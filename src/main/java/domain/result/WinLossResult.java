@@ -1,10 +1,15 @@
 package domain.result;
 
+import domain.participant.Dealer;
+import domain.participant.Player;
+
 public enum WinLossResult {
 
     WIN("승"),
     LOSS("패"),
     DRAW("무"),
+    BUST("버스트"),
+    BLACKJACK("블랙잭"),
     NONE("");
 
     private final String winLossMessage;
@@ -22,6 +27,13 @@ public enum WinLossResult {
         }
         if (winLossOption == 0) {
             return DRAW;
+        }
+        return NONE;
+    }
+
+    public static WinLossResult from(final Dealer dealer, final Player player) {
+        if(dealer.getHandTotal() > player.getHandTotal()){
+            return LOSS;
         }
         return NONE;
     }

@@ -3,16 +3,27 @@ package domain.result;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import domain.card.Card;
+import domain.card.Denomination;
+import domain.card.Suit;
+import domain.participant.Dealer;
+import domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class WinLossResultTest {
 
     @Test
-    @DisplayName("승무패 반환 테스트")
+    @DisplayName("딜러보다 플레이어의 총합이 작으면 플레이어는 패배")
     void test1() {
-        assertAll(() -> assertThat(WinLossResult.of(1)).isEqualTo(WinLossResult.WIN),
-                () -> assertThat(WinLossResult.of(-1)).isEqualTo(WinLossResult.LOSS),
-                () -> assertThat(WinLossResult.of(0)).isEqualTo(WinLossResult.DRAW));
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(Denomination.TEN, Suit.CLUB));
+        dealer.addCard(new Card(Denomination.TEN, Suit.DIAMOND));
+
+        Player player = new Player("모루");
+        player.addCard(new Card(Denomination.TEN, Suit.HEART));
+        player.addCard(new Card(Denomination.NINE, Suit.SPADE));
+
+        assertThat(WinLossResult.from(dealer.getHandTotal(), player.getHandTotal())).isEqualTo(WinLossResult.LOSS);
     }
 }
