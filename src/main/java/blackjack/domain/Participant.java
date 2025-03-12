@@ -19,6 +19,10 @@ public abstract class Participant {
         return calculateTotalCardScore() > TARGET_SCORE;
     }
 
+    public void addCard(Card card) {
+        cardDeck.add(card);
+    }
+
     public List<Card> getCardDeck() {
         return cardDeck.getCards();
     }

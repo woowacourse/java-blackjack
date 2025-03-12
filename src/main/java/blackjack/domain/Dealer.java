@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
 public class Dealer extends Participant {
@@ -10,25 +9,25 @@ public class Dealer extends Participant {
 
     private final CardDump cardDump;
 
-    public Dealer(CardDeck cardDeck, CardDump cardDump) {
-        super(cardDeck);
+    public Dealer(CardDump cardDump) {
+        super(new CardDeck());
         this.cardDump = cardDump;
     }
 
     public void initCardDeck() {
-        cardDeck.addAll(cardDump.drawCards());
-    }
-
-    public Card giveCardToPlayer() {
-        return cardDump.drawCard();
-    }
-
-    public List<Card> giveCardsToPlayer() {
-        return cardDump.drawCards();
-    }
-
-    public void addCard() {
         cardDeck.add(cardDump.drawCard());
+        cardDeck.add(cardDump.drawCard());
+    }
+
+    public CardDeck createCardDeck() {
+        CardDeck cardDeck = new CardDeck();
+        cardDeck.add(cardDump.drawCard());
+        cardDeck.add(cardDump.drawCard());
+        return cardDeck;
+    }
+
+    public Card drawCard() {
+        return cardDump.drawCard();
     }
 
     @Override
@@ -39,7 +38,7 @@ public class Dealer extends Participant {
 
     @Override
     public int calculateTotalCardScore() {
-        Set<Integer> possibleScore = cardDeck.calculatePossibleSum();
+        Set<Integer> possibleScore = cardDeck.calculatePossibleSums();
         return Collections.max(possibleScore);
     }
 
