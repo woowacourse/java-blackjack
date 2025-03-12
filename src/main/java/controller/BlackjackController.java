@@ -36,6 +36,8 @@ public class BlackjackController {
             printGameResult(blackjackGame);
         } catch (IllegalBlackjackStateException e) {
             outputView.printExceptionMessage(e);
+        } catch (Exception e) {
+            outputView.informUnexpectedException();
         }
     }
 

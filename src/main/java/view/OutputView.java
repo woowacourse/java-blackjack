@@ -66,4 +66,8 @@ public class OutputView {
     public void printExceptionMessage(final RuntimeException exception) {
         System.out.println(exception.getMessage() + LINE);
     }
+
+    public void informUnexpectedException() {
+        System.out.println("예상치 못한 에러가 발생했습니다.");
+    }
 }
