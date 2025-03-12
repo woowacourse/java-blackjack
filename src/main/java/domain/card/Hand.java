@@ -46,6 +46,10 @@ public class Hand {
         return card -> card.isAce() && card.getValue() == ORIGINAL_ACE_VALUE;
     }
 
+    public boolean isBlackJack() {
+        return false;
+    }
+
     public int getTotal() {
         return cards.stream().mapToInt(Card::getValue).sum();
     }

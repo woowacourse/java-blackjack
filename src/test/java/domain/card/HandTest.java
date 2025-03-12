@@ -82,4 +82,15 @@ public class HandTest {
         assertThat(hand.isBust()).isFalse();
     }
 
+    @Test
+    @DisplayName("Hand에 카드가 2장이 있으면서, 총 합이 21이면 블랙잭이다.")
+    void test7() {
+        Hand hand = new Hand();
+
+        hand.addCard(new Card(Denomination.TEN, Suit.CLUB));
+        hand.addCard(new Card(Denomination.ACE, Suit.CLUB));
+
+        assertThat(hand.isBlackJack()).isTrue();
+    }
+
 }
