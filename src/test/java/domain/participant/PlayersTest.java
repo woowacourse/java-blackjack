@@ -77,10 +77,10 @@ class PlayersTest {
                         Player.of("pobi3")
                 )
         );
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = Dealer.of();
 
         // when
-        players.receiveCards(dealer);
+        players.receiveCards(cardDeck);
 
         // then
         assertThat(cardDeck.getCards()).hasSize(49);

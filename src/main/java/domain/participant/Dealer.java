@@ -6,24 +6,18 @@ import domain.card.Cards;
 import java.util.List;
 
 public class Dealer {
-    private final CardDeck cardDeck;
     private final Cards ownedCards;
 
-    private Dealer(CardDeck cardDeck) {
-        this.cardDeck = cardDeck;
+    private Dealer() {
         this.ownedCards = Cards.of();
     }
 
-    public static Dealer of(CardDeck cardDeck) {
-        return new Dealer(cardDeck);
+    public static Dealer of() {
+        return new Dealer();
     }
 
-    public Card drawCard() {
-        return cardDeck.popCard();
-    }
-
-    public void receive() {
-        ownedCards.add(cardDeck.popCard());
+    public void receive(Card card) {
+        ownedCards.add(card);
     }
 
     public int getScore() {

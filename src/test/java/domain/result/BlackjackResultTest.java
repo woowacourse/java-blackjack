@@ -20,9 +20,10 @@ class BlackjackResultTest {
                 Card.of(TrumpNumber.ACE, TrumpShape.CLUB),
                 Card.of(TrumpNumber.SIX, TrumpShape.CLUB)
         );
-        Dealer dealer = Dealer.of(CardDeck.of(cards));
-        dealer.receive();
-        dealer.receive();
+        CardDeck cardDeck = CardDeck.of(cards);
+        Dealer dealer = Dealer.of();
+        dealer.receive(cardDeck.popCard());
+        dealer.receive(cardDeck.popCard());
         Player player = Player.of("pobi1");
         player.receive(Card.of(TrumpNumber.ACE, TrumpShape.CLUB));
         player.receive(Card.of(TrumpNumber.SEVEN, TrumpShape.CLUB));

@@ -1,5 +1,7 @@
 package domain;
 
+import domain.card.CardDeck;
+import domain.card.CardDeckGenerator;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -12,35 +14,37 @@ public class GameManager {
     private static final int DEALER_MIN_SCORE = 16;
     public static final int BLACKJACK_SCORE = 21;
 
+    private final CardDeck cardDeck;
     private final Dealer dealer;
     private final Players players;
 
-    private GameManager(Dealer dealer, Players players) {
+    private GameManager(CardDeck cardDeck, Dealer dealer, Players players) {
+        this.cardDeck = cardDeck;
         this.dealer = dealer;
         this.players = players;
     }
 
-    public static GameManager of(Dealer dealer, Players players) {
-        return new GameManager(dealer, players);
+    public static GameManager of(CardDeck cardDeck, Dealer dealer, Players players) {
+        return new GameManager(cardDeck, dealer, players);
     }
 
     public void distributeCards() {
         for (int count = 0; count < INITIAL_CARDS; count++) {
-            players.receiveCards(dealer);
-            dealer.receive();
+            players.receiveCards(cardDeck);
+            dealer.receive(cardDeck.popCard());
         }
     }
 
     public void passCardToPlayer(String name) {
         Player player = players.findByName(name);
-        player.receive(dealer.drawCard());
+        player.receive(cardDeck.popCard());
     }
 
     public boolean passCardToDealer() {
         if (dealer.getScore() > DEALER_MIN_SCORE) {
             return false;
         }
-        dealer.receive();
+        dealer.receive(cardDeck.popCard());
         return true;
     }
 

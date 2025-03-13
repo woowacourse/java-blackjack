@@ -24,11 +24,11 @@ public class BlackjackController {
     }
 
     public void gameStart() {
-        Dealer dealer = Dealer.of(
-                CardDeck.of(CardDeckGenerator.generateCardDeck())
-        );
+        Dealer dealer = Dealer.of();
         Players players = initParticipants();
-        GameManager gameManager = GameManager.of(dealer, players);
+        GameManager gameManager = GameManager.of(
+                CardDeck.of(CardDeckGenerator.generateCardDeck()), dealer, players
+        );
 
         gameManager.distributeCards();
         outputView.printInitCards(dealer, players);

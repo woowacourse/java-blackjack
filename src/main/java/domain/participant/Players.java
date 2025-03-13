@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.card.CardDeck;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,9 +35,9 @@ public class Players {
         }
     }
 
-    public void receiveCards(Dealer dealer) {
+    public void receiveCards(CardDeck cardDeck) {
         for (Player player : players) {
-            player.receive(dealer.drawCard());
+            player.receive(cardDeck.popCard());
         }
     }
 
