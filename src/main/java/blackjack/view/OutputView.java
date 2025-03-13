@@ -2,8 +2,10 @@ package blackjack.view;
 
 import blackjack.model.card.Card;
 import blackjack.model.participant.Dealer;
+import blackjack.model.participant.Name;
 import blackjack.model.participant.Player;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -72,5 +74,18 @@ public class OutputView {
                 .stream()
                 .map(Card::getDisplayLabel)
                 .collect(Collectors.joining(", "));
+    }
+
+    public void printFinalProfitHeader() {
+        System.out.println("## 최종 수익");
+    }
+
+    public void printDealerFinalProfit(int dealerProfit) {
+        System.out.printf("딜러: %d%n", dealerProfit);
+    }
+
+    public void printPlayerFinalProfit(Name name, int betAmount, int payout) {
+        int finalProfit = payout - betAmount;
+        System.out.printf("%s: %d%n", name.value(), finalProfit);
     }
 }

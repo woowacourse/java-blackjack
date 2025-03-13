@@ -19,6 +19,19 @@ public class InputView {
                 .toList();
     }
 
+    public int readBetAmount(Name name) {
+        System.out.printf("%n%s의 배팅 금액은?%n", name.value());
+        return parseInt(trim(scanner.nextLine()));
+    }
+
+    private int parseInt(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("숫자만 입력할 수 있습니다. 입력: %s".formatted(input));
+        }
+    }
+
     public ParticipantAction readHitOrNot(Name playerName) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", playerName.value());
         return parseParticipantAction(trim(scanner.nextLine()));
