@@ -5,7 +5,8 @@ import java.util.function.Function;
 public enum RevenuePolicy {
     BLACKJACK_WIN(cost -> (int) (cost * 1.5)),
     NORMAL_WIN(cost -> cost),
-    DRAW(cost -> cost),
+    NORMAL_DRAW(cost -> cost),
+    BLACKJACK_DRAW(cost -> cost),
     LOSE(cost -> -1 * cost),
     ;
 
