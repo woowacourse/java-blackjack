@@ -57,11 +57,11 @@ public class Dealer extends BlackJackPlayer {
     }
 
     public boolean isWin(final Player player) {
-        if (player.isBust()) {
-            return true;
-        }
         if (isBust()) {
             return false;
+        }
+        if (player.isBust()) {
+            return true;
         }
         return calculateOptimalPoint() > player.calculateOptimalPoint();
     }
