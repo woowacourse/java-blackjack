@@ -1,6 +1,9 @@
 package domain.participant;
 
 import domain.MatchResult;
+import domain.card.Deck;
+import domain.card.Hand;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.function.Consumer;
@@ -15,7 +18,7 @@ public class Players {
         validatePlayerNumbers(names);
         validateIsDuplicate(names);
         List<Player> players = names.stream()
-                .map(Player::new)
+                .map(name -> new Player(new Hand(new ArrayList<>()), name))
                 .toList();
         return new Players(players);
     }
@@ -24,13 +27,13 @@ public class Players {
         this.players = players;
     }
 
-    public void hitCards(final Dealer dealer) {
-        players.forEach(player -> player.hitCards(dealer));
+    public void hitCards(final Deck cardDeck) {
+        players.forEach(player -> player.hitCards(cardDeck));
     }
 
-    public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck, final Dealer dealer) {
+    public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck, Deck cardDeck) {
         for (Player player : players) {
-            player.draw(answer, playerDeck, dealer);
+            player.draw(answer, playerDeck, cardDeck);
         }
     }
 
