@@ -1,4 +1,4 @@
-package domain;
+package domain.gamer;
 
 import static domain.card.CardScore.*;
 import static domain.card.CardType.*;
@@ -8,13 +8,12 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import java.util.ArrayList;
 import java.util.List;
 
+import domain.GameResult;
 import domain.card.*;
-import domain.gamer.Player;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
-
-
     @Test
     void 플레이어를_생성한다() {
         //given
@@ -78,5 +77,48 @@ public class PlayerTest {
                 () -> assertThat(gameResult2).isEqualTo(GameResult.WIN),
                 () -> assertThat(gameResult3).isEqualTo(GameResult.DRAW)
         );
+    }
+
+    @DisplayName("플레이어의 카드가 2장이고 합이 21인 경우 블랙잭이다.")
+    @Test
+    void isBlackJackTest(){
+        String name = "가이온";
+        CardGroup cardGroup = new CardGroup();
+        Player blackJackPlayer = new Player(name, cardGroup);
+        blackJackPlayer.receiveCard(new Card(CLOVER,ACE));
+        blackJackPlayer.receiveCard(new Card(CLOVER,JACK));
+
+        boolean isBlackJack = blackJackPlayer.isBlackJack();
+
+        assertThat(isBlackJack).isTrue();
+    }
+
+    @DisplayName("플레이어의 카드가 3장이고 합이 21인 경우 블랙잭이 아니다.")
+    @Test
+    void isNotBlackJackTest1(){
+        String name = "가이온";
+        CardGroup cardGroup = new CardGroup();
+        Player blackJackPlayer = new Player(name, cardGroup);
+        blackJackPlayer.receiveCard(new Card(CLOVER,ACE));
+        blackJackPlayer.receiveCard(new Card(CLOVER,TWO));
+        blackJackPlayer.receiveCard(new Card(CLOVER,EIGHT));
+
+        boolean isBlackJack = blackJackPlayer.isBlackJack();
+
+        assertThat(isBlackJack).isFalse();
+    }
+
+    @DisplayName("플레이어의 카드가 2장이고 합이 21이 아닌 경우 블랙잭이 아니다.")
+    @Test
+    void isNotBlackJackTest2(){
+        String name = "가이온";
+        CardGroup cardGroup = new CardGroup();
+        Player blackJackPlayer = new Player(name, cardGroup);
+        blackJackPlayer.receiveCard(new Card(CLOVER,JACK));
+        blackJackPlayer.receiveCard(new Card(CLOVER,TWO));
+
+        boolean isNotBlackJack = blackJackPlayer.isBlackJack();
+
+        assertThat(isNotBlackJack).isFalse();
     }
 }

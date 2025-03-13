@@ -15,7 +15,7 @@ import static domain.GameResult.calculateResult;
 import static domain.GameResult.getAllGameResults;
 
 public class GameManager {
-    public static final int LIMIT = 21;
+    public static final int BLACKJACK_NUMBER = 21;
     private static final int DEALER_HIT_SCORE = 16;
     public static final int START_RECEIVE_CARD = 2;
 
@@ -48,9 +48,12 @@ public class GameManager {
         }
     }
 
+    @Deprecated
     public Map<GameResult, Integer> calculateDealerGameResult() {
         final List<GameResult> playerGameResult = calculatePlayerGameResult().values().stream().toList();
-        return getAllGameResults().stream().filter(playerGameResult::contains).collect(Collectors.toMap(GameResult::swapGameResult, result -> Collections.frequency(playerGameResult, result), (newResult, oldResult) -> oldResult));
+        return getAllGameResults().stream()
+                .filter(playerGameResult::contains)
+                .collect(Collectors.toMap(GameResult::swapGameResult, result -> Collections.frequency(playerGameResult, result), (newResult, oldResult) -> oldResult));
     }
 
     public Map<String, GameResult> calculatePlayerGameResult() {
