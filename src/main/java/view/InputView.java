@@ -14,8 +14,8 @@ public class InputView {
     private static final String BETTING_AMOUNT_INPUT_MESSAGE = "%s의 배팅 금액은?";
     private static final String CHECK_NUMBER_REGEX = "\\d+";
 
-    public int inputBettingAmountOfPlayer(Participant participant) {
-        System.out.println(BETTING_AMOUNT_INPUT_MESSAGE.formatted(participant.getName()));
+    public int inputBettingAmountOfPlayer(String playerName) {
+        System.out.println(BETTING_AMOUNT_INPUT_MESSAGE.formatted(playerName));
         String userInput = scanner.nextLine();
         validateNumber(userInput);
         return Integer.parseInt(userInput);

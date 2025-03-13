@@ -9,11 +9,18 @@ public abstract class Participant {
 
     private final String name;
     private final BlackJackCards blackJackCards;
-    private Betting betting;
+    private final Betting betting;
 
-    protected Participant(String name, BlackJackCards blackJackCards) {
+    protected Participant(String name, Betting betting) {
         this.name = name;
-        this.blackJackCards = blackJackCards;
+        this.blackJackCards = new BlackJackCards();
+        this.betting = betting;
+    }
+
+    protected Participant(String name) {
+        this.name = name;
+        this.blackJackCards = new BlackJackCards();
+        this.betting = new Betting(0);
     }
 
     public abstract boolean canPick();
@@ -22,10 +29,6 @@ public abstract class Participant {
 
     public int getBettingAmount() {
         return betting.amount();
-    }
-
-    public void startBetting(int bettingAmount) {
-        this.betting = new Betting(bettingAmount);
     }
 
     public String getName() {

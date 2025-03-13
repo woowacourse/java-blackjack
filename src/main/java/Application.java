@@ -2,7 +2,9 @@ import domain.BlackJackGame;
 import domain.card.CardBundle;
 import domain.participant.Participant;
 import domain.participant.ParticipantsResult;
+import java.util.ArrayList;
 import java.util.List;
+import utils.InputSplitter;
 import view.InputView;
 import view.OutputView;
 
@@ -14,9 +16,8 @@ public class Application {
 
     public static void main(String[] args) {
         String userNames = inputView.inputUserNames();
-        BlackJackGame blackJackGame = new BlackJackGame(cardBundle, userNames);
+        BlackJackGame blackJackGame = createBlackJackName(userNames);
         List<Participant> participants = blackJackGame.getParticipants();
-        processOfAllPlayersBetting(participants, blackJackGame);
         outputView.printInitialParticipantHands(participants);
         extraCardProcessOnPlayers(participants, blackJackGame);
         extraCardProcessOnDealer(blackJackGame);
@@ -24,20 +25,19 @@ public class Application {
         processOfPrintGameResult(blackJackGame);
     }
 
-    private static void processOfAllPlayersBetting(List<Participant> participants,
-        BlackJackGame blackJackGame) {
-        for (Participant participant : participants) {
-            processOfPlayerBetting(participant, blackJackGame);
-        }
+    private static BlackJackGame createBlackJackName(String userNames) {
+        List<String> players = InputSplitter.split(userNames);
+        List<Integer> bettingAmounts = new ArrayList<>();
+        inputBettingAmountOfPlayer(players, bettingAmounts);
+        return new BlackJackGame(cardBundle, players, bettingAmounts);
     }
 
-    private static void processOfPlayerBetting(Participant participant,
-        BlackJackGame blackJackGame) {
-        if (participant.isPlayer()) {
-            int bettingAmount = inputView.inputBettingAmountOfPlayer(participant);
-            blackJackGame.startBetting(bettingAmount, participant);
+    private static void inputBettingAmountOfPlayer(List<String> players,
+        List<Integer> bettingAmounts) {
+        for (String player : players) {
+            int bettingAmount = inputView.inputBettingAmountOfPlayer(player);
+            bettingAmounts.add(bettingAmount);
         }
-        outputView.printBlankLine();
     }
 
     private static void processOfPrintGameResult(BlackJackGame blackJackGame) {
