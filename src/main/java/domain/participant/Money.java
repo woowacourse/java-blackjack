@@ -55,7 +55,7 @@ public class Money {
     }
 
     public Money plus(Money money) {
-        return null;
+        return new Money(value + money.value);
     }
 
     public int getValue() {
