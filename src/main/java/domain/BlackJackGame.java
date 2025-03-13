@@ -63,7 +63,7 @@ public class BlackJackGame {
     }
 
     public Map<Player, Money> calculateRevenue() {
-        return null;
+        return dealer.getPlayersRevenue(players);
     }
 
     public Map<GameResult, Integer> calculateDealerWinningCount() {
