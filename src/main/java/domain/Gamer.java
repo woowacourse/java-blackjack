@@ -37,4 +37,8 @@ public abstract class Gamer {
     public Cards getCards() {
         return new Cards(cards.getCards());
     }
+
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
+    }
 }
