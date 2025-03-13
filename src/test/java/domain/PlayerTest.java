@@ -89,4 +89,21 @@ public class PlayerTest {
             () -> assertThat(threeCardTwentyOnePlayer.isBlackJack()).isFalse()
         );
     }
+
+    @Test
+    void 플레이어가_자신의_수익을_계산한다() {
+        Player player = new Player("drago",
+            List.of(new Card(Symbol.DIAMOND, Number.ACE),
+                new Card(Symbol.DIAMOND, Number.JACK)),
+            1000);
+
+        Dealer dealer = new Dealer(
+            List.of(
+                new Card(Symbol.HEART, Number.FOUR),
+                new Card(Symbol.HEART, Number.FOUR)
+            )
+        );
+
+        assertThat(player.calculateIncome(dealer)).isEqualTo(1500);
+    }
 }

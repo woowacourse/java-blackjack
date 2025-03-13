@@ -16,7 +16,8 @@ public class Player extends Participant {
         return cards.isBlackJack();
     }
 
-    public int calculateIncome(ResultStatus resultStatus) {
+    public Integer calculateIncome(Dealer dealer) {
+        ResultStatus resultStatus = ResultStatus.judgeGameResult(this, dealer);
         return betAmount.calculateIncome(resultStatus);
     }
 

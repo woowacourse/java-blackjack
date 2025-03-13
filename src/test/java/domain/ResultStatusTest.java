@@ -8,7 +8,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,16 +22,14 @@ public class ResultStatusTest {
                 new Card(Symbol.CLOVER, Number.JACK),
                 new Card(Symbol.HEART, Number.TWO)),
             1000);
-        Players players = new Players(List.of(player));
 
         Dealer dealer = new Dealer(
             List.of(new Card(Symbol.DIAMOND, Number.KING),
                 new Card(Symbol.HEART, Number.EIGHT),
                 new Card(Symbol.SPADE, Number.TWO)));
 
-        Map<Player, ResultStatus> result = Map.of(player, ResultStatus.LOSE);
 
-        assertThat(ResultStatus.judgeGameResult(players, dealer)).isEqualTo(result);
+        assertThat(ResultStatus.judgeGameResult(player, dealer)).isEqualTo(ResultStatus.LOSE);
     }
 
     @Test
@@ -42,16 +39,13 @@ public class ResultStatusTest {
                 new Card(Symbol.CLOVER, Number.EIGHT),
                 new Card(Symbol.HEART, Number.TWO)),
             1000);
-        Players players = new Players(List.of(player));
 
         Dealer dealer = new Dealer(
             List.of(new Card(Symbol.DIAMOND, Number.KING),
                 new Card(Symbol.HEART, Number.JACK),
                 new Card(Symbol.SPADE, Number.TWO)));
 
-        Map<Player, ResultStatus> result = Map.of(player, ResultStatus.WIN);
-
-        assertThat(ResultStatus.judgeGameResult(players, dealer)).isEqualTo(result);
+        assertThat(ResultStatus.judgeGameResult(player, dealer)).isEqualTo(ResultStatus.WIN);
     }
 
     @Test
@@ -61,16 +55,13 @@ public class ResultStatusTest {
                 new Card(Symbol.CLOVER, Number.EIGHT),
                 new Card(Symbol.HEART, Number.TWO)),
             1000);
-        Players players = new Players(List.of(player));
 
         Dealer dealer = new Dealer(
             List.of(new Card(Symbol.DIAMOND, Number.KING),
                 new Card(Symbol.HEART, Number.SEVEN),
                 new Card(Symbol.SPADE, Number.TWO)));
 
-        Map<Player, ResultStatus> result = Map.of(player, ResultStatus.WIN);
-
-        assertThat(ResultStatus.judgeGameResult(players, dealer)).isEqualTo(result);
+        assertThat(ResultStatus.judgeGameResult(player, dealer)).isEqualTo(ResultStatus.WIN);
     }
 
     @Test
@@ -80,16 +71,13 @@ public class ResultStatusTest {
                 new Card(Symbol.CLOVER, Number.EIGHT),
                 new Card(Symbol.HEART, Number.TWO)),
             1000);
-        Players players = new Players(List.of(player));
 
         Dealer dealer = new Dealer(
             List.of(new Card(Symbol.DIAMOND, Number.KING),
                 new Card(Symbol.HEART, Number.EIGHT),
                 new Card(Symbol.SPADE, Number.TWO)));
 
-        Map<Player, ResultStatus> result = Map.of(player, ResultStatus.PUSH);
-
-        assertThat(ResultStatus.judgeGameResult(players, dealer)).isEqualTo(result);
+        assertThat(ResultStatus.judgeGameResult(player, dealer)).isEqualTo(ResultStatus.PUSH);
     }
 
     @ParameterizedTest
@@ -101,6 +89,5 @@ public class ResultStatusTest {
     })
     void 상태에_따른_수익률을_계산한다(ResultStatus status, int betAmount, int income) {
         assertThat(status.calculateIncome(betAmount)).isEqualTo(income);
-
     }
 }

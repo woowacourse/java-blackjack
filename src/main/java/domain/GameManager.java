@@ -4,7 +4,6 @@ package domain;
 import controller.PlayerInfo;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -52,13 +51,7 @@ public class GameManager {
     }
 
     public Map<Player, Integer> calculateIncomes() {
-        Map<Player, Integer> incomes = new HashMap<>();
-        Map<Player, ResultStatus> gameResult = ResultStatus.judgeGameResult(players, dealer);
-        for (Player player : gameResult.keySet()) {
-            int income = player.calculateIncome(gameResult.get(player));
-            incomes.put(player, income);
-        }
-        return incomes;
+        return players.judgeAllPlayersIncomes(dealer);
     }
 
     public boolean isPlayerBurst(Player player) {

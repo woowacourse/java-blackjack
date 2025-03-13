@@ -32,11 +32,4 @@ public class BetAmount {
     public int hashCode() {
         return Objects.hashCode(amount);
     }
-
-    @Override
-    public String toString() {
-        return "BetAmount{" +
-            "amount=" + amount +
-            '}';
-    }
 }

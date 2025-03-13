@@ -2,6 +2,7 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -36,6 +37,15 @@ public class Players {
         return players.stream()
             .filter(player -> player.getName().equals(name))
             .findFirst().orElseThrow();
+    }
+
+    public Map<Player, Integer> judgeAllPlayersIncomes(Dealer dealer) {
+        Map<Player, Integer> incomes = new HashMap<>();
+        for (Player player : players) {
+            int income = player.calculateIncome(dealer);
+            incomes.put(player, income);
+        }
+        return incomes;
     }
 
     @Override
