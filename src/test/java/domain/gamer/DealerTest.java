@@ -1,6 +1,6 @@
 package domain.gamer;
 
-import static controller.BlackJackController.THRESHOLD;
+import static domain.gamer.Dealer.THRESHOLD;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.deck.Card;
@@ -23,7 +23,7 @@ class DealerTest {
         dealer.hit(new Card(Rank.SIX, Shape.CLOVER));
 
         // when
-        final boolean expected = dealer.canHit(THRESHOLD);
+        final boolean expected = dealer.canHit();
 
         // then
         SoftAssertions.assertSoftly(softly -> {
@@ -42,7 +42,7 @@ class DealerTest {
         dealer.hit(new Card(Rank.SEVEN, Shape.CLOVER));
 
         // when
-        final boolean expected = dealer.canHit(THRESHOLD);
+        final boolean expected = dealer.canHit();
 
         // then
         SoftAssertions.assertSoftly(softly -> {
@@ -60,7 +60,7 @@ class DealerTest {
         dealer.hit(new Card(Rank.ACE, Shape.CLOVER));
         dealer.hit(new Card(Rank.TWO, Shape.CLOVER));
         // when
-        final boolean expected = dealer.canHit(16);
+        final boolean expected = dealer.canHit();
 
         // then
         SoftAssertions.assertSoftly(softly -> {
@@ -79,7 +79,7 @@ class DealerTest {
         dealer.hit(new Card(Rank.ACE, Shape.CLOVER));
 
         // when
-        final boolean expected = dealer.canHit(16);
+        final boolean expected = dealer.canHit();
 
         // then
         SoftAssertions.assertSoftly(softly -> {
