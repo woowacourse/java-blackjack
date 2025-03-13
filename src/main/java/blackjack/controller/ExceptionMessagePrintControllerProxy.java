@@ -2,7 +2,7 @@ package blackjack.controller;
 
 import blackjack.view.writer.Writer;
 
-public class ExceptionMessagePrintControllerProxy implements Controller {
+public final class ExceptionMessagePrintControllerProxy implements Controller {
 
     private final Controller target;
     private final Writer writer;

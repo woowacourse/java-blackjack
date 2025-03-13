@@ -10,7 +10,7 @@ import blackjack.view.OutputView;
 
 import java.util.List;
 
-public class BlackjackController implements Controller {
+public final class BlackjackController implements Controller {
 
     private final InputView inputView;
     private final OutputView outputView;

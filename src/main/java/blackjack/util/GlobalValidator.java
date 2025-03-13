@@ -1,6 +1,6 @@
 package blackjack.util;
 
-public class GlobalValidator {
+public final class GlobalValidator {
     
     public static void validateNotNull(final Class<?> target, final Object... arguments) {
         for (final Object argument : arguments) {

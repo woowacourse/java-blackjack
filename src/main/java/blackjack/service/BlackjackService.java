@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class BlackjackService {
+public final class BlackjackService {
     
     public void addPlayerCards(
             final List<PlayerBettingBlackjackCardHand> playerHands,

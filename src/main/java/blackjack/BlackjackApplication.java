@@ -9,7 +9,7 @@ import blackjack.view.OutputView;
 import blackjack.view.reader.SystemReader;
 import blackjack.view.writer.SystemWriter;
 
-public class BlackjackApplication {
+public final class BlackjackApplication {
 
     public static void main(String[] args) {
         getController().run();

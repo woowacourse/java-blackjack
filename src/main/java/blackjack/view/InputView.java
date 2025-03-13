@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class InputView {
+public final class InputView {
     
     private final Writer writer;
     private final Reader reader;

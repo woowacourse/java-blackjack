@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
-public class OutputView {
+public final class OutputView {
     
     private static final String LINE_SEPARATOR = System.lineSeparator();
     
