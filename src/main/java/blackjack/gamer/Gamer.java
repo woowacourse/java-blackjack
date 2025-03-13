@@ -39,6 +39,10 @@ public abstract class Gamer {
         return hand.sumCards() == blackjackNumber && hand.countCards() == blackjackCardCount;
     }
 
+    public long getProfit() {
+        return bettingMachine.getProfit();
+    }
+
     public abstract List<Card> showInitialCards();
 
     public abstract String getNickName();

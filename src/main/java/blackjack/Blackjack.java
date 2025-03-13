@@ -129,6 +129,11 @@ public class Blackjack {
             Consumer<Player> action = actionMap.get(winningStatus);
             action.accept(player);
         }
+
+        final long playersTotalProfit = players.getPlayers().stream()
+                .mapToLong(Player::getProfit)
+                .sum();
+        dealer.updateEarnedMoney(-1 * playersTotalProfit);
     }
 
     private void receiveBettingMoney(final InputView inputView, final Player player) {
@@ -180,4 +185,11 @@ public class Blackjack {
         return WinningStatus.LOSE;
     }
 
+    public void showProfit(final ResultView resultView) {
+        resultView.printProfitHead();
+        resultView.printProfit(dealer, dealer.getProfit());
+        for (Player player : players.getPlayers()) {
+            resultView.printProfit(player, player.getProfit());
+        }
+    }
 }

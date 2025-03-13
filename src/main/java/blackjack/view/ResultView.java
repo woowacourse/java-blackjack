@@ -13,8 +13,10 @@ public class ResultView {
 
     private static final String CARDS_FORMAT = "%s: %s";
     private static final String CARDS_SUM_FORMAT = "%s - 결과: %d";
-    private static final String COMMA = ", ";
     private static final String DEALER_HIT_FORMAT = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String PROFIT_HEAD = "## 최종 수익";
+    private static final String PROFIT_FORMAT = "%s: %d";
+    private static final String COMMA = ", ";
 
     public void printCards(final Gamer gamer, final List<Card> gamerCards) {
         final String message = makeCardMessage(gamer, gamerCards);
@@ -32,6 +34,14 @@ public class ResultView {
 
     public void printEmptyLine() {
         System.out.print(LINE);
+    }
+
+    public void printProfitHead() {
+        System.out.println(LINE + PROFIT_HEAD);
+    }
+
+    public void printProfit(final Gamer gamer, final long profit) {
+        System.out.println(String.format(PROFIT_FORMAT, gamer.getNickName(), profit));
     }
 
     private String makeCardMessage(final Gamer gamer, List<Card> gamerCards) {

@@ -54,4 +54,8 @@ public class Dealer extends Gamer {
     public boolean isHit() {
         return hand.sumCards() <= HIT_THRESHOLD;
     }
+
+    public void updateEarnedMoney(final long money) {
+        bettingMachine.earnMoney(money);
+    }
 }

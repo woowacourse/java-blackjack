@@ -25,5 +25,6 @@ public class Application {
         blackjack.showSum(resultView);
         Map<Player, WinningStatus> winningResult = blackjack.calculateWinningResult();
         blackjack.calculateEarnedMoney(winningResult);
+        blackjack.showProfit(resultView);
     }
 }

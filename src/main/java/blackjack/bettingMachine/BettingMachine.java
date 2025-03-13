@@ -29,6 +29,14 @@ public class BettingMachine {
         earnedMoney.increase(bettingMoney.getOneAndHalf());
     }
 
+    public long getProfit() {
+        return earnedMoney.getMoney() - bettingMoney.getMoney();
+    }
+
+    public void earnMoney(final long money) {
+        earnedMoney.increase(money);
+    }
+
     private void validateBettingAmount(final String bettingAmount) {
         validateIsDigit(bettingAmount);
         validateIsUnitSize(bettingAmount);
