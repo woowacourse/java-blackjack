@@ -97,12 +97,28 @@ public class CardGroupTest {
                     new Card(CardType.CLOVER, CardScore.ACE),
                     new Card(CardType.HEART, CardScore.ACE));
 
-            //whenR
+            //when
             final CardGroup cardGroup = new CardGroup(cards);
             final int score = cardGroup.calculateScore(21);
 
             //then
             assertThat(score).isEqualTo(12);
+        }
+        
+        @Test
+        void 블랙잭인지_판단_한다() {
+            //given
+            final List<Card> cards = List.of(
+                    new Card(CardType.DIAMOND, CardScore.ACE),
+                    new Card(CardType.HEART, CardScore.JACK)
+            );
+            
+            //when
+            final CardGroup cardGroup = new CardGroup(cards);
+            final boolean result = cardGroup.isBlackjack();
+
+            //then
+            assertThat(result).isTrue();
         }
     }
 }

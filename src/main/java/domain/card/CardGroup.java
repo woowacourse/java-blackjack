@@ -53,4 +53,8 @@ public class CardGroup {
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
+
+    public boolean isBlackjack() {
+        return false;
+    }
 }
