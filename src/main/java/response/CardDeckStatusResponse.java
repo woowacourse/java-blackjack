@@ -1,5 +1,6 @@
 package response;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,20 +11,32 @@ import object.participant.Participant;
 
 public record CardDeckStatusResponse(Map<String, List<String>> cardDeckNamesOfParticipant) {
 
-    public static CardDeckStatusResponse from(Map<Participant, CardDeck> cardDeckOfParticipant) {
+    public static CardDeckStatusResponse generateInitCardResponse(Map<Participant, CardDeck> cardDeckOfParticipant) {
         Map<String, List<String>> cardDeckNamesOfParticipant = new LinkedHashMap<>();
 
         for (Map.Entry<Participant, CardDeck> entry : cardDeckOfParticipant.entrySet()) {
-            String participantName = entry.getKey().getNickname();
-            List<Card> participantCards = entry.getValue().getCards();
-            List<String> cardDisplayNames = participantCards.stream().map(card -> card.getName() + card.getCardSymbol()).toList();
+            Participant participant = entry.getKey();
+            CardDeck ownedCardDeck = entry.getValue();
+
+            String participantName = participant.getNickname();
+            List<Card> participantCards = new ArrayList<>(ownedCardDeck.getCards());
+
+            List<String> cardDisplayNames = new ArrayList<>(participantCards.stream().map(card -> card.getName() + card.getCardSymbol()).toList());
+
+            if (participant.areYouDealer()) {
+                cardDisplayNames.removeLast();
+                cardDisplayNames.add("\uD83C\uDCA0?");
+                cardDeckNamesOfParticipant.put(participantName, cardDisplayNames);
+                continue;
+            }
 
             cardDeckNamesOfParticipant.put(participantName, cardDisplayNames);
         }
+
         return new CardDeckStatusResponse(cardDeckNamesOfParticipant);
     }
 
-    public static CardDeckStatusResponse from(String nickname, CardDeck cardDeck) {
+    public static CardDeckStatusResponse of(String nickname, CardDeck cardDeck) {
         Map<String, List<String>> cardDeckNamesOfParticipant = new HashMap<>();
 
         List<Card> participantCards = cardDeck.getCards();

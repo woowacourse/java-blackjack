@@ -49,7 +49,7 @@ public class BlackJackManager {
         ParticipantResponse participantResponse = ParticipantResponse.of(blackJackBoard.getDealer(), blackJackBoard.getPlayers());
         outputView.printDrawTwoCardsMessage(participantResponse);
 
-        CardDeckStatusResponse cardDeckStatusResponse = CardDeckStatusResponse.from(blackJackBoard.getCardDeckOfParticipant());
+        CardDeckStatusResponse cardDeckStatusResponse = CardDeckStatusResponse.generateInitCardResponse(blackJackBoard.getCardDeckOfParticipant());
         outputView.printCardDeckStatus(cardDeckStatusResponse);
     }
 
@@ -61,7 +61,7 @@ public class BlackJackManager {
             }
 
             blackJackBoard.drawCardTo(player);
-            CardDeckStatusResponse singleCardDeckStatusResponse = CardDeckStatusResponse.from(
+            CardDeckStatusResponse singleCardDeckStatusResponse = CardDeckStatusResponse.of(
                     player.getNickname(),
                     blackJackBoard.getCardDeckOf(player)
             );
