@@ -2,7 +2,6 @@ package blackjack;
 
 import blackjack.card.CardDeck;
 import blackjack.game.BlackjackGame;
-import blackjack.game.GameResult;
 import blackjack.user.Dealer;
 import blackjack.user.Participants;
 import blackjack.user.Player;
@@ -12,7 +11,6 @@ import blackjack.view.InputView;
 import blackjack.view.GameView;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class BlackjackApplication {
 
@@ -26,7 +24,7 @@ public class BlackjackApplication {
         distributeAdditionalCards(blackjackGame, inputView, gameView);
 
         showFinalCards(blackjackGame, gameView);
-        showWinLoseResult(blackjackGame, gameView);
+        showFinalProfits(blackjackGame, gameView);
     }
 
     private static BlackjackGame enterParticipants(final InputView inputView) {
@@ -92,14 +90,13 @@ public class BlackjackApplication {
         gameView.printFinalCardResults(participants);
     }
 
-    private static void showWinLoseResult(final BlackjackGame blackjackGame, final GameView gameView) {
-        Map<GameResult, Integer> dealerResult = blackjackGame.calculateStatisticsForDealer();
-        Map<Player, GameResult> playerResults = blackjackGame.calculateStatisticsForPlayer();
+    private static void showFinalProfits(final BlackjackGame blackjackGame,
+        final GameView gameView) {
+        int playersTotalProfit = blackjackGame.calculateProfitForPlayer();
+        int dealerProfit = -playersTotalProfit;
 
-        gameView.printResultTitle();
-        gameView.printDealerResult(dealerResult);
-        for (Entry<Player, GameResult> playerResult : playerResults.entrySet()) {
-            gameView.printPlayerResult(playerResult.getKey().getName(), playerResult.getValue());
-        }
+        gameView.printProfitResultTitle();
+        gameView.printDealerResult(dealerProfit);
+        gameView.printPlayerResult(blackjackGame.getParticipants().getPlayers());
     }
 }

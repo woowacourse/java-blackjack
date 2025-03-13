@@ -1,10 +1,8 @@
 package blackjack.view;
 
-import blackjack.user.Player;
 import blackjack.user.PlayerName;
 import blackjack.user.Wallet;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +29,7 @@ public class InputView {
 
     public Map<PlayerName, Wallet> readPlayerPrincipals(final List<PlayerName> playerNames) {
         Map<PlayerName, Wallet> playerWallet = new LinkedHashMap<>();
-        for(PlayerName playerName : playerNames) {
+        for (PlayerName playerName : playerNames) {
             Wallet wallet = readPlayerPrincipal(playerName);
             playerWallet.put(playerName, wallet);
         }

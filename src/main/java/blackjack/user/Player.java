@@ -1,6 +1,7 @@
 package blackjack.user;
 
 import blackjack.card.Card;
+import blackjack.game.GameResult;
 import java.util.List;
 
 public class Player extends Participant {
@@ -8,9 +9,9 @@ public class Player extends Participant {
     private static final int PLAYER_DISTRIBUTE_CARD_THRESHOLD = 21;
 
     private final PlayerName playerName;
-    private final Wallet wallet;
+    private Wallet wallet;
 
-    public Player(final PlayerName playerName, Wallet wallet) {
+    public Player(final PlayerName playerName, final Wallet wallet) {
         this.playerName = playerName;
         this.wallet = wallet;
     }
@@ -25,7 +26,16 @@ public class Player extends Participant {
         return super.calculateDenominations() < PLAYER_DISTRIBUTE_CARD_THRESHOLD;
     }
 
+    public int updateWalletByGameResult(GameResult gameResult) {
+        this.wallet = wallet.calculateProfit(gameResult, isBlackjack());
+        return wallet.getProfit();
+    }
+
     public String getName() {
         return playerName.getName();
+    }
+
+    public int getProfit() {
+        return wallet.getProfit();
     }
 }

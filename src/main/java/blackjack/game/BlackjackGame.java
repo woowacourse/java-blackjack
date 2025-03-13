@@ -7,8 +7,6 @@ import blackjack.user.Participants;
 import blackjack.user.Player;
 import blackjack.user.PlayerName;
 import blackjack.user.Wallet;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -50,27 +48,16 @@ public class BlackjackGame {
         participant.addCards(cardDeck, EXTRA_CARD_NUMBER);
     }
 
-    public Map<Player, GameResult> calculateStatisticsForPlayer() {
-        Map<Player, GameResult> playerResult = new HashMap<>();
+    public int calculateProfitForPlayer() {
         Dealer dealer = participants.getDealer();
+        int totalProfit = 0;
 
         for (Player player : participants.getPlayers()) {
             GameResult gameResult = dealer.judgePlayerResult(player);
-            playerResult.put(player, gameResult);
+            int profit = player.updateWalletByGameResult(gameResult);
+            totalProfit += profit;
         }
-        return playerResult;
-    }
-
-    public Map<GameResult, Integer> calculateStatisticsForDealer() {
-        Map<GameResult, Integer> result = new HashMap<>();
-        Dealer dealer = participants.getDealer();
-
-        for (Player player : participants.getPlayers()) {
-            GameResult playerResult = dealer.judgePlayerResult(player);
-            GameResult dealerResult = playerResult.changeStatusOpposite();
-            result.put(dealerResult, result.getOrDefault(dealerResult, 0) + 1);
-        }
-        return result;
+        return totalProfit;
     }
 
     public Participants getParticipants() {

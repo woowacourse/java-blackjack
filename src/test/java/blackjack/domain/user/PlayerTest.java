@@ -6,6 +6,7 @@ import blackjack.card.Card;
 import blackjack.card.CardDeck;
 import blackjack.card.Denomination;
 import blackjack.card.Suit;
+import blackjack.game.GameResult;
 import blackjack.user.Player;
 import blackjack.user.PlayerName;
 import blackjack.user.Wallet;
@@ -67,6 +68,76 @@ public class PlayerTest {
             player.addCards(cardDeck, 3);
 
             assertThat(player.isPossibleToAdd()).isFalse();
+        }
+    }
+
+    @Nested
+    @DisplayName("플레이어 수익 테스트")
+    class WalletTest {
+
+        @Test
+        @DisplayName("블랙잭이면 원금의 1.5배의 이익을 얻는다")
+        void updateWalletWithBlackjack() {
+            List<Card> initialCards = new ArrayList<>(List.of(
+                new Card(Suit.SPADE, Denomination.ACE),
+                new Card(Suit.CLUB, Denomination.JACK)
+            ));
+            CardDeck cardDeck = new CardDeck(initialCards);
+
+            Player player = new Player(new PlayerName("if"), Wallet.initialBetting(10000));
+            player.addCards(cardDeck, 2);
+
+            int result = player.updateWalletByGameResult(GameResult.WIN);
+            assertThat(result).isEqualTo(15000);
+        }
+
+        @Test
+        @DisplayName("블랙잭이 아닌 승리는 원금 만큼의 이익을 얻는다")
+        void updateWalletWithJustWin() {
+            List<Card> initialCards = new ArrayList<>(List.of(
+                new Card(Suit.SPADE, Denomination.FIVE),
+                new Card(Suit.SPADE, Denomination.SIX),
+                new Card(Suit.CLUB, Denomination.JACK)
+            ));
+            CardDeck cardDeck = new CardDeck(initialCards);
+
+            Player player = new Player(new PlayerName("sana"), Wallet.initialBetting(10000));
+            player.addCards(cardDeck, 3);
+
+            int result = player.updateWalletByGameResult(GameResult.WIN);
+            assertThat(result).isEqualTo(10000);
+        }
+
+        @Test
+        @DisplayName("무승부는 이익이 없다")
+        void updateWalletWithDraw() {
+            List<Card> initialCards = new ArrayList<>(List.of(
+                new Card(Suit.SPADE, Denomination.SIX),
+                new Card(Suit.CLUB, Denomination.JACK)
+            ));
+            CardDeck cardDeck = new CardDeck(initialCards);
+
+            Player player = new Player(new PlayerName("sana"), Wallet.initialBetting(10000));
+            player.addCards(cardDeck, 2);
+
+            int result = player.updateWalletByGameResult(GameResult.DRAW);
+            assertThat(result).isEqualTo(0);
+        }
+
+        @Test
+        @DisplayName("패배는 원금 만큼을 잃는다")
+        void updateWalletWithLose() {
+            List<Card> initialCards = new ArrayList<>(List.of(
+                new Card(Suit.SPADE, Denomination.TWO),
+                new Card(Suit.CLUB, Denomination.JACK)
+            ));
+            CardDeck cardDeck = new CardDeck(initialCards);
+
+            Player player = new Player(new PlayerName("sana"), Wallet.initialBetting(10000));
+            player.addCards(cardDeck, 2);
+
+            int result = player.updateWalletByGameResult(GameResult.LOSE);
+            assertThat(result).isEqualTo(-10000);
         }
     }
 }

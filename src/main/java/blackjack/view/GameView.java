@@ -1,12 +1,10 @@
 package blackjack.view;
 
 import blackjack.card.Card;
-import blackjack.game.GameResult;
 import blackjack.user.Dealer;
 import blackjack.user.Participants;
 import blackjack.user.Player;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GameView {
@@ -60,23 +58,19 @@ public class GameView {
             player.calculateDenominations());
     }
 
-    public void printResultTitle() {
+    public void printProfitResultTitle() {
         System.out.println();
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
     }
 
-    public void printDealerResult(final Map<GameResult, Integer> dealerGameResult) {
-        StringBuilder sb = new StringBuilder();
-        for (GameResult gameResult : GameResult.values()) {
-            sb.append(dealerGameResult.getOrDefault(gameResult, 0));
-            sb.append(gameResult.getText());
+    public void printDealerResult(final int dealerProfitResult) {
+        System.out.printf("딜러: %,d%n", dealerProfitResult);
+    }
+
+    public void printPlayerResult(final List<Player> players) {
+        for (Player player : players) {
+            System.out.printf("%s: %s%n", player.getName(), player.getProfit());
         }
-
-        System.out.printf("딜러: %s%n", sb);
-    }
-
-    public void printPlayerResult(final String name, final GameResult gameResult) {
-        System.out.printf("%s: %s%n", name, gameResult.getText());
     }
 
     private String parseCardToString(final List<Card> cards) {

@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.game.BlackjackGame;
-import blackjack.game.GameResult;
 import blackjack.card.Card;
 import blackjack.card.CardDeck;
 import blackjack.card.Denomination;
@@ -16,6 +15,7 @@ import blackjack.user.Player;
 import blackjack.user.PlayerName;
 import blackjack.user.Wallet;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,10 +32,10 @@ class BlackjackGameTest {
         @Test
         @DisplayName("2명 이상의 플레이어를 입력 받을 수 있다.")
         void createParticipantsByNames() {
-            Map<PlayerName, Wallet> playerWallet = Map.of(
-                new PlayerName("hula"), Wallet.initialBetting(10000),
-                new PlayerName("sana"), Wallet.initialBetting(10000)
-            );
+            Map<PlayerName, Wallet> playerWallet = new LinkedHashMap<>();
+            playerWallet.put(new PlayerName("hula"), Wallet.initialBetting(10000));
+            playerWallet.put(new PlayerName("sana"), Wallet.initialBetting(10000));
+
             BlackjackGame game = BlackjackGame.createByPlayerNames(CardDeck.shuffleCardDeck(),
                 playerWallet);
 
@@ -155,9 +155,9 @@ class BlackjackGameTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
             Map<PlayerName, Wallet> playerWallet = Map.of(
-                new PlayerName("hula"), Wallet.initialBetting(10000),
-                new PlayerName("sana"), Wallet.initialBetting(10000),
-                new PlayerName("jason"), Wallet.initialBetting(10000)
+                new PlayerName("hula"), Wallet.initialBetting(10000), // 패
+                new PlayerName("sana"), Wallet.initialBetting(10000), // 승(블랙잭)
+                new PlayerName("jason"), Wallet.initialBetting(10000) // 패
             );
             game = BlackjackGame.createByPlayerNames(cardDeck, playerWallet);
 
@@ -171,29 +171,11 @@ class BlackjackGameTest {
         }
 
         @Test
-        @DisplayName("플레이어의 승패 통계를 계산할 수 있다.")
+        @DisplayName("플레이어의 수익을 계산할 수 있다.")
         void calculatePlayerStatistics() {
-            Map<Player, GameResult> playerResult = game.calculateStatisticsForPlayer();
-            List<Player> players = game.getParticipants().getPlayers();
-            Player player1 = players.get(0);
-            Player player2 = players.get(1);
-            Player player3 = players.get(2);
+            int totalProfit = game.calculateProfitForPlayer();
 
-            assertAll(() -> {
-                assertThat(playerResult.get(player1)).isEqualTo(GameResult.LOSE);
-                assertThat(playerResult.get(player2)).isEqualTo(GameResult.WIN);
-                assertThat(playerResult.get(player3)).isEqualTo(GameResult.LOSE);
-            });
-        }
-
-        @Test
-        @DisplayName("딜러의 승패 통계를 계산할 수 있다.")
-        void calculateDealerStatistics() {
-            Map<GameResult, Integer> result = game.calculateStatisticsForDealer();
-            assertAll(() -> {
-                assertThat(result.get(GameResult.WIN)).isEqualTo(2);
-                assertThat(result.get(GameResult.LOSE)).isEqualTo(1);
-            });
+            assertThat(totalProfit).isEqualTo(-5000);
         }
     }
 }

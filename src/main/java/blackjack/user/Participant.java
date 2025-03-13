@@ -50,6 +50,12 @@ public abstract class Participant {
         return sum;
     }
 
+    private boolean hasACE() {
+        return cards.stream()
+            .map(Card::denomination)
+            .anyMatch(denomination -> denomination == Denomination.ACE);
+    }
+
     public List<Card> openCards() {
         return Collections.unmodifiableList(cards);
     }
@@ -60,11 +66,5 @@ public abstract class Participant {
 
     public boolean isImpossibleToAdd() {
         return !isPossibleToAdd();
-    }
-
-    private boolean hasACE() {
-        return cards.stream()
-            .map(Card::denomination)
-            .anyMatch(denomination -> denomination == Denomination.ACE);
     }
 }
