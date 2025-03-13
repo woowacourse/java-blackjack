@@ -7,11 +7,12 @@ import java.util.List;
 import utils.InputSplitter;
 import view.InputView;
 import view.OutputView;
+import view.OutputViewOfProfit;
 
 public class Application {
 
     static final InputView inputView = new InputView();
-    static final OutputView outputView = new OutputView();
+    static final OutputView outputView = new OutputViewOfProfit();
     static final CardBundle cardBundle = new CardBundle();
 
     public static void main(String[] args) {
