@@ -15,10 +15,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 import card.Card;
 import card.CardHand;
 import card.Rank;
-import card.Score;
 import card.Suit;
 import paticipant.Participant;
 import paticipant.Player;
+import value.Score;
 
 public class PlayerTest {
 	private static final Score BUST_SCORE = Score.from(21);

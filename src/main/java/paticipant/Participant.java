@@ -4,10 +4,10 @@ import java.util.List;
 
 import card.Card;
 import card.CardHand;
-import card.Count;
-import card.Score;
 import duel.DuelHistory;
 import duel.DuelResult;
+import value.Count;
+import value.Score;
 
 public class Participant {
 	private final CardHand hand;

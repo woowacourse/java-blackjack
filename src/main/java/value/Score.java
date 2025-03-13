@@ -1,4 +1,4 @@
-package card;
+package value;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import value.Count;
+import value.Score;
+
 public class CardHand {
 
 	private final List<Card> cards;

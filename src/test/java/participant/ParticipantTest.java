@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test;
 import card.Card;
 import card.CardHand;
 import card.Rank;
-import card.Score;
 import card.Suit;
 import paticipant.Participant;
+import value.Score;
 
 public class ParticipantTest {
 

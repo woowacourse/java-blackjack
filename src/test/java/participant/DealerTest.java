@@ -11,10 +11,10 @@ import org.junit.jupiter.api.Test;
 import card.Card;
 import card.CardHand;
 import card.Rank;
-import card.Score;
 import card.Suit;
 import paticipant.Dealer;
 import paticipant.Participant;
+import value.Score;
 
 public class DealerTest {
 	private static final Score DEALER_PICK_CARD_SCORE_MAX = Score.from(16);

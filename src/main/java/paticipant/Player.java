@@ -3,8 +3,8 @@ package paticipant;
 import java.util.List;
 
 import card.Card;
-import card.Score;
 import duel.DuelResult;
+import value.Score;
 
 public class Player {
 	private final String name;

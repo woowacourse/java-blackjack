@@ -1,5 +1,8 @@
 package card;
 
+import value.Count;
+import value.Score;
+
 public enum Rank {
 	ACE(Score.from(11)),
 	TWO(Score.from(2)),

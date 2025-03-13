@@ -1,4 +1,4 @@
-package card;
+package value;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.SoftAssertions.*;

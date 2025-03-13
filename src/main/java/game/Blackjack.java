@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.function.Function;
 
 import card.Deck;
-import card.Score;
 import duel.DuelResult;
 import paticipant.Dealer;
 import paticipant.Participant;
 import paticipant.Player;
 import paticipant.Players;
+import value.Score;
 
 public class Blackjack {
 	private static final Score BUST_SCORE = Score.from(21);

@@ -14,10 +14,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import card.Card;
 import card.CardHand;
-import card.Count;
 import card.Rank;
-import card.Score;
 import card.Suit;
+import value.Count;
+import value.Score;
 
 class CardHandTest {
 

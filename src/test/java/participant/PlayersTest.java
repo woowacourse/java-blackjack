@@ -11,12 +11,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import card.Count;
 import card.Deck;
-import card.Score;
 import duel.DuelResult;
 import paticipant.Player;
 import paticipant.Players;
+import value.Count;
+import value.Score;
 
 public class PlayersTest {
 

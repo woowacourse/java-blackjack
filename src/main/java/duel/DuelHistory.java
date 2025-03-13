@@ -3,7 +3,7 @@ package duel;
 import java.util.HashMap;
 import java.util.Map;
 
-import card.Count;
+import value.Count;
 
 public class DuelHistory {
 	private final Map<DuelResult, Count> count;

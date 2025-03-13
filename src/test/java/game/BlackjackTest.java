@@ -12,15 +12,15 @@ import org.junit.jupiter.api.Test;
 
 import card.Card;
 import card.CardHand;
-import card.Count;
 import card.Deck;
 import card.Rank;
-import card.Score;
 import card.Suit;
 import paticipant.Dealer;
 import paticipant.Participant;
 import paticipant.Player;
 import paticipant.Players;
+import value.Count;
+import value.Score;
 
 public class BlackjackTest {
 	private static final Count ZERO = Count.from(0);

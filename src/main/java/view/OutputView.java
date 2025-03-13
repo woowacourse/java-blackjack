@@ -3,7 +3,7 @@ package view;
 import java.util.List;
 import java.util.Map;
 
-import card.Count;
+import value.Count;
 
 public class OutputView {
 	private static final String PLAYER_NAME_DELIMITER = ", ";
