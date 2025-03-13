@@ -94,6 +94,7 @@ public class BlackjackController {
         int playersTotalRevenue = players.getTotalRevenue();
         Map<Player, Integer> revenueMap = players.getRevenueMap();
 
+        OutputView.printCardResult(players, dealer);
         OutputView.printRevenue(playersTotalRevenue, revenueMap);
     }
 }

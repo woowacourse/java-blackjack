@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 public final class OutputView {
 
     private static final String DELIMITER = ", ";
+    private static final String LINE_SEPARATOR = System.lineSeparator();
 
     private OutputView() {
     }
@@ -38,7 +39,15 @@ public final class OutputView {
         System.out.println(player.getName() + "는 버스트되어 더 이상 카드를 뽑을 수 없습니다!");
     }
 
+    public static void printCardResult(Players players, Dealer dealer) {
+        System.out.println(LINE_SEPARATOR + Formatter.parseCardResult(dealer));
+        for (Player player : players.getPlayers()) {
+            System.out.println(Formatter.parseCardResult(player));
+        }
+    }
+
     public static void printRevenue(int playersTotalRevenue, Map<Player, Integer> revenueMap) {
+        System.out.println(LINE_SEPARATOR + "## 최종 수익");
         System.out.printf("딜러: %s%n", -playersTotalRevenue);
         System.out.println(Formatter.parsePlayerRevenue(revenueMap));
     }
