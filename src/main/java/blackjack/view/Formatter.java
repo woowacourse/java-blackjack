@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import static blackjack.common.Constants.LINE_SEPARATOR;
+
 import blackjack.common.Constants;
 import blackjack.domain.Card;
 import blackjack.domain.CardRank;
@@ -11,8 +13,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class Formatter {
-
-    private static final String LINE_SEPARATOR = System.lineSeparator();
 
     private Formatter() {
     }

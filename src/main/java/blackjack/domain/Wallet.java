@@ -5,8 +5,9 @@ import blackjack.common.ErrorMessage;
 public class Wallet {
 
     private static final int MAXIMUM_BETTING_MONEY = 100_000_000;
+    private static final double BLACKJACK_BONUS_RATE = 1.5;
 
-    private int currentBetMoney;
+    private final int currentBetMoney;
     private int balance;
 
     private Wallet(int currentBetMoney, int balance) {
@@ -14,18 +15,13 @@ public class Wallet {
         this.balance = balance;
     }
 
-    public static Wallet create() {
-        return new Wallet(0, 0);
-    }
-
-    public void betting(int money) {
+    public static Wallet bet(int money) {
         validBetMoney(money);
-        this.currentBetMoney = money;
-        this.balance = money;
+        return new Wallet(money, money);
     }
 
     public void receiveBlackjackBonus() {
-        this.balance += (int) (this.balance * 1.5);
+        this.balance += (int) (this.balance * BLACKJACK_BONUS_RATE);
     }
 
     public void calculate(GameResultType gameResultType) {
@@ -42,7 +38,7 @@ public class Wallet {
         return this.balance - this.currentBetMoney;
     }
 
-    private void validBetMoney(int betMoney) {
+    private static void validBetMoney(int betMoney) {
         if (betMoney > MAXIMUM_BETTING_MONEY) {
             throw new IllegalArgumentException(ErrorMessage.MAXIMUM_BETTING_MONEY.getMessage());
         }

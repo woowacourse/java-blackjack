@@ -29,10 +29,6 @@ public class PlayerHand {
         return hand.isBusted();
     }
 
-    public void betting(int money) {
-        wallet.betting(money);
-    }
-
     public void tryReceiveBlackjackBonus() {
         if (isBlackjack()) {
             wallet.receiveBlackjackBonus();

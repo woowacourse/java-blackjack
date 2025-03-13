@@ -24,7 +24,7 @@ class GameResultTypeTest {
     @ParameterizedTest
     @MethodSource("gameResultTypeArguments")
     void test2(Hand hand, Hand delerHand, GameResultType expect) {
-        PlayerHand playerHand = new PlayerHand(hand, Wallet.create());
+        PlayerHand playerHand = new PlayerHand(hand, Wallet.bet(10));
 
         Player player = new Player("꾹이", playerHand);
         Dealer dealer = new Dealer(delerHand);

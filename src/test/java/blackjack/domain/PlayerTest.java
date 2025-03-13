@@ -25,7 +25,7 @@ class PlayerTest {
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
 
         Hand hand = Hand.of(card1, card2);
-        Wallet wallet = Wallet.create();
+        Wallet wallet = Wallet.bet(1000);
 
         PlayerHand playerHand = new PlayerHand(hand, wallet);
 
@@ -42,7 +42,7 @@ class PlayerTest {
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
 
         Hand hand = Hand.of(card1, card2);
-        Wallet wallet = Wallet.create();
+        Wallet wallet = Wallet.bet(1000);
 
         PlayerHand playerHand = new PlayerHand(hand, wallet);
 
@@ -59,7 +59,7 @@ class PlayerTest {
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
 
         Hand hand = Hand.of(card1, card2);
-        Wallet wallet = Wallet.create();
+        Wallet wallet = Wallet.bet(1000);
 
         PlayerHand playerHand = new PlayerHand(hand, wallet);
 
@@ -78,14 +78,13 @@ class PlayerTest {
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
 
-
         Hand hand = Hand.of(card1, card2);
-        Wallet wallet = Wallet.create();
+        Wallet wallet = Wallet.bet(1000);
 
         PlayerHand playerHand = new PlayerHand(hand, wallet);
 
         Card newCard = new Card(CardSuit.SPADE, CardRank.KING);
-        Player player = new Player("꾹이",playerHand);
+        Player player = new Player("꾹이", playerHand);
 
         List<Card> expect = List.of(card1, card2, newCard);
 
@@ -108,12 +107,31 @@ class PlayerTest {
     @MethodSource("canTakeCardArgument")
     void test8(Hand hand, boolean expect) {
         //given
-        Wallet wallet = Wallet.create();
+        Wallet wallet = Wallet.bet(1000);
         PlayerHand playerHand = new PlayerHand(hand, wallet);
 
         Player player = new Player("꾹이", playerHand);
 
         // when & then
         assertThat(player.canTakeCard()).isEqualTo(expect);
+    }
+
+    @DisplayName("플레이어의 패가 블랙잭이라면 1.5배 더 받을 수 있다.")
+    @Test
+    void test10() {
+        // given
+        Hand blackjack = HandFixture.blackjack();
+        Wallet wallet = Wallet.bet(1000);
+
+        PlayerHand playerHand = new PlayerHand(blackjack, wallet);
+
+        Player player = new Player("꾹이", playerHand);
+
+        // when
+        player.tryReceiveBlackjackBonus();
+
+        // then
+        assertThat(player.getRevenue()).isEqualTo(1500);
+
     }
 }

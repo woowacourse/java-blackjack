@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import static blackjack.common.Constants.LINE_SEPARATOR;
+
 import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
@@ -9,7 +11,6 @@ import java.util.stream.Collectors;
 public final class OutputView {
 
     private static final String DELIMITER = ", ";
-    private static final String LINE_SEPARATOR = System.lineSeparator();
 
     private OutputView() {
     }

@@ -19,9 +19,8 @@ class WalletTest {
     @ParameterizedTest
     @ValueSource(ints = {1000, 50000, 1000000})
     void test1(int money) {
-        Wallet wallet = Wallet.create();
 
-        assertThatCode(() -> wallet.betting(money))
+        assertThatCode(() -> Wallet.bet(money))
                 .doesNotThrowAnyException();
     }
 
@@ -29,9 +28,8 @@ class WalletTest {
     @ParameterizedTest
     @ValueSource(ints = {1000000000, 100000001})
     void test5(int money) {
-        Wallet wallet = Wallet.create();
 
-        assertThatThrownBy(() -> wallet.betting(money))
+        assertThatThrownBy(() -> Wallet.bet(money))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.MAXIMUM_BETTING_MONEY.getMessage());
     }
@@ -40,9 +38,8 @@ class WalletTest {
     @ParameterizedTest
     @ValueSource(ints = {-1, 0})
     void test2(int money) {
-        Wallet wallet = Wallet.create();
 
-        assertThatThrownBy(() -> wallet.betting(money))
+        assertThatThrownBy(() -> Wallet.bet(money))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.BETTING_MONEY_IS_POSITIVE.getMessage());
     }
@@ -51,9 +48,7 @@ class WalletTest {
     @Test
     void test3() {
         // given
-        Wallet wallet = Wallet.create();
-        int money = 1000;
-        wallet.betting(money);
+        Wallet wallet = Wallet.bet(1000);
 
         // when
         wallet.receiveBlackjackBonus();
@@ -75,8 +70,7 @@ class WalletTest {
     @MethodSource("betArguments")
     void test4(int money, GameResultType gameResultType, int expect) {
         // given
-        Wallet wallet = Wallet.create();
-        wallet.betting(money);
+        Wallet wallet = Wallet.bet(money);
 
         // when
         wallet.calculate(gameResultType);

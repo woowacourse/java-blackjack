@@ -1,7 +1,10 @@
 package blackjack.view;
 
+import static blackjack.common.Constants.LINE_SEPARATOR;
+
 import blackjack.common.ErrorMessage;
 import blackjack.domain.Player;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -20,10 +23,15 @@ public final class InputView {
         return parseNames(rawNames);
     }
 
-    public static int readBettingMoney(String name) {
-        System.out.println(name + "의 배팅 금액은?");
+    public static List<Integer> readBettingMoneyList(List<String> names) {
+        List<Integer> moneyList = new ArrayList<>();
 
-        return parseMoney(scanner.nextLine());
+        for (String name : names) {
+            System.out.println(LINE_SEPARATOR + name + "의 배팅 금액은?");
+            moneyList.add(parseMoney(scanner.nextLine()));
+        }
+
+        return moneyList;
     }
 
     public static Confirmation askToGetMoreCard(Player player) {

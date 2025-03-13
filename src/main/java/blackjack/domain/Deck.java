@@ -8,6 +8,9 @@ import java.util.stream.IntStream;
 
 public class Deck {
 
+    private static final int STARTING_CARD_SIZE = 2;
+    private static final int ADDITIONAL_CARD_SIZE = 1;
+
     private final List<Card> cards;
 
     public Deck(List<Card> cards) {
@@ -18,7 +21,15 @@ public class Deck {
         return Collections.unmodifiableList(cards);
     }
 
-    public List<Card> takeCards(int size) {
+    public List<Card> takeStartCards() {
+        return takeCards(STARTING_CARD_SIZE);
+    }
+
+    public List<Card> takeOneCard() {
+        return takeCards(ADDITIONAL_CARD_SIZE);
+    }
+
+    private List<Card> takeCards(int size) {
         validateEmpty(size);
 
         return IntStream.range(0, size)

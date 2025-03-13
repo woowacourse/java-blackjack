@@ -45,7 +45,7 @@ class DeckTest {
     @DisplayName("카드뽑을 때")
     @Nested
     class DrawCard {
-        @DisplayName("원하는 개수만큼 카드를 뽑을 수 있다.")
+        @DisplayName("시작 카드는 2개를 뽑는다")
         @Test
         void test4() {
             // given
@@ -55,7 +55,7 @@ class DeckTest {
             int expect = 2;
 
             // when
-            List<Card> takeCards = deck.takeCards(expect);
+            List<Card> takeCards = deck.takeStartCards();
 
             // then
             assertThat(takeCards).hasSize(expect);
@@ -64,11 +64,9 @@ class DeckTest {
         @DisplayName("카드가 소진되면 예외를 던진다.")
         @Test
         void test5() {
-            SingDeckGenerator singDeckGenerator = new SingDeckGenerator();
-            List<Card> cards = singDeckGenerator.generate();
-            Deck deck = new Deck(cards);
+            Deck deck = new Deck(List.of());
 
-            assertThatThrownBy(() -> deck.takeCards(53))
+            assertThatThrownBy(deck::takeStartCards)
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ErrorMessage.EMPTY_DECK_SIZE.getMessage());
         }

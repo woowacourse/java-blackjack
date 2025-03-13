@@ -27,7 +27,7 @@ class BustedCheckerTest {
         // given
         Dealer dealer = new Dealer(dealerHand);
 
-        PlayerHand playerHand = new PlayerHand(hand, Wallet.create());
+        PlayerHand playerHand = new PlayerHand(hand, Wallet.bet(1000));
         Player player = new Player("꾹이", playerHand);
 
         // when & then

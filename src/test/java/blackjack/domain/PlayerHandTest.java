@@ -22,7 +22,7 @@ class PlayerHandTest {
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
 
         Hand hand = Hand.of(card1, card2);
-        Wallet wallet = Wallet.create();
+        Wallet wallet = Wallet.bet(1000);
 
         // when & then
         assertThatCode(() -> new PlayerHand(hand, wallet))
@@ -37,7 +37,7 @@ class PlayerHandTest {
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
 
         Hand hand = Hand.of(card1, card2);
-        Wallet wallet = Wallet.create();
+        Wallet wallet = Wallet.bet(1000);
 
         PlayerHand playerHand = new PlayerHand(hand, wallet);
 
@@ -55,7 +55,7 @@ class PlayerHandTest {
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
 
         Hand hand = Hand.of(card1, card2);
-        Wallet wallet = Wallet.create();
+        Wallet wallet = Wallet.bet(1000);
 
         PlayerHand playerHand = new PlayerHand(hand, wallet);
 
@@ -82,22 +82,11 @@ class PlayerHandTest {
     @MethodSource("canTakeCardArgument")
     void test8(Hand hand, boolean expect) {
         //given
-        Wallet wallet = Wallet.create();
+        Wallet wallet = Wallet.bet(1000);
         PlayerHand playerHand = new PlayerHand(hand, wallet);
 
         // when & then
         assertThat(playerHand.canTakeCard()).isEqualTo(expect);
-    }
-
-    @DisplayName("베팅을 한다.")
-    @Test
-    void test9() {
-        // given
-        Hand hand = new Hand();
-        PlayerHand playerHand = new PlayerHand(hand, Wallet.create());
-
-        assertThatCode(() -> playerHand.betting(1000))
-                .doesNotThrowAnyException();
     }
 
     @DisplayName("카드가 블랙잭이라면 1.5배 더 받는다.")
@@ -105,8 +94,7 @@ class PlayerHandTest {
     void test10() {
         // given
         Hand hand = HandFixture.blackjack();
-        PlayerHand playerHand = new PlayerHand(hand, Wallet.create());
-        playerHand.betting(1000);
+        PlayerHand playerHand = new PlayerHand(hand, Wallet.bet(1000));
 
         // when
         playerHand.tryReceiveBlackjackBonus();
@@ -128,10 +116,8 @@ class PlayerHandTest {
     @MethodSource("betArguments")
     void test11(int money, GameResultType gameResultType, int expect) {
         // given
-        Wallet wallet = Wallet.create();
+        Wallet wallet = Wallet.bet(money);
         new PlayerHand(new Hand(), wallet);
-
-        wallet.betting(money);
 
         // when
         wallet.calculate(gameResultType);
@@ -145,7 +131,7 @@ class PlayerHandTest {
     void test12() {
         // given
         Hand hand = HandFixture.blackjack();
-        PlayerHand playerHand = new PlayerHand(hand, Wallet.create());
+        PlayerHand playerHand = new PlayerHand(hand, Wallet.bet(1000));
 
         // when & then
         assertThat(playerHand.isBlackjack()).isTrue();

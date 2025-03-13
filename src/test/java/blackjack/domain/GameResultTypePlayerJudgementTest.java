@@ -29,7 +29,7 @@ public class GameResultTypePlayerJudgementTest {
     @ParameterizedTest
     @MethodSource("typeJudgeArgument")
     void test1(Hand playerHand, Hand delerHand, GameResultType expect) {
-        PlayerHand hand = new PlayerHand(playerHand, Wallet.create());
+        PlayerHand hand = new PlayerHand(playerHand, Wallet.bet(1000));
 
         Player player = new Player("꾹이", hand);
         Dealer dealer = new Dealer(delerHand);
