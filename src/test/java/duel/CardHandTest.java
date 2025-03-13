@@ -72,12 +72,13 @@ class CardHandTest {
 				new Card(Rank.TEN, Suit.DIAMOND)
 			);
 			final CardHand cardHand = new CardHand(cards);
+			final Count expected = new Count(4);
 
 			// when
 			final Count actual = cardHand.calculateCardCount();
 
 			// then
-			assertThat(actual.value()).isEqualTo(cards.size());
+			assertThat(actual).isEqualTo(expected);
 		}
 	}
 

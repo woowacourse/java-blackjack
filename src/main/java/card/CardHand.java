@@ -36,11 +36,11 @@ public class CardHand {
 			.count());
 	}
 
-	public List<Card> getCards() {
-		return Collections.unmodifiableList(cards);
+	public Count calculateCardCount() {
+		return Count.from(cards.size());
 	}
 
-	public Count calculateCardCount() {
-		return null;
+	public List<Card> getCards() {
+		return Collections.unmodifiableList(cards);
 	}
 }
