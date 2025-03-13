@@ -1,6 +1,10 @@
 package blackjack.domain.user;
 
 import static blackjack.fixture.CardFixture.make;
+import static blackjack.fixture.PlayerFixture.createBlackJackWithFinalHand;
+import static blackjack.fixture.PlayerFixture.createBlackJackWithInitialHand;
+import static blackjack.fixture.PlayerFixture.createBust;
+import static blackjack.fixture.PlayerFixture.createLessThanBlackjack;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
@@ -84,6 +88,23 @@ class PlayerTest {
                 Arguments.of(List.of(make(CardValue.ACE), make(CardValue.ACE), make(CardValue.ACE)), true),
                 Arguments.of(List.of(make(CardValue.ACE), make(CardValue.ACE), make(CardValue.QUEEN),
                         make(CardValue.KING)), false)
+        );
+    }
+
+    @ParameterizedTest
+    @DisplayName("초기 카드만으로 블랙잭을 만족하는지 여부를 확인할 수 있다.")
+    @MethodSource()
+    void canCheckBlackjackWithInitialCard(Player player, boolean isBlackjackWithInitialCards) {
+        assertThat(player.checkBlackjackWithInitialCard())
+                .isEqualTo(isBlackjackWithInitialCards);
+    }
+
+    static Stream<Arguments> canCheckBlackjackWithInitialCard() {
+        return Stream.of(
+                Arguments.of(createBlackJackWithInitialHand("플레이어"), true),
+                Arguments.of(createBlackJackWithFinalHand("플레이어"), false),
+                Arguments.of(createBust("플레이어"), false),
+                Arguments.of(createLessThanBlackjack("플레이어"), false)
         );
     }
 }

@@ -12,9 +12,9 @@ import java.util.List;
 
 public class BlackJackGame {
 
-    private GameUserStorage users;
-    private CardDeck cardDeck;
-    private GameInputOutput gameInputOutput;
+    private final GameUserStorage users;
+    private final CardDeck cardDeck;
+    private final GameInputOutput gameInputOutput;
 
     public BlackJackGame(
             GameUserStorage users,

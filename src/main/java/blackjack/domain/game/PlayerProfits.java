@@ -20,17 +20,16 @@ public class PlayerProfits {
     }
 
     private PlayerProfit makePlayerProfit(Dealer dealer, Player player) {
-        if (player.getPoint() == 21 && player.getHand().size() == 2) {
+        if (player.checkBlackjackWithInitialCard()) {
             return PlayerProfit.createWhenPlayerBlackjackWithInitialCard(player);
         }
-        if (GameRule.isBust(dealer.getPoint())) {
+        if (dealer.isBust()) {
             return PlayerProfit.createWhenDealerBust(player);
         }
-        if (GameRule.isBust(player.getPoint())) {
+        if (player.isBust()) {
             return PlayerProfit.createPlayerBust(player);
         }
-        WinningType winningType = WinningType.parse(player.getPoint(), dealer.getPoint());
-        return PlayerProfit.createByWinningType(player, winningType);
+        return PlayerProfit.createByWinningType(player, WinningType.parse(player.getPoint(), dealer.getPoint()));
     }
 
     public int calculateDealerProfit() {

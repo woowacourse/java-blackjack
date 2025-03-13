@@ -31,6 +31,12 @@ public class Player {
         return GameRule.checkPossibilityOfHit(gameUser.getPoint());
     }
 
+    public boolean checkBlackjackWithInitialCard() {
+        boolean isBlackjack = GameRule.checkBlackJack(gameUser.getPoint());
+        boolean isInitialHand = GameRule.checkInitialHand(gameUser.getHand().size());
+        return isBlackjack && isInitialHand;
+    }
+
     public List<Card> getHand() {
         return gameUser.getHand();
     }
@@ -45,6 +51,10 @@ public class Player {
 
     public int getBettingAmount() {
         return bettingAmount.getValue();
+    }
+
+    public boolean isBust() {
+        return gameUser.isBust();
     }
 
     private void validateHitPossibility() {

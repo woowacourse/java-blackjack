@@ -13,16 +13,24 @@ public enum GameRule {
         this.value = value;
     }
 
-    public static boolean checkPossibilityOfHit(int point) {
-        return point < GameRule.LIMIT_POINT_BEFORE_BUST.getValue();
-    }
-
     public static boolean isBust(int point) {
         return point > GameRule.LIMIT_POINT_BEFORE_BUST.getValue();
     }
 
+    public static boolean checkPossibilityOfHit(int point) {
+        return point < GameRule.LIMIT_POINT_BEFORE_BUST.getValue();
+    }
+
     public static boolean checkPossibilityOfDealerDrawing(int point) {
         return point <= DEALER_LIMIT_POINT.getValue();
+    }
+
+    public static boolean checkBlackJack(int point) {
+        return point == LIMIT_POINT_BEFORE_BUST.getValue();
+    }
+
+    public static boolean checkInitialHand(int cardCountInHand) {
+        return INITIAL_CARD_COUNT.getValue() == cardCountInHand;
     }
 
     public static int applyBustToPoint(int point) {
