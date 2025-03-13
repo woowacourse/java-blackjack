@@ -57,7 +57,8 @@ public class Cards {
     }
 
     public boolean isBlackJack() {
-        return cards.size() == 2 && calculateTotalCardNumber() == BLACKJACK_SCORE;
+        return cards.size() == GameMembers.INITIAL_DRAW_SIZE
+            && calculateTotalCardNumber() == BLACKJACK_SCORE;
     }
 
     @Override

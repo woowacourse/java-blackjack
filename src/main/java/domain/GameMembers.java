@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class GameMembers {
 
-    private static final int INITIAL_DRAW_SIZE = 2;
+    public static final int INITIAL_DRAW_SIZE = 2;
 
     private Players players;
     private Dealer dealer;
