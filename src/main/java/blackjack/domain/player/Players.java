@@ -1,7 +1,7 @@
 package blackjack.domain.player;
 
 import blackjack.domain.GameResult;
-import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 
 import java.util.HashSet;
 import java.util.List;
@@ -17,11 +17,11 @@ public class Players {
         this.gamblers = gamblers;
     }
 
-    public void dealAddCardForDealer(final List<Card> cards) {
+    public void dealAddCardForDealer(final Cards cards) {
         dealer.addCards(cards);
     }
 
-    public void addCardForGambler(final Gambler gambler, final List<Card> cards) {
+    public void addCardForGambler(final Gambler gambler, final Cards cards) {
         gambler.addCards(cards);
     }
 

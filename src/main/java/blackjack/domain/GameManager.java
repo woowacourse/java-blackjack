@@ -1,7 +1,7 @@
 package blackjack.domain;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.CardPack;
+import blackjack.domain.card.Cards;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
@@ -23,7 +23,7 @@ public class GameManager {
     }
 
     public void addCardForGambler(final Gambler gambler) {
-        List<Card> cards = cardPack.getDealByCount(1);
+        Cards cards = cardPack.getDealByCount(1);
         players.addCardForGambler(gambler, cards);
     }
 
@@ -33,7 +33,7 @@ public class GameManager {
 
     public boolean isDealerHitThenAddCard() {
         if (players.isDealerHit()) {
-            List<Card> cards = cardPack.getDealByCount(1);
+            Cards cards = cardPack.getDealByCount(1);
             players.dealAddCardForDealer(cards);
             return true;
         }
@@ -45,7 +45,7 @@ public class GameManager {
     }
 
     private Dealer initDealer() {
-        List<Card> cards = cardPack.getDealByCount(2);
+        Cards cards = cardPack.getDealByCount(2);
 
         Dealer dealer = new Dealer();
         dealer.addCards(cards);
@@ -54,7 +54,7 @@ public class GameManager {
 
     private void initGambler(final List<Gambler> gamblers) {
         for (Gambler player : gamblers) {
-            List<Card> cards = cardPack.getDealByCount(2);
+            Cards cards = cardPack.getDealByCount(2);
             player.addCards(cards);
         }
     }

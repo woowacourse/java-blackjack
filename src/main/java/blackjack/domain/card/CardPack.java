@@ -14,10 +14,10 @@ public class CardPack {
         blackjackShuffle.shuffle(cards);
     }
 
-    public List<Card> getDealByCount(final int count) {
-        return IntStream.range(0, count)
+    public Cards getDealByCount(final int count) {
+        return new Cards(IntStream.range(0, count)
                 .mapToObj(count1 -> cards.removeLast())
-                .toList();
+                .toList());
     }
 
     private List<Card> initCards() {

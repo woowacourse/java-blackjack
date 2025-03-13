@@ -25,7 +25,7 @@ public class OutputView {
     }
 
     public void printCardsToPlayer(final Player player) {
-        String cards = player.getHand().getCards().stream()
+        String cards = player.getHand().getCards().getCards().stream()
                 .map(this::formatCardMessage)
                 .collect(Collectors.joining(", "));
 
