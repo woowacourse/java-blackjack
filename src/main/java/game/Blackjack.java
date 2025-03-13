@@ -61,8 +61,9 @@ public class Blackjack {
 	}
 
 	private void duelDealerVsPlayer(final Player player) {
-		if (player.calculateAllScore().equals(dealer.calculateAllScore())
-			|| (player.isBust() && dealer.isBust())) {
+		final Score playerScore = player.calculateAllScore();
+		final Score dealerScore = dealer.calculateAllScore();
+		if (playerScore.equals(dealerScore) || (player.isBust() && dealer.isBust())) {
 			draw(player);
 			return;
 		}
@@ -70,8 +71,7 @@ public class Blackjack {
 			dealerWin(player);
 			return;
 		}
-		if (dealer.isBust()
-			|| player.calculateAllScore().isGreaterThan(dealer.calculateAllScore())) {
+		if (dealer.isBust() || playerScore.isGreaterThan(dealerScore)) {
 			playerWin(player);
 			return;
 		}
