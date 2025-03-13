@@ -20,7 +20,8 @@ public class OutputView {
 
         System.out.printf(NEW_LINE + "딜러와 %s에게 2장을 나누었습니다.", playerNames);
         printCardsToPlayers(players);
-        System.out.println();
+        println();
+        println();
     }
 
     public void printCardsToPlayer(final Player player) {
@@ -28,7 +29,7 @@ public class OutputView {
                 .map(this::formatCardMessage)
                 .collect(Collectors.joining(", "));
 
-        System.out.printf("%s카드: %s",
+        System.out.printf(NEW_LINE + "%s카드: %s",
                 player.getName(),
                 cards
         );
@@ -43,19 +44,14 @@ public class OutputView {
     }
 
     public void printResultCardsToPlayers(final Players players) {
-        println();
         printResultCardsToPlayer(players.getDealer());
-        println();
-        players.getGamblers().forEach(gambler -> {
-            printResultCardsToPlayer(gambler);
-            println();
-        });
+        players.getGamblers().forEach(this::printResultCardsToPlayer);
     }
 
     public void printGameResults(final GameResults gameResults) {
         Map<Player, Integer> gameResult = gameResults.getGameResults();
 
-        System.out.println(NEW_LINE + "## 최종 수익");
+        System.out.println(NEW_LINE + NEW_LINE + "## 최종 수익");
 
         gameResult.entrySet().forEach(this::printGamblerGameResult);
     }
@@ -65,12 +61,19 @@ public class OutputView {
     }
 
     private void printCardsToPlayers(final Players players) {
-        printCardsToPlayer(players.getDealer());
-        println();
-        players.getGamblers().forEach(gambler -> {
-            printCardsToPlayer(gambler);
-            println();
-        });
+        printInitCardsToPlayer(players.getDealer());
+        players.getGamblers().forEach(this::printInitCardsToPlayer);
+    }
+
+    private void printInitCardsToPlayer(final Player player) {
+        String cards = player.getOpenedCards().stream()
+                .map(this::formatCardMessage)
+                .collect(Collectors.joining(", "));
+
+        System.out.printf(NEW_LINE + "%s카드: %s",
+                player.getName(),
+                cards
+        );
     }
 
     private String formatCardMessage(Card card) {
