@@ -19,4 +19,8 @@ public class BettedMoney {
             throw new IllegalArgumentException("최대 10억 원까지 베팅 가능합니다.");
         }
     }
+
+    public int getMoney() {
+        return money;
+    }
 }

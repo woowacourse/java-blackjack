@@ -18,6 +18,10 @@ public class Participant extends Player {
         return name.getName();
     }
 
+    public int getBettedMoney() {
+        return bettedMoney.getMoney();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

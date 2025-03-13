@@ -48,7 +48,7 @@ public class MoneyDistributor {
     }
 
     public static int calculateDealerMoney(final Map<Participant, Integer> winningMoney) {
-        return 0 - winningMoney.values().stream()
+        return - winningMoney.values().stream()
                 .mapToInt(Integer::intValue)
                 .sum();
     }

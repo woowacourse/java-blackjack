@@ -1,9 +1,6 @@
 package blackjack.controller;
 
-import blackjack.model.game.BettedMoney;
-import blackjack.model.game.BlackJackGame;
-import blackjack.model.game.DeckInitializer;
-import blackjack.model.game.ParticipantResult;
+import blackjack.model.game.*;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
 import blackjack.model.player.Participants;
@@ -29,7 +26,7 @@ public class BlackJackController {
         blackJackGame.initializeGame();
         outputView.outputFirstCardDistributionResult(participants, dealer);
         progressTurns(blackJackGame, dealer, participants);
-        calculateFinalResults(dealer, participants);
+        calculateFinalWinningMoney(dealer, participants);
     }
 
     private Participants generateParticipants() {
@@ -71,9 +68,16 @@ public class BlackJackController {
         outputView.outputDealerCardFinish();
     }
 
-    private void calculateFinalResults(final Dealer dealer, final Participants participants) {
+    /*private void calculateFinalResults(final Dealer dealer, final Participants participants) {
         Map<Participant, ParticipantResult> participantResults = ParticipantResult.calculateParticipantResults(dealer, participants);
         Map<ParticipantResult, Integer> participantResultCounts = ParticipantResult.countResults(participantResults);
         outputView.outputFinalResult(participantResults, participantResultCounts);
+    }*/
+
+    private void calculateFinalWinningMoney(final Dealer dealer, final Participants participants) {
+        Map<Participant, ParticipantResult> participantResults = ParticipantResult.calculateParticipantResults(dealer, participants);
+        Map<Participant, Integer> winningMoney = MoneyDistributor.calculateWinningMoney(dealer, participantResults);
+        int dealerMoney = MoneyDistributor.calculateDealerMoney(winningMoney);
+        outputView.outputFinalWinningMoney(dealerMoney, winningMoney);
     }
 }
