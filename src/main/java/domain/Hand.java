@@ -33,16 +33,16 @@ public class Hand {
         originalAce.setValueToOne();
     }
 
+    private Predicate<Card> originalAcePredicate() {
+        return card -> card.isAce() && card.getValue() == ORIGINAL_ACE_VALUE;
+    }
+
     public void setAllCardValueToZero() {
         cards.forEach(Card::setValueToZero);
     }
 
     public boolean isBust() {
         return getTotal() > BUST_THRESHOLD;
-    }
-
-    private Predicate<Card> originalAcePredicate() {
-        return card -> card.isAce() && card.getValue() == ORIGINAL_ACE_VALUE;
     }
 
     public int getTotal() {
@@ -62,9 +62,8 @@ public class Hand {
     }
 
     public Card getFirstCard() {
-        return cards.getFirst();
+        return new Card(cards.getFirst());
     }
-
 
     public boolean isBlackJack() {
         return getSize() == INITIAL_SIZE && getTotal() == BUST_THRESHOLD;
