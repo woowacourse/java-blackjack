@@ -24,6 +24,7 @@ public class BlackjackManager {
         processDistributionTwoCardsToParticipants(dealer, players, deck);
         processPlayersTurn(players, deck);
         processDealerTurn(dealer, deck);
+        processUpdateMoney(dealer, players);
         processParticipantResults(dealer, players);
     }
 
@@ -52,10 +53,16 @@ public class BlackjackManager {
         }
     }
 
+    private void processUpdateMoney(Dealer dealer, Players players) {
+        for (Player player : players.getPlayers()) {
+            blackjackGame.updatePlayerMoney(dealer, player);
+        }
+    }
+
     private void processParticipantResults(Dealer dealer, Players players) {
         outputView.printAllCardAndScore(players, dealer);
-        Map<Player, GameResult> playersGameResults = blackjackGame.calculatePlayersGameResults(dealer, players);
-        Map<GameResult, Integer> dealerGameResults = blackjackGame.calculateDealerGameResults(playersGameResults);
+        Map<Player, Double> playersGameResults = blackjackGame.calculatePlayersGameResults(players);
+        double dealerGameResults = blackjackGame.calculateDealerGameResults(players);
         outputView.printResult(dealerGameResults, playersGameResults);
     }
 }
