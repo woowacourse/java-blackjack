@@ -36,6 +36,11 @@ public class Player implements Participant {
     }
 
     @Override
+    public boolean isBusted() {
+        return playerHand.isBusted();
+    }
+
+    @Override
     public boolean canTakeCard() {
         return playerHand.canTakeCard();
     }
@@ -43,11 +48,6 @@ public class Player implements Participant {
     @Override
     public boolean isBlackjack() {
         return playerHand.isBlackjack();
-    }
-
-    @Override
-    public boolean isBusted() {
-        return playerHand.isBusted();
     }
 
     public void tryReceiveBlackjackBonus() {

@@ -21,10 +21,6 @@ public class PlayerHand {
         return hand.canTakeCardWithin(Constants.BUSTED_STANDARD_VALUE);
     }
 
-    public boolean isBlackjack() {
-        return hand.isBlackJack();
-    }
-
     public boolean isBusted() {
         return hand.isBusted();
     }
@@ -33,6 +29,10 @@ public class PlayerHand {
         if (isBlackjack()) {
             wallet.receiveBlackjackBonus();
         }
+    }
+
+    public boolean isBlackjack() {
+        return hand.isBlackJack();
     }
 
     public void adjustBalance(GameResultType gameResultType) {

@@ -12,12 +12,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 class GameResultTypeTest {
 
     public static Stream<Arguments> gameResultTypeArguments() {
-        return Stream.of(
-                Arguments.of(HandFixture.blackjack(), HandFixture.normal(), GameResultType.WIN),
+        return Stream.of(Arguments.of(HandFixture.blackjack(), HandFixture.normal(), GameResultType.WIN),
                 Arguments.of(HandFixture.normal(), HandFixture.blackjack(), GameResultType.LOSE),
                 Arguments.of(HandFixture.blackjack(), HandFixture.blackjack(), GameResultType.TIE),
-                Arguments.of(HandFixture.blackjack(), HandFixture.createHandWithOptimisticValue21(), GameResultType.WIN)
-        );
+                Arguments.of(HandFixture.blackjack(), HandFixture.createHandWithOptimisticValue21(),
+                        GameResultType.WIN));
     }
 
     @DisplayName("딜러와 플레이어의 카드에 따라 승패가 반환된다.")

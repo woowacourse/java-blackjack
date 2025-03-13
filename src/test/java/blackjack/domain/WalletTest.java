@@ -20,8 +20,7 @@ class WalletTest {
     @ValueSource(ints = {1000, 50000, 1000000})
     void test1(int money) {
 
-        assertThatCode(() -> Wallet.bet(money))
-                .doesNotThrowAnyException();
+        assertThatCode(() -> Wallet.bet(money)).doesNotThrowAnyException();
     }
 
     @DisplayName("베팅 금액은 1억을 넘을 수 없다.")
@@ -29,8 +28,7 @@ class WalletTest {
     @ValueSource(ints = {1000000000, 100000001})
     void test5(int money) {
 
-        assertThatThrownBy(() -> Wallet.bet(money))
-                .isInstanceOf(IllegalArgumentException.class)
+        assertThatThrownBy(() -> Wallet.bet(money)).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.MAXIMUM_BETTING_MONEY.getMessage());
     }
 
@@ -39,8 +37,7 @@ class WalletTest {
     @ValueSource(ints = {-1, 0})
     void test2(int money) {
 
-        assertThatThrownBy(() -> Wallet.bet(money))
-                .isInstanceOf(IllegalArgumentException.class)
+        assertThatThrownBy(() -> Wallet.bet(money)).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.BETTING_MONEY_IS_POSITIVE.getMessage());
     }
 
@@ -58,11 +55,9 @@ class WalletTest {
     }
 
     public static Stream<Arguments> betArguments() {
-        return Stream.of(
-                Arguments.of(1000, GameResultType.WIN, 1000),
+        return Stream.of(Arguments.of(1000, GameResultType.WIN, 1000),
                 Arguments.of(1000, GameResultType.LOSE, -1000),
-                Arguments.of(1000, GameResultType.TIE, 0)
-        );
+                Arguments.of(1000, GameResultType.TIE, 0));
     }
 
     @DisplayName("초기 금액과 베팅 후 금액에 대한 수익을 반환한다.")

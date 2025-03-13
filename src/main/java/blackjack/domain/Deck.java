@@ -17,16 +17,19 @@ public class Deck {
         this.cards = new ArrayList<>(shuffled(cards));
     }
 
+    private List<Card> shuffled(List<Card> cards) {
+        ArrayList<Card> copiedCards = new ArrayList<>(cards);
+        Collections.shuffle(copiedCards);
+
+        return copiedCards;
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
 
     public List<Card> takeStartCards() {
         return takeCards(STARTING_CARD_SIZE);
-    }
-
-    public List<Card> takeOneCard() {
-        return takeCards(ADDITIONAL_CARD_SIZE);
     }
 
     private List<Card> takeCards(int size) {
@@ -37,16 +40,13 @@ public class Deck {
                 .toList();
     }
 
-    private List<Card> shuffled(List<Card> cards) {
-        ArrayList<Card> copiedCards = new ArrayList<>(cards);
-        Collections.shuffle(copiedCards);
-
-        return copiedCards;
-    }
-
     private void validateEmpty(int size) {
         if (cards.size() < size) {
             throw new IllegalArgumentException(ErrorMessage.EMPTY_DECK_SIZE.getMessage());
         }
+    }
+
+    public List<Card> takeOneCard() {
+        return takeCards(ADDITIONAL_CARD_SIZE);
     }
 }

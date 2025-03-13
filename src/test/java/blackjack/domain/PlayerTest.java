@@ -30,8 +30,7 @@ class PlayerTest {
         PlayerHand playerHand = new PlayerHand(hand, wallet);
 
         // when & then
-        assertThatCode(() -> new Player("히로", playerHand))
-                .doesNotThrowAnyException();
+        assertThatCode(() -> new Player("히로", playerHand)).doesNotThrowAnyException();
     }
 
     @DisplayName("플레이어의 이름은 공백일 수 없다.")
@@ -46,8 +45,7 @@ class PlayerTest {
 
         PlayerHand playerHand = new PlayerHand(hand, wallet);
 
-        assertThatThrownBy(() -> new Player(name, playerHand))
-                .isInstanceOf(IllegalArgumentException.class)
+        assertThatThrownBy(() -> new Player(name, playerHand)).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.USE_VALID_NAME.getMessage());
     }
 
@@ -96,10 +94,8 @@ class PlayerTest {
     }
 
     private static Stream<Arguments> canTakeCardArgument() {
-        return Stream.of(
-                Arguments.arguments(HandFixture.createHandWithOptimisticValue15(), true),
-                Arguments.arguments(HandFixture.busted(), false)
-        );
+        return Stream.of(Arguments.arguments(HandFixture.createHandWithOptimisticValue15(), true),
+                Arguments.arguments(HandFixture.busted(), false));
     }
 
     @DisplayName("플레이어의 카드가 21을 넘지 않는다면 카드를 받을 수 있다.")

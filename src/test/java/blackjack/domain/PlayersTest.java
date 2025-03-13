@@ -16,8 +16,7 @@ class PlayersTest {
         // given
         List<String> names = List.of("꾹이", "히로");
         List<Player> playersToBeSaved = names.stream()
-                .map(name -> new Player(name, new PlayerHand(new Hand(), Wallet.bet(1000))))
-                .toList();
+                .map(name -> new Player(name, new PlayerHand(new Hand(), Wallet.bet(1000)))).toList();
 
         // when
         Players players = Players.from(playersToBeSaved);
@@ -33,12 +32,10 @@ class PlayersTest {
         // given
         List<String> names = List.of("듀이", "몽이", "히로", "꾹이", "히포", "비타", "라젤", "서프");
         List<Player> playersToBeSaved = names.stream()
-                .map(name -> new Player(name, new PlayerHand(new Hand(), Wallet.bet(1000))))
-                .toList();
+                .map(name -> new Player(name, new PlayerHand(new Hand(), Wallet.bet(1000)))).toList();
 
         // when & then
-        assertThatThrownBy(() -> Players.from(playersToBeSaved))
-                .isInstanceOf(IllegalArgumentException.class)
+        assertThatThrownBy(() -> Players.from(playersToBeSaved)).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.EXCEED_PLAYER_MEMBERS.getMessage());
     }
 }

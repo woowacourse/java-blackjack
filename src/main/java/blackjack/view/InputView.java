@@ -23,6 +23,14 @@ public final class InputView {
         return parseNames(rawNames);
     }
 
+    private static List<String> parseNames(String rawNames) {
+        if (rawNames == null || rawNames.isBlank()) {
+            throw new IllegalArgumentException(ErrorMessage.NEED_PLAYER_MEMBERS.getMessage());
+        }
+
+        return Arrays.stream(rawNames.split(",")).toList();
+    }
+
     public static List<Integer> readBettingMoneyList(List<String> names) {
         List<Integer> moneyList = new ArrayList<>();
 
@@ -34,25 +42,17 @@ public final class InputView {
         return moneyList;
     }
 
-    public static Confirmation askToGetMoreCard(Player player) {
-        System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-
-        return Confirmation.find(scanner.nextLine());
-    }
-
-    private static List<String> parseNames(String rawNames) {
-        if (rawNames == null || rawNames.isBlank()) {
-            throw new IllegalArgumentException(ErrorMessage.NEED_PLAYER_MEMBERS.getMessage());
-        }
-
-        return Arrays.stream(rawNames.split(",")).toList();
-    }
-
     private static int parseMoney(String input) {
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("숫자로 입력해야 합니다.");
         }
+    }
+
+    public static Confirmation askToGetMoreCard(Player player) {
+        System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+
+        return Confirmation.find(scanner.nextLine());
     }
 }

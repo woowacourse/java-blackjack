@@ -22,11 +22,8 @@ class DeckTest {
         List<Card> cards = singDeckGenerator.generate();
 
         // when & then
-        assertAll(
-                () -> assertThat(cards).hasSize(52),
-                () -> assertThatCode(() -> new Deck(cards))
-                        .doesNotThrowAnyException()
-        );
+        assertAll(() -> assertThat(cards).hasSize(52),
+                () -> assertThatCode(() -> new Deck(cards)).doesNotThrowAnyException());
     }
 
     @DisplayName("카드는 섞일 수 있다.")
@@ -38,8 +35,7 @@ class DeckTest {
         Deck deck = new Deck(cards);
 
         // then
-        assertThat(deck.getCards())
-                .containsExactlyInAnyOrderElementsOf(cards);
+        assertThat(deck.getCards()).containsExactlyInAnyOrderElementsOf(cards);
     }
 
     @DisplayName("카드뽑을 때")
@@ -66,8 +62,7 @@ class DeckTest {
         void test5() {
             Deck deck = new Deck(List.of());
 
-            assertThatThrownBy(deck::takeStartCards)
-                    .isInstanceOf(IllegalArgumentException.class)
+            assertThatThrownBy(deck::takeStartCards).isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ErrorMessage.EMPTY_DECK_SIZE.getMessage());
         }
     }

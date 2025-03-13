@@ -20,6 +20,16 @@ public class Wallet {
         return new Wallet(money, money);
     }
 
+    private static void validBetMoney(int betMoney) {
+        if (betMoney > MAXIMUM_BETTING_MONEY) {
+            throw new IllegalArgumentException(ErrorMessage.MAXIMUM_BETTING_MONEY.getMessage());
+        }
+
+        if (betMoney <= 0) {
+            throw new IllegalArgumentException(ErrorMessage.BETTING_MONEY_IS_POSITIVE.getMessage());
+        }
+    }
+
     public void receiveBlackjackBonus() {
         this.balance += (int) (this.balance * BLACKJACK_BONUS_RATE);
     }
@@ -36,15 +46,5 @@ public class Wallet {
 
     public int getRevenue() {
         return this.balance - this.currentBetMoney;
-    }
-
-    private static void validBetMoney(int betMoney) {
-        if (betMoney > MAXIMUM_BETTING_MONEY) {
-            throw new IllegalArgumentException(ErrorMessage.MAXIMUM_BETTING_MONEY.getMessage());
-        }
-
-        if (betMoney <= 0) {
-            throw new IllegalArgumentException(ErrorMessage.BETTING_MONEY_IS_POSITIVE.getMessage());
-        }
     }
 }

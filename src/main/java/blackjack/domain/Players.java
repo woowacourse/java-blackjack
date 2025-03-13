@@ -17,6 +17,16 @@ public class Players {
         this.players = players;
     }
 
+    private void validate(List<Player> players) {
+        if (players.isEmpty()) {
+            throw new IllegalArgumentException(ErrorMessage.NEED_PLAYER_MEMBERS.getMessage());
+        }
+
+        if (players.size() > PLAYERS_VALID_SIZE) {
+            throw new IllegalArgumentException(ErrorMessage.EXCEED_PLAYER_MEMBERS.getMessage());
+        }
+    }
+
     public static Players from(List<Player> players) {
         return new Players(players);
     }
@@ -35,29 +45,19 @@ public class Players {
         }
     }
 
-    public Map<Player, Integer> getRevenueMap() {
-        return players.stream()
-                .collect(Collectors.toMap(Function.identity(), Player::getRevenue));
-    }
-
     public int getTotalRevenue() {
         return getRevenueMap().values()
                 .stream()
                 .mapToInt(Integer::intValue).sum();
     }
 
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
+    public Map<Player, Integer> getRevenueMap() {
+        return players.stream()
+                .collect(Collectors.toMap(Function.identity(), Player::getRevenue));
     }
 
-    private void validate(List<Player> players) {
-        if (players.isEmpty()) {
-            throw new IllegalArgumentException(ErrorMessage.NEED_PLAYER_MEMBERS.getMessage());
-        }
-
-        if (players.size() > PLAYERS_VALID_SIZE) {
-            throw new IllegalArgumentException(ErrorMessage.EXCEED_PLAYER_MEMBERS.getMessage());
-        }
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 
 }

@@ -18,17 +18,17 @@ public class Card {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(cardSuit, cardRank);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
         Card card = (Card) o;
         return cardSuit == card.cardSuit && cardRank == card.cardRank;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(cardSuit, cardRank);
     }
 
     public CardSuit getCardSuit() {

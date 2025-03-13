@@ -14,6 +14,11 @@ public class Dealer implements Participant {
     }
 
     @Override
+    public List<Card> getAllCards() {
+        return hand.getAllCards();
+    }
+
+    @Override
     public void takeCard(Card newCard) {
         hand.takeCard(newCard);
     }
@@ -24,18 +29,11 @@ public class Dealer implements Participant {
     }
 
     @Override
-    public List<Card> getAllCards() {
-        return hand.getAllCards();
-    }
-
-    public Card revealFirstCard() {
-        return hand.getCard(FIRST_CARD_POSITION);
-    }
-
     public boolean isBusted() {
         return hand.isBusted();
     }
 
+    @Override
     public boolean canTakeCard() {
         return hand.canTakeCardWithin(DEALER_MUST_TAKE_UNDER);
     }
@@ -43,5 +41,9 @@ public class Dealer implements Participant {
     @Override
     public boolean isBlackjack() {
         return hand.isBlackJack();
+    }
+
+    public Card revealFirstCard() {
+        return hand.getCard(FIRST_CARD_POSITION);
     }
 }

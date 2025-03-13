@@ -23,21 +23,8 @@ public final class Formatter {
         return message + parseCardResultValue(player);
     }
 
-    public static String parseCardResult(Dealer dealer) {
-
-        return parseCardStatus(dealer) + " - 결과: " + parseCardResultValue(dealer);
-    }
-
     public static String parseCardStatus(Player player) {
         return player.getName() + "카드: " + parseStartingCardStatus(player);
-    }
-
-    public static String parseStartCardStatus(Dealer dealer) {
-        return "딜러카드: " + parseCardName(dealer.revealFirstCard());
-    }
-
-    private static String parseCardStatus(Dealer dealer) {
-        return "딜러카드: " + parseStartingCardStatus(dealer);
     }
 
     private static String parseCardResultValue(Participant participant) {
@@ -56,6 +43,26 @@ public final class Formatter {
                 .collect(Collectors.joining(", "));
     }
 
+    private static String parseCardName(Card card) {
+        CardRank cardRank = card.getCardRank();
+        CardSuit cardSuit = card.getCardSuit();
+
+        return CardRankTranslator.getDescription(cardRank) + CardSuitTranslator.getDescription(cardSuit);
+    }
+
+    public static String parseCardResult(Dealer dealer) {
+
+        return parseCardStatus(dealer) + " - 결과: " + parseCardResultValue(dealer);
+    }
+
+    private static String parseCardStatus(Dealer dealer) {
+        return "딜러카드: " + parseStartingCardStatus(dealer);
+    }
+
+    public static String parseStartCardStatus(Dealer dealer) {
+        return "딜러카드: " + parseCardName(dealer.revealFirstCard());
+    }
+
     public static String parsePlayerRevenue(Map<Player, Integer> revenueMap) {
         return revenueMap.entrySet().stream().map(
                 entry -> {
@@ -65,12 +72,5 @@ public final class Formatter {
                     return name + ": " + revenue;
                 }
         ).collect(Collectors.joining(LINE_SEPARATOR));
-    }
-
-    private static String parseCardName(Card card) {
-        CardRank cardRank = card.getCardRank();
-        CardSuit cardSuit = card.getCardSuit();
-
-        return CardRankTranslator.getDescription(cardRank) + CardSuitTranslator.getDescription(cardSuit);
     }
 }

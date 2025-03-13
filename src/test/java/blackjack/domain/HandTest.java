@@ -18,8 +18,7 @@ class HandTest {
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
 
         // when & then
-        assertThatCode(() -> Hand.of(card1, card2))
-                .doesNotThrowAnyException();
+        assertThatCode(() -> Hand.of(card1, card2)).doesNotThrowAnyException();
     }
 
     @DisplayName("카드를 추가한다")
@@ -58,8 +57,7 @@ class HandTest {
     @Test
     void test6() {
         // give & when & then
-        assertThatThrownBy(() -> Hand.of(null, null))
-                .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Hand.of(null, null)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("원하는 인덱스의 Card를 가져온다.")
@@ -81,8 +79,7 @@ class HandTest {
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
         Hand hand = Hand.of(card1, card2);
 
-        assertThatThrownBy(() -> hand.getCard(2))
-                .isInstanceOf(IllegalArgumentException.class)
+        assertThatThrownBy(() -> hand.getCard(2)).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.INVALID_CARD_INDEX.getMessage());
     }
 

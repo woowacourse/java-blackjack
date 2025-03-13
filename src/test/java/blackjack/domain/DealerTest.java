@@ -23,8 +23,7 @@ class DealerTest {
         Hand hand = Hand.of(card1, card2);
 
         // when & then
-        assertThatCode(() -> new Dealer(hand))
-                .doesNotThrowAnyException();
+        assertThatCode(() -> new Dealer(hand)).doesNotThrowAnyException();
     }
 
     @DisplayName("딜러의 모든 카드를 가져온다.")
@@ -111,10 +110,8 @@ class DealerTest {
     }
 
     private static Stream<Arguments> canTakeCardArgument() {
-        return Stream.of(
-                Arguments.arguments(HandFixture.createHandWithOptimisticValue15(), true),
-                Arguments.arguments(HandFixture.createHandWithOptimisticValue20(), false)
-        );
+        return Stream.of(Arguments.arguments(HandFixture.createHandWithOptimisticValue15(), true),
+                Arguments.arguments(HandFixture.createHandWithOptimisticValue20(), false));
     }
 
     @DisplayName("딜러의 카드가 16을 넘으면 카드를 받을 수 없다.")
