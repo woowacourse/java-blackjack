@@ -43,10 +43,11 @@ public final class BlackjackService {
                 bustNotifier.run();
                 break;
             }
-            if (addCardDecision.apply(playerHand.getPlayerName())) {
-                playerHand.addCard(cardDrawer.draw());
-                playerHandNotifier.accept(playerHand);
+            if (!addCardDecision.apply(playerHand.getPlayerName())) {
+                break;
             }
+            playerHand.addCard(cardDrawer.draw());
+            playerHandNotifier.accept(playerHand);
         }
     }
     
