@@ -43,6 +43,10 @@ public class Hand {
         return sum;
     }
 
+    public int countCards() {
+        return cards.size();
+    }
+
     private static int addAceDiff(int sum) {
         if (sum <= THRESHOLD_WITH_SMALL_ACE) {
             sum += ACE_DIFF;

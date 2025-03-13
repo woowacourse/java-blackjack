@@ -6,11 +6,14 @@ import blackjack.gamer.Player;
 import blackjack.gamer.Players;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Blackjack {
 
     private static final int BLACKJACK_SCORE = 21;
+    private static final int BLACKJACK_CARD_COUNT = 2;
 
     private final Dealer dealer;
     private final Players players;
@@ -58,12 +61,12 @@ public class Blackjack {
     }
 
     public boolean isPush() {
-        final int dealerSum = dealer.sumCards();
-        if (dealerSum != BLACKJACK_SCORE) {
+
+        if (!dealer.isBlackjack(BLACKJACK_SCORE, BLACKJACK_CARD_COUNT)) {
             return false;
         }
         return players.getPlayers().stream()
-                .anyMatch(player -> player.sumCards() == BLACKJACK_SCORE);
+                .anyMatch(player -> player.isBlackjack(BLACKJACK_SCORE, BLACKJACK_CARD_COUNT));
     }
 
     public void hitOrStand(final InputView inputView, final ResultView resultView) {
@@ -93,6 +96,24 @@ public class Blackjack {
         }
     }
 
+    public Map<Player, WinningStatus> calculateWinningResult() {
+        Map<Player, WinningStatus> winningStatus = initWinningStatus();
+        if (isPush()) {
+            for (Player player : players.getPlayers()) {
+                winningStatus.replace(player, WinningStatus.LOSE);
+                if (player.isBlackjack(BLACKJACK_SCORE, BLACKJACK_CARD_COUNT)) {
+                    winningStatus.replace(player, WinningStatus.PUSH);
+                }
+            }
+            return winningStatus;
+        }
+        for (Player player : players.getPlayers()) {
+            final WinningStatus playerWinningStatus = calculateWinningStatus(player, dealer);
+            winningStatus.replace(player, playerWinningStatus);
+        }
+        return winningStatus;
+    }
+
     private void receiveBettingMoney(final InputView inputView, final Player player) {
         try {
             player.bet(inputView.readBettingMoney(player));
@@ -111,5 +132,34 @@ public class Blackjack {
             inputView.printErrorMessage(e);
         }
         return readHitOrStand(inputView, player);
+    }
+
+    private Map<Player, WinningStatus> initWinningStatus() {
+        Map<Player, WinningStatus> winningStatus = new HashMap<>();
+        for (Player player : players.getPlayers()) {
+            winningStatus.put(player, WinningStatus.UNDEFINED);
+        }
+        return winningStatus;
+    }
+
+    private WinningStatus calculateWinningStatus(final Player player, final Dealer dealer) {
+        if (player.isBlackjack(BLACKJACK_SCORE, BLACKJACK_CARD_COUNT)) {
+            return WinningStatus.BLACKJACK;
+        }
+        final int dealerSum = dealer.sumCards();
+        final int playerSum = player.sumCards();
+        if (playerSum > BLACKJACK_SCORE) {
+            return WinningStatus.LOSE;
+        }
+        if (dealerSum > BLACKJACK_SCORE) {
+            return WinningStatus.WIN;
+        }
+        if (playerSum > dealerSum) {
+            return WinningStatus.WIN;
+        }
+        if (playerSum == dealerSum) {
+            return WinningStatus.DRAW;
+        }
+        return WinningStatus.LOSE;
     }
 }

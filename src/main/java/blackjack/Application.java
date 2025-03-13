@@ -2,9 +2,11 @@ package blackjack;
 
 import blackjack.cardMachine.CardRandomMachine;
 import blackjack.gamer.Dealer;
+import blackjack.gamer.Player;
 import blackjack.gamer.Players;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
+import java.util.Map;
 
 public class Application {
     public static void main(String[] args) {
@@ -21,5 +23,6 @@ public class Application {
             blackjack.hitOrStand(inputView, resultView);
         }
         blackjack.showSum(resultView);
+        Map<Player, WinningStatus> winningStatus = blackjack.calculateWinningResult();
     }
 }

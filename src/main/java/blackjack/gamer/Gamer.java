@@ -35,6 +35,10 @@ public abstract class Gamer {
         return sumCards() > threshold;
     }
 
+    public boolean isBlackjack(final int blackjackNumber, final int blackjackCardCount) {
+        return hand.sumCards() == blackjackNumber && hand.countCards() == blackjackCardCount;
+    }
+
     public abstract List<Card> showInitialCards();
 
     public abstract String getNickName();
