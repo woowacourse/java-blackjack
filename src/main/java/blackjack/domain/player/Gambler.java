@@ -12,6 +12,6 @@ public class Gambler extends Player {
 
     @Override
     public List<Card> getOpenedCards() {
-        return this.getHand().getCards();
+        return this.getHand().getCards().getCards();
     }
 }

@@ -16,8 +16,6 @@ public enum CardNumber {
     QUEEN(10),
     KING(10);
 
-    public static final int ACE_ELEVEN_VALUE = 10;
-
     private final int value;
 
     CardNumber(final int value) {
