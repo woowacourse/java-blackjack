@@ -1,7 +1,6 @@
 package blackjack.manager;
 
 import blackjack.domain.Participants;
-import blackjack.domain.Players;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -20,26 +19,16 @@ class BlackJackInitManagerTest {
     }
 
     @Test
-    void 이름들을_입력받아서_저장한다() {
+    void 이름들을_입력받아서_참가자를_저장한다() {
         // given
         List<String> names = List.of("꾹이", "히로", "비타");
         BlackJackInitManager blackJackInitManager = new BlackJackInitManager(new CardsGenerator());
 
         // when
-        Players players = blackJackInitManager.savePlayers(names);
+        Participants participants = blackJackInitManager.saveParticipants(names);
 
         // then
-        assertThat(players.getPlayers()).hasSize(3);
-    }
-
-    @Test
-    void 딜러를_반환한다() {
-        // given
-        BlackJackInitManager blackJackInitManager = new BlackJackInitManager(new CardsGenerator());
-
-        // when & then
-        assertThatCode(blackJackInitManager::saveDealer)
-                .doesNotThrowAnyException();
+        assertThat(participants.getParticipants()).hasSize(names.size() + 1);
     }
 
     @Test
