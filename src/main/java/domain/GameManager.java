@@ -4,6 +4,7 @@ import domain.card.Deck;
 import domain.gamer.Dealer;
 import domain.gamer.PlayerGroup;
 import java.util.List;
+import java.util.Map;
 
 public class GameManager {
 
@@ -41,4 +42,7 @@ public class GameManager {
         return count;
     }
 
+    public Map<String, Integer> calculatePlayerBattingAmountOfReturn(final Map<String, GameResult> playersGameResult) {
+        return null;
+    }
 }
