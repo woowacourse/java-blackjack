@@ -16,6 +16,9 @@ public enum RevenuePolicy {
     }
 
     public static RevenuePolicy from(GameResult gameResult, final boolean isPlayerBlackjack) {
+        if (gameResult == GameResult.WIN && !isPlayerBlackjack) {
+            return NORMAL_WIN;
+        }
         return null;
     }
 
