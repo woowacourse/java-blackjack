@@ -32,8 +32,8 @@ public class BlackJackGame {
         distributeInitialCard();
         processPlayerTurns();
         processDealerTurns();
-        outputGameResult();
-        OutputFinalProfit();
+        outputFinalProfit();
+        outputProfit();
     }
 
     private void registerPlayer(List<Nickname> nicknames) {
@@ -92,17 +92,15 @@ public class BlackJackGame {
         gameInputOutput.printDealerDrawing(drawingCount);
     }
 
-    private void outputGameResult() {
+    private void outputFinalProfit() {
         gameInputOutput.printFinalHands(users.getDealer(), users.getPlayers());
-        GameResult gameResult = new GameResult(users.getDealer(), users.getPlayers());
-        gameInputOutput.printGameResult(gameResult);
     }
 
-    private void OutputFinalProfit() {
+    private void outputProfit() {
         Dealer dealer = users.getDealer();
         List<Player> players = users.getPlayers();
         PlayerProfits playerProfits = new PlayerProfits(dealer, players);
-        // 출력
+        gameInputOutput.printPlayerProfits(playerProfits);
     }
 }
 

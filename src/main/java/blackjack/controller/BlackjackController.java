@@ -44,6 +44,6 @@ public class BlackjackController {
                 outputView::printHitResult,
                 outputView::printDealerDrawing,
                 outputView::printFinalHands,
-                outputView::printGameResult);
+                outputView::printProfit);
     }
 }

@@ -1,10 +1,5 @@
 package blackjack.domain.game;
 
-import static blackjack.fixture.PlayerFixture.DEFAULT_BETTING_AMOUNT;
-import static blackjack.fixture.PlayerFixture.createBlackJackWithFinalHand;
-import static blackjack.fixture.PlayerFixture.createBlackJackWithInitialHand;
-import static blackjack.fixture.PlayerFixture.createBust;
-import static blackjack.fixture.PlayerFixture.createLessThanBlackjack;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.user.Dealer;
@@ -25,7 +20,7 @@ class PlayerProfitsTest {
     @DisplayName("플레이어가 초기카드로 블랙잭을 만들 경우 이익을 구할 수 있다.")
     void canCreateWhenPlayerBlackjackWithInitialCard() {
         Dealer dealer = DealerFixture.createBust();
-        Player player = createBlackJackWithInitialHand("플레이어");
+        Player player = PlayerFixture.createBlackJackWithInitialHand("플레이어");
 
         PlayerProfits playerProfits = new PlayerProfits(dealer, List.of(player));
 
@@ -49,14 +44,14 @@ class PlayerProfitsTest {
 
     static Stream<Arguments> canCreateWhenDealerBust() {
         return Stream.of(
-                Arguments.of(createBust("플레이어1"),
-                        DEFAULT_BETTING_AMOUNT.getValue()),
-                Arguments.of(createBlackJackWithInitialHand("플레이어2"),
-                        (int) (DEFAULT_BETTING_AMOUNT.getValue() * 1.5)),
-                Arguments.of(createBlackJackWithFinalHand("플레이어3"),
-                        DEFAULT_BETTING_AMOUNT.getValue()),
-                Arguments.of(createLessThanBlackjack("플레이어4"),
-                        DEFAULT_BETTING_AMOUNT.getValue())
+                Arguments.of(PlayerFixture.createBust("플레이어1"),
+                        PlayerFixture.DEFAULT_BETTING_AMOUNT.getValue()),
+                Arguments.of(PlayerFixture.createBlackJackWithInitialHand("플레이어2"),
+                        (int) (PlayerFixture.DEFAULT_BETTING_AMOUNT.getValue() * 1.5)),
+                Arguments.of(PlayerFixture.createBlackJackWithFinalHand("플레이어3"),
+                        PlayerFixture.DEFAULT_BETTING_AMOUNT.getValue()),
+                Arguments.of(PlayerFixture.createLessThanBlackjack("플레이어4"),
+                        PlayerFixture.DEFAULT_BETTING_AMOUNT.getValue())
         );
     }
 
@@ -78,15 +73,30 @@ class PlayerProfitsTest {
                 Arguments.of(
                         DealerFixture.createBlackJackWithFinalHand(),
                         PlayerFixture.createBlackJackWithFinalHand("플레이어"),
-                        DEFAULT_BETTING_AMOUNT.getValue() * 0),
+                        PlayerFixture.DEFAULT_BETTING_AMOUNT.getValue() * 0),
                 Arguments.of(
                         DealerFixture.createBlackJackWithFinalHand(),
                         PlayerFixture.createLessThanBlackjack("플레이어"),
-                        DEFAULT_BETTING_AMOUNT.getValue() * -1),
+                        PlayerFixture.DEFAULT_BETTING_AMOUNT.getValue() * -1),
                 Arguments.of(
                         DealerFixture.createLessThanBlackjack(),
                         PlayerFixture.createBlackJackWithFinalHand("플레이어"),
-                        DEFAULT_BETTING_AMOUNT.getValue() * 1)
+                        PlayerFixture.DEFAULT_BETTING_AMOUNT.getValue() * 1)
         );
+    }
+
+    @Test
+    @DisplayName("딜러의 수익을 계산할 수 있다.")
+    void canCalculateDealerProfit() {
+        Dealer dealer = DealerFixture.createLessThanBlackjack();
+        List<Player> players = List.of(
+                PlayerFixture.createBlackJackWithFinalHand("플레이어"),
+                PlayerFixture.createBlackJackWithFinalHand("플레이어"),
+                PlayerFixture.createBust("플레이어"));
+
+        PlayerProfits playerProfits = new PlayerProfits(dealer, players);
+
+        assertThat(playerProfits.calculateDealerProfit())
+                .isEqualTo(PlayerFixture.DEFAULT_BETTING_AMOUNT.getValue() * -1);
     }
 }

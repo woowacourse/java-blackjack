@@ -1,9 +1,8 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.game.GameResult;
-import blackjack.domain.game.PlayerWinning;
-import blackjack.domain.game.WinningType;
+import blackjack.domain.game.PlayerProfit;
+import blackjack.domain.game.PlayerProfits;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import java.util.List;
@@ -42,19 +41,15 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printGameResult(GameResult gameResult) {
-        System.out.println("## 최종 승패");
-        System.out.print("딜러: ");
+    public void printProfit(PlayerProfits playerProfits) {
+        System.out.println("## 최종 수익");
+        String dealerProfitContent = String.format("딜러: %d", playerProfits.calculateDealerProfit());
+        System.out.println(dealerProfitContent);
 
-        for (WinningType winningType : WinningType.values()) {
-            System.out.print(gameResult.getDealerWinningState(winningType)
-                    + winningType.getDescription() + " ");
-        }
-        System.out.println();
-
-        List<PlayerWinning> results = gameResult.getPlayerWinnings();
-        for (PlayerWinning result : results) {
-            System.out.println(result.getNickname() + ": " + result.getWinningType().getDescription());
+        for (PlayerProfit playerProfit : playerProfits.getPlayerProfits()) {
+            String playerProfitContent = String.format("%s: %d",
+                    playerProfit.getNickname(), playerProfit.getProfit());
+            System.out.println(playerProfitContent);
         }
     }
 

@@ -1,6 +1,6 @@
 package blackjack.domain.io;
 
-import blackjack.domain.game.GameResult;
+import blackjack.domain.game.PlayerProfits;
 import blackjack.domain.user.BettingAmount;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
@@ -16,7 +16,7 @@ public class GameInputOutput {
     private final PlayerFunction printHitResultMethod;
     private final Consumer<Integer> printDealerDrawingMethod;
     private final DealerAndPlayersFunction printFinalHandsMethod;
-    private final Consumer<GameResult> printGameResultMethod;
+    private final Consumer<PlayerProfits> printPlayerProfitsMethod;
 
     public GameInputOutput(
             DealerAndPlayersFunction printInitialHandsMethod,
@@ -25,7 +25,7 @@ public class GameInputOutput {
             PlayerFunction printHitResultMethod,
             Consumer<Integer> printDealerDrawingMethod,
             DealerAndPlayersFunction printFinalHandsMethod,
-            Consumer<GameResult> printGameResultMethod
+            Consumer<PlayerProfits> printPlayerProfitsMethod
     ) {
         this.printInitialHandsMethod = printInitialHandsMethod;
         this.readWannaHitMethod = readWannaHitMethod;
@@ -33,7 +33,7 @@ public class GameInputOutput {
         this.printHitResultMethod = printHitResultMethod;
         this.printDealerDrawingMethod = printDealerDrawingMethod;
         this.printFinalHandsMethod = printFinalHandsMethod;
-        this.printGameResultMethod = printGameResultMethod;
+        this.printPlayerProfitsMethod = printPlayerProfitsMethod;
     }
 
     public void printInitialHands(Dealer dealer, List<Player> players) {
@@ -60,7 +60,7 @@ public class GameInputOutput {
         printFinalHandsMethod.execute(dealer, players);
     }
 
-    public void printGameResult(GameResult gameResult) {
-        printGameResultMethod.accept(gameResult);
+    public void printPlayerProfits(PlayerProfits playerProfits) {
+        printPlayerProfitsMethod.accept(playerProfits);
     }
 }

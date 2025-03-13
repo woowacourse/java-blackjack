@@ -32,4 +32,11 @@ public class PlayerProfits {
         WinningType winningType = WinningType.parse(player.getPoint(), dealer.getPoint());
         return PlayerProfit.createByWinningType(player, winningType);
     }
+
+    public int calculateDealerProfit() {
+        int playerProfitSum = playerProfits.stream()
+                .mapToInt(PlayerProfit::getProfit)
+                .sum();
+        return playerProfitSum * -1;
+    }
 }

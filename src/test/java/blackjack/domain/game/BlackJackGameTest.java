@@ -85,12 +85,13 @@ class BlackJackGameTest {
         List<Nickname> nicknames = List.of(new Nickname("쿠키"), new Nickname("빙봉"));
         blackJackGame.runGame(nicknames);
 
-        GameResult gameResult = gameInputOutput.getGameResult();
-        assertThat(gameResult.getDealerWinningState(WinningType.DRAW))
-                .isEqualTo(2);
-        assertThat(gameResult.getDealerWinningState(WinningType.WIN))
+        PlayerProfits playerProfits = gameInputOutput.getPlayerProfits();
+        List<PlayerProfit> profits = playerProfits.getPlayerProfits();
+        assertThat(profits.getFirst().getProfit())
                 .isEqualTo(0);
-        assertThat(gameResult.getDealerWinningState(WinningType.LOSE))
+        assertThat(profits.getLast().getProfit())
+                .isEqualTo(0);
+        assertThat(playerProfits.calculateDealerProfit())
                 .isEqualTo(0);
     }
 
