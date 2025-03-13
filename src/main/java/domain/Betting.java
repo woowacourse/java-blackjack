@@ -12,6 +12,6 @@ public class Betting {
     }
 
     public Map<User, Long> getBetting() {
-        return null;
+        return betting;
     }
 }
