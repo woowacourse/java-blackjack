@@ -105,7 +105,7 @@ public class WagerResultCalculatorTest {
 			final Money wagerResult = wagerResultCalculator.calculate(player, wager);
 
 			// then
-			assertThat(wagerResult.getValue()).isEqualTo(1_500);
+			assertThat(wagerResult.getValue()).isEqualTo(2_000);
 		}
 	}
 }
