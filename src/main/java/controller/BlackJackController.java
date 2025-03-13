@@ -2,6 +2,7 @@ package controller;
 
 import domain.card.Card;
 import domain.card.CardDeck;
+import domain.game.BlackjackResultEvaluator;
 import domain.game.Dealer;
 import domain.game.Player;
 import domain.game.Players;
@@ -23,7 +24,8 @@ public class BlackJackController {
         List<String> playerNames = inputView.readPlayerNames();
         List<Integer> playerBettingAmount = readPlayerBettingAmount(playerNames);
         Players players = new Players(playerNames, playerBettingAmount);
-        Dealer dealer = new Dealer();
+        BlackjackResultEvaluator blackjackResultEvaluator = new BlackjackResultEvaluator();
+        Dealer dealer = new Dealer(blackjackResultEvaluator);
 
         CardDeck cardDeck = CardDeck.createCards();
 

@@ -5,6 +5,7 @@ import domain.card.CardNumber;
 import domain.card.Pattern;
 import java.util.List;
 import java.util.stream.Stream;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -14,208 +15,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {
 
-    private static void provideWinCard(List<Card> cards) {
-        cards.add(new Card(Pattern.SPADE, CardNumber.TEN));
-        cards.add(new Card(Pattern.CLOVER, CardNumber.SEVEN));
-    }
-
-    private static void provideLoseCard(List<Card> cards) {
-        cards.add(new Card(Pattern.SPADE, CardNumber.TEN));
-        cards.add(new Card(Pattern.CLOVER, CardNumber.SIX));
-    }
-
-    private static void provideBurstCard(List<Card> cards) {
-        cards.add(new Card(Pattern.SPADE, CardNumber.TEN));
-        cards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
-        cards.add(new Card(Pattern.HEART, CardNumber.TEN));
-    }
-
-    private static void provideNonBurstCard(List<Card> cards) {
-        cards.add(new Card(Pattern.SPADE, CardNumber.TEN));
-        cards.add(new Card(Pattern.CLOVER, CardNumber.TWO));
-        cards.add(new Card(Pattern.CLOVER, CardNumber.EIGHT));
-    }
-
-    private static void provideNonBlackJackCard(List<Card> cards) {
-        cards.add(new Card(Pattern.SPADE, CardNumber.TEN));
-        cards.add(new Card(Pattern.CLOVER, CardNumber.TWO));
-        cards.add(new Card(Pattern.CLOVER, CardNumber.NINE));
-    }
-
-    private static void provideBlackJackCard(List<Card> cards) {
-        cards.add(new Card(Pattern.SPADE, CardNumber.TEN));
-        cards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
-    }
-
-    @Test
-    void 모든_플레이어들과_딜러_사이의_승패를_판정한다_플레이어_승리() {
-        //given
-        Dealer dealer = new Dealer();
-        List<Card> dealerCards = dealer.getCards();
-        provideLoseCard(dealerCards);
-
-        Player player = new Player("pobi", 1000);
-        List<Card> playerCards = player.getCards();
-        provideWinCard(playerCards);
-
-        //when
-        List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
-
-        //then
-        assertThat(gameResult).containsExactly(GameResult.WIN);
-    }
-
-    @Test
-    void 모든_플레이어들과_딜러_사이의_승패를_판정한다_플레이어_패배() {
-        //given
-        Dealer dealer = new Dealer();
-        List<Card> dealerCards = dealer.getCards();
-        provideWinCard(dealerCards);
-
-        Player player = new Player("pobi", 1000);
-        List<Card> playerCards = player.getCards();
-        provideLoseCard(playerCards);
-
-        //when
-        List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
-
-        //then
-        assertThat(gameResult).containsExactly(GameResult.LOSE);
-    }
-
-    @Test
-    void 모든_플레이어들과_딜러_사이의_승패를_판정한다_무승부() {
-        //given
-        Dealer dealer = new Dealer();
-        List<Card> dealerCards = dealer.getCards();
-        provideNonBurstCard(dealerCards);
-
-        Player player = new Player("pobi", 1000);
-        List<Card> playerCards = player.getCards();
-        provideNonBurstCard(playerCards);
-
-        //when
-        List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
-
-        //then
-        assertThat(gameResult).containsExactly(GameResult.DRAW);
-    }
-
-    @Test
-    void 모든_플레이어들과_딜러_사이의_승패를_판정한다_둘다_버스트() {
-        //given
-        Dealer dealer = new Dealer();
-        List<Card> dealerCards = dealer.getCards();
-        provideBurstCard(dealerCards);
-
-        Player player = new Player("pobi", 1000);
-        List<Card> playerCards = player.getCards();
-        provideBurstCard(playerCards);
-
-        //when
-        List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
-
-        //then
-        assertThat(gameResult).containsExactly(GameResult.LOSE);
-    }
-
-    @Test
-    void 모든_플레이어들과_딜러_사이의_승패를_판정한다_딜러만_버스트() {
-        //given
-        Dealer dealer = new Dealer();
-        List<Card> dealerCards = dealer.getCards();
-        provideBurstCard(dealerCards);
-
-        Player player = new Player("pobi", 1000);
-        List<Card> playerCards = player.getCards();
-        provideNonBurstCard(playerCards);
-
-        //when
-        List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
-
-        //then
-        assertThat(gameResult).containsExactly(GameResult.WIN);
-    }
-
-    @Test
-    void 모든_플레이어들과_딜러_사이의_승패를_판정한다_플레이어만_버스트() {
-        //given
-        Dealer dealer = new Dealer();
-        List<Card> dealerCards = dealer.getCards();
-        provideNonBurstCard(dealerCards);
-
-        Player player = new Player("pobi", 1000);
-        List<Card> playerCards = player.getCards();
-        provideBurstCard(playerCards);
-
-        //when
-        List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
-
-        //then
-        assertThat(gameResult).containsExactly(GameResult.LOSE);
-    }
-
-    @Test
-    void 모든_플레이어들과_딜러_사이의_승패를_판정한다_둘다_블랙잭() {
-        //given
-        Dealer dealer = new Dealer();
-        List<Card> dealerCards = dealer.getCards();
-        provideBlackJackCard(dealerCards);
-
-        Player player = new Player("pobi", 1000);
-        List<Card> playerCards = player.getCards();
-        provideBlackJackCard(playerCards);
-
-        //when
-        List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
-
-        //then
-        assertThat(gameResult).containsExactly(GameResult.DRAW);
-    }
-
-    @Test
-    void 모든_플레이어들과_딜러_사이의_승패를_판정한다_딜러만_블랙잭() {
-        //given
-        Dealer dealer = new Dealer();
-
-        List<Card> dealerCards = dealer.getCards();
-        provideBlackJackCard(dealerCards);
-
-        Player player = new Player("pobi", 1000);
-        List<Card> playerCards = player.getCards();
-        provideNonBlackJackCard(playerCards);
-
-        //when
-        List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
-
-        //then
-        assertThat(gameResult).containsExactly(GameResult.LOSE);
-    }
-
-    @Test
-    void 모든_플레이어들과_딜러_사이의_승패를_판정한다_플레이어만_블랙잭() {
-        //given
-        Dealer dealer = new Dealer();
-        List<Card> dealerCards = dealer.getCards();
-        provideNonBlackJackCard(dealerCards);
-
-        Player player = new Player("pobi", 1000);
-        List<Card> playerCards = player.getCards();
-        provideBlackJackCard(playerCards);
-
-        //when
-        List<GameResult> gameResult = dealer.judgeGameResult(List.of(player));
-
-        //then
-        assertThat(gameResult).containsExactly(GameResult.WIN);
-    }
-
     @Test
     void 딜러는_하나의_카드를_공개한다() {
         //given
-        Dealer dealer = new Dealer();
+        BlackjackResultEvaluator blackjackResultEvaluator = new BlackjackResultEvaluator();
+        Dealer dealer = new Dealer(blackjackResultEvaluator);
         List<Card> dealerCards = dealer.getCards();
-        provideBlackJackCard(dealerCards);
+        dealerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
+        dealerCards.add(new Card(Pattern.SPADE, CardNumber.ACE));
 
         //when
         Card card = dealer.openSingleCard();
@@ -237,7 +44,8 @@ class DealerTest {
     @MethodSource("provideCard")
     void 딜러는_16_보다_작은_카드값을_가지는지_판정한다(List<Card> cards, boolean expected) {
         //given
-        Dealer dealer = new Dealer();
+        BlackjackResultEvaluator blackjackResultEvaluator = new BlackjackResultEvaluator();
+        Dealer dealer = new Dealer(blackjackResultEvaluator);
         List<Card> dealerCards = dealer.getCards();
         dealerCards.addAll(cards);
 
@@ -246,5 +54,43 @@ class DealerTest {
 
         //then
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    void 딜러와_플레이어들_간의_게임_결과를_판정한다() {
+        //given
+        BlackjackResultEvaluator blackjackResultEvaluator = new BlackjackResultEvaluator();
+        Dealer dealer = new Dealer(blackjackResultEvaluator);
+        List<Card> dealerCards = dealer.getCards();
+        dealerCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
+        dealerCards.add(new Card(Pattern.SPADE, CardNumber.SEVEN));
+
+        //when
+        Player player = new Player("pobi", 1000);
+        List<Card> playerCards = player.getCards();
+        playerCards.add(new Card(Pattern.DIAMOND, CardNumber.KING));
+        playerCards.add(new Card(Pattern.DIAMOND, CardNumber.ACE));
+
+        Player player2 = new Player("brown", 1000);
+        List<Card> playerCards2 = player2.getCards();
+        playerCards2.add(new Card(Pattern.DIAMOND, CardNumber.QUEEN));
+        playerCards2.add(new Card(Pattern.DIAMOND, CardNumber.EIGHT));
+
+        Player player3 = new Player("flint", 1000);
+        List<Card> playerCards3 = player3.getCards();
+        playerCards3.add(new Card(Pattern.DIAMOND, CardNumber.JACK));
+        playerCards3.add(new Card(Pattern.DIAMOND, CardNumber.SEVEN));
+
+        Player player4 = new Player("font", 1000);
+        List<Card> playerCards4 = player4.getCards();
+        playerCards4.add(new Card(Pattern.DIAMOND, CardNumber.TEN));
+        playerCards4.add(new Card(Pattern.DIAMOND, CardNumber.SIX));
+
+        List<Player> players = List.of(player, player2, player3, player4);
+
+        blackjackResultEvaluator.judgeGameResult(dealer, players);
+
+        //then
+        Assertions.assertThat(dealer.getTotalProfit()).isEqualTo(-1500);
     }
 }
