@@ -16,6 +16,11 @@ public class Hand {
         this.cards = cards;
     }
 
+    public Hand(Card card) {
+        this.cards = new ArrayList<>();
+        this.cards.add(card);
+    }
+
     public static Hand createEmpty() {
         return new Hand(new ArrayList<>());
     }

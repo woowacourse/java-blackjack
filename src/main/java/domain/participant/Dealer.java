@@ -1,6 +1,5 @@
 package domain.participant;
 
-import domain.card.Card;
 import domain.card.Hand;
 
 public class Dealer extends Participant {
@@ -14,11 +13,12 @@ public class Dealer extends Participant {
         return new Dealer(Hand.createEmpty());
     }
 
-    public Card getFirstCard() {
-        return hand.getFirst();
-    }
-
     public boolean isPossibleDraw() {
         return hand.calculateSum() <= VALID_DRAW_LIMIT;
+    }
+
+    @Override
+    public Hand openInitialHand() {
+        return new Hand(hand.getFirst());
     }
 }

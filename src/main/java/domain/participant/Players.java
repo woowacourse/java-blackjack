@@ -47,4 +47,12 @@ public class Players {
                 ));
         return new GameResult(gameResult);
     }
+
+    public Map<String, Hand> openNameAndInitialHand() {
+        return players.stream()
+                .collect(Collectors.toMap(
+                        Player::getName,
+                        Player::openInitialHand
+                ));
+    }
 }

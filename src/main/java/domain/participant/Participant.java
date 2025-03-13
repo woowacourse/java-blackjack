@@ -25,4 +25,6 @@ public abstract class Participant {
     public int calculateCardsSum() {
         return hand.calculateSum();
     }
+
+    public abstract Hand openInitialHand();
 }

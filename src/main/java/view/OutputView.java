@@ -2,13 +2,13 @@ package view;
 
 import static domain.result.GameResultStatus.*;
 
-import domain.card.Card;
+import domain.card.Hand;
 import domain.participant.Dealer;
 import domain.result.GameResult;
 import domain.result.GameResultStatus;
 import domain.participant.Player;
 import domain.participant.Players;
-import java.util.List;
+import java.util.Map;
 import view.support.OutputFormatter;
 
 public class OutputView {
@@ -19,16 +19,13 @@ public class OutputView {
         this.outputFormatter = outputFormatter;
     }
 
-    public void printInitialCards(Card dealerCard, Players players) {
-        List<String> playerNames = players.getAllPlayersName();
-        String parsedPlayerNames = outputFormatter.formatPlayerNames(playerNames);
+    public void printInitialStatus(Hand initialDealerHand, Map<String, Hand> PlayersNameAndInitialHand) {
+        String parsedPlayerNames = outputFormatter.formatPlayerNames(PlayersNameAndInitialHand.keySet());
 
         System.out.printf("\n딜러와 %s에게 2장을 나누었습니다.\n", parsedPlayerNames);
-        System.out.printf("딜러카드: %s\n", outputFormatter.formatCard(dealerCard));
-        players.getPlayers().forEach(
-                player ->
-                System.out.printf("%s카드: %s\n", player.getName(), outputFormatter.formatCards(player.getCards()))
-        );
+        System.out.printf("딜러카드: %s\n", outputFormatter.formatCards(initialDealerHand));
+        PlayersNameAndInitialHand.forEach((key, value)
+                -> System.out.printf("%s카드: %s\n", key, outputFormatter.formatCards(value)));
     }
 
     public void printCurrentCard(Player player) {

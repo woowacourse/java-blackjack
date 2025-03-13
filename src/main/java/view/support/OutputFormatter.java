@@ -14,6 +14,7 @@ import domain.result.GameResultStatus;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class OutputFormatter {
 
@@ -51,7 +52,7 @@ public class OutputFormatter {
             LOSE, "패"
     );
 
-    public String formatPlayerNames(List<String> names) {
+    public String formatPlayerNames(Set<String> names) {
         return String.join(NAME_SEPARATOR, names).trim();
     }
 
