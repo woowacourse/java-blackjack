@@ -9,12 +9,12 @@ import static domain.card.Shape.CLOVER;
 import static domain.card.Shape.DIAMOND;
 import static domain.card.Shape.HEART;
 import static domain.card.Shape.SPADE;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import config.CardDeckFactory;
 import domain.card.Card;
-import domain.card.CardDeck;
+import domain.card.Deck;
+import domain.card.Hand;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -22,6 +22,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -37,14 +38,15 @@ public class BlackJackTest {
     void hitCardsToParticipantTest(){
         //given
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        Dealer dealer = new Dealer(cardDeckFactory.create());
+        Deck deck = cardDeckFactory.create();
+        Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
         Players players = Players.from(List.of("pobi", "lisa"));
 
         //when
         BlackJack blackJack = new BlackJack(players, dealer);
 
         //then
-        assertDoesNotThrow(blackJack::hitCardsToParticipant);
+        assertDoesNotThrow(() -> blackJack.hitCardsToParticipant(deck));
     }
 
     @Test
@@ -62,13 +64,14 @@ public class BlackJackTest {
         OutputView testOutputView = new OutputView();
 
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        Dealer dealer = new Dealer(cardDeckFactory.create());
+        Deck deck = cardDeckFactory.create();
+        Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
         Players players = Players.from(List.of("pobi", "lisa"));
 
         BlackJack blackJack = new BlackJack(players, dealer);
 
         //when-then
-        assertDoesNotThrow(() -> blackJack.drawPlayers(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck));
+        assertDoesNotThrow(() -> blackJack.drawPlayers(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck, deck));
     }
 
     @Test
@@ -76,14 +79,15 @@ public class BlackJackTest {
     void drawDealerTest(){
         //given
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        Dealer dealer = new Dealer(cardDeckFactory.create());
+        Deck deck = cardDeckFactory.create();
+        Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
         Players players = Players.from(List.of("pobi", "lisa"));
 
         //when
         BlackJack blackJack = new BlackJack(players, dealer);
 
         //then
-        assertDoesNotThrow(blackJack::drawDealer);
+        assertDoesNotThrow(() -> blackJack.drawDealer(deck));
     }
 
     @Test
@@ -91,13 +95,13 @@ public class BlackJackTest {
     void calculatePlayerResultTest() {
         //given
         Players players = Players.from(List.of("pobi", "lisa"));
-        CardDeck cardDeck = new CardDeck(List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, FIVE), new Card(DIAMOND, ACE), new Card(SPADE, JACK), new Card(HEART, ACE), new Card(CLOVER, ACE)));
-        Dealer dealer = new Dealer(cardDeck);
+        Deck deck = new Deck(List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, FIVE), new Card(DIAMOND, ACE), new Card(SPADE, JACK), new Card(HEART, ACE), new Card(CLOVER, ACE)));
+        Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
 
         BlackJack blackJack = new BlackJack(players, dealer);
 
         //when
-        blackJack.hitCardsToParticipant();
+        blackJack.hitCardsToParticipant(deck);
         Map<Player, MatchResult> playerMatchResultMap = blackJack.calculatePlayerResult();
 
         //then
