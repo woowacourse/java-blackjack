@@ -27,8 +27,8 @@ public class PlayerTest {
     void test1() {
         //given
         FakeTrumpCardManager trumpCardManager = new FakeTrumpCardManager(cardDeck);
-        GameManager gameManager = new GameManager(List.of("레몬"), trumpCardManager);
-        Player player = (Player) gameManager.findUserByUsername("레몬");
+        GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), trumpCardManager);
+        Player player = gameManager.findPlayerByUsername("레몬");
 
         //when
         while (!player.isImpossibleDraw()) {
@@ -49,10 +49,10 @@ public class PlayerTest {
         //when & then
         SoftAssertions.assertSoftly((softAssertions) -> {
             softAssertions.assertThatIllegalArgumentException()
-                    .isThrownBy(() -> new GameManager(dealer1, trumpCardManager))
+                    .isThrownBy(() -> GameManager.initailizeGameManager(dealer1, trumpCardManager))
                     .withMessage("dealer 혹은 딜러는 이름으로 사용할 수 없습니다.");
             softAssertions.assertThatIllegalArgumentException()
-                    .isThrownBy(() -> new GameManager(dealer2, trumpCardManager))
+                    .isThrownBy(() -> GameManager.initailizeGameManager(dealer2, trumpCardManager))
                     .withMessage("dealer 혹은 딜러는 이름으로 사용할 수 없습니다.");
         });
     }
