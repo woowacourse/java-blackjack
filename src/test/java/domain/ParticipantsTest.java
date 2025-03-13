@@ -8,6 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Shape;
+import domain.participant.Betting;
 import domain.participant.Dealer;
 import domain.participant.GameResult;
 import domain.participant.Participant;
@@ -33,8 +34,8 @@ class ParticipantsTest {
     void init() {
         List<Participant> tmpParticipants = new ArrayList<>();
         dealer = new Dealer();
-        player1 = new Player("pobi");
-        player2 = new Player("james");
+        player1 = new Player("pobi", new Betting(10000));
+        player2 = new Player("james", new Betting(20000));
         tmpParticipants.add(dealer);
         tmpParticipants.add(player1);
         tmpParticipants.add(player2);

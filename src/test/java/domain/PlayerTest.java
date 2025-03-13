@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Shape;
+import domain.participant.Betting;
 import domain.participant.Participant;
 import domain.participant.Player;
 import java.util.List;
@@ -19,7 +20,7 @@ class PlayerTest {
 
     @BeforeEach
     void initPlayer() {
-        player = new Player("james");
+        player = new Player("james", new Betting(10000));
     }
 
     @Test

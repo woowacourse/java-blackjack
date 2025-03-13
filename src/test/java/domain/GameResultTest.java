@@ -9,6 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Shape;
+import domain.participant.Betting;
 import domain.participant.Dealer;
 import domain.participant.GameResult;
 import domain.participant.Participant;
@@ -27,7 +28,7 @@ class GameResultTest {
 
     @BeforeEach
     void initParticipants() {
-        player = new Player("pobi");
+        player = new Player("pobi", new Betting(10000));
         dealer = new Dealer();
     }
 

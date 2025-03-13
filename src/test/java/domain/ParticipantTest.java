@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Shape;
+import domain.participant.Betting;
 import domain.participant.Dealer;
 import domain.participant.GameResult;
 import domain.participant.Participant;
@@ -21,7 +22,7 @@ public class ParticipantTest {
 
     @BeforeEach
     void initPlayer() {
-        player = new Player("pobi");
+        player = new Player("pobi", new Betting(10000));
         dealer = new Dealer();
     }
 
@@ -33,57 +34,49 @@ public class ParticipantTest {
         @DisplayName("플레이어가 10_000을 배팅하고 이기는 경우, 수익률은 10_000이어야 한다.")
         void calculate_player_profit_when_player_win() {
             //given
-            int bettingAmount = 10000;
             int expectedValue = 10_000;
-            player.startBetting(bettingAmount);
             player.addCard(new Card(Shape.HEART, Rank.TEN));
             dealer.addCard(new Card(Shape.HEART, Rank.EIGHT));
 
             //when, then
-            assertPlayerProfit(bettingAmount, expectedValue);
+            assertPlayerProfit(player.getBettingAmount(), expectedValue);
         }
 
         @Test
         @DisplayName("플레이어가 10_000을 배팅하고 지는 경우, 수익률은 -10_000이어야 한다.")
         void calculate_player_profit_when_player_lose() {
             //given
-            int bettingAmount = 10000;
             int expectedValue = -10_000;
-            player.startBetting(bettingAmount);
             player.addCard(new Card(Shape.HEART, Rank.EIGHT));
             dealer.addCard(new Card(Shape.HEART, Rank.TEN));
 
             //when, then
-            assertPlayerProfit(bettingAmount, expectedValue);
+            assertPlayerProfit(player.getBettingAmount(), expectedValue);
         }
 
         @Test
         @DisplayName("플레이어가 10_000을 배팅하고 비기는 경우, 수익률은 0이어야 한다.")
         void calculate_player_profit_when_player_draw() {
             //given
-            int bettingAmount = 10000;
             int expectedValue = 0;
-            player.startBetting(bettingAmount);
             player.addCard(new Card(Shape.HEART, Rank.EIGHT));
             dealer.addCard(new Card(Shape.SPADE, Rank.EIGHT));
 
             //when, then
-            assertPlayerProfit(bettingAmount, expectedValue);
+            assertPlayerProfit(player.getBettingAmount(), expectedValue);
         }
 
         @Test
         @DisplayName("플레이어가 10_000을 배팅하고 블랙잭인 경우, 수익률은 15_000이어야 한다.")
         void calculate_player_profit_when_player_black_jack() {
             //given
-            int bettingAmount = 10000;
             int expectedValue = 15_000;
-            player.startBetting(bettingAmount);
             player.addCard(new Card(Shape.HEART, Rank.A));
             player.addCard(new Card(Shape.HEART, Rank.KING));
             dealer.addCard(new Card(Shape.HEART, Rank.TEN));
 
             //when, then
-            assertPlayerProfit(bettingAmount, expectedValue);
+            assertPlayerProfit(player.getBettingAmount(), expectedValue);
         }
 
         private void assertPlayerProfit(int bettingAmount, int expectedValue) {
