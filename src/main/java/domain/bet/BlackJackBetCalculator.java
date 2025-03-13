@@ -5,6 +5,7 @@ import domain.gamer.Dealer;
 import domain.gamer.Player;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -17,7 +18,7 @@ public class BlackJackBetCalculator {
                         .toMap(Map.Entry::getKey, entry -> new Bet(entry.getValue())));
     }
 
-    public Bet determineBettingAmount(Dealer dealer, Player player) {
+    public int determineBettingAmount(Dealer dealer, Player player) {
         GameResult playResult = GameResult.calculateResult(dealer,player);
         Bet playerBet = findBetByPlayer(player);
 
@@ -26,7 +27,19 @@ public class BlackJackBetCalculator {
         return playerBet.getDrawPrize();
     }
 
-    private Bet calcWinningBet(Player player, Bet playerBet){
+    public int getDealerBetResult(Dealer dealer, List<Player> players){
+        return -getPlayerBetResult(dealer,players).values().stream()
+                .mapToInt(Integer::intValue)
+                .sum();
+    }
+
+    public Map<String,Integer> getPlayerBetResult(Dealer dealer, List<Player> players){
+        return players.stream().collect(Collectors.toMap(
+                Player::getName,
+                player -> determineBettingAmount(dealer,player)));
+    }
+
+    private int calcWinningBet(Player player, Bet playerBet){
         if(player.isBlackJack()){
             return playerBet.getBlackJackPrize();
         }
