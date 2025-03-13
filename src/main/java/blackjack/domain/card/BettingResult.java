@@ -12,7 +12,7 @@ public class BettingResult {
     private final Map<Player, Integer> playerBettingResults;
     private static int dealerBettingResult;
 
-    public BettingResult(Map<Player, Integer> playerBettingResults, int dealerBettingResult) {
+    public BettingResult(Map<Player, Integer> playerBettingResults) {
         this.playerBettingResults = playerBettingResults;
     }
 
@@ -26,8 +26,7 @@ public class BettingResult {
             playerBettingResults.put(player, profit);
             dealerBettingResult -= profit;
         }));
-
-        return new BettingResult(playerBettingResults, dealerBettingResult);
+        return new BettingResult(playerBettingResults);
     }
 
     public Map<Player, Integer> getPlayerBettingResults() {

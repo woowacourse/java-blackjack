@@ -26,11 +26,6 @@ public class Cards {
         return totalBlackjackScore;
     }
 
-//    public BettingResult createBettingResult(Dealer dealer, Players players) {
-////        return calculateScore();
-//        return new BettingResult(dealer, players);
-//    }
-
     private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
