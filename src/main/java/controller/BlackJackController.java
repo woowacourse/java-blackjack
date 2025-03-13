@@ -2,9 +2,11 @@ package controller;
 
 import config.CardDeckFactory;
 import domain.BlackJack;
-import domain.card.CardDeck;
+import domain.card.Deck;
+import domain.card.Hand;
 import domain.participant.Dealer;
 import domain.participant.Players;
+import java.util.ArrayList;
 import view.InputUntilValid;
 import view.InputView;
 import view.OutputView;
@@ -20,24 +22,24 @@ public class BlackJackController {
 
     public void start() {
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        CardDeck cardDeck = cardDeckFactory.create();
+        Deck deck = cardDeckFactory.create();
         Players players = createPlayersUntilValidate();
-        Dealer dealer = new Dealer(cardDeck);
+        Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
 
-        playBlackJack(players, dealer);
+        playBlackJack(players, dealer, deck);
     }
 
-    private void playBlackJack(final Players players, final Dealer dealer) {
+    private void playBlackJack(final Players players, final Dealer dealer, final Deck deck) {
         BlackJack blackJack = new BlackJack(players, dealer);
-        blackJack.hitCardsToParticipant();
+        blackJack.hitCardsToParticipant(deck);
         outputView.printParticipant(players, dealer);
 
         blackJack.drawPlayers(
                 (player) -> InputUntilValid.validatePlayerAnswer(player, inputView::askPlayerForHitOrStand),
-                outputView::printPlayerDeck);
+                outputView::printPlayerDeck, deck);
 
         outputView.printDrawDealer(dealer);
-        blackJack.drawDealer();
+        blackJack.drawDealer(deck);
         outputView.printScore(players, dealer);
         outputView.printResult(blackJack.calculatePlayerResult());
     }

@@ -1,5 +1,6 @@
 package domain;
 
+import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -16,18 +17,18 @@ public class BlackJack {
         this.dealer = dealer;
     }
 
-    public void hitCardsToParticipant() {
-        players.hitCards(dealer);
-        dealer.addCards();
-        dealer.addCards();
+    public void hitCardsToParticipant(Deck cardDeck) {
+        players.hitCards(cardDeck);
+        dealer.addCard(cardDeck.hitCard());
+        dealer.addCard(cardDeck.hitCard());
     }
 
-    public void drawPlayers(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck) {
-        players.draw(answer, playerDeck, dealer);
+    public void drawPlayers(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck, Deck deck) {
+        players.draw(answer, playerDeck, deck);
     }
 
-    public void drawDealer() {
-        dealer.draw();
+    public void drawDealer(Deck cardDeck) {
+        dealer.draw(cardDeck.hitCard());
     }
 
     public Map<Player, MatchResult> calculatePlayerResult() {
