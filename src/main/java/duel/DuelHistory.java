@@ -30,7 +30,8 @@ public class DuelHistory {
 	}
 
 	public boolean isDraw() {
-		return false;
+		return get(DuelResult.DRAW).isGreaterThan(get(DuelResult.WIN))
+			&& get(DuelResult.DRAW).isGreaterThan(get(DuelResult.LOSE));
 	}
 
 	private Count get(final DuelResult duelResult) {
