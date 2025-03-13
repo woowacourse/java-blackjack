@@ -5,6 +5,8 @@ import domain.gamer.Dealer;
 import domain.gamer.PlayerGroup;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class GameManager {
 
@@ -43,6 +45,25 @@ public class GameManager {
     }
 
     public Map<String, Integer> calculatePlayerBattingAmountOfReturn(final Map<String, GameResult> playersGameResult) {
-        return Map.of("윌슨", 10_000, "가이온", 0, "수달", -20_000);
+        return playersGameResult.entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        Entry::getKey,
+                        this::calculateBattingAmountOfReturn,
+                        (newValue, oldValue) -> newValue
+                ));
+    }
+
+    private int calculateBattingAmountOfReturn(final Entry<String, GameResult> entry) {
+        final String playerName = entry.getKey();
+        final GameResult gameResult = entry.getValue();
+        final int battingOfReturnByName = playerGroup.getBattingOfReturnByName(playerName);
+        if (gameResult.isWin()) {
+            return battingOfReturnByName;
+        }
+        if (gameResult.isDraw()) {
+            return 0;
+        }
+        return -battingOfReturnByName;
     }
 }

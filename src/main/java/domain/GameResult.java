@@ -40,6 +40,18 @@ public enum GameResult {
         return DRAW;
     }
 
+    public boolean isWin() {
+        return this == WIN;
+    }
+
+    public boolean isDraw() {
+        return this == DRAW;
+    }
+
+    public boolean isLose() {
+        return this == LOSE;
+    }
+
     public String getDescription() {
         return description;
     }

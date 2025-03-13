@@ -45,6 +45,11 @@ public class PlayerGroup {
         findByPlayerByName(playerName).giveCard(card);
     }
 
+    public int getBattingOfReturnByName(final String playerName) {
+        final Player player = findByPlayerByName(playerName);
+        return player.getBattingAmount();
+    }
+
     private Player findByPlayerByName(final String playerName) {
         return players.stream()
                 .filter(player -> Objects.equals(playerName, player.getName()))
