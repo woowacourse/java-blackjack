@@ -63,6 +63,11 @@ public class Blackjack {
 	}
 
 	private void duelDealerVsPlayer(final Player player) {
+		if (player.calculateAllScore(BUST_SCORE).equals(dealer.calculateAllScore(BUST_SCORE))) {
+			dealer.writeDuelResult(DuelResult.DRAW);
+			player.writeDuelResult(DuelResult.DRAW);
+			return;
+		}
 		if (player.isBust(BUST_SCORE)) {
 			dealer.writeDuelResult(DuelResult.WIN);
 			player.writeDuelResult(DuelResult.LOSE);

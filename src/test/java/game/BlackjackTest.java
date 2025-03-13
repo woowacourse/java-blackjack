@@ -288,7 +288,7 @@ public class BlackjackTest {
 				s.assertThat(dealer.getParticipant().getDuelHistory().getDrawCount()).isEqualTo(ONE);
 				s.assertThat(dealer.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(ZERO);
 				s.assertThat(player.getParticipant().getDuelHistory().getWinCount()).isEqualTo(ZERO);
-				s.assertThat(dealer.getParticipant().getDuelHistory().getDrawCount()).isEqualTo(ONE);
+				s.assertThat(player.getParticipant().getDuelHistory().getDrawCount()).isEqualTo(ONE);
 				s.assertThat(player.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(ZERO);
 			});
 		}
