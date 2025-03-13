@@ -24,7 +24,7 @@ public class BettingAmount {
         if (result == GameResult.BLACKJACK_WIN) {
             return getBlackjackWinValue();
         }
-        throw new IllegalStateException("잘못된 게임 결과입니다.");
+        return value;
     }
 
     private int getWinValue() {

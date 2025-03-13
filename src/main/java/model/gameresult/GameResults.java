@@ -1,7 +1,8 @@
 package model.gameresult;
 
 import java.util.Map;
-import model.bettingamount.BettingAmounts;
+import model.bettingamount.BettingAmount;
+import model.participant.Player;
 import model.participant.Players;
 
 public class GameResults {
@@ -15,26 +16,15 @@ public class GameResults {
         return gameResults.get(name);
     }
 
-    public int calculateDealerResultCount(final GameResult gameResult) {
-        return (int) gameResults.values().stream()
-                .filter(value -> getOppositeResult(value).equals(gameResult))
-                .count();
+    public int calculatePlayerProfit(Player player) {
+        GameResult gameResult = getGameResultByName(player.getName());
+        BettingAmount bettingAmount = player.getBettingAmount();
+        return bettingAmount.getProfitByGameResult(gameResult);
     }
 
-    private GameResult getOppositeResult(final GameResult gameResult) {
-        if (GameResult.WIN.equals(gameResult)) {
-            return GameResult.LOSE;
-        }
-        if (GameResult.LOSE.equals(gameResult)) {
-            return GameResult.WIN;
-        }
-        return GameResult.DRAW;
-    }
-
-    public int calculateDealerProfit(final Players players, final BettingAmounts bettingAmounts) {
-        return players.getNames().stream()
-                .mapToInt(name -> bettingAmounts.findByName(name)
-                        .getProfitByGameResult(getOppositeResult(gameResults.get(name))))
+    public int calculateDealerProfit(final Players players) {
+        return -1 * players.getPlayers().stream()
+                .mapToInt(this::calculatePlayerProfit)
                 .sum();
     }
 }

@@ -1,16 +1,14 @@
 package controller;
 
 import dto.CardDto;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import model.Judge;
 import model.UserInput;
 import model.bettingamount.BettingAmount;
-import model.bettingamount.BettingAmounts;
 import model.card.Cards;
 import model.deck.Deck;
-import model.gameresult.GameResult;
 import model.gameresult.GameResults;
 import model.participant.Dealer;
 import model.participant.Player;
@@ -34,11 +32,20 @@ public class BlackjackController {
 
     public void start() {
         List<String> names = inputView.readPlayerNames();
-        BettingAmounts bettingAmounts = initializeBettingAmounts(names);
-        Players players = Players.createByNames(names, deck);
+        Players players = initializePlayers(names);
         Dealer dealer = new Dealer(deck);
         startGame(players, dealer);
-        endGame(players, dealer, bettingAmounts);
+        endGame(players, dealer);
+    }
+
+    private Players initializePlayers(final List<String> names) {
+        List<Player> players = new ArrayList<>();
+        for (String name : names) {
+            BettingAmount bettingAmount = new BettingAmount(inputView.readBettingAmount(name));
+            Player player = new Player(name, deck, bettingAmount);
+            players.add(player);
+        }
+        return new Players(players);
     }
 
     private void startGame(final Players players, final Dealer dealer) {
@@ -48,18 +55,9 @@ public class BlackjackController {
         printDealerDrawCount(dealer);
     }
 
-    private void endGame(final Players players, final Dealer dealer, final BettingAmounts bettingAmounts) {
+    private void endGame(final Players players, final Dealer dealer) {
         printFinalGameState(dealer, players);
-        printProfit(players, dealer, bettingAmounts);
-    }
-
-    private BettingAmounts initializeBettingAmounts(final List<String> names) {
-        return new BettingAmounts(names.stream()
-                .collect(Collectors.toMap(
-                        Function.identity(),
-                        name -> new BettingAmount(inputView.readBettingAmount(name)))
-                )
-        );
+        printProfit(players, dealer);
     }
 
     private void printInitialGameState(final Players players, final Dealer dealer) {
@@ -120,29 +118,13 @@ public class BlackjackController {
         return cards.getCards().stream().map(CardDto::from).toList();
     }
 
-    private void printProfit(final Players players, final Dealer dealer, final BettingAmounts bettingAmounts) {
+    private void printProfit(final Players players, final Dealer dealer) {
         outputView.printGameResultHeader();
         GameResults gameResults = calculateGameResults(players, dealer);
-        printDealerProfit(gameResults, players, bettingAmounts);
-        printPlayersProfit(players, gameResults, bettingAmounts);
-    }
-
-    private void printDealerProfit(final GameResults gameResults, final Players players,
-                                   final BettingAmounts bettingAmounts) {
-        int dealerProfit = gameResults.calculateDealerProfit(players, bettingAmounts);
+        int dealerProfit = gameResults.calculateDealerProfit(players);
         outputView.printProfitWithName("딜러", dealerProfit);
-    }
-
-    private void printPlayersProfit(final Players players, final GameResults gameResults,
-                                    final BettingAmounts bettingAmounts) {
-        players.getNames().forEach(name -> printPlayerProfit(name, gameResults, bettingAmounts));
-    }
-
-    private void printPlayerProfit(final String name, final GameResults gameResults,
-                                   final BettingAmounts bettingAmounts) {
-        BettingAmount bettingAmountByName = bettingAmounts.findByName(name);
-        GameResult gameResultByName = gameResults.getGameResultByName(name);
-        int profit = bettingAmountByName.getProfitByGameResult(gameResultByName);
-        outputView.printProfitWithName(name, profit);
+        players.getPlayers().forEach(player -> {
+            outputView.printProfitWithName(player.getName(), gameResults.calculatePlayerProfit(player));
+        });
     }
 }
