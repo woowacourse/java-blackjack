@@ -44,5 +44,28 @@ public class WagerResultCalculatorTest {
 			// then
 			assertThat(wagerResult.getValue()).isZero();
 		}
+
+		@DisplayName("플레이어가 무승부라면, 금액을 그대로 반환한다.")
+		@Test
+		void calculatePlayerBust1() {
+			// given
+			final WagerResultCalculator wagerResultCalculator = new WagerResultCalculator();
+			final List<Card> cards = List.of(
+				new Card(Rank.TEN, Suit.CLUB),
+				new Card(Rank.TEN, Suit.HEART),
+				new Card(Rank.TEN, Suit.SPADE)
+			);
+			final Participant participant = new Participant(new CardHand(cards));
+			participant.writeDuelResult(DuelResult.DRAW);
+			final Player player = new Player("파랑", participant);
+
+			final Money wager = new Money(1_000);
+
+			// when
+			final Money wagerResult = wagerResultCalculator.calculate(player, wager);
+
+			// then
+			assertThat(wagerResult.getValue()).isEqualTo(1_000);
+		}
 	}
 }
