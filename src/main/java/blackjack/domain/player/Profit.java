@@ -1,12 +1,18 @@
 package blackjack.domain.player;
 
+import blackjack.domain.game.GameResult;
+
 import java.util.Objects;
 
 public class Profit {
     private final int value;
 
-    public Profit(double value) {
-        this.value = (int) value;
+    public Profit(int betAmount, GameResult gameResult) {
+        this.value = calculateProfit(betAmount, gameResult);
+    }
+
+    private Profit(int value) {
+        this.value = value;
     }
 
     public Profit addProfit(Profit other) {
@@ -19,6 +25,19 @@ public class Profit {
 
     public int getValue() {
         return value;
+    }
+
+    private int calculateProfit(int betAmount, GameResult gameResult) {
+        if (gameResult == GameResult.LOSE) {
+            return -1 * betAmount;
+        }
+        if (gameResult == GameResult.BLACKJACK) {
+            return (int) (betAmount * 1.5);
+        }
+        if (gameResult == GameResult.WIN) {
+            return betAmount;
+        }
+        return 0;
     }
 
     @Override

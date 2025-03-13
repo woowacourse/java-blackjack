@@ -3,6 +3,7 @@ package blackjack.domain.player;
 import blackjack.domain.game.GameResult;
 
 public record BetAmount(int amount) {
+
     public BetAmount {
         validateAmount(amount);
     }
@@ -14,19 +15,6 @@ public record BetAmount(int amount) {
     }
 
     public Profit getProfit(GameResult gameResult) {
-        if (gameResult == GameResult.LOSE) {
-            return new Profit(negate());
-        }
-        if (gameResult == GameResult.BLACKJACK) {
-            return new Profit(amount * 1.5);
-        }
-        if (gameResult == GameResult.WIN) {
-            return new Profit(amount);
-        }
-        return new Profit(0);
-    }
-
-    public int negate() {
-        return amount() * -1;
+        return new Profit(amount, gameResult);
     }
 }
