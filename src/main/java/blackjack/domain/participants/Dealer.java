@@ -49,7 +49,7 @@ public class Dealer {
         }
     }
 
-    public GameResult createVictory() {
+    public GameResult createGameResult() {
         return GameResult.create(this, players);
     }
 

@@ -72,27 +72,27 @@ public class OutputView {
         System.out.println("더 이상 카드를 받을 수 없습니다.");
     }
 
-    public static void printVictory(GameResult gameResult, List<Player> players) {
-        Map<WinningResult, Integer> dealerVictoryResults = gameResult.getDealerGameResults();
-        Map<Player, WinningResult> playerVictoryResults = gameResult.getPlayerGameResults();
+    public static void printGameResult(GameResult gameResult, List<Player> players) {
+        Map<WinningResult, Integer> dealerGameResults = gameResult.getDealerGameResults();
+        Map<Player, WinningResult> playerGameResults = gameResult.getPlayerGameResults();
         System.out.println("## 최종 승패");
-        printIfPresentWinningResult(dealerVictoryResults);
-        dealerVictoryResults.getOrDefault(WinningResult.LOSE, 0);
+        printIfPresentWinningResult(dealerGameResults);
+        dealerGameResults.getOrDefault(WinningResult.LOSE, 0);
         for (Player player : players) {
-            System.out.printf("%s: %s\n", player.getName(), toKoreanWinningResult(playerVictoryResults.get(player)));
+            System.out.printf("%s: %s\n", player.getName(), toKoreanWinningResult(playerGameResults.get(player)));
         }
     }
 
-    private static void printIfPresentWinningResult(Map<WinningResult, Integer> dealerVictoryResults) {
+    private static void printIfPresentWinningResult(Map<WinningResult, Integer> dealerGameResults) {
         System.out.print("딜러:");
-        if (dealerVictoryResults.containsKey(WinningResult.WIN)) {
-            System.out.printf(" %d승", dealerVictoryResults.get(WinningResult.WIN));
+        if (dealerGameResults.containsKey(WinningResult.WIN)) {
+            System.out.printf(" %d승", dealerGameResults.get(WinningResult.WIN));
         }
-        if (dealerVictoryResults.containsKey(WinningResult.DRAW)) {
-            System.out.printf(" %d무", dealerVictoryResults.get(WinningResult.DRAW));
+        if (dealerGameResults.containsKey(WinningResult.DRAW)) {
+            System.out.printf(" %d무", dealerGameResults.get(WinningResult.DRAW));
         }
-        if (dealerVictoryResults.containsKey(WinningResult.LOSE)) {
-            System.out.printf(" %d패", dealerVictoryResults.get(WinningResult.LOSE));
+        if (dealerGameResults.containsKey(WinningResult.LOSE)) {
+            System.out.printf(" %d패", dealerGameResults.get(WinningResult.LOSE));
         }
         System.out.println();
     }

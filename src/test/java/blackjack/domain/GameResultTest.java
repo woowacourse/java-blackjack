@@ -52,16 +52,16 @@ public class GameResultTest {
         ));
         Dealer dealer = new Dealer(players, new Deck(cards), new Cards(DIAMOND_ACE, DIAMOND_NINE));
 
-        Map<Player, WinningResult> playerVictoryResults =
+        Map<Player, WinningResult> playerGameResults =
                 Map.of(pobi, WinningResult.LOSE,
                         surf, WinningResult.WIN);
-        Map<WinningResult, Integer> dealerVictoryResult = Map.of(WinningResult.LOSE, 1, WinningResult.WIN, 1);
+        Map<WinningResult, Integer> dealerGameResult = Map.of(WinningResult.LOSE, 1, WinningResult.WIN, 1);
 
         //when
         GameResult gameResult = GameResult.create(dealer, players);
 
         //then
-        assertThat(gameResult.getPlayerGameResults()).isEqualTo(playerVictoryResults);
-        assertThat(gameResult.getDealerGameResults()).isEqualTo(dealerVictoryResult);
+        assertThat(gameResult.getPlayerGameResults()).isEqualTo(playerGameResults);
+        assertThat(gameResult.getDealerGameResults()).isEqualTo(dealerGameResult);
     }
 }

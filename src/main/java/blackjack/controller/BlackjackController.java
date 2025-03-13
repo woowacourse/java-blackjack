@@ -21,7 +21,7 @@ public class BlackjackController {
             additionalCard(dealer, players);
             dealerAdditionalCard(dealer);
             printBlackjackResult(dealer, players);
-            printVictory(dealer, players);
+            printGameResult(dealer, players);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
         }
@@ -80,8 +80,8 @@ public class BlackjackController {
         OutputView.printPlayerResult(players.getPlayers());
     }
 
-    private void printVictory(Dealer dealer, Players players) {
-        GameResult gameResult = dealer.createVictory();
-        OutputView.printVictory(gameResult, players.getPlayers());
+    private void printGameResult(Dealer dealer, Players players) {
+        GameResult gameResult = dealer.createGameResult();
+        OutputView.printGameResult(gameResult, players.getPlayers());
     }
 }
