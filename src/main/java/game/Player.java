@@ -28,12 +28,16 @@ public class Player {
         return hand.getCardsCount();
     }
 
-    public int calculateTotalCardNumber() {
-        return hand.calculateTotalWithAce();
+    public int calculateTotalPoints() {
+        return hand.calculate();
     }
 
-    public boolean isOverBustBound() {
-        return hand.isOverBustBound();
+    public boolean isBust() {
+        return hand.isBust();
+    }
+
+    public boolean isBlackJack() {
+        return hand.getCardsCount() == 2 && hand.calculate() == 21;
     }
 
     public Hand getHand() {

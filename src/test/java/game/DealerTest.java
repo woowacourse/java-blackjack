@@ -64,7 +64,7 @@ public class DealerTest {
         ));
 
         // when
-        int actual = dealer.calculateTotalCardNumber();
+        int actual = dealer.calculateTotalPoints();
 
         //when & then
         assertThat(actual).isEqualTo(20);
@@ -81,7 +81,7 @@ public class DealerTest {
         ));
 
         //when & then
-        assertThat(dealer.isOverBustBound()).isTrue();
+        assertThat(dealer.isBust()).isTrue();
     }
 
     @Test

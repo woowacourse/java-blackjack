@@ -222,6 +222,6 @@ public class PlayersTest {
         List<GameResult> gameResult = players.judgeGameResult(dealer);
 
         //then
-        Assertions.assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.WIN));
+        Assertions.assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.BLACKJACK));
     }
 }

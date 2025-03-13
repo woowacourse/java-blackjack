@@ -189,7 +189,7 @@ public class GameResultTest {
         GameResult gameResult = GameResult.of(dealer, player);
 
         //then
-        Assertions.assertThat(gameResult).isEqualTo(GameResult.WIN);
+        Assertions.assertThat(gameResult).isEqualTo(GameResult.BLACKJACK);
     }
 
     @Test

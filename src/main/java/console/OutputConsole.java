@@ -35,10 +35,10 @@ public class OutputConsole {
 
     public void printGameResult(Dealer dealer, Players players) {
         String dealerResult = formatHand(dealer.getHand().getCards());
-        System.out.printf("%n딜러카드: %s - 결과: %d%n", dealerResult, dealer.calculateTotalCardNumber());
+        System.out.printf("%n딜러카드: %s - 결과: %d%n", dealerResult, dealer.calculateTotalPoints());
         for (Player player : players.getPlayers()) {
             String playerResult = formatHand(player.getHand().getCards());
-            System.out.printf("%s카드: %s - 결과: %d%n", player.getName(), playerResult, player.calculateTotalCardNumber());
+            System.out.printf("%s카드: %s - 결과: %d%n", player.getName(), playerResult, player.calculateTotalPoints());
         }
         System.out.println();
     }

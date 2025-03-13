@@ -51,7 +51,7 @@ public class PlayerTest {
                 new Card(Pattern.SPADE, CardNumber.NINE)));
 
         //when & then
-        assertThat(player.calculateTotalCardNumber()).isEqualTo(19);
+        assertThat(player.calculateTotalPoints()).isEqualTo(19);
     }
 
     @Test
@@ -65,7 +65,7 @@ public class PlayerTest {
         ));
 
         //when & then
-        assertThat(player.isOverBustBound()).isTrue();
+        assertThat(player.isBust()).isTrue();
     }
 
     @Test

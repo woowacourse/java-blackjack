@@ -6,9 +6,8 @@ public enum GameResult {
 
     WIN("승"),
     LOSE("패"),
-    DRAW("무");
-
-    private static final int BLACK_JACK_CONDITION_COUNT = 2;
+    DRAW("무"),
+    BLACKJACK("블랙잭");
 
     private final String result;
 
@@ -17,63 +16,57 @@ public enum GameResult {
     }
 
     public static GameResult of(Dealer dealer, Player player) {
-        if (player.isOverBustBound()) {
-            return GameResult.LOSE;
+        if (player.isBlackJack() && dealer.isBlackJack()) {
+            return DRAW;
         }
-        if (dealer.isOverBustBound()) {
-            return GameResult.WIN;
+        if (player.isBlackJack()) {
+            return BLACKJACK;
         }
-        return judgeGameResultIfNotBust(dealer, player);
+        if (dealer.isBlackJack()) {
+            return LOSE;
+        }
+        return bust(dealer, player);
     }
 
-    private static GameResult judgeGameResultIfNotBust(Dealer dealer, Player player) {
-        int playerTotalCardNumber = player.calculateTotalCardNumber();
-        int dealerTotalCardNumber = dealer.calculateTotalCardNumber();
-        if (playerTotalCardNumber < dealerTotalCardNumber) {
-            return GameResult.LOSE;
+    private static GameResult bust(Dealer dealer, Player player) {
+        if (player.isBust()) {
+            return LOSE;
         }
-        if (playerTotalCardNumber > dealerTotalCardNumber) {
-            return GameResult.WIN;
+        if (dealer.isBust()) {
+            return WIN;
         }
-        if (playerTotalCardNumber == Hand.BUST_BOUND) {
-            return judgeGameResultIfBlackJack(dealer, player);
-        }
-        return GameResult.DRAW;
+        return ifNotBust(dealer, player);
     }
 
-    private static GameResult judgeGameResultIfBlackJack(Dealer dealer, Player player) {
-        int playerCardCount = player.getCardsCount();
-        int dealerCardCount = dealer.getCardsCount();
-        if (playerCardCount == dealerCardCount) {
-            return GameResult.DRAW;
+    private static GameResult ifNotBust(Dealer dealer, Player player) {
+        int totalOfPlayer = player.calculateTotalPoints();
+        int totalOfDealer = dealer.calculateTotalPoints();
+        if (totalOfPlayer < totalOfDealer) {
+            return LOSE;
         }
-        if (playerCardCount == BLACK_JACK_CONDITION_COUNT) {
-            return GameResult.WIN;
+        if (totalOfPlayer > totalOfDealer) {
+            return WIN;
         }
-        if (dealerCardCount == BLACK_JACK_CONDITION_COUNT) {
-            return GameResult.LOSE;
-        }
-        throw new IllegalArgumentException("[ERROR] 승패 판정에 실패하였습니다.");
+        return DRAW;
     }
 
     public int countReversedGameResult(List<GameResult> gameResults) {
-        return countByCondition(gameResults, getReversedGameResult());
-    }
-
-    private GameResult getReversedGameResult() {
-        if (this == GameResult.WIN) {
-            return GameResult.LOSE;
-        }
-        if (this == GameResult.LOSE) {
-            return GameResult.WIN;
-        }
-        return GameResult.DRAW;
+        return countByCondition(gameResults, reverse());
     }
 
     private int countByCondition(List<GameResult> gameResults, GameResult target) {
         return (int) gameResults.stream()
                 .filter(gameResult -> gameResult == target)
                 .count();
+    }
+
+    private GameResult reverse() {
+        return switch (this) {
+            case WIN -> LOSE;
+            case LOSE -> WIN;
+            case DRAW -> DRAW;
+            case BLACKJACK -> BLACKJACK;
+        };
     }
 
     public String getResult() {

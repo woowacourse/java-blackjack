@@ -20,11 +20,11 @@ public class Hand {
         this.cards.addAll(cards);
     }
 
-    public boolean isOverBustBound() {
-        return calculateTotalWithAce() > BUST_BOUND;
+    public boolean isBust() {
+        return calculate() > BUST_BOUND;
     }
 
-    public int calculateTotalWithAce() {
+    public int calculate() {
         int totalCardNumber = calculateTotalCardNumber();
         if (hasAce()) {
             return calculateWithAce(totalCardNumber);

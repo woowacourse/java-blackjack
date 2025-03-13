@@ -51,14 +51,14 @@ public class BlackJackGame {
     }
 
     private void decidePlayerHitOrStand(Player player, CardDeck cardDeck) {
-        while (!player.isOverBustBound() && inputConsole.readDrawMoreCard(player)) {
+        while (!player.isBust() && inputConsole.readDrawMoreCard(player)) {
             player.drawCard(cardDeck.drawCard(DRAW_COUNT_WHEN_HIT));
             outputConsole.printPlayerCard(player);
         }
     }
 
     private void decideDealerHitOrStand(Dealer dealer, CardDeck cardDeck) {
-        while (!dealer.isOverBustBound() && !dealer.isOverDrawBound()) {
+        while (!dealer.isBust() && !dealer.isOverDrawBound()) {
             dealer.drawCard(cardDeck.drawCard(DRAW_COUNT_WHEN_HIT));
             outputConsole.printDealerDrawMessage();
         }

@@ -49,7 +49,7 @@ public class HandTest {
                 new Card(Pattern.SPADE, CardNumber.QUEEN)));
 
         //when
-        int totalNumber = hand.calculateTotalWithAce();
+        int totalNumber = hand.calculate();
 
         //then
         assertThat(totalNumber).isEqualTo(20);
@@ -64,7 +64,7 @@ public class HandTest {
                 new Card(Pattern.SPADE, CardNumber.ACE)));
 
         //when
-        int totalNumber = hand.calculateTotalWithAce();
+        int totalNumber = hand.calculate();
 
         //then
         assertThat(totalNumber).isEqualTo(21);
@@ -80,7 +80,7 @@ public class HandTest {
                 new Card(Pattern.SPADE, CardNumber.ACE)));
 
         //when
-        int totalNumber = hand.calculateTotalWithAce();
+        int totalNumber = hand.calculate();
 
         //then
         assertThat(totalNumber).isEqualTo(21);
@@ -97,7 +97,7 @@ public class HandTest {
                 new Card(Pattern.SPADE, CardNumber.ACE)));
 
         //when
-        int totalNumber = hand.calculateTotalWithAce();
+        int totalNumber = hand.calculate();
 
         //then
         assertThat(totalNumber).isEqualTo(23);
@@ -113,7 +113,7 @@ public class HandTest {
                 new Card(Pattern.SPADE, CardNumber.TWO)));
 
         //when & then
-        assertThat(hand.isOverBustBound()).isTrue();
+        assertThat(hand.isBust()).isTrue();
     }
 
     @Test
@@ -125,7 +125,7 @@ public class HandTest {
                 new Card(Pattern.SPADE, CardNumber.QUEEN)));
 
         //when & then
-        assertThat(hand.isOverBustBound()).isFalse();
+        assertThat(hand.isBust()).isFalse();
     }
 
     @Test
@@ -137,7 +137,7 @@ public class HandTest {
                 new Card(Pattern.SPADE, CardNumber.ACE)));
 
         //when & then
-        assertThat(hand.isOverBustBound()).isFalse();
+        assertThat(hand.isBust()).isFalse();
     }
 
     @Test
@@ -150,7 +150,7 @@ public class HandTest {
                 new Card(Pattern.SPADE, CardNumber.ACE)));
 
         //when & then
-        assertThat(hand.isOverBustBound()).isFalse();
+        assertThat(hand.isBust()).isFalse();
     }
 
     @Test
@@ -165,7 +165,7 @@ public class HandTest {
         ));
 
         //when & then
-        assertThat(hand.isOverBustBound()).isTrue();
+        assertThat(hand.isBust()).isTrue();
     }
 
     @Test
@@ -180,6 +180,6 @@ public class HandTest {
         ));
 
         //when & then
-        assertThat(hand.isOverBustBound()).isFalse();
+        assertThat(hand.isBust()).isFalse();
     }
 }

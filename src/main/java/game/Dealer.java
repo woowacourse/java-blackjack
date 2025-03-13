@@ -21,16 +21,16 @@ public class Dealer {
         return hand;
     }
 
-    public int calculateTotalCardNumber() {
-        return hand.calculateTotalWithAce();
+    public int calculateTotalPoints() {
+        return hand.calculate();
     }
 
-    public boolean isOverBustBound() {
-        return hand.isOverBustBound();
+    public boolean isBust() {
+        return hand.isBust();
     }
 
     public boolean isOverDrawBound() {
-        return calculateTotalCardNumber() > DEALER_DRAW_BOUND;
+        return calculateTotalPoints() > DEALER_DRAW_BOUND;
     }
 
     public int getCardsCount() {
@@ -39,5 +39,9 @@ public class Dealer {
 
     public Card getSingleCard() {
         return hand.getCards().getFirst();
+    }
+
+    public boolean isBlackJack() {
+        return hand.getCardsCount() == 2 && hand.calculate() == 21;
     }
 }
