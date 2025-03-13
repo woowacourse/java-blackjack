@@ -11,8 +11,12 @@ public class Profit {
         this.value = calculateProfit(betAmount, gameResult);
     }
 
-    private Profit(int value) {
+    public Profit(int value) {
         this.value = value;
+    }
+
+    public Profit(double value) {
+        this.value = (int) value;
     }
 
     public Profit addProfit(Profit other) {
