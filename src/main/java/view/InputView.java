@@ -18,16 +18,16 @@ public class InputView {
         return Arrays.stream(rawNicknames.split(NICKNAME_SEPARATOR)).toList();
     }
 
-    public int readBetAmount(String nickname) {
-        System.out.printf("%n%s의 배팅 금액은?%n", nickname);
-        String rawBetAmount = scanner.nextLine();
-        validateInteger(rawBetAmount);
+    public int readBettingMoney(String nickname) {
+        System.out.println(String.format("%n%s의 배팅 금액은?", nickname));
+        String rawBettingMoney = scanner.nextLine();
+        validateInteger(rawBettingMoney);
 
-        return Integer.parseInt(rawBetAmount);
+        return Integer.parseInt(rawBettingMoney);
     }
 
     public boolean readDrawOneMore(String nickname) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", nickname);
+        System.out.println(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", nickname));
         String rawAnswer = scanner.nextLine();
         validateYesOrNo(rawAnswer);
 
