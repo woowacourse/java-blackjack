@@ -30,7 +30,9 @@ public class BlackJackController {
         CardDeck cardDeck = CardDeck.createCards(randomCardShuffler);
 
         List<String> playerNames = inputView.readPlayerNames();
-        Players players = new Players(playerNames);
+        Players players = new Players(playerNames.stream()
+                .map(Player::new)
+                .toList());
         Dealer dealer = new Dealer();
 
         startBlackJack(players, dealer, cardDeck);

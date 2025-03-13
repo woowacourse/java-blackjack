@@ -14,23 +14,21 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<String> playerNames) {
-        validatePlayerCount(playerNames);
-        validateDuplicatePlayerName(playerNames);
-        this.players = playerNames.stream()
-                .map(Player::new)
-                .toList();
+    public Players(List<Player> players) {
+        validatePlayerCount(players);
+        validateDuplicatePlayerName(players);
+        this.players = players;
     }
 
-    private void validatePlayerCount(List<String> playerNames) {
-        if (playerNames.isEmpty() || playerNames.size() > MAX_PLAYER_COUNT) {
+    private void validatePlayerCount(List<Player> players) {
+        if (players.isEmpty() || players.size() > MAX_PLAYER_COUNT) {
             throw new IllegalArgumentException("[ERROR] 플레이어 수는 최소 1명, 최대" + MAX_PLAYER_COUNT + "명입니다.");
         }
     }
 
-    private void validateDuplicatePlayerName(List<String> playerNames) {
-        Set<String> uniquePlayerNames = new HashSet<>(playerNames);
-        if (uniquePlayerNames.size() != playerNames.size()) {
+    private void validateDuplicatePlayerName(List<Player> players) {
+        Set<Player> uniquePlayers = new HashSet<>(players);
+        if (uniquePlayers.size() != players.size()) {
             throw new IllegalArgumentException("[ERROR] 중복된 플레이어 이름입니다.");
         }
     }
@@ -56,5 +54,4 @@ public class Players {
                 .map(Player::getName)
                 .toList();
     }
-
 }

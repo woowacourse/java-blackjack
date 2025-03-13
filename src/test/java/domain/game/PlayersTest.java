@@ -16,42 +16,47 @@ public class PlayersTest {
 
     @Test
     void 플레이어를_정상적으로_생성한다() {
-        //given
-        List<String> playerNames = List.of("aa", "bb", "cc", "dd", "ee");
-
-        //when & then
-        assertThatCode(() -> new Players(playerNames))
-                .doesNotThrowAnyException();
+        assertThatCode(() -> new Players(List.of(
+                new Player("pobi"),
+                new Player("font")
+        ))).doesNotThrowAnyException();
     }
 
     @Test
     void 인원_수가_5명_초과이면_예외를_던진다() {
         //given
-        List<String> playerNames = List.of("aa", "bb", "cc", "dd", "ee", "ff");
+        List<Player> players = List.of(
+                new Player("a"),
+                new Player("b"),
+                new Player("c"),
+                new Player("d"),
+                new Player("e"),
+                new Player("f"));
 
         //when & then
-        assertThatThrownBy(
-                () -> new Players(playerNames))
+        assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void 인원_수가_0명이면_예외를_던진다() {
         //given
-        List<String> playerNames = List.of();
+        List<Player> players = List.of();
 
         //when & then
-        assertThatThrownBy(() -> new Players(playerNames))
+        assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void 같은_이름의_플레이어가_여러_명_있으면_예외를_던진다() {
         //given
-        List<String> playerNames = List.of("aa", "aa");
+        List<Player> players = List.of(
+                new Player("a"),
+                new Player("a"));
 
         //when & then
-        assertThatThrownBy(() -> new Players(playerNames))
+        assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -59,8 +64,9 @@ public class PlayersTest {
     void 모든_플레이어는_게임_시작_시_카드를_드로우한다() {
         //given
         CardDeck cardDeck = CardDeck.createCards(ArrayList::new);
-        List<String> playerNames = List.of("aa", "bb");
-        Players players = new Players(playerNames);
+        Players players = new Players(List.of(
+                new Player("a"),
+                new Player("b")));
 
         //when
         players.drawCard(cardDeck);
@@ -73,8 +79,9 @@ public class PlayersTest {
     @Test
     void 모든_플레이어의_이름을_반환한다() {
         //given
-        List<String> playerNames = List.of("aa", "bb");
-        Players players = new Players(playerNames);
+        Players players = new Players(List.of(
+                new Player("aa"),
+                new Player("bb")));
 
         //when
         List<String> allPlayerNames = players.getAllPlayerNames();
@@ -91,7 +98,9 @@ public class PlayersTest {
                 new Card(Pattern.SPADE, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.TEN)));
 
-        Players players = new Players(List.of("pobi"));
+        Players players = new Players(List.of(
+                new Player("pobi")));
+
         players.getPlayers().getFirst().drawCard(List.of(
                 new Card(Pattern.HEART, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.NINE)));
@@ -112,7 +121,9 @@ public class PlayersTest {
                 new Card(Pattern.CLOVER, CardNumber.TEN),
                 new Card(Pattern.DIAMOND, CardNumber.TWO)));
 
-        Players players = new Players(List.of("pobi"));
+        Players players = new Players(List.of(
+                new Player("pobi")));
+
         players.getPlayers().getFirst().drawCard(List.of(
                 new Card(Pattern.CLOVER, CardNumber.KING),
                 new Card(Pattern.SPADE, CardNumber.JACK),
@@ -134,7 +145,9 @@ public class PlayersTest {
                 new Card(Pattern.CLOVER, CardNumber.TEN),
                 new Card(Pattern.DIAMOND, CardNumber.TWO)));
 
-        Players players = new Players(List.of("pobi"));
+        Players players = new Players(List.of(
+                new Player("pobi")));
+
         players.getPlayers().getFirst().drawCard(List.of(
                 new Card(Pattern.HEART, CardNumber.TEN),
                 new Card(Pattern.DIAMOND, CardNumber.TEN)));
@@ -154,7 +167,9 @@ public class PlayersTest {
                 new Card(Pattern.SPADE, CardNumber.TEN),
                 new Card(Pattern.DIAMOND, CardNumber.ACE)));
 
-        Players players = new Players(List.of("pobi"));
+        Players players = new Players(List.of(
+                new Player("pobi")));
+
         players.getPlayers().getFirst().drawCard(List.of(
                 new Card(Pattern.HEART, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.ACE)));
@@ -174,7 +189,9 @@ public class PlayersTest {
                 new Card(Pattern.SPADE, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.ACE)));
 
-        Players players = new Players(List.of("pobi"));
+        Players players = new Players(List.of(
+                new Player("pobi")));
+
         players.getPlayers().getFirst().drawCard(List.of(
                 new Card(Pattern.HEART, CardNumber.TEN),
                 new Card(Pattern.DIAMOND, CardNumber.TEN)));
@@ -194,7 +211,9 @@ public class PlayersTest {
                 new Card(Pattern.SPADE, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.TEN)));
 
-        Players players = new Players(List.of("pobi"));
+        Players players = new Players(List.of(
+                new Player("pobi")));
+
         players.getPlayers().getFirst().drawCard(List.of(
                 new Card(Pattern.HEART, CardNumber.TEN),
                 new Card(Pattern.DIAMOND, CardNumber.ACE)));

@@ -2,6 +2,7 @@ package domain.game;
 
 import domain.card.Card;
 import java.util.List;
+import java.util.Objects;
 
 public class Player {
 
@@ -45,5 +46,21 @@ public class Player {
 
     public int getBettingMoney() {
         return bettingMoney;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Player player)) {
+            return false;
+        }
+        return Objects.equals(name, player.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name);
     }
 }
