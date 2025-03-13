@@ -3,8 +3,8 @@ package domain.bet;
 import java.util.Objects;
 
 public class Bet {
-    private final int BLACKJACK_PRIZE_RATE = 15;
-    private final int DRAW_BET_PRIZE = 0;
+    private static final int BLACKJACK_PRIZE_RATE = 15;
+    private static final int DRAW_BET_PRIZE = 0;
 
     int bettingCount;
 
