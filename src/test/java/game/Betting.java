@@ -15,4 +15,8 @@ public class Betting {
     public void lose() {
         this.money = 0;
     }
+
+    public int earn() {
+        return this.money;
+    }
 }

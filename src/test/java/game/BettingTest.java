@@ -23,4 +23,13 @@ public class BettingTest {
 
         assertThat(betting.getMoney()).isEqualTo(0);
     }
+
+    @Test
+    void 배팅_금액을_받는다() {
+        Betting betting = new Betting(10000);
+
+        int earned = betting.earn();
+
+        assertThat(earned).isEqualTo(betting.getMoney());
+    }
 }
