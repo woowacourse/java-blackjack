@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.money.BettingMoney;
 
+import blackjack.domain.money.Money;
+
 import java.util.stream.Stream;
 
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,7 +27,7 @@ public class BettingMoneyTest {
     
     @ParameterizedTest
     @MethodSource("provideBettingMoneyAndWinningStatusAndProfit")
-    void 결과에_따라_배팅_금액이_달라진다(int money, WinningStatus winningStatus, int profit) {
+    void 결과에_따라_배팅_금액이_달라진다(int money, WinningStatus winningStatus, Money  profit) {
         // given
         BettingMoney bettingMoney = new BettingMoney(money);
         
@@ -35,10 +37,10 @@ public class BettingMoneyTest {
     
     private static Stream<Arguments> provideBettingMoneyAndWinningStatusAndProfit() {
         return Stream.of(
-                Arguments.of(10000, WinningStatus.BLACKJACK_WIN, 15000),
-                Arguments.of(10000, WinningStatus.WIN, 10000),
-                Arguments.of(10000, WinningStatus.DRAW, 0),
-                Arguments.of(10000, WinningStatus.LOSE, -10000)
+                Arguments.of(10000, WinningStatus.BLACKJACK_WIN, new Money(15000)),
+                Arguments.of(10000, WinningStatus.WIN, new Money(10000)),
+                Arguments.of(10000, WinningStatus.DRAW, new Money(0)),
+                Arguments.of(10000, WinningStatus.LOSE, new Money(-10000))
         );
     }
 }

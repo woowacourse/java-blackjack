@@ -1,8 +1,10 @@
 package blackjack.domain;
 
 import static blackjack.test_util.TestConstants.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+import blackjack.domain.money.Money;
 import blackjack.domain.player.Player;
 
 import java.util.HashMap;
@@ -28,22 +30,22 @@ public class BettingBoardTest {
     
     @ParameterizedTest
     @MethodSource("provideWinningStatusAndProfit")
-    void 블랙잭_결과로_달라지는_플레이어의_수익을_확인할_수_있다(WinningStatus winningStatus, int profit) {
+    void 블랙잭_결과로_달라지는_플레이어의_수익을_확인할_수_있다(WinningStatus winningStatus, Money profit) {
         // given
         BettingBoard bettingBoard = new BettingBoard();
         bettingBoard.bet(DEFAULT_PLAYER, 10000);
         
         // expected
-        Assertions.assertThat(bettingBoard.getProfit(DEFAULT_PLAYER, winningStatus))
+        assertThat(bettingBoard.getProfit(DEFAULT_PLAYER, winningStatus))
                 .isEqualTo(profit);
     }
     
     private static Stream<Arguments> provideWinningStatusAndProfit() {
         return Stream.of(
-                Arguments.of(WinningStatus.BLACKJACK_WIN, 15000),
-                Arguments.of(WinningStatus.WIN, 10000),
-                Arguments.of(WinningStatus.DRAW, 0),
-                Arguments.of(WinningStatus.LOSE, -10000)
+                Arguments.of(WinningStatus.BLACKJACK_WIN, new Money(15000)),
+                Arguments.of(WinningStatus.WIN, new Money(10000)),
+                Arguments.of(WinningStatus.DRAW, new Money(0)),
+                Arguments.of(WinningStatus.LOSE, new Money(-10000))
         );
     }
     
@@ -66,7 +68,7 @@ public class BettingBoardTest {
         playerWinningStatus.put(secondPlayer, secondPlayerStatus);
         
         // then
-        Assertions.assertThat(bettingBoard.getDealerProfit(playerWinningStatus)).isEqualTo(profit);
+        assertThat(bettingBoard.getDealerProfit(playerWinningStatus)).isEqualTo(profit);
     }
     
     private static Stream<Arguments> providePlayersWinningStatusAndProfit() {

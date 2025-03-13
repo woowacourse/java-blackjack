@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.money.Money;
 import blackjack.domain.player.Player;
 import blackjack.view.display.CardNumberDisplay;
 import blackjack.view.display.CardShapeDisplay;
@@ -120,11 +121,11 @@ public class OutputView {
         writer.write("%s: %s".formatted(name, WinningStatusDisplay.parseWinningStatus(winningStatus)));
     }
     
-    public void outputTotalProfit(int dealerProfit, Map<Player, Integer> playersProfit) {
+    public void outputTotalProfit(int dealerProfit, Map<Player, Money> playersProfit) {
         writer.write(LINE_SEPARATOR + "## 최종 수익");
         writer.write("딜러: " + dealerProfit);
         for (Player player : playersProfit.keySet()) {
-            writer.write("%s: %d".formatted(player.getName(), playersProfit.get(player)));
+            writer.write("%s: %d".formatted(player.getName(), playersProfit.get(player).money()));
         }
     }
 }

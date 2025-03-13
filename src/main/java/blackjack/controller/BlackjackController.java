@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.BettingBoard;
 import blackjack.domain.WinningStatus;
+import blackjack.domain.money.Money;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 
@@ -107,7 +108,7 @@ public class BlackjackController implements Controller {
 
         Map<Player, WinningStatus> winningStatusOfAllPlayers = blackjackJudge.getWinningStatusOfAllPlayers();
         int dealerProfit = bettingBoard.getDealerProfit(winningStatusOfAllPlayers);
-        Map<Player, Integer> playersProfit = new HashMap<>();
+        Map<Player, Money> playersProfit = new HashMap<>();
         for (PlayerBlackjackCardHand playerBlackjackCardHand : playerBlackjackCardHands) {
             Player player = playerBlackjackCardHand.getPlayer();
             playersProfit.put(player, bettingBoard.getProfit(player,
