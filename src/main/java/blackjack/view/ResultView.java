@@ -5,6 +5,7 @@ import static blackjack.view.Constant.SHAPE_KOREAN;
 
 import blackjack.card.Card;
 import blackjack.gamer.Gamer;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class ResultView {
@@ -12,16 +13,16 @@ public class ResultView {
     private static final String CARDS_FORMAT = "%s: %s";
     private static final String COMMA = ", ";
 
-    public void printCards(final Gamer gamer) {
-        final String message = makeCardMessage(gamer);
+    public void printCards(final Gamer gamer, final List<Card> gamerCards) {
+        final String message = makeCardMessage(gamer, gamerCards);
         System.out.println(message);
     }
 
-    private String makeCardMessage(final Gamer gamer) {
+    private String makeCardMessage(final Gamer gamer, List<Card> gamerCards) {
         return String.format(
                 CARDS_FORMAT,
                 gamer.getNickName(),
-                gamer.showInitialCards().stream()
+                gamerCards.stream()
                         .map(card -> getDenominationName(card) + getShapeName(card))
                         .collect(Collectors.joining(COMMA))
         );

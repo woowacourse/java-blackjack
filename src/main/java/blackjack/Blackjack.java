@@ -59,9 +59,9 @@ public class Blackjack {
     }
 
     public void showInitialCards(final ResultView resultView) {
-        resultView.printCards(dealer);
+        resultView.printCards(dealer, dealer.showInitialCards());
         for (Player player : players.getPlayers()) {
-            resultView.printCards(player);
+            resultView.printCards(player, player.showInitialCards());
         }
     }
 
