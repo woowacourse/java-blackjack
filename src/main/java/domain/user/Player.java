@@ -5,11 +5,14 @@ import domain.TrumpCard;
 import java.util.List;
 
 public class Player extends User {
+
+    private final String name;
+
     public Player(String name) {
-        super(name);
+        this.name = name;
         validate(name);
     }
-    
+
     @Override
     public boolean isImpossibleDraw() {
         return cardDeck.isImpossibleDraw(CardDeck.MAX_SCORE);
@@ -18,6 +21,21 @@ public class Player extends User {
     @Override
     public List<TrumpCard> openCard() {
         return this.cardDeck.getAllCard();
+    }
+
+    @Override
+    public List<TrumpCard> openAllCard() {
+        return this.cardDeck.getAllCard();
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public boolean isDealer() {
+        return false;
     }
 
     private void validate(String name) {

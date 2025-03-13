@@ -5,18 +5,22 @@ import domain.TrumpCard;
 import java.util.List;
 
 public abstract class User {
-    protected final String name;
     protected final CardDeck cardDeck;
 
-    public User(String name) {
-        this.name = name;
+    public User() {
         this.cardDeck = new CardDeck();
     }
 
     public abstract boolean isImpossibleDraw();
 
     public abstract List<TrumpCard> openCard();
-    
+
+    public abstract List<TrumpCard> openAllCard();
+
+    public abstract String getName();
+
+    public abstract boolean isDealer();
+
     public void receiveCard(final TrumpCard trumpCard) {
         cardDeck.addTrumpCard(trumpCard);
     }
@@ -25,8 +29,8 @@ public abstract class User {
         return getName().equals(name);
     }
 
-    public String getName() {
-        return this.name;
+    public int userScore() {
+        return this.cardDeck.calculateScore();
     }
 
     public CardDeck getCardDeck() {
