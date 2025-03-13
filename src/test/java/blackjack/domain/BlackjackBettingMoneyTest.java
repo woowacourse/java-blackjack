@@ -22,7 +22,7 @@ public class BlackjackBettingMoneyTest {
         // expected
         assertThatThrownBy(() -> new BlackjackBettingMoney(money))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("배팅은 10,000원부터 1,000,000원까지 가능합니다.");
+                .hasMessage("블랙잭 배팅은 10,000원부터 1,000,000원까지 가능합니다.");
     }
     
     @ParameterizedTest
