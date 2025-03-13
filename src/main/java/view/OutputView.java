@@ -43,6 +43,7 @@ public class OutputView {
     }
 
     public static void printDealerDrawMessage() {
+        System.out.print(NEW_LINE);
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
@@ -59,7 +60,7 @@ public class OutputView {
     }
 
     public static void printPlayerCard(Participant player) {
-        System.out.printf("%s카드: %s%n%n", player.getParticipantName(), convertCardsToMessage(player.getCards()));
+        System.out.printf("%s카드: %s%n", player.getParticipantName(), convertCardsToMessage(player.getCards()));
     }
 
     public static void printFinalCards(Participants participants) {

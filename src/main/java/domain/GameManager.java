@@ -49,12 +49,18 @@ public class GameManager {
         return new Cards(provider.provideCards(INITIAL_DRAW_SIZE));
     }
 
-    public void drawCard(Participant participant) {
-        participant.drawCard(provider.provideCards(DEFAULT_DRAW_SIZE));
-    }
-
     public boolean shouldPlayerHit(Participant player) {
         return player.shouldHit();
+    }
+
+    public void drawCardForPlayer(Participant player, boolean answer) {
+        if (answer) {
+            drawCard(player);
+        }
+    }
+
+    private void drawCard(Participant player) {
+        player.drawCard(provider.provideCards(DEFAULT_DRAW_SIZE));
     }
 
     public boolean shouldDealerHit() {

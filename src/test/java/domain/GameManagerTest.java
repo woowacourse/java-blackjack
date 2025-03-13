@@ -50,35 +50,34 @@ public class GameManagerTest {
     }
 
     @Test
-    void 딜러가_카드를_뽑으면_가지고있는_카드리스트에_추가된다() {
-        ParticipantNames participantNames = new ParticipantNames(List.of(new ParticipantName("drago")));
-        GameManager gameManager = new GameManager(participantNames,
-                Map.of(new ParticipantName("drago"), new BettingAmount(10000)), new GameManagerTest.TestCardProvider());
-
-        Participants participants = gameManager.findParticipants();
-        Participant dealer = participants.findDealer();
-        gameManager.drawCard(dealer);
-
-        List<Card> expected = List.of(new Card(Suit.DIAMOND, Rank.FIVE),
-                new Card(Suit.SPADE, Rank.QUEEN),
-                new Card(Suit.SPADE, Rank.KING));
-
-        assertThat(dealer.getCards()).isEqualTo(expected);
-    }
-
-    @Test
-    void 플레이어가_카드를_뽑으면_가지고있는_카드리스트에_추가된다() {
+    void 플레이어가_카드를_뽑는다고_대답하면_카드를_뽑는다() {
         ParticipantNames participantNames = new ParticipantNames(List.of(new ParticipantName("drago")));
         GameManager gameManager = new GameManager(participantNames,
                 Map.of(new ParticipantName("drago"), new BettingAmount(10000)), new GameManagerTest.TestCardProvider());
 
         Participants participants = gameManager.findParticipants();
         Participant player = participants.findPlayers().getFirst();
-        gameManager.drawCard(player);
+        gameManager.drawCardForPlayer(player, true);
 
         List<Card> expected = List.of(new Card(Suit.CLOVER, Rank.EIGHT),
                 new Card(Suit.HEART, Rank.JACK),
                 new Card(Suit.SPADE, Rank.KING));
+
+        assertThat(player.getCards()).isEqualTo(expected);
+    }
+
+    @Test
+    void 플레이어가_카드를_뽑지않겠다고_대답하면_카드를_뽑지_않는다() {
+        ParticipantNames participantNames = new ParticipantNames(List.of(new ParticipantName("drago")));
+        GameManager gameManager = new GameManager(participantNames,
+                Map.of(new ParticipantName("drago"), new BettingAmount(10000)), new GameManagerTest.TestCardProvider());
+
+        Participants participants = gameManager.findParticipants();
+        Participant player = participants.findPlayers().getFirst();
+        gameManager.drawCardForPlayer(player, false);
+
+        List<Card> expected = List.of(new Card(Suit.CLOVER, Rank.EIGHT),
+                new Card(Suit.HEART, Rank.JACK));
 
         assertThat(player.getCards()).isEqualTo(expected);
     }
@@ -103,7 +102,7 @@ public class GameManagerTest {
 
         Participants participants = gameManager.findParticipants();
         Participant duei = participants.findPlayers().getFirst();
-        gameManager.drawCard(duei);
+        duei.drawCard(List.of(new Card(Suit.SPADE, Rank.KING)));
 
         assertThat(gameManager.shouldPlayerHit(duei)).isFalse();
     }
@@ -125,7 +124,7 @@ public class GameManagerTest {
 
         Participants participants = gameManager.findParticipants();
         Participant dealer = participants.findDealer();
-        gameManager.drawCard(dealer);
+        dealer.drawCard(List.of(new Card(Suit.SPADE, Rank.KING)));
 
         assertThat(gameManager.shouldDealerHit()).isFalse();
     }
