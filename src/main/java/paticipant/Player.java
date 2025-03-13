@@ -34,7 +34,7 @@ public class Player {
 	}
 
 	public boolean isBust(final Score bustScore) {
-		return calculateAllScore(bustScore).isGreaterThan(bustScore);
+		return participant.isBust(bustScore);
 	}
 
 	public void writeDuelResult(final DuelResult duelResult) {
