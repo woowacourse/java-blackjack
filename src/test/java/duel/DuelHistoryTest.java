@@ -40,21 +40,27 @@ public class DuelHistoryTest {
 	@DisplayName("검증 연산")
 	class is {
 
-		@DisplayName("우승이 더 많다면 true, 아니라면 false를 반환한다.")
+		@DisplayName("우승이 가장 많다면 true, 아니라면 false를 반환하라")
 		@Test
 		void isWin() {
 			// given
 			final var win = new DuelHistory();
 			final var lose = new DuelHistory();
+			final var draw = new DuelHistory();
 			win.write(DuelResult.WIN);
+			draw.write(DuelResult.WIN);
+			draw.write(DuelResult.DRAW);
+			draw.write(DuelResult.DRAW);
 			lose.write(DuelResult.LOSE);
 
 			// when
 			final boolean actualWin = win.isWin();
+			final boolean actualDraw = draw.isWin();
 			final boolean actualLose = lose.isWin();
 
 			// then
 			assertThat(actualWin).isTrue();
+			assertThat(actualDraw).isFalse();
 			assertThat(actualLose).isFalse();
 		}
 	}
