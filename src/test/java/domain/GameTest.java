@@ -14,8 +14,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class GameTest {
-    private final Deck deck = new Deck(new RandomShuffler());
     private final List<String> playerNames = List.of("pobi", "norang", "haru");
+    private final Deck deck = new Deck(new RandomShuffler());
     private final Game game = new Game(playerNames, deck);
 
     @Test
@@ -23,7 +23,7 @@ class GameTest {
     void testValidatePlayerCount() {
         // given
         List<String> playerNames = List.of("pobi", "woni", "brie", "neo", "norang", "haru");
-        // when && then
+        // when & then
         assertThatThrownBy(() -> new Game(playerNames, deck))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR] 참여자는 최대 5명입니다.");
@@ -34,7 +34,7 @@ class GameTest {
     void testValidateDuplicateName() {
         // given
         List<String> playerNames = List.of("pobi", "pobi");
-        // when && then
+        // when & then
         assertThatThrownBy(() -> new Game(playerNames, deck))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR] 이름은 중복될 수 없습니다.");
@@ -55,7 +55,7 @@ class GameTest {
     @Test
     @DisplayName("딜러에게 카드를 지급할 수 있다.")
     void testDealerHit() {
-        // given && when
+        // given & when
         game.dealerHit();
         // then
         assertThat(game.getDealerCards().size()).isEqualTo(3);

@@ -29,7 +29,8 @@ public class BlackJackController {
     }
 
     private void giveAdditionalCardsForPlayer(Game game) {
-        game.getPlayerNames().forEach((name) -> hitOrStay(game, name));
+        game.getPlayerNames()
+                .forEach((name) -> hitOrStay(game, name));
     }
 
     private void giveAdditionalCardsForDealer(Game game) {

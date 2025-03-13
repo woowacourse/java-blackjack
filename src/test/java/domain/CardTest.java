@@ -25,7 +25,7 @@ class CardTest {
         for (int i = 0; i < 52; i++) {
             deck.drawCard();
         }
-        // when && then
+        // when & then
         assertThatThrownBy(deck::drawCard).isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("[ERROR] 뽑을 수 있는 카드가 없습니다.");
     }

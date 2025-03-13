@@ -92,7 +92,7 @@ class GameResultTest {
     @Test
     @DisplayName("딜러의 승리 여부를 입력하면 플레이어의 승리 여부를 반환한다.")
     void test() {
-        // given && when
+        // given & when
         GameResult gameResult = GameResult.getOppositeResult(GameResult.WIN);
         // then
         assertThat(gameResult).isEqualTo(GameResult.LOSE);
