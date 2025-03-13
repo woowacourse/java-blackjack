@@ -37,6 +37,10 @@ public enum GameResult {
         return PUSH;
     }
 
+    public static GameResult calculatePlayerGameResult(Dealer dealer, Player player) {
+        return getOppositeResult(calculateDealerGameResult(dealer, player));
+    }
+
     public String getName() {
         return name;
     }

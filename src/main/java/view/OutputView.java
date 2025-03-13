@@ -6,6 +6,7 @@ import domain.game.GameResult;
 import domain.participant.GameParticipant;
 import domain.participant.Player;
 import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.List;
 
 public class OutputView {
@@ -74,13 +75,13 @@ public class OutputView {
     private void displayPlayerGameResult(Game game) {
         game.getPlayers()
                 .forEach(player -> System.out.printf("%s: %s%n", player.getName(),
-                        game.getPlayerGameResult(player).getName()));
+                        player.calculateGameResult(game.getDealer()).getName()));
     }
 
     private void displayDealerGameResult(Game game) {
+        EnumMap<GameResult, Integer> gameResults = game.getDealer().calculateGameResult(game.getPlayers());
         Arrays.stream(GameResult.values())
-                .filter((gameResult) -> game.getDealerGameResultCount(gameResult) != 0)
-                .forEach((gameResult) -> System.out.printf("%d%s ", game.getDealerGameResultCount(gameResult),
-                        gameResult.getName()));
+                .filter((gameResult) -> gameResults.get(gameResult) != 0)
+                .forEach((gameResult) -> System.out.printf("%d%s ", gameResults.get(gameResult), gameResult.getName()));
     }
 }

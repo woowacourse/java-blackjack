@@ -14,7 +14,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.CardHand;
 import domain.card.Deck;
-import domain.game.GameResult;
 import domain.participant.Dealer;
 import domain.shuffler.RandomShuffler;
 import fixture.CardFixture;
@@ -69,17 +68,5 @@ class DealerTest {
         Dealer dealer = new Dealer(deck, cardHand);
         // when & then
         assertThat(dealer.doesNeedCard()).isTrue();
-    }
-
-    @Test
-    @DisplayName("승패를 기록한다")
-    void testRecordGameResult() {
-        // given
-        CardHand cardHand = new CardHand(Set.of(CardFixture.of(TEN, HEART)));
-        Dealer dealer = new Dealer(deck, cardHand);
-        // when
-        dealer.recordGameResult(GameResult.WIN);
-        // then
-        assertThat(dealer.getGameResultCount(GameResult.WIN)).isEqualTo(1);
     }
 }

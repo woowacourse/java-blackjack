@@ -62,15 +62,13 @@ class GameTest {
     }
 
     @Test
-    @DisplayName("게임 참가자들의 승패 결과를 계산하여 저장한다.")
-    void testCalculateGameResult() {
+    @DisplayName("게임 참가자의 승패 결과를 계산한다.")
+    void testCalculateDealerGameResult() {
         // given
         List<Player> players = game.getPlayers();
         Player player = players.getFirst();
-        // when
-        game.calculateGameResult();
-        // then
-        assertThat(game.getPlayerGameResult(player)).isNotEqualTo(GameResult.NONE);
+        // when & then
+        assertThat(player.calculateGameResult(game.getDealer())).isNotEqualTo(GameResult.NONE);
     }
 
     @Test
