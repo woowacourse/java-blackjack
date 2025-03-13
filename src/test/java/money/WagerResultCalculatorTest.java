@@ -67,5 +67,27 @@ public class WagerResultCalculatorTest {
 			// then
 			assertThat(wagerResult.getValue()).isEqualTo(1_000);
 		}
+
+		@DisplayName("플레이어가 우승이면서, 블랙잭이라면 2.5배를 반환한다. (베팅금액의 1.5배를 더해서 반환)")
+		@Test
+		void calculatePlayerBust2() {
+			// given
+			final WagerResultCalculator wagerResultCalculator = new WagerResultCalculator();
+			final List<Card> cards = List.of(
+				new Card(Rank.TEN, Suit.CLUB),
+				new Card(Rank.ACE, Suit.HEART)
+			);
+			final Participant participant = new Participant(new CardHand(cards));
+			participant.writeDuelResult(DuelResult.WIN);
+			final Player player = new Player("파랑", participant);
+
+			final Money wager = new Money(1_000);
+
+			// when
+			final Money wagerResult = wagerResultCalculator.calculate(player, wager);
+
+			// then
+			assertThat(wagerResult.getValue()).isEqualTo(2_500);
+		}
 	}
 }
