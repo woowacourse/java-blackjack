@@ -30,11 +30,17 @@ public class InputView {
         return Arrays.stream(names).toList();
     }
 
-    public static boolean readHit(Player player) {
+    public static PlayerChoice readChoice(Player player) {
         OutputView.printHitOrStand(player);
-        String hit = SCANNER.nextLine();
-        validateHit(hit);
-        return hit.equals(PlayerChoice.HIT.getChoiceName());
+        String choice = SCANNER.nextLine();
+        validateChoice(choice);
+        return PlayerChoice.findPlayerChoice(choice);
+    }
+
+    public static int inputAdditionalBet() {
+        System.out.println("추가 베팅 금액을 입력해주세요");
+        String additionalBet = SCANNER.nextLine();
+        return validateInteger(additionalBet);
     }
 
     private static int validateInteger(String inputPrice) {
@@ -58,9 +64,11 @@ public class InputView {
         }
     }
 
-    private static void validateHit(String choice) {
-        if (!(choice.equals(PlayerChoice.HIT.getChoiceName()) || choice.equals(PlayerChoice.STAND.getChoiceName()))) {
-            throw new IllegalArgumentException("[ERROR] hit 또는 stand 를 입력해주세요. 입력값 : " + choice);
+    private static void validateChoice(String choice) {
+        boolean check = Arrays.stream(PlayerChoice.values())
+                .anyMatch(value-> value.getChoiceName().equals(choice));
+        if (!check) {
+            throw new IllegalArgumentException("[ERROR] 잘못된 입력입니다. 입력값 : " + choice);
         }
     }
 }

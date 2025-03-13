@@ -38,6 +38,7 @@ public class OutputView {
     }
 
     public static void printFinalScore(Dealer dealer, Players players) {
+        System.out.println();
         List<String> dealerCardNames = dealer.getHandCards().stream().map(Card::getCardName).toList();
         System.out.print("딜러카드: " + String.join(JOIN_DELIMITER, dealerCardNames));
         System.out.println(" - 결과: " + dealer.calculateFinalScore());
@@ -51,7 +52,7 @@ public class OutputView {
 
     public static void printDealerFinalResult(BettingResult bettingResult) {
         System.out.println("## 최종 수익");
-        System.out.println("딜러: " + bettingResult.calculateDealerFinalResult());
+        System.out.println("딜러: " + bettingResult.calculateDealerFinalResult()); // 이거 뷰에 비즈니스 로직 있는 거 아닌가?
     }
 
     public static void printPlayerFinalResult(BettingResult bettingResult) {
