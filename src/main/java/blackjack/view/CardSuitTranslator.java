@@ -4,7 +4,7 @@ import blackjack.common.ErrorMessage;
 import blackjack.domain.CardSuit;
 import java.util.Map;
 
-public final class CardSuitTranslator {
+public class CardSuitTranslator {
 
     private static final Map<CardSuit, String> suitDescriptions = Map.of(
             CardSuit.HEART, "하트",

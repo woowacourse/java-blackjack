@@ -109,5 +109,4 @@ class PlayerTest {
         // when & then
         assertThat(player.canTakeCard()).isEqualTo(expect);
     }
-
 }

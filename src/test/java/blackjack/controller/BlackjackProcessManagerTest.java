@@ -1,8 +1,8 @@
 package blackjack.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.GameResultType;
@@ -58,7 +58,7 @@ class BlackjackProcessManagerTest {
 
     @DisplayName("결과를 연산한다.")
     @Test
-    void test5() {
+    void test3() {
         // given
         Dealer dealer = new Dealer(HandFixture.createHandWithOptimisticValue20());
 
@@ -79,7 +79,7 @@ class BlackjackProcessManagerTest {
 
     @DisplayName("플레이어와 딜러가 busted 라면 무를 반환한다.")
     @Test
-    void test6() {
+    void test4() {
 
         Dealer dealer = new Dealer(HandFixture.busted());
 
@@ -99,7 +99,7 @@ class BlackjackProcessManagerTest {
 
     @DisplayName("플레이어만 busted라면 딜러가 승리한다.")
     @Test
-    void test7() {
+    void test5() {
         // given
         Dealer dealer = new Dealer(HandFixture.normal());
 
@@ -120,7 +120,7 @@ class BlackjackProcessManagerTest {
 
     @DisplayName("딜러만 busted라면 플레이어가 승리한다.")
     @Test
-    void test8() {
+    void test6() {
         // given
         Dealer dealer = new Dealer(HandFixture.busted());
 
@@ -137,5 +137,35 @@ class BlackjackProcessManagerTest {
 
         // then
         assertThat(result.getDealerResult()).containsEntry(GameResultType.LOSE, 5);
+    }
+
+    @DisplayName("덱을 설정한다.")
+    @Test
+    void test7() {
+        // when & then
+        assertThatCode(blackjackProcessManager::generateDeck)
+                .doesNotThrowAnyException();
+    }
+
+    @DisplayName("이름들을 입력받아서 저장한다.")
+    @Test
+    void test9() {
+        // given
+        List<String> names = List.of("꾹이", "히로", "비타");
+
+        // when
+        Players players = blackjackProcessManager.generatePlayers(names);
+
+        // the
+        assertThat(players.getPlayers()).hasSize(3);
+    }
+
+    @DisplayName("딜러를 반환한다.")
+    @Test
+    void test10() {
+
+        // when & then
+        assertThatCode(blackjackProcessManager::generateDealer)
+                .doesNotThrowAnyException();
     }
 }

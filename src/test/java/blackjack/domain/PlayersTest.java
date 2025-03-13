@@ -40,6 +40,5 @@ class PlayersTest {
         assertThatThrownBy(() -> Players.from(playersToBeSaved))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.EXCEED_PLAYER_MEMBERS.getMessage());
-
     }
 }

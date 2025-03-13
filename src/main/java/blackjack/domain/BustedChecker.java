@@ -3,8 +3,8 @@ package blackjack.domain;
 import java.util.function.BiPredicate;
 
 public enum BustedChecker {
-    ALL_BUSTED((player, dealer) -> player.isBusted() && dealer.isBusted()),
     DEALER_BUSTED((player, dealer) -> dealer.isBusted()),
+    ALL_BUSTED((player, dealer) -> player.isBusted() && dealer.isBusted()),
     PLAYER_BUSTED((player, dealer) -> player.isBusted()),
     NONE((player, dealer) -> true);
 

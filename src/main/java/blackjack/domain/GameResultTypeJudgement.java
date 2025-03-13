@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.function.BiFunction;
 
 public enum GameResultTypeJudgement {
-    ALL_BUSTED(BustedChecker.ALL_BUSTED, (playerValue, dealerValue) -> GameResultType.TIE),
     DEALER_BUSTED(BustedChecker.DEALER_BUSTED, (playerValue, dealerValue) -> GameResultType.WIN),
+    ALL_BUSTED(BustedChecker.ALL_BUSTED, (playerValue, dealerValue) -> GameResultType.TIE),
     PLAYER_BUSTED(BustedChecker.PLAYER_BUSTED, (playerValue, dealerValue) -> GameResultType.LOSE),
     NORMAL(BustedChecker.NONE, GameResultType::find);
 
