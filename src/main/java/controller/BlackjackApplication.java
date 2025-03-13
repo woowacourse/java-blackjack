@@ -63,7 +63,7 @@ public class BlackjackApplication {
     }
 
     private void decideAdditionalCardForDealer(Dealer dealer) {
-        if (!dealer.isPossibleDraw()) {
+        if (!dealer.shouldDrawCard()) {
             dealer.addCard(cardGiver.giveOne());
             outputView.printDealerDraw();
             return;
@@ -89,7 +89,7 @@ public class BlackjackApplication {
     }
 
     private void showMessageIfBust(Player player) {
-        if (player.hasBustCards()) {
+        if (player.isBust()) {
             outputView.printBustMessage();
         }
     }
@@ -101,6 +101,6 @@ public class BlackjackApplication {
     }
 
     private boolean isPossibleRequest(Player player, AnswerType answerType) {
-        return answerType.isEqualTo(YES) && !player.hasBustCards();
+        return answerType.isEqualTo(YES) && !player.isBust();
     }
 }

@@ -2,6 +2,7 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Hand;
+import domain.card.Score;
 
 public abstract class Participant {
     protected final Hand hand;
@@ -9,6 +10,8 @@ public abstract class Participant {
     protected Participant(Hand hand) {
         this.hand = hand;
     }
+
+    public abstract Hand openInitialHand();
 
     public Hand getCards() {
         return hand;
@@ -22,13 +25,11 @@ public abstract class Participant {
         hand.add(receivedCard);
     }
 
-    public int getScore() {
-        return hand.calculateSum();
+    public Score getScore() {
+        return Score.from(hand);
     }
 
-    public abstract Hand openInitialHand();
-
     public boolean isBust() {
-        return hand.isBust();
+        return getScore().isBust();
     }
 }

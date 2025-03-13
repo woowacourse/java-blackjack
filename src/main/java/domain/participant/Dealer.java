@@ -13,8 +13,8 @@ public class Dealer extends Participant {
         return new Dealer(Hand.createEmpty());
     }
 
-    public boolean isPossibleDraw() {
-        return hand.calculateSum() <= VALID_DRAW_LIMIT;
+    public boolean shouldDrawCard() {
+        return getScore().isLessOrEqualThen(VALID_DRAW_LIMIT);
     }
 
     @Override

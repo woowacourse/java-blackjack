@@ -1,4 +1,4 @@
-package domain.result;
+package domain.participant;
 
 import static domain.card.CardNumberType.*;
 import static domain.card.CardType.*;
@@ -6,13 +6,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
 import domain.card.Hand;
-import domain.participant.Dealer;
-import domain.participant.Player;
+import domain.result.GameResultStatus;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class GameResultStatusTest {
+public class PlayerTest {
     Dealer bustDealer = new Dealer(new Hand(
             List.of(new Card(JACK, CLOVER), new Card(KING, CLOVER), new Card(TWO, CLOVER))));
     Player bustPlayer = new Player("mimi", new Hand(
@@ -34,7 +33,7 @@ public class GameResultStatusTest {
         //given
 
         //when
-        GameResultStatus gameResultStatus = GameResultStatus.calculate(bustPlayer, bustDealer);
+        GameResultStatus gameResultStatus = bustPlayer.calculateScore(bustDealer);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.LOSE);
@@ -46,7 +45,7 @@ public class GameResultStatusTest {
         //given
 
         //when
-        GameResultStatus gameResultStatus = GameResultStatus.calculate(twentyHandPlayer, bustDealer);
+        GameResultStatus gameResultStatus = twentyHandPlayer.calculateScore(bustDealer);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.WIN);
@@ -58,7 +57,7 @@ public class GameResultStatusTest {
         //given
 
         //when
-        GameResultStatus gameResultStatus = GameResultStatus.calculate(bustPlayer, twentyHandDealer);
+        GameResultStatus gameResultStatus = bustPlayer.calculateScore(twentyHandDealer);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.LOSE);
@@ -70,7 +69,7 @@ public class GameResultStatusTest {
         //given
 
         //when
-        GameResultStatus gameResultStatus = GameResultStatus.calculate(twentyOneHandPlayer, twentyHandDealer);
+        GameResultStatus gameResultStatus = twentyOneHandPlayer.calculateScore(twentyHandDealer);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.WIN);
@@ -82,7 +81,7 @@ public class GameResultStatusTest {
         //given
 
         //when
-        GameResultStatus gameResultStatus = GameResultStatus.calculate(twentyHandPlayer, twentyOneHandDealer);
+        GameResultStatus gameResultStatus = twentyHandPlayer.calculateScore(twentyOneHandDealer);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.LOSE);
@@ -94,7 +93,7 @@ public class GameResultStatusTest {
         //given
 
         //when
-        GameResultStatus gameResultStatus = GameResultStatus.calculate(twentyHandPlayer, twentyHandDealer);
+        GameResultStatus gameResultStatus = twentyHandPlayer.calculateScore(twentyHandDealer);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.DRAW);

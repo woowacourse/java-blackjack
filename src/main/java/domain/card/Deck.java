@@ -22,7 +22,7 @@ public class Deck {
 
     public Card draw() {
         checkRemainingCard();
-        return deck.removeFirst();
+        return deck.removeLast();
     }
 
     private List<Card> initializeDeck() {

@@ -35,7 +35,7 @@ public class Players {
         Map<Player, GameResultStatus> gameResult = players.stream()
                 .collect(Collectors.toMap(
                         player -> player,
-                        player -> GameResultStatus.calculate(player, dealer)
+                        player -> player.calculateScore(dealer)
                 ));
         return new GameResult(gameResult);
     }

@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.card.Hand;
+import domain.result.GameResultStatus;
 import java.util.Objects;
 
 public class Player extends Participant {
@@ -11,12 +12,28 @@ public class Player extends Participant {
         this.name = name;
     }
 
-    public boolean hasBustCards() {
-        return hand.isBust();
-    }
-
     public String getName() {
         return name;
+    }
+
+    public GameResultStatus calculateScore(Dealer dealer) {
+        if (isBust()) {
+            return GameResultStatus.LOSE;
+        }
+        if (dealer.isBust()) {
+            return GameResultStatus.WIN;
+        }
+        return compare(dealer);
+    }
+
+    public GameResultStatus compare(Dealer dealer) {
+        if (getScore().isGreaterThen(dealer.getScore())) {
+            return GameResultStatus.WIN;
+        }
+        if (getScore().isEqualTo(dealer.getScore())) {
+            return GameResultStatus.DRAW;
+        }
+        return GameResultStatus.LOSE;
     }
 
     @Override

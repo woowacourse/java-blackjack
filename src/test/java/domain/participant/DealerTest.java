@@ -22,7 +22,7 @@ public class DealerTest {
         dealer.addCards(hand);
 
         //when
-        boolean isPossibleDraw = dealer.isPossibleDraw();
+        boolean isPossibleDraw = dealer.shouldDrawCard();
 
         //then
         assertThat(isPossibleDraw).isTrue();
@@ -40,7 +40,7 @@ public class DealerTest {
         dealer.addCards(hand);
 
         //when
-        boolean isPossibleDraw = dealer.isPossibleDraw();
+        boolean isPossibleDraw = dealer.shouldDrawCard();
 
         //then
         assertThat(isPossibleDraw).isFalse();
@@ -59,7 +59,7 @@ public class DealerTest {
         dealer.addCards(hand);
 
         //when
-        boolean isPossibleDraw = dealer.isPossibleDraw();
+        boolean isPossibleDraw = dealer.shouldDrawCard();
 
         //then
         assertThat(isPossibleDraw).isTrue();
@@ -78,7 +78,7 @@ public class DealerTest {
         dealer.addCards(hand);
 
         //when
-        boolean isPossibleDraw = dealer.isPossibleDraw();
+        boolean isPossibleDraw = dealer.shouldDrawCard();
 
         //then
         assertThat(isPossibleDraw).isFalse();
@@ -97,7 +97,7 @@ public class DealerTest {
         dealer.addCards(hand);
 
         //when
-        boolean isPossibleDraw = dealer.isPossibleDraw();
+        boolean isPossibleDraw = dealer.shouldDrawCard();
 
         //then
         assertThat(isPossibleDraw).isTrue();
