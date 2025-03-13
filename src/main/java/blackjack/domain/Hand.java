@@ -89,9 +89,7 @@ public class Hand  {
         }
     }
 
-    // 블랙잭 여부 반환
     public boolean isBlackJack(){
         return cards.size() == 2 && getOptimisticValue() == 21;
     }
-
 }

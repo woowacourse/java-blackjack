@@ -5,8 +5,6 @@ import java.util.function.BiPredicate;
 
 public enum GameResultType {
 
-    // TODO 블랙잭인 여부를 우선 순위로 하여 판단하도록 해야함
-
     WIN((value, comparedValue) -> value > comparedValue),
     TIE(Integer::equals),
     LOSE((value, comparedValue) -> value < comparedValue);
@@ -41,17 +39,5 @@ public enum GameResultType {
         }
 
         return GameResultType.LOSE;
-    }
-
-    public GameResultType getOppositeType() {
-        if (this.equals(WIN)) {
-            return LOSE;
-        }
-
-        if (this.equals(LOSE)) {
-            return WIN;
-        }
-
-        return TIE;
     }
 }

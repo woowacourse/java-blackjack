@@ -19,7 +19,6 @@ public enum GameResultTypePlayerJudgement {
     }
 
     public static GameResultType find(Player player, Dealer dealer) {
-
         return Arrays.stream(values())
                 .filter(judge -> judge.bustedChecker.check(player, dealer))
                 .findFirst()

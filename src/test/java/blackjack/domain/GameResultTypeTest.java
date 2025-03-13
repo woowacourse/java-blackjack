@@ -31,5 +31,4 @@ class GameResultTypeTest {
 
         assertThat(GameResultType.judgeForPlayer(player, dealer)).isEqualTo(expect);
     }
-
 }
