@@ -36,7 +36,7 @@ class HandTest {
     void 배수의_따라_계산해_반환한다(int batAmount, double multiple, int excepted) {
         Hand hand = new Hand(batAmount);
 
-        int result = hand.calculateBetAmount(multiple);
+        int result = hand.calculateWinningAmount(multiple);
 
         assertThat(result).isEqualTo(excepted);
     }

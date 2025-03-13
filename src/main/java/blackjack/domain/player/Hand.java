@@ -1,52 +1,43 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.Card;
-
-import java.util.ArrayList;
-import java.util.List;
+import blackjack.domain.card.Cards;
 
 public class Hand {
 
-    private static final int BUST_THRESHOLD = 21;
+    private static final int BLACKJACK_SCORE = 21;
 
-    private final List<Card> cards;
-    private final int batAmount;
+    private final Cards cards;
+    private final int betAmount;
 
-    public Hand(final int batAmount) {
-        this.cards = new ArrayList<>();
-        this.batAmount = batAmount;
+    public Hand(final int betAmount) {
+        this.cards = new Cards();
+        this.betAmount = betAmount;
     }
 
-    public void addCards(final List<Card> cards) {
-        this.cards.addAll(cards);
+    public void addCards(final Cards newCards) {
+        this.cards.addCard(newCards);
     }
 
-    public int calculateCardScore() {
-        int sum = cards.stream()
-                .mapToInt(Card::getValue)
-                .sum();
+    public int calculateScore() {
+        int totalScore = cards.sumCardScore();
+        int aceCardCount = cards.countAceCard();
 
-        int count = (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
-
-        while (count > 0 && sum + 10 <= BUST_THRESHOLD) {
-            sum += 10;
-            count--;
+        while (aceCardCount > 0 && totalScore + 10 <= BLACKJACK_SCORE) {
+            totalScore += 10;
+            aceCardCount--;
         }
-
-        return sum;
+        return totalScore;
     }
 
-    public int calculateBetAmount(final double multiplier) {
-        return (int) (batAmount * multiplier);
+    public int calculateWinningAmount(final double multiplier) {
+        return (int) (betAmount * multiplier);
     }
 
     public boolean isBlackJack() {
-        return calculateCardScore() == BUST_THRESHOLD && cards.size() == 2;
+        return calculateScore() == BLACKJACK_SCORE && cards.isBlackJackSize();
     }
 
-    public List<Card> getCards() {
+    public Cards getCards() {
         return cards;
     }
 }

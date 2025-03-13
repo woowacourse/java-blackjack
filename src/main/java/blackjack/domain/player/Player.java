@@ -33,11 +33,11 @@ public abstract class Player {
     }
 
     public boolean isHit() {
-        return hand.calculateCardScore() <= HIT_THRESHOLD;
+        return hand.calculateScore() <= HIT_THRESHOLD;
     }
 
     public int getCardScore() {
-        return hand.calculateCardScore();
+        return hand.calculateScore();
     }
 
     public boolean isBlackJack() {
@@ -45,7 +45,7 @@ public abstract class Player {
     }
 
     public int calculateBetAmount(double multiple) {
-        return hand.calculateBetAmount(multiple);
+        return hand.calculateWinningAmount(multiple);
     }
 
     public String getName() {
