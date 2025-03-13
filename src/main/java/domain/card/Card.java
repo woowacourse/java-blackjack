@@ -7,8 +7,8 @@ public record Card(
         CardType cardType
 ) {
 
-    public int getDefaultNumber() {
-        return cardNumberType.getDefaultNumber();
+    public int getNumber() {
+        return cardNumberType.getCardNumber();
     }
 
     @Override

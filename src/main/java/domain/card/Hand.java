@@ -9,6 +9,8 @@ import java.util.Objects;
 
 public class Hand {
     private static final int VALID_MAX_SUM_LIMIT = 21;
+    private static final int ACE_ADDING_VALUE = 10;
+    private static final int ACE_VALUE_ADDING_AVAILABLE_SUM = 11;
 
     private final List<Card> cards;
 
@@ -46,30 +48,21 @@ public class Hand {
     }
 
     public int calculateSum() {
-        int nonAceSum = calculateSumWithoutAce();
-        return calculateSumContainingAce(nonAceSum);
+        int defaultSum = calculateDefaultSum();
+        return addHighAceNumberToDefaultSum(defaultSum);
     }
 
-    private int calculateSumWithoutAce() {
-        int sum = 0;
-        List<Card> nonAceCards = cards.stream()
-                .filter(card -> card.cardNumberType() != ACE)
-                .toList();
-
-        for (Card card : nonAceCards) {
-            sum += card.getDefaultNumber();
-        }
-        return sum;
+    private int calculateDefaultSum() {
+        return cards.stream()
+                .mapToInt(Card::getNumber)
+                .sum();
     }
 
-    private int calculateSumContainingAce(int restSum) {
-        int sum = restSum;
-        int aceCount = (int) cards.stream()
-                .filter(card -> card.cardNumberType() == ACE)
-                .count();
-
-        for (int i = 0; i < aceCount; i++) {
-            sum += getAceNumber(sum);
+    private int addHighAceNumberToDefaultSum(int sum) {
+        boolean hasAce = cards.stream()
+                .anyMatch(card -> card.cardNumberType() == ACE);
+        if(hasAce && sum <= ACE_VALUE_ADDING_AVAILABLE_SUM) {
+            sum += ACE_ADDING_VALUE;
         }
         return sum;
     }
