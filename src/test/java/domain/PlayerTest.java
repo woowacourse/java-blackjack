@@ -21,7 +21,7 @@ public class PlayerTest {
     @Test
     void 카드_추가_가능() {
         // given
-        Player player = Player.init("플레이어", new Money("100000"));
+        Player player = Player.init("플레이어", Money.of("100000"));
         Card card = new Card(CardNumber.A, CardShape.CLOVER);
         player.addCard(card);
 
@@ -38,7 +38,7 @@ public class PlayerTest {
     void 최적_결과_선택_21_이하(List<Card> inputCards, int expected) {
         // given
         Hand hand = Hand.of(inputCards);
-        Player player = Player.of(hand, "플레이어1", new Money("100000"));
+        Player player = Player.of(hand, "플레이어1", Money.of("100000"));
 
         // when
         final int result = player.calculateScore();
@@ -80,7 +80,7 @@ public class PlayerTest {
     void 가장_가까운_값_선택(List<Card> inputCards, int expected) {
         //given
         Hand hand = Hand.of(inputCards);
-        Player player = Player.of(hand, "플레이어1", new Money("100000"));
+        Player player = Player.of(hand, "플레이어1", Money.of("100000"));
 
         //when
         int actual = player.calculateScore();
@@ -118,7 +118,7 @@ public class PlayerTest {
     void test1(List<Card> inputCard, boolean expected) {
         //given
         Hand hand = Hand.of(inputCard);
-        Player dealer = Player.of(hand, "플레이어1", new Money("100000"));
+        Player dealer = Player.of(hand, "플레이어1", Money.of("100000"));
         //when
         final boolean actual = dealer.isBurst();
         //then

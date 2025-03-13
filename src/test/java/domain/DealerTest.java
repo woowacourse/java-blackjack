@@ -40,7 +40,7 @@ class DealerTest {
                         new Card(CardNumber.TWO, CardShape.CLOVER)
                 )
         );
-        Player player1 = Player.of(hand1, "플레이어", new Money("100000"));
+        Player player1 = Player.of(hand1, "플레이어", Money.of("100000"));
 
         Hand hand2 = Hand.of(
                 List.of(
@@ -48,7 +48,7 @@ class DealerTest {
                         new Card(CardNumber.FOUR, CardShape.CLOVER)
                 )
         );
-        Player player2 = Player.of(hand2, "플레이어2", new Money("100000"));
+        Player player2 = Player.of(hand2, "플레이어2", Money.of("100000"));
         Map<Player, GameResult> expected = Map.of(
                 player1, GameResult.LOSE,
                 player2, GameResult.WIN
@@ -71,7 +71,7 @@ class DealerTest {
                 new Card(CardNumber.A, CardShape.CLOVER),
                 new Card(CardNumber.FOUR, CardShape.CLOVER)
         )));
-        Player player = Player.init("플레이어1", new Money("100000"));
+        Player player = Player.init("플레이어1", Money.of("100000"));
         Players players = Players.of(List.of(player));
 
         Hand dealerHand = Hand.of(
@@ -84,7 +84,7 @@ class DealerTest {
         Player expectedPlayer = Player.of(Hand.of(List.of(
                 new Card(CardNumber.TWO, CardShape.CLOVER),
                 new Card(CardNumber.TEN, CardShape.CLOVER)
-        )), "플레이어1", new Money("100000"));
+        )), "플레이어1", Money.of("100000"));
         Players expectedPlayers = Players.of(List.of(expectedPlayer));
         //when
         dealer.handoutCards(players);
@@ -101,10 +101,10 @@ class DealerTest {
         Dealer dealer = Dealer.init(new StaticCardGenerator(List.of(
                 new Card(CardNumber.A, CardShape.CLOVER)
         )));
-        Player player = Player.init("플레이어1", new Money("100000"));
+        Player player = Player.init("플레이어1", Money.of("100000"));
         Player expectedPlayer = Player.of(Hand.of(List.of(
                 new Card(CardNumber.A, CardShape.CLOVER)
-        )), "플레이어1", new Money("100000"));
+        )), "플레이어1", Money.of("100000"));
         //when
         dealer.giveCards(player, 1);
         //then
@@ -149,7 +149,7 @@ class DealerTest {
         // given
         Hand playerHand = Hand.of(self);
         Hand dealerHand = Hand.of(other);
-        Player player = Player.of(playerHand, "player", new Money("100000"));
+        Player player = Player.of(playerHand, "player", Money.of("100000"));
         Dealer dealer = Dealer.of(dealerHand, new StaticCardGenerator());
 
         // when
@@ -231,7 +231,7 @@ class DealerTest {
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
-        Player player = Player.of(playerHand, "player", new Money("100000"));
+        Player player = Player.of(playerHand, "player", Money.of("100000"));
         Dealer dealer = Dealer.of(dealerHand, new StaticCardGenerator());
 
         // when
@@ -254,7 +254,7 @@ class DealerTest {
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
-        Player player = Player.of(playerHand, "player", new Money("100000"));
+        Player player = Player.of(playerHand, "player", Money.of("100000"));
         Dealer dealer = Dealer.of(dealerHand, new StaticCardGenerator());
 
         // when
@@ -277,7 +277,7 @@ class DealerTest {
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
-        Player player = Player.of(playerHand, "player", new Money("100000"));
+        Player player = Player.of(playerHand, "player", Money.of("100000"));
         Dealer dealer = Dealer.of(dealerHand, new StaticCardGenerator());
 
         // when
@@ -299,7 +299,7 @@ class DealerTest {
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
-        Player player = Player.of(playerHand, "player", new Money("100000"));
+        Player player = Player.of(playerHand, "player", Money.of("100000"));
         Dealer dealer = Dealer.of(dealerHand, new StaticCardGenerator());
 
         // when
@@ -323,7 +323,7 @@ class DealerTest {
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
-        Player player = Player.of(playerHand, "player", new Money("100000"));
+        Player player = Player.of(playerHand, "player", Money.of("100000"));
         Dealer dealer = Dealer.of(dealerHand, new StaticCardGenerator());
 
         // when
