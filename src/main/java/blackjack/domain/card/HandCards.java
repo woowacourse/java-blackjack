@@ -11,7 +11,6 @@ public class HandCards {
 
     private final List<Card> cards;
 
-
     public HandCards() {
         this.cards = new ArrayList<>();
     }
