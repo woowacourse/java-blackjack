@@ -11,19 +11,32 @@ public class Betting {
         this.money = money;
     }
 
-    public int getMoney() {
-        return money;
+    public int evaluate(GameResult result) {
+        return switch (result) {
+            case WIN -> earn();
+            case LOSE -> lose();
+            case DRAW -> same();
+            case BLACKJACK -> earnedWhenBlackJack();
+        };
     }
 
-    public void lose() {
-        this.money = 0;
+    private int lose() {
+        return this.money * -1;
     }
 
-    public int earn() {
+    private int same() {
+        return 0;
+    }
+
+    private int earn() {
         return this.money * DEFAULT_ODDS;
     }
 
-    public int earnedWhenBlackJack() {
+    private int earnedWhenBlackJack() {
         return (int) (this.money * BLACK_JACK_ODDS);
+    }
+
+    public int getMoney() {
+        return money;
     }
 }

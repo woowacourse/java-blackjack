@@ -14,34 +14,50 @@ public class BettingTest {
 
         assertThat(betting.getMoney()).isEqualTo(money);
     }
-
+    
     @Test
-    void 배팅_금액을_모두_잃는다() {
+    void 승리하면_배팅_금액을_받는다() {
+        GameResult result = GameResult.WIN;
         int money = 10000;
         Betting betting = new Betting(money);
 
-        betting.lose();
+        int profit = betting.evaluate(result);
 
-        assertThat(betting.getMoney()).isEqualTo(0);
+        assertThat(profit).isEqualTo(money);
     }
 
     @Test
-    void 배팅_금액을_받는다() {
+    void 무승부이면_수익이_없다() {
+        GameResult result = GameResult.DRAW;
         int money = 10000;
         Betting betting = new Betting(money);
 
-        int earned = betting.earn();
+        int profit = betting.evaluate(result);
 
-        assertThat(earned).isEqualTo(money);
+        assertThat(profit).isEqualTo(0);
     }
 
     @Test
-    void 배팅_금액의_1_5배를_받는다() {
+    void 패배하면_배팅_금액을_잃는다() {
+        GameResult result = GameResult.LOSE;
         int money = 10000;
         Betting betting = new Betting(money);
 
-        int earned = betting.earnedWhenBlackJack();
+        int profit = betting.evaluate(result);
 
-        assertThat(earned).isEqualTo((int) (money * 1.5));
+        assertThat(profit).isEqualTo(-1 * money);
     }
+
+    @Test
+    void 블랙잭이면_1_5배를_받는다() {
+        GameResult result = GameResult.BLACKJACK;
+        int money = 10000;
+        Betting betting = new Betting(money);
+
+        int profit = betting.evaluate(result);
+
+        assertThat(profit).isEqualTo((int) (money * 1.5));
+    }
+
+
 }

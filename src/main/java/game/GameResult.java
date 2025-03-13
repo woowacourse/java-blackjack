@@ -50,7 +50,7 @@ public enum GameResult {
         return DRAW;
     }
 
-    public int countReversedGameResult(List<GameResult> gameResults) {
+    public int countReversed(List<GameResult> gameResults) {
         return countByCondition(gameResults, reverse());
     }
 
