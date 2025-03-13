@@ -13,7 +13,9 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import config.CardDeckFactory;
 import domain.card.Card;
-import domain.card.CardDeck;
+import domain.card.Deck;
+import domain.card.Hand;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -24,26 +26,15 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class DealerTest {
     @Test
-    @DisplayName("카드 분배 테스트")
-    void hitCardsToParticipantTest() {
-        // given
-        CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        CardDeck cardDeck = cardDeckFactory.create();
-        Dealer dealer = new Dealer(cardDeck);
-        //when-then
-        assertThat(dealer.hitCard()).isInstanceOf(Card.class);
-
-    }
-
-    @Test
     @DisplayName("카드 추가 테스트")
     void addCardsTest() {
         // given
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        CardDeck cardDeck = cardDeckFactory.create();
-        Dealer dealer = new Dealer(cardDeck);
-        // when-then
-        assertDoesNotThrow(dealer::addCards);
+        Deck deck = cardDeckFactory.create();
+        Hand hand = new Hand(List.of(new Card(DIAMOND, TWO)));
+        Dealer dealer = new Dealer(hand);
+        //when-then
+        assertDoesNotThrow(() -> dealer.addCard(deck.hitCard()));
     }
 
 
@@ -51,10 +42,10 @@ public class DealerTest {
     @DisplayName("카드 합계 테스트")
     void calculateSumTest() {
         //given
-        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE)));
-        Dealer dealer = new Dealer(cardDeck);
-        dealer.addCards();
-        dealer.addCards();
+        Deck deck = new Deck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE)));
+        Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
+        dealer.addCard(deck.hitCard());
+        dealer.addCard(deck.hitCard());
 
         //when-then
         assertThat(dealer.calculateSum()).isEqualTo(12);
@@ -64,10 +55,10 @@ public class DealerTest {
     @DisplayName("딜러 추가 카드 뽑기 테스트")
     void checkIsUnderThresholdTest() {
         //given
-        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE)));
-        Dealer dealer = new Dealer(cardDeck);
-        dealer.addCards();
-        dealer.addCards();
+        Deck deck = new Deck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE)));
+        Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
+        dealer.addCard(deck.hitCard());
+        dealer.addCard(deck.hitCard());
 
         //when-then
         assertThat(dealer.isUnderThreshold()).isTrue();
@@ -77,10 +68,10 @@ public class DealerTest {
     @DisplayName("딜러 추가 카드 뽑기 테스트 (false) 리턴")
     void checkIsNotUnderThresholdTest() {
         //given
-        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, JACK), new Card(SPADE, QUEEN)));
-        Dealer dealer = new Dealer(cardDeck);
-        dealer.addCards();
-        dealer.addCards();
+        Deck deck = new Deck(List.of(new Card(DIAMOND, JACK), new Card(SPADE, QUEEN)));
+        Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
+        dealer.addCard(deck.hitCard());
+        dealer.addCard(deck.hitCard());
 
         //when-then
         assertThat(dealer.isUnderThreshold()).isFalse();
@@ -89,21 +80,21 @@ public class DealerTest {
     @ParameterizedTest
     @DisplayName("드로우 테스트")
     @MethodSource("provideCardDeckForDrawTest")
-    void drawTest(CardDeck cardDeck) {
+    void drawTest(Deck deck) {
         //given
-        Dealer dealer = new Dealer(cardDeck);
-        dealer.addCards();
-        dealer.addCards();
+        Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
+        dealer.addCard(deck.hitCard());
+        dealer.addCard(deck.hitCard());
 
         //when-then
-        assertDoesNotThrow(dealer::draw);
+        assertDoesNotThrow(() -> dealer.draw(deck.hitCard()));
     }
 
     private static Stream<Arguments> provideCardDeckForDrawTest() {
-        return Stream.of(Arguments.of(
-                new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE), new Card(DIAMOND, TWO))),
-                new CardDeck(List.of(new Card(CLOVER, JACK), new Card(SPADE, JACK), new Card(DIAMOND, JACK))),
-                new CardDeck(List.of(new Card(CLOVER, SEVEN), new Card(SPADE, JACK), new Card(DIAMOND, SEVEN)))
+        return Stream.of(
+                Arguments.of(new Deck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE), new Card(DIAMOND, TWO))),
+                Arguments.of(new Deck(List.of(new Card(CLOVER, JACK), new Card(SPADE, JACK), new Card(DIAMOND, JACK)))),
+                Arguments.of(new Deck(List.of(new Card(CLOVER, SEVEN), new Card(SPADE, JACK), new Card(DIAMOND, SEVEN))))
         ));
     }
 
@@ -111,11 +102,11 @@ public class DealerTest {
     @DisplayName("딜러 드로우 안 터지는 테스트")
     void notDrawTest() {
         // given
-        CardDeck cardDeck = new CardDeck(List.of(new Card(CLOVER, SEVEN), new Card(SPADE, JACK), new Card(DIAMOND, SEVEN)));
-        Dealer dealer = new Dealer(cardDeck);
-        dealer.addCards();
-        dealer.addCards();
+        Deck deck = new Deck(List.of(new Card(CLOVER, SEVEN), new Card(SPADE, JACK), new Card(DIAMOND, SEVEN)));
+        Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
+        dealer.addCard(deck.hitCard());
+        dealer.addCard(deck.hitCard());
 
-        assertDoesNotThrow(dealer::draw);
+        assertDoesNotThrow(() -> dealer.draw(deck.hitCard()));
     }
 }
