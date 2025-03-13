@@ -1,7 +1,8 @@
 package domain.participant;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
+import domain.Money;
 import domain.card.Deck;
 import domain.card.Rank;
 import domain.card.Score;
@@ -9,7 +10,6 @@ import domain.card.Suit;
 import domain.card.TrumpCard;
 import java.util.ArrayDeque;
 import java.util.List;
-import mock.MockParticipant;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -17,62 +17,83 @@ import org.junit.jupiter.api.Test;
 class ParticipantTest {
 
   @Nested
-  @DisplayName("참가자 카드 뽑기")
-  class HitTest {
+  @DisplayName("제너릭 선언을 올바르게 사용한다")
+  class UsingGenericRoleTest {
 
     @Test
-    @DisplayName("참가자는 한 장의 카드를 뽑는다.")
-    void test_hit() {
+    @DisplayName("제너릭 선언된 객체에게 올바르게 요청한다")
+    void test_usingGenericRole() {
       // given
-      final var participant = new MockParticipant();
-      final var card = new TrumpCard(Rank.ACE, Suit.CLUB);
+      final MockRole mockRole = new MockRole();
+      final Participant<MockRole> participant = new Participant<>(mockRole);
 
-      // when
-      participant.hit(card);
-
-      // then
-      List<TrumpCard> actualCards = participant.getCards();
-      assertThat(actualCards.getFirst()).isEqualTo(card);
+      // when&then
+      assertThat(participant.isHit()).isEqualTo(mockRole.isHit(new Score(0)));
+      assertThat(participant.getName()).isEqualTo(mockRole.getName());
+      assertThat(participant.getMoney()).isEqualTo(mockRole.getMoney());
     }
 
     @Test
-    @DisplayName("참가자는 딜을 시작할 때, 덱으로부터 올바르게 카드를 뽑는다.")
+    @DisplayName("초기 핸드를 올바르게 생성한다")
     void test_initialDeal() {
       // given
-      final Participant participant = new MockParticipant();
-      final List<TrumpCard> cards = List.of(new TrumpCard(Rank.ACE, Suit.CLUB),
-          new TrumpCard(Rank.ACE, Suit.DIAMOND));
-      final Deck deck = new Deck(new ArrayDeque<>(cards));
+      final MockRole mockRole = new MockRole();
+      final Participant<MockRole> participant = new Participant<>(mockRole);
+      final var trumpCards = List.of(
+          new TrumpCard(Rank.ACE, Suit.DIAMOND),
+          new TrumpCard(Rank.TWO, Suit.DIAMOND));
+      final var deck = new Deck(new ArrayDeque<>(trumpCards));
+      //when
+      final Participant<MockRole> actual = participant.initialDeal(deck);
+      //then
+      assertThat(actual.getCards()).isEqualTo(trumpCards);
+      assertThat(actual).isNotSameAs(participant);
+    }
 
-      // when
-      participant.initialDeal(deck);
+    @Test
+    @DisplayName("카드를 저장할때, 히트 가능 여부를 판단하고, 불변 객체를 반환한다.")
+    void test_hit() {
+      // given
+      final MockRole mockRole = new MockRole();
+      final Participant<MockRole> participant = new Participant<>(mockRole);
+      final TrumpCard card = new TrumpCard(Rank.TWO, Suit.DIAMOND);
+      //when
+      final Participant<? extends Role> actual = participant.hit(card);
+      //then
+      assertThat(actual.getCards()).isEqualTo(List.of(card));
+      assertThat(actual).isNotSameAs(participant);
+    }
 
-      // then
-      List<TrumpCard> actualCards = participant.getCards();
-      assertThat(actualCards).isEqualTo(cards);
-      assertThat(actualCards).isNotSameAs(cards); // 방어적 복사 테스트
+    @Test
+    @DisplayName("내장된 Role 객체가 같으면, 동등한 객체로 판단(Equals)한다.")
+    void test_equals() {
+      // given
+      final MockRole mockRole = new MockRole();
+      final Participant<MockRole> participant = new Participant<>(mockRole);
+      final TrumpCard card = new TrumpCard(Rank.TWO, Suit.DIAMOND);
+      //when
+      final Participant<? extends Role> actual = participant.hit(card);
+      //then
+      assertThat(actual).isEqualTo(participant);
+      assertThat(actual).isNotSameAs(participant);
     }
   }
 
-  @Nested
-  @DisplayName("핸드 랭크 총합 반환")
-  class calculateScore {
+  private static class MockRole implements Role {
 
-    @Test
-    @DisplayName("올바른 핸드 랭크의 총합을 반환한다.")
-    void test_calculateScore() {
-      // given
-      final Participant participant = new MockParticipant();
-      final List<TrumpCard> cards = List.of(new TrumpCard(Rank.ACE, Suit.CLUB),
-          new TrumpCard(Rank.ACE, Suit.DIAMOND));
-      final Deck deck = new Deck(new ArrayDeque<>(cards));
+    @Override
+    public boolean isHit(Score score) {
+      return true;
+    }
 
-      // when
-      participant.initialDeal(deck);
+    @Override
+    public String getName() {
+      return "MOCK";
+    }
 
-      // then
-      final Score score = participant.calculateScore();
-      assertThat(score.value()).isEqualTo(12);
+    @Override
+    public Money getMoney() {
+      return new Money(0);
     }
   }
 }

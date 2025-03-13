@@ -2,10 +2,13 @@ package controller;
 
 import controller.converter.DomainToTextConverter;
 import domain.BlackjackGame;
+import domain.Money;
 import domain.RoundHistory;
 import domain.card.TrumpCard;
 import domain.participant.Participant;
+import domain.participant.Role;
 import java.util.List;
+import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
@@ -22,29 +25,26 @@ public final class BlackjackController {
   }
 
   public void run() {
-    final var names = inputView.readPlayerNames();
-    final BlackjackGame blackjack = BlackjackGame.from(names);
+    final Map<String, Money> participants = inputView.readPlayerNames();
+    final BlackjackGame blackjack = BlackjackGame.from(participants);
 
     startGame(blackjack);
   }
 
   private void startGame(final BlackjackGame blackjack) {
-    initialDael(blackjack);
-    deal(blackjack);
-    processOpenHandResult(blackjack);
-    round(blackjack);
-  }
-
-  private void initialDael(final BlackjackGame blackjack) {
-    blackjack.initialDeal();
     outputInitialDeal(blackjack);
+    deal(blackjack);
+    openHandResult(blackjack);
+    round(blackjack);
   }
 
   private void outputInitialDeal(final BlackjackGame blackjack) {
     final var players = blackjack.getPlayers();
     final var playerNames = converter.playersToNames(players);
+
     outputView.printDealIntroduce(playerNames);
     outputDealerInitialDealResult(blackjack);
+
     final var convertedPlayers = converter.playersToEntries(players);
     outputView.printPlayersHand(convertedPlayers);
   }
@@ -56,41 +56,41 @@ public final class BlackjackController {
 
 
   private void deal(final BlackjackGame blackjack) {
-    for (Participant player : blackjack.getPlayers()) {
+    for (final Participant<? extends Role> player : blackjack.getPlayers()) {
       processPlayerHits(player, blackjack);
     }
     processDealerHits(blackjack);
   }
 
 
-  public void processPlayerHits(final Participant player, final BlackjackGame blackjack) {
+  public void processPlayerHits(Participant<? extends Role> player, final BlackjackGame blackjack) {
     final var name = player.getName();
     while (player.isHit() && inputView.readPlayerAnswer(name)) {
-      blackjack.hitByParticipant(player);
-      final List<TrumpCard> hand = blackjack.getCards(player);
+      player = blackjack.hitByParticipant(player);
+      final List<TrumpCard> hand = player.getCards();
       outputView.printPlayerHand(player.getName(), converter.handToText(hand));
     }
   }
 
-  private void processDealerHits(BlackjackGame blackjack) {
-    final var dealer = blackjack.getDealer();
+  private void processDealerHits(final BlackjackGame blackjack) {
+    var dealer = blackjack.getDealer();
     while (dealer.isHit()) {
       outputView.printDealerHit();
-      blackjack.hitByParticipant(dealer);
+      dealer = blackjack.hitByParticipant(dealer);
     }
   }
 
-  private void processOpenHandResult(final BlackjackGame blackjack) {
-    final List<Participant> participants = blackjack.getParticipants();
-    for (Participant participant : participants) {
+  private void openHandResult(final BlackjackGame blackjack) {
+    final var participants = blackjack.getParticipant();
+    for (final var participant : participants) {
       outputPlayerHandResult(participant);
     }
   }
 
-  private void outputPlayerHandResult(final Participant participants) {
-    final List<String> convertedCards = converter.participantCardToText(participants);
-    final var score = participants.calculateScore();
-    outputView.printPlayerRoundResult(participants.getName(), convertedCards, score.value());
+  private void outputPlayerHandResult(final Participant<? extends Role> participant) {
+    final List<String> convertedCards = converter.participantCardToText(participant.getCards());
+    final var score = participant.calculateScore();
+    outputView.printPlayerRoundResult(participant.getName(), convertedCards, score.value());
   }
 
   private void round(final BlackjackGame blackjack) {

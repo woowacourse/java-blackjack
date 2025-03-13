@@ -1,11 +1,15 @@
 package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import domain.Money;
+import domain.card.Deck;
 import exceptions.BlackjackArgumentException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -13,75 +17,90 @@ import org.junit.jupiter.api.Test;
 class ParticipantsTest {
 
   @Nested
-  @DisplayName("참가자 추가 테스트")
-  class AddParticipants {
+  @DisplayName("참가자 생성 테스트")
+  class GenerateParticipantsTest {
 
     @Test
-    @DisplayName("딜러가 없다, 예외가 발생한다.")
+    @DisplayName("참가자가 없다면 예외를 발생시킨다.")
     void error_whenNoDealer() {
       //given
-      final List<Participant> given = new ArrayList<>();
-
+      final List<Participant<Player>> given = new ArrayList<>();
+      final var dealer = new Participant<>(new Dealer(new Money(0)));
       //then
-      assertThatThrownBy(() -> new Participants(given))
-          .isInstanceOf(BlackjackArgumentException.class)
-          .hasMessageContaining("하나의 게임에 하나의 딜러가 존재해야 합니다.");
-    }
-
-    @Test
-    @DisplayName("딜러가 2명 이상이라면, 예외가 발생한다.")
-    void error_whenDealerDuplication() {
-      //given
-      final List<Participant> given = new ArrayList<>();
-      given.add(new Dealer());
-      given.add(new Dealer());
-
-      //then
-      assertThatThrownBy(() -> new Participants(given))
-          .isInstanceOf(BlackjackArgumentException.class)
-          .hasMessageContaining("하나의 게임에 하나의 딜러가 존재해야 합니다.");
-    }
-
-    @Test
-    @DisplayName("닉네임 명단을 받으면, 참가자를 추가한다")
-    void test_generateFromNames() {
-      //given
-      final var names = List.of("pobi", "bougi", "uga");
-      final var participants = Participants.from(names);
-
-      //then
-      final var players = participants.getParticipants();
-      var actual = players.stream()
-          .flatMap(player -> names.stream()
-              .filter(name -> name.equals(player.getName())))
-          .count();
-
-      assertThat(actual).isEqualTo(names.size());
-    }
-
-    @Test
-    @DisplayName("중복된 닉네임 명단을 받으면, 예외를 발생한다")
-    void error_duplicationName() {
-      //given
-      final var names = List.of("pobi", "pobi");
-
-      //when&then
-      assertThatThrownBy(() -> Participants.from(names))
-          .isInstanceOf(BlackjackArgumentException.class)
-          .hasMessageContaining("중복된 닉네임");
-    }
-
-    @Test
-    @DisplayName("참가자가 없을 경우, 예외를 발생한다")
-    void error_emptyParticipant() {
-      //given
-      final List<Participant> given = new ArrayList<>();
-      given.add(new Dealer());
-      final var participants = new Participants(given);
-      //when&then
-      assertThatThrownBy(participants::getPlayers)
+      assertThatThrownBy(() -> new Participants(dealer, given))
           .isInstanceOf(BlackjackArgumentException.class)
           .hasMessageContaining("게임 참가자가 없습니다! 게임 설정을 다시 진행해주세요.");
+    }
+
+    @Test
+    @DisplayName("참가자가 중복이면, 예외가 발생한다.")
+    void error_whenDuplicatePlayer() {
+      //given
+      final Money money = new Money(0);
+      final var dealer = new Participant<>(new Dealer(money));
+      final List<Participant<Player>> given = new ArrayList<>();
+      final Player duplicate = new Player("duplicate", money);
+      given.add(new Participant<>(duplicate));
+      given.add(new Participant<>(duplicate));
+      //then
+      assertThatThrownBy(() -> new Participants(dealer, given))
+          .isInstanceOf(BlackjackArgumentException.class)
+          .hasMessageContaining("중복된 닉네임을 가진 플레이어가 포함되어있습니다");
+    }
+
+    @Test
+    @DisplayName("딜러가 없으면, 예외를 발생시킨다.")
+    void error_whenEmptyDealer() {
+      //given
+      final Money money = new Money(0);
+      final List<Participant<Player>> players = new ArrayList<>();
+      final Player player = new Player("given", money);
+      players.add(new Participant<>(player));
+      //then
+      assertThatThrownBy(() -> new Participants(null, players))
+          .isInstanceOf(BlackjackArgumentException.class)
+          .hasMessageContaining("딜러를 찾을 수 없습니다. 딜러는 반드시 게임에 참가해야 합니다.");
+    }
+
+    @Test
+    @DisplayName("참가자를 올바르게 생성한다.")
+    void test_generateOf() {
+      //given
+      final String name = "Test";
+      final Money value = new Money(1000);
+      final Map<String, Money> given = new HashMap<>();
+      given.put(name, value);
+
+      //when
+      final var participants = Participants.generateOf(given, Deck.createShuffledDecks(1));
+      //then
+      final var expect = new Player(name, value);
+      final var actual = participants.getPlayers().getFirst();
+      assertThat(actual.getName()).isEqualTo(expect.getName());
+      assertThat(actual.getCards().size()).isEqualTo(2);
+    }
+
+    @Nested
+    @DisplayName("전체 참가자 반환 테스트")
+    class ParticipantFindAndGetTest {
+
+      @Test
+      @DisplayName("딜러와 플레이어를 모두 반환한다.")
+      void test_getAllParticipants() {
+        //given
+        final String name = "Test";
+        final Money value = new Money(1000);
+        final Map<String, Money> given = new HashMap<>();
+        given.put(name, value);
+
+        //when
+        final var participants = Participants.generateOf(given, Deck.createShuffledDecks(1));
+        //then
+        final var actual = participants.getAllParticipants();
+        assertThat(actual.size()).isEqualTo(2);
+        assertThat(actual.getFirst().getName()).isEqualTo(DealerRoster.DEFAULT.getName());
+        assertThat(actual.getLast().getName()).isEqualTo(name);
+      }
     }
   }
 }

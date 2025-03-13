@@ -1,87 +1,103 @@
 package domain.participant;
 
+import domain.Money;
 import domain.card.Deck;
 import domain.card.TrumpCard;
 import exceptions.BlackjackArgumentException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public final class Participants {
 
-  private static final int NUMBER_OF_DEALER = 1;
+  private final Participant<Dealer> dealer;
+  private final List<Participant<Player>> participants;
 
-  private final List<Participant> participants;
-
-  public Participants(List<Participant> participants) {
-    validateNumberOfDealer(participants);
+  public Participants(Participant<Dealer> dealer, List<Participant<Player>> participants) {
+    validate(dealer, participants);
+    this.dealer = dealer;
     this.participants = participants;
   }
 
-  private void validateNumberOfDealer(List<Participant> participants) {
-    long currentNumberOfDealer = participants.stream()
-        .filter(Participant::isDealer)
-        .count();
-    if (currentNumberOfDealer != NUMBER_OF_DEALER) {
-      throw new BlackjackArgumentException("하나의 게임에 하나의 딜러가 존재해야 합니다.");
-    }
+  private void validate(Participant<Dealer> dealer, List<Participant<Player>> participants) {
+    validatePlayerNotEmpty(participants);
+    validateDuplicateOfPlayer(participants);
+    validateDealer(dealer);
   }
 
-  public static Participants from(final List<String> participantNames) {
-    final List<Participant> participants = new ArrayList<>();
-    participants.add(new Dealer());
-    participants.addAll(generatePlayers(participantNames));
-    return new Participants(participants);
-  }
-
-  private static List<Participant> generatePlayers(final List<String> participantNames) {
-    final List<Participant> participants = new ArrayList<>();
-    for (final String participantName : participantNames) {
-      final Participant player = new Player(participantName);
-      if (participants.stream().anyMatch(i -> i.getName().equals(participantName))) {
-        throw new BlackjackArgumentException("중복된 닉네임을 가진 플레이어가 포함되어있습니다: " + participantName);
-      }
-      participants.add(player);
-    }
-    return participants;
-  }
-
-  public void initialDeal(final Deck deck) {
-    for (final Participant participant : participants) {
-      participant.initialDeal(deck);
-    }
-  }
-
-  public Participant getDealer() {
-    return participants.stream()
-        .filter(Participant::isDealer)
-        .findFirst()
-        .orElseThrow(() -> new BlackjackArgumentException("딜러를 찾을 수 없습니다. 딜러는 반드시 게임에 참가해야 합니다."));
-  }
-
-  public List<Participant> getPlayers() {
-    final List<Participant> players = participants.stream()
-        .filter(participant -> !participant.isDealer())
-        .toList();
-    if (players.isEmpty()) {
+  private static void validatePlayerNotEmpty(List<Participant<Player>> participants) {
+    if (participants.isEmpty()) {
       throw new BlackjackArgumentException("게임 참가자가 없습니다! 게임 설정을 다시 진행해주세요.");
     }
-    return players;
   }
 
-  public List<TrumpCard> getCards(final Participant target) {
-    final Participant participant = find(target);
-    return participant.getCards();
+  private void validateDuplicateOfPlayer(final List<Participant<Player>> participants) {
+    final var distinctCount = participants.stream()
+        .map(Participant::getName)
+        .distinct()
+        .count();
+    if (participants.size() != distinctCount) {
+      throw new BlackjackArgumentException("중복된 닉네임을 가진 플레이어가 포함되어있습니다");
+    }
   }
 
-  public List<Participant> getParticipants() {
+  private void validateDealer(Participant<Dealer> dealer) {
+    if (dealer == null) {
+      throw new BlackjackArgumentException("딜러를 찾을 수 없습니다. 딜러는 반드시 게임에 참가해야 합니다.");
+    }
+  }
+
+  public static Participants generateOf(final Map<String, Money> participants, final Deck deck) {
+    List<Participant<Player>> players = participants.entrySet().stream()
+        .map(entry -> new Participant<>(Player.generateFrom(entry)))
+        .toList();
+
+    final var roleForDealer = Dealer.generateFrom(participants.values());
+    Participant<Dealer> dealer = new Participant<>(roleForDealer);
+
+    final var initialDealer = dealer.initialDeal(deck);
+    final var initialParticipants = initialDealForPlayers(players, deck);
+    return new Participants(initialDealer, initialParticipants);
+  }
+
+  private static List<Participant<Player>> initialDealForPlayers(
+      List<Participant<Player>> players,
+      Deck deck
+  ) {
+    List<Participant<Player>> newPlayers = new ArrayList<>();
+    for (final var player : players) {
+      newPlayers.add(player.initialDeal(deck));
+    }
+    return newPlayers;
+  }
+
+  public Participant<? extends Role> getDealer() {
+    return new Participant<>(dealer.getRole(), dealer.getCards());
+  }
+
+  public List<Participant<? extends Role>> getPlayers() {
     return Collections.unmodifiableList(participants);
   }
 
-  public Participant find(final Participant target) {
-    return participants.stream()
-        .filter(currentParticipant -> currentParticipant.equals(target))
+  public Participant<? extends Role> hit(Participant<? extends Role> participant, TrumpCard card) {
+    Participant<? extends Role> targetParticipant = findParticipant(participant);
+    return targetParticipant.hit(card);
+  }
+
+  private Participant<? extends Role> findParticipant(Participant<? extends Role> participant) {
+    List<Participant<? extends Role>> allParticipants = getAllParticipants();
+
+    return allParticipants.stream()
+        .filter(p -> p.equals(participant))
         .findFirst()
-        .orElseThrow(() -> new BlackjackArgumentException("등록되지 않은 사용자입니다: " + target.getName()));
+        .orElseThrow(() -> new IllegalArgumentException("참가자를 찾을 수 없습니다."));
+  }
+
+  public List<Participant<? extends Role>> getAllParticipants() {
+    List<Participant<? extends Role>> allParticipants = new ArrayList<>();
+    allParticipants.add(dealer);
+    allParticipants.addAll(participants);
+    return Collections.unmodifiableList(allParticipants);
   }
 }
