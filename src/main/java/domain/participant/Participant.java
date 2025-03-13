@@ -29,7 +29,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackJack() {
-        return true;
+        return hand.isBlackJack();
     }
 
     private boolean isTwentyOne() {
