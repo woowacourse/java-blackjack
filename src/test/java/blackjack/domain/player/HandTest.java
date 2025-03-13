@@ -59,6 +59,20 @@ class HandTest {
         assertThat(result).isEqualTo(21);
     }
 
+    @Test
+    @DisplayName("에이스가 2장이면 1, 11로 계산한다")
+    void calculateAceAsOneOrElevenWhenTwoAces() {
+        Hand hand = new Hand(0);
+
+        Cards newCards = new Cards(List.of(ACE, ACE));
+
+        hand.addCards(newCards);
+
+        int result = hand.calculateScore();
+
+        assertThat(result).isEqualTo(12);
+    }
+
     @ParameterizedTest
     @CsvSource({
             "5_000, 1.5, 7_500",
