@@ -1,4 +1,4 @@
-package contoller;
+package controller;
 
 import domain.Dealer;
 import domain.Deck;
