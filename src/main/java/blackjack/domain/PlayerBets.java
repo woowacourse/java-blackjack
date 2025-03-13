@@ -32,11 +32,11 @@ public class PlayerBets {
     public double getPlayerProfit(Player player, Dealer dealer) {
         int playerBet = bets.get(player);
         RoundResult roundResult = RoundResult.judgeResult(player, dealer);
+        if (player.isBust() || roundResult == RoundResult.LOSE) {
+            return -playerBet;
+        }
         if (roundResult == RoundResult.TIE) {
             return 0;
-        }
-        if (roundResult == RoundResult.LOSE) {
-            return -playerBet;
         }
         if (roundResult == RoundResult.WIN && player.isBlackjack()) {
             return (double) playerBet * 1.5;
@@ -48,13 +48,13 @@ public class PlayerBets {
         double totalProfit = 0;
         for (Player player : players) {
             RoundResult roundResult = RoundResult.judgeResult(dealer, player);
+            if (dealer.isBust() || roundResult == RoundResult.LOSE && !player.isBlackjack()) {
+                totalProfit -= bets.get(player);
+            }
             if (roundResult == RoundResult.LOSE && player.isBlackjack()) {
                 totalProfit -= (bets.get(player) * 1.5);
             }
-            if (roundResult == RoundResult.LOSE) {
-                totalProfit -= bets.get(player);
-            }
-            if (roundResult == RoundResult.WIN) {
+            if (player.isBust() || roundResult == RoundResult.WIN) {
                 totalProfit += bets.get(player);
             }
         }
