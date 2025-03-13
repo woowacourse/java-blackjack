@@ -21,6 +21,10 @@ public class BettingMoney {
         }
     }
 
+    public int calculateRevenueAmount(double multiple) {
+        return (int) (amount * multiple);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {
@@ -28,7 +32,7 @@ public class BettingMoney {
         }
 
         BettingMoney that = (BettingMoney) o;
-        
+
         return amount == that.amount;
     }
 
