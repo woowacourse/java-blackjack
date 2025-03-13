@@ -1,7 +1,8 @@
 package blackjack.view;
 
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
+import blackjack.view.display.CardNumberDisplay;
+import blackjack.view.display.CardShapeDisplay;
+import blackjack.view.display.WinningStatusDisplay;
 
 import java.util.List;
 import java.util.StringJoiner;
@@ -87,7 +88,7 @@ public class OutputView {
     }
     
     private String parseCard(Card card) {
-        return parseCardNumber(card.getNumber()) + parseCardShape(card.getShape());
+        return CardNumberDisplay.parseCardNumber(card.getNumber()) + CardShapeDisplay.parseCardShape(card.getShape());
     }
 
     private static String parseFinalSum(int sum) {
@@ -111,69 +112,6 @@ public class OutputView {
     }
     
     public void outputPlayerFinalWinOrLoss(String name, WinningStatus winningStatus) {
-        writer.write("%s: %s".formatted(name, parseWinningStatus(winningStatus)));
-    }
-    
-    private String parseCardShape(CardShape cardShape) {
-        if (cardShape.equals(CardShape.HEART)) {
-            return "하트";
-        }
-        if (cardShape.equals(CardShape.DIAMOND)) {
-            return "다이아몬드";
-        }
-        if (cardShape.equals(CardShape.SPADE)) {
-            return "스페이드";
-        }
-        return "클로버";
-    }
-    
-    private String parseWinningStatus(WinningStatus winningStatus) {
-        if (winningStatus.equals(WinningStatus.WIN)) {
-            return "승리";
-        }
-        if (winningStatus.equals(WinningStatus.DRAW)) {
-            return "무승부";
-        }
-        return "패배";
-    }
-    
-    private String parseCardNumber(CardNumber cardNumber) {
-        if (cardNumber.equals(CardNumber.ACE)) {
-            return "A";
-        }
-        if (cardNumber.equals(CardNumber.TWO)) {
-            return "2";
-        }
-        if (cardNumber.equals(CardNumber.THREE)) {
-            return "3";
-        }
-        if (cardNumber.equals(CardNumber.FOUR)) {
-            return "4";
-        }
-        if (cardNumber.equals(CardNumber.FIVE)) {
-            return "5";
-        }
-        if (cardNumber.equals(CardNumber.SIX)) {
-            return "6";
-        }
-        if (cardNumber.equals(CardNumber.SEVEN)) {
-            return "7";
-        }
-        if (cardNumber.equals(CardNumber.EIGHT)) {
-            return "8";
-        }
-        if (cardNumber.equals(CardNumber.NINE)) {
-            return "9";
-        }
-        if (cardNumber.equals(CardNumber.TEN)) {
-            return "10";
-        }
-        if (cardNumber.equals(CardNumber.JACK)) {
-            return "J";
-        }
-        if (cardNumber.equals(CardNumber.QUEEN)) {
-            return "Q";
-        }
-        return "K";
+        writer.write("%s: %s".formatted(name, WinningStatusDisplay.parseWinningStatus(winningStatus)));
     }
 }
