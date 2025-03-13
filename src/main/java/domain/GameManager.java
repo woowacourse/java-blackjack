@@ -1,5 +1,6 @@
 package domain;
 
+import domain.bet.BlackJackBetCalculator;
 import domain.card.CardGenerator;
 import domain.gamer.Dealer;
 import domain.gamer.GamerGenerator;
@@ -62,6 +63,16 @@ public class GameManager {
                         Player::getName,
                         player -> calculateResult(dealer, player)
                 ));
+    }
+
+    public int getDealerBetResult(Map<String,Integer> playerBets){
+        BlackJackBetCalculator calculator = new BlackJackBetCalculator(playerBets);
+        return calculator.getDealerBetResult(dealer,players);
+    }
+
+    public Map<String,Integer> getPlayerBetResult(Map<String,Integer> playerBets){
+        BlackJackBetCalculator calculator = new BlackJackBetCalculator(playerBets);
+        return calculator.getPlayerBetResult(dealer,players);
     }
 
     public void dealCardToPlayer(Player player) {
