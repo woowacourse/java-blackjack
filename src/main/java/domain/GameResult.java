@@ -24,6 +24,6 @@ public enum GameResult {
     }
 
     public Money applyWinningRate(Money money) {
-        return null;
+        return money.times(winningRate);
     }
 }
