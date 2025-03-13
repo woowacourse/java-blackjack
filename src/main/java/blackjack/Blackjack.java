@@ -9,6 +9,7 @@ import blackjack.view.ResultView;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class Blackjack {
 
@@ -114,6 +115,22 @@ public class Blackjack {
         return winningStatus;
     }
 
+    public void calculateEarnedMoney(final Map<Player, WinningStatus> winningResult) {
+        Map<WinningStatus, Consumer<Player>> actionMap = Map.of(
+                WinningStatus.WIN, Player::win,
+                WinningStatus.DRAW, Player::draw,
+                WinningStatus.LOSE, Player::lose,
+                WinningStatus.BLACKJACK, Player::blackjack,
+                WinningStatus.PUSH, Player::push
+        );
+
+        for (Player player : players.getPlayers()) {
+            final WinningStatus winningStatus = winningResult.get(player);
+            Consumer<Player> action = actionMap.get(winningStatus);
+            action.accept(player);
+        }
+    }
+
     private void receiveBettingMoney(final InputView inputView, final Player player) {
         try {
             player.bet(inputView.readBettingMoney(player));
@@ -162,4 +179,5 @@ public class Blackjack {
         }
         return WinningStatus.LOSE;
     }
+
 }

@@ -17,6 +17,18 @@ public class BettingMachine {
         this.bettingMoney.increase(Integer.parseInt(bettingAmount));
     }
 
+    public void earnDouble() {
+        earnedMoney.increase(bettingMoney.getDouble());
+    }
+
+    public void earnSingle() {
+        earnedMoney.increase(bettingMoney.getMoney());
+    }
+
+    public void earnOneAndHalf() {
+        earnedMoney.increase(bettingMoney.getOneAndHalf());
+    }
+
     private void validateBettingAmount(final String bettingAmount) {
         validateIsDigit(bettingAmount);
         validateIsUnitSize(bettingAmount);

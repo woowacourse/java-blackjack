@@ -15,6 +15,25 @@ public class Player extends Gamer {
         bettingMachine.bet(bettingAmount);
     }
 
+    public void win() {
+        bettingMachine.earnDouble();
+    }
+
+    public void draw() {
+        bettingMachine.earnSingle();
+    }
+
+    public void lose() {
+    }
+
+    public void blackjack() {
+        bettingMachine.earnOneAndHalf();
+    }
+
+    public void push() {
+        bettingMachine.earnSingle();
+    }
+
     @Override
     public List<Card> showInitialCards() {
         return hand.openAllCards();

@@ -23,6 +23,7 @@ public class Application {
             blackjack.hitOrStand(inputView, resultView);
         }
         blackjack.showSum(resultView);
-        Map<Player, WinningStatus> winningStatus = blackjack.calculateWinningResult();
+        Map<Player, WinningStatus> winningResult = blackjack.calculateWinningResult();
+        blackjack.calculateEarnedMoney(winningResult);
     }
 }
