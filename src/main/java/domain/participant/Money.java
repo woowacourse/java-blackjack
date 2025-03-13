@@ -8,6 +8,9 @@ public class Money {
         validateNullOrBlank(rawValue);
         validateIntegerFormat(rawValue);
         validatePositiveNumber(rawValue);
+        if (Integer.parseInt(rawValue) % 100000 != 0) {
+            throw new IllegalArgumentException("입력은 10만원 단위입니다.");
+        }
         this.value = Integer.parseInt(rawValue);
     }
 
