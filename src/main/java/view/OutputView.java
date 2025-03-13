@@ -11,7 +11,9 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
     }
 
-    public void displayOpenCards(String name, List<String> printCards) {
+    public void displayOpenCards(String name, List<TrumpCard> cards) {
+        List<String> printCards = cards.stream()
+                .map(card -> CardConverter.createTrumpCard(card.cardShape(), card.cardNumber())).toList();
         System.out.print(name + "카드: " + String.join(", ", printCards) + "\n");
     }
 
@@ -40,17 +42,12 @@ public class OutputView {
         System.out.println(name + ": " + gameResult);
     }
 
-    public void displayOpenCardsResult(String name, List<String> printCards, int score) {
-        System.out.print(name + "카드: " + String.join(", ", printCards + (" - 결과: " + score)) + "\n");
-    }
-
-    public void displayAllDealerCard(String name, List<TrumpCard> dealerCards, int score) {
-        List<String> dealerPrintCards = dealerCards.stream()
-                .map(dealerCard -> CardConverter.createTrumpCard(
-                        dealerCard.cardShape(),
-                        dealerCard.cardNumber()
+    public void displayOpenCardsResult(String name, List<TrumpCard> printCards, int score) {
+        List<String> displayCards = printCards.stream()
+                .map(card -> CardConverter.createTrumpCard(
+                        card.cardShape(),
+                        card.cardNumber()
                 )).toList();
-
-        displayOpenCardsResult(name, dealerPrintCards, score);
+        System.out.print(name + "카드: " + String.join(", ", displayCards + (" - 결과: " + score)) + "\n");
     }
 }

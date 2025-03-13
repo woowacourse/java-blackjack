@@ -9,7 +9,6 @@ import domain.user.Player;
 import domain.user.User;
 import java.util.List;
 import java.util.Map;
-import view.CardConverter;
 import view.InputView;
 import view.OutputView;
 import view.Parser;
@@ -71,9 +70,8 @@ public class BlackjackController {
     }
 
     private void displayOpenCard(String playerName, User player) {
-        List<String> cards = player.openInitialCard().stream()
-                .map(card -> CardConverter.createTrumpCard(card.cardShape(), card.cardNumber())).toList();
-        outputView.displayOpenCards(playerName, cards);
+        List<TrumpCard> trumpCards = player.openInitialCard();
+        outputView.displayOpenCards(playerName, trumpCards);
     }
 
     private void displayScore(GameManger gameManger, List<String> playerNames) {
@@ -85,24 +83,17 @@ public class BlackjackController {
         Dealer dealer = (Dealer) gameManger.getDealer();
         List<TrumpCard> dealerCards = dealer.openAllCard();
         int score = dealer.calculateScore();
-        outputView.displayAllDealerCard(dealer.getName(), dealerCards, score);
+        outputView.displayOpenCardsResult(dealer.getName(), dealerCards, score);
     }
 
     private void displayPlayers(GameManger gameManger, List<String> playerNames) {
         playerNames.stream()
                 .map(gameManger::findUserByUsername)
                 .toList()
-                .forEach(player -> displayConvertCards(player.getName(), player.openInitialCard(),
+                .forEach(player -> outputView.displayOpenCardsResult(
+                        player.getName(),
+                        player.openInitialCard(),
                         player.calculateScore()));
-    }
-
-    private void displayConvertCards(String name, List<TrumpCard> dealerCards, int score) {
-        List<String> dealerPrintCards = dealerCards.stream()
-                .map(dealerCard -> CardConverter.createTrumpCard(
-                        dealerCard.cardShape(),
-                        dealerCard.cardNumber()
-                )).toList();
-        outputView.displayOpenCardsResult(name, dealerPrintCards, score);
     }
 
     private void calculateGameResult(GameManger gameManger) {
