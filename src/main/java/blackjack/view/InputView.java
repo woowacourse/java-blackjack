@@ -20,6 +20,12 @@ public final class InputView {
         return parseNames(rawNames);
     }
 
+    public static int readBettingMoney(String name) {
+        System.out.println(name + "의 배팅 금액은?");
+
+        return parseMoney(scanner.nextLine());
+    }
+
     public static Confirmation askToGetMoreCard(Player player) {
         System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
 
@@ -32,5 +38,13 @@ public final class InputView {
         }
 
         return Arrays.stream(rawNames.split(",")).toList();
+    }
+
+    private static int parseMoney(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("숫자로 입력해야 합니다.");
+        }
     }
 }

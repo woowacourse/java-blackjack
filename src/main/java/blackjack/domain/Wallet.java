@@ -14,17 +14,17 @@ public class Wallet {
         this.balance = balance;
     }
 
-    public static Wallet create(){
+    public static Wallet create() {
         return new Wallet(0, 0);
     }
 
-    public void betting(int money){
+    public void betting(int money) {
         validBetMoney(money);
         this.currentBetMoney = money;
         this.balance = money;
     }
 
-    public void isBlackJack() {
+    public void receiveBlackjackBonus() {
         this.balance += (int) (this.balance * 1.5);
     }
 

@@ -3,6 +3,9 @@ package blackjack.domain;
 import blackjack.common.ErrorMessage;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Players {
 
@@ -18,15 +21,33 @@ public class Players {
         return new Players(players);
     }
 
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
+    public void checkBlackjack() {
+        for (Player player : players) {
+            player.tryReceiveBlackjackBonus();
+        }
     }
 
-    public void saveResult(Dealer dealer, Result result) {
+    public void adjustBalance(Dealer dealer) {
         for (Player player : players) {
-            GameResultType gameResultType = GameResultTypeJudgement.findForPlayer(player, dealer);
-            result.save(player, gameResultType);
+            GameResultType gameResultType = GameResultTypePlayerJudgement.find(player, dealer);
+
+            player.adjustBalance(gameResultType);
         }
+    }
+
+    public Map<Player, Integer> getRevenueMap() {
+        return players.stream()
+                .collect(Collectors.toMap(Function.identity(), Player::getRevenue));
+    }
+
+    public int getTotalRevenue() {
+        return getRevenueMap().values()
+                .stream()
+                .mapToInt(Integer::intValue).sum();
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 
     private void validate(List<Player> players) {

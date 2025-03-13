@@ -50,6 +50,14 @@ public class Player implements Participant {
         return playerHand.isBusted();
     }
 
+    public void betting(int money) {
+        playerHand.betting(money);
+    }
+
+    public void tryReceiveBlackjackBonus() {
+        playerHand.tryReceiveBlackjackBonus();
+    }
+
     public void adjustBalance(GameResultType gameResultType) {
         playerHand.adjustBalance(gameResultType);
     }

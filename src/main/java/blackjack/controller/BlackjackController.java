@@ -4,7 +4,6 @@ import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
-import blackjack.domain.Result;
 import blackjack.view.Confirmation;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -24,29 +23,47 @@ public class BlackjackController {
         Players players = blackjackProcessManager.generatePlayers(names);
         Dealer dealer = blackjackProcessManager.generateDealer();
 
+        betting(players);
         executeGameFlow(deck, players, dealer);
 
         printResult(players, dealer);
     }
 
-    private void executeGameFlow(Deck deck, Players players, Dealer dealer){
+    private void betting(Players players) {
+        for (Player player : players.getPlayers()) {
+            int money = InputView.readBettingMoney(player.getName());
+            player.betting(money);
+        }
+    }
+
+    private void executeGameFlow(Deck deck, Players players, Dealer dealer) {
         giveStartingCards(deck, players, dealer);
+        players.checkBlackjack();
 
         giveMoreCardFor(deck, players);
         giveMoreCardFor(deck, dealer);
     }
 
-
-    private void giveMoreCardFor(Deck deck, Dealer dealer) {
-        while (dealer.canTakeCard()) {
-            OutputView.printMoreCard();
-            blackjackProcessManager.giveCard(deck, dealer);
+    private void giveStartingCards(Deck deck, Players players, Dealer dealer) {
+        for (Player player : players.getPlayers()) {
+            blackjackProcessManager.giveStartingCardsFor(deck, player);
         }
+
+        blackjackProcessManager.giveStartingCardsFor(deck, dealer);
+
+        OutputView.printStartingCardsStatuses(dealer, players);
     }
 
     private void giveMoreCardFor(Deck deck, Players players) {
         for (Player player : players.getPlayers()) {
             giveMoreCardFor(deck, player);
+        }
+    }
+
+    private void giveMoreCardFor(Deck deck, Dealer dealer) {
+        while (dealer.canTakeCard()) {
+            OutputView.printMoreCard();
+            blackjackProcessManager.giveCard(deck, dealer);
         }
     }
 
@@ -70,20 +87,6 @@ public class BlackjackController {
         }
     }
 
-    private void giveStartingCards(Deck deck, Players players, Dealer dealer) {
-        for (Player player : players.getPlayers()) {
-            blackjackProcessManager.giveStartingCardsFor(deck, player);
-        }
-
-        blackjackProcessManager.giveStartingCardsFor(deck, dealer);
-
-        OutputView.printStartingCardsStatuses(dealer, players);
-    }
-
     private void printResult(Players players, Dealer dealer) {
-        Result result = blackjackProcessManager.calculateCardResult(players, dealer);
-        OutputView.printCardResult(players, dealer);
-        OutputView.printGameResult(result.getDealerResult(),
-                result.getPlayersResult());
     }
 }

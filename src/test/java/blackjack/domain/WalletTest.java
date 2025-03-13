@@ -56,7 +56,7 @@ class WalletTest {
         wallet.betting(money);
 
         // when
-        wallet.isBlackJack();
+        wallet.receiveBlackjackBonus();
 
         // then
         assertThat(wallet.getRevenue()).isEqualTo(1500);
@@ -84,4 +84,5 @@ class WalletTest {
         // then
         assertThat(wallet.getRevenue()).isEqualTo(expect);
     }
+
 }

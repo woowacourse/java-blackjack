@@ -8,7 +8,6 @@ import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import blackjack.domain.PlayerHand;
 import blackjack.domain.Players;
-import blackjack.domain.Result;
 import blackjack.domain.Wallet;
 import blackjack.factory.DeckGenerator;
 import java.util.List;

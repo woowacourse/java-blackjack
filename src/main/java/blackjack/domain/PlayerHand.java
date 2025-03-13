@@ -13,16 +13,8 @@ public class PlayerHand {
         this.wallet = wallet;
     }
 
-    public List<Card> getAllCards() {
-        return hand.getAllCards();
-    }
-
     public void takeCard(Card newCard) {
         hand.takeCard(newCard);
-    }
-
-    public int getOptimisticValue() {
-        return hand.getOptimisticValue();
     }
 
     public boolean canTakeCard() {
@@ -37,8 +29,26 @@ public class PlayerHand {
         return hand.isBusted();
     }
 
+    public void betting(int money) {
+        wallet.betting(money);
+    }
+
+    public void tryReceiveBlackjackBonus() {
+        if (isBlackjack()) {
+            wallet.receiveBlackjackBonus();
+        }
+    }
+
     public void adjustBalance(GameResultType gameResultType) {
         wallet.calculate(gameResultType);
+    }
+
+    public int getOptimisticValue() {
+        return hand.getOptimisticValue();
+    }
+
+    public List<Card> getAllCards() {
+        return hand.getAllCards();
     }
 
     public int getRevenue() {
