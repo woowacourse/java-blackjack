@@ -12,6 +12,6 @@ public class Money {
 	}
 
 	public Money multiply(double scale) {
-		return new Money(0);
+		return new Money((int)(value * scale));
 	}
 }
