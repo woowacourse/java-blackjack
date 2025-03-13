@@ -67,4 +67,13 @@ public class PlayerTest {
         //when & then
         assertThat(player.isOverBustBound()).isTrue();
     }
+
+    @Test
+    void 플레이어는_원하는_금액을_배팅한다() {
+        //given
+        Player player = new Player("pobi", 10000);
+
+        //when & then
+        assertThat(player.getBettingMoney()).isEqualTo(10000);
+    }
 }
