@@ -46,6 +46,10 @@ public class Participant {
 		return calculateAllScore().equals(BUST_SCORE) && BLACKJACK_REQUIRE_CARD_COUNT.equals(hand.calculateCardCount());
 	}
 
+	public DuelResult calculateDuelResult() {
+		return null;
+	}
+
 	public CardHand getCardHand() {
 		return hand;
 	}

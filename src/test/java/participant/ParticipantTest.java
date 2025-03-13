@@ -1,5 +1,6 @@
 package participant;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.SoftAssertions.*;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import card.Card;
 import card.CardHand;
 import card.Rank;
 import card.Suit;
+import duel.DuelResult;
 import paticipant.Participant;
 
 public class ParticipantTest {
@@ -72,6 +74,53 @@ public class ParticipantTest {
 				s.assertThat(blackjackActual).isTrue();
 				s.assertThat(notBlackjackActual).isFalse();
 			});
+		}
+	}
+
+	@Nested
+	@DisplayName("duel result 반환 로직")
+	class CalculateDuelResult {
+
+		@DisplayName("win이 가장 많다면 WIN을 반환한다.")
+		@Test
+		void calculateDuelResult1() {
+			// given
+			final Participant participant = new Participant();
+			participant.writeDuelResult(DuelResult.WIN);
+
+			// when
+			final DuelResult duelResult = participant.calculateDuelResult();
+
+			// then
+			assertThat(duelResult).isEqualTo(DuelResult.WIN);
+		}
+
+		@DisplayName("lose가 가장 많다면 LOSE를 반환한다.")
+		@Test
+		void calculateDuelResult2() {
+			// given
+			final Participant participant = new Participant();
+			participant.writeDuelResult(DuelResult.LOSE);
+
+			// when
+			final DuelResult duelResult = participant.calculateDuelResult();
+
+			// then
+			assertThat(duelResult).isEqualTo(DuelResult.LOSE);
+		}
+
+		@DisplayName("DRAW가 가장 많다면 DRAW를 반환한다.")
+		@Test
+		void calculateDuelResult3() {
+			// given
+			final Participant participant = new Participant();
+			participant.writeDuelResult(DuelResult.DRAW);
+
+			// when
+			final DuelResult duelResult = participant.calculateDuelResult();
+
+			// then
+			assertThat(duelResult).isEqualTo(DuelResult.DRAW);
 		}
 	}
 }
