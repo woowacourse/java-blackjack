@@ -24,4 +24,17 @@ class ParticipantTest {
         participant.putCard(new Card(CardShape.HEART, CardType.NORMAL_2));
         assertThat(participant.getReceivedCards().size()).isEqualTo(1);
     }
+
+    @Test
+    void 참가자에게는_배팅_금액이_있다() {
+        //given
+        Participant participant = new Participant("프리");
+        participant.setBetting(10000);
+        // when
+        int bettingMoney = participant.getBettingMoney();
+        // then
+        assertThat(bettingMoney).isEqualTo(10000);
+
+    }
+
 }

@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Participant extends Player {
     private final String name;
+    private int bettingMoney;
 
     public Participant(String name) {
         validate(name);
@@ -17,6 +18,14 @@ public class Participant extends Player {
         if (name.length() < 2 || name.length() > 5) {
             throw new IllegalArgumentException("참여자 이름은 2~5글자 입니다.");
         }
+    }
+
+    public void setBetting(int bettingMoney) {
+        this.bettingMoney = bettingMoney;
+    }
+
+    public int getBettingMoney() {
+        return bettingMoney;
     }
 
     public String getName() {
@@ -36,4 +45,6 @@ public class Participant extends Player {
     public int hashCode() {
         return Objects.hashCode(name);
     }
+
+
 }
