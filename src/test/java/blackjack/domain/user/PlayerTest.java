@@ -26,7 +26,7 @@ class PlayerTest {
         BettingAmount expectedBettingAmount = new BettingAmount(1000);
         player.registerBettingAmount(expectedBettingAmount);
 
-        assertThat(player.getBettingAmount()).isEqualTo(expectedBettingAmount);
+        assertThat(player.getBettingAmount()).isEqualTo(expectedBettingAmount.getValue());
     }
 
     @Test

@@ -2,14 +2,16 @@ package blackjack.domain.game;
 
 public enum WinningType {
 
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무");
+    WIN("승", 1),
+    LOSE("패", -1),
+    DRAW("무", 0);
 
     private final String description;
+    private final int profitRate;
 
-    WinningType(String description) {
+    WinningType(String description, int profitRate) {
         this.description = description;
+        this.profitRate = profitRate;
     }
 
     public WinningType reverse() {
@@ -37,5 +39,9 @@ public enum WinningType {
 
     public String getDescription() {
         return description;
+    }
+
+    public int getProfitRate() {
+        return profitRate;
     }
 }

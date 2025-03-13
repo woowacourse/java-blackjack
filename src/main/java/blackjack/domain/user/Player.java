@@ -43,8 +43,8 @@ public class Player {
         return gameUser.getNickname();
     }
 
-    public BettingAmount getBettingAmount() {
-        return bettingAmount;
+    public int getBettingAmount() {
+        return bettingAmount.getValue();
     }
 
     private void validateHitPossibility() {

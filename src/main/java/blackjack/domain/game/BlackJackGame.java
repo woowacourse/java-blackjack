@@ -33,6 +33,7 @@ public class BlackJackGame {
         processPlayerTurns();
         processDealerTurns();
         outputGameResult();
+        OutputFinalProfit();
     }
 
     private void registerPlayer(List<Nickname> nicknames) {
@@ -95,6 +96,13 @@ public class BlackJackGame {
         gameInputOutput.printFinalHands(users.getDealer(), users.getPlayers());
         GameResult gameResult = new GameResult(users.getDealer(), users.getPlayers());
         gameInputOutput.printGameResult(gameResult);
+    }
+
+    private void OutputFinalProfit() {
+        Dealer dealer = users.getDealer();
+        List<Player> players = users.getPlayers();
+        PlayerProfits playerProfits = new PlayerProfits(dealer, players);
+        // 출력
     }
 }
 
