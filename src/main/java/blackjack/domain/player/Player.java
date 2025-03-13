@@ -11,8 +11,6 @@ public abstract class Player {
 
     private final PlayerName playerName;
     private final List<Card> cards;
-    private static final int MAX_HAND_VALUE = 21;
-    private static final int ACE_ADDITIONAL_VALUE = 10;
 
     public Player(final String name) {
         this.playerName = new PlayerName(name);
@@ -54,10 +52,6 @@ public abstract class Player {
 
     public List<Card> getCards() {
         return cards;
-    }
-
-    private boolean canCalculateAceWithEleven(int sum) {
-        return hasAce() && sum + ACE_ADDITIONAL_VALUE <= MAX_HAND_VALUE;
     }
 
     private boolean hasAce() {

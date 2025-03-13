@@ -53,10 +53,14 @@ public class BlackjackController {
         Players players = gameManager.getPlayers();
         List<Gambler> gamblers = players.getGamblers();
         for (Gambler gambler : gamblers) {
-            while (gambler.isPlayerNotBust() && inputView.readOneMoreDealCard(gambler)) {
-                gameManager.dealAddCard(gambler);
-                outputView.printCardsMessage(gambler);
-            }
+            dealCardByInputs(gameManager, gambler);
+        }
+    }
+
+    private void dealCardByInputs(GameManager gameManager, Gambler gambler) {
+        while (gambler.isPlayerNotBust() && inputView.readOneMoreDealCard(gambler)) {
+            gameManager.dealAddCard(gambler);
+            outputView.printCardsMessage(gambler);
         }
     }
 
