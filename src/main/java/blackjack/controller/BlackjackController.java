@@ -1,5 +1,7 @@
 package blackjack.controller;
 
+import blackjack.domain.BettingBoard;
+import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 
 import java.util.List;
@@ -24,7 +26,17 @@ public class BlackjackController implements Controller {
     @Override
     public void run() {
         final BlackjackDeck deck = new BlackjackDeck();
-        final List<PlayerBlackjackCardHand> playerBlackjackCardHands = createPlayerCardHands(deck);
+        final BettingBoard bettingBoard = new BettingBoard();
+        final List<String> playerNames = inputView.getPlayerNames();
+        final Players players = Players.createPlayers(playerNames);
+        
+        for (Player player : players.getPlayers()) {
+            bettingBoard.bet(player, inputView.getBettingMoney(player));
+        }
+        
+        final List<PlayerBlackjackCardHand> playerBlackjackCardHands = players.getPlayers().stream()
+                .map(player -> new PlayerBlackjackCardHand(player, deck))
+                .toList();
         final DealerBlackjackCardHand dealerBlackjackCardHand = new DealerBlackjackCardHand(deck);
         processInitialCardOpening(dealerBlackjackCardHand, playerBlackjackCardHands);
         
@@ -35,14 +47,6 @@ public class BlackjackController implements Controller {
         
         processCardOpening(dealerBlackjackCardHand, playerBlackjackCardHands);
         processFinalWinOrLoss(dealerBlackjackCardHand, playerBlackjackCardHands);
-    }
-    
-    private List<PlayerBlackjackCardHand> createPlayerCardHands(final BlackjackDeck deck) {
-        final List<String> playerNames = inputView.getPlayerNames();
-        final Players players = Players.createPlayers(playerNames);
-        return players.getPlayers().stream()
-                .map(player -> new PlayerBlackjackCardHand(player, deck))
-                .toList();
     }
     
     private void processInitialCardOpening(final DealerBlackjackCardHand dealerBlackjackCardHand, final List<PlayerBlackjackCardHand> playerBlackjackCardHands) {
