@@ -1,10 +1,12 @@
 package blackjack.view;
 
+import blackjack.domain.player.Player;
 import blackjack.view.display.CardNumberDisplay;
 import blackjack.view.display.CardShapeDisplay;
 import blackjack.view.display.WinningStatusDisplay;
 
 import java.util.List;
+import java.util.Map;
 import java.util.StringJoiner;
 
 import blackjack.domain.card.Card;
@@ -99,10 +101,12 @@ public class OutputView {
         return " - 합계: %d".formatted(sum);
     }
 
+    @Deprecated
     public void outputFinalWinOrLossMessage() {
         writer.write(LINE_SEPARATOR + "<최종 승패>");
     }
     
+    @Deprecated
     public void outputDealerFinalWinOrLoss(
             int dealerWinningCount,
             int dealerDrawingCount,
@@ -111,7 +115,16 @@ public class OutputView {
         writer.write("딜러: %d승 %d무 %d패".formatted(dealerWinningCount, dealerDrawingCount, dealerLosingCount));
     }
     
+    @Deprecated
     public void outputPlayerFinalWinOrLoss(String name, WinningStatus winningStatus) {
         writer.write("%s: %s".formatted(name, WinningStatusDisplay.parseWinningStatus(winningStatus)));
+    }
+    
+    public void outputTotalProfit(int dealerProfit, Map<Player, Integer> playersProfit) {
+        writer.write(LINE_SEPARATOR + "## 최종 수익");
+        writer.write("딜러: " + dealerProfit);
+        for (Player player : playersProfit.keySet()) {
+            writer.write("%s: %d".formatted(player.getName(), playersProfit.get(player)));
+        }
     }
 }

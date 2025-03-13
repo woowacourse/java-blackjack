@@ -1,9 +1,11 @@
 package blackjack.controller;
 
 import blackjack.domain.BettingBoard;
+import blackjack.domain.WinningStatus;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 
+import java.util.HashMap;
 import java.util.List;
 
 import blackjack.domain.BlackjackJudge;
@@ -12,6 +14,8 @@ import blackjack.domain.card_hand.DealerBlackjackCardHand;
 import blackjack.domain.card_hand.PlayerBlackjackCardHand;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+
+import java.util.Map;
 
 public class BlackjackController implements Controller {
     
@@ -46,7 +50,7 @@ public class BlackjackController implements Controller {
         processDealerAddingCards(dealerBlackjackCardHand, deck);
         
         processCardOpening(dealerBlackjackCardHand, playerBlackjackCardHands);
-        processFinalWinOrLoss(dealerBlackjackCardHand, playerBlackjackCardHands);
+        processResults(dealerBlackjackCardHand, playerBlackjackCardHands, bettingBoard);
     }
     
     private void processInitialCardOpening(final DealerBlackjackCardHand dealerBlackjackCardHand, final List<PlayerBlackjackCardHand> playerBlackjackCardHands) {
@@ -94,16 +98,22 @@ public class BlackjackController implements Controller {
         }
     }
     
-    private void processFinalWinOrLoss(final DealerBlackjackCardHand dealerBlackjackCardHand, final List<PlayerBlackjackCardHand> playerBlackjackCardHands) {
-        outputView.outputFinalWinOrLossMessage();
+    private void processResults(
+            final DealerBlackjackCardHand dealerBlackjackCardHand,
+            final List<PlayerBlackjackCardHand> playerBlackjackCardHands,
+            final BettingBoard bettingBoard
+    ) {
         final BlackjackJudge blackjackJudge = new BlackjackJudge(dealerBlackjackCardHand, playerBlackjackCardHands);
-        outputView.outputDealerFinalWinOrLoss(
-                blackjackJudge.getDealerBlackjackWinningCount() + blackjackJudge.getDealerWinningCount(),
-                blackjackJudge.getDealerDrawingCount(),
-                blackjackJudge.getDealerLosingCount()
-        );
+
+        Map<Player, WinningStatus> winningStatusOfAllPlayers = blackjackJudge.getWinningStatusOfAllPlayers();
+        int dealerProfit = bettingBoard.getDealerProfit(winningStatusOfAllPlayers);
+        Map<Player, Integer> playersProfit = new HashMap<>();
         for (PlayerBlackjackCardHand playerBlackjackCardHand : playerBlackjackCardHands) {
-            outputView.outputPlayerFinalWinOrLoss(playerBlackjackCardHand.getPlayerName(), blackjackJudge.getWinningStatusOf(playerBlackjackCardHand));
+            Player player = playerBlackjackCardHand.getPlayer();
+            playersProfit.put(player, bettingBoard.getProfit(player,
+                    blackjackJudge.getWinningStatusOf(playerBlackjackCardHand)));
         }
+        
+        outputView.outputTotalProfit(dealerProfit, playersProfit);
     }
 }
