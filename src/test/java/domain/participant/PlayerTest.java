@@ -13,11 +13,13 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import config.CardDeckFactory;
 import domain.card.Card;
-import domain.card.CardDeck;
+import domain.card.Deck;
+import domain.card.Hand;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import org.junit.jupiter.api.DisplayName;
@@ -32,16 +34,13 @@ public class PlayerTest {
     @DisplayName("카드 두 장 뽑기 테스트")
     void hitCardsTest() {
         // given
-        Player player = new Player("pobi");
+        Hand hand = new Hand(new ArrayList<>());
+        Player player = new Player(hand, "pobi");
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        CardDeck cardDeck = cardDeckFactory.create();
-        Dealer dealer = new Dealer(cardDeck);
+        Deck cardDeck = cardDeckFactory.create();
 
-        // when
-        player.hitCards(dealer);
-
-        // then
-        assertDoesNotThrow(() -> player.hitCards(dealer));
+        // when - then
+        assertDoesNotThrow(() -> player.hitCards(cardDeck));
     }
 
     @Test
@@ -49,24 +48,24 @@ public class PlayerTest {
     void addCardTest() {
         //given
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        CardDeck cardDeck = cardDeckFactory.create();
-        Dealer dealer = new Dealer(cardDeck);
-        Player player = new Player("pobi");
+        Deck cardDeck = cardDeckFactory.create();
+        Hand hand = new Hand(new ArrayList<>());
+        Player player = new Player(hand, "pobi");
 
         //when-then
-        assertDoesNotThrow(() -> player.addCard(dealer));
+        assertDoesNotThrow(() -> player.addCard(cardDeck.hitCard()));
     }
 
     @Test
     @DisplayName("카드 합계 테스트")
     void calculateSumTest() {
         //given
-        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE)));
-        Dealer dealer = new Dealer(cardDeck);
-        Player player = new Player("pobi");
+        Deck cardDeck = new Deck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE)));
+        Hand hand = new Hand(new ArrayList<>());
+        Player player = new Player(hand, "pobi");
 
         //when
-        player.hitCards(dealer);
+        player.hitCards(cardDeck);
 
         //then
         assertThat(player.calculateSum()).isEqualTo(12);
@@ -86,23 +85,23 @@ public class PlayerTest {
         InputView testInputView = new InputView(new Scanner(System.in));
         OutputView testOutputView = new OutputView();
 
-        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, QUEEN), new Card(SPADE, JACK), new Card(HEART, KING)));
-        Dealer dealer = new Dealer(cardDeck);
-        Player player = new Player("pobi");
+        Deck cardDeck = new Deck(List.of(new Card(DIAMOND, QUEEN), new Card(SPADE, JACK), new Card(HEART, KING)));
+        Hand hand = new Hand(new ArrayList<>());
+        Player player = new Player(hand, "pobi");
 
         //when-then
-        assertDoesNotThrow(() -> player.draw(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck, dealer));
+        assertDoesNotThrow(() -> player.draw(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck, cardDeck));
     }
 
     @Test
     @DisplayName("승패 결정 테스트")
     void calculateWinner() {
         //given
-        Player player = new Player("pobi");
-        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, JACK), new Card(SPADE, ACE)));
-        Dealer dealer = new Dealer(cardDeck);
-        player.addCard(dealer);
-        dealer.addCards();
+        Player player = new Player(new Hand(new ArrayList<>()), "pobi");
+        Deck cardDeck = new Deck(List.of(new Card(DIAMOND, JACK), new Card(SPADE, ACE)));
+        Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
+        player.addCard(cardDeck.hitCard());
+        dealer.addCard(cardDeck.hitCard());
 
         //when-then
         assertThat(player.calculateWinner(dealer.calculateSum())).isEqualTo(LOSE);
