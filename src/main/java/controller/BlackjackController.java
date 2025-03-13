@@ -66,7 +66,7 @@ public class BlackjackController {
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new BlackjackDeckGenerateStrategy());
         BlackjackGame blackjackGame = BlackjackGame.nonBettingBlackjackGame(deck, new Dealer(), names);
-        BetManager betManager = new BetManager(names, bets, blackjackGame.dealerName());
+        BetManager betManager = new BetManager(bets, blackjackGame);
         outputView.printInitiateDraw(names);
         openFirstDealerCard(blackjackGame);
         openPlayerCards(blackjackGame);
