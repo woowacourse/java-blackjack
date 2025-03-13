@@ -80,6 +80,10 @@ public class Hand {
         return calculateTotalPoint() > HIGHEST_SCORE;
     }
 
+    public boolean isBlackjack() {
+        return calculateTotalPoint() == HIGHEST_SCORE && cards.size() == 2;
+    }
+
     public List<Card> getCards() {
         return new ArrayList<>(cards);
     }

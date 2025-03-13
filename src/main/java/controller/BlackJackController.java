@@ -57,7 +57,6 @@ public class BlackJackController {
         }
 
         return players;
-
     }
 
     private void prepareGame(Dealer dealer, List<Player> players, CardDeck deck) {

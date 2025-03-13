@@ -33,7 +33,15 @@ public class InputView {
     }
 
     public Integer readBettingAmount(Nickname nickname) {
-        System.out.printf("%s의 배팅 금액은?\n", nickname);
-        return scanner.nextInt();
+        System.out.printf("\n%s의 배팅 금액은?\n", nickname.getName());
+        return getNextInt();
+    }
+
+    private int getNextInt() {
+        try {
+            return scanner.nextInt();
+        } catch (Exception e) {
+            throw new IllegalArgumentException("[ERROR] 금액을 알맞게 입력해주세요.");
+        }
     }
 }

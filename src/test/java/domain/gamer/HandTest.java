@@ -143,4 +143,20 @@ class HandTest {
         //then
         assertThat(actual).isEqualTo(14);
     }
+
+    @DisplayName("처음 두 장의 카드 합이 21일 경우 블랙잭이다.")
+    @Test
+    void blackjack() {
+        // given
+        Card card1 = new Card(CardSymbol.HEART, CardRank.ACE);
+        Card card2 = new Card(CardSymbol.HEART, CardRank.JACK);
+
+        Hand hand = HandFixture.createHand(card1, card2);
+
+        // when
+        final var actual = hand.isBlackjack();
+
+        // then
+        assertThat(actual).isTrue();
+    }
 }
