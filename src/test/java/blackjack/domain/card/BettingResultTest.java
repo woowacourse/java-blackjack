@@ -11,10 +11,10 @@ public class BettingResultTest {
         @Test
         void 플레이어_점수가_21을_초과하는_경우() {
             //given
-            Score score = new Score(22);
+            BlackjackScore blackjackScore = new BlackjackScore(22, 3);
 
             //when
-            int multiplyRatio = BettingResult.getMultiplyRatio(score);
+            int multiplyRatio = BettingResult.getMultiplyRatio(blackjackScore);
 
             //then
             assertThat(multiplyRatio).isEqualTo(-1);

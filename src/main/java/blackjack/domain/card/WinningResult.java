@@ -4,31 +4,25 @@ import java.util.Arrays;
 import java.util.function.BiFunction;
 
 public enum WinningResult {
-    DRAW((mainCards, subCards) -> {
-        Score mainScore = mainCards.calculateScore();
-        Score subScore = subCards.calculateScore();
-
+    DRAW((mainScore, subScore) -> {
         if (mainScore.isBust() && subScore.isBust()) {
             return true;
         }
 
-        if (mainCards.isBlackjack() && !subCards.isBlackjack()) {
+        if (mainScore.isBlackjack() && !subScore.isBlackjack()) {
             return false;
         }
-        if (!mainCards.isBlackjack() && subCards.isBlackjack()) {
+        if (!mainScore.isBlackjack() && subScore.isBlackjack()) {
             return false;
         }
         return mainScore.value() == subScore.value();
     }),
-    WIN((mainCards, subCards) -> {
-        Score mainScore = mainCards.calculateScore();
-        Score subScore = subCards.calculateScore();
-
+    WIN((mainScore, subScore) -> {
         if (!mainScore.isBust() && subScore.isBust()) {
             return true;
         }
 
-        if (mainCards.isBlackjack() && !subCards.isBlackjack()) {
+        if (mainScore.isBlackjack() && !subScore.isBlackjack()) {
             return true;
         }
 
@@ -37,15 +31,12 @@ public enum WinningResult {
         }
         return false;
     }),
-    LOSE((mainCards, subCards) -> {
-        Score mainScore = mainCards.calculateScore();
-        Score subScore = subCards.calculateScore();
-
+    LOSE((mainScore, subScore) -> {
         if (mainScore.isBust() && !subScore.isBust()) {
             return true;
         }
 
-        if (!mainCards.isBlackjack() && subCards.isBlackjack()) {
+        if (!mainScore.isBlackjack() && subScore.isBlackjack()) {
             return true;
         }
 
@@ -55,15 +46,15 @@ public enum WinningResult {
         return false;
     });
 
-    private final BiFunction<Cards, Cards, Boolean> isMatch;
+    private final BiFunction<BlackjackScore, BlackjackScore, Boolean> isMatch;
 
-    WinningResult(BiFunction<Cards, Cards, Boolean> isMatch) {
+    WinningResult(BiFunction<BlackjackScore, BlackjackScore, Boolean> isMatch) {
         this.isMatch = isMatch;
     }
 
-    public static WinningResult decide(Cards mainCards, Cards subCards) {
+    public static WinningResult decide(BlackjackScore mainBlackjackScore, BlackjackScore subBlackjackScore) {
         return Arrays.stream(values())
-                .filter(winningResult -> winningResult.isMatch.apply(mainCards, subCards))
+                .filter(winningResult -> winningResult.isMatch.apply(mainBlackjackScore, subBlackjackScore))
                 .findFirst()
                 .orElseThrow();
     }

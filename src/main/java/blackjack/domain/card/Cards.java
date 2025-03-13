@@ -16,14 +16,15 @@ public class Cards {
         Collections.addAll(this.cards, cards);
     }
 
-    public Score calculateScore() {
-        Score totalScore = new Score(cards.stream()
+    public BlackjackScore calculateScore() {
+        BlackjackScore totalBlackjackScore = new BlackjackScore(cards.stream()
                 .mapToInt(Card::getScore)
-                .sum());
+                .sum(), cards.size());
+
         if (hasAce()) {
-            return totalScore.withAce();
+            return totalBlackjackScore.withAce();
         }
-        return totalScore;
+        return totalBlackjackScore;
     }
 
     private boolean hasAce() {
@@ -32,7 +33,7 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return calculateScore().isBlackjackScore() && cards.size() == BLACKJACK_CARD_NUMBER;
+        return calculateScore().isBlackjack();
     }
 
     public List<Card> getCards() {

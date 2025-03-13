@@ -26,7 +26,8 @@ public class GameResult {
     private static Map<Player, WinningResult> createPlayerGameResult(Dealer dealer, Players players) {
         Map<Player, WinningResult> playerGameResults = new HashMap<>();
         players.sendAll((player -> {
-            WinningResult playerWinningResult = WinningResult.decide(player.getCards(), dealer.getCards());
+            WinningResult playerWinningResult = WinningResult.decide(player.getCards().calculateScore(),
+                    dealer.getCards().calculateScore());
             playerGameResults.put(player, playerWinningResult);
         }));
         return playerGameResults;
@@ -35,16 +36,13 @@ public class GameResult {
     private static Map<WinningResult, Integer> createDealerGameResults(Dealer dealer, Players players) {
         Map<WinningResult, Integer> dealerGameResults = new HashMap<>();
         players.sendAll((player -> {
-            WinningResult dealerWinningResult = WinningResult.decide(dealer.getCards(), player.getCards());
+            WinningResult dealerWinningResult = WinningResult.decide(dealer.getCards().calculateScore(),
+                    player.getCards().calculateScore());
             dealerGameResults.put(
                     dealerWinningResult,
                     dealerGameResults.getOrDefault(dealerWinningResult, 0) + 1);
         }));
         return dealerGameResults;
-    }
-
-    public static int createBettingResults() {
-        return 0;
     }
 
     public Map<Player, WinningResult> getPlayerGameResults() {

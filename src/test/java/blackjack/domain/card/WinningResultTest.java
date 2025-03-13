@@ -31,7 +31,7 @@ public class WinningResultTest {
         );
 
         //when
-        WinningResult result = WinningResult.decide(mainCards, subCards);
+        WinningResult result = WinningResult.decide(mainCards.calculateScore(), subCards.calculateScore());
 
         //then
         assertThat(result).isEqualTo(WinningResult.DRAW);
@@ -51,7 +51,7 @@ public class WinningResultTest {
         );
 
         //when
-        WinningResult result = WinningResult.decide(mainCards, subCards);
+        WinningResult result = WinningResult.decide(mainCards.calculateScore(), subCards.calculateScore());
 
         //then
         assertThat(result).isEqualTo(WinningResult.WIN);
@@ -70,7 +70,7 @@ public class WinningResultTest {
         );
 
         //when
-        WinningResult result = WinningResult.decide(mainCards, subCards);
+        WinningResult result = WinningResult.decide(mainCards.calculateScore(), subCards.calculateScore());
 
         //then
         assertThat(result).isEqualTo(WinningResult.WIN);
@@ -90,7 +90,7 @@ public class WinningResultTest {
         );
 
         //when
-        WinningResult result = WinningResult.decide(mainCards, subCards);
+        WinningResult result = WinningResult.decide(mainCards.calculateScore(), subCards.calculateScore());
 
         //then
         assertThat(result).isEqualTo(WinningResult.WIN);
@@ -110,7 +110,7 @@ public class WinningResultTest {
         );
 
         //when
-        WinningResult result = WinningResult.decide(mainCards, subCards);
+        WinningResult result = WinningResult.decide(mainCards.calculateScore(), subCards.calculateScore());
 
         //then
         assertThat(result).isEqualTo(WinningResult.DRAW);
@@ -128,7 +128,7 @@ public class WinningResultTest {
         );
 
         //when
-        WinningResult result = WinningResult.decide(mainCards, subCards);
+        WinningResult result = WinningResult.decide(mainCards.calculateScore(), subCards.calculateScore());
 
         //then
         assertThat(result).isEqualTo(WinningResult.LOSE);
@@ -148,7 +148,7 @@ public class WinningResultTest {
         );
 
         //when
-        WinningResult result = WinningResult.decide(mainCards, subCards);
+        WinningResult result = WinningResult.decide(mainCards.calculateScore(), subCards.calculateScore());
 
         //then
         assertThat(result).isEqualTo(WinningResult.LOSE);
@@ -168,7 +168,7 @@ public class WinningResultTest {
         );
 
         //when
-        WinningResult result = WinningResult.decide(mainCards, subCards);
+        WinningResult result = WinningResult.decide(mainCards.calculateScore(), subCards.calculateScore());
 
         //then
         assertThat(result).isEqualTo(WinningResult.LOSE);
