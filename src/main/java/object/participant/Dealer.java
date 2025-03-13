@@ -55,7 +55,7 @@ public class Dealer implements Participant {
         wallet.betMoney(amount);
     }
 
-    public void addEarnedMoney(int amount) {
-        wallet.earnMoney(amount);
+    public void addEarnedMoney(int totalPlayersProfit) {
+        wallet.earnMoney(totalPlayersProfit * -1);
     }
 }

@@ -168,4 +168,16 @@ public class BlackJackBoard {
         winner.applyGameRecord(GameResult.WIN);
         loser.applyGameRecord(GameResult.LOSE);
     }
+
+    public void calculateDealerProfit() {
+        Dealer dealer = (Dealer) getDealer();
+        List<Participant> players = getPlayers();
+
+        int totalPlayersProfit = 0;
+        for (Participant player : players) {
+            totalPlayersProfit += player.getProfit();
+        }
+
+        dealer.addEarnedMoney(totalPlayersProfit);
+    }
 }

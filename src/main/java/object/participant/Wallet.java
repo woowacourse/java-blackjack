@@ -41,8 +41,5 @@ public class Wallet {
         if (betMoney < 0) {
             throw new IllegalArgumentException("음수의 돈을 베팅할 수 없습니다. 양수만 입력해주세요.");
         }
-        if (earnedMoney < 0) {
-            throw new IllegalArgumentException("음수의 돈을 베팅할 수 없습니다. 양수만 입력해주세요.");
-        }
     }
 }
