@@ -3,6 +3,7 @@ package domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static domain.RevenuePolicy.BLACKJACK_WIN;
 import static domain.RevenuePolicy.NORMAL_WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,5 +20,19 @@ class RevenuePolicyTest {
 
         // then
         assertThat(policy).isSameAs(NORMAL_WIN);
+    }
+
+    @DisplayName("플레이어가 블랙잭이면서 승리한 경우, BLACKJACK_WIN 정책을 반환할 수 있다.")
+    @Test
+    void winningWithBlackjack() {
+        // given
+        GameResult gameResult = GameResult.WIN;
+        final boolean isBlackjack = true;
+
+        // when
+        RevenuePolicy policy = RevenuePolicy.from(gameResult, isBlackjack);
+
+        // then
+        assertThat(policy).isSameAs(BLACKJACK_WIN);
     }
 }
