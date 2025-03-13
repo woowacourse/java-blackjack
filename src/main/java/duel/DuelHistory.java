@@ -25,7 +25,8 @@ public class DuelHistory {
 	}
 
 	public boolean isWin() {
-		return count.get(DuelResult.WIN).isGreaterThan(count.get(DuelResult.LOSE));
+		return count.get(DuelResult.WIN).isGreaterThan(count.get(DuelResult.LOSE)) &&
+			count.get(DuelResult.WIN).isGreaterThan(count.get(DuelResult.DRAW));
 	}
 
 	public Count getWinCount() {
