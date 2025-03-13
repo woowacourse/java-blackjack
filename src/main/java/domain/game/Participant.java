@@ -44,8 +44,7 @@ public abstract class Participant {
 
     private int countAce() {
         return (int) cards.stream()
-                .map(Card::cardNumber)
-                .filter(number -> number == CardNumber.ACE)
+                .filter(card -> card.cardNumber() == CardNumber.ACE)
                 .count();
     }
 
