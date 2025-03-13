@@ -7,21 +7,25 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.GameResultType;
+import blackjack.domain.result.ParticipantResult;
+import blackjack.domain.result.ParticipantResults;
 import blackjack.domain.result.PlayerResult;
 import blackjack.domain.result.PlayersResults;
 import java.util.List;
 
-public class BlackjackProcessManager {
+public class BlackjackProcessManager2 {
 
     private static final int STARTING_CARD_SIZE = 2;
     private static final int ADDITIONAL_CARD_SIZE = 1;
 
     private final Deck deck;
     private final PlayersResults playersResults;
+    private final ParticipantResults participantResults;
 
-    public BlackjackProcessManager(Deck deck, PlayersResults playersResults) {
+    public BlackjackProcessManager2(Deck deck, PlayersResults playersResults, ParticipantResults participantResults) {
         this.deck = deck;
         this.playersResults = playersResults;
+        this.participantResults = participantResults;
     }
 
     public void giveStartingCards(Participants participants) {
@@ -83,9 +87,11 @@ public class BlackjackProcessManager {
     }
 
     private void saveChallengerResult(Participant challenger, GameResultType gameResultOfPlayer,
-                                      int playerValue) {
+                                      int challengerValue) {
         // TODO: 결과 저장시 카운트 관련해서 사용하는 것으로 바꾸기
-        PlayerResult playerResult = new PlayerResult((Player) challenger, gameResultOfPlayer, playerValue);
+        PlayerResult playerResult = new PlayerResult((Player) challenger, gameResultOfPlayer, challengerValue);
+        ParticipantResult participantResult = new ParticipantResult(challenger, gameResultOfPlayer, challengerValue);
+        participantResults.add(participantResult);
         playersResults.save(playerResult);
     }
 

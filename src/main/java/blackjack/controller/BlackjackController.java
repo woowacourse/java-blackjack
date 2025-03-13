@@ -58,7 +58,7 @@ public class BlackjackController {
             return;
         }
 
-        blackjackProcessManager.giveCard(participant);
+        blackjackProcessManager.giveMoreCard(participant);
         OutputView.printCardResult(participant);
 
         if (gameRuleEvaluator.isBusted(participant)) {
@@ -74,7 +74,7 @@ public class BlackjackController {
     private void takeCardManually(Participant participant) {
         while (participant.ableToTakeMoreCards()) {
             OutputView.printMoreCard();
-            blackjackProcessManager.giveCard(participant);
+            blackjackProcessManager.giveMoreCard(participant);
         }
     }
 
