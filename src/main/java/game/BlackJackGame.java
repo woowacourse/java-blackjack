@@ -5,51 +5,54 @@ import io.ConsoleOutput;
 import participant.Dealer;
 import participant.Player;
 import participant.Players;
-import strategy.DeckShuffleStrategy;
+import strategy.DeckSettingStrategy;
 
 
 public class BlackJackGame {
 
     public static final String HIT_COMMAND = "y";
 
-    private final ConsoleInput consoleInput;
-    private final ConsoleOutput consoleOutput;
+    private final Players players;
+    private final Dealer dealer;
 
-    public BlackJackGame(ConsoleInput consoleInput, ConsoleOutput consoleOutput) {
-        this.consoleInput = consoleInput;
-        this.consoleOutput = consoleOutput;
+    private BlackJackGame(Players players, Dealer dealer) {
+        this.players = players;
+        this.dealer = dealer;
     }
 
-    public void play() {
-        Deck deck = new Deck(new DeckShuffleStrategy());
-        Players players = Players.registerPlayers(consoleInput.readParticipantsNames(), deck);
-        Dealer dealer = new Dealer(deck.drawInitialCards());
-        consoleOutput.printInitialGameSettings(players, dealer);
+    public static BlackJackGame registerParticipants(DeckSettingStrategy strategy, ConsoleInput input) {
+        Deck deck = new Deck(strategy);
+        Players players = Players.registerPlayers(input.readParticipantsNames(), deck);
+        Dealer dealer = new Dealer(deck.drawInitialCards(), strategy);
 
-        selectPlayersHitOrStand(players, deck);
-        checkDealerHit(dealer, deck);
-        consoleOutput.printGameResults(players, dealer);
-        consoleOutput.printWinningResults(players.deriveResults(dealer.sumCardNumbers()));
+        return new BlackJackGame(players, dealer);
     }
 
-    private void selectPlayersHitOrStand(Players players, Deck deck) {
+    public void play(ConsoleInput input, ConsoleOutput output) {
+        output.printInitialGameSettings(players, dealer);
+        selectPlayersHitOrStand(players, dealer, input, output);
+        checkDealerHit(dealer, output);
+        output.printGameResults(players, dealer);
+        output.printWinningResults(players.deriveResults(dealer.sumCardNumbers()));
+    }
+
+    private void selectPlayersHitOrStand(Players players, Dealer dealer, ConsoleInput input,ConsoleOutput output) {
         for (Player player : players.getPlayers()) {
-            selectHitOrStand(player, deck);
-            consoleOutput.printPlayerCards(player);
+            selectHitOrStand(player, dealer, input, output);
+            output.printPlayerCards(player);
         }
     }
 
-    private void selectHitOrStand(Player player, Deck deck) {
-        boolean shouldHit = consoleInput.readShouldHit(player.getNickname()).equals(HIT_COMMAND);
-        while (shouldHit && player.addOneCard(deck.drawOneCard())) {
-            consoleOutput.printPlayerCards(player);
+    private void selectHitOrStand(Player player, Dealer dealer, ConsoleInput input, ConsoleOutput output) {
+        while (input.readShouldHit(player.getNickname()).equals(HIT_COMMAND) && player.addOneCard(dealer.drawCard())) {
+            output.printPlayerCards(player);
         }
     }
 
-    private void checkDealerHit(Dealer dealer, Deck deck) {
+    private void checkDealerHit(Dealer dealer, ConsoleOutput output) {
         while (dealer.shouldDealerHit()) {
-            consoleOutput.printDealerHitMessage();
-            dealer.addOneCard(deck.drawOneCard());
+            output.printDealerHitMessage();
+            dealer.addOneCard(dealer.drawCard());
         }
     }
 }
