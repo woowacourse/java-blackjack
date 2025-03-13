@@ -68,10 +68,10 @@ class DealerTest {
     @DisplayName("승/패/무승부가 명확한 경우, 게임 결과를 올바르게 반환할 수 있다.")
     @ParameterizedTest
     @MethodSource("createGameResultCase")
-    void 게임_결과_반환(List<Card> self, List<Card> other, GameResult expected) {
+    void 게임_결과_반환(List<Card> playerCard, List<Card> dealerCard, GameResult expected) {
         // given
-        Cards playerCards = Cards.of(self);
-        Cards dealerCards = Cards.of(other);
+        Cards playerCards = Cards.of(playerCard);
+        Cards dealerCards = Cards.of(dealerCard);
         Player player = Player.from("player", playerCards);
         Dealer dealer = new Dealer(dealerCards, deck);
 
@@ -254,5 +254,84 @@ class DealerTest {
 
         //then
         assertThat(actual).isEqualTo(GameResult.LOSE);
+    }
+
+    @DisplayName("카드가 2장이면서 합이 21인 경우 블랙잭으로 판단할 수 있다.")
+    @ParameterizedTest
+    @MethodSource("createBlackjackCards")
+    void 블랙잭_판단(List<Card> inputCards) {
+        // given
+        Cards cards = Cards.of(inputCards);
+        Dealer dealer = new Dealer(cards, deck);
+
+        // when
+        final boolean isBlackjack = dealer.isBlackjack();
+
+        // then
+        assertThat(isBlackjack).isTrue();
+    }
+
+    private static Stream createBlackjackCards() {
+        return Stream.of(
+                List.of(
+                        new Card(CardNumber.A, CardShape.CLOVER),
+                        new Card(CardNumber.TEN, CardShape.HEART)
+                ),
+                List.of(
+                        new Card(CardNumber.A, CardShape.CLOVER),
+                        new Card(CardNumber.KING, CardShape.HEART)
+                ),
+                List.of(
+                        new Card(CardNumber.A, CardShape.CLOVER),
+                        new Card(CardNumber.QUEEN, CardShape.HEART)
+                ),
+                List.of(
+                        new Card(CardNumber.A, CardShape.CLOVER),
+                        new Card(CardNumber.JACK, CardShape.HEART)
+                )
+        );
+    }
+
+    @DisplayName("블랙잭이 아닌 경우를 판단할 수 있다.")
+    @ParameterizedTest
+    @MethodSource("createNotBlackjackCards")
+    void 블랙잭_아닌_경우_판단(List<Card> inputCards) {
+        // given
+        Cards cards = Cards.of(inputCards);
+        Dealer dealer = new Dealer(cards, deck);
+
+        // when
+        final boolean isBlackjack = dealer.isBlackjack();
+
+        // then
+        assertThat(isBlackjack).isFalse();
+    }
+
+    private static Stream createNotBlackjackCards() {
+        return Stream.of(
+                List.of(
+                        new Card(CardNumber.A, CardShape.CLOVER),
+                        new Card(CardNumber.TEN, CardShape.HEART),
+                        new Card(CardNumber.FIVE, CardShape.CLOVER)
+                ),
+                List.of(
+                        new Card(CardNumber.QUEEN, CardShape.CLOVER),
+                        new Card(CardNumber.SIX, CardShape.HEART),
+                        new Card(CardNumber.FIVE, CardShape.DIAMOND)
+                ),
+                List.of(
+                        new Card(CardNumber.A, CardShape.CLOVER),
+                        new Card(CardNumber.A, CardShape.HEART),
+                        new Card(CardNumber.TEN, CardShape.DIAMOND),
+                        new Card(CardNumber.NINE, CardShape.SPADE)
+                ),
+                List.of(
+                        new Card(CardNumber.TWO, CardShape.CLOVER),
+                        new Card(CardNumber.THREE, CardShape.HEART),
+                        new Card(CardNumber.TWO, CardShape.SPADE),
+                        new Card(CardNumber.FIVE, CardShape.HEART),
+                        new Card(CardNumber.EIGHT, CardShape.SPADE)
+                )
+        );
     }
 }

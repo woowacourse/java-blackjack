@@ -43,7 +43,7 @@ public class BlackJack {
     }
 
     public boolean canDraw(Participant participant) {
-        return !participant.isBust() && !participant.isWin();
+        return !participant.isBust() && !participant.isHit();
     }
 
     public int getDealerDrawnCount() {

@@ -8,7 +8,7 @@ import domain.card.Deck;
 import java.util.*;
 
 public class Dealer extends Participant {
-    private static final int DRAW_BOUNDARY = 16;
+    private static final int DRAW_THRESHOLD = 16;
 
     private final Deck deck;
 
@@ -33,13 +33,8 @@ public class Dealer extends Participant {
         participant.addCard(deck.pick());
     }
 
-    public Map<Player, GameResult> getPlayerResult(Players players) {
-        Map<Player, GameResult> gameResult = new HashMap<>();
-        for (Player player : players.get()) {
-            GameResult playerResult = getRule().getResult(player, this);
-            gameResult.put(player, playerResult);
-        }
-        return gameResult;
+    public int getRevenue(Cards playerCards, final int bettingCost) {
+        return 0;
     }
 
     public GameResult getResult(Player player) {
@@ -65,6 +60,6 @@ public class Dealer extends Participant {
     }
 
     private boolean hasToDraw() {
-        return this.getCardScore() <= DRAW_BOUNDARY;
+        return this.getCardScore() <= DRAW_THRESHOLD;
     }
 }

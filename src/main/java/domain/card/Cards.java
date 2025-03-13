@@ -1,10 +1,9 @@
 package domain.card;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import domain.Score;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Cards {
 
@@ -26,8 +25,28 @@ public class Cards {
         this.cards.add(card);
     }
 
-    public Set<Integer> getCoordinateSums() {
-        return getCoordinateSumsByDfs(0, 0, new HashSet<>());
+    public int getCount() {
+        return cards.size();
+    }
+
+    public List<Card> getValues() {
+        return Collections.unmodifiableList(cards);
+    }
+
+    public Score getScore() {
+        Set<Score> coordinates = getCoordinateScores();
+        if (coordinates.stream().allMatch(Score::isBust)) {
+            return getMinSum(coordinates);
+        }
+        Set<Score> filtered = coordinates.stream()
+                .filter(score -> !score.isBust())
+                .collect(Collectors.toSet());
+        return getMaxSum(filtered);
+    }
+
+    private Set<Score> getCoordinateScores() {
+        Set<Integer> coordinates = getCoordinateSumsByDfs(0, 0, new HashSet<>());
+        return coordinates.stream().map(Score::new).collect(Collectors.toSet());
     }
 
     private Set<Integer> getCoordinateSumsByDfs(int index, int sum, Set<Integer> result) {
@@ -43,11 +62,15 @@ public class Cards {
         return result;
     }
 
-    public int getCount() {
-        return cards.size();
+    private Score getMinSum(Set<Score> coordinates) {
+        return coordinates.stream()
+                .min(Comparator.comparing(Score::value))
+                .orElseThrow(() -> new IllegalStateException("카드가 존재하지 않는 플레이어입니다."));
     }
 
-    public List<Card> getValues() {
-        return Collections.unmodifiableList(cards);
+    private Score getMaxSum(Set<Score> coordinates) {
+        return coordinates.stream()
+                .max(Comparator.comparing(Score::value))
+                .orElseThrow(() -> new IllegalStateException("카드가 존재하지 않는 플레이어입니다."));
     }
 }
