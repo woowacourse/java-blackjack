@@ -441,8 +441,18 @@ public class BlackJackBoardTest {
         );
     }
 
-    @Test
-    void 딜러_수익_계산_테스트() {
+    @ParameterizedTest
+    @CsvSource(value = {
+            "1000, 1000, BLACKJACK_WIN, WIN, -2500",
+            "1000, 1000, WIN, WIN, -2000",
+            "1000, 1000, LOSE, LOSE, 2000",
+            "1000, 1000, DRAW, DRAW, 0",
+    })
+    void 딜러_수익_계산_테스트(
+            int p1BetMoney, int p2BetMoney,
+            GameResult p1Result, GameResult p2Result,
+            int expectedProfit
+    ) {
         // given
         Participant participant1 = Player.from("우가");
         Participant participant2 = Player.from("히스타");
@@ -454,10 +464,10 @@ public class BlackJackBoardTest {
                 dealer
         );
 
-        participant1.bet(1000);
-        participant2.bet(1000);
-        participant1.applyGameRecord(GameResult.WIN);
-        participant2.applyGameRecord(GameResult.WIN);
+        participant1.bet(p1BetMoney);
+        participant2.bet(p2BetMoney);
+        participant1.applyGameRecord(p1Result);
+        participant2.applyGameRecord(p2Result);
 
         BlackJackBoard blackJackBoard = new BlackJackBoard(participants);
 
@@ -466,7 +476,6 @@ public class BlackJackBoardTest {
 
         // then
         int actual = dealer.getProfit();
-        int expected = -2000;
-        Assertions.assertThat(actual).isEqualTo(expected);
+        Assertions.assertThat(actual).isEqualTo(expectedProfit);
     }
 }
