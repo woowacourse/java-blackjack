@@ -75,7 +75,7 @@ class RevenuePolicyTest {
         RevenuePolicy policy = RevenuePolicy.from(gameResult, isBlackjack);
 
         // then
-        assertThat(policy).isSameAs(BLACKJACK_DRAW);
+        assertThat(policy).isSameAs(LOSE);
     }
 
     @DisplayName("플레이어가 블랙잭이면서 패배한 경우는 존재하지 않는다 - 예외 발생")

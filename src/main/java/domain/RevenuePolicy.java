@@ -26,6 +26,15 @@ public enum RevenuePolicy {
         if (gameResult == GameResult.DRAW && isPlayerBlackjack) {
             return BLACKJACK_DRAW;
         }
+        if (gameResult == GameResult.DRAW) {
+            return NORMAL_DRAW;
+        }
+        if (gameResult == GameResult.LOSE && isPlayerBlackjack) {
+            throw new IllegalArgumentException("플레이어가 블랙잭인 경우에는 패배할 수 없습니다.");
+        }
+        if (gameResult == GameResult.LOSE) {
+            return LOSE;
+        }
         return null;
     }
 
