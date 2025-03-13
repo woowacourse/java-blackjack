@@ -3,7 +3,7 @@ package blackjack.domain;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardDump;
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardHand;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
@@ -24,7 +24,7 @@ class BlackjackGameTest {
 
         List<Player> players = List.of(player);
         Dealer dealer = new Dealer(new CardHand());
-        BlackjackGame game = new BlackjackGame(players, dealer, CardDump.shuffledDump());
+        BlackjackGame game = new BlackjackGame(players, dealer, CardDeck.shuffledDeck());
 
         // when
         game.distributeInitialCards();
@@ -42,7 +42,7 @@ class BlackjackGameTest {
 
         List<Player> players = List.of(player);
         Dealer dealer = new Dealer(new CardHand());
-        BlackjackGame game = new BlackjackGame(players, dealer, CardDump.shuffledDump());
+        BlackjackGame game = new BlackjackGame(players, dealer, CardDeck.shuffledDeck());
 
         // when
         game.dealerTurn();
@@ -74,7 +74,7 @@ class BlackjackGameTest {
         List<Player> players = List.of(player1, player2);
 
         // when
-        BlackjackGame game = new BlackjackGame(players, dealer, CardDump.shuffledDump());
+        BlackjackGame game = new BlackjackGame(players, dealer, CardDeck.shuffledDeck());
         Map<Player, Integer> playersProfit = game.calculatePlayersProfit();
 
         // then
@@ -104,7 +104,7 @@ class BlackjackGameTest {
         List<Player> players = List.of(player1, player2);
 
         // when
-        BlackjackGame game = new BlackjackGame(players, dealer, CardDump.shuffledDump());
+        BlackjackGame game = new BlackjackGame(players, dealer, CardDeck.shuffledDeck());
         int dealerProfit = game.calculateDealerProfit();
 
         // then

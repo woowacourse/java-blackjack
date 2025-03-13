@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import blackjack.domain.card.CardDump;
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.HashMap;
@@ -10,21 +10,21 @@ import java.util.Map;
 public class BlackjackGame {
     private final List<Player> players;
     private final Dealer dealer;
-    private final CardDump cardDump;
+    private final CardDeck cardDeck;
 
-    public BlackjackGame(List<Player> players, Dealer dealer, CardDump cardDump) {
+    public BlackjackGame(List<Player> players, Dealer dealer, CardDeck cardDeck) {
         this.players = players;
         this.dealer = dealer;
-        this.cardDump = cardDump;
+        this.cardDeck = cardDeck;
     }
 
     public void distributeInitialCards() {
         for (Player player : players) {
-            player.receiveCard(cardDump.drawCard());
-            player.receiveCard(cardDump.drawCard());
+            player.receiveCard(cardDeck.drawCard());
+            player.receiveCard(cardDeck.drawCard());
         }
-        dealer.receiveCard(cardDump.drawCard());
-        dealer.receiveCard(cardDump.drawCard());
+        dealer.receiveCard(cardDeck.drawCard());
+        dealer.receiveCard(cardDeck.drawCard());
     }
 
     public boolean canHit(Player player) {
@@ -35,12 +35,12 @@ public class BlackjackGame {
         if (!player.canHit()) {
             return;
         }
-        player.receiveCard(cardDump.drawCard());
+        player.receiveCard(cardDeck.drawCard());
     }
 
     public void dealerTurn() {
         while (dealer.canHit()) {
-            dealer.receiveCard(cardDump.drawCard());
+            dealer.receiveCard(cardDeck.drawCard());
         }
     }
 

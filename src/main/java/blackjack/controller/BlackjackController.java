@@ -3,7 +3,7 @@ package blackjack.controller;
 import blackjack.domain.BettingMoney;
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.card.CardHand;
-import blackjack.domain.card.CardDump;
+import blackjack.domain.card.CardDeck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.ParticipantName;
 import blackjack.domain.participant.Player;
@@ -19,12 +19,12 @@ import java.util.Map;
 public class BlackjackController {
     private final InputView inputView;
     private final OutputView outputView;
-    private final CardDump cardDump;
+    private final CardDeck cardDeck;
 
-    public BlackjackController(InputView inputView, OutputView outputView, CardDump cardDump) {
+    public BlackjackController(InputView inputView, OutputView outputView, CardDeck cardDeck) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.cardDump = cardDump;
+        this.cardDeck = cardDeck;
     }
 
     public void run() {
@@ -32,7 +32,7 @@ public class BlackjackController {
         List<ParticipantName> playerNames = createPlayerNames();
         List<Player> players = createPlayers(playerNames);
 
-        BlackjackGame game = new BlackjackGame(players, dealer, cardDump);
+        BlackjackGame game = new BlackjackGame(players, dealer, cardDeck);
 
         game.distributeInitialCards();
         displayParticipantStartCards(game, dealer);
