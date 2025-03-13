@@ -19,7 +19,9 @@ class WalletTest {
     @ParameterizedTest
     @ValueSource(ints = {1000, 50000, 1000000})
     void test1(int money) {
-        assertThatCode(() -> Wallet.betting(money))
+        Wallet wallet = Wallet.create();
+
+        assertThatCode(() -> wallet.betting(money))
                 .doesNotThrowAnyException();
     }
 
@@ -27,7 +29,9 @@ class WalletTest {
     @ParameterizedTest
     @ValueSource(ints = {1000000000, 100000001})
     void test5(int money) {
-        assertThatThrownBy(() -> Wallet.betting(money))
+        Wallet wallet = Wallet.create();
+
+        assertThatThrownBy(() -> wallet.betting(money))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.MAXIMUM_BETTING_MONEY.getMessage());
     }
@@ -36,7 +40,9 @@ class WalletTest {
     @ParameterizedTest
     @ValueSource(ints = {-1, 0})
     void test2(int money) {
-        assertThatThrownBy(() -> Wallet.betting(money))
+        Wallet wallet = Wallet.create();
+
+        assertThatThrownBy(() -> wallet.betting(money))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.BETTING_MONEY_IS_POSITIVE.getMessage());
     }
@@ -45,14 +51,15 @@ class WalletTest {
     @Test
     void test3() {
         // given
+        Wallet wallet = Wallet.create();
         int money = 1000;
-        Wallet betting = Wallet.betting(money);
+        wallet.betting(money);
 
         // when
-        betting.isBlackJack();
+        wallet.isBlackJack();
 
         // then
-        assertThat(betting.getRevenue()).isEqualTo(1500);
+        assertThat(wallet.getRevenue()).isEqualTo(1500);
     }
 
     public static Stream<Arguments> betArguments() {
@@ -68,7 +75,8 @@ class WalletTest {
     @MethodSource("betArguments")
     void test4(int money, GameResultType gameResultType, int expect) {
         // given
-        Wallet wallet = Wallet.betting(money);
+        Wallet wallet = Wallet.create();
+        wallet.betting(money);
 
         // when
         wallet.calculate(gameResultType);

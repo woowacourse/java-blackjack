@@ -17,11 +17,30 @@ public enum GameResultType {
         this.condition = condition;
     }
 
-    public static GameResultType find(int value, int comparedValue) {
+    public static GameResultType judgeForPlayer(Player player, Dealer dealer) {
+        if (player.isBlackjack() || dealer.isBlackjack()) {
+            return judgeForPlayerWithBlackjack(player, dealer);
+        }
+
+        int playerOptimisticValue = player.getOptimisticValue();
+        int dealerOptimisticValue = dealer.getOptimisticValue();
+
         return Arrays.stream(GameResultType.values())
-                .filter(resultType -> resultType.condition.test(value, comparedValue))
+                .filter(resultType -> resultType.condition.test(playerOptimisticValue, dealerOptimisticValue))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 비교 값입니다."));
+    }
+
+    private static GameResultType judgeForPlayerWithBlackjack(Player player, Dealer dealer) {
+        if (player.isBlackjack() && dealer.isBlackjack()) {
+            return GameResultType.TIE;
+        }
+
+        if (player.isBlackjack()) {
+            return GameResultType.WIN;
+        }
+
+        return GameResultType.LOSE;
     }
 
     public GameResultType getOppositeType() {

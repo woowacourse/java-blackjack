@@ -39,4 +39,9 @@ public class Dealer implements Participant {
     public boolean canTakeCard() {
         return hand.canTakeCardWithin(DEALER_MUST_TAKE_UNDER);
     }
+
+    @Override
+    public boolean isBlackjack() {
+        return hand.isBlackJack();
+    }
 }

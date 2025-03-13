@@ -24,12 +24,13 @@ class PlayerTest {
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
 
-        Hand hand = new Hand();
-        hand.takeCard(card1);
-        hand.takeCard(card2);
+        Hand hand = Hand.of(card1, card2);
+        Wallet wallet = Wallet.create();
+
+        PlayerHand playerHand = new PlayerHand(hand, wallet);
 
         // when & then
-        assertThatCode(() -> new Player("히로", hand))
+        assertThatCode(() -> new Player("히로", playerHand))
                 .doesNotThrowAnyException();
     }
 
@@ -40,11 +41,12 @@ class PlayerTest {
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
 
-        Hand hand = new Hand();
-        hand.takeCard(card1);
-        hand.takeCard(card2);
+        Hand hand = Hand.of(card1, card2);
+        Wallet wallet = Wallet.create();
 
-        assertThatThrownBy(() -> new Player(name, hand))
+        PlayerHand playerHand = new PlayerHand(hand, wallet);
+
+        assertThatThrownBy(() -> new Player(name, playerHand))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.USE_VALID_NAME.getMessage());
     }
@@ -55,12 +57,13 @@ class PlayerTest {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
-        Hand hand = new Hand();
 
-        hand.takeCard(card1);
-        hand.takeCard(card2);
+        Hand hand = Hand.of(card1, card2);
+        Wallet wallet = Wallet.create();
 
-        Player player = new Player("꾹이", hand);
+        PlayerHand playerHand = new PlayerHand(hand, wallet);
+
+        Player player = new Player("꾹이", playerHand);
 
         List<Card> expect = List.of(card1, card2);
 
@@ -74,13 +77,15 @@ class PlayerTest {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
-        Hand hand = new Hand();
 
-        hand.takeCard(card1);
-        hand.takeCard(card2);
+
+        Hand hand = Hand.of(card1, card2);
+        Wallet wallet = Wallet.create();
+
+        PlayerHand playerHand = new PlayerHand(hand, wallet);
 
         Card newCard = new Card(CardSuit.SPADE, CardRank.KING);
-        Player player = new Player("꾹이", hand);
+        Player player = new Player("꾹이",playerHand);
 
         List<Card> expect = List.of(card1, card2, newCard);
 
@@ -103,8 +108,10 @@ class PlayerTest {
     @MethodSource("canTakeCardArgument")
     void test8(Hand hand, boolean expect) {
         //given
+        Wallet wallet = Wallet.create();
+        PlayerHand playerHand = new PlayerHand(hand, wallet);
 
-        Player player = new Player("꾹이", hand);
+        Player player = new Player("꾹이", playerHand);
 
         // when & then
         assertThat(player.canTakeCard()).isEqualTo(expect);

@@ -6,17 +6,22 @@ public class Wallet {
 
     private static final int MAXIMUM_BETTING_MONEY = 100_000_000;
 
-    private final int currentBetMoney;
+    private int currentBetMoney;
     private int balance;
 
-    public Wallet(int currentBetMoney, int balance) {
-        validBetMoney(currentBetMoney);
+    private Wallet(int currentBetMoney, int balance) {
         this.currentBetMoney = currentBetMoney;
         this.balance = balance;
     }
 
-    public static Wallet betting(int money) {
-        return new Wallet(money, money);
+    public static Wallet create(){
+        return new Wallet(0, 0);
+    }
+
+    public void betting(int money){
+        validBetMoney(money);
+        this.currentBetMoney = money;
+        this.balance = money;
     }
 
     public void isBlackJack() {

@@ -6,8 +6,10 @@ import blackjack.domain.Deck;
 import blackjack.domain.Hand;
 import blackjack.domain.Participant;
 import blackjack.domain.Player;
+import blackjack.domain.PlayerHand;
 import blackjack.domain.Players;
 import blackjack.domain.Result;
+import blackjack.domain.Wallet;
 import blackjack.factory.DeckGenerator;
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class BlackjackProcessManager {
 
     public Players generatePlayers(List<String> names) {
         List<Player> players = names.stream()
-                .map(name -> new Player(name, new Hand()))
+                .map(name -> new Player(name, new PlayerHand(new Hand(), Wallet.create())))
                 .toList();
 
         return Players.from(players);
@@ -50,7 +52,4 @@ public class BlackjackProcessManager {
         cards.forEach(participant::takeCard);
     }
 
-    public Result calculateCardResult(Players players, Dealer dealer) {
-        return Result.of(players, dealer);
-    }
 }

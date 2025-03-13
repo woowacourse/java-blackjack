@@ -16,7 +16,7 @@ class PlayersTest {
         // given
         List<String> names = List.of("꾹이", "히로");
         List<Player> playersToBeSaved = names.stream()
-                .map(name -> new Player(name, new Hand()))
+                .map(name -> new Player(name, new PlayerHand(new Hand(), Wallet.create())))
                 .toList();
 
         // when
@@ -33,7 +33,7 @@ class PlayersTest {
         // given
         List<String> names = List.of("듀이", "몽이", "히로", "꾹이", "히포", "비타", "라젤", "서프");
         List<Player> playersToBeSaved = names.stream()
-                .map(name -> new Player(name, new Hand()))
+                .map(name -> new Player(name, new PlayerHand(new Hand(), Wallet.create())))
                 .toList();
 
         // when & then

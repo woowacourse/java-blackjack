@@ -13,4 +13,6 @@ public interface Participant {
     boolean isBusted();
 
     boolean canTakeCard();
+
+    boolean isBlackjack();
 }

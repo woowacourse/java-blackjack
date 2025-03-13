@@ -94,7 +94,4 @@ public class Hand  {
         return cards.size() == 2 && getOptimisticValue() == 21;
     }
 
-
-    // TODO 딜러와의 카드 비교를 하여 승패 여부를 반환한다.
-    // 우선은 여기다 만들고 ENUM으로 어떻게 처리할 지 생각해본다.
 }
