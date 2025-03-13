@@ -21,17 +21,20 @@ public class BlackjackService {
     ) {
         for (PlayerBettingBlackjackCardHand playerHand : playerHands) {
             playerTurnNotifier.accept(playerHand.getPlayerName());
-            if (playerHand.isAddedUpToMax()) {
-                reached21Notifier.run();
-                continue;
-            }
-            if (playerHand.isBust()) {
-                bustNotifier.run();
-                continue;
-            }
-            while (addCardDecision.apply(playerHand.getPlayerName())) {
-                playerHand.addCard(cardDrawer.draw());
-                playerHandNotifier.accept(playerHand);
+            playerHandNotifier.accept(playerHand);
+            while(true) {
+                if (playerHand.isAddedUpToMax()) {
+                    reached21Notifier.run();
+                    break;
+                }
+                if (playerHand.isBust()) {
+                    bustNotifier.run();
+                    break;
+                }
+                if (addCardDecision.apply(playerHand.getPlayerName())) {
+                    playerHand.addCard(cardDrawer.draw());
+                    playerHandNotifier.accept(playerHand);
+                }
             }
         }
     }
