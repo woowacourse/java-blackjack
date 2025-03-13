@@ -6,7 +6,7 @@ public class Dealer extends Participant {
     private final Score DEALER_STOP_HIT_STANDARD_SCORE = Score.from(16);
 
     public Dealer() {
-        super(DEALER_NAME);
+        super(ParticipantName.nameOf(DEALER_NAME));
     }
 
     @Override

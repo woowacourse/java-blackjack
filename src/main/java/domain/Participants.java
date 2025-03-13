@@ -11,7 +11,7 @@ public class Participants {
 
     private final List<Participant> participants;
 
-    public Participants(List<String> names, Dealer dealer) {
+    public Participants(List<ParticipantName> names, Dealer dealer) {
         List<Player> players = names.stream()
                 .map(Player::new)
                 .toList();

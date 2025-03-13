@@ -12,8 +12,7 @@ public class BlackjackGame {
 
     private final Participants participants;
     private final Deck deck;
-    public BlackjackGame(List<String> names, Deck deck) {
-
+    public BlackjackGame(List<ParticipantName> names, Deck deck) {
         validatePlayerSize(names.size());
         this.deck = deck;
         this.participants = new Participants(names, new Dealer());

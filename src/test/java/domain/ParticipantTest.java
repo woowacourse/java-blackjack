@@ -38,7 +38,7 @@ class ParticipantTest {
     void 에이스가_포함된_경우에_에이스를_최적의_값으로_계산한다(List<TrumpCard> hand, Score expected) {
         // given
         Deck deck = BlackjackDeckTestFixture.createSequentialDeck(hand);
-        Player player = new Player("루키");
+        Player player = new Player(ParticipantName.nameOf("루키"));
 
         // when
         int cardCount = hand.size();
@@ -104,8 +104,7 @@ class ParticipantTest {
     void 플레이어의_드로우_가능여부를_반환한다(List<TrumpCard> hand, boolean expected) {
         // given
         Deck deck = BlackjackDeckTestFixture.createSequentialDeck(hand);
-        String name = "루키";
-        Player player = new Player(name);
+        Player player = new Player(ParticipantName.nameOf("루키"));
         int cardCount = hand.size();
         for (int i = 0; i < cardCount; i++) {
             player.addDraw(deck.drawCard());
@@ -123,7 +122,7 @@ class ParticipantTest {
     void 점수를_비교하여_현재_플레이어의_승패를_반환한다(List<TrumpCard> hand, Score otherScore, WinStatus expected) {
         // given
         Deck deck = BlackjackDeckTestFixture.createSequentialDeck(hand);
-        Player player = new Player("루키");
+        Player player = new Player(ParticipantName.nameOf("루키"));
         int cardCount = hand.size();
         for (int i = 0; i < cardCount; i++) {
             player.addDraw(deck.drawCard());

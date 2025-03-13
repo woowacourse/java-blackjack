@@ -6,7 +6,6 @@ import domain.Deck;
 import domain.DeckGenerator;
 import domain.GameResult;
 import domain.ParticipantName;
-import domain.Player;
 import domain.Score;
 import domain.TrumpCard;
 import domain.WinStatus;
@@ -29,10 +28,10 @@ public class BlackjackController {
     }
 
     public void run() {
-        List<String> names = handleInput(this::handleNames);
+        List<ParticipantName> participantNames = handleInput(this::handleNames);
         Deck deck = DeckGenerator.generateDeck(new BlackjackDrawStrategy());
-        BlackjackGame blackjackGame = new BlackjackGame(names, deck);
-        outputView.printInitiateDraw(names);
+        BlackjackGame blackjackGame = new BlackjackGame(participantNames, deck);
+        outputView.printInitiateDraw(participantNames);
         openFirstDealerCard(blackjackGame);
         openPlayerCards(blackjackGame);
         askPlayerDraw(blackjackGame);
@@ -131,17 +130,10 @@ public class BlackjackController {
         outputView.openCards(name, List.of(trumpCard));
     }
 
-    private List<String> handleNames() {
+    private List<ParticipantName> handleNames() {
         outputView.inputNames();
         List<String> names = inputView.inputNames();
-        validateNames(names);
-        return names;
-    }
-
-    private void validateNames(List<String> names) {
-        for (String name : names) {
-            new Player(name);
-        }
+        return ParticipantName.namesOf(names);
     }
 
     private <T> T handleInput(Supplier<T> inputSupplier) {

@@ -41,7 +41,7 @@ class PlayerTest {
     void 카드의_합이_21_이하면_뽑을_수_있다(List<TrumpCard> hand) {
         // given
         Deck deck = BlackjackDeckTestFixture.createSequentialDeck(hand);
-        Player player = new Player("루키");
+        Player player = new Player(ParticipantName.nameOf("루키"));
 
         // when
         int cardCount = hand.size();
@@ -77,7 +77,7 @@ class PlayerTest {
     void 카드의_합이_21_초과면_카드를_뽑을_수_없다(List<TrumpCard> hand) {
         // given
         Deck deck = BlackjackDeckTestFixture.createSequentialDeck(hand);
-        Player player = new Player("루키");
+        Player player = new Player(ParticipantName.nameOf("루키"));
 
         // when
         int cardCount = hand.size();

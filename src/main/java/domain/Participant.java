@@ -7,8 +7,8 @@ public abstract class Participant {
     protected final ParticipantHand hand;
     private final ParticipantName name;
 
-    protected Participant(String name) {
-        this.name = new ParticipantName(name);
+    protected Participant(ParticipantName name) {
+        this.name = name;
         this.hand = new ParticipantHand();
     }
 

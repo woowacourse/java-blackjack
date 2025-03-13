@@ -29,7 +29,10 @@ public class OutputView {
         System.out.println(INPUT_NAMES);
     }
 
-    public void printInitiateDraw(List<String> names) {
+    public void printInitiateDraw(List<ParticipantName> participantNames) {
+        List<String> names = participantNames.stream()
+                .map(ParticipantName::name)
+                .toList();
         String nicknames = String.join(SPLITTER, names);
         System.out.printf(INITIATE_DRAW, nicknames);
     }

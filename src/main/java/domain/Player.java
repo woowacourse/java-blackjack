@@ -2,7 +2,7 @@ package domain;
 
 public class Player extends Participant {
 
-    public Player(String name) {
+    public Player(ParticipantName name) {
         super(name);
     }
 
