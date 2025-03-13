@@ -37,4 +37,18 @@ public class WalletTest {
         int actual = wallet.getProfit();
         Assertions.assertThat(actual).isEqualTo(expectedProfit);
     }
+
+    @Test
+    void 베팅_금액_추가_테스트() {
+        // given
+        Wallet wallet = Wallet.generateEmptyWalletFrom(0);
+
+        // when
+        wallet.bet(1000);
+
+        // then
+        int expected = 1000;
+        int actual = wallet.getBetMoney();
+        Assertions.assertThat(actual).isEqualTo(expected);
+    }
 }
