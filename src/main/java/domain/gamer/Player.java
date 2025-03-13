@@ -1,7 +1,5 @@
 package domain.gamer;
 
-import static controller.BlackJackController.BUST_NUMBER;
-
 import domain.deck.Card;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,7 +25,7 @@ public class Player extends Gamer {
             final List<Integer> sumOfRanks = calculateAllSums(cards);
 
             return sumOfRanks.stream()
-                    .filter(sum -> sum <= BUST_NUMBER)
+                    .filter(sum -> sum <= Hand.BUST_NUMBER)
                     .max(Integer::compareTo)
                     .orElseGet(() -> sumOfRanks.stream().min(Integer::compareTo).orElse(0));
         }

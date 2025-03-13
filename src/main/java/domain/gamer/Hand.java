@@ -1,13 +1,12 @@
 package domain.gamer;
 
-import static controller.BlackJackController.BUST_NUMBER;
-
 import domain.deck.Card;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
 
+    public static final int BUST_NUMBER = 21;
     private final List<Card> cards;
 
     public Hand() {
