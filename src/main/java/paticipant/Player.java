@@ -32,6 +32,10 @@ public class Player {
 		return participant.calculateAllScore();
 	}
 
+	public DuelResult calculateDuelResult() {
+		return participant.calculateDuelResult();
+	}
+
 	public boolean isBust() {
 		return participant.isBust();
 	}
