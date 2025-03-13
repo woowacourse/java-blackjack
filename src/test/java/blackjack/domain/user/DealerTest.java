@@ -11,6 +11,7 @@ import blackjack.card.Suit;
 import blackjack.user.Dealer;
 import blackjack.user.Player;
 import blackjack.user.PlayerName;
+import blackjack.user.Wallet;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -88,7 +89,7 @@ class DealerTest {
 
         @BeforeEach
         void initParticipants() {
-            player = new Player(new PlayerName("sana"));
+            player = new Player(new PlayerName("sana"), Wallet.initialBetting(10000));
             dealer = new Dealer();
         }
 

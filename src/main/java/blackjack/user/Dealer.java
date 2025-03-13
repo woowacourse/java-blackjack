@@ -9,7 +9,6 @@ public class Dealer extends Participant {
     private static final int DEALER_DISTRIBUTE_CARD_THRESHOLD = 16;
 
     public Dealer() {
-        super();
     }
 
     @Override

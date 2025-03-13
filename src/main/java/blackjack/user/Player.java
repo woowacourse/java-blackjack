@@ -8,10 +8,11 @@ public class Player extends Participant {
     private static final int PLAYER_DISTRIBUTE_CARD_THRESHOLD = 21;
 
     private final PlayerName playerName;
+    private final Wallet wallet;
 
-    public Player(final PlayerName playerName) {
-        super();
+    public Player(final PlayerName playerName, Wallet wallet) {
         this.playerName = playerName;
+        this.wallet = wallet;
     }
 
     @Override

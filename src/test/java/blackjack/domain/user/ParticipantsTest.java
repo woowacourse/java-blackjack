@@ -7,6 +7,7 @@ import blackjack.user.Dealer;
 import blackjack.user.Participants;
 import blackjack.user.Player;
 import blackjack.user.PlayerName;
+import blackjack.user.Wallet;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;
@@ -24,9 +25,9 @@ public class ParticipantsTest {
         void createParticipantsWithNotDuplicate() {
             Dealer dealer = new Dealer();
             List<Player> players = List.of(
-                new Player(new PlayerName("a")),
-                new Player(new PlayerName("b")),
-                new Player(new PlayerName("c"))
+                new Player(new PlayerName("a"), Wallet.initialBetting(10000)),
+                new Player(new PlayerName("b"), Wallet.initialBetting(10000)),
+                new Player(new PlayerName("c"), Wallet.initialBetting(10000))
             );
 
             assertThatCode(() -> new Participants(dealer, players)).doesNotThrowAnyException();
@@ -37,9 +38,9 @@ public class ParticipantsTest {
         void createParticipantsWithDuplicate() {
             Dealer dealer = new Dealer();
             List<Player> players = List.of(
-                new Player(new PlayerName("a")),
-                new Player(new PlayerName("a")),
-                new Player(new PlayerName("c"))
+                new Player(new PlayerName("a"), Wallet.initialBetting(10000)),
+                new Player(new PlayerName("a"), Wallet.initialBetting(10000)),
+                new Player(new PlayerName("c"), Wallet.initialBetting(10000))
             );
 
             assertThatThrownBy(() -> new Participants(dealer, players))
@@ -52,7 +53,8 @@ public class ParticipantsTest {
         void createParticipantsOver25() {
             Dealer dealer = new Dealer();
             List<Player> players = IntStream.rangeClosed('a', 'z')
-                .mapToObj(c -> new Player(new PlayerName(String.valueOf((char) c))))
+                .mapToObj(c -> new Player(new PlayerName(String.valueOf((char) c)),
+                    Wallet.initialBetting(10000)))
                 .toList();
 
             assertThatThrownBy(() -> new Participants(dealer, players))

@@ -8,6 +8,7 @@ import blackjack.card.Denomination;
 import blackjack.card.Suit;
 import blackjack.user.Player;
 import blackjack.user.PlayerName;
+import blackjack.user.Wallet;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -26,7 +27,7 @@ public class PlayerTest {
         @ValueSource(strings = {"iiif", "pppk"})
         @DisplayName("한 명의 플레이어를 이름으로 생성할 수 있다.")
         void createPlayerByName(String name) {
-            Player player = new Player(new PlayerName(name));
+            Player player = new Player(new PlayerName(name), Wallet.initialBetting(10000));
 
             assertThat(player).isInstanceOf(Player.class);
         }
@@ -46,7 +47,7 @@ public class PlayerTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            Player player = new Player(new PlayerName("sana"));
+            Player player = new Player(new PlayerName("sana"), Wallet.initialBetting(10000));
             player.addCards(cardDeck, 3);
 
             assertThat(player.isPossibleToAdd()).isTrue();
@@ -62,7 +63,7 @@ public class PlayerTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            Player player = new Player(new PlayerName("sana"));
+            Player player = new Player(new PlayerName("sana"), Wallet.initialBetting(10000));
             player.addCards(cardDeck, 3);
 
             assertThat(player.isPossibleToAdd()).isFalse();

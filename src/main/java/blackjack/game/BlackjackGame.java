@@ -6,6 +6,7 @@ import blackjack.user.Participant;
 import blackjack.user.Participants;
 import blackjack.user.Player;
 import blackjack.user.PlayerName;
+import blackjack.user.Wallet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +27,7 @@ public class BlackjackGame {
     public static BlackjackGame createByPlayerNames(final CardDeck cardDeck, final List<PlayerName> names) {
         Dealer dealer = new Dealer();
         List<Player> players = names.stream()
-            .map(Player::new)
+            .map(name -> new Player(name, Wallet.initialBetting(10000)))
             .toList();
 
         return new BlackjackGame(cardDeck, new Participants(dealer, players));
