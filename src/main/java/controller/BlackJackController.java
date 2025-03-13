@@ -1,6 +1,6 @@
 package controller;
 
-import domain.Deck;
+import domain.card.Deck;
 import domain.gambler.Dealer;
 import domain.gambler.Nickname;
 import domain.gambler.Player;

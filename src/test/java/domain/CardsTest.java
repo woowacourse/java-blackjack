@@ -2,6 +2,8 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
+import domain.card.Cards;
 import domain.constant.TrumpSuit;
 import domain.constant.TrumpRank;
 import java.util.ArrayList;

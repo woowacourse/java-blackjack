@@ -1,7 +1,7 @@
 package domain.gambler;
 
-import domain.Card;
-import domain.Cards;
+import domain.card.Card;
+import domain.card.Cards;
 import domain.constant.MatchResult;
 import java.util.List;
 

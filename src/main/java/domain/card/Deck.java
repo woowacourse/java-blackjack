@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import domain.constant.TrumpSuit;
 import domain.constant.TrumpRank;

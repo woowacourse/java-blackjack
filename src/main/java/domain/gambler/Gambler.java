@@ -1,7 +1,7 @@
 package domain.gambler;
 
-import domain.Card;
-import domain.Cards;
+import domain.card.Card;
+import domain.card.Cards;
 import java.util.ArrayList;
 import java.util.List;
 
