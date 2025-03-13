@@ -104,6 +104,8 @@ public class OutputView {
 
     public static void printBettingResult(BettingResult bettingResult, List<Player> players) {
         System.out.println("## 최종 수익");
+        int dealerBettingResult = bettingResult.getDealerBettingResult();
+        System.out.printf("딜러: %d\n", dealerBettingResult);
         Map<Player, Integer> playerBettingResult = bettingResult.getPlayerBettingResults();
         for (Player player : players) {
             System.out.printf("%s: %d\n", player.getName(), playerBettingResult.get(player));

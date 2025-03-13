@@ -10,8 +10,9 @@ import java.util.Map;
 
 public class BettingResult {
     private final Map<Player, Integer> playerBettingResults;
+    private static int dealerBettingResult;
 
-    public BettingResult(Map<Player, Integer> playerBettingResults) {
+    public BettingResult(Map<Player, Integer> playerBettingResults, int dealerBettingResult) {
         this.playerBettingResults = playerBettingResults;
     }
 
@@ -23,12 +24,17 @@ public class BettingResult {
             int playerBettingResult = getMultiplyRatio(playerScore, dealerScore);
             int profit = player.makeProfit(playerBettingResult);
             playerBettingResults.put(player, profit);
+            dealerBettingResult -= profit;
         }));
 
-        return new BettingResult(playerBettingResults);
+        return new BettingResult(playerBettingResults, dealerBettingResult);
     }
 
     public Map<Player, Integer> getPlayerBettingResults() {
         return playerBettingResults;
+    }
+
+    public int getDealerBettingResult() {
+        return dealerBettingResult;
     }
 }
