@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import blackjack.domain.money.BettingMoney;
+import blackjack.domain.money.BlackjackBettingMoney;
 import blackjack.domain.money.Money;
 import blackjack.domain.player.Player;
 
@@ -10,14 +10,14 @@ import java.util.Map;
 
 public class BettingBoard {
     
-    private final Map<Player, BettingMoney> bettingBoard;
+    private final Map<Player, BlackjackBettingMoney> bettingBoard;
     
     public BettingBoard() {
         this.bettingBoard = new HashMap<>();
     }
     
     public void bet(Player player, int bettingMoney) {
-        this.bettingBoard.put(player, new BettingMoney(bettingMoney));
+        this.bettingBoard.put(player, new BlackjackBettingMoney(bettingMoney));
     }
     
     public Money getProfit(Player player, WinningStatus winningStatus) {
