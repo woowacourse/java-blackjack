@@ -59,6 +59,7 @@ public class Blackjack {
     }
 
     public void showInitialCards(final ResultView resultView) {
+        resultView.printEmptyLine();
         resultView.printCards(dealer, dealer.showInitialCards());
         for (Player player : players.getPlayers()) {
             resultView.printCards(player, player.showInitialCards());
@@ -89,6 +90,7 @@ public class Blackjack {
         while (dealer.isHit()) {
             final Card card = dealer.spreadOneCard();
             dealer.receiveCard(card);
+            resultView.printDealerHit();
         }
     }
 
@@ -101,5 +103,13 @@ public class Blackjack {
             inputView.printErrorMessage(e);
         }
         return readIfHit(inputView, player);
+    }
+
+    public void showSum(final ResultView resultView) {
+        resultView.printEmptyLine();
+        resultView.printCardsSum(dealer, dealer.showAllCards(), dealer.sumCards());
+        for (Player player : players.getPlayers()) {
+            resultView.printCardsSum(player, player.showAllCards(), player.sumCards());
+        }
     }
 }

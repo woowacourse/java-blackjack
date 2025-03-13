@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import static blackjack.view.Constant.LINE;
+
 import blackjack.gamer.Player;
 import java.util.Scanner;
 
@@ -20,12 +22,12 @@ public class InputView {
     }
 
     public String readBettingMoney(final Player player) {
-        System.out.println(String.format(INPUT_BETTING_MONEY, player.getNickName()));
+        System.out.println(String.format(LINE + INPUT_BETTING_MONEY, player.getNickName()));
         return scanner.nextLine();
     }
 
     public String readIfHit(final Player player) {
-        System.out.println(String.format(INPUT_WANT_HIT, player.getNickName()));
+        System.out.println(String.format(LINE + INPUT_WANT_HIT, player.getNickName()));
         return scanner.nextLine();
     }
 }

@@ -24,6 +24,6 @@ public class Application {
         if (!blackjack.isPush()) {
             blackjack.hit(inputView, resultView);
         }
-
+        blackjack.showSum(resultView);
     }
 }
