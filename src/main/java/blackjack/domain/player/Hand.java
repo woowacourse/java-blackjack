@@ -40,4 +40,8 @@ public class Hand {
     public Cards getCards() {
         return cards;
     }
+
+    public int getBetAmount() {
+        return betAmount;
+    }
 }
