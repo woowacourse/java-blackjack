@@ -1,32 +1,26 @@
 package domain.game;
 
 import domain.card.Card;
-import domain.card.CardHand;
 import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.GameParticipant;
 import domain.participant.Player;
+import domain.participant.Players;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class Game {
-    private static final int MAX_PLAYER_COUNT = 5;
-
     private final Dealer dealer;
-    private final List<Player> players = new ArrayList<>();
+    private final Players players;
 
     public Game(List<String> playerNames, Deck deck) {
         dealer = new Dealer(deck, deck.getInitialDeal());
-        validatePlayerCount(playerNames);
-        validateDuplicateName(playerNames);
-        validatePlayerNames(playerNames);
-        playerNames.forEach(this::registerPlayer);
+        this.players = new Players(playerNames, dealer.pickInitialDeal());
     }
 
     public void playerHit(String playerName) {
         Card card = dealer.pickCard();
-        findPlayerByName(playerName).hit(card);
+        players.findPlayerByName(playerName).hit(card);
     }
 
     public void dealerHit() {
@@ -39,18 +33,18 @@ public class Game {
     }
 
     public boolean canHit(String playerName) {
-        return findPlayerByName(playerName).canHit();
+        return players.findPlayerByName(playerName).canHit();
     }
 
     public List<GameParticipant> getParticipants() {
         List<GameParticipant> participants = new ArrayList<>();
         participants.add(dealer);
-        participants.addAll(players);
+        participants.addAll(players.getPlayers());
         return participants;
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return players.getPlayers();
     }
 
     public List<Card> getDealerCards() {
@@ -58,47 +52,14 @@ public class Game {
     }
 
     public List<Card> getPlayerCards(String playerName) {
-        return findPlayerByName(playerName).getCards();
+        return players.findPlayerByName(playerName).getCards();
     }
 
     public List<String> getPlayerNames() {
-        return players.stream()
-                .map(GameParticipant::getName)
-                .toList();
+        return players.getPlayerNames();
     }
 
     public Dealer getDealer() {
         return dealer;
-    }
-
-    private void registerPlayer(String playerName) {
-        CardHand initialDeal = dealer.pickInitialDeal();
-        Player player = new Player(playerName, initialDeal);
-        players.add(player);
-    }
-
-    private void validatePlayerCount(List<String> playerNames) {
-        if (playerNames.size() > MAX_PLAYER_COUNT) {
-            throw new IllegalArgumentException("[ERROR] 참여자는 최대 5명입니다.");
-        }
-    }
-
-    private void validateDuplicateName(List<String> playerNames) {
-        if (playerNames.size() != Set.copyOf(playerNames).size()) {
-            throw new IllegalArgumentException("[ERROR] 이름은 중복될 수 없습니다.");
-        }
-    }
-
-    private void validatePlayerNames(List<String> playerNames) {
-        if (playerNames.contains("딜러")) {
-            throw new IllegalArgumentException("[ERROR] '딜러'는 플레이어 이름으로 사용할 수 없습니다.");
-        }
-    }
-
-    private GameParticipant findPlayerByName(String playerName) {
-        return players.stream()
-                .filter(player -> player.getName().equals(playerName))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 일치하는 플레이어가 없습니다."));
     }
 }
