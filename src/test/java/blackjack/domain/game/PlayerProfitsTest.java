@@ -25,19 +25,21 @@ class PlayerProfitsTest {
         PlayerProfits playerProfits = new PlayerProfits(dealer, List.of(player));
 
         PlayerProfit playerProfit = playerProfits.getPlayerProfits().getFirst();
+        int expectedProfit = ProfitRate.BLACKJACK_WITH_INITIAL_HAND.calculateProfit(player.getBettingAmount());
         assertThat(playerProfit.getNickname()).isEqualTo("플레이어");
-        assertThat(playerProfit.getProfit()).isEqualTo((int) (player.getBettingAmount() * 1.5));
+        assertThat(playerProfit.getProfit()).isEqualTo(expectedProfit);
     }
 
     @ParameterizedTest
     @DisplayName("딜러가 버스트일 경우 플레이어의 수익을 구할 수 있다.")
     @MethodSource()
-    void canCreateWhenDealerBust(Player player, int expectedProfit) {
+    void canCreateWhenDealerBust(Player player, ProfitRate expectedRate) {
         Dealer dealer = DealerFixture.createBust();
 
         PlayerProfits playerProfits = new PlayerProfits(dealer, List.of(player));
 
         PlayerProfit playerProfit = playerProfits.getPlayerProfits().getFirst();
+        int expectedProfit = expectedRate.calculateProfit(player.getBettingAmount());
         assertThat(playerProfit.getNickname()).isEqualTo(player.getNickname());
         assertThat(playerProfit.getProfit()).isEqualTo(expectedProfit);
     }
@@ -45,25 +47,26 @@ class PlayerProfitsTest {
     static Stream<Arguments> canCreateWhenDealerBust() {
         return Stream.of(
                 Arguments.of(PlayerFixture.createBust("플레이어1"),
-                        PlayerFixture.DEFAULT_BETTING_AMOUNT.getValue()),
+                        ProfitRate.WIN),
                 Arguments.of(PlayerFixture.createBlackJackWithInitialHand("플레이어2"),
-                        (int) (PlayerFixture.DEFAULT_BETTING_AMOUNT.getValue() * 1.5)),
+                        ProfitRate.BLACKJACK_WITH_INITIAL_HAND),
                 Arguments.of(PlayerFixture.createBlackJackWithFinalHand("플레이어3"),
-                        PlayerFixture.DEFAULT_BETTING_AMOUNT.getValue()),
+                        ProfitRate.WIN),
                 Arguments.of(PlayerFixture.createLessThanBlackjack("플레이어4"),
-                        PlayerFixture.DEFAULT_BETTING_AMOUNT.getValue())
+                        ProfitRate.WIN)
         );
     }
 
     @ParameterizedTest
     @DisplayName("승패에 따라 플레이어의 수익을 구할 수 있다.")
     @MethodSource()
-    void canCreateByWinningType(Dealer dealer, Player player, int expectedProfit) {
+    void canCreateByWinningType(Dealer dealer, Player player, ProfitRate expectedRate) {
         WinningType.parse(dealer.getPoint(), player.getPoint());
 
         PlayerProfits playerProfits = new PlayerProfits(dealer, List.of(player));
 
         PlayerProfit playerProfit = playerProfits.getPlayerProfits().getFirst();
+        int expectedProfit = expectedRate.calculateProfit(player.getBettingAmount());
         assertThat(playerProfit.getNickname()).isEqualTo(player.getNickname());
         assertThat(playerProfit.getProfit()).isEqualTo(expectedProfit);
     }
@@ -72,16 +75,13 @@ class PlayerProfitsTest {
         return Stream.of(
                 Arguments.of(
                         DealerFixture.createBlackJackWithFinalHand(),
-                        PlayerFixture.createBlackJackWithFinalHand("플레이어"),
-                        PlayerFixture.DEFAULT_BETTING_AMOUNT.getValue() * 0),
+                        PlayerFixture.createBlackJackWithFinalHand("플레이어"), ProfitRate.DRAW),
                 Arguments.of(
                         DealerFixture.createBlackJackWithFinalHand(),
-                        PlayerFixture.createLessThanBlackjack("플레이어"),
-                        PlayerFixture.DEFAULT_BETTING_AMOUNT.getValue() * -1),
+                        PlayerFixture.createLessThanBlackjack("플레이어"), ProfitRate.LOSE),
                 Arguments.of(
                         DealerFixture.createLessThanBlackjack(),
-                        PlayerFixture.createBlackJackWithFinalHand("플레이어"),
-                        PlayerFixture.DEFAULT_BETTING_AMOUNT.getValue() * 1)
+                        PlayerFixture.createBlackJackWithFinalHand("플레이어"), ProfitRate.WIN)
         );
     }
 
@@ -97,6 +97,6 @@ class PlayerProfitsTest {
         PlayerProfits playerProfits = new PlayerProfits(dealer, players);
 
         assertThat(playerProfits.calculateDealerProfit())
-                .isEqualTo(PlayerFixture.DEFAULT_BETTING_AMOUNT.getValue() * -1);
+                .isEqualTo(ProfitRate.LOSE.calculateProfit(PlayerFixture.DEFAULT_BETTING_AMOUNT.getValue()));
     }
 }
