@@ -11,7 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import config.CardDeckFactory;
 import domain.card.Card;
-import domain.card.CardDeck;
+import domain.card.Deck;
+import domain.card.Hand;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
@@ -39,9 +40,7 @@ public class PlayersTest {
         ));
 
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        CardDeck cardDeck = cardDeckFactory.create();
-
-        Dealer dealer = new Dealer(cardDeck);
+        Deck deck = cardDeckFactory.create();
 
         //when-then
 
@@ -50,7 +49,7 @@ public class PlayersTest {
 //            softly.assertThat(playerList.get(1).getCardDeck().getCardsSize()).isEqualTo(2);
 //        });
 
-        assertDoesNotThrow(() -> players.hitCards(dealer));
+        assertDoesNotThrow(() -> players.hitCards(deck));
 
     }
 
@@ -91,12 +90,12 @@ public class PlayersTest {
         InputView testInputView = new InputView(new Scanner(System.in));
         OutputView testOutputView = new OutputView();
 
-        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, QUEEN), new Card(SPADE, JACK), new Card(HEART, KING)));
-        Dealer dealer = new Dealer(cardDeck);
+        Deck deck = new Deck(List.of(new Card(DIAMOND, QUEEN), new Card(SPADE, JACK), new Card(HEART, KING)));
+        Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
         Players players = Players.from(List.of("pobi", "lisa"));
 
         //when-then
-        assertDoesNotThrow(() -> players.draw(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck, dealer));
+        assertDoesNotThrow(() -> players.draw(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck, deck));
     }
 
     @Test
