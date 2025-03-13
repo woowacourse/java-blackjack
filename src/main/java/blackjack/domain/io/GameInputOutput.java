@@ -5,26 +5,27 @@ import blackjack.domain.user.BettingAmount;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class GameInputOutput {
 
-    private final DealerAndPlayersFunction printInitialHandsMethod;
+    private final BiConsumer<Dealer, List<Player>> printInitialHandsMethod;
     private final Function<String, Boolean> readWannaHitMethod;
     private final Function<String, BettingAmount> readBettingAmountMethod;
-    private final PlayerFunction printHitResultMethod;
+    private final Consumer<Player> printHitResultMethod;
     private final Consumer<Integer> printDealerDrawingMethod;
-    private final DealerAndPlayersFunction printFinalHandsMethod;
+    private final BiConsumer<Dealer, List<Player>> printFinalHandsMethod;
     private final Consumer<PlayerProfits> printPlayerProfitsMethod;
 
     public GameInputOutput(
-            DealerAndPlayersFunction printInitialHandsMethod,
+            BiConsumer<Dealer, List<Player>> printInitialHandsMethod,
             Function<String, Boolean> readWannaHitMethod,
             Function<String, BettingAmount> readBettingAmountMethod,
-            PlayerFunction printHitResultMethod,
+            Consumer<Player> printHitResultMethod,
             Consumer<Integer> printDealerDrawingMethod,
-            DealerAndPlayersFunction printFinalHandsMethod,
+            BiConsumer<Dealer, List<Player>> printFinalHandsMethod,
             Consumer<PlayerProfits> printPlayerProfitsMethod
     ) {
         this.printInitialHandsMethod = printInitialHandsMethod;
@@ -37,7 +38,7 @@ public class GameInputOutput {
     }
 
     public void printInitialHands(Dealer dealer, List<Player> players) {
-        printInitialHandsMethod.execute(dealer, players);
+        printInitialHandsMethod.accept(dealer, players);
     }
 
     public boolean readIngWannaHit(String nickname) {
@@ -49,7 +50,7 @@ public class GameInputOutput {
     }
 
     public void printingHitResult(Player player) {
-        printHitResultMethod.execute(player);
+        printHitResultMethod.accept(player);
     }
 
     public void printDealerDrawing(int count) {
@@ -57,7 +58,7 @@ public class GameInputOutput {
     }
 
     public void printFinalHands(Dealer dealer, List<Player> players) {
-        printFinalHandsMethod.execute(dealer, players);
+        printFinalHandsMethod.accept(dealer, players);
     }
 
     public void printPlayerProfits(PlayerProfits playerProfits) {
