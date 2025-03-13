@@ -7,6 +7,12 @@ public class Card {
     private final Suit suit;
     protected int value;
 
+    public Card(Card card) {
+        this.denomination = card.denomination;
+        this.suit = card.suit;
+        this.value = card.value;
+    }
+
     public Card(Denomination denomination, Suit suit) {
         this.denomination = denomination;
         this.suit = suit;

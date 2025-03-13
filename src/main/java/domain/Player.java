@@ -51,8 +51,8 @@ public class Player {
         return resolveBust();
     }
 
-    private boolean isNotDealer() {
-        return !this.getClass().equals(Dealer.class);
+    public boolean isNotDealer() {
+        return true;
     }
 
     public int getHandTotal() {
@@ -61,6 +61,10 @@ public class Player {
 
     public boolean isHandBust() {
         return hand.isBust();
+    }
+
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
     }
 
     public boolean containsOriginalAce() {

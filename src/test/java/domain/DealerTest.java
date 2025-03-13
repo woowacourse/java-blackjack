@@ -21,6 +21,7 @@ public class DealerTest {
     @DisplayName("딜러의 핸드 총합이 16 이하면 카드를 추가로 받는다.")
     void test2() {
         Dealer dealer = new Dealer();
+
         dealer.addCard(new Card(Denomination.TWO, Suit.CLUB));
         dealer.addCard(new Card(Denomination.TEN, Suit.DIAMOND));
 
@@ -30,14 +31,16 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러의 핸드 총합이 16 초과이면 카드를 추가로 받지않는다.")
+    @DisplayName("딜러의 핸드 총합이 16 초과면 카드를 추가로 받지 않는다.")
     void test3() {
         Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Denomination.SEVEN, Suit.CLUB));
-        dealer.addCard(new Card(Denomination.TEN, Suit.DIAMOND));
+
+        dealer.addCard(new Card(Denomination.TEN, Suit.CLUB));
+        dealer.addCard(new Card(Denomination.SEVEN, Suit.DIAMOND));
 
         dealer.drawWithThreshold(new Deck());
 
         assertThat(dealer.getCardCount()).isEqualTo(2);
     }
+
 }

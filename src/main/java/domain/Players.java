@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Entry {
+public class Players {
     private static final String DELIMITER = ",";
     private static final String MAX_PLAYER_EXCEPTION = "플레이어는 5명까지만 입력해주세요.";
     private static final int MAX_PLAYER_SIZE = 5;
 
     private final List<Player> players = new ArrayList<>();
 
-    public Entry(String playersInput) {
+    public Players(String playersInput) {
         enterPlayer(playersInput);
     }
 

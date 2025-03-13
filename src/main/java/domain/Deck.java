@@ -25,10 +25,10 @@ public class Deck {
         deck.add(new Card(denomination, suit));
     }
 
-    public void distributeCards(Dealer dealer, Entry entry) {
+    public void distributeCards(Dealer dealer, Players players) {
         shuffle();
         drawTwoCardFromDeck(dealer);
-        for (Player player : entry.getPlayers()) {
+        for (Player player : players.getPlayers()) {
             drawTwoCardFromDeck(player);
         }
     }

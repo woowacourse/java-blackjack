@@ -5,7 +5,7 @@ public enum WinLossResult {
     WIN("승"),
     LOSS("패"),
     DRAW("무"),
-    NONE("");
+    WIN_WITH_BLACK_JACK("블랙잭으로 승");
 
     private final String winLossMessage;
 
@@ -23,7 +23,10 @@ public enum WinLossResult {
         if (winLossOption == 0) {
             return DRAW;
         }
-        return NONE;
+        if (winLossOption == 2) {
+            return WIN_WITH_BLACK_JACK;
+        }
+        throw new IllegalArgumentException("Invalid winLossOption: " + winLossOption);
     }
 
     public String getWinLossMessage() {

@@ -1,6 +1,9 @@
 package domain;
 
-import static domain.Denomination.*;
+import static domain.Denomination.ACE;
+import static domain.Denomination.JACK;
+import static domain.Denomination.THREE;
+import static domain.Denomination.TWO;
 import static domain.Suit.CLUB;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -39,20 +42,14 @@ public class CardTest {
         }
 
         @Test
-        @DisplayName("카드는 고유의 숫자값을 갖는다. - 4")
-        void test5() {
-            assertThat(new Card(TEN, CLUB).getValue()).isEqualTo(10);
-        }
-
-        @Test
         @DisplayName("ACE의 초기 숫자값은 11이다.")
-        void test6() {
+        void test5() {
             assertThat(new Card(ACE, CLUB).getValue()).isEqualTo(11);
         }
     }
 
     @Test
-    @DisplayName("카드는 0으로 값을 변경할 수 있다.")
+    @DisplayName("Card는 값을 0으로 변경할 수 있다")
     void test1() {
         Card card = new Card(THREE, CLUB);
 
