@@ -4,6 +4,7 @@ import java.util.List;
 
 import card.Card;
 import card.CardHand;
+import card.Count;
 import card.Score;
 import duel.DuelHistory;
 import duel.DuelResult;
@@ -39,7 +40,7 @@ public class Participant {
 	}
 
 	public boolean isBlackjack(final Score bustScore) {
-		return false;
+		return calculateAllScore(bustScore).equals(bustScore) && Count.from(2).equals(hand.calculateCardCount());
 	}
 
 	public CardHand getCardHand() {

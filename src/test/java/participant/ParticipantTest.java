@@ -57,7 +57,6 @@ public class ParticipantTest {
 			// given
 			final List<Card> blackjackCards = List.of(
 				new Card(Rank.TEN, Suit.CLUB),
-				new Card(Rank.TEN, Suit.SPADE),
 				new Card(Rank.ACE, Suit.CLUB)
 			);
 			final Participant blackjackParticipant = new Participant(new CardHand(blackjackCards));
@@ -68,13 +67,13 @@ public class ParticipantTest {
 			final Participant notBlackjackParticipant = new Participant(new CardHand(notBustedCards));
 
 			// when
-			final boolean bustActual = blackjackParticipant.isBlackjack(BUST_SCORE);
-			final boolean notBustActual = notBlackjackParticipant.isBlackjack(BUST_SCORE);
+			final boolean blackjackActual = blackjackParticipant.isBlackjack(BUST_SCORE);
+			final boolean notBlackjackActual = notBlackjackParticipant.isBlackjack(BUST_SCORE);
 
 			// then
 			assertSoftly(s -> {
-				s.assertThat(bustActual).isTrue();
-				s.assertThat(notBustActual).isFalse();
+				s.assertThat(blackjackActual).isTrue();
+				s.assertThat(notBlackjackActual).isFalse();
 			});
 		}
 	}
