@@ -18,7 +18,7 @@ public class Players {
         validatePlayerCount(playerNames);
         validateDuplicatePlayerName(playerNames);
         this.players = playerNames.stream()
-                .map(playerName -> new Player(playerName))
+                .map(Player::new)
                 .toList();
     }
 

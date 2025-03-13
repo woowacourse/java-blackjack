@@ -7,7 +7,7 @@ import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.CardNumber;
 import domain.card.Pattern;
-import domain.card.TestShuffler;
+import java.util.ArrayList;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -58,7 +58,7 @@ public class PlayersTest {
     @Test
     void 모든_플레이어는_게임_시작_시_카드를_드로우한다() {
         //given
-        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
+        CardDeck cardDeck = CardDeck.createCards(ArrayList::new);
         List<String> playerNames = List.of("aa", "bb");
         Players players = new Players(playerNames);
 

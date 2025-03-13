@@ -6,6 +6,7 @@ import static domain.card.CardDeck.DRAW_COUNT_WHEN_START;
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.CardShuffler;
+import domain.card.RandomCardShuffler;
 import domain.game.Dealer;
 import domain.game.GameResult;
 import domain.game.Player;
@@ -25,8 +26,8 @@ public class BlackJackController {
     }
 
     public void run() {
-        CardShuffler cardShuffler = new CardShuffler();
-        CardDeck cardDeck = CardDeck.createCards(cardShuffler);
+        CardShuffler randomCardShuffler = new RandomCardShuffler();
+        CardDeck cardDeck = CardDeck.createCards(randomCardShuffler);
 
         List<String> playerNames = inputView.readPlayerNames();
         Players players = new Players(playerNames);

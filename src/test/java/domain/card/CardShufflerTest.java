@@ -1,7 +1,7 @@
 package domain.card;
 
-import java.util.List;
-import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.Test;
 
 public class CardShufflerTest {
@@ -9,13 +9,11 @@ public class CardShufflerTest {
     @Test
     void 카드들을_섞는다() {
         //given
-        CardShuffler cardShuffler = new CardShuffler();
-        CardDeck cardDeck = CardDeck.createCards(new TestShuffler());
+        CardShuffler randomCardShuffler = new RandomCardShuffler();
+        CardDeck cardDeck1 = CardDeck.createCards(randomCardShuffler);
+        CardDeck cardDeck2 = CardDeck.createCards(randomCardShuffler);
 
-        //when
-        List<Card> actual = cardShuffler.shuffle(cardDeck.getDeck());
-
-        //then
-        Assertions.assertThat(actual).isNotEqualTo(cardDeck.getDeck());
+        //when & then
+        assertThat(cardDeck1.getDeck()).isNotEqualTo(cardDeck2.getDeck());
     }
 }
