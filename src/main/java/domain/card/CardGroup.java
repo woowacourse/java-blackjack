@@ -55,6 +55,6 @@ public class CardGroup {
     }
 
     public boolean isBlackjack() {
-        return false;
+        return true;
     }
 }
