@@ -72,4 +72,13 @@ public class Blackjack {
             resultView.printCards(player);
         }
     }
+
+    public boolean isPush() {
+        final int dealerSum = dealer.sumCards();
+        if (dealerSum != BLACKJACK_SCORE) {
+            return false;
+        }
+        return players.getPlayers().stream()
+                .anyMatch(player -> player.sumCards() == BLACKJACK_SCORE);
+    }
 }
