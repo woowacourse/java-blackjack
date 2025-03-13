@@ -1,39 +1,43 @@
-package domain;
+package participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import domain.constant.TrumpEmblem;
-import domain.constant.TrumpNumber;
-import domain.constant.WinningResult;
+import card.Card;
+import card.Cards;
+import constant.TrumpEmblem;
+import constant.TrumpNumber;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class PlayerTest {
+class DealerTest {
 
     @Test
-    void 초기_카드_두장을_받아_플레이어를_생성한다() {
+    void 초기_카드_두장을_받아_딜러를_생성한다() {
         // given
-        List<Card> initialCards = makeCards(TrumpNumber.ACE, TrumpNumber.EIGHT);
+        List<Card> initialCards = new ArrayList<>();
+        initialCards.add(new Card(TrumpNumber.SEVEN, TrumpEmblem.CLOVER));
+        initialCards.add(new Card(TrumpNumber.SIX, TrumpEmblem.HEART));
         Cards cards = new Cards(initialCards);
 
         // when // then
-        assertDoesNotThrow(() -> new Player(new Nickname("pobi"), cards));
+        assertDoesNotThrow(() -> new Dealer(cards));
     }
 
     @Test
     void 초기_카드_세장을_받으면_예외를_발생시킨다() {
         // given
-        List<Card> initialCards = makeCards(TrumpNumber.ACE, TrumpNumber.EIGHT);
-        initialCards.add(new Card(TrumpNumber.EIGHT, TrumpEmblem.HEART));
+        List<Card> initialCards = makeCards(TrumpNumber.THREE, TrumpNumber.FOUR);
+        initialCards.add(new Card(TrumpNumber.FIVE, TrumpEmblem.HEART));
         Cards cards = new Cards(initialCards);
 
         // when // then
-        assertThatThrownBy(() -> new Player(new Nickname("pobi"), cards)).isInstanceOf(IllegalArgumentException.class)
+        assertThatThrownBy(() -> new Dealer(cards))
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 초기 카드는 2장을 받아야 합니다.");
     }
 
@@ -47,12 +51,12 @@ class PlayerTest {
     void 카드를_한장_받았을_때_21이_넘는지_확인한다(TrumpNumber number1, TrumpNumber number2, TrumpNumber number3, boolean expected) {
         // given
         List<Card> initialCards = makeCards(number1, number2);
-        Card card = new Card(number3, TrumpEmblem.SPADE);
         Cards cards = new Cards(initialCards);
-        Player player = new Player(new Nickname("pobi"),cards);
+        Card card = new Card(number3, TrumpEmblem.SPADE);
+        Dealer dealer = new Dealer(cards);
 
         // when
-        boolean isOverBustStandard = player.addOneCard(card);
+        boolean isOverBustStandard = dealer.addOneCard(card);
 
         // then
         assertThat(isOverBustStandard).isEqualTo(expected);
@@ -68,11 +72,11 @@ class PlayerTest {
         // given
         List<Card> initialCards = makeCards(number1, number2);
         Cards cards = new Cards(initialCards);
-        Player player = new Player(new Nickname("pobi"), cards);
-        player.addOneCard(new Card(number3, TrumpEmblem.HEART));
+        Dealer dealer = new Dealer(cards);
+        dealer.addOneCard(new Card(number3, TrumpEmblem.HEART));
 
         // when
-        int sumCards = player.sumCardNumbers();
+        int sumCards = dealer.sumCardNumbers();
 
         // then
         assertThat(sumCards).isEqualTo(expected);
@@ -80,28 +84,37 @@ class PlayerTest {
 
     @ParameterizedTest
     @CsvSource(value = {
-            "KING, KING, EIGHT, 28, LOSE",
-            "KING, NINE, EIGHT, 28, LOSE",
-            "KING, KING, EIGHT, 27, LOSE",
-            "KING, THREE, FOUR, 27, WIN",
-            "KING, KING, EIGHT, 18, LOSE",
-            "KING, THREE, EIGHT, 18, WIN",
-            "KING, THREE, FOUR, 18, LOSE",
-            "KING, THREE, EIGHT, 21, DRAW"
+            "ACE, TWO, true",
+            "ACE, FIVE, true",
+            "ACE, SIX, false",
+            "ACE, KING, false"
     })
-    void 딜러와의_승무패를_정한다(TrumpNumber number1, TrumpNumber number2, TrumpNumber number3, int dealerScore,
-                       WinningResult expected) {
+    void 딜러의_카드_총합이_16이하인지_확인한다(TrumpNumber number1, TrumpNumber number2, boolean expected) {
         // given
         List<Card> initialCards = makeCards(number1, number2);
         Cards cards = new Cards(initialCards);
-        Player player = new Player(new Nickname("pobi"), cards);
-        player.addOneCard(new Card(number3, TrumpEmblem.HEART));
+        Dealer dealer = new Dealer(cards);
 
         // when
-        WinningResult winningResult = player.compareTo(dealerScore);
+        boolean shouldDealerHit = dealer.shouldDealerHit();
 
         // then
-        assertThat(winningResult).isEqualTo(expected);
+        assertThat(shouldDealerHit).isEqualTo(expected);
+    }
+
+    @Test
+    void 초기_딜러의_카드중_작은_숫자_한장을_오픈한다() {
+        // given
+        List<Card> initialCards = makeCards(TrumpNumber.ACE, TrumpNumber.KING);
+        Cards cards = new Cards(initialCards);
+        Dealer dealer = new Dealer(cards);
+
+        // when
+        Card card = dealer.openOneCard();
+
+        // then
+        assertThat(card.getNumber()).isEqualTo(TrumpNumber.KING);
+        assertThat(card.getEmblem()).isEqualTo(TrumpEmblem.HEART);
     }
 
     private List<Card> makeCards(TrumpNumber number1, TrumpNumber number2) {

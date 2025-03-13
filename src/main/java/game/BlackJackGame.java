@@ -1,26 +1,27 @@
-package controller;
+package game;
 
-import domain.Dealer;
-import domain.Deck;
-import domain.Player;
-import domain.Players;
-import domain.strategy.DeckShuffleStrategy;
-import view.InputView;
-import view.OutputView;
+import io.InputView;
+import io.OutputView;
+import participant.Dealer;
+import card.Deck;
+import participant.Player;
+import participant.Players;
+import strategy.DeckShuffleStrategy;
 
-public class BlackJackController {
+
+public class BlackJackGame {
 
     public static final String HIT_COMMAND = "y";
 
     private final InputView inputView;
     private final OutputView outputView;
 
-    public BlackJackController(InputView inputView, OutputView outputView) {
+    public BlackJackGame(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
 
-    public void run() {
+    public void play() {
         Deck deck = new Deck(new DeckShuffleStrategy());
         Players players = Players.registerPlayers(inputView.readParticipantsNames(), deck);
         Dealer dealer = new Dealer(deck.drawInitialCards());

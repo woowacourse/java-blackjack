@@ -1,6 +1,6 @@
-package domain;
+package card;
 
-import domain.constant.TrumpNumber;
+import constant.TrumpNumber;
 import java.util.List;
 
 public class Cards {
@@ -9,9 +9,11 @@ public class Cards {
     public static final int SOFT_ACE_DIFFERENCE = 10;
 
     private final List<Card> cards;
+    private final boolean isBlackJack;
 
     public Cards(List<Card> cards) {
         this.cards = cards;
+        isBlackJack = checkBlackJack();
     }
 
     public boolean addOneCard(Card card) {
@@ -29,6 +31,10 @@ public class Cards {
 
     public Card drawOneCard() {
         return cards.removeLast();
+    }
+
+    public boolean checkBlackJack() {
+        return sumCardNumbers() == 21;
     }
 
     private int calculateSum() {
@@ -56,5 +62,9 @@ public class Cards {
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    public boolean isBlackJack() {
+        return isBlackJack;
     }
 }

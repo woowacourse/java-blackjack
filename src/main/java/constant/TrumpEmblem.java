@@ -1,4 +1,4 @@
-package domain.constant;
+package constant;
 
 public enum TrumpEmblem {
     SPADE("스페이드"),

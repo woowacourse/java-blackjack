@@ -1,4 +1,4 @@
-package domain.constant;
+package constant;
 
 public enum TrumpNumber {
     ACE(11, "A"),

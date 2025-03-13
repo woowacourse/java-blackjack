@@ -1,4 +1,4 @@
-package domain.constant;
+package constant;
 
 public enum WinningResult {
     WIN("승"),

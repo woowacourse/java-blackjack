@@ -1,9 +1,9 @@
-package domain.strategy;
+package strategy;
 
-import domain.Card;
-import domain.Cards;
-import domain.constant.TrumpEmblem;
-import domain.constant.TrumpNumber;
+import card.Card;
+import card.Cards;
+import constant.TrumpEmblem;
+import constant.TrumpNumber;
 
 import java.util.Arrays;
 import java.util.Collections;

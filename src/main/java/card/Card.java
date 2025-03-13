@@ -1,7 +1,7 @@
-package domain;
+package card;
 
-import domain.constant.TrumpEmblem;
-import domain.constant.TrumpNumber;
+import constant.TrumpEmblem;
+import constant.TrumpNumber;
 
 public class Card {
 

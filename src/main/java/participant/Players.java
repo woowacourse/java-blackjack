@@ -1,6 +1,8 @@
-package domain;
+package participant;
 
-import domain.constant.WinningResult;
+import card.Deck;
+import constant.WinningResult;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;

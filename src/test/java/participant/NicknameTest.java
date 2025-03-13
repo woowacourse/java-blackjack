@@ -1,4 +1,4 @@
-package domain;
+package participant;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;

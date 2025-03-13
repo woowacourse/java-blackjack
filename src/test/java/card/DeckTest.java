@@ -1,11 +1,11 @@
-package domain;
+package card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.constant.TrumpEmblem;
-import domain.constant.TrumpNumber;
-import domain.strategy.DeckSettingStrategy;
-import domain.strategy.DeckShuffleStrategy;
+import constant.TrumpEmblem;
+import constant.TrumpNumber;
+import strategy.DeckSettingStrategy;
+import strategy.DeckShuffleStrategy;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;

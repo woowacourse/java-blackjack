@@ -1,6 +1,8 @@
-package domain;
+package participant;
 
-import domain.constant.WinningResult;
+import card.Card;
+import card.Cards;
+import constant.WinningResult;
 
 import java.util.List;
 

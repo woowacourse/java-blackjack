@@ -1,10 +1,10 @@
-package view;
+package io;
 
-import domain.Card;
-import domain.Dealer;
-import domain.Player;
-import domain.Players;
-import domain.constant.WinningResult;
+import card.Card;
+import participant.Dealer;
+import participant.Player;
+import participant.Players;
+import constant.WinningResult;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;

@@ -1,6 +1,6 @@
-package domain;
+package card;
 
-import domain.strategy.DeckSettingStrategy;
+import strategy.DeckSettingStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
