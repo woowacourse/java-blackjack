@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class PlayerTest {
@@ -27,7 +26,7 @@ class PlayerTest {
                     TrumpCard.TWO_OF_SPADES
             );
             Hand hand = new Hand(cards);
-            Player player = new Player("머피", new BettingMoney(1000), hand);
+            Player player = new Player(new Name("머피"), new BettingMoney(1000), hand);
 
             // when
             List<TrumpCard> retrievedCards = player.retrieveCards();
@@ -44,7 +43,7 @@ class PlayerTest {
                     TrumpCard.ACE_OF_SPADES
             );
             Hand hand = new Hand(cards);
-            Player player = new Player("머피", new BettingMoney(1000), hand);
+            Player player = new Player(new Name("머피"), new BettingMoney(1000), hand);
 
             // when
             player.receiveCard(TrumpCard.TWO_OF_SPADES);
@@ -59,7 +58,7 @@ class PlayerTest {
         void calculatePlayerScore() {
             // given
             List<TrumpCard> cards = List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.KING_OF_HEARTS);
-            Player player = new Player("머피", new BettingMoney(1000), new Hand(cards));
+            Player player = new Player(new Name("머피"), new BettingMoney(1000), new Hand(cards));
             Rule rule = new Rule();
 
             // when
@@ -74,7 +73,7 @@ class PlayerTest {
         @MethodSource("provideDealerHitAllowedCases")
         void isHitAllowed(List<TrumpCard> cards) {
             // given
-            Player player = new Player("Alice", new BettingMoney(1000), new Hand(cards));
+            Player player = new Player(new Name("머피"), new BettingMoney(1000), new Hand(cards));
             Rule rule = new Rule();
 
             // when
@@ -97,17 +96,14 @@ class PlayerTest {
     @Nested
     class InvalidCases {
 
-        @ParameterizedTest
-        @CsvSource(value = {
-                "null",
-                "' '"},
-                nullValues = {"null"})
+        @Test
         @DisplayName("플레이어는 이름을 가져야 한다.")
-        void validateNotNullName(String name) {
+        void validateNotNullName() {
             // given
+            Name nullName = null;
 
             // when & then
-            assertThatThrownBy(() -> new Player(name, new BettingMoney(1000), new Hand(List.of())))
+            assertThatThrownBy(() -> new Player(nullName, new BettingMoney(1000), new Hand(List.of())))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("플레이어는 이름과 배팅 금액을 가져야합니다.");
         }
@@ -119,7 +115,7 @@ class PlayerTest {
             BettingMoney nullBettingMoney = null;
 
             // when & then
-            assertThatThrownBy(() -> new Player("머피", nullBettingMoney, new Hand(List.of())))
+            assertThatThrownBy(() -> new Player(new Name("머피"), nullBettingMoney, new Hand(List.of())))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("플레이어는 이름과 배팅 금액을 가져야합니다.");
         }
@@ -131,7 +127,7 @@ class PlayerTest {
             Hand nullHand = null;
 
             // when & then
-            assertThatThrownBy(() -> new Player("머피", new BettingMoney(1000), nullHand))
+            assertThatThrownBy(() -> new Player(new Name("머피"), new BettingMoney(1000), nullHand))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("참가자는 손패를 가져야합니다.");
         }
