@@ -28,7 +28,7 @@ public class GameManager {
 
     private Participants createParticipants(ParticipantNames playerNames, Map<ParticipantName, BettingAmount> bettingAmounts) {
         List<Participant> participants = initPlayers(playerNames, bettingAmounts);
-        participants.add(initDealer());
+        initDealer(participants);
         return new Participants(participants);
     }
 
@@ -36,17 +36,17 @@ public class GameManager {
         return playerNames.getParticipantNames()
                 .stream()
                 .map(name -> {
-                    Cards cards = drawInitialcards();
+                    Cards cards = drawInitialCards();
                     return new Player(name, bettingAmounts.get(name), cards);
                 }).collect(Collectors.toList());
     }
 
-    private Cards drawInitialcards() {
-        return new Cards(provider.provideCards(INITIAL_DRAW_SIZE));
+    private void initDealer(List<Participant> participants) {
+        participants.add(new Dealer(drawInitialCards()));
     }
 
-    private Dealer initDealer() {
-        return new Dealer(drawInitialcards());
+    private Cards drawInitialCards() {
+        return new Cards(provider.provideCards(INITIAL_DRAW_SIZE));
     }
 
     public void drawCard(Participant participant) {
