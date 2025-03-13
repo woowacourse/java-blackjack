@@ -42,10 +42,6 @@ public class Participant {
 		return calculateAllScore().isGreaterThan(BUST_SCORE);
 	}
 
-	public boolean isBustScore(final Score score) {
-		return score.isGreaterThan(BUST_SCORE);
-	}
-
 	public boolean isBlackjack() {
 		return calculateAllScore().equals(BUST_SCORE) && BLACKJACK_REQUIRE_CARD_COUNT.equals(hand.calculateCardCount());
 	}

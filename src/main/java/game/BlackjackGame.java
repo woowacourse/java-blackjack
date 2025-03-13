@@ -68,7 +68,7 @@ public class BlackjackGame {
 
 	private Map<String, List<String>> convertPlayersToEntries(final List<Player> players) {
 		return players.stream()
-			.collect(Collectors.toMap(player -> player.getName(),
+			.collect(Collectors.toMap(Player::getName,
 				player -> convertParticipantCardText(player.getParticipant())));
 	}
 

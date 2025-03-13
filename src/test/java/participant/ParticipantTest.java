@@ -13,11 +13,8 @@ import card.CardHand;
 import card.Rank;
 import card.Suit;
 import paticipant.Participant;
-import value.Score;
 
 public class ParticipantTest {
-
-	private static final Score BUST_SCORE = Score.from(21);
 
 	@Nested
 	@DisplayName("검증 로직")

@@ -18,14 +18,12 @@ import card.Rank;
 import card.Suit;
 import paticipant.Participant;
 import paticipant.Player;
-import value.Score;
 
 public class PlayerTest {
-	private static final Score BUST_SCORE = Score.from(21);
 
 	@Nested
 	@DisplayName("플레아어가 카드를 뽑을지 여부를 반환한다.")
-	class isPickCard {
+	class IsPickCard {
 
 		@DisplayName("점수가 21점 이하라면, 카드를 뽑을 수 있는지 여부로 true를 반환하고 초과라면, true를 반환한다.")
 		@ParameterizedTest
