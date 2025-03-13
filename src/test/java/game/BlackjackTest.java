@@ -267,7 +267,7 @@ public class BlackjackTest {
 			});
 		}
 
-		@DisplayName("동점이라면, 딜러가 우승한다.")
+		@DisplayName("동점이라면, 무승부를 추가하라")
 		@Test
 		void duel3() {
 			// given
@@ -284,10 +284,12 @@ public class BlackjackTest {
 
 			// then
 			assertSoftly(s -> {
-				s.assertThat(dealer.getParticipant().getDuelHistory().getWinCount()).isEqualTo(ONE);
+				s.assertThat(dealer.getParticipant().getDuelHistory().getWinCount()).isEqualTo(ZERO);
+				s.assertThat(dealer.getParticipant().getDuelHistory().getDrawCount()).isEqualTo(ONE);
 				s.assertThat(dealer.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(ZERO);
 				s.assertThat(player.getParticipant().getDuelHistory().getWinCount()).isEqualTo(ZERO);
-				s.assertThat(player.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(ONE);
+				s.assertThat(dealer.getParticipant().getDuelHistory().getDrawCount()).isEqualTo(ONE);
+				s.assertThat(player.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(ZERO);
 			});
 		}
 	}
