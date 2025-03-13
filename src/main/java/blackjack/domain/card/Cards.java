@@ -35,6 +35,13 @@ public class Cards {
         return cards.size() == 2;
     }
 
+    @Override
+    public String toString() {
+        return "Cards{" +
+                "cards=" + cards +
+                '}';
+    }
+
     public List<Card> getCards() {
         return cards;
     }
