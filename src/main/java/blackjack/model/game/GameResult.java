@@ -1,5 +1,6 @@
 package blackjack.model.game;
 
+import static blackjack.model.game.ParticipantResult.BLACKJACK;
 import static blackjack.model.game.ParticipantResult.DRAW;
 import static blackjack.model.game.ParticipantResult.LOSE;
 import static blackjack.model.game.ParticipantResult.WIN;
@@ -32,6 +33,12 @@ public class GameResult {
         }
         int dealerPoint = dealer.calculatePoint();
         int participantPoint = participant.calculatePoint();
+        if (participantPoint == 21 && dealerPoint == 21) {
+            return DRAW;
+        }
+        if (participantPoint == 21) {
+            return BLACKJACK;
+        }
         if (dealerPoint > participantPoint) {
             return LOSE;
         }
