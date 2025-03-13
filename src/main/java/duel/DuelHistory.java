@@ -18,6 +18,10 @@ public class DuelHistory {
 		}
 	}
 
+	public boolean isWin() {
+		return winCount.isGreaterThan(loseCount);
+	}
+
 	public Count getWinCount() {
 		return winCount;
 	}
@@ -26,7 +30,7 @@ public class DuelHistory {
 		return loseCount;
 	}
 
-	public boolean isWin() {
-		return winCount.isGreaterThan(loseCount);
+	public Count getDrawCount() {
+		return null;
 	}
 }

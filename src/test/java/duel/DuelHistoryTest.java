@@ -16,13 +16,14 @@ public class DuelHistoryTest {
 	@DisplayName("승패를 기록한다.")
 	class Write {
 
-		@DisplayName("주어진 값이 DuelResult.WIN이라면 승리에 대한 기록을, DuelResult.LOSE라면 패배에 대한 기록을 한다.")
+		@DisplayName("주어진 값이 DuelResult에 따라, 값을 기록한다.")
 		@ParameterizedTest
-		@CsvSource(value = {"WIN:1:0", "LOSE:0:1"}, delimiter = ':')
-		void write(final DuelResult duelResult, final int winCount, final int loseCount) {
+		@CsvSource(value = {"WIN:1:0:0", "DRAW:0:1:0", "LOSE:0:0:1"}, delimiter = ':')
+		void write(final DuelResult duelResult, final int winCount, final int drawCount, final int loseCount) {
 			// given
 			final var duelHistory = new DuelHistory();
 			final Count expectedWinCount = Count.from(winCount);
+			final Count expectedDrawCount = Count.from(drawCount);
 			final Count expectedLoseCount = Count.from(loseCount);
 
 			// when
@@ -30,6 +31,7 @@ public class DuelHistoryTest {
 
 			// then
 			assertThat(duelHistory.getWinCount()).isEqualTo(expectedWinCount);
+			assertThat(duelHistory.getDrawCount()).isEqualTo(expectedDrawCount);
 			assertThat(duelHistory.getLoseCount()).isEqualTo(expectedLoseCount);
 		}
 	}
