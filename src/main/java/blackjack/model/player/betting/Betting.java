@@ -6,6 +6,7 @@ public class Betting {
     private int balance;
 
     private Betting(final int bettingMoney, final int balance) {
+        validateNegativeMoney(bettingMoney);
         this.bettingMoney = bettingMoney;
         this.balance = balance;
     }
@@ -19,14 +20,8 @@ public class Betting {
     }
 
     public void earn(final int money) {
-        validateEarnMoney(money);
+        validateNegativeMoney(money);
         balance += money;
-    }
-
-    private void validateEarnMoney(final int money) {
-        if (money < 0) {
-            throw new IllegalArgumentException("음수는 얻을 수 없습니다.");
-        }
     }
 
     public void lose() {
@@ -39,5 +34,11 @@ public class Betting {
 
     public int getBalance() {
         return balance;
+    }
+
+    private void validateNegativeMoney(final int money) {
+        if (money < 0) {
+            throw new IllegalArgumentException("금액은 음수가 될 수 없습니다.");
+        }
     }
 }
