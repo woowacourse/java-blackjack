@@ -6,7 +6,7 @@ public class Money {
 
   private final int value;
 
-  public Money(int value) {
+  public Money(final int value) {
     this.value = value;
   }
 

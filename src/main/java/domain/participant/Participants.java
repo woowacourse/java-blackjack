@@ -14,19 +14,25 @@ public final class Participants {
   private final Participant<Dealer> dealer;
   private final List<Participant<Player>> participants;
 
-  public Participants(Participant<Dealer> dealer, List<Participant<Player>> participants) {
+  public Participants(
+      final Participant<Dealer> dealer,
+      final List<Participant<Player>> participants
+  ) {
     validate(dealer, participants);
     this.dealer = dealer;
     this.participants = participants;
   }
 
-  private void validate(Participant<Dealer> dealer, List<Participant<Player>> participants) {
+  private void validate(
+      final Participant<Dealer> dealer,
+      final List<Participant<Player>> participants
+  ) {
     validatePlayerNotEmpty(participants);
     validateDuplicateOfPlayer(participants);
     validateDealer(dealer);
   }
 
-  private static void validatePlayerNotEmpty(List<Participant<Player>> participants) {
+  private static void validatePlayerNotEmpty(final List<Participant<Player>> participants) {
     if (participants.isEmpty()) {
       throw new BlackjackArgumentException("게임 참가자가 없습니다! 게임 설정을 다시 진행해주세요.");
     }
@@ -42,7 +48,7 @@ public final class Participants {
     }
   }
 
-  private void validateDealer(Participant<Dealer> dealer) {
+  private void validateDealer(final Participant<Dealer> dealer) {
     if (dealer == null) {
       throw new BlackjackArgumentException("딜러를 찾을 수 없습니다. 딜러는 반드시 게임에 참가해야 합니다.");
     }
@@ -62,10 +68,10 @@ public final class Participants {
   }
 
   private static List<Participant<Player>> initialDealForPlayers(
-      List<Participant<Player>> players,
-      Deck deck
+      final List<Participant<Player>> players,
+      final Deck deck
   ) {
-    List<Participant<Player>> newPlayers = new ArrayList<>();
+    final List<Participant<Player>> newPlayers = new ArrayList<>();
     for (final var player : players) {
       newPlayers.add(player.initialDeal(deck));
     }
@@ -80,13 +86,15 @@ public final class Participants {
     return Collections.unmodifiableList(participants);
   }
 
-  public Participant<? extends Role> hit(Participant<? extends Role> participant, TrumpCard card) {
-    Participant<? extends Role> targetParticipant = findParticipant(participant);
+  public Participant<? extends Role> hit(final Participant<? extends Role> participant,
+      final TrumpCard card) {
+    final var targetParticipant = findParticipant(participant);
     return targetParticipant.hit(card);
   }
 
-  private Participant<? extends Role> findParticipant(Participant<? extends Role> participant) {
-    List<Participant<? extends Role>> allParticipants = getAllParticipants();
+  private Participant<? extends Role> findParticipant(
+      final Participant<? extends Role> participant) {
+    final var allParticipants = getAllParticipants();
 
     return allParticipants.stream()
         .filter(p -> p.equals(participant))
@@ -95,7 +103,7 @@ public final class Participants {
   }
 
   public List<Participant<? extends Role>> getAllParticipants() {
-    List<Participant<? extends Role>> allParticipants = new ArrayList<>();
+    final List<Participant<? extends Role>> allParticipants = new ArrayList<>();
     allParticipants.add(dealer);
     allParticipants.addAll(participants);
     return Collections.unmodifiableList(allParticipants);

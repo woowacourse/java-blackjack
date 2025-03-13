@@ -2,6 +2,7 @@ package domain;
 
 import domain.card.Score;
 import domain.participant.Participant;
+import domain.participant.Role;
 
 public enum RoundResult {
   WIN("승"),
@@ -12,7 +13,7 @@ public enum RoundResult {
 
   private final String text;
 
-  RoundResult(String text) {
+  RoundResult(final String text) {
     this.text = text;
   }
 
@@ -20,7 +21,10 @@ public enum RoundResult {
     return text;
   }
 
-  public static RoundResult round(final Participant player, final Participant dealer) {
+  public static RoundResult round(
+      final Participant<? extends Role> player,
+      final Participant<? extends Role> dealer
+  ) {
     final var score = player.calculateScore();
     final var dealerScore = dealer.calculateScore();
 
@@ -34,7 +38,7 @@ public enum RoundResult {
   }
 
   private static RoundResult getRoundResult(
-      final Participant player,
+      final Participant<? extends Role> player,
       final Score dealerScore,
       final Score score
   ) {

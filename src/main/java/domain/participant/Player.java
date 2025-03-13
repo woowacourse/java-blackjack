@@ -9,12 +9,12 @@ public final class Player implements Role {
   private final String name;
   private final Money money;
 
-  public Player(final String name, Money money) {
+  public Player(final String name, final Money money) {
     this.name = name;
     this.money = money;
   }
 
-  public static Player generateFrom(Entry<String, Money> entry) {
+  public static Player generateFrom(final Entry<String, Money> entry) {
     return new Player(entry.getKey(), entry.getValue());
   }
 

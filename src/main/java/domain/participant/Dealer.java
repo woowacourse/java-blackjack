@@ -9,11 +9,11 @@ public final class Dealer implements Role {
   private static final String DEFAULT_NAME = DealerRoster.DEFAULT.getName();
   private final Money money;
 
-  public Dealer(Money money) {
+  public Dealer(final Money money) {
     this.money = money;
   }
 
-  public static Dealer generateFrom(Collection<Money> values) {
+  public static Dealer generateFrom(final Collection<Money> values) {
     final int total = values.stream()
         .mapToInt(Money::getValue)
         .sum();
@@ -22,7 +22,7 @@ public final class Dealer implements Role {
   }
 
   @Override
-  public boolean isHit(Score score) {
+  public boolean isHit(final Score score) {
     return score.isDealerNeedHit();
   }
 

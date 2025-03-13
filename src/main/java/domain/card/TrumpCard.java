@@ -7,7 +7,7 @@ public final class TrumpCard {
   private final Suit suit;
   private final Rank rank;
 
-  public TrumpCard(Rank rank, Suit suit) {
+  public TrumpCard(final Rank rank, final Suit suit) {
     this.rank = rank;
     this.suit = suit;
   }

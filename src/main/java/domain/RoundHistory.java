@@ -1,6 +1,7 @@
 package domain;
 
 import domain.participant.Participant;
+import domain.participant.Role;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +16,8 @@ public final class RoundHistory {
   }
 
   public static RoundHistory of(
-      final Participant dealer,
-      final List<Participant> players
+      final Participant<? extends Role> dealer,
+      final List<Participant<? extends Role>> players
   ) {
     final Map<String, RoundResult> history = players.stream()
         .collect(Collectors.toMap(

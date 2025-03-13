@@ -15,19 +15,14 @@ public final class Participant<T extends Role> {
   private final T role;
   private final Hand hand;
 
-  public Participant(T role) {
+  public Participant(final T role) {
     this.role = role;
     this.hand = new Hand();
   }
 
-  public Participant(T role, List<TrumpCard> cards) {
+  public Participant(final T role, final List<TrumpCard> cards) {
     this.role = role;
     this.hand = new Hand(cards);
-  }
-
-  public Participant(T role, Hand hand) {
-    this.role = role;
-    this.hand = hand;
   }
 
   public boolean isHit() {

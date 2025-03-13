@@ -13,7 +13,7 @@ public final class BlackjackGame {
   private static final int NUMBER_OF_DECK = 1;
 
   private final Deck deck;
-  private Participants participants;
+  private final Participants participants;
 
   public BlackjackGame(final Participants participants, final Deck deck) {
     this.participants = participants;
