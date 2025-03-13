@@ -81,8 +81,8 @@ public class BlackJackManager {
     private void processGameResult(BlackJackBoard blackJackBoard) {
         blackJackBoard.calculateBattleResult();
         printBlackJackScore(blackJackBoard);
+        printBattleResult(blackJackBoard);
         printBetResult(blackJackBoard);
-//        printBattleResult(blackJackBoard);
     }
 
     private void printBlackJackScore(BlackJackBoard blackJackBoard) {
@@ -102,8 +102,6 @@ public class BlackJackManager {
     }
 
     private void printBattleResult(BlackJackBoard blackJackBoard) {
-        blackJackBoard.calculateBattleResult();
-
         List<Participant> participants = blackJackBoard.getParticipants();
         List<BattleResultResponse> battleResultResponses = new ArrayList<>();
         for (Participant participant : participants) {

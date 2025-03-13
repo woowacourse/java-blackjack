@@ -126,31 +126,31 @@ public class BlackJackBoard {
 
         Score playerScore = getScoreOf(participant);
 
-        if (playerScore.isBust()) {
-            // 무조건 플레이어 패배 (베팅 금액 잃음)
-            updateGameResult(dealer, participant);
-            return;
-        }
-
         if (playerScore.isBlackJack() && !dealerScore.isBlackJack()) {
-            // 플레이어 1.5배
             updateGameResultBlackJack(participant, dealer);
             return;
         }
 
+        if (playerScore.isBust()) {
+            updateGameResult(dealer, participant);
+            return;
+        }
+
+        if (dealerScore.isBust()) {
+            updateGameResult(participant, dealer);
+            return;
+        }
+
         if (playerScore.getScore() > dealerScore.getScore()) {
-            // 플레이어 승리(1배)
             updateGameResult(participant, dealer);
             return;
         }
 
         if (playerScore.getScore() < dealerScore.getScore()) {
-            // 플레이어 패배(베팅 금액 잃음)
             updateGameResult(dealer, participant);
             return;
         }
 
-        // 무승부
         updateGameResultDraw(dealer, participant);
     }
 

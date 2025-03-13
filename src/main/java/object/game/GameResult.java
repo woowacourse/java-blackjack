@@ -1,7 +1,7 @@
 package object.game;
 
 public enum GameResult {
-    BLACKJACK_WIN("블랙잭 승", 2.5),
+    BLACKJACK_WIN("블랙잭", 2.5),
     WIN("승", 2.0),
     LOSE("패", 0.0),
     DRAW("무", 1.0)

@@ -59,8 +59,8 @@ public class OutputView {
     }
 
     public void printBattleResult(List<BattleResultResponse> resultResponses) {
-        GameEffect.delay(1000);
-        System.out.println("\n## 최종 승패");
+        GameEffect.delay(500);
+        System.out.println("\n## 게임 결과");
         for (BattleResultResponse response : resultResponses) {
             String nickname = response.nickname();
             Map<GameResult, Integer> battleResultCount = response.battleResult();
