@@ -10,10 +10,10 @@ import view.OutputView;
 
 public class BlackjackGame {
     private static final int INITIAL_DEAL_CARD_COUNT = 2;
-    private final static Deck deck = Deck.of();
 
     private final Players players;
     private final Dealer dealer;
+    private final Deck deck = Deck.of();
 
     public BlackjackGame(Players players, Dealer dealer) {
         this.players = players;
@@ -21,9 +21,9 @@ public class BlackjackGame {
     }
 
     public void dealInitially() {
-        OutputView.printInitialDealResult(dealer, players);
         dealInitialCardsToAllPlayers();
         dealInitialCardsToParticipant(dealer);
+        OutputView.printInitialDealResult(dealer, players);
     }
 
     public void runGameTurn() {
@@ -57,13 +57,17 @@ public class BlackjackGame {
     }
 
     private void chooseAtOnePlayerTurn(Player player) {
-        boolean flag = true;
-        while (flag == InputView.readHit(player)) {
-            player.receiveCard(deck.pick());
-            OutputView.printHitResult(player);
-            if (player.isBust()) {
-                break;
-            }
+        OutputView.printHitResult(player);
+        PlayerChoice playerChoice = InputView.readChoice(player);
+        if (playerChoice.equals(PlayerChoice.HIT)){
+            processHit(player);
+        }
+    }
+
+    private void processHit(Player player){
+        player.receiveCard(deck.pick());
+        if (!player.isBust()){
+            chooseAtOnePlayerTurn(player);
         }
     }
 }
