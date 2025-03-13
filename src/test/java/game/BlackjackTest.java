@@ -292,5 +292,33 @@ public class BlackjackTest {
 				s.assertThat(player.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(ZERO);
 			});
 		}
+
+		@DisplayName("딜러와 플레이어 모두 버스트라면, 무승부를 추가하라")
+		@Test
+		void duel4() {
+			// given
+			final List<Card> playerCards = List.of(new Card(Rank.TEN, Suit.CLUB), new Card(Rank.TEN, Suit.HEART),
+				new Card(Rank.TEN, Suit.SPADE));
+			final List<Card> dealerCards = List.of(new Card(Rank.TEN, Suit.CLUB), new Card(Rank.THREE, Suit.HEART),
+				new Card(Rank.TEN, Suit.SPADE));
+			final Participant playerParticipant = new Participant(new CardHand(playerCards));
+			final Participant dealerParticipant = new Participant(new CardHand(dealerCards));
+			final Player player = new Player(" ", playerParticipant);
+			final Dealer dealer = new Dealer(dealerParticipant);
+			final Blackjack blackjack = new Blackjack(new Players(List.of(player)), dealer, Deck.createShuffledDeck());
+
+			// when
+			blackjack.duel();
+
+			// then
+			assertSoftly(s -> {
+				s.assertThat(dealer.getParticipant().getDuelHistory().getWinCount()).isEqualTo(ZERO);
+				s.assertThat(dealer.getParticipant().getDuelHistory().getDrawCount()).isEqualTo(ONE);
+				s.assertThat(dealer.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(ZERO);
+				s.assertThat(player.getParticipant().getDuelHistory().getWinCount()).isEqualTo(ZERO);
+				s.assertThat(player.getParticipant().getDuelHistory().getDrawCount()).isEqualTo(ONE);
+				s.assertThat(player.getParticipant().getDuelHistory().getLoseCount()).isEqualTo(ZERO);
+			});
+		}
 	}
 }
