@@ -56,4 +56,10 @@ public final class Players {
                 .mapToObj(i -> PlayerBettingBlackjackCardHand.createWithInitialCards(players.get(i), bettingAmounts.get(i), deck))
                 .toList();
     }
+    
+    public List<String> getPlayerNames() {
+        return players.stream()
+                .map(Player::getName)
+                .toList();
+    }
 }

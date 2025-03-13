@@ -146,4 +146,8 @@ public final class OutputView {
         
         return -profits.values().stream().mapToDouble(Double::doubleValue).sum();
     }
+    
+    public void outputExceptionMessage(final Exception exception) {
+        writer.write("[ERROR] " + exception.getMessage());
+    }
 }

@@ -10,7 +10,7 @@ import blackjack.view.OutputView;
 
 import java.util.List;
 
-public final class BlackjackController implements Controller {
+public final class BlackjackController {
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -22,16 +22,11 @@ public final class BlackjackController implements Controller {
         this.blackjackService = blackjackService;
     }
 
-    @Override
     public void run() {
-        final List<String> playerNames = inputView.getPlayerNames();
-        final Players players = Players.from(playerNames);
-        final List<Integer> bettingAmounts = inputView.getBettingAmounts(playerNames);
-
+        final Players players = createPlayersUntilSuccess();
         final BlackjackDeck deck = new BlackjackDeck();
-        final List<PlayerBettingBlackjackCardHand> playerHands = players.toBlackjackBettingCardHand(deck, bettingAmounts);
         final DealerBlackjackCardHand dealerHands = DealerBlackjackCardHand.createWithInitialCards(deck);
-
+        final List<PlayerBettingBlackjackCardHand> playerHands = createPlayerHandsUntilSuccess(players, deck);
         outputView.outputInitialCards(dealerHands, playerHands);
         blackjackService.addPlayerCards(
                 playerHands,
@@ -45,5 +40,25 @@ public final class BlackjackController implements Controller {
         blackjackService.addDealerCards(dealerHands, deck, outputView::outputDealerAddedCards);
         outputView.outputOpenCards(dealerHands, playerHands);
         outputView.outputFinalProfit(dealerHands, playerHands);
+    }
+    
+    private Players createPlayersUntilSuccess() {
+        try {
+            final List<String> playerNames = inputView.getPlayerNames();
+            return Players.from(playerNames);
+        } catch (Exception e) {
+            outputView.outputExceptionMessage(e);
+            return createPlayersUntilSuccess();
+        }
+    }
+    
+    private List<PlayerBettingBlackjackCardHand> createPlayerHandsUntilSuccess(final Players players, final BlackjackDeck deck) {
+        try {
+            final List<Integer> bettingAmounts = inputView.getBettingAmounts(players.getPlayerNames());
+            return players.toBlackjackBettingCardHand(deck, bettingAmounts);
+        } catch (Exception e) {
+            outputView.outputExceptionMessage(e);
+            return createPlayerHandsUntilSuccess(players, deck);
+        }
     }
 }
