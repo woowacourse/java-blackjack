@@ -38,8 +38,8 @@ public class Hand {
         return sum;
     }
 
-    public int calculateBetAmountByMultiplier(final double v) {
-        return (int) (batAmount * v);
+    public int calculateBetAmount(final double multiplier) {
+        return (int) (batAmount * multiplier);
     }
 
     public boolean isBlackJack() {

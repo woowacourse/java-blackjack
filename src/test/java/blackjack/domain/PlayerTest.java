@@ -63,7 +63,7 @@ class PlayerTest {
 
         @Override
         public List<Card> getOpenedCards() {
-            return this.getCards().getCards();
+            return this.getHand().getCards();
         }
     }
 

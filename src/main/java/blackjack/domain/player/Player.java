@@ -44,6 +44,10 @@ public abstract class Player {
         return hand.isBlackJack();
     }
 
+    public int calculateBetAmount(double multiple) {
+        return hand.calculateBetAmount(multiple);
+    }
+
     public String getName() {
         return name.getName();
     }
