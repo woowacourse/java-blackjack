@@ -7,7 +7,6 @@ import dto.ParticipantResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import object.participant.Dealer;
 import object.participant.Participant;
 import object.participant.Player;
@@ -26,7 +25,7 @@ public class BlackJackManager {
 
     public void run() {
         final Dealer dealer = Dealer.generate();
-        final List<Player> players = getPlayers();
+        final List<Player> players = getBetPlayers();
         final BlackJackBoard blackJackBoard = BlackJackBoard.generateOf(dealer, players);
 
         startBlackJack(blackJackBoard);
@@ -132,11 +131,15 @@ public class BlackJackManager {
         return new BlackJackResultResponse(dealerNickname, dealerCardNames, blackJackBoard.getScoreOf(dealer).getScore());
     }
 
-    private List<Player> getPlayers() {
+    private List<Player> getBetPlayers() {
         final List<String> playerNames = inputView.askPlayerNames();
 
         return playerNames.stream()
-                .map(Player::from)
-                .collect(Collectors.toList());
+                .map(name -> {
+                    Player player = Player.from(name);
+                    player.bet(inputView.askBetMoney(name));
+                    return player;
+                })
+                .toList();
     }
 }

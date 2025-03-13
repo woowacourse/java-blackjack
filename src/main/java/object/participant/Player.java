@@ -53,6 +53,6 @@ public class Player implements Participant {
 
     @Override
     public void bet(int amount) {
-        wallet.bet(amount);
+        wallet.betMoney(amount);
     }
 }

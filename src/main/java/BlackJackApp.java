@@ -7,6 +7,11 @@ public class BlackJackApp {
         final InputView inputView = new InputView();
         final OutputView outputView = new OutputView();
         BlackJackManager blackJackManager = new BlackJackManager(inputView, outputView);
-        blackJackManager.run();
+
+        try {
+            blackJackManager.run();
+        } catch (IllegalArgumentException exception) {
+            System.out.println(exception.getMessage());
+        }
     }
 }

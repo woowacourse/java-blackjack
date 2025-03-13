@@ -52,10 +52,10 @@ public class Dealer implements Participant {
 
     @Override
     public void bet(int amount) {
-        wallet.bet(amount);
+        wallet.betMoney(amount);
     }
 
     public void addEarnedMoney(int amount) {
-        wallet.addEarnedMoney(amount);
+        wallet.earnMoney(amount);
     }
 }

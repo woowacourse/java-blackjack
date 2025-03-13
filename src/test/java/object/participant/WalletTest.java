@@ -28,7 +28,7 @@ public class WalletTest {
     void 월렛_베팅률_적용_테스트(int betMoney, GameResult gameResult, int expectedProfit) {
         // given
         Wallet wallet = new Wallet();
-        wallet.bet(betMoney);
+        wallet.betMoney(betMoney);
 
         // when
         wallet.winBetRate(gameResult);
@@ -44,7 +44,7 @@ public class WalletTest {
         Wallet wallet = new Wallet();
 
         // when
-        wallet.bet(1000);
+        wallet.betMoney(1000);
 
         // then
         int expected = 1000;

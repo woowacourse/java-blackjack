@@ -12,6 +12,16 @@ public class InputView {
         return List.of(input.split(","));
     }
 
+    public int askBetMoney(String nickname) {
+        System.out.printf("%s의 베팅 금액은?%n", nickname);
+        try{
+            String input = scanner.nextLine();
+            return Integer.parseInt(input);
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException("베팅 금액은 숫자만 입력할 수 있습니다.");
+        }
+    }
+
     public String askDrawOneMore(String nickname) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", nickname);
         return scanner.nextLine();
