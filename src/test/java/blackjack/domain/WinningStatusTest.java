@@ -183,11 +183,11 @@ class WinningStatusTest {
     }
 
     private static PlayerBlackjackCardHand playerWith(Card... cards) {
-        return new PlayerBlackjackCardHand(DEFAULT_PLAYER, () -> List.of(cards));
+        return PlayerBlackjackCardHand.createWithInitialCards(DEFAULT_PLAYER, () -> List.of(cards));
     }
 
     private static PlayerBlackjackCardHand playerWith(List<Card> cards) {
-        return new PlayerBlackjackCardHand(DEFAULT_PLAYER, () -> cards);
+        return PlayerBlackjackCardHand.createWithInitialCards(DEFAULT_PLAYER, () -> cards);
     }
 
     private static DealerBlackjackCardHand dealerWith(Card... cards) {

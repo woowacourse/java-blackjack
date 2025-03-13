@@ -27,7 +27,7 @@ public final class OutputView {
         sj.add(outputInitialCardOpeningMessage(extractPlayerNames(playerHands)));
         sj.add(parseNameAndCards("딜러", List.of(dealerHand.getInitialCard())));
         for (PlayerBettingBlackjackCardHand playerHand : playerHands) {
-            sj.add(parseNameAndCards(playerHand.getPlayerName(), playerHand.getCards()));
+            sj.add(parseNameAndCards(playerHand.getPlayerName(), playerHand.getInitialCards()));
         }
         writer.write(sj.toString());
     }

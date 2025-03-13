@@ -44,7 +44,7 @@ public final class PlayerBettingBlackjackCardHand {
             final BlackjackCardHandInitializer initializer
     ) {
         GlobalValidator.validateNotNull(PlayerBettingBlackjackCardHand.class, player, initializer);
-        return new PlayerBettingBlackjackCardHand(new PlayerBlackjackCardHand(player, initializer), bettingAmount);
+        return new PlayerBettingBlackjackCardHand(PlayerBlackjackCardHand.createWithInitialCards(player, initializer), bettingAmount);
     }
     
     public double calculateIncome(final DealerBlackjackCardHand dealerHand) {
@@ -67,6 +67,10 @@ public final class PlayerBettingBlackjackCardHand {
     
     public String getPlayerName() {
         return hand.getPlayerName();
+    }
+    
+    public List<Card> getInitialCards() {
+        return hand.getInitialCards();
     }
     
     public List<Card> getCards() {

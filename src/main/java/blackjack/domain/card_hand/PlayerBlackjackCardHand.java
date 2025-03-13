@@ -11,15 +11,28 @@ public final class PlayerBlackjackCardHand {
 
     private final BlackjackCardHand cardHand;
     private final Player player;
-
-    public PlayerBlackjackCardHand(final Player player, final BlackjackCardHandInitializer initializer) {
-        GlobalValidator.validateNotNull(PlayerBlackjackCardHand.class, player, initializer);
-        this.cardHand = BlackjackCardHand.createWithInitialCards(initializer);
+    
+    public PlayerBlackjackCardHand(final BlackjackCardHand cardHand, final Player player) {
+        GlobalValidator.validateNotNull(PlayerBlackjackCardHand.class, cardHand, player);
+        this.cardHand = cardHand;
         this.player = player;
+    }
+    
+    public static PlayerBlackjackCardHand createWithInitialCards(
+            final Player player,
+            final BlackjackCardHandInitializer initializer
+    ) {
+        GlobalValidator.validateNotNull(PlayerBlackjackCardHand.class, player, initializer);
+        return new PlayerBlackjackCardHand(
+                BlackjackCardHand.createWithInitialCards(initializer),
+                player
+        );
     }
 
     public List<Card> getInitialCards() {
-        return List.of(cardHand.getCards().getFirst(), cardHand.getCards().get(1));
+        return cardHand.getCards().stream()
+                .limit(2)
+                .toList();
     }
 
     // ↓ Forwarding Methods
