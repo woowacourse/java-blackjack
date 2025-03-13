@@ -1,10 +1,5 @@
 package blackjack.view;
 
-import static blackjack.view.ErrorMessage.INVALID_HIT_RESPONSE;
-import static blackjack.view.ErrorMessage.INVALID_PLAYER_COUNT;
-import static blackjack.view.ErrorMessage.NAME_CANNOT_BE_DUPLICATED;
-import static blackjack.view.ErrorMessage.NAME_CANNOT_BE_EQUAL_DEALER_NAME;
-
 import blackjack.domain.gambler.Name;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -33,17 +28,23 @@ public class InputView {
         return names;
     }
 
+    private static void validatePlayers(final String[] parsedName) {
+        if (parsedName.length > MAX_PLAYER_COUNT || parsedName.length < MIN_PLAYER_COUNT) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_PLAYER_COUNT.getMessage());
+        }
+    }
+
     private static void validateNameEqualsDealerName(final String[] parsedName) {
         List<String> playerNames = List.of(parsedName);
         if (playerNames.contains(Name.getDealerName().toString())) {
-            throw new IllegalArgumentException(NAME_CANNOT_BE_EQUAL_DEALER_NAME.getMessage());
+            throw new IllegalArgumentException(ErrorMessage.NAME_CANNOT_BE_EQUAL_DEALER_NAME.getMessage());
         }
     }
 
     private static void validateDuplicatedNames(final List<Name> names) {
         Set<Name> removedDuplicatedNames = new HashSet<>(names);
         if (removedDuplicatedNames.size() != names.size()) {
-            throw new IllegalArgumentException(NAME_CANNOT_BE_DUPLICATED.getMessage());
+            throw new IllegalArgumentException(ErrorMessage.NAME_CANNOT_BE_DUPLICATED.getMessage());
         }
     }
 
@@ -56,12 +57,35 @@ public class InputView {
         if (answer.equals(OPTION_NO)) {
             return false;
         }
-        throw new IllegalArgumentException(INVALID_HIT_RESPONSE.getMessage());
+        throw new IllegalArgumentException(ErrorMessage.INVALID_HIT_RESPONSE.getMessage());
     }
 
-    private static void validatePlayers(final String[] parsedName) {
-        if (parsedName.length > MAX_PLAYER_COUNT || parsedName.length < MIN_PLAYER_COUNT) {
-            throw new IllegalArgumentException(INVALID_PLAYER_COUNT.getMessage());
+    public static int inputBettingAmount(final Name name) {
+        System.out.printf("%s의 베팅 금액은?", name);
+
+        String answer = scanner.nextLine();
+        validateBettingAmountFormat(answer);
+
+        int bettingAmount = Integer.parseInt(answer);
+        validateBettingAmountRange(bettingAmount);
+
+        return bettingAmount;
+    }
+
+    private static void validateBettingAmountRange(int bettingAmount) {
+        if (bettingAmount < 1000) {
+            throw new IllegalArgumentException(ErrorMessage.BETTING_IS_POSSIBLE_FROM.getMessage());
+        }
+
+        if(bettingAmount > 100000) {
+            throw new IllegalArgumentException(ErrorMessage.BETTING_IS_POSSIBLE_TO.getMessage());
+        }
+    }
+
+    private static void validateBettingAmountFormat(String answer) {
+        if (answer.matches("^\\d+$")) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_BETTING_AMOUNT_FORMAT.getMessage());
         }
     }
 }
+
