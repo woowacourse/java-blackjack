@@ -20,7 +20,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player(new Nickname("hihi"));
+        player = new Player(new Nickname("hihi"), new Betting(0));
         card = new Card(Rank.SIX, Shape.CLOVER);
     }
 
@@ -39,7 +39,7 @@ class PlayerTest {
     void 플레이어는_카드를_한_장_받는다() {
 
         // given
-        final Player player = new Player(new Nickname("hihi"));
+        final Player player = new Player(new Nickname("hihi"), new Betting(0));
         final Card card = new Card(Rank.SIX, Shape.CLOVER);
 
         // when
@@ -58,7 +58,7 @@ class PlayerTest {
         final Card card1 = new Card(Rank.KING, Shape.CLOVER);
         final Card card2 = new Card(Rank.QUEEN, Shape.CLOVER);
         final Card card3 = new Card(Rank.JACK, Shape.CLOVER);
-        final Player player = new Player(new Nickname("hihi"));
+        final Player player = new Player(new Nickname("hihi"), new Betting(0));
         player.hit(card1);
         player.hit(card2);
         player.hit(card3);
@@ -76,7 +76,7 @@ class PlayerTest {
 
         // given
         final Card card1 = new Card(Rank.KING, Shape.CLOVER);
-        final Player player = new Player(new Nickname("hihi"));
+        final Player player = new Player(new Nickname("hihi"), new Betting(0));
         player.hit(card1);
 
         // when

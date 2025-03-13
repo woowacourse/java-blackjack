@@ -13,8 +13,11 @@ public class Player extends Gamer {
     private static final int ACE_DEFAULT_NUMBER = 1;
     private static final int ACE_ADDITIONAL_NUMBER = 11;
 
-    public Player(final Nickname nickname) {
+    private final Betting betting;
+
+    public Player(final Nickname nickname, final Betting betting) {
         super(nickname);
+        this.betting = betting;
     }
 
     @Override

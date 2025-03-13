@@ -8,6 +8,7 @@ import domain.FinalResult;
 import domain.deck.Card;
 import domain.deck.CardSetGenerator;
 import domain.deck.Deck;
+import domain.gamer.Betting;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Nickname;
@@ -39,8 +40,12 @@ public class BlackJackController {
     }
 
     private Players createPlayers() {
-        return new Players(readNicknames().stream()
-                .map(Player::new)
+        List<Nickname> nicknames = readNicknames();
+        return new Players(nicknames.stream()
+                .map(nickname -> {
+                    Betting betting = readBetAmount(nickname.getDisplayName());
+                    return new Player(nickname, betting);
+                })
                 .toList());
     }
 
@@ -49,6 +54,10 @@ public class BlackJackController {
         return Arrays.stream(inputNicknames.split(","))
                 .map(Nickname::new)
                 .toList();
+    }
+
+    private Betting readBetAmount(String playerName) {
+        return new Betting(Integer.parseInt(InputView.readPlayerBetAmount(playerName)));
     }
 
     private Deck generateDeck() {

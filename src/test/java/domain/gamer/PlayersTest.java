@@ -19,7 +19,9 @@ class PlayersTest {
     void 플레이어는_1명_이상_4명_이하여야_한다(final List<Nickname> nicknames) {
 
         // given
-        final List<Player> playerGroup = nicknames.stream().map(Player::new).toList();
+        final List<Player> playerGroup = nicknames.stream()
+                .map(nickname -> new Player(nickname, new Betting(0)))
+                .toList();
 
         // when & then
         assertThatCode(() -> new Players(playerGroup))
@@ -32,7 +34,9 @@ class PlayersTest {
     void 플레이어는_1명_이상_4명_이하가_아니라면_예외가_발생한다(final List<Nickname> nicknames) {
 
         // given
-        final List<Player> playerGroup = nicknames.stream().map(Player::new).toList();
+        final List<Player> playerGroup = nicknames.stream()
+                .map(nickname -> new Player(nickname, new Betting(0)))
+                .toList();
 
         // when & then
         assertThatThrownBy(() -> new Players(playerGroup))
@@ -43,8 +47,8 @@ class PlayersTest {
     @Test
     void 플레이어의_이름은_중복이_없으면_올바르게_작동한다() {
         // given
-        Player player1 = new Player(new Nickname("체체"));
-        Player player2 = new Player(new Nickname("체체체"));
+        Player player1 = new Player(new Nickname("체체"), new Betting(0));
+        Player player2 = new Player(new Nickname("체체체"), new Betting(0));
         List<Player> playerGroup = List.of(player1, player2);
 
         // when & then
@@ -56,8 +60,8 @@ class PlayersTest {
     @Test
     void 플레이어의_이름은_중복될_경우_예외가_발생한다() {
         // given
-        Player player1 = new Player(new Nickname("체체"));
-        Player player2 = new Player(new Nickname("체체"));
+        Player player1 = new Player(new Nickname("체체"), new Betting(0));
+        Player player2 = new Player(new Nickname("체체"), new Betting(0));
         List<Player> playerGroup = List.of(player1, player2);
 
         // when & then

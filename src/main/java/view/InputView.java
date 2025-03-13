@@ -12,6 +12,11 @@ public final class InputView {
         return readValidInput();
     }
 
+    public static String readPlayerBetAmount(String name) {
+        print(String.format("%s의 배팅 금액은?", name));
+        return readValidInput();
+    }
+
     public static String readQuestOneMoreCard(final String name) {
         print(String.format("%s는(은) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name));
         return readValidInput();

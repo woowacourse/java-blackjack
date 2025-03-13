@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.deck.Card;
 import domain.deck.Rank;
 import domain.deck.Shape;
+import domain.gamer.Betting;
 import domain.gamer.Dealer;
 import domain.gamer.Nickname;
 import domain.gamer.Player;
@@ -31,9 +32,9 @@ class FinalResultTest {
     @BeforeEach
     void setUp() {
 
-        player1 = new Player(new Nickname("체체"));
-        player2 = new Player(new Nickname("새로이"));
-        player3 = new Player(new Nickname("체로이"));
+        player1 = new Player(new Nickname("체체"), new Betting(0));
+        player2 = new Player(new Nickname("새로이"), new Betting(0));
+        player3 = new Player(new Nickname("체로이"), new Betting(0));
         dealer = new Dealer(new Nickname("딜러"));
         card1 = new Card(Rank.KING, Shape.CLOVER);
         card2 = new Card(Rank.JACK, Shape.CLOVER);
@@ -86,10 +87,10 @@ class FinalResultTest {
     void 딜러의_승패_결과를_생성한다() {
 
         // given
-        final Player player1 = new Player(new Nickname("체체"));
-        final Player player2 = new Player(new Nickname("새로이"));
-        final Player player3 = new Player(new Nickname("체로이"));
-        final Player player4 = new Player(new Nickname("짱구"));
+        final Player player1 = new Player(new Nickname("체체"), new Betting(0));
+        final Player player2 = new Player(new Nickname("새로이"), new Betting(0));
+        final Player player3 = new Player(new Nickname("체로이"), new Betting(0));
+        final Player player4 = new Player(new Nickname("짱구"), new Betting(0));
         final Dealer dealer1 = new Dealer(new Nickname("딜러"));
         final Dealer dealer2 = new Dealer(new Nickname("훈이"));
 
