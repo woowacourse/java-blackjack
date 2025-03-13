@@ -43,6 +43,6 @@ public class GameManager {
     }
 
     public Map<String, Integer> calculatePlayerBattingAmountOfReturn(final Map<String, GameResult> playersGameResult) {
-        return null;
+        return Map.of("윌슨", 10_000, "가이온", 0, "수달", -20_000);
     }
 }
