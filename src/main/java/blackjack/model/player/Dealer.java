@@ -3,11 +3,11 @@ package blackjack.model.player;
 import blackjack.model.card.BlackJackCards;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.initializer.CardDeckInitializer;
-import blackjack.model.player.money.Money;
 import java.util.List;
 
 public class Dealer extends BlackJackPlayer {
 
+    private static final float BLACKJACK_REWARD_RATE = 1.5f;
     private static final int INITIAL_DRAW_AMOUNT = 2;
     private static final int SINGLE_DRAW_AMOUNT = 1;
     private static final int DEALER_DRAWABLE_POINT = 17;
@@ -16,7 +16,7 @@ public class Dealer extends BlackJackPlayer {
     private final CardDeck cardDeck;
 
     public Dealer(final String name, final CardDeck cardDeck) {
-        super(name, Money.zero());
+        super(name);
         this.cardDeck = cardDeck;
     }
 
@@ -50,18 +50,37 @@ public class Dealer extends BlackJackPlayer {
         throw new IllegalStateException("카드를 더 뽑을 수 없습니다.");
     }
 
+    public void fight(final Player player) {
+        if (isDraw(player)) {
+            return;
+        }
+        if (isWin(player)) {
+            player.loseMoney();
+            return;
+        }
+        player.earnMoney(calculatePlayerReward(player));
+    }
+
+    private int calculatePlayerReward(final Player player) {
+        int bettingMoney = player.getBettingMoney();
+        if (isBlackJack(player)) {
+            return Math.round(bettingMoney * BLACKJACK_REWARD_RATE);
+        }
+        return bettingMoney;
+    }
+
     public boolean isDraw(final Player player) {
-        if (player.isBust() || isBust()) {
+        if (player.isBust() || isBust() || isBlackJack(player) || isBlackJack(this)) {
             return false;
         }
         return calculateOptimalPoint() == player.calculateOptimalPoint();
     }
 
     public boolean isWin(final Player player) {
-        if (isBust()) {
+        if (isBlackJack(player) || isBust()) {
             return false;
         }
-        if (player.isBust()) {
+        if (player.isBust() || isBlackJack(this)) {
             return true;
         }
         return calculateOptimalPoint() > player.calculateOptimalPoint();
@@ -73,6 +92,12 @@ public class Dealer extends BlackJackPlayer {
 
     private BlackJackCards drawCard(final int amount) {
         return cardDeck.draw(amount);
+    }
+
+    public int getProfit(final List<Player> players) {
+        return -players.stream()
+                .mapToInt(Player::getProfit)
+                .sum();
     }
 
     @Override

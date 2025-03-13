@@ -34,6 +34,10 @@ public class BlackJackController {
         dealInitialCards(dealer, players);
         drawMoreCards(dealer, players);
         printGameResults(dealer, players);
+
+        players.forEach(dealer::fight);
+        System.out.println("dealer = " + dealer.getProfit(players));
+        players.forEach(player -> System.out.println("player.getProfit() = " + player.getProfit()));
     }
 
     private void dealInitialCards(final Dealer dealer, final List<Player> players) {
@@ -57,7 +61,7 @@ public class BlackJackController {
     private List<Player> makePlayers() {
         return inputView.readUserNames()
                 .stream()
-                .map(name -> new Player(name, 1))
+                .map(name -> new Player(name, 1000))
                 .toList();
     }
 

@@ -115,7 +115,7 @@ class PlayerTest {
 
         player.loseMoney();
 
-        assertThat(player.getMoney()).isEqualTo(-1000);
+        assertThat(player.getProfit()).isEqualTo(-1000);
     }
 
     @Test
@@ -123,8 +123,8 @@ class PlayerTest {
 
         Player player = new Player("pobi", 1000);
 
-        player.addMoney(1000);
+        player.earnMoney(1000);
 
-        assertThat(player.getMoney()).isEqualTo(2000);
+        assertThat(player.getProfit()).isEqualTo(1000);
     }
 }

@@ -8,9 +8,9 @@ import blackjack.model.card.BlackJackCards;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.initializer.DefaultCardDeckInitializer;
-import blackjack.model.player.money.Money;
 import java.util.List;
 import java.util.stream.Stream;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -279,6 +279,110 @@ class DealerTest {
         );
     }
 
+    private static Stream<Arguments> 플레이어와_싸운다_테스트_케이스() {
+        return Stream.of(
+                Arguments.of(
+                        new BlackJackCards(
+                                List.of(
+                                        createCard(CardNumber.TEN),
+                                        createCard(CardNumber.EIGHT)
+                                )
+                        ),
+                        makeUser(
+                                "user",
+                                new BlackJackCards(
+                                        List.of(
+                                                createCard(CardNumber.TEN),
+                                                createCard(CardNumber.EIGHT)
+                                        )
+                                )
+                        ),
+                        0,
+                        0
+                ),
+                Arguments.of(
+                        new BlackJackCards(
+                                List.of(
+                                        createCard(CardNumber.TEN),
+                                        createCard(CardNumber.EIGHT)
+                                )
+                        ),
+                        makeUser(
+                                "user",
+                                new BlackJackCards(
+                                        List.of(
+                                                createCard(CardNumber.TEN),
+                                                createCard(CardNumber.SIX)
+                                        )
+                                )
+                        ),
+                        1,
+                        -1
+                ),
+                Arguments.of(
+                        new BlackJackCards(
+                                List.of(
+                                        createCard(CardNumber.TEN),
+                                        createCard(CardNumber.ACE)
+                                )
+                        ),
+                        makeUser(
+                                "user",
+                                new BlackJackCards(
+                                        List.of(
+                                                createCard(CardNumber.TEN),
+                                                createCard(CardNumber.EIGHT),
+                                                createCard(CardNumber.THREE)
+                                        )
+                                )
+                        ),
+                        1,
+                        -1
+                ),
+                Arguments.of(
+                        new BlackJackCards(
+                                List.of(
+                                        createCard(CardNumber.TEN),
+                                        createCard(CardNumber.EIGHT),
+                                        createCard(CardNumber.THREE)
+                                )
+                        ),
+                        makeUser(
+                                "user",
+                                new BlackJackCards(
+                                        List.of(
+                                                createCard(CardNumber.NINE),
+                                                createCard(CardNumber.ACE)
+                                        )
+                                )
+                        ),
+                        1,
+                        -1
+                ),
+                Arguments.of(
+                        new BlackJackCards(
+                                List.of(
+                                        createCard(CardNumber.TEN),
+                                        createCard(CardNumber.EIGHT),
+                                        createCard(CardNumber.FIVE)
+                                )
+                        ),
+                        makeUser(
+                                "user",
+                                new BlackJackCards(
+                                        List.of(
+                                                createCard(CardNumber.NINE),
+                                                createCard(CardNumber.SIX),
+                                                createCard(CardNumber.SEVEN)
+                                        )
+                                )
+                        ),
+                        -1,
+                        1
+                )
+        );
+    }
+
     @BeforeEach
     void setUp() {
         dealer = new Dealer(new DefaultCardDeckInitializer());
@@ -392,12 +496,32 @@ class DealerTest {
         assertThat(dealer.isBlackJack(blackJackPlayer)).isEqualTo(expected);
     }
 
+    @ParameterizedTest
+    @MethodSource("플레이어와_싸운다_테스트_케이스")
+    void 플레이어와_싸운다(
+            final BlackJackCards blackJackCards,
+            final Player player,
+            final int expectedDealerMoney,
+            final int expectedPlayerMoney
+    ) {
+        dealer.receiveCards(blackJackCards);
+
+        dealer.fight(player);
+
+        SoftAssertions.assertSoftly(
+                softly -> {
+                    softly.assertThat(dealer.getProfit(List.of(player))).isEqualTo(expectedDealerMoney);
+                    softly.assertThat(player.getProfit()).isEqualTo(expectedPlayerMoney);
+                }
+        );
+    }
+
     private static class FakeBlackJackPlayer extends BlackJackPlayer {
 
         private final boolean canDrawMoreCard;
 
         public FakeBlackJackPlayer(final String name, final boolean canDrawMoreCard) {
-            super(name, Money.from(1));
+            super(name);
             this.canDrawMoreCard = canDrawMoreCard;
         }
 

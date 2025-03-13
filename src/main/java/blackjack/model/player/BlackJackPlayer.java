@@ -1,7 +1,6 @@
 package blackjack.model.player;
 
 import blackjack.model.card.BlackJackCards;
-import blackjack.model.player.money.Money;
 import java.util.Collections;
 
 public abstract class BlackJackPlayer {
@@ -10,12 +9,10 @@ public abstract class BlackJackPlayer {
 
     protected final String name;
     protected final BlackJackCards blackJackCards;
-    protected final Money money;
 
-    protected BlackJackPlayer(final String name, final Money money) {
+    protected BlackJackPlayer(final String name) {
         this.name = name;
         this.blackJackCards = BlackJackCards.empty();
-        this.money = money;
     }
 
     public final void receiveCards(final BlackJackCards blackJackCards) {
@@ -55,9 +52,5 @@ public abstract class BlackJackPlayer {
 
     public final BlackJackCards getCards() {
         return blackJackCards;
-    }
-
-    public final int getMoney() {
-        return money.getValue();
     }
 }
