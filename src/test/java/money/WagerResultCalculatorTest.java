@@ -10,10 +10,9 @@ import org.junit.jupiter.api.Test;
 
 import card.Card;
 import card.CardHand;
-import card.Deck;
 import card.Rank;
 import card.Suit;
-import game.Blackjack;
+import duel.DuelResult;
 import paticipant.Dealer;
 import paticipant.Participant;
 import paticipant.Player;
@@ -36,6 +35,7 @@ public class WagerResultCalculatorTest {
 				new Card(Rank.TEN, Suit.SPADE)
 			);
 			final Participant participant = new Participant(new CardHand(cards));
+			participant.writeDuelResult(DuelResult.LOSE);
 			final Player player = new Player("파랑", participant);
 			final Players players = new Players(List.of(player));
 
@@ -45,8 +45,6 @@ public class WagerResultCalculatorTest {
 			);
 			final Participant participant1 = new Participant(new CardHand(cards1));
 			final Dealer dealer = new Dealer(participant1);
-			final Blackjack blackjack = new Blackjack(players, dealer, Deck.createShuffledDeck());
-			blackjack.duel();
 
 			final Money wager = new Money(1000);
 
