@@ -12,7 +12,6 @@ public class Bet {
         this.bettingCount = bettingCount;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
