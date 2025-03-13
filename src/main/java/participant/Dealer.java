@@ -7,7 +7,7 @@ public class Dealer extends Participant {
     private static final int DEALER_CARDS_MIN_TOTAL = 17;
 
     public Dealer() {
-        super("딜러", 0);
+        super("딜러");
     }
 
     @Override
