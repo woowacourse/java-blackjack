@@ -50,7 +50,7 @@ public final class Dealer extends Participant {
             return MatchResult.DRAW;
         }
         if (!this.isBlackjack() && participant.isBlackjack()) {
-            return MatchResult.WIN;
+            return MatchResult.BLACKJACK;
         }
         if (this.isBlackjack() && !participant.isBlackjack()) {
             return MatchResult.LOSE;

@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.model.participant.Dealer;
-import blackjack.model.MatchResult;
 import blackjack.model.card.Deck;
 import blackjack.model.participant.Name;
 import blackjack.model.participant.Player;
@@ -9,9 +8,7 @@ import blackjack.model.card.RandomCardShuffler;
 import blackjack.model.participant.GamePlayers;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public final class BlackjackController {
 
@@ -94,14 +91,5 @@ public final class BlackjackController {
     private void displayResult(Dealer dealer, GamePlayers gamePlayers) {
         outputView.printDealerHandAndTotal(dealer.getHand(), dealer.getTotal());
         outputView.printPlayerHandAndTotal(gamePlayers.getPlayers());
-        outputView.printMatchResult(judgeMatchResults(dealer, gamePlayers));
-    }
-
-    private Map<Player, MatchResult> judgeMatchResults(Dealer dealer, GamePlayers gamePlayers) {
-        Map<Player, MatchResult> results = new LinkedHashMap<>();
-        for (Player player : gamePlayers) {
-            results.put(player, dealer.evaluateOutcome(player));
-        }
-        return results;
     }
 }

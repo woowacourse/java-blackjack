@@ -2,12 +2,8 @@ package blackjack.view;
 
 import blackjack.model.card.Card;
 import blackjack.model.participant.Dealer;
-import blackjack.model.MatchResult;
 import blackjack.model.participant.Player;
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -62,42 +58,6 @@ public class OutputView {
             return;
         }
         System.out.println();
-    }
-
-    public void printMatchResult(Map<Player, MatchResult> playerMatchResults) {
-        System.out.println("## 최종 승패");
-        printDealerMatchResult(playerMatchResults);
-        printPlayersMatchResult(playerMatchResults);
-    }
-
-    private void printDealerMatchResult(Map<Player, MatchResult> playerMatchResults) {
-        EnumMap<MatchResult, Integer> dealerMatchResult = calculateDealerMatchResult(playerMatchResults);
-        System.out.printf("딜러: %s%n", formatDealerMatchResult(dealerMatchResult));
-    }
-
-    private String formatDealerMatchResult(EnumMap<MatchResult, Integer> dealerMatchResult) {
-        return dealerMatchResult.entrySet()
-                .stream()
-                .filter(entry -> entry.getValue() != 0)
-                .map(entry -> entry.getValue() + entry.getKey().getLabel())
-                .collect(Collectors.joining(" "));
-    }
-
-    private EnumMap<MatchResult, Integer> calculateDealerMatchResult(
-            Map<Player, MatchResult> playerMatchResults) {
-        EnumMap<MatchResult, Integer> dealerMatchResult = new EnumMap<>(MatchResult.class);
-        for (MatchResult matchResult : playerMatchResults.values()) {
-            dealerMatchResult.merge(matchResult.getReversed(), 1, Integer::sum);
-        }
-        return dealerMatchResult;
-    }
-
-    private void printPlayersMatchResult(Map<Player, MatchResult> playerMatchResults) {
-        for (Entry<Player, MatchResult> playerMatchResultEntry : playerMatchResults.entrySet()) {
-            System.out.printf("%s: %s%n",
-                    playerMatchResultEntry.getKey().getName().value(),
-                    playerMatchResultEntry.getValue().getLabel());
-        }
     }
 
     public void printPlayerHandAndTotal(List<Player> players) {

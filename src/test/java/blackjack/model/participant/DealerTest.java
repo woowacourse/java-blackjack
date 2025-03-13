@@ -312,7 +312,7 @@ class DealerTest {
                     .isSameAs(MatchResult.DRAW);
         }
 
-        @DisplayName("참가자만 블랙잭이면 이긴다.")
+        @DisplayName("참가자만 블랙잭이면 이긴다.(블랙잭이다.)")
         @Test
         void win_WhenOnlyPlayerBlackjack() {
             // given
@@ -328,7 +328,7 @@ class DealerTest {
 
             // then
             assertThat(matchResult)
-                    .isSameAs(MatchResult.WIN);
+                    .isSameAs(MatchResult.BLACKJACK);
         }
 
         @DisplayName("딜러만 블랙잭이면 참가자는 진다.")

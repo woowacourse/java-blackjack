@@ -2,35 +2,19 @@ package blackjack.model;
 
 public enum MatchResult {
 
-    WIN("승") {
-        @Override
-        public MatchResult getReversed() {
-            return LOSE;
-        }
-    },
-    LOSE("패") {
-        @Override
-        public MatchResult getReversed() {
-            return WIN;
-        }
-    },
-    DRAW("무") {
-        @Override
-        public MatchResult getReversed() {
-            return DRAW;
-        }
-    },
+    BLACKJACK(2.5),
+    WIN(2.0),
+    DRAW(1.0),
+    LOSE(0.0),
     ;
 
-    private final String label;
+    private final double multiplier;
 
-    MatchResult(String label) {
-        this.label = label;
+    MatchResult(double multiplier) {
+        this.multiplier = multiplier;
     }
 
-    public abstract MatchResult getReversed();
-
-    public String getLabel() {
-        return label;
+    public int applyMultiplier(int amount) {
+        return (int) (amount * multiplier);
     }
 }
