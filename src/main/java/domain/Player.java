@@ -24,11 +24,13 @@ public class Player extends Participant {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Player player = (Player) o;
-        return Objects.equals(name, player.name) && Objects.equals(cards, player.cards);
+        return Objects.equals(name, player.name)
+            && Objects.equals(cards, player.cards)
+            && Objects.equals(betAmount, player.betAmount);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, cards);
+        return Objects.hash(name, cards, betAmount);
     }
 }

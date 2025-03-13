@@ -25,8 +25,8 @@ public class BlackjackController {
 
     private void readyGame() {
         List<String> playerNames = InputView.readPlayerNames();
-        List<Integer> betAmounts = readPlayerBetAmount(playerNames);
-        this.gameManager = new GameManager(playerNames, betAmounts, new Deck());
+        List<PlayerInfo> playerInfos = readPlayerBetAmount(playerNames);
+        this.gameManager = new GameManager(playerInfos, new Deck());
 
         Dealer dealer = gameManager.findDealer();
         List<Player> allPlayers = gameManager.findAllPlayers();
@@ -34,12 +34,12 @@ public class BlackjackController {
     }
 
 
-    private static List<Integer> readPlayerBetAmount(List<String> playerNames) {
-        List<Integer> betAmounts = new ArrayList<>();
+    private static List<PlayerInfo> readPlayerBetAmount(List<String> playerNames) {
+        List<PlayerInfo> playerInfos = new ArrayList<>();
         for (String playerName : playerNames) {
-            betAmounts.add(InputView.readBetAmount(playerName));
+            playerInfos.add(new PlayerInfo(playerName, InputView.readBetAmount(playerName)));
         }
-        return betAmounts;
+        return playerInfos;
     }
 
     private void drawPlayersCards() {

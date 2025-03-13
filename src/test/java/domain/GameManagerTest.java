@@ -1,5 +1,6 @@
 package domain;
 
+import controller.PlayerInfo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -40,7 +41,9 @@ public class GameManagerTest {
 
     @Test
     void 초기_딜러_카드_정보를_반환한다() {
-        GameManager gameManager = new GameManager(List.of("drago", "duei"), List.of(2000,1000), new TestCardProvider());
+        GameManager gameManager = new GameManager(
+            List.of(new PlayerInfo("drago", 2000), new PlayerInfo("duei", 1000)),
+            new TestCardProvider());
         List<Card> cardsOfDealer = List.of(new Card(Symbol.SPADE, Number.KING), new Card(Symbol.CLOVER, Number.ACE));
 
         Dealer result = gameManager.findDealer();
@@ -51,7 +54,9 @@ public class GameManagerTest {
 
     @Test
     void 플레이어별_수익률을_반환한다() {
-        GameManager gameManager = new GameManager(List.of("drago", "duei"), List.of(2000,1000), new TestCardProvider());
+        GameManager gameManager = new GameManager(
+            List.of(new PlayerInfo("drago", 2000), new PlayerInfo("duei", 1000)),
+            new TestCardProvider());
 
         Map<Player, Integer> incomes = gameManager.calculateIncomes();
 

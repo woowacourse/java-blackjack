@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Objects;
+
 public class BetAmount {
 
     private final int amount;
@@ -17,5 +19,24 @@ public class BetAmount {
 
     public int calculateIncome(ResultStatus resultStatus) {
         return resultStatus.calculateIncome(amount);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        BetAmount betAmount = (BetAmount) o;
+        return amount == betAmount.amount;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(amount);
+    }
+
+    @Override
+    public String toString() {
+        return "BetAmount{" +
+            "amount=" + amount +
+            '}';
     }
 }

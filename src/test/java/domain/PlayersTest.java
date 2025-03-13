@@ -24,8 +24,8 @@ public class PlayersTest {
             1000);
 
         Player duei = new Player("duei",
-                List.of(new Card(Symbol.DIAMOND, Number.EIGHT),
-                        new Card(Symbol.DIAMOND, Number.JACK),
+                List.of(new Card(Symbol.CLOVER, Number.EIGHT),
+                        new Card(Symbol.SPADE, Number.JACK),
                         new Card(Symbol.HEART, Number.TWO)),
             1000);
 

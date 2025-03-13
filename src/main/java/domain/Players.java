@@ -39,9 +39,9 @@ public class Players {
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (object == null || getClass() != object.getClass()) return false;
-        Players players1 = (Players) object;
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Players players1 = (Players) o;
         return Objects.equals(players, players1.players);
     }
 

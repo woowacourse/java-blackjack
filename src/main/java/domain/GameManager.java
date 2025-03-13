@@ -1,6 +1,8 @@
 package domain;
 
 
+import controller.PlayerInfo;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,25 +17,22 @@ public class GameManager {
     private final Players players;
     private final Dealer dealer;
 
-    public GameManager(List<String> playerNames, List<Integer> betAmounts, CardProvider provider) {
+    public GameManager(List<PlayerInfo> playerInfos, CardProvider provider) {
         this.provider = provider;
-        this.players = new Players(createPlayers(playerNames, betAmounts));
+        this.players = new Players(createPlayers(playerInfos));
         this.dealer = new Dealer(drawInitialCards());
     }
 
-    private List<Player> createPlayers(List<String> playerNames, List<Integer> betAmounts) {
-        validateNamesAndAmountsSize(playerNames, betAmounts);
+    private List<Player> createPlayers(List<PlayerInfo> playerInfos) {
         List<Player> createdPlayers = new ArrayList<>();
-        for (int i = 0; i < playerNames.size(); i++) {
-            createdPlayers.add(new Player(playerNames.get(i), drawInitialCards(), betAmounts.get(i)));
+        for (PlayerInfo playerInfo : playerInfos) {
+            createdPlayers.add(
+                new Player(playerInfo.name(),
+                    provider.provideCards(INITIAL_DRAW_SIZE),
+                    playerInfo.betAmount())
+            );
         }
         return createdPlayers;
-    }
-
-    private void validateNamesAndAmountsSize(List<String> playerNames, List<Integer> betAmounts) {
-        if (playerNames.size() != betAmounts.size()) {
-            throw new IllegalArgumentException("[ERROR] 플레이어별 베팅 금액이 잘못 입력되었습니다.");
-        }
     }
 
     private List<Card> drawInitialCards() {
