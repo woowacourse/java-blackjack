@@ -22,7 +22,7 @@ public class BetManager {
         BlackjackCardSum dealerSum = new BlackjackCardSum(blackjackGame.dealerCards());
         for (String name : pariticipantsBets.keySet()) {
             BlackjackCardSum playerCardSum = new BlackjackCardSum(blackjackGame.playerCards(name));
-            double playerWinningMoney = playerWinningNumber(name, playerCardSum, dealerSum);
+            double playerWinningMoney = playerWinningMoney(name, playerCardSum, dealerSum);
             blackjackBetResults.put(dealerName, dealerWinningMoney(blackjackBetResults, playerWinningMoney));
             blackjackBetResults.put(name, playerWinningMoney);
         }
@@ -33,7 +33,7 @@ public class BetManager {
         return blackjackBetResults.get(dealerName) - playerWinningMoney;
     }
 
-    public double playerWinningNumber(String name, BlackjackCardSum cardSum, BlackjackCardSum dealerSum) {
+    public double playerWinningMoney(String name, BlackjackCardSum cardSum, BlackjackCardSum dealerSum) {
         BlackjackBet blackjackBet = pariticipantsBets.get(name);
         return blackjackBet.calculateWinningMoney(cardSum, dealerSum) - blackjackBet.betMoney();
     }
