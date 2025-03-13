@@ -94,7 +94,7 @@ public class BlackjackController implements Controller {
         outputView.outputFinalWinOrLossMessage();
         final BlackjackJudge blackjackJudge = new BlackjackJudge(dealerBlackjackCardHand, playerBlackjackCardHands);
         outputView.outputDealerFinalWinOrLoss(
-                blackjackJudge.getDealerWinningCount(),
+                blackjackJudge.getDealerBlackjackWinningCount() + blackjackJudge.getDealerWinningCount(),
                 blackjackJudge.getDealerDrawingCount(),
                 blackjackJudge.getDealerLosingCount()
         );
