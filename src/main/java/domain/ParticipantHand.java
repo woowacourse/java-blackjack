@@ -40,8 +40,7 @@ public class ParticipantHand {
 
     public WinStatus getWinStatusAgainst(Score other) {
         Score totalScore = calculateCardSum();
-        GameJudge gameJudge = new GameJudge(totalScore, other);
-        return gameJudge.getResult();
+        return WinStatus.determine(totalScore, other);
     }
 
     private Score totalScore() {

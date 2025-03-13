@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class GameJudgeTest {
+class WinStatusTest {
     static Stream<Arguments> createPlayerScores() {
         return Stream.of(
                 Arguments.of(new Score(21), new Score(10), WinStatus.WIN),
@@ -26,10 +26,9 @@ class GameJudgeTest {
     @MethodSource("createPlayerScores")
     void 점수를_기준으로_승패를_판별한다(Score player, Score otherPlayer, WinStatus expected) {
         // given
-        GameJudge gameJudge = new GameJudge(player, otherPlayer);
 
         // when
-        WinStatus actual = gameJudge.getResult();
+        WinStatus actual = WinStatus.determine(player, otherPlayer);
 
         // then
         assertThat(actual).isEqualTo(expected);
