@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 class DeckTest {
 
     @Test
-    @DisplayName("덱이 없을 때 드로우하면 안된다.")
+    @DisplayName("카드가 없을 때 카드를 뽑을 시 예외가 발생한다.")
     void test1() {
         // given
         Deck deck = new Deck(List::of);
