@@ -8,16 +8,16 @@ public class Player {
 
     private final String name;
     private final Hand hand;
-    private int bettingMoney;
+    private final Betting betting;
 
     public Player(String name) {
-        this.name = name;
-        this.hand = new Hand();
+        this(name, 0);
     }
 
     public Player(String name, int bettingMoney) {
-        this(name);
-        this.bettingMoney = bettingMoney;
+        this.name = name;
+        this.hand = new Hand();
+        this.betting = new Betting(bettingMoney);
     }
 
     public void drawCard(List<Card> cards) {
@@ -44,10 +44,6 @@ public class Player {
         return name;
     }
 
-    public int getBettingMoney() {
-        return bettingMoney;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -62,5 +58,9 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hashCode(name);
+    }
+
+    public int getPlayerBettingMoney() {
+        return betting.getMoney();
     }
 }

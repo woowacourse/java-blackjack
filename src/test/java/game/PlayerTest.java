@@ -74,6 +74,6 @@ public class PlayerTest {
         Player player = new Player("pobi", 10000);
 
         //when & then
-        assertThat(player.getBettingMoney()).isEqualTo(10000);
+        assertThat(player.getPlayerBettingMoney()).isEqualTo(10000);
     }
 }
