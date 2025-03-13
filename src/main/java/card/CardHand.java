@@ -39,4 +39,8 @@ public class CardHand {
 	public List<Card> getCards() {
 		return Collections.unmodifiableList(cards);
 	}
+
+	public Count calculateCardCount() {
+		return null;
+	}
 }

@@ -1,17 +1,20 @@
 package duel;
 
+import static org.assertj.core.api.Assertions.*;
+
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import card.Card;
 import card.CardHand;
+import card.Count;
 import card.Rank;
 import card.Score;
 import card.Suit;
@@ -31,7 +34,7 @@ class CardHandTest {
 			final Score bustScore = Score.from(21);
 
 			//when&then
-			Assertions.assertThat(cardHand.calculateAllScore(bustScore)).isEqualTo(Score.from(expected));
+			assertThat(cardHand.calculateAllScore(bustScore)).isEqualTo(Score.from(expected));
 		}
 
 		private static Stream<Arguments> getCardList() {
@@ -51,6 +54,30 @@ class CardHandTest {
 				Arguments.of(List.of(new Card(Rank.ACE, Suit.CLUB), new Card(Rank.ACE, Suit.HEART),
 					new Card(Rank.ACE, Suit.SPADE), new Card(Rank.ACE, Suit.DIAMOND)), 14)
 			);
+		}
+	}
+
+	@Nested
+	@DisplayName("카드 카운트 계산")
+	class CalculateCount {
+
+		@DisplayName("손에 들고있는 카드의 수를 계산하라")
+		@Test
+		void calculateCardCount() {
+			// given
+			final List<Card> cards = List.of(
+				new Card(Rank.TEN, Suit.CLUB),
+				new Card(Rank.TEN, Suit.SPADE),
+				new Card(Rank.TEN, Suit.HEART),
+				new Card(Rank.TEN, Suit.DIAMOND)
+			);
+			final CardHand cardHand = new CardHand(cards);
+
+			// when
+			final Count actual = cardHand.calculateCardCount();
+
+			// then
+			assertThat(actual.value()).isEqualTo(cards.size());
 		}
 	}
 
