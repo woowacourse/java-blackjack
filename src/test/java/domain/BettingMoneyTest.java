@@ -41,5 +41,26 @@ class BettingMoneyTest {
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("배팅 금액은 0 이상이어야 합니다.");
         }
+
+        @DisplayName("배팅 금액은 일정 금액의 범위여야한다.")
+        @ParameterizedTest
+        @ValueSource(ints = {BettingMoney.MIN_AMOUNT - 1, BettingMoney.MAX_AMOUNT + 1})
+        void validateRange(int nonRangeAmount) {
+            // when & then
+            assertThatThrownBy(() -> new BettingMoney(nonRangeAmount))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("배팅 금액은 최소 " + BettingMoney.MIN_AMOUNT + "원 이상, 최대 " + BettingMoney.MAX_AMOUNT
+                            + "원 이하여야 합니다.");
+        }
+
+        @DisplayName("배팅 금액은 일정 금액의 배수여야 한다.")
+        @ParameterizedTest
+        @ValueSource(ints = {BettingMoney.UNIT_AMOUNT * 10 - 1, BettingMoney.UNIT_AMOUNT * 10 + 1})
+        void validateMultiple(int nonMultipleAmount) {
+            // when & then
+            assertThatThrownBy(() -> new BettingMoney(nonMultipleAmount))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("배팅 금액은 " + BettingMoney.UNIT_AMOUNT + "원 단위여야 합니다.");
+        }
     }
 }
