@@ -19,4 +19,8 @@ public class Betting {
     public int earn() {
         return this.money;
     }
+
+    public int earnedWhenBlackJack() {
+        return (int) (this.money * 1.5);
+    }
 }
