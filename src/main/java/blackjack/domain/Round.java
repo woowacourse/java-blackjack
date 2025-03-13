@@ -24,7 +24,7 @@ public class Round {
 
     private List<Gambler> registerGamblers(final List<Name> playerNames) {
         List<Gambler> gamblers = new ArrayList<>();
-        gamblers.add(new Dealer(Name.getDealerName()));
+        gamblers.add(new Dealer());
         for (final Name playerName : playerNames) {
             Player player = new Player(playerName);
             gamblers.add(player);

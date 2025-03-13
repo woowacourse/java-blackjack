@@ -4,8 +4,8 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public class Dealer extends Gambler {
-    public Dealer(final Name name) {
-        super(name);
+    public Dealer() {
+        super(Name.getDealerName());
     }
 
     @Override
