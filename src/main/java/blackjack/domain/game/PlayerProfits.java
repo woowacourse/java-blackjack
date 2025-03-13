@@ -15,6 +15,13 @@ public class PlayerProfits {
                 .toList();
     }
 
+    public int calculateDealerProfit() {
+        int playerProfitSum = playerProfits.stream()
+                .mapToInt(PlayerProfit::getProfit)
+                .sum();
+        return playerProfitSum * -1;
+    }
+
     public List<PlayerProfit> getPlayerProfits() {
         return Collections.unmodifiableList(playerProfits);
     }
@@ -27,15 +34,8 @@ public class PlayerProfits {
             return PlayerProfit.createWhenDealerBust(player);
         }
         if (player.isBust()) {
-            return PlayerProfit.createPlayerBust(player);
+            return PlayerProfit.createWhenPlayerBust(player);
         }
         return PlayerProfit.createByWinningType(player, WinningType.parse(player.getPoint(), dealer.getPoint()));
-    }
-
-    public int calculateDealerProfit() {
-        int playerProfitSum = playerProfits.stream()
-                .mapToInt(PlayerProfit::getProfit)
-                .sum();
-        return playerProfitSum * -1;
     }
 }

@@ -24,7 +24,7 @@ public class PlayerProfit {
         return new PlayerProfit(player.getNickname(), profit);
     }
 
-    public static PlayerProfit createPlayerBust(Player player) {
+    public static PlayerProfit createWhenPlayerBust(Player player) {
         ProfitRate rate = ProfitRate.LOSE;
         int profit = rate.calculateProfit(player.getBettingAmount());
         return new PlayerProfit(player.getNickname(), profit);

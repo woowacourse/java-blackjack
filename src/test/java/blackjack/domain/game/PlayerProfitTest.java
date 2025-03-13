@@ -30,11 +30,11 @@ class PlayerProfitTest {
 
     @Test
     @DisplayName("플레이어가 버스트일 경우 이익을 구할 수 있다.")
-    void canCreatePlayerBust() {
+    void canCreateWhenPlayerBust() {
         Player player = new Player(new Nickname("플레이이어"));
         player.registerBettingAmount(new BettingAmount(1000));
 
-        PlayerProfit profit = PlayerProfit.createPlayerBust(player);
+        PlayerProfit profit = PlayerProfit.createWhenPlayerBust(player);
 
         assertThat(profit.getNickname())
                 .isEqualTo("플레이이어");
