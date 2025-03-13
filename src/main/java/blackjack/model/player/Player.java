@@ -21,6 +21,10 @@ public abstract class Player {
         return receivedCards.isBust();
     }
 
+    public boolean isBlackJack() {
+        return receivedCards.isBlackJack();
+    }
+
     public int calculatePoint() {
         return receivedCards.calculateTotalPoint();
     }
