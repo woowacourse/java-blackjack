@@ -24,7 +24,7 @@ public class DealerTest {
         List<Card> result = dealer.getInitialCards();
 
         // then
-        assertThat(result.size()).isEqualTo(1);
+        assertThat(result).hasSize(1);
         assertThat(result.getFirst()).isEqualTo(card1);
     }
 }

@@ -24,7 +24,7 @@ public class Name {
         if (name.length() < MIN_NAME_LENGTH || name.length() > MAX_NAME_LENGTH) {
             throw new IllegalArgumentException(INVALID_PLAYER_NAME_LENGTH.getMessage());
         }
-        if (name.split(SPACE).length != 1) {
+        if (name.contains(SPACE)) {
             throw new IllegalArgumentException(INVALID_PLAYER_NAME_FORMAT.getMessage());
         }
         return name;
