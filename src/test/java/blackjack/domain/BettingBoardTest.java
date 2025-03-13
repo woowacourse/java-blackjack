@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+import static blackjack.test_util.TestConstants.*;
+import static org.junit.jupiter.api.Assertions.*;
+
 import blackjack.domain.money.BettingMoney;
 import blackjack.domain.player.Player;
 
@@ -12,24 +15,35 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class BettingBoardTest {
     
+    @Test
+    void 플레이어별_배팅_금액을_저장할_수_있다() {
+        // given
+        Map<Player, BettingMoney> playerBettingMoney = new HashMap<>();
+        playerBettingMoney.put(DEFAULT_PLAYER, new BettingMoney(10000));
+        
+        // expected
+        assertDoesNotThrow(() -> new BettingBoard(playerBettingMoney));
+    }
+    
     @ParameterizedTest
     @MethodSource("provideWinningStatusAndProfit")
     void 블랙잭_결과로_달라지는_플레이어의_수익을_확인할_수_있다(WinningStatus winningStatus, int profit) {
         // given
         Map<Player, BettingMoney> playerBettingMoney = new HashMap<>();
-        playerBettingMoney.put(TestConstants.DEFAULT_PLAYER, new BettingMoney(10000));
+        playerBettingMoney.put(DEFAULT_PLAYER, new BettingMoney(10000));
         
         // when
         BettingBoard bettingBoard = new BettingBoard(playerBettingMoney);
         
         // expected
-        Assertions.assertThat(bettingBoard.getProfit(TestConstants.DEFAULT_PLAYER, winningStatus))
+        Assertions.assertThat(bettingBoard.getProfit(DEFAULT_PLAYER, winningStatus))
                 .isEqualTo(profit);
     }
     
