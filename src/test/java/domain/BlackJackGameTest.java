@@ -39,20 +39,20 @@ class BlackJackGameTest {
             // given
             BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
             Deck originalDeck = new Deck(Arrays.asList(TrumpCard.values()), new NoShuffle());
-            Map<String, BettingMoney> playerInfos = new LinkedHashMap<>();
-            playerInfos.put("Alice", new BettingMoney(1000));
-            playerInfos.put("Bob", new BettingMoney(1000));
+            Map<Name, BettingMoney> playerInfos = new LinkedHashMap<>();
+            playerInfos.put(new Name("머피"), new BettingMoney(1000));
+            playerInfos.put(new Name("매트"), new BettingMoney(1000));
 
             // when
             List<Player> players = blackJackGame.createPlayers(playerInfos);
 
             // then
             assertSoftly(softly -> {
-                softly.assertThat(players.getFirst().getName()).isEqualTo("Alice");
+                softly.assertThat(players.getFirst().getName()).isEqualTo("머피");
                 softly.assertThat(players.getFirst().getBettingMoney()).isEqualTo(new BettingMoney(1000));
                 softly.assertThat(players.getFirst().retrieveCards()).isEqualTo(
                         originalDeck.drawMultiple(2));
-                softly.assertThat(players.getLast().getName()).isEqualTo("Bob");
+                softly.assertThat(players.getLast().getName()).isEqualTo("매트");
                 softly.assertThat(players.getLast().getBettingMoney()).isEqualTo(new BettingMoney(1000));
                 softly.assertThat(players.getLast().retrieveCards()).isEqualTo(
                         originalDeck.drawMultiple(2));
@@ -65,7 +65,7 @@ class BlackJackGameTest {
         void isPlayerHitAllowed(List<TrumpCard> cards) {
             // given
             BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
-            Player player = new Player("Alice", new BettingMoney(1000), new Hand(cards));
+            Player player = new Player(new Name("머피"), new BettingMoney(1000), new Hand(cards));
 
             // when
             boolean result = blackJackGame.isPlayerHitAllowed(player);
@@ -88,7 +88,7 @@ class BlackJackGameTest {
         void processPlayerHit() {
             // given
             BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
-            Player player = new Player("Alice", new BettingMoney(1000),
+            Player player = new Player(new Name("머피"), new BettingMoney(1000),
                     new Hand(List.of(TrumpCard.TWO_OF_DIAMONDS, TrumpCard.FIVE_OF_SPADES)));
 
             // when
@@ -118,7 +118,7 @@ class BlackJackGameTest {
             // given
             BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
             List<TrumpCard> cards = List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.KING_OF_HEARTS);
-            Player player = new Player("머피", new BettingMoney(1000), new Hand(cards));
+            Player player = new Player(new Name("머피"), new BettingMoney(1000), new Hand(cards));
 
             // when
             Score score = blackJackGame.calculatePlayerScore(player);
@@ -166,9 +166,9 @@ class BlackJackGameTest {
             Dealer dealer = new Dealer(new Hand(List.of(TrumpCard.SEVEN_OF_DIAMONDS, TrumpCard.KING_OF_HEARTS)));
             BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
 
-            Player firstPlayer = new Player("Alice", new BettingMoney(1000),
+            Player firstPlayer = new Player(new Name("머피"), new BettingMoney(1000),
                     new Hand(List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.JACK_OF_HEARTS)));
-            Player secondPlayer = new Player("Bob", new BettingMoney(1500),
+            Player secondPlayer = new Player(new Name("매트"), new BettingMoney(2000),
                     new Hand(List.of(TrumpCard.NINE_OF_CLUBS, TrumpCard.SEVEN_OF_DIAMONDS)));
             List<Player> players = List.of(firstPlayer, secondPlayer);
 
@@ -178,7 +178,7 @@ class BlackJackGameTest {
             // then
             assertSoftly(softly -> {
                 softly.assertThat(playersRevenueAmount.get(firstPlayer.getName())).isEqualTo(1500);
-                softly.assertThat(playersRevenueAmount.get(secondPlayer.getName())).isEqualTo(-1500);
+                softly.assertThat(playersRevenueAmount.get(secondPlayer.getName())).isEqualTo(-2000);
             });
         }
     }
@@ -192,7 +192,7 @@ class BlackJackGameTest {
         void processPlayerHit(List<TrumpCard> cards) {
             // given
             BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
-            Player player = new Player("Alice", new BettingMoney(1000), new Hand(cards));
+            Player player = new Player(new Name("머피"), new BettingMoney(1000), new Hand(cards));
 
             // when & then
             assertThatThrownBy(() -> blackJackGame.processPlayerHit(player))

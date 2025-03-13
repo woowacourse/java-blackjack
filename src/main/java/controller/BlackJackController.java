@@ -3,7 +3,9 @@ package controller;
 import controller.dto.CardScoreDto;
 import domain.BettingMoney;
 import domain.BlackJackGame;
+import domain.Name;
 import domain.Player;
+import domain.PlayerRoster;
 import domain.Score;
 import domain.TrumpCard;
 import java.util.LinkedHashMap;
@@ -46,12 +48,17 @@ public class BlackJackController {
     }
 
     private List<Player> createPlayers() {
-        Map<String, BettingMoney> playerInfos = inputView.readPlayerNames().stream()
+        List<Name> PlayerNames = inputView.readPlayerNames().stream()
+                .map(Name::new)
+                .toList();
+        PlayerRoster PlayerRoster = new PlayerRoster(PlayerNames);
+
+        Map<Name, BettingMoney> playerInfos = PlayerRoster.getPlayerNames().stream()
                 .collect(Collectors.toMap(
                         playerName -> playerName,
-                        playerName -> new BettingMoney(inputView.readBettingMoney(playerName)),
+                        playerName -> new BettingMoney(inputView.readBettingMoney(playerName.getText())),
                         (oldValue, newValue) -> {
-                            throw new IllegalArgumentException("플레이어의 이름은 중복될 수 없습니다.");  // TODO. 추후 하위 계층으로 분리
+                            throw new IllegalStateException("플레이어의 이름의 중복 처리를 못했습니다.");
                         }, LinkedHashMap::new));
 
         return blackJackGame.createPlayers(playerInfos);

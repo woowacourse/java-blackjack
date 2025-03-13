@@ -38,7 +38,7 @@ public class BlackJackGame {
         return new BlackJackGame(deck, dealer, rule);
     }
 
-    public List<Player> createPlayers(Map<String, BettingMoney> playerInfos) {
+    public List<Player> createPlayers(Map<Name, BettingMoney> playerInfos) {
         return playerInfos.entrySet().stream()
                 .map(entry -> new Player(
                         entry.getKey(), entry.getValue(),

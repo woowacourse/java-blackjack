@@ -2,28 +2,28 @@ package domain;
 
 public class Player extends Participant {
 
-    private final String name;
+    private final Name name;
     private final BettingMoney bettingMoney;
 
-    public Player(String name, BettingMoney bettingMoney, Hand hand) {
+    public Player(Name name, BettingMoney bettingMoney, Hand hand) {
         super(hand);
         validate(name, bettingMoney);
         this.name = name;
         this.bettingMoney = bettingMoney;
     }
 
-    private void validate(String name, BettingMoney bettingMoney) {
+    private void validate(Name name, BettingMoney bettingMoney) {
         validateNotNull(name, bettingMoney);
     }
 
-    private void validateNotNull(String name, BettingMoney bettingMoney) {
-        if (name == null || name.isBlank() || bettingMoney == null) {
+    private void validateNotNull(Name name, BettingMoney bettingMoney) {
+        if (name == null || bettingMoney == null) {
             throw new IllegalArgumentException("플레이어는 이름과 배팅 금액을 가져야합니다.");
         }
     }
 
     public String getName() {
-        return name;
+        return name.getText();
     }
 
     public BettingMoney getBettingMoney() {
