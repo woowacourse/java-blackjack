@@ -34,11 +34,7 @@ public class Hand {
     }
 
     public boolean isBust() {
-        int sumWithLowAce = cards.stream()
-                .map(Card::cardNumberType)
-                .mapToInt(CardNumberType::getDefaultNumber)
-                .sum();
-        return sumWithLowAce > VALID_MAX_SUM_LIMIT;
+        return calculateSum() > VALID_MAX_SUM_LIMIT;
     }
 
     public void add(Card receivedCard) {
