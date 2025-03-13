@@ -49,7 +49,7 @@ public class BlackJackController {
     private List<Player> createPlayers() {
         Map<String, BettingMoney> playerInfos = inputView.readPlayerNames().stream()
                 .collect(Collectors.toMap(
-                        name -> name, name -> new BettingMoney(1000)));
+                        name -> name, name -> new BettingMoney(inputView.readBettingMoney(name))));
 
         return blackJackGame.createPlayers(playerInfos);
     }
