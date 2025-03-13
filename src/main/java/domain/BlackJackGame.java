@@ -1,7 +1,6 @@
 package domain;
 
-import static factory.BlackJackCreator.createCardDeck;
-
+import domain.card.Card;
 import domain.card.CardBundle;
 import domain.card.CardDeck;
 import domain.participant.Betting;
@@ -93,5 +92,12 @@ public class BlackJackGame {
 
     private void createDealer(List<Participant> participants) {
         participants.add(new Dealer());
+    }
+
+    private CardDeck createCardDeck(CardBundle cardBundle) {
+        List<Card> allCards = cardBundle.getAllCards();
+        List<Card> shuffledAllCards = new ArrayList<>(allCards);
+        Collections.shuffle(shuffledAllCards);
+        return new CardDeck(shuffledAllCards);
     }
 }
