@@ -8,6 +8,8 @@ import domain.card.CardPack;
 import domain.participant.Dealer;
 import domain.participant.Gambler;
 import domain.participant.Player;
+import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -17,21 +19,21 @@ public class Gamblers {
     private static final int MAX_PLAYERS_COUNT = 8;
 
     private final Dealer dealer;
-    private final List<Player> players;
+    private final Map<Player, BettingMoney> playerBettings;
 
-    public Gamblers(Dealer dealer, List<Player> players) {
-        validatePlayers(players);
+    public Gamblers(Dealer dealer, Map<Player, BettingMoney> playerBettings) {
+        validatePlayers(playerBettings.keySet());
         this.dealer = dealer;
-        this.players = players;
+        this.playerBettings = playerBettings;
     }
 
     public void distributeSetUpCards(CardPack cardPack) {
         dealer.takeCards(cardPack.poll(), cardPack.poll());
-        players.forEach(player -> player.takeCards(cardPack.poll(), cardPack.poll()));
+        playerBettings.keySet().forEach(player -> player.takeCards(cardPack.poll(), cardPack.poll()));
     }
 
     public void distributeExtraCardsToPlayers(CardPack cardPack, GamblerAnswer playerAnswer) {
-        players.forEach(player -> distributeExtraCards(player, playerAnswer, cardPack));
+        playerBettings.keySet().forEach(player -> distributeExtraCards(player, playerAnswer, cardPack));
     }
 
     public void distributeExtraCardsToDealer(CardPack cardPack, GamblerAnswer dealerAnswer) {
@@ -53,14 +55,14 @@ public class Gamblers {
     }
 
     public Map<Player, Winning> evaluatePlayerWinnings() {
-        return players.stream()
+        return playerBettings.keySet().stream()
             .collect(toMap(
                 Function.identity(),
                 dealer::judgeWinningForPlayer
             ));
     }
 
-    private void validatePlayers(List<Player> players) {
+    private void validatePlayers(Collection<Player> players) {
         if (players.isEmpty()) {
             throw new IllegalArgumentException("플레이어가 최소 1명은 있어야 합니다.");
         }

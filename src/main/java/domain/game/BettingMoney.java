@@ -39,7 +39,7 @@ public class BettingMoney {
         return amount + "";
     }
 
-    public static BettingMoney generate(int amount) {
+    public static BettingMoney of(int amount) {
         if (amount < 1000) {
             throw new IllegalArgumentException("배팅금은 최소 1000원 이상입니다.");
         }

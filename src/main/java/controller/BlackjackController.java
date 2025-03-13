@@ -1,8 +1,8 @@
 package controller;
 
-import domain.card.Card;
 import domain.card.CardHand;
 import domain.card.CardPack;
+import domain.game.BettingMoney;
 import domain.game.Gamblers;
 import domain.game.Winning;
 import domain.participant.Dealer;
@@ -27,32 +27,35 @@ public class BlackjackController {
         this.outputView = outputView;
     }
 
-    public void play() {
+    public void play(CardPack cardPack) {
         Dealer dealer = new Dealer(new CardHand());
-        List<Player> players = createPlayers();
+        Map<Player, BettingMoney> players = createPlayers();
         Gamblers gamblers = new Gamblers(dealer, players);
 
-        CardPack cardPack = new CardPack(Card.allCards());
-        cardPack.shuffle();
-
         gamblers.distributeSetUpCards(cardPack);
-        outputView.printSetUpCardDeck(dealer, players);
+        outputView.printSetUpCardDeck(dealer, toKeyList(players));
 
-        gamblers.distributeExtraCardsToPlayers(cardPack,
-            new ViewPlayerAnswer(inputView, outputView));
+        gamblers.distributeExtraCardsToPlayers(cardPack, new ViewPlayerAnswer(inputView, outputView));
         gamblers.distributeExtraCardsToDealer(cardPack, new ViewDealerAnswer(outputView));
-        outputView.printFinalCardDeck(chainGamblers(dealer, players));
+        outputView.printFinalCardDeck(chainGamblers(dealer, toKeyList(players)));
 
         Map<Winning, Long> dealerWinnings = gamblers.evaluateDealerWinnings();
         Map<Player, Winning> playerWinnings = gamblers.evaluatePlayerWinnings();
-        outputView.printGameResult(dealerWinnings, playerWinningsInOrder(players, playerWinnings));
+        outputView.printGameResult(dealerWinnings, playerWinningsInOrder(toKeyList(players), playerWinnings));
     }
 
-    private List<Player> createPlayers() {
-        return inputView.getPlayerNames()
+    private Map<Player, BettingMoney> createPlayers() {
+        List<Player> players = inputView.getPlayerNames()
             .stream()
             .map(name -> new Player(name, new CardHand()))
             .toList();
+
+        return players.stream().collect(Collectors.toMap(
+                Function.identity(),
+                p -> inputView.getBettingMoney(p.getName()),
+                (exist, replace) -> exist,
+                LinkedHashMap::new)
+            );
     }
 
     private List<Gambler> chainGamblers(Dealer dealer, List<Player> players) {
@@ -70,5 +73,9 @@ public class BlackjackController {
                 (exist, replace) -> exist,
                 LinkedHashMap::new
             ));
+    }
+
+    private <T> List<T> toKeyList(Map<T, ?> map) {
+        return new ArrayList<>(map.keySet());
     }
 }

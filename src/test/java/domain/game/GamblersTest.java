@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import domain.TestFixtures;
 import domain.card.Card;
 import domain.card.CardHand;
 import domain.card.CardPack;
@@ -30,36 +31,37 @@ public class GamblersTest {
     @BeforeEach
     void setUp() {
         dealer = new Dealer(new CardHand());
-        player1 = new Player("플레이어1", new CardHand());
-        player2 = new Player("플레이어2", new CardHand());
-        player3 = new Player("플레이어3", new CardHand());
+        player1 = TestFixtures.playerOfDefaultHand();
+        player2 = TestFixtures.playerOfDefaultHand();
+        player3 = TestFixtures.playerOfDefaultHand();
     }
 
     @Test
-    void 딜러와_플레이어들로_Gamblers를_생성한다() {
-        assertThatCode(() -> new Gamblers(dealer, List.of(player1, player2)))
+    void 딜러와_플레이어_배팅_맵으로_Gamblers를_생성한다() {
+        assertThatCode(() -> new Gamblers(dealer, Map.of(player1, BettingMoney.of(10000))))
             .doesNotThrowAnyException();
     }
 
     @Test
     void 플레이어가_없으면_예외가_발생한다() {
-        assertThatThrownBy(() -> new Gamblers(dealer, List.of()))
+        assertThatThrownBy(() -> new Gamblers(dealer, Map.of()))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void 플레이어가_8명보다_많으면_예외가_발생한다() {
-        List<Player> players = List.of(
-            new Player("플레이어1", new CardHand()),
-            new Player("플레이어2", new CardHand()),
-            new Player("플레이어3", new CardHand()),
-            new Player("플레이어4", new CardHand()),
-            new Player("플레이어5", new CardHand()),
-            new Player("플레이어6", new CardHand()),
-            new Player("플레이어7", new CardHand()),
-            new Player("플레이어8", new CardHand()),
-            new Player("플레이어9", new CardHand())
-            );
+        BettingMoney money = BettingMoney.of(10000);
+        Map<Player, BettingMoney> players = Map.of(
+            new Player("플레이어1", new CardHand()), money,
+            new Player("플레이어2", new CardHand()), money,
+            new Player("플레이어3", new CardHand()), money,
+            new Player("플레이어4", new CardHand()), money,
+            new Player("플레이어5", new CardHand()), money,
+            new Player("플레이어6", new CardHand()), money,
+            new Player("플레이어7", new CardHand()), money,
+            new Player("플레이어8", new CardHand()), money,
+            new Player("플레이어9", new CardHand()), money
+        );
 
         assertThatThrownBy(() -> new Gamblers(dealer, players))
             .isInstanceOf(IllegalArgumentException.class);
@@ -67,7 +69,7 @@ public class GamblersTest {
 
     @Test
     void 딜러와_플레이어들에게_초기카드를_나눠준다() {
-        Gamblers gamblers = new Gamblers(dealer, List.of(player1, player2));
+        Gamblers gamblers = TestFixtures.gamblers(dealer, List.of(player1, player2));
 
         gamblers.distributeSetUpCards(new CardPack(Card.allCards()));
 
@@ -80,7 +82,7 @@ public class GamblersTest {
 
     @Test
     void 초기카드는_딜러먼저_2장_이후_플레이어들에게_순서대로_2장씩_나누어준다() {
-        Gamblers gamblers = new Gamblers(dealer, List.of(player1, player2, player3));
+        Gamblers gamblers = TestFixtures.gamblers(dealer, List.of(player1, player2, player3));
 
         List<Card> cards = List.of(
             Card.SPADE_A, Card.SPADE_2, Card.SPADE_3, Card.SPADE_4,
@@ -97,14 +99,15 @@ public class GamblersTest {
 
     @Test
     void 플레이어들에게_순서대로_추가카드를_나누어준다() {
-        Gamblers gamblers = new Gamblers(dealer, List.of(player1, player2, player3));
+        Gamblers gamblers = TestFixtures.gamblers(dealer, List.of(player1, player2, player3));
         player1.takeCards(Card.DIAMOND_10, Card.DIAMOND_10);
         player2.takeCards(Card.DIAMOND_10, Card.DIAMOND_10);
         player3.takeCards(Card.DIAMOND_10, Card.DIAMOND_10);
         // 모든 참가자가 20점인 상황에서
 
         List<Card> cards = List.of(Card.SPADE_A, Card.SPADE_2, Card.SPADE_3);
-        gamblers.distributeExtraCardsToPlayers(new CardPack(cards), GamblerAnswersForTest.onlyOnceOKPerGambler());
+        gamblers.distributeExtraCardsToPlayers(new CardPack(cards),
+            GamblerAnswersForTest.onlyOnceOKPerGambler());
 
         assertAll(
             () -> assertThat(player1.getCards()).contains(Card.SPADE_A),
@@ -115,20 +118,23 @@ public class GamblersTest {
 
     @Test
     void 딜러는_16점을_초과할_때까지_계속해서_카드를_받는다() {
-        Gamblers gamblers = new Gamblers(dealer, List.of(player1, player2, player3));
+        Gamblers gamblers = TestFixtures.gamblers(dealer, List.of(player1, player2, player3));
         dealer.takeCards(Card.CLOVER_2, Card.DIAMOND_2);
         // 딜러의 초기 카드의 점수가 2 + 2 = 4점인 상황에서
 
-        List<Card> cardsToDistribute = List.of(Card.SPADE_2, Card.SPADE_3, Card.SPADE_4, Card.SPADE_5);
-        gamblers.distributeExtraCardsToDealer(new CardPack(cardsToDistribute), GamblerAnswersForTest.alwaysOK());
+        List<Card> cardsToDistribute = List.of(Card.SPADE_2, Card.SPADE_3, Card.SPADE_4,
+            Card.SPADE_5);
+        gamblers.distributeExtraCardsToDealer(new CardPack(cardsToDistribute),
+            GamblerAnswersForTest.alwaysOK());
 
         assertThat(dealer.getCards())
-            .containsSequence(Card.CLOVER_2, Card.DIAMOND_2, Card.SPADE_2, Card.SPADE_3, Card.SPADE_4, Card.SPADE_5);
+            .containsSequence(Card.CLOVER_2, Card.DIAMOND_2, Card.SPADE_2, Card.SPADE_3,
+                Card.SPADE_4, Card.SPADE_5);
     }
 
     @Test
     void Gambler가_카드를_더_받을_수_없으면_추가카드_배분_시_아무일도_일어나지_않는다() {
-        Gamblers gamblers = new Gamblers(dealer, List.of(player1));
+        Gamblers gamblers = TestFixtures.gamblers(dealer, List.of(player1));
         dealer.takeCards(Card.SPADE_J, Card.SPADE_7); // 16이하가 아니라서 못받음.
         player1.takeCards(Card.CLOVER_10, Card.HEART_10, Card.CLOVER_2); // 21을 넘어 버스트됨.
 
@@ -147,7 +153,7 @@ public class GamblersTest {
 
     @Test
     void 플레이어가_카드를_더_받을수_있지만_승낙하지_않으면_카드를_더_받지_않는다() {
-        Gamblers gamblers = new Gamblers(dealer, List.of(player1));
+        Gamblers gamblers = TestFixtures.gamblers(dealer, List.of(player1));
         player1.takeCards(Card.CLOVER_2, Card.CLOVER_3);
 
         CardPack cardPack = new CardPack(List.of(Card.DIAMOND_J, Card.SPADE_J));
@@ -163,7 +169,7 @@ public class GamblersTest {
         "SPADE_10,SPADE_9,LOSE"
     })
     void 딜러와_비교하여_플레이어의_승무패를_가린다(Card playerCard1, Card playerCard2, Winning expectedWinning) {
-        Gamblers gamblers = new Gamblers(dealer, List.of(player1));
+        Gamblers gamblers = TestFixtures.gamblers(dealer, List.of(player1));
         dealer.takeCards(Card.CLOVER_J, Card.CLOVER_K);
         player1.takeCards(playerCard1, playerCard2);
 
@@ -182,8 +188,7 @@ public class GamblersTest {
         Player losePlayer2 = new Player("이름5", new CardHand());
         Player losePlayer3 = new Player("이름6", new CardHand());
 
-        Gamblers gamblers = new Gamblers(
-            dealer,
+        Gamblers gamblers = TestFixtures.gamblers(dealer,
             List.of(winnerPlayer1, drawPlayer1, drawPlayer2,
                 losePlayer1, losePlayer2, losePlayer3));
 
