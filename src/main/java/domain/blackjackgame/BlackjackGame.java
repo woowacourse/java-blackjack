@@ -21,10 +21,10 @@ public class BlackjackGame {
     private final BlackjackDeck deck;
 
     public static BlackjackGame nonBettingBlackjackGame(BlackjackDeck deck, Dealer dealer, List<String> names) {
-        return new BlackjackGame(deck, dealer, names);
+        return new BlackjackGame(names, deck, dealer);
     }
 
-    private BlackjackGame(BlackjackDeck deck, Dealer dealer, List<String> names) {
+    public BlackjackGame(List<String> names, BlackjackDeck deck, Dealer dealer) {
         validatePlayerSize(names.size());
         List<BlackjackParticipant> players = names.stream()
                 .map(Player::new)
