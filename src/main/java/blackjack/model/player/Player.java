@@ -14,20 +14,6 @@ public class Player extends BlackJackPlayer {
         betting = Betting.bet(bettingMoney);
     }
 
-    @Override
-    public BlackJackCards openInitialCards() {
-        return blackJackCards;
-    }
-
-    @Override
-    protected boolean canDrawMoreCard() {
-        return getMinimumPoint() < DRAWABLE_POINT;
-    }
-
-    public Betting getBetting() {
-        return betting;
-    }
-
     public int getBettingMoney() {
         return betting.getBettingMoney();
     }
@@ -42,5 +28,15 @@ public class Player extends BlackJackPlayer {
 
     public int getProfit() {
         return betting.getProfit();
+    }
+
+    @Override
+    public BlackJackCards openInitialCards() {
+        return blackJackCards;
+    }
+
+    @Override
+    protected boolean canDrawMoreCard() {
+        return getMinimumPoint() < DRAWABLE_POINT;
     }
 }
