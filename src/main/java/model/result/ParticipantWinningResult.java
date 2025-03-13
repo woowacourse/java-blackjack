@@ -8,7 +8,7 @@ import model.participant.Player;
 import model.participant.Players;
 
 public class ParticipantWinningResult {
-    private final Map<Player, GameResult> result;
+    private final Map<Player, WinningResult> result;
 
     private ParticipantWinningResult(Players players, Dealer dealer) {
         this.result = calculateWinningResult(players, dealer);
@@ -18,42 +18,42 @@ public class ParticipantWinningResult {
         return new ParticipantWinningResult(players, dealer);
     }
 
-    private Map<Player, GameResult> calculateWinningResult(Players players, Dealer dealer) {
-        Map<Player, GameResult> result = new HashMap<>();
+    private Map<Player, WinningResult> calculateWinningResult(Players players, Dealer dealer) {
+        Map<Player, WinningResult> result = new HashMap<>();
         for (Player player : players.getPlayers()) {
             result.put(player, checkPlayerWin(dealer, player));
         }
         return result;
     }
 
-    private GameResult checkPlayerWin(Dealer dealer, Player player) {
+    private WinningResult checkPlayerWin(Dealer dealer, Player player) {
         if (player.isBust()) {
-            return GameResult.LOSE;
+            return WinningResult.LOSE;
         }
         if (dealer.isBust()) {
-            return GameResult.WIN;
+            return WinningResult.WIN;
         }
         return checkResultIfNotBust(dealer, player);
     }
 
-    private GameResult checkResultIfNotBust(Dealer dealer, Player player) {
+    private WinningResult checkResultIfNotBust(Dealer dealer, Player player) {
         int dealerScore = dealer.calculateFinalScore();
         int playerScore = player.calculateFinalScore();
 
         if (dealerScore > playerScore) {
-            return GameResult.LOSE;
+            return WinningResult.LOSE;
         }
         if (dealerScore < playerScore) {
-            return GameResult.WIN;
+            return WinningResult.WIN;
         }
-        return GameResult.DRAW;
+        return WinningResult.DRAW;
     }
 
-    public Map<Player, GameResult> getResult() {
+    public Map<Player, WinningResult> getResult() {
         return Collections.unmodifiableMap(result);
     }
 
-    public GameResult getPlayerGameResult(Player player) {
+    public WinningResult getPlayerGameResult(Player player) {
         return result.get(player);
     }
 }

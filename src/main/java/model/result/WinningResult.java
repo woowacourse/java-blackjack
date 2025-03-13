@@ -1,6 +1,6 @@
 package model.result;
 
-public enum GameResult {
+public enum WinningResult {
     WIN,
     DRAW,
     LOSE
