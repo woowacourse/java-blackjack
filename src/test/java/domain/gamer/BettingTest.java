@@ -1,9 +1,11 @@
 package domain.gamer;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -32,5 +34,47 @@ public class BettingTest {
         // when & then
         assertThatThrownBy(() -> new Betting(betAmount))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("블랙잭이 아니면서 승리 시 배팅한 만큼의 수익을 얻는다.")
+    @Test
+    void 블랙잭이_아니면서_승리_시_배팅한_만큼의_수익을_얻는다() {
+
+        // given
+        Betting betting = new Betting(10000);
+
+        // when
+        int profit = betting.winBetting(10000);
+
+        // then
+        assertThat(profit).isEqualTo(20000);
+    }
+
+    @DisplayName("패배 시 모든 배팅 금액을 잃는다.")
+    @Test
+    void 패배_시_모든_배팅_금액을_잃는다() {
+
+        // given
+        Betting betting = new Betting(10000);
+
+        // when
+        int profit = betting.loseBetting(0);
+
+        // then
+        assertThat(profit).isEqualTo(-10000);
+    }
+
+    @DisplayName("블랙잭 이면서 이길 시 배팅한 만큼의 수익을 얻는다.")
+    @Test
+    void 블랙잭_이면서_이길_시_배팅한_만큼의_수익을_얻는다() {
+
+        // given
+        Betting betting = new Betting(10000);
+
+        // when
+        int profit = betting.winBlackJackBetting(10000);
+
+        // then
+        assertThat(profit).isEqualTo(25000);
     }
 }
