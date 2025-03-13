@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Player {
 
@@ -54,5 +55,17 @@ public abstract class Player {
 
     public Hand getHand() {
         return hand;
+    }
+
+    @Override
+    public boolean equals(final Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        Player player = (Player) object;
+        return Objects.equals(name, player.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }
