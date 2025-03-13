@@ -32,7 +32,7 @@ public class BlackjackWinnerTest {
 
         Dealer dealer = new Dealer();
         List<String> names = List.of("포비", "루키");
-        BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
+        BlackjackGame blackjackGame = BlackjackGame.nonBettingBlackjackGame(deck, dealer, names);
         BlackjackResult blackjackDealerResult = blackjackGame.currentDealerBlackjackResult();
         List<BlackjackResult> blackjackPlayerResults = blackjackGame.currentPlayerBlackjackResult();
         BlackjackWinner blackjackWinner = new BlackjackWinner(blackjackDealerResult, blackjackPlayerResults);
@@ -56,7 +56,7 @@ public class BlackjackWinnerTest {
 
         Dealer dealer = new Dealer();
         List<String> names = List.of("포비");
-        BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
+        BlackjackGame blackjackGame = BlackjackGame.nonBettingBlackjackGame(deck, dealer, names);
         blackjackGame.drawCard("포비");
         blackjackGame.dealerHit();
         BlackjackResult blackjackDealerResult = blackjackGame.currentDealerBlackjackResult();
@@ -80,7 +80,7 @@ public class BlackjackWinnerTest {
 
         Dealer dealer = new Dealer();
         List<String> names = List.of("포비");
-        BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
+        BlackjackGame blackjackGame = BlackjackGame.nonBettingBlackjackGame(deck, dealer, names);
         blackjackGame.drawCard("포비");
 
         blackjackGame.dealerHit();
@@ -104,7 +104,7 @@ public class BlackjackWinnerTest {
 
         Dealer dealer = new Dealer();
         List<String> names = List.of("포비", "투다");
-        BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
+        BlackjackGame blackjackGame = BlackjackGame.nonBettingBlackjackGame(deck, dealer, names);
         blackjackGame.drawCard("포비");
         blackjackGame.drawCard("투다");
 

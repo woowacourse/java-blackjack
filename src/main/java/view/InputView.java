@@ -4,6 +4,7 @@ import exception.BlackJackException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class InputView {
     private static final String NAME_SPLITTER = ",";
@@ -11,6 +12,8 @@ public class InputView {
     private static final String INVALID_BOOLEAN_INPUT = "y나 n만 입력해주세요";
     private static final String NO = "n";
     private static final String YES = "y";
+    private static final Pattern IS_NUMBER = Pattern.compile("\\d+");
+    private static final String INVALID_BET = "유효하지 않은 베팅 금액입니다.";
 
     private final Scanner scanner;
 
@@ -43,5 +46,17 @@ public class InputView {
             return;
         }
         throw new BlackJackException(INVALID_BOOLEAN_INPUT);
+    }
+
+    public int inputBet() {
+        String input = scanner.nextLine();
+        validateNumber(input);
+        return Integer.parseInt(input);
+    }
+
+    private void validateNumber(String input) {
+        if (!IS_NUMBER.matcher(input).matches()) {
+            throw new BlackJackException(INVALID_BET);
+        }
     }
 }

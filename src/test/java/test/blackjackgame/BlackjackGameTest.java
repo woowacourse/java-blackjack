@@ -15,6 +15,7 @@ import domain.strategy.BlackjackDeckGenerateStrategy;
 import domain.strategy.BlackjackDrawStrategy;
 import domain.strategy.DeckGenerator;
 import exception.BlackJackException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,8 +34,7 @@ public class BlackjackGameTest {
         BlackjackDeck blackjackDeck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new BlackjackDeckGenerateStrategy());
 
-        assertThatThrownBy(() -> new BlackjackGame(names,
-                blackjackDeck, new Dealer()))
+        assertThatThrownBy(() -> BlackjackGame.nonBettingBlackjackGame(blackjackDeck, new Dealer(), new ArrayList<>()))
                 .isInstanceOf(BlackJackException.class);
     }
 
@@ -44,7 +44,7 @@ public class BlackjackGameTest {
         Dealer dealer = new Dealer();
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new BlackjackDeckGenerateStrategy());
-        assertThatThrownBy(() -> new BlackjackGame(names, deck, dealer))
+        assertThatThrownBy(() -> BlackjackGame.nonBettingBlackjackGame(deck, dealer, new ArrayList<>()))
                 .isInstanceOf(BlackJackException.class);
     }
 
@@ -60,7 +60,7 @@ public class BlackjackGameTest {
 
         Dealer dealer = new Dealer();
         List<String> names = List.of("포비", "포비2");
-        BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
+        BlackjackGame blackjackGame = BlackjackGame.nonBettingBlackjackGame(deck, dealer, names);
         List<TrumpCard> expectedCards = List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT),
                 new TrumpCard(Suit.DIAMOND, CardValue.J));
         assertThatIterable(blackjackGame.playerCards("포비")).containsExactlyInAnyOrderElementsOf(expectedCards);
@@ -75,7 +75,7 @@ public class BlackjackGameTest {
                 new TestDeckGenerateStrategy(trumpCards));
         Dealer dealer = new Dealer();
         List<String> names = List.of("포비");
-        BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
+        BlackjackGame blackjackGame = BlackjackGame.nonBettingBlackjackGame(deck, dealer, names);
         TrumpCard expectedCards = new TrumpCard(Suit.HEART, CardValue.K);
         assertThat(blackjackGame.dealerCardFirst()).isEqualTo(expectedCards);
     }
@@ -91,7 +91,7 @@ public class BlackjackGameTest {
 
         Dealer dealer = new Dealer();
         List<String> names = List.of("포비", "루키");
-        BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
+        BlackjackGame blackjackGame = BlackjackGame.nonBettingBlackjackGame(deck, dealer, names);
         List<Integer> expectedPlayersCardSum = List.of(18, 19);
         assertThatIterable(blackjackGame.currentPlayerBlackjackResult()
                 .stream()
@@ -110,7 +110,7 @@ public class BlackjackGameTest {
 
         Dealer dealer = new Dealer();
         List<String> names = List.of("포비");
-        BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
+        BlackjackGame blackjackGame = BlackjackGame.nonBettingBlackjackGame(deck, dealer, names);
         int expectedDealerCardSum = 5;
         BlackjackResult blackjackResult = blackjackGame.currentDealerBlackjackResult();
         assertThat(blackjackResult.cardSum())

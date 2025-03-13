@@ -8,6 +8,7 @@ import exception.BlackJackException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackGame {
@@ -15,21 +16,54 @@ public class BlackjackGame {
     private static final int MIN_PEOPLE_WITHOUT_DEALER = 1;
     private static final int MAX_PEOPLE_WITHOUT_DEALER = 7;
     private static final String INVALID_BLACKJACK_PLAYER_SIZE = "블랙잭은 1-7명만 이용하실 수 있습니다";
+    private static final String INVALID_PLAYER_BET = "유저의 이름과 베팅정보가 유효하지 않습니다.";
 
     private final BlackjackParticipantsManager blackjackParticipantsManager;
     private final BlackjackDeck deck;
 
-    public BlackjackGame(List<String> names, BlackjackDeck deck, Dealer dealer) {
-        int playerSize = names.size();
-        if (playerSize < MIN_PEOPLE_WITHOUT_DEALER || playerSize > MAX_PEOPLE_WITHOUT_DEALER) {
-            throw new BlackJackException(INVALID_BLACKJACK_PLAYER_SIZE);
+    public static BlackjackGame nonBettingBlackjackGame(BlackjackDeck deck, Dealer dealer, List<String> names) {
+        return new BlackjackGame(deck, dealer, names);
+    }
+
+    public static BlackjackGame bettingBlackjackGame(BlackjackDeck deck, Dealer dealer, List<String> names,
+                                                     List<Integer> bets) {
+        return new BlackjackGame(deck, dealer, names, bets);
+    }
+
+    private BlackjackGame(BlackjackDeck deck, Dealer dealer, List<String> names, List<Integer> bets) {
+        validatePlayerSize(names.size());
+        validatePlayerBet(names, bets);
+        List<BlackjackParticipant> players = new ArrayList<>();
+        for (int i = 0; i < names.size(); i++) {
+            String name = names.get(i);
+            int bet = bets.get(i);
+            players.add(new Player(name, bet));
         }
+        this.deck = deck;
+        this.blackjackParticipantsManager = new BlackjackParticipantsManager(players, dealer);
+        initiateGame();
+    }
+
+    private void validatePlayerBet(List<String> names, List<Integer> bets) {
+        if (names.size() != bets.size()) {
+            throw new BlackJackException(INVALID_PLAYER_BET);
+        }
+    }
+
+    private BlackjackGame(BlackjackDeck deck, Dealer dealer, List<String> names) {
+        validatePlayerSize(names.size());
         List<BlackjackParticipant> players = names.stream()
                 .map(Player::new)
                 .collect(Collectors.toList());
         this.deck = deck;
         this.blackjackParticipantsManager = new BlackjackParticipantsManager(players, dealer);
         initiateGame();
+    }
+
+    private static void validatePlayerSize(int playerCount) {
+        if (playerCount < MIN_PEOPLE_WITHOUT_DEALER || playerCount > MAX_PEOPLE_WITHOUT_DEALER) {
+            throw new BlackJackException(INVALID_BLACKJACK_PLAYER_SIZE);
+        }
     }
 
     private void initiateGame() {
@@ -87,10 +121,6 @@ public class BlackjackGame {
         blackjackParticipantsManager.addCard(name, deck.drawCard());
     }
 
-    private void drawDealerCard() {
-        blackjackParticipantsManager.addDealerCard(deck.drawCard());
-    }
-
     public boolean isBust(String name) {
         return blackjackParticipantsManager.isBust(name);
     }
@@ -104,4 +134,9 @@ public class BlackjackGame {
     public boolean dealerDrawable() {
         return blackjackParticipantsManager.dealerDrawable();
     }
+
+    public Map<String, Double> blackjackBettingResult() {
+        return blackjackParticipantsManager.participantsBettingResult();
+    }
 }
+

@@ -3,6 +3,8 @@ package view;
 import domain.blackjackgame.PlayerGameResult;
 import domain.blackjackgame.TrumpCard;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -18,6 +20,10 @@ public class OutputView {
     private static final String PLAYER_WIN_STATUS_FORMAT = "%s: %s\n";
     private static final String DEALER_WIN_STATUS_FORMAT = "%s: %d승 %d패\n";
     private static final String RESULT_HEADER = "## 최종 승패";
+    private static final String PRINT_INPUT_BETS = "%s의 배팅 금액은?";
+    private static final String BET_RESULT_FORMAT = "%s: %d\n";
+    private static final String BET_BLACKJACK_HEADER = "## 최종 수익\n";
+    ;
 
     public void printError(String message) {
         System.out.println(message);
@@ -70,5 +76,18 @@ public class OutputView {
 
     public void playerWinStatus(String name, PlayerGameResult status) {
         System.out.printf(PLAYER_WIN_STATUS_FORMAT, name, status.getStatus());
+    }
+
+    public void inputBets(String name) {
+        System.out.printf(PRINT_INPUT_BETS, name);
+    }
+
+    public void printBettingBlackjackGameResult(Map<String, Double> blackjackBettingResult) {
+        StringBuilder stringBuilder = new StringBuilder(BET_BLACKJACK_HEADER);
+        for (Entry<String, Double> entry : blackjackBettingResult.entrySet()) {
+            Double value = entry.getValue();
+            stringBuilder.append(String.format(BET_RESULT_FORMAT, entry.getKey(), value.intValue()));
+        }
+        System.out.println(stringBuilder.toString());
     }
 }

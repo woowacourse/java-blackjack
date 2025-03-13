@@ -1,8 +1,7 @@
-package domain;
+package domain.participant;
 
 import domain.blackjackgame.BlackjackWinner;
 import domain.blackjackgame.PlayerGameResult;
-import domain.participant.BlackjackCardSum;
 import exception.BlackJackException;
 
 public class BlackjackBet {
@@ -13,28 +12,34 @@ public class BlackjackBet {
 
     private final int money;
 
-
     public BlackjackBet(int money) {
         validateMoney(money);
         this.money = money;
     }
 
+    public BlackjackBet() {
+        this.money = 0;
+    }
+
     private void validateMoney(int money) {
-        if (money <= 0) {
+        if (money < 0) {
             throw new BlackJackException(INVALID_BET_MOENY);
         }
     }
 
     public double calculateWinningMoney(BlackjackCardSum blackjackCardSum, BlackjackCardSum otherCardSum) {
         int cardSum = blackjackCardSum.calculateCardSum();
+        PlayerGameResult playerGameResult = BlackjackWinner.calculatePlayerWinStatus(otherCardSum.calculateCardSum(),
+                cardSum);
+        if (playerGameResult == PlayerGameResult.DRAW) {
+            return money;
+        }
         if (blackjackCardSum.isBust()) {
             return 0;
         }
         if (blackjackCardSum.isBlackjack()) {
             return money + (money * BLACKJACK_WIN_MULTIPLE);
         }
-        PlayerGameResult playerGameResult = BlackjackWinner.calculatePlayerWinStatus(otherCardSum.calculateCardSum(),
-                cardSum);
         return calculateWinningMoney(playerGameResult);
     }
 
@@ -46,5 +51,9 @@ public class BlackjackBet {
             return money;
         }
         return 0;
+    }
+
+    public double betMoney() {
+        return money;
     }
 }
