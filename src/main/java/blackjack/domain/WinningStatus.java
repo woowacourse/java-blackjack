@@ -17,7 +17,7 @@ public enum WinningStatus {
             final BlackjackWinDeterminable opponentHand
     ) {
         if (isBlackjack(myHand)) {
-            return determineWinningStatusWhenBlackjack(myHand, opponentHand);
+            return determineWinningStatusWhenBlackjack(opponentHand);
         }
         if (isBustOccurred(myHand, opponentHand)) {
             return determineWinningStatusWhenBustOccurred(myHand, opponentHand);
@@ -35,7 +35,7 @@ public enum WinningStatus {
         return LOSE;
     }
     
-    private static WinningStatus determineWinningStatusWhenBlackjack(BlackjackWinDeterminable myHand, BlackjackWinDeterminable opponentHand) {
+    private static WinningStatus determineWinningStatusWhenBlackjack(BlackjackWinDeterminable opponentHand) {
         if (isBlackjack(opponentHand)) {
             return DRAW;
         }
