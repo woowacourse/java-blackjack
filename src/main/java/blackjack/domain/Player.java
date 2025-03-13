@@ -50,10 +50,6 @@ public class Player implements Participant {
         return playerHand.isBlackjack();
     }
 
-    public void tryReceiveBlackjackBonus() {
-        playerHand.tryReceiveBlackjackBonus();
-    }
-
     public void adjustBalance(GameResultType gameResultType) {
         playerHand.adjustBalance(gameResultType);
     }

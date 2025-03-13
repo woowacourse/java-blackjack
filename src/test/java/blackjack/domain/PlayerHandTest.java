@@ -14,6 +14,21 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class PlayerHandTest {
 
+    private static Stream<Arguments> canTakeCardArgument() {
+        return Stream.of(
+                Arguments.arguments(HandFixture.createHandWithOptimisticValue15(), true),
+                Arguments.arguments(HandFixture.busted(), false)
+        );
+    }
+
+    private static Stream<Arguments> betArguments() {
+        return Stream.of(
+                Arguments.of(1000, GameResultType.WIN, 1000),
+                Arguments.of(1000, GameResultType.LOSE, -1000),
+                Arguments.of(1000, GameResultType.TIE, 0)
+        );
+    }
+
     @DisplayName("카드와 지갑을 가진다.")
     @Test
     void test1() {
@@ -70,13 +85,6 @@ class PlayerHandTest {
         assertThat(playerHand.getAllCards()).isEqualTo(expect);
     }
 
-    private static Stream<Arguments> canTakeCardArgument() {
-        return Stream.of(
-                Arguments.arguments(HandFixture.createHandWithOptimisticValue15(), true),
-                Arguments.arguments(HandFixture.busted(), false)
-        );
-    }
-
     @DisplayName("플레이어의 카드가 21을 넘지 않는다면 카드를 받을 수 있다.")
     @ParameterizedTest
     @MethodSource("canTakeCardArgument")
@@ -89,27 +97,21 @@ class PlayerHandTest {
         assertThat(playerHand.canTakeCard()).isEqualTo(expect);
     }
 
-    @DisplayName("카드가 블랙잭이라면 1.5배 더 받는다.")
+    @DisplayName("블랙잭이고 승리하면 1.5배의 수익을 더 받는다")
     @Test
     void test10() {
         // given
-        Hand hand = HandFixture.blackjack();
-        PlayerHand playerHand = new PlayerHand(hand, Wallet.bet(1000));
+        Wallet wallet = Wallet.bet(1000);
+        Hand blackjack = HandFixture.blackjack();
+        PlayerHand playerHand = new PlayerHand(blackjack, wallet);
 
         // when
-        playerHand.tryReceiveBlackjackBonus();
+        playerHand.adjustBalance(GameResultType.WIN);
 
         // then
         assertThat(playerHand.getRevenue()).isEqualTo(1500);
     }
 
-    public static Stream<Arguments> betArguments() {
-        return Stream.of(
-                Arguments.of(1000, GameResultType.WIN, 1000),
-                Arguments.of(1000, GameResultType.LOSE, -1000),
-                Arguments.of(1000, GameResultType.TIE, 0)
-        );
-    }
 
     @DisplayName("초기 금액과 베팅 후 금액에 대한 수익을 반환한다.")
     @ParameterizedTest
@@ -117,13 +119,13 @@ class PlayerHandTest {
     void test11(int money, GameResultType gameResultType, int expect) {
         // given
         Wallet wallet = Wallet.bet(money);
-        new PlayerHand(new Hand(), wallet);
+        PlayerHand playerHand = new PlayerHand(new Hand(), wallet);
 
         // when
-        wallet.calculate(gameResultType);
+        playerHand.adjustBalance(gameResultType);
 
         // then
-        assertThat(wallet.getRevenue()).isEqualTo(expect);
+        assertThat(playerHand.getRevenue()).isEqualTo(expect);
     }
 
     @DisplayName("블랙잭 덱이면 true를 반환한다.")

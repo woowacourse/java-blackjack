@@ -37,7 +37,6 @@ public class BlackjackController {
 
     private void executeGameFlow(Deck deck, Players players, Dealer dealer) {
         giveStartingCards(deck, players, dealer);
-        players.checkBlackjack();
 
         giveMoreCardFor(deck, players);
         giveMoreCardFor(deck, dealer);

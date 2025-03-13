@@ -17,6 +17,11 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 class PlayerTest {
 
+    private static Stream<Arguments> canTakeCardArgument() {
+        return Stream.of(Arguments.arguments(HandFixture.createHandWithOptimisticValue15(), true),
+                Arguments.arguments(HandFixture.busted(), false));
+    }
+
     @DisplayName("플레이어는 이름과 카드를 가진다.")
     @Test
     void test1() {
@@ -93,11 +98,6 @@ class PlayerTest {
         assertThat(player.getAllCards()).isEqualTo(expect);
     }
 
-    private static Stream<Arguments> canTakeCardArgument() {
-        return Stream.of(Arguments.arguments(HandFixture.createHandWithOptimisticValue15(), true),
-                Arguments.arguments(HandFixture.busted(), false));
-    }
-
     @DisplayName("플레이어의 카드가 21을 넘지 않는다면 카드를 받을 수 있다.")
     @ParameterizedTest
     @MethodSource("canTakeCardArgument")
@@ -124,7 +124,7 @@ class PlayerTest {
         Player player = new Player("꾹이", playerHand);
 
         // when
-        player.tryReceiveBlackjackBonus();
+        player.adjustBalance(GameResultType.WIN);
 
         // then
         assertThat(player.getRevenue()).isEqualTo(1500);

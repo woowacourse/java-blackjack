@@ -28,7 +28,8 @@ public final class InputView {
             throw new IllegalArgumentException(ErrorMessage.NEED_PLAYER_MEMBERS.getMessage());
         }
 
-        return Arrays.stream(rawNames.split(",")).toList();
+        return Arrays.stream(rawNames.split(","))
+                .toList();
     }
 
     public static List<Integer> readBettingMoneyList(List<String> names) {

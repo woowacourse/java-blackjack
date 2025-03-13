@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.common.ErrorMessage;
+import blackjack.utils.HandFixture;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,19 +42,6 @@ class WalletTest {
                 .hasMessage(ErrorMessage.BETTING_MONEY_IS_POSITIVE.getMessage());
     }
 
-    @DisplayName("카드가 블랙잭이라면 1.5배의 수익을 얻는다.")
-    @Test
-    void test3() {
-        // given
-        Wallet wallet = Wallet.bet(1000);
-
-        // when
-        wallet.receiveBlackjackBonus();
-
-        // then
-        assertThat(wallet.getRevenue()).isEqualTo(1500);
-    }
-
     public static Stream<Arguments> betArguments() {
         return Stream.of(Arguments.of(1000, GameResultType.WIN, 1000),
                 Arguments.of(1000, GameResultType.LOSE, -1000),
@@ -65,10 +53,11 @@ class WalletTest {
     @MethodSource("betArguments")
     void test4(int money, GameResultType gameResultType, int expect) {
         // given
+        Hand normal = HandFixture.normal();
         Wallet wallet = Wallet.bet(money);
 
         // when
-        wallet.calculate(gameResultType);
+        wallet.calculate(gameResultType, normal);
 
         // then
         assertThat(wallet.getRevenue()).isEqualTo(expect);

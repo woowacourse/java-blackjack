@@ -16,7 +16,10 @@ public final class OutputView {
     }
 
     public static void printStartingCardsStatuses(Dealer dealer, Players players) {
-        String names = players.getPlayers().stream().map(Player::getName).collect(Collectors.joining(DELIMITER));
+        String names = players.getPlayers()
+                .stream()
+                .map(Player::getName)
+                .collect(Collectors.joining(DELIMITER));
 
         System.out.println("딜러와 " + names + "에게 2장을 나누었습니다.");
         System.out.println(Formatter.parseStartCardStatus(dealer));

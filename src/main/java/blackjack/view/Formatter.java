@@ -38,7 +38,8 @@ public final class Formatter {
     }
 
     private static String parseStartingCardStatus(Participant participant) {
-        return participant.getAllCards().stream()
+        return participant.getAllCards()
+                .stream()
                 .map(Formatter::parseCardName)
                 .collect(Collectors.joining(", "));
     }
@@ -64,13 +65,15 @@ public final class Formatter {
     }
 
     public static String parsePlayerRevenue(Map<Player, Integer> revenueMap) {
-        return revenueMap.entrySet().stream().map(
-                entry -> {
-                    String name = entry.getKey().getName();
+        return revenueMap.entrySet()
+                .stream()
+                .map(entry -> {
+                    String name = entry.getKey()
+                            .getName();
                     int revenue = entry.getValue();
 
                     return name + ": " + revenue;
-                }
-        ).collect(Collectors.joining(LINE_SEPARATOR));
+                })
+                .collect(Collectors.joining(LINE_SEPARATOR));
     }
 }

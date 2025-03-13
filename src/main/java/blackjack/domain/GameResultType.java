@@ -5,9 +5,8 @@ import java.util.function.BiPredicate;
 
 public enum GameResultType {
 
-    WIN((value, comparedValue) -> value > comparedValue),
-    TIE(Integer::equals),
-    LOSE((value, comparedValue) -> value < comparedValue);
+    WIN((value, comparedValue) -> value > comparedValue), TIE(Integer::equals), LOSE(
+            (value, comparedValue) -> value < comparedValue);
 
     private final BiPredicate<Integer, Integer> condition;
 

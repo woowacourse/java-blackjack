@@ -30,11 +30,11 @@ public class Wallet {
         }
     }
 
-    public void receiveBlackjackBonus() {
-        this.balance += (int) (this.balance * BLACKJACK_BONUS_RATE);
-    }
-
-    public void calculate(GameResultType gameResultType) {
+    public void calculate(GameResultType gameResultType, Hand hand) {
+        if (gameResultType == GameResultType.WIN && hand.isBlackJack()) {
+            this.balance += (int) (this.balance * BLACKJACK_BONUS_RATE);
+            return;
+        }
         if (gameResultType == GameResultType.WIN) {
             this.balance += currentBetMoney;
         }

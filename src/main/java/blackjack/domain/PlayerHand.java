@@ -25,18 +25,12 @@ public class PlayerHand {
         return hand.isBusted();
     }
 
-    public void tryReceiveBlackjackBonus() {
-        if (isBlackjack()) {
-            wallet.receiveBlackjackBonus();
-        }
-    }
-
     public boolean isBlackjack() {
         return hand.isBlackJack();
     }
 
     public void adjustBalance(GameResultType gameResultType) {
-        wallet.calculate(gameResultType);
+        wallet.calculate(gameResultType, hand);
     }
 
     public int getOptimisticValue() {
