@@ -1,9 +1,10 @@
 package controller;
 
+import domain.BettingTable;
 import domain.CardDeck;
 import domain.GameManger;
 import domain.GameResult;
-import domain.TrumpCard;
+import domain.Card;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
@@ -13,11 +14,11 @@ import view.InputView;
 import view.OutputView;
 import view.Parser;
 
-public class BlackjackController {
+public class BlackjackGame {
     private final OutputView outputView;
     private final InputView inputView;
 
-    public BlackjackController(OutputView outputView, InputView inputView) {
+    public BlackjackGame(OutputView outputView, InputView inputView) {
         this.outputView = outputView;
         this.inputView = inputView;
     }
@@ -25,16 +26,38 @@ public class BlackjackController {
     public void run() {
         List<String> playerNames = Parser.parseStringToList(inputView.inputUsers());
         List<Player> users = playerNames.stream().map(Player::new).toList();
-        GameManger gameManger = new GameManger(users, new Dealer(), new CardDeck());
+        Dealer dealer = new Dealer();
+
+        BettingTable bettingTable = bettingMoney(users, dealer);
+
+        GameManger gameManger = new GameManger(users, dealer, new CardDeck());
         distributionFirstCard(gameManger, playerNames);
 
         additionalPlayerCard(gameManger, playerNames);
         additionalDealerCard(gameManger);
 
         displayScore(gameManger, playerNames);
-        calculateGameResult(gameManger);
 
+        // 배팅 금액을 계산한다
+        Map<User, GameResult> gameResult = gameManger.calculatePlayerScore();
+
+        calculateGameResult(gameManger, gameResult);
+
+        Map<User, Long> rewards = bettingTable.calculateRewards(gameResult, dealer);
+        outputView.displayRewards(rewards);
         inputView.close();
+    }
+
+    private BettingTable bettingMoney(List<Player> users, Dealer dealer) {
+        BettingTable bettingTable = new BettingTable();
+
+        for (Player user : users) {
+            String moneyInput = inputView.inputBettingMoney(user.getName());
+            Long bettingMoney = Parser.parseLong(moneyInput);
+            bettingTable.bettingMoney(user, bettingMoney);
+        }
+        bettingTable.bettingMoney(dealer, 0L);
+        return bettingTable;
     }
 
     private void distributionFirstCard(GameManger gameManger, List<String> playerNames) {
@@ -70,7 +93,7 @@ public class BlackjackController {
     }
 
     private void displayOpenCard(String playerName, User player) {
-        List<TrumpCard> trumpCards = player.openInitialCard();
+        List<Card> trumpCards = player.openInitialCard();
         outputView.displayOpenCards(playerName, trumpCards);
     }
 
@@ -81,7 +104,7 @@ public class BlackjackController {
 
     private void displayDealer(GameManger gameManger) {
         Dealer dealer = (Dealer) gameManger.getDealer();
-        List<TrumpCard> dealerCards = dealer.openAllCard();
+        List<Card> dealerCards = dealer.openAllCard();
         int score = dealer.calculateScore();
         outputView.displayOpenCardsResult(dealer.getName(), dealerCards, score);
     }
@@ -96,12 +119,11 @@ public class BlackjackController {
                         player.calculateScore()));
     }
 
-    private void calculateGameResult(GameManger gameManger) {
+    private void calculateGameResult(GameManger gameManger, Map<User, GameResult> gameResult) {
         Map<GameResult, Integer> gameResultIntegerMap = gameManger.calculateDealerScore();
         outputView.displayDealerGameResult(gameResultIntegerMap.get(GameResult.WIN),
                 gameResultIntegerMap.get(GameResult.LOSE), gameResultIntegerMap.get(GameResult.DRAW));
 
-        Map<User, GameResult> gameResult = gameManger.calculatePlayerScore();
         outputView.displayGameResult(gameResult);
     }
 }

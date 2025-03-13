@@ -1,7 +1,7 @@
 package domain.user;
 
 import domain.CardHand;
-import domain.TrumpCard;
+import domain.Card;
 import java.util.List;
 
 public abstract class User {
@@ -13,11 +13,11 @@ public abstract class User {
 
     public abstract boolean isDrawable();
 
-    public abstract List<TrumpCard> openInitialCard();
+    public abstract List<Card> openInitialCard();
 
     public abstract String getName();
 
-    public void drawCard(TrumpCard card) {
+    public void drawCard(Card card) {
         cardHand.addTrumpCard(card);
     }
 
@@ -33,7 +33,7 @@ public abstract class User {
         return this.cardHand.isBlackjack();
     }
 
-    public void addTrumpCard(TrumpCard card) {
+    public void addTrumpCard(Card card) {
         this.cardHand.addTrumpCard(card);
     }
 

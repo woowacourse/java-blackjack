@@ -57,7 +57,7 @@ public class GameManger {
         return this.dealer;
     }
 
-    public TrumpCard handOutCard() {
+    public Card handOutCard() {
         return cardDeck.drawCard();
     }
 

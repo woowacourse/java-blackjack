@@ -1,6 +1,6 @@
 package domain.user;
 
-import domain.TrumpCard;
+import domain.Card;
 import java.util.List;
 
 public class Dealer extends User {
@@ -17,7 +17,7 @@ public class Dealer extends User {
     }
 
     @Override
-    public List<TrumpCard> openInitialCard() {
+    public List<Card> openInitialCard() {
         return this.cardHand.getFirstCard();
     }
 
@@ -26,7 +26,7 @@ public class Dealer extends User {
         return DEALER_NAME;
     }
 
-    public List<TrumpCard> openAllCard() {
+    public List<Card> openAllCard() {
         return this.cardHand.getAllCard();
     }
 }

@@ -14,4 +14,12 @@ public class Parser {
                 .map(String::trim)
                 .toList();
     }
+
+    public static Long parseLong(String value) {
+        try {
+            return Long.parseLong(value);
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException("");
+        }
+    }
 }

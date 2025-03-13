@@ -46,9 +46,9 @@ public class CardDeckTest {
     @Test
     void test4() {
         //given
-        TrumpCard trumpCard1 = new TrumpCard(CardShape.CLOVER, CardRank.K);
-        TrumpCard trumpCard2 = new TrumpCard(CardShape.CLOVER, CardRank.J);
-        TrumpCard trumpCard3 = new TrumpCard(CardShape.CLOVER, CardRank.FIVE);
+        Card trumpCard1 = new Card(CardShape.CLOVER, CardRank.K);
+        Card trumpCard2 = new Card(CardShape.CLOVER, CardRank.J);
+        Card trumpCard3 = new Card(CardShape.CLOVER, CardRank.FIVE);
         CardHand cardDeck = new CardHand();
 
         cardDeck.addTrumpCard(trumpCard1);
@@ -65,10 +65,10 @@ public class CardDeckTest {
     @DisplayName("카드에 ACE가 있다면 가능한 max값을 계산하여 판단한다")
     @ParameterizedTest
     @MethodSource("hasAce")
-    void test5(List<TrumpCard> cards, boolean isExpectedOver) {
+    void test5(List<Card> cards, boolean isExpectedOver) {
         //given
         CardHand cardDeck = new CardHand();
-        for (TrumpCard card : cards) {
+        for (Card card : cards) {
             cardDeck.addTrumpCard(card);
         }
 
@@ -80,26 +80,26 @@ public class CardDeckTest {
     private static Stream<Arguments> hasAce() {
         return Stream.of(
                 Arguments.arguments(List.of(
-                        new TrumpCard(CardShape.DIA, CardRank.ACE),
-                        new TrumpCard(CardShape.CLOVER, CardRank.ACE),
-                        new TrumpCard(CardShape.HEART, CardRank.ACE)), false),
+                        new Card(CardShape.DIA, CardRank.ACE),
+                        new Card(CardShape.CLOVER, CardRank.ACE),
+                        new Card(CardShape.HEART, CardRank.ACE)), false),
                 Arguments.arguments(List.of(
-                        new TrumpCard(CardShape.DIA, CardRank.K),
-                        new TrumpCard(CardShape.CLOVER, CardRank.J),
-                        new TrumpCard(CardShape.HEART, CardRank.ACE)), false),
+                        new Card(CardShape.DIA, CardRank.K),
+                        new Card(CardShape.CLOVER, CardRank.J),
+                        new Card(CardShape.HEART, CardRank.ACE)), false),
                 Arguments.arguments(List.of(
-                        new TrumpCard(CardShape.DIA, CardRank.ACE),
-                        new TrumpCard(CardShape.CLOVER, CardRank.Q)), false)
+                        new Card(CardShape.DIA, CardRank.ACE),
+                        new Card(CardShape.CLOVER, CardRank.Q)), false)
         );
     }
 
     @DisplayName("카드의 총합을 계산한다.")
     @ParameterizedTest
     @MethodSource("cardDeck")
-    void test6(List<TrumpCard> cards, int expectedSum) {
+    void test6(List<Card> cards, int expectedSum) {
         // given
         CardHand cardDeck = new CardHand();
-        for (TrumpCard card : cards) {
+        for (Card card : cards) {
             cardDeck.addTrumpCard(card);
         }
 
@@ -113,23 +113,23 @@ public class CardDeckTest {
     private static Stream<Arguments> cardDeck() {
         return Stream.of(
                 Arguments.arguments(List.of(
-                        new TrumpCard(CardShape.DIA, CardRank.ACE),
-                        new TrumpCard(CardShape.CLOVER, CardRank.ACE),
-                        new TrumpCard(CardShape.HEART, CardRank.ACE)), 13),
+                        new Card(CardShape.DIA, CardRank.ACE),
+                        new Card(CardShape.CLOVER, CardRank.ACE),
+                        new Card(CardShape.HEART, CardRank.ACE)), 13),
                 Arguments.arguments(List.of(
-                        new TrumpCard(CardShape.DIA, CardRank.K),
-                        new TrumpCard(CardShape.CLOVER, CardRank.J),
-                        new TrumpCard(CardShape.HEART, CardRank.ACE)), 21),
+                        new Card(CardShape.DIA, CardRank.K),
+                        new Card(CardShape.CLOVER, CardRank.J),
+                        new Card(CardShape.HEART, CardRank.ACE)), 21),
                 Arguments.arguments(List.of(
-                        new TrumpCard(CardShape.HEART, CardRank.ACE),
-                        new TrumpCard(CardShape.CLOVER, CardRank.Q)), 21),
+                        new Card(CardShape.HEART, CardRank.ACE),
+                        new Card(CardShape.CLOVER, CardRank.Q)), 21),
                 Arguments.arguments(List.of(
-                        new TrumpCard(CardShape.DIA, CardRank.J),
-                        new TrumpCard(CardShape.CLOVER, CardRank.Q)), 20),
+                        new Card(CardShape.DIA, CardRank.J),
+                        new Card(CardShape.CLOVER, CardRank.Q)), 20),
                 Arguments.arguments(List.of(
-                        new TrumpCard(CardShape.SPADE, CardRank.K),
-                        new TrumpCard(CardShape.CLOVER, CardRank.J),
-                        new TrumpCard(CardShape.CLOVER, CardRank.Q)), 30)
+                        new Card(CardShape.SPADE, CardRank.K),
+                        new Card(CardShape.CLOVER, CardRank.J),
+                        new Card(CardShape.CLOVER, CardRank.Q)), 30)
         );
     }
 
@@ -137,8 +137,8 @@ public class CardDeckTest {
     @Test
     void test7() {
         // given
-        TrumpCard trumpCard1 = new TrumpCard(CardShape.CLOVER, CardRank.ACE);
-        TrumpCard trumpCard2 = new TrumpCard(CardShape.CLOVER, CardRank.J);
+        Card trumpCard1 = new Card(CardShape.CLOVER, CardRank.ACE);
+        Card trumpCard2 = new Card(CardShape.CLOVER, CardRank.J);
         CardHand cardDeck = new CardHand();
 
         cardDeck.addTrumpCard(trumpCard1);

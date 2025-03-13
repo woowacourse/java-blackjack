@@ -2,7 +2,7 @@ package domain.user;
 
 import domain.CardDeck;
 import domain.GameManger;
-import domain.TrumpCard;
+import domain.Card;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -25,7 +25,7 @@ class UserTest {
             user.drawCard(gameManger.handOutCard());
 
             // when
-            List<TrumpCard> cards = user.openInitialCard();
+            List<Card> cards = user.openInitialCard();
 
             // then
             Assertions.assertThat(cards).hasSize(2);
@@ -43,7 +43,7 @@ class UserTest {
             user.drawCard(gameManger.handOutCard());
 
             // when
-            List<TrumpCard> cards = user.openInitialCard();
+            List<Card> cards = user.openInitialCard();
 
             // then
             Assertions.assertThat(cards).hasSize(1);

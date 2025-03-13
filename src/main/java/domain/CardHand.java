@@ -9,13 +9,13 @@ public class CardHand {
     private static final int ACE_MAX = 11;
     private static final int ACE_MIN = 1;
 
-    private final List<TrumpCard> cards;
+    private final List<Card> cards;
 
     public CardHand() {
         this.cards = new ArrayList<>();
     }
 
-    public void addTrumpCard(TrumpCard card) {
+    public void addTrumpCard(Card card) {
         cards.add(card);
     }
 
@@ -23,14 +23,14 @@ public class CardHand {
         return cards.size();
     }
 
-    public List<TrumpCard> getFirstCard() {
+    public List<Card> getFirstCard() {
         if (cards.isEmpty()) {
             throw new IllegalArgumentException("갖고 있는 카드가 없습니다.");
         }
         return List.of(cards.getFirst());
     }
 
-    public List<TrumpCard> getAllCard() {
+    public List<Card> getAllCard() {
         if (cards.isEmpty()) {
             throw new IllegalArgumentException("갖고 있는 카드가 없습니다.");
         }
@@ -54,7 +54,7 @@ public class CardHand {
 
     public int calculateScore() {
         int sum = cards.stream()
-                .mapToInt(TrumpCard::getCardNumberValue)
+                .mapToInt(Card::getCardNumberValue)
                 .sum();
         if (hasAce() && sum <= ACE_MAX) {
             sum += (ACE_MAX - ACE_MIN);

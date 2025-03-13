@@ -1,17 +1,18 @@
 package view;
 
 import domain.GameResult;
-import domain.TrumpCard;
+import domain.Card;
 import domain.user.User;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class OutputView {
     public void displayDealerAddCard() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
     }
 
-    public void displayOpenCards(String name, List<TrumpCard> cards) {
+    public void displayOpenCards(String name, List<Card> cards) {
         List<String> printCards = cards.stream()
                 .map(card -> CardConverter.createTrumpCard(card.cardShape(), card.cardNumber())).toList();
         System.out.print(name + "카드: " + String.join(", ", printCards) + "\n");
@@ -26,6 +27,8 @@ public class OutputView {
         gameResult.forEach((key, value) -> displayUserGameResult(
                 key.getName(),
                 convertGameResult(value)));
+
+        System.out.println();
     }
 
     private String convertGameResult(GameResult value) {
@@ -42,12 +45,19 @@ public class OutputView {
         System.out.println(name + ": " + gameResult);
     }
 
-    public void displayOpenCardsResult(String name, List<TrumpCard> printCards, int score) {
+    public void displayOpenCardsResult(String name, List<Card> printCards, int score) {
         List<String> displayCards = printCards.stream()
                 .map(card -> CardConverter.createTrumpCard(
                         card.cardShape(),
                         card.cardNumber()
                 )).toList();
         System.out.print(name + "카드: " + String.join(", ", displayCards + (" - 결과: " + score)) + "\n");
+    }
+
+    public void displayRewards(Map<User, Long> rewards) {
+        System.out.println("## 최종 수익");
+        for (Entry<User, Long> rewardEntry : rewards.entrySet()) {
+            System.out.println(rewardEntry.getKey().getName() + ": " + rewardEntry.getValue());
+        }
     }
 }
