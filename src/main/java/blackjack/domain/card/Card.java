@@ -1,8 +1,9 @@
 package blackjack.domain.card;
 
 import blackjack.util.GlobalValidator;
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public final class Card {
@@ -16,15 +17,11 @@ public final class Card {
         this.shape = shape;
     }
     
-    public Card(final int number, final CardShape shape) {
-        this(CardNumber.from(number), shape);
-    }
-    
-    public static List<Card> createTrumpCards() {
-        List<Card> cards = new ArrayList<>();
-        for (CardNumber cardNumber : CardNumber.values()) {
+    public static Table<CardNumber, CardShape, Card> createTrumpCards() {
+        Table<CardNumber, CardShape, Card> cards = HashBasedTable.create();
+        for (CardNumber number : CardNumber.values()) {
             for (CardShape shape : CardShape.values()) {
-                cards.add(new Card(cardNumber, shape));
+                cards.put(number, shape, new Card(number, shape));
             }
         }
         return cards;

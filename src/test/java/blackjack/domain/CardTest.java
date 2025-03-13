@@ -3,60 +3,27 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class CardTest {
     
     @Test
-    void 카드_모양이_NULL인_경우_예외를_발생시킨다() {
-        // expected
-        Assertions.assertThatThrownBy(() -> new Card(1, null))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Card의 인자는 null이 될 수 없습니다.");
-    }
-    
-    @Test
-    void 카드는_숫자와_모양을_기반으로_생성할_수_있다() {
-        // given
-        int number = 1;
-        CardShape shape = CardShape.다이아몬드;
-        
-        // expected
-        assertDoesNotThrow(() -> new Card(number, shape));
-    }
-    
-    
-    @ParameterizedTest
-    @ValueSource(ints = {0, 14})
-    void 카드_숫자의_범위가_1에서_13이_아닌_경우_예외가_발생한다(int number) {
-        // given
-        CardShape shape = CardShape.다이아몬드;
-        
-        // expected
-        assertThatThrownBy(() -> new Card(number, shape))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("숫자는 1부터 13 사이여야 합니다.");
-    }
-    
-    @Test
     void 카드는_가능한_블랙잭_숫자를_반환할_수_있다() {
         // given
-        int number = 7;
+        CardNumber number = CardNumber.NUMBER_7;
         CardShape shape = CardShape.다이아몬드;
         
         // when
-        final Card card = new Card(number, shape);
+        final Card card = Card.createTrumpCards().get(number, shape);
         
         // expected
         assertThat(card.getBlackjackValue())
@@ -64,13 +31,13 @@ public class CardTest {
     }
     
     @ParameterizedTest
-    @ValueSource(ints = {11, 12, 13})
-    void JQK는_블랙잭_숫자에서_10으로_반환된다(int number) {
+    @ValueSource(strings = {"NUMBER_J", "NUMBER_Q", "NUMBER_K"})
+    void JQK는_블랙잭_숫자에서_10으로_반환된다(CardNumber number) {
         // given
         CardShape shape = CardShape.다이아몬드;
         
         // when
-        final Card card = new Card(number, shape);
+        final Card card = Card.createTrumpCards().get(number, shape);
         
         // expected
         assertThat(card.getBlackjackValue())
@@ -80,11 +47,11 @@ public class CardTest {
     @Test
     void A는_블랙잭_숫자에서_1과_11로_반환된다() {
         // given
-        int number = 1;
+        CardNumber number = CardNumber.NUMBER_A;
         CardShape shape = CardShape.다이아몬드;
         
         // when
-        final Card card = new Card(number, shape);
+        final Card card = Card.createTrumpCards().get(number, shape);
         
         // expected
         assertThat(card.getBlackjackValue())
@@ -94,21 +61,21 @@ public class CardTest {
     @Test
     void 카드는_문양과_숫자가_같아도_동일하다고_판단되지_않는다() {
         // given
-        int number = 1;
+        CardNumber number = CardNumber.NUMBER_A;
         CardShape shape = CardShape.다이아몬드;
         
         // expected
-        assertThat(new Card(number, shape)).isNotEqualTo(new Card(number, shape));
+        assertThat(Card.createTrumpCards().get(number, shape)).isNotEqualTo(Card.createTrumpCards().get(number, shape));
     }
     
     @Test
     void 카드를_생성하면_모양과_숫자를_알_수_있다() {
         // given
-        int number = 1;
+        CardNumber number = CardNumber.NUMBER_A;
         CardShape shape = CardShape.다이아몬드;
         
         // when
-        final Card card = new Card(number, shape);
+        final Card card = Card.createTrumpCards().get(number, shape);
         
         // then
         assertAll(
@@ -120,7 +87,7 @@ public class CardTest {
     @Test
     void 모든_종류의_카드를_받을_수_있다() {
         // given
-        List<Card> trumpCards = Card.createTrumpCards();
+        List<Card> trumpCards = new ArrayList<>(Card.createTrumpCards().values());
         
         // expected
         assertThat(trumpCards.size()).isEqualTo(52);
@@ -129,7 +96,7 @@ public class CardTest {
     @Test
     void 트럼프_카드에_중복이_없어야_한다() {
         // given
-        List<Card> trumpCards = Card.createTrumpCards();
+        List<Card> trumpCards = new ArrayList<>(Card.createTrumpCards().values());
         
         final EnumMap<CardNumber, Integer> numberCount = getNumberMap();
         final EnumMap<CardShape, Integer> shapeCount = getShapeMap();
