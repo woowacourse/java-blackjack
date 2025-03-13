@@ -50,6 +50,31 @@ public class GameManagerTest {
     }
 
     @Test
+    void 플레이어가_카드를_뽑아야하는_상황이면_true를_반환한다() {
+        ParticipantNames participantNames = new ParticipantNames(List.of(new ParticipantName("duei")));
+        GameManager gameManager = new GameManager(participantNames,
+                Map.of(new ParticipantName("duei"), new BettingAmount(10000)), new GameManagerTest.TestCardProvider());
+
+        Participants participants = gameManager.findParticipants();
+        Participant duei = participants.findPlayers().getFirst();
+
+        assertThat(gameManager.shouldPlayerHit(duei)).isTrue();
+    }
+
+    @Test
+    void 플레이어가_카드를_뽑지않아도_되는_상황이면_false를_반환한다() {
+        ParticipantNames participantNames = new ParticipantNames(List.of(new ParticipantName("duei")));
+        GameManager gameManager = new GameManager(participantNames,
+                Map.of(new ParticipantName("duei"), new BettingAmount(10000)), new GameManagerTest.TestCardProvider());
+
+        Participants participants = gameManager.findParticipants();
+        Participant duei = participants.findPlayers().getFirst();
+        duei.drawCard(List.of(new Card(Suit.SPADE, Rank.KING)));
+
+        assertThat(gameManager.shouldPlayerHit(duei)).isFalse();
+    }
+
+    @Test
     void 플레이어가_카드를_뽑는다고_대답하면_카드를_뽑는다() {
         ParticipantNames participantNames = new ParticipantNames(List.of(new ParticipantName("drago")));
         GameManager gameManager = new GameManager(participantNames,
@@ -83,31 +108,6 @@ public class GameManagerTest {
     }
 
     @Test
-    void 플레이어가_카드를_뽑아야하는_상황이면_true를_반환한다() {
-        ParticipantNames participantNames = new ParticipantNames(List.of(new ParticipantName("duei")));
-        GameManager gameManager = new GameManager(participantNames,
-                Map.of(new ParticipantName("duei"), new BettingAmount(10000)), new GameManagerTest.TestCardProvider());
-
-        Participants participants = gameManager.findParticipants();
-        Participant duei = participants.findPlayers().getFirst();
-
-        assertThat(gameManager.shouldPlayerHit(duei)).isTrue();
-    }
-
-    @Test
-    void 플레이어가_카드를_뽑지않아도_되는_상황이면_false를_반환한다() {
-        ParticipantNames participantNames = new ParticipantNames(List.of(new ParticipantName("duei")));
-        GameManager gameManager = new GameManager(participantNames,
-                Map.of(new ParticipantName("duei"), new BettingAmount(10000)), new GameManagerTest.TestCardProvider());
-
-        Participants participants = gameManager.findParticipants();
-        Participant duei = participants.findPlayers().getFirst();
-        duei.drawCard(List.of(new Card(Suit.SPADE, Rank.KING)));
-
-        assertThat(gameManager.shouldPlayerHit(duei)).isFalse();
-    }
-
-    @Test
     void 딜러가_카드를_뽑아야하는_상황이면_true를_반환한다() {
         ParticipantNames participantNames = new ParticipantNames(List.of(new ParticipantName("duei")));
         GameManager gameManager = new GameManager(participantNames,
@@ -127,6 +127,23 @@ public class GameManagerTest {
         dealer.drawCard(List.of(new Card(Suit.SPADE, Rank.KING)));
 
         assertThat(gameManager.shouldDealerHit()).isFalse();
+    }
+
+    @Test
+    void 딜러의_카드를_뽑는다() {
+        ParticipantNames participantNames = new ParticipantNames(List.of(new ParticipantName("drago")));
+        GameManager gameManager = new GameManager(participantNames,
+                Map.of(new ParticipantName("drago"), new BettingAmount(10000)), new GameManagerTest.TestCardProvider());
+
+        Participants participants = gameManager.findParticipants();
+        Participant dealer = participants.findDealer();
+        gameManager.drawCardForDealer();
+
+        List<Card> expected = List.of(new Card(Suit.DIAMOND, Rank.FIVE),
+                new Card(Suit.SPADE, Rank.QUEEN),
+                new Card(Suit.SPADE, Rank.KING));
+
+        assertThat(dealer.getCards()).isEqualTo(expected);
     }
 
     @Test

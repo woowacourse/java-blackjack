@@ -65,11 +65,12 @@ public class GameManager {
 
     public boolean shouldDealerHit() {
         Participant dealer = participants.findDealer();
-        if (dealer.shouldHit()) {
-            drawCard(dealer);
-            return true;
-        }
-        return false;
+        return dealer.shouldHit();
+    }
+
+    public void drawCardForDealer() {
+        Participant dealer = participants.findDealer();
+        drawCard(dealer);
     }
 
     public Map<Participant, Integer> findPlayersProfits() {

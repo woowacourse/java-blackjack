@@ -79,6 +79,7 @@ public class BlackjackController {
 
     private void drawMoreDealerCards() {
         while (gameManager.shouldDealerHit()) {
+            gameManager.drawCardForDealer();
             OutputView.printDealerDrawMessage();
         }
     }
