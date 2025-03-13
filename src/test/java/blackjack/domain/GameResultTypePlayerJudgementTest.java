@@ -9,7 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class GameResultTypeJudgementTest {
+public class GameResultTypePlayerJudgementTest {
 
     public static Stream<Arguments> typeJudgeArgument() {
         return Stream.of(
@@ -18,7 +18,7 @@ public class GameResultTypeJudgementTest {
                 Arguments.of(HandFixture.normal(), HandFixture.busted(), GameResultType.WIN),
                 Arguments.of(HandFixture.createHandWithOptimisticValue20(),
                         HandFixture.createHandWithOptimisticValue20(), GameResultType.TIE),
-                Arguments.of(HandFixture.busted(), HandFixture.busted(), GameResultType.TIE),
+                Arguments.of(HandFixture.busted(), HandFixture.busted(), GameResultType.WIN),
                 Arguments.of(HandFixture.createHandWithOptimisticValue15(),
                         HandFixture.createHandWithOptimisticValue20(), GameResultType.LOSE),
                 Arguments.of(HandFixture.busted(), HandFixture.normal(), GameResultType.LOSE)
@@ -29,10 +29,12 @@ public class GameResultTypeJudgementTest {
     @ParameterizedTest
     @MethodSource("typeJudgeArgument")
     void test1(Hand playerHand, Hand delerHand, GameResultType expect) {
-        Player player = new Player("꾹이", playerHand);
+        PlayerHand hand = new PlayerHand(playerHand, Wallet.create());
+
+        Player player = new Player("꾹이", hand);
         Dealer dealer = new Dealer(delerHand);
 
-        assertThat(GameResultTypeJudgement.findForPlayer(player, dealer)).isEqualTo(expect);
+        assertThat(GameResultTypePlayerJudgement.find(player, dealer)).isEqualTo(expect);
     }
 
 }

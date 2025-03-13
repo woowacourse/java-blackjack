@@ -23,10 +23,12 @@ class BustedCheckerTest {
     @DisplayName("ALL_BUSTED는 플레이어 딜러 모두 busted라면 true를 반환한다.")
     @MethodSource("bustedCheckTest")
     @ParameterizedTest
-    void test1(Hand dealerHand, Hand playerhand, BustedChecker bustedChecker, boolean expect) {
+    void test1(Hand dealerHand, Hand hand, BustedChecker bustedChecker, boolean expect) {
         // given
         Dealer dealer = new Dealer(dealerHand);
-        Player player = new Player("꾹이", playerhand);
+
+        PlayerHand playerHand = new PlayerHand(hand, Wallet.create());
+        Player player = new Player("꾹이", playerHand);
 
         // when & then
         assertThat(bustedChecker.check(player, dealer)).isEqualTo(expect);
