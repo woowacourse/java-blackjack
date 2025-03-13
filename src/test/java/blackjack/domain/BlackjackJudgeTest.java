@@ -2,7 +2,9 @@ package blackjack.domain;
 
 import blackjack.domain.player.Player;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import static blackjack.test_util.TestConstants.*;
@@ -14,6 +16,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card_hand.DealerBlackjackCardHand;
 import blackjack.domain.card_hand.PlayerBlackjackCardHand;
 import blackjack.domain.deck.BlackjackDeck;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -146,5 +149,28 @@ public class BlackjackJudgeTest {
                 Arguments.of(List.of(DIAMOND_10, HEART_6), WinningStatus.DRAW),
                 Arguments.of(List.of(DIAMOND_10, HEART_5), WinningStatus.LOSE)
         );
+    }
+    
+    @Test
+    void 블랙잭심판은_모든_플레이어의_승패_결과를_한_번에_알_수_있다() {
+        // given
+        Player firstPlayer = new Player("dompoo");
+        Player secondPlayer = new Player("may");
+        
+        PlayerBlackjackCardHand firstPlayerCardHand = new PlayerBlackjackCardHand(firstPlayer, () -> List.of(DIAMOND_1, DIAMOND_10));
+        PlayerBlackjackCardHand secondPlayerCardHand = new PlayerBlackjackCardHand(secondPlayer, () -> List.of(HEART_1, HEART_5));
+        List<PlayerBlackjackCardHand> playerCardHands = List.of(firstPlayerCardHand, secondPlayerCardHand);
+        
+        // when
+        DealerBlackjackCardHand dealerBlackjackCardHand = new DealerBlackjackCardHand(() -> List.of(HEART_8, HEART_9));
+        BlackjackJudge blackjackJudge = new BlackjackJudge(dealerBlackjackCardHand, playerCardHands);
+        
+        // then
+        Map<String, WinningStatus> expected = new HashMap<>();
+        expected.put(firstPlayer.getName(), blackjackJudge.getWinningStatusOf(firstPlayerCardHand));
+        expected.put(secondPlayer.getName(), blackjackJudge.getWinningStatusOf(secondPlayerCardHand));
+        
+        Assertions.assertThat(blackjackJudge.getWinningStatusOfAllPlayers())
+                .containsAllEntriesOf(expected);
     }
 }

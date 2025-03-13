@@ -1,10 +1,15 @@
 package blackjack.domain;
 
+import blackjack.domain.player.Player;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import blackjack.domain.card_hand.DealerBlackjackCardHand;
 import blackjack.domain.card_hand.PlayerBlackjackCardHand;
+
+import java.util.Map;
 
 public final class BlackjackJudge {
     
@@ -54,5 +59,14 @@ public final class BlackjackJudge {
         }
         
         return WinningStatus.determineWinningStatus(playerBlackjackCardHand, dealerBlackjackCardHand);
+    }
+    
+    public Map<String, WinningStatus> getWinningStatusOfAllPlayers() {
+        Map<String, WinningStatus> playersWinningStatus = new HashMap<>();
+        for (PlayerBlackjackCardHand playerBlackjackCardHand : playerBlackjackCardHands) {
+            playersWinningStatus.put(playerBlackjackCardHand.getPlayerName(),
+                    getWinningStatusOf(playerBlackjackCardHand));
+        }
+        return playersWinningStatus;
     }
 }
