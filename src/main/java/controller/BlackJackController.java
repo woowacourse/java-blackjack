@@ -3,11 +3,9 @@ package controller;
 import controller.dto.CardScoreDto;
 import domain.BettingMoney;
 import domain.BlackJackGame;
-import domain.GameResult;
 import domain.Player;
 import domain.Score;
 import domain.TrumpCard;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -90,31 +88,18 @@ public class BlackJackController {
     }
 
     private void displayGameResult(List<Player> players) {
-        Map<String, GameResult> playerGameResults = blackJackGame.calculateGameResults(players);
-        List<GameResult> dealerGameResult = createDealerGameResult(playerGameResults);
-        outputView.printGameResult(playerGameResults, dealerGameResult);
+        Map<String, Integer> playersRevenueAmount = blackJackGame.calculatePlayersRevenueAmount(players);
+        int dealerRevenueAmount = calculateDealerRevenueAmount(playersRevenueAmount);
+        outputView.printRevenueAmount(playersRevenueAmount, dealerRevenueAmount);
     }
 
-    private List<GameResult> createDealerGameResult(Map<String, GameResult> playerGameResults) {
-        List<GameResult> dealerGameResults = new ArrayList<>();
-        playerGameResults.values().forEach(gameResult -> {
-            calculateDealerGameResult(gameResult, dealerGameResults);
-        });
+    private int calculateDealerRevenueAmount(Map<String, Integer> playersRevenueAmount) {
+        int dealerRevenueAmount = 0;
 
-        return dealerGameResults;
-    }
-
-    private void calculateDealerGameResult(GameResult gameResult, List<GameResult> dealerGameResults) {
-        if (gameResult == GameResult.WIN) {
-            dealerGameResults.add(GameResult.LOSE);
-            return;
+        for (Integer playerRevenueAmount : playersRevenueAmount.values()) {
+            dealerRevenueAmount += playerRevenueAmount * -1;
         }
 
-        if (gameResult == GameResult.LOSE) {
-            dealerGameResults.add(GameResult.WIN);
-            return;
-        }
-
-        dealerGameResults.add(GameResult.DRAW);
+        return dealerRevenueAmount;
     }
 }
