@@ -7,7 +7,6 @@ import domain.card.Cards;
 import java.util.List;
 
 public abstract class Participant {
-    private static final int BLACKJACK_COUNT = 2;
     private final Cards cards;
 
     protected Participant(Cards cards) {
@@ -33,8 +32,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        Score score = cards.getScore();
-        return score.isHit() && cards.getCount() == BLACKJACK_COUNT;
+        return cards.isBlackjack();
     }
 
     public Cards getCards() {

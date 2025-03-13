@@ -6,6 +6,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Cards {
+    private final static int BLACKJACK_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -25,12 +26,12 @@ public class Cards {
         this.cards.add(card);
     }
 
-    public int getCount() {
-        return cards.size();
-    }
-
     public List<Card> getValues() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public boolean isBlackjack() {
+        return getScore().isHit() && cards.size() == BLACKJACK_COUNT;
     }
 
     public Score getScore() {
