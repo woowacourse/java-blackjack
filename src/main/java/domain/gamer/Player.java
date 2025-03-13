@@ -60,4 +60,10 @@ public class Player extends Gamer {
         }
         calculateAllSums(cards, index + 1, currentSum + card.getScore(), resultSet);
     }
+
+    @Override
+    public List<Card> getVisibleCardsAtStart() {
+        final Hand hand = getHand();
+        return hand.getCards();
+    }
 }

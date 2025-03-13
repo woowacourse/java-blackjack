@@ -16,6 +16,8 @@ public abstract class Gamer {
 
     public abstract int calculateSumOfRank();
 
+    public abstract List<Card> getVisibleCardsAtStart();
+
     public boolean isBust() {
         return hand.isBust();
     }
@@ -38,6 +40,10 @@ public abstract class Gamer {
 
     protected Hand getHand() {
         return hand;
+    }
+
+    public Nickname getNickname() {
+        return nickname;
     }
 
     @Override

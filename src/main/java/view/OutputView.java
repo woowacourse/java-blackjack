@@ -30,6 +30,13 @@ public final class OutputView {
         print(message);
     }
 
+    public static void printCardsInHandAtFirst(final Map<Nickname, List<Card>> cards) {
+        cards.forEach((nickname, cardGroup) -> {
+            final String displayName = nickname.getDisplayName();
+            printCardsInHand(displayName, cardGroup);
+        });
+    }
+
     public static void printCardsInHand(final String name, final List<Card> cards) {
 
         final List<String> cardGroup = cards.stream()
@@ -39,8 +46,8 @@ public final class OutputView {
         print(message);
     }
 
-    public static void printDealerHit(final int threshold, final String dealerName) {
-        print(String.format("%s는 %d이하라 한 장의 카드를 더 받았습니다.", dealerName, threshold));
+    public static void printDealerHit(final String dealerName) {
+        print(String.format("%s는 %d이하라 한 장의 카드를 더 받았습니다.", dealerName, 16));
     }
 
     public static void printBustMessage(final String name) {
