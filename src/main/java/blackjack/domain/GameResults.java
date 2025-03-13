@@ -20,8 +20,8 @@ public class GameResults {
 
             if (compared == -1) {
                 int multiplier = gambler.getCards().calculateBetAmountByMultiplier(1.0);
-                gameResults.put(dealer, multiplier);
-                gameResults.put(gambler, -multiplier);
+                gameResults.merge(dealer, multiplier, Integer::sum);
+                gameResults.merge(gambler, -multiplier, Integer::sum);
             }
 
             if (compared == 1) {
@@ -29,14 +29,14 @@ public class GameResults {
                 if (gambler.isBlackJack()) {
                     multiplier = gambler.getCards().calculateBetAmountByMultiplier(1.5);
                 }
-                gameResults.put(dealer, -multiplier);
-                gameResults.put(gambler, multiplier);
+                gameResults.merge(dealer, -multiplier, Integer::sum);
+                gameResults.merge(gambler, multiplier, Integer::sum);
             }
 
             if (compared == 0) {
                 int multiplier = gambler.getCards().calculateBetAmountByMultiplier(0);
-                gameResults.put(dealer, multiplier);
-                gameResults.put(gambler, multiplier);
+                gameResults.merge(dealer, multiplier, Integer::sum);
+                gameResults.merge(gambler, multiplier, Integer::sum);
             }
         }
     }
