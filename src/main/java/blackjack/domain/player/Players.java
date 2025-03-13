@@ -1,6 +1,6 @@
 package blackjack.domain.player;
 
-import blackjack.domain.GameResults;
+import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 
 import java.util.HashSet;
@@ -29,8 +29,8 @@ public class Players {
         return dealer.isHit();
     }
 
-    public GameResults getGameResult() {
-        return new GameResults(dealer, gamblers);
+    public GameResult getGameResult() {
+        return new GameResult(dealer, gamblers);
     }
 
     private void validateHasDuplication(final List<Gambler> gamblers) {

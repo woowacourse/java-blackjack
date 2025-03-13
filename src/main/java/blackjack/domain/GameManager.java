@@ -40,7 +40,7 @@ public class GameManager {
         return false;
     }
 
-    public GameResults getGameResult() {
+    public GameResult getGameResult() {
         return players.getGameResult();
     }
 

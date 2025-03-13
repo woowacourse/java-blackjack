@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.GameResults;
+import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
@@ -48,7 +48,7 @@ public class OutputView {
         players.getGamblers().forEach(this::printResultCardsToPlayer);
     }
 
-    public void printGameResults(final GameResults gameResults) {
+    public void printGameResults(final GameResult gameResults) {
         Map<Player, Integer> gameResult = gameResults.getGameResults();
 
         System.out.println(NEW_LINE + NEW_LINE + "## 최종 수익");

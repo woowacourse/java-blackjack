@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GameResults {
+public class GameResult {
 
     public static final int MULTIPLE_DREW = 0;
     public static final double MULTIPLE_LOSE = -1.0;
@@ -17,7 +17,7 @@ public class GameResults {
 
     private final Map<Player, Integer> gameResults;
 
-    public GameResults(final Dealer dealer, final List<Gambler> gamblers) {
+    public GameResult(final Dealer dealer, final List<Gambler> gamblers) {
         gameResults = new LinkedHashMap<>();
         for (Gambler gambler : gamblers) {
             int compared = compareGamblerWithDealer(dealer, gambler);
