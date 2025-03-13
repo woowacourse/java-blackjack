@@ -12,7 +12,7 @@ public class Player extends Gamer {
     }
 
     private Player(final Player player) {
-        super(player.cardGroup);
+        super(player.getCardGroup());
         this.name = player.name;
     }
 

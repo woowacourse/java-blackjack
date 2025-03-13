@@ -13,7 +13,7 @@ public class Dealer extends Gamer {
     }
 
     public boolean isLessThen(int score) {
-        return this.cardGroup.calculateScore(Gamer.LIMIT) <= score;
+        return this.getCardGroup().calculateScore(Gamer.LIMIT) <= score;
     }
 
     public Map<GameResult, Integer> calculateDealerGameResult(final Map<String, GameResult> playerGameResults) {

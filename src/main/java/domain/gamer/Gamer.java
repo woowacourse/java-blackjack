@@ -8,7 +8,7 @@ import java.util.List;
 public abstract class Gamer {
     public static final int LIMIT = 21;
 
-    protected final CardGroup cardGroup;
+    private final CardGroup cardGroup;
 
     protected Gamer(CardGroup cardGroup) {
         this.cardGroup = cardGroup;
@@ -35,5 +35,9 @@ public abstract class Gamer {
 
     public List<Card> getCards() {
         return cardGroup.getCards();
+    }
+
+    public CardGroup getCardGroup() {
+        return cardGroup;
     }
 }
