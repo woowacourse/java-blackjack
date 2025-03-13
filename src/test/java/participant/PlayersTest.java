@@ -16,7 +16,6 @@ import duel.DuelResult;
 import paticipant.Player;
 import paticipant.Players;
 import value.Count;
-import value.Score;
 
 public class PlayersTest {
 
@@ -73,19 +72,16 @@ public class PlayersTest {
 				final Players players = Players.from(List.of("부기"));
 				final Function<String, Boolean> playerAnswer = (name) -> true;
 				final Deck shuffledDeck = Deck.createShuffledDeck();
-				final Score bustScore = Score.from(21);
 
 				// when
-				players.pickCardPlayersIfNotBust(playerAnswer, shuffledDeck, bustScore);
+				players.pickCardPlayersIfNotBust(playerAnswer, shuffledDeck);
 
 				// then
 				assertThat(
 					players.getPlayers()
 						.getFirst()
 						.getParticipant()
-						.getCardHand()
-						.calculateAllScore(bustScore)
-						.isGreaterThan(bustScore)).isTrue();
+						.isBust()).isTrue();
 			}
 		}
 

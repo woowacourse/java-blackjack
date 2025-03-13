@@ -37,7 +37,7 @@ public class PlayerTest {
 			final Player p = new Player("", participant);
 
 			// when
-			final boolean actual = p.isPickCard(BUST_SCORE);
+			final boolean actual = p.isPickCard();
 
 			// then
 			assertThat(actual).isEqualTo(expected);
@@ -69,7 +69,7 @@ public class PlayerTest {
 			final Player bustedPlayer = new Player("", participant);
 
 			// when
-			boolean actual = bustedPlayer.isBust(BUST_SCORE);
+			boolean actual = bustedPlayer.isBust();
 
 			// then
 			assertThat(actual).isTrue();
@@ -84,7 +84,7 @@ public class PlayerTest {
 			final Player noBustedPlayer = new Player("", participant);
 
 			// when
-			boolean actual = noBustedPlayer.isBust(BUST_SCORE);
+			boolean actual = noBustedPlayer.isBust();
 
 			// then
 			assertThat(actual).isFalse();
@@ -104,7 +104,7 @@ public class PlayerTest {
 			final Player player = new Player("", participant);
 
 			// when
-			final int actual = player.calculateAllScore(BUST_SCORE).value();
+			final int actual = player.calculateAllScore().value();
 
 			// then
 			assertThat(actual).isEqualTo(21);

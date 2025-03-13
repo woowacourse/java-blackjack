@@ -41,8 +41,8 @@ public class ParticipantTest {
 			final Participant notBustedParticipant = new Participant(new CardHand(notBustedCards));
 
 			// when
-			final boolean bustActual = bustedParticipant.isBust(BUST_SCORE);
-			final boolean notBustActual = notBustedParticipant.isBust(BUST_SCORE);
+			final boolean bustActual = bustedParticipant.isBust();
+			final boolean notBustActual = notBustedParticipant.isBust();
 
 			// then
 			assertSoftly(s -> {
@@ -67,8 +67,8 @@ public class ParticipantTest {
 			final Participant notBlackjackParticipant = new Participant(new CardHand(notBustedCards));
 
 			// when
-			final boolean blackjackActual = blackjackParticipant.isBlackjack(BUST_SCORE);
-			final boolean notBlackjackActual = notBlackjackParticipant.isBlackjack(BUST_SCORE);
+			final boolean blackjackActual = blackjackParticipant.isBlackjack();
+			final boolean notBlackjackActual = notBlackjackParticipant.isBlackjack();
 
 			// then
 			assertSoftly(s -> {

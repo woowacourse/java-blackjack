@@ -13,7 +13,6 @@ import paticipant.Players;
 import value.Score;
 
 public class Blackjack {
-	public static final Score BUST_SCORE = Score.from(21);
 	public static final int INIT_PICK_CARD_COUNT = 2;
 
 	private final Players players;
@@ -44,17 +43,17 @@ public class Blackjack {
 	}
 
 	public void pickCardPlayersIfNotBust(final Function<String, Boolean> playerAnswer) {
-		players.pickCardPlayersIfNotBust(playerAnswer, deck, BUST_SCORE);
+		players.pickCardPlayersIfNotBust(playerAnswer, deck);
 	}
 
 	public void pickCardDealerIfNotMax() {
-		while (dealer.isPickCard(BUST_SCORE)) {
+		while (dealer.isPickCard()) {
 			dealer.addCards(deck.pickCards(1));
 		}
 	}
 
 	public Score calculateScore(final Participant participant) {
-		return participant.calculateAllScore(BUST_SCORE);
+		return participant.calculateAllScore();
 	}
 
 	public void duel() {
@@ -62,17 +61,17 @@ public class Blackjack {
 	}
 
 	private void duelDealerVsPlayer(final Player player) {
-		if (player.calculateAllScore(BUST_SCORE).equals(dealer.calculateAllScore(BUST_SCORE))
-			|| (player.isBust(BUST_SCORE) && dealer.isBust(BUST_SCORE))) {
+		if (player.calculateAllScore().equals(dealer.calculateAllScore())
+			|| (player.isBust() && dealer.isBust())) {
 			draw(player);
 			return;
 		}
-		if (player.isBust(BUST_SCORE)) {
+		if (player.isBust()) {
 			dealerWin(player);
 			return;
 		}
-		if (dealer.isBust(BUST_SCORE)
-			|| player.calculateAllScore(BUST_SCORE).isGreaterThan(dealer.calculateAllScore(BUST_SCORE))) {
+		if (dealer.isBust()
+			|| player.calculateAllScore().isGreaterThan(dealer.calculateAllScore())) {
 			playerWin(player);
 			return;
 		}

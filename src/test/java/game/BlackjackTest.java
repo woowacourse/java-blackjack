@@ -106,15 +106,12 @@ public class BlackjackTest {
 		void pickCardDealerIfNotMax() {
 			// given
 			final Blackjack blackjack = Blackjack.from(List.of(""));
-			final Score bustScore = Score.from(21);
-			final Score dealerPickCardMaxScore = Score.from(16);
 
 			// when
 			blackjack.pickCardDealerIfNotMax();
 
 			// then
-			assertThat(blackjack.getDealer().getParticipant().calculateAllScore(bustScore).isGreaterThan(
-				dealerPickCardMaxScore)).isTrue();
+			assertThat(blackjack.getDealer().isPickCard()).isFalse();
 		}
 	}
 

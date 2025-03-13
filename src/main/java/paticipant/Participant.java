@@ -10,6 +10,9 @@ import value.Count;
 import value.Score;
 
 public class Participant {
+	private static final Score BUST_SCORE = Score.from(21);
+	private static final Count BLACKJACK_REQUIRE_CARD_COUNT = Count.from(2);
+
 	private final CardHand hand;
 	private final DuelHistory duelHistory;
 
@@ -31,16 +34,20 @@ public class Participant {
 		duelHistory.write(duelResult);
 	}
 
-	public Score calculateAllScore(final Score bustScore) {
-		return hand.calculateAllScore(bustScore);
+	public Score calculateAllScore() {
+		return hand.calculateAllScore(BUST_SCORE);
 	}
 
-	public boolean isBust(final Score bustScore) {
-		return calculateAllScore(bustScore).isGreaterThan(bustScore);
+	public boolean isBust() {
+		return calculateAllScore().isGreaterThan(BUST_SCORE);
 	}
 
-	public boolean isBlackjack(final Score bustScore) {
-		return calculateAllScore(bustScore).equals(bustScore) && Count.from(2).equals(hand.calculateCardCount());
+	public boolean isBustScore(final Score score) {
+		return score.isGreaterThan(BUST_SCORE);
+	}
+
+	public boolean isBlackjack() {
+		return calculateAllScore().equals(BUST_SCORE) && BLACKJACK_REQUIRE_CARD_COUNT.equals(hand.calculateCardCount());
 	}
 
 	public CardHand getCardHand() {

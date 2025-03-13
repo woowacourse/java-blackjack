@@ -31,7 +31,7 @@ public class DealerTest {
 			final var dealer = new Dealer();
 
 			// when
-			final var actual = dealer.isPickCard(BUST_SCORE);
+			final var actual = dealer.isPickCard();
 
 			// then
 			assertThat(actual).isTrue();
@@ -47,7 +47,7 @@ public class DealerTest {
 			final var dealer = new Dealer(new Participant(cardHand));
 
 			// when
-			final var actual = dealer.isPickCard(BUST_SCORE);
+			final var actual = dealer.isPickCard();
 
 			// then
 			assertThat(actual).isFalse();
@@ -68,7 +68,7 @@ public class DealerTest {
 			final Dealer bustedDealer = new Dealer(participant);
 
 			// when
-			boolean actual = bustedDealer.isBust(BUST_SCORE);
+			boolean actual = bustedDealer.isBust();
 
 			// then
 			assertThat(actual).isTrue();
@@ -83,7 +83,7 @@ public class DealerTest {
 			final Dealer noBustedDealer = new Dealer(participant);
 
 			// when
-			boolean actual = noBustedDealer.isBust(BUST_SCORE);
+			boolean actual = noBustedDealer.isBust();
 
 			// then
 			assertThat(actual).isFalse();
@@ -103,7 +103,7 @@ public class DealerTest {
 			final Dealer dealer = new Dealer(participant);
 
 			// when
-			final int actual = dealer.calculateAllScore(BUST_SCORE).value();
+			final int actual = dealer.calculateAllScore().value();
 
 			// then
 			assertThat(actual).isEqualTo(21);

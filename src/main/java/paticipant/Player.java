@@ -24,17 +24,16 @@ public class Player {
 		participant.addCards(cards);
 	}
 
-	public boolean isPickCard(final Score bustScore) {
-		final Score score = participant.calculateAllScore(bustScore);
-		return score.isLessThan(bustScore) || score.equals(bustScore);
+	public boolean isPickCard() {
+		return !participant.isBust();
 	}
 
-	public Score calculateAllScore(final Score bustScore) {
-		return participant.calculateAllScore(bustScore);
+	public Score calculateAllScore() {
+		return participant.calculateAllScore();
 	}
 
-	public boolean isBust(final Score bustScore) {
-		return participant.isBust(bustScore);
+	public boolean isBust() {
+		return participant.isBust();
 	}
 
 	public void writeDuelResult(final DuelResult duelResult) {
