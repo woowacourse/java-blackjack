@@ -22,10 +22,6 @@ public record BlackjackScore(int value, int cardSize) {
         return equals(BLACKJACK_BLACKJACK_SCORE) && this.cardSize == BLACKJACK_CARD_NUMBER;
     }
 
-    public boolean isBlackjackScore() {
-        return equals(BLACKJACK_BLACKJACK_SCORE);
-    }
-
     public boolean isBust() {
         return this.isGreaterThan(BLACKJACK_BLACKJACK_SCORE);
     }
