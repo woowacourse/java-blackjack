@@ -17,10 +17,6 @@ public final class Hand {
     this.cards = new ArrayList<>(cards);
   }
 
-  public Hand(final Hand hand) {
-    this.cards = new ArrayList<>(hand.getCards());
-  }
-
   public void add(final TrumpCard card) {
     cards.add(card);
   }
@@ -49,5 +45,9 @@ public final class Hand {
 
   public int getCount() {
     return cards.size();
+  }
+
+  public boolean isBlackjack() {
+    return getCount() == 2 && calculateScore().isBlackjack();
   }
 }

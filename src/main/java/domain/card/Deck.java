@@ -17,12 +17,12 @@ public final class Deck {
     this.deck = new ArrayDeque<>(deck);
   }
 
-  public static Deck createDecks(final int numberOfDeck) {
-    final List<TrumpCard> deck = IntStream.range(0, numberOfDeck)
+  public static Deck createShuffledDecks(final int numberOfDeck) {
+    List<TrumpCard> deck = new ArrayList<>(IntStream.range(0, numberOfDeck)
         .boxed()
         .flatMap(i -> createSingleDeck().stream())
-        .toList();
-
+        .toList());
+    Collections.shuffle(deck);
     return new Deck(new ArrayDeque<>(deck));
   }
 
@@ -31,12 +31,6 @@ public final class Deck {
         .flatMap(rank -> Arrays.stream(Suit.values())
             .map(suit -> new TrumpCard(rank, suit)))
         .toList();
-  }
-
-  public Deck shuffle() {
-    final var cards = new ArrayList<>(deck);
-    Collections.shuffle(cards);
-    return new Deck(new ArrayDeque<>(cards));
   }
 
   public int getNumberOfCards() {
