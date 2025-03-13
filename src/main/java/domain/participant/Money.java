@@ -7,6 +7,9 @@ public class Money {
     public Money(String rawValue) {
         validateNullOrBlank(rawValue);
         validateIntegerFormat(rawValue);
+        if (Integer.parseInt(rawValue) <= 0) {
+            throw new IllegalArgumentException("입력은 0보다 커야 합니다.");
+        }
         this.value = Integer.parseInt(rawValue);
     }
 
