@@ -11,6 +11,12 @@ public class Players {
         this.players = players;
     }
 
+    public double sumProfits() {
+        return players.stream()
+                .mapToDouble(Player::calculateProfit)
+                .sum();
+    }
+
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
