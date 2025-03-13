@@ -16,11 +16,11 @@ public enum WinningStatus {
         if (player.isBust()) {
             return 플레이어_패배;
         }
-        if (player.isBlackjack()) {
-            if (dealer.isBlackjack()) {
-                return 무승부;
-            }
+        if (player.isBlackjack() && !dealer.isBlackjack()) {
             return 플레이어_승리;
+        }
+        if (player.isBlackjack() && dealer.isBlackjack()) {
+            return 무승부;
         }
         if (dealer.isBust()) {
             return 플레이어_승리;
