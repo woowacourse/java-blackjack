@@ -1,5 +1,6 @@
 package blackjack.model.game;
 
+import static blackjack.model.game.ParticipantResult.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.card.Card;
@@ -7,8 +8,12 @@ import blackjack.model.card.CardShape;
 import blackjack.model.card.CardType;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
+import blackjack.model.player.Participants;
 import blackjack.model.player.PlayerName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.Map;
 
 class ParticipantResultTest {
 
@@ -24,7 +29,7 @@ class ParticipantResultTest {
         ParticipantResult result = ParticipantResult.of(dealer, participant);
 
         // then
-        assertThat(result).isEqualTo(ParticipantResult.LOSE);
+        assertThat(result).isEqualTo(LOSE);
     }
 
     @Test
@@ -71,8 +76,7 @@ class ParticipantResultTest {
         ParticipantResult result = ParticipantResult.of(dealer, participant);
 
         // then
-        assertThat(result).isEqualTo(ParticipantResult.LOSE);
-
+        assertThat(result).isEqualTo(LOSE);
     }
 
     @Test
@@ -90,7 +94,6 @@ class ParticipantResultTest {
 
         // then
         assertThat(result).isEqualTo(ParticipantResult.WIN);
-
     }
 
     @Test
@@ -110,7 +113,47 @@ class ParticipantResultTest {
         ParticipantResult result = ParticipantResult.of(dealer, participant);
 
         // then
-        assertThat(result).isEqualTo(ParticipantResult.LOSE);
+        assertThat(result).isEqualTo(LOSE);
+    }
 
+    @Test
+    void 여러_참가자의_승패_결과를_계산한다() {
+        // Given
+        Dealer dealer = new Dealer();
+        dealer.putCard(new Card(CardShape.CLOVER, CardType.JACK));
+        dealer.putCard(new Card(CardShape.CLOVER, CardType.QUEEN));
+        Participant participant = new Participant(new PlayerName("프리"), new BettedMoney(10_000));
+        participant.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_8));
+        Participant participant2 = new Participant(new PlayerName("포비"), new BettedMoney(20_000));
+        participant2.putCard(new Card(CardShape.CLOVER, CardType.ACE));
+        participant2.putCard(new Card(CardShape.CLOVER, CardType.KING));
+        Participants participants = new Participants(List.of(participant, participant2));
+
+        // When
+        Map<Participant, ParticipantResult> participantResults = ParticipantResult.calculateParticipantResults(dealer, participants);
+
+        // Then
+        assertThat(participantResults).isEqualTo(Map.of(participant, LOSE, participant2, WIN));
+    }
+
+    @Test
+    void 여러_참가자의_승패_결과를_가지고_승무패_개수를_구한다() {
+        // Given
+        Dealer dealer = new Dealer();
+        dealer.putCard(new Card(CardShape.CLOVER, CardType.JACK));
+        dealer.putCard(new Card(CardShape.CLOVER, CardType.QUEEN));
+        Participant participant = new Participant(new PlayerName("프리"), new BettedMoney(10_000));
+        participant.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_8));
+        Participant participant2 = new Participant(new PlayerName("포비"), new BettedMoney(20_000));
+        participant2.putCard(new Card(CardShape.CLOVER, CardType.ACE));
+        participant2.putCard(new Card(CardShape.CLOVER, CardType.KING));
+        Participants participants = new Participants(List.of(participant, participant2));
+        Map<Participant, ParticipantResult> participantResults = ParticipantResult.calculateParticipantResults(dealer, participants);
+
+        // When
+        Map<ParticipantResult, Integer> counts = ParticipantResult.countResults(participantResults);
+
+        // Then
+        assertThat(counts).isEqualTo(Map.of(WIN, 1, DRAW, 0, LOSE, 1));
     }
 }
