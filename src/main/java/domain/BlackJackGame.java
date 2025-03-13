@@ -19,11 +19,16 @@ public class BlackJackGame {
     private final CardDeck cardDeck;
     private final Participants participants;
 
-    public BlackJackGame(CardBundle cardBundle, List<String> userNames,
+    private BlackJackGame(CardBundle cardBundle, List<String> userNames,
         List<Integer> bettingAmount) {
         this.cardDeck = createCardDeck(cardBundle);
-        participants = createParticipants(userNames, bettingAmount);
+        this.participants = createParticipants(userNames, bettingAmount);
         receiveCardProcessOfParticipants();
+    }
+
+    public static BlackJackGame createBlackJackGameAndReceiveInitCardsOf(CardBundle cardBundle,
+        List<String> userNames, List<Integer> bettingAmount) {
+        return new BlackJackGame(cardBundle, userNames, bettingAmount);
     }
 
     private void receiveCardProcessOfParticipants() {
