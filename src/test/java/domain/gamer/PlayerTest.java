@@ -9,6 +9,7 @@ import domain.card.CardDeck;
 import domain.card.CardRank;
 import domain.card.CardSymbol;
 import fixture.CardsInitializerFixture;
+import fixture.NicknameFixture;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -25,7 +26,7 @@ class PlayerTest {
         cards.add(new Card(CardSymbol.COLVER, CardRank.EIGHT));
         CardDeck deck = new CardDeck(new CardsInitializerFixture(cards));
 
-        Player player = new Player("ad");
+        Player player = new Player(NicknameFixture.createNickname("ad"));
 
         //when
         player.hit(deck);
@@ -37,7 +38,7 @@ class PlayerTest {
     @Test
     void calculatePlayerScore() {
         //given
-        Player player = new Player("ad");
+        Player player = new Player(NicknameFixture.createNickname("ad"));
         Card card1 = new Card(CardSymbol.HEART, CardRank.FIVE);
         Card card2 = new Card(CardSymbol.HEART, CardRank.FOUR);
         Card card3 = new Card(CardSymbol.HEART, CardRank.JACK);
@@ -63,7 +64,7 @@ class PlayerTest {
     @Test
     void burstIsNotHit() {
         //given
-        Player player = new Player("ad");
+        Player player = new Player(NicknameFixture.createNickname("ad"));
         Card card1 = new Card(CardSymbol.HEART, CardRank.TWO);
         Card card2 = new Card(CardSymbol.HEART, CardRank.KING);
         Card card3 = new Card(CardSymbol.HEART, CardRank.JACK);
@@ -90,7 +91,7 @@ class PlayerTest {
     @Test
     void notBurstHit() {
         //given
-        Player player = new Player("ad");
+        Player player = new Player(NicknameFixture.createNickname("ad"));
         Card card1 = new Card(CardSymbol.HEART, CardRank.FIVE);
         Card card2 = new Card(CardSymbol.HEART, CardRank.FIVE);
         Card card3 = new Card(CardSymbol.HEART, CardRank.FIVE);
@@ -117,7 +118,7 @@ class PlayerTest {
     @Test
     void startGameGiveDefaultCards() {
         //given
-        Player player = new Player("ad");
+        Player player = new Player(NicknameFixture.createNickname("ad"));
 
         Card card1 = new Card(CardSymbol.HEART, CardRank.FIVE);
         Card card2 = new Card(CardSymbol.HEART, CardRank.FIVE);

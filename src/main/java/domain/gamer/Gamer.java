@@ -5,10 +5,10 @@ import domain.card.Hand;
 
 public abstract class Gamer {
 
-    private final String name;
+    private final Nickname name;
     private final Hand hand = new Hand();
 
-    protected Gamer(String name) {
+    protected Gamer(Nickname name) {
         this.name = name;
     }
 
@@ -34,7 +34,7 @@ public abstract class Gamer {
     }
 
     public String getName() {
-        return this.name;
+        return this.name.getName();
     }
 
     public void hit(CardDeck deck) {

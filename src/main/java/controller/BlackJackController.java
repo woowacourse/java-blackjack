@@ -1,10 +1,11 @@
 package controller;
 
-import domain.rule.BlackjackMatchResult;
 import domain.card.CardDeck;
-import domain.gamer.Dealer;
-import domain.gamer.Player;
 import domain.card.StandardCardsInitializer;
+import domain.gamer.Dealer;
+import domain.gamer.Nickname;
+import domain.gamer.Player;
+import domain.rule.BlackjackMatchResult;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
@@ -44,6 +45,7 @@ public class BlackJackController {
     private List<Player> setPlayers() {
         List<String> names = inputView.readNames();
         return names.stream()
+                .map(Nickname::new)
                 .map(Player::new)
                 .toList();
     }

@@ -4,7 +4,7 @@ import domain.rule.BlackjackMatchResult;
 
 public class Dealer extends Gamer {
 
-    private static final String NAME = "딜러";
+    private static final Nickname NAME = new Nickname("딜러");
     private static final int HIT_THRESHOLD = 16;
 
     public Dealer() {
