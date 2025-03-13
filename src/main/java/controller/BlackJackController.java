@@ -1,10 +1,10 @@
 package controller;
 
-import domain.BlackjackMatchResult;
-import domain.CardDeck;
-import domain.Dealer;
-import domain.Player;
-import domain.StandardCardsInitializer;
+import domain.rule.BlackjackMatchResult;
+import domain.card.CardDeck;
+import domain.gamer.Dealer;
+import domain.gamer.Player;
+import domain.card.StandardCardsInitializer;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;

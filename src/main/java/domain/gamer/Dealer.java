@@ -1,4 +1,6 @@
-package domain;
+package domain.gamer;
+
+import domain.rule.BlackjackMatchResult;
 
 public class Dealer extends Gamer {
 

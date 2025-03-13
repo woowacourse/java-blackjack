@@ -1,10 +1,10 @@
 package view;
 
-import domain.BlackjackMatchResult;
-import domain.Card;
-import domain.Dealer;
-import domain.Gamer;
-import domain.Player;
+import domain.rule.BlackjackMatchResult;
+import domain.card.Card;
+import domain.gamer.Dealer;
+import domain.gamer.Gamer;
+import domain.gamer.Player;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

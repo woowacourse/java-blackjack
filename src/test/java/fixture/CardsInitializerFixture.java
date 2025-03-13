@@ -1,7 +1,7 @@
 package fixture;
 
-import domain.Card;
-import domain.CardsInitializer;
+import domain.card.Card;
+import domain.card.CardsInitializer;
 import java.util.List;
 
 public class CardsInitializerFixture implements CardsInitializer {

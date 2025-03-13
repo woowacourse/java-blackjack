@@ -1,4 +1,7 @@
-package domain;
+package domain.gamer;
+
+import domain.card.CardDeck;
+import domain.card.Hand;
 
 public abstract class Gamer {
 

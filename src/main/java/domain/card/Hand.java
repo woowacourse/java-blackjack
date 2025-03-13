@@ -1,5 +1,6 @@
-package domain;
+package domain.card;
 
+import domain.rule.BlackjackMatchResult;
 import java.util.ArrayList;
 import java.util.List;
 

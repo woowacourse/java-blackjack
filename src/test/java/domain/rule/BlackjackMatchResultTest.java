@@ -1,7 +1,11 @@
-package domain;
+package domain.rule;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
+import domain.card.CardRank;
+import domain.card.CardSymbol;
+import domain.card.Hand;
 import fixture.HandFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
