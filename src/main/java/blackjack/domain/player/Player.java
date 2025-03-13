@@ -49,8 +49,8 @@ public abstract class Player {
         return hand.calculateWinningAmount(multiple);
     }
 
-    public String getName() {
-        return name.getName();
+    public Name getName() {
+        return name;
     }
 
     public Hand getHand() {

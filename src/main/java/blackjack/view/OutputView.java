@@ -15,7 +15,7 @@ public class OutputView {
     public void printInitCardsToPlayers(final Players players) {
         String playerNames = players.getGamblers()
                 .stream()
-                .map(Player::getName)
+                .map(player -> player.getName().getName())
                 .collect(Collectors.joining(", "));
 
         System.out.printf(NEW_LINE + "딜러와 %s에게 2장을 나누었습니다.", playerNames);
@@ -30,7 +30,7 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
 
         System.out.printf(NEW_LINE + "%s카드: %s",
-                player.getName(),
+                player.getName().getName(),
                 cards
         );
     }
@@ -71,7 +71,7 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
 
         System.out.printf(NEW_LINE + "%s카드: %s",
-                player.getName(),
+                player.getName().getName(),
                 cards
         );
     }
@@ -86,7 +86,7 @@ public class OutputView {
     }
 
     private void printGamblerGameResult(final Map.Entry<Player, Integer> entry) {
-        String name = entry.getKey().getName();
+        String name = entry.getKey().getName().getName();
         System.out.println(name + ": " + entry.getValue());
     }
 }
