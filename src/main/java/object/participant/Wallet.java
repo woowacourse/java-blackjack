@@ -35,8 +35,8 @@ public class Wallet {
     }
 
     private void validateWallet() {
-        if (betMoney > 500_000_000) {
-            throw new IllegalArgumentException("재정 문제로 이렇게 5억 초과의 베팅은 받지 않습니다. 5억 이하의 베팅만 해주세요.");
+        if (betMoney > 100_000_000) {
+            throw new IllegalArgumentException("재정 문제로 1억 초과의 베팅은 받지 않습니다. 1억 이하의 베팅만 해주세요.");
         }
         if (betMoney < 0) {
             throw new IllegalArgumentException("음수의 돈을 베팅할 수 없습니다. 양수만 입력해주세요.");

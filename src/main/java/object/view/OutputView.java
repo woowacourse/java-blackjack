@@ -11,6 +11,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import object.game.GameResult;
 import object.game.Score;
+import object.participant.Participant;
 import response.BattleResultResponse;
 import response.BlackJackResultResponse;
 import response.CardDeckStatusResponse;
@@ -73,6 +74,15 @@ public class OutputView {
             Map<GameResult, Integer> battleResultCount = response.battleResult();
 
             System.out.printf("%s: %s%n", nickname, parseBattleResult(battleResultCount));
+        }
+    }
+
+    public void printFinalProfit(List<Participant> participants) {
+        System.out.println("\n## 최종 수익");
+        for (Participant participant : participants) {
+            int profit = participant.getProfit();
+            String nickname = participant.getNickname();
+            System.out.printf("%s: %,d%n", nickname, profit);
         }
     }
 

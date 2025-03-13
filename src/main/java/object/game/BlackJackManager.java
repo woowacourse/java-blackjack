@@ -40,7 +40,7 @@ public class BlackJackManager {
             processTurnOf(player, blackJackBoard);
         }
         processDealerTurn(blackJackBoard);
-        printGameResult(blackJackBoard);
+        processGameResult(blackJackBoard);
     }
 
     private void processInitCardDraws(BlackJackBoard blackJackBoard) {
@@ -78,11 +78,11 @@ public class BlackJackManager {
         }
     }
 
-    private void printGameResult(BlackJackBoard blackJackBoard) {
+    private void processGameResult(BlackJackBoard blackJackBoard) {
+        blackJackBoard.calculateBattleResult();
         printBlackJackScore(blackJackBoard);
         printBetResult(blackJackBoard);
 //        printBattleResult(blackJackBoard);
-
     }
 
     private void printBlackJackScore(BlackJackBoard blackJackBoard) {
@@ -98,8 +98,7 @@ public class BlackJackManager {
 
     private void printBetResult(BlackJackBoard blackJackBoard) {
         blackJackBoard.calculateDealerProfit();
-        blackJackBoard.getParticipants();
-
+        outputView.printFinalProfit(blackJackBoard.getParticipants());
     }
 
     private void printBattleResult(BlackJackBoard blackJackBoard) {
