@@ -26,7 +26,7 @@ public class BlackJackGame {
         return new Participants(participants);
     }
 
-    public void run() {
+    public void shuffleGameCards() {
         gameCardDeck.shuffle();
     }
 
