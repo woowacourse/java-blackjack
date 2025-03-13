@@ -66,6 +66,10 @@ public class Dealer extends BlackJackPlayer {
         return calculateOptimalPoint() > player.calculateOptimalPoint();
     }
 
+    public boolean isBlackJack(final BlackJackPlayer blackJackPlayer) {
+        return blackJackPlayer.calculateOptimalPoint() == BLACKJACK_POINT && blackJackPlayer.hasCardSize(2);
+    }
+
     private BlackJackCards drawCard(final int amount) {
         return cardDeck.draw(amount);
     }

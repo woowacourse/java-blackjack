@@ -26,9 +26,13 @@ public abstract class BlackJackPlayer {
 
     public final int calculateOptimalPoint() {
         return blackJackCards.calculatePossiblePoints().stream()
-                .filter(point -> point < BLACKJACK_POINT)
+                .filter(point -> point <= BLACKJACK_POINT)
                 .max(Integer::compareTo)
                 .orElse(getMinimumPoint());
+    }
+
+    public final boolean hasCardSize(final int size) {
+        return blackJackCards.hasSize(size);
     }
 
     protected final int getMinimumPoint() {

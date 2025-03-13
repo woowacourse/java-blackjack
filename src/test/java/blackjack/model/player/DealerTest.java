@@ -221,15 +221,6 @@ class DealerTest {
         );
     }
 
-    //
-    //    public void drawMoreCard(final BlackJackPlayer blackJackPlayer) {
-    //        if (canDrawMoreCard(blackJackPlayer)) {
-    //            blackJackPlayer.receiveCards(drawCard(SINGLE_DRAW_AMOUNT));
-    //            return;
-    //        }
-    //        throw new IllegalStateException("카드를 더 뽑을 수 없습니다.");
-    //    }
-
     static Stream<Arguments> 블랙잭_플레이어가_카드를_더_뽑을_수_있는지_반환한다_테스트_케이스() {
         return Stream.of(
                 Arguments.of(
@@ -240,6 +231,48 @@ class DealerTest {
                 Arguments.of(
                         new Dealer(new DefaultCardDeckInitializer()),
                         new FakeBlackJackPlayer("pobi", false),
+                        false
+                )
+        );
+    }
+
+    private static Stream<Arguments> 블랙잭_플레이어가_블랙잭인지_확인한다_테스트_케이스() {
+        return Stream.of(
+                Arguments.of(
+                        makeUser("pobi", new BlackJackCards(
+                                List.of(
+                                        createCard(CardNumber.ACE),
+                                        createCard(CardNumber.KING)
+                                )
+                        )),
+                        true
+                ),
+                Arguments.of(
+                        makeUser("pobi", new BlackJackCards(
+                                List.of(
+                                        createCard(CardNumber.ACE),
+                                        createCard(CardNumber.TEN)
+                                )
+                        )),
+                        true
+                ),
+                Arguments.of(
+                        makeUser("pobi", new BlackJackCards(
+                                List.of(
+                                        createCard(CardNumber.NINE),
+                                        createCard(CardNumber.KING)
+                                )
+                        )),
+                        false
+                ),
+                Arguments.of(
+                        makeUser("pobi", new BlackJackCards(
+                                List.of(
+                                        createCard(CardNumber.THREE),
+                                        createCard(CardNumber.KING),
+                                        createCard(CardNumber.EIGHT)
+                                )
+                        )),
                         false
                 )
         );
@@ -350,6 +383,12 @@ class DealerTest {
         dealer.receiveCards(blackJackCards);
 
         assertThat(dealer.isWin(player)).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("블랙잭_플레이어가_블랙잭인지_확인한다_테스트_케이스")
+    void 블랙잭_플레이어가_블랙잭인지_확인한다(final BlackJackPlayer blackJackPlayer, final boolean expected) {
+        assertThat(dealer.isBlackJack(blackJackPlayer)).isEqualTo(expected);
     }
 
     private static class FakeBlackJackPlayer extends BlackJackPlayer {
