@@ -2,17 +2,17 @@ package blackjack.view;
 
 import blackjack.common.Constants;
 import blackjack.domain.Card;
-import blackjack.domain.Participant;
 import blackjack.domain.CardRank;
 import blackjack.domain.CardSuit;
 import blackjack.domain.Dealer;
-import blackjack.domain.GameResultType;
+import blackjack.domain.Participant;
 import blackjack.domain.Player;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class Formatter {
+
+    private static final String LINE_SEPARATOR = System.lineSeparator();
 
     private Formatter() {
     }
@@ -56,40 +56,15 @@ public final class Formatter {
                 .collect(Collectors.joining(", "));
     }
 
-    public static String parseDealerGameResult(Map<GameResultType, Integer> dealerResult) {
-        return Arrays.stream(GameResultType.values())
-                .map(gameResultType -> parseResultCount(dealerResult, gameResultType))
-                .collect(Collectors.joining(" "));
-    }
+    public static String parsePlayerRevenue(Map<Player, Integer> revenueMap) {
+        return revenueMap.entrySet().stream().map(
+                entry -> {
+                    String name = entry.getKey().getName();
+                    int revenue = entry.getValue();
 
-    public static String parsePlayerGameResult(Map<Player, GameResultType> playersResult) {
-        return playersResult.entrySet().stream().map(entry -> {
-            Player player = entry.getKey();
-            GameResultType resultType = entry.getValue();
-
-            return player.getName() + ": " + parseGameResult(resultType);
-        }).collect(Collectors.joining(System.lineSeparator()));
-    }
-
-    private static String parseResultCount(Map<GameResultType, Integer> results, GameResultType gameResultType) {
-        Integer count = results.getOrDefault(gameResultType, 0);
-        if (count == 0) {
-            return "";
-        }
-
-        return count + parseGameResult(gameResultType);
-    }
-
-    private static String parseGameResult(GameResultType gameResultType) {
-        if (gameResultType.equals(GameResultType.WIN)) {
-            return "승";
-        }
-
-        if (gameResultType.equals(GameResultType.LOSE)) {
-            return "패";
-        }
-
-        return "무";
+                    return name + ": " + revenue;
+                }
+        ).collect(Collectors.joining(LINE_SEPARATOR));
     }
 
     private static String parseCardName(Card card) {

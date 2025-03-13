@@ -8,6 +8,7 @@ import blackjack.view.Confirmation;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
 
@@ -88,5 +89,11 @@ public class BlackjackController {
     }
 
     private void printResult(Players players, Dealer dealer) {
+        players.adjustBalance(dealer);
+
+        int playersTotalRevenue = players.getTotalRevenue();
+        Map<Player, Integer> revenueMap = players.getRevenueMap();
+
+        OutputView.printRevenue(playersTotalRevenue, revenueMap);
     }
 }
