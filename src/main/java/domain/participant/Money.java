@@ -6,6 +6,11 @@ public class Money {
 
     public Money(String rawValue) {
         validateNullOrBlank(rawValue);
+        try {
+            Integer.parseInt(rawValue);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("입력이 정수 형식이 아닙니다.");
+        }
         this.value = Integer.parseInt(rawValue);
     }
 
