@@ -13,7 +13,7 @@ public class Player implements Participant {
     private Player(final String nickname) {
         this.nickname = nickname;
         this.gameRecord = new GameRecord();
-        this.wallet = Wallet.generateEmptyWalletFrom(0);
+        this.wallet = new Wallet();
     }
 
     public static Player from(final String nickname) {
@@ -46,7 +46,13 @@ public class Player implements Participant {
         return gameRecord.getGameRecord();
     }
 
+    @Override
     public int getProfit() {
         return wallet.getProfit();
+    }
+
+    @Override
+    public void bet(int amount) {
+        wallet.bet(amount);
     }
 }

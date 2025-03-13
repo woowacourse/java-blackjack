@@ -13,7 +13,7 @@ public class Dealer implements Participant {
     private Dealer(final String nickname) {
         this.nickname = nickname;
         this.gameRecord = new GameRecord();
-        this.wallet = Wallet.generateEmptyWalletFrom(0);
+        this.wallet = new Wallet();
     }
 
     public static Dealer generate() {
@@ -48,6 +48,11 @@ public class Dealer implements Participant {
     @Override
     public int getProfit() {
         return wallet.getProfit();
+    }
+
+    @Override
+    public void bet(int amount) {
+        wallet.bet(amount);
     }
 
     public void addEarnedMoney(int amount) {

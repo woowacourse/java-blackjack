@@ -6,13 +6,9 @@ public class Wallet {
     private int betMoney;
     private int earnedMoney;
 
-    private Wallet(int betMoney, int earnedMoney) {
-        this.betMoney = betMoney;
-        this.earnedMoney = earnedMoney;
-    }
-
-    public static Wallet generateEmptyWalletFrom(int betMoney) {
-        return new Wallet(betMoney, 0);
+    public Wallet() {
+        this.betMoney = 0;
+        this.earnedMoney = 0;
     }
 
     public void winBetRate(GameResult gameResult) {

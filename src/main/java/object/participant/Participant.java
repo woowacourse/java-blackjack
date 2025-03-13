@@ -10,4 +10,5 @@ public interface Participant {
     void applyGameRecord(GameResult result);
     Map<GameResult, Integer> getGameRecord();
     int getProfit();
+    void bet(int amount);
 }

@@ -10,10 +10,9 @@ public class WalletTest {
     @Test
     void 월렛_생성_테스트() {
         // given
-        int betMoney = 1000;
 
         // when
-        Wallet wallet = Wallet.generateEmptyWalletFrom(betMoney);
+        Wallet wallet = new Wallet();
 
         // then
         Assertions.assertThat(wallet).isInstanceOf(Wallet.class);
@@ -28,7 +27,8 @@ public class WalletTest {
     })
     void 월렛_베팅률_적용_테스트(int betMoney, GameResult gameResult, int expectedProfit) {
         // given
-        Wallet wallet = Wallet.generateEmptyWalletFrom(betMoney);
+        Wallet wallet = new Wallet();
+        wallet.bet(betMoney);
 
         // when
         wallet.winBetRate(gameResult);
@@ -41,7 +41,7 @@ public class WalletTest {
     @Test
     void 베팅_금액_추가_테스트() {
         // given
-        Wallet wallet = Wallet.generateEmptyWalletFrom(0);
+        Wallet wallet = new Wallet();
 
         // when
         wallet.bet(1000);
