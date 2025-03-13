@@ -145,4 +145,38 @@ public class PlayerTest {
                 )
         );
     }
+
+    @DisplayName("플레이어가 가진 카드의 블랙잭 여부를 판단한다.")
+    @ParameterizedTest
+    @MethodSource("createBlackJackCase")
+    void test2(List<Card> inputCard, boolean expected) {
+        //given
+        Hand hand = Hand.of(inputCard);
+        Player dealer = Player.of(hand, "플레이어1", Money.of("100000"));
+        //when
+        final boolean actual = dealer.isBlackJack();
+        //then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream createBlackJackCase() {
+        return Stream.of(
+                Arguments.of(
+                        List.of(
+                                new Card(CardNumber.TEN, CardShape.CLOVER),
+                                new Card(CardNumber.QUEEN, CardShape.CLOVER),
+                                new Card(CardNumber.TWO, CardShape.CLOVER)
+                        ),
+                        true
+                ),
+                Arguments.of(
+                        List.of(
+                                new Card(CardNumber.A, CardShape.CLOVER),
+                                new Card(CardNumber.QUEEN, CardShape.CLOVER),
+                                new Card(CardNumber.TWO, CardShape.CLOVER)
+                        ),
+                        false
+                )
+        );
+    }
 }
