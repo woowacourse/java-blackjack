@@ -1,31 +1,39 @@
 package domain.participant;
 
-import domain.card.Hand;
+import domain.Money;
+import domain.card.Score;
+import java.util.Collection;
 
-public final class Dealer extends Participant {
+public final class Dealer implements Role {
 
   private static final String DEFAULT_NAME = DealerRoster.DEFAULT.getName();
+  private final Money money;
 
-  public Dealer() {
-    super();
+  public Dealer(Money money) {
+    this.money = money;
   }
 
-  public Dealer(final Hand hand) {
-    super(hand);
+  public static Dealer generateFrom(Collection<Money> values) {
+    final int total = values.stream()
+        .mapToInt(Money::getValue)
+        .sum();
+    final Money money = new Money(total);
+    return new Dealer(money);
   }
 
   @Override
-  public boolean isHit() {
-    return calculateScore().isDealerNeedHit();
+  public boolean isHit(Score score) {
+    return score.isDealerNeedHit();
   }
 
   @Override
-  public boolean isDealer() {
-    return true;
+  public Money getMoney() {
+    return money;
   }
 
   @Override
   public String getName() {
     return DEFAULT_NAME;
   }
+
 }
