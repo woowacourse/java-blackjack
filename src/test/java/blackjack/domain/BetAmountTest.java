@@ -7,13 +7,15 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class BetAmountTest {
     @Test
     @DisplayName("겜블러가 패배했다면 배팅금액을 잃는다")
     void testBetAmount() {
         BetAmount betAmount = new BetAmount(10000);
         Profit profit = betAmount.getProfit(GameResult.LOSE);
-        Assertions.assertThat(profit).isEqualTo(new Profit(-10000));
+        assertThat(profit).isEqualTo(new Profit(-10000));
     }
 
     @Test
@@ -21,7 +23,7 @@ public class BetAmountTest {
     void testBetAmount1() {
         BetAmount betAmount = new BetAmount(10000);
         Profit profit = betAmount.getProfit(GameResult.BLACKJACK);
-        Assertions.assertThat(profit).isEqualTo(new Profit(10000 * 1.5));
+        assertThat(profit).isEqualTo(new Profit(10000 * 1.5));
     }
 
     @Test
@@ -29,7 +31,7 @@ public class BetAmountTest {
     void testBetAmount2() {
         BetAmount betAmount = new BetAmount(10000);
         Profit profit = betAmount.getProfit(GameResult.WIN);
-        Assertions.assertThat(profit).isEqualTo(new Profit(10000));
+        assertThat(profit).isEqualTo(new Profit(10000));
     }
 
     @Test
@@ -37,6 +39,14 @@ public class BetAmountTest {
     void testBetAmount3() {
         BetAmount betAmount = new BetAmount(10000);
         Profit profit = betAmount.getProfit(GameResult.DRAW);
-        Assertions.assertThat(profit).isEqualTo(new Profit(0));
+        assertThat(profit).isEqualTo(new Profit(0));
+    }
+
+    @Test
+    @DisplayName("배팅 금액이 음수면 예외를 던진다")
+    void testBetAmount4() {
+        Assertions.assertThatThrownBy(
+                () -> new BetAmount(-1000)
+        ).isInstanceOf(IllegalArgumentException.class);
     }
 }
