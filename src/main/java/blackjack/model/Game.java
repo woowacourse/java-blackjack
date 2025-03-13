@@ -50,7 +50,7 @@ public class Game {
     public Map<Player, MatchResult> judgeMatchResults() {
         Map<Player, MatchResult> results = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
-            results.put(player, MatchResult.judge(dealer, player));
+            results.put(player, MatchResult.calculatePlayerResult(dealer, player));
         }
         return results;
     }

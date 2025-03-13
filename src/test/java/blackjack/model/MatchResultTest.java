@@ -26,7 +26,7 @@ class MatchResultTest {
         Dealer dealer = new Dealer();
 
         // when
-        MatchResult matchResult = MatchResult.judge(dealer, player);
+        MatchResult matchResult = MatchResult.calculatePlayerResult(dealer, player);
 
         // then
         assertThat(matchResult)
@@ -44,7 +44,7 @@ class MatchResultTest {
         dealer.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
 
         // when
-        MatchResult matchResult = MatchResult.judge(dealer, player);
+        MatchResult matchResult = MatchResult.calculatePlayerResult(dealer, player);
 
         // then
         assertThat(matchResult)
@@ -63,7 +63,7 @@ class MatchResultTest {
         dealer.receiveHand(new Card(Suit.SPADES, CardValue.KING));
 
         // when
-        MatchResult matchResult = MatchResult.judge(dealer, player);
+        MatchResult matchResult = MatchResult.calculatePlayerResult(dealer, player);
 
         // then
         assertThat(matchResult)
@@ -82,11 +82,11 @@ class MatchResultTest {
         dealer.receiveHand(new Card(Suit.SPADES, CardValue.KING));
 
         // when
-        MatchResult matchResult = MatchResult.judge(dealer, player);
+        MatchResult matchResult = MatchResult.calculatePlayerResult(dealer, player);
 
         // then
         assertThat(matchResult)
-                .isSameAs(MatchResult.WIN);
+                .isSameAs(MatchResult.BLACKJACK);
     }
 
     @DisplayName("플레이어는 블랙잭이 아니고 딜러가 블랙잭이면 진다.")
@@ -101,7 +101,7 @@ class MatchResultTest {
         dealer.receiveHand(new Card(Suit.SPADES, CardValue.KING));
 
         // when
-        MatchResult matchResult = MatchResult.judge(dealer, player);
+        MatchResult matchResult = MatchResult.calculatePlayerResult(dealer, player);
 
         // then
         assertThat(matchResult)
@@ -115,9 +115,9 @@ class MatchResultTest {
             "KING, NINE, KING, NINE, DRAW",
             "KING, KING, KING, EIGHT, WIN"
     })
-    void judgeTest(CardValue playerCard1, CardValue playerCard2,
-                   CardValue dealerCard1, CardValue dealerCard2,
-                   MatchResult expected) {
+    void calculatePlayerResultTest(CardValue playerCard1, CardValue playerCard2,
+                                   CardValue dealerCard1, CardValue dealerCard2,
+                                   MatchResult expected) {
         // given
         Player player = new Player("pobi");
         player.receiveHand(new Card(Suit.SPADES, playerCard1));
@@ -127,7 +127,7 @@ class MatchResultTest {
         dealer.receiveHand(new Card(Suit.SPADES, dealerCard2));
 
         // when
-        MatchResult matchResult = MatchResult.judge(dealer, player);
+        MatchResult matchResult = MatchResult.calculatePlayerResult(dealer, player);
 
         // then
         assertThat(matchResult)

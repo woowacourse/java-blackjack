@@ -5,6 +5,7 @@ import blackjack.model.participant.Player;
 
 public enum MatchResult {
 
+    BLACKJACK("블랙잭"),
     WIN("승"),
     LOSE("패"),
     DRAW("무"),
@@ -16,7 +17,7 @@ public enum MatchResult {
         this.label = label;
     }
 
-    public static MatchResult judge(Dealer dealer, Player player) {
+    public static MatchResult calculatePlayerResult(Dealer dealer, Player player) {
         if (player.isBust()) {
             return LOSE;
         }
@@ -27,7 +28,7 @@ public enum MatchResult {
             return DRAW;
         }
         if (player.isBlackjack()) {
-            return WIN;
+            return BLACKJACK;
         }
         if (dealer.isBlackjack()) {
             return LOSE;
@@ -50,7 +51,7 @@ public enum MatchResult {
     }
 
     public static MatchResult reverse(MatchResult matchResult) {
-        if (matchResult == WIN) {
+        if (matchResult == WIN || matchResult == BLACKJACK) {
             return LOSE;
         }
         if (matchResult == LOSE) {
