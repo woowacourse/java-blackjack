@@ -7,6 +7,7 @@ import blackjack.user.Dealer;
 import blackjack.user.Participants;
 import blackjack.user.Player;
 import blackjack.user.PlayerName;
+import blackjack.user.Wallet;
 import blackjack.view.InputView;
 import blackjack.view.GameView;
 import java.util.List;
@@ -31,7 +32,8 @@ public class BlackjackApplication {
     private static BlackjackGame enterParticipants(final InputView inputView) {
         try {
             List<PlayerName> names = inputView.readNames();
-            return BlackjackGame.createByPlayerNames(CardDeck.shuffleCardDeck(), names);
+            Map<PlayerName, Wallet> playersWallet = inputView.readPlayerPrincipals(names);
+            return BlackjackGame.createByPlayerNames(CardDeck.shuffleCardDeck(), playersWallet);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return enterParticipants(inputView);

@@ -1,8 +1,13 @@
 package blackjack.view;
 
+import blackjack.user.Player;
 import blackjack.user.PlayerName;
+import blackjack.user.Wallet;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class InputView {
@@ -24,6 +29,28 @@ public class InputView {
         }
     }
 
+    public Map<PlayerName, Wallet> readPlayerPrincipals(final List<PlayerName> playerNames) {
+        Map<PlayerName, Wallet> playerWallet = new LinkedHashMap<>();
+        for(PlayerName playerName : playerNames) {
+            Wallet wallet = readPlayerPrincipal(playerName);
+            playerWallet.put(playerName, wallet);
+        }
+
+        return playerWallet;
+    }
+
+    private Wallet readPlayerPrincipal(final PlayerName playerName) {
+        try {
+            System.out.printf("%n%s의 배팅 금액은?(1만원에서 1,000만원까지 배팅 가능합니다.)%n", playerName.getName());
+            int principal = parseStringToInteger(scanner.nextLine());
+
+            return Wallet.initialBetting(principal);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return readPlayerPrincipal(playerName);
+        }
+    }
+
     public boolean readGetOneMore(final String name) {
         try {
             System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
@@ -39,6 +66,14 @@ public class InputView {
 
     private List<String> parseStringToList(final String input) {
         return Arrays.asList(input.split(","));
+    }
+
+    private int parseStringToInteger(final String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("숫자만 입력 가능합니다.");
+        }
     }
 
     private void validateBlank(final String input) {
