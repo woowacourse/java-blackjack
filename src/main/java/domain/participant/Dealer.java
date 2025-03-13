@@ -52,13 +52,14 @@ public class Dealer extends Participant {
     }
 
     public GameResult judgeResult(Player player) {
-        if (player.isBurst()) {
-            return GameResult.LOSE;
+        if (player.isBlackJack() && !this.isBlackJack()) {
+            return GameResult.BLACKJACK;
         }
-        if (this.isBurst() || player.calculateScore() > this.calculateScore()) {
+        if ((this.isBurst() && !player.isBurst()) || (!player.isBurst()
+                && player.calculateScore() > this.calculateScore())) {
             return GameResult.WIN;
         }
-        if (player.calculateScore() < this.calculateScore()) {
+        if (player.isBurst() || (player.calculateScore() < this.calculateScore()) && !this.isBurst()) {
             return GameResult.LOSE;
         }
         return GameResult.DRAW;

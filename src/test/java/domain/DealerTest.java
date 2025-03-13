@@ -172,7 +172,7 @@ class DealerTest {
                                 new Card(CardNumber.TEN, CardShape.CLOVER),
                                 new Card(CardNumber.TWO, CardShape.CLOVER)
                         ),
-                        "WIN"
+                        "BLACKJACK"
                 ),
                 Arguments.of(
                         // 12
@@ -264,12 +264,12 @@ class DealerTest {
         assertThat(actual).isEqualTo(GameResult.LOSE);
     }
 
-    @DisplayName("딜러가 버스트인 경우, 승리한다")
+    @DisplayName("플레이어가 버스트가 아니면서 딜러가 버스트인 경우, 승리한다")
     @Test
     void 딜러가_버스트인_경우_승리한다() {
         // given
         Hand playerHand = Hand.of(List.of(
-                new Card(CardNumber.TEN, CardShape.CLOVER),
+                new Card(CardNumber.NINE, CardShape.CLOVER),
                 new Card(CardNumber.A, CardShape.CLOVER)
         ));
         Hand dealerHand = Hand.of(List.of(
