@@ -63,7 +63,7 @@ class ResultTest {
     }
 
     private static Player makeUser(final String name, final BlackJackCards blackJackCards) {
-        Player player = new Player(name);
+        Player player = new Player(name, 1);
         player.receiveCards(blackJackCards);
         return player;
     }

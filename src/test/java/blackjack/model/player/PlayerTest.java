@@ -69,7 +69,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player("pobi");
+        player = new Player("pobi", 1);
     }
 
     @Test
@@ -106,5 +106,25 @@ class PlayerTest {
         player.receiveCards(blackJackCards);
 
         assertThat(player.canDrawMoreCard()).isEqualTo(expected);
+    }
+
+    @Test
+    void 돈을_잃을_수_있다() {
+
+        Player player = new Player("pobi", 1000);
+
+        player.loseMoney();
+
+        assertThat(player.getMoney()).isEqualTo(-1000);
+    }
+
+    @Test
+    void 돈을_얻을_수_있다() {
+
+        Player player = new Player("pobi", 1000);
+
+        player.addMoney(1000);
+
+        assertThat(player.getMoney()).isEqualTo(2000);
     }
 }

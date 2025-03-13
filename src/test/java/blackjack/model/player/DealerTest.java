@@ -8,6 +8,7 @@ import blackjack.model.card.BlackJackCards;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.initializer.DefaultCardDeckInitializer;
+import blackjack.model.player.money.Money;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
@@ -134,7 +135,7 @@ class DealerTest {
                                         )
                                 )
                         ),
-                        true
+                        false
                 ),
                 Arguments.of(
                         new BlackJackCards(
@@ -202,7 +203,7 @@ class DealerTest {
     }
 
     private static Player makeUser(final String name, final BlackJackCards blackJackCards) {
-        Player player = new Player(name);
+        Player player = new Player(name, 1);
         player.receiveCards(blackJackCards);
         return player;
     }
@@ -290,7 +291,7 @@ class DealerTest {
                         createCard(CardNumber.FIVE))
         ));
         Dealer dealer = new Dealer("딜러", cardDeck);
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 1);
 
         dealer.dealInitialCards(List.of(player));
 
@@ -396,7 +397,7 @@ class DealerTest {
         private final boolean canDrawMoreCard;
 
         public FakeBlackJackPlayer(final String name, final boolean canDrawMoreCard) {
-            super(name);
+            super(name, Money.from(1));
             this.canDrawMoreCard = canDrawMoreCard;
         }
 

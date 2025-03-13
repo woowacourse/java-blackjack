@@ -1,8 +1,8 @@
 package blackjack.model.player;
 
 import blackjack.model.card.BlackJackCards;
+import blackjack.model.player.money.Money;
 import java.util.Collections;
-import java.util.Objects;
 
 public abstract class BlackJackPlayer {
 
@@ -10,10 +10,12 @@ public abstract class BlackJackPlayer {
 
     protected final String name;
     protected final BlackJackCards blackJackCards;
+    protected final Money money;
 
-    protected BlackJackPlayer(final String name) {
+    protected BlackJackPlayer(final String name, final Money money) {
         this.name = name;
         this.blackJackCards = BlackJackCards.empty();
+        this.money = money;
     }
 
     public final void receiveCards(final BlackJackCards blackJackCards) {
@@ -43,6 +45,10 @@ public abstract class BlackJackPlayer {
         return calculateOptimalPoint() > BLACKJACK_POINT;
     }
 
+    public abstract BlackJackCards openInitialCards();
+
+    protected abstract boolean canDrawMoreCard();
+
     public final String getName() {
         return name;
     }
@@ -51,25 +57,7 @@ public abstract class BlackJackPlayer {
         return blackJackCards;
     }
 
-    public abstract BlackJackCards openInitialCards();
-
-    protected abstract boolean canDrawMoreCard();
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof BlackJackPlayer blackJackPlayer)) {
-            return false;
-        }
-        return Objects.equals(name, blackJackPlayer.name) && Objects.equals(
-                blackJackCards, blackJackPlayer.blackJackCards);
+    public final int getMoney() {
+        return money.getValue();
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, blackJackCards);
-    }
-
 }

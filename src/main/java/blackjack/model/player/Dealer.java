@@ -3,6 +3,7 @@ package blackjack.model.player;
 import blackjack.model.card.BlackJackCards;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.initializer.CardDeckInitializer;
+import blackjack.model.player.money.Money;
 import java.util.List;
 
 public class Dealer extends BlackJackPlayer {
@@ -15,7 +16,7 @@ public class Dealer extends BlackJackPlayer {
     private final CardDeck cardDeck;
 
     public Dealer(final String name, final CardDeck cardDeck) {
-        super(name);
+        super(name, Money.zero());
         this.cardDeck = cardDeck;
     }
 

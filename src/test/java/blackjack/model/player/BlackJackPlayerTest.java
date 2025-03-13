@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.card.BlackJackCards;
 import blackjack.model.card.CardNumber;
+import blackjack.model.player.money.Money;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
@@ -229,7 +230,11 @@ public class BlackJackPlayerTest {
     private static class RawBlackJackPlayer extends BlackJackPlayer {
 
         RawBlackJackPlayer(String name) {
-            super(name);
+            super(name, Money.from(1));
+        }
+
+        RawBlackJackPlayer(String name, int bettingMoney) {
+            super(name, Money.from(bettingMoney));
         }
 
         static RawBlackJackPlayer withCards(final String name, final BlackJackCards blackJackCards) {

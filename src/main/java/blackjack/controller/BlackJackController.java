@@ -57,7 +57,7 @@ public class BlackJackController {
     private List<Player> makePlayers() {
         return inputView.readUserNames()
                 .stream()
-                .map(Player::new)
+                .map(name -> new Player(name, 1))
                 .toList();
     }
 
