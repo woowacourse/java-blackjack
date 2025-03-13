@@ -15,10 +15,6 @@ public class Betting {
         return new Betting(bettingMoney, bettingMoney);
     }
 
-    public int getBettingMoney() {
-        return bettingMoney;
-    }
-
     public void earn(final int money) {
         validateNegativeMoney(money);
         balance += money;
@@ -40,5 +36,9 @@ public class Betting {
         if (money < 0) {
             throw new IllegalArgumentException("금액은 음수가 될 수 없습니다.");
         }
+    }
+
+    public int getBettingMoney() {
+        return bettingMoney;
     }
 }

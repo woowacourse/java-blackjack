@@ -8,9 +8,10 @@ import java.util.List;
 public class Dealer extends BlackJackPlayer {
 
     private static final float BLACKJACK_REWARD_RATE = 1.5f;
-    private static final int INITIAL_DRAW_AMOUNT = 2;
+    private static final int BLACKJACK_CARD_SIZE = 2;
     private static final int SINGLE_DRAW_AMOUNT = 1;
     private static final int DEALER_DRAWABLE_POINT = 17;
+    private static final int INITIAL_DRAW_AMOUNT = 2;
     private static final String DEFAULT_NAME = "딜러";
 
     private final CardDeck cardDeck;
@@ -87,7 +88,8 @@ public class Dealer extends BlackJackPlayer {
     }
 
     public boolean isBlackJack(final BlackJackPlayer blackJackPlayer) {
-        return blackJackPlayer.calculateOptimalPoint() == BLACKJACK_POINT && blackJackPlayer.hasCardSize(2);
+        return blackJackPlayer.calculateOptimalPoint() == BLACKJACK_POINT
+                && blackJackPlayer.hasCardSize(BLACKJACK_CARD_SIZE);
     }
 
     private BlackJackCards drawCard(final int amount) {
@@ -95,7 +97,7 @@ public class Dealer extends BlackJackPlayer {
     }
 
     public int getProfit(final List<Player> players) {
-        return -players.stream()
+        return (-1) * players.stream()
                 .mapToInt(Player::getProfit)
                 .sum();
     }

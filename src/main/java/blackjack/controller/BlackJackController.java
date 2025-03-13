@@ -30,9 +30,7 @@ public class BlackJackController {
 
         dealInitialCards(dealer, players);
         drawMoreCards(dealer, players);
-
-        players.forEach(dealer::fight);
-
+        fight(dealer, players);
         printGameResults(dealer, players);
     }
 
@@ -51,6 +49,12 @@ public class BlackJackController {
     private void drawMoreCards(final Dealer dealer, final List<Player> players) {
         players.forEach(player -> drawMorePlayerCards(dealer, player));
         outputView.printDealerDrawnMoreCards(dealer.drawSelf());
+    }
+
+    private void fight(final Dealer dealer, final List<Player> players) {
+        for (Player player : players) {
+            dealer.fight(player);
+        }
     }
 
     private void drawMorePlayerCards(final Dealer dealer, final Player player) {
