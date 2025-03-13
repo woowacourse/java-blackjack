@@ -6,8 +6,7 @@ import domain.participant.Player;
 public enum GameResult {
     WIN("승"),
     LOSE("패"),
-    PUSH("무"),
-    NONE("없음");
+    PUSH("무");
 
     private final String name;
 

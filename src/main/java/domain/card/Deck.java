@@ -1,11 +1,12 @@
 package domain.card;
 
 import domain.shuffler.Shuffler;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Set;
-import java.util.Stack;
 
 public class Deck {
-    private final Stack<Card> deck = new Stack<>();
+    private final Deque<Card> deck = new ArrayDeque<>();
 
     public Deck(Shuffler shuffler) {
         for (Rank rank : Rank.values()) {

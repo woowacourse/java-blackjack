@@ -1,11 +1,11 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.card.Deck;
 import domain.game.Game;
-import domain.game.GameResult;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.shuffler.RandomShuffler;
@@ -68,7 +68,9 @@ class GameTest {
         List<Player> players = game.getPlayers();
         Player player = players.getFirst();
         // when & then
-        assertThat(player.calculateGameResult(game.getDealer())).isNotEqualTo(GameResult.NONE);
+        assertThatCode(() -> {
+            player.calculateGameResult(game.getDealer());
+        }).doesNotThrowAnyException();
     }
 
     @Test

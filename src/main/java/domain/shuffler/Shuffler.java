@@ -1,8 +1,8 @@
 package domain.shuffler;
 
 import domain.card.Card;
-import java.util.List;
+import java.util.Deque;
 
 public interface Shuffler {
-    void shuffle(List<Card> cards);
+    void shuffle(Deque<Card> cards);
 }
