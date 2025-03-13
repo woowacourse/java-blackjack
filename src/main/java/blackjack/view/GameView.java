@@ -50,7 +50,8 @@ public class GameView {
     private void printDealerFinalCardResult(final Dealer dealer) {
         String cardResult = parseCardToString(dealer.getCards().openCards());
         System.out.println();
-        System.out.printf("딜러카드: %s - 결과: %d%n", cardResult, dealer.getCards().calculateDenominations());
+        System.out.printf("딜러카드: %s - 결과: %d%n", cardResult,
+            dealer.getCards().calculateDenominations());
     }
 
     private void printPlayerFinalCardResult(final Player player) {

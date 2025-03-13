@@ -4,8 +4,8 @@ import blackjack.game.GameResult;
 
 public class Wallet {
 
-    private static final int PRINCIPAL_MIN_NUMBER = 10000;
-    private static final int PRINCIPAL_MAX_NUMBER = 10000000;
+    private static final int PRINCIPAL_MIN_NUMBER = 10_000;
+    private static final int PRINCIPAL_MAX_NUMBER = 10_000_000;
     private static final int DEFAULT_PROFIT = 0;
     private static final double BLACKJACK_PROFIT_RATE = 1.5;
 

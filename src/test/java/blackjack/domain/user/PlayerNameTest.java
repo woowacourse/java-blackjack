@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import blackjack.card.CardHand;
 import blackjack.user.Player;
 import blackjack.user.PlayerName;
-import blackjack.user.Wallet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;

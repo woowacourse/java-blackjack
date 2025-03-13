@@ -12,7 +12,6 @@ import blackjack.card.Suit;
 import blackjack.user.Dealer;
 import blackjack.user.Player;
 import blackjack.user.PlayerName;
-import blackjack.user.Wallet;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;

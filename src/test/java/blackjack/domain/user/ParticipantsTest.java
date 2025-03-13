@@ -8,7 +8,6 @@ import blackjack.user.Dealer;
 import blackjack.user.Participants;
 import blackjack.user.Player;
 import blackjack.user.PlayerName;
-import blackjack.user.Wallet;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;
