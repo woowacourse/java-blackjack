@@ -87,4 +87,13 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
         return String.format("%s카드: %s", name, cardsMessage);
     }
+
+    public void printGamerBetResult(int dealerBetResult, Map<String, Integer> playerBetResult) {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(LINE_SEPARATOR);
+        sb.append("## 최종수익").append(LINE_SEPARATOR)
+                .append("딜러: ").append(dealerBetResult).append(LINE_SEPARATOR);
+        playerBetResult.forEach((key, value) -> sb.append(key).append(": ").append(value).append(LINE_SEPARATOR));
+        System.out.println(sb);
+    }
 }
