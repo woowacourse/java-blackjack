@@ -41,10 +41,10 @@ public class CardsTest {
         
         // expected
         for (CardNumber cardNumber : CardNumber.values()) {
-            org.assertj.core.api.Assertions.assertThat(numberCount.get(cardNumber)).isEqualTo(4);
+            assertThat(numberCount.get(cardNumber)).isEqualTo(4);
         }
         for (CardShape shape : CardShape.values()) {
-            org.assertj.core.api.Assertions.assertThat(shapeCount.get(shape)).isEqualTo(13);
+            assertThat(shapeCount.get(shape)).isEqualTo(13);
         }
     }
     
