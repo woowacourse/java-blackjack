@@ -39,21 +39,21 @@ public final class Dealer extends Participant {
         return hand.getFirst();
     }
 
-    public MatchResult compareWith(Participant participant) {
-        if (participant.isBust()) {
-            return MatchResult.WIN;
-        }
-        if (this.isBust()) {
+    public MatchResult evaluateOutcome(Participant participant) {
+        if (!this.isBust() && participant.isBust()) {
             return MatchResult.LOSE;
+        }
+        if (this.isBust() && !participant.isBust()) {
+            return MatchResult.WIN;
         }
         if (this.isBlackjack() && participant.isBlackjack()) {
             return MatchResult.DRAW;
         }
-        if (participant.isBlackjack()) {
-            return MatchResult.LOSE;
-        }
-        if (this.isBlackjack()) {
+        if (!this.isBlackjack() && participant.isBlackjack()) {
             return MatchResult.WIN;
+        }
+        if (this.isBlackjack() && !participant.isBlackjack()) {
+            return MatchResult.LOSE;
         }
         return determineByCompareTotal(participant.getTotal());
     }
@@ -61,10 +61,10 @@ public final class Dealer extends Participant {
     private MatchResult determineByCompareTotal(int participantTotal) {
         int dealerTotal = getTotal();
         if (participantTotal < dealerTotal) {
-            return MatchResult.WIN;
+            return MatchResult.LOSE;
         }
         if (dealerTotal < participantTotal) {
-            return MatchResult.LOSE;
+            return MatchResult.WIN;
         }
         return MatchResult.DRAW;
     }

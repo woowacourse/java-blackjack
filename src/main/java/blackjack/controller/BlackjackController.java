@@ -100,7 +100,7 @@ public final class BlackjackController {
     private Map<Player, MatchResult> judgeMatchResults(Dealer dealer, GamePlayers gamePlayers) {
         Map<Player, MatchResult> results = new LinkedHashMap<>();
         for (Player player : gamePlayers) {
-            results.put(player, dealer.compareWith(player).getReversed());
+            results.put(player, dealer.evaluateOutcome(player));
         }
         return results;
     }

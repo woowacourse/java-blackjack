@@ -257,9 +257,9 @@ class DealerTest {
     @Nested
     class CompareWithTest {
 
-        @DisplayName("참가자가 버스트인 경우 딜러가 이긴다.")
+        @DisplayName("참가자가 버스트인 경우 참가자가 진다.")
         @Test
-        void win_WhenPlayerBust() {
+        void lose_WhenPlayerBust() {
             // given
             Player player = new Player(new Name("포비"));
             player.receiveHand(SPADE_TEN_CARD);
@@ -268,29 +268,29 @@ class DealerTest {
             Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
 
             // when
-            MatchResult matchResult = dealer.compareWith(player);
-
-            // then
-            assertThat(matchResult)
-                    .isSameAs(MatchResult.WIN);
-        }
-
-        @DisplayName("참가자는 버스트가 아니면서 딜러가 버스트인 경우 딜러가 진다.")
-        @Test
-        void lose_WhenDealerBust() {
-            // given
-            Player player = new Player(new Name("포비"));
-            Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
-            dealer.receiveHand(SPADE_TEN_CARD);
-            dealer.receiveHand(SPADE_TEN_CARD);
-            dealer.receiveHand(SPADE_TEN_CARD);
-
-            // when
-            MatchResult matchResult = dealer.compareWith(player);
+            MatchResult matchResult = dealer.evaluateOutcome(player);
 
             // then
             assertThat(matchResult)
                     .isSameAs(MatchResult.LOSE);
+        }
+
+        @DisplayName("딜러만 버스트인 경우 플레이어가 이긴다.")
+        @Test
+        void win_WhenDealerBust() {
+            // given
+            Player player = new Player(new Name("포비"));
+            Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+            dealer.receiveHand(SPADE_TEN_CARD);
+            dealer.receiveHand(SPADE_TEN_CARD);
+            dealer.receiveHand(SPADE_TEN_CARD);
+
+            // when
+            MatchResult matchResult = dealer.evaluateOutcome(player);
+
+            // then
+            assertThat(matchResult)
+                    .isSameAs(MatchResult.WIN);
         }
 
         @DisplayName("둘 다 블랙잭인 경우 무승부이다.")
@@ -305,16 +305,16 @@ class DealerTest {
             dealer.receiveHand(SPADE_TEN_CARD);
 
             // when
-            MatchResult matchResult = dealer.compareWith(player);
+            MatchResult matchResult = dealer.evaluateOutcome(player);
 
             // then
             assertThat(matchResult)
                     .isSameAs(MatchResult.DRAW);
         }
 
-        @DisplayName("참가자만 블랙잭이면 딜러는 진다.")
+        @DisplayName("참가자만 블랙잭이면 이긴다.")
         @Test
-        void lose_WhenOnlyPlayerBlackjack() {
+        void win_WhenOnlyPlayerBlackjack() {
             // given
             Player player = new Player(new Name("포비"));
             player.receiveHand(SPADE_ACE_CARD);
@@ -324,16 +324,16 @@ class DealerTest {
             dealer.receiveHand(SPADE_TEN_CARD);
 
             // when
-            MatchResult matchResult = dealer.compareWith(player);
+            MatchResult matchResult = dealer.evaluateOutcome(player);
 
             // then
             assertThat(matchResult)
-                    .isSameAs(MatchResult.LOSE);
+                    .isSameAs(MatchResult.WIN);
         }
 
-        @DisplayName("딜러만 블랙잭이면 이긴다.")
+        @DisplayName("딜러만 블랙잭이면 참가자는 진다.")
         @Test
-        void win_WhenOnlyDealerBlackjack() {
+        void lose_WhenOnlyDealerBlackjack() {
             // given
             Player player = new Player(new Name("포비"));
             player.receiveHand(SPADE_TEN_CARD);
@@ -343,19 +343,19 @@ class DealerTest {
             dealer.receiveHand(SPADE_TEN_CARD);
 
             // when
-            MatchResult matchResult = dealer.compareWith(player);
+            MatchResult matchResult = dealer.evaluateOutcome(player);
 
             // then
             assertThat(matchResult)
-                    .isSameAs(MatchResult.WIN);
+                    .isSameAs(MatchResult.LOSE);
         }
 
         @DisplayName("모두 블랙잭이나 버스트가 아닌 경우 숫자로 승부를 낸다.")
         @ParameterizedTest
         @CsvSource({
-                "KING, EIGHT, KING, KING, WIN",
+                "KING, EIGHT, KING, KING, LOSE",
                 "KING, NINE, KING, NINE, DRAW",
-                "KING, KING, KING, EIGHT, LOSE"
+                "KING, KING, KING, EIGHT, WIN"
         })
         void compareWithTest(CardValue playerCardValue1, CardValue playerCardValue2,
                        CardValue dealerCardValue1, CardValue dealerCardValue2,
@@ -369,7 +369,7 @@ class DealerTest {
             dealer.receiveHand(createCard(Suit.SPADES, dealerCardValue2));
 
             // when
-            MatchResult matchResult = dealer.compareWith(player);
+            MatchResult matchResult = dealer.evaluateOutcome(player);
 
             // then
             assertThat(matchResult)
