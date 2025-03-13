@@ -96,7 +96,7 @@ public class PlayerTest {
     }
 
     @Test
-    void 플레이어의_점수가_21점_이하일_때_카드를_더_받을수있다() {
+    void 플레이어의_점수가_21점_미만일_때_카드를_더_받을수있다() {
         //given
         player.takeCards(Card.SPADE_J, Card.SPADE_K);
 
@@ -108,9 +108,9 @@ public class PlayerTest {
     }
 
     @Test
-    void 플레이어의_점수가_21점을_초과하면_카드를_더_받을수없다() {
+    void 플레이어의_점수가_21점_이상이면_카드를_더_받을수없다() {
         //given
-        player.takeCards(Card.SPADE_J, Card.SPADE_K, Card.SPADE_2);
+        player.takeCards(Card.SPADE_J, Card.SPADE_A);
 
         //when
         boolean canTakeMore = player.canTakeMoreCard();

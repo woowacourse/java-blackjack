@@ -4,8 +4,8 @@ import domain.card.CardHand;
 
 public class Player extends Gambler {
 
-    public static final int TAKE_CARD_THRESHOLD = 21;
-    public static final int NAME_LENGTH_THRESHOLD = 10;
+    private static final int TAKE_CARD_THRESHOLD = 21;
+    private static final int NAME_LENGTH_THRESHOLD = 10;
 
     public Player(String name, CardHand cardHand) {
         super(name, cardHand);
@@ -15,7 +15,7 @@ public class Player extends Gambler {
 
     @Override
     public boolean canTakeMoreCard() {
-        return (calculateScore() <= TAKE_CARD_THRESHOLD);
+        return calculateScore() < TAKE_CARD_THRESHOLD;
     }
 
     private void validateLength(String name) {
