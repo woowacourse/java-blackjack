@@ -2,10 +2,12 @@ package controller;
 
 import domain.card.CardDeck;
 import domain.card.StandardCardsInitializer;
+import domain.gamer.Betting;
 import domain.gamer.Dealer;
 import domain.gamer.Nickname;
 import domain.gamer.Player;
 import domain.rule.BlackjackMatchResult;
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
@@ -43,11 +45,19 @@ public class BlackJackController {
     }
 
     private List<Player> setPlayers() {
-        List<String> names = inputView.readNames();
-        return names.stream()
+        List<Player> players = new ArrayList<>();
+
+        List<Nickname> nicknames = inputView.readNames().stream()
                 .map(Nickname::new)
-                .map(Player::new)
                 .toList();
+
+        for (Nickname nickname : nicknames) {
+            Betting betting = new Betting(inputView.readBettingAmount(nickname));
+            players.add(new Player(nickname, betting));
+        }
+
+        return players;
+
     }
 
     private void prepareGame(Dealer dealer, List<Player> players, CardDeck deck) {

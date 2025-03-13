@@ -1,5 +1,6 @@
 package view;
 
+import domain.gamer.Nickname;
 import domain.gamer.Player;
 import java.util.Arrays;
 import java.util.List;
@@ -29,5 +30,10 @@ public class InputView {
 
     private String readLine() {
         return scanner.nextLine();
+    }
+
+    public Integer readBettingAmount(Nickname nickname) {
+        System.out.printf("%s의 배팅 금액은?\n", nickname);
+        return scanner.nextInt();
     }
 }
