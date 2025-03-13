@@ -4,6 +4,8 @@ import model.card.Deck;
 import model.participant.Participant;
 
 public class Turn {
+    private static final int INITIAL_DEAL_CARD_COUNT = 2;
+
     private final Participant participant;
 
     public Turn(Participant participant) {
@@ -11,9 +13,8 @@ public class Turn {
     }
 
     public void dealInitialCards(Deck deck) {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < INITIAL_DEAL_CARD_COUNT; i++) {
             participant.receiveCard(deck.pick());
         }
     }
-
 }
