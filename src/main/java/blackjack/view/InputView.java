@@ -18,7 +18,7 @@ public class InputView {
     }
 
     public int readBatAmount(String name) {
-        System.out.printf("%s의 배팅 금액은?", name);
+        System.out.printf(NEW_LINE + "%s의 배팅 금액은?" + NEW_LINE, name);
         String inputBatAmount = CONSOLE.nextLine();
         validateIsNumeric(inputBatAmount);
 
@@ -26,7 +26,7 @@ public class InputView {
     }
 
     public boolean readOneMoreDealCard(final Player player) {
-        System.out.println(NEW_LINE + player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = CONSOLE.nextLine();
         validateYesOrNo(input);
 

@@ -31,7 +31,7 @@ public class BlackjackController {
 
         dealMoreCards(gameManager, players);
         dealMoreDealerCards(gameManager);
-        displayGameResults(players);
+        displayGameResults(gameManager);
     }
 
     private GameManager createGameManager() {
@@ -63,6 +63,7 @@ public class BlackjackController {
             while (!gameManager.isPlayerBust(gambler) && inputView.readOneMoreDealCard(gambler)) {
                 gameManager.addCardForGambler(gambler);
                 outputView.printCardsToPlayer(gambler);
+                outputView.println();
             }
         }
     }
@@ -73,8 +74,8 @@ public class BlackjackController {
         }
     }
 
-    private void displayGameResults(final Players players) {
-        outputView.printResultCardsToPlayers(players);
-//        outputView.printGameResults(players.getGameResult());
+    private void displayGameResults(final GameManager gameManager) {
+        outputView.printResultCardsToPlayers(gameManager.getPlayers());
+        outputView.printGameResults(gameManager.getGameResult());
     }
 }

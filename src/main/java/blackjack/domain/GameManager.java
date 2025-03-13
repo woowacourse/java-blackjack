@@ -40,6 +40,10 @@ public class GameManager {
         return false;
     }
 
+    public GameResults getGameResult() {
+        return players.getGameResult();
+    }
+
     private Dealer initDealer() {
         List<Card> cards = cardPack.getDealByCount(2);
 
