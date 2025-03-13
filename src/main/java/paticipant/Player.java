@@ -36,6 +36,10 @@ public class Player {
 		return participant.calculateDuelResult();
 	}
 
+	public boolean isBlackjack() {
+		return participant.isBlackjack();
+	}
+
 	public boolean isBust() {
 		return participant.isBust();
 	}
