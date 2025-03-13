@@ -22,9 +22,13 @@ public abstract class Participant {
         hand.add(receivedCard);
     }
 
-    public int calculateCardsSum() {
+    public int getScore() {
         return hand.calculateSum();
     }
 
     public abstract Hand openInitialHand();
+
+    public boolean isBust() {
+        return hand.isBust();
+    }
 }

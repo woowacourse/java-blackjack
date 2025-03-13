@@ -1,21 +1,40 @@
 package domain.result;
 
-import static org.assertj.core.api.Assertions.*;
+import static domain.card.CardNumberType.*;
+import static domain.card.CardType.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
+import domain.card.Hand;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class GameResultStatusTest {
+public class GameResultStatusTest {
+    Dealer bustDealer = new Dealer(new Hand(
+            List.of(new Card(JACK, CLOVER), new Card(KING, CLOVER), new Card(TWO, CLOVER))));
+    Player bustPlayer = new Player("mimi", new Hand(
+            List.of(new Card(JACK, CLOVER), new Card(KING, CLOVER), new Card(THREE, CLOVER))));
+
+    Dealer twentyHandDealer = new Dealer(new Hand(
+            List.of(new Card(JACK, CLOVER), new Card(KING, CLOVER))));
+    Player twentyHandPlayer = new Player("mimi", new Hand(
+            List.of(new Card(JACK, CLOVER), new Card(KING, CLOVER))));
+
+    Dealer twentyOneHandDealer = new Dealer(new Hand(
+            List.of(new Card(JACK, CLOVER), new Card(KING, CLOVER), new Card(ACE, CLOVER))));
+    Player twentyOneHandPlayer = new Player("mimi", new Hand(
+            List.of(new Card(JACK, CLOVER), new Card(KING, CLOVER), new Card(ACE, CLOVER))));
 
     @DisplayName("딜러와 플레이어가 모두 버스트일 경우 플레이어 버스트가 우선이기 때문에, 플레이어의 패배이다")
     @Test
     void test1() {
         //given
-        int dealerSum = 22;
-        int playerSum = 23;
 
         //when
-        GameResultStatus gameResultStatus = GameResultStatus.calculate(dealerSum, playerSum);
+        GameResultStatus gameResultStatus = GameResultStatus.calculate(bustPlayer, bustDealer);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.LOSE);
@@ -25,11 +44,9 @@ class GameResultStatusTest {
     @Test
     void test2() {
         //given
-        int dealerSum = 22;
-        int playerSum = 20;
 
         //when
-        GameResultStatus gameResultStatus = GameResultStatus.calculate(dealerSum, playerSum);
+        GameResultStatus gameResultStatus = GameResultStatus.calculate(twentyHandPlayer, bustDealer);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.WIN);
@@ -39,11 +56,9 @@ class GameResultStatusTest {
     @Test
     void test3() {
         //given
-        int dealerSum = 20;
-        int playerSum = 23;
 
         //when
-        GameResultStatus gameResultStatus = GameResultStatus.calculate(dealerSum, playerSum);
+        GameResultStatus gameResultStatus = GameResultStatus.calculate(bustPlayer, twentyHandDealer);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.LOSE);
@@ -53,11 +68,9 @@ class GameResultStatusTest {
     @Test
     void test4() {
         //given
-        int dealerSum = 20;
-        int playerSum = 21;
 
         //when
-        GameResultStatus gameResultStatus = GameResultStatus.calculate(dealerSum, playerSum);
+        GameResultStatus gameResultStatus = GameResultStatus.calculate(twentyOneHandPlayer, twentyHandDealer);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.WIN);
@@ -67,11 +80,9 @@ class GameResultStatusTest {
     @Test
     void test5() {
         //given
-        int dealerSum = 21;
-        int playerSum = 20;
 
         //when
-        GameResultStatus gameResultStatus = GameResultStatus.calculate(dealerSum, playerSum);
+        GameResultStatus gameResultStatus = GameResultStatus.calculate(twentyHandPlayer, twentyOneHandDealer);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.LOSE);
@@ -81,14 +92,11 @@ class GameResultStatusTest {
     @Test
     void test6() {
         //given
-        int dealerSum = 20;
-        int playerSum = 20;
 
         //when
-        GameResultStatus gameResultStatus = GameResultStatus.calculate(dealerSum, playerSum);
+        GameResultStatus gameResultStatus = GameResultStatus.calculate(twentyHandPlayer, twentyHandDealer);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.DRAW);
     }
-
 }

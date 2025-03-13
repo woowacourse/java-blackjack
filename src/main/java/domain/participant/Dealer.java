@@ -5,7 +5,7 @@ import domain.card.Hand;
 public class Dealer extends Participant {
     private static final int VALID_DRAW_LIMIT = 16;
 
-    private Dealer(Hand hand) {
+    public Dealer(Hand hand) {
         super(hand);
     }
 

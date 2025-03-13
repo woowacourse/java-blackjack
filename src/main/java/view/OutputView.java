@@ -42,12 +42,12 @@ public class OutputView {
 
     public void printCardsResult(Dealer dealer, Players players) {
         String parsedDealerCards = outputFormatter.formatCards(dealer.getCards());
-        int dealerCardsSum = dealer.calculateCardsSum();
+        int dealerCardsSum = dealer.getScore();
         System.out.printf("\n딜러카드: %s - 결과: %d\n", parsedDealerCards, dealerCardsSum);
 
         players.getPlayers().forEach(player -> {
             String parsedPlayerCards = outputFormatter.formatCards(player.getCards());
-            int playerCardsSum = player.calculateCardsSum();
+            int playerCardsSum = player.getScore();
             System.out.printf("%s카드: %s - 결과: %d\n", player.getName(), parsedPlayerCards, playerCardsSum);
 
         });

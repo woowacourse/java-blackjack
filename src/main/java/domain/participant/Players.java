@@ -31,19 +31,11 @@ public class Players {
         return Collections.unmodifiableList(players);
     }
 
-    public List<String> getAllPlayersName() {
-        return players.stream()
-                .map(Player::getName)
-                .toList();
-    }
-
     public GameResult judgeAgainstDealer(Dealer dealer) {
-        int dealerSum = dealer.calculateCardsSum();
         Map<Player, GameResultStatus> gameResult = players.stream()
                 .collect(Collectors.toMap(
                         player -> player,
-                        player -> GameResultStatus.calculate(
-                                dealerSum, player.calculateCardsSum())
+                        player -> GameResultStatus.calculate(player, dealer)
                 ));
         return new GameResult(gameResult);
     }

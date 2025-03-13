@@ -1,38 +1,31 @@
 package domain.result;
 
+import domain.participant.Dealer;
+import domain.participant.Player;
+
 public enum GameResultStatus {
     WIN,
     DRAW,
     LOSE;
 
-    private static final int BLACKJACK_BUST_THRESHOLD = 22;
-
-    public static GameResultStatus calculate(int dealerSum, int playerSum) {
-        if (isPlayerBust(playerSum)) {
-            return LOSE;
+    public static GameResultStatus calculate(Player player, Dealer dealer) {
+        if (player.isBust()) {
+            return GameResultStatus.LOSE;
         }
-        if (isDealerBust(dealerSum)) {
-            return WIN;
+        if (dealer.isBust()) {
+            return GameResultStatus.WIN;
         }
-        return compareHands(dealerSum, playerSum);
+        return compareScores(player, dealer);
     }
 
-    private static boolean isDealerBust(int dealerSum) {
-        return dealerSum >= BLACKJACK_BUST_THRESHOLD;
-    }
-
-    private static boolean isPlayerBust(int playerSum) {
-        return playerSum >= BLACKJACK_BUST_THRESHOLD;
-    }
-
-    private static GameResultStatus compareHands(int dealerSum, int playerSum) {
-        if (playerSum > dealerSum) {
-            return WIN;
+    private static GameResultStatus compareScores(Player player, Dealer dealer) {
+        if (player.getScore() > dealer.getScore()) {
+            return GameResultStatus.WIN;
         }
-        if (playerSum == dealerSum) {
-            return DRAW;
+        if (player.getScore() == dealer.getScore()) {
+            return GameResultStatus.DRAW;
         }
-        return LOSE;
+        return GameResultStatus.LOSE;
     }
 
     public boolean isEqualTo(GameResultStatus gameResultStatus) {
