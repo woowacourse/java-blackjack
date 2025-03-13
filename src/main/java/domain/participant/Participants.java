@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.Money;
+import domain.Bet;
 import domain.card.Deck;
 import domain.card.TrumpCard;
 import exceptions.BlackjackArgumentException;
@@ -39,29 +39,8 @@ public final class Participants {
     validateDealer(dealer);
   }
 
-  private static void validatePlayerNotEmpty(final List<Participant<Player>> participants) {
-    if (participants.isEmpty()) {
-      throw new BlackjackArgumentException("게임 참가자가 없습니다! 게임 설정을 다시 진행해주세요.");
-    }
-  }
 
-  private void validateDuplicateOfPlayer(final List<Participant<Player>> participants) {
-    final var distinctCount = participants.stream()
-        .map(Participant::getName)
-        .distinct()
-        .count();
-    if (participants.size() != distinctCount) {
-      throw new BlackjackArgumentException("중복된 닉네임을 가진 플레이어가 포함되어있습니다");
-    }
-  }
-
-  private void validateDealer(final Participant<Dealer> dealer) {
-    if (dealer == null) {
-      throw new BlackjackArgumentException("딜러를 찾을 수 없습니다. 딜러는 반드시 게임에 참가해야 합니다.");
-    }
-  }
-
-  public static Participants generateOf(final Map<String, Money> participants, final Deck deck) {
+  public static Participants generateOf(final Map<String, Bet> participants, final Deck deck) {
     List<Participant<Player>> players = participants.entrySet().stream()
         .map(entry -> new Participant<>(Player.generateFrom(entry)))
         .toList();
@@ -99,6 +78,36 @@ public final class Participants {
     return targetParticipant.hit(card);
   }
 
+
+  public List<Participant<? extends Role>> getAllParticipants() {
+    final List<Participant<? extends Role>> allParticipants = new ArrayList<>();
+    allParticipants.add(dealer);
+    allParticipants.addAll(participants);
+    return Collections.unmodifiableList(allParticipants);
+  }
+
+  private void validatePlayerNotEmpty(final List<Participant<Player>> participants) {
+    if (participants.isEmpty()) {
+      throw new BlackjackArgumentException("게임 참가자가 없습니다! 게임 설정을 다시 진행해주세요.");
+    }
+  }
+
+  private void validateDuplicateOfPlayer(final List<Participant<Player>> participants) {
+    final var distinctCount = participants.stream()
+        .map(Participant::getName)
+        .distinct()
+        .count();
+    if (participants.size() != distinctCount) {
+      throw new BlackjackArgumentException("중복된 닉네임을 가진 플레이어가 포함되어있습니다");
+    }
+  }
+
+  private void validateDealer(final Participant<Dealer> dealer) {
+    if (dealer == null) {
+      throw new BlackjackArgumentException("딜러를 찾을 수 없습니다. 딜러는 반드시 게임에 참가해야 합니다.");
+    }
+  }
+
   private Participant<? extends Role> findParticipant(
       final Participant<? extends Role> participant) {
     final var allParticipants = getAllParticipants();
@@ -109,10 +118,4 @@ public final class Participants {
         .orElseThrow(() -> new IllegalArgumentException("참가자를 찾을 수 없습니다."));
   }
 
-  public List<Participant<? extends Role>> getAllParticipants() {
-    final List<Participant<? extends Role>> allParticipants = new ArrayList<>();
-    allParticipants.add(dealer);
-    allParticipants.addAll(participants);
-    return Collections.unmodifiableList(allParticipants);
-  }
 }

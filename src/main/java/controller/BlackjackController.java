@@ -1,8 +1,8 @@
 package controller;
 
 import controller.converter.DomainToTextConverter;
+import domain.Bet;
 import domain.BlackjackManager;
-import domain.Money;
 import domain.RoundHistory;
 import domain.card.TrumpCard;
 import domain.participant.Participant;
@@ -25,7 +25,7 @@ public final class BlackjackController {
   }
 
   public void run() {
-    final Map<String, Money> participants = inputView.readPlayerNames();
+    final Map<String, Bet> participants = inputView.readPlayerNames();
     final BlackjackManager blackjack = BlackjackManager.from(participants);
 
     startGame(blackjack);

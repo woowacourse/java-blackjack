@@ -2,7 +2,7 @@ package domain.participant;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
-import domain.Money;
+import domain.Bet;
 import domain.card.Deck;
 import domain.card.Rank;
 import domain.card.Score;
@@ -30,7 +30,7 @@ class ParticipantTest {
       // when&then
       assertThat(participant.isHit()).isEqualTo(mockRole.isHit(new Score(0)));
       assertThat(participant.getName()).isEqualTo(mockRole.getName());
-      assertThat(participant.getMoney()).isEqualTo(mockRole.getMoney());
+      assertThat(participant.getBet()).isEqualTo(mockRole.getBet());
     }
 
     @Test
@@ -92,8 +92,8 @@ class ParticipantTest {
     }
 
     @Override
-    public Money getMoney() {
-      return new Money(0);
+    public Bet getBet() {
+      return new Bet(0);
     }
   }
 }

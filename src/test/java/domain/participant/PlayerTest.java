@@ -2,7 +2,7 @@ package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.Money;
+import domain.Bet;
 import domain.card.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,8 +16,8 @@ public class PlayerTest {
   void test_isHit(int value, boolean expected) {
     // given
     final String name = "player";
-    final Money money = new Money(0);
-    final var player = new Player(name, money);
+    final Bet bet = new Bet(0);
+    final var player = new Player(name, bet);
     final var score = new Score(value);
     // when&then
     assertThat(player.isHit(score)).isEqualTo(expected);

@@ -1,24 +1,24 @@
 package domain.participant;
 
-import domain.Money;
+import domain.Bet;
 import domain.card.Score;
 import java.util.Collection;
 
 public final class Dealer implements Role {
 
   private static final String DEFAULT_NAME = DealerRoster.DEFAULT.getName();
-  private final Money money;
+  private final Bet bet;
 
-  public Dealer(final Money money) {
-    this.money = money;
+  public Dealer(final Bet bet) {
+    this.bet = bet;
   }
 
-  public static Dealer generateFrom(final Collection<Money> values) {
+  public static Dealer generateFrom(final Collection<Bet> values) {
     final int total = values.stream()
-        .mapToInt(Money::getValue)
+        .mapToInt(Bet::getValue)
         .sum();
-    final Money money = new Money(total);
-    return new Dealer(money);
+    final Bet bet = new Bet(total);
+    return new Dealer(bet);
   }
 
   @Override
@@ -27,8 +27,8 @@ public final class Dealer implements Role {
   }
 
   @Override
-  public Money getMoney() {
-    return money;
+  public Bet getBet() {
+    return bet;
   }
 
   @Override

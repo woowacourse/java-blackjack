@@ -3,19 +3,23 @@ package domain;
 import domain.card.Score;
 import domain.participant.Participant;
 import domain.participant.Role;
+import java.util.function.Function;
 
 public enum RoundResult {
-  WIN("승"),
-  LOSE("패"),
-  PUSH("무승부"),
-  BLACKJACK("블랙잭"),
-  NONE("없음");
+  WIN("승", bet -> bet),
+  LOSE("패", Bet::lose),
+  PUSH("무승부", Bet::push),
+  BLACKJACK("블랙잭", Bet::blackjack),
+  NONE("없음", x -> x);
 
   private final String text;
+  private final Function<Bet, Bet> betting;
 
-  RoundResult(final String text) {
+  RoundResult(final String text, Function<Bet, Bet> betting) {
     this.text = text;
+    this.betting = betting;
   }
+
 
   public String getText() {
     return text;

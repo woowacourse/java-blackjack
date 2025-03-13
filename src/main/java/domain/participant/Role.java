@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.Money;
+import domain.Bet;
 import domain.card.Score;
 
 /**
@@ -14,5 +14,5 @@ public interface Role {
 
   String getName();
 
-  Money getMoney();
+  Bet getBet();
 }

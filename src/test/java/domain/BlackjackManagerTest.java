@@ -29,9 +29,9 @@ class BlackjackManagerTest {
     @DisplayName("딜러와 명단에 따른 플레이어를 생성한다.")
     void test_initializeBlackjack() {
       //given
-      final Map<String, Money> givenParticipants = new HashMap<>();
+      final Map<String, Bet> givenParticipants = new HashMap<>();
       final var name = "name";
-      givenParticipants.put(name, new Money(1000));
+      givenParticipants.put(name, new Bet(1000));
 
       //when
       final BlackjackManager blackjack = BlackjackManager.from(givenParticipants);
@@ -51,9 +51,9 @@ class BlackjackManagerTest {
     @DisplayName("딜러에 대한 hit을 진행시킨다.")
     void test_hitByParticipantForDealer() {
       //given
-      var money = new Money(1000);
-      Participant<Dealer> dealer = new Participant<>(new Dealer(money));
-      List<Participant<Player>> players = List.of(new Participant<>(new Player("test", money)));
+      var bet = new Bet(1000);
+      Participant<Dealer> dealer = new Participant<>(new Dealer(bet));
+      List<Participant<Player>> players = List.of(new Participant<>(new Player("test", bet)));
       final Participants participants = new Participants(dealer, players);
       List<TrumpCard> trumpCards = List.of(new TrumpCard(Rank.ACE, Suit.CLUB));
       final var deck = new Deck(new ArrayDeque<>(trumpCards));
@@ -67,15 +67,15 @@ class BlackjackManagerTest {
     @DisplayName("플레이어에 대한 hit을 진행시킨다.")
     void test_hitByParticipantForPlayer() {
       //given
-      var money = new Money(1000);
-      Participant<Dealer> dealer = new Participant<>(new Dealer(money));
-      Participant<Player> player = new Participant<>(new Player("test", money));
+      var bet = new Bet(1000);
+      Participant<Dealer> dealer = new Participant<>(new Dealer(bet));
+      Participant<Player> player = new Participant<>(new Player("test", bet));
       List<Participant<Player>> players = List.of(player);
       final Participants participants = new Participants(dealer, players);
       List<TrumpCard> trumpCards = List.of(new TrumpCard(Rank.ACE, Suit.CLUB));
       final var deck = new Deck(new ArrayDeque<>(trumpCards));
       final BlackjackManager blackjackManager = new BlackjackManager(participants, deck);
-      //then
+      //when&then
       final var newPlayer = blackjackManager.hitByParticipant(player);
       assertThat(newPlayer.getCards()).isEqualTo(trumpCards);
     }

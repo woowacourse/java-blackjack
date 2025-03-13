@@ -2,16 +2,28 @@ package domain;
 
 import java.util.Objects;
 
-public class Money {
+public class Bet {
 
   private final int value;
 
-  public Money(final int value) {
+  public Bet(final int value) {
     this.value = value;
   }
 
   public int getValue() {
     return value;
+  }
+
+  public Bet lose() {
+    return new Bet(0);
+  }
+
+  public Bet push() {
+    return this;
+  }
+
+  public Bet blackjack() {
+    return new Bet((int) (getValue() * 1.5));
   }
 
   @Override
@@ -22,8 +34,8 @@ public class Money {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Money money = (Money) o;
-    return value == money.value;
+    Bet bet = (Bet) o;
+    return value == bet.value;
   }
 
   @Override

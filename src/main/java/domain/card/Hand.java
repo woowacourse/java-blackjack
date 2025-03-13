@@ -32,10 +32,6 @@ public final class Hand {
     return score;
   }
 
-  private boolean hasAce() {
-    return cards.stream().anyMatch(TrumpCard::isAce);
-  }
-
   public List<TrumpCard> getCards() {
     if (cards.isEmpty()) {
       throw new BlackjackArgumentException("핸드가 비었습니다.");
@@ -50,4 +46,9 @@ public final class Hand {
   public boolean isBlackjack() {
     return getCount() == 2 && calculateScore().isBlackjack();
   }
+
+  private boolean hasAce() {
+    return cards.stream().anyMatch(TrumpCard::isAce);
+  }
+
 }

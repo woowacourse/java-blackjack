@@ -20,7 +20,7 @@ public final class BlackjackManager {
     this.deck = deck;
   }
 
-  public static BlackjackManager from(final Map<String, Money> participantNames) {
+  public static BlackjackManager from(final Map<String, Bet> participantNames) {
     final Deck deck = Deck.createShuffledDecks(NUMBER_OF_DECK);
     final Participants participants = Participants.generateOf(participantNames, deck);
     return new BlackjackManager(participants, deck);

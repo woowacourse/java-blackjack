@@ -1,20 +1,20 @@
 package domain.participant;
 
-import domain.Money;
+import domain.Bet;
 import domain.card.Score;
 import java.util.Map.Entry;
 
 public final class Player implements Role {
 
   private final String name;
-  private final Money money;
+  private final Bet bet;
 
-  public Player(final String name, final Money money) {
+  public Player(final String name, final Bet bet) {
     this.name = name;
-    this.money = money;
+    this.bet = bet;
   }
 
-  public static Player generateFrom(final Entry<String, Money> entry) {
+  public static Player generateFrom(final Entry<String, Bet> entry) {
     return new Player(entry.getKey(), entry.getValue());
   }
 
@@ -29,8 +29,8 @@ public final class Player implements Role {
   }
 
   @Override
-  public Money getMoney() {
-    return money;
+  public Bet getBet() {
+    return bet;
   }
 
 }

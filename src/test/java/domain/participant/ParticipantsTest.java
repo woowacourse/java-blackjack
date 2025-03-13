@@ -3,7 +3,7 @@ package domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import domain.Money;
+import domain.Bet;
 import domain.card.Deck;
 import exceptions.BlackjackArgumentException;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ class ParticipantsTest {
     void error_whenNoDealer() {
       //given
       final List<Participant<Player>> given = new ArrayList<>();
-      final var dealer = new Participant<>(new Dealer(new Money(0)));
+      final var dealer = new Participant<>(new Dealer(new Bet(0)));
       //then
       assertThatThrownBy(() -> new Participants(dealer, given))
           .isInstanceOf(BlackjackArgumentException.class)
@@ -36,10 +36,10 @@ class ParticipantsTest {
     @DisplayName("참가자가 중복이면, 예외가 발생한다.")
     void error_whenDuplicatePlayer() {
       //given
-      final Money money = new Money(0);
-      final var dealer = new Participant<>(new Dealer(money));
+      final Bet bet = new Bet(0);
+      final var dealer = new Participant<>(new Dealer(bet));
       final List<Participant<Player>> given = new ArrayList<>();
-      final Player duplicate = new Player("duplicate", money);
+      final Player duplicate = new Player("duplicate", bet);
       given.add(new Participant<>(duplicate));
       given.add(new Participant<>(duplicate));
       //then
@@ -52,9 +52,9 @@ class ParticipantsTest {
     @DisplayName("딜러가 없으면, 예외를 발생시킨다.")
     void error_whenEmptyDealer() {
       //given
-      final Money money = new Money(0);
+      final Bet bet = new Bet(0);
       final List<Participant<Player>> players = new ArrayList<>();
-      final Player player = new Player("given", money);
+      final Player player = new Player("given", bet);
       players.add(new Participant<>(player));
       //then
       assertThatThrownBy(() -> new Participants(null, players))
@@ -67,8 +67,8 @@ class ParticipantsTest {
     void test_generateOf() {
       //given
       final String name = "Test";
-      final Money value = new Money(1000);
-      final Map<String, Money> given = new HashMap<>();
+      final Bet value = new Bet(1000);
+      final Map<String, Bet> given = new HashMap<>();
       given.put(name, value);
 
       //when
@@ -89,8 +89,8 @@ class ParticipantsTest {
       void test_getAllParticipants() {
         //given
         final String name = "Test";
-        final Money value = new Money(1000);
-        final Map<String, Money> given = new HashMap<>();
+        final Bet value = new Bet(1000);
+        final Map<String, Bet> given = new HashMap<>();
         given.put(name, value);
 
         //when

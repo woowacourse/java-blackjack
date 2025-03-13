@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.Money;
+import domain.Bet;
 import domain.card.Deck;
 import domain.card.Hand;
 import domain.card.Score;
@@ -40,8 +40,8 @@ public final class Participant<T extends Role> {
     return role.getName();
   }
 
-  public Money getMoney() {
-    return role.getMoney();
+  public Bet getBet() {
+    return role.getBet();
   }
 
   public Participant<T> initialDeal(final Deck deck) {
