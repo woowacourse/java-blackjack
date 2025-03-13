@@ -13,10 +13,8 @@ import card.CardHand;
 import card.Rank;
 import card.Suit;
 import duel.DuelResult;
-import paticipant.Dealer;
 import paticipant.Participant;
 import paticipant.Player;
-import paticipant.Players;
 
 public class WagerResultCalculatorTest {
 
@@ -37,14 +35,6 @@ public class WagerResultCalculatorTest {
 			final Participant participant = new Participant(new CardHand(cards));
 			participant.writeDuelResult(DuelResult.LOSE);
 			final Player player = new Player("파랑", participant);
-			final Players players = new Players(List.of(player));
-
-			final List<Card> cards1 = List.of(
-				new Card(Rank.TEN, Suit.CLUB),
-				new Card(Rank.TEN, Suit.HEART)
-			);
-			final Participant participant1 = new Participant(new CardHand(cards1));
-			final Dealer dealer = new Dealer(participant1);
 
 			final Money wager = new Money(1000);
 
