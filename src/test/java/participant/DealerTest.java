@@ -31,7 +31,7 @@ public class DealerTest {
 			final var dealer = new Dealer();
 
 			// when
-			final var actual = dealer.isPickCard(BUST_SCORE, DEALER_PICK_CARD_SCORE_MAX);
+			final var actual = dealer.isPickCard(BUST_SCORE);
 
 			// then
 			assertThat(actual).isTrue();
@@ -47,7 +47,7 @@ public class DealerTest {
 			final var dealer = new Dealer(new Participant(cardHand));
 
 			// when
-			final var actual = dealer.isPickCard(BUST_SCORE, DEALER_PICK_CARD_SCORE_MAX);
+			final var actual = dealer.isPickCard(BUST_SCORE);
 
 			// then
 			assertThat(actual).isFalse();

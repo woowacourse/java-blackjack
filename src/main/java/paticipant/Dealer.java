@@ -7,6 +7,7 @@ import duel.DuelResult;
 import value.Score;
 
 public class Dealer {
+	private static final Score DEALER_PICK_CARD_SCORE_MAX = Score.from(16);
 
 	private final Participant participant;
 
@@ -22,9 +23,9 @@ public class Dealer {
 		participant.addCards(cards);
 	}
 
-	public boolean isPickCard(final Score bustScore, final Score dealerPickCardScoreMax) {
+	public boolean isPickCard(final Score bustScore) {
 		final Score score = participant.calculateAllScore(bustScore);
-		return score.isLessThan(dealerPickCardScoreMax) || score.equals(dealerPickCardScoreMax);
+		return score.isLessThan(DEALER_PICK_CARD_SCORE_MAX) || score.equals(DEALER_PICK_CARD_SCORE_MAX);
 	}
 
 	public Score calculateAllScore(final Score bustScore) {
