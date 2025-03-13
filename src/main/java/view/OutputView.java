@@ -3,8 +3,6 @@ package view;
 import java.util.List;
 import java.util.Map;
 
-import value.Count;
-
 public class OutputView {
 	private static final String PLAYER_NAME_DELIMITER = ", ";
 
@@ -38,22 +36,5 @@ public class OutputView {
 	public void printPlayerHandResult(final String name, final List<String> cards, final int score) {
 		final String joinedCards = String.join(PLAYER_NAME_DELIMITER, cards);
 		System.out.printf("%s카드: %s - 결과: %d" + System.lineSeparator(), name, joinedCards, score);
-	}
-
-	public void printBlackjackDuelResultIntroduce() {
-		System.out.println("## 최종 승패");
-	}
-
-	public void printBlackjackDealerDuelResult(final Count winCount, final Count loseCount) {
-		System.out.printf("딜러: %d승, %d패" + System.lineSeparator(), winCount.value(), loseCount.value());
-	}
-
-	public void printBlackjackPlayerDuelResult(final String name, final boolean isWin) {
-		System.out.printf("%s: ", name);
-		if (isWin) {
-			System.out.println("승");
-			return;
-		}
-		System.out.println("패");
 	}
 }

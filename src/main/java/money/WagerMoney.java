@@ -3,7 +3,6 @@ package money;
 import java.util.Map;
 
 import paticipant.Player;
-import value.Money;
 
 public class WagerMoney {
 	private final Map<Player, Money> money;

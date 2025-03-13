@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import paticipant.Player;
-import value.Money;
 
 public class WagerMoneyTest {
 

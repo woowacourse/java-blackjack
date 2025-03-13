@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import card.Card;
 import card.CardHand;
-import duel.DuelHistory;
+import money.WagerMoney;
 import paticipant.Dealer;
 import paticipant.Participant;
 import paticipant.Player;
@@ -25,13 +25,13 @@ public class BlackjackGame {
 
 	public void run() {
 		final Blackjack blackjack = Blackjack.from(inputView.readPlayerNames());
+		final WagerMoney wagerMoney = new WagerMoney(inputView.readPlayersMoney(blackjack));
 		handOutCards(blackjack);
 		blackjack.pickCardPlayersIfNotBust(inputView::readPlayerAnswer);
 		blackjack.pickCardDealerIfNotMax();
 		outputDealerPickCard(blackjack);
 		outputHandResult(blackjack);
 		blackjack.duel();
-		outputDuelResult(blackjack);
 	}
 
 	private void outputDealerPickCard(final Blackjack blackjack) {
@@ -100,21 +100,6 @@ public class BlackjackGame {
 			final List<String> convertedCards = convertParticipantCardText(participant);
 			final int score = blackjack.calculateScore(participant).value();
 			outputView.printPlayerHandResult(player.getName(), convertedCards, score);
-		}
-	}
-
-	private void outputDuelResult(final Blackjack blackjack) {
-		final DuelHistory duelHistory = blackjack.getDealer().getParticipant().getDuelHistory();
-		outputView.printBlackjackDuelResultIntroduce();
-		outputView.printBlackjackDealerDuelResult(duelHistory.getWinCount(), duelHistory.getLoseCount());
-		outputPlayersDuelResult(blackjack.getPlayers().getPlayers());
-	}
-
-	private void outputPlayersDuelResult(final List<Player> players) {
-		for (final Player player : players) {
-			final String name = player.getName();
-			final DuelHistory duelHistory = player.getParticipant().getDuelHistory();
-			outputView.printBlackjackPlayerDuelResult(name, duelHistory.isWin());
 		}
 	}
 }
