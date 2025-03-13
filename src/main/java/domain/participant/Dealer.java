@@ -51,10 +51,22 @@ public class Dealer extends Participant {
         return this.calculateScore() <= DRAW_BOUNDARY;
     }
 
+    public GameResult judgeResult(Player player) {
+        if (player.isBurst()) {
+            return GameResult.LOSE;
+        }
+        if (this.isBurst() || player.calculateScore() > this.calculateScore()) {
+            return GameResult.WIN;
+        }
+        if (player.calculateScore() < this.calculateScore()) {
+            return GameResult.LOSE;
+        }
+        return GameResult.DRAW;
+    }
 
     public Map<Player, GameResult> getGameResult(Players players) {
         return players.getPlayers().stream()
-                .collect(Collectors.toMap(player -> player, player -> GameResult.getResult(player, this)));
+                .collect(Collectors.toMap(player -> player, this::judgeResult));
     }
 
     public int getNewCardCount() {
