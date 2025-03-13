@@ -27,7 +27,7 @@ public abstract class Gamer {
         return hand.openAllCards();
     }
 
-    private int sumCards() {
+    public int sumCards() {
         return hand.sumCards();
     }
 

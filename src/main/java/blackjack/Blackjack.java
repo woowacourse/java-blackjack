@@ -1,7 +1,6 @@
 package blackjack;
 
 import blackjack.card.Card;
-import blackjack.cardMachine.CardRandomMachine;
 import blackjack.gamer.Dealer;
 import blackjack.gamer.Player;
 import blackjack.gamer.Players;
@@ -10,29 +9,22 @@ import blackjack.view.ResultView;
 import java.util.List;
 
 public class Blackjack {
+
+    private static final int BLACKJACK_SCORE = 21;
+
     private final Dealer dealer;
     private final Players players;
 
-    public Blackjack() {
-        this.dealer = new Dealer(new CardRandomMachine());
-        this.players = new Players();
+    public Blackjack(final Dealer dealer, final Players players) {
+        this.dealer = dealer;
+        this.players = players;
     }
 
-    public void run() {
-        final InputView inputView = new InputView();
-        final ResultView resultView = new ResultView();
-        initDealer();
-        makePlayers(inputView);
-        betMoney(inputView);
-        spreadTwoCards();
-        showInitialCards(resultView);
-    }
-
-    private void initDealer() {
+    public void initDealer() {
         dealer.initCardMachine();
     }
 
-    private void makePlayers(final InputView inputView) {
+    public void makePlayers(final InputView inputView) {
         final String names = inputView.readNames();
         try {
             players.addPlayersFrom(names);
@@ -42,13 +34,13 @@ public class Blackjack {
         }
     }
 
-    private void betMoney(final InputView inputView) {
+    public void betMoney(final InputView inputView) {
         for (Player player : players.getPlayers()) {
             receiveBettingMoney(inputView, player);
         }
     }
 
-    private static void receiveBettingMoney(final InputView inputView, final Player player) {
+    public void receiveBettingMoney(final InputView inputView, final Player player) {
         try {
             player.bet(inputView.readBettingMoney(player));
         } catch (IllegalArgumentException e) {
@@ -57,7 +49,7 @@ public class Blackjack {
         }
     }
 
-    private void spreadTwoCards() {
+    public void spreadTwoCards() {
         final List<Card> dealerCards = dealer.spreadTwoCards();
         dealer.receiveCards(dealerCards);
         for (Player player : players.getPlayers()) {
@@ -66,7 +58,7 @@ public class Blackjack {
         }
     }
 
-    private void showInitialCards(final ResultView resultView) {
+    public void showInitialCards(final ResultView resultView) {
         resultView.printCards(dealer);
         for (Player player : players.getPlayers()) {
             resultView.printCards(player);
