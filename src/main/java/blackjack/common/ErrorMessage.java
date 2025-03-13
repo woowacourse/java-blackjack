@@ -13,8 +13,8 @@ public enum ErrorMessage {
     INVALID_CARD_INDEX("해당 위치에 카드를 가지고 있지 않습니다!"),
     USE_VALID_NAME("이름은 공백일 수 없습니다"),
     INVALID_TRANSLATE("잘못된 변환입니다."),
-    MAXIMUM_BETTING_MONEY("최대 베팅 금액은 1억까지 입니다!"),
-    BETTING_MONEY_IS_POSITIVE("베팅 금액은 양수여야 한다.");
+    MAXIMUM_BETTING_MONEY("최대 베팅 금액은 1억까지 가능합니다!"),
+    BETTING_MONEY_IS_POSITIVE("베팅 금액은 양수여야 합니다.");
 
     private final String message;
 
