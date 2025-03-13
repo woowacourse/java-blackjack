@@ -440,4 +440,33 @@ public class BlackJackBoardTest {
                 () -> Assertions.assertThat(dealer.getGameRecord().containsKey(GameResult.WIN)).isTrue()
         );
     }
+
+    @Test
+    void 딜러_수익_계산_테스트() {
+        // given
+        Participant participant1 = Player.from("우가");
+        Participant participant2 = Player.from("히스타");
+        Participant dealer = Dealer.generate();
+
+        List<Participant> participants = List.of(
+                participant1,
+                participant2,
+                dealer
+        );
+
+        participant1.bet(1000);
+        participant2.bet(1000);
+        participant1.applyGameRecord(GameResult.WIN);
+        participant2.applyGameRecord(GameResult.WIN);
+
+        BlackJackBoard blackJackBoard = new BlackJackBoard(participants);
+
+        // when
+        blackJackBoard.calculateDealerProfit();
+
+        // then
+        int actual = dealer.getProfit();
+        int expected = -2000;
+        Assertions.assertThat(actual).isEqualTo(expected);
+    }
 }
