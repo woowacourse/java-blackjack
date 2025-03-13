@@ -16,25 +16,25 @@ public class GameResults {
         gameResults = new LinkedHashMap<>();
 
         for (Gambler gambler : gamblers) {
-            int compared = gambler.compareWithOtherPlayer(dealer);
+            int compared = compareDealerWithGambler(dealer, gambler);
 
             if (compared == -1) {
-                int multiplier = gambler.getCards().calculateBetAmountByMultiplier(1.0);
+                int multiplier = gambler.getHand().calculateBetAmountByMultiplier(1.0);
                 gameResults.merge(dealer, multiplier, Integer::sum);
                 gameResults.merge(gambler, -multiplier, Integer::sum);
             }
 
             if (compared == 1) {
-                int multiplier = gambler.getCards().calculateBetAmountByMultiplier(1.0);
+                int multiplier = gambler.getHand().calculateBetAmountByMultiplier(1.0);
                 if (gambler.isBlackJack()) {
-                    multiplier = gambler.getCards().calculateBetAmountByMultiplier(1.5);
+                    multiplier = gambler.getHand().calculateBetAmountByMultiplier(1.5);
                 }
                 gameResults.merge(dealer, -multiplier, Integer::sum);
                 gameResults.merge(gambler, multiplier, Integer::sum);
             }
 
             if (compared == 0) {
-                int multiplier = gambler.getCards().calculateBetAmountByMultiplier(0);
+                int multiplier = gambler.getHand().calculateBetAmountByMultiplier(0);
                 gameResults.merge(dealer, multiplier, Integer::sum);
                 gameResults.merge(gambler, multiplier, Integer::sum);
             }

@@ -70,7 +70,7 @@ public abstract class Player {
         return name.getName();
     }
 
-    public Hand getCards() {
+    public Hand getHand() {
         return hand;
     }
 
