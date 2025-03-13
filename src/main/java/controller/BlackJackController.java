@@ -6,6 +6,7 @@ import domain.BlackJackGame;
 import domain.Player;
 import domain.Score;
 import domain.TrumpCard;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -47,7 +48,11 @@ public class BlackJackController {
     private List<Player> createPlayers() {
         Map<String, BettingMoney> playerInfos = inputView.readPlayerNames().stream()
                 .collect(Collectors.toMap(
-                        name -> name, name -> new BettingMoney(inputView.readBettingMoney(name))));
+                        playerName -> playerName,
+                        playerName -> new BettingMoney(inputView.readBettingMoney(playerName)),
+                        (oldValue, newValue) -> {
+                            throw new IllegalArgumentException("플레이어의 이름은 중복될 수 없습니다.");  // TODO. 추후 하위 계층으로 분리
+                        }, LinkedHashMap::new));
 
         return blackJackGame.createPlayers(playerInfos);
     }

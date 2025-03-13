@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -38,8 +39,9 @@ class BlackJackGameTest {
             // given
             BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
             Deck originalDeck = new Deck(Arrays.asList(TrumpCard.values()), new NoShuffle());
-            Map<String, BettingMoney> playerInfos = Map.of(
-                    "Alice", new BettingMoney(1000), "Bob", new BettingMoney(1000));
+            Map<String, BettingMoney> playerInfos = new LinkedHashMap<>();
+            playerInfos.put("Alice", new BettingMoney(1000));
+            playerInfos.put("Bob", new BettingMoney(1000));
 
             // when
             List<Player> players = blackJackGame.createPlayers(playerInfos);
