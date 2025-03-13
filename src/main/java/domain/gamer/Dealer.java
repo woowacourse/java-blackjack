@@ -12,6 +12,10 @@ public class Dealer extends Gamer {
         super(cardGroup);
     }
 
+    public Dealer(final CardGroup cardGroup, final int battingAmount) {
+        super(cardGroup, battingAmount);
+    }
+
     public boolean isLessThen(int score) {
         return this.getCardGroup().calculateScore(Gamer.LIMIT) <= score;
     }

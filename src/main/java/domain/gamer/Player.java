@@ -11,6 +11,11 @@ public class Player extends Gamer {
         this.name = name;
     }
 
+    public Player(final String name, final CardGroup cardGroup, final int battingAmount) {
+        super(cardGroup, battingAmount);
+        this.name = name;
+    }
+
     private Player(final Player player) {
         super(player.getCardGroup());
         this.name = player.name;

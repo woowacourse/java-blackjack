@@ -9,9 +9,16 @@ public abstract class Gamer {
     public static final int LIMIT = 21;
 
     private final CardGroup cardGroup;
+    private final int battingAmount;
 
     protected Gamer(CardGroup cardGroup) {
         this.cardGroup = cardGroup;
+        this.battingAmount = 0;
+    }
+
+    protected Gamer(CardGroup cardGroup, int battingAmount) {
+        this.cardGroup = cardGroup;
+        this.battingAmount = battingAmount;
     }
 
     public void giveCard(final Card card) {
@@ -39,5 +46,13 @@ public abstract class Gamer {
 
     public CardGroup getCardGroup() {
         return cardGroup;
+    }
+
+    public int getBattingAmount() {
+        return battingAmount;
+    }
+
+    public int calculateBattingAmountOfReturn(final int amount) {
+        return battingAmount + amount;
     }
 }
