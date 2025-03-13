@@ -19,7 +19,7 @@ public class Application {
         blackjack.initDealer();
         blackjack.makePlayers(inputView);
         blackjack.betMoney(inputView);
-        blackjack.spreadTwoCards();
+        blackjack.deal();
         blackjack.showInitialCards(resultView);
         if (!blackjack.isPush()) {
             // 플레이어와 딜러 카드 나눠주기

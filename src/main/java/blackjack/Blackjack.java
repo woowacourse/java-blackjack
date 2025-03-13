@@ -40,7 +40,7 @@ public class Blackjack {
         }
     }
 
-    public void receiveBettingMoney(final InputView inputView, final Player player) {
+    private void receiveBettingMoney(final InputView inputView, final Player player) {
         try {
             player.bet(inputView.readBettingMoney(player));
         } catch (IllegalArgumentException e) {
@@ -49,7 +49,7 @@ public class Blackjack {
         }
     }
 
-    public void spreadTwoCards() {
+    public void deal() {
         final List<Card> dealerCards = dealer.spreadTwoCards();
         dealer.receiveCards(dealerCards);
         for (Player player : players.getPlayers()) {
