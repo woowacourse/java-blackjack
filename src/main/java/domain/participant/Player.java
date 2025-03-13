@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.GameResult;
 import domain.card.Hand;
 import java.util.Objects;
 
@@ -20,6 +21,10 @@ public class Player extends Participant {
 
     public static Player of(Hand hand, String name, Money bettingAmount) {
         return new Player(hand, name, bettingAmount);
+    }
+
+    public Money calculateRevenue(GameResult result) {
+        return null;
     }
 
     public String getName() {

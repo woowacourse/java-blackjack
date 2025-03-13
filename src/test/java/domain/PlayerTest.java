@@ -8,6 +8,7 @@ import domain.card.CardShape;
 import domain.card.Hand;
 import domain.participant.Money;
 import domain.participant.Player;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -164,8 +165,7 @@ public class PlayerTest {
                 Arguments.of(
                         List.of(
                                 new Card(CardNumber.TEN, CardShape.CLOVER),
-                                new Card(CardNumber.QUEEN, CardShape.CLOVER),
-                                new Card(CardNumber.TWO, CardShape.CLOVER)
+                                new Card(CardNumber.A, CardShape.CLOVER)
                         ),
                         true
                 ),
@@ -178,5 +178,49 @@ public class PlayerTest {
                         false
                 )
         );
+    }
+
+    @Test
+    void 플레이어가_이겼을_경우_수익을_계산한다() {
+        //given
+        Hand hand = Hand.of(new ArrayList<>());
+        Player player = Player.of(hand, "플레이어1", Money.of("100000"));
+        //when
+        Money actual = player.calculateRevenue(GameResult.WIN);
+        //then
+        assertThat(actual).isEqualTo(Money.of(100000));
+    }
+
+    @Test
+    void 플레이어가_블랙잭으로_이겼을_경우_수익을_계산한다() {
+        //given
+        Hand hand = Hand.of(new ArrayList<>());
+        Player player = Player.of(hand, "플레이어1", Money.of("100000"));
+        //when
+        Money actual = player.calculateRevenue(GameResult.BLACKJACK);
+        //then
+        assertThat(actual).isEqualTo(Money.of(150000));
+    }
+
+    @Test
+    void 플레이어가_비겼을_경우_수익을_계산한다() {
+        //given
+        Hand hand = Hand.of(new ArrayList<>());
+        Player player = Player.of(hand, "플레이어1", Money.of("100000"));
+        //when
+        Money actual = player.calculateRevenue(GameResult.DRAW);
+        //then
+        assertThat(actual).isEqualTo(Money.of(0));
+    }
+
+    @Test
+    void 플레이어가_졌을_경우_수익을_계산한다() {
+        //given
+        Hand hand = Hand.of(new ArrayList<>());
+        Player player = Player.of(hand, "플레이어1", Money.of("100000"));
+        //when
+        Money actual = player.calculateRevenue(GameResult.LOSE);
+        //then
+        assertThat(actual).isEqualTo(Money.of(-100000));
     }
 }
