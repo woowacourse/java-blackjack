@@ -1,6 +1,7 @@
 package blackjack.domain.fixture;
 
 import static blackjack.domain.fixture.CardFixture.createCards;
+import static blackjack.domain.gambler.Dealer.DEALER_NAME;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardType;
@@ -9,8 +10,11 @@ import blackjack.domain.gambler.Name;
 import blackjack.domain.gambler.Player;
 
 public class GamblerFixture {
+    public static Dealer createDealer() {
+        return new Dealer(new Player(DEALER_NAME));
+    }
     public static Dealer createDealerWithCards(CardType... cardTypes) {
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(new Player(DEALER_NAME));
         for (Card card : createCards(cardTypes)) {
             dealer.addCard(card);
         }

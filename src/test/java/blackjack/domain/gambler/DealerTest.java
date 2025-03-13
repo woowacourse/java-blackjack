@@ -1,5 +1,6 @@
 package blackjack.domain.gambler;
 
+import static blackjack.domain.fixture.GamblerFixture.createDealer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -15,7 +16,7 @@ public class DealerTest {
     @Test
     void getInitialCardsTest() {
         // given
-        Dealer dealer = new Dealer();
+        Dealer dealer = createDealer();
         Card card1 = new Card(CardShape.CLOVER, CardType.TEN);
         Card card2 = new Card(CardShape.HEART, CardType.EIGHT);
         dealer.addCard(card1);
@@ -29,18 +30,5 @@ public class DealerTest {
             () -> assertThat(result).hasSize(1),
             () -> assertThat(result.getFirst()).isEqualTo(card1)
         );
-    }
-
-    @DisplayName("플레이어인지_여부를_반환한다")
-    @Test
-    void isPlayer() {
-        // given
-        Dealer dealer = new Dealer();
-
-        // when
-        boolean result = dealer.isPlayer();
-
-        // then
-        assertThat(result).isFalse();
     }
 }

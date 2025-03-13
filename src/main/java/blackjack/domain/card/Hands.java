@@ -1,10 +1,9 @@
-package blackjack.domain.gambler;
+package blackjack.domain.card;
 
 import static blackjack.domain.game.Round.BLACKJACK;
 import static blackjack.domain.card.Card.MAX_ACE_VALUE;
 import static blackjack.domain.card.Card.MIN_ACE_VALUE;
 
-import blackjack.domain.card.Card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

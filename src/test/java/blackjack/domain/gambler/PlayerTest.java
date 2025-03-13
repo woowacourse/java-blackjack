@@ -95,17 +95,4 @@ class PlayerTest {
                 () -> assertThat(result).contains(card1, card2)
         );
     }
-
-    @DisplayName("플레이어인지_여부를_반환한다")
-    @Test
-    void isPlayer() {
-        // given
-        Player player = new Player(NAME);
-
-        // when
-        boolean result = player.isPlayer();
-
-        // then
-        assertThat(result).isTrue();
-    }
 }

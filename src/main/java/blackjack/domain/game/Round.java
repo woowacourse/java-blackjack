@@ -24,12 +24,12 @@ public class Round {
     private final List<Gambler> gamblers = new ArrayList<>();
 
     public Round(final CardDeck cardDeck, final Names playerNames) {
+        registerDealerAndPlayers(playerNames);
         this.cardDeck = cardDeck;
-        registerGamblers(playerNames);
     }
 
-    private void registerGamblers(final Names playerNames) {
-        gamblers.add(new Dealer());
+    private void registerDealerAndPlayers(final Names playerNames) {
+        gamblers.add(new Player(DEALER_NAME));
         List<Player> players = playerNames.getNames()
                 .stream()
                 .map(Player::new)
@@ -37,11 +37,11 @@ public class Round {
         gamblers.addAll(players);
     }
 
-    public void distributeCards(final Name playerName, final int cardCount) {
-        Gambler foundGambler = findGambler(playerName);
+    public void distributeCards(final Name gamblerName, final int cardCount) {
+        Gambler gambler = findGambler(gamblerName);
         for (int i = 0; i < cardCount; i++) {
             Card card = cardDeck.getCard();
-            foundGambler.addCard(card);
+            gambler.addCard(card);
         }
     }
 
@@ -77,7 +77,7 @@ public class Round {
     public WinningDiscriminator getWinningDiscriminator() {
         Gambler dealer = findGambler(DEALER_NAME);
         List<Gambler> players = gamblers.stream()
-                .filter(Gambler::isPlayer)
+                .filter(gambler -> !gambler.isNameEquals(DEALER_NAME))
                 .toList();
         return new WinningDiscriminator(dealer, players);
     }
