@@ -11,6 +11,9 @@ import java.util.Set;
 
 public class Hand {
 
+    private static final int BLACKJACK_SUM = 21;
+    private static final int BLACKJACK_CARD_SIZE = 2;
+
     private final List<Card> cards;
 
     public Hand() {
@@ -42,8 +45,10 @@ public class Hand {
     }
 
     public int getOptimisticValue() {
-        return getPossibleSums().stream().filter(sum -> sum <= Constants.BUSTED_STANDARD_VALUE)
-                .max(Comparator.naturalOrder()).orElse(Constants.BUSTED_VALUE);
+        return getPossibleSums().stream()
+                .filter(sum -> sum <= Constants.BUSTED_STANDARD_VALUE)
+                .max(Comparator.naturalOrder())
+                .orElse(Constants.BUSTED_VALUE);
     }
 
     public Card getCard(int position) {
@@ -57,20 +62,23 @@ public class Hand {
     public boolean isBusted() {
         List<Integer> possibleSums = getPossibleSums();
 
-        return possibleSums.stream().allMatch(sum -> sum > Constants.BUSTED_STANDARD_VALUE);
+        return possibleSums.stream()
+                .allMatch(sum -> sum > Constants.BUSTED_STANDARD_VALUE);
     }
 
     public boolean canTakeCardWithin(int takeBoundary) {
         List<Integer> possibleSums = getPossibleSums();
 
-        return possibleSums.stream().anyMatch(sum -> sum <= takeBoundary);
+        return possibleSums.stream()
+                .anyMatch(sum -> sum <= takeBoundary);
     }
 
     private List<Integer> getPossibleSums() {
         Set<Integer> possibleSums = new HashSet<>();
 
         calculatePossibleSums(possibleSums, 0, 0);
-        return possibleSums.stream().toList();
+        return possibleSums.stream()
+                .toList();
     }
 
     private void calculatePossibleSums(Set<Integer> values, int index, int sum) {
@@ -86,6 +94,6 @@ public class Hand {
     }
 
     public boolean isBlackJack() {
-        return cards.size() == 2 && getOptimisticValue() == 21;
+        return cards.size() == BLACKJACK_CARD_SIZE && getOptimisticValue() == BLACKJACK_SUM;
     }
 }
