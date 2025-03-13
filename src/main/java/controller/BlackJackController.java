@@ -23,7 +23,7 @@ public class BlackJackController {
     public void run() {
         try {
             List<String> names = inputView.readPlayerNames();
-            BlackJack blackJack = new BlackJack(names);
+            BlackJack blackJack = BlackJack.init(names);
             runGameWith(blackJack);
         } catch (RuntimeException e) {
             outputView.printErrorMessage(e);

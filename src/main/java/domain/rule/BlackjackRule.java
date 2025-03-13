@@ -1,9 +1,6 @@
 package domain.rule;
 
-import domain.GameResult;
 import domain.card.Cards;
-import domain.participant.Dealer;
-import domain.participant.Player;
 import java.util.Set;
 
 public class BlackjackRule {
@@ -11,7 +8,7 @@ public class BlackjackRule {
     private static final int BLACKJACK_COUNT = 2;
 
     public boolean isBlackjack(Cards cards) {
-        return cards.getCount() == BLACKJACK_COUNT && isWin(cards);
+        return cards.getCount() == BLACKJACK_COUNT && isHit(cards);
     }
 
     public boolean isBust(Cards cards) {
@@ -19,7 +16,7 @@ public class BlackjackRule {
         return coordinates.stream().noneMatch(coordinate -> coordinate <= SUM_LIMIT);
     }
 
-    public boolean isWin(Cards cards) {
+    public boolean isHit(Cards cards) {
         return getScore(cards) == SUM_LIMIT;
     }
 
@@ -29,19 +26,6 @@ public class BlackjackRule {
             return getMinSum(coordinates);
         }
         return getMaxSum(coordinates);
-    }
-
-    public GameResult getResult(Player player, Dealer dealer) {
-        if (isBust(player.getCards())) {
-            return GameResult.LOSE;
-        }
-        if (isBust(dealer.getCards()) || getScore(player.getCards()) > getScore(dealer.getCards())) {
-            return GameResult.WIN;
-        }
-        if (getScore(player.getCards()) < getScore(dealer.getCards())) {
-            return GameResult.LOSE;
-        }
-        return GameResult.DRAW;
     }
 
     private int getMinSum(Set<Integer> coordinates) {

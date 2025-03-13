@@ -42,15 +42,17 @@ public class Dealer extends Participant {
         return gameResult;
     }
 
-    public Map<GameResult, Integer> getDealerResult(Players players) {
-        Map<GameResult, Integer> result = new HashMap<>();
-        Map<Player, GameResult> gameResult = getPlayerResult(players);
-        for (GameResult playerResult : gameResult.values()) {
-            GameResult dealerResult = playerResult.getReverse();
-            final int updated = result.getOrDefault(dealerResult, 0) + 1;
-            result.put(dealerResult, updated);
+    public GameResult getResult(Player player) {
+        if (player.isBust()) {
+            return GameResult.LOSE;
         }
-        return result;
+        if (this.isBust() || player.getCardScore() > this.getCardScore()) {
+            return GameResult.WIN;
+        }
+        if (player.getCardScore() < this.getCardScore()) {
+            return GameResult.LOSE;
+        }
+        return GameResult.DRAW;
     }
 
     public int drawCards() {

@@ -9,6 +9,7 @@ import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,11 +18,16 @@ public class BlackJack {
     private final Dealer dealer;
     private final Players players;
 
-    public BlackJack(List<String> names) {
+    public BlackJack(Dealer dealer, Players players) {
+        this.dealer = dealer;
+        this.players = players;
+    }
+
+    public static BlackJack init(List<String> names) {
         List<Player> players = names.stream().map(Player::init).toList();
         Deck deck = new Deck(new RandomCardsGenerator());
-        this.dealer = new Dealer(Cards.empty(), deck);
-        this.players = new Players(players);
+        Dealer dealer = new Dealer(Cards.empty(), deck);
+        return new BlackJack(dealer, new Players(players));
     }
 
     public void handoutCards() {
@@ -52,15 +58,27 @@ public class BlackJack {
         return dealer.getCards();
     }
 
+    public Set<Player> getPlayers() {
+        return players.get();
+    }
+
     public Map<Player, GameResult> getPlayersResult() {
-        return dealer.getPlayerResult(players);
+        Map<Player, GameResult> gameResult = new HashMap<>();
+        for (Player player : players.get()) {
+            GameResult playerResult = dealer.getResult(player);
+            gameResult.put(player, playerResult);
+        }
+        return gameResult;
     }
 
     public Map<GameResult, Integer> getDealerResult() {
-        return dealer.getDealerResult(players);
-    }
-
-    public Set<Player> getPlayers() {
-        return players.get();
+        Map<GameResult, Integer> result = new HashMap<>();
+        Map<Player, GameResult> gameResult = getPlayersResult();
+        for (GameResult playerResult : gameResult.values()) {
+            GameResult dealerResult = playerResult.getReverse();
+            final int updated = result.getOrDefault(dealerResult, 0) + 1;
+            result.put(dealerResult, updated);
+        }
+        return result;
     }
 }

@@ -28,15 +28,11 @@ public abstract class Participant {
     }
 
     public boolean isWin() {
-        return rule.isWin(cards);
+        return rule.isHit(cards);
     }
 
     public Cards getCards() {
         return cards;
-    }
-
-    public BlackjackRule getRule() {
-        return rule;
     }
 
     public abstract List<Card> getShowCards();
