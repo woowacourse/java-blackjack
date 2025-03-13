@@ -5,6 +5,7 @@ import blackjack.domain.card_hand.PlayerBettingBlackjackCardHand;
 import blackjack.domain.deck.BlackjackDeck;
 import blackjack.domain.player.Players;
 import blackjack.service.BlackjackService;
+import blackjack.util.RetryHandler;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -15,13 +16,15 @@ public final class BlackjackController {
     private final InputView inputView;
     private final OutputView outputView;
     private final BlackjackService blackjackService;
-
-    public BlackjackController(final InputView inputView, final OutputView outputView, final BlackjackService blackjackService) {
+    private final RetryHandler retryHandler;
+    
+    public BlackjackController(final InputView inputView, final OutputView outputView, final BlackjackService blackjackService, final RetryHandler retryHandler) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.blackjackService = blackjackService;
+        this.retryHandler = retryHandler;
     }
-
+    
     public void run() {
         final Players players = createPlayersUntilSuccess();
         final BlackjackDeck deck = new BlackjackDeck();
@@ -43,22 +46,16 @@ public final class BlackjackController {
     }
     
     private Players createPlayersUntilSuccess() {
-        try {
+        return retryHandler.runWithRetry(() -> {
             final List<String> playerNames = inputView.getPlayerNames();
             return Players.from(playerNames);
-        } catch (Exception e) {
-            outputView.outputExceptionMessage(e);
-            return createPlayersUntilSuccess();
-        }
+        });
     }
     
     private List<PlayerBettingBlackjackCardHand> createPlayerHandsUntilSuccess(final Players players, final BlackjackDeck deck) {
-        try {
+        return retryHandler.runWithRetry(() -> {
             final List<Integer> bettingAmounts = inputView.getBettingAmounts(players.getPlayerNames());
             return players.toBlackjackBettingCardHand(deck, bettingAmounts);
-        } catch (Exception e) {
-            outputView.outputExceptionMessage(e);
-            return createPlayerHandsUntilSuccess(players, deck);
-        }
+        });
     }
 }

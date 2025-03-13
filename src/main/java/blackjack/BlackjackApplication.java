@@ -2,6 +2,7 @@ package blackjack;
 
 import blackjack.controller.BlackjackController;
 import blackjack.service.BlackjackService;
+import blackjack.util.RetryHandler;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.reader.SystemReader;
@@ -15,10 +16,12 @@ public final class BlackjackApplication {
 
     private static BlackjackController getController() {
         final SystemWriter writer = new SystemWriter();
+        final OutputView outputView = new OutputView(writer);
         return new BlackjackController(
                 new InputView(writer, new SystemReader()),
-                new OutputView(writer),
-                new BlackjackService()
+                outputView,
+                new BlackjackService(),
+                new RetryHandler(outputView)
         );
     }
 }
