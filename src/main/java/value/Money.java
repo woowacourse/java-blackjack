@@ -10,4 +10,8 @@ public class Money {
 	public int getValue() {
 		return value;
 	}
+
+	public Money multiply(double scale) {
+		return new Money(0);
+	}
 }
