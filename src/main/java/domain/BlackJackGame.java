@@ -1,9 +1,11 @@
 package domain;
 
 import domain.participant.Dealer;
+import domain.participant.Money;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BlackJackGame {
@@ -17,7 +19,8 @@ public class BlackJackGame {
         this.players = players;
     }
 
-    public static BlackJackGame init(Dealer dealer, Players players) {
+    public static BlackJackGame init(Dealer dealer, List<String> playerNames, List<Money> monies) {
+        Players players = Players.of(playerNames, monies);
         dealer.handoutCards(players);
         return new BlackJackGame(dealer, players);
     }

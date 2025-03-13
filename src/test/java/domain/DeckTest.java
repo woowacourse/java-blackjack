@@ -9,6 +9,7 @@ import domain.card.CardShape;
 import domain.card.Deck;
 import domain.card.Hand;
 import domain.card.cardsGenerator.RandomCardsGenerator;
+import domain.participant.Money;
 import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,9 +68,9 @@ public class DeckTest {
         //given
         Card card = new Card(CardNumber.A, CardShape.CLOVER);
         Deck deck = new Deck(new StaticCardGenerator(List.of(card)));
-        Player player = Player.init("플레이어");
+        Player player = Player.init("플레이어", "100000");
 
-        Player expected = Player.from("플레이어", Hand.of(List.of(card)));
+        Player expected = Player.of(Hand.of(List.of(card)), "플레이어", new Money("100000"));
 
         //when
         deck.giveCardTo(player, 1);

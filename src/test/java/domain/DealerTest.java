@@ -7,6 +7,7 @@ import domain.card.CardNumber;
 import domain.card.CardShape;
 import domain.card.Hand;
 import domain.participant.Dealer;
+import domain.participant.Money;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.List;
@@ -34,7 +35,7 @@ class DealerTest {
                         new Card(CardNumber.TWO, CardShape.CLOVER)
                 )
         );
-        Player player1 = Player.from("플레이어", hand1);
+        Player player1 = Player.of(hand1, "플레이어", new Money("100000"));
 
         Hand hand2 = Hand.of(
                 List.of(
@@ -42,7 +43,7 @@ class DealerTest {
                         new Card(CardNumber.FOUR, CardShape.CLOVER)
                 )
         );
-        Player player2 = Player.from("플레이어2", hand2);
+        Player player2 = Player.of(hand2, "플레이어2", new Money("100000"));
         Map<Player, GameResult> expected = Map.of(
                 player1, GameResult.LOSE,
                 player2, GameResult.WIN
@@ -65,7 +66,7 @@ class DealerTest {
                 new Card(CardNumber.A, CardShape.CLOVER),
                 new Card(CardNumber.FOUR, CardShape.CLOVER)
         )));
-        Player player = Player.init("플레이어1");
+        Player player = Player.init("플레이어1", "100000");
         Players players = new Players(List.of(player));
 
         Hand dealerHand = Hand.of(
@@ -75,10 +76,10 @@ class DealerTest {
                 )
         );
         Dealer expectedDealer = Dealer.of(dealerHand, new StaticCardGenerator());
-        Player expectedPlayer = Player.from("플레이어1", Hand.of(List.of(
+        Player expectedPlayer = Player.of(Hand.of(List.of(
                 new Card(CardNumber.TWO, CardShape.CLOVER),
                 new Card(CardNumber.TEN, CardShape.CLOVER)
-        )));
+        )), "플레이어1", new Money("100000"));
         Players expectedPlayers = new Players(List.of(expectedPlayer));
         //when
         dealer.handoutCards(players);
@@ -95,10 +96,10 @@ class DealerTest {
         Dealer dealer = Dealer.init(new StaticCardGenerator(List.of(
                 new Card(CardNumber.A, CardShape.CLOVER)
         )));
-        Player player = Player.init("플레이어1");
-        Player expectedPlayer = Player.from("플레이어1", Hand.of(List.of(
+        Player player = Player.init("플레이어1", "100000");
+        Player expectedPlayer = Player.of(Hand.of(List.of(
                 new Card(CardNumber.A, CardShape.CLOVER)
-        )));
+        )), "플레이어1", new Money("100000"));
         //when
         dealer.giveCards(player, 1);
         //then
