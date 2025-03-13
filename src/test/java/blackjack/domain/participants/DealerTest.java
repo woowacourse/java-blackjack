@@ -4,6 +4,7 @@ import static blackjack.fixture.CardFixture.CLUB_FIVE;
 import static blackjack.fixture.CardFixture.CLUB_FOUR;
 import static blackjack.fixture.CardFixture.CLUB_ONE;
 import static blackjack.fixture.CardFixture.DIAMOND_ACE;
+import static blackjack.fixture.CardFixture.DIAMOND_EIGHT;
 import static blackjack.fixture.CardFixture.DIAMOND_FIVE;
 import static blackjack.fixture.CardFixture.DIAMOND_FOUR;
 import static blackjack.fixture.CardFixture.DIAMOND_ONE;
@@ -89,8 +90,8 @@ public class DealerTest {
                         DIAMOND_ACE,
                         DIAMOND_ONE,
                         DIAMOND_TEN,
+                        DIAMOND_EIGHT,
                         DIAMOND_THREE,
-                        DIAMOND_FOUR,
                         DIAMOND_FIVE
                 )
         );
@@ -104,8 +105,8 @@ public class DealerTest {
         assertThat(dealer.getCards().getCards())
                 .isEqualTo(List.of(
                         DIAMOND_FIVE,
-                        DIAMOND_FOUR,
                         DIAMOND_THREE,
+                        DIAMOND_EIGHT,
                         DIAMOND_TEN
                 ));
     }
