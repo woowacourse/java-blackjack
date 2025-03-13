@@ -10,17 +10,13 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<String> playerNames) {
-        validateMaxPlayer(playerNames);
-
-        players = new ArrayList<>();
-        for (String playerName : playerNames) {
-            players.add(new Player(playerName.trim()));
-        }
+    public Players (List<Player> players) {
+        validateMaxPlayer(players);
+        this.players = new ArrayList<>(players);
     }
 
-    private void validateMaxPlayer(final List<String> playerNames) {
-        if (playerNames.size() > MAX_PLAYER_SIZE) {
+    private void validateMaxPlayer(final List<Player> players) {
+        if (players.size() > MAX_PLAYER_SIZE) {
             throw new IllegalArgumentException(MAX_PLAYER_EXCEPTION);
         }
     }

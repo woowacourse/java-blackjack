@@ -24,24 +24,42 @@ public class BlackJackController {
     private final Dealer dealer = new Dealer();
 
     public void play() {
-        Players players = enterPlayer();
-        prepareBlackJack(players);
+        try {
+            Players players = enterPlayer();
+            Players betPlayers = betMoneyPlayers(players);
 
-        playersTurn(players);
-        dealerTurn();
+            distributeCards(betPlayers);
 
-        printDealerExtraCardsCount(dealer.getName(), dealer.getExtraHandSize());
-        printEveryOneCardsNamesWithTotal(players, dealer);
-        printResult(players);
+            playersTurn(betPlayers);
+            dealerTurn();
+
+            printDealerExtraCardsCount(dealer.getName(), dealer.getExtraHandSize());
+            printEveryOneCardsNamesWithTotal(betPlayers, dealer);
+            printResult(betPlayers);
+        } catch (IllegalArgumentException e) {
+            printExceptionMessage(e);
+        }
     }
 
     private Players enterPlayer() {
         String playerNamesInput = getPlayerNamesInput();
         List<String> playerNames = Arrays.asList(playerNamesInput.split(DELIMITER));
-        return new Players(playerNames);
+
+        List<Player> players = playerNames.stream()
+                .map(playerName -> new Player(playerName.trim()))
+                .toList();
+        return new Players(players);
     }
 
-    private void prepareBlackJack(final Players players) {
+    private Players betMoneyPlayers(final Players players) {
+        List<Player> betPlayers = new ArrayList<>();
+        for (Player player : players.getPlayers()) {
+            betPlayers.add(player.bet(getBetAmountInput(player.getName())));
+        }
+        return new Players(betPlayers);
+    }
+
+    private void distributeCards(final Players players) {
         dealer.shuffleDeck();
         drawTwoCardFromDeck(dealer);
         for (Player player : players.getPlayers()) {
