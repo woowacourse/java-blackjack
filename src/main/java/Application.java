@@ -15,7 +15,7 @@ public class Application {
         OutputView outputView = new OutputView();
         Dealer dealer = new Dealer();
         Players players = new Players(inputView.readNicknames().stream()
-                .map(nickname -> new Player(nickname, inputView.readBetAmount(nickname)))
+                .map(nickname -> new Player(nickname, inputView.readBettingMoney(nickname)))
                 .toList());
         Deck deck = new Deck(new ShuffledDeckCreator());
         BlackjackGame blackjackGame = new BlackjackGame();

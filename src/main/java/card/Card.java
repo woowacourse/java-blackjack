@@ -18,7 +18,7 @@ public class Card {
         return cardNumber;
     }
 
-    public CardShape getCardType() {
+    public CardShape getCardShape() {
         return cardShape;
     }
 }
