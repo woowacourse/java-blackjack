@@ -2,7 +2,7 @@ package game;
 
 public class Betting {
 
-    private final int money;
+    private int money;
 
     public Betting(int money) {
         this.money = money;
@@ -10,5 +10,9 @@ public class Betting {
 
     public int getMoney() {
         return money;
+    }
+
+    public void lose() {
+        this.money = 0;
     }
 }
