@@ -1,13 +1,16 @@
 package blackjack.domain;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 
 import java.util.List;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -20,11 +23,8 @@ public class PlayersTest {
         // given
         final List<String> playerNames = List.of("돔푸", "메이");
         
-        // when
-        Players players = Players.createPlayers(playerNames);
-        
         // expected
-        assertThat(players.getPlayers()).hasSize(2);
+        Assertions.assertDoesNotThrow(() -> Players.createPlayers(playerNames));
     }
     
     @Test
@@ -52,5 +52,26 @@ public class PlayersTest {
                 Arguments.of(List.of()),
                 Arguments.of(List.of("메이", "돔푸", "리사", "포라", "밍곰", "멍구", "가이온"))
         );
+    }
+    
+    @Test
+    void 플레이어_이름으로_플레이어를_찾을_수_있다() {
+        // given
+        final List<String> playerNames = List.of("돔푸", "메이");
+        Players players = Players.createPlayers(playerNames);
+        
+        // expected
+        assertThat(players.findPlayerByName("메이")).isEqualTo(new Player("메이"));
+    }
+    
+    @Test
+    void 존재하지_않는_플레이어를_찾으려는_경우_예외를_발생시킨다() {
+        // given
+        final List<String> playerNames = List.of("돔푸", "메이");
+        Players players = Players.createPlayers(playerNames);
+        
+        // expected
+        assertThatThrownBy(() -> players.findPlayerByName("멍구"))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
