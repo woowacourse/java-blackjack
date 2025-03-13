@@ -11,7 +11,7 @@ import java.util.Map;
 public class Participants {
 
     private static final int PLAYER_MAX_SIZE = 8;
-    private static final int DEALER = 1;
+    private static final int DEALER_MAX_SIZE = 1;
 
     private final List<Participant> participants;
 
@@ -58,8 +58,8 @@ public class Participants {
     }
 
     private void validateParticipantSize(List<Participant> participants) {
-        if (participants.size() > PLAYER_MAX_SIZE + DEALER) {
-            throw new InvalidParticipantSizeException(PLAYER_MAX_SIZE + DEALER);
+        if (participants.size() > PLAYER_MAX_SIZE + DEALER_MAX_SIZE) {
+            throw new InvalidParticipantSizeException(PLAYER_MAX_SIZE + DEALER_MAX_SIZE);
         }
     }
 }
