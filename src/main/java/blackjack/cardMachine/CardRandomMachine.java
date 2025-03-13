@@ -30,7 +30,7 @@ public class CardRandomMachine implements CardMachine {
         Collections.shuffle(mutableDeck);
         final Card drawCard = mutableDeck.getFirst();
         if (isAlreadyUsed(drawCard)) {
-            drawOneCard();
+            return drawOneCard();
         }
         cardUsage.replace(drawCard, true);
         return drawCard;
