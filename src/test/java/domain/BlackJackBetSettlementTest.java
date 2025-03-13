@@ -41,9 +41,9 @@ class BlackJackBetSettlementTest {
             CardGroup losingCardGroup = new CardGroup();
             Dealer dealer = new Dealer(losingCardGroup);
 
-            Bet winningBet = calculator.determineBettingAmount(dealer, winningPlayer);
+            int winningBet = calculator.determineBettingAmount(dealer, winningPlayer);
 
-            assertThat(winningBet).isEqualTo(new Bet(1000));
+            assertThat(winningBet).isEqualTo(1000);
         }
 
         @DisplayName("플레이어가 딜러를 상대로 패배한 경우 배팅한 금액만큼 잃는다")
@@ -56,9 +56,9 @@ class BlackJackBetSettlementTest {
             Dealer dealer = new Dealer(winningCardGroup);
             dealer.receiveCard(new Card(CardType.CLOVER, CardScore.TEN));
 
-            Bet winningBet = calculator.determineBettingAmount(dealer, losingPlayer);
+            int winningBet = calculator.determineBettingAmount(dealer, losingPlayer);
 
-            assertThat(winningBet).isEqualTo(new Bet(-1000));
+            assertThat(winningBet).isEqualTo(-1000);
         }
 
         @DisplayName("플레이어가 딜러를 상대로 무승부한 경우 배팅한 금액을 그래돌 돌려받는다")
@@ -72,9 +72,9 @@ class BlackJackBetSettlementTest {
             Dealer drawingDealer = new Dealer(drawingDealerCardGroup);
             drawingDealer.receiveCard(new Card(CardType.DIAMOND, CardScore.TEN));
 
-            Bet drawingBet = calculator.determineBettingAmount(drawingDealer, drawingPlayer);
+            int drawingBet = calculator.determineBettingAmount(drawingDealer, drawingPlayer);
 
-            assertThat(drawingBet).isEqualTo(new Bet(0));
+            assertThat(drawingBet).isEqualTo(0);
         }
 
         @DisplayName("플레이어가 블랙잭으로 승리한 경우 1.5배를 받는다")
@@ -89,9 +89,9 @@ class BlackJackBetSettlementTest {
             CardGroup losingCardGroup = new CardGroup();
             Dealer dealer = new Dealer(losingCardGroup);
 
-            Bet winningBet = calculator.determineBettingAmount(dealer, winningPlayer);
+            int winningBet = calculator.determineBettingAmount(dealer, winningPlayer);
 
-            assertThat(winningBet).isEqualTo(new Bet(1500));
+            assertThat(winningBet).isEqualTo(1500);
         }
     }
 }
