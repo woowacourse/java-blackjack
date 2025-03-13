@@ -9,6 +9,7 @@ public class Hand {
 
     private static final int BUST_THRESHOLD = 22;
     private static final int BLACKJACK_SCORE = 21;
+    private static final int BLACKJACK_SIZE = 2;
     private static final int ACE_BONUS = 10;
 
     private final List<Card> cards;
@@ -50,6 +51,10 @@ public class Hand {
 
     public boolean isBust() {
         return isBust(calculateTotalScore());
+    }
+
+    public boolean isBlackJack() {
+        return calculateFinalScore() == BLACKJACK_SCORE && size() == BLACKJACK_SIZE;
     }
 
     public boolean isTwentyOne() {
