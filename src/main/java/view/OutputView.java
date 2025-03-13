@@ -3,7 +3,6 @@ package view;
 import card.Card;
 import card.CardNumber;
 import card.CardShape;
-import game.GameResult;
 import java.util.List;
 import java.util.Map;
 import participant.Dealer;
@@ -13,21 +12,15 @@ import participant.Players;
 
 public class OutputView {
 
+    private static final String NICKNAME_SEPARATOR = ", ";
     private static final String CLOVER = "클로버";
     private static final String SPADE = "스페이드";
     private static final String DIAMOND = "다이아몬드";
     private static final String HEART = "하트";
-    private static final String WIN = "승";
-    private static final String LOSE = "패";
-    private static final String DRAW = "무";
     private static final String ACE = "A";
     private static final String JACK = "J";
     private static final String QUEEN = "Q";
     private static final String KING = "K";
-    private static final String NICKNAME_SEPARATOR = ", ";
-
-    private static final String ALL_CARDS = "%s: %s";
-    private static final String RESULT = " - 결과: %s";
 
     public void printDistributionCards(Dealer dealer, Players players) {
         printNewLine();
@@ -38,16 +31,15 @@ public class OutputView {
         );
         println("에게 2장을 나누었습니다.");
 
-        System.out.printf("딜러카드: %s%n", cardToString(dealer.getLastCard()));
+        println(String.format("딜러 카드: %s", cardToString(dealer.getLastCard())));
         for (Player player : players.getPlayers()) {
             printPlayerCards(player);
         }
         printNewLine();
     }
 
-    public void printPlayerCards(Participant player) {
-        System.out.printf(ALL_CARDS, player.getNickname(), allCardToString(player.getCards()));
-        printNewLine();
+    public void printPlayerCards(Player player) {
+        println(String.format("%s: %s", player.getNickname(), allCardToString(player.getCards())));
     }
 
     public void printDealerReceivedCard() {
@@ -65,10 +57,18 @@ public class OutputView {
         printNewLine();
     }
 
-    private void printPlayerCardsWithScore(Participant player) {
-        System.out.printf(ALL_CARDS, player.getNickname(), allCardToString(player.getCards()));
-        System.out.printf(RESULT, player.score());
-        printNewLine();
+    public void printResult(double dealerGameResult, Map<Player, Double> playersGameResults) {
+        println("## 최종 수익");
+        println(String.format("딜러: %.0f", dealerGameResult));
+
+        for (Player player : playersGameResults.keySet()) {
+            println(String.format("%s: %.0f", player.getNickname(), playersGameResults.get(player)));
+        }
+    }
+
+    private void printPlayerCardsWithScore(Participant participant) {
+        print(String.format("%s: %s", participant.getNickname(), allCardToString(participant.getCards())));
+        println(String.format(" - 결과: %s", participant.score()));
     }
 
     private String allCardToString(List<Card> cards) {
@@ -77,34 +77,8 @@ public class OutputView {
                 .toList());
     }
 
-    public void printResult(Map<GameResult, Integer> dealerResults, Map<Player, GameResult> playerResults) {
-        println("## 최종 승패");
-        print("딜러:");
-        for (GameResult gameResult : GameResult.values()) {
-            if (dealerResults.get(gameResult) != 0) {
-                System.out.printf(" %d%s", dealerResults.get(gameResult), gameResultToString(gameResult));
-            }
-        }
-        printNewLine();
-
-        for (Player player : playerResults.keySet()) {
-            System.out.printf(ALL_CARDS, player.getNickname(), gameResultToString(playerResults.get(player)));
-            printNewLine();
-        }
-    }
-
-    private String gameResultToString(GameResult gameResult) {
-        if (gameResult.equals(GameResult.WIN)) {
-            return WIN;
-        }
-        if (gameResult.equals(GameResult.LOSE)) {
-            return LOSE;
-        }
-        return DRAW;
-    }
-
     private String cardToString(Card card) {
-        return cardNumberToString(card) + cardTypeToString(card);
+        return cardNumberToString(card) + cardShapeToString(card);
     }
 
     private String cardNumberToString(Card card) {
@@ -123,14 +97,14 @@ public class OutputView {
         return String.valueOf(card.getCardNumber().getValue());
     }
 
-    private String cardTypeToString(Card card) {
-        if (card.getCardType() == CardShape.CLOVER) {
+    private String cardShapeToString(Card card) {
+        if (card.getCardShape() == CardShape.CLOVER) {
             return CLOVER;
         }
-        if (card.getCardType() == CardShape.DIAMOND) {
+        if (card.getCardShape() == CardShape.DIAMOND) {
             return DIAMOND;
         }
-        if (card.getCardType() == CardShape.SPADE) {
+        if (card.getCardShape() == CardShape.SPADE) {
             return SPADE;
         }
         return HEART;
