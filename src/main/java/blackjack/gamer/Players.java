@@ -7,6 +7,8 @@ import java.util.Set;
 
 public class Players {
 
+    private static final int MAX_PLAYER_NUMBER = 6;
+
     private final List<Player> players;
 
     public Players() {
@@ -35,7 +37,7 @@ public class Players {
     }
 
     private void validateNameCount(final List<String> parsedNames) {
-        if (parsedNames.size() >= 6) {
+        if (parsedNames.size() > MAX_PLAYER_NUMBER) {
             throw new IllegalArgumentException("적정 인원을 초과했습니다. 다시 입력해주세요.");
         }
     }
