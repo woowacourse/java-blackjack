@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
+@DisplayName("이름 테스트")
 class NameTest {
 
     @ParameterizedTest
