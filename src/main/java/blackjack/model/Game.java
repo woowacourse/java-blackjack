@@ -3,7 +3,6 @@ package blackjack.model;
 import blackjack.model.card.Card;
 import blackjack.model.card.Deck;
 import blackjack.model.participant.Dealer;
-import blackjack.model.participant.Participant;
 import blackjack.model.participant.Player;
 import blackjack.model.participant.Players;
 import java.util.LinkedHashMap;
@@ -12,39 +11,37 @@ import java.util.Map;
 
 public class Game {
 
-    private final Deck deck;
     private final Dealer dealer;
     private final Players players;
 
-    public Game(Deck deck, Dealer dealer, List<Player> players) {
-        this.deck = deck;
+    public Game(Dealer dealer, List<Player> players) {
         this.dealer = dealer;
         this.players = new Players(players);
     }
 
     public void dealInitialCards() {
         for (Player player : players.getPlayers()) {
-            dealCard(player);
-            dealCard(player);
+            dealPlayerCard(player);
+            dealPlayerCard(player);
         }
-        dealCard(dealer);
-        dealCard(dealer);
+        dealDealerCard(dealer);
+        dealDealerCard(dealer);
     }
 
-    private void dealCard(Participant participant) {
-        participant.receiveHand(deck.draw());
+    private void dealPlayerCard(Player player) {
+        player.receiveHand(dealer.drawCard());
+    }
+
+    private void dealDealerCard(Dealer dealer) {
+        dealer.receiveHand(dealer.drawCard());
     }
 
     public void hitPlayer(Player player) {
-        dealCard(player);
+        dealPlayerCard(player);
     }
 
     public boolean hitDealer() {
-        if (dealer.canHit()) {
-            dealCard(dealer);
-            return true;
-        }
-        return false;
+        return dealer.hitDealer();
     }
 
     public Map<Player, MatchResult> judgeMatchResults() {
@@ -56,7 +53,7 @@ public class Game {
     }
 
     public Card getDealerVisibleCard() {
-        return dealer.getHand().getFirst();
+        return dealer.getVisibleCard();
     }
 
     public List<Player> getPlayers() {

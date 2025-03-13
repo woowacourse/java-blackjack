@@ -1,7 +1,9 @@
 package blackjack.model.participant;
 
+import static blackjack.TestFixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.TestFixtures;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardValue;
 import blackjack.model.card.Suit;
@@ -18,7 +20,7 @@ class DealerTest {
     void receiveHandTest() {
         // given
         Card card = new Card(Suit.SPADES, CardValue.ACE);
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(UNSHUFFLED_DECK);
 
         // when
         dealer.receiveHand(card);
@@ -34,7 +36,7 @@ class DealerTest {
         // given
         Card spadeTen = new Card(Suit.SPADES, CardValue.TEN);
         Card spadeFive = new Card(Suit.SPADES, CardValue.FIVE);
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(UNSHUFFLED_DECK);
         dealer.receiveHand(spadeTen);
         dealer.receiveHand(spadeFive);
 
@@ -52,7 +54,7 @@ class DealerTest {
         // given
         Card spadeAce = new Card(Suit.SPADES, CardValue.ACE);
         Card spadeTen = new Card(Suit.SPADES, CardValue.TEN);
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(UNSHUFFLED_DECK);
         dealer.receiveHand(spadeTen);
         dealer.receiveHand(spadeAce);
 
@@ -71,7 +73,7 @@ class DealerTest {
         Card spadeAce = new Card(Suit.SPADES, CardValue.ACE);
         Card spadeTwo = new Card(Suit.SPADES, CardValue.TWO);
         Card spadeNine = new Card(Suit.SPADES, CardValue.NINE);
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(UNSHUFFLED_DECK);
         dealer.receiveHand(spadeAce);
         dealer.receiveHand(spadeTwo);
         dealer.receiveHand(spadeNine);
@@ -94,7 +96,7 @@ class DealerTest {
         // given
         Card spadeTen = new Card(Suit.SPADES, value1);
         Card spadeAce = new Card(Suit.SPADES, value2);
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(UNSHUFFLED_DECK);
         dealer.receiveHand(spadeTen);
         dealer.receiveHand(spadeAce);
 
@@ -117,7 +119,7 @@ class DealerTest {
         Card card1 = new Card(Suit.SPADES, value1);
         Card card2 = new Card(Suit.SPADES, value2);
         Card card3 = new Card(Suit.SPADES, value3);
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(UNSHUFFLED_DECK);
         dealer.receiveHand(card1);
         dealer.receiveHand(card2);
         dealer.receiveHand(card3);
@@ -138,12 +140,12 @@ class DealerTest {
     })
     void shouldHitTrueTest(CardValue cardValue1, CardValue cardValue2, boolean expected) {
         // given
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(UNSHUFFLED_DECK);
         dealer.receiveHand(new Card(Suit.SPADES, cardValue1));
         dealer.receiveHand(new Card(Suit.SPADES, cardValue2));
 
         // when
-        boolean canHit = dealer.canHit();
+        boolean canHit = dealer.hitDealer();
 
         // then
         assertThat(canHit)

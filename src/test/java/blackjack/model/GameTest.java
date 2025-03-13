@@ -28,7 +28,7 @@ class GameTest {
         List<Player> players = List.of(new Player("pobi"), new Player("neo"));
 
         // when, then
-        assertThatCode(() -> new Game(deck, new Dealer(), players))
+        assertThatCode(() -> new Game(new Dealer(deck), players))
                 .doesNotThrowAnyException();
     }
 
@@ -37,9 +37,9 @@ class GameTest {
     void dealInitialCardsTest() {
         // given
         Deck deck = Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler());
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(deck);
         List<Player> players = List.of(new Player("pobi"), new Player("neo"));
-        Game game = new Game(deck, dealer, players);
+        Game game = new Game(dealer, players);
 
         // when
         game.dealInitialCards();
@@ -57,7 +57,7 @@ class GameTest {
         // given
         Player pobi = new Player("pobi");
         List<Player> players = List.of(pobi);
-        Game game = new Game(UNSHUFFLED_DECK, DEALER, players);
+        Game game = new Game(DEALER, players);
         game.dealInitialCards();
 
         //when
@@ -75,8 +75,8 @@ class GameTest {
         Card spadeFive = new Card(Suit.SPADES, CardValue.FIVE);
         Card spadeTen = new Card(Suit.SPADES, CardValue.TEN);
         Deck deck = Deck.createShuffledDeck(List.of(spadeFive, spadeTen, spadeFive, spadeTen), new FixedCardShuffler());
-        Dealer dealer = new Dealer();
-        Game game = new Game(deck, dealer, List.of(new Player("pobi")));
+        Dealer dealer = new Dealer(deck);
+        Game game = new Game(dealer, List.of(new Player("pobi")));
         game.dealInitialCards();
 
         //when
@@ -99,9 +99,9 @@ class GameTest {
                 new Card(Suit.HEARTS, CardValue.TWO)
         );
         Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(deck);
         List<Player> players = List.of(new Player("pobi"));
-        Game game = new Game(deck, dealer, players);
+        Game game = new Game(dealer, players);
         game.dealInitialCards();
 
         //when
@@ -126,9 +126,9 @@ class GameTest {
                 new Card(Suit.SPADES, CardValue.FOUR)
         );
         Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(deck);
         List<Player> players = List.of(new Player("pobi"));
-        Game game = new Game(deck, dealer, players);
+        Game game = new Game(dealer, players);
         game.dealInitialCards();
 
         //when
@@ -153,9 +153,9 @@ class GameTest {
                 new Card(Suit.SPADES, CardValue.FOUR)
         );
         Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(deck);
         List<Player> players = List.of(new Player("pobi"));
-        Game game = new Game(deck, dealer, players);
+        Game game = new Game(dealer, players);
         game.dealInitialCards();
 
         //when
@@ -179,9 +179,9 @@ class GameTest {
                 new Card(Suit.SPADES, CardValue.TEN)
         );
         Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(deck);
         List<Player> players = List.of(new Player("pobi"));
-        Game game = new Game(deck, dealer, players);
+        Game game = new Game(dealer, players);
         game.dealInitialCards();
 
         // when
