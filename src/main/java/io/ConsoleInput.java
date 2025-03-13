@@ -3,7 +3,7 @@ package io;
 import java.util.List;
 import java.util.Scanner;
 
-public class InputView {
+public class ConsoleInput {
 
     private final Scanner scanner = new Scanner(System.in);
 

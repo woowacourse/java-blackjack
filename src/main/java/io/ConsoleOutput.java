@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class OutputView {
+public class ConsoleOutput {
 
     public void printInitialGameSettings(Players players, Dealer dealer) {
         String joinedPlayers = String.join(", ", players.getPlayerNames());
