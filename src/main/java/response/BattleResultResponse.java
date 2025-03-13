@@ -1,4 +1,4 @@
-package dto;
+package response;
 
 import java.util.Map;
 import object.game.GameResult;

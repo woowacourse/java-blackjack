@@ -1,9 +1,5 @@
 package object.game;
 
-import dto.BattleResultResponse;
-import dto.BlackJackResultResponse;
-import dto.CardDeckStatusResponse;
-import dto.ParticipantResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +9,10 @@ import object.participant.Player;
 import object.view.Answer;
 import object.view.InputView;
 import object.view.OutputView;
+import response.BattleResultResponse;
+import response.BlackJackResultResponse;
+import response.CardDeckStatusResponse;
+import response.ParticipantResponse;
 
 public class BlackJackManager {
     private final InputView inputView;

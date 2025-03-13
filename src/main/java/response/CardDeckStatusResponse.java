@@ -1,4 +1,4 @@
-package dto;
+package response;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;

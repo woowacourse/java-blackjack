@@ -1,9 +1,5 @@
 package object.view;
 
-import dto.BattleResultResponse;
-import dto.BlackJackResultResponse;
-import dto.CardDeckStatusResponse;
-import dto.ParticipantResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -15,6 +11,10 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import object.game.GameResult;
 import object.game.Score;
+import response.BattleResultResponse;
+import response.BlackJackResultResponse;
+import response.CardDeckStatusResponse;
+import response.ParticipantResponse;
 
 public class OutputView {
     public void printDrawTwoCardsMessage(ParticipantResponse response) {
