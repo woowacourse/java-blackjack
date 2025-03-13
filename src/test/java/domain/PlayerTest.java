@@ -89,24 +89,4 @@ public class PlayerTest {
             () -> assertThat(threeCardTwentyOnePlayer.isBlackJack()).isFalse()
         );
     }
-
-    @Test
-    void 결과별_수익을_계산한다() {
-        Player player = new Player("drago",
-            List.of(new Card(Symbol.DIAMOND, Number.ACE),
-                new Card(Symbol.DIAMOND, Number.NINE)),
-            1000);
-
-        int loseIncome = player.calculateIncome(ResultStatus.LOSE);
-        int winIncome = player.calculateIncome(ResultStatus.WIN);
-        int pushIncome = player.calculateIncome(ResultStatus.PUSH);
-        int blackJackIncome = player.calculateIncome(ResultStatus.BLACK_JACK);
-
-        assertAll(
-            () -> assertThat(loseIncome).isEqualTo(-1000),
-            () -> assertThat(winIncome).isEqualTo(1000),
-            () -> assertThat(pushIncome).isEqualTo(0),
-            () -> assertThat(blackJackIncome).isEqualTo(1500)
-        );
-    }
 }

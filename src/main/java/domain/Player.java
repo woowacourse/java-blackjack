@@ -5,11 +5,11 @@ import java.util.Objects;
 
 public class Player extends Participant {
 
-    private final int betAmount;
+    private final BetAmount betAmount;
 
-    public Player(String name, List<Card> cards, int betAmount) {
+    public Player(String name, List<Card> cards, int amount) {
         super(name, cards);
-        this.betAmount = betAmount;
+        this.betAmount = new BetAmount(amount);
     }
 
     public boolean isBlackJack() {
@@ -17,7 +17,7 @@ public class Player extends Participant {
     }
 
     public int calculateIncome(ResultStatus resultStatus) {
-        return resultStatus.calculateIncome(betAmount);
+        return betAmount.calculateIncome(resultStatus);
     }
 
     @Override
