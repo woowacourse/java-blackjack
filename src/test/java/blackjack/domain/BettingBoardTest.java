@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -59,29 +58,19 @@ public class BettingBoardTest {
         
         // when
         Map<Player, WinningStatus> playerWinningStatus = new HashMap<>();
-        playerWinningStatus.put(firstPlayer, WinningStatus.LOSE);
-        playerWinningStatus.put(secondPlayer, WinningStatus.LOSE);
+        playerWinningStatus.put(firstPlayer, firstPlayerStatus);
+        playerWinningStatus.put(secondPlayer, secondPlayerStatus);
         
         // then
-        Assertions.assertThat(bettingBoard.getDealerProfit(playerWinningStatus)).isEqualTo(30000);
+        Assertions.assertThat(bettingBoard.getDealerProfit(playerWinningStatus)).isEqualTo(profit);
     }
     
-    @Test
-    void 모든_플레이어의_수익을_계산한_후_딜러의_총_수익을_계산할_수_있다_2() {
-        // given
-        Player firstPlayer = new Player("돔푸");
-        Player secondPlayer = new Player("메이");
-        Map<Player, BettingMoney> playerBettingMoney = new HashMap<>();
-        playerBettingMoney.put(firstPlayer, new BettingMoney(10000));
-        playerBettingMoney.put(secondPlayer, new BettingMoney(20000));
-        BettingBoard bettingBoard = new BettingBoard(playerBettingMoney);
-        
-        // when
-        Map<Player, WinningStatus> playerWinningStatus = new HashMap<>();
-        playerWinningStatus.put(firstPlayer, WinningStatus.BLACKJACK_WIN);
-        playerWinningStatus.put(secondPlayer, WinningStatus.LOSE);
-        
-        // then
-        Assertions.assertThat(bettingBoard.getDealerProfit(playerWinningStatus)).isEqualTo(5000);
+    private static Stream<Arguments> providePlayersWinningStatusAndProfit() {
+        return Stream.of(
+                Arguments.of(WinningStatus.LOSE, WinningStatus.LOSE, 30000),
+                Arguments.of(WinningStatus.BLACKJACK_WIN, WinningStatus.LOSE, 5000),
+                Arguments.of(WinningStatus.BLACKJACK_WIN, WinningStatus.BLACKJACK_WIN, -45000),
+                Arguments.of(WinningStatus.WIN, WinningStatus.WIN, -30000)
+        );
     }
 }
