@@ -60,4 +60,8 @@ public class GameManager {
     public void calculateResult() {
         players.calculateResult(dealer);
     }
+
+    public void winAllPlayers() {
+        players.winAll(dealer);
+    }
 }

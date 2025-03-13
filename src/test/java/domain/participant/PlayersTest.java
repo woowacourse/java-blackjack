@@ -179,4 +179,37 @@ class PlayersTest {
             assertThat(dealer.getTotalWinnings()).isEqualTo(4000);
         });
     }
+
+    @Test
+    void 살아있는_모든_플레이어가_베팅_금액을_받는다() {
+        // given
+        // 20
+        Player player1 = Player.of("player1", Money.of(1000));
+        player1.receive(Card.of(TrumpNumber.ACE, TrumpShape.SPADE));
+        player1.receive(Card.of(TrumpNumber.NINE, TrumpShape.SPADE));
+
+        // 17
+        Player player2 = Player.of("player2", Money.of(2000));
+        player2.receive(Card.of(TrumpNumber.ACE, TrumpShape.SPADE));
+        player2.receive(Card.of(TrumpNumber.SIX, TrumpShape.SPADE));
+
+        // bust
+        Player player3 = Player.of("player3", Money.of(3000));
+        player3.receive(Card.of(TrumpNumber.JACK, TrumpShape.SPADE));
+        player3.receive(Card.of(TrumpNumber.NINE, TrumpShape.SPADE));
+        player3.receive(Card.of(TrumpNumber.QUEEN, TrumpShape.SPADE));
+
+        Players players = Players.of(List.of(player1, player2, player3));
+        Dealer dealer = Dealer.of(CardDeck.of());
+
+        // when
+        players.winAll(dealer);
+
+        // then
+        Assertions.assertAll(() -> {
+            assertThat(player1.getTotalWinnings()).isEqualTo(1000);
+            assertThat(player2.getTotalWinnings()).isEqualTo(2000);
+            assertThat(player3.getTotalWinnings()).isEqualTo(0);
+        });
+    }
 }

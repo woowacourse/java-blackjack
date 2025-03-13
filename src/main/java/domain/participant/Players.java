@@ -57,6 +57,12 @@ public class Players {
         }
     }
 
+    public void winAll(Dealer dealer) {
+        for (Player player : players) {
+            handleBustDealerAmount(dealer, player);
+        }
+    }
+
     private void handleInitialBlackjack(Dealer dealer, Player player) {
         int blackjackAmount = getBlackjackAmount(player);
         if (BlackjackResult.isBlackjack(player) && !BlackjackResult.isBlackjack(dealer)) {
@@ -79,6 +85,14 @@ public class Players {
         if (playerResult == BlackjackResult.WIN) {
             player.increaseAmount(player.getBetAmount());
             dealer.decreaseAmount(player.getBetAmount());
+        }
+    }
+
+    private void handleBustDealerAmount(Dealer dealer, Player player) {
+        if (!BlackjackResult.isBust(player)) {
+            int betAmount = player.getBetAmount();
+            player.increaseAmount(betAmount);
+            dealer.decreaseAmount(betAmount);
         }
     }
 }

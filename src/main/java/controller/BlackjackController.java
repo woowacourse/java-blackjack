@@ -8,6 +8,7 @@ import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
+import domain.result.BlackjackResult;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -39,9 +40,9 @@ public class BlackjackController {
         outputView.printInitCards(dealer, players);
 
         drawToPlayers(gameManager);
-        drawToDealer(dealer);
+        drawToDealer(dealer, gameManager);
         outputView.printFinalCardsContent(dealer, players);
-        
+
         gameManager.calculateResult();
         outputView.printResult(dealer, players);
     }
@@ -62,13 +63,14 @@ public class BlackjackController {
         }
     }
 
-    private void drawToDealer(Dealer dealer) {
-        while (true) {
-            boolean received = dealer.passCardToSelf();
-            if (!received) {
-                break;
-            }
+    private void drawToDealer(Dealer dealer, GameManager gameManager) {
+        while (!BlackjackResult.isBust(dealer) && dealer.isHit()) {
+            dealer.receive(dealer.drawCard());
             outputView.printDealerReceived();
+        }
+
+        if (BlackjackResult.isBust(dealer)) {
+            gameManager.winAllPlayers();
         }
     }
 
