@@ -2,6 +2,7 @@ package blackjack;
 
 import blackjack.card.CardDeck;
 import blackjack.game.BlackjackGame;
+import blackjack.user.BettingPlayer;
 import blackjack.user.Dealer;
 import blackjack.user.Participants;
 import blackjack.user.Player;
@@ -11,6 +12,7 @@ import blackjack.view.InputView;
 import blackjack.view.GameView;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackjackApplication {
 
@@ -30,8 +32,10 @@ public class BlackjackApplication {
     private static BlackjackGame enterParticipants(final InputView inputView) {
         try {
             List<PlayerName> names = inputView.readNames();
+            BlackjackGame.createByPlayerNames(CardDeck.shuffleCardDeck(), names);
+
             Map<PlayerName, Wallet> playersWallet = inputView.readPlayerPrincipals(names);
-            return BlackjackGame.createByPlayerNames(CardDeck.shuffleCardDeck(), playersWallet);
+            return BlackjackGame.createByBettingPlayers(CardDeck.shuffleCardDeck(), playersWallet);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return enterParticipants(inputView);
@@ -60,7 +64,7 @@ public class BlackjackApplication {
         final BlackjackGame blackjackGame, final InputView inputView, final GameView gameView) {
         handleExtraCardError(() -> {
             while (inputView.readGetOneMore(player.getName())) {
-                blackjackGame.addExtraCard(player);
+                blackjackGame.addExtraCardToPlayer(player);
                 gameView.printPlayerCardResult(player);
             }
         });
@@ -71,7 +75,7 @@ public class BlackjackApplication {
         Dealer dealer = blackjackGame.getParticipants().getDealer();
         handleExtraCardError(() -> {
             while (dealer.isPossibleToAdd()) {
-                blackjackGame.addExtraCard(dealer);
+                blackjackGame.addExtraCardToDealer();
                 gameView.printAddExtraCardToDealer();
             }
         });
@@ -97,6 +101,11 @@ public class BlackjackApplication {
 
         gameView.printProfitResultTitle();
         gameView.printDealerResult(dealerProfit);
-        gameView.printPlayerResult(blackjackGame.getParticipants().getPlayers());
+        gameView.printPlayerResult(
+            blackjackGame.getParticipants().getPlayers().stream()
+                .filter(player -> player instanceof BettingPlayer)
+                .map(player -> (BettingPlayer) player)
+                .collect(Collectors.toList())
+        );
     }
 }

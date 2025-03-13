@@ -1,50 +1,27 @@
-package blackjack.domain.user;
+package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.card.Card;
 import blackjack.card.CardDeck;
+import blackjack.card.CardHand;
 import blackjack.card.Denomination;
 import blackjack.card.Suit;
-import blackjack.user.Participant;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-public class ParticipantTest {
-
-    Participant participant;
-
-    @BeforeEach
-    void initParticipant() {
-        participant = new Participant() {
-            @Override
-            public List<Card> openInitialCards() {
-                return super.openCards();
-            }
-
-            @Override
-            public boolean isPossibleToAdd() {
-                return true;
-            }
-
-            @Override
-            public boolean isImpossibleToAdd() {
-                return false;
-            }
-        };
-    }
+public class CardHandTest {
 
     @Nested
     @DisplayName("카드 배부 테스트")
     class CardDistributeTest {
 
         @Test
-        @DisplayName("참가자는 카드를 여러장 배부 받을 수 있다.")
+        @DisplayName("카드를 여러장 배부 받을 수 있다.")
         void distributeTwoCards() {
             List<Card> initialCards = new ArrayList<>(List.of(
                 new Card(Suit.HEART, Denomination.ACE),
@@ -52,8 +29,9 @@ public class ParticipantTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            participant.addCards(cardDeck, 2);
-            List<Card> cards = participant.openCards();
+            CardHand cardHand = new CardHand();
+            cardHand.addCards(cardDeck, 2, 21);
+            List<Card> cards = cardHand.openCards();
 
             assertAll(() -> {
                 assertThat(cards).hasSize(2);
@@ -78,8 +56,9 @@ public class ParticipantTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            participant.addCards(cardDeck, 2);
-            int cardSum = participant.calculateDenominations();
+            CardHand cardHand = new CardHand();
+            cardHand.addCards(cardDeck, 2, 21);
+            int cardSum = cardHand.calculateDenominations();
 
             assertThat(cardSum).isEqualTo(12);
         }
@@ -93,8 +72,9 @@ public class ParticipantTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            participant.addCards(cardDeck, 2);
-            int cardSumWithAceValue11 = participant.calculateDenominations();
+            CardHand cardHand = new CardHand();
+            cardHand.addCards(cardDeck, 2, 21);
+            int cardSumWithAceValue11 = cardHand.calculateDenominations();
 
             assertThat(cardSumWithAceValue11).isEqualTo(21);
         }
@@ -109,8 +89,9 @@ public class ParticipantTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            participant.addCards(cardDeck, 3);
-            int cardSumWithAceValue1 = participant.calculateDenominations();
+            CardHand cardHand = new CardHand();
+            cardHand.addCards(cardDeck, 3, 21);
+            int cardSumWithAceValue1 = cardHand.calculateDenominations();
 
             assertThat(cardSumWithAceValue1).isEqualTo(13);
         }

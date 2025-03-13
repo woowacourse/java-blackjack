@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.card.Card;
 import blackjack.card.CardDeck;
+import blackjack.card.CardHand;
 import blackjack.card.Denomination;
 import blackjack.game.GameResult;
 import blackjack.card.Suit;
@@ -34,7 +35,7 @@ class DealerTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            Dealer dealer = new Dealer();
+            Dealer dealer = new Dealer(new CardHand());
             dealer.addCards(cardDeck, 2);
 
             List<Card> cards = dealer.openInitialCards();
@@ -58,7 +59,7 @@ class DealerTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            Dealer dealer = new Dealer();
+            Dealer dealer = new Dealer(new CardHand());
             dealer.addCards(cardDeck, 2);
 
             assertThat(dealer.isPossibleToAdd()).isTrue();
@@ -73,7 +74,7 @@ class DealerTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            Dealer dealer = new Dealer();
+            Dealer dealer = new Dealer(new CardHand());
             dealer.addCards(cardDeck, 2);
 
             assertThat(dealer.isPossibleToAdd()).isFalse();
@@ -89,8 +90,8 @@ class DealerTest {
 
         @BeforeEach
         void initParticipants() {
-            player = new Player(new PlayerName("sana"), Wallet.initialBetting(10000));
-            dealer = new Dealer();
+            player = new Player(new PlayerName("sana"), new CardHand());
+            dealer = new Dealer(new CardHand());
         }
 
         @Test

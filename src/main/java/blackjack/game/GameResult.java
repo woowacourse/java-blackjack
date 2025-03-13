@@ -12,8 +12,8 @@ public enum GameResult {
     }
 
     public static GameResult FromDenominationsSum(final Dealer dealer, final Player player) {
-        int dealerSum = dealer.calculateDenominations();
-        int playerSum = player.calculateDenominations();
+        int dealerSum = dealer.getCards().calculateDenominations();
+        int playerSum = player.getCards().calculateDenominations();
 
         if (dealerSum < playerSum) {
             return WIN;

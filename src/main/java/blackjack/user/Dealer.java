@@ -1,36 +1,49 @@
 package blackjack.user;
 
 import blackjack.card.Card;
+import blackjack.card.CardDeck;
+import blackjack.card.CardHand;
 import blackjack.game.GameResult;
 import java.util.List;
 
-public class Dealer extends Participant {
+public class Dealer {
 
-    private static final int DEALER_DISTRIBUTE_CARD_THRESHOLD = 16;
+    private static final int DEALER_OPEN_INITIAL_CARD_COUNT = 1;
+    private static final int DEALER_DISTRIBUTE_CARD_THRESHOLD = 17;
 
-    public Dealer() {
+    private final CardHand cards;
+
+    public Dealer(CardHand cards) {
+        this.cards = cards;
     }
 
-    @Override
     public List<Card> openInitialCards() {
-        return List.of(super.cards.getFirst());
+        return cards.openInitialCards(DEALER_OPEN_INITIAL_CARD_COUNT);
     }
 
-    @Override
+    public void addCards(CardDeck cardDeck, int count) {
+        cards.addCards(cardDeck, count, DEALER_DISTRIBUTE_CARD_THRESHOLD);
+    }
+
     public boolean isPossibleToAdd() {
-        return super.calculateDenominations() <= DEALER_DISTRIBUTE_CARD_THRESHOLD;
+        return cards.isPossibleToAdd(DEALER_DISTRIBUTE_CARD_THRESHOLD);
     }
 
     public GameResult judgePlayerResult(final Player player) {
-        if (player.isBust()) {
+        CardHand playerCards = player.getCards();
+        if (playerCards.isBust()) {
             return GameResult.LOSE;
         }
-        if (player.isBlackjack() && super.isBlackjack()) {
+        if (playerCards.isBlackjack() && this.cards.isBlackjack()) {
             return GameResult.DRAW;
         }
-        if (player.isBlackjack() || super.isBust()) {
+        if (playerCards.isBlackjack() || this.cards.isBust()) {
             return GameResult.WIN;
         }
         return GameResult.FromDenominationsSum(this, player);
+    }
+
+    public CardHand getCards() {
+        return cards;
     }
 }

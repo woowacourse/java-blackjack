@@ -1,41 +1,40 @@
 package blackjack.user;
 
 import blackjack.card.Card;
-import blackjack.game.GameResult;
+import blackjack.card.CardDeck;
+import blackjack.card.CardHand;
 import java.util.List;
 
-public class Player extends Participant {
+public class Player {
 
+    private static final int PLAYER_OPEN_INITIAL_CARD_COUNT = 2;
     private static final int PLAYER_DISTRIBUTE_CARD_THRESHOLD = 21;
 
     private final PlayerName playerName;
-    private Wallet wallet;
+    protected final CardHand cards;
 
-    public Player(final PlayerName playerName, final Wallet wallet) {
+    public Player(final PlayerName playerName, CardHand cards) {
         this.playerName = playerName;
-        this.wallet = wallet;
+        this.cards = cards;
     }
 
-    @Override
     public List<Card> openInitialCards() {
-        return super.cards;
+        return cards.openInitialCards(PLAYER_OPEN_INITIAL_CARD_COUNT);
     }
 
-    @Override
+    public void addCards(CardDeck cardDeck, int count) {
+        cards.addCards(cardDeck, count, PLAYER_DISTRIBUTE_CARD_THRESHOLD);
+    }
+
     public boolean isPossibleToAdd() {
-        return super.calculateDenominations() < PLAYER_DISTRIBUTE_CARD_THRESHOLD;
-    }
-
-    public int updateWalletByGameResult(final GameResult gameResult) {
-        this.wallet = wallet.calculateProfit(gameResult, isBlackjack());
-        return wallet.getProfit();
+        return cards.isPossibleToAdd(PLAYER_DISTRIBUTE_CARD_THRESHOLD);
     }
 
     public String getName() {
         return playerName.getName();
     }
 
-    public int getProfit() {
-        return wallet.getProfit();
+    public CardHand getCards() {
+        return cards;
     }
 }

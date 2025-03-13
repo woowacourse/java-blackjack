@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.card.Card;
+import blackjack.user.BettingPlayer;
 import blackjack.user.Dealer;
 import blackjack.user.Participants;
 import blackjack.user.Player;
@@ -30,7 +31,7 @@ public class GameView {
     }
 
     public void printPlayerCardResult(final Player player) {
-        String cardResult = parseCardToString(player.openCards());
+        String cardResult = parseCardToString(player.getCards().openCards());
         System.out.printf("%s카드: %s%n", player.getName(), cardResult);
     }
 
@@ -47,15 +48,15 @@ public class GameView {
     }
 
     private void printDealerFinalCardResult(final Dealer dealer) {
-        String cardResult = parseCardToString(dealer.openCards());
+        String cardResult = parseCardToString(dealer.getCards().openCards());
         System.out.println();
-        System.out.printf("딜러카드: %s - 결과: %d%n", cardResult, dealer.calculateDenominations());
+        System.out.printf("딜러카드: %s - 결과: %d%n", cardResult, dealer.getCards().calculateDenominations());
     }
 
     private void printPlayerFinalCardResult(final Player player) {
-        String cardResult = parseCardToString(player.openCards());
+        String cardResult = parseCardToString(player.getCards().openCards());
         System.out.printf("%s카드: %s - 결과 %d%n", player.getName(), cardResult,
-            player.calculateDenominations());
+            player.getCards().calculateDenominations());
     }
 
     public void printProfitResultTitle() {
@@ -67,9 +68,9 @@ public class GameView {
         System.out.printf("딜러: %,d%n", dealerProfitResult);
     }
 
-    public void printPlayerResult(final List<Player> players) {
-        for (Player player : players) {
-            System.out.printf("%s: %s%n", player.getName(), player.getProfit());
+    public void printPlayerResult(final List<BettingPlayer> bettingPlayers) {
+        for (BettingPlayer bettingPlayer : bettingPlayers) {
+            System.out.printf("%s: %s%n", bettingPlayer.getName(), bettingPlayer.getProfit());
         }
     }
 

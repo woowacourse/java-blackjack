@@ -1,25 +1,22 @@
-package blackjack.user;
+package blackjack.card;
 
-import blackjack.card.Card;
-import blackjack.card.CardDeck;
-import blackjack.card.Denomination;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class Participant {
+public class CardHand {
 
     private static final int BLACKJACK_VALUE = 21;
     private static final int BLACKJACK_CARDS_SIZE = 2;
 
-    protected final List<Card> cards;
+    private final List<Card> cards;
 
-    public Participant() {
+    public CardHand() {
         this.cards = new ArrayList<>();
     }
 
-    public void addCards(final CardDeck cardDeck, final int count) {
-        if (isImpossibleToAdd()) {
+    public void addCards(final CardDeck cardDeck, final int count, final int threshold) {
+        if (isImpossibleToAdd(threshold)) {
             throw new IllegalArgumentException("더 이상 카드를 추가할 수 없습니다.");
         }
 
@@ -60,11 +57,15 @@ public abstract class Participant {
         return Collections.unmodifiableList(cards);
     }
 
-    public abstract List<Card> openInitialCards();
+    public List<Card> openInitialCards(int count) {
+        return cards.subList(0, Math.min(count, cards.size()));
+    }
 
-    public abstract boolean isPossibleToAdd();
+    public boolean isPossibleToAdd(int threshold) {
+        return calculateDenominations() < threshold;
+    }
 
-    public boolean isImpossibleToAdd() {
-        return !isPossibleToAdd();
+    private boolean isImpossibleToAdd(int threshold) {
+        return !isPossibleToAdd(threshold);
     }
 }

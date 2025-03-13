@@ -1,8 +1,9 @@
 package blackjack.game;
 
 import blackjack.card.CardDeck;
+import blackjack.card.CardHand;
+import blackjack.user.BettingPlayer;
 import blackjack.user.Dealer;
-import blackjack.user.Participant;
 import blackjack.user.Participants;
 import blackjack.user.Player;
 import blackjack.user.PlayerName;
@@ -12,8 +13,8 @@ import java.util.Map;
 
 public class BlackjackGame {
 
-    private static final int INITIAL_CARD_NUMBER = 2;
-    private static final int EXTRA_CARD_NUMBER = 1;
+    private static final int INITIAL_DISTRIBUTE_CARD_NUMBER = 2;
+    private static final int EXTRA_DISTRIBUTE_CARD_NUMBER = 1;
 
     private final CardDeck cardDeck;
     private final Participants participants;
@@ -24,10 +25,21 @@ public class BlackjackGame {
     }
 
     public static BlackjackGame createByPlayerNames(final CardDeck cardDeck,
+        final List<PlayerName> names) {
+        Dealer dealer = new Dealer(new CardHand());
+        List<Player> players = names.stream()
+            .map(name -> new Player(name, new CardHand()))
+            .toList();
+
+        return new BlackjackGame(cardDeck, new Participants(dealer, players));
+    }
+
+    public static BlackjackGame createByBettingPlayers(final CardDeck cardDeck,
         final Map<PlayerName, Wallet> playerWallet) {
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(new CardHand());
         List<Player> players = playerWallet.entrySet().stream()
-            .map(entry -> new Player(entry.getKey(), entry.getValue()))
+            .map(entry -> (Player) new BettingPlayer(entry.getKey(), new CardHand(),
+                entry.getValue()))
             .toList();
 
         return new BlackjackGame(cardDeck, new Participants(dealer, players));
@@ -35,29 +47,31 @@ public class BlackjackGame {
 
     public void initCardsToDealer() {
         Dealer dealer = participants.getDealer();
-        dealer.addCards(cardDeck, INITIAL_CARD_NUMBER);
+        dealer.addCards(cardDeck, INITIAL_DISTRIBUTE_CARD_NUMBER);
     }
 
     public void initCardsToPlayer() {
-        for (Participant participant : participants.getPlayers()) {
-            participant.addCards(cardDeck, INITIAL_CARD_NUMBER);
+        for (Player player : participants.getPlayers()) {
+            player.addCards(cardDeck, INITIAL_DISTRIBUTE_CARD_NUMBER);
         }
     }
 
-    public void addExtraCard(final Participant participant) {
-        participant.addCards(cardDeck, EXTRA_CARD_NUMBER);
+    public void addExtraCardToDealer() {
+        participants.getDealer().addCards(cardDeck, EXTRA_DISTRIBUTE_CARD_NUMBER);
+    }
+
+    public void addExtraCardToPlayer(final Player player) {
+        player.addCards(cardDeck, EXTRA_DISTRIBUTE_CARD_NUMBER);
     }
 
     public int calculateProfitForPlayer() {
         Dealer dealer = participants.getDealer();
-        int totalProfit = 0;
 
-        for (Player player : participants.getPlayers()) {
-            GameResult gameResult = dealer.judgePlayerResult(player);
-            int profit = player.updateWalletByGameResult(gameResult);
-            totalProfit += profit;
-        }
-        return totalProfit;
+        return participants.getPlayers().stream()
+            .filter(player -> player instanceof BettingPlayer)
+            .map(player -> (BettingPlayer) player)
+            .mapToInt(player -> player.updateWalletByGameResult(dealer.judgePlayerResult(player)))
+            .sum();
     }
 
     public Participants getParticipants() {

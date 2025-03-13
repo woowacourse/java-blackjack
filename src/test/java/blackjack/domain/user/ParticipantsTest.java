@@ -3,6 +3,7 @@ package blackjack.domain.user;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.card.CardHand;
 import blackjack.user.Dealer;
 import blackjack.user.Participants;
 import blackjack.user.Player;
@@ -23,11 +24,11 @@ public class ParticipantsTest {
         @Test
         @DisplayName("중복된 이름이 없는 경우 참가자를 생성할 수 있다.")
         void createParticipantsWithNotDuplicate() {
-            Dealer dealer = new Dealer();
+            Dealer dealer = new Dealer(new CardHand());
             List<Player> players = List.of(
-                new Player(new PlayerName("a"), Wallet.initialBetting(10000)),
-                new Player(new PlayerName("b"), Wallet.initialBetting(10000)),
-                new Player(new PlayerName("c"), Wallet.initialBetting(10000))
+                new Player(new PlayerName("a"), new CardHand()),
+                new Player(new PlayerName("b"), new CardHand()),
+                new Player(new PlayerName("c"), new CardHand())
             );
 
             assertThatCode(() -> new Participants(dealer, players)).doesNotThrowAnyException();
@@ -36,11 +37,11 @@ public class ParticipantsTest {
         @Test
         @DisplayName("중복된 이름이 없는 경우 참가자를 생성할 수 없다.")
         void createParticipantsWithDuplicate() {
-            Dealer dealer = new Dealer();
+            Dealer dealer = new Dealer(new CardHand());
             List<Player> players = List.of(
-                new Player(new PlayerName("a"), Wallet.initialBetting(10000)),
-                new Player(new PlayerName("a"), Wallet.initialBetting(10000)),
-                new Player(new PlayerName("c"), Wallet.initialBetting(10000))
+                new Player(new PlayerName("a"), new CardHand()),
+                new Player(new PlayerName("a"), new CardHand()),
+                new Player(new PlayerName("c"), new CardHand())
             );
 
             assertThatThrownBy(() -> new Participants(dealer, players))
@@ -51,10 +52,9 @@ public class ParticipantsTest {
         @Test
         @DisplayName("25명의 참가자는 게임을 진행할 수 없다.")
         void createParticipantsOver25() {
-            Dealer dealer = new Dealer();
+            Dealer dealer = new Dealer(new CardHand());
             List<Player> players = IntStream.rangeClosed('a', 'z')
-                .mapToObj(c -> new Player(new PlayerName(String.valueOf((char) c)),
-                    Wallet.initialBetting(10000)))
+                .mapToObj(c -> new Player(new PlayerName(String.valueOf((char) c)), new CardHand()))
                 .toList();
 
             assertThatThrownBy(() -> new Participants(dealer, players))
