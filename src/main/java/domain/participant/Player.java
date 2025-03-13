@@ -1,40 +1,32 @@
 package domain.participant;
 
 import domain.MatchResult;
-import domain.card.CardDeck;
-import java.util.ArrayList;
+import domain.card.Card;
+import domain.card.Deck;
+import domain.card.Hand;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class Player {
+public class Player extends Participant {
     private static final int BLACKJACK_NUMBER = 21;
     private static final int INITIAL_HIT_COUNT = 2;
 
     private final String name;
-    private final CardDeck hand;
 
-    public Player(final String name) {
-        this.hand = new CardDeck(new ArrayList<>());
+    public Player(Hand hand, final String name) {
+        super(hand);
         this.name = name;
     }
 
-    public void hitCards(final Dealer dealer) {
+    public void hitCards(Deck cardDeck) {
         for (int i = 0; i < INITIAL_HIT_COUNT; i++) {
-            hand.addCard(dealer.hitCard());
+            super.addCard(cardDeck.hitCard());
         }
     }
 
-    public void addCard(final Dealer dealer) {
-        hand.addCard(dealer.hitCard());
-    }
-
-    public int calculateSum() {
-        return hand.sum();
-    }
-
-    public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck, final Dealer dealer) {
+    public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck, final Deck cardDeck) {
         while (!isBust() && answer.apply(this)) {
-            addCard(dealer);
+            addCard(cardDeck.hitCard());
             playerDeck.accept(this);
         }
     }
@@ -51,8 +43,18 @@ public class Player {
         return name;
     }
 
-    public CardDeck getHand() {
-        return hand;
+    @Override
+    public void addCard(Card card) {
+        super.addCard(card);
+    }
+
+    @Override
+    public int calculateSum() {
+        return super.calculateSum();
+    }
+
+    public Hand getHand() {
+        return super.getHand();
     }
 
 }
