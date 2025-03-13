@@ -2,15 +2,15 @@ package domain.participant;
 
 public class Money {
 
+    public static final int AMOUNT_VALUE = 100000;
+    
     private final int value;
 
     public Money(String rawValue) {
         validateNullOrBlank(rawValue);
         validateIntegerFormat(rawValue);
         validatePositiveNumber(rawValue);
-        if (Integer.parseInt(rawValue) % 100000 != 0) {
-            throw new IllegalArgumentException("입력은 10만원 단위입니다.");
-        }
+        validateAmountUnit(rawValue);
         this.value = Integer.parseInt(rawValue);
     }
 
@@ -31,6 +31,12 @@ public class Money {
     private void validatePositiveNumber(String rawValue) {
         if (Integer.parseInt(rawValue) <= 0) {
             throw new IllegalArgumentException("입력은 0보다 커야 합니다.");
+        }
+    }
+
+    private void validateAmountUnit(String rawValue) {
+        if (Integer.parseInt(rawValue) % AMOUNT_VALUE != 0) {
+            throw new IllegalArgumentException("입력은 10만원 단위입니다.");
         }
     }
 }
