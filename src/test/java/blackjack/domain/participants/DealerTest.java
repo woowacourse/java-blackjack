@@ -252,9 +252,6 @@ public class DealerTest {
         dealer.prepareBlackjack();
         dealer.pickAdditionalCard();
 
-        // 딜러 : 17
-        // 포비 : 23
-        // 서프 : 18
         Map<Player, Integer> playerProfit =
                 Map.of(pobiPlayer, -10000, surfPlayer, 20000);
 
@@ -263,15 +260,5 @@ public class DealerTest {
 
         //then
         assertThat(bettingResult.getPlayerBettingResults()).isEqualTo(playerProfit);
-    }
-
-    @Test
-    void 플레이어가_패배한_경우() {
-
-    }
-
-    @Test
-    void 플레이어와_딜러가_무승부인_경우() {
-
     }
 }
