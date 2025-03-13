@@ -3,7 +3,7 @@ package object.participant;
 import object.game.GameResult;
 
 public class Wallet {
-    private final int betMoney;
+    private int betMoney;
     private int earnedMoney;
 
     private Wallet(int betMoney, int earnedMoney) {
@@ -24,7 +24,15 @@ public class Wallet {
         this.earnedMoney += amount.intValue();
     }
 
+    public void bet(int amount) {
+        betMoney += amount;
+    }
+
     public int getProfit() {
         return earnedMoney - betMoney;
+    }
+
+    public int getBetMoney() {
+        return betMoney;
     }
 }
