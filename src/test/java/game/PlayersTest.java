@@ -69,7 +69,7 @@ public class PlayersTest {
                 new Player("b")));
 
         //when
-        players.drawCard(cardDeck);
+        players.draw(cardDeck);
 
         //when
         Assertions.assertThat(players.getPlayers().get(0).getCardsCount()).isEqualTo(2);
@@ -94,14 +94,14 @@ public class PlayersTest {
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다() {
         //given
         Dealer dealer = new Dealer();
-        dealer.drawCard(List.of(
+        dealer.draw(List.of(
                 new Card(Pattern.SPADE, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.TEN)));
 
         Players players = new Players(List.of(
                 new Player("pobi")));
 
-        players.getPlayers().getFirst().drawCard(List.of(
+        players.getPlayers().getFirst().draw(List.of(
                 new Card(Pattern.HEART, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.NINE)));
 
@@ -116,7 +116,7 @@ public class PlayersTest {
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_둘다_버스트() {
         //given
         Dealer dealer = new Dealer();
-        dealer.drawCard(List.of(
+        dealer.draw(List.of(
                 new Card(Pattern.SPADE, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.TEN),
                 new Card(Pattern.DIAMOND, CardNumber.TWO)));
@@ -124,7 +124,7 @@ public class PlayersTest {
         Players players = new Players(List.of(
                 new Player("pobi")));
 
-        players.getPlayers().getFirst().drawCard(List.of(
+        players.getPlayers().getFirst().draw(List.of(
                 new Card(Pattern.CLOVER, CardNumber.KING),
                 new Card(Pattern.SPADE, CardNumber.JACK),
                 new Card(Pattern.HEART, CardNumber.TWO)));
@@ -140,7 +140,7 @@ public class PlayersTest {
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_딜러만_버스트() {
         //given
         Dealer dealer = new Dealer();
-        dealer.drawCard(List.of(
+        dealer.draw(List.of(
                 new Card(Pattern.SPADE, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.TEN),
                 new Card(Pattern.DIAMOND, CardNumber.TWO)));
@@ -148,7 +148,7 @@ public class PlayersTest {
         Players players = new Players(List.of(
                 new Player("pobi")));
 
-        players.getPlayers().getFirst().drawCard(List.of(
+        players.getPlayers().getFirst().draw(List.of(
                 new Card(Pattern.HEART, CardNumber.TEN),
                 new Card(Pattern.DIAMOND, CardNumber.TEN)));
 
@@ -163,14 +163,14 @@ public class PlayersTest {
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_둘다_블랙잭() {
         //given
         Dealer dealer = new Dealer();
-        dealer.drawCard(List.of(
+        dealer.draw(List.of(
                 new Card(Pattern.SPADE, CardNumber.TEN),
                 new Card(Pattern.DIAMOND, CardNumber.ACE)));
 
         Players players = new Players(List.of(
                 new Player("pobi")));
 
-        players.getPlayers().getFirst().drawCard(List.of(
+        players.getPlayers().getFirst().draw(List.of(
                 new Card(Pattern.HEART, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.ACE)));
 
@@ -185,14 +185,14 @@ public class PlayersTest {
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_딜러만_블랙잭() {
         //given
         Dealer dealer = new Dealer();
-        dealer.drawCard(List.of(
+        dealer.draw(List.of(
                 new Card(Pattern.SPADE, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.ACE)));
 
         Players players = new Players(List.of(
                 new Player("pobi")));
 
-        players.getPlayers().getFirst().drawCard(List.of(
+        players.getPlayers().getFirst().draw(List.of(
                 new Card(Pattern.HEART, CardNumber.TEN),
                 new Card(Pattern.DIAMOND, CardNumber.TEN)));
 
@@ -207,14 +207,14 @@ public class PlayersTest {
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_플레이어만_블랙잭() {
         //given
         Dealer dealer = new Dealer();
-        dealer.drawCard(List.of(
+        dealer.draw(List.of(
                 new Card(Pattern.SPADE, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.TEN)));
 
         Players players = new Players(List.of(
                 new Player("pobi")));
 
-        players.getPlayers().getFirst().drawCard(List.of(
+        players.getPlayers().getFirst().draw(List.of(
                 new Card(Pattern.HEART, CardNumber.TEN),
                 new Card(Pattern.DIAMOND, CardNumber.ACE)));
 

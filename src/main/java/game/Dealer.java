@@ -13,7 +13,7 @@ public class Dealer {
         this.hand = new Hand();
     }
 
-    public void drawCard(List<Card> cards) {
+    public void draw(List<Card> cards) {
         hand.drawCard(cards);
     }
 

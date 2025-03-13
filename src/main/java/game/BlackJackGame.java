@@ -35,8 +35,8 @@ public class BlackJackGame {
     }
 
     private void opening(Players players, Dealer dealer, CardDeck cardDeck) {
-        players.drawCard(cardDeck);
-        dealer.drawCard(cardDeck.drawCard(DRAW_COUNT_WHEN_START));
+        players.draw(cardDeck);
+        dealer.draw(cardDeck.drawCard(DRAW_COUNT_WHEN_START));
         Card dealerCard = dealer.getSingleCard();
 
         outputConsole.printInitialGame(dealerCard, players.getPlayers());
@@ -52,14 +52,14 @@ public class BlackJackGame {
 
     private void decidePlayerHitOrStand(Player player, CardDeck cardDeck) {
         while (!player.isBust() && inputConsole.readDrawMoreCard(player)) {
-            player.drawCard(cardDeck.drawCard(DRAW_COUNT_WHEN_HIT));
+            player.draw(cardDeck.drawCard(DRAW_COUNT_WHEN_HIT));
             outputConsole.printPlayerCard(player);
         }
     }
 
     private void decideDealerHitOrStand(Dealer dealer, CardDeck cardDeck) {
         while (!dealer.isBust() && !dealer.isOverDrawBound()) {
-            dealer.drawCard(cardDeck.drawCard(DRAW_COUNT_WHEN_HIT));
+            dealer.draw(cardDeck.drawCard(DRAW_COUNT_WHEN_HIT));
             outputConsole.printDealerDrawMessage();
         }
     }
@@ -68,9 +68,9 @@ public class BlackJackGame {
         List<GameResult> gameResults = players.judgeGameResult(dealer);
         List<String> playerNames = players.getAllPlayerNames();
 
-        int winCount = GameResult.WIN.countReversedGameResult(gameResults);
-        int loseCount = GameResult.LOSE.countReversedGameResult(gameResults);
-        int drawCount = GameResult.DRAW.countReversedGameResult(gameResults);
+        int winCount = GameResult.WIN.countReversed(gameResults);
+        int loseCount = GameResult.LOSE.countReversed(gameResults);
+        int drawCount = GameResult.DRAW.countReversed(gameResults);
 
         outputConsole.printDealerWinningResult(winCount, drawCount, loseCount);
         outputConsole.printWinningResult(playerNames, gameResults);

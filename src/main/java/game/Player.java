@@ -20,7 +20,7 @@ public class Player {
         this.betting = new Betting(bettingMoney);
     }
 
-    public void drawCard(List<Card> cards) {
+    public void draw(List<Card> cards) {
         hand.drawCard(cards);
     }
 

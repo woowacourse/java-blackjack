@@ -41,8 +41,8 @@ public class Players {
         return gameResults;
     }
 
-    public void drawCard(CardDeck cardDeck) {
-        players.forEach(player -> player.drawCard(cardDeck.drawCard(DRAW_COUNT_WHEN_START)));
+    public void draw(CardDeck cardDeck) {
+        players.forEach(player -> player.draw(cardDeck.drawCard(DRAW_COUNT_WHEN_START)));
     }
 
     public List<Player> getPlayers() {

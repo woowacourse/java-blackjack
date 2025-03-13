@@ -21,7 +21,7 @@ public class DealerTest {
         Dealer dealer = new Dealer();
 
         //when
-        dealer.drawCard(cardDeck.drawCard(DRAW_COUNT_WHEN_START));
+        dealer.draw(cardDeck.drawCard(DRAW_COUNT_WHEN_START));
 
         //then
         assertThat(dealer.getHand().getCards()).hasSize(2);
@@ -32,7 +32,7 @@ public class DealerTest {
         //given
         CardDeck cardDeck = CardDeck.prepareDeck(ArrayList::new);
         Dealer dealer = new Dealer();
-        dealer.drawCard(cardDeck.drawCard(DRAW_COUNT_WHEN_START));
+        dealer.draw(cardDeck.drawCard(DRAW_COUNT_WHEN_START));
 
         //when
         Card singleCard = dealer.getSingleCard();
@@ -48,7 +48,7 @@ public class DealerTest {
         Dealer dealer = new Dealer();
 
         //when
-        dealer.drawCard(cardDeck.drawCard(DRAW_COUNT_WHEN_HIT));
+        dealer.draw(cardDeck.drawCard(DRAW_COUNT_WHEN_HIT));
 
         //then
         assertThat(dealer.getHand().getCards()).hasSize(1);
@@ -58,7 +58,7 @@ public class DealerTest {
     void 딜러가_보유한_카드의_합계를_구한다() {
         //given
         Dealer dealer = new Dealer();
-        dealer.drawCard(List.of(
+        dealer.draw(List.of(
                 new Card(Pattern.CLOVER, CardNumber.TEN),
                 new Card(Pattern.SPADE, CardNumber.TEN)
         ));
@@ -74,7 +74,7 @@ public class DealerTest {
     void 딜러가_보유한_카드의_합계가_21을_넘었는지_판정한다() {
         //given
         Dealer dealer = new Dealer();
-        dealer.drawCard(List.of(
+        dealer.draw(List.of(
                 new Card(Pattern.CLOVER, CardNumber.TEN),
                 new Card(Pattern.SPADE, CardNumber.TEN),
                 new Card(Pattern.SPADE, CardNumber.TWO)
@@ -88,7 +88,7 @@ public class DealerTest {
     void 딜러가_보유한_카드의_합계가_16을_넘었는지_판정한다() {
         //given
         Dealer dealer = new Dealer();
-        dealer.drawCard(List.of(
+        dealer.draw(List.of(
                 new Card(Pattern.CLOVER, CardNumber.TEN),
                 new Card(Pattern.SPADE, CardNumber.SEVEN)
         ));
