@@ -12,7 +12,7 @@ public class PlayerGroup {
 
     private final List<Player> players;
 
-    private PlayerGroup(final List<Player> players) {
+    public PlayerGroup(final List<Player> players) {
         this.players = players;
     }
 
@@ -23,6 +23,7 @@ public class PlayerGroup {
                 .toList();
         return new PlayerGroup(players);
     }
+
 
     public Map<String, GameResult> calculatePlayersGameResult(final Dealer dealer) {
         Map<String, GameResult> resultMap = new HashMap<>();
