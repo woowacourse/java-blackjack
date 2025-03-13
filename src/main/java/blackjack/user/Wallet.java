@@ -29,7 +29,7 @@ public class Wallet {
         return new Wallet(principal, DEFAULT_PROFIT);
     }
 
-    public Wallet calculateProfit(GameResult gameResult, boolean isBlackjack) {
+    public Wallet calculateProfit(final GameResult gameResult, final boolean isBlackjack) {
         if (gameResult.isWin() && isBlackjack) {
             return new Wallet(principal, (int) (principal * BLACKJACK_PROFIT_RATE));
         }

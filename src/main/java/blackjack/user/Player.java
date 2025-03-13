@@ -26,7 +26,7 @@ public class Player extends Participant {
         return super.calculateDenominations() < PLAYER_DISTRIBUTE_CARD_THRESHOLD;
     }
 
-    public int updateWalletByGameResult(GameResult gameResult) {
+    public int updateWalletByGameResult(final GameResult gameResult) {
         this.wallet = wallet.calculateProfit(gameResult, isBlackjack());
         return wallet.getProfit();
     }

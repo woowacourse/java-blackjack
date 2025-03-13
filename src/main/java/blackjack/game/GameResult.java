@@ -11,7 +11,7 @@ public enum GameResult {
     GameResult() {
     }
 
-    public static GameResult FromDenominationsSum(final Dealer dealer, Player player) {
+    public static GameResult FromDenominationsSum(final Dealer dealer, final Player player) {
         int dealerSum = dealer.calculateDenominations();
         int playerSum = player.calculateDenominations();
 
