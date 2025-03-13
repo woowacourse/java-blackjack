@@ -41,6 +41,28 @@ public class GameResults {
         }
     }
 
+    public int compareDealerWithGambler(final Dealer dealer, final Gambler gambler) {
+        if (dealer.isBust() && gambler.isNotBust()) {
+            return -1;
+        }
+        if (dealer.isBust() && gambler.isBust()) {
+            return 0;
+        }
+        if (dealer.isNotBust() && gambler.isBust()) {
+            return 1;
+        }
+        if (dealer.isBlackJack() || gambler.isBlackJack()) {
+            if (dealer.isBlackJack() && gambler.isBlackJack()) {
+                return 0;
+            }
+            if (gambler.isBlackJack()) {
+                return -1;
+            }
+            return 1;
+        }
+        return Integer.compare(dealer.getCardScore(), gambler.getCardScore());
+    }
+
     public Map<Player, Integer> getGameResults() {
         return gameResults;
     }

@@ -24,28 +24,6 @@ public abstract class Player {
         hand.addCards(cards);
     }
 
-    public int compareWithOtherPlayer(final Player otherPlayer) {
-        if (this.isBust() && otherPlayer.isNotBust()) {
-            return -1;
-        }
-        if (this.isBust() && otherPlayer.isBust()) {
-            return 0;
-        }
-        if (this.isNotBust() && otherPlayer.isBust()) {
-            return 1;
-        }
-        if (this.isBlackJack() || otherPlayer.isBlackJack()) {
-            if (this.isBlackJack() && otherPlayer.isBlackJack()) {
-                return 0;
-            }
-            if (otherPlayer.isBlackJack()) {
-                return -1;
-            }
-            return 1;
-        }
-        return Integer.compare(this.getCardScore(), otherPlayer.getCardScore());
-    }
-
     public boolean isBust() {
         return getCardScore() > BUST_THRESHOLD;
     }
