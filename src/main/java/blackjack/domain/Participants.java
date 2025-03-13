@@ -25,9 +25,9 @@ public class Participants {
 
     public List<String> getNamesOfParticipants() {
         return participants.stream()
-                .filter(participant -> participant.doesHaveName())
+                .filter(Participant::doesHaveName)
                 .map(participant -> (Player) participant)
-                .map(participant -> participant.getName())
+                .map(Player::getName)
                 .toList();
     }
 

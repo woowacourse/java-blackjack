@@ -10,4 +10,3 @@ public class GameRuleEvaluator {
         return participant.isOverLimit(BUSTED_STANDARD_VALUE);
     }
 }
-
