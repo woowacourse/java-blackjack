@@ -33,6 +33,10 @@ public class BlackJackController {
     private void runGameWith(BlackJack blackJack) {
         blackJack.handoutCards();
         outputView.printHandoutCards(blackJack.getShowDealerCards(), blackJack.getPlayers());
+        runBlackjack(blackJack);
+    }
+
+    private void runBlackjack(BlackJack blackJack) {
         askNewCardToAllPlayers(blackJack);
         setupDealerCards(blackJack);
         showCardsResult(blackJack);
