@@ -1,7 +1,5 @@
 package domain.participant;
 
-import static domain.GameManager.INITIAL_CARDS;
-
 import domain.card.Card;
 import domain.card.CardDeck;
 import java.util.Collections;
@@ -20,26 +18,20 @@ public class Participants {
         return new Participants(dealer, players);
     }
 
-    public void distributeCards(CardDeck cardDeck) {
-        for (int count = 0; count < INITIAL_CARDS; count++) {
-            players.receiveCards(cardDeck);
-            dealer.receive(cardDeck.popCard());
-        }
+    public void passCardToPlayers(CardDeck cardDeck) {
+        players.receiveCards(cardDeck);
     }
 
     public void passCardToPlayer(String name, Card card) {
-        Player player = players.findByName(name); // TODO: 메시지를 던지기 VS 현행
-        player.receive(card);
+        players.passCardByName(name, card);
     }
-
 
     public void passCardToDealer(Card card) {
         dealer.receive(card);
     }
 
-    public int getScoreOf(String name) {
-        Player player = players.findByName(name);
-        return player.getScore();
+    public int getScoreOfPlayer(String name) {
+        return players.getScoreOf(name);
     }
 
     public int getScoreOfDealer() {

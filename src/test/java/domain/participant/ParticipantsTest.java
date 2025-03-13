@@ -40,10 +40,10 @@ class ParticipantsTest {
         Participants participants = Participants.of(Dealer.of(), players);
 
         // when
-        participants.distributeCards(cardDeck);
+        participants.passCardToPlayers(cardDeck);
 
         // then
-        assertThat(cardDeck.getCards()).hasSize(46);
+        assertThat(cardDeck.getCards()).hasSize(50);
     }
 
     @Test
@@ -97,7 +97,7 @@ class ParticipantsTest {
         Participants participants = Participants.of(dealer, players);
 
         // when
-        int score = participants.getScoreOf("pobi1");
+        int score = participants.getScoreOfPlayer("pobi1");
 
         // then
         assertThat(score).isEqualTo(9);

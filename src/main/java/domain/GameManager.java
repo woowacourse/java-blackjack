@@ -24,7 +24,10 @@ public class GameManager {
     }
 
     public void distributeCards() {
-        participants.distributeCards(cardDeck);
+        for (int count = 0; count < INITIAL_CARDS; count++) {
+            participants.passCardToPlayers(cardDeck);
+            participants.passCardToDealer(cardDeck.popCard());
+        }
     }
 
     public void passCardToPlayer(String name) {
@@ -32,7 +35,7 @@ public class GameManager {
     }
 
     public boolean passCardToDealer() {
-        if (participants.getScoreOfDealer() > DEALER_MIN_SCORE) { // TODO: 판단 로직의 위치에 대한 고민 필요
+        if (participants.getScoreOfDealer() > DEALER_MIN_SCORE) {
             return false;
         }
         participants.passCardToDealer(cardDeck.popCard());
@@ -40,7 +43,7 @@ public class GameManager {
     }
 
     public int getScoreOf(String name) {
-        return participants.getScoreOf(name);
+        return participants.getScoreOfPlayer(name);
     }
 
     public List<String> getPlayersName() {
