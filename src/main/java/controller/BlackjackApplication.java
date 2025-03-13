@@ -70,7 +70,7 @@ public class BlackjackApplication {
     private void processPlayerCardRequest(Player player) {
         AnswerType answerType = consoleView.requestAdditionalCard(player);
         while (isPossibleRequest(player, answerType)) {
-            cardGiver.giveAdditionalCard(player, answerType);
+            player.addCard(cardGiver.giveOne());
             consoleView.printCurrentCard(player);
             answerType = consoleView.requestAdditionalCard(player);
         }

@@ -9,9 +9,9 @@
     void test4() {
         //given
         RandomGenerator<Card> randomGenerator = new TestRandomGenerator();
-        GivenCards testGivenCards = GivenCards.createEmpty();
-        testGivenCards.addUnique(new Card(CardNumberType.FIVE, CardType.SPACE)); // 이 부분
-        CardGiver cardGiver = new CardGiver(randomGenerator, testGivenCards);
+        GivenCards testDeck = GivenCards.createEmpty();
+        testDeck.addUnique(new Card(CardNumberType.FIVE, CardType.SPACE)); // 이 부분
+        CardGiver cardGiver = new CardGiver(randomGenerator, testDeck);
         //when
 
         //then
