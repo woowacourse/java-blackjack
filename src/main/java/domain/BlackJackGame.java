@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackJackGame {
 
@@ -96,5 +97,16 @@ public class BlackJackGame {
         });
 
         return results;
+    }
+
+    public Map<String, Integer> calculatePlayersRevenueAmount(List<Player> players) {
+        return players.stream().collect(
+                Collectors.toMap(Player::getName, player -> {
+                    List<TrumpCard> playerCards = player.retrieveCards();
+                    GameResult gameResult = dealer.calculateGameResult(rule, playerCards);
+                    BettingMoney bettingMoney = player.getBettingMoney();
+
+                    return bettingMoney.calculateRevenueAmount(gameResult.getMultiple());
+                }));
     }
 }

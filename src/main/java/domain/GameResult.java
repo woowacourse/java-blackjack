@@ -33,4 +33,8 @@ public enum GameResult {
     public String getTitle() {
         return title;
     }
+
+    public double getMultiple() {
+        return multiple;
+    }
 }

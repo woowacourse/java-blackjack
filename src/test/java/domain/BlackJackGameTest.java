@@ -174,6 +174,29 @@ class BlackJackGameTest {
             // then
             assertThat(results).containsKeys("Alice", "Bob");
         }
+
+        @Test
+        @DisplayName("플레이어들의 수익을 계산한다.")
+        void calculatePlayersRevenueAmount() {
+            // given
+            Dealer dealer = new Dealer(new Hand(List.of(TrumpCard.SEVEN_OF_DIAMONDS, TrumpCard.KING_OF_HEARTS)));
+            BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
+
+            Player firstPlayer = new Player("Alice", new BettingMoney(1000),
+                    new Hand(List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.JACK_OF_HEARTS)));
+            Player secondPlayer = new Player("Bob", new BettingMoney(1500),
+                    new Hand(List.of(TrumpCard.NINE_OF_CLUBS, TrumpCard.SEVEN_OF_DIAMONDS)));
+            List<Player> players = List.of(firstPlayer, secondPlayer);
+
+            // when
+            Map<String, Integer> playersRevenueAmount = blackJackGame.calculatePlayersRevenueAmount(players);
+
+            // then
+            assertSoftly(softly -> {
+                softly.assertThat(playersRevenueAmount.get(firstPlayer.getName())).isEqualTo(1500);
+                softly.assertThat(playersRevenueAmount.get(secondPlayer.getName())).isEqualTo(-1500);
+            });
+        }
     }
 
     @Nested
