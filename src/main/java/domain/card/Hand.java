@@ -1,5 +1,6 @@
 package domain.card;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
@@ -9,7 +10,7 @@ public class Hand {
     private final List<Card> hand;
 
     public Hand(List<Card> hand) {
-        this.hand = hand;
+        this.hand = new ArrayList<>(hand);
     }
 
     public void addCard(Card card) {
