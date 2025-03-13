@@ -1,15 +1,14 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.CardDeck;
-import domain.card.Cards;
+import domain.card.Hand;
 import java.util.List;
 
 public class Dealer {
-    private final Cards ownedCards;
+    private final Hand ownedHand;
 
     private Dealer() {
-        this.ownedCards = Cards.of();
+        this.ownedHand = Hand.of();
     }
 
     public static Dealer of() {
@@ -17,18 +16,18 @@ public class Dealer {
     }
 
     public void receive(Card card) {
-        ownedCards.add(card);
+        ownedHand.add(card);
     }
 
     public int getScore() {
-        return ownedCards.calculateScore();
+        return ownedHand.calculateScore();
     }
 
     public int getCardCount() {
-        return ownedCards.getSize();
+        return ownedHand.getSize();
     }
 
     public List<Card> getOwnedCards() {
-        return ownedCards.getCards();
+        return ownedHand.getCards();
     }
 }

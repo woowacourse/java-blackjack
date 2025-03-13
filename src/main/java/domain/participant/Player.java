@@ -1,7 +1,7 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.Cards;
+import domain.card.Hand;
 import domain.result.BlackjackResult;
 import java.util.List;
 import java.util.Objects;
@@ -9,11 +9,11 @@ import java.util.Objects;
 public class Player {
 
     private final String name;
-    private final Cards ownedCards;
+    private final Hand ownedHand;
 
     private Player(final String name) {
         this.name = name;
-        this.ownedCards = Cards.of();
+        this.ownedHand = Hand.of();
     }
 
     public static Player of(final String name) {
@@ -21,19 +21,19 @@ public class Player {
     }
 
     public void receive(final Card card) {
-        ownedCards.add(card);
+        ownedHand.add(card);
     }
 
     public int getScore() {
-        return ownedCards.calculateScore();
+        return ownedHand.calculateScore();
     }
 
     public int getCardCount() {
-        return ownedCards.getSize();
+        return ownedHand.getSize();
     }
 
     public List<Card> getOwnedCards() {
-        return ownedCards.getCards();
+        return ownedHand.getCards();
     }
 
     public String getName() {
