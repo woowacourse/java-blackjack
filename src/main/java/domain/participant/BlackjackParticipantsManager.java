@@ -6,9 +6,7 @@ import exception.BlackJackException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -20,7 +18,7 @@ public class BlackjackParticipantsManager {
 
     private final List<BlackjackParticipant> players;
     private final BlackjackParticipant dealer;
-    
+
     public BlackjackParticipantsManager(List<BlackjackParticipant> players, BlackjackParticipant dealer) {
         this.players = new ArrayList<>(players);
         this.dealer = dealer;
@@ -108,18 +106,5 @@ public class BlackjackParticipantsManager {
         for (TrumpCard trumpCard : trumpCards) {
             addDealerCard(trumpCard);
         }
-    }
-
-    public Map<String, Double> participantsBettingResult() {
-        String dealerName = dealerName();
-        Map<String, Double> bettingResult = new LinkedHashMap<>(Map.of(dealerName, (double) 0));
-        for (String name : getPlayerNames()) {
-            BlackjackParticipant player = findPlayer(name);
-            double playerBetEarnMoney = player.earnMoney(dealer);
-            double dealerEarnMoney = dealer.earnMoney(player);
-            bettingResult.put(name, playerBetEarnMoney);
-            bettingResult.put(dealerName, bettingResult.getOrDefault(dealerName, (double) 0) + dealerEarnMoney);
-        }
-        return bettingResult;
     }
 }

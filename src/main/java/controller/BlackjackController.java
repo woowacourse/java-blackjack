@@ -3,10 +3,8 @@ package controller;
 import domain.blackjackgame.BlackjackDeck;
 import domain.blackjackgame.BlackjackGame;
 import domain.blackjackgame.BlackjackResult;
-import domain.blackjackgame.BlackjackWinner;
-import domain.blackjackgame.DealerWinStatus;
-import domain.blackjackgame.PlayerGameResult;
 import domain.blackjackgame.TrumpCard;
+import domain.participant.BetManager;
 import domain.participant.BlackjackBet;
 import domain.participant.Dealer;
 import domain.participant.Player;
@@ -67,13 +65,14 @@ public class BlackjackController {
     private void startBlackjack(List<String> names, List<Integer> bets) {
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new BlackjackDeckGenerateStrategy());
-        BlackjackGame blackjackGame = BlackjackGame.bettingBlackjackGame(deck, new Dealer(), names, bets);
+        BlackjackGame blackjackGame = BlackjackGame.nonBettingBlackjackGame(deck, new Dealer(), names);
+        BetManager betManager = new BetManager(names, bets, blackjackGame.dealerName());
         outputView.printInitiateDraw(names);
         openFirstDealerCard(blackjackGame);
         openPlayerCards(blackjackGame);
         askPlayerDraw(blackjackGame);
         dealerHit(blackjackGame);
-        bettingBlackjackGameResult(blackjackGame);
+        bettingBlackjackGameResult(blackjackGame, betManager);
     }
 
     private void openFirstDealerCard(BlackjackGame blackjackGame) {
@@ -127,22 +126,10 @@ public class BlackjackController {
         }
     }
 
-    private void bettingBlackjackGameResult(BlackjackGame blackjackGame) {
+    private void bettingBlackjackGameResult(BlackjackGame blackjackGame, BetManager betManager) {
         openParticipantsCards(blackjackGame);
-        Map<String, Double> blackjackBettingResult = blackjackGame.blackjackBettingResult();
+        Map<String, Double> blackjackBettingResult = betManager.blackjackBettingResult(blackjackGame);
         outputView.printBettingBlackjackGameResult(blackjackBettingResult);
-    }
-
-    private void nonBettingBlackjackGameResult(BlackjackGame blackjackGame) {
-        BlackjackResult dealerResult = blackjackGame.currentDealerBlackjackResult();
-        openPlayerResultCards(dealerResult);
-
-        List<BlackjackResult> playerResults = blackjackGame.currentPlayerBlackjackResult();
-        for (BlackjackResult result : playerResults) {
-            openPlayerResultCards(result);
-        }
-
-        blackjackWinnerResult(blackjackGame, dealerResult, playerResults);
     }
 
     private void openParticipantsCards(BlackjackGame blackjackGame) {
@@ -159,21 +146,7 @@ public class BlackjackController {
         String name = blackjackResult.name();
         List<TrumpCard> cardHands = blackjackResult.cardHands();
         int sum = blackjackResult.cardSum();
-
         outputView.openCardsWithSum(name, cardHands, sum);
-    }
-
-    private void blackjackWinnerResult(BlackjackGame blackjackGame, BlackjackResult dealerResult,
-                                       List<BlackjackResult> playerResults) {
-        BlackjackWinner blackjackWinner = new BlackjackWinner(dealerResult, playerResults);
-        DealerWinStatus dealerWinStatus = blackjackWinner.getDealerWinStatus();
-        Map<String, PlayerGameResult> playerWinStatuses = blackjackWinner.getPlayerWinStatuses();
-
-        outputView.resultHeader();
-        outputView.dealerWinStatus(dealerWinStatus.win(), dealerWinStatus.lose(), blackjackGame.dealerName());
-        for (String name : playerWinStatuses.keySet()) {
-            outputView.playerWinStatus(name, playerWinStatuses.get(name));
-        }
     }
 
     private <T> T handleInput(Supplier<T> inputSupplier) {

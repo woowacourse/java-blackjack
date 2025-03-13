@@ -11,10 +11,6 @@ public class Player extends BlackjackParticipant {
         validatePlayerName(name);
     }
 
-    public Player(String name, int bet) {
-        super(name, bet);
-    }
-
     private void validatePlayerName(String name) {
         if (name.equals(BlackjackParticipant.dealerName())) {
             throw new BlackJackException(INVALID_PLAYER_NAME);
@@ -24,10 +20,5 @@ public class Player extends BlackjackParticipant {
     @Override
     public boolean isDrawable() {
         return !isBust();
-    }
-
-    @Override
-    public double earnMoney(BlackjackParticipant otherPlayer) {
-        return calculateWinningMoney(otherPlayer.cardSum()) - betMoney();
     }
 }

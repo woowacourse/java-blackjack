@@ -8,7 +8,6 @@ import exception.BlackJackException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackGame {
@@ -23,31 +22,6 @@ public class BlackjackGame {
 
     public static BlackjackGame nonBettingBlackjackGame(BlackjackDeck deck, Dealer dealer, List<String> names) {
         return new BlackjackGame(deck, dealer, names);
-    }
-
-    public static BlackjackGame bettingBlackjackGame(BlackjackDeck deck, Dealer dealer, List<String> names,
-                                                     List<Integer> bets) {
-        return new BlackjackGame(deck, dealer, names, bets);
-    }
-
-    private BlackjackGame(BlackjackDeck deck, Dealer dealer, List<String> names, List<Integer> bets) {
-        validatePlayerSize(names.size());
-        validatePlayerBet(names, bets);
-        List<BlackjackParticipant> players = new ArrayList<>();
-        for (int i = 0; i < names.size(); i++) {
-            String name = names.get(i);
-            int bet = bets.get(i);
-            players.add(new Player(name, bet));
-        }
-        this.deck = deck;
-        this.blackjackParticipantsManager = new BlackjackParticipantsManager(players, dealer);
-        initiateGame();
-    }
-
-    private void validatePlayerBet(List<String> names, List<Integer> bets) {
-        if (names.size() != bets.size()) {
-            throw new BlackJackException(INVALID_PLAYER_BET);
-        }
     }
 
     private BlackjackGame(BlackjackDeck deck, Dealer dealer, List<String> names) {
@@ -135,8 +109,8 @@ public class BlackjackGame {
         return blackjackParticipantsManager.dealerDrawable();
     }
 
-    public Map<String, Double> blackjackBettingResult() {
-        return blackjackParticipantsManager.participantsBettingResult();
+    public List<TrumpCard> dealerCards() {
+        return blackjackParticipantsManager.dealerCards();
     }
 }
 
