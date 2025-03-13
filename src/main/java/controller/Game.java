@@ -1,7 +1,6 @@
 package controller;
 
 import constant.Answer;
-import domain.GameManager;
 import domain.Money;
 import domain.card.Card;
 import domain.card.CardDeck;
@@ -13,14 +12,20 @@ import java.util.List;
 import view.InputView;
 import view.OutputView;
 
-public class BlackjackController {
+public class Game {
+
+    private static final int INITIAL_CARDS = 2;
 
     private final InputView inputView;
     private final OutputView outputView;
 
-    public BlackjackController(InputView inputView, OutputView outputView) {
+    private Game(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
+    }
+
+    public static Game of(InputView inputView, OutputView outputView) {
+        return new Game(inputView, outputView);
     }
 
     public void run() {
@@ -34,16 +39,15 @@ public class BlackjackController {
     private void gameStart() {
         Dealer dealer = Dealer.of(CardDeck.of());
         Players players = initParticipants();
-        GameManager gameManager = GameManager.of(dealer, players);
 
-        gameManager.distributeCards();
+        distributeCards(players, dealer);
         outputView.printInitCards(dealer, players);
 
-        drawToPlayers(gameManager);
-        drawToDealer(dealer, gameManager);
+        drawToPlayers(players, dealer);
+        drawToDealer(players, dealer);
         outputView.printFinalCardsContent(dealer, players);
 
-        gameManager.calculateResult();
+        players.calculateResult(dealer);
         outputView.printResult(dealer, players);
     }
 
@@ -56,33 +60,40 @@ public class BlackjackController {
         return Players.of(players);
     }
 
-    private void drawToPlayers(GameManager gameManager) {
-        List<String> playersNames = gameManager.getPlayersName();
-        for (String name : playersNames) {
-            processPlayerDecision(name, gameManager);
+    private void distributeCards(Players players, Dealer dealer) {
+        for (int count = 0; count < INITIAL_CARDS; count++) {
+            players.receiveCards(dealer);
+            dealer.receive(dealer.drawCard());
+        }
+        players.judgeBlackjack(dealer);
+    }
+
+    private void drawToPlayers(Players players, Dealer dealer) {
+        for (Player player : players.getPlayers()) {
+            processPlayerDecision(player, dealer);
         }
     }
 
-    private void drawToDealer(Dealer dealer, GameManager gameManager) {
+    private void drawToDealer(Players players, Dealer dealer) {
         while (!BlackjackResult.isBust(dealer) && dealer.isHit()) {
             dealer.receive(dealer.drawCard());
             outputView.printDealerReceived();
         }
 
         if (BlackjackResult.isBust(dealer)) {
-            gameManager.winAllPlayers();
+            players.winAll(dealer);
         }
     }
 
-    private void processPlayerDecision(String name, GameManager gameManager) {
-        while (gameManager.getScoreOf(name) < Card.BLACKJACK_SCORE) {
-            String answer = inputView.askReceive(name);
+    private void processPlayerDecision(Player player, Dealer dealer) {
+        while (player.getScore() < Card.BLACKJACK_SCORE) {
+            String answer = inputView.askReceive(player.getName());
             if (Answer.getAnswer(answer) == Answer.NO) {
-                outputView.printCardsByName(gameManager.getPlayerByName(name));
+                outputView.printCardsByName(player);
                 break;
             }
-            gameManager.passCardToPlayer(name);
-            outputView.printCardsByName(gameManager.getPlayerByName(name));
+            player.receive(dealer.drawCard());
+            outputView.printCardsByName(player);
         }
     }
 }

@@ -2,6 +2,7 @@ package domain.participant;
 
 import domain.Money;
 import domain.result.BlackjackResult;
+import java.util.Collections;
 import java.util.List;
 
 public class Players {
@@ -49,6 +50,10 @@ public class Players {
         for (Player player : players) {
             handleInitialBlackjack(dealer, player);
         }
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 
     public void calculateResult(Dealer dealer) {

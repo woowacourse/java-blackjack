@@ -1,4 +1,4 @@
-import controller.BlackjackController;
+import controller.Game;
 import java.util.Scanner;
 import view.InputView;
 import view.OutputView;
@@ -9,8 +9,8 @@ public class BlackjackApplication {
         final InputView inputView = new InputView(new Scanner(System.in));
         final OutputView outputView = new OutputView();
 
-        final BlackjackController controller = new BlackjackController(inputView, outputView);
+        final Game game = Game.of(inputView, outputView);
 
-        controller.run();
+        game.run();
     }
 }
