@@ -52,6 +52,20 @@ public class BlackjackJudgeTest {
     }
     
     @Test
+    void 블랙잭심판은_딜러의_블랙잭_승리_갯수를_확인할_수_있다() {
+        // given
+        final PlayerBlackjackCardHand dompooCardHand = new PlayerBlackjackCardHand(new Player("dompoo"), () -> List.of(DIAMOND_1, HEART_7));
+        final PlayerBlackjackCardHand mayCardHand = new PlayerBlackjackCardHand(new Player("may"), () -> List.of(HEART_2, HEART_3));
+        final List<PlayerBlackjackCardHand> playerHands = List.of(dompooCardHand, mayCardHand);
+        final DealerBlackjackCardHand dealerHand = new DealerBlackjackCardHand(() -> List.of(HEART_1, DIAMOND_10));
+        
+        final BlackjackJudge blackjackJudge = new BlackjackJudge(dealerHand, playerHands);
+        
+        // expected
+        assertThat(blackjackJudge.getDealerBlackjackWinningCount()).isEqualTo(2);
+    }
+    
+    @Test
     void 블랙잭심판은_딜러의_승리_갯수를_확인할_수_있다() {
         // given
         final PlayerBlackjackCardHand dompooCardHand = new PlayerBlackjackCardHand(new Player("dompoo"), () -> List.of(DIAMOND_1, HEART_7));

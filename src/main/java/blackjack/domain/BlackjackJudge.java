@@ -26,6 +26,10 @@ public final class BlackjackJudge {
         }
     }
     
+    public int getDealerBlackjackWinningCount() {
+        return getCountOf(WinningStatus.BLACKJACK_WIN);
+    }
+    
     public int getDealerWinningCount() {
         return getCountOf(WinningStatus.WIN);
     }
