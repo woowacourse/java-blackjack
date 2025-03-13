@@ -6,6 +6,7 @@ import domain.GameManager;
 import domain.card.CardDeck;
 import domain.card.CardDeckGenerator;
 import domain.participant.Dealer;
+import domain.participant.Participants;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.Arrays;
@@ -26,8 +27,9 @@ public class BlackjackController {
     public void gameStart() {
         Dealer dealer = Dealer.of();
         Players players = initParticipants();
+        Participants participants = Participants.of(dealer, players);
         GameManager gameManager = GameManager.of(
-                CardDeck.of(CardDeckGenerator.generateCardDeck()), dealer, players
+                CardDeck.of(CardDeckGenerator.generateCardDeck()), participants
         );
 
         gameManager.distributeCards();

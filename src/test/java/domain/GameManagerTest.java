@@ -9,6 +9,7 @@ import domain.card.CardDeckGenerator;
 import domain.card.TrumpNumber;
 import domain.card.TrumpShape;
 import domain.participant.Dealer;
+import domain.participant.Participants;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.List;
@@ -30,7 +31,7 @@ class GameManagerTest {
         );
 
         // when & then
-        assertThatCode(() -> GameManager.of(cardDeck, dealer, players))
+        assertThatCode(() -> GameManager.of(cardDeck, Participants.of(dealer, players)))
                 .doesNotThrowAnyException();
     }
 
@@ -46,7 +47,7 @@ class GameManagerTest {
                         Player.of("pobi3")
                 )
         );
-        GameManager gameManager = GameManager.of(cardDeck, dealer, players);
+        GameManager gameManager = GameManager.of(cardDeck, Participants.of(dealer, players));
 
         // when
         gameManager.distributeCards();
@@ -67,7 +68,7 @@ class GameManagerTest {
                         Player.of("pobi3")
                 )
         );
-        GameManager gameManager = GameManager.of(cardDeck, dealer, players);
+        GameManager gameManager = GameManager.of(cardDeck, Participants.of(dealer, players));
 
         // when
         List<String> names = gameManager.getPlayersName();
@@ -89,7 +90,7 @@ class GameManagerTest {
                         Player.of("pobi3")
                 )
         );
-        GameManager gameManager = GameManager.of(cardDeck, dealer, players);
+        GameManager gameManager = GameManager.of(cardDeck, Participants.of(dealer, players));
 
         // when
         gameManager.passCardToPlayer("pobi1");
@@ -113,7 +114,7 @@ class GameManagerTest {
                         Player.of("pobi3")
                 )
         );
-        GameManager gameManager = GameManager.of(cardDeck, dealer, players);
+        GameManager gameManager = GameManager.of(cardDeck, Participants.of(dealer, players));
 
         // when
         int score = gameManager.getScoreOf("pobi1");
@@ -141,7 +142,7 @@ class GameManagerTest {
                         Player.of("pobi3")
                 )
         );
-        GameManager gameManager = GameManager.of(cardDeck, dealer, players);
+        GameManager gameManager = GameManager.of(cardDeck, Participants.of(dealer, players));
 
         // when
         boolean result = gameManager.passCardToDealer();
@@ -168,7 +169,7 @@ class GameManagerTest {
                         Player.of("pobi3")
                 )
         );
-        GameManager gameManager = GameManager.of(cardDeck, dealer, players);
+        GameManager gameManager = GameManager.of(cardDeck, Participants.of(dealer, players));
 
         // when
         boolean result = gameManager.passCardToDealer();

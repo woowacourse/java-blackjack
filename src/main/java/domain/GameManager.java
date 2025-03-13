@@ -1,63 +1,53 @@
 package domain;
 
 import domain.card.CardDeck;
-import domain.card.CardDeckGenerator;
-import domain.participant.Dealer;
+import domain.participant.Participants;
 import domain.participant.Player;
-import domain.participant.Players;
-import java.util.Collections;
 import java.util.List;
 
 public class GameManager {
 
-    private static final int INITIAL_CARDS = 2;
+    public static final int INITIAL_CARDS = 2;
     private static final int DEALER_MIN_SCORE = 16;
     public static final int BLACKJACK_SCORE = 21;
 
     private final CardDeck cardDeck;
-    private final Dealer dealer;
-    private final Players players;
+    private final Participants participants;
 
-    private GameManager(CardDeck cardDeck, Dealer dealer, Players players) {
+    private GameManager(CardDeck cardDeck, Participants participants) {
         this.cardDeck = cardDeck;
-        this.dealer = dealer;
-        this.players = players;
+        this.participants = participants;
     }
 
-    public static GameManager of(CardDeck cardDeck, Dealer dealer, Players players) {
-        return new GameManager(cardDeck, dealer, players);
+    public static GameManager of(CardDeck cardDeck, Participants participants) {
+        return new GameManager(cardDeck, participants);
     }
 
     public void distributeCards() {
-        for (int count = 0; count < INITIAL_CARDS; count++) {
-            players.receiveCards(cardDeck);
-            dealer.receive(cardDeck.popCard());
-        }
+        participants.distributeCards(cardDeck);
     }
 
     public void passCardToPlayer(String name) {
-        Player player = players.findByName(name);
-        player.receive(cardDeck.popCard());
+        participants.passCardToPlayer(name, cardDeck.popCard());
     }
 
     public boolean passCardToDealer() {
-        if (dealer.getScore() > DEALER_MIN_SCORE) {
+        if (participants.getScoreOfDealer() > DEALER_MIN_SCORE) { // TODO: 판단 로직의 위치에 대한 고민 필요
             return false;
         }
-        dealer.receive(cardDeck.popCard());
+        participants.passCardToDealer(cardDeck.popCard());
         return true;
     }
 
     public int getScoreOf(String name) {
-        Player player = players.findByName(name);
-        return player.getScore();
+        return participants.getScoreOf(name);
     }
 
     public List<String> getPlayersName() {
-        return Collections.unmodifiableList(players.getPlayersName());
+        return participants.getPlayersName();
     }
 
     public Player getPlayerByName(String name) {
-        return players.findByName(name);
+        return participants.getPlayerByName(name);
     }
 }
