@@ -7,6 +7,7 @@ import domain.card.CardNumber;
 import domain.card.CardShape;
 import domain.card.Hand;
 import domain.participant.Dealer;
+import domain.participant.Money;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.List;
@@ -65,10 +66,19 @@ public class OutputView {
         });
     }
 
+    public void printRevenue(Money money, Map<Player, Money> revenueResult) {
+        System.out.println("## 최종 수익");
+        System.out.printf("딜러: %s\n", money.getValue());
+        revenueResult.keySet().forEach(player -> {
+            System.out.printf("%s: %s\n", player.getName(), revenueResult.get(player).getValue());
+        });
+    }
+
     private String getDealerResultText(Map<GameResult, Integer> dealerResult) {
         StringBuilder stringBuilder = new StringBuilder("딜러: ");
-        if (dealerResult.containsKey(GameResult.WIN)) {
-            stringBuilder.append(String.format("%d승", dealerResult.get(GameResult.WIN)));
+        if (dealerResult.containsKey(GameResult.WIN) || dealerResult.containsKey(GameResult.BLACKJACK)) {
+            stringBuilder.append(String.format("%d승",
+                    dealerResult.getOrDefault(GameResult.WIN, 0) + dealerResult.getOrDefault(GameResult.BLACKJACK, 0)));
         }
         if (dealerResult.containsKey(GameResult.DRAW)) {
             stringBuilder.append(String.format(" %d무", dealerResult.get(GameResult.DRAW)));
@@ -82,7 +92,7 @@ public class OutputView {
     private String getGameResultText(GameResult gameResult) {
         return switch (gameResult) {
             case LOSE -> "패";
-            case WIN -> "승";
+            case WIN, BLACKJACK -> "승";
             case DRAW -> "무";
         };
     }

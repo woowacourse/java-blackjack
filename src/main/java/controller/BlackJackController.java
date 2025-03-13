@@ -46,7 +46,7 @@ public class BlackJackController {
 
     private List<Money> readBettingAmounts(List<String> playerNames) {
         return playerNames.stream()
-                .map(name -> new Money(inputView.readBettingAmount(name)))
+                .map(name -> Money.of(inputView.readBettingAmount(name)))
                 .collect(Collectors.toList());
     }
 
@@ -71,7 +71,9 @@ public class BlackJackController {
 
     private void showGameResult(BlackJackGame game) {
         showFinalCards(game);
-        showPlayerResult(game);
+        Money money = game.calculateDealerRevenue();
+        Map<Player, Money> revenueResult = game.calculateRevenue();
+        outputView.printRevenue(money, revenueResult);
     }
 
     private void showFinalCards(BlackJackGame game) {
