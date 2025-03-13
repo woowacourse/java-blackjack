@@ -188,10 +188,10 @@ public class HandTest {
         );
     }
 
-    @DisplayName("플레이어가 소유한 카드에 따라서 블랙잭 여부를 판단한다.")
+    @DisplayName("플레이어가 소유한 카드에 따라서 21 여부를 판단한다.")
     @ParameterizedTest
-    @MethodSource("createBlackJackCase")
-    void 블랙잭_검증(List<Card> inputCard, boolean expected) {
+    @MethodSource("create21Case")
+    void 합이_21인지_검증(List<Card> inputCard, boolean expected) {
         // given
         Hand hand = Hand.of(inputCard);
 
@@ -202,7 +202,7 @@ public class HandTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> createBlackJackCase() {
+    private static Stream<Arguments> create21Case() {
         return Stream.of(
                 Arguments.of(
                         List.of(
