@@ -35,6 +35,19 @@ class PlayersTest {
                 .hasMessage("비어있는 값을 입력했습니다. 다시 입력해주세요.");
     }
 
+    @DisplayName("중복된 이름을 입력하면 예외를 발생시킨다.")
+    @Test
+    void addPlayersFromDuplicateNames() {
+        // given
+        final Players players = new Players();
+        final String names = "엠제이, 엠제이, 포비, 저스틴";
+
+        // when & then
+        assertThatCode(() -> players.addPlayersFrom(names))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("중복된 닉네임이 있습니다. 다시 입력해주세요.");
+    }
+
     @DisplayName("입력한 닉네임의 개수가 6개를 초과하며 예외를 발생시킨다.")
     @Test
     void addPlayersFromOverSixSNametring() {
