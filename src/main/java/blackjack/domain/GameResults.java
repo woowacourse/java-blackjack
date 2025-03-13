@@ -20,7 +20,7 @@ public class GameResults {
     public GameResults(final Dealer dealer, final List<Gambler> gamblers) {
         gameResults = new LinkedHashMap<>();
         for (Gambler gambler : gamblers) {
-            int compared = compareGamblerWithDealer(gambler, dealer);
+            int compared = compareGamblerWithDealer(dealer, gambler);
             double multiple = calculateMultiple(gambler, compared);
             int multiplier = gambler.calculateBetAmount(multiple);
 
@@ -28,26 +28,32 @@ public class GameResults {
         }
     }
 
-    private int compareGamblerWithDealer(final Gambler gambler, final Dealer dealer) {
-        if (gambler.isNotBust() && dealer.isBust()) {
-            return 1;
-        }
-        if (dealer.isBust() && gambler.isBust()) {
+    private int compareGamblerWithDealer(final Dealer dealer, final Gambler gambler) {
+        if (isTieOutcome(dealer, gambler)) {
             return 0;
         }
-        if (dealer.isNotBust() && gambler.isBust()) {
-            return -1;
+        if (isGamblerWinCondition(dealer, gambler)) {
+            return 1;
         }
-        if (dealer.isBlackJack() || gambler.isBlackJack()) {
-            if (dealer.isBlackJack() && gambler.isBlackJack()) {
-                return 0;
-            }
-            if (gambler.isBlackJack()) {
-                return 1;
-            }
+        if (isDealerWinCondition(dealer, gambler)) {
             return -1;
         }
         return Integer.compare(gambler.getCardScore(), dealer.getCardScore());
+    }
+
+    private boolean isTieOutcome(final Dealer dealer, final Gambler gambler) {
+        return (dealer.isBust() && gambler.isBust()) ||
+                (dealer.isBlackJack() && gambler.isBlackJack());
+    }
+
+    private boolean isGamblerWinCondition(final Dealer dealer, final Gambler gambler) {
+        return (gambler.isNotBust() && dealer.isBust()) ||
+                gambler.isBlackJack();
+    }
+
+    private boolean isDealerWinCondition(final Dealer dealer, final Gambler gambler) {
+        return (dealer.isNotBust() && gambler.isBust()) ||
+                dealer.isBlackJack();
     }
 
     private double calculateMultiple(final Gambler gambler, final int compared) {
