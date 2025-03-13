@@ -29,8 +29,12 @@ public class Players {
         return dealer.isHit();
     }
 
-    public GameResult getGameResult() {
-        return new GameResult(dealer, gamblers);
+    public GameResult createGameResult() {
+        GameResult gameResult = new GameResult();
+        for (Gambler gambler : gamblers) {
+            gameResult.processResult(dealer, gambler);
+        }
+        return gameResult;
     }
 
     private void validateHasDuplication(final List<Gambler> gamblers) {

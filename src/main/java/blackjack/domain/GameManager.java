@@ -41,7 +41,7 @@ public class GameManager {
     }
 
     public GameResult getGameResult() {
-        return players.getGameResult();
+        return players.createGameResult();
     }
 
     private Dealer initDealer() {

@@ -4,8 +4,8 @@ import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 public class GameResult {
@@ -15,17 +15,14 @@ public class GameResult {
     public static final double MULTIPLE_WIN = 1.0;
     public static final double MULTIPLE_BLACKJACK_WIN = 1.5;
 
-    private final Map<Player, Integer> gameResults;
+    private final Map<Player, Integer> gameResults = new LinkedHashMap<>();
 
-    public GameResult(final Dealer dealer, final List<Gambler> gamblers) {
-        gameResults = new LinkedHashMap<>();
-        for (Gambler gambler : gamblers) {
-            int compared = compareGamblerWithDealer(dealer, gambler);
-            double multiple = calculateMultiple(gambler, compared);
-            int multiplier = gambler.calculateBetAmount(multiple);
+    public void processResult(final Dealer dealer, final Gambler gambler) {
+        int compared = compareGamblerWithDealer(dealer, gambler);
+        double multiple = calculateMultiple(gambler, compared);
+        int multiplier = gambler.calculateBetAmount(multiple);
 
-            updateGameResults(dealer, gambler, multiplier);
-        }
+        updateGameResults(dealer, gambler, multiplier);
     }
 
     private int compareGamblerWithDealer(final Dealer dealer, final Gambler gambler) {
@@ -75,6 +72,6 @@ public class GameResult {
     }
 
     public Map<Player, Integer> getGameResults() {
-        return gameResults;
+        return Collections.unmodifiableMap(gameResults);
     }
 }
