@@ -1,0 +1,44 @@
+package blackjack.domain;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import blackjack.domain.money.BettingMoney;
+
+import java.util.stream.Stream;
+
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
+
+public class BettingMoneyTest {
+    
+    @ParameterizedTest
+    @ValueSource(ints = {9_999, 1_000_001})
+    void 베팅_금액이_범위를_넘어가는_경우_예외를_발생시킨다(int money) {
+        // expected
+        assertThatThrownBy(() -> new BettingMoney(money))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("배팅은 10,000원부터 1,000,000원까지 가능합니다.");
+    }
+    
+    @ParameterizedTest
+    @MethodSource("provideBettingMoneyAndWinningStatusAndProfit")
+    void 결과에_따라_배팅_금액이_달라진다(int money, WinningStatus winningStatus, int profit) {
+        // given
+        BettingMoney bettingMoney = new BettingMoney(money);
+        
+        // expected
+        assertThat(bettingMoney.getProfit(winningStatus)).isEqualTo(profit);
+    }
+    
+    private static Stream<Arguments> provideBettingMoneyAndWinningStatusAndProfit() {
+        return Stream.of(
+                Arguments.of(10000, WinningStatus.BLACKJACK_WIN, 15000),
+                Arguments.of(10000, WinningStatus.WIN, 10000),
+                Arguments.of(10000, WinningStatus.DRAW, 0),
+                Arguments.of(10000, WinningStatus.LOSE, -10000)
+        );
+    }
+}
