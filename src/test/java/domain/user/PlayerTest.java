@@ -37,7 +37,7 @@ public class PlayerTest {
         //then
         Assertions.assertThat(player.getCardDeck().calculateScore()).isGreaterThanOrEqualTo(21);
     }
-    
+
     @DisplayName("플레이어는 dealer 혹은 딜러이름을 사용할 수 없다.")
     @Test
     void test2() {
@@ -56,6 +56,7 @@ public class PlayerTest {
                     .withMessage("dealer 혹은 딜러는 이름으로 사용할 수 없습니다.");
         });
     }
+
 
     private static class FakeTrumpCardManager extends TrumpCardManager {
 
