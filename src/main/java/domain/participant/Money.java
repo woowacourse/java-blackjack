@@ -8,8 +8,12 @@ public class Money {
 
     private final int value;
 
-    public Money(int value) {
+    private Money(int value) {
         this.value = value;
+    }
+
+    public static Money of(int value) {
+        return new Money(value);
     }
 
     public static Money of(String rawValue) {
@@ -48,6 +52,14 @@ public class Money {
 
     public Money times(double count) {
         return new Money((int) (value * count));
+    }
+
+    public Money plus(Money money) {
+        return null;
+    }
+
+    public int getValue() {
+        return value;
     }
 
     @Override

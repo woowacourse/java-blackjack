@@ -1,5 +1,6 @@
 package domain.participant;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.Test;
@@ -59,5 +60,16 @@ class MoneyTest {
         assertThatThrownBy(() -> Money.of(rawValue))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("입력은 10만원 단위입니다.");
+    }
+
+    @Test
+    void 돈을_더할_수_있다() {
+        // given
+        Money money1 = Money.of(100000);
+        Money money2 = Money.of(100000);
+        // when
+        Money actual = money1.plus(money2);
+        // then
+        assertThat(actual).isEqualTo(Money.of(200000));
     }
 }
