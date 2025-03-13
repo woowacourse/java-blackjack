@@ -6,7 +6,7 @@ import blackjack.domain.card.Suit;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
-import blackjack.domain.winning.Victory;
+import blackjack.domain.winning.Profit;
 import blackjack.domain.winning.WinningResult;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +38,10 @@ public class OutputView {
     }
 
     public static void printDealerAdditionalCard(int additionalCardsNumber) {
+        if (additionalCardsNumber == 0) {
+            return;
+        }
+        System.out.println();
         System.out.printf("딜러는 16이하라 %d장의 카드를 더 받았습니다.\n", additionalCardsNumber);
         System.out.println();
     }
@@ -66,17 +70,6 @@ public class OutputView {
         System.out.println("더 이상 카드를 받을 수 없습니다.");
     }
 
-    public static void printVictory(Victory victory, List<Player> players) {
-        Map<WinningResult, Integer> dealerVictoryResults = victory.getDealerVictoryResults();
-        Map<Player, WinningResult> playerVictoryResults = victory.getPlayerVictoryResults();
-        System.out.println("## 최종 승패");
-        printIfPresentWinningResult(dealerVictoryResults);
-        dealerVictoryResults.getOrDefault(WinningResult.LOSE, 0);
-        for (Player player : players) {
-            System.out.printf("%s: %s\n", player.getName(), toKoreanWinningResult(playerVictoryResults.get(player)));
-        }
-    }
-
     private static void printIfPresentWinningResult(Map<WinningResult, Integer> dealerVictoryResults) {
         System.out.print("딜러:");
         if (dealerVictoryResults.containsKey(WinningResult.WIN)) {
@@ -91,16 +84,6 @@ public class OutputView {
         System.out.println();
     }
 
-    private static String toKoreanWinningResult(WinningResult winningResult) {
-        if (winningResult.equals(WinningResult.WIN)) {
-            return "승";
-        }
-        if (winningResult.equals(WinningResult.LOSE)) {
-            return "패";
-        }
-        return "무";
-    }
-
     public static void printErrorMessage(RuntimeException e) {
         System.out.println("[ERROR] " + e.getMessage());
     }
@@ -111,5 +94,14 @@ public class OutputView {
 
     private static String toKoreaRank(Rank rank) {
         return RankLabel.fromRank(rank).getDisplayName();
+    }
+
+    public static void printProfit(Profit profit, List<Player> players) {
+        System.out.println("## 최종 수익");
+        System.out.println("딜러: " + profit.dealerProfit());
+        Map<Player, Integer> playerProfit = profit.playerProfit();
+        for (Player player : players) {
+            System.out.printf("%s: %d\n", player.getName(), playerProfit.get(player));
+        }
     }
 }

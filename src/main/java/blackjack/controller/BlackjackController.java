@@ -9,7 +9,7 @@ import blackjack.domain.participants.BattingMoney;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
-import blackjack.domain.winning.Victory;
+import blackjack.domain.winning.Profit;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class BlackjackController {
             additionalCard(gameBoard, players);
             dealerAdditionalCard(gameBoard);
             printBlackjackResult(dealer, players);
-            printVictory(gameBoard, players);
+            printBlackjackProfit(gameBoard, players);
         } catch (RuntimeException e) {
             OutputView.printErrorMessage(e);
         }
@@ -38,7 +38,10 @@ public class BlackjackController {
 
     private List<Player> toPlayers(List<String> playerNames) {
         return playerNames.stream()
-                .map(name -> new Player(name, new Cards(new ArrayList<>(), new ScoreCalculator()), new BattingMoney(0)))
+                .map(name -> new Player(
+                        name,
+                        new Cards(new ArrayList<>(), new ScoreCalculator()),
+                        new BattingMoney(InputView.inputBattingAmount(name))))
                 .toList();
     }
 
@@ -80,8 +83,8 @@ public class BlackjackController {
         OutputView.printPlayerResult(players.getPlayers());
     }
 
-    private void printVictory(GameBoard gameBoard, Players players) {
-        Victory victory = gameBoard.createVictory();
-        OutputView.printVictory(victory, players.getPlayers());
+    private void printBlackjackProfit(GameBoard gameBoard, Players players) {
+        Profit profit = gameBoard.createProfit();
+        OutputView.printProfit(profit, players.getPlayers());
     }
 }

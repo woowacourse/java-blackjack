@@ -6,7 +6,6 @@ import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
 import blackjack.domain.winning.Profit;
-import blackjack.domain.winning.Victory;
 
 public class GameBoard {
 
@@ -32,10 +31,6 @@ public class GameBoard {
 
     public void drawAdditionalCardOfDealer() {
         dealer.drawAdditionalCard(deck);
-    }
-
-    public Victory createVictory() {
-        return Victory.create(dealer, players);
     }
 
     public Profit createProfit() {

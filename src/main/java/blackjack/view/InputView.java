@@ -18,6 +18,16 @@ public class InputView {
                 .toList();
     }
 
+    public static int inputBattingAmount(String nickname) {
+        System.out.println();
+        System.out.printf("%s의 배팅 금액은?\n", nickname);
+        try {
+            return Integer.parseInt(Console.readLine());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("숫자만 가능합니다.");
+        }
+    }
+
     private static void validatePlayerNames(String[] playerNames) {
         if (playerNames.length == 0) {
             throw new IllegalArgumentException("쉼표를 이용하여 플레이어 이름을 입력해야 합니다.");

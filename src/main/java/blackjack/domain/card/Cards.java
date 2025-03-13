@@ -31,10 +31,6 @@ public class Cards {
         return scoreCalculator.calculateMaxScore(cards);
     }
 
-    public int calculateMinScore() {
-        return scoreCalculator.calculateMinScore(cards);
-    }
-
     public boolean isBlackjack() {
         if (cards.size() != BLACKJACK_MAX_CARD_SIZE) {
             return false;

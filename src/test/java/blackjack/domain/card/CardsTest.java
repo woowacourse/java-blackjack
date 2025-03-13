@@ -24,20 +24,6 @@ public class CardsTest {
     }
 
     @Test
-    void 플레이어의_카드에_A가_포함되어_있을_때_최솟값으로_점수를_계산할_수_있다() {
-        //given
-        Cards cards = new Cards(
-                List.of(new Card(Suit.DIAMOND, Rank.ACE),
-                        new Card(Suit.DIAMOND, Rank.KING)));
-
-        //when
-        int minScore = cards.calculateMinScore();
-
-        //then
-        assertThat(minScore).isEqualTo(11);
-    }
-
-    @Test
     void 카드가_블랙잭임을_계산할_수_있다() {
         //given
         Cards cards = new Cards(

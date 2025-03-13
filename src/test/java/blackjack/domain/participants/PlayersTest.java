@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import java.util.List;
@@ -62,6 +63,29 @@ class PlayersTest {
 
         //then
         assertThat(profit).isEqualTo(3000);
+    }
+
+    @Test
+    void 플레이어들의_카드_세팅을_준비한다() {
+        //given
+        Players players = new Players(
+                new Player("pobi", new Cards(), new BattingMoney(1000)),
+                new Player("neo", new Cards(), new BattingMoney(2000))
+        );
+        Deck deck = new Deck(
+                new Card(Suit.DIAMOND, Rank.TEN), new Card(Suit.DIAMOND, Rank.ONE),
+                new Card(Suit.DIAMOND, Rank.TWO), new Card(Suit.DIAMOND, Rank.THREE));
+
+        //when
+        players.prepareCards(deck);
+
+        //then
+        assertThat(players).isEqualTo(new Players(
+                new Player("pobi", new Cards(new Card(Suit.DIAMOND, Rank.TEN), new Card(Suit.DIAMOND, Rank.ONE)),
+                        new BattingMoney(1000)),
+                new Player("neo", new Cards(new Card(Suit.DIAMOND, Rank.TWO), new Card(Suit.DIAMOND, Rank.THREE)),
+                        new BattingMoney(2000))
+        ));
     }
 
     @Test
