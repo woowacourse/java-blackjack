@@ -41,8 +41,8 @@ public class Hand {
         cards.add(card);
     }
 
-    public void addAll(Hand receivedHand) {
-        cards.addAll(receivedHand.getCards());
+    public void addAll(List<Card> receiveCards) {
+        cards.addAll(receiveCards);
     }
 
     public boolean isLargerThan(Hand dealerHand) {

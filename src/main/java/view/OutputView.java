@@ -5,6 +5,7 @@ import static domain.GameResultStatus.*;
 import domain.Dealer;
 import domain.GameResults;
 import domain.GameResultStatus;
+import domain.Hand;
 import domain.Player;
 import domain.Players;
 import java.util.List;
@@ -27,12 +28,12 @@ public class OutputView {
         players.getPlayers().forEach(
                 player ->
                         System.out.printf("%s카드: %s\n", player.getName(),
-                                outputFormatter.formatCards(player.getCards()))
+                                outputFormatter.formatCards(player.getHand()))
         );
     }
 
     public void printCurrentCard(Player player) {
-        System.out.printf("%s카드: %s\n", player.getName(), outputFormatter.formatCards(player.getCards()));
+        System.out.printf("%s카드: %s\n", player.getName(), outputFormatter.formatCards(player.getHand()));
     }
 
     public void printDealerDraw() {
@@ -44,15 +45,16 @@ public class OutputView {
     }
 
     public void printCardsResult(Dealer dealer, Players players) {
-        String parsedDealerCards = outputFormatter.formatCards(dealer.getCards());
-        int dealerCardsSum = dealer.calculateCardsSum();
+        Hand dealerHand = dealer.getHand();
+        String parsedDealerCards = outputFormatter.formatCards(dealerHand);
+        int dealerCardsSum = dealerHand.calculateSum();
         System.out.printf("\n딜러카드: %s - 결과: %d\n", parsedDealerCards, dealerCardsSum);
 
         players.getPlayers().forEach(player -> {
-            String parsedPlayerCards = outputFormatter.formatCards(player.getCards());
-            int playerCardsSum = player.calculateCardsSum();
+            Hand playerHand = player.getHand();
+            String parsedPlayerCards = outputFormatter.formatCards(playerHand);
+            int playerCardsSum = playerHand.calculateSum();
             System.out.printf("%s카드: %s - 결과: %d\n", player.getName(), parsedPlayerCards, playerCardsSum);
-
         });
     }
 

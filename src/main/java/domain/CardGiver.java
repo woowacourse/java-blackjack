@@ -12,15 +12,13 @@ public class CardGiver {
         this.deck = deck;
     }
 
-    public Hand giveDefault() {
-        return new Hand(deck.drawCards(DEFAULT_CARD_GIVE_COUNT));
-    }
-
-    public Card giveOne() {
-        return deck.drawCard();
+    public void giveOneTo(Participant participant) {
+        if (participant.isPossibleDraw()) {
+            participant.addCard(deck.drawCard());
+        }
     }
 
     public void giveDefaultTo(List<Participant> participants) {
-        participants.forEach(participant -> participant.addCards(giveDefault()));
+        participants.forEach(participant -> participant.addCards(deck.drawCards(DEFAULT_CARD_GIVE_COUNT)));
     }
 }

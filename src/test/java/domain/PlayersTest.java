@@ -33,8 +33,8 @@ class PlayersTest {
     void test2() {
         //given
         Dealer dealer = Dealer.createEmpty();
-        dealer.getCards().add(new Card(CardNumberType.JACK, CardType.DIAMOND));
-        dealer.getCards().add(new Card(CardNumberType.QUEEN, CardType.DIAMOND));
+        dealer.getHand().add(new Card(CardNumberType.JACK, CardType.DIAMOND));
+        dealer.getHand().add(new Card(CardNumberType.QUEEN, CardType.DIAMOND));
 
         Hand winHand = new Hand(List.of(
                 new Card(CardNumberType.ACE, CardType.DIAMOND),

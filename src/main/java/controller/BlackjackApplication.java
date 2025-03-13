@@ -2,16 +2,17 @@ package controller;
 
 import static view.AnswerType.*;
 
+import domain.Participant;
 import domain.Players;
 import domain.CardGiver;
 import domain.Dealer;
 import domain.GameResults;
-import domain.Participant;
 import domain.Player;
 import java.util.ArrayList;
 import java.util.List;
 import view.AnswerType;
 import view.ConsoleView;
+
 public class BlackjackApplication {
 
     private final ConsoleView consoleView;
@@ -28,7 +29,7 @@ public class BlackjackApplication {
 
         initializeParticipantCards(dealer, players);
 
-        askForAdditionalCard(players);
+        askAdditionalCardForPlayers(players);
 
         decideAdditionalCardForDealer(dealer);
 
@@ -44,21 +45,16 @@ public class BlackjackApplication {
         List<Participant> participants = new ArrayList<>(players.getPlayers());
         participants.add(dealer);
         cardGiver.giveDefaultTo(participants);
-
         consoleView.printInitialCards(dealer, players);
     }
 
-    private void askForAdditionalCard(Players players) {
+    private void askAdditionalCardForPlayers(Players players) {
         players.getPlayers().forEach(this::processPlayerCardRequest);
     }
 
     private void decideAdditionalCardForDealer(Dealer dealer) {
-        if (dealer.isPossibleDraw()) {
-            dealer.addCard(cardGiver.giveOne());
-            consoleView.printDealerDraw();
-            return;
-        }
-        consoleView.printDealerNoDraw();
+        cardGiver.giveOneTo(dealer);
+        consoleView.printDealerDraw(dealer.isPossibleDraw());
     }
 
     private void calculateResult(Dealer dealer, Players players) {
@@ -68,14 +64,14 @@ public class BlackjackApplication {
     }
 
     private void processPlayerCardRequest(Player player) {
-        AnswerType answerType = consoleView.requestAdditionalCard(player);
-        while (isPossibleRequest(player, answerType)) {
-            player.addCard(cardGiver.giveOne());
-            consoleView.printCurrentCard(player);
+        AnswerType answerType = YES;
+        showCurrentCardIfNo(player, answerType);
+        while (answerType == YES && player.isPossibleDraw()) {
             answerType = consoleView.requestAdditionalCard(player);
+            cardGiver.giveOneTo(player);
+            consoleView.printCurrentCard(player);
         }
         showMessageIfBust(player);
-        showCurrentCardIfNo(player, answerType);
     }
 
     private void showMessageIfBust(Player player) {
@@ -88,9 +84,5 @@ public class BlackjackApplication {
         if (answerType == NO) {
             consoleView.printCurrentCard(player);
         }
-    }
-
-    private boolean isPossibleRequest(Player player, AnswerType answerType) {
-        return answerType == YES && player.hasNotBustCards();
     }
 }

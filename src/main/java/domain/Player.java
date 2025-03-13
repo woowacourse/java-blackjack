@@ -23,7 +23,8 @@ public class Player extends Participant {
         return hand.isBust();
     }
 
-    public boolean hasNotBustCards() {
+    @Override
+    public boolean isPossibleDraw() {
         return !hand.isBust();
     }
 

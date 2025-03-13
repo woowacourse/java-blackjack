@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 public abstract class Participant {
 
     protected final Hand hand;
@@ -8,19 +10,19 @@ public abstract class Participant {
         this.hand = hand;
     }
 
-    public Hand getCards() {
+    public Hand getHand() {
         return hand;
     }
 
-    public void addCards(Hand receivedHand) {
-        hand.addAll(receivedHand);
+    public void addCards(List<Card> cards) {
+        hand.addAll(cards);
     }
 
     public void addCard(Card receivedCard) {
         hand.add(receivedCard);
     }
 
-    public int calculateCardsSum() {
-        return hand.calculateSum();
+    public boolean isPossibleDraw() {
+        return true;
     }
 }

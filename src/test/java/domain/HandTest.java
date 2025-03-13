@@ -116,11 +116,10 @@ public class HandTest {
                 new Card(CardNumberType.ACE, CardType.HEART),
                 new Card(CardNumberType.ACE, CardType.DIAMOND)
         );
-        Hand hand = new Hand(testCards);
         Hand emptyHand = Hand.createEmpty();
 
         //when
-        emptyHand.addAll(hand);
+        emptyHand.addAll(testCards);
 
         //thens
         assertThat(emptyHand.getCards()).hasSize(2);

@@ -32,7 +32,7 @@ public class Players {
         Map<Player, GameResultStatus> gameResult = players.stream()
                 .collect(Collectors.toMap(
                         player -> player,
-                        player -> player.calculateResultStatus(dealer.getCards())
+                        player -> player.calculateResultStatus(dealer.getHand())
                 ));
         return new GameResults(gameResult);
     }

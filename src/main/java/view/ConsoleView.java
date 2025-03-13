@@ -24,11 +24,11 @@ public class ConsoleView {
         outputView.printInitialCards(dealer, players);
     }
 
-    public void printDealerDraw() {
-        outputView.printDealerDraw();
-    }
-
-    public void printDealerNoDraw() {
+    public void printDealerDraw(boolean possibleDraw) {
+        if (possibleDraw) {
+            outputView.printDealerDraw();
+            return;
+        }
         outputView.printDealerNoDraw();
     }
 
