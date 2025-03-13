@@ -22,9 +22,30 @@ public class InputView {
         return AnswerCommand.findByAnswer(input);
     }
 
+    public int readBet(final String playerName){
+        System.out.println(playerName + "의 배팅 금액은?");
+        final String input = readInput();
+        validateBetAmount(input);
+        return Integer.parseInt(input);
+    }
+
+    private void validateBetAmount(String betAmountInput){
+        try{
+            int betAmount = Integer.parseInt(betAmountInput);
+            validateBetAmountRange(betAmount);
+        }catch (NumberFormatException e){
+            throw new IllegalArgumentException("[ERROR] 배팅 금액은 숫자만 가능합니다.");
+        }
+    }
+
+    private void validateBetAmountRange(int betAmount){
+        if(betAmount <= 0){
+            throw new IllegalArgumentException("[ERROR] 배팅 금액이 올바르지 않습니다.");
+        }
+    }
+
     private String readInput() {
         final Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
     }
-
 }
