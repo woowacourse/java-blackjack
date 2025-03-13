@@ -1,12 +1,10 @@
 package domain.gamer;
 
 import static domain.gamer.Dealer.THRESHOLD;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.deck.Card;
 import domain.deck.Rank;
 import domain.deck.Shape;
-import java.util.List;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -86,22 +84,5 @@ class DealerTest {
             softly.assertThat(dealer.calculateSumOfRank()).isEqualTo(21);
             softly.assertThat(expected).isFalse();
         });
-    }
-
-    @DisplayName("딜러의 첫번째 카드를 가져온다.")
-    @Test
-    void 딜러의_첫번쨰_카드를_가져온다() {
-
-        // given
-        final Dealer dealer = new Dealer(new Nickname("새로이"));
-        final Card card1 = new Card(Rank.JACK, Shape.CLOVER);
-        final Card card2 = new Card(Rank.ACE, Shape.CLOVER);
-        dealer.receiveInitialCards(List.of(card1, card2));
-
-        // when
-        final Card dealerFirstCard = dealer.getFirstCard();
-
-        // then
-        assertThat(dealerFirstCard).isEqualTo(card1);
     }
 }

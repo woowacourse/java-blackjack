@@ -36,10 +36,4 @@ public class Dealer extends Gamer {
         }
         return hand.calculateSumOfRank();
     }
-
-    public Card getFirstCard() {
-        final Hand hand = getHand();
-        final List<Card> cards = hand.getCards();
-        return cards.getFirst();
-    }
 }
