@@ -26,6 +26,16 @@ public class Dealer implements Participant {
     }
 
     @Override
+    public void applyGameRecord(GameResult result) {
+        gameRecord.add(result);
+    }
+
+    @Override
+    public void bet(int amount) {
+        wallet.betMoney(amount);
+    }
+
+    @Override
     public boolean areYouDealer() {
         return true;
     }
@@ -36,11 +46,6 @@ public class Dealer implements Participant {
     }
 
     @Override
-    public void applyGameRecord(GameResult result) {
-        gameRecord.add(result);
-    }
-
-    @Override
     public Map<GameResult, Integer> getGameRecord() {
         return gameRecord.getGameRecord();
     }
@@ -48,11 +53,6 @@ public class Dealer implements Participant {
     @Override
     public int getProfit() {
         return wallet.getProfit();
-    }
-
-    @Override
-    public void bet(int amount) {
-        wallet.betMoney(amount);
     }
 
     public void addEarnedMoney(int totalPlayersProfit) {

@@ -26,6 +26,17 @@ public class Player implements Participant {
     }
 
     @Override
+    public void applyGameRecord(GameResult result) {
+        gameRecord.add(result);
+        wallet.winBetRate(result);
+    }
+
+    @Override
+    public void bet(int amount) {
+        wallet.betMoney(amount);
+    }
+
+    @Override
     public boolean areYouDealer() {
         return false;
     }
@@ -36,12 +47,6 @@ public class Player implements Participant {
     }
 
     @Override
-    public void applyGameRecord(GameResult result) {
-        gameRecord.add(result);
-        wallet.winBetRate(result);
-    }
-
-    @Override
     public Map<GameResult, Integer> getGameRecord() {
         return gameRecord.getGameRecord();
     }
@@ -49,10 +54,5 @@ public class Player implements Participant {
     @Override
     public int getProfit() {
         return wallet.getProfit();
-    }
-
-    @Override
-    public void bet(int amount) {
-        wallet.betMoney(amount);
     }
 }

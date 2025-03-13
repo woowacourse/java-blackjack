@@ -63,12 +63,12 @@ public class CardDeck {
         Collections.shuffle(this.cards);
     }
 
-    public void addCard(Card card) {
-        cards.add(card);
-    }
-
     public Card draw() {
         return cards.removeFirst();
+    }
+
+    public void addCard(Card card) {
+        cards.add(card);
     }
 
     public List<Card> getCards() {

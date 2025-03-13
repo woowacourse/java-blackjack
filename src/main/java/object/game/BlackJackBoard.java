@@ -78,6 +78,18 @@ public class BlackJackBoard {
         }
     }
 
+    public void calculateDealerProfit() {
+        Dealer dealer = (Dealer) getDealer();
+        List<Participant> players = getPlayers();
+
+        int totalPlayersProfit = 0;
+        for (Participant player : players) {
+            totalPlayersProfit += player.getProfit();
+        }
+
+        dealer.addEarnedMoney(totalPlayersProfit);
+    }
+
     public CardDeck getCardDeckOf(Participant participant) {
         CardDeck cardDeck = cardDeckOfParticipant.get(participant);
         return new CardDeck(cardDeck);
@@ -167,17 +179,5 @@ public class BlackJackBoard {
     private void updateGameResult(Participant winner, Participant loser) {
         winner.applyGameRecord(GameResult.WIN);
         loser.applyGameRecord(GameResult.LOSE);
-    }
-
-    public void calculateDealerProfit() {
-        Dealer dealer = (Dealer) getDealer();
-        List<Participant> players = getPlayers();
-
-        int totalPlayersProfit = 0;
-        for (Participant player : players) {
-            totalPlayersProfit += player.getProfit();
-        }
-
-        dealer.addEarnedMoney(totalPlayersProfit);
     }
 }
