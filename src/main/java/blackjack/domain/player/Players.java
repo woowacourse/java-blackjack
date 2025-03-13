@@ -17,7 +17,7 @@ public class Players {
         this.gamblers = gamblers;
     }
 
-    public void dealAddCardForDealer(final Cards cards) {
+    public void addCardForDealer(final Cards cards) {
         dealer.addCards(cards);
     }
 

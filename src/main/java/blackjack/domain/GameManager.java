@@ -34,7 +34,7 @@ public class GameManager {
     public boolean isDealerHitThenAddCard() {
         if (players.isDealerHit()) {
             Cards cards = cardPack.getDealByCount(1);
-            players.dealAddCardForDealer(cards);
+            players.addCardForDealer(cards);
             return true;
         }
         return false;
