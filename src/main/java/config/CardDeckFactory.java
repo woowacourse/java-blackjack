@@ -1,7 +1,7 @@
 package config;
 
 import domain.card.Card;
-import domain.card.CardDeck;
+import domain.card.Deck;
 import domain.card.Number;
 import domain.card.Shape;
 import java.util.Arrays;
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class CardDeckFactory {
 
-    public CardDeck create() {
+    public Deck create() {
         List<Card> cards;
         cards = Arrays.stream(Shape.values())
                 .flatMap(shape -> Arrays.stream(Number.values())
@@ -19,6 +19,6 @@ public class CardDeckFactory {
                 .collect(Collectors.toList());
 
         Collections.shuffle(cards);
-        return new CardDeck(cards);
+        return new Deck(cards);
     }
 }
