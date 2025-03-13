@@ -3,7 +3,7 @@ package participant;
 import game.Card;
 import game.Cards;
 import game.Deck;
-import strategy.DeckShuffleStrategy;
+import strategy.DeckSettingStrategy;
 
 import java.util.Comparator;
 import java.util.List;
@@ -16,10 +16,10 @@ public class Dealer {
     private final Cards cards;
     private final Deck deck;
 
-    public Dealer(Cards cards) {
+    public Dealer(Cards cards, DeckSettingStrategy strategy) {
         validateInitialCardsSize(cards);
         this.cards = cards;
-        this.deck = new Deck(new DeckShuffleStrategy());
+        this.deck = new Deck(strategy);
     }
 
     public Card openOneCard() {
@@ -38,6 +38,10 @@ public class Dealer {
 
     public boolean addOneCard(Card card) {
         return cards.addOneCard(card);
+    }
+
+    public Card drawCard() {
+        return deck.drawOneCard();
     }
 
     public int sumCardNumbers() {
