@@ -3,6 +3,7 @@ package blackjack.domain.player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
+import blackjack.domain.card.Cards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,12 +17,46 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
+@DisplayName("소지품 테스트")
 class HandTest {
+
+    private static final Card ACE = new Card(CardNumber.ACE, CardShape.CLOVER);
+    private static final Card FIVE = new Card(CardNumber.FIVE, CardShape.CLOVER);
+    private static final Card TEN = new Card(CardNumber.TEN, CardShape.CLOVER);
 
     @Test
     @DisplayName("배팅 금액으로 객체를 생성한다")
-    void 배팅_금액으로_객체를_생성한다() {
-        assertThatNoException().isThrownBy(() -> new Hand(5_000));
+    void createObjectWithBetAmount() {
+        assertThatNoException()
+                .isThrownBy(() -> new Hand(5_000));
+    }
+
+    @Test
+    @DisplayName("카드를 추가한다")
+    void addCard() {
+        Hand hand = new Hand(0);
+
+        List<Card> cards = List.of(ACE);
+        Cards newCards = new Cards(cards);
+        hand.addCards(newCards);
+
+        List<Card> result = hand.getCards().getCards();
+
+        assertThat(result).containsExactlyElementsOf(cards);
+    }
+
+    @Test
+    @DisplayName("카드 점수를 계산해 반환한다")
+    void calculateAndReturnCardScore() {
+        Hand hand = new Hand(0);
+
+        Cards newCards = new Cards(List.of(ACE, TEN));
+
+        hand.addCards(newCards);
+
+        int result = hand.calculateScore();
+
+        assertThat(result).isEqualTo(21);
     }
 
     @ParameterizedTest
@@ -33,7 +68,7 @@ class HandTest {
             "10_000, 2.5, 25_000",
     })
     @DisplayName("배수의 따라 계산해 반환한다")
-    void 배수의_따라_계산해_반환한다(int batAmount, double multiple, int excepted) {
+    void calculateAndReturnBasedOnMultiple(int batAmount, double multiple, int excepted) {
         Hand hand = new Hand(batAmount);
 
         int result = hand.calculateWinningAmount(multiple);
@@ -43,8 +78,8 @@ class HandTest {
 
     @ParameterizedTest
     @MethodSource("blackJackHandTestCases")
-    @DisplayName("블랙잭인 경우 TRUE를 반환한다")
-    void 블랙잭_여부를_반환한다(List<Card> cards, boolean excepted) {
+    @DisplayName("블랙잭을 판단해 반환한다")
+    void returnIfBlackJack(Cards cards, boolean excepted) {
         Hand hand = new Hand(0);
         hand.addCards(cards);
 
@@ -54,15 +89,11 @@ class HandTest {
     }
 
     private static Stream<Arguments> blackJackHandTestCases() {
-        Card ace = new Card(CardNumber.ACE, CardShape.CLOVER);
-        Card five = new Card(CardNumber.FIVE, CardShape.CLOVER);
-        Card ten = new Card(CardNumber.TEN, CardShape.CLOVER);
-
         return Stream.of(
-                Arguments.of(List.of(ace), false),
-                Arguments.of(List.of(ace, five), false),
-                Arguments.of(List.of(ace, five, five), false),
-                Arguments.of(List.of(ace, ten), true)
+                Arguments.of(new Cards(List.of(ACE)), false),
+                Arguments.of(new Cards(List.of(ACE, FIVE)), false),
+                Arguments.of(new Cards(List.of(ACE, FIVE, FIVE)), false),
+                Arguments.of(new Cards(List.of(ACE, TEN)), true)
         );
     }
 }
