@@ -65,6 +65,10 @@ public class Dealer extends Participant {
         return GameResult.DRAW;
     }
 
+    public Map<Player, Money> getPlayersRevenue(Players players) {
+        return null;
+    }
+
     public Map<Player, GameResult> getGameResult(Players players) {
         return players.getPlayers().stream()
                 .collect(Collectors.toMap(player -> player, this::judgeResult));
