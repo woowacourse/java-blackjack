@@ -9,12 +9,12 @@ import org.junit.jupiter.api.Test;
 class GameResultsTest {
 
     Map<Player, GameResultStatus> gameResults = Map.of(
-            new Player("mimi", Cards.createEmpty()), GameResultStatus.WIN,
-            new Player("wade", Cards.createEmpty()), GameResultStatus.DRAW,
-            new Player("pobi", Cards.createEmpty()), GameResultStatus.DRAW,
-            new Player("hiro", Cards.createEmpty()), GameResultStatus.LOSE,
-            new Player("hipo", Cards.createEmpty()), GameResultStatus.LOSE,
-            new Player("july", Cards.createEmpty()), GameResultStatus.LOSE
+            new Player("mimi", Hand.createEmpty()), GameResultStatus.WIN,
+            new Player("wade", Hand.createEmpty()), GameResultStatus.DRAW,
+            new Player("pobi", Hand.createEmpty()), GameResultStatus.DRAW,
+            new Player("hiro", Hand.createEmpty()), GameResultStatus.LOSE,
+            new Player("hipo", Hand.createEmpty()), GameResultStatus.LOSE,
+            new Player("july", Hand.createEmpty()), GameResultStatus.LOSE
             );
 
     @DisplayName("승의 개수를 정상적으로 반환한다")

@@ -7,18 +7,18 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class Cards {
+public class Hand {
 
     private static final int VALID_MAX_SUM_LIMIT = 21;
 
     private final List<Card> cards;
 
-    public Cards(List<Card> cards) {
+    public Hand(List<Card> cards) {
         this.cards = cards;
     }
 
-    public static Cards createEmpty() {
-        return new Cards(new ArrayList<>());
+    public static Hand createEmpty() {
+        return new Hand(new ArrayList<>());
     }
 
     public List<Card> getCards() {
@@ -41,12 +41,12 @@ public class Cards {
         cards.add(card);
     }
 
-    public void addAll(Cards receivedCards) {
-        cards.addAll(receivedCards.getCards());
+    public void addAll(Hand receivedHand) {
+        cards.addAll(receivedHand.getCards());
     }
 
-    public boolean isLargerThan(Cards dealerCards) {
-        return this.calculateSum() > dealerCards.calculateSum();
+    public boolean isLargerThan(Hand dealerHand) {
+        return this.calculateSum() > dealerHand.calculateSum();
     }
 
     public int calculateSum() {
@@ -81,7 +81,7 @@ public class Cards {
         if (object == null || getClass() != object.getClass()) {
             return false;
         }
-        Cards other = (Cards) object;
+        Hand other = (Hand) object;
         return Objects.equals(cards, other.cards);
     }
 

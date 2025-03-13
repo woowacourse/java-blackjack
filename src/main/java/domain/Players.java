@@ -15,7 +15,7 @@ public class Players {
 
     public static Players createByNames(List<String> playerNames) {
         List<Player> players = playerNames.stream()
-                .map(playerName -> new Player(playerName, Cards.createEmpty()))
+                .map(playerName -> new Player(playerName, Hand.createEmpty()))
                 .toList();
         return new Players(players);
     }

@@ -12,16 +12,16 @@ class PlayerTest {
     @Test
     void test2() {
         //given
-        Cards playerCards = new Cards(
+        Hand playerHand = new Hand(
                 List.of(
                         new Card(CardNumberType.JACK, CardType.CLOVER),
                         new Card(CardNumberType.JACK, CardType.DIAMOND)
                 )
         );
 
-        Player player = new Player("이름", playerCards);
+        Player player = new Player("이름", playerHand);
 
-        Cards dealerCards = new Cards(
+        Hand dealerHand = new Hand(
                 List.of(
                         new Card(CardNumberType.JACK, CardType.CLOVER),
                         new Card(CardNumberType.JACK, CardType.DIAMOND),
@@ -30,7 +30,7 @@ class PlayerTest {
         );
 
         //when
-        GameResultStatus gameResultStatus = player.calculateResultStatus(dealerCards);
+        GameResultStatus gameResultStatus = player.calculateResultStatus(dealerHand);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.WIN);
@@ -40,7 +40,7 @@ class PlayerTest {
     @Test
     void test3() {
         //given
-        Cards playerCards = new Cards(
+        Hand playerHand = new Hand(
                 List.of(
                         new Card(CardNumberType.JACK, CardType.CLOVER),
                         new Card(CardNumberType.JACK, CardType.DIAMOND),
@@ -49,9 +49,9 @@ class PlayerTest {
                 )
         );
 
-        Player player = new Player("이름", playerCards);
+        Player player = new Player("이름", playerHand);
 
-        Cards dealerCards = new Cards(
+        Hand dealerHand = new Hand(
                 List.of(
                         new Card(CardNumberType.JACK, CardType.CLOVER),
                         new Card(CardNumberType.JACK, CardType.DIAMOND)
@@ -59,7 +59,7 @@ class PlayerTest {
         );
 
         //when
-        GameResultStatus gameResultStatus = player.calculateResultStatus(dealerCards);
+        GameResultStatus gameResultStatus = player.calculateResultStatus(dealerHand);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.LOSE);
@@ -69,16 +69,16 @@ class PlayerTest {
     @Test
     void test4() {
         //given
-        Cards playerCards = new Cards(
+        Hand playerHand = new Hand(
                 List.of(
                         new Card(CardNumberType.JACK, CardType.CLOVER),
                         new Card(CardNumberType.ACE, CardType.DIAMOND)
                 )
         );
 
-        Player player = new Player("이름", playerCards);
+        Player player = new Player("이름", playerHand);
 
-        Cards dealerCards = new Cards(
+        Hand dealerHand = new Hand(
                 List.of(
                         new Card(CardNumberType.JACK, CardType.CLOVER),
                         new Card(CardNumberType.JACK, CardType.DIAMOND)
@@ -86,7 +86,7 @@ class PlayerTest {
         );
 
         //when
-        GameResultStatus gameResultStatus = player.calculateResultStatus(dealerCards);
+        GameResultStatus gameResultStatus = player.calculateResultStatus(dealerHand);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.WIN);
@@ -96,16 +96,16 @@ class PlayerTest {
     @Test
     void test5() {
         //given
-        Cards playerCards = new Cards(
+        Hand playerHand = new Hand(
                 List.of(
                         new Card(CardNumberType.JACK, CardType.CLOVER),
                         new Card(CardNumberType.JACK, CardType.DIAMOND)
                 )
         );
 
-        Player player = new Player("이름", playerCards);
+        Player player = new Player("이름", playerHand);
 
-        Cards dealerCards = new Cards(
+        Hand dealerHand = new Hand(
                 List.of(
                         new Card(CardNumberType.JACK, CardType.CLOVER),
                         new Card(CardNumberType.ACE, CardType.DIAMOND)
@@ -113,7 +113,7 @@ class PlayerTest {
         );
 
         //when
-        GameResultStatus gameResultStatus = player.calculateResultStatus(dealerCards);
+        GameResultStatus gameResultStatus = player.calculateResultStatus(dealerHand);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.LOSE);
@@ -123,16 +123,16 @@ class PlayerTest {
     @Test
     void test6() {
         //given
-        Cards playerCards = new Cards(
+        Hand playerHand = new Hand(
                 List.of(
                         new Card(CardNumberType.JACK, CardType.CLOVER),
                         new Card(CardNumberType.JACK, CardType.DIAMOND)
                 )
         );
 
-        Player player = new Player("이름", playerCards);
+        Player player = new Player("이름", playerHand);
 
-        Cards dealerCards = new Cards(
+        Hand dealerHand = new Hand(
                 List.of(
                         new Card(CardNumberType.JACK, CardType.CLOVER),
                         new Card(CardNumberType.JACK, CardType.DIAMOND)
@@ -140,7 +140,7 @@ class PlayerTest {
         );
 
         //when
-        GameResultStatus gameResultStatus = player.calculateResultStatus(dealerCards);
+        GameResultStatus gameResultStatus = player.calculateResultStatus(dealerHand);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.DRAW);

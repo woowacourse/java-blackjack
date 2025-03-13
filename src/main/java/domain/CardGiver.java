@@ -12,8 +12,8 @@ public class CardGiver {
         this.deck = deck;
     }
 
-    public Cards giveDefault() {
-        return new Cards(deck.drawCards(DEFAULT_CARD_GIVE_COUNT));
+    public Hand giveDefault() {
+        return new Hand(deck.drawCards(DEFAULT_CARD_GIVE_COUNT));
     }
 
     public Card giveOne() {

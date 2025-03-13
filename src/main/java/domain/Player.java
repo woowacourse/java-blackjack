@@ -10,8 +10,8 @@ public class Player extends Participant {
 
     private final String name;
 
-    public Player(String name, Cards cards) {
-        super(cards);
+    public Player(String name, Hand hand) {
+        super(hand);
         this.name = name;
     }
 
@@ -20,28 +20,28 @@ public class Player extends Participant {
     }
 
     public boolean hasBustCards() {
-        return cards.isBust();
+        return hand.isBust();
     }
 
     public boolean hasNotBustCards() {
-        return !cards.isBust();
+        return !hand.isBust();
     }
 
-    public GameResultStatus calculateResultStatus(Cards dealerCards) {
-        if (cards.isBust()) {
+    public GameResultStatus calculateResultStatus(Hand dealerHand) {
+        if (hand.isBust()) {
             return LOSE;
         }
-        if (dealerCards.isBust()) {
+        if (dealerHand.isBust()) {
             return WIN;
         }
-        return compareCardsSum(cards, dealerCards);
+        return compareCardsSum(hand, dealerHand);
     }
 
-    private GameResultStatus compareCardsSum(Cards playerCards, Cards dealerCards) {
-        if (playerCards.isLargerThan(dealerCards)) {
+    private GameResultStatus compareCardsSum(Hand playerHand, Hand dealerHand) {
+        if (playerHand.isLargerThan(dealerHand)) {
             return WIN;
         }
-        if (dealerCards.isLargerThan(playerCards)) {
+        if (dealerHand.isLargerThan(playerHand)) {
             return LOSE;
         }
         return DRAW;

@@ -13,9 +13,9 @@ public class DealerTest {
         //given
         List<Card> testCards = List.of(new Card(CardNumberType.SIX, CardType.CLOVER),
                 new Card(CardNumberType.JACK, CardType.DIAMOND));
-        Cards cards = new Cards(testCards);
+        Hand hand = new Hand(testCards);
         Dealer dealer = Dealer.createEmpty();
-        dealer.addCards(cards);
+        dealer.addCards(hand);
 
         //when
         boolean isPossibleDraw = dealer.isPossibleDraw();
@@ -31,9 +31,9 @@ public class DealerTest {
         List<Card> testCards = List.of(new Card(CardNumberType.SIX, CardType.CLOVER),
                 new Card(CardNumberType.ACE, CardType.DIAMOND),
                 new Card(CardNumberType.JACK, CardType.DIAMOND));
-        Cards cards = new Cards(testCards);
+        Hand hand = new Hand(testCards);
         Dealer dealer = Dealer.createEmpty();
-        dealer.addCards(cards);
+        dealer.addCards(hand);
 
         //when
         boolean isPossibleDraw = dealer.isPossibleDraw();
@@ -50,9 +50,9 @@ public class DealerTest {
                 new Card(CardNumberType.QUEEN, CardType.HEART),
                 new Card(CardNumberType.SIX, CardType.DIAMOND)
         );
-        Cards cards = new Cards(testCards);
+        Hand hand = new Hand(testCards);
         Dealer dealer = Dealer.createEmpty();
-        dealer.addCards(cards);
+        dealer.addCards(hand);
 
         //when
         boolean isPossibleDraw = dealer.isPossibleDraw();
@@ -69,9 +69,9 @@ public class DealerTest {
                 new Card(CardNumberType.QUEEN, CardType.HEART),
                 new Card(CardNumberType.ACE, CardType.DIAMOND)
         );
-        Cards cards = new Cards(testCards);
+        Hand hand = new Hand(testCards);
         Dealer dealer = Dealer.createEmpty();
-        dealer.addCards(cards);
+        dealer.addCards(hand);
 
         //when
         boolean isPossibleDraw = dealer.isPossibleDraw();
@@ -88,9 +88,9 @@ public class DealerTest {
                 new Card(CardNumberType.ACE, CardType.HEART),
                 new Card(CardNumberType.ACE, CardType.DIAMOND)
         );
-        Cards cards = new Cards(testCards);
+        Hand hand = new Hand(testCards);
         Dealer dealer = Dealer.createEmpty();
-        dealer.addCards(cards);
+        dealer.addCards(hand);
 
         //when
         boolean isPossibleDraw = dealer.isPossibleDraw();

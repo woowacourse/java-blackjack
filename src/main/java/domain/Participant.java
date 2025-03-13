@@ -2,25 +2,25 @@ package domain;
 
 public abstract class Participant {
 
-    protected final Cards cards;
+    protected final Hand hand;
 
-    protected Participant(Cards cards) {
-        this.cards = cards;
+    protected Participant(Hand hand) {
+        this.hand = hand;
     }
 
-    public Cards getCards() {
-        return cards;
+    public Hand getCards() {
+        return hand;
     }
 
-    public void addCards(Cards receivedCards) {
-        cards.addAll(receivedCards);
+    public void addCards(Hand receivedHand) {
+        hand.addAll(receivedHand);
     }
 
     public void addCard(Card receivedCard) {
-        cards.add(receivedCard);
+        hand.add(receivedCard);
     }
 
     public int calculateCardsSum() {
-        return cards.calculateSum();
+        return hand.calculateSum();
     }
 }

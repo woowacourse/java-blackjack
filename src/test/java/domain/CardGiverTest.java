@@ -20,10 +20,10 @@ public class CardGiverTest {
         CardGiver cardGiver = new CardGiver(new Deck(new ArrayList<>(fixedCards)));
 
         //when
-        Cards cards = cardGiver.giveDefault();
+        Hand hand = cardGiver.giveDefault();
 
         //then
-        assertThat(cards.getCards()).containsExactly(fixedCards.get(0), fixedCards.get(1));
+        assertThat(hand.getCards()).containsExactly(fixedCards.get(0), fixedCards.get(1));
     }
 
     @DisplayName("배분할 카드가 2장 미만일 시 예외가 발생한다")
@@ -60,7 +60,7 @@ public class CardGiverTest {
         CardGiver cardGiver = new CardGiver(new Deck(new ArrayList<>(fixedCards)));
 
         Dealer dealer = Dealer.createEmpty();
-        Player player = new Player("mimi", Cards.createEmpty());
+        Player player = new Player("mimi", Hand.createEmpty());
 
         List<Participant> participants = List.of(dealer, player);
         //when
@@ -68,11 +68,11 @@ public class CardGiverTest {
 
         //then
         SoftAssertions.assertSoftly(softly ->{
-            softly.assertThat(dealer.cards).isEqualTo(new Cards(List.of(
+            softly.assertThat(dealer.hand).isEqualTo(new Hand(List.of(
                     fixedCards.get(0),
                     fixedCards.get(1)
             )));
-            softly.assertThat(player.cards).isEqualTo(new Cards(List.of(
+            softly.assertThat(player.hand).isEqualTo(new Hand(List.of(
                     fixedCards.get(2),
                     fixedCards.get(3)
             )));

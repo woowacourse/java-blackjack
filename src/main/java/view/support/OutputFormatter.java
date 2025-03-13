@@ -9,7 +9,7 @@ import static domain.GameResultStatus.WIN;
 import domain.Card;
 import domain.CardNumberType;
 import domain.CardType;
-import domain.Cards;
+import domain.Hand;
 import domain.GameResultStatus;
 import java.util.HashMap;
 import java.util.List;
@@ -55,8 +55,8 @@ public class OutputFormatter {
         return String.join(NAME_SEPARATOR, names).trim();
     }
 
-    public String formatCards(Cards cards) {
-        List<String> formattedCards = cards.getCards().stream()
+    public String formatCards(Hand hand) {
+        List<String> formattedCards = hand.getCards().stream()
                 .map(this::formatCard)
                 .toList();
         return String.join(CARD_SEPARATOR, formattedCards);
