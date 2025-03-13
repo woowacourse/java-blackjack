@@ -54,7 +54,7 @@ public class BlackjackApplication {
     }
 
     private void decideAdditionalCardForDealer(Deck deck, Dealer dealer) {
-        if (!dealer.shouldDrawCard()) {
+        if (dealer.shouldDrawCard()) {
             dealer.addCard(deck.draw());
             outputView.printDealerDraw();
             return;
