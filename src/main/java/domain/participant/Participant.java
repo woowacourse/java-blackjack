@@ -36,11 +36,11 @@ public abstract class Participant {
     }
 
     public boolean isBlackJack() {
-        return blackJackCards.decideBlackJackByTotalValue();
+        return blackJackCards.isBlackJack();
     }
 
     public boolean isBust(int value) {
-        return blackJackCards.decideBustByValue(value);
+        return blackJackCards.isBustBy(value);
     }
 
     public void addCard(Card card) {
@@ -54,7 +54,7 @@ public abstract class Participant {
     }
 
     public Card getFirstCard() {
-        return blackJackCards.findFirstCard();
+        return blackJackCards.getFirstCard();
     }
 
     public int getTotalValue() {

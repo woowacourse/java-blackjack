@@ -19,15 +19,15 @@ public class BlackJackCards {
         cards.add(card);
     }
 
-    public boolean decideBustByValue(int value) {
+    public boolean isBustBy(int value) {
         return value > BURST_UPPER_BOUND;
     }
 
-    public boolean decideBlackJackByTotalValue() {
+    public boolean isBlackJack() {
         return getTotalValue() == BURST_UPPER_BOUND && cards.size() == BLACK_JACK_SIZE;
     }
 
-    public Card findFirstCard() {
+    public Card getFirstCard() {
         return cards.getFirst();
     }
 
@@ -48,7 +48,7 @@ public class BlackJackCards {
         int candidateResult = baseValue;
         for (int oneValueCount = 0; oneValueCount <= aceCount; ++oneValueCount) {
             candidateResult = baseValue + (oneValueCount * 1) + ((aceCount - oneValueCount) * 11);
-            if (decideBustByValue(candidateResult)) {
+            if (isBustBy(candidateResult)) {
                 continue;
             }
             return candidateResult;
