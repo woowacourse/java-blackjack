@@ -6,10 +6,13 @@ import paticipant.Player;
 import value.Money;
 
 public class WagerMoney {
+	private final Map<Player, Money> money;
+
 	public WagerMoney(final Map<Player, Money> money) {
+		this.money = money;
 	}
 
 	public Map<Player, Money> getMoney() {
-		return null;
+		return money;
 	}
 }
