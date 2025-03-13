@@ -6,6 +6,8 @@ import java.util.Objects;
 
 public class Dealer {
 
+    private static final int MIN_SUM_OF_CARDS = 16;
+
     private final Cards cards;
 
     public Dealer(Cards cards) {
@@ -17,7 +19,7 @@ public class Dealer {
     }
 
     public void drawAdditionalCard(Deck deck) {
-        while (calculateMaxScore() <= 16) {
+        while (calculateMaxScore() <= MIN_SUM_OF_CARDS) {
             cards.take(deck.draw());
         }
     }
