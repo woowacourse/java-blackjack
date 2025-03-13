@@ -24,7 +24,7 @@ public record Score(int score) {
     private static int addHighAceToSum(List<Card> cards, int sum) {
         boolean hasAce = cards.stream()
                 .anyMatch(card -> card.cardNumberType() == ACE);
-        if(hasAce && sum <= ACE_VALUE_ADDING_AVAILABLE_SUM) {
+        if (hasAce && sum <= ACE_VALUE_ADDING_AVAILABLE_SUM) {
             sum += ACE_ADDING_VALUE;
         }
         return sum;

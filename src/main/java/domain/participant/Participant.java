@@ -32,4 +32,8 @@ public abstract class Participant {
     public boolean isBust() {
         return getScore().isBust();
     }
+
+    public void initializeHand(Hand hand) {
+        this.addCards(hand);
+    }
 }

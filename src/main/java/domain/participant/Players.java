@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.card.Deck;
 import domain.result.GameResult;
 import domain.result.GameResultStatus;
 import domain.card.Hand;
@@ -46,5 +47,11 @@ public class Players {
                         Player::getName,
                         Player::openInitialHand
                 ));
+    }
+
+    public void initializeHand(Deck deck) {
+        for (Player player : players) {
+            player.initializeHand(deck.drawInitialHand());
+        }
     }
 }

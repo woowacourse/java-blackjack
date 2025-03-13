@@ -2,32 +2,25 @@ package controller;
 
 import static view.AnswerType.*;
 
+import domain.card.Deck;
 import domain.participant.Players;
-import domain.generator.CardGiver;
 import domain.participant.Dealer;
 import domain.result.GameResult;
-import domain.participant.Participant;
 import domain.participant.Player;
-import java.util.ArrayList;
-import java.util.List;
 import view.AnswerType;
 import view.InputView;
 import view.OutputView;
 
 public class BlackjackApplication {
-
     private final InputView inputView;
     private final OutputView outputView;
-    private final CardGiver cardGiver;
 
     public BlackjackApplication(
             InputView inputView,
-            OutputView outputView,
-            CardGiver cardGiver
+            OutputView outputView
     ) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.cardGiver = cardGiver;
     }
 
     public void execute() {
@@ -35,36 +28,36 @@ public class BlackjackApplication {
 
         final Players players = initializePlayers();
 
-        initializeParticipantCards(dealer, players);
+        final Deck deck = new Deck();
 
-        askForAdditionalCard(players);
+        initializeParticipantCards(deck, dealer, players);
 
-        decideAdditionalCardForDealer(dealer);
+        askForAdditionalCard(deck, players);
+
+        decideAdditionalCardForDealer(deck, dealer);
 
         calculateResult(dealer, players);
     }
 
     private Players initializePlayers() {
-        List<String> playerNames = inputView.requestPlayerNames();
-        return Players.createByNames(playerNames);
+        return Players.createByNames(inputView.requestPlayerNames());
     }
 
-    private void initializeParticipantCards(Dealer dealer, Players players) {
-        List<Participant> participants = new ArrayList<>(players.getPlayers());
-        participants.add(dealer);
-        cardGiver.giveDefaultTo(participants);
+    private void initializeParticipantCards(Deck deck, Dealer dealer, Players players) {
+        dealer.initializeHand(deck.drawInitialHand());
+        players.initializeHand(deck);
 
         outputView.printInitialStatus(dealer.openInitialHand(), players.openNameAndInitialHand());
     }
 
-    private void askForAdditionalCard(Players players) {
+    private void askForAdditionalCard(Deck deck, Players players) {
         players.getPlayers()
-                .forEach(this::processPlayerCardRequest);
+                .forEach(player -> processPlayerCardRequest(deck, player));
     }
 
-    private void decideAdditionalCardForDealer(Dealer dealer) {
+    private void decideAdditionalCardForDealer(Deck deck, Dealer dealer) {
         if (!dealer.shouldDrawCard()) {
-            dealer.addCard(cardGiver.giveOne());
+            dealer.addCard(deck.draw());
             outputView.printDealerDraw();
             return;
         }
@@ -77,10 +70,10 @@ public class BlackjackApplication {
         outputView.printGameResults(gameResult);
     }
 
-    private void processPlayerCardRequest(Player player) {
+    private void processPlayerCardRequest(Deck deck, Player player) {
         AnswerType answerType = inputView.requestAdditionalCard(player);
         while (isPossibleRequest(player, answerType)) {
-            cardGiver.giveAdditionalCard(player);
+            player.addCard(deck.draw());
             outputView.printCurrentCard(player);
             answerType = inputView.requestAdditionalCard(player);
         }

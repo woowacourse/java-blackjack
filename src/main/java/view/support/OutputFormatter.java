@@ -30,7 +30,7 @@ public class OutputFormatter {
 
     private static final Map<CardNumberType, String> CARD_NUMBER_TYPE_FORMATTER = new HashMap<>();
 
-     static {
+    static {
         CARD_NUMBER_TYPE_FORMATTER.put(ACE, "A");
         CARD_NUMBER_TYPE_FORMATTER.put(TWO, "2");
         CARD_NUMBER_TYPE_FORMATTER.put(THREE, "3");
