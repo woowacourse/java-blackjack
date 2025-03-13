@@ -11,6 +11,7 @@ import java.util.List;
 public class Dealer extends Gamer {
 
     private static final String NICKNAME = "딜러";
+    private static final int HIT_THRESHOLD = 16;
 
     private final CardMachine cardMachine;
 
@@ -29,15 +30,15 @@ public class Dealer extends Gamer {
         return new ArrayList<>(List.of(firstCard, secondCard));
     }
 
+    public Card spreadOneCard() {
+        return cardMachine.drawOneCard();
+    }
+
     private List<Card> organizeDeck() {
         return Arrays.stream(Shape.values())
                 .flatMap(shape -> Arrays.stream(Denomination.values())
                         .map(denomination -> new Card(shape, denomination)))
                 .toList();
-    }
-
-    private Card spreadOneCard() {
-        return cardMachine.drawOneCard();
     }
 
     @Override
@@ -48,5 +49,9 @@ public class Dealer extends Gamer {
     @Override
     public String getNickName() {
         return NICKNAME;
+    }
+
+    public boolean isHit() {
+        return hand.sumCards() <= HIT_THRESHOLD;
     }
 }

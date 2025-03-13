@@ -22,7 +22,8 @@ public class Application {
         blackjack.deal();
         blackjack.showInitialCards(resultView);
         if (!blackjack.isPush()) {
-            // 플레이어와 딜러 카드 나눠주기
+            blackjack.hit(inputView, resultView);
         }
+
     }
 }

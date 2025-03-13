@@ -73,4 +73,33 @@ public class Blackjack {
         return players.getPlayers().stream()
                 .anyMatch(player -> player.sumCards() == BLACKJACK_SCORE);
     }
+
+    public void hit(final InputView inputView, final ResultView resultView) {
+        for (Player player : players.getPlayers()) {
+            while (!player.isBust(BLACKJACK_SCORE)) {
+                final boolean isHit = readIfHit(inputView, player);
+                if (!isHit) {
+                    break;
+                }
+                final Card card = dealer.spreadOneCard();
+                player.receiveCard(card);
+                resultView.printCards(player, player.showAllCards());
+            }
+        }
+        while (dealer.isHit()) {
+            final Card card = dealer.spreadOneCard();
+            dealer.receiveCard(card);
+        }
+    }
+
+    private boolean readIfHit(final InputView inputView, final Player player) {
+        try {
+            final String answer = inputView.readIfHit(player);
+            final UserAnswer userAnswer = UserAnswer.of(answer);
+            return userAnswer.isYes();
+        } catch (IllegalArgumentException e) {
+            inputView.printErrorMessage(e);
+        }
+        return readIfHit(inputView, player);
+    }
 }

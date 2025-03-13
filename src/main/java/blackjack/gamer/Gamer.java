@@ -23,12 +23,16 @@ public abstract class Gamer {
         hand.addCard(card);
     }
 
-    private List<Card> showAllCards() {
+    public List<Card> showAllCards() {
         return hand.openAllCards();
     }
 
     public int sumCards() {
         return hand.sumCards();
+    }
+
+    public boolean isBust(final int threshold) {
+        return sumCards() > threshold;
     }
 
     public abstract List<Card> showInitialCards();
