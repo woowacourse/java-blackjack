@@ -1,11 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.money;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.money.BlackjackBettingMoney;
-
-import blackjack.domain.money.Money;
+import blackjack.domain.WinningStatus;
 
 import java.util.stream.Stream;
 

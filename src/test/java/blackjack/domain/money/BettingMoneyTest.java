@@ -1,7 +1,5 @@
-package blackjack.domain;
+package blackjack.domain.money;
 
-import blackjack.domain.money.BettingMoney;
-import blackjack.domain.money.Money;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

@@ -1,11 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.player;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import blackjack.domain.player.Player;
-import blackjack.domain.player.Players;
 
 import java.util.List;
 import java.util.stream.Stream;
