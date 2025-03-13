@@ -2,6 +2,7 @@ package domain.participant;
 
 import static error.ErrorMessage.NOT_EXIST_DEALER;
 
+import domain.card.CardDeck;
 import error.exception.InvalidParticipantSizeException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -18,6 +19,13 @@ public class Participants {
     public Participants(List<Participant> participants) {
         validateParticipantSize(participants);
         this.participants = participants;
+    }
+
+    public void receiveCardProcessOfParticipants(CardDeck cardDeck) {
+        for (Participant participant : participants) {
+            participant.addCard(cardDeck.getAndRemoveFrontCard());
+            participant.addCard(cardDeck.getAndRemoveFrontCard());
+        }
     }
 
     public List<Participant> getParticipants() {

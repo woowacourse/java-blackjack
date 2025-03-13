@@ -22,7 +22,7 @@ public class BlackJackGame {
         List<Integer> bettingAmount) {
         this.cardDeck = createCardDeck(cardBundle);
         this.participants = createParticipants(userNames, bettingAmount);
-        receiveCardProcessOfParticipants();
+        participants.receiveCardProcessOfParticipants(cardDeck);
     }
 
     public static BlackJackGame createBlackJackGameAndReceiveInitCardsOf(CardBundle cardBundle,
@@ -30,12 +30,6 @@ public class BlackJackGame {
         return new BlackJackGame(cardBundle, userNames, bettingAmount);
     }
 
-    private void receiveCardProcessOfParticipants() {
-        for (Participant participant : participants.getParticipants()) {
-            participant.addCard(cardDeck.getAndRemoveFrontCard());
-            participant.addCard(cardDeck.getAndRemoveFrontCard());
-        }
-    }
 
     public int receiveExtraCardProcessOfDealer() {
         return participants.getParticipants().stream()
