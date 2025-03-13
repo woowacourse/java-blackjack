@@ -10,6 +10,9 @@ public class WagerResultCalculator {
 		if (player.isBust() && player.calculateDuelResult() == DuelResult.LOSE) {
 			return wager.multiply(WAGER_LOSE);
 		}
+		if (player.calculateDuelResult() == DuelResult.DRAW) {
+			return wager;
+		}
 		return null;
 	}
 }
