@@ -38,6 +38,17 @@ public class PlayerBettingBlackjackCardHandTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("베팅 금액은 1000원 이상, 100000원 이하여야 합니다.");
     }
+    
+    @Test
+    void 베팅_금액이_1000원_단위가_아니면_예외가_발생한다() {
+        // given
+        final int bettingAmount = 1500;
+        
+        // expected
+        Assertions.assertThatThrownBy(() -> PlayerBettingBlackjackCardHand.createWithInitialCards(DEFAULT_PLAYER, bettingAmount, List::of))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("베팅 금액은 1000원 단위여야 합니다.");
+    }
 
     @ParameterizedTest
     @MethodSource("provideLess16Cards")
