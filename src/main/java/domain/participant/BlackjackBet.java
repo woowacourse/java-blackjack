@@ -8,7 +8,7 @@ public class BlackjackBet {
 
     private static final double BLACKJACK_WIN_MULTIPLE = 1.5;
     private static final double WINNING_MULTIPLE = 2.0;
-    private static final String INVALID_BET_MOENY = "베팅 금액은 1원부터입니다.";
+    private static final String INVALID_BET_MONEY = "베팅 금액은 1원부터입니다.";
 
     private final int money;
 
@@ -17,13 +17,9 @@ public class BlackjackBet {
         this.money = money;
     }
 
-    public BlackjackBet() {
-        this.money = 0;
-    }
-
     private void validateMoney(int money) {
         if (money < 0) {
-            throw new BlackJackException(INVALID_BET_MOENY);
+            throw new BlackJackException(INVALID_BET_MONEY);
         }
     }
 

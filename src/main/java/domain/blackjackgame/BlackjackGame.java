@@ -112,5 +112,9 @@ public class BlackjackGame {
     public List<TrumpCard> dealerCards() {
         return blackjackParticipantsManager.dealerCards();
     }
+
+    public List<BlackjackParticipant> players() {
+        return blackjackParticipantsManager.players();
+    }
 }
 

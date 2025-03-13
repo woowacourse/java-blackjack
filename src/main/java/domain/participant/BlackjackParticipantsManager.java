@@ -107,4 +107,8 @@ public class BlackjackParticipantsManager {
             addDealerCard(trumpCard);
         }
     }
+
+    public List<BlackjackParticipant> players() {
+        return Collections.unmodifiableList(players);
+    }
 }
