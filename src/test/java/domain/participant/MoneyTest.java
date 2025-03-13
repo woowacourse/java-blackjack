@@ -49,4 +49,15 @@ class MoneyTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("입력은 0보다 커야 합니다.");
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "10000", "99999", "100001", "100010"
+    })
+    void 입력이_10만_단위가_아니면_예외를_발생시킨다(String rawValue) {
+        // when & then
+        assertThatThrownBy(() -> new Money(rawValue))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("입력은 10만원 단위입니다.");
+    }
 }
