@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class PlayerNameTest {
+class PlayerNameTest {
 
     @Nested
     @DisplayName("플레이어 이름 검증 테스트")

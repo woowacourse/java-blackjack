@@ -14,8 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-@Nested
-public class PlayerTest {
+class PlayerTest {
 
     @Nested
     @DisplayName("플레이어 생성 테스트")

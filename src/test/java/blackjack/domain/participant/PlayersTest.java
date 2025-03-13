@@ -12,8 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@Nested
-public class PlayersTest {
+class PlayersTest {
 
     @Nested
     @DisplayName("일급 컬렉션 생성 테스트")
