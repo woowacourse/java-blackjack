@@ -196,7 +196,7 @@ public class HandTest {
         Hand hand = Hand.of(inputCard);
 
         // when
-        final boolean actual = hand.isBlackJack();
+        final boolean actual = hand.isTwentyOne();
 
         //then
         assertThat(actual).isEqualTo(expected);

@@ -52,7 +52,7 @@ public class Hand {
         return isBust(calculateTotalScore());
     }
 
-    public boolean isBlackJack() {
+    public boolean isTwentyOne() {
         return calculateFinalScore() == BLACKJACK_SCORE;
     }
 
