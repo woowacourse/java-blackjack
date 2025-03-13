@@ -53,6 +53,10 @@ public class Dealer {
         return GameResult.create(this, players);
     }
 
+//    public BettingResult createBettingResult(GameResult gameResult) {
+//        return BettingResult.create(gameResult);
+//    }
+
     public Cards getCards() {
         return cards;
     }

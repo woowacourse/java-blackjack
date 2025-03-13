@@ -43,6 +43,10 @@ public class GameResult {
         return dealerGameResults;
     }
 
+    public static int createBettingResults() {
+        return 0;
+    }
+
     public Map<Player, WinningResult> getPlayerGameResults() {
         return playerGameResults;
     }
