@@ -29,7 +29,7 @@ class GameResultTest {
     @ParameterizedTest
     @MethodSource("finalResultExpectedData")
     @DisplayName("최종 수익을 종합해 반환한다")
-    void 최종_수익을_종합해_반환한다(List<Card> dealerCard, List<Card> playerCard, int dealerExcepted, int playerExcepted) {
+    void 최종_수익을_종합해_반환한다(List<Card> dealerCard, List<Card> playerCard, double dealerExcepted, double playerExcepted) {
         Dealer dealer = new Dealer();
         dealer.addCards(dealerCard);
 
@@ -39,15 +39,15 @@ class GameResultTest {
         Map<Player, Integer> result = new GameResults(dealer, List.of(gambler)).getGameResults();
 
         assertAll(
-                () -> assertThat(result.get(dealer)).isEqualTo(dealerExcepted),
-                () -> assertThat(result.get(gambler)).isEqualTo(playerExcepted)
+                () -> assertThat(result.get(dealer)).isEqualTo((int) dealerExcepted),
+                () -> assertThat(result.get(gambler)).isEqualTo((int) playerExcepted)
         );
     }
 
     @ParameterizedTest
     @MethodSource("finalResultWithBlackJackExpectedData")
     @DisplayName("최종 수익을 블랙잭 상황을 고려해 반환한다")
-    void 참가자가_블랙잭인_경우_수익은_1_5배이다(List<Card> dealerCard, List<Card> playerCard, int dealerExcepted, int playerExcepted) {
+    void 참가자가_블랙잭인_경우_수익은_1_5배이다(List<Card> dealerCard, List<Card> playerCard, double dealerExcepted, double playerExcepted) {
         Dealer dealer = new Dealer();
         dealer.addCards(dealerCard);
 
@@ -59,8 +59,8 @@ class GameResultTest {
         Map<Player, Integer> result = gameResults.getGameResults();
 
         assertAll(
-                () -> assertThat(result.get(dealer)).isEqualTo(dealerExcepted),
-                () -> assertThat(result.get(gambler)).isEqualTo(playerExcepted)
+                () -> assertThat(result.get(dealer)).isEqualTo((int) dealerExcepted),
+                () -> assertThat(result.get(gambler)).isEqualTo((int) playerExcepted)
         );
     }
 
