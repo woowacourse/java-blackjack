@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.card.BlackjackScore;
 import blackjack.domain.card.WinningResult;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
@@ -43,6 +44,17 @@ public class GameResult {
                     dealerGameResults.getOrDefault(dealerWinningResult, 0) + 1);
         }));
         return dealerGameResults;
+    }
+
+    public static int getMultiplyRatio(BlackjackScore playerScore, BlackjackScore dealerScore) {
+        WinningResult winningResult = WinningResult.decide(playerScore, dealerScore);
+        if (winningResult.equals(WinningResult.WIN)) {
+            return 1;
+        }
+        if (winningResult.equals(WinningResult.LOSE)) {
+            return -1;
+        }
+        return 0;
     }
 
     public Map<Player, WinningResult> getPlayerGameResults() {

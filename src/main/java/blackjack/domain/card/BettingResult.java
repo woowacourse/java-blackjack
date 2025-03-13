@@ -1,15 +1,34 @@
 package blackjack.domain.card;
 
-public class BettingResult {
+import static blackjack.domain.GameResult.getMultiplyRatio;
 
-    public static int getMultiplyRatio(BlackjackScore playerScore, BlackjackScore dealerScore) {
-        WinningResult winningResult = WinningResult.decide(playerScore, dealerScore);
-        if (winningResult.equals(WinningResult.WIN)) {
-            return 1;
-        }
-        if (winningResult.equals(WinningResult.LOSE)) {
-            return -1;
-        }
-        return 0;
+import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.Player;
+import blackjack.domain.participants.Players;
+import java.util.HashMap;
+import java.util.Map;
+
+public class BettingResult {
+    private final Map<Player, Integer> playerBettingResults;
+
+    public BettingResult(Map<Player, Integer> playerBettingResults) {
+        this.playerBettingResults = playerBettingResults;
+    }
+
+    public static BettingResult create(Dealer dealer, Players players) {
+        Map<Player, Integer> playerBettingResults = new HashMap<>();
+        players.sendAll((player -> {
+            BlackjackScore playerScore = player.getCards().calculateScore();
+            BlackjackScore dealerScore = dealer.getCards().calculateScore();
+            int playerBettingResult = getMultiplyRatio(playerScore, dealerScore);
+            int profit = player.makeProfit(playerBettingResult);
+            playerBettingResults.put(player, profit);
+        }));
+
+        return new BettingResult(playerBettingResults);
+    }
+
+    public Map<Player, Integer> getPlayerBettingResults() {
+        return playerBettingResults;
     }
 }

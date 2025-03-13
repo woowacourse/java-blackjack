@@ -1,6 +1,7 @@
 package blackjack.domain.participants;
 
 import blackjack.domain.GameResult;
+import blackjack.domain.card.BettingResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
@@ -53,6 +54,12 @@ public class Dealer {
         return GameResult.create(this, players);
     }
 
+    public BettingResult calculateBettingResult() {
+        return BettingResult.create(this, players);
+
+
+    }
+
     public Cards getCards() {
         return cards;
     }
@@ -63,5 +70,8 @@ public class Dealer {
 
     public int getCardSize() {
         return cards.getSize();
+    }
+
+    public void sendProfitToPlayer() {
     }
 }

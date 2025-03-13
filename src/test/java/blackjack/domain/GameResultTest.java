@@ -32,14 +32,14 @@ public class GameResultTest {
                 new Cards(
                         DIAMOND_THREE,
                         DIAMOND_TEN
-                ));
+                ), 10000);
         Player surf = new Player("surf",
                 new Cards(
                         DIAMOND_THREE,
                         DIAMOND_TEN,
                         DIAMOND_FIVE,
                         DIAMOND_THREE
-                ));
+                ), 10000);
         Players players = new Players(List.of(pobi, surf));
         Stack<Card> cards = new Stack<>();
         cards.addAll(List.of(

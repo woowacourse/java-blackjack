@@ -26,7 +26,7 @@ class PlayerTest {
                 DIAMOND_ACE,
                 DIAMOND_ACE,
                 DIAMOND_TWO
-        ));
+        ), 10000);
 
         Card card = new Card(Suit.HEART, Rank.TWO);
 
@@ -44,7 +44,7 @@ class PlayerTest {
                 new Cards(
                         DIAMOND_ACE,
                         DIAMOND_TWO
-                ));
+                ), 10000);
 
         Card card = new Card(Suit.HEART, Rank.THREE);
 

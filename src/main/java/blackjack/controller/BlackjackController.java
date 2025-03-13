@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.GameResult;
+import blackjack.domain.card.BettingResult;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.DeckFactory;
 import blackjack.domain.card.RandomCardsShuffler;
@@ -34,7 +35,7 @@ public class BlackjackController {
 
     private static List<Player> toPlayers(String[] playerNames) {
         return Arrays.stream(playerNames)
-                .map(name -> new Player(name.trim(), new Cards()))
+                .map(name -> new Player(name.trim(), new Cards(), 10000))
                 .toList();
     }
 
@@ -82,7 +83,8 @@ public class BlackjackController {
 
     private void printGameResult(Dealer dealer, Players players) {
         GameResult gameResult = dealer.createGameResult();
-//        BettingResult bettingResult = dealer.createBettingResult(gameResult);
         OutputView.printGameResult(gameResult, players.getPlayers());
+        BettingResult bettingResult = dealer.calculateBettingResult();
+        OutputView.printBettingResult(bettingResult, players.getPlayers());
     }
 }

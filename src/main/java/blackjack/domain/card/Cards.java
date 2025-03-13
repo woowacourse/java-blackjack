@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class Cards {
-    private static final int BLACKJACK_CARD_NUMBER = 2;
     private final List<Card> cards;
 
     public Cards(Card... cards) {
@@ -26,6 +25,11 @@ public class Cards {
         }
         return totalBlackjackScore;
     }
+
+//    public BettingResult createBettingResult(Dealer dealer, Players players) {
+////        return calculateScore();
+//        return new BettingResult(dealer, players);
+//    }
 
     private boolean hasAce() {
         return cards.stream()
