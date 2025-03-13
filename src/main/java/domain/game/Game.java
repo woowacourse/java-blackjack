@@ -1,6 +1,7 @@
 package domain.game;
 
 import domain.card.Card;
+import domain.card.CardHand;
 import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.GameParticipant;
@@ -8,14 +9,20 @@ import domain.participant.Player;
 import domain.participant.Players;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class Game {
+    private static final int MAX_PLAYER_COUNT = 5;
+
     private final Dealer dealer;
     private final Players players;
 
     public Game(List<String> playerNames, Deck deck) {
         dealer = new Dealer(deck, deck.getInitialDeal());
-        this.players = new Players(playerNames, dealer.pickInitialDeal());
+        validatePlayerCount(playerNames);
+        validateDuplicateName(playerNames);
+        this.players = new Players();
+        playerNames.forEach(this::registerPlayer);
     }
 
     public void playerHit(String playerName) {
@@ -26,6 +33,12 @@ public class Game {
     public void dealerHit() {
         Card card = dealer.pickCard();
         dealer.hit(card);
+    }
+
+    private void registerPlayer(String playerName) {
+        CardHand initialDeal = dealer.pickInitialDeal();
+        Player player = new Player(playerName, initialDeal);
+        players.addPlayer(player);
     }
 
     public boolean doesDealerNeedCard() {
@@ -61,5 +74,17 @@ public class Game {
 
     public Dealer getDealer() {
         return dealer;
+    }
+
+    private void validatePlayerCount(List<String> playerNames) {
+        if (playerNames.size() > MAX_PLAYER_COUNT) {
+            throw new IllegalArgumentException("[ERROR] 참여자는 최대 5명입니다.");
+        }
+    }
+
+    private void validateDuplicateName(List<String> playerNames) {
+        if (playerNames.size() != Set.copyOf(playerNames).size()) {
+            throw new IllegalArgumentException("[ERROR] 이름은 중복될 수 없습니다.");
+        }
     }
 }
