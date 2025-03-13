@@ -24,7 +24,7 @@ public class Player extends Participant {
     }
 
     public Money calculateRevenue(GameResult result) {
-        return null;
+        return result.applyWinningRate(bettingAmount);
     }
 
     public String getName() {
