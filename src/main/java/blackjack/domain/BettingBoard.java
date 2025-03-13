@@ -3,14 +3,19 @@ package blackjack.domain;
 import blackjack.domain.money.BettingMoney;
 import blackjack.domain.player.Player;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class BettingBoard {
     
     private final Map<Player, BettingMoney> bettingBoard;
     
-    public BettingBoard(final Map<Player, BettingMoney> bettingBoard) {
-        this.bettingBoard = bettingBoard;
+    public BettingBoard() {
+        this.bettingBoard = new HashMap<>();
+    }
+    
+    public void bet(Player player, int bettingMoney) {
+        this.bettingBoard.put(player, new BettingMoney(bettingMoney));
     }
     
     public int getProfit(Player player, WinningStatus winningStatus) {

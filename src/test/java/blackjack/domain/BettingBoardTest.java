@@ -3,15 +3,10 @@ package blackjack.domain;
 import static blackjack.test_util.TestConstants.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import blackjack.domain.money.BettingMoney;
 import blackjack.domain.player.Player;
 
-import blackjack.test_util.TestConstants;
-
 import java.util.HashMap;
-
 import java.util.Map;
-
 import java.util.stream.Stream;
 
 import org.assertj.core.api.Assertions;
@@ -23,24 +18,20 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class BettingBoardTest {
     
     @Test
-    void 플레이어별_배팅_금액을_저장할_수_있다() {
+    void 플레이어는_금액을_배팅할_수_있다() {
         // given
-        Map<Player, BettingMoney> playerBettingMoney = new HashMap<>();
-        playerBettingMoney.put(DEFAULT_PLAYER, new BettingMoney(10000));
+        BettingBoard bettingBoard = new BettingBoard();
         
         // expected
-        assertDoesNotThrow(() -> new BettingBoard(playerBettingMoney));
+        assertDoesNotThrow(() -> bettingBoard.bet(DEFAULT_PLAYER, 10000));
     }
     
     @ParameterizedTest
     @MethodSource("provideWinningStatusAndProfit")
     void 블랙잭_결과로_달라지는_플레이어의_수익을_확인할_수_있다(WinningStatus winningStatus, int profit) {
         // given
-        Map<Player, BettingMoney> playerBettingMoney = new HashMap<>();
-        playerBettingMoney.put(DEFAULT_PLAYER, new BettingMoney(10000));
-        
-        // when
-        BettingBoard bettingBoard = new BettingBoard(playerBettingMoney);
+        BettingBoard bettingBoard = new BettingBoard();
+        bettingBoard.bet(DEFAULT_PLAYER, 10000);
         
         // expected
         Assertions.assertThat(bettingBoard.getProfit(DEFAULT_PLAYER, winningStatus))
@@ -65,10 +56,9 @@ public class BettingBoardTest {
         // given
         Player firstPlayer = new Player("돔푸");
         Player secondPlayer = new Player("메이");
-        Map<Player, BettingMoney> playerBettingMoney = new HashMap<>();
-        playerBettingMoney.put(firstPlayer, new BettingMoney(10000));
-        playerBettingMoney.put(secondPlayer, new BettingMoney(20000));
-        BettingBoard bettingBoard = new BettingBoard(playerBettingMoney);
+        BettingBoard bettingBoard = new BettingBoard();
+        bettingBoard.bet(firstPlayer, 10000);
+        bettingBoard.bet(secondPlayer, 20000);
         
         // when
         Map<Player, WinningStatus> playerWinningStatus = new HashMap<>();
