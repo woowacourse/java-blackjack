@@ -34,8 +34,8 @@ public class Participant {
 		return hand.calculateAllScore(bustScore);
 	}
 
-	public boolean isBust(int bustScore) {
-		return false;
+	public boolean isBust(Score bustScore) {
+		return calculateAllScore(bustScore).isGreaterThan(bustScore);
 	}
 
 	public CardHand getCardHand() {

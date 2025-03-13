@@ -1,6 +1,6 @@
 package participant;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.SoftAssertions.*;
 
 import java.util.List;
 
@@ -11,12 +11,13 @@ import org.junit.jupiter.api.Test;
 import card.Card;
 import card.CardHand;
 import card.Rank;
+import card.Score;
 import card.Suit;
 import paticipant.Participant;
 
 public class ParticipantTest {
 
-	private static final int BUST_SCORE = 21;
+	private static final Score BUST_SCORE = Score.from(21);
 
 	@Nested
 	@DisplayName("Bust 여부 검증")
@@ -44,8 +45,10 @@ public class ParticipantTest {
 			final boolean notBustActual = notBustedParticipant.isBust(BUST_SCORE);
 
 			// then
-			assertThat(bustActual).isTrue();
-			assertThat(notBustActual).isFalse();
+			assertSoftly(s -> {
+				s.assertThat(bustActual).isTrue();
+				s.assertThat(notBustActual).isFalse();
+			});
 		}
 	}
 }
