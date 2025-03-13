@@ -8,22 +8,22 @@ import domain.participant.Role;
 import java.util.List;
 import java.util.Map;
 
-public final class BlackjackGame {
+public final class BlackjackManager {
 
   private static final int NUMBER_OF_DECK = 1;
 
   private final Deck deck;
   private final Participants participants;
 
-  public BlackjackGame(final Participants participants, final Deck deck) {
+  public BlackjackManager(final Participants participants, final Deck deck) {
     this.participants = participants;
     this.deck = deck;
   }
 
-  public static BlackjackGame from(final Map<String, Money> participantNames) {
+  public static BlackjackManager from(final Map<String, Money> participantNames) {
     final Deck deck = Deck.createShuffledDecks(NUMBER_OF_DECK);
     final Participants participants = Participants.generateOf(participantNames, deck);
-    return new BlackjackGame(participants, deck);
+    return new BlackjackManager(participants, deck);
   }
 
 

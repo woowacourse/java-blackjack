@@ -19,7 +19,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-class BlackjackGameTest {
+class BlackjackManagerTest {
 
   @Nested
   @DisplayName("블랙잭 게임 생성")
@@ -34,7 +34,7 @@ class BlackjackGameTest {
       givenParticipants.put(name, new Money(1000));
 
       //when
-      final BlackjackGame blackjack = BlackjackGame.from(givenParticipants);
+      final BlackjackManager blackjack = BlackjackManager.from(givenParticipants);
       //then
       var dealer = blackjack.getDealer();
       var generated = blackjack.getPlayers();
@@ -57,9 +57,9 @@ class BlackjackGameTest {
       final Participants participants = new Participants(dealer, players);
       List<TrumpCard> trumpCards = List.of(new TrumpCard(Rank.ACE, Suit.CLUB));
       final var deck = new Deck(new ArrayDeque<>(trumpCards));
-      final BlackjackGame blackjackGame = new BlackjackGame(participants, deck);
+      final BlackjackManager blackjackManager = new BlackjackManager(participants, deck);
       //then
-      final var newDealer = blackjackGame.hitByParticipant(dealer);
+      final var newDealer = blackjackManager.hitByParticipant(dealer);
       assertThat(newDealer.getCards()).isEqualTo(trumpCards);
     }
 
@@ -74,9 +74,9 @@ class BlackjackGameTest {
       final Participants participants = new Participants(dealer, players);
       List<TrumpCard> trumpCards = List.of(new TrumpCard(Rank.ACE, Suit.CLUB));
       final var deck = new Deck(new ArrayDeque<>(trumpCards));
-      final BlackjackGame blackjackGame = new BlackjackGame(participants, deck);
+      final BlackjackManager blackjackManager = new BlackjackManager(participants, deck);
       //then
-      final var newPlayer = blackjackGame.hitByParticipant(player);
+      final var newPlayer = blackjackManager.hitByParticipant(player);
       assertThat(newPlayer.getCards()).isEqualTo(trumpCards);
     }
   }

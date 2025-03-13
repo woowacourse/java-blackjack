@@ -9,6 +9,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 블랙잭 게임의 모든 참가자(딜러와 플레이어들)를 관리하는 클래스입니다.
+ * <p>
+ * 내부적으로는 딜러와 플레이어를 구체적인 타입으로 구분하여 관리하지만,
+ * <p>
+ * 외부로는 다형적 인터페이스(Participant<? extends Role>)를 제공합니다.
+ */
 public final class Participants {
 
   private final Participant<Dealer> dealer;
