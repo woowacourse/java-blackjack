@@ -4,9 +4,8 @@ import blackjack.domain.card_hand.PlayerBettingBlackjackCardHand;
 import blackjack.domain.deck.BlackjackDeck;
 import blackjack.util.GlobalValidator;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public final class Players {
 
@@ -53,10 +52,8 @@ public final class Players {
     }
 
     public List<PlayerBettingBlackjackCardHand> toBlackjackBettingCardHand(final BlackjackDeck deck, final List<Integer> bettingAmounts) {
-        final List<PlayerBettingBlackjackCardHand> bettingBlackjackCardHands = new ArrayList<>();
-        for (int i = 0; i < players.size(); i++) {
-            bettingBlackjackCardHands.add(PlayerBettingBlackjackCardHand.createWithInitialCards(players.get(i), bettingAmounts.get(i), deck));
-        }
-        return Collections.unmodifiableList(bettingBlackjackCardHands);
+        return IntStream.range(0, players.size())
+                .mapToObj(i -> PlayerBettingBlackjackCardHand.createWithInitialCards(players.get(i), bettingAmounts.get(i), deck))
+                .toList();
     }
 }
