@@ -2,6 +2,9 @@ package game;
 
 public class Betting {
 
+    private static final int DEFAULT_ODDS = 1;
+    private static final double BLACK_JACK_ODDS = 1.5;
+
     private int money;
 
     public Betting(int money) {
@@ -17,10 +20,10 @@ public class Betting {
     }
 
     public int earn() {
-        return this.money;
+        return this.money * DEFAULT_ODDS;
     }
 
     public int earnedWhenBlackJack() {
-        return (int) (this.money * 1.5);
+        return (int) (this.money * BLACK_JACK_ODDS);
     }
 }
