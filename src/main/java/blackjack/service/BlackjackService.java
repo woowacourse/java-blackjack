@@ -14,7 +14,7 @@ public class BlackjackService {
             final List<PlayerBettingBlackjackCardHand> playerHands,
             final CardDrawer cardDrawer,
             final Consumer<String> playerTurnNotifier,
-            final Runnable reached21Notifier,
+            final Runnable reachedMaxNotifier,
             final Runnable bustNotifier,
             final Function<String, Boolean> addCardDecision,
             final Consumer<PlayerBettingBlackjackCardHand> playerHandNotifier
@@ -22,19 +22,30 @@ public class BlackjackService {
         for (PlayerBettingBlackjackCardHand playerHand : playerHands) {
             playerTurnNotifier.accept(playerHand.getPlayerName());
             playerHandNotifier.accept(playerHand);
-            while(true) {
-                if (playerHand.isAddedUpToMax()) {
-                    reached21Notifier.run();
-                    break;
-                }
-                if (playerHand.isBust()) {
-                    bustNotifier.run();
-                    break;
-                }
-                if (addCardDecision.apply(playerHand.getPlayerName())) {
-                    playerHand.addCard(cardDrawer.draw());
-                    playerHandNotifier.accept(playerHand);
-                }
+            startAddingPlayerCards(cardDrawer, reachedMaxNotifier, bustNotifier, addCardDecision, playerHandNotifier, playerHand);
+        }
+    }
+    
+    private void startAddingPlayerCards(
+            final CardDrawer cardDrawer,
+            final Runnable reachedMaxNotifier,
+            final Runnable bustNotifier,
+            final Function<String, Boolean> addCardDecision,
+            final Consumer<PlayerBettingBlackjackCardHand> playerHandNotifier,
+            final PlayerBettingBlackjackCardHand playerHand
+    ) {
+        while(true) {
+            if (playerHand.isAddedUpToMax()) {
+                reachedMaxNotifier.run();
+                break;
+            }
+            if (playerHand.isBust()) {
+                bustNotifier.run();
+                break;
+            }
+            if (addCardDecision.apply(playerHand.getPlayerName())) {
+                playerHand.addCard(cardDrawer.draw());
+                playerHandNotifier.accept(playerHand);
             }
         }
     }

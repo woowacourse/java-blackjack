@@ -37,7 +37,7 @@ public class BlackjackController implements Controller {
                 playerHands,
                 deck,
                 outputView::outputAddingMessage,
-                outputView::addTo21Warning,
+                outputView::reachedMaxWarning,
                 outputView::bustWarning,
                 inputView::getAddingCardDecision,
                 outputView::outputCardsAndSum

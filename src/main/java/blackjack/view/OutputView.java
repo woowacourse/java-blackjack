@@ -81,7 +81,7 @@ public class OutputView {
         writer.write(message);
     }
     
-    public void addTo21Warning() {
+    public void reachedMaxWarning() {
         writer.write("카드 총합이 21이기 때문에 더 받을 수 없습니다.");
     }
     
