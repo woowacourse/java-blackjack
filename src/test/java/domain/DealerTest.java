@@ -50,7 +50,7 @@ class DealerTest {
         );
 
         //when
-        Map<Player, GameResult> actual = dealer.getGameResult(new Players(List.of(player1, player2)));
+        Map<Player, GameResult> actual = dealer.getGameResult(Players.of(List.of(player1, player2)));
 
         //then
         assertThat(actual).isEqualTo(expected);
@@ -66,8 +66,8 @@ class DealerTest {
                 new Card(CardNumber.A, CardShape.CLOVER),
                 new Card(CardNumber.FOUR, CardShape.CLOVER)
         )));
-        Player player = Player.init("플레이어1", "100000");
-        Players players = new Players(List.of(player));
+        Player player = Player.init("플레이어1", new Money("100000"));
+        Players players = Players.of(List.of(player));
 
         Hand dealerHand = Hand.of(
                 List.of(
@@ -80,7 +80,7 @@ class DealerTest {
                 new Card(CardNumber.TWO, CardShape.CLOVER),
                 new Card(CardNumber.TEN, CardShape.CLOVER)
         )), "플레이어1", new Money("100000"));
-        Players expectedPlayers = new Players(List.of(expectedPlayer));
+        Players expectedPlayers = Players.of(List.of(expectedPlayer));
         //when
         dealer.handoutCards(players);
 
@@ -96,7 +96,7 @@ class DealerTest {
         Dealer dealer = Dealer.init(new StaticCardGenerator(List.of(
                 new Card(CardNumber.A, CardShape.CLOVER)
         )));
-        Player player = Player.init("플레이어1", "100000");
+        Player player = Player.init("플레이어1", new Money("100000"));
         Player expectedPlayer = Player.of(Hand.of(List.of(
                 new Card(CardNumber.A, CardShape.CLOVER)
         )), "플레이어1", new Money("100000"));

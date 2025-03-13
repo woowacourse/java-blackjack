@@ -21,7 +21,7 @@ public class PlayerTest {
     @Test
     void 카드_추가_가능() {
         // given
-        Player player = Player.init("플레이어", "100000");
+        Player player = Player.init("플레이어", new Money("100000"));
         Card card = new Card(CardNumber.A, CardShape.CLOVER);
         player.addCard(card);
 

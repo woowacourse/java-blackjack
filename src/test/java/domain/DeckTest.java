@@ -68,7 +68,7 @@ public class DeckTest {
         //given
         Card card = new Card(CardNumber.A, CardShape.CLOVER);
         Deck deck = new Deck(new StaticCardGenerator(List.of(card)));
-        Player player = Player.init("플레이어", "100000");
+        Player player = Player.init("플레이어", new Money("100000"));
 
         Player expected = Player.of(Hand.of(List.of(card)), "플레이어", new Money("100000"));
 
