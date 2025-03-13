@@ -70,7 +70,7 @@ class HandTest {
         hand.add(card2);
 
         // then
-        assertThat(hand.getSumOfRank()).isEqualTo(3);
+        assertThat(hand.calculateSumOfRank()).isEqualTo(3);
     }
 
     @DisplayName("버스트이면 true, 아니면 false를 반환한다.")

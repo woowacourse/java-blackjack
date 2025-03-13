@@ -1,6 +1,7 @@
 package domain.gamer;
 
 import domain.deck.Card;
+import domain.deck.Rank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,14 +18,18 @@ public class Hand {
         cards.add(card);
     }
 
-    public int getSumOfRank() {
+    public int calculateSumOfRank() {
         return cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
     }
 
+    public int calculateSumOfRankConsideredAce() {
+        return calculateSumOfRank() + Rank.ACE.getAdditionalAceScore() - Rank.ACE.getScore();
+    }
+
     public boolean isBust() {
-        return getSumOfRank() > BUST_NUMBER;
+        return calculateSumOfRank() > BUST_NUMBER;
     }
 
     public boolean hasAce() {

@@ -27,6 +27,13 @@ public enum Rank {
         return this == ACE;
     }
 
+    public int getAdditionalAceScore() {
+        if (this == ACE) {
+            return 11;
+        }
+        return 0;
+    }
+
     public int getScore() {
         return score;
     }

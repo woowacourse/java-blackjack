@@ -30,7 +30,7 @@ public class Player extends Gamer {
                     .orElseGet(() -> sumOfRanks.stream().min(Integer::compareTo).orElse(0));
         }
 
-        return hand.getSumOfRank();
+        return hand.calculateSumOfRank();
     }
 
     private List<Integer> calculateAllSums(final List<Card> cards) {
