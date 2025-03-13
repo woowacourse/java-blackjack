@@ -1,8 +1,6 @@
 package game;
 
 import deck.Deck;
-import java.util.Arrays;
-import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -35,29 +33,22 @@ public class BlackjackGame {
         dealer.receiveCard(deck.draw());
     }
 
-    public Map<Player, GameResult> calculatePlayersGameResults(Dealer dealer, Players players) {
+    public void updatePlayerMoney(Dealer dealer, Player player) {
+        GameResult gameResult = GameResult.judgePlayerResult(dealer, player);
+        player.updateMoney(gameResult.getRate());
+    }
+
+    public Map<Player, Double> calculatePlayersGameResults(Players players) {
         return players.getPlayers().stream()
                 .collect(Collectors.toMap(
                         player -> player,
-                        player -> GameResult.judge(player, dealer),
+                        Player::calculateProfit,
                         (oldValue, newValue) -> oldValue,
                         LinkedHashMap::new
                 ));
     }
 
-    public Map<GameResult, Integer> calculateDealerGameResults(Map<Player, GameResult> playerGameResults) {
-        Map<GameResult, Integer> dealerResults = Arrays.stream(GameResult.values())
-                .collect(Collectors.toMap(
-                        gameResult -> gameResult,
-                        gameResult -> 0,
-                        (oldValue, newValue) -> oldValue,
-                        () -> new EnumMap<>(GameResult.class)
-                ));
-
-        for (GameResult gameResult : playerGameResults.values()) {
-            dealerResults.put(gameResult.inverse(), dealerResults.get(gameResult.inverse()) + 1);
-        }
-
-        return dealerResults;
+    public double calculateDealerGameResults(Players players) {
+        return players.sumProfits() * -1;
     }
 }
