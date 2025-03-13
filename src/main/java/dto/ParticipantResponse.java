@@ -13,11 +13,4 @@ public record ParticipantResponse(String dealerName, List<String> playerNames) {
 
         return new ParticipantResponse(dealerName, playerNames);
     }
-
-//    public static ParticipantResponse of(Dealer dealer, List<Player> players) {
-//        String dealerName = dealer.getNickname();
-//        List<String> playerNames = players.stream().map(Player::getNickname).toList();
-//
-//        return new ParticipantResponse(dealerName, playerNames);
-//    }
 }

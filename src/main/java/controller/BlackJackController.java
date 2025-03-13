@@ -121,7 +121,6 @@ public class BlackJackController {
 
     private void endBlackJack(final Participants participants) {
         final ScoreBoard scoreBoard = new ScoreBoard(participants);
-        scoreBoard.calculateScoreBoard();
         Map<Participant, BattleResults> battleResultsMap = scoreBoard.getScoreBoard();
 
         List<BattleResultResponse> battleResultResponses = new ArrayList<>();

@@ -21,33 +21,23 @@ class ScoreBoardTest {
     @Test
     void 스코어보드_계산_확인1() {
         //given
-        Player player1 = new Player("우가");
-        Player player2 = new Player("히스타");
-        Dealer dealer = new Dealer();
-
-        List<Participant> originParticipants = new ArrayList<>();
-        originParticipants.add(player1);
-        originParticipants.add(player2);
-        originParticipants.add(dealer);
-
-        Participants participants = new Participants(originParticipants);
+        Participants participants = new Participants(List.of(new Player("우가"), new Player("히스타"), new Dealer()));
 
         GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
         participants.drawTwoCards(gameCardDeck);
         participants.drawTwoCards(gameCardDeck);
 
+        //when
         ScoreBoard scoreBoard = new ScoreBoard(participants);
 
-        //when
-        scoreBoard.calculateScoreBoard();
-
         Map<Participant, BattleResults> battleResultsMap = scoreBoard.getScoreBoard();
+        List<Participant> originParticipants = participants.getParticipants();
 
         //then
         org.junit.jupiter.api.Assertions.assertAll(
-                () -> Assertions.assertThat(battleResultsMap.get(player1).getResults().get(BattleResult.WIN)).isEqualTo(1),
-                () -> Assertions.assertThat(battleResultsMap.get(player2).getResults().get(BattleResult.WIN)).isEqualTo(1),
-                () -> Assertions.assertThat(battleResultsMap.get(dealer).getResults().get(BattleResult.LOSE)).isEqualTo(2)
+                () -> Assertions.assertThat(battleResultsMap.get(originParticipants.getFirst()).getResults().get(BattleResult.WIN)).isEqualTo(1),
+                () -> Assertions.assertThat(battleResultsMap.get(originParticipants.get(1)).getResults().get(BattleResult.WIN)).isEqualTo(1),
+                () -> Assertions.assertThat(battleResultsMap.get(originParticipants.getLast()).getResults().get(BattleResult.LOSE)).isEqualTo(2)
         );
     }
 
@@ -71,14 +61,8 @@ class ScoreBoardTest {
         player2.drawCard(gameCardDeck, 7);
         dealer.drawCard(gameCardDeck, 4);
 
-        System.out.println(player1.getScore());
-        System.out.println(player2.getScore());
-        System.out.println(dealer.getScore());
-
-        ScoreBoard scoreBoard = new ScoreBoard(participants);
-
         //when
-        scoreBoard.calculateScoreBoard();
+        ScoreBoard scoreBoard = new ScoreBoard(participants);
 
         Map<Participant, BattleResults> battleResultsMap = scoreBoard.getScoreBoard();
 
@@ -110,10 +94,8 @@ class ScoreBoardTest {
         participants.drawTwoCards(gameCardDeck);
         participants.drawTwoCards(gameCardDeck);
 
-        ScoreBoard scoreBoard = new ScoreBoard(participants);
-
         //when
-        scoreBoard.calculateScoreBoard();
+        ScoreBoard scoreBoard = new ScoreBoard(participants);
 
         Map<Participant, BattleResults> battleResultsMap = scoreBoard.getScoreBoard();
 
@@ -145,10 +127,8 @@ class ScoreBoardTest {
         player2.drawCard(gameCardDeck, 1);
         dealer.drawCard(gameCardDeck, 1);
 
-        ScoreBoard scoreBoard = new ScoreBoard(participants);
-
         //when
-        scoreBoard.calculateScoreBoard();
+        ScoreBoard scoreBoard = new ScoreBoard(participants);
 
         Map<Participant, BattleResults> battleResultsMap = scoreBoard.getScoreBoard();
 
@@ -184,10 +164,8 @@ class ScoreBoardTest {
         dealer.drawCard(gameCardDeck, 1);
         player1.drawCard(gameCardDeck, 1);
 
-        ScoreBoard scoreBoard = new ScoreBoard(participants);
-
         //when
-        scoreBoard.calculateScoreBoard();
+        ScoreBoard scoreBoard = new ScoreBoard(participants);
 
         Map<Participant, BattleResults> battleResultsMap = scoreBoard.getScoreBoard();
 
@@ -223,10 +201,8 @@ class ScoreBoardTest {
         garbagePlayer.drawCard(gameCardDeck, 1);
         player1.drawCard(gameCardDeck, 1);
 
-        ScoreBoard scoreBoard = new ScoreBoard(participants);
-
         //when
-        scoreBoard.calculateScoreBoard();
+        ScoreBoard scoreBoard = new ScoreBoard(participants);
 
         Map<Participant, BattleResults> battleResultsMap = scoreBoard.getScoreBoard();
 
@@ -259,10 +235,8 @@ class ScoreBoardTest {
         player2.drawCard(gameCardDeck, 12);
         dealer.drawCard(gameCardDeck, 12);
 
-        ScoreBoard scoreBoard = new ScoreBoard(participants);
-
         //when
-        scoreBoard.calculateScoreBoard();
+        ScoreBoard scoreBoard = new ScoreBoard(participants);
 
         Map<Participant, BattleResults> battleResultsMap = scoreBoard.getScoreBoard();
 
@@ -294,10 +268,8 @@ class ScoreBoardTest {
         player1.drawCard(gameCardDeck, 1);
         player2.drawCard(gameCardDeck, 1);
 
-        ScoreBoard scoreBoard = new ScoreBoard(participants);
-
         //when
-        scoreBoard.calculateScoreBoard();
+        ScoreBoard scoreBoard = new ScoreBoard(participants);
 
         Map<Participant, BattleResults> battleResultsMap = scoreBoard.getScoreBoard();
 
@@ -329,10 +301,8 @@ class ScoreBoardTest {
         player2.drawCard(gameCardDeck, 12);
         dealer.drawCard(gameCardDeck, 1);
 
-        ScoreBoard scoreBoard = new ScoreBoard(participants);
-
         //when
-        scoreBoard.calculateScoreBoard();
+        ScoreBoard scoreBoard = new ScoreBoard(participants);
 
         Map<Participant, BattleResults> battleResultsMap = scoreBoard.getScoreBoard();
 
