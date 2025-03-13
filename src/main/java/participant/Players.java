@@ -18,8 +18,7 @@ public class Players {
 
     public static Players createByNames(List<String> playerNames) {
         List<Player> players = playerNames.stream()
-                .map(playerName -> new Player(
-                        playerName, Hand.createEmpty()))
+                .map(playerName -> new Player(playerName, Hand.createEmpty()))
                 .toList();
         return new Players(players);
     }
@@ -34,19 +33,15 @@ public class Players {
 
     public GameResult judgeAgainstDealer(Dealer dealer) {
         Map<Player, GameResultStatus> gameResult = players.stream()
-                .collect(Collectors.toMap(
-                        player -> player,
-                        player -> player.calculateScore(dealer)
-                ));
+                .collect(Collectors.toMap(player -> player,
+                        player -> player.calculateScore(dealer)));
         return new GameResult(gameResult);
     }
 
     public Map<String, Hand> openNameAndInitialHand() {
         return players.stream()
-                .collect(Collectors.toMap(
-                        Player::getName,
-                        Player::openInitialHand
-                ));
+                .collect(Collectors.toMap(Player::getName,
+                        Player::openInitialHand));
     }
 
     public void initializeHand(Deck deck) {
