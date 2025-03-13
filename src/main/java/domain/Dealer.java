@@ -11,14 +11,6 @@ public class Dealer extends Player {
         super(DEALER_NAME);
     }
 
-    public boolean isBelowThreshold() {
-        return getHandTotal() <= THRESHOLD;
-    }
-
-    public Card openOneCard() {
-        return hand.getFirstCard();
-    }
-
     public void drawWithThreshold(Deck deck) {
         boolean isAlive = resolveBust();
         while (isAlive) {
@@ -31,6 +23,14 @@ public class Dealer extends Player {
         }
         setHandTotalToZero();
         printBust();
+    }
+
+    public boolean isBelowThreshold() {
+        return getHandTotal() <= THRESHOLD;
+    }
+
+    public Card openOneCard() {
+        return hand.getFirstCard();
     }
 
     public int getCardCount() {
