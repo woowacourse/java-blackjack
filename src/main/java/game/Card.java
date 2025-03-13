@@ -1,4 +1,4 @@
-package card;
+package game;
 
 import constant.TrumpEmblem;
 import constant.TrumpNumber;

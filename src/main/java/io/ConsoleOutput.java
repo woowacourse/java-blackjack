@@ -1,6 +1,6 @@
 package io;
 
-import card.Card;
+import game.Card;
 import participant.Dealer;
 import participant.Player;
 import participant.Players;

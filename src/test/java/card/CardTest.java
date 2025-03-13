@@ -6,6 +6,9 @@ import constant.TrumpEmblem;
 import constant.TrumpNumber;
 import java.util.ArrayList;
 import java.util.List;
+
+import game.Card;
+import game.Cards;
 import org.junit.jupiter.api.Test;
 
 class CardTest {

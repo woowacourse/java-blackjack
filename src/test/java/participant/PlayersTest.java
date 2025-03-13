@@ -1,8 +1,8 @@
 package participant;
 
-import card.Card;
-import card.Cards;
-import card.Deck;
+import game.Card;
+import game.Cards;
+import game.Deck;
 import constant.TrumpEmblem;
 import constant.TrumpNumber;
 import constant.WinningResult;

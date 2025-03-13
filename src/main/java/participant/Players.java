@@ -1,6 +1,6 @@
 package participant;
 
-import card.Deck;
+import game.Deck;
 import constant.WinningResult;
 
 import java.util.LinkedHashMap;

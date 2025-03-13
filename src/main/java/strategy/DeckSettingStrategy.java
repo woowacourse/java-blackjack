@@ -1,6 +1,6 @@
 package strategy;
 
-import card.Cards;
+import game.Cards;
 
 public interface DeckSettingStrategy {
 

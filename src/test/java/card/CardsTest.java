@@ -6,6 +6,9 @@ import constant.TrumpEmblem;
 import constant.TrumpNumber;
 import java.util.ArrayList;
 import java.util.List;
+
+import game.Card;
+import game.Cards;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 

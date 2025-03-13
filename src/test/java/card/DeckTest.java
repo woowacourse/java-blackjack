@@ -4,6 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import constant.TrumpEmblem;
 import constant.TrumpNumber;
+import game.Card;
+import game.Cards;
+import game.Deck;
 import strategy.DeckSettingStrategy;
 import strategy.DeckShuffleStrategy;
 import org.junit.jupiter.api.Test;

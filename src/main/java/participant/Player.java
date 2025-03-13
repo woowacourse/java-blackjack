@@ -1,7 +1,7 @@
 package participant;
 
-import card.Card;
-import card.Cards;
+import game.Card;
+import game.Cards;
 import constant.WinningResult;
 
 import java.util.List;

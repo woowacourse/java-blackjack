@@ -3,7 +3,6 @@ package game;
 import io.ConsoleInput;
 import io.ConsoleOutput;
 import participant.Dealer;
-import card.Deck;
 import participant.Player;
 import participant.Players;
 import strategy.DeckShuffleStrategy;

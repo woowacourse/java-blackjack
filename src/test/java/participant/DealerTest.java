@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import card.Card;
-import card.Cards;
+import game.Card;
+import game.Cards;
 import constant.TrumpEmblem;
 import constant.TrumpNumber;
 import java.util.ArrayList;
