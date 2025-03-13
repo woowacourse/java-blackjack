@@ -5,12 +5,22 @@ import participant.Player;
 
 public enum GameResult {
 
-    WIN,
-    LOSE,
-    DRAW,
+    BLACKJACK(1.5),
+    WIN(1),
+    LOSE(-1),
+    DRAW(0),
     ;
 
-    public static GameResult judge(Player player, Dealer dealer) {
+    private final double rate;
+
+    GameResult(double rate) {
+        this.rate = rate;
+    }
+
+    public static GameResult judgePlayerResult(Dealer dealer, Player player) {
+        if (player.isBlackjack() && !dealer.isBlackjack()) {
+            return BLACKJACK;
+        }
         if (!player.isBust() && (player.score() > dealer.score() || dealer.isBust())) {
             return WIN;
         }
@@ -20,13 +30,7 @@ public enum GameResult {
         return DRAW;
     }
 
-    public GameResult inverse() {
-        if (this == GameResult.WIN) {
-            return GameResult.LOSE;
-        }
-        if (this == GameResult.LOSE) {
-            return GameResult.WIN;
-        }
-        return GameResult.DRAW;
+    public double getRate() {
+        return rate;
     }
 }
