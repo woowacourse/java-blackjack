@@ -90,4 +90,74 @@ class RevenuePolicyTest {
             RevenuePolicy.from(gameResult, isBlackjack);
         }).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("플레이어가 블랙잭으로 승리한 경우(= BLACKJACK_WIN) 베팅 금액의 1.5배만큼의 수익을 얻는다.")
+    @Test
+    void blackjackWinRevenue() {
+        // given
+        final int bettingCost = 10000;
+        RevenuePolicy policy = BLACKJACK_WIN;
+
+        // when
+        final int revenue = policy.getRevenue(bettingCost);
+
+        // then
+        assertThat(revenue).isEqualTo((int) (bettingCost * 1.5));
+    }
+
+    @DisplayName("플레이어가 승리한 경우(= NORMAL_WIN) 베팅 금액만큼의 수익을 얻는다.")
+    @Test
+    void notBlackjackWinRevenue() {
+        // given
+        final int bettingCost = 10000;
+        RevenuePolicy policy = NORMAL_WIN;
+
+        // when
+        final int revenue = policy.getRevenue(bettingCost);
+
+        // then
+        assertThat(revenue).isEqualTo(bettingCost);
+    }
+
+    @DisplayName("플레이어가 블랙잭이 아니면서 비긴 경우(= NORMAL_DRAW) 수익을 얻지 않는다.")
+    @Test
+    void normalDrawRevenue() {
+        // given
+        final int bettingCost = 10000;
+        RevenuePolicy policy = NORMAL_DRAW;
+
+        // when
+        final int revenue = policy.getRevenue(bettingCost);
+
+        // then
+        assertThat(revenue).isEqualTo(0);
+    }
+
+    @DisplayName("플레이어가 블랙잭이면서 비긴 경우(= BLACKJACK_DRAW) 수익을 얻지 않는다.")
+    @Test
+    void blackjackDrawRevenue() {
+        // given
+        final int bettingCost = 10000;
+        RevenuePolicy policy = BLACKJACK_DRAW;
+
+        // when
+        final int revenue = policy.getRevenue(bettingCost);
+
+        // then
+        assertThat(revenue).isEqualTo(0);
+    }
+
+    @DisplayName("플레이어가 패배한 경우 베팅 금액을 잃는다.")
+    @Test
+    void loseRevenue() {
+        // given
+        final int bettingCost = 10000;
+        RevenuePolicy policy = LOSE;
+
+        // when
+        final int revenue = policy.getRevenue(bettingCost);
+
+        // then
+        assertThat(revenue).isEqualTo(-1 * bettingCost);
+    }
 }

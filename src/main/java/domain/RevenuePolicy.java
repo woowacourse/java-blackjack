@@ -28,7 +28,7 @@ public enum RevenuePolicy {
                 .orElseThrow(() -> new IllegalArgumentException("플레이어가 블랙잭인 경우에는 패배할 수 없습니다."));
     }
 
-    public int apply(final int bettingCost) {
+    public int getRevenue(final int bettingCost) {
         return function.apply(bettingCost);
     }
 }
