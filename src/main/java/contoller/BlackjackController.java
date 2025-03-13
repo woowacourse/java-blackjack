@@ -1,12 +1,16 @@
 package contoller;
 
+import domain.BettingAmount;
 import domain.card.Deck;
 import domain.GameManager;
 import domain.participant.Participant;
+import domain.participant.ParticipantName;
+import domain.participant.ParticipantNames;
 import domain.participant.Participants;
 import view.InputView;
 import view.OutputView;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -17,27 +21,37 @@ public class BlackjackController {
 
     public void run() {
         readyGame();
-        drawInitialCards();
+        printInitialCards();
         drawMorePlayersCards();
         drawMoreDealerCards();
-        printParticipantsCards();
+        printFinalCards();
         printProfits();
     }
 
     private void readyGame() {
-        List<String> playerNames = InputView.readPlayerNames();
-        Map<String, Integer> bettingAmounts = getBettingAmounts(playerNames);
-        gameManager = new GameManager(playerNames, bettingAmounts, new Deck());
+        ParticipantNames participantNames = getParticipantNames();
+        Map<ParticipantName, BettingAmount> bettingAmounts = getBettingAmounts(participantNames);
+        gameManager = new GameManager(participantNames, bettingAmounts, new Deck());
     }
 
-    private Map<String, Integer> getBettingAmounts(List<String> playerNames) {
-        return playerNames.stream()
-                .collect(Collectors.toMap(name -> name,
-                        InputView::readBettingAmount
+    private ParticipantNames getParticipantNames() {
+        List<String> playerNames = InputView.readPlayerNames();
+        return new ParticipantNames(playerNames.stream()
+                .map(ParticipantName::new)
+                .toList());
+    }
+
+    private Map<ParticipantName, BettingAmount> getBettingAmounts(ParticipantNames playerNames) {
+        return playerNames.getParticipantNames().stream()
+                .collect(Collectors.toMap(
+                        name -> name,
+                        name -> new BettingAmount(InputView.readBettingAmount(name.getName())),
+                        (existing, replacement) -> existing,
+                        LinkedHashMap::new
                 ));
     }
 
-    private void drawInitialCards() {
+    private void printInitialCards() {
         Participants participants = gameManager.findParticipants();
         OutputView.printInitialParticipants(participants);
     }
@@ -54,7 +68,7 @@ public class BlackjackController {
         boolean answer;
 
         while (gameManager.shouldPlayerHit(player)) {
-            answer = InputView.askForOneMoreCard(player);
+            answer = InputView.askForOneMoreCard(player.getParticipantName());
             drawCardIfAnswerIsYes(player, answer);
             if (!answer) {
                 break;
@@ -75,9 +89,9 @@ public class BlackjackController {
         }
     }
 
-    private void printParticipantsCards() {
+    private void printFinalCards() {
         Participants participants = gameManager.findParticipants();
-        OutputView.printFinalParticipant(participants);
+        OutputView.printFinalCards(participants);
     }
 
     private void printProfits() {

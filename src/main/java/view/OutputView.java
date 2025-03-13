@@ -3,7 +3,6 @@ package view;
 import domain.card.Card;
 import domain.participant.Participant;
 import domain.card.Rank;
-import domain.GameResult;
 import domain.card.Suit;
 import domain.participant.Participants;
 
@@ -63,9 +62,9 @@ public class OutputView {
         System.out.printf("%s카드: %s%n%n", player.getParticipantName(), convertCardsToMessage(player.getCards()));
     }
 
-    public static void printFinalParticipant(Participants participants) {
+    public static void printFinalCards(Participants participants) {
         printFinalDealerCard(participants.findDealer());
-        printFinalAllPlayersCards(participants.findPlayers());
+        printFinalPlayersCards(participants.findPlayers());
     }
 
     private static void printFinalDealerCard(Participant dealer) {
@@ -75,7 +74,7 @@ public class OutputView {
                 dealer.getTotalRankSum());
     }
 
-    private static void printFinalAllPlayersCards(List<Participant> players) {
+    private static void printFinalPlayersCards(List<Participant> players) {
         for (Participant player : players) {
             System.out.printf("%s카드: %s - 결과: %d%n",
                     player.getParticipantName(),

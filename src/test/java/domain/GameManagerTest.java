@@ -8,6 +8,7 @@ import domain.card.Suit;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.ParticipantName;
+import domain.participant.ParticipantNames;
 import domain.participant.Participants;
 import domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
@@ -50,7 +51,9 @@ public class GameManagerTest {
 
     @Test
     void 딜러가_카드를_뽑으면_가지고있는_카드리스트에_추가된다() {
-        GameManager gameManager = new GameManager(List.of("drago"), Map.of("drago", 10000), new GameManagerTest.TestCardProvider());
+        ParticipantNames participantNames = new ParticipantNames(List.of(new ParticipantName("drago")));
+        GameManager gameManager = new GameManager(participantNames,
+                Map.of(new ParticipantName("drago"), new BettingAmount(10000)), new GameManagerTest.TestCardProvider());
 
         Participants participants = gameManager.findParticipants();
         Participant dealer = participants.findDealer();
@@ -65,7 +68,9 @@ public class GameManagerTest {
 
     @Test
     void 플레이어가_카드를_뽑으면_가지고있는_카드리스트에_추가된다() {
-        GameManager gameManager = new GameManager(List.of("drago"), Map.of("drago", 10000), new GameManagerTest.TestCardProvider());
+        ParticipantNames participantNames = new ParticipantNames(List.of(new ParticipantName("drago")));
+        GameManager gameManager = new GameManager(participantNames,
+                Map.of(new ParticipantName("drago"), new BettingAmount(10000)), new GameManagerTest.TestCardProvider());
 
         Participants participants = gameManager.findParticipants();
         Participant player = participants.findPlayers().getFirst();
@@ -80,7 +85,9 @@ public class GameManagerTest {
 
     @Test
     void 플레이어가_카드를_뽑아야하는_상황이면_true를_반환한다() {
-        GameManager gameManager = new GameManager(List.of("duei"), Map.of("duei", 10000), new GameManagerTest.TestCardProvider());
+        ParticipantNames participantNames = new ParticipantNames(List.of(new ParticipantName("duei")));
+        GameManager gameManager = new GameManager(participantNames,
+                Map.of(new ParticipantName("duei"), new BettingAmount(10000)), new GameManagerTest.TestCardProvider());
 
         Participants participants = gameManager.findParticipants();
         Participant duei = participants.findPlayers().getFirst();
@@ -90,7 +97,9 @@ public class GameManagerTest {
 
     @Test
     void 플레이어가_카드를_뽑지않아도_되는_상황이면_false를_반환한다() {
-        GameManager gameManager = new GameManager(List.of("duei"), Map.of("duei", 10000), new GameManagerTest.TestCardProvider());
+        ParticipantNames participantNames = new ParticipantNames(List.of(new ParticipantName("duei")));
+        GameManager gameManager = new GameManager(participantNames,
+                Map.of(new ParticipantName("duei"), new BettingAmount(10000)), new GameManagerTest.TestCardProvider());
 
         Participants participants = gameManager.findParticipants();
         Participant duei = participants.findPlayers().getFirst();
@@ -101,14 +110,18 @@ public class GameManagerTest {
 
     @Test
     void 딜러가_카드를_뽑아야하는_상황이면_true를_반환한다() {
-        GameManager gameManager = new GameManager(List.of("duei"), Map.of("duei", 10000), new GameManagerTest.TestCardProvider());
+        ParticipantNames participantNames = new ParticipantNames(List.of(new ParticipantName("duei")));
+        GameManager gameManager = new GameManager(participantNames,
+                Map.of(new ParticipantName("duei"), new BettingAmount(10000)), new GameManagerTest.TestCardProvider());
 
         assertThat(gameManager.shouldDealerHit()).isTrue();
     }
 
     @Test
     void 딜러가_카드를_뽑지않아도_되는_상황이면_false를_반환한다() {
-        GameManager gameManager = new GameManager(List.of("duei"), Map.of("duei", 10000), new GameManagerTest.TestCardProvider());
+        ParticipantNames participantNames = new ParticipantNames(List.of(new ParticipantName("duei")));
+        GameManager gameManager = new GameManager(participantNames,
+                Map.of(new ParticipantName("duei"), new BettingAmount(10000)), new GameManagerTest.TestCardProvider());
 
         Participants participants = gameManager.findParticipants();
         Participant dealer = participants.findDealer();
@@ -119,8 +132,11 @@ public class GameManagerTest {
 
     @Test
     void 최종_플레이어들의_수익을_반환한다() {
-        GameManager gameManager = new GameManager(
-                List.of("drago", "duei"), Map.of("drago", 10000, "duei", 20000), new GameManagerTest.TestCardProvider());
+        ParticipantNames participantNames = new ParticipantNames(List.of(new ParticipantName("drago"), new ParticipantName("duei")));
+        GameManager gameManager = new GameManager(participantNames,
+                Map.of(new ParticipantName("drago"), new BettingAmount(10000),
+                        new ParticipantName("duei"), new BettingAmount(20000)),
+                new GameManagerTest.TestCardProvider());
         Cards cardsOfDrago = new Cards(
                 List.of(new Card(Suit.CLOVER, Rank.EIGHT), new Card(Suit.HEART, Rank.JACK)));
         Cards cardsOfDuei = new Cards(
@@ -136,8 +152,11 @@ public class GameManagerTest {
 
     @Test
     void 최종_딜러의_수익을_반환한다() {
-        GameManager gameManager = new GameManager(
-                List.of("drago", "duei"), Map.of("drago", 10000, "duei", 20000), new GameManagerTest.TestCardProvider());
+        ParticipantNames participantNames = new ParticipantNames(List.of(new ParticipantName("drago"), new ParticipantName("duei")));
+        GameManager gameManager = new GameManager(participantNames,
+                Map.of(new ParticipantName("drago"), new BettingAmount(10000),
+                        new ParticipantName("duei"), new BettingAmount(20000)),
+                new GameManagerTest.TestCardProvider());
 
         int expected = 30000;
 
@@ -146,13 +165,13 @@ public class GameManagerTest {
 
     @Test
     void 게임의_모든_참가자들을_반환한다() {
-        GameManager gameManager = new GameManager(List.of("duei"), Map.of("duei", 10000), new GameManagerTest.TestCardProvider());
+        ParticipantNames participantNames = new ParticipantNames(List.of(new ParticipantName("duei")));
+        GameManager gameManager = new GameManager(participantNames,
+                Map.of(new ParticipantName("duei"), new BettingAmount(10000)), new GameManagerTest.TestCardProvider());
 
-        ParticipantName name = new ParticipantName("duei");
-        BettingAmount bettingAmount = new BettingAmount(10000);
         Cards cardsOfDuei = new Cards(
                 List.of(new Card(Suit.CLOVER, Rank.EIGHT), new Card(Suit.HEART, Rank.JACK)));
-        Player duei = new Player(name, bettingAmount, cardsOfDuei);
+        Player duei = new Player(new ParticipantName("duei"), new BettingAmount(10000), cardsOfDuei);
 
         Cards cardsOfDealer = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.FIVE), new Card(Suit.SPADE, Rank.QUEEN)));

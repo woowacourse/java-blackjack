@@ -5,6 +5,7 @@ import domain.card.Cards;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.ParticipantName;
+import domain.participant.ParticipantNames;
 import domain.participant.Participants;
 import domain.participant.Player;
 
@@ -20,21 +21,32 @@ public class GameManager {
     private final CardProvider provider;
     private final Participants participants;
 
-    public GameManager(List<String> playerNames, Map<String, Integer> bettingAmounts, CardProvider provider) {
+    public GameManager(ParticipantNames playerNames, Map<ParticipantName, BettingAmount> bettingAmounts, CardProvider provider) {
         this.provider = provider;
         this.participants = createParticipants(playerNames, bettingAmounts);
     }
 
-    private Participants createParticipants(List<String> playerNames, Map<String, Integer> bettingAmounts) {
-        List<Participant> participants = playerNames.stream()
-                .map(name -> {
-                    ParticipantName participantName = new ParticipantName(name);
-                    BettingAmount bettingAmount = new BettingAmount(bettingAmounts.get(name));
-                    Cards cards = new Cards(provider.provideCards(INITIAL_DRAW_SIZE));
-                    return new Player(participantName, bettingAmount, cards);
-                }).collect(Collectors.toList());
-        participants.add(new Dealer(new Cards(provider.provideCards(INITIAL_DRAW_SIZE))));
+    private Participants createParticipants(ParticipantNames playerNames, Map<ParticipantName, BettingAmount> bettingAmounts) {
+        List<Participant> participants = initPlayers(playerNames, bettingAmounts);
+        participants.add(initDealer());
         return new Participants(participants);
+    }
+
+    private List<Participant> initPlayers(ParticipantNames playerNames, Map<ParticipantName, BettingAmount> bettingAmounts) {
+        return playerNames.getParticipantNames()
+                .stream()
+                .map(name -> {
+                    Cards cards = drawInitialcards();
+                    return new Player(name, bettingAmounts.get(name), cards);
+                }).collect(Collectors.toList());
+    }
+
+    private Cards drawInitialcards() {
+        return new Cards(provider.provideCards(INITIAL_DRAW_SIZE));
+    }
+
+    private Dealer initDealer() {
+        return new Dealer(drawInitialcards());
     }
 
     public void drawCard(Participant participant) {
