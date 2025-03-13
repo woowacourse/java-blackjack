@@ -27,7 +27,7 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public String readIfHit(final Player player) {
+    public String readHitOrStand(final Player player) {
         System.out.println(String.format(LINE + INPUT_WANT_HIT, player.getNickName()));
         return scanner.nextLine();
     }

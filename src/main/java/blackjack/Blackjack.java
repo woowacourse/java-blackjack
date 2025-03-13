@@ -40,15 +40,6 @@ public class Blackjack {
         }
     }
 
-    private void receiveBettingMoney(final InputView inputView, final Player player) {
-        try {
-            player.bet(inputView.readBettingMoney(player));
-        } catch (IllegalArgumentException e) {
-            inputView.printErrorMessage(e);
-            receiveBettingMoney(inputView, player);
-        }
-    }
-
     public void deal() {
         final List<Card> dealerCards = dealer.spreadTwoCards();
         dealer.receiveCards(dealerCards);
@@ -75,10 +66,10 @@ public class Blackjack {
                 .anyMatch(player -> player.sumCards() == BLACKJACK_SCORE);
     }
 
-    public void hit(final InputView inputView, final ResultView resultView) {
+    public void hitOrStand(final InputView inputView, final ResultView resultView) {
         for (Player player : players.getPlayers()) {
             while (!player.isBust(BLACKJACK_SCORE)) {
-                final boolean isHit = readIfHit(inputView, player);
+                final boolean isHit = readHitOrStand(inputView, player);
                 if (!isHit) {
                     break;
                 }
@@ -94,22 +85,31 @@ public class Blackjack {
         }
     }
 
-    private boolean readIfHit(final InputView inputView, final Player player) {
-        try {
-            final String answer = inputView.readIfHit(player);
-            final UserAnswer userAnswer = UserAnswer.of(answer);
-            return userAnswer.isYes();
-        } catch (IllegalArgumentException e) {
-            inputView.printErrorMessage(e);
-        }
-        return readIfHit(inputView, player);
-    }
-
     public void showSum(final ResultView resultView) {
         resultView.printEmptyLine();
         resultView.printCardsSum(dealer, dealer.showAllCards(), dealer.sumCards());
         for (Player player : players.getPlayers()) {
             resultView.printCardsSum(player, player.showAllCards(), player.sumCards());
         }
+    }
+
+    private void receiveBettingMoney(final InputView inputView, final Player player) {
+        try {
+            player.bet(inputView.readBettingMoney(player));
+        } catch (IllegalArgumentException e) {
+            inputView.printErrorMessage(e);
+            receiveBettingMoney(inputView, player);
+        }
+    }
+
+    private boolean readHitOrStand(final InputView inputView, final Player player) {
+        try {
+            final String answer = inputView.readHitOrStand(player);
+            final UserAnswer userAnswer = UserAnswer.of(answer);
+            return userAnswer.isYes();
+        } catch (IllegalArgumentException e) {
+            inputView.printErrorMessage(e);
+        }
+        return readHitOrStand(inputView, player);
     }
 }

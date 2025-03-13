@@ -8,10 +8,6 @@ import blackjack.view.ResultView;
 
 public class Application {
     public static void main(String[] args) {
-        startBlackjack();
-    }
-
-    public static void startBlackjack() {
         final Blackjack blackjack = new Blackjack(new Dealer(new CardRandomMachine()), new Players());
         final InputView inputView = new InputView();
         final ResultView resultView = new ResultView();
@@ -22,7 +18,7 @@ public class Application {
         blackjack.deal();
         blackjack.showInitialCards(resultView);
         if (!blackjack.isPush()) {
-            blackjack.hit(inputView, resultView);
+            blackjack.hitOrStand(inputView, resultView);
         }
         blackjack.showSum(resultView);
     }
