@@ -6,7 +6,7 @@ public enum WinningStatus {
     WIN,
     DRAW,
     LOSE,
-    ;
+    BLACKJACK_WIN;
     
     private static final int BUST_THRESHOLD = 21;
     private static final int BLACKJACK_SUM = 21;
@@ -50,7 +50,7 @@ public enum WinningStatus {
     
     private static WinningStatus determineWinningStatusWhenSumEquals(BlackjackWinDeterminable myHand, BlackjackWinDeterminable opponentHand) {
         if (isBlackjack(myHand) && !isBlackjack(opponentHand)) {
-            return WinningStatus.WIN;
+            return WinningStatus.BLACKJACK_WIN;
         }
         if (!isBlackjack(myHand) && isBlackjack(opponentHand)) {
             return WinningStatus.LOSE;

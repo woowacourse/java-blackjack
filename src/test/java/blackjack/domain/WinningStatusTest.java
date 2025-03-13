@@ -63,7 +63,7 @@ class WinningStatusTest {
         looser.addCard(HEART_9);
         looser.addCard(HEART_3);
         
-        assertThat(WinningStatus.determineWinningStatus(winner, looser)).isEqualTo(WinningStatus.WIN);
+        assertThat(WinningStatus.determineWinningStatus(winner, looser)).isEqualTo(WinningStatus.BLACKJACK_WIN);
     }
     
     @Test
