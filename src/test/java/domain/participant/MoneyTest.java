@@ -39,4 +39,14 @@ class MoneyTest {
                 .hasMessage("입력이 정수 형식이 아닙니다.");
     }
 
+    @ParameterizedTest
+    @CsvSource({
+            "0", "-1000"
+    })
+    void 입력이_0보다_작거나_같으면_예외를_발생시킨다(String rawValue) {
+        // when & then
+        assertThatThrownBy(() -> new Money(rawValue))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("입력은 0보다 커야 합니다.");
+    }
 }
