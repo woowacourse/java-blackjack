@@ -55,10 +55,10 @@ public class Cards {
             result.add(sum);
             return result;
         }
-
         Card card = cards.get(index);
-        for (int coordinateNumber : card.getCoordinateNumbers()) {
-            result = getCoordinateSumsByDfs(index + 1, sum + coordinateNumber, result);
+        result = getCoordinateSumsByDfs(index + 1, sum + card.getNumberValue(), result);
+        if (card.getCardNumber() == CardNumber.A) {
+            result = getCoordinateSumsByDfs(index + 1, sum + 11, result);
         }
         return result;
     }

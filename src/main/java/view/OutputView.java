@@ -100,7 +100,7 @@ public class OutputView {
             case KING -> "K";
             case QUEEN -> "Q";
             case JACK -> "J";
-            default -> String.valueOf(cardNumber.getCoordinates().getFirst());
+            default -> String.valueOf(cardNumber.value);
         };
     }
 
