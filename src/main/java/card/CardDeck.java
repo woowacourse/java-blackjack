@@ -1,4 +1,4 @@
-package domain.card;
+package card;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,7 +12,7 @@ public class CardDeck {
 
     private final List<Card> deck;
 
-    public static CardDeck createCards(CardShuffler cardShuffler) {
+    public static CardDeck prepareDeck(CardShuffler cardShuffler) {
         List<Card> cards = generateAllCards();
         List<Card> shuffledCards = cardShuffler.shuffle(cards);
         return new CardDeck(shuffledCards);

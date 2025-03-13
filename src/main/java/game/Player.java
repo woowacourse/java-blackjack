@@ -1,6 +1,6 @@
-package domain.game;
+package game;
 
-import domain.card.Card;
+import card.Card;
 import java.util.List;
 import java.util.Objects;
 

@@ -1,13 +1,13 @@
-package domain.game;
+package game;
 
-import static domain.card.CardDeck.DRAW_COUNT_WHEN_HIT;
-import static domain.card.CardDeck.DRAW_COUNT_WHEN_START;
+import static card.CardDeck.DRAW_COUNT_WHEN_HIT;
+import static card.CardDeck.DRAW_COUNT_WHEN_START;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.card.Card;
-import domain.card.CardDeck;
-import domain.card.CardNumber;
-import domain.card.Pattern;
+import card.Card;
+import card.CardDeck;
+import card.CardNumber;
+import card.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ public class PlayerTest {
     @Test
     void 플레이어는_게임_시작_시_두_장의_카드를_받는다() {
         //given
-        CardDeck cardDeck = CardDeck.createCards(ArrayList::new);
+        CardDeck cardDeck = CardDeck.prepareDeck(ArrayList::new);
         String name = "pobi";
         Player player = new Player(name);
 
@@ -31,7 +31,7 @@ public class PlayerTest {
     @Test
     void 플레이어는_한_장의_카드를_받는다() {
         //given
-        CardDeck cardDeck = CardDeck.createCards(ArrayList::new);
+        CardDeck cardDeck = CardDeck.prepareDeck(ArrayList::new);
         String name = "pobi";
         Player player = new Player(name);
 

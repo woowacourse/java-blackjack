@@ -1,8 +1,8 @@
-package domain.game;
+package game;
 
-import static domain.card.CardDeck.DRAW_COUNT_WHEN_START;
+import static card.CardDeck.DRAW_COUNT_WHEN_START;
 
-import domain.card.CardDeck;
+import card.CardDeck;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

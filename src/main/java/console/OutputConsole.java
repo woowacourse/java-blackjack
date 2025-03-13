@@ -1,15 +1,15 @@
-package view;
+package console;
 
-import domain.card.Card;
-import domain.card.CardDeck;
-import domain.card.CardNumber;
-import domain.game.Dealer;
-import domain.game.GameResult;
-import domain.game.Player;
-import domain.game.Players;
+import card.Card;
+import card.CardDeck;
+import card.CardNumber;
+import game.Dealer;
+import game.GameResult;
+import game.Player;
+import game.Players;
 import java.util.List;
 
-public class OutputView {
+public class OutputConsole {
 
     public void printInitialGame(Card dealerCard, List<Player> players) {
         String playerNames = formatPlayerNames(players);

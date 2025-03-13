@@ -1,12 +1,12 @@
-package domain.game;
+package game;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import domain.card.Card;
-import domain.card.CardDeck;
-import domain.card.CardNumber;
-import domain.card.Pattern;
+import card.Card;
+import card.CardDeck;
+import card.CardNumber;
+import card.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -63,7 +63,7 @@ public class PlayersTest {
     @Test
     void 모든_플레이어는_게임_시작_시_카드를_드로우한다() {
         //given
-        CardDeck cardDeck = CardDeck.createCards(ArrayList::new);
+        CardDeck cardDeck = CardDeck.prepareDeck(ArrayList::new);
         Players players = new Players(List.of(
                 new Player("a"),
                 new Player("b")));

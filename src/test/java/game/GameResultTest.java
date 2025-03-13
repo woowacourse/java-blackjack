@@ -1,8 +1,8 @@
-package domain.game;
+package game;
 
-import domain.card.Card;
-import domain.card.CardNumber;
-import domain.card.Pattern;
+import card.Card;
+import card.CardNumber;
+import card.Pattern;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,7 @@
-package domain.game;
+package game;
 
-import domain.card.Card;
-import domain.card.CardNumber;
+import card.Card;
+import card.CardNumber;
 import java.util.ArrayList;
 import java.util.List;
 
