@@ -1,4 +1,4 @@
-package value;
+package money;
 
 public class Money {
 	private final int value;
