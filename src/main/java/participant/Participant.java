@@ -7,15 +7,14 @@ import java.util.List;
 
 public abstract class Participant {
 
-    private static final int BUST_NUMBER = 21;
+    private static final int BLACKJACK_NUMBER = 21;
+    private static final int BUST_NUMBER = 22;
 
     private final String nickname;
-    private final int betAmount;
     private final Cards cards;
 
-    public Participant(String nickname, int betAmount) {
+    public Participant(String nickname) {
         this.nickname = nickname;
-        this.betAmount = betAmount;
         this.cards = new Cards();
     }
 
@@ -23,8 +22,12 @@ public abstract class Participant {
         cards.add(card);
     }
 
+    public boolean isBlackjack() {
+        return cards.calculateNearestTotal() == BLACKJACK_NUMBER && getCards().size() == 2;
+    }
+
     public boolean isBust() {
-        return cards.calculateNearestTotal() > BUST_NUMBER;
+        return cards.calculateNearestTotal() >= BUST_NUMBER;
     }
 
     public int score() {
