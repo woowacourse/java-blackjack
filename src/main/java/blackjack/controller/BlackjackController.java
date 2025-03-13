@@ -17,6 +17,7 @@ public class BlackjackController {
     public void run() {
         try {
             Players players = createPlayers();
+            playersBettingMoney(players);
             Dealer dealer = new Dealer(players, DeckFactory.createShuffledDeck(new RandomCardsShuffler()));
             handOutCards(dealer, players);
             additionalCard(dealer, players);
@@ -31,6 +32,13 @@ public class BlackjackController {
     private Players createPlayers() {
         String[] playerNames = InputView.inputPlayerNames();
         return new Players(toPlayers(playerNames));
+    }
+
+    private void playersBettingMoney(Players players) {
+        players.sendAll(player -> {
+            int playerBettingMoney = InputView.inputBettingMoney(player);
+            player.setBettingMoney(playerBettingMoney);
+        });
     }
 
     private static List<Player> toPlayers(String[] playerNames) {

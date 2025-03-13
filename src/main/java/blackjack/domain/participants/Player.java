@@ -39,6 +39,10 @@ public class Player {
         return name;
     }
 
+    public void setBettingMoney(int playerBettingMoney) {
+        bettingMoney = playerBettingMoney;
+    }
+
     public int makeProfit(int multiplyRatio) {
         return bettingMoney * multiplyRatio;
     }

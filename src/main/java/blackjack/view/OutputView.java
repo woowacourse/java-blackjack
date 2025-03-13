@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.GameResult;
+import blackjack.domain.card.BettingResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Rank;
@@ -40,6 +41,9 @@ public class OutputView {
     }
 
     public static void printDealerAdditionalCard(int additionalCardsNumber) {
+        if (additionalCardsNumber == 0) {
+            return;
+        }
         System.out.printf("딜러는 16이하라 %d장의 카드를 더 받았습니다.\n", additionalCardsNumber);
         System.out.println();
     }
@@ -73,14 +77,15 @@ public class OutputView {
     }
 
     public static void printGameResult(GameResult gameResult, List<Player> players) {
+        System.out.println("## 최종 승패");
         Map<WinningResult, Integer> dealerGameResults = gameResult.getDealerGameResults();
         Map<Player, WinningResult> playerGameResults = gameResult.getPlayerGameResults();
-        System.out.println("## 최종 승패");
         printIfPresentWinningResult(dealerGameResults);
         dealerGameResults.getOrDefault(WinningResult.LOSE, 0);
         for (Player player : players) {
             System.out.printf("%s: %s\n", player.getName(), toKoreanWinningResult(playerGameResults.get(player)));
         }
+        System.out.println();
     }
 
     private static void printIfPresentWinningResult(Map<WinningResult, Integer> dealerGameResults) {
@@ -95,6 +100,14 @@ public class OutputView {
             System.out.printf(" %d패", dealerGameResults.get(WinningResult.LOSE));
         }
         System.out.println();
+    }
+
+    public static void printBettingResult(BettingResult bettingResult, List<Player> players) {
+        System.out.println("## 최종 수익");
+        Map<Player, Integer> playerBettingResult = bettingResult.getPlayerBettingResults();
+        for (Player player : players) {
+            System.out.printf("%s: %d\n", player.getName(), playerBettingResult.get(player));
+        }
     }
 
     private static String toKoreanRank(Rank rank) {
