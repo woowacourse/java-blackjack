@@ -10,7 +10,7 @@ import java.util.List;
 
 public class PlayerBets {
 
-    private static final int MIN_BET = 1;
+    private static final int INCREMENT = 1_000;
     private static final int MAX_BET = 100_000_000;
 
     private final LinkedHashMap<Gamer, Integer> bets = new LinkedHashMap<>();
@@ -21,8 +21,11 @@ public class PlayerBets {
     }
 
     private void validateRange(int amount) {
-        if (amount < MIN_BET) {
-            throw new IllegalArgumentException(String.format("[ERROR] %s 이상의 수를 입력해 주세요.", MIN_BET));
+        if (amount < INCREMENT) {
+            throw new IllegalArgumentException(String.format("[ERROR] %s 이상의 수를 입력해 주세요.", INCREMENT));
+        }
+        if (amount % INCREMENT != 0) {
+            throw new IllegalArgumentException(String.format("[ERROR] %s 단위로 입력해 주세요.", INCREMENT));
         }
         if (amount > MAX_BET) {
             throw new IllegalArgumentException(String.format("[ERROR] %s 이하의 수를 입력해 주세요.", MAX_BET));
