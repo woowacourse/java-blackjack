@@ -10,6 +10,7 @@ public class Hand {
     private static final int ORIGINAL_ACE_VALUE = 11;
     private static final int BUST_THRESHOLD = 21;
     public static final int INITIAL_SIZE = 2;
+
     private final List<Card> cards;
 
     public Hand() {
@@ -53,7 +54,7 @@ public class Hand {
     }
 
     public int getExtraSize() {
-        return cards.size()- INITIAL_SIZE;
+        return cards.size() - INITIAL_SIZE;
     }
 
     public List<Card> getCards() {

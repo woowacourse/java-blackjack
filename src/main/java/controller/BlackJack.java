@@ -18,45 +18,43 @@ import java.util.Map;
 
 public class BlackJack {
 
-    private Players players;
-    private final Dealer dealer = new Dealer();
-
-    private final Deck deck = new Deck();
-    private final Accountant accountant = new Accountant();
-
     public void play() {
-        preset();
-        playersTurn();
-        dealersTurn();
-        printResult();
+        Dealer dealer = new Dealer();
+        Deck deck = new Deck();
+        Accountant accountant = new Accountant();
+        Players players = preset(dealer, deck, accountant);
+        playersTurn(players, deck);
+        dealersTurn(dealer, deck);
+        printResult(players, dealer, accountant);
     }
 
-    private void preset() {
-        players = new Players(getPlayerNamesInput());
+    private Players preset(Dealer dealer, Deck deck, Accountant accountant) {
+        Players players = new Players(getPlayerNamesInput());
         accountBettingPrice(players, accountant);
         deck.distributeCards(dealer, players);
         printDistributeResult(players, dealer);
+        return players;
     }
 
-    private void playersTurn() {
+    private void playersTurn(Players players, Deck deck) {
         for (Player player : players.getPlayers()) {
             player.drawByChoice(deck);
         }
     }
 
-    public void dealersTurn() {
+    public void dealersTurn(Dealer dealer, Deck deck) {
         dealer.drawWithThreshold(deck);
     }
 
-    private void printResult() {
+    private void printResult(Players players, Dealer dealer, Accountant accountant) {
         printDealerExtraCardsCount(dealer);
         printEveryOneCardsNamesWithTotal(players, dealer);
-        Map<Player, Integer> profitPerParticipant = calculateProfit();
+        Map<Player, Integer> profitPerParticipant = calculateProfit(players, dealer, accountant);
         printProfitPerParticipant(profitPerParticipant, dealer);
 //        printWinLossResult(players, dealer, countWinLoss(players, dealer));
     }
 
-    private Map<Player, Integer> calculateProfit() {
+    private Map<Player, Integer> calculateProfit(Players players, Dealer dealer, Accountant accountant) {
         Map<Player, Integer> profitPerParticipant = new LinkedHashMap<>();
         int dealersProfit = 0;
         for (Player player : players.getPlayers()) {
