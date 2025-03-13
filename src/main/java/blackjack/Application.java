@@ -1,5 +1,7 @@
 package blackjack;
 
+import blackjack.blackjack.Blackjack;
+import blackjack.blackjack.WinningStatus;
 import blackjack.cardMachine.CardRandomMachine;
 import blackjack.gamer.Dealer;
 import blackjack.gamer.Player;

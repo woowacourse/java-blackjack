@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.blackjack;
 
 public enum WinningStatus {
 
