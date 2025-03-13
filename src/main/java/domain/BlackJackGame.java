@@ -25,6 +25,10 @@ public class BlackJackGame {
         return new BlackJackGame(dealer, players);
     }
 
+    public static BlackJackGame of(Dealer dealer, Players players) {
+        return new BlackJackGame(dealer, players);
+    }
+
     public void setupDealerCards() {
         dealer.drawUntilLimit();
     }
@@ -58,6 +62,10 @@ public class BlackJackGame {
         return dealer.getGameResult(players);
     }
 
+    public Map<Player, Money> calculateRevenue() {
+        return null;
+    }
+
     public Map<GameResult, Integer> calculateDealerWinningCount() {
         Map<Player, GameResult> playerResult = calculateGameResult();
         Map<GameResult, Integer> dealerWinningCount = new HashMap<>();
@@ -66,6 +74,11 @@ public class BlackJackGame {
                 .forEach((result) -> dealerWinningCount.put(result, dealerWinningCount.getOrDefault(result, 0) + 1));
 
         return dealerWinningCount;
+    }
+
+    public Money calculateDealerRevenue() {
+        Map<Player, Money> results = calculateRevenue();
+        return results.values().stream().reduce(Money::plus).map(money -> money.times(-1)).orElse(Money.of(0));
     }
 
     public int calculateDealerDrawCount() {
