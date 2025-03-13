@@ -22,10 +22,7 @@ public class Dealer extends Gambler {
         return (calculateScore() <= TAKE_CARD_THRESHOLD);
     }
 
-    public Winning judgeWinningForPlayer(Player playerToCompare) {
-        int dealerScore = calculateScore();
-        int playerScore = playerToCompare.calculateScore();
-
-        return Winning.determineForPlayer(playerScore, dealerScore);
+    public Winning judgeWinningForPlayer(Player player) {
+        return Winning.determineForPlayer(player, this);
     }
 }

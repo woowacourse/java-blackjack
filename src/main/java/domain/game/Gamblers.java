@@ -53,10 +53,11 @@ public class Gamblers {
     }
 
     public Map<Player, Winning> evaluatePlayerWinnings() {
-        int dealerScore = dealer.calculateScore();
         return players.stream()
-            .collect(toMap(Function.identity(),
-                player -> Winning.determineForPlayer(player.calculateScore(), dealerScore)));
+            .collect(toMap(
+                Function.identity(),
+                dealer::judgeWinningForPlayer
+            ));
     }
 
     private void validatePlayers(List<Player> players) {

@@ -78,6 +78,24 @@ public class PlayerTest {
     }
 
     @Test
+    void 플레이어가_블랙잭인지_알_수_있다() {
+        //given
+        player.takeCards(Card.SPADE_A, Card.HEART_10);
+
+        //when
+        boolean blackJack = player.isBlackJack();
+
+        //then
+        assertThat(blackJack).isTrue();
+    }
+
+    @Test
+    void 점수가_21점을_넘으면_버스트이다() {
+        player.takeCards(Card.SPADE_10, Card.HEART_10, Card.SPADE_2);
+        assertThat(player.isBust()).isTrue();
+    }
+
+    @Test
     void 플레이어의_점수가_21점_이하일_때_카드를_더_받을수있다() {
         //given
         player.takeCards(Card.SPADE_J, Card.SPADE_K);
