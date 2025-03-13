@@ -34,11 +34,12 @@ public class Dealer extends Gamer {
         return cardMachine.drawOneCard();
     }
 
-    private List<Card> organizeDeck() {
-        return Arrays.stream(Shape.values())
-                .flatMap(shape -> Arrays.stream(Denomination.values())
-                        .map(denomination -> new Card(shape, denomination)))
-                .toList();
+    public boolean isHit() {
+        return hand.sumCards() <= HIT_THRESHOLD;
+    }
+
+    public void updateEarnedMoney(final long money) {
+        bettingMachine.earnMoney(money);
     }
 
     @Override
@@ -51,11 +52,10 @@ public class Dealer extends Gamer {
         return NICKNAME;
     }
 
-    public boolean isHit() {
-        return hand.sumCards() <= HIT_THRESHOLD;
-    }
-
-    public void updateEarnedMoney(final long money) {
-        bettingMachine.earnMoney(money);
+    private List<Card> organizeDeck() {
+        return Arrays.stream(Shape.values())
+                .flatMap(shape -> Arrays.stream(Denomination.values())
+                        .map(denomination -> new Card(shape, denomination)))
+                .toList();
     }
 }

@@ -62,7 +62,6 @@ public class Blackjack {
     }
 
     public boolean isPush() {
-
         if (!dealer.isBlackjack(BLACKJACK_SCORE, BLACKJACK_CARD_COUNT)) {
             return false;
         }
@@ -136,6 +135,14 @@ public class Blackjack {
         dealer.updateEarnedMoney(-1 * playersTotalProfit);
     }
 
+    public void showProfit(final ResultView resultView) {
+        resultView.printProfitHead();
+        resultView.printProfit(dealer, dealer.getProfit());
+        for (Player player : players.getPlayers()) {
+            resultView.printProfit(player, player.getProfit());
+        }
+    }
+
     private void receiveBettingMoney(final InputView inputView, final Player player) {
         try {
             player.bet(inputView.readBettingMoney(player));
@@ -183,13 +190,5 @@ public class Blackjack {
             return WinningStatus.DRAW;
         }
         return WinningStatus.LOSE;
-    }
-
-    public void showProfit(final ResultView resultView) {
-        resultView.printProfitHead();
-        resultView.printProfit(dealer, dealer.getProfit());
-        for (Player player : players.getPlayers()) {
-            resultView.printProfit(player, player.getProfit());
-        }
     }
 }
