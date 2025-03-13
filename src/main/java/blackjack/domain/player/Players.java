@@ -3,6 +3,8 @@ package blackjack.domain.player;
 import blackjack.domain.card.CardPack;
 import blackjack.domain.game.GameResults;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
@@ -16,7 +18,7 @@ public class Players {
     public Players(List<Gambler> gamblers) {
         this.dealer = new Dealer();
         validateHasDuplication(gamblers);
-        this.gamblers = gamblers;
+        this.gamblers = new ArrayList<>(gamblers);
     }
 
     private void validateHasDuplication(List<Gambler> gamblers) {
@@ -31,7 +33,7 @@ public class Players {
     }
 
     public List<Gambler> getGamblers() {
-        return gamblers;
+        return Collections.unmodifiableList(gamblers);
     }
 
     public void dealInitCardsToPlayers(CardPack cardPack) {

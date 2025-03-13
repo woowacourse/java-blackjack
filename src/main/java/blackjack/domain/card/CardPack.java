@@ -27,6 +27,6 @@ public class CardPack {
         List<Card> dealCards = new ArrayList<>();
         IntStream.range(0, count).forEach(i ->
                 dealCards.add(cards.removeLast()));
-        return dealCards;
+        return Collections.unmodifiableList(dealCards);
     }
 }
