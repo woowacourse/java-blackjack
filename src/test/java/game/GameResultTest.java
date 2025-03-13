@@ -13,19 +13,79 @@ import participant.Player;
 class GameResultTest {
 
     @Test
-    @DisplayName("두 점수 사이 승패 여부 결정 테스트")
+    @DisplayName("플레이어의 승패 여부를 결정한다. (플레이어만 Blackjack)")
     void test1() {
         // given
         Player player = new Player("율무", 10000);
         player.receiveCard(new Card(CardShape.DIAMOND, CardNumber.TEN));
-        player.receiveCard(new Card(CardShape.DIAMOND, CardNumber.JACK));
+        player.receiveCard(new Card(CardShape.DIAMOND, CardNumber.ACE));
 
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.THREE));
         dealer.receiveCard(new Card(CardShape.CLOVER, CardNumber.THREE));
 
         // when
-        GameResult result = GameResult.judge(player, dealer);
+        GameResult result = GameResult.judgePlayerResult(dealer, player);
+
+        // then
+        assertThat(result)
+                .isEqualTo(GameResult.BLACKJACK);
+    }
+
+    @Test
+    @DisplayName("플레이어의 승패 여부를 결정한다. (플레이어, 딜러 모두 Blackjack)")
+    void test2() {
+        // given
+        Player player = new Player("율무", 10000);
+        player.receiveCard(new Card(CardShape.DIAMOND, CardNumber.TEN));
+        player.receiveCard(new Card(CardShape.DIAMOND, CardNumber.ACE));
+
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.TEN));
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.ACE));
+
+        // when
+        GameResult result = GameResult.judgePlayerResult(dealer, player);
+
+        // then
+        assertThat(result)
+                .isEqualTo(GameResult.DRAW);
+    }
+
+    @Test
+    @DisplayName("플레이어의 승패 여부를 결정한다. (딜러만 Blackjack)")
+    void test3() {
+        // given
+        Player player = new Player("율무", 10000);
+        player.receiveCard(new Card(CardShape.DIAMOND, CardNumber.THREE));
+        player.receiveCard(new Card(CardShape.DIAMOND, CardNumber.THREE));
+
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.TEN));
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.ACE));
+
+        // when
+        GameResult result = GameResult.judgePlayerResult(dealer, player);
+
+        // then
+        assertThat(result)
+                .isEqualTo(GameResult.LOSE);
+    }
+
+    @Test
+    @DisplayName("플레이어의 승패 여부를 결정한다. (플레이어 > 딜러 && 둘 다 Bust X)")
+    void test4() {
+        // given
+        Player player = new Player("율무", 10000);
+        player.receiveCard(new Card(CardShape.DIAMOND, CardNumber.TEN));
+        player.receiveCard(new Card(CardShape.DIAMOND, CardNumber.EIGHT));
+
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.THREE));
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.THREE));
+
+        // when
+        GameResult result = GameResult.judgePlayerResult(dealer, player);
 
         // then
         assertThat(result)
@@ -33,21 +93,106 @@ class GameResultTest {
     }
 
     @Test
-    @DisplayName("카드의 반대 결과를 출력한다.")
-    void test2() {
+    @DisplayName("플레이어의 승패 여부를 결정한다. (플레이어 < 딜러 && 둘 다 Bust X)")
+    void test5() {
         // given
-        GameResult win = GameResult.WIN;
-        GameResult lose = GameResult.LOSE;
-        GameResult draw = GameResult.DRAW;
+        Player player = new Player("율무", 10000);
+        player.receiveCard(new Card(CardShape.DIAMOND, CardNumber.THREE));
+        player.receiveCard(new Card(CardShape.DIAMOND, CardNumber.THREE));
+
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.TEN));
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.EIGHT));
 
         // when
-        GameResult inverseWin = win.inverse();
-        GameResult inverseLose = lose.inverse();
-        GameResult inverseDraw = draw.inverse();
+        GameResult result = GameResult.judgePlayerResult(dealer, player);
 
         // then
-        assertThat(inverseWin).isEqualTo(GameResult.LOSE);
-        assertThat(inverseLose).isEqualTo(GameResult.WIN);
-        assertThat(inverseDraw).isEqualTo(GameResult.DRAW);
+        assertThat(result)
+                .isEqualTo(GameResult.LOSE);
+    }
+
+    @Test
+    @DisplayName("플레이어의 승패 여부를 결정한다. (플레이어 = 딜러 && 둘 다 Bust X)")
+    void test6() {
+        // given
+        Player player = new Player("율무", 10000);
+        player.receiveCard(new Card(CardShape.DIAMOND, CardNumber.TEN));
+        player.receiveCard(new Card(CardShape.DIAMOND, CardNumber.EIGHT));
+
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.TEN));
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.EIGHT));
+
+        // when
+        GameResult result = GameResult.judgePlayerResult(dealer, player);
+
+        // then
+        assertThat(result)
+                .isEqualTo(GameResult.DRAW);
+    }
+
+    @Test
+    @DisplayName("플레이어의 승패 여부를 결정한다. (둘 다 Bust)")
+    void test7() {
+        // given
+        Player player = new Player("율무", 10000);
+        player.receiveCard(new Card(CardShape.DIAMOND, CardNumber.TEN));
+        player.receiveCard(new Card(CardShape.DIAMOND, CardNumber.EIGHT));
+        player.receiveCard(new Card(CardShape.DIAMOND, CardNumber.EIGHT));
+
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.TEN));
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.EIGHT));
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.EIGHT));
+
+        // when
+        GameResult result = GameResult.judgePlayerResult(dealer, player);
+
+        // then
+        assertThat(result)
+                .isEqualTo(GameResult.DRAW);
+    }
+
+    @Test
+    @DisplayName("플레이어의 승패 여부를 결정한다. (딜러만 Bust)")
+    void test8() {
+        // given
+        Player player = new Player("율무", 10000);
+        player.receiveCard(new Card(CardShape.DIAMOND, CardNumber.TEN));
+        player.receiveCard(new Card(CardShape.DIAMOND, CardNumber.EIGHT));
+
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.TEN));
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.EIGHT));
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.EIGHT));
+
+        // when
+        GameResult result = GameResult.judgePlayerResult(dealer, player);
+
+        // then
+        assertThat(result)
+                .isEqualTo(GameResult.WIN);
+    }
+
+    @Test
+    @DisplayName("플레이어의 승패 여부를 결정한다. (플레이어만 Bust)")
+    void test9() {
+        // given
+        Player player = new Player("율무", 10000);
+        player.receiveCard(new Card(CardShape.DIAMOND, CardNumber.TEN));
+        player.receiveCard(new Card(CardShape.DIAMOND, CardNumber.EIGHT));
+        player.receiveCard(new Card(CardShape.DIAMOND, CardNumber.EIGHT));
+
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.TEN));
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.EIGHT));
+
+        // when
+        GameResult result = GameResult.judgePlayerResult(dealer, player);
+
+        // then
+        assertThat(result)
+                .isEqualTo(GameResult.LOSE);
     }
 }
