@@ -61,10 +61,10 @@ public final class BlackjackJudge {
         return WinningStatus.determineWinningStatus(playerBlackjackCardHand, dealerBlackjackCardHand);
     }
     
-    public Map<String, WinningStatus> getWinningStatusOfAllPlayers() {
-        Map<String, WinningStatus> playersWinningStatus = new HashMap<>();
+    public Map<Player, WinningStatus> getWinningStatusOfAllPlayers() {
+        Map<Player, WinningStatus> playersWinningStatus = new HashMap<>();
         for (PlayerBlackjackCardHand playerBlackjackCardHand : playerBlackjackCardHands) {
-            playersWinningStatus.put(playerBlackjackCardHand.getPlayerName(),
+            playersWinningStatus.put(playerBlackjackCardHand.getPlayer(),
                     getWinningStatusOf(playerBlackjackCardHand));
         }
         return playersWinningStatus;

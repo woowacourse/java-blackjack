@@ -41,6 +41,10 @@ public final class PlayerBlackjackCardHand implements BlackjackWinDeterminable {
         return player.getName();
     }
     
+    public Player getPlayer() {
+        return player;
+    }
+    
     public List<Card> getCards() {
         return cardHand.getCards();
     }

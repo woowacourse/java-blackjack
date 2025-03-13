@@ -166,9 +166,9 @@ public class BlackjackJudgeTest {
         BlackjackJudge blackjackJudge = new BlackjackJudge(dealerBlackjackCardHand, playerCardHands);
         
         // then
-        Map<String, WinningStatus> expected = new HashMap<>();
-        expected.put(firstPlayer.getName(), blackjackJudge.getWinningStatusOf(firstPlayerCardHand));
-        expected.put(secondPlayer.getName(), blackjackJudge.getWinningStatusOf(secondPlayerCardHand));
+        Map<Player, WinningStatus> expected = new HashMap<>();
+        expected.put(firstPlayer, blackjackJudge.getWinningStatusOf(firstPlayerCardHand));
+        expected.put(secondPlayer, blackjackJudge.getWinningStatusOf(secondPlayerCardHand));
         
         Assertions.assertThat(blackjackJudge.getWinningStatusOfAllPlayers())
                 .containsAllEntriesOf(expected);
