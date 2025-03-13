@@ -3,10 +3,10 @@ package test.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.BlackjackBet;
 import domain.blackjackgame.CardValue;
 import domain.blackjackgame.Suit;
 import domain.blackjackgame.TrumpCard;
+import domain.participant.BlackjackBet;
 import domain.participant.BlackjackCardSum;
 import exception.BlackJackException;
 import java.util.List;
@@ -24,8 +24,8 @@ public class BlackjackBetTest {
     }
 
     @Test
-    void 플레이어는_1원이상만_베팅할_수_있다() {
-        int money = 0;
+    void 플레이어는_0원이상만_베팅할_수_있다() {
+        int money = -1;
         assertThatThrownBy(() -> new BlackjackBet(money)).isInstanceOf(BlackJackException.class);
     }
 
