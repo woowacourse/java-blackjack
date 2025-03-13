@@ -2,13 +2,14 @@ package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.card.Card;
-import domain.card.CardNumberType;
-import domain.card.CardType;
-import domain.card.Hand;
+import card.Card;
+import card.CardNumberType;
+import card.CardType;
+import card.Hand;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import participant.Dealer;
 
 public class DealerTest {
     @DisplayName("카드의 합계가 16 이하이면 True를 반환한다")

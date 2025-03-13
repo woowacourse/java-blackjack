@@ -2,16 +2,19 @@ package domain.participant;
 
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
-import domain.card.Card;
-import domain.card.CardNumberType;
-import domain.card.CardType;
-import domain.card.Hand;
-import domain.result.GameResult;
-import domain.result.GameResultStatus;
+import card.Card;
+import card.CardNumberType;
+import card.CardType;
+import card.Hand;
+import result.GameResult;
+import result.GameResultStatus;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import participant.Dealer;
+import participant.Player;
+import participant.Players;
 
 class PlayersTest {
 

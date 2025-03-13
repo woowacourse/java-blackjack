@@ -1,6 +1,3 @@
-package config;
-
-import controller.BlackjackApplication;
 import view.InputView;
 import view.OutputView;
 import view.support.InputParser;

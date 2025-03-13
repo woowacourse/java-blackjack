@@ -1,4 +1,4 @@
-package domain.card;
+package card;
 
 import static util.ExceptionConstants.*;
 
@@ -18,7 +18,7 @@ public class Deck {
         Collections.shuffle(deck);
     }
 
-    protected Deck(List<Card> cards) {
+    public Deck(List<Card> cards) {
         this.deck = cards;
     }
 

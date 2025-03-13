@@ -1,8 +1,8 @@
-package domain.participant;
+package participant;
 
-import domain.card.Card;
-import domain.card.Hand;
-import domain.card.Score;
+import card.Card;
+import card.Hand;
+import card.Score;
 
 public abstract class Participant {
     protected final Hand hand;

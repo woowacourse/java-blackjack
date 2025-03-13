@@ -1,6 +1,3 @@
-import config.BlackjackConfig;
-import controller.BlackjackApplication;
-
 public class Application {
 
     public static void main(String[] args) {

@@ -1,13 +1,13 @@
 package view;
 
-import static domain.result.GameResultStatus.*;
+import static result.GameResultStatus.*;
 
-import domain.card.Hand;
-import domain.participant.Dealer;
-import domain.result.GameResult;
-import domain.result.GameResultStatus;
-import domain.participant.Player;
-import domain.participant.Players;
+import card.Hand;
+import participant.Dealer;
+import result.GameResult;
+import result.GameResultStatus;
+import participant.Player;
+import participant.Players;
 import java.util.Map;
 import view.support.OutputFormatter;
 

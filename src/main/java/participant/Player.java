@@ -1,7 +1,7 @@
-package domain.participant;
+package participant;
 
-import domain.card.Hand;
-import domain.result.GameResultStatus;
+import card.Hand;
+import result.GameResultStatus;
 import java.util.Objects;
 
 public class Player extends Participant {

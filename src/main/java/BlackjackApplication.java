@@ -1,12 +1,10 @@
-package controller;
-
 import static view.AnswerType.*;
 
-import domain.card.Deck;
-import domain.participant.Players;
-import domain.participant.Dealer;
-import domain.result.GameResult;
-import domain.participant.Player;
+import card.Deck;
+import participant.Players;
+import participant.Dealer;
+import result.GameResult;
+import participant.Player;
 import view.AnswerType;
 import view.InputView;
 import view.OutputView;

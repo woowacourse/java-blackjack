@@ -1,6 +1,6 @@
-package domain.participant;
+package participant;
 
-import domain.card.Hand;
+import card.Hand;
 
 public class Dealer extends Participant {
     private static final int VALID_DRAW_LIMIT = 16;

@@ -1,15 +1,17 @@
 package domain.participant;
 
-import static domain.card.CardNumberType.*;
-import static domain.card.CardType.*;
+import static card.CardNumberType.*;
+import static card.CardType.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.card.Card;
-import domain.card.Hand;
-import domain.result.GameResultStatus;
+import card.Card;
+import card.Hand;
+import result.GameResultStatus;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import participant.Dealer;
+import participant.Player;
 
 public class PlayerTest {
     Dealer bustDealer = new Dealer(new Hand(

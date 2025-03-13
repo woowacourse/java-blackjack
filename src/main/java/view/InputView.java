@@ -1,6 +1,6 @@
 package view;
 
-import domain.participant.Player;
+import participant.Player;
 import java.util.List;
 import java.util.Scanner;
 import view.support.InputParser;

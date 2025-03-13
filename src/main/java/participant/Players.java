@@ -1,9 +1,9 @@
-package domain.participant;
+package participant;
 
-import domain.card.Deck;
-import domain.result.GameResult;
-import domain.result.GameResultStatus;
-import domain.card.Hand;
+import card.Deck;
+import result.GameResult;
+import result.GameResultStatus;
+import card.Hand;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;

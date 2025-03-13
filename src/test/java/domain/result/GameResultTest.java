@@ -2,11 +2,13 @@ package domain.result;
 
 import static org.assertj.core.api.Assertions.*;
 
-import domain.card.Hand;
-import domain.participant.Player;
+import card.Hand;
+import participant.Player;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import result.GameResult;
+import result.GameResultStatus;
 
 class GameResultTest {
 
