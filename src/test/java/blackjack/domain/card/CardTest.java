@@ -49,4 +49,20 @@ class CardTest {
 
         assertThat(result).isEqualTo(excepted);
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "ACE, CLOVER, ACE, CLOVER, TRUE",
+            "ACE, CLOVER, ACE, DIAMOND, FALSE",
+            "ACE, CLOVER, TWO, CLOVER, FALSE"
+    })
+    @DisplayName("동일한 카드인지 판단한다")
+    void shouldDetermineIfCardsAreEqual(CardNumber cardNumber, CardShape cardShape, CardNumber otherCardNumber, CardShape otherCardShape, boolean excepted) {
+        Card card = new Card(cardNumber, cardShape);
+        Card otherCard = new Card(otherCardNumber, otherCardShape);
+
+        boolean result = card.equals(otherCard);
+
+        assertThat(result).isEqualTo(excepted);
+    }
 }
