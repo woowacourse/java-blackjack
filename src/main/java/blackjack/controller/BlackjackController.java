@@ -94,10 +94,11 @@ public final class BlackjackController {
     }
 
     private void askHitForDealer(Dealer dealer) {
-        if (dealer.canHit() && dealer.decideHit()) {
+        boolean isDealerHitting = dealer.canHit() && dealer.decideHit();
+        if (isDealerHitting) {
             dealer.dealCard(dealer);
-            outputView.printDealerHit(true);
         }
+        outputView.printDealerHit(isDealerHitting);
     }
 
     private void displayResult(Dealer dealer, GamePlayers gamePlayers, BettingTable bettingTable) {
