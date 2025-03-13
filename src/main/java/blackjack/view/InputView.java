@@ -17,7 +17,7 @@ public class InputView {
         return CONSOLE.nextLine();
     }
 
-    public int readBatAmount(String name) {
+    public int readBatAmount(final String name) {
         System.out.printf(NEW_LINE + "%s의 배팅 금액은?" + NEW_LINE, name);
         String inputBatAmount = CONSOLE.nextLine();
         validateIsNumeric(inputBatAmount);
@@ -33,7 +33,7 @@ public class InputView {
         return input.equals(YES);
     }
 
-    public void validateIsNumeric(String input) {
+    public void validateIsNumeric(final String input) {
         try {
             Integer.parseInt(input);
         } catch (NumberFormatException e) {

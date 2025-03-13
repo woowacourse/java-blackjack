@@ -76,7 +76,7 @@ public class OutputView {
         );
     }
 
-    private String formatCardMessage(Card card) {
+    private String formatCardMessage(final Card card) {
         return CardNumberView.getNumberMessage(card.getNumber()) + CardShapeView.getShapeMessage(card.getShape());
     }
 
