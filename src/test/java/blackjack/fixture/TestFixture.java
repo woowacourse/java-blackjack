@@ -70,4 +70,25 @@ public class TestFixture {
                 new Card(Shape.CLOB, Denomination.SEVEN)
         );
     }
+
+    public static List<Card> provideSum17Cards() {
+        return List.of(
+                new Card(Shape.DIAMOND, Denomination.EIGHT),
+                new Card(Shape.CLOB, Denomination.NINE)
+        );
+    }
+
+    public static List<Card> provideSum18Cards() {
+        return List.of(
+                new Card(Shape.DIAMOND, Denomination.ACE),
+                new Card(Shape.CLOB, Denomination.SEVEN)
+        );
+    }
+
+    public static List<Card> provideSum20Cards() {
+        return List.of(
+                new Card(Shape.DIAMOND, Denomination.KING),
+                new Card(Shape.CLOB, Denomination.TEN)
+        );
+    }
 }
