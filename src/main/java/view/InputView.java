@@ -33,7 +33,7 @@ public class InputView {
     }
 
     public int askPlayerBattingMoney(Name name) {
-        System.out.printf(PLAYER_BATTING_MONEY, name);
+        System.out.printf(PLAYER_BATTING_MONEY, name.getName());
         return Integer.parseInt(scanner.nextLine());
     }
 }
