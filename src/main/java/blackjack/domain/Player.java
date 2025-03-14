@@ -46,8 +46,8 @@ public class Player implements Participant {
     }
 
     @Override
-    public int getOptimisticValue() {
-        return playerHand.getOptimisticValue();
+    public int getBestCardValue() {
+        return playerHand.getBestCardValue();
     }
 
     public void adjustBalance(GameResultType gameResultType) {

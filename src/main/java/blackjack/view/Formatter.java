@@ -28,7 +28,7 @@ public final class Formatter {
     }
 
     private static String parseCardResultValue(Participant participant) {
-        int value = participant.getOptimisticValue();
+        int value = participant.getBestCardValue();
 
         if (value == Constants.BUSTED_VALUE) {
             return "Busted!";

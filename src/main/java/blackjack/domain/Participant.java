@@ -14,5 +14,5 @@ public interface Participant {
 
     List<Card> getAllCards();
 
-    int getOptimisticValue();
+    int getBestCardValue();
 }

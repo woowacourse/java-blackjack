@@ -21,12 +21,12 @@ public enum GameResultType {
             return judgeForPlayerWithBlackjack(player, dealer);
         }
 
-        int playerOptimisticValue = player.getOptimisticValue();
-        int dealerOptimisticValue = dealer.getOptimisticValue();
+        int playerBestCardValue = player.getBestCardValue();
+        int dealerBestCardValue = dealer.getBestCardValue();
 
         return Arrays.stream(GameResultType.values())
                 .filter(resultType ->
-                        resultType.condition.test(playerOptimisticValue, dealerOptimisticValue))
+                        resultType.condition.test(playerBestCardValue, dealerBestCardValue))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 비교 값입니다."));
     }

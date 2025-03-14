@@ -39,7 +39,7 @@ public class Dealer implements Participant {
     }
 
     @Override
-    public int getOptimisticValue() {
+    public int getBestCardValue() {
         return hand.getBestCardValue();
     }
 

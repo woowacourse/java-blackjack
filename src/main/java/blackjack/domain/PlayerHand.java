@@ -33,7 +33,7 @@ public class PlayerHand {
         wallet.calculate(gameResultType, hand);
     }
 
-    public int getOptimisticValue() {
+    public int getBestCardValue() {
         return hand.getBestCardValue();
     }
 
