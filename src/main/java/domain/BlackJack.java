@@ -80,4 +80,9 @@ public class BlackJack {
         }
         return result;
     }
+
+    public Map<Participant, Integer> getRevenueResult() {
+        Map<Participant, Integer> revenues = new HashMap<>();
+        return revenues;
+    }
 }

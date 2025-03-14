@@ -3,11 +3,14 @@ package domain;
 import domain.card.*;
 import domain.card.cardsGenerator.RandomCardsGenerator;
 import domain.participant.Dealer;
+import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -57,5 +60,41 @@ class BlackJackTest {
 
         //then
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("플레이어가 블랙잭으로 승리한 경우, 수익을 구할 수 있다.")
+    @Test
+    void blackjackWinRevenue() {
+        // given
+        final int bettingCost = 10000;
+
+        Cards playerCards = Cards.of(List.of(
+                new Card(CardNumber.A, CardShape.SPADE),
+                new Card(CardNumber.TEN, CardShape.HEART)
+        ));
+        Player player = Player.from(
+                new Nickname("player"),
+                playerCards
+        );
+
+        Cards dealerCards = Cards.of(List.of(
+                new Card(CardNumber.SEVEN, CardShape.DIAMOND),
+                new Card(CardNumber.QUEEN, CardShape.HEART)
+        ));
+        Dealer dealer = new Dealer(dealerCards, deck);
+        Map<Player, Money> bettingPlayers = Map.of(
+                player, new Money(bettingCost)
+        );
+
+        BlackJack blackJack = new BlackJack(dealer, new Players(bettingPlayers));
+
+        // when
+        Map<Participant, Integer> revenueResult = blackJack.getRevenueResult();
+
+        // then
+        SoftAssertions.assertSoftly((softly) -> {
+            softly.assertThat(revenueResult.get(player)).isEqualTo((int) (bettingCost * 1.5));
+            softly.assertThat(revenueResult.get(dealer)).isEqualTo((int) (bettingCost * 1.5) * -1);
+        });
     }
 }
