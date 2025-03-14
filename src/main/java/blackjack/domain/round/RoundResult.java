@@ -6,16 +6,10 @@ import java.util.List;
 import java.util.function.BiFunction;
 
 public enum RoundResult {
-    WIN("승"),
-    LOSE("패"),
-    TIE("무"),
+    WIN,
+    LOSE,
+    TIE,
     ;
-
-    private final String displayName;
-
-    RoundResult(String displayName) {
-        this.displayName = displayName;
-    }
 
     public static RoundResult judgeResult(Gamer gamer, Gamer otherGamer) {
         return getResultOf(
