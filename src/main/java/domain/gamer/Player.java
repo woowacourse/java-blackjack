@@ -58,27 +58,27 @@ public class Player extends Gamer {
         calculateAllSums(cards, index + 1, currentSum + card.getScore(), resultSet);
     }
 
-    private int findMaxSum(List<Integer> sums) {
+    private int findMaxSum(final List<Integer> sums) {
         return sums.stream()
                 .filter(sum -> sum <= BUST_NUMBER)
                 .max(Integer::compareTo)
                 .orElseGet(() -> findMinSum(sums));
     }
 
-    private int findMinSum(List<Integer> sums) {
+    private int findMinSum(final List<Integer> sums) {
         return sums.stream()
                 .min(Integer::compareTo)
                 .orElse(0);
     }
 
-    public int winBetting(int profit) {
+    public int winBetting(final int profit) {
         if (isBlackJack()) {
             return betting.winBlackJackBetting(profit);
         }
         return betting.winBetting(profit);
     }
 
-    public int loseBetting(int profit) {
+    public int loseBetting(final int profit) {
         return betting.loseBetting(profit);
     }
 }

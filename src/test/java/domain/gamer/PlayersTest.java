@@ -60,9 +60,9 @@ class PlayersTest {
     @Test
     void 플레이어의_이름은_중복될_경우_예외가_발생한다() {
         // given
-        Player player1 = new Player(new Nickname("체체"), new Betting(1000));
-        Player player2 = new Player(new Nickname("체체"), new Betting(1000));
-        List<Player> playerGroup = List.of(player1, player2);
+        final Player player1 = new Player(new Nickname("체체"), new Betting(1000));
+        final Player player2 = new Player(new Nickname("체체"), new Betting(1000));
+        final List<Player> playerGroup = List.of(player1, player2);
 
         // when & then
         assertThatThrownBy(() -> new Players(playerGroup))

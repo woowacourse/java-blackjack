@@ -57,7 +57,7 @@ public class BlackJackController {
                 .toList();
     }
 
-    private Betting readBetAmount(String playerName) {
+    private Betting readBetAmount(final String playerName) {
         return new Betting(Integer.parseInt(InputView.readPlayerBetAmount(playerName)));
     }
 
@@ -148,8 +148,8 @@ public class BlackJackController {
 
     private void finishGame(final Players players, final Dealer dealer) {
         OutputView.printCardsInHandWithResults(dealer, players);
-        FinalResults finalResults = new FinalResults(players.createFinalResults(dealer));
-        Map<Gamer, Integer> profitResults = new LinkedHashMap<>(finalResults.createProfitResult(dealer));
+        final FinalResults finalResults = new FinalResults(players.createFinalResults(dealer));
+        final Map<Gamer, Integer> profitResults = new LinkedHashMap<>(finalResults.createProfitResult(dealer));
         OutputView.printProfitResults(profitResults);
     }
 }

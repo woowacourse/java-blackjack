@@ -14,7 +14,7 @@ public class Rule {
         this.finalResult = finalResult;
     }
 
-    public boolean matches(Player player, Dealer dealer) {
+    public boolean matches(final Player player, final Dealer dealer) {
         return condition.test(player, dealer);
     }
 

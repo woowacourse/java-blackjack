@@ -41,10 +41,10 @@ public class BettingTest {
     void 블랙잭이_아니면서_승리_시_배팅한_만큼의_수익을_얻는다() {
 
         // given
-        Betting betting = new Betting(10000);
+        final Betting betting = new Betting(10000);
 
         // when
-        int profit = betting.winBetting(10000);
+        final int profit = betting.winBetting(10000);
 
         // then
         assertThat(profit).isEqualTo(20000);
@@ -55,10 +55,10 @@ public class BettingTest {
     void 패배_시_모든_배팅_금액을_잃는다() {
 
         // given
-        Betting betting = new Betting(10000);
+        final Betting betting = new Betting(10000);
 
         // when
-        int profit = betting.loseBetting(0);
+        final int profit = betting.loseBetting(0);
 
         // then
         assertThat(profit).isEqualTo(-10000);
@@ -69,10 +69,10 @@ public class BettingTest {
     void 블랙잭_이면서_이길_시_배팅한_만큼의_수익을_얻는다() {
 
         // given
-        Betting betting = new Betting(10000);
+        final Betting betting = new Betting(10000);
 
         // when
-        int profit = betting.winBlackJackBetting(10000);
+        final int profit = betting.winBlackJackBetting(10000);
 
         // then
         assertThat(profit).isEqualTo(25000);

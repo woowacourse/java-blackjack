@@ -33,8 +33,8 @@ public class Players {
         throw new IllegalArgumentException("닉네임은 중복될 수 없습니다.");
     }
 
-    public Map<Player, FinalResult> createFinalResults(Dealer dealer) {
-        Map<Player, FinalResult> finalResults = new LinkedHashMap<>();
+    public Map<Player, FinalResult> createFinalResults(final Dealer dealer) {
+        final Map<Player, FinalResult> finalResults = new LinkedHashMap<>();
         for (Player player : players) {
 
             FinalResult currentResult = FinalResult.selectResult(player, dealer);

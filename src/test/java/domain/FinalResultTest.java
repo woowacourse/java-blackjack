@@ -70,8 +70,6 @@ class FinalResultTest {
     @Test
     void 룰에_따라_승패를_결정한다() {
 
-        System.out.println(bustPlayer.calculateSumOfRank());
-        System.out.println(bustPlayer.isBust());
         // given
 
         // when

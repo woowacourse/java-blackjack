@@ -12,7 +12,7 @@ public final class InputView {
         return readValidInput();
     }
 
-    public static String readPlayerBetAmount(String name) {
+    public static String readPlayerBetAmount(final String name) {
         print(String.format("%s의 배팅 금액은?", name));
         return readValidInput();
     }

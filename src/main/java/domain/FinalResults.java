@@ -15,18 +15,9 @@ public class FinalResults {
         this.finalResults = new HashMap<>(finalResults);
     }
 
-    public Map<Gamer, Integer> createProfitResult(Dealer dealer) {
-        Map<Gamer, Integer> profitResults = new LinkedHashMap<>();
-
+    public Map<Gamer, Integer> createProfitResult(final Dealer dealer) {
+        final Map<Gamer, Integer> profitResults = new LinkedHashMap<>();
         int dealerProfit = 0;
-
-        for (Map.Entry<Player, FinalResult> entry : finalResults.entrySet()) {
-            Player player = entry.getKey();
-            FinalResult result = entry.getValue();
-
-            dealerProfit -= calculatePlayerProfit(player, result);
-        }
-        profitResults.put(dealer, dealerProfit);
 
         for (Map.Entry<Player, FinalResult> entry : finalResults.entrySet()) {
             Player player = entry.getKey();
@@ -34,13 +25,15 @@ public class FinalResults {
 
             int playerProfit = calculatePlayerProfit(player, result);
             profitResults.put(player, playerProfit);
+            dealerProfit -= playerProfit;
         }
+
+        profitResults.put(dealer, dealerProfit);
 
         return profitResults;
     }
 
     private int calculatePlayerProfit(Player player, FinalResult result) {
-
         if (result == FinalResult.WIN) {
             return player.winBetting(0);
         }

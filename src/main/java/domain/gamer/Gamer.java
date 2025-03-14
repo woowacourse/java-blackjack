@@ -6,6 +6,9 @@ import java.util.Objects;
 
 public abstract class Gamer {
 
+    private static final int CARD_MAX_SUM = 21;
+    private static final int BLACKJACK_CARD_SIZE = 2;
+
     private final Nickname nickname;
     private final Hand hand;
 
@@ -17,15 +20,15 @@ public abstract class Gamer {
     public abstract int calculateSumOfRank();
 
     public boolean isBust() {
-        return calculateSumOfRank() > 21;
+        return calculateSumOfRank() > CARD_MAX_SUM;
     }
 
     public boolean isImPossibleDrawCard() {
-        return calculateSumOfRank() == 21;
+        return calculateSumOfRank() == CARD_MAX_SUM;
     }
 
     public boolean isBlackJack() {
-        return calculateSumOfRank() == 21 && getCards().size() == 2;
+        return calculateSumOfRank() == CARD_MAX_SUM && getCards().size() == BLACKJACK_CARD_SIZE;
     }
 
     public void receiveInitialCards(final List<Card> cards) {
