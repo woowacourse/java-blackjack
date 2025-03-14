@@ -5,7 +5,7 @@ public record BettingAmount(
     double end
 ) {
 
-    public static BettingAmount of(int money) {
+    public static BettingAmount of(double money) {
         return new BettingAmount(money, 0);
     }
 

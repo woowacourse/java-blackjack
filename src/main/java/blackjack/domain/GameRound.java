@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -11,7 +11,7 @@ import blackjack.domain.gamer.Player;
 public class GameRound {
 
     private final Dealer dealer;
-    private final Map<Player, BettingAmount> bettingAmounts = new HashMap<>();
+    private final Map<Player, BettingAmount> bettingAmounts = new LinkedHashMap<>();
 
     public GameRound(Dealer dealer) {
         this.dealer = dealer;
@@ -21,7 +21,7 @@ public class GameRound {
         return new GameRound(dealer);
     }
 
-    public void betting(Player player, int money) {
+    public void betting(Player player, double money) {
         bettingAmounts.put(player, BettingAmount.of(money));
     }
 
@@ -51,10 +51,14 @@ public class GameRound {
         return false;
     }
 
-    public void dealerBust() {
-        bettingAmounts.keySet().stream()
-            .filter(player -> !player.isBust())
-            .forEach(player -> bettingAmounts.put(player, bettingAmounts.get(player).win()));
+    public boolean endGameIfDealerBust() {
+        if (dealer.isBust()) {
+            bettingAmounts.keySet().stream()
+                .filter(player -> !player.isBust())
+                .forEach(player -> bettingAmounts.put(player, bettingAmounts.get(player).win()));
+            return true;
+        }
+        return false;
     }
 
     public void computeResult() {
@@ -64,14 +68,17 @@ public class GameRound {
     }
 
     public Map<Gamer, Double> getAllProfit() {
-        Map<Gamer, Double> result = bettingAmounts.keySet().stream()
+        Map<Gamer, Double> playerResults = bettingAmounts.keySet().stream()
             .collect(Collectors.toMap(
                 player -> player,
                 player -> bettingAmounts.get(player).getProfit()));
-        double playersProfitSum = result.values().stream()
+        double playersProfitSum = playerResults.values().stream()
             .mapToDouble(Double::doubleValue)
             .sum();
-        result.put(dealer, -playersProfitSum);
-        return result;
+
+        Map<Gamer, Double> allProfit = new LinkedHashMap<>();
+        allProfit.put(dealer, -playersProfitSum);
+        allProfit.putAll(playerResults);
+        return allProfit;
     }
 }

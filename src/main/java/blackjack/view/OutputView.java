@@ -8,6 +8,7 @@ import blackjack.dto.GamerDto;
 import blackjack.dto.card.CardDto;
 import blackjack.dto.card.CardsDto;
 import blackjack.dto.response.FinalResultResponseDto;
+import blackjack.dto.response.ProfitResponseDto;
 import blackjack.dto.response.RoundResultsResponseDto;
 import blackjack.dto.response.StartingCardsResponseDto;
 
@@ -50,6 +51,13 @@ public class OutputView {
         System.out.println("## 최종 승패");
         for (var gamer : responseDto.gamers()) {
             System.out.println(toString(gamer));
+        }
+    }
+
+    public static void printProfit(ProfitResponseDto dto) {
+        System.out.println("## 최종 수익");
+        for (var gamerProfit : dto.profits().entrySet()) {
+            System.out.printf("%s: %.0f%n", gamerProfit.getKey(), gamerProfit.getValue());
         }
     }
 

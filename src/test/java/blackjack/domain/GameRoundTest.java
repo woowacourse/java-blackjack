@@ -83,14 +83,22 @@ class GameRoundTest {
 
     @Test
     @DisplayName("딜러가 21을 초과하면 그 시점까지 남아 있던 플레이어들은 승리해 베팅 금액을 받는다.")
-    void dealerBustPlayersWinTest() {
+    void endGameIfDealerBustPlayersWinTest() {
         int initialMoney = 10000;
 
         Player player = new Player("pobi");
         Dealer dealer = new Dealer();
         GameRound round = new GameRound(dealer);
         round.betting(player, initialMoney);
-        round.dealerBust();
+        GameManager gameManager = GameManagerFixture.GameManagerWith(
+            DeckFixture.deckOf(
+                CardNumber.KING, CardNumber.SEVEN, CardNumber.QUEEN, // dealer
+                CardNumber.JACK, CardNumber.ACE)); // player
+        gameManager.drawStartingCards(player);
+        gameManager.drawStartingCards(dealer);
+        gameManager.drawCard(dealer);
+
+        round.endGameIfDealerBust();
         assertThat(round.getEndBettingMoney(player)).isEqualTo(initialMoney * 2);
     }
 
