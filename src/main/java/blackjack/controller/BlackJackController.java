@@ -46,13 +46,14 @@ public final class BlackJackController {
     }
 
     private void dealInitialCards(final Dealer dealer, final List<Player> players) {
-        dealer.dealInitialCards(players);
+        dealer.dealStartingHand();
+        players.forEach(player -> player.receiveCards(dealer.drawPlayerStartingCards()));
         outputView.printDealInitialCardsResult(dealer, players);
     }
 
     private void drawMoreCards(final Dealer dealer, final List<Player> players) {
         players.forEach(player -> drawMorePlayerCards(dealer, player));
-        outputView.printDealerDrawnMoreCards(dealer.drawSelf());
+        outputView.printDealerDrawnMoreCards(dealer.dealSelf());
     }
 
     private void fight(final Dealer dealer, final List<Player> players) {

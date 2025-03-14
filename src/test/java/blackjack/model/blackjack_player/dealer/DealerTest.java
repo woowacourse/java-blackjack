@@ -173,20 +173,22 @@ class DealerTest {
     }
 
     @Test
-    void 게임_시작시_자신과_플레이어들에게_카드_두장을_나눠준다() {
+    void 자신의_시작_카드_두_장_뽑아_저장한다() {
+        dealer.dealStartingHand();
+
+        assertThat(dealer.getAllCards().getValues()).hasSize(2);
+    }
+
+    @Test
+    void 플레이어들에게_나눠_줄_시작_카드를_두_장_뽑는다() {
         CardDeck cardDeck = new CardDeck(new BlackJackCards(
                 List.of(createCard(CardNumber.TWO), createCard(CardNumber.THREE), createCard(CardNumber.FOUR),
                         createCard(CardNumber.FIVE))
         ));
         Dealer dealer = new Dealer(new DefaultJudgementStrategy(), Hand.empty(), cardDeck);
-        Player player = new Player("pobi", 1);
 
-        dealer.dealInitialCards(List.of(player));
-
-        assertThat(dealer.getAllCards().getValues()).hasSize(2);
-        assertThat(player.getCards().getValues()).hasSize(2);
+        assertThat(dealer.drawPlayerStartingCards().getValues()).hasSize(2);
     }
-
 
     @Test
     void 블랙잭_플레이어의_카드를_더_뽑는다() {
@@ -199,14 +201,14 @@ class DealerTest {
     @MethodSource("자신의_카드를_뽑는다_테스트_케이스")
     void 자신의_카드를_뽑는다(final Dealer dealer, final boolean expected) {
 
-        boolean actual = dealer.drawSelf();
+        boolean actual = dealer.dealSelf();
 
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     void 자신의_카드를_한_장_뽑는다() {
-        dealer.drawSelf();
+        dealer.dealSelf();
 
         assertThat(dealer.getAllCards().getValues()).hasSize(1);
     }

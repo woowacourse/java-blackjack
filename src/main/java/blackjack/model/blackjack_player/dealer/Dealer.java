@@ -6,7 +6,6 @@ import blackjack.model.blackjack_player.player.Player;
 import blackjack.model.card.BlackJackCards;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.initializer.CardDeckInitializer;
-import java.util.List;
 
 public final class Dealer {
 
@@ -29,17 +28,20 @@ public final class Dealer {
         this(judgementStrategy, Hand.empty(), CardDeck.initializeFrom(cardDeckInitializer));
     }
 
-    public void dealInitialCards(final List<Player> players) {
+    public void dealStartingHand() {
         hand.addCards(drawCard(INITIAL_DRAW_AMOUNT));
-        players.forEach(player -> player.receiveCards(drawCard(INITIAL_DRAW_AMOUNT)));
     }
 
-    public boolean drawSelf() {
+    public boolean dealSelf() {
         if (canDrawMoreCard()) {
             hand.addCards(drawCard(DEALER_SINGLE_DRAW_AMOUNT));
             return true;
         }
         return false;
+    }
+
+    public BlackJackCards drawPlayerStartingCards() {
+        return drawCard(INITIAL_DRAW_AMOUNT);
     }
 
     public BlackJackCards drawPlayerCards() {
