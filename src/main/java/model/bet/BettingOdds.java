@@ -18,6 +18,10 @@ public enum BettingOdds {
         this.odds = odds;
     }
 
+    public double multiple(final int bet) {
+        return bet * this.odds;
+    }
+
     public static BettingOdds from(final GameResult gameResult) {
         return Arrays.stream(values())
                 .filter(bettingOdds -> bettingOdds.gameResult == gameResult)
