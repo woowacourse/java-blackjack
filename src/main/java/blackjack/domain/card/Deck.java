@@ -28,7 +28,7 @@ public class Deck {
     }
 
     private List<Card> shuffled(List<Card> cards) {
-        ArrayList<Card> copiedCards = new ArrayList<>(cards);
+        List<Card> copiedCards = new ArrayList<>(cards);
         Collections.shuffle(copiedCards);
 
         return copiedCards;
