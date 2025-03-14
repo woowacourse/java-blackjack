@@ -64,7 +64,7 @@ public class GameView {
     private void distributeAdditionalCardsToPlayer(final Player player,
         final BlackjackGame blackjackGame) {
         while (inputView.readGetOneMore(player)) {
-            blackjackGame.addExtraCardToPlayer(player);
+            blackjackGame.addExtraCardToPlayer(player.getName());
             outputView.printPlayerCardResult(player);
         }
     }
@@ -72,7 +72,7 @@ public class GameView {
     private void distributeAdditionalCardsToDealer(final Dealer dealer,
         final BlackjackGame blackjackGame) {
         while (dealer.isPossibleToAdd()) {
-            blackjackGame.addExtraCardToDealer(dealer);
+            blackjackGame.addExtraCardToDealer();
             outputView.printAddExtraCardToDealer();
         }
     }

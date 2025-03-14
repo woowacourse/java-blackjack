@@ -77,7 +77,7 @@ class BlackjackGameTest {
             Player player = game.getParticipants().getPlayers().getFirst();
 
             player.addCards(cardDeck, 2);
-            game.addExtraCardToPlayer(player); // 총 3장 카드 보유
+            game.addExtraCardToPlayer(player.getName()); // 총 3장 카드 보유
 
             assertThat(player.getCards().openCards()).hasSize(3);
         }
@@ -98,7 +98,7 @@ class BlackjackGameTest {
             Dealer dealer = game.getParticipants().getDealer();
 
             dealer.addCards(cardDeck, 2);
-            game.addExtraCardToDealer(dealer);
+            game.addExtraCardToDealer();
 
             assertThat(dealer.getCards().openCards()).hasSize(3);
         }
@@ -120,7 +120,7 @@ class BlackjackGameTest {
 
             dealer.addCards(cardDeck, 2);
 
-            assertThatThrownBy(() -> game.addExtraCardToDealer(dealer))
+            assertThatThrownBy(game::addExtraCardToDealer)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("더 이상 카드를 추가할 수 없습니다.");
         }

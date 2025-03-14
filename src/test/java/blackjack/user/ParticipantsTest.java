@@ -1,9 +1,17 @@
 package blackjack.user;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
+import blackjack.card.Card;
+import blackjack.card.CardDeck;
 import blackjack.card.CardHand;
+import blackjack.card.Denomination;
+import blackjack.card.Suit;
+import blackjack.game.BlackjackGame;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;
@@ -55,6 +63,104 @@ public class ParticipantsTest {
             assertThatThrownBy(() -> new Participants(dealer, players))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어는 25명까지만 참가 가능합니다.");
+        }
+    }
+
+    @Nested
+    @DisplayName("카드 배부 테스트")
+    class DistributeCardTest {
+
+        @Test
+        @DisplayName("딜러에게 카드를 2장씩 배부할 수 있다.")
+        void distributeCardsToDealer() {
+            List<Card> initialCards = new ArrayList<>(List.of(
+                new Card(Suit.HEART, Denomination.TWO),
+                new Card(Suit.SPADE, Denomination.KING)
+            ));
+            CardDeck cardDeck = new CardDeck(initialCards);
+
+            Dealer dealer = new Dealer(new CardHand(17));
+            List<Player> players = List.of(new Player(new PlayerName("sana"), new CardHand(21)));
+
+            Participants participants = new Participants(dealer, players);
+            participants.addInitialCardsToDealer(cardDeck);
+
+            assertThat(dealer.getCards().openCards()).hasSize(2);
+        }
+
+        @Test
+        @DisplayName("플레이어에게 카드를 2장씩 배부할 수 있다.")
+        void distributeCardsToPlayers() {
+            List<Card> initialCards = new ArrayList<>(List.of(
+                new Card(Suit.HEART, Denomination.TWO),
+                new Card(Suit.SPADE, Denomination.KING),
+                new Card(Suit.HEART, Denomination.TWO),
+                new Card(Suit.SPADE, Denomination.KING)
+            ));
+            CardDeck cardDeck = new CardDeck(initialCards);
+
+            Dealer dealer = new Dealer(new CardHand(17));
+            List<Player> players = List.of(
+                new Player(new PlayerName("sana"), new CardHand(21)),
+                new Player(new PlayerName("iffff"), new CardHand(21)));
+
+            Participants participants = new Participants(dealer, players);
+            participants.addInitialCardsToPlayers(cardDeck);
+
+            assertAll(() -> {
+                assertThat(players.getFirst().getCards().openCards()).hasSize(2);
+                assertThat(players.getLast().getCards().openCards()).hasSize(2);
+            });
+        }
+
+        @Test
+        @DisplayName("딜러에게 추가 카드를 1장씩 배부할 수 있다.")
+        void distributeExtraCardsToDealer() {
+            List<Card> initialCards = new ArrayList<>(List.of(
+                new Card(Suit.HEART, Denomination.TWO),
+                new Card(Suit.SPADE, Denomination.KING),
+                new Card(Suit.SPADE, Denomination.THREE)
+            ));
+            CardDeck cardDeck = new CardDeck(initialCards);
+
+            Dealer dealer = new Dealer(new CardHand(17));
+            List<Player> players = List.of(new Player(new PlayerName("sana"), new CardHand(21)));
+
+            Participants participants = new Participants(dealer, players);
+            participants.addInitialCardsToDealer(cardDeck);
+            participants.addExtraCardToDealer(cardDeck); // 총 3장
+
+            assertThat(dealer.getCards().openCards()).hasSize(3);
+        }
+
+        @Test
+        @DisplayName("플레이어에게 추가 카드를 1장씩 배부할 수 있다.")
+        void distributeExtraCardsToPlayers() {
+            List<Card> initialCards = new ArrayList<>(List.of(
+                new Card(Suit.HEART, Denomination.TWO),
+                new Card(Suit.SPADE, Denomination.KING),
+                new Card(Suit.HEART, Denomination.TWO),
+                new Card(Suit.SPADE, Denomination.KING),
+                new Card(Suit.HEART, Denomination.TWO),
+                new Card(Suit.SPADE, Denomination.THREE)
+            ));
+            CardDeck cardDeck = new CardDeck(initialCards);
+
+            Dealer dealer = new Dealer(new CardHand(17));
+            List<Player> players = List.of(
+                new Player(new PlayerName("sana"), new CardHand(21)),
+                new Player(new PlayerName("iffff"), new CardHand(21)));
+
+            Participants participants = new Participants(dealer, players);
+            participants.addInitialCardsToPlayers(cardDeck);
+
+            participants.addExtraCardToPlayer(cardDeck, new PlayerName("sana"));
+            participants.addExtraCardToPlayer(cardDeck, new PlayerName("iffff"));
+
+            assertAll(() -> {
+                assertThat(players.getFirst().getCards().openCards()).hasSize(3);
+                assertThat(players.getLast().getCards().openCards()).hasSize(3);
+            });
         }
     }
 }

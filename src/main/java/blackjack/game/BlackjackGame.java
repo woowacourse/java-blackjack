@@ -13,8 +13,6 @@ import java.util.Map;
 
 public class BlackjackGame {
 
-    private static final int INITIAL_DISTRIBUTE_CARD_NUMBER = 2;
-    private static final int EXTRA_DISTRIBUTE_CARD_NUMBER = 1;
     private static final int DEALER_DISTRIBUTE_CARD_THRESHOLD = 17;
     private static final int PLAYER_DISTRIBUTE_CARD_THRESHOLD = 21;
 
@@ -54,20 +52,16 @@ public class BlackjackGame {
     }
 
     public void initCardsToParticipants() {
-        Dealer dealer = participants.getDealer();
-        dealer.addCards(cardDeck, INITIAL_DISTRIBUTE_CARD_NUMBER);
-
-        for (Player player : participants.getPlayers()) {
-            player.addCards(cardDeck, INITIAL_DISTRIBUTE_CARD_NUMBER);
-        }
+        participants.addInitialCardsToDealer(cardDeck);
+        participants.addInitialCardsToPlayers(cardDeck);
     }
 
-    public void addExtraCardToDealer(final Dealer dealer) {
-        dealer.addCards(cardDeck, EXTRA_DISTRIBUTE_CARD_NUMBER);
+    public void addExtraCardToDealer() {
+        participants.addExtraCardToDealer(cardDeck);
     }
 
-    public void addExtraCardToPlayer(final Player player) {
-        player.addCards(cardDeck, EXTRA_DISTRIBUTE_CARD_NUMBER);
+    public void addExtraCardToPlayer(final PlayerName name) {
+        participants.addExtraCardToPlayer(cardDeck, name);
     }
 
     public Map<PlayerName, BetAmount> calculateProfitForPlayers() {
