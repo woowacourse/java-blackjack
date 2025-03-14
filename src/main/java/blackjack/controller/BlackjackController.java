@@ -46,6 +46,17 @@ public class BlackjackController {
         displayAllFinalProfitsInfo(game);
     }
 
+    private List<ParticipantName> createPlayerNames() {
+        return RetryUtil.getReturnWithRetry(() -> {
+            String[] playerNames = inputView.readPlayerName();
+            List<ParticipantName> participantNames = new ArrayList<>();
+            for (String playerName : playerNames) {
+                participantNames.add(new ParticipantName(playerName));
+            }
+            return participantNames;
+        });
+    }
+
     private List<Player> createPlayers(List<ParticipantName> playerNames) {
         return RetryUtil.getReturnWithRetry(() -> {
             List<Player> players = new ArrayList<>();
@@ -62,16 +73,6 @@ public class BlackjackController {
         outputView.displayFinalCardStatus(
                 FinalResultDto.from(dealer),
                 FinalResultDto.fromPlayers(game.getPlayers()));
-    }
-
-    private List<ParticipantName> createPlayerNames() {
-        String[] playerNames = inputView.readPlayerName();
-
-        List<ParticipantName> participantNames = new ArrayList<>();
-        for (String playerName : playerNames) {
-            participantNames.add(new ParticipantName(playerName));
-        }
-        return participantNames;
     }
 
     private void displayParticipantStartCards(BlackjackGame game, Dealer dealer) {
