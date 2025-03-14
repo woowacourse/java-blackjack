@@ -10,8 +10,8 @@ import domain.participant.Gambler;
 import domain.participant.Player;
 import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.Function;
 
 public class Gamblers {
@@ -19,9 +19,9 @@ public class Gamblers {
     private static final int MAX_PLAYERS_COUNT = 8;
 
     private final Dealer dealer;
-    private final Map<Player, BettingMoney> playerBettings;
+    private final Map<Player, GamblingMoney> playerBettings;
 
-    public Gamblers(Dealer dealer, Map<Player, BettingMoney> playerBettings) {
+    public Gamblers(Dealer dealer, Map<Player, GamblingMoney> playerBettings) {
         validatePlayers(playerBettings.keySet());
         this.dealer = dealer;
         this.playerBettings = playerBettings;
@@ -60,6 +60,38 @@ public class Gamblers {
                 Function.identity(),
                 dealer::judgeWinningForPlayer
             ));
+    }
+
+    public Map<Gambler, Integer> evaluateProfits() {
+        LinkedHashMap<Gambler, Integer> moneys = new LinkedHashMap<>();
+        var playerWinnings = evaluatePlayerWinnings();
+        var dealerProfit = 0;
+
+        for (Entry<Player, Winning> entry : playerWinnings.entrySet()) {
+            Player player = entry.getKey();
+            Winning winning = entry.getValue();
+
+            computePlayerProfits(player, winning, moneys);
+            var playerProfit = moneys.get(player);
+            dealerProfit = dealerProfit - playerProfit;
+        }
+
+        moneys.putFirst(dealer, dealerProfit);
+        return moneys;
+    }
+
+    private void computePlayerProfits(Player player, Winning winning, Map<Gambler, Integer> moneys) {
+        GamblingMoney gamblingMoney = playerBettings.get(player);
+
+        if (player.isBlackJack() && !dealer.isBlackJack()) {
+            moneys.put(player, gamblingMoney.onceHalf().getAmount());
+        }
+
+        switch (winning) {
+            case WIN -> moneys.putIfAbsent(player, gamblingMoney.getAmount());
+            case DRAW -> moneys.putIfAbsent(player, 0);
+            case LOSE -> moneys.put(player, -1 * gamblingMoney.getAmount());
+        }
     }
 
     private void validatePlayers(Collection<Player> players) {

@@ -2,7 +2,7 @@ package controller;
 
 import domain.card.CardHand;
 import domain.card.CardPack;
-import domain.game.BettingMoney;
+import domain.game.GamblingMoney;
 import domain.game.Gamblers;
 import domain.game.Winning;
 import domain.participant.Dealer;
@@ -29,7 +29,7 @@ public class BlackjackController {
 
     public void play(CardPack cardPack) {
         Dealer dealer = new Dealer(new CardHand());
-        Map<Player, BettingMoney> players = createPlayers();
+        Map<Player, GamblingMoney> players = createPlayers();
         Gamblers gamblers = new Gamblers(dealer, players);
 
         gamblers.distributeSetUpCards(cardPack);
@@ -44,7 +44,7 @@ public class BlackjackController {
         outputView.printGameResult(dealerWinnings, playerWinningsInOrder(toKeyList(players), playerWinnings));
     }
 
-    private Map<Player, BettingMoney> createPlayers() {
+    private Map<Player, GamblingMoney> createPlayers() {
         List<Player> players = inputView.getPlayerNames()
             .stream()
             .map(name -> new Player(name, new CardHand()))

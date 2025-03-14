@@ -10,10 +10,12 @@ import domain.card.Card;
 import domain.card.CardHand;
 import domain.card.CardPack;
 import domain.participant.Dealer;
+import domain.participant.Gambler;
 import domain.participant.Player;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
@@ -38,7 +40,7 @@ public class GamblersTest {
 
     @Test
     void 딜러와_플레이어_배팅_맵으로_Gamblers를_생성한다() {
-        assertThatCode(() -> new Gamblers(dealer, Map.of(player1, BettingMoney.of(10000))))
+        assertThatCode(() -> new Gamblers(dealer, Map.of(player1, GamblingMoney.bet(10000))))
             .doesNotThrowAnyException();
     }
 
@@ -50,17 +52,17 @@ public class GamblersTest {
 
     @Test
     void 플레이어가_8명보다_많으면_예외가_발생한다() {
-        BettingMoney money = BettingMoney.of(10000);
-        Map<Player, BettingMoney> players = Map.of(
-            new Player("플레이어1", new CardHand()), money,
-            new Player("플레이어2", new CardHand()), money,
-            new Player("플레이어3", new CardHand()), money,
-            new Player("플레이어4", new CardHand()), money,
-            new Player("플레이어5", new CardHand()), money,
-            new Player("플레이어6", new CardHand()), money,
-            new Player("플레이어7", new CardHand()), money,
-            new Player("플레이어8", new CardHand()), money,
-            new Player("플레이어9", new CardHand()), money
+        GamblingMoney money = GamblingMoney.bet(10000);
+        Map<Player, GamblingMoney> players = Map.of(
+            TestFixtures.playerOfDefaultHand(), money,
+            TestFixtures.playerOfDefaultHand(), money,
+            TestFixtures.playerOfDefaultHand(), money,
+            TestFixtures.playerOfDefaultHand(), money,
+            TestFixtures.playerOfDefaultHand(), money,
+            TestFixtures.playerOfDefaultHand(), money,
+            TestFixtures.playerOfDefaultHand(), money,
+            TestFixtures.playerOfDefaultHand(), money,
+            TestFixtures.playerOfDefaultHand(), money
         );
 
         assertThatThrownBy(() -> new Gamblers(dealer, players))
@@ -181,16 +183,16 @@ public class GamblersTest {
     @Test
     void 딜러의_승무패_횟수를_계산한다() {
         //given
-        Player winnerPlayer1 = new Player("이름1", new CardHand());
-        Player drawPlayer1 = new Player("이름2", new CardHand());
-        Player drawPlayer2 = new Player("이름3", new CardHand());
-        Player losePlayer1 = new Player("이름4", new CardHand());
-        Player losePlayer2 = new Player("이름5", new CardHand());
-        Player losePlayer3 = new Player("이름6", new CardHand());
+        Player winnerPlayer1 = TestFixtures.playerOfDefaultHand();
+        Player drawPlayer1 = TestFixtures.playerOfDefaultHand();
+        Player drawPlayer2 = TestFixtures.playerOfDefaultHand();
+        Player losePlayer1 = TestFixtures.playerOfDefaultHand();
+        Player losePlayer2 = TestFixtures.playerOfDefaultHand();
+        Player losePlayer3 = TestFixtures.playerOfDefaultHand();
 
         Gamblers gamblers = TestFixtures.gamblers(dealer,
             List.of(winnerPlayer1, drawPlayer1, drawPlayer2,
-                losePlayer1, losePlayer2, losePlayer3));
+                losePlayer1, losePlayer2, losePlayer3), 10000);
 
         dealer.takeCards(Card.SPADE_10, Card.DIAMOND_10);
 
@@ -213,6 +215,84 @@ public class GamblersTest {
             () -> assertThat(dealerWinCount).isEqualTo(3),
             () -> assertThat(dealerDrawCount).isEqualTo(2),
             () -> assertThat(dealerLoseCount).isEqualTo(1)
+        );
+    }
+
+    @Test
+    void 최종_수익을_계산할_수_있다() {
+        //given
+        Player winnerPlayer1 = TestFixtures.playerOfDefaultHand();
+        Player drawPlayer1 = TestFixtures.playerOfDefaultHand();
+        Player drawPlayer2 = TestFixtures.playerOfDefaultHand();
+        Player losePlayer1 = TestFixtures.playerOfDefaultHand();
+        Player losePlayer2 = TestFixtures.playerOfDefaultHand();
+        Player losePlayer3 = TestFixtures.playerOfDefaultHand();
+
+        Gamblers gamblers = TestFixtures.gamblers(dealer,
+            List.of(winnerPlayer1, drawPlayer1, drawPlayer2,
+                losePlayer1, losePlayer2, losePlayer3),
+            10000); //6명 플레이어 모두 1만원씩 배팅했을 때
+
+        dealer.takeCards(Card.SPADE_10, Card.DIAMOND_10);
+
+        winnerPlayer1.takeCards(Card.SPADE_10, Card.HEART_9, Card.HEART_2); // 21
+        drawPlayer1.takeCards(Card.CLOVER_10, Card.SPADE_J); // 20
+        drawPlayer2.takeCards(Card.DIAMOND_J, Card.HEART_J); // 20
+        losePlayer1.takeCards(Card.SPADE_K, Card.SPADE_9); // 19
+        losePlayer2.takeCards(Card.DIAMOND_K, Card.DIAMOND_9); // 19
+        losePlayer3.takeCards(Card.HEART_K, Card.HEART_9); // 19
+
+        //when
+        Map<Gambler, Integer> moneys = gamblers.evaluateProfits();
+
+        //then
+        assertAll(
+            () -> assertThat(moneys.get(dealer)).isEqualTo(20000),
+
+            () -> assertThat(moneys.get(winnerPlayer1)).isEqualTo(10000),
+
+            () -> assertThat(moneys.get(drawPlayer1)).isEqualTo(0),
+            () -> assertThat(moneys.get(drawPlayer2)).isEqualTo(0),
+
+            () -> assertThat(moneys.get(losePlayer1)).isEqualTo(-10000),
+            () -> assertThat(moneys.get(losePlayer2)).isEqualTo(-10000),
+            () -> assertThat(moneys.get(losePlayer3)).isEqualTo(-10000)
+        );
+    }
+
+    @DisplayName("플레이어가 블랙잭이고 딜러가 블랙잭이 아니면 플레이어의 수익은 1.5배이다.")
+    @Test
+    void evaluateProfitsWhenPlayerIsBlackJack() {
+        //given
+        Gamblers gamblers = TestFixtures.gamblers(dealer, List.of(player1), 10000);
+        dealer.takeCards(Card.SPADE_10, Card.HEART_10);
+        player1.takeCards(Card.SPADE_A, Card.SPADE_J);
+
+        //when
+        Map<Gambler, Integer> moneys = gamblers.evaluateProfits();
+
+        //then
+        assertAll(
+            () -> assertThat(moneys.get(dealer)).isEqualTo(-15000),
+            () -> assertThat(moneys.get(player1)).isEqualTo(+15000)
+        );
+    }
+
+    @DisplayName("플레이어와 딜러 모두 블랙잭이면 수익은 0원이다.")
+    @Test
+    void evaluateProfitsWhenPlayerAndDealerAreBlackJack() {
+        //given
+        Gamblers gamblers = TestFixtures.gamblers(dealer, List.of(player1), 10000);
+        dealer.takeCards(Card.SPADE_10, Card.SPADE_A);
+        player1.takeCards(Card.HEART_10, Card.HEART_A);
+
+        //when
+        Map<Gambler, Integer> moneys = gamblers.evaluateProfits();
+
+        //then
+        assertAll(
+            () -> assertThat(moneys.get(dealer)).isEqualTo(0),
+            () -> assertThat(moneys.get(player1)).isEqualTo(0)
         );
     }
 }

@@ -1,7 +1,7 @@
 package domain;
 
 import domain.card.CardHand;
-import domain.game.BettingMoney;
+import domain.game.GamblingMoney;
 import domain.game.Gamblers;
 import domain.participant.Dealer;
 import domain.participant.Player;
@@ -19,11 +19,15 @@ public class TestFixtures {
     }
 
     public static Gamblers gamblers(Dealer dealer, List<Player> players) {
-        Map<Player, BettingMoney> map = new LinkedHashMap<>();
-        BettingMoney bettingMoney = BettingMoney.of(10000);
+        return gamblers(dealer, players, 10000);
+    }
+
+    public static Gamblers gamblers(Dealer dealer, List<Player> players, int betAmount) {
+        Map<Player, GamblingMoney> map = new LinkedHashMap<>();
+        GamblingMoney gamblingMoney = GamblingMoney.bet(betAmount);
 
         for (Player player : players) {
-            map.put(player, bettingMoney);
+            map.put(player, gamblingMoney);
         }
         return new Gamblers(dealer, map);
     }

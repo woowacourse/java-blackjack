@@ -1,19 +1,17 @@
 package domain.game;
 
-public class BettingMoney {
+public class GamblingMoney {
+
+    private static final GamblingMoney ZERO = new GamblingMoney(0);
 
     private final int amount;
 
-    private BettingMoney(int amount) {
+    private GamblingMoney(int amount) {
         this.amount = amount;
     }
 
-    public BettingMoney onceHalf() {
-        return new BettingMoney((int) (amount * 1.5));
-    }
-
-    public BettingMoney twice() {
-        return new BettingMoney(amount * 2);
+    public GamblingMoney onceHalf() {
+        return new GamblingMoney((int) (amount * 1.5));
     }
 
     public int getAmount() {
@@ -22,7 +20,7 @@ public class BettingMoney {
 
     @Override
     public final boolean equals(Object o) {
-        if (!(o instanceof BettingMoney betting)) {
+        if (!(o instanceof GamblingMoney betting)) {
             return false;
         }
 
@@ -39,7 +37,7 @@ public class BettingMoney {
         return amount + "";
     }
 
-    public static BettingMoney of(int amount) {
+    public static GamblingMoney bet(int amount) {
         if (amount < 1000) {
             throw new IllegalArgumentException("배팅금은 최소 1000원 이상입니다.");
         }
@@ -49,6 +47,6 @@ public class BettingMoney {
         if (amount % 1000 != 0) {
             throw new IllegalArgumentException("배팅금은 1000원 단위로만 가능합니다.");
         }
-        return new BettingMoney(amount);
+        return new GamblingMoney(amount);
     }
 }
