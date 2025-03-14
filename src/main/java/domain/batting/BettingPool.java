@@ -1,7 +1,7 @@
 package domain.batting;
 
 import domain.participant.Player;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BettingPool {
@@ -12,7 +12,7 @@ public class BettingPool {
     }
 
     public static BettingPool of() {
-        return new BettingPool(new HashMap<>());
+        return new BettingPool(new LinkedHashMap<>());
     }
 
     public boolean wager(Player player, Bet bet) {

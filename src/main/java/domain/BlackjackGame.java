@@ -8,7 +8,7 @@ import domain.participant.Player;
 import domain.participant.Players;
 import domain.result.BlackjackResult;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -56,7 +56,7 @@ public class BlackjackGame {
     }
 
     public Map<Player, Integer> calculatePlayerProfit(BettingPool bettingPool) {
-        Map<Player, Integer> profits = new HashMap<>();
+        Map<Player, Integer> profits = new LinkedHashMap<>();
         List<String> playersName = getPlayersName();
         for (String name : playersName) {
             Player player = getPlayerByName(name);
