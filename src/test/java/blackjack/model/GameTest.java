@@ -1,10 +1,10 @@
 package blackjack.model;
 
 import static blackjack.TestFixtures.DEALER;
-import static blackjack.TestFixtures.UNSHUFFLED_DECK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import blackjack.model.betting.Profit;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardValue;
 import blackjack.model.card.Deck;
@@ -12,6 +12,8 @@ import blackjack.model.card.FixedCardShuffler;
 import blackjack.model.card.Suit;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
+import blackjack.model.participant.Players;
+import blackjack.view.BettingPlayerCreateDto;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -20,12 +22,16 @@ import org.junit.jupiter.api.Test;
 @DisplayName("게임 테스트")
 class GameTest {
 
+    private Player makePlayer(String name) {
+        return Player.of(new BettingPlayerCreateDto(name, 1000));
+    }
+
     @DisplayName("딜러와 플레이어와 덱을 가진다.")
     @Test
     void createTest() {
         // given
         Deck deck = Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler());
-        List<Player> players = List.of(new Player("pobi"), new Player("neo"));
+        Players players = new Players(List.of(makePlayer("pobi"), makePlayer("jason")));
 
         // when, then
         assertThatCode(() -> new Game(new Dealer(deck), players))
@@ -38,14 +44,14 @@ class GameTest {
         // given
         Deck deck = Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler());
         Dealer dealer = new Dealer(deck);
-        List<Player> players = List.of(new Player("pobi"), new Player("neo"));
+        Players players = new Players(List.of(makePlayer("pobi"), makePlayer("jason")));
         Game game = new Game(dealer, players);
 
         // when
         game.dealInitialCards();
 
         // then
-        assertThat(players)
+        assertThat(players.getPlayers())
                 .allSatisfy(player -> assertThat(player.getHand()).hasSize(2));
         assertThat(dealer.getHand())
                 .hasSize(2);
@@ -55,8 +61,8 @@ class GameTest {
     @Test
     void playTurnForAllPlayerTest() {
         // given
-        Player pobi = new Player("pobi");
-        List<Player> players = List.of(pobi);
+        Player pobi = makePlayer("pobi");
+        Players players = new Players(List.of(pobi));
         Game game = new Game(DEALER, players);
         game.dealInitialCards();
 
@@ -64,7 +70,7 @@ class GameTest {
         game.hitPlayer(pobi);
 
         // then
-        assertThat(players)
+        assertThat(players.getPlayers())
                 .allSatisfy(player -> assertThat(player.getHand()).hasSize(3));
     }
 
@@ -76,7 +82,7 @@ class GameTest {
         Card spadeTen = new Card(Suit.SPADES, CardValue.TEN);
         Deck deck = Deck.createShuffledDeck(List.of(spadeFive, spadeTen, spadeFive, spadeTen), new FixedCardShuffler());
         Dealer dealer = new Dealer(deck);
-        Game game = new Game(dealer, List.of(new Player("pobi")));
+        Game game = new Game(dealer, new Players(List.of(makePlayer("pobi"))));
         game.dealInitialCards();
 
         //when
@@ -100,17 +106,17 @@ class GameTest {
         );
         Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
         Dealer dealer = new Dealer(deck);
-        List<Player> players = List.of(new Player("pobi"));
+        Players players = new Players(List.of(makePlayer("pobi")));
         Game game = new Game(dealer, players);
         game.dealInitialCards();
 
         //when
-        for (Player player : players) {
+        for (Player player : players.getPlayers()) {
             game.hitPlayer(player);
         }
 
         // then
-        assertThat(players)
+        assertThat(players.getPlayers())
                 .allSatisfy(player -> assertThat(player.getHand()).hasSize(3));
     }
 
@@ -127,7 +133,7 @@ class GameTest {
         );
         Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
         Dealer dealer = new Dealer(deck);
-        List<Player> players = List.of(new Player("pobi"));
+        Players players = new Players(List.of(makePlayer("pobi")));
         Game game = new Game(dealer, players);
         game.dealInitialCards();
 
@@ -154,7 +160,7 @@ class GameTest {
         );
         Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
         Dealer dealer = new Dealer(deck);
-        List<Player> players = List.of(new Player("pobi"));
+        Players players = new Players(List.of(makePlayer("pobi")));
         Game game = new Game(dealer, players);
         game.dealInitialCards();
 
@@ -168,9 +174,9 @@ class GameTest {
                 .hasSize(2);
     }
 
-    @DisplayName("모든 플레이어의 승부를 판단한다.")
+    @DisplayName("모든 플레이어의 수익률을 계산한다.")
     @Test
-    void judgeMatchResultsTest() {
+    void calculatePlayerProfitTest() {
         // given
         List<Card> cards = List.of(
                 new Card(Suit.SPADES, CardValue.TEN),
@@ -180,15 +186,42 @@ class GameTest {
         );
         Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
         Dealer dealer = new Dealer(deck);
-        List<Player> players = List.of(new Player("pobi"));
+        Player pobi = makePlayer("pobi");
+        Players players = new Players(List.of(pobi));
         Game game = new Game(dealer, players);
         game.dealInitialCards();
 
         // when
-        Map<Player, MatchResult> playerMatchResults = game.judgeMatchResults();
+        Map<Player, Profit> playerMatchResults = game.calculatePlayersProfit();
 
         // then
-        assertThat(playerMatchResults.get(new Player("pobi")))
-                .isSameAs(MatchResult.WIN);
+        assertThat(playerMatchResults.get(pobi).getProfit())
+                .isEqualTo(1000);
+    }
+
+    @DisplayName("딜러의 수익률을 계산한다.")
+    @Test
+    void calculateDealerProfitTest() {
+        // given
+        List<Card> cards = List.of(
+                new Card(Suit.SPADES, CardValue.TEN),
+                new Card(Suit.HEARTS, CardValue.TEN),
+                new Card(Suit.SPADES, CardValue.SEVEN),
+                new Card(Suit.SPADES, CardValue.TEN)
+        );
+        Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
+        Dealer dealer = new Dealer(deck);
+        Player pobi = makePlayer("pobi");
+        Players players = new Players(List.of(pobi));
+        Game game = new Game(dealer, players);
+        game.dealInitialCards();
+
+        // when
+        Map<Player, Profit> playerMatchResults = game.calculatePlayersProfit();
+        Profit dealerProfit = game.calculateDealerProfit(playerMatchResults);
+
+        // then
+        assertThat(dealerProfit.getProfit())
+                .isEqualTo(-1000);
     }
 }

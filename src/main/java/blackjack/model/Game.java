@@ -1,7 +1,7 @@
 package blackjack.model;
 
+import blackjack.model.betting.Profit;
 import blackjack.model.card.Card;
-import blackjack.model.card.Deck;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
 import blackjack.model.participant.Players;
@@ -14,9 +14,9 @@ public class Game {
     private final Dealer dealer;
     private final Players players;
 
-    public Game(Dealer dealer, List<Player> players) {
+    public Game(Dealer dealer, Players players) {
         this.dealer = dealer;
-        this.players = new Players(players);
+        this.players = players;
     }
 
     public void dealInitialCards() {
@@ -44,12 +44,17 @@ public class Game {
         return dealer.hitDealer();
     }
 
-    public Map<Player, MatchResult> judgeMatchResults() {
-        Map<Player, MatchResult> results = new LinkedHashMap<>();
+    public Map<Player, Profit> calculatePlayersProfit() {
+        Map<Player, Profit> results = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
-            results.put(player, MatchResult.calculatePlayerResult(dealer, player));
+            MatchResult matchResult = MatchResult.calculatePlayerResult(dealer, player);
+            results.put(player, player.calculateProfit(matchResult));
         }
         return results;
+    }
+
+    public Profit calculateDealerProfit(Map<Player, Profit> playersProfit) {
+        return dealer.calculateProfit(playersProfit);
     }
 
     public Card getDealerVisibleCard() {

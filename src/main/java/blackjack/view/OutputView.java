@@ -3,6 +3,7 @@ package blackjack.view;
 import static blackjack.model.constants.RuleConstants.DEALER_HIT_THRESHOLD;
 
 import blackjack.model.MatchResult;
+import blackjack.model.betting.Profit;
 import blackjack.model.card.Card;
 import blackjack.model.participant.Player;
 import java.util.EnumMap;
@@ -98,5 +99,13 @@ public class OutputView {
                 .stream()
                 .map(Card::getDisplayLabel)
                 .collect(Collectors.joining(", "));
+    }
+
+    public void printProfit(Profit dealerProfit, Map<Player, Profit> playersProfit) {
+        System.out.println("## 최종 수익");
+        System.out.println("딜러: " + dealerProfit.getProfit());
+        for (Entry<Player, Profit> results : playersProfit.entrySet()) {
+            System.out.printf("%s: %d%n", results.getKey().getName(), results.getValue().getProfit());
+        }
     }
 }

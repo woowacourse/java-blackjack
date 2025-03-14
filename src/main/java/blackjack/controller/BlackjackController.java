@@ -1,14 +1,19 @@
 package blackjack.controller;
 
 import blackjack.model.Game;
+import blackjack.model.betting.Profit;
 import blackjack.model.card.Card;
 import blackjack.model.card.Deck;
 import blackjack.model.card.RandomCardShuffler;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
+import blackjack.model.participant.Players;
+import blackjack.view.BettingPlayerCreateDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
 
@@ -21,7 +26,7 @@ public class BlackjackController {
     }
 
     public void run() {
-        List<Player> players = getPlayers();
+        Players players = getPlayers();
         Game game = createGame(players);
         dealInitialHand(game);
         askHitForAllPlayer(game);
@@ -29,7 +34,7 @@ public class BlackjackController {
         displayResult(game);
     }
 
-    private Game createGame(List<Player> players) {
+    private Game createGame(Players players) {
         Deck deck = Deck.createShuffledDeck(Card.createDeck(), new RandomCardShuffler());
         Dealer dealer = new Dealer(deck);
         return new Game(dealer, players);
@@ -54,16 +59,22 @@ public class BlackjackController {
         outputView.printDealerHit(isDealerHit);
     }
 
-    private List<Player> getPlayers() {
+    private Players getPlayers() {
+        List<Player> players = new ArrayList<>();
         List<String> playerNames = inputView.readPlayerNames();
-        return playerNames.stream()
-                .map(Player::new)
-                .toList();
+        for (String name : playerNames) {
+            BettingPlayerCreateDto bettingPlayerCreateDto = inputView.readPlayerBetAmount(name);
+            players.add(Player.of(bettingPlayerCreateDto));
+        }
+
+        return new Players(players);
     }
 
     private void displayResult(Game game) {
         outputView.printDealerHandAndTotal(game.getDealerHand(), game.getDealerTotal());
         outputView.printPlayerHandAndTotal(game.getPlayers());
-        outputView.printMatchResult(game.judgeMatchResults());
+        Map<Player, Profit> playersProfit = game.calculatePlayersProfit();
+        Profit dealerProfit = game.calculateDealerProfit(playersProfit);
+        outputView.printProfit(dealerProfit, playersProfit);
     }
 }
