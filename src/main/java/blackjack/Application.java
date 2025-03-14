@@ -1,7 +1,7 @@
 package blackjack;
 
 import blackjack.controller.BlackjackController;
-import blackjack.manager.GameRuleEvaluator;
+import blackjack.domain.game.GameRuleEvaluator;
 
 public class Application {
 

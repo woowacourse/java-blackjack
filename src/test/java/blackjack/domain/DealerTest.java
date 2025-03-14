@@ -3,6 +3,8 @@ package blackjack.domain;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
+import blackjack.domain.game.Dealer;
+import blackjack.domain.game.Hand;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;

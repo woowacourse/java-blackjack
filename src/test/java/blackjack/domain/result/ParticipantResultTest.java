@@ -1,8 +1,8 @@
 package blackjack.domain.result;
 
-import blackjack.domain.Dealer;
-import blackjack.domain.Hand;
-import blackjack.domain.Player;
+import blackjack.domain.game.Dealer;
+import blackjack.domain.game.Hand;
+import blackjack.domain.game.Player;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
