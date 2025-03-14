@@ -13,6 +13,20 @@ public enum WinLossResult {
         this.winLossMessage = winLossMessage;
     }
 
+    public static WinLossResult computeWinLoss(Player player, Dealer dealer) {
+        int playerScore = player.getHandTotal();
+        if (player.isBlackJack() && !dealer.isBlackJack()) {
+            return WinLossResult.WIN_WITH_BLACK_JACK;
+        }
+        if (playerScore > dealer.getHandTotal()) {
+            return WinLossResult.WIN;
+        }
+        if (playerScore == dealer.getHandTotal()) {
+            return WinLossResult.DRAW;
+        }
+        return WinLossResult.LOSS;
+    }
+
     public static WinLossResult of(int winLossOption) {
         if (winLossOption == 1) {
             return WIN;

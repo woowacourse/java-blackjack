@@ -53,18 +53,4 @@ public class BlackJack {
         printProfitPerParticipant(profitPerParticipant, dealer);
     }
 
-    private WinLossResult computeWinLoss(Player player, Dealer dealer) {
-        int playerScore = player.getHandTotal();
-        if (player.isBlackJack() && !dealer.isBlackJack()) {
-            return WinLossResult.WIN_WITH_BLACK_JACK;
-        }
-        if (playerScore > dealer.getHandTotal()) {
-            return WinLossResult.WIN;
-        }
-        if (playerScore == dealer.getHandTotal()) {
-            return WinLossResult.DRAW;
-        }
-        return WinLossResult.LOSS;
-    }
-
 }
