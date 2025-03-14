@@ -2,7 +2,6 @@ package blackjack.domain.game;
 
 import static blackjack.domain.game.GameRule.BUST_THRESHOLD;
 import static blackjack.domain.game.GameRule.INITIAL_CARD_COUNT;
-import static blackjack.domain.game.GameRule.applyBustToPoint;
 import static blackjack.domain.game.GameRule.isBlackJack;
 import static blackjack.domain.game.GameRule.isBust;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -41,13 +40,5 @@ class GameRuleTest {
                 Arguments.of(BUST_THRESHOLD.getValue(), INITIAL_CARD_COUNT.getValue() + 1, false),
                 Arguments.of(BUST_THRESHOLD.getValue() + 1, INITIAL_CARD_COUNT.getValue() + 1, false)
         );
-    }
-
-    @ParameterizedTest
-    @DisplayName("버스트된 카드점수를 0으로 계산할 수 있다.")
-    @CsvSource({"20,20", "21,21", "22,0"})
-    void canApplyBustToPoint(int point, int expectedPoint) {
-        int actualPoint = applyBustToPoint(point);
-        assertThat(actualPoint).isEqualTo(expectedPoint);
     }
 }

@@ -23,13 +23,6 @@ public enum GameRule {
         return isInitialHand && isMaxPoint;
     }
 
-    public static int applyBustToPoint(int point) {
-        if (point > BUST_THRESHOLD.value) {
-            return 0;
-        }
-        return point;
-    }
-
     public int getValue() {
         return value;
     }
