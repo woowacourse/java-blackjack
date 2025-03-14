@@ -1,11 +1,6 @@
 package blackjack.domain.game;
 
-import static java.util.function.Function.identity;
-import static java.util.stream.Collectors.toMap;
-
 import blackjack.domain.betting.BettingAmount;
-import java.util.Arrays;
-import java.util.Map;
 
 public enum WinningType {
     BLACKJACK_WIN("블랙잭 승", 2.5),

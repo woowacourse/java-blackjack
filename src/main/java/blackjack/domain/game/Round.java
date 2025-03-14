@@ -4,7 +4,6 @@ import static blackjack.domain.gambler.Dealer.DEALER_NAME;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.gambler.Dealer;
 import blackjack.domain.gambler.Gambler;
 import blackjack.domain.gambler.Name;
 import blackjack.domain.gambler.Names;
