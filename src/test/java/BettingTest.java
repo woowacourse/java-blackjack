@@ -1,33 +1,37 @@
-import domain.Betting;
-import domain.user.Player;
-import domain.user.User;
-import java.util.HashMap;
-import java.util.Map;
+import domain.user.Betting;
+import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class BettingTest {
 
-    @DisplayName("플레이어는 배팅을 할 수 있다.")
+    @DisplayName("배팅을 할 수 있다.")
     @Test
     void
     test1() {
         //given
-        Map<User, Long> bettingMap = new HashMap<>();
-        long submitMoney = 3000000L;
-        User user = new Player("Lemon");
-        bettingMap.put(user, 0L);
-        Betting betting = new Betting(bettingMap);
-
+        long amount = 30000000;
         //when
-        betting.summitBet(user, submitMoney);
-
+        Betting betting = new Betting(amount);
         //then
-        SoftAssertions.assertSoftly(softAssertions -> {
-            softAssertions.assertThat(betting.getBetting()).containsKey(user);
-            softAssertions.assertThat(betting.getBetting().get(user)).isEqualTo(3000000L);
-        });
+        Assertions.assertThat(betting.getBettingMoney()).isEqualTo(30000000);
     }
 
+    @DisplayName("배팅금액이 음수 혹은 0일시 예외가 발생한다.")
+    @Test
+    void test2() {
+        //given
+        long minusAmount = -100000;
+        long zeroAmount = 0;
+
+        // when & then
+        SoftAssertions.assertSoftly(softAssertions -> {
+            softAssertions.assertThatIllegalArgumentException().isThrownBy(() -> new Betting(zeroAmount))
+                    .withMessage("배팅금액을 입력해 주세요.");
+            softAssertions.assertThatIllegalArgumentException().isThrownBy(() -> new Betting(minusAmount))
+                    .withMessage("배팅금액은 음수가 불가능합니다.");
+
+        });
+    }
 }
