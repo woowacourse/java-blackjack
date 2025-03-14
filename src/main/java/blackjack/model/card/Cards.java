@@ -16,8 +16,9 @@ public class Cards {
     }
 
     public Cards(final Card... cards) {
-        this.values = new ArrayList<>(Arrays.stream(cards)
-                .toList());
+        this(Arrays.stream(cards)
+                .toList()
+        );
     }
 
     private Cards() {
