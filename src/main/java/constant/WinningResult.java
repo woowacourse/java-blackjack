@@ -1,17 +1,18 @@
 package constant;
 
 public enum WinningResult {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패"),
+    BLACKJACK(1.5),
+    WIN(1),
+    DRAW(0),
+    LOSE(-1),
     ;
 
     private static final int BUST_STANDARD = 21;
 
-    private final String message;
+    private final double profitRate;
 
-    WinningResult(String message) {
-        this.message = message;
+    WinningResult(double profitRate) {
+        this.profitRate = profitRate;
     }
 
     public static WinningResult getWinningResult(int playerScore, int dealerScore) {
@@ -38,7 +39,7 @@ public enum WinningResult {
         return WinningResult.LOSE;
     }
 
-    public String getMessage() {
-        return message;
+    public double getProfitRate() {
+        return profitRate;
     }
 }
