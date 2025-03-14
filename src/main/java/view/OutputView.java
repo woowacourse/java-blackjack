@@ -1,6 +1,7 @@
 package view;
 
 import domain.card.Card;
+import domain.game.GamblingMoney;
 import domain.game.Winning;
 import domain.participant.Dealer;
 import domain.participant.Gambler;
@@ -46,23 +47,10 @@ public class OutputView {
         );
     }
 
-    public void printGameResult(Map<Winning, Long> dealerWinnings,
-        Map<Player, Winning> playerWinnings) {
-        printStream.println("## 최종 승패");
-        printDealerWinnings(dealerWinnings);
-
-        playerWinnings.forEach((player, winning) ->
-            printStream.printf("%s: %s%n", player.getName(), winning.getName()));
-    }
-
-    private void printDealerWinnings(Map<Winning, Long> dealerWinnings) {
-        printStream.print("딜러: ");
-        dealerWinnings.entrySet()
-            .stream()
-            .sorted(Entry.comparingByKey())
-            .forEach(
-                entry -> printStream.printf("%d%s ", entry.getValue(), entry.getKey().getName()));
-        printStream.println();
+    public void printGamblerProfits(Map<Gambler, Integer> gamblerProfits) {
+        printStream.println("## 최종 수익");
+        gamblerProfits.forEach((gambler, profit) ->
+            printStream.printf("%s: %d%n", gambler.getName(), profit));
     }
 
     private String formatCards(List<Card> cards) {

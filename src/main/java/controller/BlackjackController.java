@@ -39,9 +39,8 @@ public class BlackjackController {
         gamblers.distributeExtraCardsToDealer(cardPack, new ViewDealerAnswer(outputView));
         outputView.printFinalCardDeck(chainGamblers(dealer, toKeyList(players)));
 
-        Map<Winning, Long> dealerWinnings = gamblers.evaluateDealerWinnings();
-        Map<Player, Winning> playerWinnings = gamblers.evaluatePlayerWinnings();
-        outputView.printGameResult(dealerWinnings, playerWinningsInOrder(toKeyList(players), playerWinnings));
+        Map<Gambler, Integer> gamblerProfits = gamblers.evaluateProfits();
+        outputView.printGamblerProfits(gamblerProfits);
     }
 
     private Map<Player, GamblingMoney> createPlayers() {
