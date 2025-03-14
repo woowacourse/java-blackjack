@@ -68,6 +68,10 @@ public enum Score {
         return this.rank > o.rank;
     }
 
+    public boolean isHigherThan(Score o) {
+        return this.rank < o.rank;
+    }
+
     public String getTitle() {
         return title;
     }

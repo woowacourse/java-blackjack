@@ -36,26 +36,47 @@ class ScoreTest {
                             Score.BUST)
             );
         }
-    }
 
-    @ParameterizedTest
-    @DisplayName("점수를 비교한다.")
-    @MethodSource("provideScoreComparisonCases")
-    void isLowerThan(Score firstScore, Score secondScore, boolean expectedResult) {
-        // when
-        boolean result = firstScore.isLowerThan(secondScore);
+        @ParameterizedTest
+        @DisplayName("점수의 작음을 비교한다.")
+        @MethodSource("provideScoreLowerComparisonCases")
+        void isLowerThan(Score firstScore, Score secondScore, boolean expectedResult) {
+            // when
+            boolean result = firstScore.isLowerThan(secondScore);
 
-        // then
-        assertThat(result).isEqualTo(expectedResult);
-    }
+            // then
+            assertThat(result).isEqualTo(expectedResult);
+        }
 
-    static Stream<Arguments> provideScoreComparisonCases() {
-        return Stream.of(
-                Arguments.of(Score.BUST, Score.TWENTY_ONE, true),
-                Arguments.of(Score.TEN, Score.ELEVEN, true),
-                Arguments.of(Score.FIFTEEN, Score.TWENTY, true),
-                Arguments.of(Score.TWENTY, Score.TWENTY, false),
-                Arguments.of(Score.TWENTY_ONE, Score.TWENTY, false)
-        );
+        static Stream<Arguments> provideScoreLowerComparisonCases() {
+            return Stream.of(
+                    Arguments.of(Score.BUST, Score.TWENTY_ONE, true),
+                    Arguments.of(Score.TEN, Score.ELEVEN, true),
+                    Arguments.of(Score.FIFTEEN, Score.TWENTY, true),
+                    Arguments.of(Score.TWENTY, Score.TWENTY, false),
+                    Arguments.of(Score.TWENTY_ONE, Score.TWENTY, false)
+            );
+        }
+
+        @ParameterizedTest
+        @DisplayName("점수의 큼을 비교한다.")
+        @MethodSource("provideScoreHigherComparisonCases")
+        void isHigherThan(Score firstScore, Score secondScore, boolean expectedResult) {
+            // when
+            boolean result = firstScore.isHigherThan(secondScore);
+
+            // then
+            assertThat(result).isEqualTo(expectedResult);
+        }
+
+        static Stream<Arguments> provideScoreHigherComparisonCases() {
+            return Stream.of(
+                    Arguments.of(Score.BUST, Score.TWENTY_ONE, false),
+                    Arguments.of(Score.TEN, Score.ELEVEN, false),
+                    Arguments.of(Score.FIFTEEN, Score.TWENTY, false),
+                    Arguments.of(Score.TWENTY, Score.TWENTY, false),
+                    Arguments.of(Score.TWENTY_ONE, Score.TWENTY, true)
+            );
+        }
     }
 }
