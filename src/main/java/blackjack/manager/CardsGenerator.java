@@ -1,8 +1,8 @@
 package blackjack.manager;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
-import blackjack.domain.card.Card;
 import java.util.Arrays;
 import java.util.List;
 
