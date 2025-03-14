@@ -41,7 +41,7 @@ public class BlackjackGame {
     public boolean passCardToDealer() {
         if (dealer.canReceive()) {
             dealer.receive(cardDeck.popCard());
-            return true; // TODO: View 때문에 생긴 반환값이 아닌가에 대한 고민
+            return true;
         }
         return false;
     }
@@ -50,7 +50,6 @@ public class BlackjackGame {
         return players.canPlayerReceive(name);
     }
 
-    // TODO: 모델에서 이름을 빼는 것이 맞는 것일까? Controller에 이미 정보가 있지 않은가? 하지만 모델에서 정보를 빼내는 것이 더 정확하긴 하다. 고민
     public List<String> getPlayersName() {
         return Collections.unmodifiableList(players.getPlayersName());
     }

@@ -18,7 +18,7 @@ public enum BlackjackResult {
         this.value = value;
     }
 
-    public static BlackjackResult getPlayerResult(Dealer dealer, Player player) {
+    public static BlackjackResult getPlayerResult(Player player, Dealer dealer) {
         if (isPlayerLose(player, dealer)) {
             return LOSE;
         }

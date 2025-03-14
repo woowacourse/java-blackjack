@@ -29,7 +29,7 @@ class BlackjackResultTest {
         player.receive(Card.of(TrumpNumber.SEVEN, TrumpShape.CLUB));
 
         // when
-        BlackjackResult result = BlackjackResult.getPlayerResult(dealer, player);
+        BlackjackResult result = BlackjackResult.getPlayerResult(player, dealer);
 
         // then
         assertThat(result).isEqualTo(BlackjackResult.WIN);

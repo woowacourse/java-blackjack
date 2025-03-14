@@ -38,16 +38,16 @@ public class Player {
         return ownedHand.getSize();
     }
 
+    public BlackjackResult getBlackjackResult(Dealer dealer) {
+        return BlackjackResult.getPlayerResult(this, dealer);
+    }
+
     public List<Card> getOwnedCards() {
         return ownedHand.getCards();
     }
 
     public String getName() {
         return name;
-    }
-
-    public BlackjackResult getBlackjackResult(Dealer dealer) {
-        return BlackjackResult.getPlayerResult(dealer, this);
     }
 
     @Override
