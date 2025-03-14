@@ -7,8 +7,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.Cards;
@@ -41,12 +39,9 @@ class DealerTest {
         assertThat(dealer.getCards().getValues()).hasSize(3);
     }
 
-    @CsvSource(value = {
-            "DEALER,true", "USER,false"
-    })
-    @ParameterizedTest
-    void 자신의_역할과_같은_역할인지_확인한다(Role role, boolean expected) {
-        assertThat(dealer.hasRole(role)).isEqualTo(expected);
+    @Test
+    void 딜러인지_확인해준다() {
+        assertThat(dealer.isDealer()).isTrue();
     }
 
     @Test

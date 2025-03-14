@@ -7,7 +7,6 @@ import java.util.function.Predicate;
 
 import blackjack.model.card.Cards;
 import blackjack.model.player.Player;
-import blackjack.model.player.Role;
 
 public class BlackJackRule {
 
@@ -18,7 +17,7 @@ public class BlackJackRule {
             user.getMinimumPoint() < BLACK_JACK_POINT;
 
     public boolean canDrawMoreCard(final Player player) {
-        if (player.hasRole(Role.DEALER)) {
+        if (player.isDealer()) {
             return DEALER_DRAW_PREDICATE.test(player);
         }
         return USER_DRAW_PREDICATE.test(player);
@@ -26,7 +25,7 @@ public class BlackJackRule {
 
     public Cards openInitialCards(final Player player) {
         Cards playerCards = player.getCards();
-        if (player.hasRole(Role.DEALER)) {
+        if (player.isDealer()) {
             return new Cards(playerCards.getFirst());
         }
         return playerCards;

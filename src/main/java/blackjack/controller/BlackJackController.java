@@ -8,7 +8,6 @@ import blackjack.model.card.initializer.DefaultCardDeckInitializer;
 import blackjack.model.game.BlackJackGame;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
-import blackjack.model.player.Role;
 import blackjack.model.player.User;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -56,7 +55,7 @@ public class BlackJackController {
     }
 
     private void userDrawMoreCards(final BlackJackGame blackJackGame, final Player player) {
-        if (player.hasRole(Role.DEALER)) {
+        if (player.isDealer()) {
             return;
         }
         while (blackJackGame.canDrawMoreCard(player) && inputView.readUserDrawMoreCard(player)) {

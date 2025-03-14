@@ -10,13 +10,13 @@ public abstract class Player {
 
     protected final String name;
     protected final Cards cards;
-    protected final Role role;
 
-    protected Player(final String name, final Role role) {
+    protected Player(final String name) {
         this.name = name;
         this.cards = Cards.empty();
-        this.role = role;
     }
+
+    public abstract boolean isDealer();
 
     public List<Integer> calculatePossiblePoints() {
         return cards.calculatePossiblePoints();
@@ -28,10 +28,6 @@ public abstract class Player {
 
     public void receiveCards(final Cards cards) {
         this.cards.merge(cards);
-    }
-
-    public boolean hasRole(final Role role) {
-        return this.role == role;
     }
 
     public Cards getCards() {
@@ -50,12 +46,12 @@ public abstract class Player {
         if (!(o instanceof Player player)) {
             return false;
         }
-        return Objects.equals(getName(), player.getName()) && role == player.role;
+        return Objects.equals(getName(), player.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), role);
+        return Objects.hashCode(getName());
     }
 
 }
