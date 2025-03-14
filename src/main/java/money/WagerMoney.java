@@ -14,4 +14,8 @@ public class WagerMoney {
 	public Map<Player, Money> getMoney() {
 		return money;
 	}
+
+	public Map<Player, Money> calculateWagerResult() {
+		return null;
+	}
 }

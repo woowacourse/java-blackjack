@@ -9,6 +9,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import duel.DuelResult;
+import paticipant.Participant;
 import paticipant.Player;
 
 public class WagerMoneyTest {
@@ -28,6 +30,28 @@ public class WagerMoneyTest {
 
 			// then
 			assertThat(wagerMoney.getMoney()).isEqualTo(money);
+		}
+	}
+
+	@Nested
+	@DisplayName("베팅 결과 반환")
+	class CalculateWagerResult {
+
+		@DisplayName("베팅 결과 수익률 Map을 반환한다.")
+		@Test
+		void calculateWagerResult() {
+			// given
+			final Participant participant = new Participant();
+			participant.writeDuelResult(DuelResult.WIN);
+			final Player player = new Player("");
+			final Map<Player, Money> money = Map.of(player, new Money(10_000));
+			final WagerMoney wagerMoney = new WagerMoney(money);
+
+			// when
+			final Map<Player, Money> wagerResult = wagerMoney.calculateWagerResult();
+
+			// then
+			assertThat(wagerResult.get(player)).isEqualTo(new Money(10_000));
 		}
 	}
 }
