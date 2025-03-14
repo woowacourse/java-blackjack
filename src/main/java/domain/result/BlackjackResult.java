@@ -1,6 +1,6 @@
 package domain.result;
 
-import static domain.GameManager.BLACKJACK_SCORE;
+import static domain.BlackjackGame.BLACKJACK_SCORE;
 
 import domain.participant.Dealer;
 import domain.participant.Player;

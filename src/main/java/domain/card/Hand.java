@@ -1,6 +1,6 @@
 package domain.card;
 
-import static domain.GameManager.*;
+import static domain.BlackjackGame.BLACKJACK_SCORE;
 
 import java.util.ArrayList;
 import java.util.Collections;

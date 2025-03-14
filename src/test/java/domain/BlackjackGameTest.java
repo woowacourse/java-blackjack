@@ -15,7 +15,7 @@ import domain.participant.Players;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-class GameManagerTest {
+class BlackjackGameTest {
 
     @Test
     void 게임_메니저를_생성한다() {
@@ -31,7 +31,7 @@ class GameManagerTest {
         );
 
         // when & then
-        assertThatCode(() -> GameManager.of(cardDeck, Participants.of(dealer, players)))
+        assertThatCode(() -> BlackjackGame.of(cardDeck, Participants.of(dealer, players)))
                 .doesNotThrowAnyException();
     }
 
@@ -47,10 +47,10 @@ class GameManagerTest {
                         Player.of("pobi3")
                 )
         );
-        GameManager gameManager = GameManager.of(cardDeck, Participants.of(dealer, players));
+        BlackjackGame blackjackGame = BlackjackGame.of(cardDeck, Participants.of(dealer, players));
 
         // when
-        gameManager.distributeCards();
+        blackjackGame.distributeCards();
 
         // then
         assertThat(cardDeck.getCards()).hasSize(44);
@@ -68,10 +68,10 @@ class GameManagerTest {
                         Player.of("pobi3")
                 )
         );
-        GameManager gameManager = GameManager.of(cardDeck, Participants.of(dealer, players));
+        BlackjackGame blackjackGame = BlackjackGame.of(cardDeck, Participants.of(dealer, players));
 
         // when
-        List<String> names = gameManager.getPlayersName();
+        List<String> names = blackjackGame.getPlayersName();
 
         // then
         assertThat(names).hasSize(3).contains("pobi1", "pobi2", "pobi3");
@@ -90,10 +90,10 @@ class GameManagerTest {
                         Player.of("pobi3")
                 )
         );
-        GameManager gameManager = GameManager.of(cardDeck, Participants.of(dealer, players));
+        BlackjackGame blackjackGame = BlackjackGame.of(cardDeck, Participants.of(dealer, players));
 
         // when
-        gameManager.passCardToPlayer("pobi1");
+        blackjackGame.passCardToPlayer("pobi1");
 
         // then
         assertThat(target.getOwnedCards()).hasSize(1);
@@ -114,10 +114,10 @@ class GameManagerTest {
                         Player.of("pobi3")
                 )
         );
-        GameManager gameManager = GameManager.of(cardDeck, Participants.of(dealer, players));
+        BlackjackGame blackjackGame = BlackjackGame.of(cardDeck, Participants.of(dealer, players));
 
         // when
-        int score = gameManager.getScoreOf("pobi1");
+        int score = blackjackGame.getScoreOf("pobi1");
 
         // then
         assertThat(score).isEqualTo(9);
@@ -142,10 +142,10 @@ class GameManagerTest {
                         Player.of("pobi3")
                 )
         );
-        GameManager gameManager = GameManager.of(cardDeck, Participants.of(dealer, players));
+        BlackjackGame blackjackGame = BlackjackGame.of(cardDeck, Participants.of(dealer, players));
 
         // when
-        boolean result = gameManager.passCardToDealer();
+        boolean result = blackjackGame.passCardToDealer();
 
         // then
         assertThat(result).isTrue();
@@ -169,10 +169,10 @@ class GameManagerTest {
                         Player.of("pobi3")
                 )
         );
-        GameManager gameManager = GameManager.of(cardDeck, Participants.of(dealer, players));
+        BlackjackGame blackjackGame = BlackjackGame.of(cardDeck, Participants.of(dealer, players));
 
         // when
-        boolean result = gameManager.passCardToDealer();
+        boolean result = blackjackGame.passCardToDealer();
 
         // then
         assertThat(result).isFalse();

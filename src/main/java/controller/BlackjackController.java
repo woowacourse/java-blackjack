@@ -1,8 +1,8 @@
 package controller;
 
-import static domain.GameManager.BLACKJACK_SCORE;
+import static domain.BlackjackGame.BLACKJACK_SCORE;
 
-import domain.GameManager;
+import domain.BlackjackGame;
 import domain.batting.Bet;
 import domain.batting.BettingPool;
 import domain.card.CardDeck;
@@ -34,16 +34,16 @@ public class BlackjackController {
         readPlayersBet(rawPlayers, bettingPool);
 
         Players players = Players.of(rawPlayers);
-        GameManager gameManager = GameManager.of(
+        BlackjackGame blackjackGame = BlackjackGame.of(
                 CardDeck.of(CardDeckGenerator.generateCardDeck()),
                 Participants.of(dealer, players)
         );
 
-        gameManager.distributeCards();
+        blackjackGame.distributeCards();
         outputView.printInitCards(dealer, players);
 
-        drawToPlayers(gameManager);
-        drawToDealer(gameManager);
+        drawToPlayers(blackjackGame);
+        drawToDealer(blackjackGame);
 
         outputView.printFinalCardsContent(dealer, players);
         outputView.printResult(dealer, players);
@@ -65,31 +65,31 @@ public class BlackjackController {
         }
     }
 
-    private void drawToPlayers(GameManager gameManager) {
-        List<String> playersNames = gameManager.getPlayersName();
+    private void drawToPlayers(BlackjackGame blackjackGame) {
+        List<String> playersNames = blackjackGame.getPlayersName();
         for (String name : playersNames) {
-            processPlayerDecision(name, gameManager);
+            processPlayerDecision(name, blackjackGame);
         }
     }
 
-    private void drawToDealer(GameManager gameManager) {
-        boolean received = gameManager.passCardToDealer();
+    private void drawToDealer(BlackjackGame blackjackGame) {
+        boolean received = blackjackGame.passCardToDealer();
         while (received) {
             outputView.printDealerReceived();
-            received = gameManager.passCardToDealer();
+            received = blackjackGame.passCardToDealer();
         }
     }
 
-    private void processPlayerDecision(String name, GameManager gameManager) {
-        while (gameManager.getScoreOf(name) < BLACKJACK_SCORE) {
+    private void processPlayerDecision(String name, BlackjackGame blackjackGame) {
+        while (blackjackGame.getScoreOf(name) < BLACKJACK_SCORE) { // TODO: 플레이어 모델이 더 받을 수 있는지 판단하도록 함
             String answer = inputView.askReceive(name);
             validateBinaryQuestion(answer);
             if (answer.equals("n")) {
-                outputView.printCardsByName(gameManager.getPlayerByName(name));
+                outputView.printCardsByName(blackjackGame.getPlayerByName(name));
                 break;
             }
-            gameManager.passCardToPlayer(name);
-            outputView.printCardsByName(gameManager.getPlayerByName(name));
+            blackjackGame.passCardToPlayer(name);
+            outputView.printCardsByName(blackjackGame.getPlayerByName(name));
         }
     }
 

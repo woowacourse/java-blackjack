@@ -1,6 +1,6 @@
 package domain.card;
 
-import static domain.GameManager.BLACKJACK_SCORE;
+import static domain.BlackjackGame.BLACKJACK_SCORE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.stream.Stream;
