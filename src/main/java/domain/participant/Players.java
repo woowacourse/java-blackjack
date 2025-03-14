@@ -46,6 +46,10 @@ public class Players {
         findByName(name).receive(card);
     }
 
+    public boolean canPlayerReceive(String name) {
+        return findByName(name).canReceive();
+    }
+
     public int getScoreOf(String name) {
         return findByName(name).getScore();
     }

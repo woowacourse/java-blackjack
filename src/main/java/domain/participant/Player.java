@@ -1,5 +1,7 @@
 package domain.participant;
 
+import static domain.BlackjackGame.BLACKJACK_SCORE;
+
 import domain.card.Card;
 import domain.card.Hand;
 import domain.result.BlackjackResult;
@@ -22,6 +24,10 @@ public class Player {
 
     public void receive(final Card card) {
         ownedHand.add(card);
+    }
+
+    public boolean canReceive() {
+        return (getScore() < BLACKJACK_SCORE);
     }
 
     public int getScore() {

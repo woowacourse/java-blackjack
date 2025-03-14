@@ -1,5 +1,7 @@
 package domain.participant;
 
+import static domain.BlackjackGame.DEALER_MIN_SCORE;
+
 import domain.card.Card;
 import domain.card.Hand;
 import java.util.List;
@@ -19,15 +21,19 @@ public class Dealer {
         ownedHand.add(card);
     }
 
+    public List<Card> getOwnedCards() {
+        return ownedHand.getCards();
+    }
+
+    public boolean canReceive() {
+        return (getScore() <= DEALER_MIN_SCORE);
+    }
+
     public int getScore() {
         return ownedHand.calculateScore();
     }
 
     public int getCardCount() {
         return ownedHand.getSize();
-    }
-
-    public List<Card> getOwnedCards() {
-        return ownedHand.getCards();
     }
 }

@@ -39,16 +39,15 @@ public class BlackjackGame {
     }
 
     public boolean passCardToDealer() {
-        if (dealer.getScore() > DEALER_MIN_SCORE) { // TODO: 판단을 여기서 하지 말고, 딜러에게 메시지를 던져 판단
-            return false;
+        if (dealer.canReceive()) {
+            dealer.receive(cardDeck.popCard());
+            return true; // TODO: View 때문에 생긴 반환값이 아닌가에 대한 고민
         }
-        dealer.receive(cardDeck.popCard());
-        return true;
+        return false;
     }
 
-    // TODO: 직접적으로 게임의 스코어를 반환하는 것 보다, 해당 사용자가 Blackjack인지 판별하는 것이 더 나아보임
-    public int getScoreOf(String name) {
-        return players.getScoreOf(name);
+    public boolean checkPlayerCanReceive(String name) {
+        return players.canPlayerReceive(name);
     }
 
     // TODO: 모델에서 이름을 빼는 것이 맞는 것일까? Controller에 이미 정보가 있지 않은가? 하지만 모델에서 정보를 빼내는 것이 더 정확하긴 하다. 고민

@@ -99,30 +99,6 @@ class BlackjackGameTest {
     }
 
     @Test
-    void 플레이어의_현재_카드_점수를_계산한다() {
-        // given
-        CardDeck cardDeck = CardDeck.of(CardDeckGenerator.generateCardDeck());
-        Player target = Player.of("pobi1");
-        target.receive(Card.of(TrumpNumber.NINE, TrumpShape.CLUB));
-
-        Dealer dealer = Dealer.of();
-        Players players = Players.of(
-                List.of(
-                        target,
-                        Player.of("pobi2"),
-                        Player.of("pobi3")
-                )
-        );
-        BlackjackGame blackjackGame = BlackjackGame.of(cardDeck, dealer, players);
-
-        // when
-        int score = blackjackGame.getScoreOf("pobi1");
-
-        // then
-        assertThat(score).isEqualTo(9);
-    }
-
-    @Test
     void 딜러의_카드_합이_16_이하면_카드를_한_장_받고_true를_반환한다() {
         // given
         List<Card> cards = List.of(

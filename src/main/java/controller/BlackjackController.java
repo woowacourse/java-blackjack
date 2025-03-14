@@ -1,7 +1,5 @@
 package controller;
 
-import static domain.BlackjackGame.BLACKJACK_SCORE;
-
 import domain.BlackjackGame;
 import domain.batting.Bet;
 import domain.batting.BettingPool;
@@ -79,7 +77,7 @@ public class BlackjackController {
     }
 
     private void processPlayerDecision(String name, BlackjackGame blackjackGame) {
-        while (blackjackGame.getScoreOf(name) < BLACKJACK_SCORE) { // TODO: 플레이어 모델이 더 받을 수 있는지 판단하도록 함
+        while (blackjackGame.checkPlayerCanReceive(name)) {
             String answer = inputView.askReceive(name);
             validateBinaryQuestion(answer);
             if (answer.equals("n")) {
