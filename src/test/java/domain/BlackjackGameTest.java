@@ -9,7 +9,6 @@ import domain.card.CardDeckGenerator;
 import domain.card.TrumpNumber;
 import domain.card.TrumpShape;
 import domain.participant.Dealer;
-import domain.participant.Participants;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.List;
@@ -31,7 +30,7 @@ class BlackjackGameTest {
         );
 
         // when & then
-        assertThatCode(() -> BlackjackGame.of(cardDeck, Participants.of(dealer, players)))
+        assertThatCode(() -> BlackjackGame.of(cardDeck, dealer, players))
                 .doesNotThrowAnyException();
     }
 
@@ -47,7 +46,7 @@ class BlackjackGameTest {
                         Player.of("pobi3")
                 )
         );
-        BlackjackGame blackjackGame = BlackjackGame.of(cardDeck, Participants.of(dealer, players));
+        BlackjackGame blackjackGame = BlackjackGame.of(cardDeck, dealer, players);
 
         // when
         blackjackGame.distributeCards();
@@ -68,7 +67,7 @@ class BlackjackGameTest {
                         Player.of("pobi3")
                 )
         );
-        BlackjackGame blackjackGame = BlackjackGame.of(cardDeck, Participants.of(dealer, players));
+        BlackjackGame blackjackGame = BlackjackGame.of(cardDeck, dealer, players);
 
         // when
         List<String> names = blackjackGame.getPlayersName();
@@ -90,7 +89,7 @@ class BlackjackGameTest {
                         Player.of("pobi3")
                 )
         );
-        BlackjackGame blackjackGame = BlackjackGame.of(cardDeck, Participants.of(dealer, players));
+        BlackjackGame blackjackGame = BlackjackGame.of(cardDeck, dealer, players);
 
         // when
         blackjackGame.passCardToPlayer("pobi1");
@@ -114,7 +113,7 @@ class BlackjackGameTest {
                         Player.of("pobi3")
                 )
         );
-        BlackjackGame blackjackGame = BlackjackGame.of(cardDeck, Participants.of(dealer, players));
+        BlackjackGame blackjackGame = BlackjackGame.of(cardDeck, dealer, players);
 
         // when
         int score = blackjackGame.getScoreOf("pobi1");
@@ -142,7 +141,7 @@ class BlackjackGameTest {
                         Player.of("pobi3")
                 )
         );
-        BlackjackGame blackjackGame = BlackjackGame.of(cardDeck, Participants.of(dealer, players));
+        BlackjackGame blackjackGame = BlackjackGame.of(cardDeck, dealer, players);
 
         // when
         boolean result = blackjackGame.passCardToDealer();
@@ -169,7 +168,7 @@ class BlackjackGameTest {
                         Player.of("pobi3")
                 )
         );
-        BlackjackGame blackjackGame = BlackjackGame.of(cardDeck, Participants.of(dealer, players));
+        BlackjackGame blackjackGame = BlackjackGame.of(cardDeck, dealer, players);
 
         // when
         boolean result = blackjackGame.passCardToDealer();

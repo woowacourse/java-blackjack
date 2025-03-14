@@ -8,7 +8,6 @@ import domain.batting.BettingPool;
 import domain.card.CardDeck;
 import domain.card.CardDeckGenerator;
 import domain.participant.Dealer;
-import domain.participant.Participants;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.Arrays;
@@ -35,8 +34,7 @@ public class BlackjackController {
 
         Players players = Players.of(rawPlayers);
         BlackjackGame blackjackGame = BlackjackGame.of(
-                CardDeck.of(CardDeckGenerator.generateCardDeck()),
-                Participants.of(dealer, players)
+                CardDeck.of(CardDeckGenerator.generateCardDeck()), dealer, players
         );
 
         blackjackGame.distributeCards();
