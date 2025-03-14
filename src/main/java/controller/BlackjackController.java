@@ -27,7 +27,9 @@ public class BlackjackController {
 
     public void run() {
         List<String> playerNames = Parser.parserStringToList(inputView.inputUsers());
-        GameManager gameManager = GameManager.initailizeGameManager(playerNames, trumpCardManager);
+        List<Long> playersBettingMoney = inputBettingMoney(playerNames);
+
+        GameManager gameManager = GameManager.initailizeGameManager(playerNames, playersBettingMoney, trumpCardManager);
 
         distributionFirstCard(gameManager, playerNames);
 
@@ -35,8 +37,12 @@ public class BlackjackController {
         additionalDealerCard(gameManager);
 
         createGameResult(gameManager, playerNames);
-
         calculateGameResult(gameManager);
+    }
+
+    private List<Long> inputBettingMoney(List<String> playerNames) {
+        return playerNames.stream().map(inputView::inputBettingMoney)
+                .toList();
     }
 
     private void distributionFirstCard(GameManager gameManager, List<String> playerNames) {
@@ -109,7 +115,7 @@ public class BlackjackController {
                 .filter(entry -> entry.getValue() == status)
                 .count();
     }
-    
+
     private void displayPlayers(GameManager gameManager, List<String> playerNames) {
         playerNames.stream()
                 .map(gameManager::findPlayerByUsername)

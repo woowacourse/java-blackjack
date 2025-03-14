@@ -15,6 +15,11 @@ public class InputView {
         return scanner.next();
     }
 
+    public Long inputBettingMoney(String name) {
+        System.out.printf("%s의 배팅 금액은?\n", name);
+        return scanner.nextLong();
+    }
+
     public void close() {
         scanner.close();
     }
