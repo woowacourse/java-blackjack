@@ -42,6 +42,20 @@ class BlackjackTest {
         );
     }
 
+    @DisplayName("플레이어가 베팅을 한다.")
+    @Test
+    void betPlayer() {
+        // given
+        final Blackjack blackjack = new Blackjack();
+        final Player player = new Player("엠제이");
+
+        // when
+        blackjack.betMoney(player, "10000");
+
+        // then
+        assertThat(player.getProfit()).isEqualTo(-10000);
+    }
+
     @DisplayName("푸시인지 판단한다.")
     @Test
     void isPush() {
@@ -116,5 +130,44 @@ class BlackjackTest {
                         player4, WinningStatus.LOSE
                 )
         );
+    }
+
+    @DisplayName("플레이어의 수익을 계산한다.")
+    @Test
+    void calculateEarnedMoney() {
+        // given
+        final Blackjack blackjack = new Blackjack();
+        final Dealer dealer = Dealer.getDealer(new CardRandomMachine());
+        final Players players = Players.from("엠제이, 밍트, 리원, 포스티");
+
+        final Player player1 = players.getPlayers().get(0);
+        final Player player2 = players.getPlayers().get(1);
+        final Player player3 = players.getPlayers().get(2);
+        final Player player4 = players.getPlayers().get(3);
+
+        player1.bet("10000");
+        player2.bet("10000");
+        player3.bet("10000");
+        player4.bet("10000");
+
+        dealer.receiveCards(provideSum18Cards());
+        player1.receiveCards(provideBlackjackCards());
+        player2.receiveCards(provideSum20Cards());
+        player3.receiveCards(provideSum17Cards());
+        player4.receiveCards(provideSum18Cards());
+
+        // when
+        Map<Player, WinningStatus> winningResult = blackjack.calculateWinningResult(false, dealer, players);
+        blackjack.calculateEarnedMoney(winningResult, dealer, players);
+
+        // then
+        assertAll(
+                () -> assertThat(dealer.getProfit()).isEqualTo(-5000),
+                () -> assertThat(player1.getProfit()).isEqualTo(5000),
+                () -> assertThat(player2.getProfit()).isEqualTo(10000),
+                () -> assertThat(player3.getProfit()).isEqualTo(-10000),
+                () -> assertThat(player4.getProfit()).isEqualTo(0)
+        );
+
     }
 }
