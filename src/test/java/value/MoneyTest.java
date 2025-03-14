@@ -46,5 +46,20 @@ public class MoneyTest {
 			// then
 			assertThat(actual.getValue()).isEqualTo(25_000);
 		}
+
+		@DisplayName("금액 빼기 연산")
+		@Test
+		void minus() {
+			// given
+			final int value = 10_000;
+			final Money money = new Money(value);
+			final Money minusMoney = new Money(value);
+
+			// when
+			final Money actual = money.minus(minusMoney);
+
+			// then
+			assertThat(actual.getValue()).isZero();
+		}
 	}
 }
