@@ -1,6 +1,5 @@
 package blackjack.gamer;
 
-import blackjack.bettingMachine.BettingMachine;
 import blackjack.card.Card;
 import blackjack.card.Hand;
 import java.util.List;
@@ -8,11 +7,9 @@ import java.util.List;
 public abstract class Gamer {
 
     protected final Hand hand;
-    protected final BettingMachine bettingMachine;
 
     public Gamer() {
         this.hand = new Hand();
-        this.bettingMachine = new BettingMachine();
     }
 
     public void receiveCards(List<Card> cards) {
@@ -37,10 +34,6 @@ public abstract class Gamer {
 
     public boolean isBlackjack(final int blackjackNumber, final int blackjackCardCount) {
         return hand.sumCards() == blackjackNumber && hand.countCards() == blackjackCardCount;
-    }
-
-    public long getProfit() {
-        return bettingMachine.getProfit();
     }
 
     public abstract List<Card> showInitialCards();

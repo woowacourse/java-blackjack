@@ -1,5 +1,6 @@
 package blackjack.gamer;
 
+import blackjack.bettingMachine.Money;
 import blackjack.card.Card;
 import blackjack.card.Denomination;
 import blackjack.card.Shape;
@@ -14,9 +15,11 @@ public class Dealer extends Gamer {
     private static final int HIT_THRESHOLD = 16;
 
     private final CardMachine cardMachine;
+    private final Money earnMoney;
 
     public Dealer(final CardMachine cardMachine) {
         this.cardMachine = cardMachine;
+        this.earnMoney = new Money(0);
     }
 
     public void initCardMachine() {
@@ -39,7 +42,11 @@ public class Dealer extends Gamer {
     }
 
     public void updateEarnedMoney(final long money) {
-        bettingMachine.earnMoney(money);
+        earnMoney.increase(money);
+    }
+
+    public long getProfit() {
+        return earnMoney.getMoney();
     }
 
     @Override

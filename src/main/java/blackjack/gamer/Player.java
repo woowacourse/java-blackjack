@@ -1,14 +1,17 @@
 package blackjack.gamer;
 
+import blackjack.bettingMachine.BettingMachine;
 import blackjack.card.Card;
 import java.util.List;
 
 public class Player extends Gamer {
 
     private final String nickName;
+    private final BettingMachine bettingMachine;
 
     public Player(final String nickName) {
         this.nickName = nickName;
+        this.bettingMachine = new BettingMachine();
     }
 
     public void bet(final String bettingAmount) {
@@ -32,6 +35,10 @@ public class Player extends Gamer {
 
     public void push() {
         bettingMachine.earnSingle();
+    }
+
+    public long getProfit() {
+        return bettingMachine.getProfit();
     }
 
     @Override
