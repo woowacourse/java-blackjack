@@ -9,7 +9,8 @@ import model.card.CardNumber;
 
 public abstract class Cards {
 
-    protected static final int BUST_THRESHOLD = 21;
+    protected static final int MAX_SCORE = 21;
+    protected static final int INITIAL_CARDS_COUNT = 2;
 
     protected final List<Card> cards;
 
@@ -26,12 +27,16 @@ public abstract class Cards {
     }
 
     public boolean isBust() {
-        return calculateSum() > BUST_THRESHOLD;
+        return calculateSum() > MAX_SCORE;
     }
 
     public int calculateResult() {
         changeAceElevenToOneUntilNotBust();
         return calculateSum();
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == INITIAL_CARDS_COUNT && calculateResult() == MAX_SCORE;
     }
 
     public List<Card> getCards() {

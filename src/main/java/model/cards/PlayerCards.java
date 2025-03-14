@@ -9,6 +9,6 @@ final public class PlayerCards extends Cards {
     }
 
     public boolean canDraw() {
-        return super.calculateSum() < BUST_THRESHOLD;
+        return super.calculateSum() < MAX_SCORE;
     }
 }

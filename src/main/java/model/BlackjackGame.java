@@ -56,10 +56,10 @@ public class BlackjackGame {
         return new GameResults(participants.getPlayerNames().stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
-                        name -> GameResult.determineGameResult(participants.getDealerCards(),
-                                participants.findCardsByName(name)
-                        )))
-        );
+                        name -> GameResult.determineGameResult(
+                                participants.getDealerCards(),
+                                participants.findCardsByName(name))
+                )));
     }
 
     public static BlackjackGame getBlackjackGame(
