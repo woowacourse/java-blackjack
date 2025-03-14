@@ -1,8 +1,8 @@
 package view;
 
 import domain.participant.GameResult;
+import domain.participant.Participant;
 import domain.participant.ParticipantsResult;
-import domain.participant.Player;
 import java.util.Map;
 
 public class OutputViewOfProfit extends OutputView {
@@ -13,22 +13,22 @@ public class OutputViewOfProfit extends OutputView {
     public void printGameResult(ParticipantsResult participantsResult) {
         System.out.println();
         System.out.println(RESULT_MESSAGE);
-        Map<Player, GameResult> playersResult = participantsResult.getPlayersResult();
+        Map<Participant, GameResult> playersResult = participantsResult.getPlayersResult();
         printDealerResult(playersResult);
         printPlayersResult(playersResult);
     }
 
-    private void printDealerResult(Map<Player, GameResult> playersResult) {
+    private void printDealerResult(Map<Participant, GameResult> playersResult) {
         System.out.print("딜러: ");
         int sum = 0;
-        for (Player player : playersResult.keySet()) {
+        for (Participant player : playersResult.keySet()) {
             sum -= playersResult.get(player).getCalculateValue(player.getBettingAmount());
         }
         System.out.println(sum);
     }
 
-    private void printPlayersResult(Map<Player, GameResult> playersResult) {
-        for (Player player : playersResult.keySet()) {
+    private void printPlayersResult(Map<Participant, GameResult> playersResult) {
+        for (Participant player : playersResult.keySet()) {
             System.out.println(player.getName() + ": " + playersResult.get(player)
                 .getCalculateValue(player.getBettingAmount()));
         }

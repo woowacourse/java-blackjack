@@ -58,7 +58,7 @@ class ParticipantsTest {
 
             //when
             ParticipantsResult participantsResult = participants.calculateOfResult();
-            Map<Player, GameResult> playersResult = participantsResult.getPlayersResult();
+            Map<Participant, GameResult> playersResult = participantsResult.getPlayersResult();
             Map<GameResult, Integer> dealerResult = participantsResult.getDealerResult();
 
             //then
@@ -81,7 +81,7 @@ class ParticipantsTest {
 
             //when
             ParticipantsResult participantsResult = participants.calculateOfResult();
-            Map<Player, GameResult> playersResult = participantsResult.getPlayersResult();
+            Map<Participant, GameResult> playersResult = participantsResult.getPlayersResult();
             Map<GameResult, Integer> dealerResult = participantsResult.getDealerResult();
 
             //then
@@ -102,7 +102,7 @@ class ParticipantsTest {
 
             //when
             ParticipantsResult participantsResult = participants.calculateOfResult();
-            Map<Player, GameResult> playersResult = participantsResult.getPlayersResult();
+            Map<Participant, GameResult> playersResult = participantsResult.getPlayersResult();
             Map<GameResult, Integer> dealerResult = participantsResult.getDealerResult();
 
             //then
@@ -123,7 +123,7 @@ class ParticipantsTest {
 
             //when
             ParticipantsResult participantsResult = participants.calculateOfResult();
-            Map<Player, GameResult> playersResult = participantsResult.getPlayersResult();
+            Map<Participant, GameResult> playersResult = participantsResult.getPlayersResult();
             Map<GameResult, Integer> dealerResult = participantsResult.getDealerResult();
 
             //then

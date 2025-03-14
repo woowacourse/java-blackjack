@@ -5,16 +5,16 @@ import java.util.Map;
 
 public class ParticipantsResult {
 
-    private final Map<Player, GameResult> playersResult;
+    private final Map<Participant, GameResult> playersResult;
     private final Map<GameResult, Integer> dealerResult;
 
-    public ParticipantsResult(Map<Player, GameResult> playersResult,
+    public ParticipantsResult(Map<Participant, GameResult> playersResult,
         Map<GameResult, Integer> dealerResult) {
         this.playersResult = playersResult;
         this.dealerResult = dealerResult;
     }
 
-    public Map<Player, GameResult> getPlayersResult() {
+    public Map<Participant, GameResult> getPlayersResult() {
         return Collections.unmodifiableMap(playersResult);
     }
 

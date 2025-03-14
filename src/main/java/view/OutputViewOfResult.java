@@ -1,8 +1,8 @@
 package view;
 
 import domain.participant.GameResult;
+import domain.participant.Participant;
 import domain.participant.ParticipantsResult;
-import domain.participant.Player;
 import java.util.Map;
 
 public class OutputViewOfResult extends OutputView {
@@ -14,7 +14,7 @@ public class OutputViewOfResult extends OutputView {
         System.out.println();
         System.out.println(RESULT_MESSAGE);
         Map<GameResult, Integer> dealerResult = participantsResult.getDealerResult();
-        Map<Player, GameResult> playersResult = participantsResult.getPlayersResult();
+        Map<Participant, GameResult> playersResult = participantsResult.getPlayersResult();
         printDealerResult(dealerResult);
         printPlayersResult(playersResult);
     }
@@ -24,8 +24,8 @@ public class OutputViewOfResult extends OutputView {
         System.out.println(dealerFormatter(dealerResult));
     }
 
-    private void printPlayersResult(Map<Player, GameResult> playersResult) {
-        for (Player player : playersResult.keySet()) {
+    private void printPlayersResult(Map<Participant, GameResult> playersResult) {
+        for (Participant player : playersResult.keySet()) {
             System.out.println(player.getName() + ": " + playersResult.get(player).getKoreanName());
         }
     }

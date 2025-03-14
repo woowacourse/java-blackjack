@@ -34,7 +34,7 @@ public class Participants {
 
     public ParticipantsResult calculateOfResult() {
         Participant dealer = findDealer();
-        Map<Player, GameResult> playersResult = new HashMap<>();
+        Map<Participant, GameResult> playersResult = new HashMap<>();
         Map<GameResult, Integer> dealerResult = new HashMap<>();
         calculateResultOfParticipant(dealer, dealerResult, playersResult);
         return new ParticipantsResult(playersResult, dealerResult);
@@ -42,19 +42,19 @@ public class Participants {
 
     private void calculateResultOfParticipant(Participant dealer,
         Map<GameResult, Integer> dealerResult,
-        Map<Player, GameResult> playersResult) {
+        Map<Participant, GameResult> playersResult) {
         for (Participant participant : participants) {
             addResultOfParticipant(dealer, dealerResult, playersResult, participant);
         }
     }
 
     private void addResultOfParticipant(Participant dealer, Map<GameResult, Integer> dealerResult,
-        Map<Player, GameResult> playersResult, Participant participant) {
+        Map<Participant, GameResult> playersResult, Participant participant) {
         if (participant.isPlayer()) {
             GameResult gameResult = GameResult.calculateResultOfPlayer(dealer, participant);
             dealerResult.put(gameResult.convertOfDealer(),
                 dealerResult.getOrDefault(gameResult.convertOfDealer(), 0) + 1);
-            playersResult.put((Player) participant, gameResult);
+            playersResult.put(participant, gameResult);
         }
     }
 
