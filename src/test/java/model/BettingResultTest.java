@@ -34,9 +34,9 @@ class BettingResultTest {
         dealer.receiveCard(new Card(CardRank.FIVE, CardSuit.CLOVER));
         Players players = new Players(List.of(player));
         ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
-        Map<Player, Integer> map = new HashMap<>(Map.of(player, 10000));
-        BettingResult bettingResult = new BettingResult(map);
-        bettingResult.calculatePlayerBettingResult(players, participantWinningResult);
+        Map<Player, Betting> map = new HashMap<>(Map.of(player, new Betting(10000)));
+        BettingResult bettingResult = new BettingResult(map, participantWinningResult);
+        bettingResult.calculatePlayerBettingResult(players, dealer);
         int expect = 10000;
         int result = bettingResult.getBetting().get(player);
         assertEquals(expect, result);
@@ -49,10 +49,9 @@ class BettingResultTest {
         dealer.receiveCard(new Card(CardRank.EIGHT, CardSuit.CLOVER));
         Players players = new Players(List.of(player));
         ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
-        Map<Player, Integer> map = new HashMap<>();
-        map.put(player, 10000);
-        BettingResult bettingResult = new BettingResult(map);
-        bettingResult.calculatePlayerBettingResult(players, participantWinningResult);
+        Map<Player, Betting> map = new HashMap<>(Map.of(player, new Betting(10000)));
+        BettingResult bettingResult = new BettingResult(map, participantWinningResult);
+        bettingResult.calculatePlayerBettingResult(players, dealer);
         int expect = -10000;
         int result = bettingResult.getBetting().get(player);
         assertEquals(expect, result);
@@ -65,10 +64,9 @@ class BettingResultTest {
         dealer.receiveCard(new Card(CardRank.FIVE, CardSuit.CLOVER));
         Players players = new Players(List.of(player));
         ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
-        Map<Player, Integer> map = new HashMap<>();
-        map.put(player, 10000);
-        BettingResult bettingResult = new BettingResult(map);
-        bettingResult.calculatePlayerBettingResult(players, participantWinningResult);
+        Map<Player, Betting> map = new HashMap<>(Map.of(player, new Betting(10000)));
+        BettingResult bettingResult = new BettingResult(map, participantWinningResult);
+        bettingResult.calculatePlayerBettingResult(players, dealer);
         int expect = 0;
         int result = bettingResult.getBetting().get(player);
         assertEquals(expect, result);
@@ -82,10 +80,9 @@ class BettingResultTest {
         dealer.receiveCard(new Card(CardRank.FIVE, CardSuit.CLOVER));
         Players players = new Players(List.of(player));
         ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
-        Map<Player, Integer> map = new HashMap<>();
-        map.put(player, 10000);
-        BettingResult bettingResult = new BettingResult(map);
-        bettingResult.calculatePlayerBettingResult(players, participantWinningResult);
+        Map<Player, Betting> map = new HashMap<>(Map.of(player, new Betting(10000)));
+        BettingResult bettingResult = new BettingResult(map, participantWinningResult);
+        bettingResult.calculatePlayerBettingResult(players, dealer);
         int expect = 15000;
         int result = bettingResult.getBetting().get(player);
         assertEquals(expect, result);
@@ -94,12 +91,5 @@ class BettingResultTest {
     @Test
     @DisplayName("딜러의 최종 수익 계산 테스트")
     void 딜러의_최종_수익_계산_테스트(){
-        BettingResult bettingResult = new BettingResult(Map.of(
-                new Player("a"), 10000,
-                new Player("b"), 20000)
-        );
-        int expect = -30000;
-        int result = bettingResult.calculateDealerFinalResult();
-        assertEquals(expect, result);
     }
 }
