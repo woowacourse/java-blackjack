@@ -7,16 +7,17 @@ import java.util.List;
 
 public class CardDeck {
 
-    private final List<Card> cards = new ArrayList<>();
+    private final List<Card> cards;
 
     public CardDeck() {
-        initializeCardPack();
+        cards = initializeCardPack();
     }
 
-    private void initializeCardPack() {
-        Arrays.stream(Rank.values())
-                .forEach(rank -> Arrays.stream(Shape.values())
-                        .forEach(shape -> cards.add(new Card(rank, shape))));
+    private List<Card> initializeCardPack() {
+        return new ArrayList<>(Arrays.stream(Rank.values())
+                        .flatMap(rank -> Arrays.stream(Shape.values())
+                                .map(shape -> new Card(rank, shape)))
+                                .toList());
     }
 
     public void shuffle() {
@@ -25,7 +26,7 @@ public class CardDeck {
 
     public Card poll() {
         if (cards.isEmpty()) {
-            initializeCardPack();
+            throw new IllegalArgumentException("카드가 모두 소진되었습니다.");
         }
         return cards.removeFirst();
     }
