@@ -1,7 +1,6 @@
 package domain.participant;
 
 import domain.card.TrumpCard;
-import domain.game.WinStatus;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -38,11 +37,6 @@ public class ParticipantHand {
         Score totalScore = totalScore();
         int aceCount = aceCount();
         return calculateAceIncludeSum(aceCalculateStandard, aceCount, totalScore);
-    }
-
-    public WinStatus getWinStatusAgainst(Score other) {
-        Score totalScore = calculateCardSum();
-        return WinStatus.determine(totalScore, other);
     }
 
     private Score totalScore() {

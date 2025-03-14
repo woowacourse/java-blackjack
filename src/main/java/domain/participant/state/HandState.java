@@ -1,7 +1,6 @@
 package domain.participant.state;
 
 import domain.card.TrumpCard;
-import domain.game.WinStatus;
 import domain.participant.ParticipantHand;
 import domain.participant.Score;
 import java.util.List;
@@ -18,7 +17,7 @@ public abstract class HandState {
     public static HandState start(TrumpCard... initCards){
         HandState start = new Start(initCards);
 
-        if(start.isBlackjack()){
+        if (start.isBlackjack()) {
             return new Blackjack(start.hand);
         }
 
@@ -26,15 +25,19 @@ public abstract class HandState {
     }
 
     public abstract HandState addCard(TrumpCard card);
+
     public abstract HandState stay();
+
+    public abstract boolean isFinished();
+
     public abstract double calculateProfitRate(HandState other);
 
-    public boolean isBust(){
+    public boolean isBust() {
         Score totalScore = hand.calculateCardSum();
         return hand.isBust(totalScore);
     }
 
-    protected boolean isBlackjack(){
+    protected boolean isBlackjack() {
         Score totalScore = hand.calculateCardSum();
         return totalScore.isEqualTo(MAX_SCORE) && hand.size() == BLACKJACK_CARD_COUNT;
     }
@@ -49,9 +52,5 @@ public abstract class HandState {
 
     public List<TrumpCard> getCards(){
         return hand.getCards();
-    }
-
-    public WinStatus getWinStatusAgainst(Score other) {
-        return hand.getWinStatusAgainst(other);
     }
 }

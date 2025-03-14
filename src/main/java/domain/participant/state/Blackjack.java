@@ -22,6 +22,11 @@ public class Blackjack extends HandState {
     }
 
     @Override
+    public boolean isFinished() {
+        return true;
+    }
+
+    @Override
     public double calculateProfitRate(HandState other) {
         if (other.isBlackjack()) {
             return BLACKJACK_DRAW_PROFIT;

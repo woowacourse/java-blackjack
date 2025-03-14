@@ -16,6 +16,9 @@ public class Dealer {
     }
 
     public boolean isDrawable() {
+        if (participant.handState().isFinished()) {
+            return false;
+        }
         Score totalScore = participant.calculateCardSum(DEALER_STOP_HIT_STANDARD_SCORE);
         return totalScore.isLessThanEqual(DEALER_STOP_HIT_STANDARD_SCORE);
     }
@@ -30,6 +33,10 @@ public class Dealer {
 
     public void addCard(TrumpCard trumpCard) {
         participant.addDraw(trumpCard);
+    }
+
+    public Score calculateSum() {
+        return handState().calculateCardSum();
     }
 
     public HandState handState() {

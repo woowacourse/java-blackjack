@@ -6,13 +6,11 @@ import domain.card.TrumpCard;
 import domain.card.strategy.BlackjackDrawStrategy;
 import domain.game.BlackjackGame;
 import domain.game.GameResult;
-import domain.game.WinStatus;
-import domain.participant.DealerWinStatus;
 import domain.participant.ParticipantName;
 import domain.participant.Score;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.function.Supplier;
 import view.InputView;
 import view.OutputView;
@@ -28,10 +26,12 @@ public class BlackjackController {
     }
 
     public void run() {
-        List<ParticipantName> participantNames = handleInput(this::handleNames);
+        List<String> names = handleInput(this::handleNames);
+        List<Integer> betAmounts = inputBetAmounts(names);
         Deck deck = DeckGenerator.generateDeck(new BlackjackDrawStrategy());
-        BlackjackGame blackjackGame = new BlackjackGame(participantNames, deck);
-        outputView.printInitiateDraw(participantNames);
+
+        BlackjackGame blackjackGame = new BlackjackGame(names, betAmounts, deck);
+        outputView.printInitiateDraw(names);
         openFirstDealerCard(blackjackGame);
         openPlayerCards(blackjackGame);
         askPlayerDraw(blackjackGame);
@@ -41,7 +41,13 @@ public class BlackjackController {
 
     private void blackjackGameResult(BlackjackGame blackjackGame) {
         blackjackCardResult(blackjackGame);
-        blackjackWinnerResult(blackjackGame);
+        blackjackProfitResult(blackjackGame);
+    }
+
+    private void blackjackProfitResult(BlackjackGame blackjackGame) {
+        Map<String, Integer> playersProfit = blackjackGame.getPlayersProfit();
+        Map<String, Integer> dealerProfit = blackjackGame.getDealerProfit(playersProfit);
+        outputView.printProfitResult(playersProfit, dealerProfit);
     }
 
     private void blackjackCardResult(BlackjackGame blackjackGame) {
@@ -51,17 +57,6 @@ public class BlackjackController {
         List<GameResult> playerGameResults = blackjackGame.currentPlayerBlackjackResult();
         for (GameResult gameResult : playerGameResults) {
             openPlayerResultCards(gameResult);
-        }
-    }
-
-    private void blackjackWinnerResult(BlackjackGame blackjackGame) {
-        Map<ParticipantName, WinStatus> playerWinStatuses = blackjackGame.getPlayerWinStatuses();
-        DealerWinStatus dealerWinStatus = blackjackGame.calculateDealerWinStatus(playerWinStatuses);
-        outputView.resultHeader();
-        outputView.dealerWinStatus(dealerWinStatus.win(), dealerWinStatus.lose(), blackjackGame.dealerName());
-
-        for (Entry<ParticipantName, WinStatus> winStatus : playerWinStatuses.entrySet()) {
-            outputView.playerWinStatus(winStatus.getKey(), winStatus.getValue());
         }
     }
 
@@ -88,16 +83,15 @@ public class BlackjackController {
     }
 
     private void handleAskDraw(ParticipantName name, BlackjackGame blackjackGame) {
-        boolean isDraw = handleAskDraw(name);
-        if (!isDraw) {
-            return;
+        while (!blackjackGame.isFinished(name)) {
+            boolean isDraw = handleAskDraw(name);
+            if (!isDraw) {
+                blackjackGame.stayPlayer(name);
+                return;
+            }
+            blackjackGame.dealCard(name);
+            openPlayerCards(name, blackjackGame);
         }
-        blackjackGame.dealCard(name);
-        openPlayerCards(name, blackjackGame);
-        if (blackjackGame.isBust(name)) {
-            return;
-        }
-        handleAskDraw(name, blackjackGame);
     }
 
     private void openPlayerCards(ParticipantName name, BlackjackGame blackjackGame) {
@@ -130,10 +124,19 @@ public class BlackjackController {
         outputView.openCards(name, List.of(trumpCard));
     }
 
-    private List<ParticipantName> handleNames() {
+    private List<String> handleNames() {
         outputView.inputNames();
-        List<String> names = inputView.inputNames();
-        return ParticipantName.namesOf(names);
+        return inputView.inputNames();
+    }
+
+    private List<Integer> inputBetAmounts(List<String> names) {
+        List<Integer> betAmounts = new ArrayList<>();
+        for (String name : names) {
+            outputView.inputBetAmounts(name);
+            int betAmount = handleInput(inputView::inputNumber);
+            betAmounts.add(betAmount);
+        }
+        return betAmounts;
     }
 
     private <T> T handleInput(Supplier<T> inputSupplier) {
@@ -144,4 +147,5 @@ public class BlackjackController {
             return handleInput(inputSupplier);
         }
     }
+
 }

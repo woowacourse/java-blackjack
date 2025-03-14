@@ -29,10 +29,6 @@ public class Player {
         return participant.trumpCards();
     }
 
-    public boolean isBust() {
-        return participant.isBust();
-    }
-
     public void addCard(TrumpCard trumpCard) {
         participant.addDraw(trumpCard);
     }
@@ -49,5 +45,9 @@ public class Player {
 
     public HandState handState() {
         return participant.handState();
+    }
+
+    public boolean isFinished() {
+        return participant.isFinished();
     }
 }

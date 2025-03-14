@@ -106,7 +106,7 @@ class PlayerTest {
                 ),
 
                 Arguments.of(List.of(new TrumpCard(Suit.DIAMOND, CardValue.K),
-                                new TrumpCard(Suit.CLOVER, CardValue.A),
+                                new TrumpCard(Suit.CLOVER, CardValue.TWO),
                                 new TrumpCard(Suit.DIAMOND, CardValue.NINE)
                         ),
                         true

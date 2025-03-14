@@ -25,8 +25,8 @@ class DealerTest {
                         new TrumpCard(Suit.CLOVER, CardValue.SEVEN))),
 
                 Arguments.of(List.of(new TrumpCard(Suit.DIAMOND, CardValue.A),
-                        new TrumpCard(Suit.CLOVER, CardValue.K),
-                        new TrumpCard(Suit.HEART, CardValue.SIX)))
+                        new TrumpCard(Suit.HEART, CardValue.SIX),
+                        new TrumpCard(Suit.CLOVER, CardValue.K)))
         );
     }
 
@@ -54,7 +54,7 @@ class DealerTest {
                 Arguments.of(List.of(new TrumpCard(Suit.DIAMOND, CardValue.K),
                         new TrumpCard(Suit.CLOVER, CardValue.SIX))),
 
-                Arguments.of(List.of(new TrumpCard(Suit.DIAMOND, CardValue.A),
+                Arguments.of(List.of(new TrumpCard(Suit.DIAMOND, CardValue.TWO),
                         new TrumpCard(Suit.CLOVER, CardValue.K)))
         );
     }

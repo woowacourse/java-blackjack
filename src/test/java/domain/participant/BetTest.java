@@ -29,8 +29,7 @@ public class BetTest {
         return Stream.of(
                 Arguments.of(1_000_000, 2.0, 1_000_000),
                 Arguments.of(10_000, 0, -10_000),
-                Arguments.of(1_000_000_000, 1.5, 500_000_000),
-                Arguments.of(1_000_000, 0.3, 700_000)
+                Arguments.of(1_000_000, 0.3, -700_000)
         );
     }
 

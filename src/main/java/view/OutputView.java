@@ -1,25 +1,26 @@
 package view;
 
 import domain.card.TrumpCard;
-import domain.game.WinStatus;
 import domain.participant.ParticipantName;
 import domain.participant.Score;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {
 
-    private final String OPEN_CARD_FORMAT = "%s카드: %s\n";
-    private final String TRUMP_CARD_FORMAT = "%s%s";
-    private final String OPEN_CARD_WITH_SUM_FORMAT = "%s카드: %s - 결과: %d\n";
-    private final String INPUT_NAMES = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
-    private final String SPLITTER = ", ";
-    private final String INITIATE_DRAW = "딜러와 %s에게 2장을 나누었습니다.\n";
-    private final String INPUT_ASK_DRAW_FORMAT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
-    private final String DRAW_DEALER = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private final String PLAYER_WIN_STATUS_FORMAT = "%s: %s\n";
-    private final String DEALER_WIN_STATUS_FORMAT = "%s: %d승 %d패\n";
-    private final String RESULT_HEADER = "## 최종 승패";
+    private final static String OPEN_CARD_FORMAT = "%s카드: %s\n";
+    private final static String TRUMP_CARD_FORMAT = "%s%s";
+    private final static String OPEN_CARD_WITH_SUM_FORMAT = "%s카드: %s - 결과: %d\n";
+    private final static String PLAYER_BET_INPUT_FORMAT = "%s 배팅 금액은?\n";
+    private final static String INPUT_NAMES = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private final static String SPLITTER = ", ";
+    private final static String INITIATE_DRAW = "딜러와 %s에게 2장을 나누었습니다.\n";
+    private final static String INPUT_ASK_DRAW_FORMAT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
+    private final static String DRAW_DEALER = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private final static String RESULT_TITLE = "## 최종 수익\n";
+    private final static String PROFIT_RESULT = "%s: %,d\n";
 
     public void printError(String message) {
         System.out.println(message);
@@ -29,10 +30,11 @@ public class OutputView {
         System.out.println(INPUT_NAMES);
     }
 
-    public void printInitiateDraw(List<ParticipantName> participantNames) {
-        List<String> names = participantNames.stream()
-                .map(ParticipantName::name)
-                .toList();
+    public void inputBetAmounts(String name) {
+        System.out.printf(PLAYER_BET_INPUT_FORMAT, name);
+    }
+
+    public void printInitiateDraw(List<String> names) {
         String nicknames = String.join(SPLITTER, names);
         System.out.printf(INITIATE_DRAW, nicknames);
     }
@@ -60,19 +62,24 @@ public class OutputView {
         System.out.printf(INPUT_ASK_DRAW_FORMAT, name.name());
     }
 
-    public void resultHeader() {
-        System.out.println(RESULT_HEADER);
-    }
 
     public void dealerHit() {
         System.out.println(DRAW_DEALER);
     }
 
-    public void dealerWinStatus(int win, int lose, ParticipantName name) {
-        System.out.printf(DEALER_WIN_STATUS_FORMAT, name, win, lose);
+    public void printProfitResult(Map<String, Integer> playersProfit, Map<String, Integer> dealerProfit) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(RESULT_TITLE);
+        appendProfitResult(stringBuilder, dealerProfit);
+        appendProfitResult(stringBuilder, playersProfit);
+        System.out.println(stringBuilder);
     }
 
-    public void playerWinStatus(ParticipantName name, WinStatus status) {
-        System.out.printf(PLAYER_WIN_STATUS_FORMAT, name, status.getStatus());
+    private void appendProfitResult(StringBuilder stringBuilder, Map<String, Integer> profits) {
+        for (Entry<String, Integer> entry : profits.entrySet()) {
+            stringBuilder.append(String.format(PROFIT_RESULT, entry.getKey(), entry.getValue()));
+        }
     }
+
+
 }

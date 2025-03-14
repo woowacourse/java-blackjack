@@ -15,7 +15,7 @@ public class Participant {
     }
 
     public void addDraw(TrumpCard trumpCard) {
-        hand.addCard(trumpCard);
+        this.hand = hand.addCard(trumpCard);
     }
 
     public Score calculateCardSum() {
@@ -44,5 +44,9 @@ public class Participant {
 
     public HandState handState() {
         return hand;
+    }
+
+    public boolean isFinished() {
+        return hand.isFinished();
     }
 }

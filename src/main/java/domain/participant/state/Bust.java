@@ -20,6 +20,11 @@ public class Bust extends HandState {
     }
 
     @Override
+    public boolean isFinished() {
+        return true;
+    }
+
+    @Override
     public double calculateProfitRate(HandState other) {
         return 0;
     }

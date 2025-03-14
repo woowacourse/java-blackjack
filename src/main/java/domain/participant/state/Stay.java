@@ -24,9 +24,17 @@ public class Stay extends HandState {
     }
 
     @Override
+    public boolean isFinished() {
+        return true;
+    }
+
+    @Override
     public double calculateProfitRate(HandState other) {
-        if(other.isBust()){
+        if (other.isBust()) {
             return WIN_PROFIT_RATE;
+        }
+        if (other.isBlackjack()) {
+            return LOSE_PROFIT_RATE;
         }
 
         return calculateProfitFromOtherScore(other);

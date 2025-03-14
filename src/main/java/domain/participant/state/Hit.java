@@ -2,7 +2,6 @@ package domain.participant.state;
 
 import domain.card.TrumpCard;
 import domain.participant.ParticipantHand;
-import domain.participant.Score;
 
 public class Hit extends HandState {
     public Hit(ParticipantHand hand) {
@@ -12,9 +11,11 @@ public class Hit extends HandState {
     @Override
     public HandState addCard(TrumpCard card) {
         hand.addCard(card);
-        Score totalScore = hand.calculateCardSum();
-        if(hand.isBust(totalScore)){
-           return new Bust(hand);
+        if (isBlackjack()) {
+            return new Blackjack(hand);
+        }
+        if (isBust()) {
+            return new Bust(hand);
         }
         return this;
     }
@@ -22,6 +23,11 @@ public class Hit extends HandState {
     @Override
     public HandState stay() {
         return new Stay(hand);
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
     }
 
     @Override

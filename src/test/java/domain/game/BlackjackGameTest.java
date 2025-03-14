@@ -12,6 +12,7 @@ import domain.card.Suit;
 import domain.card.TrumpCard;
 import domain.participant.ParticipantName;
 import domain.participant.Score;
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -24,11 +25,12 @@ class BlackjackGameTest {
     @Test
     void 플레이어_수는_1명_이상이여야_한다() {
         // given
-        List<ParticipantName> names = List.of();
+        List<String> names = List.of();
+        List<Integer> bets = List.of();
         Deck deck = createRandomDeck();
 
         // when & then
-        assertThatThrownBy(() -> new BlackjackGame(names,
+        assertThatThrownBy(() -> new BlackjackGame(names, bets,
                 deck))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("블랙잭은 1-7명만 이용하실 수 있습니다.");
@@ -38,11 +40,11 @@ class BlackjackGameTest {
     void 플레이어_수가_7명을_초과하면_예외가_발생한다() {
         // given
         List<String> names = List.of("포비1", "포비2", "포비3", "포비4", "포비5", "포비6", "포비7", "포비8", "포비9");
-        List<ParticipantName> participantNames = ParticipantName.namesOf(names);
+        List<Integer> bets = Collections.nCopies(names.size(), 1_000);
         Deck deck = createRandomDeck();
 
         //when & then
-        assertThatThrownBy(() -> new BlackjackGame(participantNames, deck))
+        assertThatThrownBy(() -> new BlackjackGame(names, bets, deck))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("블랙잭은 1-7명만 이용하실 수 있습니다.");
     }
@@ -59,7 +61,7 @@ class BlackjackGameTest {
         BlackjackGame blackjackGame = createTestGame(names, drawOrder);
 
         // when
-        List<TrumpCard> cards = blackjackGame.playerCards(ParticipantName.nameOf("포비1"));
+        List<TrumpCard> cards = blackjackGame.playerCards(new ParticipantName("포비1"));
 
         //then
         List<TrumpCard> expectedCards = List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT),
