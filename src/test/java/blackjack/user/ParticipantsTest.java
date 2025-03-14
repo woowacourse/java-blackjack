@@ -10,7 +10,6 @@ import blackjack.card.CardDeck;
 import blackjack.card.CardHand;
 import blackjack.card.Denomination;
 import blackjack.card.Suit;
-import blackjack.game.BlackjackGame;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -57,7 +56,8 @@ public class ParticipantsTest {
         void createParticipantsOver25() {
             Dealer dealer = new Dealer(new CardHand(17));
             List<Player> players = IntStream.rangeClosed('a', 'z')
-                .mapToObj(c -> new Player(new PlayerName(String.valueOf((char) c)), new CardHand(21)))
+                .mapToObj(
+                    c -> new Player(new PlayerName(String.valueOf((char) c)), new CardHand(21)))
                 .toList();
 
             assertThatThrownBy(() -> new Participants(dealer, players))
