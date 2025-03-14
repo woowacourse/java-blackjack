@@ -1,6 +1,6 @@
 package blackjack.domain.io;
 
-import blackjack.domain.game.PlayerProfits;
+import blackjack.domain.game.PlayerProfit;
 import blackjack.domain.user.BettingAmount;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
@@ -17,7 +17,7 @@ public class GameInputOutput {
     private final Consumer<Player> printHitResultMethod;
     private final Consumer<Integer> printDealerDrawingMethod;
     private final BiConsumer<Dealer, List<Player>> printFinalHandsMethod;
-    private final Consumer<PlayerProfits> printPlayerProfitsMethod;
+    private final Consumer<List<PlayerProfit>> printPlayerProfitsMethod;
 
     public GameInputOutput(
             BiConsumer<Dealer, List<Player>> printInitialHandsMethod,
@@ -26,7 +26,7 @@ public class GameInputOutput {
             Consumer<Player> printHitResultMethod,
             Consumer<Integer> printDealerDrawingMethod,
             BiConsumer<Dealer, List<Player>> printFinalHandsMethod,
-            Consumer<PlayerProfits> printPlayerProfitsMethod
+            Consumer<List<PlayerProfit>> printPlayerProfitsMethod
     ) {
         this.printInitialHandsMethod = printInitialHandsMethod;
         this.readWannaHitMethod = readWannaHitMethod;
@@ -61,7 +61,7 @@ public class GameInputOutput {
         printFinalHandsMethod.accept(dealer, players);
     }
 
-    public void printPlayerProfits(PlayerProfits playerProfits) {
+    public void printPlayerProfits(List<PlayerProfit> playerProfits) {
         printPlayerProfitsMethod.accept(playerProfits);
     }
 }

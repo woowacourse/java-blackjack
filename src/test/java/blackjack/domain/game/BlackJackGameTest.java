@@ -73,17 +73,14 @@ class BlackJackGameTest {
     }
 
     @Test
-    @DisplayName("승패를 계산할 수 있다.")
-    void canWinningState() {
+    @DisplayName("수익을 계산할 수 있다.")
+    void canCalculateProfit() {
         blackJackGame.runGame();
 
-        PlayerProfits playerProfits = gameInputOutputMock.getPlayerProfits();
-        List<PlayerProfit> profits = playerProfits.getPlayerProfits();
+        List<PlayerProfit> profits = gameInputOutputMock.getPlayerProfits();
         assertThat(profits.getFirst().getProfit())
                 .isEqualTo(0);
         assertThat(profits.getLast().getProfit())
-                .isEqualTo(0);
-        assertThat(playerProfits.calculateDealerProfit())
                 .isEqualTo(0);
     }
 

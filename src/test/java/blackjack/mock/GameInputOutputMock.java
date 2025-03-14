@@ -1,7 +1,7 @@
 package blackjack.mock;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.game.PlayerProfits;
+import blackjack.domain.game.PlayerProfit;
 import blackjack.domain.io.GameInputOutput;
 import blackjack.domain.user.BettingAmount;
 import blackjack.domain.user.Dealer;
@@ -16,7 +16,7 @@ public class GameInputOutputMock extends GameInputOutput {
     private Map<String, List<Card>> initialPlayerHands;
     private List<Card> finalDealerHand;
     private Map<String, List<Card>> finalPlayerHands;
-    private PlayerProfits playerProfits;
+    private List<PlayerProfit> playerProfits;
 
     public GameInputOutputMock() {
         super(null, null, null,
@@ -58,7 +58,7 @@ public class GameInputOutputMock extends GameInputOutput {
     }
 
     @Override
-    public void printPlayerProfits(PlayerProfits playerProfits) {
+    public void printPlayerProfits(List<PlayerProfit> playerProfits) {
         this.playerProfits = playerProfits;
     }
 
@@ -78,7 +78,7 @@ public class GameInputOutputMock extends GameInputOutput {
         return finalPlayerHands;
     }
 
-    public PlayerProfits getPlayerProfits() {
+    public List<PlayerProfit> getPlayerProfits() {
         return playerProfits;
     }
 }

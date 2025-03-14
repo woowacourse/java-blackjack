@@ -2,7 +2,6 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.PlayerProfit;
-import blackjack.domain.game.PlayerProfits;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import java.util.List;
@@ -41,12 +40,12 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printProfit(PlayerProfits playerProfits) {
+    public void printProfit(List<PlayerProfit> playerProfits) {
         System.out.println("## 최종 수익");
-        String dealerProfitContent = String.format("딜러: %d", playerProfits.calculateDealerProfit());
+        String dealerProfitContent = makeDealerProfitContent(playerProfits);
         System.out.println(dealerProfitContent);
 
-        for (PlayerProfit playerProfit : playerProfits.getPlayerProfits()) {
+        for (PlayerProfit playerProfit : playerProfits) {
             String playerProfitContent = String.format("%s: %d",
                     playerProfit.getNickname(), playerProfit.getProfit());
             System.out.println(playerProfitContent);
@@ -78,5 +77,11 @@ public class OutputView {
 
     private String makeNicknamesContent(List<String> nicknames) {
         return String.join(", ", nicknames);
+    }
+
+    private String makeDealerProfitContent(List<PlayerProfit> playerProfits) {
+        int totalPlayerProfit = playerProfits.stream().mapToInt(PlayerProfit::getProfit).sum();
+        int dealerProfit = totalPlayerProfit * -1;
+        return String.format("딜러: %d", dealerProfit);
     }
 }
