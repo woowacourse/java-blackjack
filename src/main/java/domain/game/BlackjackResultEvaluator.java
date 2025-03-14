@@ -7,7 +7,7 @@ public class BlackjackResultEvaluator {
     private static final int BLACK_JACK_CONDITION_COUNT = 2;
     private static final int BLACK_JACK_NUMBER = 21;
 
-    public List<GameResult> judgeGameResult(Dealer dealer, List<Player> players) {
+    public List<GameResult> judgeGameResult(List<Player> players, Dealer dealer) {
         return players.stream()
                 .map(player -> judgePlayerVsDealerResult(dealer, player))
                 .toList();

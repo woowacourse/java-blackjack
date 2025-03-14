@@ -47,7 +47,7 @@ class BlackjackResultEvaluatorTest {
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_플레이어_일반_승리() {
         //given
         BlackjackResultEvaluator blackjackResultEvaluator = new BlackjackResultEvaluator();
-        Dealer dealer = new Dealer(blackjackResultEvaluator);
+        Dealer dealer = new Dealer();
         List<Card> dealerCards = dealer.getCards();
         provideLoseCard(dealerCards);
 
@@ -56,7 +56,7 @@ class BlackjackResultEvaluatorTest {
         provideWinCard(playerCards);
 
         //when
-        List<GameResult> gameResult = blackjackResultEvaluator.judgeGameResult(dealer, List.of(player));
+        List<GameResult> gameResult = blackjackResultEvaluator.judgeGameResult(List.of(player), dealer);
 
         //then
         assertThat(gameResult).containsExactly(GameResult.WIN);
@@ -66,7 +66,7 @@ class BlackjackResultEvaluatorTest {
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_플레이어_일반_21_승리() {
         //given
         BlackjackResultEvaluator blackjackResultEvaluator = new BlackjackResultEvaluator();
-        Dealer dealer = new Dealer(blackjackResultEvaluator);
+        Dealer dealer = new Dealer();
         List<Card> dealerCards = dealer.getCards();
         provideLoseCard(dealerCards);
 
@@ -75,7 +75,7 @@ class BlackjackResultEvaluatorTest {
         provideNonBlackJackCard(playerCards);
 
         //when
-        List<GameResult> gameResult = blackjackResultEvaluator.judgeGameResult(dealer, List.of(player));
+        List<GameResult> gameResult = blackjackResultEvaluator.judgeGameResult(List.of(player), dealer);
 
         //then
         assertThat(gameResult).containsExactly(GameResult.WIN);
@@ -85,7 +85,7 @@ class BlackjackResultEvaluatorTest {
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_플레이어_블랙잭_승리() {
         //given
         BlackjackResultEvaluator blackjackResultEvaluator = new BlackjackResultEvaluator();
-        Dealer dealer = new Dealer(blackjackResultEvaluator);
+        Dealer dealer = new Dealer();
         List<Card> dealerCards = dealer.getCards();
         provideLoseCard(dealerCards);
 
@@ -94,7 +94,7 @@ class BlackjackResultEvaluatorTest {
         provideBlackJackCard(playerCards);
 
         //when
-        List<GameResult> gameResult = blackjackResultEvaluator.judgeGameResult(dealer, List.of(player));
+        List<GameResult> gameResult = blackjackResultEvaluator.judgeGameResult(List.of(player), dealer);
 
         //then
         assertThat(gameResult).containsExactly(GameResult.BLACKJACK_WIN);
@@ -104,7 +104,7 @@ class BlackjackResultEvaluatorTest {
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_플레이어_패배() {
         //given
         BlackjackResultEvaluator blackjackResultEvaluator = new BlackjackResultEvaluator();
-        Dealer dealer = new Dealer(blackjackResultEvaluator);
+        Dealer dealer = new Dealer();
         List<Card> dealerCards = dealer.getCards();
         provideWinCard(dealerCards);
 
@@ -113,7 +113,7 @@ class BlackjackResultEvaluatorTest {
         provideLoseCard(playerCards);
 
         //when
-        List<GameResult> gameResult = blackjackResultEvaluator.judgeGameResult(dealer, List.of(player));
+        List<GameResult> gameResult = blackjackResultEvaluator.judgeGameResult(List.of(player), dealer);
 
         //then
         assertThat(gameResult).containsExactly(GameResult.LOSE);
@@ -123,7 +123,7 @@ class BlackjackResultEvaluatorTest {
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_무승부() {
         //given
         BlackjackResultEvaluator blackjackResultEvaluator = new BlackjackResultEvaluator();
-        Dealer dealer = new Dealer(blackjackResultEvaluator);
+        Dealer dealer = new Dealer();
         List<Card> dealerCards = dealer.getCards();
         provideNonBurstCard(dealerCards);
 
@@ -132,7 +132,7 @@ class BlackjackResultEvaluatorTest {
         provideNonBurstCard(playerCards);
 
         //when
-        List<GameResult> gameResult = blackjackResultEvaluator.judgeGameResult(dealer, List.of(player));
+        List<GameResult> gameResult = blackjackResultEvaluator.judgeGameResult(List.of(player), dealer);
 
         //then
         assertThat(gameResult).containsExactly(GameResult.DRAW);
@@ -142,7 +142,7 @@ class BlackjackResultEvaluatorTest {
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_둘다_버스트() {
         //given
         BlackjackResultEvaluator blackjackResultEvaluator = new BlackjackResultEvaluator();
-        Dealer dealer = new Dealer(blackjackResultEvaluator);
+        Dealer dealer = new Dealer();
         List<Card> dealerCards = dealer.getCards();
         provideBurstCard(dealerCards);
 
@@ -151,7 +151,7 @@ class BlackjackResultEvaluatorTest {
         provideBurstCard(playerCards);
 
         //when
-        List<GameResult> gameResult = blackjackResultEvaluator.judgeGameResult(dealer, List.of(player));
+        List<GameResult> gameResult = blackjackResultEvaluator.judgeGameResult(List.of(player), dealer);
 
         //then
         assertThat(gameResult).containsExactly(GameResult.LOSE);
@@ -161,7 +161,7 @@ class BlackjackResultEvaluatorTest {
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_딜러만_버스트() {
         //given
         BlackjackResultEvaluator blackjackResultEvaluator = new BlackjackResultEvaluator();
-        Dealer dealer = new Dealer(blackjackResultEvaluator);
+        Dealer dealer = new Dealer();
         List<Card> dealerCards = dealer.getCards();
         provideBurstCard(dealerCards);
 
@@ -170,7 +170,7 @@ class BlackjackResultEvaluatorTest {
         provideNonBurstCard(playerCards);
 
         //when
-        List<GameResult> gameResult = blackjackResultEvaluator.judgeGameResult(dealer, List.of(player));
+        List<GameResult> gameResult = blackjackResultEvaluator.judgeGameResult(List.of(player), dealer);
 
         //then
         assertThat(gameResult).containsExactly(GameResult.WIN);
@@ -180,7 +180,7 @@ class BlackjackResultEvaluatorTest {
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_플레이어만_버스트() {
         //given
         BlackjackResultEvaluator blackjackResultEvaluator = new BlackjackResultEvaluator();
-        Dealer dealer = new Dealer(blackjackResultEvaluator);
+        Dealer dealer = new Dealer();
         List<Card> dealerCards = dealer.getCards();
         provideNonBurstCard(dealerCards);
 
@@ -189,7 +189,7 @@ class BlackjackResultEvaluatorTest {
         provideBurstCard(playerCards);
 
         //when
-        List<GameResult> gameResult = blackjackResultEvaluator.judgeGameResult(dealer, List.of(player));
+        List<GameResult> gameResult = blackjackResultEvaluator.judgeGameResult(List.of(player), dealer);
 
         //then
         assertThat(gameResult).containsExactly(GameResult.LOSE);
@@ -199,7 +199,7 @@ class BlackjackResultEvaluatorTest {
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_둘다_블랙잭() {
         //given
         BlackjackResultEvaluator blackjackResultEvaluator = new BlackjackResultEvaluator();
-        Dealer dealer = new Dealer(blackjackResultEvaluator);
+        Dealer dealer = new Dealer();
         List<Card> dealerCards = dealer.getCards();
         provideBlackJackCard(dealerCards);
 
@@ -208,7 +208,7 @@ class BlackjackResultEvaluatorTest {
         provideBlackJackCard(playerCards);
 
         //when
-        List<GameResult> gameResult = blackjackResultEvaluator.judgeGameResult(dealer, List.of(player));
+        List<GameResult> gameResult = blackjackResultEvaluator.judgeGameResult(List.of(player), dealer);
 
         //then
         assertThat(gameResult).containsExactly(GameResult.DRAW);
@@ -218,7 +218,7 @@ class BlackjackResultEvaluatorTest {
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_딜러만_블랙잭() {
         //given
         BlackjackResultEvaluator blackjackResultEvaluator = new BlackjackResultEvaluator();
-        Dealer dealer = new Dealer(blackjackResultEvaluator);
+        Dealer dealer = new Dealer();
 
         List<Card> dealerCards = dealer.getCards();
         provideBlackJackCard(dealerCards);
@@ -228,7 +228,7 @@ class BlackjackResultEvaluatorTest {
         provideNonBlackJackCard(playerCards);
 
         //when
-        List<GameResult> gameResult = blackjackResultEvaluator.judgeGameResult(dealer, List.of(player));
+        List<GameResult> gameResult = blackjackResultEvaluator.judgeGameResult(List.of(player), dealer);
 
         //then
         assertThat(gameResult).containsExactly(GameResult.LOSE);
@@ -238,7 +238,7 @@ class BlackjackResultEvaluatorTest {
     void 모든_플레이어들과_딜러_사이의_승패를_판정한다_딜러는_21_플레이어는_블랙잭() {
         //given_
         BlackjackResultEvaluator blackjackResultEvaluator = new BlackjackResultEvaluator();
-        Dealer dealer = new Dealer(blackjackResultEvaluator);
+        Dealer dealer = new Dealer();
         List<Card> dealerCards = dealer.getCards();
         provideNonBlackJackCard(dealerCards);
 
@@ -247,7 +247,7 @@ class BlackjackResultEvaluatorTest {
         provideBlackJackCard(playerCards);
 
         //when
-        List<GameResult> gameResult = blackjackResultEvaluator.judgeGameResult(dealer, List.of(player));
+        List<GameResult> gameResult = blackjackResultEvaluator.judgeGameResult(List.of(player), dealer);
 
         //then
         assertThat(gameResult).containsExactly(GameResult.BLACKJACK_WIN);

@@ -25,13 +25,13 @@ public class BlackJackController {
         List<Integer> playerBettingAmount = readPlayerBettingAmount(playerNames);
         Players players = new Players(playerNames, playerBettingAmount);
         BlackjackResultEvaluator blackjackResultEvaluator = new BlackjackResultEvaluator();
-        Dealer dealer = new Dealer(blackjackResultEvaluator);
+        Dealer dealer = new Dealer();
 
         CardDeck cardDeck = CardDeck.createCards();
 
         startBlackJack(cardDeck, players, dealer);
         playBlackJack(cardDeck, players, dealer);
-        judgeGameResult(players, dealer);
+        blackjackResultEvaluator.judgeGameResult(players.getPlayers(), dealer);
         calculateTotalBettingAmount(players, dealer);
     }
 
@@ -69,10 +69,6 @@ public class BlackJackController {
             dealer.drawCard(cardDeck);
             outputView.printDealerDrawMessage();
         }
-    }
-
-    private void judgeGameResult(Players players, Dealer dealer) {
-        dealer.judgeGameResult(players.getPlayers());
     }
 
     private void calculateTotalBettingAmount(Players players, Dealer dealer) {
