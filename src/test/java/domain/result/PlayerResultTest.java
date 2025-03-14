@@ -1,47 +1,45 @@
 package domain.result;
 
-import static org.assertj.core.api.Assertions.*;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static result.GameStatus.*;
+
+import card.Card;
+import card.CardNumberType;
+import card.CardType;
 import card.Hand;
+import java.util.List;
+import participant.Money;
 import participant.Player;
-import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import result.PlayerResult;
-import result.GameStatus;
 
 class PlayerResultTest {
+    Hand blackJack = new Hand(List.of(
+            new Card(CardNumberType.JACK, CardType.CLOVER),
+            new Card(CardNumberType.ACE, CardType.CLOVER)));
+    Player blackjackPlayer = new Player("blackJack", blackJack, Money.bet(10000));
+    Player winner = new Player("winner", Hand.createEmpty(), Money.bet(10000));
+    Player drawer = new Player("drawer", Hand.createEmpty(), Money.bet(20000));
+    Player loser = new Player("loser", Hand.createEmpty(), Money.bet(30000));
 
-    Map<Player, GameStatus> gameResults = Map.of(
-            new Player("mimi", Hand.createEmpty()), GameStatus.WIN,
-            new Player("hiro", Hand.createEmpty()), GameStatus.LOSE,
-            new Player("hipo", Hand.createEmpty()), GameStatus.LOSE,
-            new Player("july", Hand.createEmpty()), GameStatus.LOSE
-            );
+//  - [ ] 플레이어는 블랙잭으로 승리할 경우 베팅 금액의 1.5배를 얻는다
+//  - [ ] 플레이어는 승리할 경우 베팅 금액을 얻는다
+//  - [ ] 플레이어는 무승부일 경우 베팅 금액을 돌려받는다
+//  - [ ] 플레이어는 패배할 경우 베팅 금액을 잃는다
+//  - [ ] 딜러의 수익은 모든 플레이어들의 수익 합의 반대 값이다
 
-    @DisplayName("승의 개수를 정상적으로 반환한다")
+    @DisplayName("플레이어는 블랙잭으로 승리할 경우 베팅 금액의 1.5배를 얻는다")
     @Test
-    void test1() {
+    void test10() {
         //given
-        PlayerResult playerResult = new PlayerResult(gameResults);
+        PlayerResult playerResult = new PlayerResult(blackjackPlayer, WIN);
 
         //when
-        int winCount = playerResult.calculateStatusCount(GameStatus.WIN);
+        Money profit = playerResult.calculateProfit();
 
         //then
-        assertThat(winCount).isEqualTo(1);
-    }
-
-    @DisplayName("패의 개수를 정상적으로 반환한다")
-    @Test
-    void test3() {
-        //given
-        PlayerResult playerResult = new PlayerResult(gameResults);
-
-        //when
-        int loseCount = playerResult.calculateStatusCount(GameStatus.LOSE);
-
-        //then
-        assertThat(loseCount).isEqualTo(3);
+        assertThat(profit).isEqualTo(new Money(15000));
     }
 }
