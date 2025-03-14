@@ -9,16 +9,12 @@ import blackjack.domain.result.ParticipantResult;
 import blackjack.domain.result.ParticipantResults;
 import java.util.List;
 
-public class BlackjackProcessManager {
-
-    private static final int STARTING_CARD_SIZE = 2;
-    private static final int ADDITIONAL_CARD_SIZE = 1;
-
+public class BlackjackGame {
     private final Deck deck;
 
     private final ParticipantResults participantResults;
 
-    public BlackjackProcessManager(Deck deck, ParticipantResults participantResults) {
+    public BlackjackGame(Deck deck, ParticipantResults participantResults) {
         this.deck = deck;
         this.participantResults = participantResults;
     }

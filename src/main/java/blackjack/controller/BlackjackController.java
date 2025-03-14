@@ -7,7 +7,7 @@ import blackjack.domain.Participants;
 import blackjack.domain.Player;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.ParticipantResults;
-import blackjack.manager.BlackjackProcessManager;
+import blackjack.manager.BlackjackGame;
 import blackjack.manager.GameRuleEvaluator;
 import blackjack.view.Confirmation;
 import blackjack.view.InputView;
@@ -17,11 +17,11 @@ import java.util.List;
 public class BlackjackController {
 
     private final GameRuleEvaluator gameRuleEvaluator;
-    private final BlackjackProcessManager blackjackProcessManager;
+    private final BlackjackGame blackjackGame;
 
     public BlackjackController(GameRuleEvaluator gameRuleEvaluator) {
         this.gameRuleEvaluator = gameRuleEvaluator;
-        this.blackjackProcessManager = new BlackjackProcessManager(new Deck(), new ParticipantResults());
+        this.blackjackGame = new BlackjackGame(new Deck(), new ParticipantResults());
     }
 
     public void run() {
@@ -53,7 +53,7 @@ public class BlackjackController {
             return;
         }
 
-        blackjackProcessManager.giveMoreCard(participant);
+        blackjackGame.giveMoreCard(participant);
         OutputView.printCardResult(participant);
 
         if (gameRuleEvaluator.isBusted(participant)) {
@@ -69,19 +69,19 @@ public class BlackjackController {
     private void takeCardManually(Participant participant) {
         while (participant.ableToTakeMoreCards()) {
             OutputView.printMoreCard();
-            blackjackProcessManager.giveMoreCard(participant);
+            blackjackGame.giveMoreCard(participant);
         }
     }
 
     private void giveStartingCards(Participants participants) {
-        blackjackProcessManager.giveStartingCards(participants);
+        blackjackGame.giveStartingCards(participants);
 
         OutputView.printStartingCardsStatuses(participants);
     }
 
     private ParticipantResults calculateResultOfParticipants(Participants participants) {
-        blackjackProcessManager.calculateAllResults(participants, gameRuleEvaluator);
-        return blackjackProcessManager.getParticipantResults();
+        blackjackGame.calculateAllResults(participants, gameRuleEvaluator);
+        return blackjackGame.getParticipantResults();
     }
 
     private Participants saveParticipants(List<String> names) {

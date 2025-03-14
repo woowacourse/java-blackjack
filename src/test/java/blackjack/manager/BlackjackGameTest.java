@@ -14,21 +14,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class BlackjackProcessManagerTest {
+class BlackjackGameTest {
 
-    BlackjackProcessManager blackjackProcessManager;
+    BlackjackGame blackjackGame;
 
     @BeforeEach
     void init() {
         Deck deck = new Deck();
-        blackjackProcessManager = new BlackjackProcessManager(deck, new ParticipantResults());
+        blackjackGame = new BlackjackGame(deck, new ParticipantResults());
     }
 
     @Test
     void 손에_카드_1장을_쥐어준다() {
         // given
         Participant participant = new Player("히로", new Hand());
-        blackjackProcessManager.giveMoreCard(participant);
+        blackjackGame.giveMoreCard(participant);
 
         // when & then
         assertThat(participant.getCards()).hasSize(1);
@@ -49,10 +49,10 @@ class BlackjackProcessManagerTest {
         ParticipantResult playerResult = new ParticipantResult(player, GameResultType.LOSE, 31);
         participantResults.add(playerResult);
 
-        BlackjackProcessManager blackjackProcessManager = new BlackjackProcessManager(deck, participantResults);
+        BlackjackGame blackjackGame = new BlackjackGame(deck, participantResults);
 
         // when
-        blackjackProcessManager.calculateAllResults(participants, gameRuleEvaluator);
+        blackjackGame.calculateAllResults(participants, gameRuleEvaluator);
 
         // then
         ParticipantResult result = participantResults.findResult(dealer);
@@ -67,7 +67,7 @@ class BlackjackProcessManagerTest {
         Participants participants = new Participants(List.of(player));
 
         // when
-        blackjackProcessManager.giveStartingCards(participants);
+        blackjackGame.giveStartingCards(participants);
 
         // then
         assertThat(player.getCards()).hasSize(2);
@@ -80,7 +80,7 @@ class BlackjackProcessManagerTest {
         Player player = new Player("히로", hand);
 
         // when
-        blackjackProcessManager.giveMoreCard(player);
+        blackjackGame.giveMoreCard(player);
 
         // then
         assertThat(player.getCards()).hasSize(1);
