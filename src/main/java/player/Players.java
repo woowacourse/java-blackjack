@@ -3,6 +3,7 @@ package player;
 import card.Card;
 import card.Deck;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -68,7 +69,7 @@ public class Players {
     }
 
     public Map<String, Integer> mapToNameAndSum() {
-        Map<String, Integer> sumResult = new HashMap<>();
+        Map<String, Integer> sumResult = new LinkedHashMap<>();
         for (Player player : players) {
             sumResult.put(player.getName(), player.computeOptimalSum());
         }
