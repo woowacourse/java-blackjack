@@ -13,10 +13,12 @@ public class Player extends Participant {
     private static final int INITIAL_HIT_COUNT = 2;
 
     private final Name name;
+    private final Money money;
 
-    public Player(final Hand hand, final Name name) {
+    public Player(final Hand hand, final Name name, final Money money) {
         super(hand);
         this.name = name;
+        this.money = money;
     }
 
     public void hitCards(Deck cardDeck) {
@@ -61,5 +63,9 @@ public class Player extends Participant {
 
     public Hand getCards() {
         return super.getCards();
+    }
+
+    public Money getMoney() {
+        return money;
     }
 }

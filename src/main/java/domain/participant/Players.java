@@ -14,7 +14,7 @@ public class Players {
 
     public static Players from(final Names names) {
         List<Player> players = names.getNames().stream()
-                .map(name -> new Player(new Hand(List.of()), name))
+                .map(name -> new Player(new Hand(List.of()), name, new Money(10000)))
                 .toList();
         return new Players(players);
     }
