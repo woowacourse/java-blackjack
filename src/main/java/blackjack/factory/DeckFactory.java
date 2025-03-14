@@ -11,6 +11,6 @@ public class DeckFactory {
     }
 
     public Deck generate() {
-        return new Deck(deckGenerator.generate());
+        return Deck.shuffled(deckGenerator.generate());
     }
 }

@@ -13,15 +13,15 @@ public class Deck {
 
     private final List<Card> cards;
 
-    public Deck(List<Card> cards) {
-        this.cards = new ArrayList<>(shuffled(cards));
+    private Deck(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
     }
 
-    private List<Card> shuffled(List<Card> cards) {
+    public static Deck shuffled(List<Card> cards) {
         ArrayList<Card> copiedCards = new ArrayList<>(cards);
         Collections.shuffle(copiedCards);
 
-        return copiedCards;
+        return new Deck(copiedCards);
     }
 
     public List<Card> getCards() {
