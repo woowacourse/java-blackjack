@@ -18,13 +18,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class PlayerTest {
-    private final Name NAME = new Name("라젤");
+    private final Name name = new Name("라젤");
 
     @DisplayName("플레이어의_패에_카드를_추가한다")
     @Test
     void addCardTest() {
         // given
-        Player player = createPlayerWithCards(NAME, TEN, EIGHT);
+        Player player = createPlayerWithCards(name, TEN, EIGHT);
 
         // when
         int result = player.calculateScore();
@@ -38,7 +38,7 @@ class PlayerTest {
     @ParameterizedTest
     void isBlackjack() {
         // given
-        Player player = createPlayerWithCards(NAME, TEN, ACE);
+        Player player = createPlayerWithCards(name, TEN, ACE);
 
         // when
         boolean result = player.isBlackjack();
@@ -52,7 +52,7 @@ class PlayerTest {
     @ParameterizedTest
     void isBelowTest(int criteria, boolean expected) {
         // given
-        Player player = createPlayerWithCards(NAME, TEN, EIGHT);
+        Player player = createPlayerWithCards(name, TEN, EIGHT);
 
         // when
         boolean result = player.isScoreBelow(criteria);
@@ -67,7 +67,7 @@ class PlayerTest {
     void calculateScoreDifference(CardType firstType, CardType secondType, int expected) {
         // given
         Dealer dealer = createDealerWithCards(TEN, EIGHT);
-        Player player = createPlayerWithCards(NAME, firstType, secondType);
+        Player player = createPlayerWithCards(name, firstType, secondType);
 
         // when
         int result = player.calculateScoreDifference(dealer);
@@ -80,7 +80,7 @@ class PlayerTest {
     @Test
     void getInitialCardsTest() {
         // given
-        Player player = new Player(NAME);
+        Player player = new Player(name);
         Card card1 = new Card(CardShape.CLOVER, CardType.TEN);
         Card card2 = new Card(CardShape.HEART, CardType.EIGHT);
         player.addCard(card1);

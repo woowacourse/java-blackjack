@@ -22,7 +22,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class RoundTest {
     private final Shuffler shuffler = new TestShuffler();
-    private final Name NAME = new Name("라젤");
+    private final Name name = new Name("라젤");
 
     @DisplayName("특정 플레이어에게 지정한 장 수의 카드를 지급한다")
     @Test
@@ -32,16 +32,16 @@ class RoundTest {
         Card card2 = new Card(CardShape.HEART, EIGHT);
         CardDeck cardDeck = new CardDeck(List.of(card1, card2), shuffler);
 
-        Names playerNames = new Names(List.of(NAME));
+        Names playerNames = new Names(List.of(name));
         Round round = new Round(cardDeck, playerNames);
 
         // when
-        round.distributeCards(NAME, 2);
+        round.distributeCards(name, 2);
 
         // then
         assertAll(
-            () -> assertThat(round.getCards(NAME)).contains(card1, card2),
-            () -> assertThat(round.getScore(NAME)).isEqualTo(18)
+            () -> assertThat(round.getCards(name)).contains(card1, card2),
+            () -> assertThat(round.getScore(name)).isEqualTo(18)
         );
     }
 
@@ -55,7 +55,7 @@ class RoundTest {
         Card card4 = new Card(CardShape.HEART, KING);
         CardDeck cardDeck = new CardDeck(List.of(card1, card2, card3, card4), shuffler);
 
-        Names playerNames = new Names(List.of(NAME));
+        Names playerNames = new Names(List.of(name));
         Round round = new Round(cardDeck, playerNames);
 
         // when
@@ -63,9 +63,9 @@ class RoundTest {
 
         // then
         assertAll(
-            () -> assertThat(round.getScore(NAME)).isEqualTo(20),
-            () -> assertThat(round.getCards(NAME)).hasSize(2),
-            () -> assertThat(round.getCards(NAME)).contains(card3, card4),
+            () -> assertThat(round.getScore(name)).isEqualTo(20),
+            () -> assertThat(round.getCards(name)).hasSize(2),
+            () -> assertThat(round.getCards(name)).contains(card3, card4),
             () -> assertThat(round.getScore(DEALER_NAME)).isEqualTo(16),
             () -> assertThat(round.getCards(DEALER_NAME)).hasSize(2),
             () -> assertThat(round.getCards(DEALER_NAME)).contains(card1, card2)
@@ -79,13 +79,13 @@ class RoundTest {
         // given
         List<Card> cards = createCards(KING, NINE, type);
         CardDeck cardDeck = new CardDeck(cards, shuffler);
-        Names playerNames = new Names(List.of(NAME));
+        Names playerNames = new Names(List.of(name));
         Round round = new Round(cardDeck, playerNames);
 
-        round.distributeCards(NAME, 3);
+        round.distributeCards(name, 3);
 
         // when
-        boolean result = round.isBusted(NAME);
+        boolean result = round.isBusted(name);
 
         // then
         assertThat(result).isEqualTo(expected);
@@ -98,7 +98,7 @@ class RoundTest {
         // given
         List<Card> cards = createCards(EIGHT, SIX, type);
         CardDeck cardDeck = new CardDeck(cards, shuffler);
-        Names playerNames = new Names(List.of(NAME));
+        Names playerNames = new Names(List.of(name));
         Round round = new Round(cardDeck, playerNames);
 
         round.distributeCards(DEALER_NAME, 3);

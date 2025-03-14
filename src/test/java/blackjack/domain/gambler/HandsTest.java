@@ -25,7 +25,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 class HandsTest {
     @DisplayName("카드의_개수가_주어진_사이즈와_일치하는_지_여부를_반환한다")
     @Test
-    void aa() {
+    void hasSize() {
         // given
         Hands hands = new Hands();
         hands.addCard(new Card(CardShape.CLOVER, TEN));
