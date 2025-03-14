@@ -16,32 +16,23 @@ public class GameManager {
     public final static int MIN_RANGE_HAND_OUT_CARD = 0;
 
     private final Users users;
-    private final Betting betting;
     private final TrumpCardManager trumpCardManager;
 
-    public GameManager(Users users, Betting betting, TrumpCardManager trumpCardManager) {
+    public GameManager(Users users, TrumpCardManager trumpCardManager) {
         this.users = users;
-        this.betting = betting;
         this.trumpCardManager = trumpCardManager;
     }
 
     public static GameManager initailizeGameManager(List<String> names, TrumpCardManager trumpCardManager) {
-        validate(names);
+        validateNames(names);
         List<User> users = names.stream().map(Player::new).collect(Collectors.toList());
         User dealer = new Dealer();
         users.add(dealer);
-        return new GameManager(
-                new Users(users),
-                new Betting(names.stream()
-                        .map(Player::new)
-                        .collect(Collectors.toList())
-                ),
-                trumpCardManager
-        );
+        return new GameManager(new Users(users), trumpCardManager);
     }
 
     // TODO: static을 제거하는 과정을 생각해보자
-    private static void validate(List<String> names) {
+    private static void validateNames(List<String> names) {
         HashSet<String> distinctNames = new HashSet<>(names);
         if (names.isEmpty() || names.size() > MAX_PLAYER) {
             throw new IllegalArgumentException("유저는 1명 이상 7명 이하로 등록해야 합니다.");

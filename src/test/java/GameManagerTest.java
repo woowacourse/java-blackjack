@@ -182,14 +182,14 @@ public class GameManagerTest {
         // then
         Assertions.assertThat(gameResult.get(player)).isEqualTo(GameResult.LOSE);
     }
-/*
+
     @DisplayName("입력된 금액에 따라 배팅을 한다.")
     @Test
     void test10() {
         ///given
        GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬", "띵화"), new TrumpCardManager());
-        User user1 = gameManager.findUserByUsername("레몬");
-        User user2 = gameManager.findUserByUsername("띵화");
+        User user1 = gameManager.findPlayerByUsername("레몬");
+        User user2 = gameManager.findPlayerByUsername("띵화");
 
         Long playerMoney1 = 300000000L;
         Long playerMoney2 = 500000000L;
@@ -200,7 +200,7 @@ public class GameManagerTest {
 
         //then
         SoftAssertions.assertSoftly(softAssertions -> {
-            softAssertions.assertThat(gameManager.)
+            softAssertions.assertThat()
         });
-    }*/
+    }
 }
