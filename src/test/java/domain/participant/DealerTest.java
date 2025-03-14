@@ -19,7 +19,7 @@ public class DealerTest {
         List<Card> testCards = List.of(new Card(CardNumberType.SIX, CardType.CLOVER),
                 new Card(CardNumberType.JACK, CardType.DIAMOND));
         Hand hand = new Hand(testCards);
-        Dealer dealer = Dealer.createEmpty();
+        Dealer dealer = Dealer.createEmptyHand();
         dealer.addCards(hand);
 
         //when
@@ -37,7 +37,7 @@ public class DealerTest {
                 new Card(CardNumberType.ACE, CardType.DIAMOND),
                 new Card(CardNumberType.JACK, CardType.DIAMOND));
         Hand hand = new Hand(testCards);
-        Dealer dealer = Dealer.createEmpty();
+        Dealer dealer = Dealer.createEmptyHand();
         dealer.addCards(hand);
 
         //when
@@ -56,7 +56,7 @@ public class DealerTest {
                 new Card(CardNumberType.SIX, CardType.DIAMOND)
         );
         Hand hand = new Hand(testCards);
-        Dealer dealer = Dealer.createEmpty();
+        Dealer dealer = Dealer.createEmptyHand();
         dealer.addCards(hand);
 
         //when
@@ -75,7 +75,7 @@ public class DealerTest {
                 new Card(CardNumberType.ACE, CardType.DIAMOND)
         );
         Hand hand = new Hand(testCards);
-        Dealer dealer = Dealer.createEmpty();
+        Dealer dealer = Dealer.createEmptyHand();
         dealer.addCards(hand);
 
         //when
@@ -94,7 +94,7 @@ public class DealerTest {
                 new Card(CardNumberType.ACE, CardType.DIAMOND)
         );
         Hand hand = new Hand(testCards);
-        Dealer dealer = Dealer.createEmpty();
+        Dealer dealer = Dealer.createEmptyHand();
         dealer.addCards(hand);
 
         //when

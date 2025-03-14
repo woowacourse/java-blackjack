@@ -14,6 +14,18 @@ public class Player extends Participant {
         this.bettingPrice = bettingPrice;
     }
 
+    public Player(String name, Money bettingPrice) {
+        super(Hand.createEmpty());
+        this.name = name;
+        this.bettingPrice = bettingPrice;
+    }
+
+    public Player(String name) {
+        super(Hand.createEmpty());
+        this.name = name;
+        this.bettingPrice = Money.ZERO;
+    }
+
     public String getName() {
         return name;
     }

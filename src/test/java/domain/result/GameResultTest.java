@@ -20,7 +20,7 @@ import result.GameResult;
 import result.GameStatus;
 
 public class GameResultTest {
-    Money zero = Money.createZero();
+    Money zero = Money.ZERO;
 
     Dealer bustDealer = new Dealer(new Hand(
             List.of(new Card(JACK, CLOVER), new Card(KING, CLOVER), new Card(TWO, CLOVER))));

@@ -12,6 +12,10 @@ public class PlayerResult {
         this.gameStatus = gameStatus;
     }
 
+    public String getPlayerName() {
+        return player.getName();
+    }
+
     public Money calculateProfit() {
         return player.calculateProfit(gameStatus.getPayoutRate());
     }

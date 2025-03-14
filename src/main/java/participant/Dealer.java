@@ -9,7 +9,7 @@ public class Dealer extends Participant {
         super(hand);
     }
 
-    public static Dealer createEmpty() {
+    public static Dealer createEmptyHand() {
         return new Dealer(Hand.createEmpty());
     }
 

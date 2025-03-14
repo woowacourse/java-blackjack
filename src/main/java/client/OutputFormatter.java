@@ -1,4 +1,4 @@
-package view.support;
+package client;
 
 import static card.CardNumberType.*;
 import static card.CardType.*;

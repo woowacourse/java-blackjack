@@ -1,17 +1,16 @@
-package view;
+package client;
 
 import participant.Player;
 import java.util.List;
 import java.util.Scanner;
-import view.support.InputParser;
 
-public class InputView {
+public class InputProcessor {
 
     private static final Scanner scanner = new Scanner(System.in);
 
     private final InputParser inputParser;
 
-    public InputView(InputParser inputParser) {
+    public InputProcessor(InputParser inputParser) {
         this.inputParser = inputParser;
     }
 
@@ -29,5 +28,11 @@ public class InputView {
         System.out.printf("\n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", player.getName());
         String rawAnswer = readLine();
         return inputParser.parseAnswerType(rawAnswer);
+    }
+
+    public int requestBettingPrice(Player player) {
+        System.out.printf("\n%s의 배팅 금액은?\n", player.getName());
+        String rawPrice = readLine();
+        return inputParser.parsePrice(rawPrice);
     }
 }

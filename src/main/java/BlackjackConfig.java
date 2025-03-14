@@ -1,22 +1,22 @@
-import view.InputView;
-import view.OutputView;
-import view.support.InputParser;
-import view.support.OutputFormatter;
+import client.InputProcessor;
+import client.OutputPrinter;
+import client.InputParser;
+import client.OutputFormatter;
 
 public class BlackjackConfig {
 
-    public BlackjackApplication blackjackApplication() {
-        return new BlackjackApplication(
+    public BlackjackGame blackjackApplication() {
+        return new BlackjackGame(
                 inputView(),
                 outputView()
         );
     }
 
-    private InputView inputView() {
-        return new InputView(new InputParser());
+    private InputProcessor inputView() {
+        return new InputProcessor(new InputParser());
     }
 
-    private OutputView outputView() {
-        return new OutputView(new OutputFormatter());
+    private OutputPrinter outputView() {
+        return new OutputPrinter(new OutputFormatter());
     }
 }

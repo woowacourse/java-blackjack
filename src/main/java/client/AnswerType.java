@@ -1,4 +1,4 @@
-package view;
+package client;
 
 public enum AnswerType {
     YES,
