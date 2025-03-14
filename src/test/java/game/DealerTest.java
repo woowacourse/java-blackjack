@@ -97,4 +97,18 @@ public class DealerTest {
         assertThat(dealer.isOverDrawBound()).isTrue();
     }
 
+    @Test
+    void 딜러의_수익을_계산한다() {
+        //given
+        Dealer dealer = new Dealer();
+        List<Integer> playerProfits = List.of(
+                1000, 2000, -5000);
+
+        //when
+        int profit = dealer.evaluate(playerProfits);
+
+        //then
+        assertThat(profit).isEqualTo(2000);
+    }
+
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 public class Players {
 
@@ -39,6 +40,12 @@ public class Players {
             gameResults.add(GameResult.of(dealer, player));
         }
         return gameResults;
+    }
+
+    public List<Integer> evaluate(List<GameResult> gameResults) {
+        return IntStream.range(0, players.size())
+                .mapToObj(i -> players.get(i).evaluate(gameResults.get(i)))
+                .toList();
     }
 
     public void draw(CardDeck cardDeck) {

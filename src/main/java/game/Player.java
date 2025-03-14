@@ -37,7 +37,7 @@ public class Player {
     }
 
     public boolean isBlackJack() {
-        return hand.getCardsCount() == 2 && hand.calculate() == 21;
+        return hand.isBlackJack();
     }
 
     public Hand getHand() {
@@ -66,5 +66,9 @@ public class Player {
 
     public int getPlayerBettingMoney() {
         return betting.getBetting();
+    }
+
+    public int evaluate(GameResult gameResult) {
+        return betting.evaluate(gameResult);
     }
 }

@@ -1,5 +1,6 @@
 package game;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
@@ -223,5 +224,23 @@ public class PlayersTest {
 
         //then
         Assertions.assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.BLACKJACK));
+    }
+
+    @Test
+    void 모든_플레이어의_수익을_계산한다() {
+        //given
+        Players players = new Players(List.of(
+                new Player("a", 1000),
+                new Player("b", 1000),
+                new Player("c", 1000),
+                new Player("d", 1000)));
+        List<GameResult> gameResults = List.of(
+                GameResult.BLACKJACK, GameResult.WIN, GameResult.DRAW, GameResult.LOSE);
+
+        //when
+        List<Integer> profits = players.evaluate(gameResults);
+
+        //then
+        assertThat(profits).containsExactlyElementsOf(List.of(1500, 1000, 0, -1000));
     }
 }

@@ -4,7 +4,6 @@ import card.Card;
 import card.CardDeck;
 import card.CardNumber;
 import game.Dealer;
-import game.GameResult;
 import game.Player;
 import game.Players;
 import java.util.List;
@@ -77,14 +76,14 @@ public class OutputConsole {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printDealerWinningResult(int winCount, int drawCount, int loseCount) {
-        System.out.println("## 최종 승패");
-        System.out.printf("딜러: %d승 %d무 %d패%n", winCount, drawCount, loseCount);
+
+    public void printDealerProfit(int dealerProfit) {
+        System.out.printf("딜러: %d%n", dealerProfit);
     }
 
-    public void printWinningResult(List<String> playerNames, List<GameResult> gameResults) {
-        for (int i = 0; i < playerNames.size(); i++) {
-            System.out.printf("%s: %s%n", playerNames.get(i), gameResults.get(i).getResult());
+    public void printPlayersProfit(List<String> allPlayerNames, List<Integer> playerProfits) {
+        for (int i = 0; i < allPlayerNames.size(); i++) {
+            System.out.printf("%s: %d%n", allPlayerNames.get(i), playerProfits.get(i));
         }
     }
 }

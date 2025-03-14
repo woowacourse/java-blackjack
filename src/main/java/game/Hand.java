@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Hand {
 
-    public static final int BUST_BOUND = 21;
+    public static final int BLACK_JACK_BOUND = 21;
     private static final int VALUE_TO_SOFT_ACE = 10;
 
     private final List<Card> cards;
@@ -21,7 +21,11 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return calculate() > BUST_BOUND;
+        return calculate() > BLACK_JACK_BOUND;
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == 2 && calculate() == BLACK_JACK_BOUND;
     }
 
     public int calculate() {
@@ -45,7 +49,7 @@ public class Hand {
 
     private int calculateWithAce(int totalCardNumber) {
         int totalWithAce = totalCardNumber + VALUE_TO_SOFT_ACE;
-        if (totalWithAce <= BUST_BOUND) {
+        if (totalWithAce <= BLACK_JACK_BOUND) {
             return totalWithAce;
         }
         return totalCardNumber;

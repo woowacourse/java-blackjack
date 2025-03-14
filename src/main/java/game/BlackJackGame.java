@@ -69,13 +69,11 @@ public class BlackJackGame {
 
     private void end(Players players, Dealer dealer) {
         List<GameResult> gameResults = players.judgeGameResult(dealer);
+        List<Integer> playerProfits = players.evaluate(gameResults);
 
-        outputConsole.printDealerWinningResult(
-                GameResult.WIN.countReversed(gameResults),
-                GameResult.DRAW.countReversed(gameResults),
-                GameResult.LOSE.countReversed(gameResults));
+        int dealerProfit = dealer.evaluate(playerProfits);
 
-        List<String> playerNames = players.getAllPlayerNames();
-        outputConsole.printWinningResult(playerNames, gameResults);
+        outputConsole.printDealerProfit(dealerProfit);
+        outputConsole.printPlayersProfit(players.getAllPlayerNames(), playerProfits);
     }
 }
