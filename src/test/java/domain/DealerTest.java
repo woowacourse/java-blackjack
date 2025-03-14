@@ -14,7 +14,7 @@ public class DealerTest {
         List<Card> testCards = List.of(new Card(CardNumberType.SIX, CardType.CLOVER),
                 new Card(CardNumberType.JACK, CardType.DIAMOND));
         Dealer dealer = Dealer.createEmpty();
-        dealer.addCards(testCards);
+        dealer.addDefaultCards(testCards);
 
         //when
         boolean isPossibleDraw = dealer.isPossibleDraw();
@@ -31,7 +31,7 @@ public class DealerTest {
                 new Card(CardNumberType.ACE, CardType.DIAMOND),
                 new Card(CardNumberType.JACK, CardType.DIAMOND));
         Dealer dealer = Dealer.createEmpty();
-        dealer.addCards(testCards);
+        dealer.addDefaultCards(testCards);
 
         //when
         boolean isPossibleDraw = dealer.isPossibleDraw();
@@ -49,7 +49,7 @@ public class DealerTest {
                 new Card(CardNumberType.SIX, CardType.DIAMOND)
         );
         Dealer dealer = Dealer.createEmpty();
-        dealer.addCards(testCards);
+        dealer.addDefaultCards(testCards);
 
         //when
         boolean isPossibleDraw = dealer.isPossibleDraw();
@@ -67,7 +67,7 @@ public class DealerTest {
                 new Card(CardNumberType.ACE, CardType.DIAMOND)
         );
         Dealer dealer = Dealer.createEmpty();
-        dealer.addCards(testCards);
+        dealer.addDefaultCards(testCards);
 
         //when
         boolean isPossibleDraw = dealer.isPossibleDraw();
@@ -85,7 +85,7 @@ public class DealerTest {
                 new Card(CardNumberType.ACE, CardType.DIAMOND)
         );
         Dealer dealer = Dealer.createEmpty();
-        dealer.addCards(testCards);
+        dealer.addDefaultCards(testCards);
 
         //when
         boolean isPossibleDraw = dealer.isPossibleDraw();

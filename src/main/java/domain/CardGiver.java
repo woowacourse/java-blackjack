@@ -14,11 +14,11 @@ public class CardGiver {
 
     public void giveOneTo(Participant participant) {
         if (participant.isPossibleDraw()) {
-            participant.addCard(deck.drawCard());
+            participant.addDrawCard(deck.drawCard());
         }
     }
 
     public void giveDefaultTo(List<Participant> participants) {
-        participants.forEach(participant -> participant.addCards(deck.drawCards(DEFAULT_CARD_GIVE_COUNT)));
+        participants.forEach(participant -> participant.addDefaultCards(deck.drawCards(DEFAULT_CARD_GIVE_COUNT)));
     }
 }

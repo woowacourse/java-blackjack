@@ -14,15 +14,15 @@ public abstract class Participant {
         return hand;
     }
 
-    public void addCards(List<Card> cards) {
+    public void addDefaultCards(List<Card> cards) {
         hand.addAll(cards);
     }
 
-    public void addCard(Card receivedCard) {
-        hand.add(receivedCard);
+    public void addDrawCard(Card receivedCard) {
+        if (isPossibleDraw()) {
+            hand.add(receivedCard);
+        }
     }
 
-    public boolean isPossibleDraw() {
-        return true;
-    }
+    abstract boolean isPossibleDraw();
 }
