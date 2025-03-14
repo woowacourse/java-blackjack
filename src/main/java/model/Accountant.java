@@ -1,6 +1,6 @@
-package domain;
+package model;
 
-import static domain.WinLossResult.computeWinLoss;
+import static model.WinLossResult.computeWinLoss;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;

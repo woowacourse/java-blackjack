@@ -1,10 +1,10 @@
-package domain;
+package model;
 
-import static domain.Denomination.ACE;
-import static domain.Denomination.JACK;
-import static domain.Denomination.THREE;
-import static domain.Denomination.TWO;
-import static domain.Suit.CLUB;
+import static model.Denomination.ACE;
+import static model.Denomination.JACK;
+import static model.Denomination.THREE;
+import static model.Denomination.TWO;
+import static model.Suit.CLUB;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 

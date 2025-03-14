@@ -1,9 +1,9 @@
-package domain;
+package model;
 
-import static domain.WinLossResult.DRAW;
-import static domain.WinLossResult.LOSS;
-import static domain.WinLossResult.WIN;
-import static domain.WinLossResult.WIN_WITH_BLACK_JACK;
+import static model.WinLossResult.DRAW;
+import static model.WinLossResult.LOSS;
+import static model.WinLossResult.WIN;
+import static model.WinLossResult.WIN_WITH_BLACK_JACK;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;

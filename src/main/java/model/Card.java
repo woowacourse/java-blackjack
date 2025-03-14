@@ -1,7 +1,7 @@
-package domain;
+package model;
 
-import static domain.Denomination.ACE;
-import static domain.Denomination.ORIGINAL_ACE_VALUE;
+import static model.Denomination.ACE;
+import static model.Denomination.ORIGINAL_ACE_VALUE;
 
 public class Card {
     private final Denomination denomination;

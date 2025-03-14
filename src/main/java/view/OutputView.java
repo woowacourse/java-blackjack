@@ -1,16 +1,16 @@
 package view;
 
-import static domain.Dealer.THRESHOLD;
+import static model.Dealer.THRESHOLD;
 
-import domain.Card;
-import domain.Dealer;
-import domain.Hand;
-import domain.Participants;
-import domain.Player;
-import domain.Players;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import model.Card;
+import model.Dealer;
+import model.Hand;
+import model.Participants;
+import model.Player;
+import model.Players;
 
 public class OutputView {
     public static void printDistributeResult(Participants participants) {

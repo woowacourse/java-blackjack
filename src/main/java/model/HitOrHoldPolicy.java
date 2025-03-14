@@ -1,4 +1,4 @@
-package domain;
+package model;
 
 @FunctionalInterface
 public interface HitOrHoldPolicy {

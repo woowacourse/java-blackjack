@@ -1,7 +1,7 @@
-package domain;
+package model;
 
-import static domain.Denomination.ACE;
-import static domain.Suit.CLUB;
+import static model.Denomination.ACE;
+import static model.Suit.CLUB;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;

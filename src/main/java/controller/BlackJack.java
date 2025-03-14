@@ -9,14 +9,14 @@ import static view.OutputView.printEveryOneCardsNamesWithTotal;
 import static view.OutputView.printHandCardsNames;
 import static view.OutputView.printProfitPerParticipant;
 
-import domain.Accountant;
-import domain.Dealer;
-import domain.Deck;
-import domain.HitOrHoldPolicy;
-import domain.Participants;
-import domain.Player;
-import domain.Players;
 import java.util.Map;
+import model.Accountant;
+import model.Dealer;
+import model.Deck;
+import model.HitOrHoldPolicy;
+import model.Participants;
+import model.Player;
+import model.Players;
 import view.InputView;
 
 public class BlackJack {

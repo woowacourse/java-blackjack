@@ -1,11 +1,11 @@
 package view;
 
-import domain.Player;
-import domain.Players;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+import model.Player;
+import model.Players;
 
 public class InputView {
     private static final String PLAYER_NAMES_INPUT_REGEX = "^([가-힣a-zA-Z]+)(,\s*[가-힣a-zA-Z]+)*$";

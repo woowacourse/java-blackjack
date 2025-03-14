@@ -1,4 +1,4 @@
-package domain;
+package model;
 
 public enum Denomination {
     ACE("A"),
