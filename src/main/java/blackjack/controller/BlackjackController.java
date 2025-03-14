@@ -14,6 +14,7 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 public class BlackjackController {
 
@@ -44,10 +45,10 @@ public class BlackjackController {
 
     private void giveStartingCards(Deck deck, Players players, Dealer dealer) {
         for (Player player : players.getPlayers()) {
-            giveStartingCardsFor(deck, player);
+            giveCard(Deck::takeStartCards, deck, player);
         }
 
-        giveStartingCardsFor(deck, dealer);
+        giveCard(Deck::takeStartCards, deck, dealer);
 
         OutputView.printStartingCardsStatuses(dealer, players);
     }
@@ -61,7 +62,7 @@ public class BlackjackController {
     private void giveMoreCardFor(Deck deck, Dealer dealer) {
         while (dealer.canTakeCard()) {
             OutputView.printMoreCard();
-            giveCard(deck, dealer);
+            giveCard(Deck::takeOneCard, deck, dealer);
         }
     }
 
@@ -72,7 +73,7 @@ public class BlackjackController {
             return;
         }
 
-        giveCard(deck, player);
+        giveCard(Deck::takeOneCard, deck, player);
         OutputView.printCardResult(player);
 
         if (player.isBusted()) {
@@ -85,14 +86,8 @@ public class BlackjackController {
         }
     }
 
-    private void giveStartingCardsFor(Deck deck, Participant participant) {
-        List<Card> cards = deck.takeStartCards();
-
-        cards.forEach(participant::takeCard);
-    }
-
-    private void giveCard(Deck deck, Participant participant) {
-        List<Card> cards = deck.takeOneCard();
+    private void giveCard(Function<Deck, List<Card>> function, Deck deck, Participant participant) {
+        List<Card> cards = function.apply(deck);
 
         cards.forEach(participant::takeCard);
     }
