@@ -74,7 +74,8 @@ public class PlayersTest {
 				final Deck shuffledDeck = Deck.createShuffledDeck();
 
 				// when
-				players.pickCardPlayersIfNotBust(playerAnswer, shuffledDeck);
+				players.pickCardPlayersIfNotBust(playerAnswer, x -> {
+				}, shuffledDeck);
 
 				// then
 				assertThat(

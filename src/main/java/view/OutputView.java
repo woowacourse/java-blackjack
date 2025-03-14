@@ -35,9 +35,13 @@ public class OutputView {
 
 	private void printPlayersCard(final Blackjack blackjack) {
 		for (final Player player : blackjack.getPlayers().getPlayers()) {
-			System.out.printf("%s카드: %s" + System.lineSeparator(), player.getName(),
-				convertCardsToString(player.getParticipant().getCardHand().getCards()));
+			printPlayerPickCard(player);
 		}
+	}
+
+	public void printPlayerPickCard(final Player player) {
+		System.out.printf("%s카드: %s" + System.lineSeparator(), player.getName(),
+			convertCardsToString(player.getParticipant().getCardHand().getCards()));
 	}
 
 	public void printDealerPickCard(final Blackjack blackjack) {

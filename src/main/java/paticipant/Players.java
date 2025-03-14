@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import card.Deck;
 
 public class Players {
+	private static final int ADDITION_PLAYER_PICK_CARD_COUNT = 1;
 	private final List<Player> players;
 
 	public Players(final List<Player> players) {
@@ -31,16 +32,21 @@ public class Players {
 		}
 	}
 
-	public void pickCardPlayersIfNotBust(final Function<String, Boolean> playerAnswer, final Deck deck) {
+	public void pickCardPlayersIfNotBust(
+		final Function<String, Boolean> playerAnswer,
+		final Consumer<Player> printPlayerCard,
+		final Deck deck
+	) {
 		for (final Player player : players) {
-			pickCard(playerAnswer, deck, player);
+			while (canPlayerPickCard(playerAnswer, player)) {
+				player.addCards(deck.pickCards(ADDITION_PLAYER_PICK_CARD_COUNT));
+				printPlayerCard.accept(player);
+			}
 		}
 	}
 
-	private void pickCard(final Function<String, Boolean> playerAnswer, final Deck deck, final Player player) {
-		while (!player.isBust() && playerAnswer.apply(player.getName())) {
-			player.addCards(deck.pickCards(1));
-		}
+	private boolean canPlayerPickCard(Function<String, Boolean> playerAnswer, Player player) {
+		return !player.isBust() && playerAnswer.apply(player.getName());
 	}
 
 	public void duelVsDealer(final Consumer<Player> duel) {

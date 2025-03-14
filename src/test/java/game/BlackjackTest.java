@@ -84,7 +84,8 @@ public class BlackjackTest {
 			final Score bustScore = Score.from(21);
 
 			// when
-			blackjack.pickCardPlayersIfNotBust(alwaysYes);
+			blackjack.pickCardPlayersIfNotBust(alwaysYes, x -> {
+			});
 
 			// then
 			assertSoftly(s -> {

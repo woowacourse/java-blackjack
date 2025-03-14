@@ -14,7 +14,7 @@ public class BlackjackApp {
 		blackjack.initPickCard();
 		outputView.printHandOut(blackjack);
 
-		blackjack.pickCardPlayersIfNotBust(inputView::readPlayerAnswer);
+		blackjack.pickCardPlayersIfNotBust(inputView::readPlayerAnswer, outputView::printPlayerPickCard);
 		blackjack.pickCardDealerIfNotMax();
 
 		outputView.printDealerPickCard(blackjack);

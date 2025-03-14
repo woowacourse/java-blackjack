@@ -2,6 +2,7 @@ package game;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import card.Deck;
@@ -42,8 +43,11 @@ public class Blackjack {
 		dealer.addCards(deck.pickCards(INIT_PICK_CARD_COUNT));
 	}
 
-	public void pickCardPlayersIfNotBust(final Function<String, Boolean> playerAnswer) {
-		players.pickCardPlayersIfNotBust(playerAnswer, deck);
+	public void pickCardPlayersIfNotBust(
+		final Function<String, Boolean> playerAnswer,
+		final Consumer<Player> printPlayerCard
+	) {
+		players.pickCardPlayersIfNotBust(playerAnswer, printPlayerCard, deck);
 	}
 
 	public void pickCardDealerIfNotMax() {
