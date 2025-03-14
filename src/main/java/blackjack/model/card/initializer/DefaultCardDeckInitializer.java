@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class DefaultCardDeckInitializer implements CardDeckInitializer {
+public final class DefaultCardDeckInitializer implements CardDeckInitializer {
 
     @Override
     public BlackJackCards initialize() {

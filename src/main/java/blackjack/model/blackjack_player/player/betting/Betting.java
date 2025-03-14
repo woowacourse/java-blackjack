@@ -1,6 +1,6 @@
 package blackjack.model.blackjack_player.player.betting;
 
-public class Betting {
+public final class Betting {
 
     private final int bettingMoney;
     private int balance;

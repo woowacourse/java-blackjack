@@ -8,7 +8,7 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 
-public class BlackJackController {
+public final class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;

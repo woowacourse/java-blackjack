@@ -8,7 +8,7 @@ import blackjack.model.card.CardDeck;
 import blackjack.model.card.initializer.CardDeckInitializer;
 import java.util.List;
 
-public class Dealer {
+public final class Dealer {
 
     private static final int INITIAL_DRAW_AMOUNT = 2;
     private static final int PLAYER_SINGLE_DRAW_AMOUNT = 1;

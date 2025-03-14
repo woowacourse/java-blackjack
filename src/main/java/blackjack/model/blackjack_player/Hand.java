@@ -3,7 +3,7 @@ package blackjack.model.blackjack_player;
 import blackjack.model.card.BlackJackCards;
 import java.util.Collections;
 
-public class Hand {
+public final class Hand {
 
     private static final int BLACKJACK_POINT = 21;
     private static final int BLACKJACK_CARD_SIZE = 2;
@@ -22,18 +22,18 @@ public class Hand {
         this.cards.addAll(cards);
     }
 
-    public final int calculateOptimalPoint() {
+    public int calculateOptimalPoint() {
         return cards.calculatePossiblePoints().stream()
                 .filter(point -> point <= BLACKJACK_POINT)
                 .max(Integer::compareTo)
                 .orElse(getMinimumPoint());
     }
 
-    public final int getMinimumPoint() {
+    public int getMinimumPoint() {
         return Collections.min(cards.calculatePossiblePoints());
     }
 
-    public final boolean isBust() {
+    public boolean isBust() {
         return calculateOptimalPoint() > BLACKJACK_POINT;
     }
 
@@ -42,7 +42,7 @@ public class Hand {
                 && cards.hasSize(BLACKJACK_CARD_SIZE);
     }
 
-    public final BlackJackCards getCards() {
+    public BlackJackCards getCards() {
         return cards;
     }
 }

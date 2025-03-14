@@ -6,7 +6,7 @@ import blackjack.model.card.BlackJackCards;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class OutputView {
+public final class OutputView {
 
     public void printDealInitialCardsResult(final Dealer dealer, final List<Player> players) {
         String userNames = players.stream()

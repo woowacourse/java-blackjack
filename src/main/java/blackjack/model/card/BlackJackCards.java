@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-public class BlackJackCards {
+public final class BlackJackCards {
 
     private final List<BlackJackCard> values;
 
