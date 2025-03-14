@@ -31,9 +31,9 @@ public class BlackJackController {
             final Players players = createPlayers();
             final Dealer dealer = createDealer();
             final Deck deck = generateDeck();
-            setGame(players.getPlayers(), dealer, deck);
+            setGame(players, dealer, deck);
             printGameSetting(dealer, players);
-            playGame(dealer, players.getPlayers(), deck);
+            playGame(dealer, players, deck);
             finishGame(players, dealer);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
@@ -72,32 +72,26 @@ public class BlackJackController {
         return new Dealer(new Nickname(DEALER_NAME));
     }
 
-    private void setGame(final List<Player> players, Dealer dealer, final Deck deck) {
-        players.forEach(player -> receiveInitialCards(player, deck));
-        receiveInitialCards(dealer, deck);
+    private void setGame(final Players players, Dealer dealer, final Deck deck) {
+        players.receiveInitialCards(deck);
+        List<Card> initialCards = deck.getInitialGameCards();
+        dealer.receiveInitialCards(initialCards);
     }
 
-    private void receiveInitialCards(Gamer gamer, Deck deck) {
-        final Card firstCard = deck.drawCard();
-        final Card secondCard = deck.drawCard();
-        gamer.receiveInitialCards(List.of(firstCard, secondCard));
-    }
-
-    private void printGameSetting(final Dealer dealer,
-                                  final Players players) {
+    private void printGameSetting(final Dealer dealer, final Players players) {
         final List<String> playerNicknames = players.getPlayersDisplayNicknames();
         OutputView.printInitialSettingMessage(dealer.getDisplayName(), playerNicknames, INITIAL_CARD_AMOUNT);
         OutputView.printCardsInHand(dealer.getDisplayName(), List.of(dealer.getFirstCard()));
         players.getPlayers().forEach(player -> OutputView.printCardsInHand(player.getDisplayName(), player.getCards()));
     }
 
-    private void playGame(final Dealer dealer, final List<Player> players, final Deck deck) {
+    private void playGame(final Dealer dealer, final Players players, final Deck deck) {
         processPlayerHit(players, deck);
         processDealerHit(dealer, deck);
     }
 
-    private void processPlayerHit(final List<Player> players, final Deck deck) {
-        players.stream()
+    private void processPlayerHit(final Players players, final Deck deck) {
+        players.getPlayers().stream()
                 .filter(player -> isMoreCard(deck, player))
                 .forEach(player -> processAdditionalHit(deck, player));
     }
