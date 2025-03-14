@@ -2,8 +2,10 @@ package view;
 
 import static view.InputValidator.validateDuplicate;
 import static view.InputValidator.validateInputFormat;
+import static view.InputValidator.validateInputMoney;
 import static view.InputValidator.validateUserResponse;
 
+import domain.BettingMoney;
 import domain.PlayerName;
 import java.util.List;
 import java.util.Map;
@@ -37,5 +39,13 @@ public class InputView {
         String rawUserResponse = readLine();
         validateUserResponse(rawUserResponse);
         return UserResponses.get(rawUserResponse);
+    }
+
+    public BettingMoney insertBettingMoney(PlayerName playerName) {
+        System.out.printf("%s의 배팅 금액은?\n", playerName.username());
+        String rawBettingMoney = readLine();
+        validateInputMoney(rawBettingMoney);
+
+        return new BettingMoney(Integer.parseInt(rawBettingMoney));
     }
 }

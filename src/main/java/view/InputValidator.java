@@ -26,4 +26,12 @@ public class InputValidator {
             throw new IllegalArgumentException("응답은 반드시 y 혹은 n만 가능합니다.");
         }
     }
+
+    public static void validateInputMoney(String rawBettingMoney) {
+        try {
+            Integer.parseInt(rawBettingMoney);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("정수가 아닙니다.");
+        }
+    }
 }
