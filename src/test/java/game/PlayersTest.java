@@ -99,10 +99,9 @@ public class PlayersTest {
                 new Card(Pattern.SPADE, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.TEN)));
 
-        Players players = new Players(List.of(
-                new Player("pobi")));
-
-        players.getPlayers().getFirst().draw(List.of(
+        Player player = new Player("a");
+        Players players = new Players(List.of(player));
+        player.draw(List.of(
                 new Card(Pattern.HEART, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.NINE)));
 
@@ -122,10 +121,9 @@ public class PlayersTest {
                 new Card(Pattern.CLOVER, CardNumber.TEN),
                 new Card(Pattern.DIAMOND, CardNumber.TWO)));
 
-        Players players = new Players(List.of(
-                new Player("pobi")));
-
-        players.getPlayers().getFirst().draw(List.of(
+        Player player = new Player("a");
+        Players players = new Players(List.of(player));
+        player.draw(List.of(
                 new Card(Pattern.CLOVER, CardNumber.KING),
                 new Card(Pattern.SPADE, CardNumber.JACK),
                 new Card(Pattern.HEART, CardNumber.TWO)));
@@ -146,10 +144,9 @@ public class PlayersTest {
                 new Card(Pattern.CLOVER, CardNumber.TEN),
                 new Card(Pattern.DIAMOND, CardNumber.TWO)));
 
-        Players players = new Players(List.of(
-                new Player("pobi")));
-
-        players.getPlayers().getFirst().draw(List.of(
+        Player player = new Player("a");
+        Players players = new Players(List.of(player));
+        player.draw(List.of(
                 new Card(Pattern.HEART, CardNumber.TEN),
                 new Card(Pattern.DIAMOND, CardNumber.TEN)));
 
@@ -168,10 +165,9 @@ public class PlayersTest {
                 new Card(Pattern.SPADE, CardNumber.TEN),
                 new Card(Pattern.DIAMOND, CardNumber.ACE)));
 
-        Players players = new Players(List.of(
-                new Player("pobi")));
-
-        players.getPlayers().getFirst().draw(List.of(
+        Player player = new Player("a");
+        Players players = new Players(List.of(player));
+        player.draw(List.of(
                 new Card(Pattern.HEART, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.ACE)));
 
@@ -190,10 +186,9 @@ public class PlayersTest {
                 new Card(Pattern.SPADE, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.ACE)));
 
-        Players players = new Players(List.of(
-                new Player("pobi")));
-
-        players.getPlayers().getFirst().draw(List.of(
+        Player player = new Player("a");
+        Players players = new Players(List.of(player));
+        player.draw(List.of(
                 new Card(Pattern.HEART, CardNumber.TEN),
                 new Card(Pattern.DIAMOND, CardNumber.TEN)));
 
@@ -212,10 +207,9 @@ public class PlayersTest {
                 new Card(Pattern.SPADE, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.TEN)));
 
-        Players players = new Players(List.of(
-                new Player("pobi")));
-
-        players.getPlayers().getFirst().draw(List.of(
+        Player player = new Player("a");
+        Players players = new Players(List.of(player));
+        player.draw(List.of(
                 new Card(Pattern.HEART, CardNumber.TEN),
                 new Card(Pattern.DIAMOND, CardNumber.ACE)));
 
