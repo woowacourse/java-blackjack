@@ -1,10 +1,12 @@
 package domain.participant;
 
-import static domain.MatchResult.LOSE;
 import static domain.card.Number.ACE;
 import static domain.card.Number.JACK;
 import static domain.card.Number.KING;
+import static domain.card.Number.NINE;
 import static domain.card.Number.QUEEN;
+import static domain.card.Number.TEN;
+import static domain.card.Number.TWO;
 import static domain.card.Shape.DIAMOND;
 import static domain.card.Shape.HEART;
 import static domain.card.Shape.SPADE;
@@ -94,20 +96,6 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("승패 결정 테스트")
-    void calculateWinner() {
-        //given
-        Player player = new Player(new Hand(new ArrayList<>()), new Name("pobi"), new Money(10000));
-        Deck cardDeck = new Deck(List.of(new Card(DIAMOND, JACK), new Card(SPADE, ACE)));
-        Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
-        player.addCard(cardDeck.hitCard());
-        dealer.addCard(cardDeck.hitCard());
-
-        //when-then
-        assertThat(player.calculateWinner(dealer.calculateSum())).isEqualTo(LOSE);
-    }
-
-    @Test
     @DisplayName("플레이어 초기 카드 오픈 테스트")
     void openInitialCardsTest() {
         Player player = new Player(new Hand(new ArrayList<>()), new Name("pobi"), new Money(10000));
@@ -117,5 +105,45 @@ public class PlayerTest {
 
         assertThat(player.openInitialCards().getFirst()).isEqualTo(new Card(DIAMOND, JACK));
         assertThat(player.openInitialCards().get(1)).isEqualTo(new Card(SPADE, ACE));
+    }
+
+    @Test
+    @DisplayName("수익률 계산 테스트 (승리)")
+    void calculateProfitTest() {
+        Player player = new Player(new Hand(List.of()), new Name("pobi"), new Money(10000));
+        Deck cardDeck = new Deck(List.of(new Card(DIAMOND, JACK), new Card(SPADE, QUEEN)));
+        player.addCard(cardDeck.hitCard());
+        player.addCard(cardDeck.hitCard());
+
+        Dealer dealer = new Dealer(new Hand(List.of()));
+
+        assertThat(player.calculateWinner(dealer.calculateSum())).isEqualTo(10000);
+    }
+
+    @Test
+    @DisplayName("수익률 계산 테스트 (블랙잭이면서 승리)")
+    void calculateBlackJackProfitTest() {
+        Player player = new Player(new Hand(List.of()), new Name("pobi"), new Money(10000));
+        Deck cardDeck = new Deck(List.of(new Card(DIAMOND, TEN), new Card(SPADE, NINE), new Card(DIAMOND, TWO)));
+        player.addCard(cardDeck.hitCard());
+        player.addCard(cardDeck.hitCard());
+        player.addCard(cardDeck.hitCard());
+
+        Dealer dealer = new Dealer(new Hand(List.of()));
+
+        assertThat(player.calculateWinner(dealer.calculateSum())).isEqualTo(15000);
+    }
+
+    @Test
+    @DisplayName("수익률 계산 테스트 (패배)")
+    void calculateLoseProfitTest() {
+        Player player = new Player(new Hand(List.of()), new Name("pobi"), new Money(10000));
+        Deck cardDeck = new Deck(List.of(new Card(DIAMOND, TWO), new Card(SPADE, QUEEN)));
+        Dealer dealer = new Dealer(new Hand(List.of()));
+
+        player.addCard(cardDeck.hitCard());
+        dealer.addCard(cardDeck.hitCard());
+
+        assertThat(player.calculateWinner(dealer.calculateSum())).isEqualTo(-10000);
     }
 }
