@@ -24,18 +24,14 @@ public class Betting {
         balance = 0;
     }
 
-    public int getProfit() {
-        return balance - bettingMoney;
-    }
-
-    public int getBalance() {
-        return balance;
-    }
-
     private void validateNegativeMoney(final int money) {
         if (money < 0) {
             throw new IllegalArgumentException("금액은 음수가 될 수 없습니다.");
         }
+    }
+
+    public int getBalance() {
+        return balance;
     }
 
     public int getBettingMoney() {

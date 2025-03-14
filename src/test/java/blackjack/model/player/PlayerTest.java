@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class PlayerTest {
@@ -126,5 +127,17 @@ class PlayerTest {
         player.earnMoney(1000);
 
         assertThat(player.getProfit()).isEqualTo(1000);
+    }
+
+
+    @ParameterizedTest
+    @CsvSource(value = {"1000,500,500", "1000,1500,1500"})
+    void 수익을_계산할_수_있다(int bettingMoney, int earnMoney, int expected) {
+
+        Player player = new Player("pobi", bettingMoney);
+
+        player.earnMoney(earnMoney);
+
+        assertThat(player.getProfit()).isEqualTo(expected);
     }
 }

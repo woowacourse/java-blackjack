@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class BettingTest {
@@ -42,15 +41,5 @@ class BettingTest {
         betting.lose();
 
         assertThat(betting.getBalance()).isEqualTo(0);
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"1000,500,500", "1000,1500,1500"})
-    void 수익을_계산할_수_있다(int bettingMoney, int earnMoney, int expected) {
-        Betting betting = Betting.bet(bettingMoney);
-
-        betting.earn(earnMoney);
-
-        assertThat(betting.getProfit()).isEqualTo(expected);
     }
 }

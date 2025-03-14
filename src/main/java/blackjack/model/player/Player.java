@@ -27,7 +27,7 @@ public class Player extends BlackJackPlayer {
     }
 
     public int getProfit() {
-        return betting.getProfit();
+        return betting.getBalance() - betting.getBettingMoney();
     }
 
     @Override
