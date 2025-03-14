@@ -42,16 +42,6 @@ public class ParticipantTest {
         assertEquals(GameStatus.valueOf(gameStatusName), otherParticipant.determineGameStatus(participant));
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {"", " "})
-    @DisplayName("이름이 공백인 참여자 예외 테스트")
-    void blankParticipantNameTest(String name) {
-        // given & when & then
-        assertThatThrownBy(() -> createParticipant(name))
-                .isInstanceOf(ErrorException.class)
-                .hasMessageContaining("[ERROR]");
-    }
-
     private static Participant createParticipantCardsOfRanks(List<Rank> ranks) {
         Participant participant = createParticipant("행성");
         ranks.stream()

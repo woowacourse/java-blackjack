@@ -29,9 +29,22 @@ public class InputView {
     }
 
     private static List<String> validateAndParsePlayerNames(String response) {
-        List<String> playerNames = Arrays.asList(response.split(","));
+        List<String> playerNames = Arrays.asList(response.split(",", -1));
+        validatePlayerNamesBlank(playerNames);
         validatePlayerNamesSize(playerNames);
         return playerNames;
+    }
+
+    private static void validatePlayerNamesBlank(List<String> playerNames) {
+        for (String playerName : playerNames) {
+            validatePlayerNameBlank(playerName);
+        }
+    }
+
+    private static void validatePlayerNameBlank(String playerName) {
+        if (playerName.isBlank()) {
+            throw new ErrorException("공백이 아닌 플레이어 이름을 입력해야 합니다.");
+        }
     }
 
     private static void validatePlayerNamesSize(List<String> playerNames) {

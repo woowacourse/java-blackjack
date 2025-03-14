@@ -1,7 +1,6 @@
 package domain;
 
 import domain.card.Card;
-import exception.ErrorException;
 import java.util.List;
 
 public abstract class Participant {
@@ -10,7 +9,6 @@ public abstract class Participant {
     protected final Cards cards;
 
     protected Participant(String name) {
-        validateBlank(name);
         this.name = name;
         this.cards = new Cards();
     }
@@ -41,11 +39,5 @@ public abstract class Participant {
 
     public int getCardsScore() {
         return cards.calculateScore();
-    }
-
-    private void validateBlank(String name) {
-        if (name.isBlank()) {
-            throw new ErrorException("참여자 이름은 공백일 수 없습니다.");
-        }
     }
 }
