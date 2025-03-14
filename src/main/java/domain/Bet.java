@@ -4,7 +4,7 @@ import domain.participant.Role;
 import java.util.List;
 import java.util.Objects;
 
-public class Bet {
+public final class Bet {
 
   private static final Bet BET_FOR_LOSE = new Bet(0);
 
