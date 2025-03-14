@@ -15,6 +15,8 @@ import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
 
+    private final List<Long> playersBettingMoney = List.of(300000L);
+    
     private final List<TrumpCard> cardDeck = List.of(
             new TrumpCard(CardShape.CLOVER, CardNumber.J),
             new TrumpCard(CardShape.CLOVER, CardNumber.SEVEN),
@@ -27,7 +29,8 @@ public class PlayerTest {
     void test1() {
         //given
         FakeTrumpCardManager trumpCardManager = new FakeTrumpCardManager(cardDeck);
-        GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), trumpCardManager);
+        GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), playersBettingMoney,
+                trumpCardManager);
         Player player = gameManager.findPlayerByUsername("레몬");
 
         //when
@@ -49,10 +52,10 @@ public class PlayerTest {
         //when & then
         SoftAssertions.assertSoftly((softAssertions) -> {
             softAssertions.assertThatIllegalArgumentException()
-                    .isThrownBy(() -> GameManager.initailizeGameManager(dealer1, trumpCardManager))
+                    .isThrownBy(() -> GameManager.initailizeGameManager(dealer1, playersBettingMoney, trumpCardManager))
                     .withMessage("dealer 혹은 딜러는 이름으로 사용할 수 없습니다.");
             softAssertions.assertThatIllegalArgumentException()
-                    .isThrownBy(() -> GameManager.initailizeGameManager(dealer2, trumpCardManager))
+                    .isThrownBy(() -> GameManager.initailizeGameManager(dealer2, playersBettingMoney, trumpCardManager))
                     .withMessage("dealer 혹은 딜러는 이름으로 사용할 수 없습니다.");
         });
     }
