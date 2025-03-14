@@ -37,6 +37,7 @@ public class Player extends Participant {
         return MatchResult.fromCompare(compareToScore(dealer));
     }
 
+    // TODO: DL: 승패 판단 compare 반환값: https://www.notion.so/DL-compare-1b6cfbb673e4804685c7f7f9f3ce9504?pvs=4
     private int compareToScore(Dealer dealer) {
         if (isBust()) {
             return -1;

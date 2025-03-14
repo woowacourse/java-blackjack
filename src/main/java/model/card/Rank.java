@@ -36,16 +36,11 @@ public enum Rank {
         return scoreData.get(idx);
     }
 
-    public int findNextScore(int idx) {
-        int nextIdx = findNextIdx(idx);
-        return scoreData.get(nextIdx);
-    }
-
-    private int findNextIdx(int idx) {
-        if (!isLastIdx(idx)) {
-            return idx + 1;
+    public int findAdjustOrOriginalIdx(int scoreIdx) {
+        if (!isLastIdx(scoreIdx)) {
+            return scoreIdx + 1;
         }
-        return idx;
+        return scoreIdx;
     }
 
     private boolean isLastIdx(int idx) {

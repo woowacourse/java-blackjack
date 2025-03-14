@@ -10,8 +10,8 @@ public class MultiScoreCard extends Card {
     }
 
     @Override
-    public int findAdjustOrDefalutScore() {
-        scoreIdx = rank.findNextScore(scoreIdx);
+    public int findAdjustOrDefaultScore() {
+        scoreIdx = rank.findAdjustOrOriginalIdx(scoreIdx);
         return rank.findScore(scoreIdx);
     }
 
