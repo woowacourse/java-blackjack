@@ -19,6 +19,10 @@ public class Money {
 		return new Money(value - minusMoney.value);
 	}
 
+	public Money plus(Money plusMoney) {
+		return null;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)

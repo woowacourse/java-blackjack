@@ -61,5 +61,20 @@ public class MoneyTest {
 			// then
 			assertThat(actual.getValue()).isZero();
 		}
+
+		@DisplayName("금액 더하기 연산")
+		@Test
+		void plus() {
+			// given
+			final int value = 10_000;
+			final Money money = new Money(value);
+			final Money money1 = new Money(value);
+
+			// when
+			final Money actual = money.plus(money1);
+
+			// then
+			assertThat(actual.getValue()).isEqualTo(20_000);
+		}
 	}
 }
