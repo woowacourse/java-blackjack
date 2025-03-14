@@ -57,7 +57,10 @@ public class BettingResult {
 
     private int computeInsuranceResult(Player player, Dealer dealer) {
         Betting bet = betting.get(player);
-        return bet.calculateInsurance(dealer);
+        if (dealer.checkBlackjack()){
+            return bet.calculateInsurance(dealer);
+        }
+        return 0;
     }
 }
 
