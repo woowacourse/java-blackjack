@@ -5,38 +5,42 @@ public class Betting {
     private static final int DEFAULT_ODDS = 1;
     private static final double BLACK_JACK_ODDS = 1.5;
 
-    private int money;
+    private final int betting;
+    private int earned;
 
     public Betting(int money) {
-        this.money = money;
+        this.betting = money;
+        this.earned = 0;
     }
 
     public int evaluate(GameResult result) {
         return switch (result) {
+            case BLACKJACK -> blackJack();
             case WIN -> earn();
-            case LOSE -> lose();
             case DRAW -> same();
-            case BLACKJACK -> earnedWhenBlackJack();
+            case LOSE -> lose();
         };
     }
 
-    private int lose() {
-        return this.money * -1;
-    }
-
-    private int same() {
-        return 0;
+    private int blackJack() {
+        return (int) (betting * BLACK_JACK_ODDS);
     }
 
     private int earn() {
-        return this.money * DEFAULT_ODDS;
+        earned = betting * DEFAULT_ODDS;
+        return earned;
     }
 
-    private int earnedWhenBlackJack() {
-        return (int) (this.money * BLACK_JACK_ODDS);
+    private int same() {
+        return earned;
     }
 
-    public int getMoney() {
-        return money;
+    private int lose() {
+        earned = betting * -1;
+        return earned;
+    }
+
+    public int getBetting() {
+        return betting;
     }
 }

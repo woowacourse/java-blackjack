@@ -65,6 +65,6 @@ public class Player {
     }
 
     public int getPlayerBettingMoney() {
-        return betting.getMoney();
+        return betting.getBetting();
     }
 }

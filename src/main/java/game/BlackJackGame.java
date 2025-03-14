@@ -68,11 +68,11 @@ public class BlackJackGame {
         List<GameResult> gameResults = players.judgeGameResult(dealer);
         List<String> playerNames = players.getAllPlayerNames();
 
-        int winCount = GameResult.WIN.countReversed(gameResults);
-        int loseCount = GameResult.LOSE.countReversed(gameResults);
-        int drawCount = GameResult.DRAW.countReversed(gameResults);
+        outputConsole.printDealerWinningResult(
+                GameResult.WIN.countReversed(gameResults),
+                GameResult.DRAW.countReversed(gameResults),
+                GameResult.LOSE.countReversed(gameResults));
 
-        outputConsole.printDealerWinningResult(winCount, drawCount, loseCount);
         outputConsole.printWinningResult(playerNames, gameResults);
     }
 }
