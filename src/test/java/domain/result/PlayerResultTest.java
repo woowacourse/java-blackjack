@@ -34,7 +34,7 @@ class PlayerResultTest {
     @Test
     void test10() {
         //given
-        PlayerResult playerResult = new PlayerResult(blackjackPlayer, WIN);
+        PlayerResult playerResult = new PlayerResult(blackjackPlayer, BLACKJACK_WIN);
 
         //when
         Money profit = playerResult.calculateProfit();

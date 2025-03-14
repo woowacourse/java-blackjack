@@ -53,19 +53,19 @@ public class OutputView {
         });
     }
 
-    public void printGameResults(PlayerResult playerResult) {
-        int winCount = playerResult.calculateStatusCount(WIN);
-        int loseCount = playerResult.calculateStatusCount(LOSE);
-        int drawCount = playerResult.calculateStatusCount(DRAW);
-        System.out.println("\n## 최종 승패");
-        System.out.printf("딜러: %d승 %d무 %d패\n", loseCount, drawCount, winCount);
-        playerResult.getAllPlayers()
-                .forEach(player -> {
-                    GameStatus gameStatus = playerResult.getGameResultStatus(player);
-                    String resultMessage = outputFormatter.formatGameResult(gameStatus);
-                    System.out.printf("%s: %s\n", player.getName(), resultMessage);
-                });
-    }
+//    public void printGameResults(PlayerResult playerResult) {
+//        int winCount = playerResult.calculateStatusCount(WIN);
+//        int loseCount = playerResult.calculateStatusCount(LOSE);
+//        int drawCount = playerResult.calculateStatusCount(DRAW);
+//        System.out.println("\n## 최종 승패");
+//        System.out.printf("딜러: %d승 %d무 %d패\n", loseCount, drawCount, winCount);
+//        playerResult.getAllPlayers()
+//                .forEach(player -> {
+//                    GameStatus gameStatus = playerResult.getGameResultStatus(player);
+//                    String resultMessage = outputFormatter.formatGameResult(gameStatus);
+//                    System.out.printf("%s: %s\n", player.getName(), resultMessage);
+//                });
+//    }
 
     public void printBustMessage() {
         System.out.println("카드의 합이 21을 초과하였습니다. 더이상 카드를 받을 수 없습니다.");

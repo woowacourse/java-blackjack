@@ -12,7 +12,7 @@ public class BlackJack implements HandStatus {
             return DRAW;
         }
         if (player.isBlackJack()) {
-            return WIN;
+            return BLACKJACK_WIN;
         }
         if (dealer.isBlackJack()) {
             return LOSE;

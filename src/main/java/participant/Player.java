@@ -1,19 +1,24 @@
 package participant;
 
 import card.Hand;
-import result.GameStatus;
 import java.util.Objects;
 
 public class Player extends Participant {
     private final String name;
+    private final Money bettingPrice;
 
-    public Player(String name, Hand hand) {
+    public Player(String name, Hand hand, Money bettingPrice) {
         super(hand);
         this.name = name;
+        this.bettingPrice = bettingPrice;
     }
 
     public String getName() {
         return name;
+    }
+
+    public Money calculateProfit(double payoutRate) {
+        return Money.multiply(bettingPrice, payoutRate);
     }
 
     @Override

@@ -14,31 +14,37 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import participant.Dealer;
+import participant.Money;
 import participant.Player;
 import result.GameResult;
 import result.GameStatus;
 
 public class GameResultTest {
+    Money zero = Money.createZero();
 
     Dealer bustDealer = new Dealer(new Hand(
             List.of(new Card(JACK, CLOVER), new Card(KING, CLOVER), new Card(TWO, CLOVER))));
     Player bustPlayer = new Player("mimi", new Hand(
-            List.of(new Card(JACK, CLOVER), new Card(KING, CLOVER), new Card(THREE, CLOVER))));
+            List.of(new Card(JACK, CLOVER), new Card(KING, CLOVER), new Card(THREE, CLOVER))),
+            zero);
 
     Dealer twentyHandDealer = new Dealer(new Hand(
             List.of(new Card(JACK, CLOVER), new Card(KING, CLOVER))));
     Player twentyHandPlayer = new Player("mimi", new Hand(
-            List.of(new Card(JACK, CLOVER), new Card(KING, CLOVER))));
+            List.of(new Card(JACK, CLOVER), new Card(KING, CLOVER))),
+            zero);
 
     Dealer twentyOneHandDealer = new Dealer(new Hand(
             List.of(new Card(JACK, CLOVER), new Card(KING, CLOVER), new Card(ACE, CLOVER))));
     Player twentyOneHandPlayer = new Player("mimi", new Hand(
-            List.of(new Card(JACK, CLOVER), new Card(KING, CLOVER), new Card(ACE, CLOVER))));
+            List.of(new Card(JACK, CLOVER), new Card(KING, CLOVER), new Card(ACE, CLOVER)))
+            ,zero);
 
     Dealer blackJackDealer = new Dealer(new Hand(
             List.of(new Card(KING, CLOVER), new Card(ACE, CLOVER))));
     Player blackJackPlayer = new Player("mimi", new Hand(
-            List.of(new Card(KING, CLOVER), new Card(ACE, CLOVER))));
+            List.of(new Card(KING, CLOVER), new Card(ACE, CLOVER))),
+            zero);
 
     @DisplayName("플레이어가 버스트일 경우 플레이어의 패배이다")
     @Test
@@ -89,7 +95,7 @@ public class GameResultTest {
         GameStatus gameStatus = gameResult.calculate(blackJackPlayer, twentyOneHandDealer);
 
         //then
-        assertThat(gameStatus).isEqualTo(GameStatus.WIN);
+        assertThat(gameStatus).isEqualTo(GameStatus.BLACKJACK_WIN);
     }
 
     @DisplayName("딜러만 블랙잭일 경우 플레이어의 패배이다")

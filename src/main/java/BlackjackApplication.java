@@ -38,7 +38,8 @@ public class BlackjackApplication {
     }
 
     private Players initializePlayers() {
-        return Players.createByNames(inputView.requestPlayerNames());
+//        return Players.createByNames(inputView.requestPlayerNames());
+        return null;
     }
 
     private void initializeParticipantCards(Deck deck, Dealer dealer, Players players) {
