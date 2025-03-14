@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 import blackjack.model.blackjack_player.Hand;
+import blackjack.model.blackjack_player.dealer.judgement.DefaultJudgement;
 import blackjack.model.blackjack_player.player.Player;
 import blackjack.model.card.BlackJackCards;
 import blackjack.model.card.CardDeck;
@@ -289,7 +290,7 @@ class DealerTest {
     ) {
         dealer.getAllCards().addAll(blackJackCards);
 
-        dealer.fight(player);
+        dealer.fight(new DefaultJudgement(), player);
 
         SoftAssertions.assertSoftly(
                 softly -> {
