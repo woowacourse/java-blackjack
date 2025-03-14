@@ -38,7 +38,7 @@ public class Dealer {
     }
 
     public int getCardSize() {
-        return cards.getSize();
+        return cards.size();
     }
 
     @Override

@@ -6,7 +6,7 @@ public record Score(
 
     public static final Score MAX = new Score(100);
     public static final Score MIN = new Score(0);
-    private static final Score BLACKJACK = new Score(21);
+    public static final Score BLACKJACK = new Score(21);
 
     public static Score min(Score a, Score b) {
         if (a.score > b.score) {

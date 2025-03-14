@@ -2,6 +2,8 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Score;
+import blackjack.domain.winning.WinningResult;
 
 public class Blackjack extends Start {
     public Blackjack(Cards cards) {
@@ -19,5 +21,31 @@ public class Blackjack extends Start {
     @Override
     public State stay() {
         return this;
+    }
+
+    @Override
+    public double profit(double bettingMoney) {
+        return bettingMoney * 1.5 - bettingMoney;
+    }
+
+    @Override
+    public Score calculateTotalScore() {
+        return Score.BLACKJACK;
+    }
+
+    @Override
+    public WinningResult decide(State state) {
+        if (!state.isFinished()) {
+            throw new IllegalArgumentException("끝난 상태와 승패를 결정할 수 있습니다.");
+        }
+        if (state instanceof Blackjack) {
+            return WinningResult.DRAW;
+        }
+        return WinningResult.WIN;
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;
     }
 }
