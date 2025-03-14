@@ -8,20 +8,18 @@ import blackjack.card.CardHand;
 import blackjack.card.Denomination;
 import blackjack.card.Suit;
 import blackjack.game.GameResult;
-import blackjack.user.BettingPlayer;
-import blackjack.user.PlayerName;
-import blackjack.user.Wallet;
+import blackjack.game.betting.BetAmount;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-public class BettingPlayerTest {
+public class BetPlayerTest {
 
     @Nested
     @DisplayName("플레이어 수익 테스트")
-    class WalletTest {
+    class BetAmountTest {
 
         @Test
         @DisplayName("블랙잭이면 원금의 1.5배의 이익을 얻는다")
@@ -33,7 +31,7 @@ public class BettingPlayerTest {
             CardDeck cardDeck = new CardDeck(initialCards);
 
             BettingPlayer bettingPlayer = new BettingPlayer(new PlayerName("if"), new CardHand(),
-                Wallet.initialBetting(10000));
+                BetAmount.initialBetting(10000));
             bettingPlayer.addCards(cardDeck, 2);
 
             int result = bettingPlayer.updateWalletByGameResult(GameResult.WIN);
@@ -51,7 +49,7 @@ public class BettingPlayerTest {
             CardDeck cardDeck = new CardDeck(initialCards);
 
             BettingPlayer bettingPlayer = new BettingPlayer(new PlayerName("sana"), new CardHand(),
-                Wallet.initialBetting(10000));
+                BetAmount.initialBetting(10000));
             bettingPlayer.addCards(cardDeck, 3);
 
             int result = bettingPlayer.updateWalletByGameResult(GameResult.WIN);
@@ -68,7 +66,7 @@ public class BettingPlayerTest {
             CardDeck cardDeck = new CardDeck(initialCards);
 
             BettingPlayer bettingPlayer = new BettingPlayer(new PlayerName("sana"), new CardHand(),
-                Wallet.initialBetting(10000));
+                BetAmount.initialBetting(10000));
             bettingPlayer.addCards(cardDeck, 2);
 
             int result = bettingPlayer.updateWalletByGameResult(GameResult.DRAW);
@@ -85,7 +83,7 @@ public class BettingPlayerTest {
             CardDeck cardDeck = new CardDeck(initialCards);
 
             BettingPlayer bettingPlayer = new BettingPlayer(new PlayerName("sana"), new CardHand(),
-                Wallet.initialBetting(10000));
+                BetAmount.initialBetting(10000));
             bettingPlayer.addCards(cardDeck, 2);
 
             int result = bettingPlayer.updateWalletByGameResult(GameResult.LOSE);

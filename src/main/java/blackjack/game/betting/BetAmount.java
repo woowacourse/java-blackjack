@@ -1,8 +1,8 @@
-package blackjack.user;
+package blackjack.game.betting;
 
 import blackjack.game.GameResult;
 
-public class Wallet {
+public class BetAmount {
 
     private static final int PRINCIPAL_MIN_NUMBER = 10_000;
     private static final int PRINCIPAL_MAX_NUMBER = 10_000_000;
@@ -12,11 +12,15 @@ public class Wallet {
     private final int principal;
     private final int profit;
 
-    private Wallet(final int principal, final int profit) {
+    private BetAmount(final int principal, final int profit) {
         validateRange(principal);
 
         this.principal = principal;
         this.profit = profit;
+    }
+
+    public static BetAmount initialBetting(final int principal) {
+        return new BetAmount(principal, DEFAULT_PROFIT);
     }
 
     private void validateRange(final int principal) {
@@ -25,21 +29,17 @@ public class Wallet {
         }
     }
 
-    public static Wallet initialBetting(final int principal) {
-        return new Wallet(principal, DEFAULT_PROFIT);
-    }
-
-    public Wallet calculateProfit(final GameResult gameResult, final boolean isBlackjack) {
+    public BetAmount calculateProfit(final GameResult gameResult, final boolean isBlackjack) {
         if (gameResult.isWin() && isBlackjack) {
-            return new Wallet(principal, (int) (principal * BLACKJACK_PROFIT_RATE));
+            return new BetAmount(principal, (int) (principal * BLACKJACK_PROFIT_RATE));
         }
         if (gameResult.isWin()) {
-            return new Wallet(principal, principal);
+            return new BetAmount(principal, principal);
         }
         if (gameResult.isLose()) {
-            return new Wallet(principal, -principal);
+            return new BetAmount(principal, -principal);
         }
-        return new Wallet(principal, DEFAULT_PROFIT);
+        return new BetAmount(principal, DEFAULT_PROFIT);
     }
 
     public int getProfit() {
