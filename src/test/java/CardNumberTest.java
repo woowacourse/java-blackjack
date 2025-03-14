@@ -15,7 +15,8 @@ public class CardNumberTest {
     @Test
     void test() {
         // given
-        GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), new TrumpCardManager());
+        GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), List.of(1L),
+                new TrumpCardManager());
         User user = gameManager.findPlayerByUsername("레몬");
         gameManager.drawMoreCard(user);
 

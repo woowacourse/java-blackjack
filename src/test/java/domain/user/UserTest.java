@@ -15,6 +15,8 @@ import org.junit.jupiter.api.Test;
 
 class UserTest {
 
+    private final List<Long> playersBettingMoney = List.of(300000L);
+
     private final List<TrumpCard> cardDeck = List.of(
             new TrumpCard(CardShape.CLOVER, CardNumber.J),
             new TrumpCard(CardShape.CLOVER, CardNumber.SEVEN),
@@ -41,7 +43,8 @@ class UserTest {
         void test() {
             // given
             FakeTrumpCardManager trumpCardManager = new FakeTrumpCardManager(cardDeck);
-            GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), trumpCardManager);
+            GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), playersBettingMoney,
+                    trumpCardManager);
             Player user = gameManager.findPlayerByUsername("레몬");
 
             gameManager.firstHandOutCard();
@@ -61,7 +64,8 @@ class UserTest {
         void test2() {
             // given
             FakeTrumpCardManager trumpCardManager = new FakeTrumpCardManager(cardDeck);
-            GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), trumpCardManager);
+            GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), playersBettingMoney,
+                    trumpCardManager);
             gameManager.firstHandOutCard();
             User dealer = gameManager.getDealer();
 
@@ -77,7 +81,8 @@ class UserTest {
     void test3() {
         //given
         FakeTrumpCardManager trumpCardManager = new FakeTrumpCardManager(cardDeck);
-        GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), trumpCardManager);
+        GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), playersBettingMoney,
+                trumpCardManager);
         Player player = gameManager.findPlayerByUsername("레몬");
 
         //when

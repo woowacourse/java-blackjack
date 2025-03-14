@@ -32,7 +32,8 @@ public class DealerTest {
     void test() {
         //given
         FakeTrumpCardManager fakeTrumpCardManager = new FakeTrumpCardManager(cardDeck);
-        GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), new TrumpCardManager());
+        GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), List.of(300000L),
+                new TrumpCardManager());
         Dealer dealer = (Dealer) gameManager.getDealer();
         //when
         for (int i = 0; i < 5; i++) {
@@ -47,7 +48,8 @@ public class DealerTest {
     void test1() {
         //given
         FakeTrumpCardManager fakeTrumpCardManager = new FakeTrumpCardManager(cardDeck);
-        GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), fakeTrumpCardManager);
+        GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), List.of(300000L),
+                fakeTrumpCardManager);
         Dealer dealer = (Dealer) gameManager.getDealer();
 
         //when
