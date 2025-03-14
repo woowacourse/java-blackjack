@@ -58,9 +58,6 @@ public class ConsoleBlackjackGame {
     }
 
     private void addMoreCardsIfNotBust(Blackjack blackjack, Player participant) {
-        if (blackjack.isBust(participant)) {
-            return;
-        }
         addMoreCards(blackjack, participant);
     }
 }
