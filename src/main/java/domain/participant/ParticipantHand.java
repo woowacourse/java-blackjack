@@ -13,10 +13,10 @@ public class ParticipantHand {
 
     private final List<TrumpCard> handCards;
 
+
     public ParticipantHand() {
         this.handCards = new ArrayList<>();
     }
-
 
     public void addCard(TrumpCard card) {
         Score totalScore = calculateCardSum();
@@ -70,6 +70,10 @@ public class ParticipantHand {
 
     public List<TrumpCard> getCards() {
         return Collections.unmodifiableList(handCards);
+    }
+
+    public int size(){
+        return handCards.size();
     }
 
 }

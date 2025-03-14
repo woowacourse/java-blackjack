@@ -2,16 +2,17 @@ package domain.participant;
 
 import domain.card.TrumpCard;
 import domain.game.WinStatus;
+import domain.participant.state.HandState;
 import java.util.List;
 
 public class Participant {
 
-    private final ParticipantHand hand;
+    private final HandState hand;
     private final ParticipantName name;
 
-    public Participant(ParticipantName name) {
+    public Participant(ParticipantName name, TrumpCard... initCards) {
         this.name = name;
-        this.hand = new ParticipantHand();
+        this.hand = HandState.start(initCards);
     }
 
     public void addDraw(TrumpCard trumpCard) {
@@ -27,8 +28,7 @@ public class Participant {
     }
 
     public boolean isBust() {
-        Score score = hand.calculateCardSum();
-        return hand.isBust(score);
+        return hand.isBust();
     }
 
     public List<TrumpCard> trumpCards() {
