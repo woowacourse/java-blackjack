@@ -7,6 +7,7 @@ import domain.participant.Participants;
 import domain.participant.Role;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public final class BlackjackGame {
 
@@ -34,9 +35,12 @@ public final class BlackjackGame {
   }
 
   public RoundHistory writeRoundHistory() {
-    final var dealer = getDealer();
-    final var players = getPlayers();
-    return RoundHistory.generateOf(dealer, players);
+    final Map<Role, RoundResult> history = getPlayers().stream()
+        .collect(Collectors.toMap(
+            Participant::getRole,
+            player -> RoundResult.round(player, getDealer())
+        ));
+    return new RoundHistory(history);
   }
 
   public TrumpCard openDealerFirstCard() {
