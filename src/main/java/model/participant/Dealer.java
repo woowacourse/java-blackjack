@@ -66,7 +66,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public boolean isHit() {
+    public boolean canHit() {
         return cards.isHit(HIT_CONDITION);
     }
 
