@@ -4,7 +4,6 @@ import domain.participant.Dealer;
 import domain.participant.Money;
 import domain.participant.Player;
 import domain.participant.Players;
-import domain.result.BlackjackResult;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -72,12 +71,12 @@ public class Game {
     }
 
     private void drawToDealer(Players players, Dealer dealer) {
-        while (!BlackjackResult.isBust(dealer) && dealer.canHit()) {
+        while (!dealer.isBust() && dealer.canHit()) {
             dealer.receive(dealer.drawCard());
             outputView.printDealerReceived();
         }
 
-        if (BlackjackResult.isBust(dealer)) {
+        if (dealer.isBust()) {
             players.winAll(dealer);
         }
     }

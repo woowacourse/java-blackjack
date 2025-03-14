@@ -33,6 +33,14 @@ public abstract class Participant {
         return totalWinnings.getAmount();
     }
 
+    public boolean isBust() {
+        return getScore() > Card.BLACKJACK_SCORE;
+    }
+
+    public boolean isBlackjack() {
+        return getScore() == Card.BLACKJACK_SCORE && getCardCount() == Card.BLACKJACK_MIN_CARD_COUNT;
+    }
+
     abstract public boolean canHit();
 
     protected void increaseAmount(int amount) {

@@ -69,7 +69,7 @@ public class Players {
 
     private void handleInitialBlackjack(Dealer dealer, Player player) {
         int blackjackAmount = getBlackjackAmount(player);
-        if (BlackjackResult.isBlackjack(player) && !BlackjackResult.isBlackjack(dealer)) {
+        if (player.isBlackjack() && !dealer.isBlackjack()) {
             player.increaseAmount(blackjackAmount);
             dealer.decreaseAmount(blackjackAmount);
         }
@@ -91,7 +91,7 @@ public class Players {
     }
 
     private void handleBustDealerAmount(Dealer dealer, Player player) {
-        if (!BlackjackResult.isBust(player)) {
+        if (!player.isBust()) {
             player.win(dealer);
         }
     }
