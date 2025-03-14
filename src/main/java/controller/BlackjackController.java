@@ -27,20 +27,23 @@ public class BlackjackController {
 
         playerTurnManager.dealInitialCardsToAllPlayers(deck);
         dealerTurn.dealInitialCards(deck);
+        OutputView.printInitialDealResult(dealer, players);
+        playerTurnManager.betInsurance(dealer);
         playerTurnManager.runPlayerTurn(deck);
         dealerTurn.runDealerTurn(deck);
 
-        BettingResult bettingResult = new BettingResult(playerTurnManager.getPlayersBet());
         ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
-        bettingResult.calculatePlayerBettingResult(players, participantWinningResult);
+        BettingResult bettingResult = new BettingResult(playerTurnManager.getPlayersBet(), participantWinningResult);
+        Map<Player, Integer> finalProfitByPlayer  = bettingResult.calculatePlayerBettingResult(players, dealer);
+        int finalProfitByDealer = bettingResult.calculateDealerFinalResult(finalProfitByPlayer);
 
         OutputView.printFinalScore(dealer, players);
-        printFinalGameResult(bettingResult);
+        printFinalGameResult(finalProfitByPlayer, finalProfitByDealer);
     }
 
-    private void printFinalGameResult(BettingResult bettingResult) {
+    private void printFinalGameResult(Map<Player, Integer> playersProfit , int dealerProfit) {
         System.out.println();
-        OutputView.printDealerFinalResult(bettingResult);
-        OutputView.printPlayerFinalResult(bettingResult);
+        OutputView.printDealerFinalResult(dealerProfit);
+        OutputView.printPlayerFinalResult(playersProfit);
     }
 }

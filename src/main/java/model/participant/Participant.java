@@ -19,6 +19,10 @@ public class Participant {
         return participantHand.checkBust();
     }
 
+    public boolean checkBlackjack() {
+        return getParticipantHand().checkBlackjack();
+    }
+
     public int calculateFinalScore() {
         return participantHand.calculateFinalScore();
     }
