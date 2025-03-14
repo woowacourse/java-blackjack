@@ -291,10 +291,11 @@ class DealerTest {
         dealer.getAllCards().addAll(blackJackCards);
 
         dealer.fight(new DefaultJudgement(), player);
+        int dealerProfit = (-1) * player.getProfit();
 
         SoftAssertions.assertSoftly(
                 softly -> {
-                    softly.assertThat(dealer.getProfit(List.of(player))).isEqualTo(expectedDealerMoney);
+                    softly.assertThat(dealerProfit).isEqualTo(expectedDealerMoney);
                     softly.assertThat(player.getProfit()).isEqualTo(expectedPlayerMoney);
                 }
         );

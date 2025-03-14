@@ -64,12 +64,6 @@ public class Dealer {
         return cardDeck.draw(amount);
     }
 
-    public int getProfit(final List<Player> players) {
-        return (-1) * players.stream()
-                .mapToInt(Player::getProfit)
-                .sum();
-    }
-
     public int getOptimalPoint() {
         return hand.calculateOptimalPoint();
     }

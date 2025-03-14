@@ -47,7 +47,10 @@ public class OutputView {
     }
 
     private void printDealerResult(final Dealer dealer, final List<Player> players) {
-        System.out.println("딜러: " + dealer.getProfit(players));
+        int dealerProfit = players.stream()
+                .mapToInt(Player::getProfit)
+                .sum();
+        System.out.println("딜러: " + dealerProfit);
     }
 
     private void printUsersResults(final List<Player> players) {
