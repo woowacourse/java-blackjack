@@ -22,7 +22,8 @@ public class Dealer extends Participant {
         return cardDeck.popCard();
     }
 
-    public boolean isHit() {
+    @Override
+    public boolean canHit() {
         return getScore() <= DEALER_HIT_MIN_THRESHOLD;
     }
 }

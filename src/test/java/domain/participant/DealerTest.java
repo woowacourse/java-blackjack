@@ -40,7 +40,7 @@ class DealerTest {
     @MethodSource("dealerAndHitResult")
     void 딜러가_카드를_더_받아야하는지_판단한다(Dealer dealer, boolean expectedResult) {
         // when
-        boolean result = dealer.isHit();
+        boolean result = dealer.canHit();
 
         // then
         assertThat(result).isEqualTo(expectedResult);

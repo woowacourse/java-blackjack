@@ -74,7 +74,7 @@ public class Game {
     }
 
     private void drawToDealer(Players players, Dealer dealer) {
-        while (!BlackjackResult.isBust(dealer) && dealer.isHit()) {
+        while (!BlackjackResult.isBust(dealer) && dealer.canHit()) {
             dealer.receive(dealer.drawCard());
             outputView.printDealerReceived();
         }

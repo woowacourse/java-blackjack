@@ -19,10 +19,6 @@ public class Player extends Participant {
         return new Player(name, betAmount);
     }
 
-    public boolean canHit() {
-        return getScore() < Card.BLACKJACK_SCORE;
-    }
-
     public String getName() {
         return name;
     }
@@ -33,5 +29,10 @@ public class Player extends Participant {
 
     public BlackjackResult getBlackjackResult(Dealer dealer) {
         return BlackjackResult.getPlayerResult(dealer, this);
+    }
+
+    @Override
+    public boolean canHit() {
+        return getScore() < Card.BLACKJACK_SCORE;
     }
 }

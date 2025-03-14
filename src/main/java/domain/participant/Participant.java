@@ -34,6 +34,8 @@ public abstract class Participant {
         return totalWinnings.getAmount();
     }
 
+    abstract public boolean canHit();
+
     protected void increaseAmount(int amount) {
         totalWinnings.increase(amount);
     }
