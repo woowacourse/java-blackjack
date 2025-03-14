@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -45,7 +46,8 @@ class PlayerTest {
     void 카드의_합이_21_이하면_뽑을_수_있다(List<TrumpCard> hand) {
         // given
         Deck deck = BlackjackDeckTestFixture.createSequentialDeck(hand);
-        Player player = new Player(ParticipantName.nameOf("루키"));
+        Bet bet = new Bet(10000);
+        Player player = new Player(new ParticipantName("루키"), bet);
 
         // when
         int cardCount = hand.size();
@@ -81,7 +83,8 @@ class PlayerTest {
     void 카드의_합이_21_초과면_카드를_뽑을_수_없다(List<TrumpCard> hand) {
         // given
         Deck deck = BlackjackDeckTestFixture.createSequentialDeck(hand);
-        Player player = new Player(ParticipantName.nameOf("루키"));
+        Bet bet = new Bet(10000);
+        Player player = new Player(new ParticipantName("루키"), bet);
 
         // when
         int cardCount = hand.size();
@@ -121,7 +124,8 @@ class PlayerTest {
     void 플레이어의_드로우_가능여부를_반환한다(List<TrumpCard> hand, boolean expected) {
         // given
         Deck deck = BlackjackDeckTestFixture.createSequentialDeck(hand);
-        Player player = new Player(ParticipantName.nameOf("루키"));
+        Bet bet = new Bet(10000);
+        Player player = new Player(new ParticipantName("루키"), bet);
 
         int cardCount = hand.size();
         for (int i = 0; i < cardCount; i++) {
@@ -134,5 +138,26 @@ class PlayerTest {
 
         // then
         assertThat(actual).isEqualTo(expected);
+    }
+
+
+    @Test
+    void 베팅의_수익_금액을_반환한다() {
+        // given
+        TrumpCard[] rookieCards = {new TrumpCard(Suit.CLOVER, CardValue.A), new TrumpCard(Suit.HEART, CardValue.EIGHT)};
+        TrumpCard[] otherCards = {new TrumpCard(Suit.HEART, CardValue.A), new TrumpCard(Suit.SPADE, CardValue.J)};
+        Bet rookieBet = new Bet(100_000);
+        Bet otherBet = new Bet(100_000);
+        Player player = new Player(new ParticipantName("루키"), rookieBet, rookieCards);
+        Player other = new Player(new ParticipantName("투다"), otherBet, otherCards);
+        player.stay();
+
+        // when
+        int profit = player.getProfitFromOpponents(other.handState());
+
+        // then
+        int expected = -100_000;
+        assertThat(profit).isEqualTo(expected);
+
     }
 }

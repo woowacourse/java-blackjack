@@ -1,21 +1,23 @@
 package domain.participant;
 
 import domain.card.TrumpCard;
-import domain.game.WinStatus;
+import domain.participant.state.HandState;
 import java.util.List;
 
 public class Player {
     private final Participant participant;
+    private final Bet betMoney;
 
-    public Player(ParticipantName name) {
-        participant = new Participant(name);
+    public Player(ParticipantName name, Bet betMoney, TrumpCard... initCards) {
+        participant = new Participant(name, initCards);
+        this.betMoney = betMoney;
     }
 
     boolean isDrawable() {
         return !participant.isBust();
     }
 
-    public ParticipantName name(){
+    public ParticipantName name() {
         return participant.name();
     }
 
@@ -23,19 +25,29 @@ public class Player {
         return participant.calculateCardSum();
     }
 
-    public List<TrumpCard> cards(){
+    public List<TrumpCard> cards() {
         return participant.trumpCards();
     }
 
-    public boolean isBust(){
+    public boolean isBust() {
         return participant.isBust();
     }
 
-    public void addCard(TrumpCard trumpCard){
+    public void addCard(TrumpCard trumpCard) {
         participant.addDraw(trumpCard);
     }
 
-    public WinStatus determineResult(Score other){
-        return participant.determineResult(other);
+    public int getProfitFromOpponents(HandState other) {
+        HandState hand = participant.handState();
+        double profitRate = hand.calculateProfitRate(other);
+        return betMoney.calculateBenefit(profitRate);
+    }
+
+    public void stay() {
+        participant.stay();
+    }
+
+    public HandState handState() {
+        return participant.handState();
     }
 }

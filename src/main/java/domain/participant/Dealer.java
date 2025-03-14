@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.card.TrumpCard;
+import domain.participant.state.HandState;
 import java.util.List;
 
 public class Dealer {
@@ -9,9 +10,9 @@ public class Dealer {
     private static final Score DEALER_STOP_HIT_STANDARD_SCORE = Score.from(16);
     private final Participant participant;
 
-    public Dealer() {
+    public Dealer(TrumpCard... initCards) {
         ParticipantName dealerName = new ParticipantName(DEALER_NAME);
-        participant = new Participant(dealerName);
+        participant = new Participant(dealerName, initCards);
     }
 
     public boolean isDrawable() {
@@ -23,17 +24,15 @@ public class Dealer {
         return participant.trumpCards();
     }
 
-    public ParticipantName name(){
+    public ParticipantName name() {
         return participant.name();
     }
 
-    public Score calculateCardSum(){
-        return participant.calculateCardSum();
-    }
-
-    public void addCard(TrumpCard trumpCard){
+    public void addCard(TrumpCard trumpCard) {
         participant.addDraw(trumpCard);
     }
 
-
+    public HandState handState() {
+        return participant.handState();
+    }
 }
