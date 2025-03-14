@@ -64,8 +64,8 @@ public abstract class Cards {
                 .findAny()
                 .orElseThrow(() -> new IllegalBlackjackStateException("ACE11이 존재하지 않습니다."));
 
-        cards.remove(aceElevenCard);
-        cards.add(new Card(CardNumber.ACE_ONE, aceElevenCard.getShape()));
+        int aceElevenCardIndex = cards.indexOf(aceElevenCard);
+        cards.set(aceElevenCardIndex, new Card(CardNumber.ACE_ONE, aceElevenCard.getShape()));
     }
 
     @Override
