@@ -56,8 +56,7 @@ public class GameController {
 
     private void distributePlayerExtraCards(Player player) {
         while (player.ableToAddCard() && InputView.readAddPlayerCard(player.getName())) {
-            Card card = cardDeck.pickCard();
-            player.addCard(card);
+            game.addExtraCard(player, cardDeck);
         }
         ParticipantCardsDto participantCardsDto = createParticipantCardsDto(player);
         OutputView.printParticipantCards(participantCardsDto);
@@ -67,7 +66,7 @@ public class GameController {
         Dealer dealer = game.getDealer();
         boolean dealerExtraCard = dealer.ableToAddCard();
         if (dealerExtraCard) {
-            dealer.addCard(cardDeck.pickCard());
+            game.addExtraCard(dealer, cardDeck);
         }
         ParticipantCardsDto dealerCardsDto = createParticipantCardsDto(dealer);
         OutputView.printDealerExtraCard(dealerCardsDto, dealerExtraCard);

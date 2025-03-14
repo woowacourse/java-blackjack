@@ -44,6 +44,11 @@ public class Game {
         return determinePlayerGameResult((Player) participant);
     }
 
+    public void addExtraCard(Participant participant, CardDeck cardDeck) {
+        Card card = cardDeck.pickCard();
+        participant.addCard(card);
+    }
+
     public Dealer getDealer() {
         return dealer;
     }
