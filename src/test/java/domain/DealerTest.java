@@ -145,10 +145,10 @@ class DealerTest {
     @DisplayName("게임 결과를 올바르게 반환할 수 있다.")
     @ParameterizedTest
     @MethodSource("createGameResultCase")
-    void 게임_결과_반환(List<Card> self, List<Card> other, GameResult expected) {
+    void 게임_결과_반환(List<Card> playerCards, List<Card> dealerCards, GameResult expected) {
         // given
-        Hand playerHand = Hand.of(self);
-        Hand dealerHand = Hand.of(other);
+        Hand playerHand = Hand.of(playerCards);
+        Hand dealerHand = Hand.of(dealerCards);
         Player player = Player.of(playerHand, "player", Money.of("100000"));
         Dealer dealer = Dealer.of(dealerHand, new StaticCardGenerator());
 
@@ -173,6 +173,19 @@ class DealerTest {
                                 new Card(CardNumber.TWO, CardShape.CLOVER)
                         ),
                         "BLACKJACK"
+                ),
+                Arguments.of(
+                        // 20
+                        List.of(
+                                new Card(CardNumber.TEN, CardShape.CLOVER),
+                                new Card(CardNumber.QUEEN, CardShape.CLOVER)
+                        ),
+                        // 19
+                        List.of(
+                                new Card(CardNumber.TEN, CardShape.CLOVER),
+                                new Card(CardNumber.NINE, CardShape.CLOVER)
+                        ),
+                        "WIN"
                 ),
                 Arguments.of(
                         // 12
@@ -361,5 +374,20 @@ class DealerTest {
 
         //then
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    void 딜러가_더_뽑은_카드의_개수를_알_수_있다() {
+        // given
+        List<Card> cards = List.of(
+                new Card(CardNumber.A, CardShape.CLOVER),
+                new Card(CardNumber.TWO, CardShape.CLOVER),
+                new Card(CardNumber.THREE, CardShape.CLOVER)
+        );
+        Dealer dealer = Dealer.of(Hand.of(cards), new StaticCardGenerator());
+        // when
+        int actual = dealer.getNewCardCount();
+        // then
+        assertThat(actual).isEqualTo(1);
     }
 }
