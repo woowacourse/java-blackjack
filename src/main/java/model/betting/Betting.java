@@ -54,7 +54,7 @@ public class Betting {
     }
 
     public int calculateSurrender(){
-        return bet / SURRENDER_PAYOUT_RATIO;
+        return -(bet / SURRENDER_PAYOUT_RATIO);
     }
 
     public int calculateInsurance(Dealer dealer) {
