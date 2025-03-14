@@ -9,9 +9,6 @@ public class WagerResultCalculator {
 	private static final double BLACKJACK_WIN_WAGER = 2.5;
 
 	public Money calculate(final Player player, final Money wager) {
-		if (player.isBust() && player.calculateDuelResult() == DuelResult.LOSE) {
-			return wager.multiply(WAGER_LOSE);
-		}
 		if (player.calculateDuelResult() == DuelResult.DRAW) {
 			return wager;
 		}
@@ -21,6 +18,6 @@ public class WagerResultCalculator {
 		if (player.calculateDuelResult() == DuelResult.WIN) {
 			return wager.multiply(WAGER_WIN);
 		}
-		return null;
+		return wager.multiply(WAGER_LOSE);
 	}
 }
