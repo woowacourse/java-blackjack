@@ -23,7 +23,7 @@ public class BlackJack {
         this.players = players;
     }
 
-    public static BlackJack init(List<String> names) {
+    public static BlackJack init(List<Nickname> names) {
         List<Player> players = names.stream().map(Player::init).toList();
         Deck deck = new Deck(new RandomCardsGenerator());
         Dealer dealer = new Dealer(Cards.empty(), deck);

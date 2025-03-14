@@ -14,8 +14,8 @@ class PlayersTest {
     @Test
     void test1() {
         //given
-        Player player1 = Player.init("포비");
-        Player player2 = Player.init("포비");
+        Player player1 = Player.init(new Nickname("포비"));
+        Player player2 = Player.init(new Nickname("포비"));
         //when & then
         assertThatThrownBy(() -> new Players(List.of(player1, player2)))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -26,12 +26,12 @@ class PlayersTest {
     @Test
     void test2() {
         //given
-        Player player1 = Player.init("짱구");
-        Player player2 = Player.init("밍곰");
-        Player player3 = Player.init("포비");
-        Player player4 = Player.init("네오");
-        Player player5 = Player.init("가이온");
-        Player player6 = Player.init("플린트");
+        Player player1 = Player.init(new Nickname("짱구"));
+        Player player2 = Player.init(new Nickname("밍곰"));
+        Player player3 = Player.init(new Nickname("포비"));
+        Player player4 = Player.init(new Nickname("네오"));
+        Player player5 = Player.init(new Nickname("가이온"));
+        Player player6 = Player.init(new Nickname("플린트"));
         List<Player> allPlayer = List.of(player1, player2, player3, player4, player5, player6);
         //when & then
         assertThatThrownBy(() -> new Players(allPlayer))

@@ -34,7 +34,7 @@ class BlackJackTest {
                         new Card(CardNumber.TWO, CardShape.CLOVER)
                 )
         );
-        Player player1 = Player.from("플레이어1", player1Cards);
+        Player player1 = Player.from(new Nickname("플레이어1"), player1Cards);
 
         Cards player2Cards = Cards.of(
                 List.of(
@@ -42,7 +42,7 @@ class BlackJackTest {
                         new Card(CardNumber.FOUR, CardShape.CLOVER)
                 )
         );
-        Player player2 = Player.from("플레이어2", player2Cards);
+        Player player2 = Player.from(new Nickname("플레이어2"), player2Cards);
 
         Map<Player, GameResult> expected = Map.of(
                 player1, GameResult.LOSE,

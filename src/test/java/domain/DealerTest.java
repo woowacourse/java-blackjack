@@ -30,7 +30,7 @@ class DealerTest {
         Deck deck = new Deck(() -> new ArrayList<>(List.of(card)));
 
         Dealer dealer = new Dealer(Cards.empty(), deck);
-        Player player = Player.init("플레이어");
+        Player player = Player.init(new Nickname("플레이어"));
 
         //when
         dealer.giveOneCardTo(player);
@@ -72,7 +72,7 @@ class DealerTest {
         // given
         Cards playerCards = Cards.of(playerCard);
         Cards dealerCards = Cards.of(dealerCard);
-        Player player = Player.from("player", playerCards);
+        Player player = Player.from(new Nickname("player"), playerCards);
         Dealer dealer = new Dealer(dealerCards, deck);
 
         // when
@@ -154,7 +154,7 @@ class DealerTest {
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
-        Player player = Player.from("player", playerCards);
+        Player player = Player.from(new Nickname("player"), playerCards);
         Dealer dealer = new Dealer(dealerCards, deck);
 
         // when
@@ -177,7 +177,7 @@ class DealerTest {
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
-        Player player = Player.from("player", playerCards);
+        Player player = Player.from(new Nickname("player"), playerCards);
         Dealer dealer = new Dealer(dealerCards, deck);
 
         // when
@@ -200,7 +200,7 @@ class DealerTest {
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
-        Player player = Player.from("player", playerCards);
+        Player player = Player.from(new Nickname("player"), playerCards);
         Dealer dealer = new Dealer(dealerCards, deck);
 
         // when
@@ -222,7 +222,7 @@ class DealerTest {
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
-        Player player = Player.from("player", playerCards);
+        Player player = Player.from(new Nickname("player"), playerCards);
         Dealer dealer = new Dealer(dealerCards, deck);
 
         // when
@@ -246,7 +246,7 @@ class DealerTest {
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.TWO, CardShape.CLOVER)
         ));
-        Player player = Player.from("player", playerCards);
+        Player player = Player.from(new Nickname("player"), playerCards);
         Dealer dealer = new Dealer(dealerCards, deck);
 
         // when

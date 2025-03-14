@@ -20,7 +20,7 @@ public class PlayerTest {
     @Test
     void 카드_추가_가능() {
         // given
-        Player player = Player.init("플레이어");
+        Player player = Player.init(new Nickname("플레이어"));
         Card card = new Card(CardNumber.A, CardShape.CLOVER);
         player.addCard(card);
 
@@ -37,7 +37,7 @@ public class PlayerTest {
     void 최적_결과_선택_21_이하(List<Card> inputCards, int expected) {
         // given
         Cards cards = Cards.of(inputCards);
-        Player player = Player.from("플레이어1", cards);
+        Player player = Player.from(new Nickname("플레이어1"), cards);
 
         // when
         final int result = player.getCardScore();
@@ -79,7 +79,7 @@ public class PlayerTest {
     void 가장_가까운_값_선택(List<Card> inputCards, int expected) {
         //given
         Cards cards = Cards.of(inputCards);
-        Player player = Player.from("플레이어1", cards);
+        Player player = Player.from(new Nickname("플레이어1"), cards);
 
         //when
         int actual = player.getCardScore();
@@ -117,7 +117,7 @@ public class PlayerTest {
     void test1(List<Card> inputCard, boolean expected) {
         //given
         Cards cards = Cards.of(inputCard);
-        Player dealer = Player.from("플레이어1", cards);
+        Player dealer = Player.from(new Nickname("플레이어1"), cards);
         //when
         final boolean actual = dealer.isBust();
         //then
@@ -151,7 +151,7 @@ public class PlayerTest {
     void 블랙잭_판단(List<Card> inputCards) {
         // given
         Cards cards = Cards.of(inputCards);
-        Player player = Player.from("player", cards);
+        Player player = Player.from(new Nickname("player"), cards);
 
         // when
         final boolean isBlackjack = player.isBlackjack();
@@ -187,7 +187,7 @@ public class PlayerTest {
     void 블랙잭_아닌_경우_판단(List<Card> inputCards) {
         // given
         Cards cards = Cards.of(inputCards);
-        Player player = Player.from("player", cards);
+        Player player = Player.from(new Nickname("player"), cards);
 
         // when
         final boolean isBlackjack = player.isBlackjack();

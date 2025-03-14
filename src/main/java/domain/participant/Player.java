@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.Nickname;
 import domain.card.Card;
 import domain.card.Cards;
 
@@ -7,18 +8,18 @@ import java.util.List;
 import java.util.Objects;
 
 public class Player extends Participant {
-    private final String name;
+    private final Nickname name;
 
-    private Player(String name, Cards cards) {
+    private Player(Nickname name, Cards cards) {
         super(cards);
         this.name = name;
     }
 
-    public static Player init(String name) {
+    public static Player init(Nickname name) {
         return new Player(name, Cards.empty());
     }
 
-    public static Player from(String name, Cards cards) {
+    public static Player from(Nickname name, Cards cards) {
         return new Player(name, cards);
     }
 
@@ -28,7 +29,7 @@ public class Player extends Participant {
     }
 
     public String getName() {
-        return name;
+        return name.value();
     }
 
     @Override

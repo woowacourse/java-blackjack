@@ -2,6 +2,7 @@ package controller;
 
 import domain.BlackJack;
 import domain.GameResult;
+import domain.Nickname;
 import domain.participant.Player;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,8 @@ public class BlackJackController {
     public void run() {
         try {
             List<String> names = inputView.readPlayerNames();
-            BlackJack blackJack = BlackJack.init(names);
+            List<Nickname> nicknames = names.stream().map(Nickname::new).toList();
+            BlackJack blackJack = BlackJack.init(nicknames);
             runGameWith(blackJack);
         } catch (RuntimeException e) {
             outputView.printErrorMessage(e);
