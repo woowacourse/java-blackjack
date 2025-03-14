@@ -18,4 +18,21 @@ public class Money {
 	public Money minus(final Money minusMoney) {
 		return new Money(value - minusMoney.value);
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+
+		Money money = (Money)o;
+
+		return value == money.value;
+	}
+
+	@Override
+	public int hashCode() {
+		return value;
+	}
 }
