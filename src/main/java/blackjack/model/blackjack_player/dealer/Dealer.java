@@ -13,7 +13,6 @@ public final class Dealer {
     private static final int INITIAL_DRAW_AMOUNT = 2;
     private static final int PLAYER_SINGLE_DRAW_AMOUNT = 1;
     private static final int DEALER_SINGLE_DRAW_AMOUNT = 1;
-    private static final int PLAYER_DRAWABLE_POINT = 21;
     private static final int DEALER_DRAWABLE_POINT = 17;
 
     private final Hand hand;
@@ -42,7 +41,7 @@ public final class Dealer {
     }
 
     public void drawPlayerCards(final Player player) {
-        if (canPlayerDrawMoreCard(player)) {
+        if (player.canDrawMoreCard()) {
             player.receiveCards(drawCard(PLAYER_SINGLE_DRAW_AMOUNT));
             return;
         }
@@ -82,10 +81,6 @@ public final class Dealer {
 
     public BlackJackCards getAllCards() {
         return hand.getCards();
-    }
-
-    public boolean canPlayerDrawMoreCard(final Player player) {
-        return player.getOptimalPoint() < PLAYER_DRAWABLE_POINT;
     }
 
     private boolean canDrawMoreCard() {

@@ -6,6 +6,8 @@ import blackjack.model.card.BlackJackCards;
 
 public final class Player {
 
+    private static final int DRAWABLE_POINT = 21;
+
     private final String name;
     private final Betting betting;
     private final Hand hand;
@@ -14,6 +16,10 @@ public final class Player {
         this.name = name;
         this.betting = Betting.bet(bettingMoney);
         this.hand = Hand.empty();
+    }
+
+    public boolean canDrawMoreCard() {
+        return getMinimumPoint() < DRAWABLE_POINT;
     }
 
     public int getBettingMoney() {

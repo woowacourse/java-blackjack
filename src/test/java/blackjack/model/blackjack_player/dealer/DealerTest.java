@@ -168,41 +168,6 @@ class DealerTest {
         return player;
     }
 
-    private static Stream<Arguments> 플레이어가_카드를_더_뽑을_수_있는지_반환한다_테스트_케이스() {
-        return Stream.of(
-                Arguments.of(
-                        new BlackJackCards(
-                                List.of(
-                                        createCard(CardNumber.TEN),
-                                        createCard(CardNumber.FIVE)
-                                )
-                        ),
-                        true
-                ),
-                Arguments.of(
-                        new BlackJackCards(
-                                List.of(
-                                        createCard(CardNumber.TEN),
-                                        createCard(CardNumber.FIVE),
-                                        createCard(CardNumber.SIX)
-                                )
-                        ),
-                        false
-                ),
-                Arguments.of(
-                        new BlackJackCards(
-                                List.of(
-                                        createCard(CardNumber.TEN),
-                                        createCard(CardNumber.FIVE),
-                                        createCard(CardNumber.SIX),
-                                        createCard(CardNumber.ACE)
-                                )
-                        ),
-                        false
-                )
-        );
-    }
-
     @BeforeEach
     void setUp() {
         dealer = new Dealer(new DefaultCardDeckInitializer());
@@ -223,15 +188,6 @@ class DealerTest {
         assertThat(player.getCards().getValues()).hasSize(2);
     }
 
-    @ParameterizedTest
-    @MethodSource("플레이어가_카드를_더_뽑을_수_있는지_반환한다_테스트_케이스")
-    void 플레이어가_카드를_더_뽑을_수_있는지_반환한다(final BlackJackCards blackJackCards, final boolean expected) {
-        Player player = new Player("pobi", 1);
-
-        player.receiveCards(blackJackCards);
-
-        assertThat(dealer.canPlayerDrawMoreCard(player)).isEqualTo(expected);
-    }
 
     @Test
     void 블랙잭_플레이어의_카드를_더_뽑는다() {

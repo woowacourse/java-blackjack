@@ -18,6 +18,41 @@ class PlayerTest {
 
     private Player player;
 
+    private static Stream<Arguments> 카드를_더_뽑을_수_있는지_반환한다_테스트_케이스() {
+        return Stream.of(
+                Arguments.of(
+                        new BlackJackCards(
+                                List.of(
+                                        createCard(CardNumber.TEN),
+                                        createCard(CardNumber.FIVE)
+                                )
+                        ),
+                        true
+                ),
+                Arguments.of(
+                        new BlackJackCards(
+                                List.of(
+                                        createCard(CardNumber.TEN),
+                                        createCard(CardNumber.FIVE),
+                                        createCard(CardNumber.SIX)
+                                )
+                        ),
+                        false
+                ),
+                Arguments.of(
+                        new BlackJackCards(
+                                List.of(
+                                        createCard(CardNumber.TEN),
+                                        createCard(CardNumber.FIVE),
+                                        createCard(CardNumber.SIX),
+                                        createCard(CardNumber.ACE)
+                                )
+                        ),
+                        false
+                )
+        );
+    }
+
     private static Stream<Arguments> 카드를_반환한다_테스트_케이스() {
         return Stream.of(
                 Arguments.of(
@@ -36,6 +71,16 @@ class PlayerTest {
     @BeforeEach
     void setUp() {
         player = new Player("pobi", 1);
+    }
+
+    @ParameterizedTest
+    @MethodSource("카드를_더_뽑을_수_있는지_반환한다_테스트_케이스")
+    void 카드를_더_뽑을_수_있는지_반환한다(final BlackJackCards blackJackCards, final boolean expected) {
+        Player player = new Player("pobi", 1);
+
+        player.receiveCards(blackJackCards);
+
+        assertThat(player.canDrawMoreCard()).isEqualTo(expected);
     }
 
     @Test
