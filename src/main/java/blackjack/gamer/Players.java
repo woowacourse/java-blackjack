@@ -46,10 +46,4 @@ public class Players {
     public List<Player> getPlayers() {
         return players;
     }
-
-    public List<String> getNameList() {
-        return players.stream()
-                .map(Player::getNickName)
-                .toList();
-    }
 }
