@@ -3,6 +3,11 @@ package model.betting;
 import model.participant.Dealer;
 
 public class Betting {
+    private static final int INSURANCE_BET_DIVISOR  = 2;
+    private static final int INSURANCE_PAYOUT_RATIO = 2;
+    private static final int BLACKJACK_PAYOUT_RATIO = 3/2;
+
+
     private int bet;
     private int insuranceBet;
 
@@ -15,7 +20,7 @@ public class Betting {
     }
 
     public int calculateMaxInsuranceAmount() {
-        return bet / 2;
+        return bet / INSURANCE_BET_DIVISOR;
     }
 
     public void takeInsurance(int insuranceBet) {
@@ -40,13 +45,13 @@ public class Betting {
 
     public int calculateInsurance(Dealer dealer) {
         if (dealer.checkBlackjack()) {
-            return insuranceBet * 2;
+            return insuranceBet * INSURANCE_PAYOUT_RATIO;
         }
         return insuranceBet;
     }
 
     public int calculateBlackJack() {
-        return bet * 3 / 2;
+        return bet * BLACKJACK_PAYOUT_RATIO;
     }
 
     public int calculateWin() {
