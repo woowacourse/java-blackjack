@@ -1,6 +1,10 @@
 package blackjack.model.participant;
 
+import blackjack.model.MatchResult;
+import blackjack.model.betting.BetAmount;
+import blackjack.model.betting.Profit;
 import blackjack.model.card.Card;
+import blackjack.view.BettingPlayerCreateDto;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,15 +14,22 @@ public class Player {
 
     private final String name;
     private final Hand hand;
+    private final BetAmount betAmount;
 
-    public Player(String name) {
-        validateName(name);
+    private Player(String name, Hand hand, BetAmount betAmount) {
         this.name = name;
-        this.hand = new Hand(new ArrayList<>());
-
+        this.hand = hand;
+        this.betAmount = betAmount;
     }
 
-    private void validateName(String name) {
+    public static Player of(BettingPlayerCreateDto bettingPlayerCreateDto) {
+        String name = bettingPlayerCreateDto.name();
+        BetAmount betAmount = new BetAmount(bettingPlayerCreateDto.stake());
+        validateName(name);
+        return new Player(name, new Hand(new ArrayList<>()), betAmount);
+    }
+
+    private static void validateName(String name) {
         if (name.isBlank()) {
             throw new IllegalArgumentException("이름은 한글자 이상이어야합니다.");
         }
@@ -42,6 +53,10 @@ public class Player {
 
     public int calculateHandTotal() {
         return hand.calculateHandTotal();
+    }
+
+    public Profit calculateProfit(MatchResult matchResult) {
+        return Profit.of(betAmount, matchResult);
     }
 
     @Override

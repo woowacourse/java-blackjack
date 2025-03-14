@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardValue;
 import blackjack.model.card.Suit;
+import blackjack.view.BettingPlayerCreateDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,14 +16,18 @@ import org.junit.jupiter.params.provider.ValueSource;
 @DisplayName("플레이어 테스트")
 class PlayerTest {
 
-    @DisplayName("이름을 가진다.")
+    private Player makePlayer(String name) {
+        return Player.of(new BettingPlayerCreateDto(name, 1000));
+    }
+
+    @DisplayName("이름과 배팅 금액을 가진다.")
     @Test
     void createPlayerTest() {
         // given
         String name = "pobi";
 
         // when, then
-        assertThatCode(() -> new Player(name))
+        assertThatCode(() -> Player.of(BettingPlayerCreateDto.of(name, 10000)))
                 .doesNotThrowAnyException();
     }
 
@@ -30,7 +35,7 @@ class PlayerTest {
     @ParameterizedTest
     @ValueSource(strings = {" ", ""})
     void createPlayerValidateTest(String name) {
-        assertThatCode(() -> new Player(name))
+        assertThatCode(() -> Player.of(BettingPlayerCreateDto.of(name, 1000)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름은 한글자 이상이어야합니다.");
     }
@@ -40,7 +45,7 @@ class PlayerTest {
     void receiveHandTest() {
         // given
         Card card = new Card(Suit.SPADES, CardValue.ACE);
-        Player player = new Player("pobi");
+        Player player = makePlayer("pobi");
 
         // when
         player.receiveHand(card);
@@ -57,7 +62,7 @@ class PlayerTest {
         // given
         Card spadeTen = new Card(Suit.SPADES, CardValue.TEN);
         Card spadeFive = new Card(Suit.SPADES, CardValue.FIVE);
-        Player player = new Player("pobi");
+        Player player = makePlayer("pobi");
 
         // when
         player.receiveHand(spadeTen);
@@ -74,7 +79,7 @@ class PlayerTest {
         // given
         Card spadeAce = new Card(Suit.SPADES, CardValue.ACE);
         Card spadeTen = new Card(Suit.SPADES, CardValue.TEN);
-        Player player = new Player("pobi");
+        Player player = makePlayer("pobi");
 
         // when
         player.receiveHand(spadeAce);
@@ -92,7 +97,7 @@ class PlayerTest {
         Card spadeAce = new Card(Suit.SPADES, CardValue.ACE);
         Card spadeTwo = new Card(Suit.SPADES, CardValue.TWO);
         Card spadeNine = new Card(Suit.SPADES, CardValue.NINE);
-        Player player = new Player("pobi");
+        Player player = makePlayer("pobi");
 
         // when
         player.receiveHand(spadeAce);
@@ -114,7 +119,7 @@ class PlayerTest {
         // given
         Card spadeTen = new Card(Suit.SPADES, value1);
         Card spadeAce = new Card(Suit.SPADES, value2);
-        Player player = new Player("pobi");
+        Player player = makePlayer("pobi");
         player.receiveHand(spadeTen);
         player.receiveHand(spadeAce);
 
@@ -137,7 +142,7 @@ class PlayerTest {
         Card card1 = new Card(Suit.SPADES, value1);
         Card card2 = new Card(Suit.SPADES, value2);
         Card card3 = new Card(Suit.SPADES, value3);
-        Player player = new Player("pobi");
+        Player player = makePlayer("pobi");
         player.receiveHand(card1);
         player.receiveHand(card2);
         player.receiveHand(card3);
@@ -154,7 +159,7 @@ class PlayerTest {
     @Test
     void canHitTrue_WhenNotBustAndNotBlackJackTest() {
         // given
-        Player player = new Player("pobi");
+        Player player = makePlayer("pobi");
         player.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
         player.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
 
@@ -170,7 +175,7 @@ class PlayerTest {
     @Test
     void canHitFalse_WhenBustTest() {
         // given
-        Player player = new Player("pobi");
+        Player player = makePlayer("pobi");
         player.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
         player.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
         player.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
@@ -187,7 +192,7 @@ class PlayerTest {
     @Test
     void canHitFalse_WhenBlackJackTest() {
         // given
-        Player player = new Player("pobi");
+        Player player = makePlayer("pobi");
         player.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
         player.receiveHand(new Card(Suit.SPADES, CardValue.ACE));
 
