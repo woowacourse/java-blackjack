@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -8,8 +8,6 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import blackjack.domain.GameManager;
-import blackjack.domain.GameRound;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
@@ -17,7 +15,7 @@ import blackjack.domain.gamer.Player;
 import blackjack.fixture.DeckFixture;
 import blackjack.fixture.GameManagerFixture;
 
-class BettingTest {
+class GameRoundTest {
 
     @Test
     @DisplayName("플레이어는 게임을 시작할 때 배팅 금액을 정한다.")
@@ -45,7 +43,7 @@ class BettingTest {
         gameManager.drawCard(player);
 
         assertThat(round.loseIfBust(player)).isTrue();
-        assertThat(round.getFinalBettingMoney(player)).isZero();
+        assertThat(round.getEndBettingMoney(player)).isZero();
     }
 
     @Test
@@ -62,7 +60,7 @@ class BettingTest {
         );
         gameManager.drawStartingCards(player);
         assertThat(round.endGameIfBlackjack(player)).isTrue();
-        assertThat(round.getFinalBettingMoney(player)).isEqualTo((int)(initialMoney * 1.5));
+        assertThat(round.getEndBettingMoney(player)).isEqualTo((int)(initialMoney * 1.5));
     }
 
     @Test
@@ -80,7 +78,7 @@ class BettingTest {
         gameManager.drawStartingCards(player);
         gameManager.drawStartingCards(dealer);
         assertThat(round.endGameIfBlackjack(dealer)).isTrue();
-        assertThat(round.getFinalBettingMoney(player)).isEqualTo(initialMoney);
+        assertThat(round.getEndBettingMoney(player)).isEqualTo(initialMoney);
     }
 
     @Test
@@ -93,7 +91,7 @@ class BettingTest {
         GameRound round = new GameRound(dealer);
         round.betting(player, initialMoney);
         round.dealerBust();
-        assertThat(round.getFinalBettingMoney(player)).isEqualTo(initialMoney * 2);
+        assertThat(round.getEndBettingMoney(player)).isEqualTo(initialMoney * 2);
     }
 
     @Test
@@ -118,7 +116,7 @@ class BettingTest {
         gameManager.drawStartingCards(dealer);
 
         round.computeResult();
-        Map<Gamer, Integer> profit = round.getAllProfit();
+        Map<Gamer, Double> profit = round.getAllProfit();
         assertThat(profit.get(player1)).isEqualTo(player1Money);
         assertThat(profit.get(player2)).isEqualTo(-player2Money);
         assertThat(profit.get(dealer)).isEqualTo(-player1Money + player2Money);

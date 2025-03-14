@@ -11,8 +11,7 @@ import blackjack.domain.gamer.Player;
 public class GameRound {
 
     private final Dealer dealer;
-    private final Map<Player, Integer> initialBettingMoney = new HashMap<>();
-    private final Map<Player, Integer> finalBettingMoney = new HashMap<>();
+    private final Map<Player, BettingAmount> bettingAmounts = new HashMap<>();
 
     public GameRound(Dealer dealer) {
         this.dealer = dealer;
@@ -23,28 +22,20 @@ public class GameRound {
     }
 
     public void betting(Player player, int money) {
-        initialBettingMoney.put(player, money);
-        finalBettingMoney.put(player, 0);
+        bettingAmounts.put(player, BettingAmount.of(money));
     }
 
     public boolean loseIfBust(Player player) {
-/*
-        if (player.isBust()) {
-            finalBettingMoney.put(player, 0);
-            return true;
-        }
-        return false;
-*/
         return player.isBust();
     }
 
-    public int getFinalBettingMoney(Player player) {
-        return finalBettingMoney.get(player);
+    public double getEndBettingMoney(Player player) {
+        return bettingAmounts.get(player).end();
     }
 
     public boolean endGameIfBlackjack(Player player) {
         if (player.isBlackjack()) {
-            finalBettingMoney.put(player, (int)(initialBettingMoney.get(player) * 1.5));
+            bettingAmounts.put(player, bettingAmounts.get(player).blackjack());
             return true;
         }
         return false;
@@ -52,34 +43,33 @@ public class GameRound {
 
     public boolean endGameIfBlackjack(Dealer dealer) {
         if (dealer.isBlackjack()) {
-            initialBettingMoney.keySet().stream()
+            bettingAmounts.keySet().stream()
                 .filter(Gamer::isBlackjack)
-                .forEach(player -> finalBettingMoney.put(player, initialBettingMoney.get(player)));
-
+                .forEach(player -> bettingAmounts.put(player, bettingAmounts.get(player).draw()));
             return true;
         }
         return false;
     }
 
     public void dealerBust() {
-        initialBettingMoney.keySet().stream()
+        bettingAmounts.keySet().stream()
             .filter(player -> !player.isBust())
-            .forEach(player -> finalBettingMoney.put(player, initialBettingMoney.get(player) * 2));
+            .forEach(player -> bettingAmounts.put(player, bettingAmounts.get(player).win()));
     }
 
     public void computeResult() {
-        initialBettingMoney.keySet().stream()
+        bettingAmounts.keySet().stream()
             .filter(player -> RoundResult.judgeResult(player, dealer) == RoundResult.WIN)
-            .forEach(player -> finalBettingMoney.put(player, initialBettingMoney.get(player) * 2));
+            .forEach(player -> bettingAmounts.put(player, bettingAmounts.get(player).win()));
     }
 
-    public Map<Gamer, Integer> getAllProfit() {
-        Map<Gamer, Integer> result = initialBettingMoney.keySet().stream()
+    public Map<Gamer, Double> getAllProfit() {
+        Map<Gamer, Double> result = bettingAmounts.keySet().stream()
             .collect(Collectors.toMap(
                 player -> player,
-                player -> finalBettingMoney.get(player) - initialBettingMoney.get(player)));
-        int playersProfitSum = result.values().stream()
-            .mapToInt(Integer::intValue)
+                player -> bettingAmounts.get(player).getProfit()));
+        double playersProfitSum = result.values().stream()
+            .mapToDouble(Double::doubleValue)
             .sum();
         result.put(dealer, -playersProfitSum);
         return result;
