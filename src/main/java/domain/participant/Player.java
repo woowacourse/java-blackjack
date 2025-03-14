@@ -12,9 +12,9 @@ public class Player extends Participant {
     private static final int BLACKJACK_NUMBER = 21;
     private static final int INITIAL_HIT_COUNT = 2;
 
-    private final String name;
+    private final Name name;
 
-    public Player(Hand hand, final String name) {
+    public Player(Hand hand, final Name name) {
         super(hand);
         this.name = name;
     }
@@ -41,7 +41,7 @@ public class Player extends Participant {
     }
 
     public String getName() {
-        return name;
+        return name.getName();
     }
 
     @Override

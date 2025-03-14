@@ -35,7 +35,7 @@ public class PlayerTest {
     void hitCardsTest() {
         // given
         Hand hand = new Hand(new ArrayList<>());
-        Player player = new Player(hand, "pobi");
+        Player player = new Player(hand, new Name("pobi"));
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
         Deck cardDeck = cardDeckFactory.create();
 
@@ -50,7 +50,7 @@ public class PlayerTest {
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
         Deck cardDeck = cardDeckFactory.create();
         Hand hand = new Hand(new ArrayList<>());
-        Player player = new Player(hand, "pobi");
+        Player player = new Player(hand, new Name("pobi"));
 
         //when-then
         assertDoesNotThrow(() -> player.addCard(cardDeck.hitCard()));
@@ -62,7 +62,7 @@ public class PlayerTest {
         //given
         Deck cardDeck = new Deck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE)));
         Hand hand = new Hand(new ArrayList<>());
-        Player player = new Player(hand, "pobi");
+        Player player = new Player(hand, new Name("pobi"));
 
         //when
         player.hitCards(cardDeck);
@@ -87,7 +87,7 @@ public class PlayerTest {
 
         Deck cardDeck = new Deck(List.of(new Card(DIAMOND, QUEEN), new Card(SPADE, JACK), new Card(HEART, KING)));
         Hand hand = new Hand(new ArrayList<>());
-        Player player = new Player(hand, "pobi");
+        Player player = new Player(hand, new Name("pobi"));
 
         //when-then
         assertDoesNotThrow(() -> player.draw(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck, cardDeck));
@@ -97,7 +97,7 @@ public class PlayerTest {
     @DisplayName("승패 결정 테스트")
     void calculateWinner() {
         //given
-        Player player = new Player(new Hand(new ArrayList<>()), "pobi");
+        Player player = new Player(new Hand(new ArrayList<>()), new Name("pobi"));
         Deck cardDeck = new Deck(List.of(new Card(DIAMOND, JACK), new Card(SPADE, ACE)));
         Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
         player.addCard(cardDeck.hitCard());
