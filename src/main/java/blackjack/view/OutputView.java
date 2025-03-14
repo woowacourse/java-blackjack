@@ -47,7 +47,7 @@ public final class OutputView {
     }
 
     private void printDealerResult(final List<Player> players) {
-        int dealerProfit = players.stream()
+        int dealerProfit = (-1) * players.stream()
                 .mapToInt(Player::getProfit)
                 .sum();
         System.out.println("딜러: " + dealerProfit);
