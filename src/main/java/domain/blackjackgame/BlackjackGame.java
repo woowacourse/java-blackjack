@@ -1,5 +1,6 @@
 package domain.blackjackgame;
 
+import domain.participant.BlackjackHands;
 import domain.participant.BlackjackParticipant;
 import domain.participant.BlackjackParticipantsManager;
 import domain.participant.Dealer;
@@ -20,17 +21,21 @@ public class BlackjackGame {
     private final BlackjackDeck deck;
 
     public static BlackjackGame nonBettingBlackjackGame(BlackjackDeck deck, Dealer dealer, List<String> names) {
-        return new BlackjackGame(names, deck, dealer);
+        return new BlackjackGame(names, deck);
     }
 
-    public BlackjackGame(List<String> names, BlackjackDeck deck, Dealer dealer) {
+    public BlackjackGame(List<String> names, BlackjackDeck deck) {
         validatePlayerSize(names.size());
-        List<BlackjackParticipant> players = names.stream()
-                .map(Player::new)
-                .collect(Collectors.toList());
         this.deck = deck;
+        List<BlackjackParticipant> players = names.stream()
+                .map(name -> new Player(name, drawFirstCards(deck)))
+                .collect(Collectors.toList());
+        BlackjackParticipant dealer = new Dealer(drawFirstCards(deck));
         this.blackjackParticipantsManager = new BlackjackParticipantsManager(players, dealer);
-        initiateGame();
+    }
+
+    private static List<TrumpCard> drawFirstCards(BlackjackDeck deck) {
+        return List.of(deck.drawCard(), deck.drawCard());
     }
 
     private static void validatePlayerSize(int playerCount) {
@@ -39,30 +44,12 @@ public class BlackjackGame {
         }
     }
 
-    private void initiateGame() {
-        List<String> playerNames = blackjackParticipantsManager.getPlayerNames();
-        for (String name : playerNames) {
-            initiateDrawCardToPlayer(name);
-        }
-        initiateDealerDrawCard();
-    }
-
-    private void initiateDealerDrawCard() {
-        List<TrumpCard> firstDrawCards = List.of(deck.drawCard(), deck.drawCard());
-        blackjackParticipantsManager.addInitiateCardsToDealer(firstDrawCards);
-    }
-
-    private void initiateDrawCardToPlayer(String name) {
-        List<TrumpCard> firstDrawCards = List.of(deck.drawCard(), deck.drawCard());
-        blackjackParticipantsManager.addInitiateCardsToPlayer(name, firstDrawCards);
-    }
-
     public List<BlackjackResult> currentPlayerBlackjackResult() {
         List<BlackjackResult> blackjackResults = new ArrayList<>();
         for (String name : blackjackParticipantsManager.getPlayerNames()) {
-            List<TrumpCard> trumpCards = blackjackParticipantsManager.playerCards(name);
+            List<TrumpCard> holdingCards = blackjackParticipantsManager.playerCards(name);
             int sum = blackjackParticipantsManager.calculateCardSum(name);
-            blackjackResults.add(new BlackjackResult(name, trumpCards, sum));
+            blackjackResults.add(new BlackjackResult(name, holdingCards, sum));
         }
         return Collections.unmodifiableList(blackjackResults);
     }
@@ -75,7 +62,7 @@ public class BlackjackGame {
     }
 
     public List<TrumpCard> playerCards(String name) {
-        return Collections.unmodifiableList(blackjackParticipantsManager.playerCards(name));
+        return blackjackParticipantsManager.playerCards(name);
     }
 
     public TrumpCard dealerCardFirst() {
@@ -108,12 +95,12 @@ public class BlackjackGame {
         return blackjackParticipantsManager.dealerDrawable();
     }
 
-    public List<TrumpCard> dealerCards() {
-        return blackjackParticipantsManager.dealerCards();
+    public BlackjackHands dealerHands() {
+        return blackjackParticipantsManager.dealerHands();
     }
 
-    public List<BlackjackParticipant> players() {
-        return blackjackParticipantsManager.players();
+    public BlackjackHands playerHands(String name) {
+        return blackjackParticipantsManager.playerHands(name);
     }
 }
 

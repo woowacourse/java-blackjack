@@ -2,7 +2,6 @@ package domain.participant;
 
 import domain.blackjackgame.TrumpCard;
 import exception.BlackJackException;
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BlackjackParticipant {
@@ -11,11 +10,12 @@ public abstract class BlackjackParticipant {
     private static final String INVALID_NAME = "닉네임은 공백일 수 없습니다";
     private static final String DEALER_NAME = "딜러";
 
-    private final List<TrumpCard> cardHands = new ArrayList<>();
     private final String name;
+    private BlackjackHands hands;
 
-    protected BlackjackParticipant(String name) {
+    protected BlackjackParticipant(String name, List<TrumpCard> cards) {
         this.name = name;
+        this.hands = new BlackjackHands(cards);
         validateNickname();
     }
 
@@ -33,27 +33,29 @@ public abstract class BlackjackParticipant {
         if (isBust()) {
             throw new IllegalStateException(INVALID_CARD_STATE);
         }
-        cardHands.add(trumpCard);
+        hands = hands.addCard(trumpCard);
     }
 
     protected boolean isBust() {
-        BlackjackCardSum blackjackCardSum = new BlackjackCardSum(cardHands);
-        return blackjackCardSum.isBust();
+        return hands.isBust();
     }
 
     public int calculateCardSum() {
-        BlackjackCardSum blackjackCardSum = new BlackjackCardSum(cardHands);
-        return blackjackCardSum.calculateCardSum();
+        return hands.calculateCardSum();
     }
 
     abstract public boolean isDrawable();
 
-    public List<TrumpCard> cardHands() {
-        return cardHands;
+    public BlackjackHands hands() {
+        return hands;
     }
 
     public String name() {
         return name;
+    }
+
+    public List<TrumpCard> cards() {
+        return hands.cards();
     }
 }
 

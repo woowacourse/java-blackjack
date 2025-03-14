@@ -7,7 +7,7 @@ import domain.blackjackgame.CardValue;
 import domain.blackjackgame.Suit;
 import domain.blackjackgame.TrumpCard;
 import domain.participant.BlackjackBet;
-import domain.participant.BlackjackCardSum;
+import domain.participant.BlackjackHands;
 import exception.BlackJackException;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -38,8 +38,8 @@ public class BlackjackBetTest {
                 new TrumpCard(Suit.CLOVER, CardValue.EIGHT));
         List<TrumpCard> dealerTrumpCards = List.of(new TrumpCard(Suit.CLOVER, CardValue.A),
                 new TrumpCard(Suit.CLOVER, CardValue.NINE));
-        BlackjackCardSum cardSum = new BlackjackCardSum(trumpCards);
-        BlackjackCardSum otherCardSum = new BlackjackCardSum(dealerTrumpCards);
+        BlackjackHands cardSum = new BlackjackHands(trumpCards);
+        BlackjackHands otherCardSum = new BlackjackHands(dealerTrumpCards);
         assertThat(blackjackBet.calculateEarnMoney(cardSum, otherCardSum))
                 .isEqualTo(0);
     }
@@ -54,8 +54,8 @@ public class BlackjackBetTest {
                 new TrumpCard(Suit.CLOVER, CardValue.EIGHT),
                 new TrumpCard(Suit.CLOVER, CardValue.FIVE),
                 new TrumpCard(Suit.CLOVER, CardValue.SIX));
-        BlackjackCardSum cardSum = new BlackjackCardSum(trumpCards);
-        BlackjackCardSum otherCardSum = new BlackjackCardSum(dealerTrumpCards);
+        BlackjackHands cardSum = new BlackjackHands(trumpCards);
+        BlackjackHands otherCardSum = new BlackjackHands(dealerTrumpCards);
         assertThat(blackjackBet.calculateEarnMoney(cardSum, otherCardSum))
                 .isEqualTo(2000);
     }
@@ -71,8 +71,8 @@ public class BlackjackBetTest {
                 new TrumpCard(Suit.HEART, CardValue.NINE),
                 new TrumpCard(Suit.HEART, CardValue.EIGHT));
 
-        BlackjackCardSum cardSum = new BlackjackCardSum(trumpCards);
-        BlackjackCardSum otherCardSum = new BlackjackCardSum(dealerTrumpCards);
+        BlackjackHands cardSum = new BlackjackHands(trumpCards);
+        BlackjackHands otherCardSum = new BlackjackHands(dealerTrumpCards);
         assertThat(blackjackBet.calculateEarnMoney(cardSum, otherCardSum))
                 .isEqualTo(money);
     }
@@ -87,8 +87,8 @@ public class BlackjackBetTest {
         List<TrumpCard> dealerTrumpCards = List.of(new TrumpCard(Suit.HEART, CardValue.A),
                 new TrumpCard(Suit.HEART, CardValue.NINE),
                 new TrumpCard(Suit.HEART, CardValue.EIGHT));
-        BlackjackCardSum cardSum = new BlackjackCardSum(trumpCards);
-        BlackjackCardSum otherCardSum = new BlackjackCardSum(dealerTrumpCards);
+        BlackjackHands cardSum = new BlackjackHands(trumpCards);
+        BlackjackHands otherCardSum = new BlackjackHands(dealerTrumpCards);
         assertThat(blackjackBet.calculateEarnMoney(cardSum, otherCardSum))
                 .isEqualTo(money);
     }
@@ -101,8 +101,8 @@ public class BlackjackBetTest {
                 new TrumpCard(Suit.CLOVER, CardValue.TWO));
         List<TrumpCard> dealerTrumpCards = List.of(new TrumpCard(Suit.HEART, CardValue.A),
                 new TrumpCard(Suit.SPADE, CardValue.A));
-        BlackjackCardSum cardSum = new BlackjackCardSum(trumpCards);
-        BlackjackCardSum otherCardSum = new BlackjackCardSum(dealerTrumpCards);
+        BlackjackHands cardSum = new BlackjackHands(trumpCards);
+        BlackjackHands otherCardSum = new BlackjackHands(dealerTrumpCards);
         assertThat(blackjackBet.calculateEarnMoney(cardSum, otherCardSum))
                 .isEqualTo(money * 2);
     }

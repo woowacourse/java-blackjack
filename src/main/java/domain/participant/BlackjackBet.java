@@ -23,7 +23,7 @@ public class BlackjackBet {
         }
     }
 
-    public double calculateEarnMoney(BlackjackCardSum playerCardSum, BlackjackCardSum otherPlayerCardSum) {
+    public double calculateEarnMoney(BlackjackHands playerCardSum, BlackjackHands otherPlayerCardSum) {
         int cardSum = playerCardSum.calculateCardSum();
         PlayerGameResult playerGameResult = BlackjackWinner.calculatePlayerWinStatus(
                 otherPlayerCardSum.calculateCardSum(),

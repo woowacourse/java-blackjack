@@ -12,6 +12,7 @@ import domain.blackjackgame.TrumpCard;
 import domain.participant.Dealer;
 import domain.strategy.BlackjackDrawStrategy;
 import domain.strategy.DeckGenerator;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -28,9 +29,9 @@ public class BlackjackWinnerTest {
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new TestDeckGenerateStrategy(trumpCards));
 
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(new ArrayList<>());
         List<String> names = List.of("포비", "루키");
-        BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
+        BlackjackGame blackjackGame = new BlackjackGame(names, deck);
         BlackjackResult blackjackDealerResult = blackjackGame.currentDealerBlackjackResult();
         List<BlackjackResult> blackjackPlayerResults = blackjackGame.currentPlayerBlackjackResult();
         BlackjackWinner blackjackWinner = new BlackjackWinner(blackjackDealerResult, blackjackPlayerResults);
@@ -52,9 +53,9 @@ public class BlackjackWinnerTest {
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new TestDeckGenerateStrategy(trumpCards));
 
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(new ArrayList<>());
         List<String> names = List.of("포비");
-        BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
+        BlackjackGame blackjackGame = new BlackjackGame(names, deck);
         blackjackGame.drawCard("포비");
         blackjackGame.dealerHit();
         BlackjackResult blackjackDealerResult = blackjackGame.currentDealerBlackjackResult();
@@ -76,9 +77,9 @@ public class BlackjackWinnerTest {
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new TestDeckGenerateStrategy(trumpCards));
 
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(new ArrayList<>());
         List<String> names = List.of("포비");
-        BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
+        BlackjackGame blackjackGame = new BlackjackGame(names, deck);
         blackjackGame.drawCard("포비");
 
         blackjackGame.dealerHit();
@@ -100,7 +101,7 @@ public class BlackjackWinnerTest {
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new TestDeckGenerateStrategy(trumpCards));
 
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(new ArrayList<>());
         List<String> names = List.of("포비", "투다");
         BlackjackGame blackjackGame = BlackjackGame.nonBettingBlackjackGame(deck, dealer, names);
         blackjackGame.drawCard("포비");

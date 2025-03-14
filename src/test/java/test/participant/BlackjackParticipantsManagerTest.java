@@ -21,9 +21,9 @@ public class BlackjackParticipantsManagerTest {
     void 중복된_닉네임을_가질수_없다() {
 
         List<BlackjackParticipant> players = new ArrayList<>();
-        players.add(new Player("투다"));
-        players.add(new Player("투다"));
-        Dealer dealer = new Dealer();
+        players.add(new Player("투다", new ArrayList<>()));
+        players.add(new Player("투다", new ArrayList<>()));
+        Dealer dealer = new Dealer(new ArrayList<>());
         assertThatThrownBy(() -> new BlackjackParticipantsManager(players, dealer))
                 .isInstanceOf(BlackJackException.class);
     }

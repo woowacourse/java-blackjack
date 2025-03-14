@@ -13,6 +13,7 @@ import domain.strategy.BlackjackDeckGenerateStrategy;
 import domain.strategy.BlackjackDrawStrategy;
 import domain.strategy.DeckGenerator;
 import exception.BlackJackException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,17 +33,17 @@ public class BlackjackGameTest {
                 new BlackjackDeckGenerateStrategy());
 
         assertThatThrownBy(() -> new BlackjackGame(names,
-                blackjackDeck, new Dealer()))
+                blackjackDeck))
                 .isInstanceOf(BlackJackException.class);
     }
 
     @Test
     void 플레이어_수는_8명_초과하면_예외가_발생한다() {
         List<String> names = List.of("포비", "포비2", "포비3", "포비4", "포비5", "포비6", "포비7", "포비8", "포비9");
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(new ArrayList<>());
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new BlackjackDeckGenerateStrategy());
-        assertThatThrownBy(() -> new BlackjackGame(names, deck, dealer))
+        assertThatThrownBy(() -> new BlackjackGame(names, deck))
                 .isInstanceOf(BlackJackException.class);
     }
 
@@ -56,9 +57,9 @@ public class BlackjackGameTest {
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new TestDeckGenerateStrategy(trumpCards));
 
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(new ArrayList<>());
         List<String> names = List.of("포비", "포비2");
-        BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
+        BlackjackGame blackjackGame = new BlackjackGame(names, deck);
         List<TrumpCard> expectedCards = List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT),
                 new TrumpCard(Suit.DIAMOND, CardValue.J));
         assertThatIterable(blackjackGame.playerCards("포비")).containsExactlyInAnyOrderElementsOf(expectedCards);
@@ -71,9 +72,9 @@ public class BlackjackGameTest {
                         new TrumpCard(Suit.HEART, CardValue.K), new TrumpCard(Suit.HEART, CardValue.EIGHT)));
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new TestDeckGenerateStrategy(trumpCards));
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(new ArrayList<>());
         List<String> names = List.of("포비");
-        BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
+        BlackjackGame blackjackGame = new BlackjackGame(names, deck);
         TrumpCard expectedCards = new TrumpCard(Suit.HEART, CardValue.K);
         assertThat(blackjackGame.dealerCardFirst()).isEqualTo(expectedCards);
     }
@@ -87,9 +88,9 @@ public class BlackjackGameTest {
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new TestDeckGenerateStrategy(trumpCards));
 
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(new ArrayList<>());
         List<String> names = List.of("포비", "루키");
-        BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
+        BlackjackGame blackjackGame = new BlackjackGame(names, deck);
         List<Integer> expectedPlayersCardSum = List.of(18, 19);
         assertThatIterable(blackjackGame.currentPlayerBlackjackResult()
                 .stream()
@@ -106,9 +107,9 @@ public class BlackjackGameTest {
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new TestDeckGenerateStrategy(trumpCards));
 
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(new ArrayList<>());
         List<String> names = List.of("포비");
-        BlackjackGame blackjackGame = new BlackjackGame(names, deck, dealer);
+        BlackjackGame blackjackGame = new BlackjackGame(names, deck);
         int expectedDealerCardSum = 5;
         BlackjackResult blackjackResult = blackjackGame.currentDealerBlackjackResult();
         assertThat(blackjackResult.cardSum())

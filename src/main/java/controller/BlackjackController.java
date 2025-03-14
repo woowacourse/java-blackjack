@@ -58,15 +58,15 @@ public class BlackjackController {
 
     private void validateNames(List<String> names) {
         for (String name : names) {
-            new Player(name);
+            new Player(name, new ArrayList<>());
         }
     }
 
     private void startBlackjack(List<String> names, List<Integer> bets) {
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new BlackjackDeckGenerateStrategy());
-        BlackjackGame blackjackGame = BlackjackGame.nonBettingBlackjackGame(deck, new Dealer(), names);
-        BetManager betManager = new BetManager(names, bets, blackjackGame.dealerName());
+        BlackjackGame blackjackGame = BlackjackGame.nonBettingBlackjackGame(deck, new Dealer(new ArrayList<>()), names);
+        BetManager betManager = new BetManager(names, bets);
         outputView.printInitiateDraw(names);
         openFirstDealerCard(blackjackGame);
         openPlayerCards(blackjackGame);

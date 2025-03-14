@@ -7,6 +7,7 @@ import domain.blackjackgame.TrumpCard;
 import domain.participant.Dealer;
 import domain.strategy.BlackjackDrawStrategy;
 import domain.strategy.DeckGenerator;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -24,7 +25,7 @@ public class DealerTest {
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new TestDeckGenerateStrategy(trumpCards));
 
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(new ArrayList<>());
         dealer.addDraw(deck.drawCard());
         dealer.addDraw(deck.drawCard());
         assertThat(dealer.isDrawable()).isFalse();
@@ -38,7 +39,7 @@ public class DealerTest {
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new TestDeckGenerateStrategy(trumpCards));
 
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(new ArrayList<>());
         assertThat(dealer.isDrawable()).isTrue();
     }
 }

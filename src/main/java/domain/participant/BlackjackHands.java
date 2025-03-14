@@ -1,20 +1,23 @@
 package domain.participant;
 
 import domain.blackjackgame.TrumpCard;
+import domain.except.BlackJackStateException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class BlackjackCardSum {
+public class BlackjackHands {
 
     private static final int BUST_STANDARD = 21;
     private static final int BLACKJACK_STANDARD = 21;
     private static final int ACE_DIFF = 10;
     private static final int BLACKJACK_CARD_COUNT_STANDARD = 2;
+    private static final String INVALID_HANDS_STATE = "아직 카드를 받지 않은 참여자입니다.";
 
     private final List<TrumpCard> cardHands;
     private final int cardSum;
 
-    public BlackjackCardSum(List<TrumpCard> cardHands) {
+    public BlackjackHands(List<TrumpCard> cardHands) {
         this.cardHands = new ArrayList<>(cardHands);
         cardSum = calculateCardSum();
     }
@@ -49,5 +52,21 @@ public class BlackjackCardSum {
 
     public boolean isBlackjack() {
         return cardHands.size() == BLACKJACK_CARD_COUNT_STANDARD && BLACKJACK_STANDARD == cardSum;
+    }
+
+    public BlackjackHands addCard(TrumpCard trumpCard) {
+        cardHands.add(trumpCard);
+        return new BlackjackHands(this.cardHands);
+    }
+
+    public TrumpCard getFirst() {
+        if (cardHands.isEmpty()) {
+            throw new BlackJackStateException(INVALID_HANDS_STATE);
+        }
+        return cardHands.get(0);
+    }
+
+    public List<TrumpCard> cards() {
+        return Collections.unmodifiableList(cardHands);
     }
 }
