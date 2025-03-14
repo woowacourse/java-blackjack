@@ -1,5 +1,3 @@
-package game;
-
 import static card.CardDeck.DRAW_COUNT_WHEN_HIT;
 import static card.CardDeck.DRAW_COUNT_WHEN_START;
 
@@ -8,20 +6,20 @@ import card.CardDeck;
 import card.RandomCardShuffler;
 import console.InputConsole;
 import console.OutputConsole;
+import game.Dealer;
+import game.GameResult;
+import game.Player;
+import game.Players;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.IntStream;
 
-public class BlackJackGame {
+public class BlackjackApplication {
 
-    private final InputConsole inputConsole;
-    private final OutputConsole outputConsole;
+    public static void main(String[] args) {
+        InputConsole inputConsole = new InputConsole(new Scanner(System.in));
+        OutputConsole outputConsole = new OutputConsole();
 
-    public BlackJackGame(InputConsole inputConsole, OutputConsole outputConsole) {
-        this.inputConsole = inputConsole;
-        this.outputConsole = outputConsole;
-    }
-
-    public void play() {
         CardDeck cardDeck = CardDeck.prepareDeck(new RandomCardShuffler());
 
         List<String> playerNames = inputConsole.readPlayerNames();
@@ -32,42 +30,24 @@ public class BlackJackGame {
                 .toList());
         Dealer dealer = new Dealer();
 
-        opening(players, dealer, cardDeck);
-        hitOrStand(players, dealer, cardDeck);
-        end(players, dealer);
-    }
-
-    private void opening(Players players, Dealer dealer, CardDeck cardDeck) {
         players.draw(cardDeck);
         dealer.draw(cardDeck.drawCard(DRAW_COUNT_WHEN_START));
         Card dealerCard = dealer.getSingleCard();
 
         outputConsole.printInitialGame(dealerCard, players.getPlayers());
-    }
 
-    private void hitOrStand(Players players, Dealer dealer, CardDeck cardDeck) {
         for (Player player : players.getPlayers()) {
-            decidePlayerHitOrStand(player, cardDeck);
+            while (!player.isBust() && inputConsole.readDrawMoreCard(player)) {
+                player.draw(cardDeck.drawCard(DRAW_COUNT_WHEN_HIT));
+                outputConsole.printPlayerCard(player);
+            }
         }
-        decideDealerHitOrStand(dealer, cardDeck);
-        outputConsole.printGameResult(dealer, players);
-    }
-
-    private void decidePlayerHitOrStand(Player player, CardDeck cardDeck) {
-        while (!player.isBust() && inputConsole.readDrawMoreCard(player)) {
-            player.draw(cardDeck.drawCard(DRAW_COUNT_WHEN_HIT));
-            outputConsole.printPlayerCard(player);
-        }
-    }
-
-    private void decideDealerHitOrStand(Dealer dealer, CardDeck cardDeck) {
         while (!dealer.isBust() && !dealer.isOverDrawBound()) {
             dealer.draw(cardDeck.drawCard(DRAW_COUNT_WHEN_HIT));
             outputConsole.printDealerDrawMessage();
         }
-    }
+        outputConsole.printGameResult(dealer, players);
 
-    private void end(Players players, Dealer dealer) {
         List<GameResult> gameResults = players.judgeGameResult(dealer);
         List<Integer> playerProfits = players.evaluate(gameResults);
 
@@ -76,4 +56,5 @@ public class BlackJackGame {
         outputConsole.printDealerProfit(dealerProfit);
         outputConsole.printPlayersProfit(players.getAllPlayerNames(), playerProfits);
     }
+
 }
