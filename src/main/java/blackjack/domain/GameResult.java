@@ -27,8 +27,9 @@ public class GameResult {
     private static Map<Player, WinningResult> createPlayerGameResult(Dealer dealer, Players players) {
         Map<Player, WinningResult> playerGameResults = new HashMap<>();
         players.sendAll((player -> {
-            WinningResult playerWinningResult = WinningResult.decide(player.getCards().calculateScore(),
-                    dealer.getCards().calculateScore());
+            BlackjackScore playerScore = player.getCards().calculateScore();
+            BlackjackScore dealerScore = dealer.getCards().calculateScore();
+            WinningResult playerWinningResult = playerScore.decide(dealerScore);
             playerGameResults.put(player, playerWinningResult);
         }));
         return playerGameResults;
@@ -37,8 +38,9 @@ public class GameResult {
     private static Map<WinningResult, Integer> createDealerGameResults(Dealer dealer, Players players) {
         Map<WinningResult, Integer> dealerGameResults = new HashMap<>();
         players.sendAll((player -> {
-            WinningResult dealerWinningResult = WinningResult.decide(dealer.getCards().calculateScore(),
-                    player.getCards().calculateScore());
+            BlackjackScore dealerScore = dealer.getCards().calculateScore();
+            BlackjackScore playerScore = player.getCards().calculateScore();
+            WinningResult dealerWinningResult = dealerScore.decide(playerScore);
             dealerGameResults.put(
                     dealerWinningResult,
                     dealerGameResults.getOrDefault(dealerWinningResult, 0) + 1);
@@ -47,7 +49,7 @@ public class GameResult {
     }
 
     public static int getMultiplyRatio(BlackjackScore playerScore, BlackjackScore dealerScore) {
-        WinningResult winningResult = WinningResult.decide(playerScore, dealerScore);
+        WinningResult winningResult = playerScore.decide(dealerScore);
         if (winningResult.equals(WinningResult.WIN)) {
             return 1;
         }
