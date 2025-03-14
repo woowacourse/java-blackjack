@@ -49,14 +49,10 @@ public class DeckTest {
         assertThat(outputCards).doesNotHaveDuplicates();
     }
 
-    @DisplayName("덱은 52장의 카드를 갖고 있다.")
     @Test
-    void 덱은_52장() {
+    void 덱에_카드가_없을_때_카드를_뽑으면_예외를_발생시킨다() {
         // given
-        Deck deck = new Deck(new RandomCardsGenerator());
-        for (int i = 0; i < 52; ++i) {
-            deck.pick();
-        }
+        Deck deck = new Deck(new StaticCardGenerator());
 
         // when & then
         assertThatThrownBy(deck::pick).isInstanceOf(IllegalStateException.class);
