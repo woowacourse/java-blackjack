@@ -16,8 +16,8 @@ public class Gamers {
         this.gamers = gamers;
     }
 
-    public static Gamers of(final List<Player> players, final Gamer dealer) {
-        final List<Gamer> gamerGroup = new ArrayList<>(players);
+    public static Gamers of(final Players players, final Gamer dealer) {
+        final List<Gamer> gamerGroup = new ArrayList<>(players.getPlayers());
         gamerGroup.add(dealer);
         return new Gamers(sortGamers(gamerGroup));
     }

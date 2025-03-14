@@ -21,17 +21,17 @@ public class BlackJackController {
     private static final String DEALER_NAME = "딜러";
 
     public void run() {
-        final List<Player> playerGroup = generatePlayers(readNicknames()).getPlayers();
+        final Players players = generatePlayers(readNicknames());
         final Dealer dealer = generateDealer();
-        final Gamers gamers = Gamers.of(playerGroup, dealer);
+        final Gamers gamers = Gamers.of(players, dealer);
         final Deck deck = Deck.createShuffledDeck(new RandomShuffleStrategy());
 
         gamers.dealInitialCards(deck);
         printInitialSetting(gamers);
 
-        processPlayerHit(playerGroup, deck);
+        processPlayerHit(players, deck);
         processDealerHit(dealer, deck);
-        processFinalResult(dealer, playerGroup);
+        processFinalResult(dealer, players);
     }
 
     private List<Nickname> readNicknames() {
@@ -57,8 +57,8 @@ public class BlackJackController {
         OutputView.printCardsInHandAtFirst(gamers.getCardsAtStartWithNickname());
     }
 
-    private void processPlayerHit(final List<Player> players, final Deck deck) {
-        for (final Player player : players) {
+    private void processPlayerHit(final Players players, final Deck deck) {
+        for (final Player player : players.getPlayers()) {
             if (isNotMoreCard(deck, player)) {
                 continue;
             }
@@ -107,10 +107,10 @@ public class BlackJackController {
         return InputView.readQuestOneMoreCard(player.getDisplayName());
     }
 
-    private void processFinalResult(final Dealer dealer, final List<Player> players) {
-        OutputView.printCardsInHandWithResults(dealer, players);
+    private void processFinalResult(final Dealer dealer, final Players players) {
+        OutputView.printCardsInHandWithResults(dealer, players.getPlayers());
 
-        final Map<Player, FinalResult> playerResults = FinalResult.makePlayerResult(players, dealer);
+        final Map<Player, FinalResult> playerResults = FinalResult.makePlayerResult(players.getPlayers(), dealer);
         final Map<FinalResult, Integer> resultCounts = FinalResult.makeDealerResult(playerResults);
         OutputView.printFinalResults(dealer.getDisplayName(), resultCounts, playerResults);
     }

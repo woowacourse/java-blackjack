@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Supplier;
 
 public class Player extends Gamer {
 
@@ -27,10 +28,13 @@ public class Player extends Gamer {
             return sumOfRanks.stream()
                     .filter(sum -> sum <= Hand.BUST_NUMBER)
                     .max(Integer::compareTo)
-                    .orElseGet(() -> sumOfRanks.stream().min(Integer::compareTo).orElse(0));
+                    .orElseGet(getMinSum(sumOfRanks));
         }
-
         return hand.calculateSumOfRank();
+    }
+
+    private static Supplier<Integer> getMinSum(final List<Integer> sumOfRanks) {
+        return () -> sumOfRanks.stream().min(Integer::compareTo).orElse(0);
     }
 
     private List<Integer> calculateAllSums(final List<Card> cards) {
