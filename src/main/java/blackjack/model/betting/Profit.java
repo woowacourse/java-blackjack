@@ -7,19 +7,19 @@ public class Profit {
 
     private final int profit;
 
-    private Profit(int profit) {
+    public Profit(int profit) {
         this.profit = profit;
     }
 
     public static Profit of(BetAmount betAmount, MatchResult matchResult) {
         int stake = betAmount.getStake();
-        if(matchResult == MatchResult.BLACKJACK) {
+        if (matchResult == MatchResult.BLACKJACK) {
             return new Profit((int) (1.5 * stake));
         }
         if (matchResult == MatchResult.WIN) {
             return new Profit(stake);
         }
-        if(matchResult == MatchResult.DRAW) {
+        if (matchResult == MatchResult.DRAW) {
             return new Profit(0);
         }
         return new Profit(stake * -1);

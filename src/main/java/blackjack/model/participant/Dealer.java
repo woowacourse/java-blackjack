@@ -2,11 +2,13 @@ package blackjack.model.participant;
 
 import static blackjack.model.constants.RuleConstants.DEALER_HIT_THRESHOLD;
 
+import blackjack.model.betting.Profit;
 import blackjack.model.card.Card;
 import blackjack.model.card.Deck;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class Dealer {
 
@@ -44,6 +46,14 @@ public class Dealer {
             return true;
         }
         return false;
+    }
+
+    public Profit calculateProfit(Map<Player, Profit> playersProfit) {
+        int sum = (-1) * playersProfit.values().stream()
+                .map(Profit::getProfit)
+                .reduce(0, Integer::sum);
+
+        return new Profit(sum);
     }
 
     public List<Card> getHand() {

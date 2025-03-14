@@ -11,10 +11,7 @@ class ProfitTest {
     @DisplayName("블랙잭으로 이기면 수익은 배팅금액의 1.5배이다.")
     @Test
     void blackJackProfitTest() {
-        // given
-        BetAmount betAmount = new BetAmount(1000);
-
-        // when
+        // given, when
         Profit profit = Profit.of(new BetAmount(1000), MatchResult.BLACKJACK);
 
         // then
@@ -25,10 +22,7 @@ class ProfitTest {
     @DisplayName("숫자 비교로 이기면 수익은 배팅 금액이다.")
     @Test
     void normalWinProfitTest() {
-        // given
-        BetAmount betAmount = new BetAmount(1000);
-
-        // when
+        // given, when
         Profit profit = Profit.of(new BetAmount(1000), MatchResult.WIN);
 
         // then
@@ -39,10 +33,7 @@ class ProfitTest {
     @DisplayName("지면 배팅 금액만큼 잃는다")
     @Test
     void loseProfitTest() {
-        // given
-        BetAmount betAmount = new BetAmount(1000);
-
-        // when
+        // given, when
         Profit profit = Profit.of(new BetAmount(1000), MatchResult.LOSE);
 
         // then
@@ -53,10 +44,7 @@ class ProfitTest {
     @DisplayName("비기면 낸 수익이 0원이다")
     @Test
     void drawProfitTest() {
-        // given
-        BetAmount betAmount = new BetAmount(1000);
-
-        // when
+        // given, when
         Profit profit = Profit.of(new BetAmount(1000), MatchResult.DRAW);
 
         // then

@@ -1,12 +1,15 @@
 package blackjack.model.participant;
 
-import static blackjack.TestFixtures.*;
+import static blackjack.TestFixtures.UNSHUFFLED_DECK;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.TestFixtures;
+import blackjack.model.betting.Profit;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardValue;
 import blackjack.model.card.Suit;
+import blackjack.view.BettingPlayerCreateDto;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -150,5 +153,21 @@ class DealerTest {
         // then
         assertThat(canHit)
                 .isSameAs(expected);
+    }
+
+    @DisplayName("딜러의 수익률를 계산한다.")
+    @Test
+    void calculateProfitTest() {
+        // given
+        Dealer dealer = new Dealer(UNSHUFFLED_DECK);
+        Map<Player, Profit> playerProfit = new HashMap<>();
+        playerProfit.put(Player.of(new BettingPlayerCreateDto("pobi", 1000)), new Profit(10000));
+
+        // when
+        Profit profit = dealer.calculateProfit(playerProfit);
+
+        // then
+        assertThat(profit.getProfit())
+                .isEqualTo(-10000);
     }
 }
