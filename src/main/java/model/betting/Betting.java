@@ -6,7 +6,7 @@ public class Betting {
     private static final int INSURANCE_BET_DIVISOR  = 2;
     private static final int SURRENDER_PAYOUT_RATIO  = 2;
     private static final int INSURANCE_PAYOUT_RATIO = 2;
-    private static final int BLACKJACK_PAYOUT_RATIO = 3/2;
+    private static final double BLACKJACK_PAYOUT_RATIO = 1.5;
 
 
     private int bet;
@@ -65,7 +65,7 @@ public class Betting {
     }
 
     public int calculateBlackJack() {
-        return bet * BLACKJACK_PAYOUT_RATIO;
+        return (int) (bet * BLACKJACK_PAYOUT_RATIO);
     }
 
     public int calculateWin() {
