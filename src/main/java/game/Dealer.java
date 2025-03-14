@@ -33,13 +33,10 @@ public class Dealer {
         return calculateTotalPoints() > DEALER_DRAW_BOUND;
     }
 
-    public int getCardsCount() {
-        return hand.getCardsCount();
-    }
-
     public Card getSingleCard() {
         return hand.getCards().getFirst();
     }
+
 
     public boolean isBlackJack() {
         return hand.getCardsCount() == 2 && hand.calculate() == 21;

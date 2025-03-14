@@ -32,4 +32,12 @@ public class InputConsole {
         }
         throw new IllegalArgumentException("[ERROR] y 또는 n만 입력 가능합니다.");
     }
+
+    public List<Integer> readBettingMoney(List<String> playerNames) {
+        return playerNames.stream()
+                .map(playerName -> {
+                    System.out.printf("%s의 배팅 금액은?%n", playerName);
+                    return Integer.parseInt(scanner.nextLine());
+                }).toList();
+    }
 }

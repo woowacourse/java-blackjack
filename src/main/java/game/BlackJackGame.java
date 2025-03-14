@@ -9,6 +9,7 @@ import card.RandomCardShuffler;
 import console.InputConsole;
 import console.OutputConsole;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class BlackJackGame {
 
@@ -24,8 +25,10 @@ public class BlackJackGame {
         CardDeck cardDeck = CardDeck.prepareDeck(new RandomCardShuffler());
 
         List<String> playerNames = inputConsole.readPlayerNames();
-        Players players = new Players(playerNames.stream()
-                .map(Player::new)
+        List<Integer> bettingMoney = inputConsole.readBettingMoney(playerNames);
+
+        Players players = new Players(IntStream.range(0, playerNames.size())
+                .mapToObj(i -> new Player(playerNames.get(i), bettingMoney.get(i)))
                 .toList());
         Dealer dealer = new Dealer();
 
@@ -66,13 +69,13 @@ public class BlackJackGame {
 
     private void end(Players players, Dealer dealer) {
         List<GameResult> gameResults = players.judgeGameResult(dealer);
-        List<String> playerNames = players.getAllPlayerNames();
 
         outputConsole.printDealerWinningResult(
                 GameResult.WIN.countReversed(gameResults),
                 GameResult.DRAW.countReversed(gameResults),
                 GameResult.LOSE.countReversed(gameResults));
 
+        List<String> playerNames = players.getAllPlayerNames();
         outputConsole.printWinningResult(playerNames, gameResults);
     }
 }
