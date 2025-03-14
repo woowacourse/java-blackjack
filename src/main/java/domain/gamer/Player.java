@@ -70,4 +70,19 @@ public class Player extends Gamer {
                 .min(Integer::compareTo)
                 .orElse(0);
     }
+
+    public int winBetting(int profit) {
+        if (isBlackJack()) {
+            return betting.winBlackJackBetting(profit);
+        }
+        return betting.winBetting(profit);
+    }
+
+    public int loseBetting(int profit) {
+        return betting.loseBetting(profit);
+    }
+
+    public boolean isBlackJack() {
+        return calculateSumOfRank() == 21 && getCards().size() == 2;
+    }
 }
