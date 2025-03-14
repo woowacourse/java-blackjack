@@ -10,6 +10,7 @@ import domain.participant.Player;
 import domain.participant.Players;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
@@ -41,8 +42,9 @@ public class BlackjackController {
         drawToPlayers(blackjackGame);
         drawToDealer(blackjackGame);
 
+        Map<Player, Integer> profits = blackjackGame.calculatePlayerProfit(bettingPool);
         outputView.printFinalCardsContent(dealer, players);
-        outputView.printResult(dealer, players);
+        outputView.printProfits(profits);
     }
 
     private List<Player> readPlayers() {
