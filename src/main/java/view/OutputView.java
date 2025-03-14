@@ -5,6 +5,7 @@ import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;
 import domain.card.Cards;
+import domain.participant.Participant;
 import domain.participant.Player;
 import java.util.List;
 import java.util.Map;
@@ -111,5 +112,13 @@ public class OutputView {
             case CLOVER -> "클로버";
             case DIAMOND -> "다이아몬드";
         };
+    }
+
+    public void printRevenueResult(final int dealerRevenue, Map<Player, Integer> playerRevenues) {
+        System.out.println("## 최종 수익");
+        System.out.printf("딜러: %d\n", dealerRevenue);
+        for (Player player : playerRevenues.keySet()) {
+            System.out.printf("%s: %d\n", player.getName(), playerRevenues.get(player));
+        }
     }
 }

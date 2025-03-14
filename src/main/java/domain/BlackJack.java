@@ -81,15 +81,13 @@ public class BlackJack {
         return result;
     }
 
-    public Map<Participant, Integer> getRevenueResult() {
-        Map<Participant, Integer> revenues = getPlayerRevenues();
-        final int dealerRevenue = -1 * revenues.values().stream().mapToInt(i -> i).sum();
-        revenues.put(dealer, dealerRevenue);
-        return revenues;
+    public int getDealerRevenue() {
+        Map<Player, Integer> revenues = getPlayerRevenues();
+        return -1 * revenues.values().stream().mapToInt(i -> i).sum();
     }
 
-    private Map<Participant, Integer> getPlayerRevenues() {
-        Map<Participant, Integer> revenues = new HashMap<>();
+    public Map<Player, Integer> getPlayerRevenues() {
+        Map<Player, Integer> revenues = new HashMap<>();
         for (Player player : players.get()) {
             GameResult gameResult = dealer.getResult(player);
             RevenuePolicy policy = RevenuePolicy.from(gameResult, player.isBlackjack());

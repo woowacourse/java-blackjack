@@ -3,6 +3,7 @@ package controller;
 import domain.BlackJack;
 import domain.GameResult;
 import domain.Money;
+import domain.participant.Participant;
 import domain.participant.Player;
 import java.util.Map;
 import java.util.Set;
@@ -40,7 +41,7 @@ public class BlackJackController {
         askNewCardToAllPlayers(blackJack);
         setupDealerCards(blackJack);
         showCardsResult(blackJack);
-        showGameResult(blackJack);
+        showRevenues(blackJack);
     }
 
     private void askNewCardToAllPlayers(BlackJack blackJack) {
@@ -75,5 +76,11 @@ public class BlackJackController {
         Map<Player, GameResult> playerResult = blackJack.getPlayersResult();
         Map<GameResult, Integer> dealerResult = blackJack.getDealerResult();
         outputView.printResult(dealerResult, playerResult);
+    }
+
+    private void showRevenues(BlackJack blackJack) {
+        final int dealerRevenue = blackJack.getDealerRevenue();
+        Map<Player, Integer> playerRevenues = blackJack.getPlayerRevenues();
+        outputView.printRevenueResult(dealerRevenue, playerRevenues);
     }
 }

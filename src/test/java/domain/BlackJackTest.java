@@ -76,12 +76,13 @@ class BlackJackTest {
         BlackJack blackJack = new BlackJack(dealer, new Players(bettingPlayers));
 
         // when
-        Map<Participant, Integer> revenueResult = blackJack.getRevenueResult();
+        Map<Player, Integer> revenueResult = blackJack.getPlayerRevenues();
+        final int dealerRevenue = blackJack.getDealerRevenue();
 
         // then
         SoftAssertions.assertSoftly((softly) -> {
             softly.assertThat(revenueResult.get(player)).isEqualTo(playerRevenue);
-            softly.assertThat(revenueResult.get(dealer)).isEqualTo(-1 * playerRevenue);
+            softly.assertThat(dealerRevenue).isEqualTo(-1 * playerRevenue);
         });
     }
 
@@ -273,17 +274,18 @@ class BlackJackTest {
                 losePlayer, new Money(5000)
         );
         BlackJack blackJack = new BlackJack(dealer, new Players(bettingPlayers));
-        final int dealerRevenue = (int) (10000 * 1.5) * -1 + // blackjack
+        final int expectedDealerRevenue = (int) (10000 * 1.5) * -1 + // blackjack
                 20000 + // bust
                 30000 * -1 + // normalWin
                 5000; // lose
 
         // when
-        Map<Participant, Integer> revenueResult = blackJack.getRevenueResult();
+        final int dealerRevenue = blackJack.getDealerRevenue();
+        Map<Player, Integer> revenueResult = blackJack.getPlayerRevenues();
 
         // then
         SoftAssertions.assertSoftly((softly) -> {
-            softly.assertThat(revenueResult.get(dealer)).isEqualTo(dealerRevenue);
+            softly.assertThat(dealerRevenue).isEqualTo(expectedDealerRevenue);
             softly.assertThat(revenueResult.get(blackjackPlayer)).isEqualTo((int) (10000 * 1.5));
             softly.assertThat(revenueResult.get(bustPlayer)).isEqualTo(-20000);
             softly.assertThat(revenueResult.get(normalWinPlayer)).isEqualTo(30000);
