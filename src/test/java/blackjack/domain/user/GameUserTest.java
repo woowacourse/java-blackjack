@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.CardValue;
-import blackjack.fixture.CardFixture;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,18 +37,5 @@ class GameUserTest {
         assertThat(gameUser.getHand()).hasSize(2);
         assertThat(gameUser.getHand().getFirst()).isEqualTo(firstCard);
         assertThat(gameUser.getHand().getLast()).isEqualTo(secondCard);
-    }
-
-    @Test
-    @DisplayName("유저가 버스트인지 확인할 수 있다.")
-    void canCheckBust() {
-        List<Card> cards = List.of(
-                CardFixture.make(CardValue.JACK),
-                CardFixture.make(CardValue.KING),
-                CardFixture.make(CardValue.JACK));
-
-        gameUser.addCardInHand(cards);
-
-        assertThat(gameUser.isBust()).isTrue();
     }
 }

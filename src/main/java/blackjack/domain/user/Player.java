@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.game.GameResultType;
 import blackjack.domain.game.GameRule;
 import blackjack.domain.game.PlayerProfit;
-import blackjack.exception.ExceptionMessage;
 import java.util.List;
 
 public class Player {
@@ -30,25 +29,15 @@ public class Player {
     }
 
     public void hitUntilLimit(Card card) {
-        validateHitPossibility();
-        gameUser.addCardInHand(card);
+        if (canHit()) {
+            gameUser.addCardInHand(card);
+        }
     }
 
-    public PlayerProfit calculateProfit(Dealer dealer) {
-        if (checkBlackjackWithInitialCard()) {
-            return PlayerProfit.createWhenPlayerBlackjackWithInitialCard(this);
-        }
-        if (dealer.isBust()) {
-            return PlayerProfit.createWhenDealerBust(this);
-        }
-        if (isBust()) {
-            return PlayerProfit.createWhenPlayerBust(this);
-        }
-        return PlayerProfit.createByWinningType(this, GameResultType.parse(getPoint(), dealer.getPoint()));
-    }
-
-    public boolean isBust() {
-        return gameUser.isBust();
+    public PlayerProfit calculateProfit(int dealerPoint) {
+        GameResultType gameResult = GameResultType.parse(gameUser.getHand().size(), gameUser.getPoint(), dealerPoint);
+        int profit = bettingAmount.calculateProfitAmount(gameResult.getProfitRate());
+        return new PlayerProfit(gameUser.getNickname(), profit);
     }
 
     public List<Card> getHand() {
@@ -65,15 +54,5 @@ public class Player {
 
     public int getBettingAmount() {
         return bettingAmount.getValue();
-    }
-
-    private void validateHitPossibility() {
-        if (!canHit()) {
-            throw new IllegalArgumentException(ExceptionMessage.CANNOT_HIT.getContent());
-        }
-    }
-
-    private boolean checkBlackjackWithInitialCard() {
-        return GameRule.isBlackJack(gameUser.getHand().size(), gameUser.getPoint());
     }
 }

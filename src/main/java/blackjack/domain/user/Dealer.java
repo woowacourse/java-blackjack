@@ -47,10 +47,6 @@ public class Dealer {
         return gameUser.getPoint();
     }
 
-    public boolean isBust() {
-        return gameUser.isBust();
-    }
-
     private void validateBeforeDrawInitialCards() {
         if (gameUser.getHand().isEmpty()) {
             throw new IllegalArgumentException(ExceptionMessage.BEFORE_CARD_DISTRIBUTION.getContent());

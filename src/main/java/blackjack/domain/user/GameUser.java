@@ -1,7 +1,6 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.game.GameRule;
 import java.util.List;
 
 public class GameUser {
@@ -20,10 +19,6 @@ public class GameUser {
 
     public void addCardInHand(Card card) {
         hand.addCard(card);
-    }
-
-    public Boolean isBust() {
-        return GameRule.isBust(hand.calculateTotalPoint());
     }
 
     public List<Card> getHand() {

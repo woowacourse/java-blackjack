@@ -13,10 +13,24 @@ public enum GameResultType {
         this.profitRate = profitRate;
     }
 
-    public static GameResultType parse(int playerPoint, int dealerPoint) {
-        playerPoint = GameRule.applyBustToPoint(playerPoint);
-        dealerPoint = GameRule.applyBustToPoint(dealerPoint);
+    public static GameResultType parse(int playerHandCount, int playerPoint, int dealerPoint) {
+        if (GameRule.isBlackJack(playerHandCount, playerPoint)) {
+            return WIN_WITH_INITIAL_HAND_BLACKJACK;
+        }
+        if (GameRule.isBust(dealerPoint)) {
+            return GameResultType.WIN;
+        }
+        if (GameRule.isBust(playerPoint)) {
+            return GameResultType.LOSE;
+        }
+        return parseWhenNotBust(playerPoint, dealerPoint);
+    }
 
+    public double getProfitRate() {
+        return profitRate;
+    }
+
+    private static GameResultType parseWhenNotBust(int playerPoint, int dealerPoint) {
         if (playerPoint > dealerPoint) {
             return GameResultType.WIN;
         }
@@ -24,13 +38,5 @@ public enum GameResultType {
             return GameResultType.LOSE;
         }
         return GameResultType.DRAW;
-    }
-
-    public int calculateProfit(int amount) {
-        return (int) (amount * profitRate);
-    }
-
-    public double getProfitRate() {
-        return profitRate;
     }
 }
