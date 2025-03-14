@@ -18,7 +18,6 @@ public class Betting {
         }
     }
 
-
     public Long getBettingMoney() {
         return bettingMoney;
     }

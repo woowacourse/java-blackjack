@@ -37,6 +37,7 @@ public class BlackjackController {
         additionalDealerCard(gameManager);
 
         createGameResult(gameManager, playerNames);
+
         calculateGameResult(gameManager);
     }
 
@@ -97,24 +98,10 @@ public class BlackjackController {
 
     private void calculateGameResult(GameManager gameManager) {
         Map<User, GameResult> gameResult = gameManager.createGameResult();
-        calculateDealerResult(gameResult);
 
-        outputView.displayGameResult(gameResult);
+        outputView.displayProfitResult();
     }
 
-    private void calculateDealerResult(Map<User, GameResult> gameResult) {
-        int loseCount = getResultStateCount(gameResult, GameResult.WIN);
-        int winCount = getResultStateCount(gameResult, GameResult.LOSE);
-        int mooCount = getResultStateCount(gameResult, GameResult.DRAW);
-
-        outputView.displayDealerGameResult(winCount, loseCount, mooCount);
-    }
-
-    private int getResultStateCount(Map<User, GameResult> gameResult, GameResult status) {
-        return (int) gameResult.entrySet().stream()
-                .filter(entry -> entry.getValue() == status)
-                .count();
-    }
 
     private void displayPlayers(GameManager gameManager, List<String> playerNames) {
         playerNames.stream()
