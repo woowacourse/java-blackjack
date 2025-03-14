@@ -1,5 +1,6 @@
 package model;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.HashMap;
@@ -89,8 +90,112 @@ class BettingResultTest {
         assertEquals(expect, result);
     }
 
+
     @Test
-    @DisplayName("딜러의 최종 수익 계산 테스트")
-    void 딜러의_최종_수익_계산_테스트(){
+    @DisplayName("보험을 걸고 딜러가 블랙잭이 아니며 게임은 이겼을 경우 테스트")
+    void 보험을_걸고_딜러가_블랙잭이_아닐_경우_테스트(){
+        Betting betting = new Betting(10000);
+        betting.takeInsurance(4000);
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(CardRank.TWO, CardSuit.CLOVER));
+        dealer.receiveCard(new Card(CardRank.KING, CardSuit.CLOVER));
+        player.receiveCard(new Card(CardRank.KING, CardSuit.CLOVER));
+        player.receiveCard(new Card(CardRank.KING, CardSuit.DIAMOND));
+        Players players = new Players(List.of(player));
+        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        Map<Player, Betting> map = new HashMap<>(Map.of(player, betting));
+
+        BettingResult bettingResult = new BettingResult(map, participantWinningResult);
+
+        int expect = 6000;
+        Map<Player, Integer> result = bettingResult.calculatePlayerBettingResult(players, dealer);
+        assertThat(result.get(player)).isEqualTo(expect);
+    }
+
+    @Test
+    @DisplayName("보험을 걸고 딜러가 블랙잭이 아니며 게임도 진 경우 테스트")
+    void 보험을_걸고_딜러가_블랙잭이_아니며_게임도_진_경우_테스트(){
+        Betting betting = new Betting(10000);
+        betting.takeInsurance(4000);
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(CardRank.QUEEN, CardSuit.CLOVER));
+        dealer.receiveCard(new Card(CardRank.KING, CardSuit.CLOVER));
+        player.receiveCard(new Card(CardRank.NINE, CardSuit.CLOVER));
+        player.receiveCard(new Card(CardRank.KING, CardSuit.DIAMOND));
+        Players players = new Players(List.of(player));
+        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        Map<Player, Betting> map = new HashMap<>(Map.of(player, betting));
+
+        BettingResult bettingResult = new BettingResult(map, participantWinningResult);
+
+        int expect = -6000;
+        Map<Player, Integer> result = bettingResult.calculatePlayerBettingResult(players, dealer);
+        assertThat(result.get(player)).isEqualTo(expect);
+    }
+
+    @Test
+    @DisplayName("보험을 걸고 딜러가 블랙잭이 아니며 게임은 무승부인 경우 테스트")
+    void 보험을_걸고_딜러가_블랙잭이_아니며_게임은_무승부_경우_테스트(){
+        Betting betting = new Betting(10000);
+        betting.takeInsurance(4000);
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(CardRank.QUEEN, CardSuit.CLOVER));
+        dealer.receiveCard(new Card(CardRank.KING, CardSuit.CLOVER));
+        player.receiveCard(new Card(CardRank.QUEEN, CardSuit.CLOVER));
+        player.receiveCard(new Card(CardRank.KING, CardSuit.DIAMOND));
+        Players players = new Players(List.of(player));
+        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        Map<Player, Betting> map = new HashMap<>(Map.of(player, betting));
+
+        BettingResult bettingResult = new BettingResult(map, participantWinningResult);
+
+        int expect = 0;
+        Map<Player, Integer> result = bettingResult.calculatePlayerBettingResult(players, dealer);
+        assertThat(result.get(player)).isEqualTo(expect);
+    }
+
+    @Test
+    @DisplayName("플레이어가 서렌을 하고 딜러가 버스트되었을 경우")
+    void 플레이어가_서렌을_하고_딜러가_버스트되었을_경우(){
+        Betting betting = new Betting(10000);
+        betting.surrender();
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(CardRank.QUEEN, CardSuit.CLOVER));
+        dealer.receiveCard(new Card(CardRank.QUEEN, CardSuit.CLOVER));
+        dealer.receiveCard(new Card(CardRank.KING, CardSuit.CLOVER));
+        player.receiveCard(new Card(CardRank.QUEEN, CardSuit.CLOVER));
+        player.receiveCard(new Card(CardRank.KING, CardSuit.DIAMOND));
+        Players players = new Players(List.of(player));
+        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        Map<Player, Betting> map = new HashMap<>(Map.of(player, betting));
+
+        BettingResult bettingResult = new BettingResult(map, participantWinningResult);
+
+        int expect = -5000;
+        Map<Player, Integer> result = bettingResult.calculatePlayerBettingResult(players, dealer);
+        assertThat(result.get(player)).isEqualTo(expect);
+    }
+
+    @Test
+    @DisplayName("플레이어가 서렌을 하고 딜러가 버스트되었을 경우 딜러의 수익계산 테스트")
+    void 플레이어가_서렌을_하고_딜러가_버스트되었을_경우_딜러의_수익계산_테스트(){
+        Betting betting = new Betting(10000);
+        betting.surrender();
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(CardRank.QUEEN, CardSuit.CLOVER));
+        dealer.receiveCard(new Card(CardRank.QUEEN, CardSuit.CLOVER));
+        dealer.receiveCard(new Card(CardRank.KING, CardSuit.CLOVER));
+        player.receiveCard(new Card(CardRank.QUEEN, CardSuit.CLOVER));
+        player.receiveCard(new Card(CardRank.KING, CardSuit.DIAMOND));
+        Players players = new Players(List.of(player));
+        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        Map<Player, Betting> map = new HashMap<>(Map.of(player, betting));
+
+        BettingResult bettingResult = new BettingResult(map, participantWinningResult);
+
+        int expect = 5000;
+        Map<Player, Integer> playerResult = bettingResult.calculatePlayerBettingResult(players, dealer);
+        int result = bettingResult.calculateDealerFinalResult(playerResult);
+        assertThat(result).isEqualTo(expect);
     }
 }
