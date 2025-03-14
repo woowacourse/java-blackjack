@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -28,16 +27,13 @@ public enum FinalResult {
 
     public static Map<Player, FinalResult> makePlayerResult(final List<Player> players, final Dealer dealer) {
         return players.stream()
-                .collect(Collectors.toMap(
-                        Function.identity(),
-                        player -> {
-                            final int playerSum = player.calculateSumOfRank();
-                            final int dealerSum = dealer.calculateSumOfRank();
-                            return Optional.of(playerSum)
-                                    .map(sum -> getIntegerFinalResultFunction(sum, dealerSum))
-                                    .orElse(LOSE);
-                        }
-                ));
+                .collect(Collectors.toMap(Function.identity(), player -> getFinalResult(player, dealer)));
+    }
+
+    private static FinalResult getFinalResult(final Player player, final Dealer dealer) {
+        final int playerSum = player.calculateSumOfRank();
+        final int dealerSum = dealer.calculateSumOfRank();
+        return getIntegerFinalResultFunction(playerSum, dealerSum);
     }
 
     private static FinalResult getIntegerFinalResultFunction(final int playerSum, final int dealerSum) {
