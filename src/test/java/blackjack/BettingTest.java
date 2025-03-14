@@ -76,4 +76,24 @@ class BettingTest {
         assertThat(round.endGameIfBlackjack(dealer)).isTrue();
         assertThat(round.getFinalBettingMoney(player)).isEqualTo(initialMoney);
     }
+
+    @Test
+    @DisplayName("딜러가 21을 초과하면 그 시점까지 남아 있던 플레이어들은 승리해 베팅 금액을 받는다.")
+    void dealerBustPlayersWinTest() {
+        int initialMoney = 10000;
+
+        Player player = new Player("pobi");
+        Dealer dealer = new Dealer();
+        GameRound round = new GameRound();
+        round.betting(player, initialMoney);
+        GameManager gameManager = GameManagerFixture.GameManagerWith(
+            DeckFixture.deckOf(CardNumber.JACK, CardNumber.ACE, CardNumber.TWO, CardNumber.QUEEN, CardNumber.KING)
+        );
+        gameManager.drawStartingCards(player);
+        gameManager.drawStartingCards(dealer);
+        gameManager.drawCard(dealer);
+
+        round.dealerBust();
+        assertThat(round.getFinalBettingMoney(player)).isEqualTo(initialMoney * 2);
+    }
 }

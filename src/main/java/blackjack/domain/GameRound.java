@@ -50,4 +50,10 @@ public class GameRound {
         }
         return false;
     }
+
+    public void dealerBust() {
+        initialBettingMoney.keySet().stream()
+            .filter(player -> !player.isBust())
+            .forEach(player -> finalBettingMoney.put(player, initialBettingMoney.get(player) * 2));
+    }
 }
