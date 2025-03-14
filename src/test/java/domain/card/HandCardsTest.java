@@ -61,4 +61,5 @@ class HandCardsTest {
         List<Card> cards = handCards.getCards();
         assertThat(cards).contains(jClover, fiveHeart, twoDiamond);
     }
+
 }
