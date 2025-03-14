@@ -8,7 +8,6 @@ import state.started.Started;
 
 public class Players {
 
-    public static final int INIT_CARD_COUNT = 2;
     private final List<Player> players;
 
     private Players(final List<String> names, final Deck deck) {

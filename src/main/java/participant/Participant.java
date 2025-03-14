@@ -8,14 +8,14 @@ public abstract class Participant {
 
     public static final int PARTICIPANT_MAX_NUMBER_FOR_BUST = 21;
 
-    protected final State state;
+    protected State state;
 
     public Participant(final State state) {
         this.state = state;
     }
 
     public void hit(Card card) {
-        state.draw(card);
+        this.state = state.draw(card);
     }
 
     public void receiveCards(List<Card> cards) {
