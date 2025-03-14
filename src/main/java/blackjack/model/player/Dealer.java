@@ -14,9 +14,9 @@ public class Dealer extends Player {
         return getReceivedCards().getFirstCard();
     }
 
-    public int calculateProfitAmount(Participants participants) {
-        return Math.toIntExact(participants.stream()
-                .mapToInt(participant -> participant.calculateProfitAmount(participant.duelWith(this)))
-                .reduce(0, (total, profitAmount) -> total - profitAmount));
+    public double calculateProfitAmount(Participants participants) {
+        return participants.stream()
+                .mapToDouble(participant -> participant.calculateProfitAmount(participant.duelWith(this)))
+                .reduce(0, (total, profitAmount) -> total - profitAmount);
     }
 }

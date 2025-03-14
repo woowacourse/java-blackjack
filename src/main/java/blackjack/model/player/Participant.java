@@ -25,7 +25,7 @@ public class Participant extends Player {
         if (isBlackJack()) {
             return ParticipantResult.BLACKJACK;
         }
-        if (isBust()) {
+        if (isBust() || dealer.isBlackJack()) {
             return ParticipantResult.LOSE;
         }
         if (dealer.isBust()) {
@@ -38,7 +38,7 @@ public class Participant extends Player {
         return name;
     }
 
-    public int calculateProfitAmount(ParticipantResult participantResult) {
+    public double calculateProfitAmount(ParticipantResult participantResult) {
         return betAmount.calculateProfitAmount(participantResult);
     }
 

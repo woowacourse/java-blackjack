@@ -144,4 +144,22 @@ class ParticipantTest {
         // then
         assertThat(result).isEqualTo(ParticipantResult.DRAW);
     }
+
+    @Test
+    void 세_장의_카드로_21인_경우_블랙잭이_아니다() {
+        // given
+        Dealer dealer = new Dealer();
+        Participant participant = new Participant("프리");
+        participant.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_10));
+        participant.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_10));
+        participant.putCard(new Card(CardShape.CLOVER, CardType.ACE));
+        dealer.putCard(new Card(CardShape.CLOVER, CardType.ACE));
+        dealer.putCard(new Card(CardShape.CLOVER, CardType.KING));
+
+        // when
+        ParticipantResult result = participant.duelWith(dealer);
+
+        // then
+        assertThat(result).isEqualTo(ParticipantResult.LOSE);
+    }
 }

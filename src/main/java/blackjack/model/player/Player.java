@@ -23,8 +23,8 @@ public abstract class Player {
     }
 
     public boolean isBlackJack() {
-        long specialCardCount = getReceivedCards().stream().filter(Card::isSpecialCard).count();
-        long aceCardCount = getReceivedCards().stream().filter(Card::isAceCard).count();
+        long specialCardCount = receivedCards.getSpecialCardCount();
+        long aceCardCount = receivedCards.getAceCardCount();
         return specialCardCount == 1 && aceCardCount == 1;
     }
 }

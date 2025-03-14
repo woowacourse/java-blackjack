@@ -8,16 +8,7 @@ public record BetAmount(int value) {
         }
     }
 
-    public int calculateProfitAmount(ParticipantResult participantResult) {
-        if (participantResult == ParticipantResult.DRAW) {
-            return 0;
-        }
-        if (participantResult == ParticipantResult.LOSE) {
-            return -value;
-        }
-        if (participantResult == ParticipantResult.WIN) {
-            return value;
-        }
-        return (int) (value * 1.5);
+    public double calculateProfitAmount(ParticipantResult participantResult) {
+        return participantResult.getRate() * value;
     }
 }

@@ -42,6 +42,14 @@ public class ReceivedCards {
         return cards.stream();
     }
 
+    public long getSpecialCardCount () {
+        return cards.stream().filter(Card::isSpecialCard).count();
+    }
+
+    public long getAceCardCount() {
+        return cards.stream().filter(Card::isAceCard).count();
+    }
+
     private int calculateMinimumPoint() {
         return cards.stream()
                 .mapToInt(Card::getPoint)

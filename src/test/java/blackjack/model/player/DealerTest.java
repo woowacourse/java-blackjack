@@ -46,9 +46,9 @@ class DealerTest {
         participant2.putCard(new Card(CardShape.CLOVER, CardType.ACE));
 
         // when
-        int dealerAmount = dealer.calculateProfitAmount(participants);
-        int participant1Amount = participant1.calculateProfitAmount(participant1.duelWith(dealer));
-        int participant2Amount = participant2.calculateProfitAmount(participant2.duelWith(dealer));
+        double dealerAmount = dealer.calculateProfitAmount(participants);
+        double participant1Amount = participant1.calculateProfitAmount(participant1.duelWith(dealer));
+        double participant2Amount = participant2.calculateProfitAmount(participant2.duelWith(dealer));
 
         // then
         SoftAssertions softly = new SoftAssertions();

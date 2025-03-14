@@ -11,7 +11,7 @@ class BetAmountTest {
         BetAmount betAmount = new BetAmount(10000);
 
         // when
-        int amount = betAmount.calculateProfitAmount(ParticipantResult.WIN);
+        double amount = betAmount.calculateProfitAmount(ParticipantResult.WIN);
 
         // then
         Assertions.assertThat(amount).isEqualTo(10000);
@@ -23,7 +23,7 @@ class BetAmountTest {
         BetAmount betAmount = new BetAmount(10000);
 
         // when
-        int amount = betAmount.calculateProfitAmount(ParticipantResult.BLACKJACK);
+        double amount = betAmount.calculateProfitAmount(ParticipantResult.BLACKJACK);
 
         // then
         Assertions.assertThat(amount).isEqualTo(15000);
