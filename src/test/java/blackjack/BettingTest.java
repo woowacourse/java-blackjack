@@ -92,13 +92,6 @@ class BettingTest {
         Dealer dealer = new Dealer();
         GameRound round = new GameRound(dealer);
         round.betting(player, initialMoney);
-        GameManager gameManager = GameManagerFixture.GameManagerWith(
-            DeckFixture.deckOf(CardNumber.JACK, CardNumber.ACE, CardNumber.TWO, CardNumber.QUEEN, CardNumber.KING)
-        );
-        gameManager.drawStartingCards(player);
-        gameManager.drawStartingCards(dealer);
-        gameManager.drawCard(dealer);
-
         round.dealerBust();
         assertThat(round.getFinalBettingMoney(player)).isEqualTo(initialMoney * 2);
     }
