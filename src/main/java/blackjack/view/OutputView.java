@@ -31,7 +31,7 @@ public class OutputView {
     }
 
     public void printPlayerCardResult(final Player player) {
-        String cardResult = parseCardToString(player.openInitialCards());
+        String cardResult = parseCardToString(player.getCards().openCards());
         System.out.printf("%s카드: %s%n", player.getName().getText(), cardResult);
     }
 
