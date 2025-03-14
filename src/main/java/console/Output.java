@@ -8,7 +8,7 @@ import game.Player;
 import game.Players;
 import java.util.List;
 
-public class OutputConsole {
+public class Output {
 
     public void printInitialGame(Card dealerCard, List<Player> players) {
         String playerNames = formatPlayerNames(players);
@@ -61,14 +61,14 @@ public class OutputConsole {
     }
 
     private void formatSingleCard(Card card, List<CardNumber> honorCards, StringBuilder stringBuilder) {
-        if (honorCards.contains(card.getCardNumber())) {
-            stringBuilder.append(card.getCardNumber().name().charAt(0))
-                    .append(card.getPattern().getPattern())
+        if (honorCards.contains(card.cardNumber())) {
+            stringBuilder.append(card.cardNumber().name().charAt(0))
+                    .append(card.pattern().getPattern())
                     .append(", ");
             return;
         }
-        stringBuilder.append(card.getCardNumber().getNumber())
-                .append(card.getPattern().getPattern())
+        stringBuilder.append(card.cardNumber().getNumber())
+                .append(card.pattern().getPattern())
                 .append(", ");
     }
 

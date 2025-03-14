@@ -4,8 +4,8 @@ import static card.CardDeck.DRAW_COUNT_WHEN_START;
 import card.Card;
 import card.CardDeck;
 import card.RandomCardShuffler;
-import console.InputConsole;
-import console.OutputConsole;
+import console.Input;
+import console.Output;
 import game.Dealer;
 import game.GameResult;
 import game.Player;
@@ -17,13 +17,13 @@ import java.util.stream.IntStream;
 public class BlackjackApplication {
 
     public static void main(String[] args) {
-        InputConsole inputConsole = new InputConsole(new Scanner(System.in));
-        OutputConsole outputConsole = new OutputConsole();
+        Input input = new Input(new Scanner(System.in));
+        Output output = new Output();
 
         CardDeck cardDeck = CardDeck.prepareDeck(new RandomCardShuffler());
 
-        List<String> playerNames = inputConsole.readPlayerNames();
-        List<Integer> bettingMoney = inputConsole.readBettingMoney(playerNames);
+        List<String> playerNames = input.readPlayerNames();
+        List<Integer> bettingMoney = input.readBettingMoney(playerNames);
 
         Players players = new Players(IntStream.range(0, playerNames.size())
                 .mapToObj(i -> new Player(playerNames.get(i), bettingMoney.get(i)))
@@ -33,28 +33,27 @@ public class BlackjackApplication {
         players.draw(cardDeck);
         dealer.draw(cardDeck.drawCard(DRAW_COUNT_WHEN_START));
         Card dealerCard = dealer.getSingleCard();
-
-        outputConsole.printInitialGame(dealerCard, players.getPlayers());
+        output.printInitialGame(dealerCard, players.getPlayers());
 
         for (Player player : players.getPlayers()) {
-            while (!player.isBust() && inputConsole.readDrawMoreCard(player)) {
+            while (!player.isBust() && input.readDrawMoreCard(player)) {
                 player.draw(cardDeck.drawCard(DRAW_COUNT_WHEN_HIT));
-                outputConsole.printPlayerCard(player);
+                output.printPlayerCard(player);
             }
         }
         while (!dealer.isBust() && !dealer.isOverDrawBound()) {
             dealer.draw(cardDeck.drawCard(DRAW_COUNT_WHEN_HIT));
-            outputConsole.printDealerDrawMessage();
+            output.printDealerDrawMessage();
         }
-        outputConsole.printGameResult(dealer, players);
+        output.printGameResult(dealer, players);
 
         List<GameResult> gameResults = players.judgeGameResult(dealer);
         List<Integer> playerProfits = players.evaluate(gameResults);
 
         int dealerProfit = dealer.evaluate(playerProfits);
 
-        outputConsole.printDealerProfit(dealerProfit);
-        outputConsole.printPlayersProfit(players.getAllPlayerNames(), playerProfits);
+        output.printDealerProfit(dealerProfit);
+        output.printPlayersProfit(players.getAllPlayerNames(), playerProfits);
     }
 
 }

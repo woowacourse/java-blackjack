@@ -5,11 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class InputConsole {
+public class Input {
 
     private final Scanner scanner;
 
-    public InputConsole(Scanner scanner) {
+    public Input(Scanner scanner) {
         this.scanner = scanner;
     }
 
