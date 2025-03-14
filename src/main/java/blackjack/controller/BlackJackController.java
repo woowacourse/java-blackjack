@@ -70,6 +70,6 @@ public final class BlackJackController {
 
     private void printGameResults(final Dealer dealer, final List<Player> players) {
         outputView.printOptimalPoints(dealer, players);
-        outputView.printGameResult(dealer, players);
+        outputView.printGameResult(players);
     }
 }

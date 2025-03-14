@@ -40,13 +40,13 @@ public final class OutputView {
         System.out.println("딜러는 한장의 카드를 더 받지 않았습니다." + System.lineSeparator());
     }
 
-    public void printGameResult(final Dealer dealer, final List<Player> players) {
+    public void printGameResult(final List<Player> players) {
         System.out.println("## 최종 수익");
-        printDealerResult(dealer, players);
+        printDealerResult(players);
         printUsersResults(players);
     }
 
-    private void printDealerResult(final Dealer dealer, final List<Player> players) {
+    private void printDealerResult(final List<Player> players) {
         int dealerProfit = players.stream()
                 .mapToInt(Player::getProfit)
                 .sum();
