@@ -33,6 +33,10 @@ public abstract class Participant {
         return getScore().isBust();
     }
 
+    public boolean isBlackJack() {
+        return getScore().isBlackJackValue() && hand.isInitialStatus();
+    }
+
     public void initializeHand(Hand hand) {
         this.addCards(hand);
     }

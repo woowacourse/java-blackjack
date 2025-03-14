@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class Hand {
+    private static final int INITIAL_HAND_SIZE = 2;
+
     private final List<Card> cards;
 
     public Hand(List<Card> cards) {
@@ -35,6 +37,10 @@ public class Hand {
 
     public void addAll(Hand receivedHand) {
         cards.addAll(receivedHand.getCards());
+    }
+
+    public boolean isInitialStatus() {
+        return cards.size() == INITIAL_HAND_SIZE;
     }
 
     @Override

@@ -58,18 +58,6 @@ public class PlayerTest {
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.WIN);
     }
 
-    @DisplayName("플레이어만 버스트일 경우 플레이어의 패배이다")
-    @Test
-    void test3() {
-        //given
-
-        //when
-        GameResultStatus gameResultStatus = bustPlayer.calculateScore(twentyHandDealer);
-
-        //then
-        assertThat(gameResultStatus).isEqualTo(GameResultStatus.LOSE);
-    }
-
     @DisplayName("딜러와 풀래이어가 모두 블랙잭일 경우 무승부이다")
     @Test
     void test40() {

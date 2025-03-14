@@ -23,6 +23,15 @@ public class Player extends Participant {
         if (dealer.isBust()) {
             return GameResultStatus.WIN;
         }
+        if (isBlackJack() && dealer.isBlackJack()) {
+            return GameResultStatus.DRAW;
+        }
+        if (isBlackJack()) {
+            return GameResultStatus.WIN;
+        }
+        if (dealer.isBlackJack()) {
+            return GameResultStatus.LOSE;
+        }
         return compare(dealer);
     }
 

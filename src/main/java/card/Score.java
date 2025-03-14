@@ -5,7 +5,7 @@ import static card.CardNumberType.ACE;
 import java.util.List;
 
 public record Score(int score) {
-    private static final int NOT_BUST_LIMIT = 21;
+    private static final int BLACKJACK_VALUE = 21;
     private static final int ACE_ADDING_VALUE = 10;
     private static final int ACE_VALUE_ADDING_AVAILABLE_SUM = 11;
 
@@ -35,7 +35,11 @@ public record Score(int score) {
     }
 
     public boolean isBust() {
-        return score > NOT_BUST_LIMIT;
+        return score > BLACKJACK_VALUE;
+    }
+
+    public boolean isBlackJackValue() {
+        return score == BLACKJACK_VALUE;
     }
 
     public boolean isGreaterThen(Score other) {
