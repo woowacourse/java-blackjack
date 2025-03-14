@@ -6,7 +6,7 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-class BlackJackCardDeckTest {
+class BlackJackPlayerDeckTest {
 
     @Test
     void N_개의_카드를_반환한다() {

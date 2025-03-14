@@ -1,8 +1,8 @@
 package blackjack.controller;
 
+import blackjack.model.blackjack_player.dealer.Dealer;
+import blackjack.model.blackjack_player.player.Player;
 import blackjack.model.card.initializer.CardDeckInitializer;
-import blackjack.model.player.Dealer;
-import blackjack.model.player.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -58,8 +58,8 @@ public class BlackJackController {
     }
 
     private void drawMorePlayerCards(final Dealer dealer, final Player player) {
-        while (dealer.canDrawMoreCard(player) && inputView.readUserDrawMoreCard(player)) {
-            dealer.drawMoreCard(player);
+        while (dealer.canPlayerDrawMoreCard(player) && inputView.readUserDrawMoreCard(player)) {
+            dealer.drawPlayerCards(player);
             outputView.printPlayerCards(player);
         }
     }

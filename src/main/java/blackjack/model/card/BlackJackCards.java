@@ -53,7 +53,7 @@ public class BlackJackCards {
 
     private List<Integer> calculateAceAppliedPoints(final int minimumPoint, final int aceCount) {
         return IntStream.rangeClosed(1, aceCount)
-                .map(i -> minimumPoint + i * CardNumber.ACE_ADDITIONAL_VALUE)
+                .map(i -> minimumPoint + (i * CardNumber.ACE_ADDITIONAL_VALUE))
                 .boxed()
                 .toList();
     }
@@ -62,7 +62,7 @@ public class BlackJackCards {
         return values.size() == size;
     }
 
-    public void merge(final BlackJackCards otherBlackJackCards) {
+    public void addAll(final BlackJackCards otherBlackJackCards) {
         this.values.addAll(otherBlackJackCards.values);
     }
 

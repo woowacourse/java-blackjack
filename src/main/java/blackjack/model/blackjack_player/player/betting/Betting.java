@@ -1,4 +1,4 @@
-package blackjack.model.player.betting;
+package blackjack.model.blackjack_player.player.betting;
 
 public class Betting {
 

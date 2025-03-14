@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.model.card.BlackJackCards;
 import org.junit.jupiter.api.Test;
 
-class DefaultBlackJackCardDeckInitializerTest {
+class DefaultBlackJackPlayerDeckInitializerTest {
 
     private final DefaultCardDeckInitializer defaultCardDeckInitializer = new DefaultCardDeckInitializer();
 

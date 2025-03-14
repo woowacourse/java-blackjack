@@ -1,9 +1,8 @@
 package blackjack.view;
 
+import blackjack.model.blackjack_player.dealer.Dealer;
+import blackjack.model.blackjack_player.player.Player;
 import blackjack.model.card.BlackJackCards;
-import blackjack.model.player.BlackJackPlayer;
-import blackjack.model.player.Dealer;
-import blackjack.model.player.Player;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,17 +10,18 @@ public class OutputView {
 
     public void printDealInitialCardsResult(final Dealer dealer, final List<Player> players) {
         String userNames = players.stream()
-                .map(BlackJackPlayer::getName)
+                .map(Player::getName)
                 .collect(Collectors.joining(", "));
         System.out.println();
-        System.out.println(dealer.getName() + "와 " + userNames + "에게 2장을 나누었습니다.");
-        printPlayerCards(dealer);
+        System.out.println("딜러와 " + userNames + "에게 2장을 나누었습니다.");
+        System.out.println("딜러카드: " + formatCards(dealer.openCards()));
         players.forEach(this::printPlayerCards);
         System.out.println();
     }
 
-    public void printPlayerCards(final BlackJackPlayer blackJackPlayer) {
-        System.out.println(blackJackPlayer.getName() + "카드: " + formatCards(blackJackPlayer.openInitialCards()));
+    public void printPlayerCards(final Player player) {
+        System.out.println(
+                player.getName() + "카드: " + formatCards(player.getCards()));
     }
 
     private String formatCards(final BlackJackCards blackJackCards) {
@@ -47,19 +47,21 @@ public class OutputView {
     }
 
     private void printDealerResult(final Dealer dealer, final List<Player> players) {
-        System.out.println(dealer.getName() + ": " + dealer.getProfit(players));
+        System.out.println("딜러: " + dealer.getProfit(players));
     }
 
     private void printUsersResults(final List<Player> players) {
-        players.forEach(player -> System.out.println(player.getName() + ": " + player.getProfit()));
+        players.forEach(
+                player -> System.out.println(player.getName() + ": " + player.getProfit()));
     }
 
     public void printOptimalPoints(final Dealer dealer, final List<Player> players) {
         System.out.println(
-                dealer.getName() + "카드: " + formatCards(dealer.openAllCards()) + " - 결과: "
-                        + dealer.calculateOptimalPoint());
-        players.forEach(user -> System.out.println(
-                user.getName() + "카드: " + formatCards(user.openAllCards()) + " - 결과: " + user.calculateOptimalPoint()));
+                "딜러카드: " + formatCards(dealer.getAllCards()) + " - 결과: "
+                        + dealer.getOptimalPoint());
+        players.forEach(player -> System.out.println(
+                player.getName() + "카드: " + formatCards(player.getCards()) + " - 결과: "
+                        + player.getOptimalPoint()));
         System.out.println();
     }
 }

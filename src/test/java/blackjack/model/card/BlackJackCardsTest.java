@@ -44,7 +44,7 @@ class BlackJackCardsTest {
         BlackJackCards otherBlackJackCards = new BlackJackCards(
                 List.of(new BlackJackCard(CardType.CLOVER, CardNumber.TEN)));
 
-        blackJackCards.merge(otherBlackJackCards);
+        blackJackCards.addAll(otherBlackJackCards);
 
         assertThat(blackJackCards.hasSize(2)).isTrue();
     }
