@@ -42,7 +42,8 @@ public class Players {
     public int getTotalRevenue() {
         return getRevenueMap().values()
                 .stream()
-                .mapToInt(Integer::intValue).sum();
+                .mapToInt(Integer::intValue)
+                .sum();
     }
 
     public Map<Player, Integer> getRevenueMap() {

@@ -24,22 +24,16 @@ public class Deck {
         return new Deck(copiedCards);
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
     public List<Card> takeStartCards() {
         return takeCards(STARTING_CARD_SIZE);
-    }
-
-    public List<Card> takeOneCard() {
-        return takeCards(ADDITIONAL_CARD_SIZE);
     }
 
     private List<Card> takeCards(int size) {
         validateEmpty(size);
 
-        return IntStream.range(0, size).mapToObj(i -> cards.removeLast()).toList();
+        return IntStream.range(0, size)
+                .mapToObj(i -> cards.removeLast())
+                .toList();
     }
 
     private void validateEmpty(int size) {
@@ -47,4 +41,13 @@ public class Deck {
             throw new IllegalArgumentException(ErrorMessage.EMPTY_DECK_SIZE.getMessage());
         }
     }
+
+    public List<Card> takeOneCard() {
+        return takeCards(ADDITIONAL_CARD_SIZE);
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
+    }
+
 }

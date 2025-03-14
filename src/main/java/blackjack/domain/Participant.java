@@ -4,15 +4,15 @@ import java.util.List;
 
 public interface Participant {
 
-    List<Card> getAllCards();
-
     void takeCard(Card newCard);
-
-    int getOptimisticValue();
-
-    boolean isBusted();
 
     boolean canTakeCard();
 
+    boolean isBusted();
+
     boolean isBlackjack();
+
+    List<Card> getAllCards();
+
+    int getOptimisticValue();
 }

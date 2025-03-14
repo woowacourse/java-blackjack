@@ -14,23 +14,8 @@ public class Dealer implements Participant {
     }
 
     @Override
-    public List<Card> getAllCards() {
-        return hand.getAllCards();
-    }
-
-    @Override
     public void takeCard(Card newCard) {
         hand.takeCard(newCard);
-    }
-
-    @Override
-    public int getOptimisticValue() {
-        return hand.getOptimisticValue();
-    }
-
-    @Override
-    public boolean isBusted() {
-        return hand.isBusted();
     }
 
     @Override
@@ -39,8 +24,23 @@ public class Dealer implements Participant {
     }
 
     @Override
+    public boolean isBusted() {
+        return hand.isBusted();
+    }
+
+    @Override
     public boolean isBlackjack() {
         return hand.isBlackJack();
+    }
+
+    @Override
+    public List<Card> getAllCards() {
+        return hand.getAllCards();
+    }
+
+    @Override
+    public int getOptimisticValue() {
+        return hand.getOptimisticValue();
     }
 
     public Card revealFirstCard() {

@@ -14,15 +14,10 @@ public class Player implements Participant {
         this.playerHand = playerHand;
     }
 
-    public void validName(String name) {
+    private void validName(String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException(ErrorMessage.USE_VALID_NAME.getMessage());
         }
-    }
-
-    @Override
-    public List<Card> getAllCards() {
-        return playerHand.getAllCards();
     }
 
     @Override
@@ -31,8 +26,8 @@ public class Player implements Participant {
     }
 
     @Override
-    public int getOptimisticValue() {
-        return playerHand.getOptimisticValue();
+    public boolean canTakeCard() {
+        return playerHand.canTakeCard();
     }
 
     @Override
@@ -41,13 +36,18 @@ public class Player implements Participant {
     }
 
     @Override
-    public boolean canTakeCard() {
-        return playerHand.canTakeCard();
+    public boolean isBlackjack() {
+        return playerHand.isBlackjack();
     }
 
     @Override
-    public boolean isBlackjack() {
-        return playerHand.isBlackjack();
+    public List<Card> getAllCards() {
+        return playerHand.getAllCards();
+    }
+
+    @Override
+    public int getOptimisticValue() {
+        return playerHand.getOptimisticValue();
     }
 
     public void adjustBalance(GameResultType gameResultType) {

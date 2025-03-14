@@ -5,8 +5,9 @@ import java.util.function.BiPredicate;
 
 public enum GameResultType {
 
-    WIN((value, comparedValue) -> value > comparedValue), TIE(Integer::equals), LOSE(
-            (value, comparedValue) -> value < comparedValue);
+    WIN((value, comparedValue) -> value > comparedValue),
+    TIE(Integer::equals),
+    LOSE((value, comparedValue) -> value < comparedValue);
 
     private final BiPredicate<Integer, Integer> condition;
 
@@ -23,7 +24,8 @@ public enum GameResultType {
         int dealerOptimisticValue = dealer.getOptimisticValue();
 
         return Arrays.stream(GameResultType.values())
-                .filter(resultType -> resultType.condition.test(playerOptimisticValue, dealerOptimisticValue))
+                .filter(resultType ->
+                        resultType.condition.test(playerOptimisticValue, dealerOptimisticValue))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 비교 값입니다."));
     }
