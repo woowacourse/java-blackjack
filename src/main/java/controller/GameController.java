@@ -29,7 +29,7 @@ public class GameController {
         registerGamePlayers();
         distributeGameInitialCards();
         distributeParticipantExtraCards();
-        determineFinalParticipantCards();
+        determineParticipantFinalCards();
         determineGameResult();
     }
 

@@ -46,7 +46,7 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    public static void printFinalParticipantsCards(List<ParticipantCardsDto> participantCardsDtos) {
+    public static void printParticipantsFinalCards(List<ParticipantCardsDto> participantCardsDtos) {
         StringBuilder stringBuilder = new StringBuilder();
         for (ParticipantCardsDto participantCardsDto : participantCardsDtos) {
             stringBuilder.append(formatFinalParticipantCards(participantCardsDto))
