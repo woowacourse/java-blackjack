@@ -15,7 +15,8 @@ public class Dealer extends Participant {
         return new Dealer(DEALER_NAME);
     }
 
-    public boolean isNotUp() {
+    @Override
+    public boolean ableToDraw() {
         return getScore() < STANDING_CONDITION;
     }
 

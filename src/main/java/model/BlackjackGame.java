@@ -61,11 +61,11 @@ public class BlackjackGame {
     }
 
     private boolean satisfiedConditionByPlayer(Player player) {
-        return player.canHit() && agreeIntent(player);
+        return player.ableToDraw() && agreeIntent(player);
     }
 
     private boolean satisfiedConditionByDealer(Dealer dealer) {
-        return dealer.isNotUp();
+        return dealer.ableToDraw();
     }
 
     private boolean agreeIntent(Player player) {

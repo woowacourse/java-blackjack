@@ -78,7 +78,7 @@ class DealerTest {
 
         // when
         // then
-        Assertions.assertThat(dealer.isNotUp()).isTrue();
+        Assertions.assertThat(dealer.ableToDraw()).isTrue();
     }
 
     @Test
@@ -97,6 +97,6 @@ class DealerTest {
         // when
         // then
         System.out.println(dealer.getScore());
-        Assertions.assertThat(dealer.isNotUp()).isFalse();
+        Assertions.assertThat(dealer.ableToDraw()).isFalse();
     }
 }

@@ -17,6 +17,11 @@ public class Player extends Participant {
     }
 
     @Override
+    public boolean ableToDraw() {
+        return getScore() < BLACK_JACK_SCORE;
+    }
+
+    @Override
     public String getNickname() {
         return nickname.getValue();
     }

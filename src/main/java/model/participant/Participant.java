@@ -20,20 +20,18 @@ public abstract class Participant {
     }
 
     private void adjustScoreIfNeeded() {
-        if (canHit() || isBlackjack()) {
+        if (ableToDraw() || isBlackjack()) {
             return;
         }
         for (Card card : hands) {
             card.findAdjustOrDefaultScore();
-            if (canHit() || isBlackjack()) {
+            if (ableToDraw() || isBlackjack()) {
                 return;
             }
         }
     }
 
-    public boolean canHit() {
-        return getScore() < BLACK_JACK_SCORE;
-    }
+    public abstract boolean ableToDraw();
 
     public boolean isBust() {
         return getScore() > BLACK_JACK_SCORE;
