@@ -135,12 +135,6 @@ class DealerTest {
     }
 
     @Test
-    void 딜러는_승패_횟수를_추적한다() {
-        Dealer dealer = new Dealer(new Hand());
-        assertThat(dealer.tracksWinLossCount()).isTrue();
-    }
-
-    @Test
     void 딜러는_첫번째_카드만_공개해야_한다() {
         Dealer dealer = new Dealer(new Hand());
         assertThat(dealer.shouldRevealSingleCard()).isTrue();

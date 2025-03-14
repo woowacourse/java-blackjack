@@ -126,12 +126,6 @@ class PlayerTest {
     }
 
     @Test
-    void 플레이어는_승패_횟수를_세지_않는다() {
-        Player player = new Player("히로", new Hand());
-        assertThat(player.tracksWinLossCount()).isFalse();
-    }
-
-    @Test
     void 플레이어는_첫번째_카드만을_공개하지_않는다() {
         Player player = new Player("히로", new Hand());
         assertThat(player.shouldRevealSingleCard()).isFalse();

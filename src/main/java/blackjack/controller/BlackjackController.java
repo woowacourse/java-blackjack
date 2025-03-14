@@ -1,14 +1,15 @@
 package blackjack.controller;
 
+import blackjack.domain.card.Deck;
+import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.Dealer;
+import blackjack.domain.game.GameRuleEvaluator;
 import blackjack.domain.game.Hand;
 import blackjack.domain.game.Participant;
 import blackjack.domain.game.Participants;
 import blackjack.domain.game.Player;
-import blackjack.domain.card.Deck;
+import blackjack.domain.result.Judge;
 import blackjack.domain.result.ParticipantResults;
-import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.game.GameRuleEvaluator;
 import blackjack.view.Confirmation;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -17,20 +18,21 @@ import java.util.List;
 public class BlackjackController {
 
     private final GameRuleEvaluator gameRuleEvaluator;
-    private final BlackjackGame blackjackGame;
+    private final Judge judge;
 
-    public BlackjackController(GameRuleEvaluator gameRuleEvaluator) {
+    public BlackjackController(GameRuleEvaluator gameRuleEvaluator, Judge judge) {
         this.gameRuleEvaluator = gameRuleEvaluator;
-        this.blackjackGame = new BlackjackGame(new Deck(), new ParticipantResults());
+        this.judge = judge;
     }
 
     public void run() {
         List<String> names = InputView.readNames();
-
         Participants participants = saveParticipants(names);
 
-        giveStartingCards(participants);
-        participants.getParticipants().forEach(this::giveMoreCard);
+        BlackjackGame blackjackGame = new BlackjackGame(new Deck(), participants);
+        giveStartingCards(blackjackGame);
+
+        participants.getParticipants().forEach(participant -> giveMoreCard(participant, blackjackGame));
 
         ParticipantResults participantResults = calculateResultOfParticipants(participants);
 
@@ -38,15 +40,15 @@ public class BlackjackController {
         OutputView.printGameResult(participantResults);
     }
 
-    private void giveMoreCard(Participant participant) {
+    private void giveMoreCard(Participant participant, BlackjackGame blackjackGame) {
         if (participant.canDecideToTakeMoreCard()) {
-            takeCardsAsLongAsWanted(participant);
+            takeCardsAsLongAsWanted(participant, blackjackGame);
             return;
         }
-        takeCardManually(participant);
+        takeCardManually(participant, blackjackGame);
     }
 
-    private void takeCardsAsLongAsWanted(Participant participant) {
+    private void takeCardsAsLongAsWanted(Participant participant, BlackjackGame blackjackGame) {
         Confirmation confirmation = InputView.askToGetMoreCard(participant);
         if (confirmation.equals(Confirmation.N)) {
             OutputView.printCardResult(participant);
@@ -62,26 +64,27 @@ public class BlackjackController {
         }
 
         if (participant.ableToTakeMoreCards()) {
-            giveMoreCard(participant);
+            giveMoreCard(participant, blackjackGame);
         }
     }
 
-    private void takeCardManually(Participant participant) {
+    private void takeCardManually(Participant participant, BlackjackGame blackjackGame) {
         while (participant.ableToTakeMoreCards()) {
             OutputView.printMoreCard();
             blackjackGame.giveMoreCard(participant);
         }
     }
 
-    private void giveStartingCards(Participants participants) {
-        blackjackGame.giveStartingCards(participants);
 
-        OutputView.printStartingCardsStatuses(participants);
+    private void giveStartingCards(BlackjackGame blackjackGame) {
+        blackjackGame.giveStartingCards();
+
+        OutputView.printStartingCardsStatuses(blackjackGame.getParticipants());
     }
 
     private ParticipantResults calculateResultOfParticipants(Participants participants) {
-        blackjackGame.calculateAllResults(participants, gameRuleEvaluator);
-        return blackjackGame.getParticipantResults();
+        judge.calculateAllResults(participants, gameRuleEvaluator);
+        return judge.getParticipantResults();
     }
 
     private Participants saveParticipants(List<String> names) {
