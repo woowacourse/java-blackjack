@@ -2,7 +2,7 @@ package domain.gamer;
 
 import java.util.Objects;
 
-public class Nickname {
+public class Nickname implements Comparable<Nickname> {
 
     private static final String REGEX = "^[a-zA-Z가-힣]{2,5}$";
     private final String displayName;
@@ -34,5 +34,10 @@ public class Nickname {
     @Override
     public int hashCode() {
         return Objects.hashCode(getDisplayName());
+    }
+
+    @Override
+    public int compareTo(final Nickname o) {
+        return this.displayName.compareTo(o.getDisplayName());
     }
 }
