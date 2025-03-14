@@ -20,6 +20,10 @@ public abstract class Gamer {
         return hand.isBust();
     }
 
+    public boolean isImPossibleDrawCard() {
+        return hand.isImPossibleDrawCard();
+    }
+
     public void receiveInitialCards(final List<Card> cards) {
         cards.forEach(hand::add);
     }
