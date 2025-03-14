@@ -1,7 +1,7 @@
 package blackjack.dto.response;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import blackjack.domain.gamer.Gamer;
 
@@ -10,9 +10,10 @@ public record ProfitResponseDto(
 ) {
 
     public static ProfitResponseDto of(Map<Gamer, Double> profits) {
-        return new ProfitResponseDto(profits.entrySet().stream()
-            .collect(Collectors.toMap(
-                profit -> profit.getKey().getName(),
-                Map.Entry::getValue)));
+        Map<String, Double> converted = new LinkedHashMap<>();
+        for (var profit : profits.entrySet()) {
+            converted.put(profit.getKey().getName(), profit.getValue());
+        }
+        return new ProfitResponseDto(converted);
     }
 }
