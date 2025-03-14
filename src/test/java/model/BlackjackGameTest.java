@@ -24,8 +24,8 @@ class BlackjackGameTest {
 
     private Deck deck;
     private Cards pobiCards;
-    private Players players;
     private DealerCards dealerCards;
+    private Participants participants;
     private BlackjackGame blackjackGame;
 
     @BeforeEach
@@ -37,15 +37,15 @@ class BlackjackGameTest {
                 new Card(CardNumber.TEN, CardShape.DIAMOND)))
         );
 
-        players = new Players(Map.of("pobi", pobiCards));
-
         dealerCards = new DealerCards(new ArrayList<>(List.of(
                 new Card(CardNumber.KING, CardShape.SPADE),
                 new Card(CardNumber.FIVE, CardShape.SPADE),
                 new Card(CardNumber.QUEEN, CardShape.SPADE)))
         );
 
-        blackjackGame = new BlackjackGame(deck, players, dealerCards);
+        participants = new Participants(dealerCards, Map.of("pobi", pobiCards));
+
+        blackjackGame = new BlackjackGame(deck, participants);
     }
 
     @DisplayName("플레이어 이름에 해당하는 플레이어의 Cards를 찾아 반환한다.")
@@ -82,10 +82,11 @@ class BlackjackGameTest {
                 new Card(CardNumber.QUEEN, CardShape.CLOVER)
         )));
         BlackjackGame blackjackGame = new BlackjackGame(
-                deck, new Players(Map.of(
-                "pobi", pobiCards,
-                "hotteok", hotteokCards)), dealerCards
-        );
+                deck, new Participants(
+                dealerCards,
+                Map.of("pobi", pobiCards,
+                        "hotteok", hotteokCards)
+        ));
 
         assertAll(
                 () -> assertThat(blackjackGame.checkIsBustByName("pobi")).isFalse(),
@@ -112,7 +113,7 @@ class BlackjackGameTest {
         map.put("hotteok", hotteokCards);
 
         BlackjackGame blackjackGame = new BlackjackGame(
-                deck, new Players(map), dealerCards
+                deck, new Participants(dealerCards, map)
         );
         assertThat(blackjackGame.getSequencedPlayerNames())
                 .containsSequence("pobi", "hotteok");
@@ -127,9 +128,10 @@ class BlackjackGameTest {
                 new Card(CardNumber.QUEEN, CardShape.CLOVER)
         )));
         BlackjackGame blackjackGame = new BlackjackGame(
-                deck, new Players(Map.of(
-                "pobi", pobiCards,
-                "hotteok", hotteokCards)), dealerCards
+                deck, new Participants(dealerCards,
+                Map.of(
+                        "pobi", pobiCards,
+                        "hotteok", hotteokCards))
         );
         GameResults gameResults = blackjackGame.calculateGameResults();
         assertAll(

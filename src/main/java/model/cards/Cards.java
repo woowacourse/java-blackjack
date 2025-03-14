@@ -22,6 +22,7 @@ public abstract class Cards {
             throw new IllegalBlackjackStateException("버스트일 때는 카드를 추가할 수 없습니다.");
         }
         cards.add(card);
+        changeAceElevenToOneUntilNotBust();
     }
 
     public boolean isBust() {

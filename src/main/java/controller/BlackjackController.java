@@ -5,7 +5,7 @@ import exception.IllegalBlackjackInputException;
 import exception.IllegalBlackjackStateException;
 import java.util.List;
 import model.BlackjackGame;
-import model.Players;
+import model.Participants;
 import model.cards.Cards;
 import model.cards.DealerCards;
 import model.cards.DealerCardsFactory;
@@ -66,14 +66,15 @@ public class BlackjackController {
     private void printPlayersAndInitialCards(final BlackjackGame blackjackGame) {
         outputView.printNewLine();
         outputView.printPlayers(blackjackGame.getSequencedPlayerNames());
-        printInitialCardsWithName(blackjackGame.getDealerCards(), blackjackGame.getPlayers());
+        printInitialCardsWithName(blackjackGame);
         outputView.printNewLine();
     }
 
-    private void printInitialCardsWithName(final DealerCards dealerCards, final Players players) {
+    private void printInitialCardsWithName(final BlackjackGame blackjackGame) {
+        DealerCards dealerCards = blackjackGame.getDealerCards();
         outputView.printDealerFirstCard(CardDto.from(dealerCards.getFirstCard()));
-        for (String name : players.getNames()) {
-            List<CardDto> playerCardDtos = getCardDtos(players.findCardsByName(name));
+        for (String name : blackjackGame.getSequencedPlayerNames()) {
+            List<CardDto> playerCardDtos = getCardDtos(blackjackGame.getPlayerCardsByName(name));
             outputView.printCardsWithName(name, playerCardDtos);
         }
     }
@@ -114,8 +115,10 @@ public class BlackjackController {
 
     private void printFinalCards(final BlackjackGame blackjackGame) {
         outputView.printNewLine();
-        outputView.printDealerCardsWithResult(getCardDtos(blackjackGame.getDealerCards()),
-                blackjackGame.getDealerResult());
+        outputView.printDealerCardsWithResult(
+                getCardDtos(blackjackGame.getDealerCards()),
+                blackjackGame.getDealerResult()
+        );
 
         blackjackGame.getSequencedPlayerNames().forEach(name -> outputView.printCardsWithNameAndResult(
                 name,
