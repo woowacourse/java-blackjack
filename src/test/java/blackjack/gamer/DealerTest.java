@@ -45,7 +45,7 @@ class DealerTest {
     @Test
     void SpreadOneRandomCard() {
         // given
-        final Dealer dealer = new Dealer(new TestCardRandomMachine());
+        final Dealer dealer = Dealer.getDealer(new TestCardRandomMachine());
 
         // when & then
         assertThat(dealer.spreadOneCard()).extracting("shape").isEqualTo(Shape.CLOB);
@@ -55,7 +55,7 @@ class DealerTest {
     @Test
     void drawEveryCard() {
         // given
-        final Dealer dealer = new Dealer(new CardRandomMachine());
+        final Dealer dealer = Dealer.getDealer(new CardRandomMachine());
 
         // when
         dealer.initCardMachine();
@@ -73,7 +73,7 @@ class DealerTest {
     @Test
     void spreadTwoCards() {
         // given
-        final Dealer dealer = new Dealer(new CardRandomMachine());
+        final Dealer dealer = Dealer.getDealer(new CardRandomMachine());
 
         // when
         dealer.initCardMachine();
@@ -86,7 +86,7 @@ class DealerTest {
     @Test
     void isHit() {
         // given
-        final Dealer dealer = new Dealer(new CardRandomMachine());
+        final Dealer dealer = Dealer.getDealer(new CardRandomMachine());
 
         // when
         dealer.receiveCards(provideSum15Cards());
@@ -99,7 +99,7 @@ class DealerTest {
     @Test
     void updateEarnedMoney() {
         // given
-        final Dealer dealer = new Dealer(new CardRandomMachine());
+        final Dealer dealer = Dealer.getDealer(new CardRandomMachine());
 
         // when
         dealer.updateEarnedMoney(30_000);
@@ -112,7 +112,7 @@ class DealerTest {
     @Test
     void showInitialCards() {
         // given
-        final Dealer dealer = new Dealer(new CardRandomMachine());
+        final Dealer dealer = Dealer.getDealer(new CardRandomMachine());
 
         // when
         dealer.initCardMachine();
@@ -127,7 +127,7 @@ class DealerTest {
     @Test
     void getDealerNickName() {
         // given
-        final Dealer dealer = new Dealer(new CardRandomMachine());
+        final Dealer dealer = Dealer.getDealer(new CardRandomMachine());
 
         // when & then
         assertThat(dealer.getNickName()).isEqualTo("딜러");
@@ -137,7 +137,7 @@ class DealerTest {
     @Test
     void isBust() {
         // given
-        final Dealer dealer = new Dealer(new CardRandomMachine());
+        final Dealer dealer = Dealer.getDealer(new CardRandomMachine());
 
         // when
         dealer.receiveCards(provideSum15Cards());
@@ -150,7 +150,7 @@ class DealerTest {
     @Test
     void isBlackjack() {
         // given
-        final Dealer dealer = new Dealer(new CardRandomMachine());
+        final Dealer dealer = Dealer.getDealer(new CardRandomMachine());
 
         // when
         dealer.receiveCards(provideBlackjackCards());

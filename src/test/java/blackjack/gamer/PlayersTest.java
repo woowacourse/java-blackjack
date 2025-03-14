@@ -12,11 +12,9 @@ class PlayersTest {
     @Test
     void fromString() {
         // given
-        final Players players = new Players();
-        final String names = "엠제이, 포비, 저스틴";
+        final Players players = Players.from("엠제이, 포비, 저스틴");
 
         // when
-        players.from(names);
 
         // then
         assertThat(players.getPlayers()).hasSize(3);
@@ -26,11 +24,10 @@ class PlayersTest {
     @Test
     void fromEmptyString() {
         // given
-        final Players players = new Players();
         final String names = "";
 
         // when && then
-        assertThatCode(() -> players.from(names))
+        assertThatCode(() -> Players.from(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("비어있는 값을 입력했습니다. 다시 입력해주세요.");
     }
@@ -39,11 +36,10 @@ class PlayersTest {
     @Test
     void fromDuplicateNames() {
         // given
-        final Players players = new Players();
         final String names = "엠제이, 엠제이, 포비, 저스틴";
 
         // when & then
-        assertThatCode(() -> players.from(names))
+        assertThatCode(() -> Players.from(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중복된 닉네임이 있습니다. 다시 입력해주세요.");
     }
@@ -52,11 +48,10 @@ class PlayersTest {
     @Test
     void fromOverSixSNametring() {
         // given
-        final Players players = new Players();
         final String names = "엠제이, 칼리, 폰트, 띠용, 강산, 저스틴, 포비";
 
         // when && then
-        assertThatCode(() -> players.from(names))
+        assertThatCode(() -> Players.from(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("적정 인원을 초과했습니다. 다시 입력해주세요.");
     }

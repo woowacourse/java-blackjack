@@ -21,16 +21,18 @@ class BlackjackTest {
     @Test
     void deal() {
         // given
-        final Dealer dealer = new Dealer(new CardRandomMachine());
-        final Players players = new Players();
-        players.addPlayersFrom("엠제이, 밍트");
-        final Blackjack blackjack = new Blackjack(dealer, players);
+        final Dealer dealer = Dealer.getDealer(new CardRandomMachine());
+        final Players players = Players.from("엠제이, 밍트");
+        final Blackjack blackjack = new Blackjack();
 
         // when
-        blackjack.initDealer();
+        dealer.initCardMachine();
+
         final Player player1 = players.getPlayers().get(0);
         final Player player2 = players.getPlayers().get(1);
-        blackjack.deal();
+
+        blackjack.spreadInitCardsToDealer(dealer);
+        blackjack.spreadInitCardsToPlayers(dealer, players);
 
         // then
         assertAll(
@@ -44,27 +46,25 @@ class BlackjackTest {
     @Test
     void isPush() {
         // given
-        final Dealer dealer = new Dealer(new CardRandomMachine());
-        final Players players = new Players();
-        players.addPlayersFrom("엠제이, 밍트");
+        final Blackjack blackjack = new Blackjack();
+        final Dealer dealer = Dealer.getDealer(new CardRandomMachine());
+        final Players players = Players.from("엠제이, 밍트");
 
         dealer.receiveCards(provideBlackjackCards());
         final Player player1 = players.getPlayers().getFirst();
         player1.receiveCards(provideBlackjackCards());
 
-        final Blackjack blackjack = new Blackjack(dealer, players);
-
         // when & then
-        assertThat(blackjack.isPush()).isTrue();
+        assertThat(blackjack.isPush(dealer, players)).isTrue();
     }
 
     @DisplayName("승, 패, 무, 블랙잭 상황의 플레이어들의 승패를 계산한다.")
     @Test
     void calculateWinningResult() {
         // given
-        final Dealer dealer = new Dealer(new CardRandomMachine());
-        final Players players = new Players();
-        players.addPlayersFrom("엠제이, 밍트, 리원, 포스티");
+        final Blackjack blackjack = new Blackjack();
+        final Dealer dealer = Dealer.getDealer(new CardRandomMachine());
+        final Players players = Players.from("엠제이, 밍트, 리원, 포스티");
 
         final Player player1 = players.getPlayers().get(0);
         final Player player2 = players.getPlayers().get(1);
@@ -77,10 +77,8 @@ class BlackjackTest {
         player3.receiveCards(provideSum17Cards());
         player4.receiveCards(provideSum18Cards());
 
-        final Blackjack blackjack = new Blackjack(dealer, players);
-
         // when & then
-        assertThat(blackjack.calculateWinningResult()).isEqualTo(
+        assertThat(blackjack.calculateWinningResult(false, dealer, players)).isEqualTo(
                 Map.of(
                         player1, WinningStatus.BLACKJACK,
                         player2, WinningStatus.WIN,
@@ -94,9 +92,9 @@ class BlackjackTest {
     @Test
     void calculateWinningResultWhenPush() {
         // given
-        final Dealer dealer = new Dealer(new CardRandomMachine());
-        final Players players = new Players();
-        players.addPlayersFrom("엠제이, 밍트, 리원, 포스티");
+        final Blackjack blackjack = new Blackjack();
+        final Dealer dealer = Dealer.getDealer(new CardRandomMachine());
+        final Players players = Players.from("엠제이, 밍트, 리원, 포스티");
 
         final Player player1 = players.getPlayers().get(0);
         final Player player2 = players.getPlayers().get(1);
@@ -109,10 +107,8 @@ class BlackjackTest {
         player3.receiveCards(provideSum17Cards());
         player4.receiveCards(provideSum18Cards());
 
-        final Blackjack blackjack = new Blackjack(dealer, players);
-
         // when & then
-        assertThat(blackjack.calculateWinningResult()).isEqualTo(
+        assertThat(blackjack.calculateWinningResult(true, dealer, players)).isEqualTo(
                 Map.of(
                         player1, WinningStatus.PUSH,
                         player2, WinningStatus.LOSE,

@@ -23,7 +23,7 @@ class PlayerTest {
     @Test
     void showInitialCards() {
         // given
-        final Dealer dealer = new Dealer(new CardRandomMachine());
+        final Dealer dealer = Dealer.getDealer(new CardRandomMachine());
 
         // when
         dealer.initCardMachine();
