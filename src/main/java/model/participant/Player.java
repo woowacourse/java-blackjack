@@ -8,10 +8,6 @@ public class Player extends Participant {
         this.name = name;
     }
 
-    public boolean checkBlackjack() {
-        return getParticipantHand().checkBlackjack();
-    }
-
     public String getName() {
         return name;
     }
