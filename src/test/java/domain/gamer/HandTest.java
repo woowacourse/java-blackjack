@@ -6,43 +6,24 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import domain.deck.Card;
 import domain.deck.Rank;
 import domain.deck.Shape;
-import java.util.ArrayList;
-import java.util.List;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class HandTest {
 
-    private List<Card> cards;
-    private Card card1;
-    private Card card2;
-    private Card card3;
-    private Card card4;
-    private Card card5;
-    private Card card6;
-    private Card card7;
-    private Card card8;
-    private Card card9;
-    private Card card10;
-
+    private Card card1 = new Card(Rank.ACE, Shape.CLOVER);
+    private Card card2 = new Card(Rank.TWO, Shape.CLOVER);
+    private Card card3 = new Card(Rank.THREE, Shape.CLOVER);
+    private Card card4 = new Card(Rank.FOUR, Shape.CLOVER);
+    private Card card5 = new Card(Rank.FIVE, Shape.CLOVER);
+    private Card card6 = new Card(Rank.SIX, Shape.CLOVER);
+    private Card card7 = new Card(Rank.SEVEN, Shape.CLOVER);
+    private Card card8 = new Card(Rank.EIGHT, Shape.CLOVER);
+    private Card card9 = new Card(Rank.NINE, Shape.CLOVER);
+    private Card card10 = new Card(Rank.JACK, Shape.CLOVER);
     private Hand hand;
 
-    @BeforeEach
-    void setUp() {
-        cards = new ArrayList<>();
-        card1 = new Card(Rank.ACE, Shape.CLOVER);
-        card2 = new Card(Rank.TWO, Shape.CLOVER);
-        card3 = new Card(Rank.THREE, Shape.CLOVER);
-        card4 = new Card(Rank.FOUR, Shape.CLOVER);
-        card5 = new Card(Rank.FIVE, Shape.CLOVER);
-        card6 = new Card(Rank.SIX, Shape.CLOVER);
-        card7 = new Card(Rank.SEVEN, Shape.CLOVER);
-        card8 = new Card(Rank.EIGHT, Shape.CLOVER);
-        card9 = new Card(Rank.NINE, Shape.CLOVER);
-        card10 = new Card(Rank.JACK, Shape.CLOVER);
-    }
 
     @DisplayName("카드를 손에 추가한다.")
     @Test
@@ -124,6 +105,4 @@ class HandTest {
         // when & then
         assertThat(hand.hasAce()).isFalse();
     }
-
-
 }

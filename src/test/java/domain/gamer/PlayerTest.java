@@ -7,7 +7,6 @@ import domain.deck.Card;
 import domain.deck.Rank;
 import domain.deck.Shape;
 import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,14 +14,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class PlayerTest {
 
-    private Player player;
-    private Card card;
-
-    @BeforeEach
-    void setUp() {
-        player = new Player(new Nickname("hihi"));
-        card = new Card(Rank.SIX, Shape.CLOVER);
-    }
+    private Player player = new Player(new Nickname("hihi"));
 
     @DisplayName("플레이어의 카드 합을 구한다.")
     @Test

@@ -15,26 +15,16 @@ import org.junit.jupiter.api.Test;
 
 class FinalResultTest {
 
-    Player player1;
-    Player player2;
-    Player player3;
-    Dealer dealer;
-
-    Card card1;
-    Card card2;
-    Card card3;
+    private Player player1 = new Player(new Nickname("체체"));
+    private Player player2 = new Player(new Nickname("새로이"));
+    private Player player3 = new Player(new Nickname("체로이"));
+    private Dealer dealer = new Dealer(new Nickname("딜러"));
+    private Card card1 = new Card(Rank.KING, Shape.CLOVER);
+    private Card card2 = new Card(Rank.JACK, Shape.CLOVER);
+    private Card card3 = new Card(Rank.ACE, Shape.CLOVER);
 
     @BeforeEach
     void setUp() {
-
-        player1 = new Player(new Nickname("체체"));
-        player2 = new Player(new Nickname("새로이"));
-        player3 = new Player(new Nickname("체로이"));
-        dealer = new Dealer(new Nickname("딜러"));
-        card1 = new Card(Rank.KING, Shape.CLOVER);
-        card2 = new Card(Rank.JACK, Shape.CLOVER);
-        card3 = new Card(Rank.ACE, Shape.CLOVER);
-
         player1.hit(card1);
         player1.hit(card2);
         player1.hit(card3);
