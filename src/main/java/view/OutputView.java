@@ -17,6 +17,8 @@ public class OutputView {
     private static final String DEALER_EXTRA_CARD_FALSE_FORMAT = "%s는 16초과라 한장카드를 더 받지 않았습니다.";
     private static final String GAME_RESULT_HEADER = "## 최종 승패";
     private static final String DEALER_GAME_RESULT_FORMAT = "%d%s";
+    private static final String PLAYER_NAMES_DELIMITER  =",";
+    private static final String CARDS_DELIMITER = ",";
 
     public static void printErrorMessage(String message) {
         System.out.println(message);
@@ -72,7 +74,7 @@ public class OutputView {
     private static String formatPlayerNames(List<ParticipantCardsDto> participantCardsDtos) {
         return participantCardsDtos.stream()
                 .map(ParticipantCardsDto::name)
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining(PLAYER_NAMES_DELIMITER));
     }
 
     private static String formatParticipantCards(ParticipantCardsDto participantCardsDto) {
@@ -133,7 +135,7 @@ public class OutputView {
     private static String formatCards(List<Card> cards) {
         return cards.stream()
                 .map(card -> java.lang.String.format(CARD_FORMAT, card.rank().getName(), card.suit().getName()))
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining(CARDS_DELIMITER));
     }
 
     private static String formatCardsScore(ParticipantCardsDto participantCardsDto) {

@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Player extends Participant {
 
+    private static final int PLAYER_SCORE_THRESHOLD = 21;
+
     protected Player(String name) {
         super(name);
     }
@@ -17,6 +19,6 @@ public class Player extends Participant {
     @Override
     public boolean ableToAddCard() {
         int cardsScore = cards.calculateScore();
-        return cardsScore <= 21;
+        return cardsScore <= PLAYER_SCORE_THRESHOLD;
     }
 }

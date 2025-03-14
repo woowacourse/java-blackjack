@@ -9,6 +9,7 @@ import java.util.List;
 
 public class CardDeck {
 
+    private final static int INITIAL_DISTRIBUTION_COUNT = 2;
     private final Cards cards;
 
     public CardDeck() {
@@ -27,7 +28,7 @@ public class CardDeck {
 
     public List<List<Card>> pickInitialCardsStack(int stackSize) {
         List<List<Card>> cardsStack = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < INITIAL_DISTRIBUTION_COUNT; i++) {
             List<Card> cards = pickInitialCards(stackSize);
             cardsStack.add(cards);
         }

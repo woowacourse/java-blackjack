@@ -8,6 +8,12 @@ import exception.ExceptionHandler;
 
 public class InputView {
 
+    private static final String ADD_PLAYER_CARD_FORMAT = "%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)";
+    private static final String YES_OR_NO_FORMAT = "%s 또는 %s만 입력해주세요.";
+    private static final String YES_KEY = "y";
+    private static final String NO_KEY = "n";
+    private static final String PLAYER_NAMES_DELIMITER  =",";
+
     private static final Scanner scanner = new Scanner(System.in);
 
     public static List<String> readPlayerNames() {
@@ -17,9 +23,9 @@ public class InputView {
 
     public static boolean readAddPlayerCard(String name) {
         return ExceptionHandler.repeatUntilSuccess(() -> {
-            String response = prompt(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name));
+            String response = prompt(String.format(ADD_PLAYER_CARD_FORMAT, name, YES_KEY, NO_KEY));
             validateYesOrNo(response);
-            return response.equals("y");
+            return response.equals(YES_KEY);
         });
     }
 
@@ -29,7 +35,7 @@ public class InputView {
     }
 
     private static List<String> validateAndParsePlayerNames(String response) {
-        List<String> playerNames = Arrays.asList(response.split(",", -1));
+        List<String> playerNames = Arrays.asList(response.split(PLAYER_NAMES_DELIMITER, -1));
         validatePlayerNamesBlank(playerNames);
         validatePlayerNamesSize(playerNames);
         return playerNames;
@@ -54,8 +60,8 @@ public class InputView {
     }
 
     private static void validateYesOrNo(String response) {
-        if (!response.equals("y") && !response.equals("n")) {
-            throw new ErrorException("y 또는 n만 입력해주세요.");
+        if (!response.equals(YES_KEY) && !response.equals(NO_KEY)) {
+            throw new ErrorException(String.format(YES_OR_NO_FORMAT, YES_KEY, NO_KEY));
         }
     }
 }

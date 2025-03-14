@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Dealer extends Participant  {
 
+    private static final int DEALER_SCORE_THRESHOLD = 16;
+
     protected Dealer() {
         super("딜러");
     }
@@ -18,6 +20,6 @@ public class Dealer extends Participant  {
     @Override
     public boolean ableToAddCard() {
         int cardsScore = cards.calculateScore();
-        return cardsScore <= 16;
+        return cardsScore <= DEALER_SCORE_THRESHOLD;
     }
 }

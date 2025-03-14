@@ -7,6 +7,8 @@ import java.util.List;
 
 public class Cards {
 
+    private static final int ACE_SCORE_DIFFERENCE = 10;
+    private static final int CARDS_BUST_THRESHOLD = 21;
     private final List<Card> cards;
 
     public Cards() {
@@ -22,8 +24,8 @@ public class Cards {
                 .map(card -> card.rank().getValue())
                 .reduce(0, Integer::sum);
         int aceCount = calculateAceCount();
-        while (aceCount-- > 0 && !isGameOver(score + 10)) {
-            score += 10;
+        while (aceCount-- > 0 && !isGameOver(score + ACE_SCORE_DIFFERENCE)) {
+            score += ACE_SCORE_DIFFERENCE;
         }
         return score;
     }
@@ -76,6 +78,6 @@ public class Cards {
     }
 
     private boolean isGameOver(int score) {
-        return score > 21;
+        return score > CARDS_BUST_THRESHOLD;
     }
 }
