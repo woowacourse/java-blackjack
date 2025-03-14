@@ -11,26 +11,6 @@ import org.junit.jupiter.api.Test;
 
 public class DealerTest {
     @Test
-    @DisplayName("딜러는 고유 숫자값 총합이 16이하 여부를 반환 - 이상일 때")
-    void test1() {
-        Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Denomination.JACK, Suit.SPADE));
-        dealer.addCard(new Card(Denomination.TEN, Suit.SPADE));
-
-        assertThat(dealer.isBelowThreshold()).isFalse();
-    }
-
-    @Test
-    @DisplayName("딜러는 고유 숫자값 총합이 16이하 여부를 반환 - 이하일 때")
-    void test2() {
-        Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Denomination.TWO, Suit.SPADE));
-        dealer.addCard(new Card(Denomination.TEN, Suit.SPADE));
-
-        assertThat(dealer.isBelowThreshold()).isTrue();
-    }
-
-    @Test
     @DisplayName("딜러는 카드를 받으면 첫번째 카드를 공개할 수 있다.")
     void test3() {
         Dealer dealer = new Dealer();

@@ -8,14 +8,10 @@ import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
-import domain.result.WinLossResult;
 
-import java.util.EnumMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
-
-import static domain.participant.Dealer.THRESHOLD;
 
 public class OutputView {
     private static final Map<Denomination, String> DENOMINATION_NAME_MAP = Map.ofEntries(
@@ -33,6 +29,7 @@ public class OutputView {
             Map.entry(Denomination.QUEEN, "Q"),
             Map.entry(Denomination.KING, "K")
     );
+    private static final int THRESHOLD = 16;
 
     public static void printDistributeResult(Players players, Dealer dealer) {
         StringBuilder stringBuilder = new StringBuilder();

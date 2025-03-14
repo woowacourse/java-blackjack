@@ -2,6 +2,7 @@ package controller;
 
 import domain.bet.BetMoney;
 import domain.bet.BettingPool;
+import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
@@ -19,22 +20,20 @@ public class BlackJackController {
 
     private static final String DELIMITER = ",";
     private static final String YES = "y";
+    private static final int THRESHOLD = 16;
 
     private final Dealer dealer = new Dealer();
+    private final Deck deck = new Deck();
 
     public void play() {
         try {
             Players players = enterPlayer();
             BettingPool bettingPool = betMoneyPlayers(players);
-
             distributeCards(players);
-
             playersTurn(players);
             dealerTurn();
 
-            OutputView.printDealerExtraCardsCount(dealer.getName(), dealer.getExtraHandSize());
-            OutputView.printEveryOneCardsNamesWithTotal(players, dealer);
-            printResult(bettingPool);
+            printResult(players, bettingPool);
         } catch (IllegalArgumentException e) {
             OutputView.printExceptionMessage(e);
         }
@@ -59,7 +58,8 @@ public class BlackJackController {
     }
 
     private void distributeCards(final Players players) {
-        dealer.shuffleDeck();
+        deck.shuffle();
+
         drawTwoCardFromDeck(dealer);
         for (Player player : players.getPlayers()) {
             drawTwoCardFromDeck(player);
@@ -68,8 +68,8 @@ public class BlackJackController {
     }
 
     private void drawTwoCardFromDeck(final Participant participant) {
-        participant.addCard(dealer.drawCard());
-        participant.addCard(dealer.drawCard());
+        participant.addCard(deck.draw());
+        participant.addCard(deck.draw());
     }
 
     private void playersTurn(final Players players) {
@@ -78,18 +78,19 @@ public class BlackJackController {
         }
     }
 
-    private void playerTurn(final Player player) { //player도 객체 안에 물어보기
-        playTurn(player, () -> InputView.getYnInput(player).equalsIgnoreCase(YES));
+    private void playerTurn(final Player player) {
+        playTurn(player, () -> !player.isMaxScore() && InputView.getYnInput(player).equalsIgnoreCase(YES));
     }
 
     private void dealerTurn() {
-        playTurn(dealer, dealer::isBelowThreshold);
+        playTurn(dealer, () -> dealer.getHandTotal() <= THRESHOLD);
     }
 
     private void playTurn(final Participant participant, final Supplier<Boolean> shouldDrawMore) {
         if (participant.isMaxScore()) return;
+
         boolean isAlive = participant.resolveBust();
-        while (isAlive && !participant.isMaxScore() && shouldDrawMore.get()) { //TODO: dealer는 isMaxScore()가 필요 없음
+        while (isAlive && shouldDrawMore.get()) {
             isAlive = drawAdditionalCard(participant);
         }
         if (!isAlive) {
@@ -97,20 +98,23 @@ public class BlackJackController {
         }
     }
 
-    private static void handleBust(final Participant participant) {
-        participant.applyBustPenalty();
-        OutputView.printBust();
-    }
-
     private boolean drawAdditionalCard(final Participant participant) {
-        participant.addCard(dealer.drawCard());
+        participant.addCard(deck.draw());
         if (participant.getClass().equals(Player.class)) {
             OutputView.printHandCardsNames(participant.getName(), participant.getHand());
         }
         return participant.resolveBust();
     }
 
-    private void printResult(final BettingPool bettingPool) {
+    private static void handleBust(final Participant participant) {
+        participant.applyBustPenalty();
+        OutputView.printBust();
+    }
+
+    private void printResult(final Players players, final BettingPool bettingPool) {
+        OutputView.printDealerExtraCardsCount(dealer.getName(), dealer.getExtraHandSize());
+        OutputView.printEveryOneCardsNamesWithTotal(players, dealer);
+
         Map<String,BetMoney> playerProfits =  bettingPool.computePlayersProfit(dealer);
 
         OutputView.printAllResult(playerProfits, dealer.getName());
