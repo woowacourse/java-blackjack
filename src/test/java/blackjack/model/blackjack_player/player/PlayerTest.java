@@ -34,6 +34,15 @@ class PlayerTest {
                         new BlackJackCards(
                                 List.of(
                                         createCard(CardNumber.TEN),
+                                        createCard(CardNumber.ACE)
+                                )
+                        ),
+                        false
+                ),
+                Arguments.of(
+                        new BlackJackCards(
+                                List.of(
+                                        createCard(CardNumber.TEN),
                                         createCard(CardNumber.FIVE),
                                         createCard(CardNumber.SIX)
                                 )

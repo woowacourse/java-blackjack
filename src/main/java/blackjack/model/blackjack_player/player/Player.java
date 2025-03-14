@@ -19,7 +19,7 @@ public final class Player {
     }
 
     public boolean canReceiveMoreCard() {
-        return getMinimumPoint() < DRAWABLE_POINT;
+        return getOptimalPoint() < DRAWABLE_POINT;
     }
 
     public int getBettingMoney() {
