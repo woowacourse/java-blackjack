@@ -37,6 +37,15 @@ public class InputView {
         }
     }
 
+    public static String getYnInput(Player player) {
+        System.out.println(player.getName() + ASK_ONE_MORE_CARD_MESSAGE);
+        String ynInput = sc.nextLine();
+        if (!Pattern.matches(YN_REGEX, ynInput)) {
+            throw new IllegalArgumentException(INVALID_YN_INPUT);
+        }
+        return ynInput;
+    }
+
     private static void validatePlayerNames(final String playerNamesInput) {
         if (!Pattern.matches(PLAYER_NAMES_INPUT_REGEX, playerNamesInput)) {
             throw new IllegalArgumentException(INVALID_PLAYER_NAMES_INPUT);
@@ -47,14 +56,5 @@ public class InputView {
         if(parsedBetAmount % BET_AMOUNT_UNIT != 0) {
             throw new IllegalArgumentException(INVALID_BET_AMOUNT_INPUT);
         }
-    }
-
-    public static String getYnInput(Player player) {
-        System.out.println(player.getName() + ASK_ONE_MORE_CARD_MESSAGE);
-        String ynInput = sc.nextLine();
-        if (!Pattern.matches(YN_REGEX, ynInput)) {
-            throw new IllegalArgumentException(INVALID_YN_INPUT);
-        }
-        return ynInput;
     }
 }

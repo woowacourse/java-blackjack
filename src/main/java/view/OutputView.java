@@ -128,19 +128,6 @@ public class OutputView {
                 .append("\n");
     }
 
-    private static Map<WinLossResult, Integer> calculateDealerResult(Map<String, WinLossResult> playerResults) {
-        Map<WinLossResult, Integer> winLossCountResult = new EnumMap<>(WinLossResult.class);
-
-        for (WinLossResult value : WinLossResult.values()) {
-            winLossCountResult.put(value, 0);
-        }
-
-        for (WinLossResult result : playerResults.values()) {
-            winLossCountResult.put(result, winLossCountResult.getOrDefault(result, 0) + 1);
-        }
-        return winLossCountResult;
-    }
-
     private static String mapDenominationToString(final Denomination denomination) {
         return DENOMINATION_NAME_MAP.get(denomination);
     }
