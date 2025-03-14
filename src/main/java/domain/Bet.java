@@ -1,8 +1,12 @@
 package domain;
 
+import domain.participant.Role;
+import java.util.List;
 import java.util.Objects;
 
 public class Bet {
+
+  private static final Bet BET_FOR_LOSE = new Bet(0);
 
   private final int value;
 
@@ -15,7 +19,7 @@ public class Bet {
   }
 
   public Bet lose() {
-    return new Bet(0);
+    return BET_FOR_LOSE;
   }
 
   public Bet push() {
@@ -23,7 +27,38 @@ public class Bet {
   }
 
   public Bet blackjack() {
-    return new Bet((int) (getValue() * 1.5));
+    return new Bet((int) (getValue() * 2.5));
+  }
+
+  public Bet win() {
+    return new Bet(getValue() * 2);
+  }
+
+  public Bet minus(Bet allocated) {
+    return new Bet(value - allocated.getValue());
+  }
+
+  public Bet plus(Bet allocated) {
+    return new Bet(value + allocated.getValue());
+  }
+
+
+  public Bet seekAllocationTotalDifference(final List<Role> calculated) {
+    final var calculatedTotal = calculatedTotal(calculated);
+    return this.minus(calculatedTotal);
+  }
+
+  private Bet calculatedTotal(final List<Role> calculated) {
+    return calculated.stream()
+        .map(Role::getBet)
+        .reduce(Bet::plus)
+        .orElseThrow();
+  }
+
+
+  @Override
+  public String toString() {
+    return value + "";
   }
 
   @Override
@@ -42,6 +77,4 @@ public class Bet {
   public int hashCode() {
     return Objects.hashCode(value);
   }
-
-
 }

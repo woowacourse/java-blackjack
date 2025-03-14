@@ -6,24 +6,18 @@ import domain.participant.Role;
 import java.util.function.Function;
 
 public enum RoundResult {
-  WIN("승", bet -> bet),
-  LOSE("패", Bet::lose),
-  PUSH("무승부", Bet::push),
-  BLACKJACK("블랙잭", Bet::blackjack),
-  NONE("없음", x -> x);
+  WIN(Bet::win),
+  LOSE(Bet::lose),
+  PUSH(Bet::push),
+  BLACKJACK(Bet::blackjack),
+  NONE(x -> x);
 
-  private final String text;
-  private final Function<Bet, Bet> betting;
+  private final Function<Bet, Bet> allocation;
 
-  RoundResult(final String text, Function<Bet, Bet> betting) {
-    this.text = text;
-    this.betting = betting;
+  RoundResult(Function<Bet, Bet> allocation) {
+    this.allocation = allocation;
   }
 
-
-  public String getText() {
-    return text;
-  }
 
   public static RoundResult round(
       final Participant<? extends Role> player,
@@ -56,4 +50,7 @@ public enum RoundResult {
     return RoundResult.LOSE;
   }
 
+  public Bet allocate(Bet other) {
+    return allocation.apply(other);
+  }
 }
