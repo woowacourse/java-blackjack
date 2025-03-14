@@ -39,7 +39,7 @@ public class Participants {
         }
     }
 
-    public List<String> getPlayerNames() {
+    public List<PlayerName> getPlayerNames() {
         return players.stream()
             .map(Player::getName)
             .toList();

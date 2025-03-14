@@ -30,8 +30,8 @@ public class Player {
         return cards.isPossibleToAdd(PLAYER_DISTRIBUTE_CARD_THRESHOLD);
     }
 
-    public String getName() {
-        return playerName.getName();
+    public PlayerName getName() {
+        return playerName;
     }
 
     public CardHand getCards() {

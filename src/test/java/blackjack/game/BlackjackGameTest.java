@@ -5,15 +5,14 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.game.BlackjackGame;
 import blackjack.card.Card;
 import blackjack.card.CardDeck;
 import blackjack.card.Denomination;
 import blackjack.card.Suit;
+import blackjack.game.betting.BetAmount;
 import blackjack.user.Dealer;
 import blackjack.user.Player;
 import blackjack.user.PlayerName;
-import blackjack.user.Wallet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +35,7 @@ class BlackjackGameTest {
                 new PlayerName("sana")
             );
 
-            BlackjackGame game = BlackjackGame.createByPlayerNames(CardDeck.shuffleCardDeck(),
+            BlackjackGame game = BlackjackGame.createWithEmptyBet(CardDeck.shuffleCardDeck(),
                 names);
             List<String> playerNames = game.getParticipants().getPlayerNames();
 
@@ -55,11 +54,11 @@ class BlackjackGameTest {
         @DisplayName("딜러와 플레이어에게 카드를 2장씩 배부할 수 있다.")
         void distributeCardsToDealerAndPlayer() {
             List<PlayerName> names = List.of(new PlayerName("sana"));
-            BlackjackGame game = BlackjackGame.createByPlayerNames(CardDeck.shuffleCardDeck(),
+            BlackjackGame game = BlackjackGame.createWithEmptyBet(CardDeck.shuffleCardDeck(),
                 names);
 
             assertAll(() -> {
-                assertThatCode(game::initCardsToDealer).doesNotThrowAnyException();
+                assertThatCode(game::initCardsToParticipants).doesNotThrowAnyException();
                 assertThatCode(game::initCardsToPlayer).doesNotThrowAnyException();
             });
         }
@@ -76,7 +75,7 @@ class BlackjackGameTest {
 
             List<PlayerName> names = List.of(new PlayerName("sana"));
 
-            BlackjackGame game = BlackjackGame.createByPlayerNames(cardDeck, names);
+            BlackjackGame game = BlackjackGame.createWithEmptyBet(cardDeck, names);
             Player player = game.getParticipants().getPlayers().getFirst();
 
             player.addCards(cardDeck, 2);
@@ -97,8 +96,8 @@ class BlackjackGameTest {
 
             List<PlayerName> names = List.of(new PlayerName("sana"));
 
-            BlackjackGame game = BlackjackGame.createByPlayerNames(cardDeck, names);
-            game.initCardsToDealer();
+            BlackjackGame game = BlackjackGame.createWithEmptyBet(cardDeck, names);
+            game.initCardsToParticipants();
             game.addExtraCardToDealer();
 
             assertThat(game.getParticipants().getDealer().getCards().openCards()).hasSize(3);
@@ -116,7 +115,7 @@ class BlackjackGameTest {
 
             List<PlayerName> names = List.of(new PlayerName("sana"));
 
-            BlackjackGame game = BlackjackGame.createByPlayerNames(cardDeck, names);
+            BlackjackGame game = BlackjackGame.createWithEmptyBet(cardDeck, names);
             Dealer dealer = game.getParticipants().getDealer();
 
             dealer.addCards(cardDeck, 2);
@@ -146,10 +145,10 @@ class BlackjackGameTest {
                 new Card(Suit.SPADE, Denomination.KING)
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
-            Map<PlayerName, Wallet> playerWallet = Map.of(
-                new PlayerName("hula"), Wallet.initialBetting(10000), // 패
-                new PlayerName("sana"), Wallet.initialBetting(10000), // 승(블랙잭)
-                new PlayerName("jason"), Wallet.initialBetting(10000) // 패
+            Map<PlayerName, BetAmount> playerWallet = Map.of(
+                new PlayerName("hula"), BetAmount.initialBetting(10000), // 패
+                new PlayerName("sana"), BetAmount.initialBetting(10000), // 승(블랙잭)
+                new PlayerName("jason"), BetAmount.initialBetting(10000) // 패
             );
             game = BlackjackGame.createByBettingPlayers(cardDeck, playerWallet);
 
