@@ -21,7 +21,7 @@ public class Dealer implements Participant {
     }
 
     @Override
-    public boolean ableToDraw(final int score) {
+    public boolean isAbleToDraw(final int score) {
         return score <= STAY_THRESHOLD;
     }
 
@@ -36,7 +36,7 @@ public class Dealer implements Participant {
     }
 
     @Override
-    public boolean areYouDealer() {
+    public boolean isDealer() {
         return true;
     }
 

@@ -50,7 +50,7 @@ public class BlackJackBoard {
 
     public boolean ableToDraw(Participant participant) {
         Score score = getScoreOf(participant);
-        return participant.ableToDraw(score.getScore());
+        return participant.isAbleToDraw(score.getScore());
     }
 
     public void shufflePlayingCard() {
@@ -65,7 +65,7 @@ public class BlackJackBoard {
     public void calculateBattleResult() {
         Entry<Participant, CardDeck> cardDeckOfDealer = cardDeckOfParticipant.entrySet()
                 .stream()
-                .filter(entry -> entry.getKey().areYouDealer())
+                .filter(entry -> entry.getKey().isDealer())
                 .findFirst()
                 .orElseThrow();
 
@@ -110,13 +110,13 @@ public class BlackJackBoard {
 
     public List<Participant> getPlayers() {
         return cardDeckOfParticipant.keySet().stream()
-                .filter(participant -> !participant.areYouDealer())
+                .filter(participant -> !participant.isDealer())
                 .toList();
     }
 
     public Participant getDealer() {
         return cardDeckOfParticipant.keySet().stream()
-                .filter(Participant::areYouDealer)
+                .filter(Participant::isDealer)
                 .findFirst()
                 .orElseThrow();
     }
@@ -132,7 +132,7 @@ public class BlackJackBoard {
     }
 
     private void updateBattleResultBetween(Participant dealer, Participant participant, Score dealerScore) {
-        if (participant.areYouDealer()) {
+        if (participant.isDealer()) {
             return;
         }
 

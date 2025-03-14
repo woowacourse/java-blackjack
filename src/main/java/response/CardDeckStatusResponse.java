@@ -23,7 +23,7 @@ public record CardDeckStatusResponse(Map<String, List<String>> cardDeckNamesOfPa
 
             List<String> cardDisplayNames = new ArrayList<>(participantCards.stream().map(card -> card.getName() + card.getCardSymbol()).toList());
 
-            if (participant.areYouDealer()) {
+            if (participant.isDealer()) {
                 cardDisplayNames.removeLast();
                 cardDisplayNames.add("\uD83C\uDCA0?");
                 cardDeckNamesOfParticipant.put(participantName, cardDisplayNames);

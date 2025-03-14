@@ -4,10 +4,10 @@ import java.util.Map;
 import object.game.GameResult;
 
 public interface Participant {
-    boolean ableToDraw(final int score);
+    boolean isAbleToDraw(final int score);
     void applyGameRecord(GameResult result);
     void bet(int amount);
-    boolean areYouDealer();
+    boolean isDealer();
     String getNickname();
     Map<GameResult, Integer> getGameRecord();
     int getProfit();
