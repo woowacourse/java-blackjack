@@ -1,4 +1,4 @@
-package blackjack.controller;
+package blackjack.model.game;
 
 public enum HitOrStand {
     HIT("y"),
@@ -23,7 +23,5 @@ public enum HitOrStand {
             return STAND;
         }
         throw new IllegalArgumentException("y 또는 n을 입력해 주세요.");
-
     }
-
 }

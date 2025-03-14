@@ -2,35 +2,35 @@ package blackjack.model.game;
 
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
-import blackjack.model.player.Participants;
 import blackjack.model.player.Player;
+import blackjack.model.player.Players;
 import java.util.Deque;
 import java.util.LinkedList;
 
-public class BlackJackGame {
+public class BlackJackGame2 {
     public static final int ACE_THRESHOLD = 16;
 
     private final Deck deck;
-    private final Participants participants;
+    private final Players players;
     private final Dealer dealer;
-    private final Deque<Participant> readyQueue;
+    private final Deque<Player> readyQueue;
 
-    public BlackJackGame(DeckInitializer deckInitializer, Dealer dealer, Participants participants) {
+    public BlackJackGame2(DeckInitializer deckInitializer, Dealer dealer, Players players) {
         this.deck = deckInitializer.generateDeck();
-        this.participants = participants;
+        this.players = players;
         this.dealer = dealer;
-        this.readyQueue = new LinkedList<>(participants.getParticipants());
+        this.readyQueue = new LinkedList<>(players.getParticipants());
     }
 
     public void initializeGame() {
-        participants.getParticipants()
+        players.getParticipants()
                 .forEach(this::putTowCard);
         putTowCard(dealer);
     }
 
-    private void putTowCard(Player player) {
-        player.putCard(deck.drawCard());
-        player.putCard(deck.drawCard());
+    private void putTowCard(Participant participant) {
+        participant.putCard(deck.drawCard());
+        participant.putCard(deck.drawCard());
     }
 
     public void receiveCard(boolean isReceive) {
@@ -41,7 +41,11 @@ public class BlackJackGame {
         readyQueue.poll();
     }
 
-    public Participant getCurrentTurnParticipant() {
+    public void setBettingMoney(int bettingMoney) {
+
+    }
+
+    public Player getCurrentTurnParticipant() {
         return readyQueue.getFirst();
     }
 

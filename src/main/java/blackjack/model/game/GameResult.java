@@ -12,19 +12,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameResult {
-    private final Map<Player, PlayerResult> winLoseResult;
 
-    public GameResult(Dealer dealer, Players players) {
+    public static Map<Player, PlayerResult> calculateGameResult(Dealer dealer, Players players) {
         Map<Player, PlayerResult> winLoseResult = new HashMap<>();
         players.getParticipants().forEach(
                 participant -> {
                     winLoseResult.put(participant, getParticipantResult(dealer, participant));
                 }
         );
-        this.winLoseResult = winLoseResult;
+        return winLoseResult;
     }
 
-    private PlayerResult getParticipantResult(Dealer dealer, Player player) {
+    private static PlayerResult getParticipantResult(Dealer dealer, Player player) {
         if (player.isBust()) {
             return LOSE;
         }
@@ -48,19 +47,5 @@ public class GameResult {
         return DRAW;
     }
 
-    public Map<Player, PlayerResult> getWinLoseResult() {
-        return winLoseResult;
-    }
 
-    public int getDealerWinCount() {
-        return (int) winLoseResult.values().stream()
-                .filter(result -> result == LOSE)
-                .count();
-    }
-
-    public int getDealerLoseCount() {
-        return (int) winLoseResult.values().stream()
-                .filter(result -> result == WIN)
-                .count();
-    }
 }

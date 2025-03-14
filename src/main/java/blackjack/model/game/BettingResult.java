@@ -37,4 +37,10 @@ public class BettingResult {
     public Map<Player, Integer> getBettingResult() {
         return bettingResult;
     }
+
+    public int getDealerResult() {
+        return bettingResult.values().stream()
+                .mapToInt(Integer::intValue)
+                .sum();
+    }
 }

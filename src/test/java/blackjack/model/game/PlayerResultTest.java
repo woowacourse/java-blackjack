@@ -9,6 +9,7 @@ import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
 import blackjack.model.player.Players;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class PlayerResultTest {
@@ -25,8 +26,8 @@ class PlayerResultTest {
         player1.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_2));
 
         // when
-        GameResult gameResult = new GameResult(dealer, players);
-        PlayerResult result = gameResult.getWinLoseResult().get(player1);
+        Map<Player, PlayerResult> playerPlayerResultMap = GameResult.calculateGameResult(dealer, players);
+        PlayerResult result = playerPlayerResultMap.get(player1);
 
         // then
         assertThat(result).isEqualTo(PlayerResult.LOSE);
@@ -47,8 +48,8 @@ class PlayerResultTest {
         player1.putCard(new Card(CardShape.CLOVER, CardType.KING));
 
         // when
-        GameResult gameResult = new GameResult(dealer, players);
-        PlayerResult result = gameResult.getWinLoseResult().get(player1);
+        Map<Player, PlayerResult> playerPlayerResultMap = GameResult.calculateGameResult(dealer, players);
+        PlayerResult result = playerPlayerResultMap.get(player1);
 
         // then
         assertThat(result).isEqualTo(PlayerResult.LOSE);
@@ -70,8 +71,8 @@ class PlayerResultTest {
         dealer.putCard(new Card(CardShape.CLOVER, CardType.KING));
 
         // when
-        GameResult gameResult = new GameResult(dealer, players);
-        PlayerResult result = gameResult.getWinLoseResult().get(player1);
+        Map<Player, PlayerResult> playerPlayerResultMap = GameResult.calculateGameResult(dealer, players);
+        PlayerResult result = playerPlayerResultMap.get(player1);
 
         // then
         assertThat(result).isEqualTo(PlayerResult.WIN);
@@ -96,9 +97,8 @@ class PlayerResultTest {
         player1.putCard(new Card(CardShape.CLOVER, CardType.KING));
 
         // when
-        GameResult gameResult = new GameResult(dealer, players);
-        PlayerResult result = gameResult.getWinLoseResult().get(player1);
-        // then
+        Map<Player, PlayerResult> playerPlayerResultMap = GameResult.calculateGameResult(dealer, players);
+        PlayerResult result = playerPlayerResultMap.get(player1);        // then
         assertThat(result).isEqualTo(PlayerResult.LOSE);
 
     }

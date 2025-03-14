@@ -9,6 +9,7 @@ import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
 import blackjack.model.player.Players;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -35,10 +36,10 @@ class GameResultTest {
         player1.putCard(new Card(CardShape.HEART, CardType.NORMAL_5)); // 25점, 버스트
 
         // when
-        GameResult gameResult = new GameResult(dealer, players);
-
+        Map<Player, PlayerResult> playerPlayerResultMap = GameResult.calculateGameResult(dealer, players);
+        PlayerResult result = playerPlayerResultMap.get(player1);
         // then
-        assertThat(gameResult.getWinLoseResult().get(player1)).isEqualTo(PlayerResult.LOSE);
+        assertThat(result).isEqualTo(PlayerResult.LOSE);
     }
 
     @Test
@@ -52,10 +53,10 @@ class GameResultTest {
         player1.putCard(new Card(CardShape.SPADE, CardType.QUEEN)); // 10점 -> 총 20점
 
         // when
-        GameResult gameResult = new GameResult(dealer, players);
-
+        Map<Player, PlayerResult> playerPlayerResultMap = GameResult.calculateGameResult(dealer, players);
+        PlayerResult result = playerPlayerResultMap.get(player1);
         // then
-        assertThat(gameResult.getWinLoseResult().get(player1)).isEqualTo(PlayerResult.WIN);
+        assertThat(result).isEqualTo(PlayerResult.WIN);
     }
 
     @Test
@@ -68,10 +69,10 @@ class GameResultTest {
         player1.putCard(new Card(CardShape.SPADE, CardType.NORMAL_8)); // 8점 -> 총 18점
 
         // when
-        GameResult gameResult = new GameResult(dealer, players);
-
+        Map<Player, PlayerResult> playerPlayerResultMap = GameResult.calculateGameResult(dealer, players);
+        PlayerResult result = playerPlayerResultMap.get(player1);
         // then
-        assertThat(gameResult.getWinLoseResult().get(player1)).isEqualTo(PlayerResult.WIN);
+        assertThat(result).isEqualTo(PlayerResult.WIN);
     }
 
     @Test
@@ -84,10 +85,10 @@ class GameResultTest {
         player1.putCard(new Card(CardShape.SPADE, CardType.NORMAL_6)); // 6점 -> 총 16점
 
         // when
-        GameResult gameResult = new GameResult(dealer, players);
-
+        Map<Player, PlayerResult> playerPlayerResultMap = GameResult.calculateGameResult(dealer, players);
+        PlayerResult result = playerPlayerResultMap.get(player1);
         // then
-        assertThat(gameResult.getWinLoseResult().get(player1)).isEqualTo(PlayerResult.LOSE);
+        assertThat(result).isEqualTo(PlayerResult.LOSE);
     }
 
     @Test
@@ -100,30 +101,10 @@ class GameResultTest {
         player1.putCard(new Card(CardShape.SPADE, CardType.NORMAL_8)); // 8점 -> 총 18점
 
         // when
-        GameResult gameResult = new GameResult(dealer, players);
-
+        Map<Player, PlayerResult> playerPlayerResultMap = GameResult.calculateGameResult(dealer, players);
+        PlayerResult result = playerPlayerResultMap.get(player1);
         // then
-        assertThat(gameResult.getWinLoseResult().get(player1)).isEqualTo(PlayerResult.DRAW);
-    }
-
-    @Test
-    void 딜러의_승패_카운트를_확인한다() {
-        // given
-        dealer.putCard(new Card(CardShape.HEART, CardType.KING)); // 10점
-        dealer.putCard(new Card(CardShape.HEART, CardType.NORMAL_8)); // 8점 -> 총 18점
-
-        player1.putCard(new Card(CardShape.SPADE, CardType.KING)); // 10점
-        player1.putCard(new Card(CardShape.SPADE, CardType.NORMAL_6)); // 6점 -> 총 16점 (패배)
-
-        player2.putCard(new Card(CardShape.DIAMOND, CardType.KING)); // 10점
-        player2.putCard(new Card(CardShape.DIAMOND, CardType.NORMAL_9)); // 9점 -> 총 19점 (승리)
-
-        // when
-        GameResult gameResult = new GameResult(dealer, players);
-
-        // then
-        assertThat(gameResult.getDealerWinCount()).isEqualTo(1);
-        assertThat(gameResult.getDealerLoseCount()).isEqualTo(1);
+        assertThat(result).isEqualTo(PlayerResult.DRAW);
     }
 
 }

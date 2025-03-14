@@ -1,13 +1,13 @@
 package blackjack.view;
 
 import blackjack.model.card.Card;
-import blackjack.model.game.PlayerResult;
 import blackjack.model.game.ReceivedCards;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
 import blackjack.model.player.Player;
 import blackjack.model.player.Players;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -70,23 +70,17 @@ public class OutputView {
         System.out.println("딜러는 17이상이라 더이상 카드를 받을 수 없습니다.");
     }
 
-    public void outputFinalResult(Map<Player, PlayerResult> gameResult, int dealerWin, int dealerLose) {
-        CustomStringBuilder customStringBuilder = new CustomStringBuilder();
-        customStringBuilder.appendLine("## 최종 승패");
-        customStringBuilder.appendLine(String.format("딜러: %d승 %d패", dealerWin, dealerLose));
-        gameResult.keySet()
-                .forEach(
-                        participant -> {
-                            customStringBuilder.appendLine(
-                                    String.format("%s : %s", participant.getName(),
-                                            gameResult.get(participant)));
-                        }
-                );
-        customStringBuilder.print();
-    }
-
-
     public void printParticipantBust(String name) {
         System.out.println(String.format("%s는 bust입니다.", name));
+    }
+
+    public void outputFinalProfit(Map<Player, Integer> bettingResult, int dealerResult) {
+        CustomStringBuilder customStringBuilder = new CustomStringBuilder();
+        customStringBuilder.appendLine("## 최종 수익");
+        customStringBuilder.appendLine(String.format("딜러 : %d", dealerResult));
+        for (Entry<Player, Integer> entry : bettingResult.entrySet()) {
+            customStringBuilder.appendLine(String.format("%s : %d원", entry.getKey().getName(), entry.getValue()));
+        }
+        customStringBuilder.print();
     }
 }
