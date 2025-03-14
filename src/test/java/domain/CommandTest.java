@@ -2,7 +2,6 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -16,8 +15,6 @@ class CommandTest {
     })
     void 입력에_대한_커맨드가_반환된다(final String input, final Command command) {
 
-        // given
-
         //when & then
         assertThat(Command.find(input)).isEqualTo(command);
     }
@@ -29,8 +26,6 @@ class CommandTest {
     })
     void Y가_입력되면_true_아니면_false를_반환한다(final String input, final boolean expected) {
 
-        // given
-
         //when & then
         assertThat(Command.isYes(input)).isEqualTo(expected);
     }
@@ -41,9 +36,6 @@ class CommandTest {
             "N, true", "Y, false"
     })
     void N이_입력되면_true_아니면_false를_반환한다(final String input, final boolean expected) {
-
-        // given
-        final List<Integer> integers = List.of(1, 2, 3, 4, 5);
 
         //when & then
         assertThat(Command.isNo(input)).isEqualTo(expected);

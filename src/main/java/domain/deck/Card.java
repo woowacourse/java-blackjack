@@ -23,8 +23,8 @@ public class Card {
         return shape;
     }
 
-    public String getDisplayName() {
-        return rank.getDisplayName();
+    public Rank getRank() {
+        return rank;
     }
 
     @Override

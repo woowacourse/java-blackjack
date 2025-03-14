@@ -13,15 +13,13 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public enum FinalResult {
-    WIN("승", (sumOfRank, otherSumOfRank) -> sumOfRank > otherSumOfRank),
-    LOSE("패", (sumOfRank, otherSumOfRank) -> sumOfRank < otherSumOfRank),
-    DRAW("무", Integer::equals);
+    WIN((sumOfRank, otherSumOfRank) -> sumOfRank > otherSumOfRank),
+    LOSE((sumOfRank, otherSumOfRank) -> sumOfRank < otherSumOfRank),
+    DRAW(Integer::equals);
 
-    private final String title;
     private final BiPredicate<Integer, Integer> condition;
 
-    FinalResult(final String title, final BiPredicate<Integer, Integer> condition) {
-        this.title = title;
+    FinalResult(final BiPredicate<Integer, Integer> condition) {
         this.condition = condition;
     }
 
@@ -63,9 +61,5 @@ public enum FinalResult {
                         Integer::sum,
                         () -> new EnumMap<>(FinalResult.class)
                 ));
-    }
-
-    public String getTitle() {
-        return title;
     }
 }

@@ -9,9 +9,14 @@ import domain.gamer.Player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 public final class OutputView {
+
+    private static final ResourceBundle FINAL_RESULT_BUNDLE = ResourceBundle.getBundle("finalResult");
+    private static final ResourceBundle SHAPE_BUNDLE = ResourceBundle.getBundle("shape");
+    private static final ResourceBundle RANK_BUNDLE = ResourceBundle.getBundle("rank");
 
     private OutputView() {
     }
@@ -38,7 +43,8 @@ public final class OutputView {
 
     public static void printCardsInHand(final String name, final List<Card> cards) {
         final List<String> cardGroup = cards.stream()
-                .map(card -> card.getDisplayName() + card.getShape().getTitle())
+                .map(card -> RANK_BUNDLE.getString(card.getRank().name()) + SHAPE_BUNDLE.getString(
+                        card.getShape().name()))
                 .toList();
         final String message = String.format("%s카드: %s", name, String.join(", ", cardGroup));
         print(message);
@@ -62,7 +68,8 @@ public final class OutputView {
     private static String getMessage(final Gamer gamer) {
         final List<Card> cards = gamer.getCards();
         final List<String> cardGroup = cards.stream()
-                .map(card -> card.getDisplayName() + card.getShape().getTitle())
+                .map(card -> RANK_BUNDLE.getString(card.getRank().name()) + SHAPE_BUNDLE.getString(
+                        card.getShape().name()))
                 .toList();
         final int result = gamer.calculateSumOfRank();
         return String.format(
@@ -86,7 +93,11 @@ public final class OutputView {
         print(dealerMessage);
 
         playerResults.forEach((player, finalResult) -> {
-            final String playerMessage = String.format("%s: %s", player.getDisplayName(), finalResult.getTitle());
+            final String playerMessage = String.format(
+                    "%s: %s",
+                    player.getDisplayName(),
+                    FINAL_RESULT_BUNDLE.getString(finalResult.name())
+            );
             print(playerMessage);
         });
     }
