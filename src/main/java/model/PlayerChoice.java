@@ -6,7 +6,6 @@ public enum PlayerChoice {
     HIT("hit"),
     STAND("stand"),
     SURRENDER("surrender"),
-    INSURANCE("insurance"),
     DOUBLE_DOWN("double down");
 
     private final String choiceName;
