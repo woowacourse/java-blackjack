@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import card.Card;
 import card.CardHand;
+import money.Money;
 import money.WagerMoney;
 import paticipant.Dealer;
 import paticipant.Participant;
@@ -32,6 +33,7 @@ public class BlackjackManager {
 		outputDealerPickCard(blackjack);
 		outputHandResult(blackjack);
 		blackjack.duel();
+		outputWagerResult(wagerMoney);
 	}
 
 	private void outputDealerPickCard(final Blackjack blackjack) {
@@ -90,8 +92,8 @@ public class BlackjackManager {
 
 	private String convertedCardText(final Card dealerFirstCard) {
 		final String rankText = RankMessage.convertRankToMessage(dealerFirstCard.rank());
-		final String cardsuitText = dealerFirstCard.suit().getName();
-		return rankText + cardsuitText;
+		final String cardSuitText = dealerFirstCard.suit().getName();
+		return rankText + cardSuitText;
 	}
 
 	private void outputPlayersHandResult(final Blackjack blackjack) {
@@ -101,5 +103,18 @@ public class BlackjackManager {
 			final int score = blackjack.calculateScore(participant).value();
 			outputView.printPlayerHandResult(player.getName(), convertedCards, score);
 		}
+	}
+
+	private void outputWagerResult(WagerMoney wagerMoney) {
+		final Map<Player, Money> playerMoney = wagerMoney.calculateWagerResult();
+		outputView.printWagerResult(playerMoney, calculateDealerWagerResult(playerMoney));
+	}
+
+	private Money calculateDealerWagerResult(final Map<Player, Money> playerWagerResult) {
+		Money dealerMoney = new Money(0);
+		for (final Money playerMoney : playerWagerResult.values()) {
+			dealerMoney = dealerMoney.minus(playerMoney);
+		}
+		return dealerMoney;
 	}
 }

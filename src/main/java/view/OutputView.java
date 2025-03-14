@@ -3,6 +3,9 @@ package view;
 import java.util.List;
 import java.util.Map;
 
+import money.Money;
+import paticipant.Player;
+
 public class OutputView {
 	private static final String PLAYER_NAME_DELIMITER = ", ";
 
@@ -36,5 +39,16 @@ public class OutputView {
 	public void printPlayerHandResult(final String name, final List<String> cards, final int score) {
 		final String joinedCards = String.join(PLAYER_NAME_DELIMITER, cards);
 		System.out.printf("%s카드: %s - 결과: %d" + System.lineSeparator(), name, joinedCards, score);
+	}
+
+	public void printWagerResult(final Map<Player, Money> playerWagerResult, final Money dealerWager) {
+		System.out.println("## 최종 수익");
+		System.out.printf("딜러: %d" + System.lineSeparator(), dealerWager.getValue());
+		for (final Map.Entry<Player, Money> playerMoney : playerWagerResult.entrySet()) {
+			System.out.printf("%s: %d" + System.lineSeparator(),
+				playerMoney.getKey().getName(),
+				playerMoney.getValue().getValue()
+			);
+		}
 	}
 }
