@@ -3,6 +3,8 @@ package controller;
 import static domain.GameManager.BLACKJACK_SCORE;
 
 import domain.GameManager;
+import domain.batting.Bet;
+import domain.batting.BettingPool;
 import domain.card.CardDeck;
 import domain.card.CardDeckGenerator;
 import domain.participant.Dealer;
@@ -25,11 +27,16 @@ public class BlackjackController {
     }
 
     public void gameStart() {
+        BettingPool bettingPool = BettingPool.of();
         Dealer dealer = Dealer.of();
-        Players players = initParticipants();
-        Participants participants = Participants.of(dealer, players);
+
+        List<Player> rawPlayers = readPlayers();
+        readPlayersBet(rawPlayers, bettingPool);
+
+        Players players = Players.of(rawPlayers);
         GameManager gameManager = GameManager.of(
-                CardDeck.of(CardDeckGenerator.generateCardDeck()), participants
+                CardDeck.of(CardDeckGenerator.generateCardDeck()),
+                Participants.of(dealer, players)
         );
 
         gameManager.distributeCards();
@@ -42,13 +49,20 @@ public class BlackjackController {
         outputView.printResult(dealer, players);
     }
 
-    private Players initParticipants() {
+    private List<Player> readPlayers() {
         String rawNames = inputView.getPlayerNames();
-        List<Player> players = Arrays.stream(rawNames.split(","))
+        return Arrays.stream(rawNames.split(","))
                 .map(String::trim)
                 .map(Player::of)
                 .toList();
-        return Players.of(players);
+    }
+
+    private void readPlayersBet(List<Player> ps, BettingPool bettingPool) {
+        for (Player p : ps) {
+            String rawBet = inputView.getPlayerBetAmount(p);
+            int betMoney = Integer.parseInt(rawBet);
+            bettingPool.wager(p, Bet.of(betMoney));
+        }
     }
 
     private void drawToPlayers(GameManager gameManager) {
@@ -81,7 +95,7 @@ public class BlackjackController {
 
     private void validateBinaryQuestion(String question) {
         if (question.equals("y") || question.equals("n")) {
-            return ;
+            return;
         }
         throw new IllegalArgumentException("유효하지 않은 입력입니다.");
     }
