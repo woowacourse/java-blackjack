@@ -2,13 +2,18 @@ package blackjack;
 
 import blackjack.controller.BlackjackController;
 import blackjack.factory.SingleDeckFactory;
+import blackjack.view.OutputView;
 
 public class Application {
 
     public static void main(String[] args) {
-        SingleDeckFactory deckFactory = new SingleDeckFactory();
-        BlackjackController blackjackController = new BlackjackController(deckFactory);
+        try {
+            SingleDeckFactory deckFactory = new SingleDeckFactory();
+            BlackjackController blackjackController = new BlackjackController(deckFactory);
 
-        blackjackController.run();
+            blackjackController.run();
+        } catch (Exception e) {
+            OutputView.printError(e);
+        }
     }
 }

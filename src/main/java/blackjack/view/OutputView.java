@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 public final class OutputView {
 
     private static final String DELIMITER = ", ";
+    private static final String ERROR_SIGN = "[ERROR] ";
 
     private OutputView() {
     }
@@ -51,5 +52,9 @@ public final class OutputView {
         System.out.println(LINE_SEPARATOR + "## 최종 수익");
         System.out.printf("딜러: %s%n", -playersTotalRevenue);
         System.out.println(Formatter.parsePlayerRevenue(revenueMap));
+    }
+
+    public static void printError(Exception e) {
+        System.out.println(ERROR_SIGN + e.getMessage());
     }
 }
