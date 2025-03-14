@@ -1,34 +1,30 @@
 package model;
 
-import exception.IllegalBlackjackStateException;
-import java.util.Map;
 import java.util.Set;
-import model.cards.Cards;
+import model.bet.ParticipantsBet;
 import model.cards.DealerCards;
+import model.cards.ParticipantsCards;
 import model.cards.PlayerCards;
 
 public class Participants {
 
-    private final Cards dealerCards;
-    private final Map<String, Cards> playerCards;
+    private final ParticipantsCards participantsCards;
+    private final ParticipantsBet participantsBet;
 
-    public Participants(final Cards dealerCards, final Map<String, Cards> playerCards) {
-        this.dealerCards = dealerCards;
-        this.playerCards = playerCards;
+    public Participants(final ParticipantsCards participantsCards, final ParticipantsBet participantsBet) {
+        this.participantsCards = participantsCards;
+        this.participantsBet = participantsBet;
     }
 
     public DealerCards getDealerCards() {
-        return (DealerCards) dealerCards;
+        return participantsCards.getDealerCards();
     }
 
     public PlayerCards findCardsByName(final String name) {
-        if (!playerCards.containsKey(name)) {
-            throw new IllegalBlackjackStateException("존재하지 않는 플레이어입니다.");
-        }
-        return (PlayerCards) playerCards.get(name);
+        return participantsCards.findCardsByName(name);
     }
 
-    public Set<String> getNames() {
-        return playerCards.keySet();
+    public Set<String> getPlayerNames() {
+        return participantsCards.getNames();
     }
 }

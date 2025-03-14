@@ -6,9 +6,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import model.bet.ParticipantsBet;
 import model.cards.Cards;
 import model.cards.DealerCards;
 import model.cards.DealerCardsFactory;
+import model.cards.ParticipantsCards;
 import model.cards.PlayerCards;
 import model.cards.PlayerCardsFactory;
 import model.deck.Deck;
@@ -47,41 +49,64 @@ public class BlackjackGame {
     }
 
     public Set<String> getSequencedPlayerNames() {
-        return participants.getNames();
+        return participants.getPlayerNames();
     }
 
     public GameResults calculateGameResults() {
-        return new GameResults(participants.getNames().stream()
+        return new GameResults(participants.getPlayerNames().stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
-                        name -> GameResult.determineGameResult(participants.getDealerCards(), participants.findCardsByName(name)
+                        name -> GameResult.determineGameResult(participants.getDealerCards(),
+                                participants.findCardsByName(name)
                         )))
         );
     }
 
     public static BlackjackGame getBlackjackGame(
             final List<String> rawPlayers,
-            final DeckFactory deckFactory,
-            final PlayerCardsFactory playerCardsFactory,
-            final DealerCardsFactory dealerCardsFactory
+            final List<Integer> betAmount
     ) {
+        DeckFactory deckFactory = new DeckFactory();
         Deck deck = new Deck(deckFactory.getInitializedDeck());
-        Participants participants = generatePlayersWithCards(rawPlayers, deck, dealerCardsFactory, playerCardsFactory);
+        Participants participants = generateParticipants(rawPlayers, betAmount, deck);
         return new BlackjackGame(deck, participants);
     }
 
-    private static Participants generatePlayersWithCards(
+    private static Participants generateParticipants(
             final List<String> names,
-            final Deck deck,
-            final DealerCardsFactory dealerCardsFactory,
-            final PlayerCardsFactory playerCardsFactory
+            final List<Integer> betAmount,
+            final Deck deck
     ) {
+        ParticipantsCards participantsCards = generateParticipantsCards(names, deck);
+        ParticipantsBet participantsBet = generateParticipantsBet(names, betAmount);
+
+        return new Participants(participantsCards, participantsBet);
+    }
+
+    private static ParticipantsCards generateParticipantsCards(
+            final List<String> names,
+            final Deck deck
+    ) {
+        DealerCardsFactory dealerCardsFactory = new DealerCardsFactory();
+        PlayerCardsFactory playerCardsFactory = new PlayerCardsFactory();
+
         DealerCards dealerCards = (DealerCards) dealerCardsFactory.generate(deck);
 
         Map<String, Cards> playerCards = new LinkedHashMap<>(names.size());
         names.forEach(name -> playerCards.put(name, playerCardsFactory.generate(deck)));
 
-        return new Participants(dealerCards, playerCards);
+        return new ParticipantsCards(dealerCards, playerCards);
+    }
+
+    private static ParticipantsBet generateParticipantsBet(
+            final List<String> names,
+            final List<Integer> betAmount
+    ) {
+        Map<String, Integer> playerBet = new LinkedHashMap<>(names.size());
+        for (int i = 0; i < names.size(); i++) {
+            playerBet.put(names.get(i), betAmount.get(i));
+        }
+        return new ParticipantsBet(playerBet);
     }
 
     public PlayerCards getPlayerCardsByName(final String name) {

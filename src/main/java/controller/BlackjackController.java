@@ -5,7 +5,6 @@ import exception.IllegalBlackjackInputException;
 import exception.IllegalBlackjackStateException;
 import java.util.List;
 import model.BlackjackGame;
-import model.Participants;
 import model.cards.Cards;
 import model.cards.DealerCards;
 import model.cards.DealerCardsFactory;
@@ -48,9 +47,7 @@ public class BlackjackController {
 
         return BlackjackGame.getBlackjackGame(
                 getPlayerNames(),
-                deckFactory,
-                playerCardsFactory,
-                dealerCardsFactory
+                List.of(1,2,3,4,5) // TODO : 수정 !
         );
     }
 

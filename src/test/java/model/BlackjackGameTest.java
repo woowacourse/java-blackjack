@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import model.bet.ParticipantsBet;
 import model.card.Card;
 import model.card.CardNumber;
 import model.card.CardShape;
 import model.cards.Cards;
 import model.cards.DealerCards;
+import model.cards.ParticipantsCards;
 import model.cards.PlayerCards;
 import model.deck.Deck;
 import model.result.GameResult;
@@ -25,6 +27,8 @@ class BlackjackGameTest {
     private Deck deck;
     private Cards pobiCards;
     private DealerCards dealerCards;
+    private ParticipantsCards participantsCards;
+    private ParticipantsBet participantsBet;
     private Participants participants;
     private BlackjackGame blackjackGame;
 
@@ -43,7 +47,10 @@ class BlackjackGameTest {
                 new Card(CardNumber.QUEEN, CardShape.SPADE)))
         );
 
-        participants = new Participants(dealerCards, Map.of("pobi", pobiCards));
+        participantsCards = new ParticipantsCards(dealerCards, Map.of("pobi", pobiCards));
+        participantsBet = new ParticipantsBet(null); // TODO : 수정 !!
+
+        participants = new Participants(participantsCards, participantsBet);
 
         blackjackGame = new BlackjackGame(deck, participants);
     }
@@ -83,9 +90,11 @@ class BlackjackGameTest {
         )));
         BlackjackGame blackjackGame = new BlackjackGame(
                 deck, new Participants(
-                dealerCards,
-                Map.of("pobi", pobiCards,
-                        "hotteok", hotteokCards)
+                new ParticipantsCards(
+                        dealerCards,
+                        Map.of("pobi", pobiCards,
+                                "hotteok", hotteokCards)
+                ), participantsBet
         ));
 
         assertAll(
@@ -113,7 +122,7 @@ class BlackjackGameTest {
         map.put("hotteok", hotteokCards);
 
         BlackjackGame blackjackGame = new BlackjackGame(
-                deck, new Participants(dealerCards, map)
+                deck, new Participants(new ParticipantsCards(dealerCards, map), participantsBet)
         );
         assertThat(blackjackGame.getSequencedPlayerNames())
                 .containsSequence("pobi", "hotteok");
@@ -128,11 +137,13 @@ class BlackjackGameTest {
                 new Card(CardNumber.QUEEN, CardShape.CLOVER)
         )));
         BlackjackGame blackjackGame = new BlackjackGame(
-                deck, new Participants(dealerCards,
-                Map.of(
-                        "pobi", pobiCards,
-                        "hotteok", hotteokCards))
-        );
+                deck, new Participants(
+                new ParticipantsCards(
+                        dealerCards,
+                        Map.of("pobi", pobiCards,
+                                "hotteok", hotteokCards)
+                ), participantsBet
+        ));
         GameResults gameResults = blackjackGame.calculateGameResults();
         assertAll(
                 () -> assertThat(gameResults.getGameResultByName("pobi")).isEqualTo(GameResult.WIN),
