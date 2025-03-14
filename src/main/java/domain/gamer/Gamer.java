@@ -16,8 +16,6 @@ public abstract class Gamer {
 
     public abstract int calculateSumOfRank();
 
-    public abstract List<Card> getVisibleCardsAtStart();
-
     public boolean isBust() {
         return hand.isBust();
     }
