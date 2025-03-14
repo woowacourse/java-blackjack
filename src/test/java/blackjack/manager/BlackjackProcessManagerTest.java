@@ -7,10 +7,9 @@ import blackjack.domain.Participants;
 import blackjack.domain.Player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
-import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.GameResultType;
-import blackjack.domain.result.PlayerResult;
-import blackjack.domain.result.PlayersResults;
+import blackjack.domain.result.ParticipantResult;
+import blackjack.domain.result.ParticipantResults;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +24,7 @@ class BlackjackProcessManagerTest {
         CardsGenerator cardsGenerator = new CardsGenerator();
         List<Card> cards = cardsGenerator.generate();
         Deck deck = new Deck(cards);
-        blackjackProcessManager = new BlackjackProcessManager(deck, PlayersResults.create());
+        blackjackProcessManager = new BlackjackProcessManager(deck, new ParticipantResults());
     }
 
     @Test
@@ -43,21 +42,25 @@ class BlackjackProcessManagerTest {
         // given
         CardsGenerator cardsGenerator = new CardsGenerator();
         Deck deck = new Deck(cardsGenerator.generate());
-        PlayersResults playersResults = PlayersResults.create();
+        ParticipantResults participantResults = new ParticipantResults();
         Player player = new Player("히로", new Hand());
-
         Dealer dealer = new Dealer(new Hand());
 
-        PlayerResult playerResult = new PlayerResult(player, GameResultType.LOSE, 31);
-        playersResults.save(playerResult);
+        GameRuleEvaluator gameRuleEvaluator = new GameRuleEvaluator();
 
-        BlackjackProcessManager blackjackProcessManager = new BlackjackProcessManager(deck, playersResults);
+        Participants participants = new Participants(List.of(player, dealer));
+
+        ParticipantResult playerResult = new ParticipantResult(player, GameResultType.LOSE, 31);
+        participantResults.add(playerResult);
+
+        BlackjackProcessManager blackjackProcessManager = new BlackjackProcessManager(deck, participantResults);
 
         // when
-        DealerResult dealerResult = blackjackProcessManager.calculateDefenderResult(dealer);
+        blackjackProcessManager.calculateAllResults(participants, gameRuleEvaluator);
 
         // then
-        assertThat(dealerResult.getCountsOfResultTypes().getOrDefault(GameResultType.WIN, 0)).isEqualTo(1);
+        ParticipantResult result = participantResults.findResult(dealer);
+        assertThat(result.getCountsOfResultTypes().getOrDefault(GameResultType.TIE, 0)).isEqualTo(1);
     }
 
     @Test

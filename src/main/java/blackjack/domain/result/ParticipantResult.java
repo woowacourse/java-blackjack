@@ -30,6 +30,14 @@ public class ParticipantResult {
         return participant.equals(this.participant);
     }
 
+    public boolean isResultOfChallenger() {
+        return participant.isChallenger();
+    }
+
+    public Participant getParticipant() {
+        return participant;
+    }
+
     public int getValue() {
         return value;
     }

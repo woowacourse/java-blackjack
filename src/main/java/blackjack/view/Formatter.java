@@ -1,14 +1,13 @@
 package blackjack.view;
 
-import blackjack.domain.Dealer;
 import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
-import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.GameResultType;
-import blackjack.domain.result.PlayerResult;
+import blackjack.domain.result.ParticipantResult;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -21,14 +20,17 @@ public final class Formatter {
     private Formatter() {
     }
 
-    public static String formatPlayerCardResult(PlayerResult playerResult) {
-        String message = formatPlayerCardStatus(playerResult.getPlayer()) + " - 결과: ";
-
-        return message + formatCardResultValue(playerResult);
+    public static String formatPlayerCardResult(ParticipantResult participantResult) {
+        String message = formatPlayerCardStatus(participantResult.getParticipant()) + " - 결과: ";
+        return message + formatCardResultValue(participantResult);
     }
 
-    public static String formatPlayerCardStatus(Player player) {
-        return player.getName() + "카드: " + formatStartingCardStatus(player);
+    public static String formatPlayerCardStatus(Participant participant) {
+        if (participant.doesHaveName()) {
+            Player player = (Player) participant;
+            return player.getName() + "카드: " + formatStartingCardStatus(player);
+        }
+        throw new IllegalArgumentException("해당 참가자는 이름이 없습니다.");
     }
 
     public static String formatMultipleCardStatusWithName(Participant participant) {
@@ -39,40 +41,26 @@ public final class Formatter {
         throw new IllegalArgumentException("이름이 없는 참가자의 상태를 출력할 수 없습니다.");
     }
 
-    public static String formatDealerStartCardStatus(Dealer dealer) {
-        List<Card> cards = dealer.getCards();
-        return "딜러카드: " + Formatter.formatCard(cards.getFirst());
-    }
-
     public static String formatSingleCardStatus(Participant participant) {
         List<Card> cards = participant.getCards();
         return "딜러카드: " + Formatter.formatCard(cards.getFirst());
     }
 
-    // TODO: Dealer 의 결과를 저장하는 기능을 구현한 뒤에 수정하기
-    public static String formatDealerCardResult(Participant participant, DealerResult dealerResult) {
-        return formatDealerCardStatus(participant) + " - 결과: " + formatCardResultValue(dealerResult);
+    public static List<String> formatDefenderCardResult(List<ParticipantResult> participantResults) {
+        return participantResults.stream()
+                .map(result -> formatDefendersCardStatus(result.getParticipant()) + " - 결과: " + formatCardResultValue(
+                        result))
+                .toList();
     }
 
-    private static String formatDealerCardStatus(Participant participant) {
+    private static String formatDefendersCardStatus(Participant participant) {
         return "딜러카드: " + formatStartingCardStatus(participant);
     }
 
-    private static String formatCardResultValue(PlayerResult playerResult) {
-        int value = playerResult.getValue();
+    private static String formatCardResultValue(ParticipantResult participantResult) {
+        int value = participantResult.getValue();
 
         if (value > BUSTED_STANDARD_VALUE) {
-            return "Busted!";
-        }
-
-        return java.lang.String.valueOf(value);
-    }
-
-    private static String formatCardResultValue(DealerResult dealerResult) {
-        int value = dealerResult.getValue();
-
-        // TODO: 매직 넘버 없애기
-        if (value > 21) {
             return "Busted!";
         }
 
@@ -85,21 +73,29 @@ public final class Formatter {
                 .collect(Collectors.joining(", "));
     }
 
-    public static String formatDealerGameResult(DealerResult dealerResult) {
-        Map<GameResultType, Integer> countsOfResultTypes = dealerResult.getCountsOfResultTypes();
+    public static String formatDefenderGameResult(ParticipantResult participantResult) {
+        Map<GameResultType, Integer> countsOfResultTypes = participantResult.getCountsOfResultTypes();
 
         return Arrays.stream(GameResultType.values())
                 .map(gameResultType -> formatResultCount(countsOfResultTypes, gameResultType))
                 .collect(Collectors.joining(" "));
     }
 
-    public static String formatPlayerGameResult(List<PlayerResult> playersResults) {
-        return playersResults.stream()
-                .map(result -> {
-                    String nameOfPlayer = result.getPlayerName();
-                    GameResultType gameResultType = result.getGameResultType();
-                    return nameOfPlayer + ": " + formatGameResult(gameResultType);
-                }).collect(Collectors.joining(System.lineSeparator()));
+    public static String formatChallengerGameResult(List<ParticipantResult> participantResults) {
+        List<String> result = new ArrayList<>();
+
+        for (ParticipantResult participantResult : participantResults) {
+            Player player = (Player) participantResult.getParticipant();
+
+            String nameOfPlayer = player.getName();
+
+            Map<GameResultType, Integer> countsOfResultTypes = participantResult.getCountsOfResultTypes();
+            for (GameResultType gameResultType : countsOfResultTypes.keySet()) {
+                result.add(nameOfPlayer + ": " + formatGameResult(gameResultType));
+            }
+        }
+
+        return result.stream().collect(Collectors.joining(System.lineSeparator()));
     }
 
     private static String formatResultCount(Map<GameResultType, Integer> results, GameResultType gameResultType) {

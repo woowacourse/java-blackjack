@@ -2,6 +2,8 @@ package blackjack.domain.result;
 
 import blackjack.domain.Dealer;
 import blackjack.domain.Hand;
+import blackjack.domain.Player;
+import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import org.junit.jupiter.api.Test;
@@ -35,5 +37,47 @@ class ParticipantResultsTest {
 
         // then
         assertThat(actual).isEqualTo(participantResult);
+    }
+
+    @Test
+    void 챌린저의_결과만_가져온다() {
+        // given
+        Dealer dealer = new Dealer(new Hand());
+        Player player = new Player("히로", new Hand());
+
+        ParticipantResults participantResults = new ParticipantResults();
+
+        ParticipantResult participantResultOfDealer = new ParticipantResult(dealer, GameResultType.LOSE, 19);
+        participantResults.add(participantResultOfDealer);
+
+        ParticipantResult participantResultOfPlayer = new ParticipantResult(player, GameResultType.WIN, 19);
+        participantResults.add(participantResultOfPlayer);
+
+        // when
+        List<ParticipantResult> resultsOfChallenger = participantResults.findResultsOfChallenger();
+
+        // then
+        assertThat(resultsOfChallenger).containsExactly(participantResultOfPlayer);
+    }
+
+    @Test
+    void 디펜더의_결과만_가져온다() {
+        // given
+        Dealer dealer = new Dealer(new Hand());
+        Player player = new Player("히로", new Hand());
+
+        ParticipantResults participantResults = new ParticipantResults();
+
+        ParticipantResult participantResultOfDealer = new ParticipantResult(dealer, GameResultType.LOSE, 19);
+        participantResults.add(participantResultOfDealer);
+
+        ParticipantResult participantResultOfPlayer = new ParticipantResult(player, GameResultType.WIN, 19);
+        participantResults.add(participantResultOfPlayer);
+
+        // when
+        List<ParticipantResult> resultsOfChallenger = participantResults.findResultsOfDefender();
+
+        // then
+        assertThat(resultsOfChallenger).isEqualTo(List.of(participantResultOfDealer));
     }
 }
