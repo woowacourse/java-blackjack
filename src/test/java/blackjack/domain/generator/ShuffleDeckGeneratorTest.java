@@ -3,8 +3,10 @@ package blackjack.domain.generator;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.generator.DeckGenerator;
 import blackjack.domain.card.generator.ShuffleDeckGenerator;
+import java.util.Deque;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,7 +27,7 @@ class ShuffleDeckGeneratorTest {
         // given
 
         // when
-        List<Card> deck = deckGenerator.makeDeck();
+        Deque<Card> deck = deckGenerator.makeDeck();
 
         // then
         assertThat(deck).hasSize(52);

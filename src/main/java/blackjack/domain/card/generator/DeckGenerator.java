@@ -1,9 +1,9 @@
 package blackjack.domain.card.generator;
 
 import blackjack.domain.card.Card;
-import java.util.List;
+import java.util.Deque;
 
 public interface DeckGenerator {
 
-    List<Card> makeDeck();
+    Deque<Card> makeDeck();
 }

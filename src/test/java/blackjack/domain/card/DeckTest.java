@@ -3,7 +3,7 @@ package blackjack.domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import java.util.ArrayList;
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,7 @@ class DeckTest {
     @Test
     void spreadCards() {
         // given
-        final Deck deck = new Deck(() -> new ArrayList<>(Arrays.asList(
+        final Deck deck = new Deck(() -> new ArrayDeque<>(Arrays.asList(
                 new Card(Shape.CLOB, CardScore.A),
                 new Card(Shape.DIAMOND, CardScore.SIX))));
 

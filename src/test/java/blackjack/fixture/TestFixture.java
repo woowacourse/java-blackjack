@@ -9,27 +9,18 @@ import blackjack.domain.card.generator.ShuffleDeckGenerator;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class TestFixture {
 
-    public static class TestDeckGeneratorGenerator implements DeckGenerator {
-
-        private int callingCount = 0;
-
-        @Override
-        public List<Card> makeDeck() {
-            callingCount += 1;
-            if (callingCount == 0 || callingCount == 1) {
-                return List.of(new Card(Shape.DIAMOND, CardScore.TWO));
-            }
-            return List.of(new Card(Shape.DIAMOND, CardScore.THREE));
-        }
-    }
-
     public static Hand provideCards(final int count) {
         DeckGenerator deckGenerator = new ShuffleDeckGenerator();
-        return new Hand(deckGenerator.makeDeck().subList(0, count));
+        Deque<Card> cards = deckGenerator.makeDeck();
+        return new Hand(IntStream.range(0, count)
+                .mapToObj(i -> cards.pollFirst())
+                .toList());
     }
 
     public static Players providePlayers() {
