@@ -22,9 +22,7 @@ public abstract class Participant {
     }
 
     final public void applyAceRule() {
-        if (isBust() && cards.hasSoftAce()) {
-            cards.convertSoftAceToHardAce();
-        }
+        cards.applyAceRule();
     }
 
     final public int getScore() {

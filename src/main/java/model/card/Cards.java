@@ -34,6 +34,12 @@ public class Cards {
                 .anyMatch(card -> card.matchesRank(AceRank.SOFT_ACE));
     }
 
+    public void applyAceRule() {
+        if (isBust() && hasSoftAce()) {
+            convertSoftAceToHardAce();
+        }
+    }
+
     public void convertSoftAceToHardAce() {
         Card existedSoftAce = cards.stream()
                 .filter(card -> card.matchesRank(AceRank.SOFT_ACE))
