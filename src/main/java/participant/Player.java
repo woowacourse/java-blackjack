@@ -1,7 +1,6 @@
 package participant;
 
 import card.Card;
-import card.Cards;
 import java.util.List;
 import state.State;
 

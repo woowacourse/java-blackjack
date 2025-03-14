@@ -2,8 +2,8 @@ package state.finished;
 
 import card.Card;
 import card.Cards;
-import state.started.Started;
 import state.State;
+import state.started.Started;
 
 public abstract class Finished extends Started {
 

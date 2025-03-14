@@ -1,11 +1,11 @@
 package deck;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import card.Card;
 import card.CardNumber;
 import card.CardType;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class ShuffledDeckCreator implements DeckCreateStrategy {
 

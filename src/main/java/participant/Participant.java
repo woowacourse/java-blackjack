@@ -1,7 +1,7 @@
 package participant;
 
-import java.util.List;
 import card.Card;
+import java.util.List;
 import state.State;
 
 public abstract class Participant {

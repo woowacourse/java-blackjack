@@ -2,9 +2,9 @@ package state.running;
 
 import card.Card;
 import card.Cards;
+import state.State;
 import state.finished.Bust;
 import state.finished.Stand;
-import state.State;
 
 public class Hit extends Running {
 

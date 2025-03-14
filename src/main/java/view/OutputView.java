@@ -1,13 +1,12 @@
 package view;
 
-import java.util.List;
-import java.util.Map;
 import card.Card;
 import card.CardNumber;
 import card.CardType;
+import java.util.List;
+import java.util.Map;
 import participant.Dealer;
 import participant.GameResult;
-import participant.Participant;
 import participant.Player;
 import participant.Players;
 
