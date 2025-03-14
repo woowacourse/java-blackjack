@@ -1,7 +1,10 @@
 package domain.gamer;
 
+import domain.FinalResult;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class Players {
@@ -28,6 +31,16 @@ public class Players {
             return;
         }
         throw new IllegalArgumentException("닉네임은 중복될 수 없습니다.");
+    }
+
+    public Map<Player, FinalResult> createFinalResults(Dealer dealer) {
+        Map<Player, FinalResult> finalResults = new LinkedHashMap<>();
+        for (Player player : players) {
+
+            FinalResult currentResult = FinalResult.selectResult(player, dealer);
+            finalResults.put(player, currentResult);
+        }
+        return finalResults;
     }
 
     public List<Player> getPlayers() {
