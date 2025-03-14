@@ -29,7 +29,12 @@ public class PlayerTest {
     Player twentyOneHandPlayer = new Player("mimi", new Hand(
             List.of(new Card(JACK, CLOVER), new Card(KING, CLOVER), new Card(ACE, CLOVER))));
 
-    @DisplayName("딜러와 플레이어가 모두 버스트일 경우 플레이어 버스트가 우선이기 때문에, 플레이어의 패배이다")
+    Dealer blackJackDealer = new Dealer(new Hand(
+            List.of(new Card(KING, CLOVER), new Card(ACE, CLOVER))));
+    Player blackJackPlayer = new Player("mimi", new Hand(
+            List.of(new Card(KING, CLOVER), new Card(ACE, CLOVER))));
+
+    @DisplayName("플레이어가 버스트일 경우 플레이어의 패배이다")
     @Test
     void test1() {
         //given
@@ -65,7 +70,43 @@ public class PlayerTest {
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.LOSE);
     }
 
-    @DisplayName("딜러와 플레이어가 모두 버스트가 아니고, 플레이어의 합이 더 높다면 플레이어의 승리이다")
+    @DisplayName("딜러와 풀래이어가 모두 블랙잭일 경우 무승부이다")
+    @Test
+    void test40() {
+        //given
+
+        //when
+        GameResultStatus gameResultStatus = blackJackPlayer.calculateScore(blackJackDealer);
+
+        //then
+        assertThat(gameResultStatus).isEqualTo(GameResultStatus.DRAW);
+    }
+
+    @DisplayName("플레이어만 블랙잭일 경우 플레이어의 승리이다")
+    @Test
+    void test41() {
+        //given
+
+        //when
+        GameResultStatus gameResultStatus = blackJackPlayer.calculateScore(twentyOneHandDealer);
+
+        //then
+        assertThat(gameResultStatus).isEqualTo(GameResultStatus.WIN);
+    }
+
+    @DisplayName("딜러만 블랙잭일 경우 플레이어의 패배이다")
+    @Test
+    void test42() {
+        //given
+
+        //when
+        GameResultStatus gameResultStatus = twentyOneHandPlayer.calculateScore(blackJackDealer);
+
+        //then
+        assertThat(gameResultStatus).isEqualTo(GameResultStatus.LOSE);
+    }
+
+    @DisplayName("플레이어의 합이 더 높다면 플레이어의 승리이다")
     @Test
     void test4() {
         //given
@@ -77,7 +118,7 @@ public class PlayerTest {
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.WIN);
     }
 
-    @DisplayName("딜러와 플레이어가 모두 버스트가 아니고, 딜러의 합이 더 높다면 플레이어의 패배이다")
+    @DisplayName("딜러의 합이 더 높다면 플레이어의 패배이다")
     @Test
     void test5() {
         //given
@@ -89,7 +130,7 @@ public class PlayerTest {
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.LOSE);
     }
 
-    @DisplayName("딜러와 플레이어가 모두 버스트가 아니고, 플레이어와 딜러의 합이 같다면 무승부이다")
+    @DisplayName("플레이어와 딜러의 합이 같다면 무승부이다")
     @Test
     void test6() {
         //given
