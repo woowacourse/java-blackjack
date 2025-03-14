@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("딜러 테스트")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -35,22 +34,24 @@ public class DealerTest {
     }
 
     @Test
-    void 딜러가_가진_카드리스트의_합계가_21초과이면_true_아니면_false를_반환한다() {
+    void 딜러가_가진_카드리스트의_합계가_21초과이면_true를_반환한다() {
         Cards exceedBlackjackScoreCards = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
                         new Card(Suit.DIAMOND, Rank.JACK),
                         new Card(Suit.HEART, Rank.FOUR)));
         Participant exceedDealer = new Dealer(exceedBlackjackScoreCards);
 
+        assertThat(exceedDealer.isBust()).isTrue();
+    }
+
+    @Test
+    void 딜러가_가진_카드리스트의_합계가_21이하이면_false를_반환한다() {
         Cards notExceedBlackjackScoreCards = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.ACE),
                         new Card(Suit.DIAMOND, Rank.JACK)));
         Participant notExceedDealer = new Dealer(notExceedBlackjackScoreCards);
 
-        assertAll(
-                () -> assertThat(exceedDealer.isBust()).isTrue(),
-                () -> assertThat(notExceedDealer.isBust()).isFalse()
-        );
+        assertThat(notExceedDealer.isBust()).isFalse();
     }
 
     @Test
@@ -65,22 +66,23 @@ public class DealerTest {
     }
 
     @Test
-    void 딜러가_가진_카드리스트의_합계가_16초과이면_true_아니면_false를_반환한다() {
+    void 딜러가_가진_카드리스트의_합계가_16초과이면_true를_반환한다() {
         Cards exceedDealerDrawLimitCards = new Cards(
                 List.of(new Card(Suit.CLOVER, Rank.SIX),
                         new Card(Suit.HEART, Rank.JACK)));
-
         Participant shouldHitDealer = new Dealer(exceedDealerDrawLimitCards);
 
+        assertThat(shouldHitDealer.shouldHit()).isTrue();
+    }
+
+    @Test
+    void 딜러가_가진_카드리스트의_합계가_16이하이면_false를_반환한다() {
         Cards notExceedDealerDrawLimitCards = new Cards(
                 List.of(new Card(Suit.CLOVER, Rank.SEVEN),
                         new Card(Suit.HEART, Rank.JACK)));
         Participant shouldNotHitDealer = new Dealer(notExceedDealerDrawLimitCards);
 
-        assertAll(
-                () -> assertThat(shouldHitDealer.shouldHit()).isTrue(),
-                () -> assertThat(shouldNotHitDealer.shouldHit()).isFalse()
-        );
+        assertThat(shouldNotHitDealer.shouldHit()).isFalse();
     }
 
     @Test
@@ -104,34 +106,43 @@ public class DealerTest {
     }
 
     @Test
-    void 딜러가_가진_카드리스트_두장의_합계가_21이면_true_아니면_false를_반환한다() {
+    void 딜러가_가진_카드리스트의_크기가_두장이면서_합계가_21이면_true를_반환한다() {
         Cards equalToBlackjackScoreCards = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.ACE),
                         new Card(Suit.DIAMOND, Rank.JACK)));
-        Participant isBlackjackPlayer = new Dealer(equalToBlackjackScoreCards);
+        Participant isBlackjackDealer = new Dealer(equalToBlackjackScoreCards);
 
+        assertThat(isBlackjackDealer.isBlackjack()).isTrue();
+    }
+
+    @Test
+    void 딜러가_가진_카드리스트의_크기가_두장이면서_합계가_21초과이면_false를_반환한다() {
         Cards exceedBlackjackScoreCards = new Cards(
-                List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
-                        new Card(Suit.DIAMOND, Rank.JACK),
-                        new Card(Suit.HEART, Rank.FOUR)));
+                List.of(new Card(Suit.DIAMOND, Rank.ACE),
+                        new Card(Suit.HEART, Rank.ACE)));
         Participant exceedDealer = new Dealer(exceedBlackjackScoreCards);
 
+        assertThat(exceedDealer.isBlackjack()).isFalse();
+    }
+
+    @Test
+    void 딜러가_가진_카드리스트의_크기가_두장이면서_합계가_21이하이면_false를_반환한다() {
         Cards notExceedBlackjackScoreCards = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.QUEEN),
                         new Card(Suit.DIAMOND, Rank.JACK)));
         Participant notExceedDealer = new Dealer(notExceedBlackjackScoreCards);
 
-        Cards exceedSizeCards = new Cards(
+        assertThat(notExceedDealer.isBlackjack()).isFalse();
+    }
+
+    @Test
+    void 딜러가_가진_카드리스트의_크기가_두장이아니고_합계가_21이면_false를_반환한다() {
+        Cards sizeNotTwoCards = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
                         new Card(Suit.DIAMOND, Rank.JACK),
                         new Card(Suit.HEART, Rank.THREE)));
-        Participant exceedSizeDealer = new Dealer(exceedSizeCards);
+        Participant sizeNotTwoDealer = new Dealer(sizeNotTwoCards);
 
-        assertAll(
-                () -> assertThat(isBlackjackPlayer.isBlackjack()).isTrue(),
-                () -> assertThat(exceedDealer.isBlackjack()).isFalse(),
-                () -> assertThat(notExceedDealer.isBlackjack()).isFalse(),
-                () -> assertThat(exceedSizeDealer.isBlackjack()).isFalse()
-        );
+        assertThat(sizeNotTwoDealer.isBlackjack()).isFalse();
     }
 }

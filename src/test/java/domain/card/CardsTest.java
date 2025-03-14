@@ -80,61 +80,72 @@ public class CardsTest {
     }
 
     @Test
-    void 카드리스트의_합계가_21초과이면_true_아니면_false를_반환한다() {
+    void 카드리스트의_합계가_21초과이면_true를_반환한다() {
         Card card1 = new Card(Suit.DIAMOND, Rank.JACK);
         Card card2 = new Card(Suit.CLOVER, Rank.QUEEN);
         Card card3 = new Card(Suit.DIAMOND, Rank.ACE);
         Card card4 = new Card(Suit.DIAMOND, Rank.ACE);
-        List<Card> cards = List.of(card1, card2, card3);
-        Cards notExceedCards = new Cards(cards);
+        Cards exceedCards = new Cards(List.of(card1, card2, card3, card4));
 
-        List<Card> otherCards = List.of(card1, card2, card3, card4);
-        Cards exceedCards = new Cards(otherCards);
-
-        assertAll(
-                () -> assertThat(notExceedCards.isBlackjackScoreExceeded()).isFalse(),
-                () -> assertThat(exceedCards.isBlackjackScoreExceeded()).isTrue()
-        );
+        assertThat(exceedCards.isBlackjackScoreExceeded()).isTrue();
     }
 
     @Test
-    void 카드리스트의_합계가_16초과이면_true_아니면_false를_반환한다() {
+    void 카드리스트의_합계가_21이하이면_false를_반환한다() {
+        Card card1 = new Card(Suit.DIAMOND, Rank.JACK);
+        Card card2 = new Card(Suit.CLOVER, Rank.QUEEN);
+        Card card3 = new Card(Suit.DIAMOND, Rank.ACE);
+        Cards notExceedCards = new Cards(List.of(card1, card2, card3));
+
+        assertThat(notExceedCards.isBlackjackScoreExceeded()).isFalse();
+    }
+
+    @Test
+    void 카드리스트의_합계가_16초과이면_true를_반환한다() {
         Card card1 = new Card(Suit.DIAMOND, Rank.QUEEN);
         Card card2 = new Card(Suit.CLOVER, Rank.FIVE);
         Card card3 = new Card(Suit.DIAMOND, Rank.ACE);
         Card card4 = new Card(Suit.DIAMOND, Rank.ACE);
-        List<Card> cards = List.of(card1, card2, card3);
-        Cards notExceedCards = new Cards(cards);
+        Cards exceedCards = new Cards(List.of(card1, card2, card3, card4));
 
-        List<Card> otherCards = List.of(card1, card2, card3, card4);
-        Cards exceedCards = new Cards(otherCards);
-
-        assertAll(
-                () -> assertThat(notExceedCards.isDealerDrawLimitExceeded()).isFalse(),
-                () -> assertThat(exceedCards.isDealerDrawLimitExceeded()).isTrue()
-        );
+        assertThat(exceedCards.isDealerDrawLimitExceeded()).isTrue();
     }
 
     @Test
-    void 카드리스트의_합계가_21이면_true_아니면_false를_반환한다() {
+    void 카드리스트의_합계가_16이하이면_false를_반환한다() {
+        Card card1 = new Card(Suit.DIAMOND, Rank.QUEEN);
+        Card card2 = new Card(Suit.CLOVER, Rank.FIVE);
+        Card card3 = new Card(Suit.DIAMOND, Rank.ACE);
+        Cards notExceedCards = new Cards(List.of(card1, card2, card3));
+
+        assertThat(notExceedCards.isDealerDrawLimitExceeded()).isFalse();
+    }
+
+    @Test
+    void 카드리스트의_합계가_21이면_true를_반환한다() {
+        Card card1 = new Card(Suit.DIAMOND, Rank.QUEEN);
+        Card card2 = new Card(Suit.CLOVER, Rank.ACE);
+        Cards equalToBlackjackScoreCards = new Cards(List.of(card1, card2));
+
+        assertThat(equalToBlackjackScoreCards.equalToBlackjackScore()).isTrue();
+    }
+
+    @Test
+    void 카드리스트의_합계가_21초과이면_false를_반환한다() {
         Card card1 = new Card(Suit.DIAMOND, Rank.QUEEN);
         Card card2 = new Card(Suit.CLOVER, Rank.ACE);
         Card card3 = new Card(Suit.SPADE, Rank.ACE);
-        Card card4 = new Card(Suit.HEART, Rank.JACK);
+        Cards exceedCards = new Cards(List.of(card1, card2, card3));
 
-        List<Card> cards = List.of(card1, card2);
-        Cards equalToBlackjackScoreCards = new Cards(cards);
+        assertThat(exceedCards.equalToBlackjackScore()).isFalse();
+    }
 
-        List<Card> anotherCards = List.of(card1, card2, card3);
-        Cards exceedCards = new Cards(anotherCards);
+    @Test
+    void 카드리스트의_합계가_21미만이면_false를_반환한다() {
+        Card card1 = new Card(Suit.DIAMOND, Rank.QUEEN);
+        Card card2 = new Card(Suit.HEART, Rank.JACK);
+        Cards underCards = new Cards(List.of(card1, card2));
 
-        List<Card> otherCards = List.of(card1, card4);
-        Cards notExceedCards = new Cards(otherCards);
-
-        assertAll(
-                () -> assertThat(equalToBlackjackScoreCards.equalToBlackjackScore()).isTrue(),
-                () -> assertThat(exceedCards.equalToBlackjackScore()).isFalse(),
-                () -> assertThat(notExceedCards.equalToBlackjackScore()).isFalse()
-        );
+        assertThat(underCards.equalToBlackjackScore()).isFalse();
     }
 }
