@@ -1,13 +1,12 @@
 package blackjack;
 
 import blackjack.controller.BlackjackController;
-import blackjack.factory.DeckFactory;
-import blackjack.factory.SingDeckGenerator;
+import blackjack.factory.SingleDeckFactory;
 
 public class Application {
 
     public static void main(String[] args) {
-        DeckFactory deckFactory = new DeckFactory(new SingDeckGenerator());
+        SingleDeckFactory deckFactory = new SingleDeckFactory();
         BlackjackController blackjackController = new BlackjackController(deckFactory);
 
         blackjackController.run();

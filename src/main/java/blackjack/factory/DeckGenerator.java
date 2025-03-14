@@ -1,9 +1,8 @@
 package blackjack.factory;
 
-import blackjack.domain.Card;
-import java.util.List;
+import blackjack.domain.Deck;
 
 public interface DeckGenerator {
 
-    List<Card> generate();
+    Deck generate();
 }

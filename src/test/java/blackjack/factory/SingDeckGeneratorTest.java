@@ -3,6 +3,7 @@ package blackjack.factory;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.Card;
+import blackjack.domain.Deck;
 import java.util.HashSet;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -14,24 +15,24 @@ class SingDeckGeneratorTest {
     @Test
     void test1() {
         // given
-        SingDeckGenerator singDeckGenerator = new SingDeckGenerator();
+        SingleDeckFactory singDeckGenerator = new SingleDeckFactory();
 
         // when
-        List<Card> cards = singDeckGenerator.generate();
+        Deck deck = singDeckGenerator.generate();
 
         // then
-        assertThat(cards).hasSize(52);
+        assertThat(deck.getCards()).hasSize(52);
     }
 
     @DisplayName("카드 덱은 중복되면 안된다.")
     @Test
     void test2() {
         // given
-        SingDeckGenerator singDeckGenerator = new SingDeckGenerator();
+        SingleDeckFactory singDeckGenerator = new SingleDeckFactory();
 
-        List<Card> cards = singDeckGenerator.generate();
+        Deck deck = singDeckGenerator.generate();
 
-        int uniqueCardSize = new HashSet<>(cards).size();
+        int uniqueCardSize = new HashSet<>(deck.getCards()).size();
 
         assertThat(uniqueCardSize).isEqualTo(52);
     }

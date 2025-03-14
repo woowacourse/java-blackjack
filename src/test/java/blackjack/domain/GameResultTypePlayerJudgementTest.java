@@ -12,15 +12,17 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class GameResultTypePlayerJudgementTest {
 
     public static Stream<Arguments> typeJudgeArgument() {
-        return Stream.of(Arguments.of(HandFixture.createHandWithOptimisticValue20(),
+        return Stream.of(
+                Arguments.of(HandFixture.createHandWithOptimisticValue20(),
                         HandFixture.createHandWithOptimisticValue15(), GameResultType.WIN),
                 Arguments.of(HandFixture.normal(), HandFixture.busted(), GameResultType.WIN),
                 Arguments.of(HandFixture.createHandWithOptimisticValue20(),
                         HandFixture.createHandWithOptimisticValue20(), GameResultType.TIE),
-                Arguments.of(HandFixture.busted(), HandFixture.busted(), GameResultType.WIN),
+                Arguments.of(HandFixture.busted(), HandFixture.busted(), GameResultType.LOSE),
                 Arguments.of(HandFixture.createHandWithOptimisticValue15(),
                         HandFixture.createHandWithOptimisticValue20(), GameResultType.LOSE),
-                Arguments.of(HandFixture.busted(), HandFixture.normal(), GameResultType.LOSE));
+                Arguments.of(HandFixture.busted(), HandFixture.normal(), GameResultType.LOSE)
+        );
     }
 
     @DisplayName("상황에 따라 맞는 승패 결과를 반환한다.")

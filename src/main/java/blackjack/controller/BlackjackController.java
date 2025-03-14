@@ -7,7 +7,7 @@ import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.factory.DealerFactory;
-import blackjack.factory.DeckFactory;
+import blackjack.factory.DeckGenerator;
 import blackjack.factory.PlayersFactory;
 import blackjack.view.Confirmation;
 import blackjack.view.InputView;
@@ -18,16 +18,16 @@ import java.util.function.Function;
 
 public class BlackjackController {
 
-    private final DeckFactory deckFactory;
+    private final DeckGenerator deckGenerator;
 
-    public BlackjackController(DeckFactory deckFactory) {
-        this.deckFactory = deckFactory;
+    public BlackjackController(DeckGenerator deckGenerator) {
+        this.deckGenerator = deckGenerator;
     }
 
     public void run() {
         List<String> names = InputView.readNames();
         List<Integer> bettingMoneyList = InputView.readBettingMoneyList(names);
-        Deck deck = deckFactory.generate();
+        Deck deck = deckGenerator.generate();
         Players players = PlayersFactory.generate(names, bettingMoneyList);
         Dealer dealer = DealerFactory.generate();
 
@@ -67,8 +67,9 @@ public class BlackjackController {
     }
 
     private void giveMoreCardFor(Deck deck, Player player) {
+        // 10줄 줄여야함
         Confirmation confirmation = InputView.askToGetMoreCard(player);
-        if (confirmation.equals(Confirmation.N)) {
+        if (confirmation == Confirmation.N) {
             OutputView.printCardResult(player);
             return;
         }

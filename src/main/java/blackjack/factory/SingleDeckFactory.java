@@ -4,23 +4,24 @@ import blackjack.common.ErrorMessage;
 import blackjack.domain.Card;
 import blackjack.domain.CardRank;
 import blackjack.domain.CardSuit;
+import blackjack.domain.Deck;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
-public class SingDeckGenerator implements DeckGenerator {
+public class SingleDeckFactory implements DeckGenerator {
 
     private static final int DECK_SIZE = 52;
 
     @Override
-    public List<Card> generate() {
-        List<Card> deck = Arrays.stream(CardSuit.values())
+    public Deck generate() {
+        List<Card> cards = Arrays.stream(CardSuit.values())
                 .flatMap(suit -> Arrays.stream(CardRank.values())
                         .map(rank -> new Card(suit, rank)))
                 .toList();
-        validate(deck);
+        validate(cards);
 
-        return deck;
+        return Deck.shuffled(cards);
     }
 
     private void validate(List<Card> cards) {

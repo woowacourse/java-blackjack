@@ -1,37 +1,34 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.common.ErrorMessage;
-import blackjack.factory.SingDeckGenerator;
+import blackjack.factory.SingleDeckFactory;
+import java.util.Arrays;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class DeckTest {
 
-    @DisplayName("생성되는 시점에 카드의 개수는 52장이어야 한다.")
-    @Test
-    void test6() {
-        // given
-        SingDeckGenerator singDeckGenerator = new SingDeckGenerator();
-        List<Card> cards = singDeckGenerator.generate();
+    List<Card> cards;
 
-        // when & then
-        assertAll(() -> assertThat(cards).hasSize(52),
-                () -> assertThatCode(() -> Deck.shuffled(cards)).doesNotThrowAnyException());
+    @BeforeEach
+    void init() {
+        cards = Arrays.stream(CardSuit.values())
+                .flatMap(suit -> Arrays.stream(CardRank.values())
+                        .map(rank -> new Card(suit, rank)))
+                .toList();
     }
 
     @DisplayName("카드는 섞일 수 있다.")
     @Test
     void test3() {
         // given
-        SingDeckGenerator singDeckGenerator = new SingDeckGenerator();
-        List<Card> cards = singDeckGenerator.generate();
         Deck deck = Deck.shuffled(cards);
 
         // then
@@ -45,8 +42,6 @@ class DeckTest {
         @Test
         void test4() {
             // given
-            SingDeckGenerator singDeckGenerator = new SingDeckGenerator();
-            List<Card> cards = singDeckGenerator.generate();
             Deck deck = Deck.shuffled(cards);
             int expect = 2;
 
