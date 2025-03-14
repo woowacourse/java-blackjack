@@ -1,5 +1,10 @@
 package domain.participant;
 
+import static domain.blackJack.MatchResult.BLACKJACK;
+import static domain.blackJack.MatchResult.DRAW;
+import static domain.blackJack.MatchResult.LOSE;
+import static domain.blackJack.MatchResult.WIN;
+
 import domain.blackJack.MatchResult;
 import domain.blackJack.Result;
 import domain.card.CardDeck;
@@ -30,8 +35,30 @@ public class Player extends Participant {
         return hand;
     }
 
-    public int calculateProfit(MatchResult matchResult) {
-        return money.calculateProfit(matchResult);
+    public int calculateProfit(Dealer dealer) {
+
+        return money.calculateProfit(calculateResultOfPlayer(dealer));
+    }
+
+    public MatchResult calculateResultOfPlayer(Dealer dealer) {
+        int playerSum = sum();
+        int dealerSum = dealer.sum();
+
+        if (isBlackjack()) {
+            if (dealer.isBlackjack()) {
+                return DRAW;
+            }
+            return BLACKJACK;
+        }
+
+        if ((!dealer.isBust() && dealerSum > playerSum) || isBust()) {
+            return LOSE;
+        }
+
+        if (dealerSum < playerSum || dealer.isBust()) {
+            return WIN;
+        }
+        return DRAW;
     }
 
     public String getName() {
