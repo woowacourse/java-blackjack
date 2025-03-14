@@ -1,10 +1,13 @@
 package controller;
 
 import static view.InputView.accountBettingPrice;
+import static view.InputView.getContinueOrNot;
 import static view.InputView.getPlayerNamesInput;
+import static view.OutputView.printBust;
 import static view.OutputView.printDealerExtraCardsCount;
 import static view.OutputView.printDistributeResult;
 import static view.OutputView.printEveryOneCardsNamesWithTotal;
+import static view.OutputView.printHandCardsNames;
 import static view.OutputView.printProfitPerParticipant;
 
 import domain.Accountant;
@@ -17,6 +20,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BlackJack {
+
+    private static final String NO = "n";
 
     public void play() {
         Dealer dealer = new Dealer();
