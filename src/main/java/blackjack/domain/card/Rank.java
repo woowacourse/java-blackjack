@@ -3,32 +3,32 @@ package blackjack.domain.card;
 import java.util.Set;
 
 public enum Rank {
-    ONE(1),
-    TWO(2),
-    THREE(3),
-    FOUR(4),
-    FIVE(5),
-    SIX(6),
-    SEVEN(7),
-    EIGHT(8),
-    NINE(9),
-    TEN(10),
-    JACK(10),
-    QUEEN(10),
-    KING(10),
-    ACE(Set.of(1, 11));
+    ONE(new Score(1)),
+    TWO(new Score(2)),
+    THREE(new Score(3)),
+    FOUR(new Score(4)),
+    FIVE(new Score(5)),
+    SIX(new Score(6)),
+    SEVEN(new Score(7)),
+    EIGHT(new Score(8)),
+    NINE(new Score(9)),
+    TEN(new Score(10)),
+    JACK(new Score(10)),
+    QUEEN(new Score(10)),
+    KING(new Score(10)),
+    ACE(Set.of(new Score(1), new Score(11)));
 
-    private final Set<Integer> scores;
+    private final Set<Score> scores;
 
-    Rank(int score) {
+    Rank(Score score) {
         this.scores = Set.of(score);
     }
 
-    Rank(Set<Integer> scores) {
+    Rank(Set<Score> scores) {
         this.scores = scores;
     }
 
-    public Set<Integer> getScore() {
+    public Set<Score> getScore() {
         return scores;
     }
 }

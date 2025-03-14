@@ -1,6 +1,7 @@
 package blackjack.domain.winning;
 
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.Score;
 import java.util.function.Function;
 
 public enum WinningResult {
@@ -40,12 +41,12 @@ public enum WinningResult {
     }
 
     private static WinningResult compareScore(Cards playerCards, Cards dealerCards) {
-        int mainScore = playerCards.calculateMaxScore();
-        int subScore = dealerCards.calculateMaxScore();
-        if (mainScore > subScore) {
+        Score mainScore = playerCards.calculateMaxScore();
+        Score subScore = dealerCards.calculateMaxScore();
+        if (mainScore.compareTo(subScore) > 0) {
             return WinningResult.WIN;
         }
-        if (mainScore < subScore) {
+        if (mainScore.compareTo(subScore) < 0) {
             return WinningResult.LOSE;
         }
         return WinningResult.DRAW;

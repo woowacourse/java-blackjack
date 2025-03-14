@@ -1,7 +1,8 @@
 package blackjack.domain.card;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class ScoreCalculatorTest {
@@ -21,10 +22,10 @@ public class ScoreCalculatorTest {
         );
 
         //when
-        int score = scoreCalculator.calculateMaxScore(cards);
+        Score score = scoreCalculator.calculateMaxScore(cards);
 
         //then
-        Assertions.assertThat(score).isEqualTo(20);
+        assertThat(score).isEqualTo(new Score(20));
     }
 
     @Test
@@ -40,10 +41,10 @@ public class ScoreCalculatorTest {
         );
 
         //when
-        int score = scoreCalculator.calculateMaxScore(cards);
+        Score score = scoreCalculator.calculateMaxScore(cards);
 
         //then
-        Assertions.assertThat(score).isEqualTo(22);
+        assertThat(score).isEqualTo(new Score(22));
     }
 
     @Test
@@ -58,9 +59,9 @@ public class ScoreCalculatorTest {
         );
 
         //when
-        int score = scoreCalculator.calculateMinScore(cards);
+        Score score = scoreCalculator.calculateMinScore(cards);
 
         //then
-        Assertions.assertThat(score).isEqualTo(12);
+        assertThat(score).isEqualTo(new Score(12));
     }
 }

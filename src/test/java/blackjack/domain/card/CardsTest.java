@@ -17,10 +17,10 @@ public class CardsTest {
                         new Card(Suit.DIAMOND, Rank.ACE)));
 
         //when
-        int maxScore = cards.calculateMaxScore();
+        Score maxScore = cards.calculateMaxScore();
 
         //then
-        assertThat(maxScore).isEqualTo(20);
+        assertThat(maxScore).isEqualTo(new Score(20));
     }
 
     @Test

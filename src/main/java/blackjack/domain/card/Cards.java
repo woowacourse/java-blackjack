@@ -8,7 +8,6 @@ import java.util.Objects;
 
 public class Cards {
 
-    private final static int BUST_THRESHOLD = 21;
     private final static int BLACKJACK_MAX_CARD_SIZE = 2;
 
     private final List<Card> cards;
@@ -27,7 +26,7 @@ public class Cards {
         this.scoreCalculator = scoreCalculator;
     }
 
-    public int calculateMaxScore() {
+    public Score calculateMaxScore() {
         return scoreCalculator.calculateMaxScore(cards);
     }
 
@@ -35,7 +34,7 @@ public class Cards {
         if (cards.size() != BLACKJACK_MAX_CARD_SIZE) {
             return false;
         }
-        return calculateMaxScore() == BUST_THRESHOLD;
+        return calculateMaxScore().isBlackjack();
     }
 
     public void take(Card... cards) {
@@ -46,7 +45,7 @@ public class Cards {
     }
 
     public boolean isBust() {
-        return scoreCalculator.calculateMinScore(cards) > BUST_THRESHOLD;
+        return scoreCalculator.calculateMinScore(cards).isBust();
     }
 
     public int getSize() {

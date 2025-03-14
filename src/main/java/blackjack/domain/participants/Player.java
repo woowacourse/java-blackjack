@@ -2,6 +2,7 @@ package blackjack.domain.participants;
 
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.Score;
 import blackjack.domain.winning.WinningResult;
 import java.util.Objects;
 
@@ -24,7 +25,7 @@ public class Player {
         cards.take(deck.draw());
     }
 
-    public int calculateMaxScore() {
+    public Score calculateMaxScore() {
         return cards.calculateMaxScore();
     }
 

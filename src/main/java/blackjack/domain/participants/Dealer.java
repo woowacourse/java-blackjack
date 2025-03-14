@@ -2,11 +2,12 @@ package blackjack.domain.participants;
 
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.Score;
 import java.util.Objects;
 
 public class Dealer {
 
-    private static final int MIN_SUM_OF_CARDS = 16;
+    private static final Score MIN_SCORE_OF_CARDS = new Score(17);
 
     private final Cards cards;
 
@@ -19,12 +20,12 @@ public class Dealer {
     }
 
     public void drawAdditionalCard(Deck deck) {
-        while (calculateMaxScore() <= MIN_SUM_OF_CARDS) {
+        while (calculateMaxScore().compareTo(MIN_SCORE_OF_CARDS) < 0) {
             cards.take(deck.draw());
         }
     }
 
-    public int calculateMaxScore() {
+    public Score calculateMaxScore() {
         return cards.calculateMaxScore();
     }
 
