@@ -47,7 +47,7 @@ public class OutputView {
     public static void printDivisionStart(Dealer dealer, Players values) {
         String dealerNickname = dealer.getNickname();
         List<String> playerNicknames = values.getNicknames();
-        System.out.println(formatDivideCommentByNickname(dealerNickname, playerNicknames));
+        System.out.println(formatDistributeCommentByNickname(dealerNickname, playerNicknames));
         Card card = dealer.getHands().getFirst();
         String formattedDealerCard = getCardFormat(card);
         String handsHeader = formatHandsHeader(dealerNickname);
@@ -129,7 +129,7 @@ public class OutputView {
         return formatBasicForm(handsHeader, joinedHands);
     }
 
-    private static String formatDivideCommentByNickname(String nickname, List<String> nicknames) {
+    private static String formatDistributeCommentByNickname(String nickname, List<String> nicknames) {
         return nickname + "와 " + String.join(", ", nicknames) + "에게 2장을 나누었습니다.";
     }
 

@@ -32,7 +32,7 @@ public class BlackjackGame {
         this.players = players;
         Dealer dealer = Dealer.create();
         this.dealer = dealer;
-        divideAllParticipant();
+        distributeAllParticipant();
         OutputView.printDivisionStart(dealer, players);
 
         for (Player player : players.getPlayers()) {
@@ -48,14 +48,14 @@ public class BlackjackGame {
 
     private void receiveAdditionalCard(Player player) {
         while (satisfiedConditionByPlayer(player)) {
-            divideCardByParticipant(player, 1);
+            distributeCardByParticipant(player, 1);
             OutputView.printCurrentHands(player);
         }
     }
 
     private void receiveAdditionalCard(Dealer dealer) {
         while (satisfiedConditionByDealer(dealer)) {
-            divideCardByParticipant(dealer, 1);
+            distributeCardByParticipant(dealer, 1);
             OutputView.printStandingDealer(dealer);
         }
     }
@@ -72,16 +72,16 @@ public class BlackjackGame {
         return Intent.from(InputView.readIntent(player.getNickname())).equals(Intent.Y);
     }
 
-    public void divideAllParticipant() {
+    public void distributeAllParticipant() {
         List<Participant> participants = new ArrayList<>();
         participants.add(dealer);
         participants.addAll(players.getPlayers());
         for (Participant participant : participants) {
-            divideCardByParticipant(participant, INITIAL_DEAL_COUNT);
+            distributeCardByParticipant(participant, INITIAL_DEAL_COUNT);
         }
     }
 
-    public void  divideCardByParticipant(Participant participant, int amount) {
+    public void  distributeCardByParticipant(Participant participant, int amount) {
         List<Card> pickCards = deck.pickCard(amount);
         participant.addCards(pickCards);
     }

@@ -40,17 +40,17 @@ public class PlayersTest {
     void sum() {
         // given
         // 총 합이 9
-        List<Card> divideCards = List.of(
+        List<Card> distributeCards = List.of(
                 new SingleScoreCard(Suit.HEARTS, Rank.FIVE),
                 new SingleScoreCard(Suit.CLUBS, Rank.FOUR)
         );
-        int expected = divideCards.stream()
+        int expected = distributeCards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
 
         String nickname = "pobia";
         Player player = Player.from(nickname);
-        player.addCards(divideCards);
+        player.addCards(distributeCards);
 
         // when
         int sum = player.getScore();

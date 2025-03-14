@@ -45,16 +45,16 @@ class DealerTest {
     void sum() {
         // given
         // 총 합이 9
-        List<Card> divideCards = List.of(
+        List<Card> distributeCards = List.of(
                 new SingleScoreCard(Suit.HEARTS, Rank.FIVE),
                 new SingleScoreCard(Suit.CLUBS, Rank.FOUR)
         );
-        int expected = divideCards.stream()
+        int expected = distributeCards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
 
         Participant dealer = Dealer.create();
-        dealer.addCards(divideCards);
+        dealer.addCards(distributeCards);
 
         // when
         int sum = dealer.getScore();
@@ -68,13 +68,13 @@ class DealerTest {
     void isNotUpTrue() {
 
         // given
-        List<Card> divideCards = List.of(
+        List<Card> distributeCards = List.of(
                 new SingleScoreCard(Suit.HEARTS, Rank.JACK),
                 new SingleScoreCard(Suit.CLUBS, Rank.FOUR)
         );
 
         Dealer dealer = Dealer.create();
-        dealer.addCards(divideCards);
+        dealer.addCards(distributeCards);
 
         // when
         // then
@@ -86,13 +86,13 @@ class DealerTest {
     void isNotUpFalse() {
 
         // given
-        List<Card> divideCards = List.of(
+        List<Card> distributeCards = List.of(
                 new SingleScoreCard(Suit.HEARTS, Rank.JACK),
                 new SingleScoreCard(Suit.CLUBS, Rank.KING)
         );
 
         Dealer dealer = Dealer.create();
-        dealer.addCards(divideCards);
+        dealer.addCards(distributeCards);
 
         // when
         // then
