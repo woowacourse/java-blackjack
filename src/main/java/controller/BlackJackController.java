@@ -5,6 +5,7 @@ import domain.BlackJack;
 import domain.card.Deck;
 import domain.card.Hand;
 import domain.participant.Dealer;
+import domain.participant.Names;
 import domain.participant.Players;
 import java.util.ArrayList;
 import view.InputUntilValid;
@@ -46,7 +47,8 @@ public class BlackJackController {
 
     private Players createPlayersUntilValidate() {
         try {
-            return Players.from(inputView.readPlayersName());
+            Names names = new Names(inputView.readPlayersName());
+            return Players.from(names);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return createPlayersUntilValidate();

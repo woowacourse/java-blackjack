@@ -10,15 +10,11 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class Players {
-    private static final int MAXIMUM_PLAYER_NUMBER = 6;
-
     private final List<Player> players;
 
-    public static Players from(final List<String> names) {
-        validatePlayerNumbers(names);
-        validateIsDuplicate(names);
-        List<Player> players = names.stream()
-                .map(name -> new Player(new Hand(new ArrayList<>()), name))
+    public static Players from(final Names names) {
+        List<Player> players = names.getNames().stream()
+                .map(name -> new Player(new Hand(List.of()), name))
                 .toList();
         return new Players(players);
     }
@@ -43,18 +39,6 @@ public class Players {
             res.put(player, player.calculateWinner(dealerSum));
         }
         return res;
-    }
-
-    private static void validatePlayerNumbers(final List<String> names) {
-        if (names.isEmpty() || names.size() > MAXIMUM_PLAYER_NUMBER) {
-            throw new IllegalArgumentException("[ERROR] 플레이어 인원은 1~6명 입니다.");
-        }
-    }
-
-    private static void validateIsDuplicate(final List<String> names) {
-        if (names.stream().distinct().count() != names.size()) {
-            throw new IllegalArgumentException("[ERROR] 중복된 이름의 플레이어가 게임에 참여할 수 없습니다.");
-        }
     }
 
     public List<Player> getPlayers() {

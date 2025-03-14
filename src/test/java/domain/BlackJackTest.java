@@ -16,6 +16,7 @@ import domain.card.Card;
 import domain.card.Deck;
 import domain.card.Hand;
 import domain.participant.Dealer;
+import domain.participant.Names;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.io.ByteArrayInputStream;
@@ -40,7 +41,8 @@ public class BlackJackTest {
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
         Deck deck = cardDeckFactory.create();
         Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
-        Players players = Players.from(List.of("pobi", "lisa"));
+        Names names = new Names(List.of("pobi", "lisa"));
+        Players players = Players.from(names);
 
         //when
         BlackJack blackJack = new BlackJack(players, dealer);
@@ -66,7 +68,8 @@ public class BlackJackTest {
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
         Deck deck = cardDeckFactory.create();
         Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
-        Players players = Players.from(List.of("pobi", "lisa"));
+        Names names = new Names(List.of("pobi", "lisa"));
+        Players players = Players.from(names);
 
         BlackJack blackJack = new BlackJack(players, dealer);
 
@@ -81,7 +84,8 @@ public class BlackJackTest {
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
         Deck deck = cardDeckFactory.create();
         Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
-        Players players = Players.from(List.of("pobi", "lisa"));
+        Names names = new Names(List.of("pobi", "lisa"));
+        Players players = Players.from(names);
 
         //when
         BlackJack blackJack = new BlackJack(players, dealer);
@@ -94,7 +98,8 @@ public class BlackJackTest {
     @DisplayName("결과 선출 테스트")
     void calculatePlayerResultTest() {
         //given
-        Players players = Players.from(List.of("pobi", "lisa"));
+        Names names = new Names(List.of("pobi", "lisa"));
+        Players players = Players.from(names);
         Deck deck = new Deck(List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, FIVE), new Card(DIAMOND, ACE), new Card(SPADE, JACK), new Card(HEART, ACE), new Card(CLOVER, ACE)));
         Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
 
