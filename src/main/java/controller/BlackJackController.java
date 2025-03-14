@@ -53,15 +53,20 @@ public class BlackJackController {
     private void drawCards(BlackJackGame game) {
         game.determineNextTurnPlayer();
         while (game.isInProgress()) {
-            if (inputView.readPlayerHit(game.getThisTurnPlayer()).isNo()) {
-                outputView.printPlayerCards(game.getThisTurnPlayer());
-                game.skipThisTurn();
-                continue;
-            }
-            game.drawCardForCurrentPlayer();
-            outputView.printPlayerCards(game.getThisTurnPlayer());
-            game.determineNextTurnPlayer();
+            processTurn(game);
         }
+    }
+
+    private void processTurn(BlackJackGame game) {
+        Player player = game.getThisTurnPlayer();
+        if (inputView.readPlayerHit(player).isYes()) {
+            game.drawCardForCurrentPlayer();
+            outputView.printPlayerCards(player);
+            game.determineNextTurnPlayer();
+            return;
+        }
+        outputView.printPlayerCards(player);
+        game.skipThisTurn();
     }
 
     private void drawDealerCards(BlackJackGame game) {

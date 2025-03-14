@@ -18,7 +18,7 @@ public enum Answer {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 입력입니다."));
     }
 
-    public boolean isNo() {
-        return this == NO;
+    public boolean isYes() {
+        return this == YES;
     }
 }
