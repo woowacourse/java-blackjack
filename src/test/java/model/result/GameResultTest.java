@@ -50,6 +50,23 @@ class GameResultTest {
         assertThat(GameResult.determineGameResult(dealerCards, playerCards)).isEqualTo(GameResult.SPECIAL_WIN);
     }
 
+    @DisplayName("플레이어가 블랙잭이 아니고 딜러가 블랙잭이라면 패배한다.")
+    @Test
+    void test8() {
+        Cards dealerCards = new DealerCards(new ArrayList<>(List.of(
+                new Card(CardNumber.TEN, CardShape.SPADE),
+                new Card(CardNumber.ACE_ELEVEN, CardShape.SPADE)
+        )));
+
+        Cards playerCards = new PlayerCards(new ArrayList<>(List.of(
+                new Card(CardNumber.KING, CardShape.SPADE),
+                new Card(CardNumber.NINE, CardShape.HEART),
+                new Card(CardNumber.TWO, CardShape.HEART)
+        )));
+
+        assertThat(GameResult.determineGameResult(dealerCards, playerCards)).isEqualTo(GameResult.LOSE);
+    }
+
     @DisplayName("카드 숫자를 합쳐 21을 초과한다면 패배한다.")
     @Test
     void test1() {

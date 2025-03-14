@@ -32,6 +32,9 @@ public enum GameResult {
         if (playerCards.isBlackjack() && !dealerCards.isBlackjack()) {
             return SPECIAL_WIN;
         }
+        if (!playerCards.isBlackjack() && dealerCards.isBlackjack()) {
+            return LOSE;
+        }
         return determineByBust(dealerCards, playerCards);
     }
 
