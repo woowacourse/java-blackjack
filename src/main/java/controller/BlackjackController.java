@@ -32,7 +32,6 @@ public class BlackjackController {
         Dealer dealer = new Dealer();
         List<Player> players = inputView.getPlayers();
         GameManager gameManager = new GameManager(dealer, players);
-        gameManager.shuffle();
         gameManager.distributeSetUpCards();
         SetUpCardsDTO setUpCardsDTO = createSetUpCardsDTO(dealer, players);
         outputView.printSetUpCardDeck(setUpCardsDTO);

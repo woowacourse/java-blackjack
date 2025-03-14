@@ -21,6 +21,7 @@ public class GameManager {
         this.dealer = dealer;
         this.players = players;
         this.cardDeck = new CardDeck();
+        shuffle();
     }
 
     public void shuffle() {
