@@ -7,7 +7,7 @@ import exception.BlackJackException;
 public class BlackjackBet {
 
     private static final double BLACKJACK_WIN_MULTIPLE = 1.5;
-    private static final double WINNING_MULTIPLE = 2.0;
+    private static final double WINNING_MULTIPLE = 1.0;
     private static final String INVALID_BET_MONEY = "베팅 금액은 1원부터입니다.";
 
     private final int money;
@@ -23,28 +23,26 @@ public class BlackjackBet {
         }
     }
 
-    public double calculateWinningMoney(BlackjackCardSum blackjackCardSum, BlackjackCardSum otherCardSum) {
-        int cardSum = blackjackCardSum.calculateCardSum();
-        PlayerGameResult playerGameResult = BlackjackWinner.calculatePlayerWinStatus(otherCardSum.calculateCardSum(),
+    public double calculateEarnMoney(BlackjackCardSum playerCardSum, BlackjackCardSum otherPlayerCardSum) {
+        int cardSum = playerCardSum.calculateCardSum();
+        PlayerGameResult playerGameResult = BlackjackWinner.calculatePlayerWinStatus(
+                otherPlayerCardSum.calculateCardSum(),
                 cardSum);
-        if (playerGameResult == PlayerGameResult.DRAW) {
+        if (playerGameResult.isDraw()) {
             return money;
         }
-        if (blackjackCardSum.isBust()) {
+        if (playerCardSum.isBust()) {
             return 0;
         }
-        if (blackjackCardSum.isBlackjack()) {
+        if (playerCardSum.isBlackjack()) {
             return money + (money * BLACKJACK_WIN_MULTIPLE);
         }
-        return calculateWinningMoney(playerGameResult);
+        return calculateEarnMoney(playerGameResult);
     }
 
-    private double calculateWinningMoney(PlayerGameResult playerGameResult) {
-        if (playerGameResult == PlayerGameResult.WIN) {
-            return money * WINNING_MULTIPLE;
-        }
-        if (playerGameResult == PlayerGameResult.DRAW) {
-            return money;
+    private double calculateEarnMoney(PlayerGameResult playerGameResult) {
+        if (playerGameResult.isWin()) {
+            return money + money * WINNING_MULTIPLE;
         }
         return 0;
     }

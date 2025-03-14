@@ -15,4 +15,16 @@ public enum PlayerGameResult {
     public String getStatus() {
         return status;
     }
+
+    public boolean isDraw() {
+        return this == DRAW;
+    }
+
+    public boolean isWin() {
+        return this == WIN;
+    }
+
+    public boolean isLose() {
+        return this == LOSE;
+    }
 }

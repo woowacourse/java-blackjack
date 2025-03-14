@@ -27,7 +27,7 @@ public class BlackjackBetManagerTest {
                 new TrumpCard(Suit.CLOVER, CardValue.EIGHT));
         BlackjackCardSum playerCardSum = new BlackjackCardSum(trumpCards);
         BlackjackCardSum dealerCardSum = new BlackjackCardSum(dealerCards);
-        assertThat(betManager.playerWinningMoney("투다", playerCardSum, dealerCardSum)).isEqualTo(money);
+        assertThat(betManager.playerProfit("투다", playerCardSum, dealerCardSum)).isEqualTo(money);
     }
 }
 

@@ -40,7 +40,7 @@ public class BlackjackBetTest {
                 new TrumpCard(Suit.CLOVER, CardValue.NINE));
         BlackjackCardSum cardSum = new BlackjackCardSum(trumpCards);
         BlackjackCardSum otherCardSum = new BlackjackCardSum(dealerTrumpCards);
-        assertThat(blackjackBet.calculateWinningMoney(cardSum, otherCardSum))
+        assertThat(blackjackBet.calculateEarnMoney(cardSum, otherCardSum))
                 .isEqualTo(0);
     }
 
@@ -56,7 +56,7 @@ public class BlackjackBetTest {
                 new TrumpCard(Suit.CLOVER, CardValue.SIX));
         BlackjackCardSum cardSum = new BlackjackCardSum(trumpCards);
         BlackjackCardSum otherCardSum = new BlackjackCardSum(dealerTrumpCards);
-        assertThat(blackjackBet.calculateWinningMoney(cardSum, otherCardSum))
+        assertThat(blackjackBet.calculateEarnMoney(cardSum, otherCardSum))
                 .isEqualTo(2000);
     }
 
@@ -73,7 +73,7 @@ public class BlackjackBetTest {
 
         BlackjackCardSum cardSum = new BlackjackCardSum(trumpCards);
         BlackjackCardSum otherCardSum = new BlackjackCardSum(dealerTrumpCards);
-        assertThat(blackjackBet.calculateWinningMoney(cardSum, otherCardSum))
+        assertThat(blackjackBet.calculateEarnMoney(cardSum, otherCardSum))
                 .isEqualTo(money);
     }
 
@@ -89,7 +89,7 @@ public class BlackjackBetTest {
                 new TrumpCard(Suit.HEART, CardValue.EIGHT));
         BlackjackCardSum cardSum = new BlackjackCardSum(trumpCards);
         BlackjackCardSum otherCardSum = new BlackjackCardSum(dealerTrumpCards);
-        assertThat(blackjackBet.calculateWinningMoney(cardSum, otherCardSum))
+        assertThat(blackjackBet.calculateEarnMoney(cardSum, otherCardSum))
                 .isEqualTo(money);
     }
 
@@ -103,7 +103,7 @@ public class BlackjackBetTest {
                 new TrumpCard(Suit.SPADE, CardValue.A));
         BlackjackCardSum cardSum = new BlackjackCardSum(trumpCards);
         BlackjackCardSum otherCardSum = new BlackjackCardSum(dealerTrumpCards);
-        assertThat(blackjackBet.calculateWinningMoney(cardSum, otherCardSum))
+        assertThat(blackjackBet.calculateEarnMoney(cardSum, otherCardSum))
                 .isEqualTo(money * 2);
     }
 }

@@ -8,33 +8,33 @@ import java.util.Map;
 public class BetManager {
 
     private final String dealerName;
-    private final Map<String, BlackjackBet> pariticipantsBets = new LinkedHashMap<>();
+    private final Map<String, BlackjackBet> participantsBets = new LinkedHashMap<>();
 
     public BetManager(List<String> names, List<Integer> bets, String dealerName) {
         this.dealerName = dealerName;
         for (int idx = 0; idx < names.size(); idx++) {
-            pariticipantsBets.put(names.get(idx), new BlackjackBet(bets.get(idx)));
+            participantsBets.put(names.get(idx), new BlackjackBet(bets.get(idx)));
         }
     }
 
     public Map<String, Double> blackjackBettingResult(BlackjackGame blackjackGame) {
-        Map<String, Double> blackjackBetResults = new LinkedHashMap<>(Map.of(dealerName, 0.0));
+        Map<String, Double> participantsEarnMoney = new LinkedHashMap<>(Map.of(dealerName, 0.0));
         BlackjackCardSum dealerSum = new BlackjackCardSum(blackjackGame.dealerCards());
-        for (String name : pariticipantsBets.keySet()) {
+        for (String name : participantsBets.keySet()) {
             BlackjackCardSum playerCardSum = new BlackjackCardSum(blackjackGame.playerCards(name));
-            double playerWinningMoney = playerWinningMoney(name, playerCardSum, dealerSum);
-            blackjackBetResults.put(dealerName, dealerWinningMoney(blackjackBetResults, playerWinningMoney));
-            blackjackBetResults.put(name, playerWinningMoney);
+            double playerProfit = playerProfit(name, playerCardSum, dealerSum);
+            participantsEarnMoney.put(dealerName, dealerProfit(participantsEarnMoney, playerProfit));
+            participantsEarnMoney.put(name, playerProfit);
         }
-        return blackjackBetResults;
+        return participantsEarnMoney;
     }
 
-    private double dealerWinningMoney(Map<String, Double> blackjackBetResults, double playerWinningMoney) {
-        return blackjackBetResults.get(dealerName) - playerWinningMoney;
+    private double dealerProfit(Map<String, Double> participantsEarnMoney, double playerProfit) {
+        return participantsEarnMoney.get(dealerName) - playerProfit;
     }
 
-    public double playerWinningMoney(String name, BlackjackCardSum cardSum, BlackjackCardSum dealerSum) {
-        BlackjackBet blackjackBet = pariticipantsBets.get(name);
-        return blackjackBet.calculateWinningMoney(cardSum, dealerSum) - blackjackBet.betMoney();
+    public double playerProfit(String name, BlackjackCardSum cardSum, BlackjackCardSum dealerSum) {
+        BlackjackBet blackjackBet = participantsBets.get(name);
+        return blackjackBet.calculateEarnMoney(cardSum, dealerSum) - blackjackBet.betMoney();
     }
 }
