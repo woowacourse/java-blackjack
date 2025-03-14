@@ -6,7 +6,7 @@ public enum GameResult {
     WIN("승"),
     LOSE("패"),
     DRAW("무"),
-    SPECIAL_WIN("승");
+    BLACKJACK_WIN("승");
 
     private final String name;
 
@@ -30,7 +30,7 @@ public enum GameResult {
 
     private static GameResult determineByBlackjack(final Cards dealerCards, final Cards playerCards) {
         if (playerCards.isBlackjack() && !dealerCards.isBlackjack()) {
-            return SPECIAL_WIN;
+            return BLACKJACK_WIN;
         }
         if (!playerCards.isBlackjack() && dealerCards.isBlackjack()) {
             return LOSE;

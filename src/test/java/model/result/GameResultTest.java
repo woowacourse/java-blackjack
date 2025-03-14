@@ -47,7 +47,7 @@ class GameResultTest {
                 new Card(CardNumber.ACE_ELEVEN, CardShape.HEART)
         )));
 
-        assertThat(GameResult.determineGameResult(dealerCards, playerCards)).isEqualTo(GameResult.SPECIAL_WIN);
+        assertThat(GameResult.determineGameResult(dealerCards, playerCards)).isEqualTo(GameResult.BLACKJACK_WIN);
     }
 
     @DisplayName("플레이어가 블랙잭이 아니고 딜러가 블랙잭이라면 패배한다.")
