@@ -65,7 +65,7 @@ public class Player extends Participant {
         return super.getCards();
     }
 
-    public Money getMoney() {
-        return money;
+    public int getMoney() {
+        return money.getMoney();
     }
 }

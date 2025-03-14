@@ -13,4 +13,8 @@ public class Money {
             throw new IllegalArgumentException("[ERROR] 배팅 금액은 만원 단위입니다.");
         }
     }
+
+    public int getMoney() {
+        return money;
+    }
 }
