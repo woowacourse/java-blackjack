@@ -18,7 +18,7 @@ public class Parser {
         String[] splittedNames = namesText.split(NAME_DELIMITER);
         validateNameCount(splittedNames);
         return Arrays.stream(splittedNames)
-                .map(PlayerName::new)
+                .map(name -> new PlayerName(name.trim()))
                 .toList();
     }
 
