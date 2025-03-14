@@ -8,8 +8,8 @@ import java.util.List;
 public class Participants {
     private final List<Participant> participants;
 
-    public Participants(final List<Participant> participants) {
-        this.participants = new ArrayList<>(participants);
+    public Participants(final List<Participant> originParticipants) {
+        this.participants = new ArrayList<>(originParticipants);
     }
 
     public void drawTwoCards(GameCardDeck gameCardDeck) {
@@ -20,20 +20,20 @@ public class Participants {
 
     public Participant findDealer() {
         return participants.stream()
-                .filter(Participant::areYouDealer)
+                .filter(Participant::isDealer)
                 .findFirst()
                 .orElseThrow();
     }
 
-    public Participants findOnlyPlayers() {
-        List<Participant> onlyPlayers = new ArrayList<>();
+    public Participants findPlayers() {
+        List<Participant> players = new ArrayList<>();
         for (Participant participant : participants) {
-            if (participant.areYouDealer()) {
+            if (participant.isDealer()) {
                 continue;
             }
-            onlyPlayers.add(participant);
+            players.add(participant);
         }
-        return new Participants(onlyPlayers);
+        return new Participants(players);
     }
 
     public List<Participant> getParticipants() {
