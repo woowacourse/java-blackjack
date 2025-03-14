@@ -1,12 +1,12 @@
 package domain;
 
+import static domain.CardsFactory.createCardsOfRanks;
+import static domain.CardsFactory.createRanks;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import domain.card.Card;
 import domain.card.Rank;
-import domain.card.Suit;
-import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -60,19 +60,5 @@ public class CardsTest {
         Card card = cards.pickCard();
         // when & then
         assertThat(card).isNotNull();
-    }
-
-    private static Cards createCardsOfRanks(List<Rank> ranks) {
-        Cards cardsOfRanks = new Cards();
-        ranks.stream()
-                .map(rank -> new Card(rank, Suit.DIAMOND))
-                .forEach(cardsOfRanks::addCard);
-        return cardsOfRanks;
-    }
-
-    private static List<Rank> createRanks(String rankNames) {
-        return Arrays.stream(rankNames.split(","))
-                .map(Rank::valueOf)
-                .toList();
     }
 }

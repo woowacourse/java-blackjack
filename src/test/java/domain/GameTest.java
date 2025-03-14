@@ -1,12 +1,12 @@
 package domain;
 
+import static domain.CardsFactory.createCardListOfRanks;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import domain.card.Card;
 import domain.card.Rank;
-import domain.card.Suit;
 import exception.ErrorException;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,16 +76,10 @@ public class GameTest {
                 .hasMessageContaining("[ERROR]");
     }
 
-    private static List<Card> createCardsOfRanks(List<Rank> ranks) {
-        return ranks.stream()
-                .map(rank -> new Card(rank, Suit.DIAMOND))
-                .toList();
-    }
-
     private static List<List<Card>> createCardsStackOfRanks(List<List<Rank>> ranks) {
         List<List<Card>> cardsStack = new ArrayList<>();
         for (List<Rank> rank : ranks) {
-            List<Card> cards = new ArrayList<>(createCardsOfRanks(rank));
+            List<Card> cards = new ArrayList<>(createCardListOfRanks(rank));
             cardsStack.add(cards);
         }
         return cardsStack;

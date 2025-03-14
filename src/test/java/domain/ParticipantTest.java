@@ -1,18 +1,14 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static domain.CardsFactory.createParticipantCardsOfRanks;
+import static domain.CardsFactory.createRanks;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import domain.card.Card;
 import domain.card.Rank;
-import domain.card.Suit;
-import exception.ErrorException;
-import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 public class ParticipantTest {
 
@@ -40,33 +36,5 @@ public class ParticipantTest {
         Participant otherParticipant = createParticipantCardsOfRanks(otherRanks);
         // then & when
         assertEquals(GameStatus.valueOf(gameStatusName), otherParticipant.determineGameStatus(participant));
-    }
-
-    private static Participant createParticipantCardsOfRanks(List<Rank> ranks) {
-        Participant participant = createParticipant("행성");
-        ranks.stream()
-                .map(rank -> new Card(rank, Suit.DIAMOND))
-                .forEach(participant::addCard);
-        return participant;
-    }
-
-    private static List<Rank> createRanks(String rankNames) {
-        return Arrays.stream(rankNames.split(","))
-                .map(Rank::valueOf)
-                .toList();
-    }
-
-    private static Participant createParticipant(String name) {
-        return new Participant(name) {
-            @Override
-            public List<Card> getInitialCards() {
-                return List.of();
-            }
-
-            @Override
-            public boolean ableToAddCard() {
-                return false;
-            }
-        };
     }
 }

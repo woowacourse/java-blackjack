@@ -1,11 +1,10 @@
 package domain;
 
+import static domain.CardsFactory.createDealerCardsOfRanks;
+import static domain.CardsFactory.createRanks;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import domain.card.Card;
 import domain.card.Rank;
-import domain.card.Suit;
-import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,19 +21,5 @@ public class DealerTest {
         Dealer dealer = createDealerCardsOfRanks(dealerRanks);
         // when & then
         assertEquals(expected, dealer.ableToAddCard());
-    }
-
-    private static Dealer createDealerCardsOfRanks(List<Rank> ranks) {
-        Dealer dealer = new Dealer();
-        ranks.stream()
-                .map(rank -> new Card(rank, Suit.DIAMOND))
-                .forEach(dealer::addCard);
-        return dealer;
-    }
-
-    private static List<Rank> createRanks(String rankNames) {
-        return Arrays.stream(rankNames.split(","))
-                .map(Rank::valueOf)
-                .toList();
     }
 }
