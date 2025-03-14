@@ -56,17 +56,21 @@ public class GameView {
         for (Player player : blackjackGame.getParticipants().getPlayers()) {
             handleExtraCardError(() -> distributeAdditionalCardsToPlayer(player, blackjackGame));
         }
-        handleExtraCardError(() -> distributeAdditionalCardsToDealer(blackjackGame.getParticipants().getDealer(), blackjackGame));
+        handleExtraCardError(
+            () -> distributeAdditionalCardsToDealer(blackjackGame.getParticipants().getDealer(),
+                blackjackGame));
     }
 
-    private void distributeAdditionalCardsToPlayer(final Player player, final BlackjackGame blackjackGame) {
+    private void distributeAdditionalCardsToPlayer(final Player player,
+        final BlackjackGame blackjackGame) {
         while (inputView.readGetOneMore(player)) {
             blackjackGame.addExtraCardToPlayer(player);
             outputView.printPlayerCardResult(player);
         }
     }
 
-    private void distributeAdditionalCardsToDealer(final Dealer dealer, final BlackjackGame blackjackGame) {
+    private void distributeAdditionalCardsToDealer(final Dealer dealer,
+        final BlackjackGame blackjackGame) {
         while (dealer.isPossibleToAdd()) {
             blackjackGame.addExtraCardToDealer(dealer);
             outputView.printAddExtraCardToDealer();

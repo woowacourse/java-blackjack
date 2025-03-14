@@ -21,12 +21,13 @@ public class Betting {
     }
 
     public void calculateProfitForPlayer(final Dealer dealer, final List<Player> players) {
-        for(Player player : players) {
+        for (Player player : players) {
             GameResult gameResult = dealer.judgePlayerResult(player);
 
             PlayerName name = player.getName();
             BetAmount betAmount = bettingTable.get(name);
-            BetAmount newBetAmount = betAmount.calculateProfit(gameResult, player.getCards().isBlackjack());
+            BetAmount newBetAmount = betAmount.calculateProfit(gameResult,
+                player.getCards().isBlackjack());
             bettingTable.put(name, newBetAmount);
         }
     }

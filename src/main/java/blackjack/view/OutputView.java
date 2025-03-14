@@ -25,7 +25,7 @@ public class OutputView {
     }
 
     public void printPlayersCardResult(final List<Player> players) {
-        for(Player player : players) {
+        for (Player player : players) {
             printPlayerCardResult(player);
         }
     }
@@ -48,7 +48,7 @@ public class OutputView {
     }
 
     public void printPlayersFinalCardResult(final List<Player> players) {
-        for(Player player : players) {
+        for (Player player : players) {
             String cardResult = parseCardToString(player.getCards().openCards());
             System.out.printf("%s카드: %s - 결과 %d%n", player.getName().getText(), cardResult,
                 player.getCards().calculateDenominations());

@@ -51,7 +51,8 @@ public class InputView {
 
     public boolean readGetOneMore(final Player player) {
         try {
-            printMessage(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", player.getName().getText()));
+            printMessage(
+                String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", player.getName().getText()));
             String input = scanner.nextLine();
             validateBlank(input);
 
