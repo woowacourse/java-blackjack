@@ -83,6 +83,16 @@ public class BlackJack {
 
     public Map<Participant, Integer> getRevenueResult() {
         Map<Participant, Integer> revenues = new HashMap<>();
+        int dealerRevenue = 0;
+        for (Player player : players.get()) {
+            GameResult gameResult = dealer.getResult(player);
+            RevenuePolicy policy = RevenuePolicy.from(gameResult, player.isBlackjack());
+            Money bettingMoney = players.getBettingMoneyOf(player);
+            final int playerRevenue = policy.getRevenue(bettingMoney.value());
+            revenues.put(player, playerRevenue);
+            dealerRevenue -= playerRevenue;
+        }
+        revenues.put(dealer, dealerRevenue);
         return revenues;
     }
 }
