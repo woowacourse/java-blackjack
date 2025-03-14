@@ -13,10 +13,10 @@ class BattingMoneyTest {
     @Test
     void 버스트라면_배팅금액만큼_잃는다() {
         //given
-        BattingMoney battingMoney = new BattingMoney(1000);
+        BettingMoney bettingMoney = new BettingMoney(1000);
 
         //when
-        int revenue = battingMoney.calculateProfit(WinningResult.LOSE);
+        int revenue = bettingMoney.calculateProfit(WinningResult.LOSE);
 
         //then
         assertThat(revenue).isEqualTo(-1000);
@@ -25,10 +25,10 @@ class BattingMoneyTest {
     @Test
     void 블랙잭으로_승리한경우_1점5배의_수익을_얻는다() {
         //given
-        BattingMoney battingMoney = new BattingMoney(1000);
+        BettingMoney bettingMoney = new BettingMoney(1000);
 
         //when
-        int revenue = battingMoney.calculateProfit(WinningResult.BLACKJACK_WIN);
+        int revenue = bettingMoney.calculateProfit(WinningResult.BLACKJACK_WIN);
 
         //then
         assertThat(revenue).isEqualTo(500);
@@ -37,10 +37,10 @@ class BattingMoneyTest {
     @Test
     void 블랙잭이_아니면서_승리한_경우_2배의_수익을_얻는다() {
         //given
-        BattingMoney battingMoney = new BattingMoney(1000);
+        BettingMoney bettingMoney = new BettingMoney(1000);
 
         //when
-        int revenue = battingMoney.calculateProfit(WinningResult.WIN);
+        int revenue = bettingMoney.calculateProfit(WinningResult.WIN);
 
         //then
         assertThat(revenue).isEqualTo(1000);
@@ -49,10 +49,10 @@ class BattingMoneyTest {
     @Test
     void 무승부인_경우_수익은_없다() {
         //given
-        BattingMoney battingMoney = new BattingMoney(1000);
+        BettingMoney bettingMoney = new BettingMoney(1000);
 
         //when
-        int revenue = battingMoney.calculateProfit(WinningResult.DRAW);
+        int revenue = bettingMoney.calculateProfit(WinningResult.DRAW);
 
         //then
         assertThat(revenue).isEqualTo(0);
@@ -61,10 +61,10 @@ class BattingMoneyTest {
     @Test
     void 패배한_경우_배팅금액만큼_잃는다() {
         //given
-        BattingMoney battingMoney = new BattingMoney(1000);
+        BettingMoney bettingMoney = new BettingMoney(1000);
 
         //when
-        int revenue = battingMoney.calculateProfit(WinningResult.LOSE);
+        int revenue = bettingMoney.calculateProfit(WinningResult.LOSE);
 
         //then
         assertThat(revenue).isEqualTo(-1000);
@@ -74,7 +74,7 @@ class BattingMoneyTest {
     @ValueSource(ints = {0, 999, 1500})
     void 배팅금액이_1000원_단위가_아니라면_예외를_발생시킨다(int amount) {
         //given & when & then
-        assertThatThrownBy(() -> new BattingMoney(amount))
+        assertThatThrownBy(() -> new BettingMoney(amount))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("배팅금액은 1000원 단위여야합니다.");
     }

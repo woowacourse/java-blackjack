@@ -9,12 +9,12 @@ import java.util.Objects;
 public class Player {
     private final String name;
     private final Cards cards;
-    private final BattingMoney battingMoney;
-
-    public Player(String name, Cards cards, BattingMoney battingMoney) {
+    private final BettingMoney bettingMoney;
+    
+    public Player(String name, Cards cards, BettingMoney bettingMoney) {
         this.name = name.trim();
         this.cards = cards;
-        this.battingMoney = battingMoney;
+        this.bettingMoney = bettingMoney;
     }
 
     public void prepareCards(Deck deck) {
@@ -31,7 +31,7 @@ public class Player {
 
     public int calculateProfit(Cards competitiveCards) {
         WinningResult winningResult = WinningResult.decide(cards, competitiveCards);
-        return battingMoney.calculateProfit(winningResult);
+        return bettingMoney.calculateProfit(winningResult);
     }
 
     public Cards getCards() {
@@ -53,14 +53,14 @@ public class Player {
 
         Player player = (Player) object;
         return getName().equals(player.getName()) && Objects.equals(getCards(), player.getCards())
-                && Objects.equals(battingMoney, player.battingMoney);
+                && Objects.equals(bettingMoney, player.bettingMoney);
     }
 
     @Override
     public int hashCode() {
         int result = getName().hashCode();
         result = 31 * result + Objects.hashCode(getCards());
-        result = 31 * result + Objects.hashCode(battingMoney);
+        result = 31 * result + Objects.hashCode(bettingMoney);
         return result;
     }
 }

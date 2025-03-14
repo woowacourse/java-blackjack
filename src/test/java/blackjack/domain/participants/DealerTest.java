@@ -62,10 +62,10 @@ class DealerTest {
         Players players = new Players(
                 new Player("neo",
                         new Cards(new Card(Suit.DIAMOND, Rank.TEN), new Card(Suit.SPADE, Rank.TEN)),
-                        new BattingMoney(10000)),
+                        new BettingMoney(10000)),
                 new Player("neo",
                         new Cards(new Card(Suit.DIAMOND, Rank.TEN), new Card(Suit.SPADE, Rank.SIX)),
-                        new BattingMoney(20000))
+                        new BettingMoney(20000))
         );
 
         //when

@@ -5,7 +5,7 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.RandomCardsShuffler;
 import blackjack.domain.card.ScoreCalculator;
-import blackjack.domain.participants.BattingMoney;
+import blackjack.domain.participants.BettingMoney;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
@@ -41,7 +41,7 @@ public class BlackjackController {
                 .map(name -> new Player(
                         name,
                         new Cards(new ArrayList<>(), new ScoreCalculator()),
-                        new BattingMoney(InputView.inputBattingAmount(name))))
+                        new BettingMoney(InputView.inputBattingAmount(name))))
                 .toList();
     }
 
