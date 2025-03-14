@@ -45,10 +45,6 @@ public class Cards {
                 .count();
     }
 
-    public void shuffle() {
-        Collections.shuffle(cards);
-    }
-
     public Card pickCard() {
         return cards.removeFirst();
     }

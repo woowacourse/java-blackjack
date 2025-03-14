@@ -1,10 +1,10 @@
 package view;
 
 import exception.ErrorException;
+import exception.ExceptionHandler;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import exception.ExceptionHandler;
 
 public class InputView {
 

@@ -1,15 +1,15 @@
 import domain.CardDeck;
-import domain.participant.Dealer;
-import domain.participant.GameParticipant;
 import domain.GameResult;
-import domain.participant.Participant;
-import domain.participant.Player;
 import domain.card.Card;
 import domain.dto.GameResultDto;
 import domain.dto.ParticipantCardsDto;
+import domain.participant.Dealer;
+import domain.participant.GameParticipant;
+import domain.participant.Participant;
+import domain.participant.Player;
+import exception.ExceptionHandler;
 import java.util.ArrayList;
 import java.util.List;
-import exception.ExceptionHandler;
 import view.InputView;
 import view.OutputView;
 
@@ -32,7 +32,7 @@ public class Game {
     }
 
     private void registerGamePlayers() {
-        ExceptionHandler.repeatUntilSuccess(() ->{
+        ExceptionHandler.repeatUntilSuccess(() -> {
             List<String> names = InputView.readPlayerNames();
             gameParticipant.registerPlayers(names);
         });
@@ -104,7 +104,8 @@ public class Game {
     }
 
     private ParticipantCardsDto createParticipantInitialCardsDto(Participant participant) {
-        return new ParticipantCardsDto(participant.getName(), participant.getInitialCards(), participant.getCardsScore());
+        return new ParticipantCardsDto(participant.getName(), participant.getInitialCards(),
+                participant.getCardsScore());
     }
 
     private ParticipantCardsDto createParticipantCardsDto(Participant participant) {
