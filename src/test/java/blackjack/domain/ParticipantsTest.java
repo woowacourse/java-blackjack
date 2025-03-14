@@ -6,8 +6,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.Test;
 
 class ParticipantsTest {
+
     @Test
-    void 참여자가_7명이_넘으면_예외를_던진다() {
+    void 참여자가_7명을_초과하면_예외를_던진다() {
         // given
         List<Participant> participants = List.of(
                 new Dealer(new Hand()),
@@ -26,7 +27,7 @@ class ParticipantsTest {
     }
 
     @Test
-    void 참가자들의_이름을_가져온다() {
+    void 참가자의_이름을_가져올_수_있다() {
         // given
         List<String> names = List.of("히로", "히포");
         List<Participant> participantsToBeSaved = new java.util.ArrayList<>(names.stream()
@@ -44,7 +45,7 @@ class ParticipantsTest {
     }
 
     @Test
-    void defender를_찾는다() {
+    void 딜러를_찾을_수_있다() {
         // given
         List<String> names = List.of("히로", "히포");
         List<Participant> participantsToBeSaved = new java.util.ArrayList<>(names.stream()

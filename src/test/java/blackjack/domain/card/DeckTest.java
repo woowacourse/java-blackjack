@@ -7,15 +7,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class DeckTest {
 
-    @DisplayName("생성되는 시점에 카드의 개수는 52장이어야 한다.")
     @Test
-    void test6() {
+    void 생성되는_시점에_카드의_개수는_52장이어야_한다() {
         // given
         CardsGenerator cardsGenerator = new CardsGenerator();
         List<Card> cards = cardsGenerator.generate();
@@ -28,9 +26,8 @@ class DeckTest {
         );
     }
 
-    @DisplayName("생성되는 시점에 카드의 개수가 52장이 아니면 예외를 던진다.")
     @Test
-    void test1() {
+    void 생성되는_시점에_카드의_개수가_52장이_아니면_예외를_던진다() {
         // given
         List<Card> cards = List.of(new Card(CardSuit.CLUB, CardRank.ACE));
 
@@ -40,9 +37,8 @@ class DeckTest {
                 .hasMessage("카드 개수는 52개여야 합니다.");
     }
 
-    @DisplayName("중복되는 카드가 존재하면 예외를 던진다.")
     @Test
-    void test2() {
+    void 중복되는_카드가_존재하면_예외를_던진다() {
         // given
         CardsGenerator cardsGenerator = new CardsGenerator();
         List<Card> cards = cardsGenerator.generate();
@@ -58,9 +54,8 @@ class DeckTest {
                 .hasMessage("중복된 카드가 존재합니다.");
     }
 
-    @DisplayName("카드는 섞일 수 있다.")
     @Test
-    void test3() {
+    void 카드는_섞일_수_있다() {
         // given
         CardsGenerator cardsGenerator = new CardsGenerator();
         List<Card> cards = cardsGenerator.generate();
@@ -71,12 +66,10 @@ class DeckTest {
                 .containsExactlyInAnyOrderElementsOf(cards);
     }
 
-    @DisplayName("카드뽑을 때")
     @Nested
-    class DrawCard {
-        @DisplayName("원하는 개수만큼 카드를 뽑을 수 있다.")
+    class 카드뽑기 {
         @Test
-        void test4() {
+        void 원하는_개수만큼_카드를_뽑을_수_있다() {
             // given
             CardsGenerator cardsGenerator = new CardsGenerator();
             List<Card> cards = cardsGenerator.generate();
@@ -90,9 +83,8 @@ class DeckTest {
             assertThat(takeCards).hasSize(expect);
         }
 
-        @DisplayName("카드가 소진되면 예외를 던진다.")
         @Test
-        void test5() {
+        void 카드가_소진되면_예외를_던진다() {
             CardsGenerator cardsGenerator = new CardsGenerator();
             List<Card> cards = cardsGenerator.generate();
             Deck deck = new Deck(cards);
@@ -102,6 +94,4 @@ class DeckTest {
                     .hasMessage("모든 카드를 소진하였습니다.");
         }
     }
-
-
 }

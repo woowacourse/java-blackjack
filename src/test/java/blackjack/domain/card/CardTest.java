@@ -1,14 +1,12 @@
 package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class CardTest {
 
-    @DisplayName("객체 값 검증 테스트")
     @Test
-    void test1() {
+    void 객체값을_검증한다() {
         // given
         Card card = new Card(CardSuit.HEART, CardRank.EIGHT);
 
@@ -16,9 +14,8 @@ class CardTest {
         assertThat(card.getRankValues()).contains(8);
     }
 
-    @DisplayName("ACE의 경우에는 1과 11의 값을 가질 수 있다.")
     @Test
-    void test3() {
+    void ACE는_1과_11의_값을_가질_수_있다() {
         // given
         Card ace = new Card(CardSuit.CLUB, CardRank.ACE);
 
@@ -26,9 +23,8 @@ class CardTest {
         assertThat(ace.getRankValues()).containsExactlyInAnyOrder(1, 11);
     }
 
-    @DisplayName("값과 타입으로 동일한 객체인지 확인한다")
     @Test
-    void test2() {
+    void 값과_타입으로_동일한_객체인지_확인한다() {
         // given
         Card card = new Card(CardSuit.HEART, CardRank.TWO);
         Card comparedCard = new Card(CardSuit.HEART, CardRank.TWO);

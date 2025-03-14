@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 class ParticipantResultTest {
 
     @Test
-    void 같은_참가자에_대한_결과는_같은_객체로_취급한다() {
+    void 같은_참가자에_대한_결과는_동일한_객체로_취급한다() {
         // given
         Player player = new Player("히로", new Hand());
 
@@ -25,7 +25,7 @@ class ParticipantResultTest {
     }
 
     @Test
-    void 참가자에_대한_결과를_업데이트_한다() {
+    void 참가자의_결과를_업데이트할_수_있다() {
         // given
         Dealer dealer = new Dealer(new Hand());
 
@@ -40,7 +40,7 @@ class ParticipantResultTest {
     }
 
     @Test
-    void 참가자에_대한_결과인지_확인한다() {
+    void 특정_참가자의_결과인지_확인할_수_있다() {
         // given
         Dealer dealer = new Dealer(new Hand());
         ParticipantResult participantResult = new ParticipantResult(dealer, GameResultType.LOSE, 21);

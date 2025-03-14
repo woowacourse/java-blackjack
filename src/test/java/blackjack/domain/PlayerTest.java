@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 class PlayerTest {
 
     @Test
-    void 플레이어는_이름과_카드를_가진다() {
+    void 플레이어는_이름과_카드를_가지고_있어야_한다() {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
@@ -26,7 +26,7 @@ class PlayerTest {
     }
 
     @Test
-    void 플레이어의_모든_카드를_가져온다() {
+    void 플레이어는_모든_카드를_조회할_수_있다() {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
@@ -44,7 +44,7 @@ class PlayerTest {
     }
 
     @Test
-    void 플레이어는_카드를_가져올_수_있다() {
+    void 플레이어는_카드를_추가로_받을_수_있다() {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
@@ -66,7 +66,7 @@ class PlayerTest {
     }
 
     @Test
-    void 플레이어는_갖고_있는_카드들의_합이_모두_21이하일_때만_카드를_더_뽑을_수_있다() {
+    void 플레이어는_카드의_합이_21이하일_때만_카드를_더_뽑을_수_있다() {
         // given
         Hand hand = new Hand();
 
@@ -85,7 +85,7 @@ class PlayerTest {
     }
 
     @Test
-    void 카드의_합이_특정_범위를_넘어가면_한계에_도달했음을_나타낸다() {
+    void 카드의_합이_한계를_넘으면_제한됨을_나타낸다() {
         // given
         Hand hand = new Hand();
 
@@ -106,25 +106,25 @@ class PlayerTest {
     }
 
     @Test
-    void 플레이어는_챌린저다() {
+    void 플레이어는_챌린저이다() {
         Player player = new Player("히로", new Hand());
         assertThat(player.isChallenger()).isTrue();
     }
 
     @Test
-    void 플레이어는_카드를_더_뽑는_것을_선택할_수_있다() {
+    void 플레이어는_추가로_카드를_뽑을_지_결정할_수_있다() {
         Player player = new Player("히로", new Hand());
         assertThat(player.canDecideToTakeMoreCard()).isTrue();
     }
 
     @Test
-    void 플레이어는_이름이_있다() {
+    void 플레이어는_이름을_가지고_있다() {
         Player player = new Player("히로", new Hand());
         assertThat(player.doesHaveName()).isTrue();
     }
 
     @Test
-    void 플레이어는_승패의_횟수를_세지_않는다() {
+    void 플레이어는_승패_횟수를_세지_않는다() {
         Player player = new Player("히로", new Hand());
         assertThat(player.tracksWinLossCount()).isFalse();
     }

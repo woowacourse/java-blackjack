@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 class ParticipantResultsTest {
 
     @Test
-    void 결과를_추가한다() {
+    void 결과를_추가할_수_있다() {
         // given
         Dealer dealer = new Dealer(new Hand());
         ParticipantResult participantResult = new ParticipantResult(dealer, GameResultType.LOSE, 19);
@@ -25,7 +25,7 @@ class ParticipantResultsTest {
     }
 
     @Test
-    void 참가자의_결과를_조회한다() {
+    void 참가자의_결과를_조회할_수_있다() {
         // given
         Dealer dealer = new Dealer(new Hand());
         ParticipantResult participantResult = new ParticipantResult(dealer, GameResultType.LOSE, 19);
@@ -40,7 +40,7 @@ class ParticipantResultsTest {
     }
 
     @Test
-    void 챌린저의_결과만_가져온다() {
+    void 챌린저의_결과만_조회할_수_있다() {
         // given
         Dealer dealer = new Dealer(new Hand());
         Player player = new Player("히로", new Hand());
@@ -61,7 +61,7 @@ class ParticipantResultsTest {
     }
 
     @Test
-    void 디펜더의_결과만_가져온다() {
+    void 디펜더의_결과만_조회할_수_있다() {
         // given
         Dealer dealer = new Dealer(new Hand());
         Player player = new Player("히로", new Hand());
@@ -75,9 +75,9 @@ class ParticipantResultsTest {
         participantResults.add(participantResultOfPlayer);
 
         // when
-        List<ParticipantResult> resultsOfChallenger = participantResults.findResultsOfDefender();
+        List<ParticipantResult> resultsOfDefender = participantResults.findResultsOfDefender();
 
         // then
-        assertThat(resultsOfChallenger).isEqualTo(List.of(participantResultOfDealer));
+        assertThat(resultsOfDefender).isEqualTo(List.of(participantResultOfDealer));
     }
 }

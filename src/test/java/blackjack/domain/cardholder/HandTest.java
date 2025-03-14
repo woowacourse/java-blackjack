@@ -6,14 +6,12 @@ import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class HandTest {
 
-    @DisplayName("카드를 추가한다")
     @Test
-    void test2() {
+    void 카드를_추가한다() {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
@@ -30,9 +28,8 @@ class HandTest {
         assertThat(hand.getAllCards()).containsExactly(card1, card2, newCard);
     }
 
-    @DisplayName("가능한 카드의 모든 합을 반환한다")
     @Test
-    void test3() {
+    void 가능한_카드의_모든_합을_반환한다() {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.ACE);
@@ -47,9 +44,8 @@ class HandTest {
         assertThat(totalValues).containsExactlyInAnyOrder(2, 12, 22);
     }
 
-    @DisplayName("모든 카드를 반환한다.")
     @Test
-    void test5() {
+    void 모든_카드를_반환한다() {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
