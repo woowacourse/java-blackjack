@@ -1,8 +1,7 @@
 package money;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import paticipant.Player;
 
@@ -10,7 +9,7 @@ public class WagerMoney {
 	private final Map<Player, Money> money;
 
 	public WagerMoney(final Map<Player, Money> money) {
-		this.money = money;
+		this.money = new LinkedHashMap<>(money);
 	}
 
 	public Map<Player, Money> getMoney() {
@@ -19,10 +18,12 @@ public class WagerMoney {
 
 	public Map<Player, Money> calculateWagerResult() {
 		final WagerResultCalculator wagerResultCalculator = new WagerResultCalculator();
-		return money.keySet().stream()
-			.collect(Collectors.toMap(
-				Function.identity(),
-				player -> money.get(player).minus(wagerResultCalculator.calculate(player, money.get(player)))
-			));
+		final Map<Player, Money> wagerResult = new LinkedHashMap<>();
+		for (final Player player : money.keySet()) {
+			final Money playerWager = money.get(player);
+			final Money playerWagerResult = wagerResultCalculator.calculate(player, playerWager);
+			wagerResult.put(player, playerWagerResult.minus(playerWager));
+		}
+		return wagerResult;
 	}
 }

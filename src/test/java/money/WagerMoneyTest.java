@@ -43,7 +43,7 @@ public class WagerMoneyTest {
 			// given
 			final Participant participant = new Participant();
 			participant.writeDuelResult(DuelResult.WIN);
-			final Player player = new Player("");
+			final Player player = new Player("", participant);
 			final Map<Player, Money> money = Map.of(player, new Money(10_000));
 			final WagerMoney wagerMoney = new WagerMoney(money);
 
@@ -51,7 +51,7 @@ public class WagerMoneyTest {
 			final Map<Player, Money> wagerResult = wagerMoney.calculateWagerResult();
 
 			// then
-			assertThat(wagerResult.get(player)).isEqualTo(new Money(10_000));
+			assertThat(wagerResult.get(player).getValue()).isEqualTo(10_000);
 		}
 	}
 }
