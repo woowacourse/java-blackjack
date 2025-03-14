@@ -1,40 +1,43 @@
 package domain.bet;
 
-import java.util.Objects;
+import domain.result.WinLossResult;
 
 public class BetMoney {
 
+    public static final int DRAW_PROFIT = 0;
     private final double amount;
 
     public BetMoney(final double amount) {
         this.amount = amount;
     }
 
-    public BetMoney applyBlackJackBonus() {
-        return new BetMoney(amount * 1.5);
+    public BetMoney computeProfit(final WinLossResult winLossResult) {
+        if(winLossResult == WinLossResult.WIN) {
+            return applyWinBonus();
+        }
+        if(winLossResult == WinLossResult.BLACKJACK_WIN) {
+            return applyBlackJackBonus();
+        }
+        if(winLossResult == WinLossResult.LOSS) {
+            return applyLossPenalty();
+        }
+        return new BetMoney(DRAW_PROFIT);
     }
 
-    public BetMoney applyWinBonus() {
-        return new BetMoney(amount * 2);
+    private BetMoney applyBlackJackBonus() {
+        return new BetMoney(amount * 1.5 - amount);
     }
 
-    public BetMoney applyLossPenalty() {
-        return new BetMoney(0);
+    private BetMoney applyWinBonus() {
+        return new BetMoney(amount * 2 - amount);
+    }
+
+    private BetMoney applyLossPenalty() {
+        return new BetMoney(-amount);
     }
 
     public double getAmount() {
         return amount;
     }
 
-    @Override
-    public boolean equals(final Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        BetMoney betMoney = (BetMoney) o;
-        return Double.compare(amount, betMoney.amount) == 0;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(amount);
-    }
 }

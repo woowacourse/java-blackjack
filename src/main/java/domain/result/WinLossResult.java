@@ -18,33 +18,16 @@ public enum WinLossResult {
     }
 
     public static WinLossResult from(final Dealer dealer, final Player player) {
-        if (player.isHandBust()) {
-            return LOSS;
-        }
-        return computeWinLossResult(dealer, player);
+        return computePlayerResult(dealer, player);
     }
 
-    private static WinLossResult computeWinLossResult(final Dealer dealer, final Player player) {
-        WinLossResult winLossResult = WinLossResult.NONE;
-        if (dealer.getHandTotal() < player.getHandTotal()) {
-            winLossResult = WIN;
-        }
-        if (dealer.getHandTotal() > player.getHandTotal()) {
-            winLossResult = LOSS;
-        }
-        if (dealer.getHandTotal() == player.getHandTotal()) {
-            winLossResult = checkBlackJackCase(dealer, player);
-        }
-        return winLossResult;
-    }
-
-    private static WinLossResult checkBlackJackCase(final Dealer dealer, final Player player) {
-        if (player.isBlackJack() && !dealer.isBlackJack()) {
-            return BLACKJACK_WIN;
-        }
-        if (dealer.isBlackJack() && !player.isBlackJack()) {
-            return LOSS;
-        }
+    private static WinLossResult computePlayerResult(final Dealer dealer, final Player player) {
+        if (player.isHandBust()) return LOSS;
+        if (player.isBlackJack() && dealer.isBlackJack()) return DRAW;
+        if (player.isBlackJack() && !dealer.isBlackJack()) return BLACKJACK_WIN;
+        if (!player.isBlackJack() && dealer.isBlackJack()) return LOSS;
+        if (player.getHandTotal() > dealer.getHandTotal()) return WIN;
+        if (player.getHandTotal() < dealer.getHandTotal()) return LOSS;
         return DRAW;
     }
 

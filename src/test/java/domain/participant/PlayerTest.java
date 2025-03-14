@@ -23,44 +23,4 @@ public class PlayerTest {
 
         assertThat(player.getHandTotal()).isEqualTo(11);
     }
-
-    @Test
-    @DisplayName("플레이어는 베팅을 할 수 있다.")
-    void test2() {
-        Player player = new Player("moru");
-
-        assertThat(player.bet(10000).getBetMoney()).isEqualTo(new BetMoney(10000));
-    }
-
-    @Test
-    @DisplayName("승리 시 베팅 금액은 2배가 된다.")
-    void test3() {
-        Player player = new Player("moru").bet(10000);
-
-        assertThat(player.computeBetResult(WinLossResult.WIN)).isEqualTo(new BetMoney(20000));
-    }
-
-    @Test
-    @DisplayName("블랙잭으로 승리 시 베팅 금액은 1.5배가 된다.")
-    void test4() {
-        Player player = new Player("moru").bet(10000);
-
-        assertThat(player.computeBetResult(WinLossResult.BLACKJACK_WIN)).isEqualTo(new BetMoney(15000));
-    }
-
-    @Test
-    @DisplayName("패배 시 베팅 금액은 0배가 된다.")
-    void test5() {
-        Player player = new Player("moru").bet(10000);
-
-        assertThat(player.computeBetResult(WinLossResult.LOSS)).isEqualTo(new BetMoney(0));
-    }
-
-    @Test
-    @DisplayName("무승부 시 베팅 금액을 그대로 가져간다.")
-    void test6() {
-        Player player = new Player("moru").bet(10000);
-
-        assertThat(player.computeBetResult(WinLossResult.DRAW)).isEqualTo(new BetMoney(10000));
-    }
 }

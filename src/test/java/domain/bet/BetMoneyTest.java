@@ -1,5 +1,6 @@
 package domain.bet;
 
+import domain.result.WinLossResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,9 +19,9 @@ class BetMoneyTest {
     void test2() {
         BetMoney betMoney = new BetMoney(10000);
 
-        BetMoney applyedBetMoney = betMoney.applyBlackJackBonus();
+        BetMoney applyedBetMoney = betMoney.computeProfit(WinLossResult.BLACKJACK_WIN);
 
-        assertThat(applyedBetMoney.getAmount()).isEqualTo(15000);
+        assertThat(applyedBetMoney.getAmount()).isEqualTo(5000);
     }
 
     @Test
@@ -28,9 +29,9 @@ class BetMoneyTest {
     void test3() {
         BetMoney betMoney = new BetMoney(10000);
 
-        BetMoney applyedBetMoney = betMoney.applyWinBonus();
+        BetMoney applyedBetMoney = betMoney.computeProfit(WinLossResult.WIN);
 
-        assertThat(applyedBetMoney.getAmount()).isEqualTo(20000);
+        assertThat(applyedBetMoney.getAmount()).isEqualTo(10000);
     }
 
     @Test
@@ -38,8 +39,8 @@ class BetMoneyTest {
     void test4() {
         BetMoney betMoney = new BetMoney(10000);
 
-        BetMoney applyedBetMoney = betMoney.applyLossPenalty();
+        BetMoney applyedBetMoney = betMoney.computeProfit(WinLossResult.LOSS);
 
-        assertThat(applyedBetMoney.getAmount()).isEqualTo(0);
+        assertThat(applyedBetMoney.getAmount()).isEqualTo(-10000);
     }
 }
