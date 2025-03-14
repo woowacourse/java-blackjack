@@ -7,6 +7,8 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
+import blackjack.domain.state.Hit;
+import blackjack.domain.state.Stay;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
@@ -19,52 +21,36 @@ class DealerTest {
                 new Card(Suit.DIAMOND, Rank.NINE),
                 new Card(Suit.CLUB, Rank.TEN)
         );
-        Dealer dealer = new Dealer(new Cards());
+        Dealer dealer = new Dealer(new Hit(new Cards()));
 
         //when
         dealer.drawAdditionalCard(deck);
 
         //then
-        assertThat(dealer).isEqualTo(new Dealer(new Cards(
-                new Card(Suit.CLUB, Rank.EIGHT),
-                new Card(Suit.DIAMOND, Rank.NINE)
-        )));
-    }
-
-    @Test
-    void 카드를_2장_준비한다() {
-        //given
-        Deck deck = new Deck(
-                new Card(Suit.CLUB, Rank.EIGHT),
-                new Card(Suit.DIAMOND, Rank.NINE),
-                new Card(Suit.CLUB, Rank.TEN)
-        );
-        Dealer dealer = new Dealer(new Cards());
-
-        //when
-        dealer.prepareCards(deck);
-
-        //then
-        assertThat(dealer).isEqualTo(new Dealer(new Cards(
-                new Card(Suit.CLUB, Rank.EIGHT),
-                new Card(Suit.DIAMOND, Rank.NINE)
+        assertThat(dealer).isEqualTo(new Dealer(new Hit(
+                new Cards(
+                        new Card(Suit.CLUB, Rank.EIGHT),
+                        new Card(Suit.DIAMOND, Rank.NINE)
+                )
         )));
     }
 
     @Test
     void 수익을_계산할_수_있다() {
         //given
-        Dealer dealer = new Dealer(new Cards(
-                new Card(Suit.CLUB, Rank.EIGHT),
-                new Card(Suit.DIAMOND, Rank.NINE)
+        Dealer dealer = new Dealer(new Stay(
+                new Cards(
+                        new Card(Suit.CLUB, Rank.EIGHT),
+                        new Card(Suit.DIAMOND, Rank.NINE)
+                )
         ));
 
         Players players = new Players(
                 new Player("neo",
-                        new Cards(new Card(Suit.DIAMOND, Rank.TEN), new Card(Suit.SPADE, Rank.TEN)),
+                        new Stay(new Cards(new Card(Suit.DIAMOND, Rank.TEN), new Card(Suit.SPADE, Rank.TEN))),
                         new BettingMoney(10000)),
                 new Player("neo",
-                        new Cards(new Card(Suit.DIAMOND, Rank.TEN), new Card(Suit.SPADE, Rank.SIX)),
+                        new Stay(new Cards(new Card(Suit.DIAMOND, Rank.TEN), new Card(Suit.SPADE, Rank.SIX))),
                         new BettingMoney(20000))
         );
 

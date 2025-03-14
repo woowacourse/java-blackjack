@@ -21,8 +21,6 @@ public class GameBoard {
 
     public void prepareGame(CardsShuffler cardsShuffler) {
         deck.shuffleCards(cardsShuffler);
-        dealer.prepareCards(deck);
-        players.prepareCards(deck);
     }
 
     public void drawCard(Player player) {
@@ -51,5 +49,4 @@ public class GameBoard {
     public int getDealerCardSize() {
         return dealer.getCardSize();
     }
-
 }

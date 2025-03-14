@@ -2,7 +2,6 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.Score;
 import blackjack.domain.winning.WinningResult;
 
 public class Hit extends Start {
@@ -27,11 +26,6 @@ public class Hit extends Start {
     @Override
     public double profit(double bettingMoney) {
         throw new IllegalStateException("수익을 계산할 수 없습니다.");
-    }
-
-    @Override
-    public Score calculateTotalScore() {
-        throw new IllegalStateException("아직 점수를 계산할 수 없습니다.");
     }
 
     @Override

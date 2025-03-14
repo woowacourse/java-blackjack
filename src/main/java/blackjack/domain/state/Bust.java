@@ -2,7 +2,6 @@ package blackjack.domain.state;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.Score;
 import blackjack.domain.winning.WinningResult;
 
 public class Bust extends Start {
@@ -23,11 +22,6 @@ public class Bust extends Start {
     @Override
     public double profit(double bettingMoney) {
         return -bettingMoney;
-    }
-
-    @Override
-    public Score calculateTotalScore() {
-        return cards.calculateMaxScore();
     }
 
     @Override

@@ -26,11 +26,6 @@ public class Stay extends Start {
     }
 
     @Override
-    public Score calculateTotalScore() {
-        return cards.calculateMaxScore();
-    }
-
-    @Override
     public WinningResult decide(State state) {
         if (!state.isFinished()) {
             throw new IllegalArgumentException("끝난 상태와 승패를 결정할 수 있습니다.");
@@ -39,7 +34,7 @@ public class Stay extends Start {
             return WinningResult.WIN;
         }
         if (state instanceof Blackjack) {
-            return WinningResult.WIN;
+            return WinningResult.LOSE;
         }
         return compareScore(state);
     }

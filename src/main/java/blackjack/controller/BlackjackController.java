@@ -1,26 +1,26 @@
 package blackjack.controller;
 
 import blackjack.domain.GameBoard;
-import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.RandomCardsShuffler;
-import blackjack.domain.card.ScoreCalculator;
 import blackjack.domain.participants.BettingMoney;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
+import blackjack.domain.state.Start;
 import blackjack.domain.winning.Profit;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackController {
     public void run() {
         try {
-            Players players = createPlayers();
-            Dealer dealer = new Dealer(new Cards());
-            GameBoard gameBoard = new GameBoard(Deck.defaultDeck(), dealer, players);
+            Deck deck = Deck.defaultDeck();
+            deck.shuffleCards(new RandomCardsShuffler());
+            Dealer dealer = new Dealer(Start.of(deck.draw(), deck.draw()));
+            Players players = createPlayers(deck);
+            GameBoard gameBoard = new GameBoard(deck, dealer, players);
             handOutCards(gameBoard);
             additionalCard(gameBoard, players);
             dealerAdditionalCard(gameBoard);
@@ -31,16 +31,16 @@ public class BlackjackController {
         }
     }
 
-    private Players createPlayers() {
+    private Players createPlayers(Deck deck) {
         List<String> playerNames = InputView.inputPlayerNames();
-        return new Players(toPlayers(playerNames));
+        return new Players(toPlayers(playerNames, deck));
     }
 
-    private List<Player> toPlayers(List<String> playerNames) {
+    private List<Player> toPlayers(List<String> playerNames, Deck deck) {
         return playerNames.stream()
                 .map(name -> new Player(
                         name,
-                        new Cards(new ArrayList<>(), new ScoreCalculator()),
+                        Start.of(deck.draw(), deck.draw()),
                         new BettingMoney(InputView.inputBattingAmount(name))))
                 .toList();
     }
@@ -58,6 +58,7 @@ public class BlackjackController {
                 }
                 OutputView.printPlayerCards(player);
             }
+            player.stay();
         }));
     }
 

@@ -1,7 +1,7 @@
 package blackjack.domain.participants;
 
-import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
+import blackjack.domain.state.State;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,10 +35,6 @@ public class Players {
         }
     }
 
-    public void prepareCards(Deck deck) {
-        players.forEach(player -> player.prepareCards(deck));
-    }
-
     public void drawCard(Deck deck, Player player) {
         if (!players.contains(player)) {
             throw new IllegalArgumentException("해당 플레이어는 존재하지 않습니다.");
@@ -52,9 +48,9 @@ public class Players {
         }
     }
 
-    public int calculateTotalProfit(Cards competitiveCards) {
+    public int calculateTotalProfit(State competitiveState) {
         return players.stream()
-                .mapToInt(player -> player.calculateProfit(competitiveCards))
+                .mapToInt(player -> player.calculateProfit(competitiveState))
                 .sum();
     }
 
@@ -62,7 +58,7 @@ public class Players {
         return players.stream()
                 .collect(Collectors.toMap(
                         player -> player,
-                        player -> player.calculateProfit(dealer.getCards())
+                        player -> player.calculateProfit(dealer.getState())
                 ));
     }
 
