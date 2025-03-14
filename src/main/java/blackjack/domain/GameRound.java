@@ -25,4 +25,12 @@ public class GameRound {
     public int getFinalBettingMoney(Player player) {
         return finalBettingMoney.get(player);
     }
+
+    public boolean endGameIfBlackjack(Player player) {
+        if (player.isBlackjack()) {
+            finalBettingMoney.put(player, (int)(initialBettingMoney.get(player) * 1.5));
+            return true;
+        }
+        return false;
+    }
 }
