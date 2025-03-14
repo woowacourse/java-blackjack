@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -10,7 +11,11 @@ public class Deck {
     private static final int DECK_SIZE = 52;
     private final List<Card> cards;
 
-    public Deck(List<Card> cards) {
+    public Deck() {
+        List<Card> cards = Arrays.stream(CardSuit.values())
+                .flatMap(suit -> Arrays.stream(CardRank.values())
+                        .map(rank -> new Card(suit, rank)))
+                .toList();
         validate(cards);
         this.cards = new ArrayList<>(shuffled(cards));
     }

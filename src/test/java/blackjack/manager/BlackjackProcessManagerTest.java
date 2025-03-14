@@ -5,7 +5,6 @@ import blackjack.domain.Hand;
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
 import blackjack.domain.Player;
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.GameResultType;
 import blackjack.domain.result.ParticipantResult;
@@ -21,9 +20,7 @@ class BlackjackProcessManagerTest {
 
     @BeforeEach
     void init() {
-        CardsGenerator cardsGenerator = new CardsGenerator();
-        List<Card> cards = cardsGenerator.generate();
-        Deck deck = new Deck(cards);
+        Deck deck = new Deck();
         blackjackProcessManager = new BlackjackProcessManager(deck, new ParticipantResults());
     }
 
@@ -40,8 +37,7 @@ class BlackjackProcessManagerTest {
     @Test
     void 참가자들의_게임_결과를_저장한다() {
         // given
-        CardsGenerator cardsGenerator = new CardsGenerator();
-        Deck deck = new Deck(cardsGenerator.generate());
+        Deck deck = new Deck();
         ParticipantResults participantResults = new ParticipantResults();
         Player player = new Player("히로", new Hand());
         Dealer dealer = new Dealer(new Hand());

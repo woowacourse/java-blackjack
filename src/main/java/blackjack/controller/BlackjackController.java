@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
+import blackjack.domain.card.Deck;
 import blackjack.domain.result.ParticipantResults;
 import blackjack.manager.BlackJackInitManager;
 import blackjack.manager.BlackjackProcessManager;
@@ -20,8 +21,7 @@ public class BlackjackController {
     public BlackjackController(GameRuleEvaluator gameRuleEvaluator, BlackJackInitManager blackJackInitManager) {
         this.gameRuleEvaluator = gameRuleEvaluator;
         this.blackJackInitManager = blackJackInitManager;
-        this.blackjackProcessManager = new BlackjackProcessManager(blackJackInitManager.generateDeck(),
-                new ParticipantResults());
+        this.blackjackProcessManager = new BlackjackProcessManager(new Deck(), new ParticipantResults());
     }
 
     public void run() {
