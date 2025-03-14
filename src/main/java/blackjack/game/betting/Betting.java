@@ -25,7 +25,8 @@ public class Betting {
             GameResult gameResult = dealer.judgePlayerResult(player);
 
             PlayerName name = player.getName();
-            BetAmount newBetAmount = bettingTable.get(name).calculateProfit(gameResult, player.getCards().isBlackjack());
+            BetAmount betAmount = bettingTable.get(name);
+            BetAmount newBetAmount = betAmount.calculateProfit(gameResult, player.getCards().isBlackjack());
             bettingTable.put(name, newBetAmount);
         }
     }

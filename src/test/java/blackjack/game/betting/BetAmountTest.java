@@ -1,10 +1,9 @@
-package blackjack.user;
+package blackjack.game.betting;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.game.GameResult;
-import blackjack.game.betting.BetAmount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -14,6 +13,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 public class BetAmountTest {
 
     @Nested
+    @DisplayName("배팅 금액 입력 테스트")
     class CreateBetAmountTest {
 
         @ParameterizedTest
@@ -36,6 +36,7 @@ public class BetAmountTest {
     }
 
     @Nested
+    @DisplayName("배팅 금액 계산 테스트")
     class ProfitTest {
 
         @Test
