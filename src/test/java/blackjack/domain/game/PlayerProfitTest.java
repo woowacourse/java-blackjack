@@ -25,7 +25,7 @@ class PlayerProfitTest {
         assertThat(profit.getNickname())
                 .isEqualTo("플레이이어");
         assertThat(profit.getProfit())
-                .isEqualTo(ProfitRate.BLACKJACK_WITH_INITIAL_HAND.calculateProfit(player.getBettingAmount()));
+                .isEqualTo(GameResultType.WIN_WITH_INITIAL_HAND_BLACKJACK.calculateProfit(player.getBettingAmount()));
     }
 
     @Test
@@ -39,7 +39,7 @@ class PlayerProfitTest {
         assertThat(profit.getNickname())
                 .isEqualTo("플레이이어");
         assertThat(profit.getProfit())
-                .isEqualTo(ProfitRate.LOSE.calculateProfit(player.getBettingAmount()));
+                .isEqualTo(GameResultType.LOSE.calculateProfit(player.getBettingAmount()));
     }
 
     @Test
@@ -53,28 +53,27 @@ class PlayerProfitTest {
         assertThat(profit.getNickname())
                 .isEqualTo("플레이이어");
         assertThat(profit.getProfit())
-                .isEqualTo(ProfitRate.WIN.calculateProfit(player.getBettingAmount()));
+                .isEqualTo(GameResultType.WIN.calculateProfit(player.getBettingAmount()));
     }
 
     @ParameterizedTest
     @DisplayName("승패에 따라 이익을 구할 수 있다.")
     @MethodSource()
-    void canCreateByWinningType(WinningType winningType) {
+    void canCreateByWinningType(GameResultType gameResultType) {
         Player player = new Player(new Nickname("플레이이어"));
         player.registerBettingAmount(new BettingAmount(1000));
 
-        PlayerProfit profit = PlayerProfit.createByWinningType(player, winningType);
+        PlayerProfit profit = PlayerProfit.createByWinningType(player, gameResultType);
 
-        ProfitRate expectedRate = winningType.getProfitRate();
         assertThat(profit.getNickname()).isEqualTo("플레이이어");
-        assertThat(profit.getProfit()).isEqualTo(expectedRate.calculateProfit(player.getBettingAmount()));
+        assertThat(profit.getProfit()).isEqualTo(gameResultType.calculateProfit(player.getBettingAmount()));
     }
 
     static Stream<Arguments> canCreateByWinningType() {
         return Stream.of(
-                Arguments.of(WinningType.WIN),
-                Arguments.of(WinningType.LOSE),
-                Arguments.of(WinningType.DRAW)
+                Arguments.of(GameResultType.WIN),
+                Arguments.of(GameResultType.LOSE),
+                Arguments.of(GameResultType.DRAW)
         );
     }
 }

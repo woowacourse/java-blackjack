@@ -36,6 +36,6 @@ public class PlayerProfits {
         if (player.isBust()) {
             return PlayerProfit.createWhenPlayerBust(player);
         }
-        return PlayerProfit.createByWinningType(player, WinningType.parse(player.getPoint(), dealer.getPoint()));
+        return PlayerProfit.createByWinningType(player, GameResultType.parse(player.getPoint(), dealer.getPoint()));
     }
 }

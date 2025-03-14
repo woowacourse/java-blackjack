@@ -13,26 +13,22 @@ public class PlayerProfit {
     }
 
     public static PlayerProfit createWhenPlayerBlackjackWithInitialCard(Player player) {
-        ProfitRate rate = ProfitRate.BLACKJACK_WITH_INITIAL_HAND;
-        int profit = rate.calculateProfit(player.getBettingAmount());
+        int profit = GameResultType.WIN_WITH_INITIAL_HAND_BLACKJACK.calculateProfit(player.getBettingAmount());
         return new PlayerProfit(player.getNickname(), profit);
     }
 
     public static PlayerProfit createWhenDealerBust(Player player) {
-        ProfitRate rate = ProfitRate.WIN;
-        int profit = rate.calculateProfit(player.getBettingAmount());
+        int profit = GameResultType.WIN.calculateProfit(player.getBettingAmount());
         return new PlayerProfit(player.getNickname(), profit);
     }
 
     public static PlayerProfit createWhenPlayerBust(Player player) {
-        ProfitRate rate = ProfitRate.LOSE;
-        int profit = rate.calculateProfit(player.getBettingAmount());
+        int profit = GameResultType.LOSE.calculateProfit(player.getBettingAmount());
         return new PlayerProfit(player.getNickname(), profit);
     }
 
-    public static PlayerProfit createByWinningType(Player player, WinningType winningType) {
-        ProfitRate profitRate = winningType.getProfitRate();
-        int profit = profitRate.calculateProfit(player.getBettingAmount());
+    public static PlayerProfit createByWinningType(Player player, GameResultType gameResultType) {
+        int profit = gameResultType.calculateProfit(player.getBettingAmount());
         return new PlayerProfit(player.getNickname(), profit);
     }
 
