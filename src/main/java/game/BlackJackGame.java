@@ -20,7 +20,7 @@ public class BlackJackGame {
         this.dealer = dealer;
     }
 
-    public static BlackJackGame of(ConsoleInput input) {
+    public static BlackJackGame from(ConsoleInput input) {
         Dealer dealer = new Dealer(new DeckShuffleStrategy());
         Players players = Players.registerPlayers(input.readParticipantsNames(), dealer);
 
