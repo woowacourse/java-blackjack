@@ -51,7 +51,7 @@ public enum FinalResult {
         return Arrays.stream(FinalResult.values())
                 .filter(finalResult -> finalResult.condition.test(sumOfRank, otherSumOfRank))
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException("비 정상적인 상태입니다."));
+                .orElseThrow(() -> new IllegalStateException("플레이어의 합계와 딜러의 합계에 해당하는 결과를 찾을 수 없습니다."));
     }
 
     public static Map<FinalResult, Integer> makeDealerResult(final Map<Player, FinalResult> playerResults) {
