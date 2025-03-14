@@ -33,10 +33,6 @@ public class Hand {
         originalAce.setValueToOne();
     }
 
-    private Predicate<Card> originalAcePredicate() {
-        return card -> card.isAce() && card.getValue() == ORIGINAL_ACE_VALUE;
-    }
-
     public void setAllCardValueToZero() {
         cards.forEach(Card::setValueToZero);
     }

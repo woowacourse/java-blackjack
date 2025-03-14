@@ -2,7 +2,6 @@ package view;
 
 import static domain.Dealer.THRESHOLD;
 
-import controller.dto.WinLossCountDto;
 import domain.Card;
 import domain.Dealer;
 import domain.Hand;
@@ -45,20 +44,6 @@ public class OutputView {
         if (dealerExtraCardsCount > 0) {
             System.out.printf("%s는 %d이하라 %d장의 카드를 더 받았습니다.\n\n", dealer.getName(), THRESHOLD, dealerExtraCardsCount);
         }
-    }
-
-    public static void printWinLossResult(Players players, Dealer dealer, WinLossCountDto winLossCountResult) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("## 최종 승패\n");
-        stringBuilder.append(String.format("%s: %d승 %d패 %d무\n", dealer.getName(),
-                winLossCountResult.winCount(),
-                winLossCountResult.lossCount(),
-                winLossCountResult.drawCount()));
-        for (Player player : players.getPlayers()) {
-            stringBuilder.append(String.format("%s: %s\n", player.getName(),
-                    player.getWinLoss(dealer.getHandTotal()).getWinLossMessage()));
-        }
-        System.out.println(stringBuilder);
     }
 
     public static void printBust() {
