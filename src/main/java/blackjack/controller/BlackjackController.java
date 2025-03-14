@@ -2,7 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
-import blackjack.domain.card.generator.ShuffleCardGenerator;
+import blackjack.domain.card.generator.ShuffleDeckGenerator;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Gamer;
 import blackjack.domain.participant.Player;
@@ -32,7 +32,7 @@ public class BlackjackController {
     }
 
     public void run() {
-        final Deck deck = new Deck(new ShuffleCardGenerator());
+        final Deck deck = new Deck(new ShuffleDeckGenerator());
         final Dealer dealer = Dealer.createEmpty();
         final Players players = makePlayers();
 

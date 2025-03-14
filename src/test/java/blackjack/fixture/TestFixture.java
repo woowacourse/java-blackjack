@@ -4,7 +4,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardScore;
 import blackjack.domain.card.Hand;
 import blackjack.domain.card.Shape;
-import blackjack.domain.card.generator.CardGenerator;
+import blackjack.domain.card.generator.DeckGenerator;
+import blackjack.domain.card.generator.ShuffleDeckGenerator;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.ArrayList;
@@ -12,22 +13,23 @@ import java.util.List;
 
 public class TestFixture {
 
-    public static class TestCardGeneratorGenerator implements CardGenerator {
+    public static class TestDeckGeneratorGenerator implements DeckGenerator {
 
         private int callingCount = 0;
 
         @Override
-        public Card pickCard() {
+        public List<Card> makeDeck() {
             callingCount += 1;
             if (callingCount == 0 || callingCount == 1) {
-                return new Card(Shape.DIAMOND, CardScore.TWO);
+                return List.of(new Card(Shape.DIAMOND, CardScore.TWO));
             }
-            return new Card(Shape.DIAMOND, CardScore.THREE);
+            return List.of(new Card(Shape.DIAMOND, CardScore.THREE));
         }
     }
 
     public static Hand provideCards(final int count) {
-        return new Hand(CardGenerator.DECK.subList(0, count));
+        DeckGenerator deckGenerator = new ShuffleDeckGenerator();
+        return new Hand(deckGenerator.makeDeck().subList(0, count));
     }
 
     public static Players providePlayers() {

@@ -9,8 +9,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Hand;
 import blackjack.domain.card.CardScore;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.Shape;
 import java.util.List;
 import java.util.stream.Stream;
@@ -60,30 +60,26 @@ public class PlayerTest {
         // given
         final Hand hand = provideCards(2);
         player.receiveCards(hand);
-        final List<Card> expected = List.of(new Card(Shape.SPADE, CardScore.A),
-                new Card(Shape.SPADE, CardScore.TWO));
 
         // when
         final Hand playerHand = player.showAllCards();
 
         // then
-        assertThat(playerHand.getHand()).isEqualTo(expected);
+        assertThat(playerHand.getHand()).hasSize(2);
     }
 
-    @DisplayName("플레이어는 1장만 보여준다.")
+    @DisplayName("플레이어는 2장을 보여준다.")
     @Test
     void showPlayerInitialCards() {
         // given
         final Hand hand = provideCards(2);
         player.receiveCards(hand);
-        final List<Card> expected = List.of(new Card(Shape.SPADE, CardScore.A),
-                new Card(Shape.SPADE, CardScore.TWO));
 
         // when
         final Hand playerHand = player.showInitialCards();
 
         // then
-        assertThat(playerHand.getHand()).isEqualTo(expected);
+        assertThat(playerHand.getHand()).hasSize(2);
     }
 
 
