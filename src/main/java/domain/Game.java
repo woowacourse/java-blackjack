@@ -67,7 +67,7 @@ public class Game {
         return Dealer.copyOf(dealer);
     }
 
-    public GameStatistics getGameStatistics() {
+    public Map<PlayerName, GameResult> getGameResults() {
         return players.calculateGameStatistics(dealer);
     }
 }

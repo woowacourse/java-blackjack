@@ -45,14 +45,13 @@ public class Players {
         return selectedPlayer.getCards();
     }
 
-    public GameStatistics calculateGameStatistics(Dealer dealer) {
-        Map<PlayerName, GameResult> gameResults = players.entrySet().stream()
+    public Map<PlayerName, GameResult> calculateGameStatistics(Dealer dealer) {
+        return players.entrySet().stream()
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
                         entry -> entry.getValue().decideGameResult(dealer)
                 ));
 
-        return new GameStatistics(gameResults);
     }
 
     public Map<PlayerName, Player> getPlayersInfo() {
