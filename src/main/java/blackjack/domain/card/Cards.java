@@ -48,7 +48,7 @@ public class Cards {
         return scoreCalculator.calculateMinScore(cards).isBust();
     }
 
-    public int getSize() {
+    public int size() {
         return cards.size();
     }
 
