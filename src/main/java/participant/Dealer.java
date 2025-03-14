@@ -1,7 +1,6 @@
 package participant;
 
 import card.Card;
-import deck.Deck;
 import java.util.List;
 import state.started.Started;
 
@@ -9,12 +8,12 @@ public class Dealer extends Participant {
 
     public static final int DEALER_MAX_NUMBER_FOR_BUST = 16;
 
-    private Dealer(final Card card1, final Card card2) {
-        super(Started.start(card1, card2));
+    public Dealer() {
+        super();
     }
 
-    public static Dealer prepareGame(Deck deck) {
-        return new Dealer(deck.draw(), deck.draw());
+    public void prepareGame(final Card card1, final Card card2) {
+        state = Started.start(card1, card2);
     }
 
     public Card firstRoundCard() {
@@ -23,7 +22,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canReceiveCard() {
-        return score() <= DEALER_MAX_NUMBER_FOR_BUST;
+        return score() <= DEALER_MAX_NUMBER_FOR_BUST || !state.isFinished();
     }
 
     public List<Card> cards() {

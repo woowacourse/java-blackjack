@@ -10,8 +10,7 @@ public abstract class Participant {
 
     protected State state;
 
-    public Participant(final State state) {
-        this.state = state;
+    public Participant() {
     }
 
     public void hit(Card card) {

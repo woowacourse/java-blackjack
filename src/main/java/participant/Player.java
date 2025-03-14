@@ -2,7 +2,7 @@ package participant;
 
 import card.Card;
 import java.util.List;
-import state.State;
+import state.started.Started;
 
 public class Player extends Participant {
 
@@ -11,6 +11,10 @@ public class Player extends Participant {
     public Player(final String nickname, final State start) {
         super(start);
         this.nickname = nickname;
+    }
+
+    public void prepareGame(final Card card1, final Card card2) {
+        state = Started.start(card1, card2);
     }
 
     @Override

@@ -4,23 +4,24 @@ import deck.Deck;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import state.started.Started;
 
 public class Players {
 
     private final List<Player> players;
 
-    private Players(final List<String> names, final Deck deck) {
+    public Players(final List<String> names) {
         this.players = names.stream()
-                .map(nickname -> new Player(nickname, Started.start(deck.draw(), deck.draw())))
+                .map(nickname -> new Player(nickname, new BetMoney(1000)))
                 .collect(Collectors.toList());
-    }
-
-    public static Players prepareGame(List<String> names, Deck deck) {
-        return new Players(names, deck);
     }
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
+    }
+
+    public void prepareAllPlayers(Deck deck) {
+        for (Player player : players) {
+            player.prepareGame(deck.draw(), deck.draw());
+        }
     }
 }

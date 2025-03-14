@@ -20,8 +20,11 @@ public class BlackjackGame {
     }
 
     public void run() {
-        Players players = Players.prepareGame(InputView.readNicknames(), deck);
-        Dealer dealer = Dealer.prepareGame(deck);
+        Players players = new Players(InputView.readNicknames());
+        Dealer dealer = new Dealer();
+
+        players.prepareAllPlayers(deck);
+        dealer.prepareGame(deck.draw(), deck.draw());
         OutputView.printInitialCards(dealer, players);
 
         for (Player player : players.getPlayers()) {
