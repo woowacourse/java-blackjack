@@ -1,8 +1,8 @@
 package domain.fixture;
 
-import domain.BlackjackGame;
-import domain.ParticipantName;
-import domain.TrumpCard;
+import domain.card.TrumpCard;
+import domain.game.BlackjackGame;
+import domain.participant.ParticipantName;
 import java.util.List;
 
 public class BlackjackGameTestFixture {

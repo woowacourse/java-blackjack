@@ -1,9 +1,9 @@
 package view;
 
-import domain.ParticipantName;
-import domain.Score;
-import domain.TrumpCard;
-import domain.WinStatus;
+import domain.card.TrumpCard;
+import domain.game.WinStatus;
+import domain.participant.ParticipantName;
+import domain.participant.Score;
 import java.util.List;
 import java.util.stream.Collectors;
 

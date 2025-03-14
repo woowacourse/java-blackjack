@@ -1,10 +1,10 @@
 package domain.fixture;
 
-import domain.Deck;
-import domain.DeckGenerator;
-import domain.TrumpCard;
-import domain.strategy.BlackjackDrawStrategy;
-import domain.strategy.TestDrawStrategy;
+import domain.card.Deck;
+import domain.card.DeckGenerator;
+import domain.card.TrumpCard;
+import domain.card.strategy.BlackjackDrawStrategy;
+import domain.card.strategy.TestDrawStrategy;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;

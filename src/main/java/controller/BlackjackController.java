@@ -1,15 +1,15 @@
 package controller;
 
-import domain.BlackjackGame;
-import domain.DealerWinStatus;
-import domain.Deck;
-import domain.DeckGenerator;
-import domain.GameResult;
-import domain.ParticipantName;
-import domain.Score;
-import domain.TrumpCard;
-import domain.WinStatus;
-import domain.strategy.BlackjackDrawStrategy;
+import domain.card.Deck;
+import domain.card.DeckGenerator;
+import domain.card.TrumpCard;
+import domain.card.strategy.BlackjackDrawStrategy;
+import domain.game.BlackjackGame;
+import domain.game.GameResult;
+import domain.game.WinStatus;
+import domain.participant.DealerWinStatus;
+import domain.participant.ParticipantName;
+import domain.participant.Score;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
