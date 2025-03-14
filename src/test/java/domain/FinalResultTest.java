@@ -1,7 +1,5 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import domain.deck.Card;
 import domain.deck.Rank;
 import domain.deck.Shape;
@@ -14,8 +12,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 class FinalResultTest {
 
@@ -47,20 +43,6 @@ class FinalResultTest {
         player3.hit(card2);
         dealer.hit(card1);
         dealer.hit(card2);
-    }
-
-    @DisplayName("카드 합에 따른 승패 결과 반환한다.")
-    @ParameterizedTest
-    @CsvSource(value = {
-            "15, 14, WIN", "15, 17, LOSE", "15, 15, DRAW"
-    })
-    void 카드_합에_따른_승패_결과_반환한다(final int sumOfRank, final int otherSumOfRank, final FinalResult expected) {
-
-        // given
-        final FinalResult finalResult = FinalResult.findBySumOfRank(sumOfRank, otherSumOfRank);
-
-        // when & then
-        assertThat(finalResult).isEqualTo(expected);
     }
 
     @DisplayName("플레이어들의 승패 결과를 생성한다.")

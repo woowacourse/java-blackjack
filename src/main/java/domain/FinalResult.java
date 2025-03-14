@@ -26,13 +26,6 @@ public enum FinalResult {
         this.condition = condition;
     }
 
-    public static FinalResult findBySumOfRank(final int sumOfRank, final int otherSumOfRank) {
-        return Arrays.stream(FinalResult.values())
-                .filter(finalResult -> finalResult.condition.test(sumOfRank, otherSumOfRank))
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException("비 정상적인 상태입니다."));
-    }
-
     public static Map<Player, FinalResult> makePlayerResult(final List<Player> players, final Dealer dealer) {
         return players.stream()
                 .collect(Collectors.toMap(
@@ -56,6 +49,13 @@ public enum FinalResult {
             return WIN;
         }
         return FinalResult.findBySumOfRank(playerSum, dealerSum);
+    }
+
+    private static FinalResult findBySumOfRank(final int sumOfRank, final int otherSumOfRank) {
+        return Arrays.stream(FinalResult.values())
+                .filter(finalResult -> finalResult.condition.test(sumOfRank, otherSumOfRank))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("비 정상적인 상태입니다."));
     }
 
     public static Map<FinalResult, Integer> makeDealerResult(final Map<Player, FinalResult> playerResults) {
