@@ -8,8 +8,8 @@ import java.util.function.Predicate;
 public class Hand {
     private static final int ORIGINAL_ACE_VALUE = 11;
     private static final int BLACKJACK_MAX_SCORE = 21;
-    public static final int INITIAL_SIZE = 2;
-    public static final int AFTER_APPLY_BUST_PENALTY_SCORE = 0;
+    private static final int INITIAL_SIZE = 2;
+    private static final int AFTER_APPLY_BUST_PENALTY_SCORE = 0;
 
     private final List<Card> cards;
 

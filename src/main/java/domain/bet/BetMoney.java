@@ -4,7 +4,10 @@ import domain.result.WinLossResult;
 
 public class BetMoney {
 
-    public static final int DRAW_PROFIT = 0;
+    private static final int DRAW_PROFIT = 0;
+    private static final double BLACKJACK_BONUS = 1.5;
+    private static final int WIN_BONUS = 2;
+
     private final double amount;
 
     public BetMoney(final double amount) {
@@ -25,11 +28,11 @@ public class BetMoney {
     }
 
     private BetMoney applyBlackJackBonus() {
-        return new BetMoney(amount * 1.5 - amount);
+        return new BetMoney(amount * BLACKJACK_BONUS - amount);
     }
 
     private BetMoney applyWinBonus() {
-        return new BetMoney(amount * 2 - amount);
+        return new BetMoney(amount * WIN_BONUS - amount);
     }
 
     private BetMoney applyLossPenalty() {
