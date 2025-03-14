@@ -1,5 +1,6 @@
 package game;
 
+import bet.BettingCenter;
 import io.ConsoleInput;
 import io.ConsoleOutput;
 import participant.Dealer;
@@ -12,30 +13,20 @@ public class BlackJackGame {
 
     public static final String HIT_COMMAND = "y";
 
-    private final Players players;
-    private final Dealer dealer;
-
-    private BlackJackGame(Players players, Dealer dealer) {
-        this.players = players;
-        this.dealer = dealer;
-    }
-
-    public static BlackJackGame from(ConsoleInput input) {
+    public void play(ConsoleInput input, ConsoleOutput output) {
         Dealer dealer = new Dealer(new DeckShuffleStrategy());
         Players players = Players.registerPlayers(input.readParticipantsNames(), dealer);
+        BettingCenter bettingCenter = new BettingCenter(input.readPlayerBetAmounts(players));
 
-        return new BlackJackGame(players, dealer);
-    }
-
-    public void play(ConsoleInput input, ConsoleOutput output) {
         output.printInitialGameSettings(players, dealer);
-        selectPlayersHitOrStand(players, dealer, input, output);
-        checkDealerHit(dealer, output);
+        performPlayerTurn(players, dealer, input, output);
+        performDealerTurn(dealer, output);
+
         output.printGameResults(players, dealer);
-        output.printWinningResults(players.deriveResults(dealer.sumCardNumbers()));
+        output.printFinalProfit(bettingCenter, dealer);
     }
 
-    private void selectPlayersHitOrStand(Players players, Dealer dealer, ConsoleInput input,ConsoleOutput output) {
+    private void performPlayerTurn(Players players, Dealer dealer, ConsoleInput input, ConsoleOutput output) {
         for (Player player : players.getPlayers()) {
             selectHitOrStand(player, dealer, input, output);
             output.printPlayerCards(player);
@@ -48,7 +39,7 @@ public class BlackJackGame {
         }
     }
 
-    private void checkDealerHit(Dealer dealer, ConsoleOutput output) {
+    private void performDealerTurn(Dealer dealer, ConsoleOutput output) {
         while (dealer.shouldDealerHit()) {
             output.printDealerHitMessage();
             dealer.addOneCard(dealer.drawCard());
