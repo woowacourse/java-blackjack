@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import blackjack.domain.GameManager;
 import blackjack.domain.GameRound;
 import blackjack.domain.card.CardNumber;
+import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.fixture.DeckFixture;
 import blackjack.fixture.GameManagerFixture;
@@ -56,5 +57,23 @@ class BettingTest {
         gameManager.drawStartingCards(player);
         assertThat(round.endGameIfBlackjack(player)).isTrue();
         assertThat(round.getFinalBettingMoney(player)).isEqualTo((int)(initialMoney * 1.5));
+    }
+
+    @Test
+    @DisplayName("딜러와 플레이어가 모두 동시에 블랙잭인 경우 플레이어는 베팅한 금액을 돌려받는다.")
+    void bothBalckjackRollbackTest() {
+        int initialMoney = 10000;
+
+        Player player = new Player("pobi");
+        Dealer dealer = new Dealer();
+        GameRound round = new GameRound();
+        round.betting(player, initialMoney);
+        GameManager gameManager = GameManagerFixture.GameManagerWith(
+            DeckFixture.deckOf(CardNumber.JACK, CardNumber.ACE, CardNumber.JACK, CardNumber.ACE)
+        );
+        gameManager.drawStartingCards(player);
+        gameManager.drawStartingCards(dealer);
+        assertThat(round.endGameIfBlackjack(dealer)).isTrue();
+        assertThat(round.getFinalBettingMoney(player)).isEqualTo(initialMoney);
     }
 }
