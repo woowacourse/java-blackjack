@@ -7,6 +7,7 @@ public class Cards {
 
     public static final int BUST_STANDARD = 21;
     public static final int SOFT_ACE_DIFFERENCE = 10;
+    public static final int HIGHEST_SCORE = 21;
 
     private final List<Card> cards;
     private final boolean isBlackJack;
@@ -29,12 +30,12 @@ public class Cards {
         return sum;
     }
 
-    public Card drawOneCard() {
+    public Card drawCard() {
         return cards.removeLast();
     }
 
     public boolean checkBlackJack() {
-        return sumCardNumbers() == 21;
+        return sumCardNumbers() == HIGHEST_SCORE;
     }
 
     private int calculateSum() {
