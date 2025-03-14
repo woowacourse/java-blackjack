@@ -6,7 +6,6 @@ import static domain.blackJack.MatchResult.LOSE;
 import static domain.blackJack.MatchResult.WIN;
 
 import domain.blackJack.MatchResult;
-import domain.blackJack.Result;
 import domain.card.CardDeck;
 import domain.card.Hand;
 import java.util.function.Consumer;
@@ -36,11 +35,10 @@ public class Player extends Participant {
     }
 
     public int calculateProfit(Dealer dealer) {
-
-        return money.calculateProfit(calculateResultOfPlayer(dealer));
+        return money.calculateProfit(calculateResult(dealer));
     }
 
-    public MatchResult calculateResultOfPlayer(Dealer dealer) {
+    public MatchResult calculateResult(Dealer dealer) {
         int playerSum = sum();
         int dealerSum = dealer.sum();
 
