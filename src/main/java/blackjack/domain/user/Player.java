@@ -14,6 +14,7 @@ public class Player {
 
     public Player(Nickname nickname) {
         this.gameUser = new GameUser(nickname);
+        this.bettingAmount = new BettingAmount(0);
     }
 
     public void registerBettingAmount(BettingAmount bettingAmount) {

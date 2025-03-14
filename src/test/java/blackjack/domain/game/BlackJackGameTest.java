@@ -6,9 +6,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.CardValue;
-import blackjack.domain.user.GameUserStorage;
 import blackjack.domain.user.Nickname;
-import blackjack.domain.user.Player;
 import blackjack.mock.GameInputOutputMock;
 import java.util.List;
 import java.util.Map;
@@ -17,29 +15,27 @@ import org.junit.jupiter.api.Test;
 
 class BlackJackGameTest {
 
-    GameUserStorage gameUserStorage = new GameUserStorage();
+    static final List<Nickname> NICKNAMES = List.of(new Nickname("쿠키"), new Nickname("빙봉"));
     CardDeck cardDeck = makeCardDeck();
-    GameInputOutputMock gameInputOutput = new GameInputOutputMock();
-    BlackJackGame blackJackGame = new BlackJackGame(gameUserStorage, cardDeck, gameInputOutput);
+    GameInputOutputMock gameInputOutputMock = new GameInputOutputMock();
+    BlackJackGame blackJackGame = new BlackJackGame(NICKNAMES, cardDeck, gameInputOutputMock);
 
     @Test
     @DisplayName("입력된 닉네임만으로 플레이어를 등록할 수 있다.")
     void canRegisterPlayer() {
-        List<Nickname> nicknames = List.of(new Nickname("쿠키"), new Nickname("빙봉"));
-        blackJackGame.runGame(nicknames);
+        blackJackGame.runGame();
 
-        assertThat(gameUserStorage.getPlayers())
-                .extracting(Player::getNickname)
+        Map<String, List<Card>> initialPlayerHands = gameInputOutputMock.getInitialPlayerHands();
+        assertThat(initialPlayerHands.keySet())
                 .containsExactlyInAnyOrder("쿠키", "빙봉");
     }
 
     @Test
     @DisplayName("플레이어에게 초기카드를 분배할 수 있다.")
     void canDistributeInitialCardToPlayer() {
-        List<Nickname> nicknames = List.of(new Nickname("쿠키"), new Nickname("빙봉"));
-        blackJackGame.runGame(nicknames);
+        blackJackGame.runGame();
 
-        Map<String, List<Card>> initialPlayerHands = gameInputOutput.getInitialPlayerHands();
+        Map<String, List<Card>> initialPlayerHands = gameInputOutputMock.getInitialPlayerHands();
         assertThat(initialPlayerHands.keySet())
                 .containsExactlyInAnyOrder("쿠키", "빙봉");
         assertThat(initialPlayerHands.values())
@@ -49,20 +45,18 @@ class BlackJackGameTest {
     @Test
     @DisplayName("딜러에게 초기카드를 분배할 수 있다.")
     void canDistributeInitialCardToDealer() {
-        List<Nickname> nicknames = List.of(new Nickname("쿠키"), new Nickname("빙봉"));
-        blackJackGame.runGame(nicknames);
+        blackJackGame.runGame();
 
-        List<Card> initialDealerHand = gameInputOutput.getInitialDealerHand();
+        List<Card> initialDealerHand = gameInputOutputMock.getInitialDealerHand();
         assertThat(initialDealerHand).hasSize(GameRule.INITIAL_CARD_COUNT.getValue());
     }
 
     @Test
     @DisplayName("플레이어 턴을 진행할 수 있다.")
     void canProcessPlayerTurn() {
-        List<Nickname> nicknames = List.of(new Nickname("쿠키"), new Nickname("빙봉"));
-        blackJackGame.runGame(nicknames);
+        blackJackGame.runGame();
 
-        Map<String, List<Card>> finalPlayerHands = gameInputOutput.getFinalPlayerHands();
+        Map<String, List<Card>> finalPlayerHands = gameInputOutputMock.getFinalPlayerHands();
         assertThat(finalPlayerHands.keySet())
                 .containsExactlyInAnyOrder("쿠키", "빙봉");
         assertThat(finalPlayerHands.values())
@@ -72,20 +66,18 @@ class BlackJackGameTest {
     @Test
     @DisplayName("딜러의 턴을 진행할 수 있다.")
     void canProcessDealerTurn() {
-        List<Nickname> nicknames = List.of(new Nickname("쿠키"), new Nickname("빙봉"));
-        blackJackGame.runGame(nicknames);
+        blackJackGame.runGame();
 
-        List<Card> finalDealerHand = gameInputOutput.getFinalDealerHand();
+        List<Card> finalDealerHand = gameInputOutputMock.getFinalDealerHand();
         assertThat(finalDealerHand).hasSize(3);
     }
 
     @Test
     @DisplayName("승패를 계산할 수 있다.")
     void canWinningState() {
-        List<Nickname> nicknames = List.of(new Nickname("쿠키"), new Nickname("빙봉"));
-        blackJackGame.runGame(nicknames);
+        blackJackGame.runGame();
 
-        PlayerProfits playerProfits = gameInputOutput.getPlayerProfits();
+        PlayerProfits playerProfits = gameInputOutputMock.getPlayerProfits();
         List<PlayerProfit> profits = playerProfits.getPlayerProfits();
         assertThat(profits.getFirst().getProfit())
                 .isEqualTo(0);

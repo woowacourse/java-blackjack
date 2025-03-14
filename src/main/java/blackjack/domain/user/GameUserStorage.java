@@ -12,7 +12,7 @@ public class GameUserStorage {
     private List<Player> players;
     private Dealer dealer;
 
-    public void initialize(List<Nickname> nicknames) {
+    public GameUserStorage(List<Nickname> nicknames) {
         validatePlayerCount(nicknames);
         validateDuplicatedPlayer(nicknames);
         makePlayers(nicknames);

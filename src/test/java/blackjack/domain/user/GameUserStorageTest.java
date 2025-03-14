@@ -12,13 +12,12 @@ import org.junit.jupiter.api.Test;
 
 class GameUserStorageTest {
 
-    GameUserStorage gameUserStorage = new GameUserStorage();
+    static final List<Nickname> NICKNAMES = List.of(new Nickname("쿠키"), new Nickname("빙봉"));
 
     @Test
     @DisplayName("입력된 닉네임으로 플레이어를 등록할 수 있다.")
     void canRegisterPlayer() {
-        List<Nickname> nicknames = List.of(new Nickname("쿠키"), new Nickname("빙봉"));
-        gameUserStorage.initialize(nicknames);
+        GameUserStorage gameUserStorage = new GameUserStorage(NICKNAMES);
 
         assertThat(gameUserStorage.getPlayers())
                 .extracting(Player::getNickname)
@@ -29,7 +28,7 @@ class GameUserStorageTest {
     @DisplayName("등록할 플레이어의 수가 0명인 경우 예외를 발생시킨다.")
     void canEmptyPlayer() {
         List<Nickname> emptyNickname = List.of();
-        assertThatThrownBy(() -> gameUserStorage.initialize(emptyNickname))
+        assertThatThrownBy(() -> new GameUserStorage(emptyNickname))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ExceptionMessage.INVALID_PLAYER_COUNT.getContent());
     }
@@ -37,10 +36,11 @@ class GameUserStorageTest {
     @Test
     @DisplayName("등록할 플레이어의 수가 너무 많은 경우 예외를 발생시킨다.")
     void canTooManyPlayer() {
-        List<Nickname> tooManyNickname = IntStream.range(0, GameRule.MAX_PLAYER_COUNT.getValue() + 1)
-                .mapToObj(number -> new Nickname("player" + number))
-                .toList();
-        assertThatThrownBy(() -> gameUserStorage.initialize(tooManyNickname))
+        List<Nickname> tooManyNickname =
+                IntStream.range(0, GameRule.MAX_PLAYER_COUNT.getValue() + 1)
+                        .mapToObj(number -> new Nickname("player" + number))
+                        .toList();
+        assertThatThrownBy(() -> new GameUserStorage(tooManyNickname))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ExceptionMessage.INVALID_PLAYER_COUNT.getContent());
     }
@@ -49,7 +49,7 @@ class GameUserStorageTest {
     @DisplayName("중복된 플레이어는 허용하지 않는다.")
     void canValidateDuplicatedPlayer() {
         List<Nickname> duplicatedPlayer = List.of(new Nickname("쿠키"), new Nickname("쿠키"));
-        assertThatThrownBy(() -> gameUserStorage.initialize(duplicatedPlayer))
+        assertThatThrownBy(() -> new GameUserStorage(duplicatedPlayer))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ExceptionMessage.NOT_ALLOWED_DUPLICATED_PLAYER.getContent());
     }

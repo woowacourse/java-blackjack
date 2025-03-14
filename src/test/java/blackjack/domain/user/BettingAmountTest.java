@@ -10,8 +10,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 class BettingAmountTest {
 
     @ParameterizedTest
-    @DisplayName("음수나 0이 입력될 경우를 검증할 수 있다.")
-    @ValueSource(ints = {-10, 0})
+    @DisplayName("음수가 입력될 경우를 검증할 수 있다.")
+    @ValueSource(ints = {-10, -1})
     void validateInvalidAmount(int amount) {
         assertThatThrownBy(() -> new BettingAmount(amount))
                 .isInstanceOf(IllegalArgumentException.class)
