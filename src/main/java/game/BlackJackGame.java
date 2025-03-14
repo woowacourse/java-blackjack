@@ -5,7 +5,7 @@ import io.ConsoleOutput;
 import participant.Dealer;
 import participant.Player;
 import participant.Players;
-import strategy.DeckSettingStrategy;
+import strategy.DeckShuffleStrategy;
 
 
 public class BlackJackGame {
@@ -20,10 +20,9 @@ public class BlackJackGame {
         this.dealer = dealer;
     }
 
-    public static BlackJackGame registerParticipants(DeckSettingStrategy strategy, ConsoleInput input) {
-        Deck deck = new Deck(strategy);
-        Players players = Players.registerPlayers(input.readParticipantsNames(), deck);
-        Dealer dealer = new Dealer(deck.drawInitialCards(), strategy);
+    public static BlackJackGame of(ConsoleInput input) {
+        Dealer dealer = new Dealer(new DeckShuffleStrategy());
+        Players players = Players.registerPlayers(input.readParticipantsNames(), dealer);
 
         return new BlackJackGame(players, dealer);
     }
