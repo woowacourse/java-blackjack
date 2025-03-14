@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class Deck {
 
@@ -38,17 +37,17 @@ public class Deck {
         return Collections.unmodifiableList(cards);
     }
 
-    // TODO: size 제한하기
-    public List<Card> takeCards(int size) {
-        validateEmpty(size);
-
-        return IntStream.range(0, size)
-                .mapToObj(i -> cards.removeLast())
-                .toList();
+    public List<Card> takeStartingCards() {
+        return List.of(cards.removeLast(), cards.removeLast());
     }
 
-    private void validateEmpty(int size) {
-        if (cards.size() < size) {
+    public Card takeSingleCard() {
+        validateEmpty();
+        return cards.removeLast();
+    }
+
+    private void validateEmpty() {
+        if (cards.isEmpty()) {
             throw new IllegalArgumentException("모든 카드를 소진하였습니다.");
         }
     }

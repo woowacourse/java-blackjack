@@ -28,13 +28,13 @@ public class BlackjackProcessManager {
     }
 
     private void giveStartingCards(Participant participant) {
-        List<Card> cards = deck.takeCards(STARTING_CARD_SIZE);
+        List<Card> cards = deck.takeStartingCards();
         cards.forEach(participant::takeCard);
     }
 
     public void giveMoreCard(Participant participant) {
-        List<Card> cards = deck.takeCards(ADDITIONAL_CARD_SIZE);
-        cards.forEach(participant::takeCard);
+        Card card = deck.takeSingleCard();
+        participant.takeCard(card);
     }
 
     public void calculateAllResults(Participants participants, GameRuleEvaluator gameRuleEvaluator) {

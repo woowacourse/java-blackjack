@@ -68,20 +68,6 @@ class DeckTest {
 
     @Nested
     class 카드뽑기 {
-        @Test
-        void 원하는_개수만큼_카드를_뽑을_수_있다() {
-            // given
-            CardsGenerator cardsGenerator = new CardsGenerator();
-            List<Card> cards = cardsGenerator.generate();
-            Deck deck = new Deck(cards);
-            int expect = 2;
-
-            // when
-            List<Card> takeCards = deck.takeCards(expect);
-
-            // then
-            assertThat(takeCards).hasSize(expect);
-        }
 
         @Test
         void 카드가_소진되면_예외를_던진다() {
@@ -89,7 +75,11 @@ class DeckTest {
             List<Card> cards = cardsGenerator.generate();
             Deck deck = new Deck(cards);
 
-            assertThatThrownBy(() -> deck.takeCards(53))
+            for (int i = 0; i < 52; i++) {
+                deck.takeSingleCard();
+            }
+
+            assertThatThrownBy(deck::takeSingleCard)
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("모든 카드를 소진하였습니다.");
         }
