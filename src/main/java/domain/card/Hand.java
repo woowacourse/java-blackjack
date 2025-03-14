@@ -41,13 +41,6 @@ public class Hand {
                 .anyMatch(Card::isA);
     }
 
-    public Hand firstOpenCards() {
-        List<Card> firstOpenCards = new ArrayList<>(cards);
-        firstOpenCards.removeLast();
-
-        return new Hand(firstOpenCards);
-    }
-
     public boolean isBust() {
         return sumWithAce() > BLACKJACK_NUMBER;
     }
@@ -58,6 +51,13 @@ public class Hand {
 
     public boolean isBlackJackCount() {
         return cards.size() == BLACKJACK_COUNT;
+    }
+
+    public Hand getExceptHidden() {
+        List<Card> firstOpenCards = new ArrayList<>(cards);
+        firstOpenCards.removeLast();
+
+        return new Hand(firstOpenCards);
     }
 
     public List<Card> getCards() {
