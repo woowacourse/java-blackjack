@@ -1,6 +1,5 @@
 package domain;
 
-import domain.card.Score;
 import domain.participant.Participant;
 import domain.participant.Role;
 import java.util.function.Function;
@@ -29,23 +28,14 @@ public enum RoundResult {
     if (score.isBust()) {
       return RoundResult.LOSE;
     }
-    if (dealerScore.isBust() || score.isGreaterThan(dealerScore)) {
-      return RoundResult.WIN;
-    }
-    return getRoundResult(player, dealerScore, score);
-  }
-
-  private static RoundResult getRoundResult(
-      final Participant<? extends Role> player,
-      final Score dealerScore,
-      final Score score
-  ) {
-
     if (score.equals(dealerScore)) {
       return RoundResult.PUSH;
     }
     if (player.isBlackjack()) {
       return RoundResult.BLACKJACK;
+    }
+    if (dealerScore.isBust() || score.isGreaterThan(dealerScore)) {
+      return RoundResult.WIN;
     }
     return RoundResult.LOSE;
   }

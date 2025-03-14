@@ -38,11 +38,6 @@ public class Bet {
     return new Bet(value - allocated.getValue());
   }
 
-  public Bet plus(Bet allocated) {
-    return new Bet(value + allocated.getValue());
-  }
-
-
   public Bet seekAllocationTotalDifference(final List<Role> calculated) {
     final var calculatedTotal = calculatedTotal(calculated);
     return this.minus(calculatedTotal);
@@ -55,6 +50,9 @@ public class Bet {
         .orElseThrow();
   }
 
+  private Bet plus(Bet allocated) {
+    return new Bet(value + allocated.getValue());
+  }
 
   @Override
   public String toString() {
