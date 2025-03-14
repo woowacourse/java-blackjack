@@ -1,4 +1,3 @@
-import domain.controller.Game;
 import java.util.Scanner;
 import view.InputView;
 import view.OutputView;
