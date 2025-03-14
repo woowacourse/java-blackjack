@@ -10,7 +10,7 @@ import java.util.function.Consumer;
 
 public class Blackjack {
 
-    private static final int BLACKJACK_SCORE = 21;
+    public static final int BLACKJACK_SCORE = 21;
     private static final int BLACKJACK_CARD_COUNT = 2;
 
     public void betMoney(final Player player, final String amount) {

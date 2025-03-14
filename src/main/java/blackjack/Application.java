@@ -1,5 +1,7 @@
 package blackjack;
 
+import static blackjack.blackjack.Blackjack.BLACKJACK_SCORE;
+
 import blackjack.blackjack.Blackjack;
 import blackjack.blackjack.UserAnswer;
 import blackjack.blackjack.WinningStatus;
@@ -29,7 +31,9 @@ public class Application {
 
         final boolean isPush = blackjack.isPush(dealer, players);
 
-        spreadExtraCards(isPush, players, blackjack, dealer);
+        if (!isPush) {
+            spreadExtraCards(players, blackjack, dealer);
+        }
 
         printCardsSum(dealer, players);
 
@@ -68,23 +72,30 @@ public class Application {
     }
 
     private static void spreadExtraCards(
-            final boolean isPush,
             final Players players,
             final Blackjack blackjack,
             final Dealer dealer
     ) {
-        if (!isPush) {
-            final ResultView resultView = new ResultView();
-            for (Player player : players.getPlayers()) {
-                while (!player.isBust(21) && readIfHit(player)) {
-                    blackjack.spreadOneCardToPlayer(dealer, player);
-                    resultView.printCards(player.getNickName(), player.showAllCards());
-                }
-            }
-            while (dealer.isHit()) {
-                blackjack.spreadOneCardToDealer(dealer);
-                resultView.printDealerHit();
-            }
+        for (Player player : players.getPlayers()) {
+            spreadExtraCardToPlayer(blackjack, dealer, player);
+        }
+        spreadExtraCardToDealer(blackjack, dealer);
+
+    }
+
+    private static void spreadExtraCardToPlayer(final Blackjack blackjack, final Dealer dealer, final Player player) {
+        final ResultView resultView = new ResultView();
+        while (!player.isBust(BLACKJACK_SCORE) && readIfHit(player)) {
+            blackjack.spreadOneCardToPlayer(dealer, player);
+            resultView.printCards(player.getNickName(), player.showAllCards());
+        }
+    }
+
+    private static void spreadExtraCardToDealer(final Blackjack blackjack, final Dealer dealer) {
+        final ResultView resultView = new ResultView();
+        while (dealer.isHit()) {
+            blackjack.spreadOneCardToDealer(dealer);
+            resultView.printDealerHit();
         }
     }
 
