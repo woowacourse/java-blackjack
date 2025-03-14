@@ -1,11 +1,13 @@
-package domain;
+package domain.participant;
 
-import static domain.CardsFactory.createParticipantCardsOfRanks;
-import static domain.CardsFactory.createRanks;
+import static domain.participant.ParticipantFactory.createParticipantCardsOfRanks;
+import static domain.participant.ParticipantFactory.createRanks;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import domain.GameStatus;
 import domain.card.Rank;
 import java.util.List;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -22,7 +24,7 @@ public class ParticipantTest {
         List<Rank> otherRanks = createRanks(rankNames);
         Participant otherParticipant = createParticipantCardsOfRanks(otherRanks);
         // then & when
-        assertEquals(GameStatus.valueOf(gameStatusName), otherParticipant.determineGameStatus(participant));
+        Assertions.assertEquals(GameStatus.valueOf(gameStatusName), otherParticipant.determineGameStatus(participant));
     }
 
     @ParameterizedTest

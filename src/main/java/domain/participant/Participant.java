@@ -1,5 +1,7 @@
-package domain;
+package domain.participant;
 
+import domain.Cards;
+import domain.GameStatus;
 import domain.card.Card;
 import java.util.List;
 

@@ -1,7 +1,7 @@
-package domain;
+package domain.participant;
 
-import static domain.CardsFactory.createPlayerCardsOfRanks;
-import static domain.CardsFactory.createRanks;
+import static domain.participant.ParticipantFactory.createPlayerCardsOfRanks;
+import static domain.participant.ParticipantFactory.createRanks;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import domain.card.Rank;

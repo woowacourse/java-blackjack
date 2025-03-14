@@ -1,7 +1,7 @@
 package domain;
 
-import static domain.CardsFactory.createCardsOfRanks;
-import static domain.CardsFactory.createRanks;
+import static domain.participant.ParticipantFactory.createCardsOfRanks;
+import static domain.participant.ParticipantFactory.createRanks;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

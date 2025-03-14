@@ -1,9 +1,9 @@
-package domain;
+package domain.participant;
 
 import domain.card.Card;
 import java.util.List;
 
-public class Dealer extends Participant  {
+public class Dealer extends Participant {
 
     private static final int DEALER_SCORE_THRESHOLD = 16;
 

@@ -1,12 +1,13 @@
-package domain;
+package domain.participant;
 
+import domain.Cards;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
 import java.util.Arrays;
 import java.util.List;
 
-public class CardsFactory {
+public class ParticipantFactory {
 
     public static Participant createParticipantCardsOfRanks(List<Rank> ranks) {
         Participant participant = createParticipant("행성");
