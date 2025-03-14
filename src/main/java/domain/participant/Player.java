@@ -4,6 +4,7 @@ import domain.MatchResult;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.card.Hand;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -53,8 +54,12 @@ public class Player extends Participant {
         return super.calculateSum();
     }
 
-    public Hand getHand() {
-        return super.getHand();
+    @Override
+    public List<Card> openInitialCards() {
+        return List.of(getCards().getHand().getFirst(), getCards().getHand().get(1));
     }
 
+    public Hand getCards() {
+        return super.getCards();
+    }
 }

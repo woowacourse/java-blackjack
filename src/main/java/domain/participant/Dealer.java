@@ -2,10 +2,10 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Hand;
+import java.util.List;
 
 public class Dealer extends Participant {
     private static final int DEALER_DRAW_THRESHOLD = 16;
-
 
     public Dealer(Hand hand) {
         super(hand);
@@ -31,7 +31,12 @@ public class Dealer extends Participant {
         return super.calculateSum();
     }
 
-    public Hand getHand() {
-        return super.getHand();
+    @Override
+    public List<Card> openInitialCards() {
+        return List.of(getCards().getHand().getFirst());
+    }
+
+    public Hand getCards() {
+        return super.getCards();
     }
 }

@@ -50,7 +50,7 @@ public class OutputView {
     public String printDealerDeck(final Dealer dealer) {
         System.out.printf(DEALER_CARDS);
         List<String> cardSymbols = new ArrayList<>();
-        for (Card card : dealer.getHand().getHand()) {
+        for (Card card : dealer.getCards().getHand()) {
             cardSymbols.add(toSymbol(card));
         }
         return String.join(COMMA_DELIMITER, cardSymbols);
@@ -90,7 +90,7 @@ public class OutputView {
     }
 
     private void printDealerDeckWithHidden(final Dealer dealer) {
-        System.out.println(DEALER_CARDS + toSymbol(dealer.getHand().getHand().getFirst()));
+        System.out.println(DEALER_CARDS + toSymbol(dealer.getCards().getHand().getFirst()));
     }
 
     private void printHitNotice(final Players players) {
@@ -106,7 +106,7 @@ public class OutputView {
     private String resultMaker(final Player player) {
         System.out.printf(PLAYER_CARDS, player.getName());
         List<String> cardSymbols = new ArrayList<>();
-        for (Card card : player.getHand().getHand()) {
+        for (Card card : player.getCards().getHand()) {
             cardSymbols.add(toSymbol(card));
         }
         return String.join(COMMA_DELIMITER, cardSymbols);
