@@ -22,14 +22,13 @@ public class BlackJackGame {
         List<Integer> bettingAmount) {
         this.cardDeck = createCardDeck(cardBundle);
         this.participants = createParticipants(userNames, bettingAmount);
-        participants.receiveCardProcessOfParticipants(cardDeck);
+        participants.initCards(cardDeck);
     }
 
     public static BlackJackGame ofInit(CardBundle cardBundle,
         List<String> userNames, List<Integer> bettingAmount) {
         return new BlackJackGame(cardBundle, userNames, bettingAmount);
     }
-
 
     public int receiveExtraCardProcessOfDealer() {
         return participants.getParticipants().stream()
@@ -64,11 +63,11 @@ public class BlackJackGame {
         return Collections.unmodifiableList(participants.getParticipants());
     }
 
-    public Participant createParticipant(String userName, int bettingAmount) {
+    private Participant createPlayer(String userName, int bettingAmount) {
         return new Player(userName, new Betting(bettingAmount));
     }
 
-    public Participants createParticipants(List<String> userNames, List<Integer> bettingAmounts) {
+    private Participants createParticipants(List<String> userNames, List<Integer> bettingAmounts) {
         List<Participant> participants = new ArrayList<>();
         createDealer(participants);
         createPlayer(userNames, bettingAmounts, participants);
@@ -80,7 +79,7 @@ public class BlackJackGame {
         for (int i = 0; i < userNames.size(); i++) {
             String userName = userNames.get(i);
             int bettingAmount = bettingAmounts.get(i);
-            participants.add(createParticipant(userName, bettingAmount));
+            participants.add(createPlayer(userName, bettingAmount));
         }
     }
 

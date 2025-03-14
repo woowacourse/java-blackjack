@@ -21,7 +21,7 @@ public class Participants {
         this.participants = participants;
     }
 
-    public void receiveCardProcessOfParticipants(CardDeck cardDeck) {
+    public void initCards(CardDeck cardDeck) {
         for (Participant participant : participants) {
             participant.addCard(cardDeck.getAndRemoveFrontCard());
             participant.addCard(cardDeck.getAndRemoveFrontCard());
