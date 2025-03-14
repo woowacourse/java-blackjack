@@ -20,16 +20,25 @@ public class BettingResult {
     public Map<Player, Integer> calculatePlayerBettingResult(Players players, Dealer dealer) {
         Map<Player, Integer> playerBetResults = new HashMap<>();
         for (Player player : players.getPlayers()) {
-            WinningResult winningResult = participantWinningResult.getPlayerGameResult(player);
-            int playerBetResult = computeResultByWinningStatus(player, winningResult);
-            int insuranceBetResult = computeInsuranceResult(player, dealer);
-            playerBetResults.put(player, playerBetResult + insuranceBetResult);
+            int calculateFinalBettingResult = calculateFinalBettingResult(player, dealer);
+            playerBetResults.put(player, calculateFinalBettingResult);
         }
         return playerBetResults;
     }
 
     public int calculateDealerFinalResult(Map<Player, Integer> playerBetResults) {
         return playerBetResults.values().stream().mapToInt(i -> -i).sum();
+    }
+
+    private int calculateFinalBettingResult(Player player, Dealer dealer) {
+        Betting playerBetting = betting.get(player);
+        if (playerBetting.checkSurrender()) {
+            return playerBetting.calculateSurrender();
+        }
+        WinningResult winningResult = participantWinningResult.getPlayerGameResult(player);
+        int playerBetResult = computeResultByWinningStatus(player, winningResult);
+        int insuranceBetResult = computeInsuranceResult(player, dealer);
+        return playerBetResult + insuranceBetResult;
     }
 
     private int computeResultByWinningStatus(Player player, WinningResult winningResult) {

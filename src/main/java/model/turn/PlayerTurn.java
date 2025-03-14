@@ -10,13 +10,11 @@ import view.InputView;
 public class PlayerTurn extends Turn {
     private final Player player;
     private final Betting betting;
-    private boolean isSurrender;
 
     public PlayerTurn(Player player, Betting betting) {
         super(player);
         this.player = player;
         this.betting = betting;
-        this.isSurrender = false;
     }
 
     public void selectAtOnePlayerChoice(Deck deck) {
@@ -29,7 +27,7 @@ public class PlayerTurn extends Turn {
             processDoubleDown(deck, additionalBet);
         }
         if (playerChoice.equals(PlayerChoice.SURRENDER)) {
-            isSurrender = true;
+            betting.surrender();
         }
     }
 

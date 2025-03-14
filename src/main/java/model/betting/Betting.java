@@ -4,12 +4,14 @@ import model.participant.Dealer;
 
 public class Betting {
     private static final int INSURANCE_BET_DIVISOR  = 2;
+    private static final int SURRENDER_PAYOUT_RATIO  = 2;
     private static final int INSURANCE_PAYOUT_RATIO = 2;
     private static final int BLACKJACK_PAYOUT_RATIO = 3/2;
 
 
     private int bet;
     private int insuranceBet;
+    private boolean isSurrender = false;
 
     public Betting(int bet) {
         this.bet = bet;
@@ -41,6 +43,18 @@ public class Betting {
 
     public int calculateDraw() {
         return 0;
+    }
+
+    public void surrender() {
+        isSurrender = true;
+    }
+
+    public boolean checkSurrender(){
+        return isSurrender;
+    }
+
+    public int calculateSurrender(){
+        return bet / SURRENDER_PAYOUT_RATIO;
     }
 
     public int calculateInsurance(Dealer dealer) {
