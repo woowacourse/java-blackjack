@@ -1,7 +1,5 @@
 package domain;
 
-import static view.OutputView.printBust;
-
 public class Dealer extends Player {
 
     public static final String DEALER_NAME = "딜러";
@@ -11,22 +9,8 @@ public class Dealer extends Player {
         super(DEALER_NAME);
     }
 
-    public void drawWithThreshold(Deck deck) {
-        boolean isAlive = resolveBust();
-        while (isAlive) {
-            if (isBelowThreshold()) {
-                isAlive = drawOneMoreCard(deck);
-            }
-            if (isAlive && !isBelowThreshold()) {
-                return;
-            }
-        }
-        setHandTotalToZero();
-        printBust();
-    }
-
-    public boolean isBelowThreshold() {
-        return getHandTotal() <= THRESHOLD;
+    public boolean isOverThreshold() {
+        return getHandTotal() > THRESHOLD;
     }
 
     public Card openOneCard() {

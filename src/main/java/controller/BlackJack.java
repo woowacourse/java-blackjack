@@ -38,12 +38,42 @@ public class BlackJack {
 
     private void playersTurn(Players players, Deck deck) {
         for (Player player : players.getPlayers()) {
-            player.drawByChoice(deck);
+            bustCheckOfHitOrHold(player, deck, new HitOrHoldPolicy() {
+                @Override
+                public boolean hold() {
+                    return getContinueOrNot(player).equalsIgnoreCase(NO);
+                }
+            });
         }
     }
 
+    private void bustCheckOfHitOrHold(Player player, Deck deck, HitOrHoldPolicy hitOrHoldPolicy) {
+        boolean isAlive = player.resolveBust();
+        while (isAlive) {
+            if (hitOrHoldPolicy.hold()) {
+                return;
+            }
+            isAlive = bustWithDrawOneMoreCard(player, deck);
+        }
+        player.setHandTotalToZero();
+        printBust();
+    }
+
+    private boolean bustWithDrawOneMoreCard(Player player, Deck deck) {
+        player.addCard(deck.draw());
+        if (player.isNotDealer()) {
+            printHandCardsNames(player);
+        }
+        return player.resolveBust();
+    }
+
     public void dealersTurn(Dealer dealer, Deck deck) {
-        dealer.drawWithThreshold(deck);
+        bustCheckOfHitOrHold(dealer, deck, new HitOrHoldPolicy() {
+            @Override
+            public boolean hold() {
+                return dealer.isOverThreshold();
+            }
+        });
     }
 
     private void printResult(Players players, Dealer dealer, Accountant accountant) {
