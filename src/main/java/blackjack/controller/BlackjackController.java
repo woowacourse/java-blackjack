@@ -1,10 +1,12 @@
 package blackjack.controller;
 
+import blackjack.domain.Dealer;
+import blackjack.domain.Hand;
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
+import blackjack.domain.Player;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.ParticipantResults;
-import blackjack.manager.BlackJackInitManager;
 import blackjack.manager.BlackjackProcessManager;
 import blackjack.manager.GameRuleEvaluator;
 import blackjack.view.Confirmation;
@@ -15,26 +17,22 @@ import java.util.List;
 public class BlackjackController {
 
     private final GameRuleEvaluator gameRuleEvaluator;
-    private final BlackJackInitManager blackJackInitManager;
     private final BlackjackProcessManager blackjackProcessManager;
 
-    public BlackjackController(GameRuleEvaluator gameRuleEvaluator, BlackJackInitManager blackJackInitManager) {
+    public BlackjackController(GameRuleEvaluator gameRuleEvaluator) {
         this.gameRuleEvaluator = gameRuleEvaluator;
-        this.blackJackInitManager = blackJackInitManager;
         this.blackjackProcessManager = new BlackjackProcessManager(new Deck(), new ParticipantResults());
     }
 
     public void run() {
         List<String> names = InputView.readNames();
 
-        Participants participants = blackJackInitManager.saveParticipants(names);
+        Participants participants = saveParticipants(names);
 
         giveStartingCards(participants);
         participants.getParticipants().forEach(this::giveMoreCard);
 
         ParticipantResults participantResults = calculateResultOfParticipants(participants);
-
-        Participant defender = participants.findDefender();
 
         OutputView.printCardResult(participantResults);
         OutputView.printGameResult(participantResults);
@@ -84,5 +82,13 @@ public class BlackjackController {
     private ParticipantResults calculateResultOfParticipants(Participants participants) {
         blackjackProcessManager.calculateAllResults(participants, gameRuleEvaluator);
         return blackjackProcessManager.getParticipantResults();
+    }
+
+    private Participants saveParticipants(List<String> names) {
+        List<Participant> participants = new java.util.ArrayList<>(names.stream()
+                .map(name -> (Participant) new Player(name, new Hand()))
+                .toList());
+        participants.add(new Dealer(new Hand()));
+        return new Participants(participants);
     }
 }
