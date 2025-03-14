@@ -59,13 +59,13 @@ public class CardTest {
     }
     
     @Test
-    void 카드는_문양과_숫자가_같아도_동일하다고_판단되지_않는다() {
+    void 트럼프_카드를_여러번_생성해도_동일한_객체가_나온다() {
         // given
         CardNumber number = CardNumber.NUMBER_A;
         CardShape shape = CardShape.다이아몬드;
         
         // expected
-        assertThat(Card.createTrumpCards().get(number, shape)).isNotEqualTo(Card.createTrumpCards().get(number, shape));
+        assertThat(Card.createTrumpCards().get(number, shape)).isEqualTo(Card.createTrumpCards().get(number, shape));
     }
     
     @Test
