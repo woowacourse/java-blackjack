@@ -10,23 +10,21 @@ import java.util.List;
 public class Participants {
 
     private final String PLAYER_NOT_EXIST = "존재하지 않는 플레이어입니다.";
-    private final String DEALER_NOT_EXIST = "딜러가 존재하지 않습니다.";
 
-    private final List<Participant> participants;
+    private final List<Player> players;
+    private final Dealer dealer;
 
     public Participants(List<ParticipantName> names, Dealer dealer) {
-        List<Player> players = names.stream()
+        players = names.stream()
                 .map(Player::new)
                 .toList();
 
-        participants = new ArrayList<>();
-        participants.addAll(players);
-        participants.add(dealer);
+        this.dealer = dealer;
     }
 
-    private Participant findParticipant(ParticipantName name) {
-        return participants.stream()
-                .filter(participant -> participant.isNameMatch(name))
+    private Player findPlayer(ParticipantName name) {
+        return players.stream()
+                .filter(player -> player.name().isMatch(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(PLAYER_NOT_EXIST));
     }
@@ -34,7 +32,7 @@ public class Participants {
     public List<GameResult> calculatePlayerResults() {
         List<GameResult> gameResults = new ArrayList<>();
         for (ParticipantName name : getPlayerNames()) {
-            List<TrumpCard> trumpCards = participantCards(name);
+            List<TrumpCard> trumpCards = playerCards(name);
             Score sum = calculateCardSum(name);
             gameResults.add(new GameResult(name, trumpCards, sum));
         }
@@ -42,56 +40,57 @@ public class Participants {
     }
 
     public List<ParticipantName> getPlayerNames() {
-        return participants.stream()
-                .filter(participant -> !participant.isDealer())
-                .map(Participant::name)
+        return players.stream()
+                .map(Player::name)
                 .toList();
     }
 
-    public GameResult calculateResult(ParticipantName name) {
-        Participant participant = findParticipant(name);
-        ParticipantHand hand = participant.hand;
-        Score sum = hand.calculateCardSum();
-        List<TrumpCard> trumpCards = hand.getCards();
+    public GameResult playerResult(ParticipantName name) {
+        Player player = findPlayer(name);
+        Score sum = player.calculateCardSum();
+        List<TrumpCard> trumpCards = player.cards();
         return new GameResult(name, trumpCards, sum);
     }
 
-    public List<TrumpCard> participantCards(ParticipantName name) {
-        Participant participant = findParticipant(name);
-        return participant.trumpCards();
+    public List<TrumpCard> playerCards(ParticipantName name) {
+        Player player = findPlayer(name);
+        return player.cards();
+    }
+
+    public List<TrumpCard> dealerCards(){
+        return dealer.cards();
     }
 
     public Score calculateCardSum(ParticipantName name) {
-        Participant participant = findParticipant(name);
-        return participant.calculateCardSum();
+        Player player = findPlayer(name);
+        return player.calculateCardSum();
     }
 
     public ParticipantName dealerName() {
-        return participants.stream()
-                .filter(Participant::isDealer)
-                .map(Participant::name)
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException(DEALER_NOT_EXIST));
+        return dealer.name();
     }
 
     public boolean isBust(ParticipantName name) {
-        Participant participant = findParticipant(name);
-        return participant.isBust();
+        Player player = findPlayer(name);
+        return player.isBust();
     }
 
     public boolean isDrawable(ParticipantName name) {
-        Participant participant = findParticipant(name);
-        return participant.isDrawable();
+        Player player = findPlayer(name);
+        return player.isDrawable();
     }
 
     public void addCard(ParticipantName name, TrumpCard trumpCard) {
-        Participant participant = findParticipant(name);
-        participant.addDraw(trumpCard);
+        Player player = findPlayer(name);
+        player.addCard(trumpCard);
     }
 
-    public WinStatus determineResult(ParticipantName selfName, ParticipantName opponentName) {
-        Participant self = findParticipant(selfName);
-        Participant opponent = findParticipant(opponentName);
-        return self.determineResult(opponent.calculateCardSum());
+    public void dealDealerCard(TrumpCard trumpCard){
+        dealer.addCard(trumpCard);
+    }
+
+    public WinStatus determinePlayerResult(ParticipantName playerName) {
+        Player player = findPlayer(playerName);
+        return player.determineResult(dealer.calculateCardSum());
     }
 }

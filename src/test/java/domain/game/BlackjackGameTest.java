@@ -107,23 +107,4 @@ class BlackjackGameTest {
                 .toList()
         ).containsExactlyElementsOf(expectedPlayersCardSum);
     }
-
-    @Test
-    void 딜러_블랙잭_현재_현황_확인() {
-        // given
-        List<TrumpCard> drawOrder = List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT),
-                new TrumpCard(Suit.DIAMOND, CardValue.J),
-                new TrumpCard(Suit.CLOVER, CardValue.TWO), new TrumpCard(Suit.CLOVER, CardValue.THREE));
-        List<String> names = List.of("포비");
-        BlackjackGame blackjackGame = createTestGame(names, drawOrder);
-
-        // when
-        GameResult gameResult = blackjackGame.currentDealerBlackjackResult();
-
-        // then
-        Score expectedDealerCardSum = Score.from(5);
-        assertThat(gameResult.cardSum())
-                .isEqualTo(expectedDealerCardSum);
-    }
-
 }

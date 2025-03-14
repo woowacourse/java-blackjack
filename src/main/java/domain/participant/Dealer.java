@@ -1,22 +1,39 @@
 package domain.participant;
 
-public class Dealer extends Participant {
+import domain.card.TrumpCard;
+import java.util.List;
+
+public class Dealer {
 
     private static final String DEALER_NAME = "딜러";
-    private final Score DEALER_STOP_HIT_STANDARD_SCORE = Score.from(16);
+    private static final Score DEALER_STOP_HIT_STANDARD_SCORE = Score.from(16);
+    private final Participant participant;
 
     public Dealer() {
-        super(ParticipantName.nameOf(DEALER_NAME));
+        ParticipantName dealerName = new ParticipantName(DEALER_NAME);
+        participant = new Participant(dealerName);
     }
 
-    @Override
     public boolean isDrawable() {
-        Score totalScore = hand.calculateCardSum(DEALER_STOP_HIT_STANDARD_SCORE);
+        Score totalScore = participant.calculateCardSum(DEALER_STOP_HIT_STANDARD_SCORE);
         return totalScore.isLessThanEqual(DEALER_STOP_HIT_STANDARD_SCORE);
     }
 
-    @Override
-    public boolean isDealer() {
-        return true;
+    public List<TrumpCard> cards(){
+        return participant.trumpCards();
     }
+
+    public ParticipantName name(){
+        return participant.name();
+    }
+
+    public Score calculateCardSum(){
+        return participant.calculateCardSum();
+    }
+
+    public void addCard(TrumpCard trumpCard){
+        participant.addDraw(trumpCard);
+    }
+
+
 }

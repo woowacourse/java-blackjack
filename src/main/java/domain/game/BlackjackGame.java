@@ -41,7 +41,7 @@ public class BlackjackGame {
     }
 
     public List<TrumpCard> playerCards(ParticipantName name) {
-        return participants.participantCards(name);
+        return participants.playerCards(name);
     }
 
     public TrumpCard dealerCardFirst() {
@@ -49,8 +49,7 @@ public class BlackjackGame {
     }
 
     public List<TrumpCard> dealerCards() {
-        ParticipantName dealerName = participants.dealerName();
-        return participants.participantCards(dealerName);
+        return participants.dealerCards();
     }
 
     public ParticipantName dealerName() {
@@ -66,8 +65,7 @@ public class BlackjackGame {
     }
 
     private void dealDealerCard() {
-        ParticipantName dealerName = participants.dealerName();
-        participants.addCard(dealerName, deck.drawCard());
+        participants.dealDealerCard(deck.drawCard());
     }
 
     public boolean isBust(ParticipantName name) {
@@ -92,16 +90,15 @@ public class BlackjackGame {
 
     public GameResult currentDealerBlackjackResult() {
         ParticipantName dealerName = participants.dealerName();
-        return participants.calculateResult(dealerName);
+        return participants.playerResult(dealerName);
     }
 
     public Map<ParticipantName, WinStatus> getPlayerWinStatuses() {
         Map<ParticipantName, WinStatus> winStatuses = new HashMap<>();
         List<ParticipantName> playerNames = participants.getPlayerNames();
-        ParticipantName dealerName = participants.dealerName();
 
         for (ParticipantName playerName : playerNames) {
-            WinStatus winStatus = participants.determineResult(playerName, dealerName);
+            WinStatus winStatus = participants.determinePlayerResult(playerName);
             winStatuses.put(playerName, winStatus);
         }
         return winStatuses;

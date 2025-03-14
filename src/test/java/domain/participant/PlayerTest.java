@@ -50,7 +50,7 @@ class PlayerTest {
         // when
         int cardCount = hand.size();
         for (int i = 0; i < cardCount; i++) {
-            player.addDraw(deck.drawCard());
+            player.addCard(deck.drawCard());
         }
 
         // then
@@ -86,10 +86,53 @@ class PlayerTest {
         // when
         int cardCount = hand.size();
         for (int i = 0; i < cardCount; i++) {
-            player.addDraw(deck.drawCard());
+            player.addCard(deck.drawCard());
         }
 
         // then
         assertThat(player.isDrawable()).isFalse();
+    }
+
+    static Stream<Arguments> createDrawCard() {
+        return Stream.of(
+                Arguments.of(List.of(new TrumpCard(Suit.DIAMOND, CardValue.TWO),
+                                new TrumpCard(Suit.CLOVER, CardValue.K),
+                                new TrumpCard(Suit.HEART, CardValue.K)
+                        ),
+                        false
+                ),
+
+                Arguments.of(List.of(new TrumpCard(Suit.DIAMOND, CardValue.K),
+                                new TrumpCard(Suit.CLOVER, CardValue.A),
+                                new TrumpCard(Suit.DIAMOND, CardValue.NINE)
+                        ),
+                        true
+                ),
+
+                Arguments.of(List.of(new TrumpCard(Suit.DIAMOND, CardValue.A),
+                                new TrumpCard(Suit.CLOVER, CardValue.A)),
+                        true
+                )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("createDrawCard")
+    void 플레이어의_드로우_가능여부를_반환한다(List<TrumpCard> hand, boolean expected) {
+        // given
+        Deck deck = BlackjackDeckTestFixture.createSequentialDeck(hand);
+        Player player = new Player(ParticipantName.nameOf("루키"));
+
+        int cardCount = hand.size();
+        for (int i = 0; i < cardCount; i++) {
+            player.addCard(deck.drawCard());
+
+        }
+
+        // when
+        boolean actual = player.isDrawable();
+
+        // then
+        assertThat(actual).isEqualTo(expected);
     }
 }

@@ -43,41 +43,20 @@ class ParticipantTest {
     void 에이스가_포함된_경우에_에이스를_최적의_값으로_계산한다(List<TrumpCard> hand, Score expected) {
         // given
         Deck deck = BlackjackDeckTestFixture.createSequentialDeck(hand);
-        Player player = new Player(ParticipantName.nameOf("루키"));
+        Participant participant = new Participant(ParticipantName.nameOf("루키"));
 
         // when
         int cardCount = hand.size();
         for (int i = 0; i < cardCount; i++) {
-            player.addDraw(deck.drawCard());
+            participant.addDraw(deck.drawCard());
         }
-        Score score = player.calculateCardSum();
+        Score score = participant.calculateCardSum();
 
         // then
         assertThat(score).isEqualTo(expected);
     }
 
-    static Stream<Arguments> createDrawCard() {
-        return Stream.of(
-                Arguments.of(List.of(new TrumpCard(Suit.DIAMOND, CardValue.TWO),
-                                new TrumpCard(Suit.CLOVER, CardValue.K),
-                                new TrumpCard(Suit.HEART, CardValue.K)
-                        ),
-                        false
-                ),
 
-                Arguments.of(List.of(new TrumpCard(Suit.DIAMOND, CardValue.K),
-                                new TrumpCard(Suit.CLOVER, CardValue.A),
-                                new TrumpCard(Suit.DIAMOND, CardValue.NINE)
-                        ),
-                        true
-                ),
-
-                Arguments.of(List.of(new TrumpCard(Suit.DIAMOND, CardValue.A),
-                                new TrumpCard(Suit.CLOVER, CardValue.A)),
-                        true
-                )
-        );
-    }
 
     static Stream<Arguments> createScoreCard() {
         return Stream.of(
@@ -105,24 +84,6 @@ class ParticipantTest {
     }
 
     @ParameterizedTest
-    @MethodSource("createDrawCard")
-    void 플레이어의_드로우_가능여부를_반환한다(List<TrumpCard> hand, boolean expected) {
-        // given
-        Deck deck = BlackjackDeckTestFixture.createSequentialDeck(hand);
-        Player player = new Player(ParticipantName.nameOf("루키"));
-        int cardCount = hand.size();
-        for (int i = 0; i < cardCount; i++) {
-            player.addDraw(deck.drawCard());
-        }
-
-        // when
-        boolean actual = player.isDrawable();
-
-        // then
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
     @MethodSource("createScoreCard")
     void 점수를_비교하여_현재_플레이어의_승패를_반환한다(List<TrumpCard> hand, Score otherScore, WinStatus expected) {
         // given
@@ -130,7 +91,7 @@ class ParticipantTest {
         Player player = new Player(ParticipantName.nameOf("루키"));
         int cardCount = hand.size();
         for (int i = 0; i < cardCount; i++) {
-            player.addDraw(deck.drawCard());
+            player.addCard(deck.drawCard());
         }
 
         // when

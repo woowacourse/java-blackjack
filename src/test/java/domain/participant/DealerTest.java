@@ -36,7 +36,7 @@ class DealerTest {
         // given
         Dealer dealer = new Dealer();
         for (TrumpCard drawCard : hand) {
-            dealer.addDraw(drawCard);
+            dealer.addCard(drawCard);
         }
 
         // when
@@ -65,7 +65,7 @@ class DealerTest {
         // given
         Dealer dealer = new Dealer();
         for (TrumpCard drawCard : hand) {
-            dealer.addDraw(drawCard);
+            dealer.addCard(drawCard);
         }
 
         // when
