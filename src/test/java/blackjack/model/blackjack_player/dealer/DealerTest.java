@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 import blackjack.model.blackjack_player.Hand;
-import blackjack.model.blackjack_player.dealer.judgement.DefaultJudgement;
+import blackjack.model.blackjack_player.dealer.judgement.DefaultJudgementStrategy;
 import blackjack.model.blackjack_player.player.Player;
 import blackjack.model.card.BlackJackCards;
 import blackjack.model.card.CardDeck;
@@ -157,7 +157,7 @@ class DealerTest {
     }
 
     private static Dealer makeDealer(final BlackJackCards blackJackCards) {
-        Dealer dealer = new Dealer(new DefaultCardDeckInitializer());
+        Dealer dealer = new Dealer(new DefaultJudgementStrategy(), new DefaultCardDeckInitializer());
         dealer.getAllCards().addAll(blackJackCards);
         return dealer;
     }
@@ -170,7 +170,7 @@ class DealerTest {
 
     @BeforeEach
     void setUp() {
-        dealer = new Dealer(new DefaultCardDeckInitializer());
+        dealer = new Dealer(new DefaultJudgementStrategy(), new DefaultCardDeckInitializer());
     }
 
     @Test
@@ -179,7 +179,7 @@ class DealerTest {
                 List.of(createCard(CardNumber.TWO), createCard(CardNumber.THREE), createCard(CardNumber.FOUR),
                         createCard(CardNumber.FIVE))
         ));
-        Dealer dealer = new Dealer(Hand.empty(), cardDeck);
+        Dealer dealer = new Dealer(new DefaultJudgementStrategy(), Hand.empty(), cardDeck);
         Player player = new Player("pobi", 1);
 
         dealer.dealInitialCards(List.of(player));
@@ -191,7 +191,7 @@ class DealerTest {
 
     @Test
     void 블랙잭_플레이어의_카드를_더_뽑는다() {
-        Dealer dealer = new Dealer(new DefaultCardDeckInitializer());
+        Dealer dealer = new Dealer(new DefaultJudgementStrategy(), new DefaultCardDeckInitializer());
         Player player = new Player("pobi", 1000);
 
         dealer.dealPlayerCards(player);
@@ -201,7 +201,7 @@ class DealerTest {
 
     @Test
     void 블랙잭_플레이어가_카드를_더_뽑을_수_없는_경우_예외를_던진다() {
-        Dealer dealer = new Dealer(new DefaultCardDeckInitializer());
+        Dealer dealer = new Dealer(new DefaultJudgementStrategy(), new DefaultCardDeckInitializer());
         Player player = new Player("pobi", 1000);
         player.receiveCards(new BlackJackCards(
                 List.of(createCard(CardNumber.TEN), createCard(CardNumber.SEVEN), createCard(CardNumber.FIVE))
@@ -246,7 +246,7 @@ class DealerTest {
     ) {
         dealer.getAllCards().addAll(blackJackCards);
 
-        dealer.fight(new DefaultJudgement(), player);
+        dealer.fight(player);
         int dealerProfit = (-1) * player.getProfit();
 
         SoftAssertions.assertSoftly(

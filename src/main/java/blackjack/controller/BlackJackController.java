@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.model.blackjack_player.dealer.Dealer;
-import blackjack.model.blackjack_player.dealer.judgement.Judgement;
+import blackjack.model.blackjack_player.dealer.judgement.JudgementStrategy;
 import blackjack.model.blackjack_player.player.Player;
 import blackjack.model.card.initializer.CardDeckInitializer;
 import blackjack.view.InputView;
@@ -13,23 +13,23 @@ public final class BlackJackController {
     private final InputView inputView;
     private final OutputView outputView;
 
-    private final Judgement judgement;
+    private final JudgementStrategy judgementStrategy;
     private final CardDeckInitializer cardDeckInitializer;
 
     public BlackJackController(
             final InputView inputView,
             final OutputView outputView,
-            final Judgement judgement,
+            final JudgementStrategy judgementStrategy,
             final CardDeckInitializer cardDeckInitializer
     ) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.judgement = judgement;
+        this.judgementStrategy = judgementStrategy;
         this.cardDeckInitializer = cardDeckInitializer;
     }
 
     public void run() {
-        Dealer dealer = new Dealer(cardDeckInitializer);
+        Dealer dealer = new Dealer(judgementStrategy, cardDeckInitializer);
         List<Player> players = makePlayers();
 
         dealInitialCards(dealer, players);
@@ -57,12 +57,12 @@ public final class BlackJackController {
 
     private void fight(final Dealer dealer, final List<Player> players) {
         for (Player player : players) {
-            dealer.fight(judgement, player);
+            dealer.fight(player);
         }
     }
 
     private void drawMorePlayerCards(final Dealer dealer, final Player player) {
-        while (player.canDrawMoreCard() && inputView.readUserDrawMoreCard(player)) {
+        while (player.canReceiveMoreCard() && inputView.readUserDrawMoreCard(player)) {
             dealer.dealPlayerCards(player);
             outputView.printPlayerCards(player);
         }

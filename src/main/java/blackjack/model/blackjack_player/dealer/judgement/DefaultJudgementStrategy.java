@@ -3,7 +3,7 @@ package blackjack.model.blackjack_player.dealer.judgement;
 import blackjack.model.blackjack_player.dealer.Dealer;
 import blackjack.model.blackjack_player.player.Player;
 
-public final class DefaultJudgement implements Judgement {
+public final class DefaultJudgementStrategy implements JudgementStrategy {
 
     private static final float BLACKJACK_REWARD_RATE = 1.5f;
 

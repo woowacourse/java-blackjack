@@ -14,9 +14,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class DefaultJudgementTest {
+class DefaultJudgementStrategyTest {
 
-    private final DefaultJudgement judgement = new DefaultJudgement();
+    private final DefaultJudgementStrategy judgement = new DefaultJudgementStrategy();
 
     private static Stream<Arguments> 비겼는지_확인한다_테스트_케이스() {
         return Stream.of(
@@ -157,7 +157,7 @@ class DefaultJudgementTest {
     }
 
     private static Dealer makeDealer(final BlackJackCards blackJackCards) {
-        Dealer dealer = new Dealer(new DefaultCardDeckInitializer());
+        Dealer dealer = new Dealer(new DefaultJudgementStrategy(), new DefaultCardDeckInitializer());
         dealer.getAllCards().addAll(blackJackCards);
         return dealer;
     }
