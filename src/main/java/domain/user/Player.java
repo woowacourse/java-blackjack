@@ -7,9 +7,11 @@ import java.util.List;
 public class Player extends User {
 
     private final String name;
+    private final Betting betting;
 
-    public Player(String name) {
+    public Player(String name, Betting betting) {
         this.name = name;
+        this.betting = betting;
         validate(name);
     }
 
@@ -42,5 +44,9 @@ public class Player extends User {
         if (name.equals("dealer") || name.equals("딜러")) {
             throw new IllegalArgumentException("dealer 혹은 딜러는 이름으로 사용할 수 없습니다.");
         }
+    }
+
+    public Betting getBetting() {
+        return betting;
     }
 }

@@ -1,5 +1,6 @@
 package domain;
 
+import domain.user.Betting;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
@@ -9,6 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class GameManager {
     public final static int MAX_PLAYER = 7;
@@ -23,15 +25,17 @@ public class GameManager {
         this.trumpCardManager = trumpCardManager;
     }
 
-    public static GameManager initailizeGameManager(List<String> names, TrumpCardManager trumpCardManager) {
+    public static GameManager initailizeGameManager(List<String> names, List<Long> playersBettingMoney,
+                                                    TrumpCardManager trumpCardManager) {
         validateNames(names);
-        List<User> users = names.stream().map(Player::new).collect(Collectors.toList());
+        List<User> users = IntStream.range(0, names.size())
+                .mapToObj(i -> new Player(names.get(i), new Betting(playersBettingMoney.get(i))))
+                .collect(Collectors.toList());
         User dealer = new Dealer();
         users.add(dealer);
         return new GameManager(new Users(users), trumpCardManager);
     }
 
-    // TODO: static을 제거하는 과정을 생각해보자
     private static void validateNames(List<String> names) {
         HashSet<String> distinctNames = new HashSet<>(names);
         if (names.isEmpty() || names.size() > MAX_PLAYER) {
@@ -40,11 +44,6 @@ public class GameManager {
         if (distinctNames.size() != names.size()) {
             throw new IllegalArgumentException("유저는 중복될 수 없습니다.");
         }
-    }
-
-    // TODO: 해당 메서드 구현 필요
-    public void submitBet(User user, Long money) {
-
     }
 
     public void firstHandOutCard() {
