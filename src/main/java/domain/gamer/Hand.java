@@ -1,7 +1,5 @@
 package domain.gamer;
 
-import static domain.BlackJackConstants.BUST_NUMBER;
-
 import domain.deck.Card;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,14 +20,6 @@ public class Hand {
         return cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
-    }
-
-    public boolean isBust() {
-        return getSumOfRank() > BUST_NUMBER;
-    }
-
-    public boolean isImPossibleDrawCard() {
-        return getSumOfRank() >= BUST_NUMBER;
     }
 
     public boolean hasAce() {

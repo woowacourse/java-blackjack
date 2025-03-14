@@ -20,7 +20,7 @@ class PlayersTest {
 
         // given
         final List<Player> playerGroup = nicknames.stream()
-                .map(nickname -> new Player(nickname, new Betting(0)))
+                .map(nickname -> new Player(nickname, new Betting(1000)))
                 .toList();
 
         // when & then
@@ -35,7 +35,7 @@ class PlayersTest {
 
         // given
         final List<Player> playerGroup = nicknames.stream()
-                .map(nickname -> new Player(nickname, new Betting(0)))
+                .map(nickname -> new Player(nickname, new Betting(1000)))
                 .toList();
 
         // when & then
@@ -47,8 +47,8 @@ class PlayersTest {
     @Test
     void 플레이어의_이름은_중복이_없으면_올바르게_작동한다() {
         // given
-        Player player1 = new Player(new Nickname("체체"), new Betting(0));
-        Player player2 = new Player(new Nickname("체체체"), new Betting(0));
+        Player player1 = new Player(new Nickname("체체"), new Betting(1000));
+        Player player2 = new Player(new Nickname("체체체"), new Betting(1000));
         List<Player> playerGroup = List.of(player1, player2);
 
         // when & then
@@ -60,8 +60,8 @@ class PlayersTest {
     @Test
     void 플레이어의_이름은_중복될_경우_예외가_발생한다() {
         // given
-        Player player1 = new Player(new Nickname("체체"), new Betting(0));
-        Player player2 = new Player(new Nickname("체체"), new Betting(0));
+        Player player1 = new Player(new Nickname("체체"), new Betting(1000));
+        Player player2 = new Player(new Nickname("체체"), new Betting(1000));
         List<Player> playerGroup = List.of(player1, player2);
 
         // when & then

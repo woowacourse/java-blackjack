@@ -81,8 +81,4 @@ public class Player extends Gamer {
     public int loseBetting(int profit) {
         return betting.loseBetting(profit);
     }
-
-    public boolean isBlackJack() {
-        return calculateSumOfRank() == 21 && getCards().size() == 2;
-    }
 }

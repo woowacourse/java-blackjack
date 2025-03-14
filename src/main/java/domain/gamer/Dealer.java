@@ -34,8 +34,4 @@ public class Dealer extends Gamer {
         final List<Card> cards = getCards();
         return cards.getFirst();
     }
-
-    public boolean isBlackJack() {
-        return calculateSumOfRank() == 21 && getCards().size() == 2;
-    }
 }

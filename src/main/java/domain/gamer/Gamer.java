@@ -17,11 +17,15 @@ public abstract class Gamer {
     public abstract int calculateSumOfRank();
 
     public boolean isBust() {
-        return hand.isBust();
+        return calculateSumOfRank() > 21;
     }
 
     public boolean isImPossibleDrawCard() {
-        return hand.isImPossibleDrawCard();
+        return calculateSumOfRank() == 21;
+    }
+
+    public boolean isBlackJack() {
+        return calculateSumOfRank() == 21 && getCards().size() == 2;
     }
 
     public void receiveInitialCards(final List<Card> cards) {

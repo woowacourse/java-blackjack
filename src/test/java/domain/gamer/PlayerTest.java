@@ -208,4 +208,41 @@ class PlayerTest {
         // when & then
         assertThat(player.isImPossibleDrawCard()).isTrue();
     }
+
+    @DisplayName("플레이어가 블랙잭이 아니면서 승리시 배팅금액 만큼 수익을 얻는다.")
+    @Test
+    void 플레이어가_블랙잭이_아니면서_승리시_배팅금액_만큼_수익을_얻는다() {
+
+        // given
+        int profit = player.winBetting(0);
+
+        // when & then
+        assertThat(profit).isEqualTo(1000);
+    }
+
+    @DisplayName("플레이어가 블랙잭이면서 승리시 배팅금액 만큼 수익을 얻는다.")
+    @Test
+    void 플레이어가_블랙잭이면서_승리시_배팅금액_만큼_수익을_얻는다() {
+
+        // given
+        player.hit(new Card(Rank.ACE, Shape.SPADE));
+        player.hit(new Card(Rank.JACK, Shape.SPADE));
+        int profit = player.winBetting(0);
+
+        // when & then
+        assertThat(profit).isEqualTo(1500);
+    }
+
+    @DisplayName("플레이어가 패배시 배팅금액 만큼 수익을 잃는다.")
+    @Test
+    void 플레이어가_패배시_배팅금액_만큼_수익을_잃는다() {
+
+        // given
+        player.hit(new Card(Rank.ACE, Shape.SPADE));
+        player.hit(new Card(Rank.JACK, Shape.SPADE));
+        int profit = player.loseBetting(0);
+
+        // when & then
+        assertThat(profit).isEqualTo(-1000);
+    }
 }
