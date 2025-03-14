@@ -21,6 +21,12 @@ public class Players {
         this.players = players;
     }
 
+    public static Players of(List<String> playerNames, List<Integer> playerBetting) {
+        return new Players(IntStream.range(0, playerNames.size())
+                .mapToObj(i -> new Player(playerNames.get(i), playerBetting.get(i)))
+                .toList());
+    }
+
     private void validatePlayerCount(List<Player> players) {
         if (players.isEmpty() || players.size() > MAX_PLAYER_COUNT) {
             throw new IllegalArgumentException("[ERROR] 플레이어 수는 최소 1명, 최대" + MAX_PLAYER_COUNT + "명입니다.");

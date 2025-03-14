@@ -12,7 +12,6 @@ import game.Player;
 import game.Players;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.IntStream;
 
 public class BlackjackApplication {
 
@@ -23,11 +22,9 @@ public class BlackjackApplication {
         CardDeck cardDeck = CardDeck.prepareDeck(new RandomCardShuffler());
 
         List<String> playerNames = input.readPlayerNames();
-        List<Integer> bettingMoney = input.readBettingMoney(playerNames);
+        List<Integer> playerBetting = input.readBettingMoney(playerNames);
 
-        Players players = new Players(IntStream.range(0, playerNames.size())
-                .mapToObj(i -> new Player(playerNames.get(i), bettingMoney.get(i)))
-                .toList());
+        Players players = Players.of(playerNames, playerBetting);
         Dealer dealer = new Dealer();
 
         players.draw(cardDeck);
