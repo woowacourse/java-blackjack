@@ -19,8 +19,8 @@ public class Money {
 		return new Money(value - minusMoney.value);
 	}
 
-	public Money plus(Money plusMoney) {
-		return null;
+	public Money plus(final Money plusMoney) {
+		return new Money(value + plusMoney.value);
 	}
 
 	@Override
