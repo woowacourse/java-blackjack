@@ -19,13 +19,13 @@ public class Deck {
 
     public Cards drawInitialCards() {
         List<Card> cards = new ArrayList<>();
-        cards.add(this.cards.drawOneCard());
-        cards.add(this.cards.drawOneCard());
+        cards.add(this.cards.drawCard());
+        cards.add(this.cards.drawCard());
         return new Cards(cards);
     }
 
     public Card drawOneCard() {
-        return cards.drawOneCard();
+        return cards.drawCard();
     }
 
     public int getSize() {
