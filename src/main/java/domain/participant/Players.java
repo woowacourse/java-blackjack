@@ -1,6 +1,5 @@
 package domain.participant;
 
-import domain.MatchResult;
 import domain.card.Deck;
 import domain.card.Hand;
 import java.util.ArrayList;
@@ -36,8 +35,8 @@ public class Players {
         }
     }
 
-    public LinkedHashMap<Player, MatchResult> calculateWinner(final int dealerSum) {
-        LinkedHashMap<Player, MatchResult> res = new LinkedHashMap<>();
+    public LinkedHashMap<Player, Integer> calculateWinner(final int dealerSum) {
+        LinkedHashMap<Player, Integer> res = new LinkedHashMap<>();
         for (Player player : players) {
             res.put(player, player.calculateWinner(dealerSum));
         }

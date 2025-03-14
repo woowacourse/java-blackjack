@@ -1,18 +1,15 @@
 package view;
 
-import static domain.MatchResult.DRAW;
-import static domain.MatchResult.LOSE;
-import static domain.MatchResult.WIN;
 import static domain.card.Number.ACE;
 import static domain.card.Number.JACK;
 import static domain.card.Number.KING;
 import static domain.card.Number.QUEEN;
 
-import domain.MatchResult;
 import domain.card.Card;
 import domain.card.Number;
 import domain.card.Shape;
 import domain.participant.Dealer;
+import domain.participant.Money;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.ArrayList;
@@ -77,28 +74,18 @@ public class OutputView {
         }
     }
 
-    public void printResult(final Map<Player, MatchResult> playerMatchResult) {
+    public void printResult(int dealerProfit, final Map<Player, Integer> playerMatchResult) {
         printNewLine();
         System.out.println(RESULT_INTRO);
 
-        int dealerProfit = 0;
-
         printNewLine();
-        for (Entry<Player, MatchResult> entry : playerMatchResult.entrySet()) {
-            if (entry.getValue() == WIN) {
-                System.out.printf(PLAYER_RESULT, entry.getKey().getName(), entry.getKey().getMoney());
-                dealerProfit -= entry.getKey().getMoney();
-            }
-            if (entry.getValue() == LOSE) {
-                System.out.printf(PLAYER_RESULT, entry.getKey().getName(), entry.getKey().getMoney() * -1);
-                dealerProfit += entry.getKey().getMoney();
-            }
-            if (entry.getValue() == DRAW) {
-                System.out.printf(PLAYER_RESULT, entry.getKey().getMoney(), 0);
-            }
-        }
-
         System.out.printf(DEALER_RESULT, dealerProfit);
+
+        for (Entry<Player, Integer> entry : playerMatchResult.entrySet()) {
+            String playerName = entry.getKey().getName();
+            int playerProfit = entry.getValue();
+            System.out.printf(PLAYER_RESULT, playerName, playerProfit);
+        }
     }
 
 
