@@ -1,15 +1,13 @@
-package domain;
+package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.GameResult;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;
 import domain.card.Hand;
-import domain.participant.Dealer;
-import domain.participant.Money;
-import domain.participant.Player;
-import domain.participant.Players;
+import domain.card.StaticCardGenerator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;

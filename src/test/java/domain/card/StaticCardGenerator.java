@@ -1,6 +1,5 @@
-package domain;
+package domain.card;
 
-import domain.card.Card;
 import domain.card.cardsGenerator.CardsGenerator;
 import java.util.ArrayList;
 import java.util.List;

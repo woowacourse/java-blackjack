@@ -1,12 +1,11 @@
-package domain;
+package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.card.CardNumber;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class CardNumberTest {
+public class CardTest {
 
     @ParameterizedTest
     @CsvSource({
@@ -14,9 +13,11 @@ public class CardNumberTest {
             "SIX, false", "SEVEN, false", "EIGHT, false", "NINE, false", "TEN, false",
             "QUEEN, false", "KING, false", "JACK, false"
     })
-    void 카드숫자가_에이스인지_아닌지_반환한다(CardNumber cardNumber, boolean expected) {
+    void 카드의_숫자가_에이스인지_아닌지_반환한다(CardNumber cardNumber, boolean expected) {
+        //given
+        Card card = new Card(cardNumber, CardShape.CLOVER);
         //when
-        boolean actual = cardNumber.isAce();
+        boolean actual = card.isAce();
         //then
         assertThat(actual).isEqualTo(expected);
     }

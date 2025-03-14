@@ -1,13 +1,8 @@
-package domain;
+package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.card.Card;
-import domain.card.CardNumber;
-import domain.card.CardShape;
-import domain.card.Deck;
-import domain.card.Hand;
 import domain.card.cardsGenerator.RandomCardsGenerator;
 import domain.participant.Money;
 import domain.participant.Player;
