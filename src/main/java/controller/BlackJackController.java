@@ -70,8 +70,8 @@ public class BlackJackController {
     }
 
     private void drawDealerCards(BlackJackGame game) {
-        game.setupDealerCards();
-        outputView.printDealerDrawCount(game.calculateDealerDrawCount());
+        int count = game.calculateDealerDrawCount();
+        outputView.printDealerDrawCount(count);
     }
 
     private void showGameResult(BlackJackGame game) {

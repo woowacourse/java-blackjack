@@ -8,6 +8,7 @@ import domain.card.CardNumber;
 import domain.card.CardShape;
 import domain.card.Hand;
 import domain.card.StaticCardGenerator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -379,10 +380,12 @@ class DealerTest {
         // given
         List<Card> cards = List.of(
                 new Card(CardNumber.A, CardShape.CLOVER),
-                new Card(CardNumber.TWO, CardShape.CLOVER),
-                new Card(CardNumber.THREE, CardShape.CLOVER)
+                new Card(CardNumber.TWO, CardShape.CLOVER)
         );
-        Dealer dealer = Dealer.of(Hand.of(cards), new StaticCardGenerator());
+        StaticCardGenerator staticCardGenerator = new StaticCardGenerator(List.of(
+                new Card(CardNumber.FOUR, CardShape.CLOVER)
+        ));
+        Dealer dealer = Dealer.of(Hand.of(new ArrayList<>(cards)), staticCardGenerator);
         // when
         int actual = dealer.getNewCardCount();
         // then

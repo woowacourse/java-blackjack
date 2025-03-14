@@ -41,16 +41,6 @@ public class Dealer extends Participant {
         deck.giveCardTo(participant, count);
     }
 
-    public void drawUntilLimit() {
-        while (hasToDraw()) {
-            deck.giveCardTo(this, 1);
-        }
-    }
-
-    private boolean hasToDraw() {
-        return this.calculateScore() <= DRAW_BOUNDARY;
-    }
-
     public GameResult judgeResult(Player player) {
         if (player.isBlackJack() && !this.isBlackJack()) {
             return GameResult.BLACKJACK;
@@ -81,7 +71,19 @@ public class Dealer extends Participant {
     }
 
     public int getNewCardCount() {
-        return super.handSize() - INIT_COUNT;
+        int beforeCount = super.handSize();
+        drawUntilLimit();
+        return super.handSize() - beforeCount;
+    }
+
+    public void drawUntilLimit() {
+        while (hasToDraw()) {
+            deck.giveCardTo(this, 1);
+        }
+    }
+
+    private boolean hasToDraw() {
+        return this.calculateScore() <= DRAW_BOUNDARY;
     }
 
     @Override

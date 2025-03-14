@@ -29,10 +29,6 @@ public class BlackJackGame {
         return new BlackJackGame(dealer, players);
     }
 
-    public void setupDealerCards() {
-        dealer.drawUntilLimit();
-    }
-
     public void drawCardForCurrentPlayer() {
         if (getThisTurnPlayer().canDraw()) {
             dealer.giveCards(getThisTurnPlayer(), 1);
