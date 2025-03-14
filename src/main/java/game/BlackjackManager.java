@@ -14,11 +14,11 @@ import view.InputView;
 import view.OutputView;
 import view.RankMessage;
 
-public class BlackjackGame {
+public class BlackjackManager {
 	private final InputView inputView;
 	private final OutputView outputView;
 
-	public BlackjackGame(final InputView inputView, final OutputView outputView) {
+	public BlackjackManager(final InputView inputView, final OutputView outputView) {
 		this.inputView = inputView;
 		this.outputView = outputView;
 	}

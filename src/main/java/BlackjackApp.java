@@ -1,4 +1,4 @@
-import game.BlackjackGame;
+import game.BlackjackManager;
 import view.InputView;
 import view.OutputView;
 
@@ -7,8 +7,8 @@ public class BlackjackApp {
 	public static void main(String[] args) {
 		InputView inputView = new InputView();
 		OutputView outputView = new OutputView();
-		BlackjackGame blackjackGame = new BlackjackGame(inputView, outputView);
+		BlackjackManager blackjackManager = new BlackjackManager(inputView, outputView);
 
-		blackjackGame.run();
+		blackjackManager.run();
 	}
 }
