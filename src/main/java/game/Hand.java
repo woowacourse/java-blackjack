@@ -38,13 +38,13 @@ public class Hand {
 
     private int calculateTotalCardNumber() {
         return cards.stream()
-                .mapToInt(card -> card.getCardNumber().getNumber())
+                .mapToInt(card -> card.cardNumber().getNumber())
                 .sum();
     }
 
     private boolean hasAce() {
         return cards.stream()
-                .anyMatch(card -> card.getCardNumber() == CardNumber.ACE);
+                .anyMatch(card -> card.cardNumber() == CardNumber.ACE);
     }
 
     private int calculateWithAce(int totalCardNumber) {

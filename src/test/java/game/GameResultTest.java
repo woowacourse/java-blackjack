@@ -192,46 +192,4 @@ public class GameResultTest {
         Assertions.assertThat(gameResult).isEqualTo(GameResult.BLACKJACK);
     }
 
-//    @Test
-//    void 딜러의_승리_횟수를_계산한다() {
-//        //when
-//        int winCount = GameResult.WIN.countReversed(
-//                List.of(GameResult.WIN, GameResult.WIN, GameResult.LOSE, GameResult.DRAW));
-//
-//        //then
-//        Assertions.assertThat(winCount).isEqualTo(1);
-//
-//    }
-//
-//    @Test
-//    void 딜러의_패배_횟수를_계산한다() {
-//        //when
-//        int winCount = GameResult.LOSE.countReversed(
-//                List.of(GameResult.WIN, GameResult.WIN, GameResult.LOSE, GameResult.DRAW));
-//
-//        //then
-//        Assertions.assertThat(winCount).isEqualTo(2);
-//
-//    }
-//
-//    @Test
-//    void 딜러의_무승부_횟수를_계산한다() {
-//        //when
-//        int winCount = GameResult.DRAW.countReversed(
-//                List.of(GameResult.WIN, GameResult.WIN, GameResult.LOSE, GameResult.DRAW));
-//
-//        //then
-//        Assertions.assertThat(winCount).isEqualTo(1);
-//    }
-//
-//    @Test
-//    void 딜러의_블랙잭_횟수를_계산한다() {
-//        //when
-//        int blackJackCount = GameResult.BLACKJACK.countReversed(
-//                List.of(GameResult.BLACKJACK));
-//
-//        //then
-//        Assertions.assertThat(blackJackCount).isEqualTo(1);
-//    }
-
 }

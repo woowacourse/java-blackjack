@@ -48,23 +48,4 @@ public enum GameResult {
         return DRAW;
     }
 
-//    public int countReversed(List<GameResult> gameResults) {
-//        return countByCondition(gameResults, reverse());
-//    }
-//
-//    private int countByCondition(List<GameResult> gameResults, GameResult target) {
-//        return (int) gameResults.stream()
-//                .filter(gameResult -> gameResult == target)
-//                .count();
-//    }
-//
-//    private GameResult reverse() {
-//        return switch (this) {
-//            case WIN -> LOSE;
-//            case LOSE -> WIN;
-//            case DRAW -> DRAW;
-//            case BLACKJACK -> BLACKJACK;
-//        };
-//    }
-
 }
