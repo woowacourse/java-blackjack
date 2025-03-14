@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.Money;
+import domain.card.Card;
 import domain.result.BlackjackResult;
 
 public class Player extends Participant {
@@ -16,6 +17,10 @@ public class Player extends Participant {
 
     public static Player of(final String name, final Money betAmount) {
         return new Player(name, betAmount);
+    }
+
+    public boolean canHit() {
+        return getScore() < Card.BLACKJACK_SCORE;
     }
 
     public String getName() {

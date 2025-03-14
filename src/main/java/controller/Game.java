@@ -2,7 +2,6 @@ package controller;
 
 import constant.Answer;
 import domain.Money;
-import domain.card.Card;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Player;
@@ -86,14 +85,18 @@ public class Game {
     }
 
     private void processPlayerDecision(Player player, Dealer dealer) {
-        while (player.getScore() < Card.BLACKJACK_SCORE) {
-            String answer = inputView.askReceive(player.getName());
-            if (Answer.getAnswer(answer) == Answer.NO) {
+        while (player.canHit()) {
+            if (!answerHit(player)) {
                 outputView.printCardsByName(player);
                 break;
             }
             player.receive(dealer.drawCard());
             outputView.printCardsByName(player);
         }
+    }
+
+    private boolean answerHit(Player player) {
+        String answer = inputView.askReceive(player.getName());
+        return Answer.getAnswer(answer) == Answer.YES;
     }
 }

@@ -71,6 +71,16 @@ public class PlayerTest {
         assertThat(blackjackResult).isEqualTo(result);
     }
 
+    @MethodSource("createPlayerAndCanHitResult")
+    @ParameterizedTest
+    void 플레이어가_히트할_수_있는지_판단한다(Player player, boolean expectedResult) {
+        // when
+        boolean result = player.canHit();
+
+        // then
+        assertThat(result).isEqualTo(expectedResult);
+    }
+
     private static Stream<Arguments> createPlayerAndResult() {
         final Player loser = Player.of("pobi", Money.of(1000));
         loser.receive(Card.of(TrumpNumber.ACE, TrumpShape.CLUB));
@@ -88,6 +98,22 @@ public class PlayerTest {
                 Arguments.of(loser, BlackjackResult.LOSE),
                 Arguments.of(drawer, BlackjackResult.DRAW),
                 Arguments.of(winner, BlackjackResult.WIN)
+        );
+    }
+
+    public static Stream<Arguments> createPlayerAndCanHitResult() {
+        final Player canHitPlayer = Player.of("pobi", Money.of(1000));
+        canHitPlayer.receive(Card.of(TrumpNumber.ACE, TrumpShape.CLUB));
+        canHitPlayer.receive(Card.of(TrumpNumber.FIVE, TrumpShape.CLUB));
+
+        final Player canNotHitPlayer = Player.of("pobi", Money.of(1000));
+        canNotHitPlayer.receive(Card.of(TrumpNumber.JACK, TrumpShape.CLUB));
+        canNotHitPlayer.receive(Card.of(TrumpNumber.TEN, TrumpShape.CLUB));
+        canNotHitPlayer.receive(Card.of(TrumpNumber.ACE, TrumpShape.CLUB));
+
+        return Stream.of(
+                Arguments.of(canHitPlayer, true),
+                Arguments.of(canNotHitPlayer, false)
         );
     }
 }
