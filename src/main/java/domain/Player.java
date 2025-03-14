@@ -45,13 +45,13 @@ public class Player extends Gamer {
     }
 
     private GameResult decideGameResultWithoutBust(Dealer dealer) {
-        if (cards.isBlackJack()) { // 플레이어만 블랙잭인 경우
+        if (isBlackJack() && !dealer.isBlackJack()) { // 플레이어만 블랙잭인 경우
             return BLACKJACK;
         }
         if (cards.calculateScore() == dealer.getScore()) { // 점수 무승부
             return TIE;
         }
-        if (cards.isBlackJack() && dealer.isBlackJack()
+        if (isBlackJack() && dealer.isBlackJack()
                 || cards.calculateScore() > dealer.getScore()) { // 딜러 & 플레이어 모두 블랙잭 혹은 플레이어가 점수 높은 경우
             return WIN;
         }

@@ -1,14 +1,9 @@
 package view;
 
 import static domain.Dealer.DEALER_DRAWABLE_THRESHOLD;
-import static domain.GameResult.DRAW;
-import static domain.GameResult.LOSE;
-import static domain.GameResult.WIN;
 
 import domain.Card;
 import domain.Cards;
-import domain.GameResult;
-import domain.GameStatistics;
 import domain.Gamer;
 import domain.Player;
 import domain.PlayerName;
@@ -17,12 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public class OutputView {
-
-    private static final Map<GameResult, String> GAME_RESULT = Map.of(
-            WIN, "승",
-            DRAW, "무",
-            LOSE, "패");
-
+    
     public void printInitialState(Map<PlayerName, Player> playersInfo, Card dealerCard) {
         List<PlayerName> playerNames = new ArrayList<>(playersInfo.keySet());
         List<String> usernames = playerNames.stream()
@@ -67,20 +57,11 @@ public class OutputView {
         System.out.printf(" - 결과: %d\n", gamer.getScore());
     }
 
-    public void printGameStatistics(GameStatistics gameStatistics) {
-        System.out.println("##최종 승패");
-        int dealerDrawCount = gameStatistics.getDealerDrawCount();
-        if (dealerDrawCount == 0) {
-            System.out.printf("\n딜러: %d승 %d패\n", gameStatistics.getDealerWinCount(),
-                    gameStatistics.getDealerLoseCount());
-        }
-        if (dealerDrawCount != 0) {
-            System.out.printf("딜러: %d승 %d무 %d패\n", gameStatistics.getDealerWinCount(), dealerDrawCount,
-                    gameStatistics.getDealerLoseCount());
-        }
-        Map<PlayerName, GameResult> results = gameStatistics.getResults();
-        results.forEach((key, value) -> {
-            System.out.printf("%s: %s\n", key.username(), GAME_RESULT.get(value));
+    public void printFinalResult(Map<PlayerName, Integer> gameResults, int dealerBenefit) {
+        System.out.println("## 최종 수익\n");
+        System.out.printf("딜러: %d\n", dealerBenefit);
+        gameResults.forEach((key, value) -> {
+            System.out.printf("%s: %d\n", key.username(), value);
         });
     }
 }
