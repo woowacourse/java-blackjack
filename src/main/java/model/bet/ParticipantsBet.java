@@ -1,7 +1,6 @@
 package model.bet;
 
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import model.result.GameResult;
@@ -25,7 +24,7 @@ public class ParticipantsBet {
     }
 
     private int calculateBettingResultByName(final String name, final GameResults gameResults) {
-        GameResult gameResult =  gameResults.getGameResultByName(name);
+        GameResult gameResult = gameResults.getGameResultByName(name);
         BettingOdds bettingOdds = BettingOdds.from(gameResult);
         return (int) bettingOdds.multiple(playersBet.get(name));
     }

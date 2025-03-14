@@ -5,10 +5,9 @@ import exception.IllegalBlackjackInputException;
 import exception.IllegalBlackjackStateException;
 import java.util.List;
 import model.BlackjackGame;
+import model.bet.BettingResults;
 import model.cards.Cards;
 import model.cards.DealerCards;
-import model.result.GameResult;
-import model.result.GameResults;
 import view.InputView;
 import view.OutputView;
 
@@ -29,7 +28,7 @@ public class BlackjackController {
             askToAllPlayersForAdditionalCard(blackjackGame);
             printDealerDraw(blackjackGame);
             printFinalCards(blackjackGame);
-            printGameResult(blackjackGame);
+            printBettingResult(blackjackGame);
         } catch (IllegalBlackjackStateException e) {
             outputView.printExceptionMessage(e);
         } catch (Exception e) {
@@ -136,18 +135,14 @@ public class BlackjackController {
         ));
     }
 
-    private void printGameResult(final BlackjackGame blackjackGame) {
+    private void printBettingResult(final BlackjackGame blackjackGame) {
         outputView.printNewLine();
-        GameResults gameResults = blackjackGame.calculateGameResults();
+        BettingResults bettingResults = blackjackGame.calculateBettingResults();
         outputView.printGameResultHeader();
-        outputView.printDealerGameResult(
-                gameResults.calculateDealerResultCount(GameResult.WIN),
-                gameResults.calculateDealerResultCount(GameResult.DRAW),
-                gameResults.calculateDealerResultCount(GameResult.LOSE)
-        );
+        outputView.printDealerBettingResult(bettingResults.calculateDealerBettingResult());
 
         blackjackGame.getSequencedPlayerNames().forEach(name ->
-                outputView.printPlayerGameResult(name, gameResults.getGameResultByName(name).getName()));
+                outputView.printPlayerBettingResult(name, bettingResults.getBettingResultByName(name)));
     }
 
     private List<CardDto> getCardDtos(final Cards cards) {

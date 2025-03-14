@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import model.bet.BettingResults;
 import model.bet.ParticipantsBet;
 import model.cards.Cards;
 import model.cards.DealerCards;
@@ -52,7 +53,12 @@ public class BlackjackGame {
         return participants.getPlayerNames();
     }
 
-    public GameResults calculateGameResults() {
+    public BettingResults calculateBettingResults() {
+        GameResults gameResults = calculateGameResults();
+        return participants.calculateBettingResults(gameResults);
+    }
+
+    private GameResults calculateGameResults() {
         return new GameResults(participants.getPlayerNames().stream()
                 .collect(Collectors.toMap(
                         Function.identity(),

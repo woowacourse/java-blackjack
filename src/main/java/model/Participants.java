@@ -1,10 +1,12 @@
 package model;
 
 import java.util.Set;
+import model.bet.BettingResults;
 import model.bet.ParticipantsBet;
 import model.cards.DealerCards;
 import model.cards.ParticipantsCards;
 import model.cards.PlayerCards;
+import model.result.GameResults;
 
 public class Participants {
 
@@ -22,6 +24,10 @@ public class Participants {
 
     public PlayerCards findCardsByName(final String name) {
         return participantsCards.findCardsByName(name);
+    }
+
+    public BettingResults calculateBettingResults(final GameResults gameResults) {
+        return participantsBet.calculateBettingResults(gameResults);
     }
 
     public Set<String> getPlayerNames() {
