@@ -43,6 +43,12 @@ public class InputView {
         return validateInteger(additionalBet);
     }
 
+    public static int readInsuranceBet(int maxInsuranceAmount) {
+        System.out.println("최대 보험금액은 " + maxInsuranceAmount + "입니다. 얼마를 보험금으로 설정하시겠습니까?");
+        String insuranceBet = SCANNER.nextLine();
+        return validateInteger(insuranceBet);
+    }
+
     private static int validateInteger(String inputPrice) {
         if (inputPrice.chars().allMatch(Character::isDigit)) {
             return Integer.parseInt(inputPrice);

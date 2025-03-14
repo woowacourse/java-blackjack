@@ -30,7 +30,12 @@ public class PlayerTurn extends Turn{
             processDoubleDown(deck, additionalBet);
         }
         if (playerChoice.equals(PlayerChoice.SURRENDER)){
-
+            isSurrender = true;
+        }
+        if (playerChoice.equals(PlayerChoice.INSURANCE)){
+            int maxInsuranceAmount = betting.calculateMaxInsuranceAmount();
+            int insuranceBet =  InputView.readInsuranceBet(maxInsuranceAmount);
+            betting.takeInsurance(insuranceBet);
         }
     }
 
