@@ -6,16 +6,19 @@ import domain.card.Hand;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class Players {
     private final List<Player> players;
 
-    public static Players from(final Names names) {
-        List<Player> players = names.getNames().stream()
-                .map(name -> new Player(new Hand(List.of()), name, new Money(10000)))
-                .toList();
+    public static Players from(final Map<Name, Money> playerBets) {
+        List<Player> players = new ArrayList<>();
+        for (Entry<Name, Money> entry : playerBets.entrySet()) {
+            players.add(new Player(new Hand(List.of()), entry.getKey(), entry.getValue()));
+        }
         return new Players(players);
     }
 
