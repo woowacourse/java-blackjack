@@ -28,6 +28,10 @@ public class Hand {
         return getSumOfRank() > BUST_NUMBER;
     }
 
+    public boolean isImPossibleDrawCard() {
+        return getSumOfRank() >= BUST_NUMBER;
+    }
+
     public boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
