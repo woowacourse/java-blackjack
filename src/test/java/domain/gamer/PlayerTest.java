@@ -20,7 +20,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player(new Nickname("hihi"), new Betting(0));
+        player = new Player(new Nickname("hihi"), new Betting(1000));
         card = new Card(Rank.SIX, Shape.CLOVER);
     }
 
@@ -39,7 +39,7 @@ class PlayerTest {
     void 플레이어는_카드를_한_장_받는다() {
 
         // given
-        final Player player = new Player(new Nickname("hihi"), new Betting(0));
+        final Player player = new Player(new Nickname("hihi"), new Betting(1000));
         final Card card = new Card(Rank.SIX, Shape.CLOVER);
 
         // when
@@ -58,7 +58,7 @@ class PlayerTest {
         final Card card1 = new Card(Rank.KING, Shape.CLOVER);
         final Card card2 = new Card(Rank.QUEEN, Shape.CLOVER);
         final Card card3 = new Card(Rank.JACK, Shape.CLOVER);
-        final Player player = new Player(new Nickname("hihi"), new Betting(0));
+        final Player player = new Player(new Nickname("hihi"), new Betting(1000));
         player.hit(card1);
         player.hit(card2);
         player.hit(card3);
@@ -76,7 +76,7 @@ class PlayerTest {
 
         // given
         final Card card1 = new Card(Rank.KING, Shape.CLOVER);
-        final Player player = new Player(new Nickname("hihi"), new Betting(0));
+        final Player player = new Player(new Nickname("hihi"), new Betting(1000));
         player.hit(card1);
 
         // when
@@ -153,5 +153,34 @@ class PlayerTest {
 
         // then
         assertThat(sumOfRank).isEqualTo(31);
+    }
+
+    @DisplayName("블랙잭 상태면 true를 반환한다")
+    @Test
+    void 블랙잭_상태면_true를_반환한다() {
+
+        // given
+
+        // when
+        player.hit(new Card(Rank.ACE, Shape.SPADE));
+        player.hit(new Card(Rank.JACK, Shape.SPADE));
+
+        // when & then
+        assertThat(player.isBlackJack()).isTrue();
+    }
+
+    @DisplayName("블랙잭 상태가 아니라면 false를 반환한다")
+    @Test
+    void 블랙잭_상태가_아니라면_false를_반환한다() {
+
+        // given
+
+        // when
+        player.hit(new Card(Rank.ACE, Shape.SPADE));
+        player.hit(new Card(Rank.FIVE, Shape.SPADE));
+        player.hit(new Card(Rank.FIVE, Shape.HEART));
+
+        // when & then
+        assertThat(player.isBlackJack()).isFalse();
     }
 }
