@@ -40,7 +40,7 @@ public class BlackjackManager {
                 if (!drawOneMore) {
                     break;
                 }
-                blackjackGame.runPlayerTurn(player, deck);
+                blackjackGame.runParticipantTurn(player, deck);
                 outputView.printPlayerCards(player);
             }
         }
@@ -48,7 +48,7 @@ public class BlackjackManager {
 
     private void processDealerTurn(Dealer dealer, Deck deck) {
         while (dealer.canReceiveCard()) {
-            blackjackGame.runDealerTurn(dealer, deck);
+            blackjackGame.runParticipantTurn(dealer, deck);
             outputView.printDealerReceivedCard();
         }
     }
