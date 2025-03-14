@@ -15,7 +15,13 @@ public class Score {
         return possibleScores.stream()
                 .filter(sum -> sum <= BLACKJACK_GOAL_SCORE)
                 .max(Integer::compareTo)
-                .orElse(possibleScores.stream().min(Integer::compareTo).orElse(0));
+                .orElse(calculateMinimum(possibleScores));
+    }
+
+    private int calculateMinimum(Set<Integer> possibleScores) {
+        return possibleScores.stream()
+                .min(Integer::compareTo)
+                .orElse(0);
     }
 
     public boolean isUnderGoal() {
