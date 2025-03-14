@@ -28,7 +28,17 @@ public abstract class Participant {
 
     public GameStatus determineGameStatus(Participant other) {
         Optional<GameStatus> gameStatus = determineGameStatusWhenBust(other);
-        return gameStatus.orElseGet(() -> cards.determineGameStatusByScore(other.cards));
+        return gameStatus.orElseGet(() -> determineGameStatusByScore(other));
+    }
+
+    private GameStatus determineGameStatusByScore(final Participant other) {
+        if (cards.calculateScore() > other.cards.calculateScore()) {
+            return GameStatus.WIN;
+        }
+        if (cards.calculateScore() < other.cards.calculateScore()) {
+            return GameStatus.LOSE;
+        }
+        return GameStatus.TIE;
     }
 
     public boolean isBust() {

@@ -24,19 +24,6 @@ public class CardsTest {
         assertEquals(cardsScore, cards.calculateScore());
     }
 
-    @ParameterizedTest
-    @CsvSource(value = {"JACK,QUEEN:WIN", "QUEEN,TWO:TIE", "JACK:LOSE", "JACK,QUEEN,KING:WIN"}, delimiterString = ":")
-    @DisplayName("카드 묶음의 점수에 따른 GameStatus 계산 기능 테스트")
-    void determineStatusByScoreTest(String rankNames, String gameStatusName) {
-        // given
-        List<Rank> ranks = List.of(Rank.JACK, Rank.TWO);
-        Cards cards = createCardsOfRanks(ranks);
-        List<Rank> otherRanks = createRanks(rankNames);
-        Cards otherCards = createCardsOfRanks(otherRanks);
-        // then & when
-        assertEquals(GameStatus.valueOf(gameStatusName), otherCards.determineGameStatusByScore(cards));
-    }
-
     private static Cards createCardsOfRanks(List<Rank> ranks) {
         Cards cardsOfRanks = new Cards();
         ranks.stream()

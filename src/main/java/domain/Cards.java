@@ -12,7 +12,7 @@ public class Cards {
 
     private final List<Card> cards;
 
-    public Cards(List<Card> cards) {
+    public Cards(final List<Card> cards) {
         this.cards = cards;
     }
 
@@ -41,15 +41,7 @@ public class Cards {
                 .count();
     }
 
-    protected GameStatus determineGameStatusByScore(final Cards other) {
-        if (calculateScore() > other.calculateScore()) {
-            return GameStatus.WIN;
-        }
-        if (calculateScore() < other.calculateScore()) {
-            return GameStatus.LOSE;
-        }
-        return GameStatus.TIE;
-    }
+
 
     public boolean isBust(int score) {
         return score > BLACKJACK_SCORE;
