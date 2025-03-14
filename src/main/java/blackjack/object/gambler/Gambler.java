@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Gambler {
+public class Gambler {
     private static final int MIN_ACE_VALUE = 1;
     private final List<Card> cards;
     private final Name name;
@@ -70,5 +70,12 @@ public abstract class Gambler {
         return Collections.unmodifiableList(cards);
     }
 
-    public abstract List<Card> getInitialCards();
+    public List<Card> getInitialCards() {
+        if (name.isDealer()) {
+            List<Card> cards = getCards();
+            Card firstCard = cards.getFirst();
+            return List.of(firstCard);
+        }
+        return getCards();
+    }
 }

@@ -20,6 +20,10 @@ public class Name {
         return DEALER_NAME;
     }
 
+    public boolean isDealer() {
+        return this == DEALER_NAME;
+    }
+
     private String validateForm(final String name) {
         if (name.length() < MIN_NAME_LENGTH || name.length() > MAX_NAME_LENGTH) {
             throw new IllegalArgumentException(INVALID_PLAYER_NAME_LENGTH.getMessage());
