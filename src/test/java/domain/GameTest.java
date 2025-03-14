@@ -10,6 +10,7 @@ import domain.card.Suit;
 import exception.ErrorException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,7 +37,7 @@ public class GameTest {
     @DisplayName("딜러 게임 결과 계산 기능 테스트")
     void dealerGameResultTest() {
         // given & when
-        GameResult gameResult = game.determineGameResult("딜러");
+        GameResult gameResult = game.determineDealerGameResult();
         // then
         assertAll(
                 () -> assertEquals(1, gameResult.getStatusCount(GameStatus.WIN)),
@@ -50,12 +51,16 @@ public class GameTest {
     @DisplayName("플레이어 게임 결과 계산 기능 테스트")
     void playerGameResultTest(String name, int win, int tie, int lose) {
         // given & when
-        GameResult gameResult = game.determineGameResult(name);
+        List<GameResult> playerGameResults = game.determinePlayerGameResults();
+        GameResult playerGameResult = playerGameResults.stream()
+                .filter(gameResult -> Objects.equals(gameResult.getName(), name))
+                .findFirst()
+                .orElseThrow();
         // then
         assertAll(
-                () -> assertEquals(win, gameResult.getStatusCount(GameStatus.WIN)),
-                () -> assertEquals(tie, gameResult.getStatusCount(GameStatus.TIE)),
-                () -> assertEquals(lose, gameResult.getStatusCount(GameStatus.LOSE))
+                () -> assertEquals(win, playerGameResult.getStatusCount(GameStatus.WIN)),
+                () -> assertEquals(tie, playerGameResult.getStatusCount(GameStatus.TIE)),
+                () -> assertEquals(lose, playerGameResult.getStatusCount(GameStatus.LOSE))
         );
     }
 
@@ -63,9 +68,10 @@ public class GameTest {
     @DisplayName("이름이 중복되는 참여자 예외 테스트")
     void duplicateParticipantNamesTest() {
         // given
-        String name = "pobi,jason,pobi";
+        Game game = new Game();
+        String names = "pobi,jason,pobi";
         // when & then
-        assertThatThrownBy(() -> game.determineGameResult(name))
+        assertThatThrownBy(() -> game.registerPlayers(List.of(names.split(","))))
                 .isInstanceOf(ErrorException.class)
                 .hasMessageContaining("[ERROR]");
     }

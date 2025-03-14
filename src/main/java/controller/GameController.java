@@ -72,25 +72,24 @@ public class GameController {
         OutputView.printDealerExtraCard(dealerCardsDto, dealerExtraCard);
     }
 
-    private void determineFinalParticipantCards() {
+    private void determineParticipantFinalCards() {
         List<ParticipantCardsDto> participantCardsDtos = new ArrayList<>();
         participantCardsDtos.add(createParticipantCardsDto(game.getDealer()));
         List<Player> players = game.getPlayers();
         for (Player player : players) {
             participantCardsDtos.add(createParticipantCardsDto(player));
         }
-        OutputView.printFinalParticipantsCards(participantCardsDtos);
+        OutputView.printParticipantsFinalCards(participantCardsDtos);
     }
 
     private void determineGameResult() {
-        Dealer dealer = game.getDealer();
-        List<Player> players = game.getPlayers();
-        GameResult dealerGameResult = game.determineGameResult(dealer.getName());
-        GameResultDto dealerGameResultDto = createGameResultDto(dealer, dealerGameResult);
+        GameResult dealerGameResult = game.determineDealerGameResult();
+        GameResultDto dealerGameResultDto = createGameResultDto(dealerGameResult);
+
+        List<GameResult> playerGameResults = game.determinePlayerGameResults();
         List<GameResultDto> playerGameResultDtos = new ArrayList<>();
-        for (Player player : players) {
-            GameResult playerGameResult = game.determineGameResult(player.getName());
-            playerGameResultDtos.add(createGameResultDto(player, playerGameResult));
+        for (GameResult playerGameResult : playerGameResults) {
+            playerGameResultDtos.add(createGameResultDto(playerGameResult));
         }
         OutputView.printFinalGameResult(dealerGameResultDto, playerGameResultDtos);
     }
@@ -114,7 +113,7 @@ public class GameController {
         return new ParticipantCardsDto(participant.getName(), participant.getCards(), participant.getCardsScore());
     }
 
-    private GameResultDto createGameResultDto(Participant participant, GameResult gameResult) {
-        return new GameResultDto(participant.getName(), gameResult.getGameResult());
+    private GameResultDto createGameResultDto(GameResult gameResult) {
+        return new GameResultDto(gameResult.getName(), gameResult.getGameResult());
     }
 }
