@@ -6,8 +6,8 @@ import domain.deck.Card;
 import domain.deck.Deck;
 import domain.deck.RandomShuffleStrategy;
 import domain.gamer.Dealer;
+import domain.gamer.Gamers;
 import domain.gamer.Nickname;
-import domain.gamer.Participants;
 import domain.gamer.Player;
 import domain.gamer.Players;
 import java.util.Arrays;
@@ -23,11 +23,11 @@ public class BlackJackController {
     public void run() {
         final List<Player> playerGroup = generatePlayers(readNicknames()).getPlayers();
         final Dealer dealer = generateDealer();
-        final Participants participants = Participants.of(playerGroup, dealer);
+        final Gamers gamers = Gamers.of(playerGroup, dealer);
         final Deck deck = Deck.createShuffledDeck(new RandomShuffleStrategy());
 
-        participants.dealInitialCards(deck);
-        printInitialSetting(participants);
+        gamers.dealInitialCards(deck);
+        printInitialSetting(gamers);
 
         processPlayerHit(playerGroup, deck);
         processDealerHit(dealer, deck);
@@ -53,8 +53,8 @@ public class BlackJackController {
         return new Dealer(new Nickname(DEALER_NAME));
     }
 
-    private void printInitialSetting(final Participants participants) {
-        OutputView.printCardsInHandAtFirst(participants.getCardsAtStartWithNickname());
+    private void printInitialSetting(final Gamers gamers) {
+        OutputView.printCardsInHandAtFirst(gamers.getCardsAtStartWithNickname());
     }
 
     private void processPlayerHit(final List<Player> players, final Deck deck) {
