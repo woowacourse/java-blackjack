@@ -8,22 +8,22 @@ import domain.participant.Role;
 import java.util.List;
 import java.util.Map;
 
-public final class BlackjackManager {
+public final class BlackjackGame {
 
   private static final int NUMBER_OF_DECK = 1;
 
   private final Deck deck;
   private final Participants participants;
 
-  public BlackjackManager(final Participants participants, final Deck deck) {
+  public BlackjackGame(final Participants participants, final Deck deck) {
     this.participants = participants;
     this.deck = deck;
   }
 
-  public static BlackjackManager from(final Map<String, Bet> participantNames) {
+  public static BlackjackGame from(final Map<String, Bet> participantNames) {
     final Deck deck = Deck.createShuffledDecks(NUMBER_OF_DECK);
     final Participants participants = Participants.generateOf(participantNames, deck);
-    return new BlackjackManager(participants, deck);
+    return new BlackjackGame(participants, deck);
   }
 
 
@@ -35,8 +35,8 @@ public final class BlackjackManager {
 
   public RoundHistory writeRoundHistory() {
     final var dealer = getDealer();
-    final List<Participant<? extends Role>> players = getPlayers();
-    return RoundHistory.of(dealer, players);
+    final var players = getPlayers();
+    return RoundHistory.generateOf(dealer, players);
   }
 
   public TrumpCard openDealerFirstCard() {

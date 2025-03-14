@@ -30,16 +30,6 @@ public final class Participants {
     this.participants = participants;
   }
 
-  private void validate(
-      final Participant<Dealer> dealer,
-      final List<Participant<Player>> participants
-  ) {
-    validatePlayerNotEmpty(participants);
-    validateDuplicateOfPlayer(participants);
-    validateDealer(dealer);
-  }
-
-
   public static Participants generateOf(final Map<String, Bet> participants, final Deck deck) {
     List<Participant<Player>> players = participants.entrySet().stream()
         .map(entry -> new Participant<>(Player.generateFrom(entry)))
@@ -64,26 +54,21 @@ public final class Participants {
     return newPlayers;
   }
 
-  public Participant<? extends Role> getDealer() {
-    return new Participant<>(dealer.getRole(), dealer.getCards());
-  }
-
-  public List<Participant<? extends Role>> getPlayers() {
-    return Collections.unmodifiableList(participants);
-  }
-
-  public Participant<? extends Role> hit(final Participant<? extends Role> participant,
-      final TrumpCard card) {
+  public Participant<? extends Role> hit(
+      final Participant<? extends Role> participant,
+      final TrumpCard card
+  ) {
     final var targetParticipant = findParticipant(participant);
     return targetParticipant.hit(card);
   }
 
-
-  public List<Participant<? extends Role>> getAllParticipants() {
-    final List<Participant<? extends Role>> allParticipants = new ArrayList<>();
-    allParticipants.add(dealer);
-    allParticipants.addAll(participants);
-    return Collections.unmodifiableList(allParticipants);
+  private void validate(
+      final Participant<Dealer> dealer,
+      final List<Participant<Player>> participants
+  ) {
+    validatePlayerNotEmpty(participants);
+    validateDuplicateOfPlayer(participants);
+    validateDealer(dealer);
   }
 
   private void validatePlayerNotEmpty(final List<Participant<Player>> participants) {
@@ -109,7 +94,8 @@ public final class Participants {
   }
 
   private Participant<? extends Role> findParticipant(
-      final Participant<? extends Role> participant) {
+      final Participant<? extends Role> participant
+  ) {
     final var allParticipants = getAllParticipants();
 
     return allParticipants.stream()
@@ -118,4 +104,18 @@ public final class Participants {
         .orElseThrow(() -> new IllegalArgumentException("참가자를 찾을 수 없습니다."));
   }
 
+  public List<Participant<? extends Role>> getAllParticipants() {
+    final List<Participant<? extends Role>> allParticipants = new ArrayList<>();
+    allParticipants.add(dealer);
+    allParticipants.addAll(participants);
+    return Collections.unmodifiableList(allParticipants);
+  }
+
+  public Participant<? extends Role> getDealer() {
+    return new Participant<>(dealer.getRole(), dealer.getCards());
+  }
+
+  public List<Participant<? extends Role>> getPlayers() {
+    return Collections.unmodifiableList(participants);
+  }
 }
