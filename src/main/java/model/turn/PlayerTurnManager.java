@@ -3,7 +3,7 @@ package model.turn;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import model.Betting;
+import model.betting.Betting;
 import model.card.CardRank;
 import model.card.Deck;
 import model.participant.Dealer;
@@ -28,18 +28,18 @@ public class PlayerTurnManager {
         }
     }
 
+    public void betInsurance(Dealer dealer) {
+        if (dealer.openFirstCard().getCardRank() == CardRank.ACE) {
+            runPlayersBetInsurance();
+        }
+    }
+
     public Map<Player, Betting> getPlayersBet() {
         Map<Player, Betting> playersBet = new HashMap<>();
         for (PlayerTurn playerTurn : playersGameRound) {
             playerTurn.putBetting(playersBet);
         }
         return playersBet;
-    }
-
-    public void betInsurance(Dealer dealer) {
-        if (dealer.openFirstCard().getCardRank() == CardRank.ACE) {
-            runPlayersBetInsurance();
-        }
     }
 
     private void runPlayersBetInsurance() {

@@ -2,7 +2,6 @@ package view;
 
 import java.util.List;
 import java.util.Map;
-import model.result.BettingResult;
 import model.card.Card;
 import model.participant.Dealer;
 import model.participant.Player;

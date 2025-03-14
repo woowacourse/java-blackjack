@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
-import model.Betting;
+import model.betting.Betting;
 import model.participant.Player;
 import model.PlayerChoice;
 import model.participant.Players;

@@ -1,4 +1,4 @@
-package model;
+package model.betting;
 
 import model.participant.Dealer;
 

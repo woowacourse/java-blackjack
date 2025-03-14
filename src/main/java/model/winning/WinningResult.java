@@ -1,4 +1,4 @@
-package model.result;
+package model.winning;
 
 public enum WinningResult {
     WIN,

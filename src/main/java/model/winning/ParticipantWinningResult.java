@@ -1,4 +1,4 @@
-package model.result;
+package model.winning;
 
 import java.util.Collections;
 import java.util.HashMap;

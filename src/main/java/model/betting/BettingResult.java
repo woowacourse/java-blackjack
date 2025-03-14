@@ -1,11 +1,12 @@
-package model.result;
+package model.betting;
 
 import java.util.HashMap;
 import java.util.Map;
-import model.Betting;
 import model.participant.Dealer;
 import model.participant.Player;
 import model.participant.Players;
+import model.winning.ParticipantWinningResult;
+import model.winning.WinningResult;
 
 public class BettingResult {
     private final Map<Player, Betting> betting;

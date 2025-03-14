@@ -1,7 +1,7 @@
 package model.turn;
 
 import java.util.Map;
-import model.Betting;
+import model.betting.Betting;
 import model.PlayerChoice;
 import model.card.Deck;
 import model.participant.Player;
