@@ -1,6 +1,7 @@
 package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.util.Collections;
 import java.util.List;
@@ -36,6 +37,13 @@ class NamesTest {
         assertThatThrownBy(() -> new Names(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 중복된 이름의 플레이어가 게임에 참여할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("플레이어 이름 생성 테스트")
+    void nameTest() {
+        List<String> names = List.of("pobi", "lisa");
+        assertDoesNotThrow(() -> new Names(names));
     }
 
 }
