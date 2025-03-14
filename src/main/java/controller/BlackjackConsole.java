@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import view.InputView;
 import view.OutputView;
+import view.YesOrNo;
 
 public class BlackjackConsole {
     private final OutputView outputView;
@@ -89,8 +90,8 @@ public class BlackjackConsole {
     private void addCardAllPlayer(GameManger gameManger, String playerName) {
         User player = gameManger.findUserByUsername(playerName);
         while (player.isDrawable()) {
-            String yesOrNo = inputView.inputYesOrNo(playerName);
-            if (yesOrNo.equalsIgnoreCase("N")) {
+            YesOrNo yesOrNo = inputView.inputYesOrNo(playerName);
+            if (yesOrNo == YesOrNo.NO) {
                 return;
             }
             player.drawCard(gameManger.handOutCard());
