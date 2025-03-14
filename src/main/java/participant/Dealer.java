@@ -11,15 +11,13 @@ import java.util.List;
 public class Dealer {
 
     private static final int DEALER_HIT_THRESHOLD = 16;
-    private static final int INITIAL_CARD_COUNT = 2;
 
-    private final Cards cards;
     private final Deck deck;
+    private final Cards cards;
 
-    public Dealer(Cards cards, DeckSettingStrategy strategy) {
-        validateInitialCardsSize(cards);
-        this.cards = cards;
+    public Dealer(DeckSettingStrategy strategy) {
         this.deck = new Deck(strategy);
+        this.cards = deck.drawInitialCards();
     }
 
     public Card openOneCard() {
@@ -40,6 +38,10 @@ public class Dealer {
         return cards.addOneCard(card);
     }
 
+    public Cards drawInitialCards() {
+        return deck.drawInitialCards();
+    }
+
     public Card drawCard() {
         return deck.drawOneCard();
     }
@@ -51,11 +53,4 @@ public class Dealer {
     public boolean isBlackJack() {
         return cards.isBlackJack();
     }
-
-    private void validateInitialCardsSize(Cards cards) {
-        if (cards.getSize() != INITIAL_CARD_COUNT) {
-            throw new IllegalArgumentException("[ERROR] 초기 카드는 " + INITIAL_CARD_COUNT + "장을 받아야 합니다.");
-        }
-    }
-
 }

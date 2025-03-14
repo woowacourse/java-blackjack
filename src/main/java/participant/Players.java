@@ -1,6 +1,5 @@
 package participant;
 
-import game.Deck;
 import constant.WinningResult;
 
 import java.util.LinkedHashMap;
@@ -16,10 +15,10 @@ public class Players {
         this.players = players;
     }
 
-    public static Players registerPlayers(List<String> names, Deck deck) {
+    public static Players registerPlayers(List<String> names, Dealer dealer) {
         return new Players(names.stream()
                 .map(Nickname::new)
-                .map(nickname -> new Player(nickname, deck.drawInitialCards()))
+                .map(nickname -> new Player(nickname, dealer.drawInitialCards()))
                 .toList());
     }
 
