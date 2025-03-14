@@ -1,11 +1,10 @@
-package domain;
+package domain.participant;
 
 import java.util.Objects;
 
 public class Money {
 
     public static final int DEFAULT_AMOUNT = 0;
-    public static final int DEFAULT_BET_RATIO = 1;
     public static final double BLACKJACK_BET_RATIO = 1.5;
 
     private int amount;

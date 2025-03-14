@@ -2,7 +2,6 @@ package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.Money;
 import domain.card.Card;
 import domain.card.TrumpNumber;
 import domain.card.TrumpShape;

@@ -2,12 +2,12 @@ package domain.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.Money;
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.TrumpNumber;
 import domain.card.TrumpShape;
 import domain.participant.Dealer;
+import domain.participant.Money;
 import domain.participant.Player;
 import org.junit.jupiter.api.Test;
 

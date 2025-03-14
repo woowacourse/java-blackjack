@@ -1,5 +1,3 @@
-package controller;
-
 import constant.Answer;
 import domain.Money;
 import domain.card.CardDeck;

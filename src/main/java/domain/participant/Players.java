@@ -1,6 +1,5 @@
 package domain.participant;
 
-import domain.Money;
 import domain.result.BlackjackResult;
 import java.util.Collections;
 import java.util.List;

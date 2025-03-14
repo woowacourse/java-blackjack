@@ -1,6 +1,5 @@
 package domain.participant;
 
-import domain.Money;
 import domain.card.Card;
 import domain.card.Cards;
 import java.util.List;

@@ -1,5 +1,6 @@
 package domain;
 
+import domain.participant.Money;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
