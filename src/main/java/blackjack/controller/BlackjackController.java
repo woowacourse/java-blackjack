@@ -47,13 +47,15 @@ public class BlackjackController {
     }
 
     private List<Player> createPlayers(List<ParticipantName> playerNames) {
-        List<Player> players = new ArrayList<>();
-        for (ParticipantName playerName : playerNames) {
-            int money = inputView.readBettingMoney(playerName.getValue());
-            BettingMoney bettingMoney = new BettingMoney(money);
-            players.add(new Player(playerName, new CardHand(), bettingMoney));
-        }
-        return players;
+        return RetryUtil.getReturnWithRetry(() -> {
+            List<Player> players = new ArrayList<>();
+            for (ParticipantName playerName : playerNames) {
+                int money = inputView.readBettingMoney(playerName.getValue());
+                BettingMoney bettingMoney = new BettingMoney(money);
+                players.add(new Player(playerName, new CardHand(), bettingMoney));
+            }
+            return players;
+        });
     }
 
     private void displayFinalCardsInfo(Dealer dealer, BlackjackGame game) {
