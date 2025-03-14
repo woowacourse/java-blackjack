@@ -1,9 +1,10 @@
-package result;
+package result.handStatus;
 
 import static result.GameStatus.*;
 
 import participant.Dealer;
 import participant.Player;
+import result.GameStatus;
 
 public class Bust implements HandStatus {
     @Override

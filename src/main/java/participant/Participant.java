@@ -2,7 +2,7 @@ package participant;
 
 import card.Card;
 import card.Hand;
-import card.Score;
+import participant.value.Score;
 
 public abstract class Participant {
     protected final Hand hand;

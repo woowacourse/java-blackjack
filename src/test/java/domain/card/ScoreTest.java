@@ -6,7 +6,7 @@ import card.Card;
 import card.CardNumberType;
 import card.CardType;
 import card.Hand;
-import card.Score;
+import participant.value.Score;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

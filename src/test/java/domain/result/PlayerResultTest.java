@@ -9,7 +9,7 @@ import card.CardNumberType;
 import card.CardType;
 import card.Hand;
 import java.util.List;
-import participant.Money;
+import participant.value.Money;
 import participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

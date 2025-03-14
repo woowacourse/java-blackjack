@@ -2,6 +2,7 @@ package participant;
 
 import card.Hand;
 import java.util.Objects;
+import participant.value.Money;
 
 public class Player extends Participant {
     private final String name;

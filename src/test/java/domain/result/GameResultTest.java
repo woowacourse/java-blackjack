@@ -14,7 +14,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import participant.Dealer;
-import participant.Money;
+import participant.value.Money;
 import participant.Player;
 import result.GameResult;
 import result.GameStatus;

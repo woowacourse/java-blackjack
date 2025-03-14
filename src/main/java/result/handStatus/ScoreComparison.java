@@ -1,7 +1,8 @@
-package result;
+package result.handStatus;
 
 import participant.Dealer;
 import participant.Player;
+import result.GameStatus;
 
 public class ScoreComparison implements HandStatus {
     @Override

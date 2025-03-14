@@ -3,7 +3,6 @@ import static view.AnswerType.*;
 import card.Deck;
 import participant.Players;
 import participant.Dealer;
-import result.PlayerResult;
 import participant.Player;
 import view.AnswerType;
 import view.InputView;

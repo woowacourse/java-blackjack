@@ -1,6 +1,6 @@
 package result;
 
-import participant.Money;
+import participant.value.Money;
 import participant.Player;
 
 public class PlayerResult {

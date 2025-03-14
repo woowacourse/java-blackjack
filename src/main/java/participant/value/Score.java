@@ -1,7 +1,9 @@
-package card;
+package participant.value;
 
 import static card.CardNumberType.ACE;
 
+import card.Card;
+import card.Hand;
 import java.util.List;
 
 public record Score(int score) {

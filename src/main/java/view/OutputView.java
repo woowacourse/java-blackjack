@@ -1,11 +1,7 @@
 package view;
 
-import static result.GameStatus.*;
-
 import card.Hand;
 import participant.Dealer;
-import result.PlayerResult;
-import result.GameStatus;
 import participant.Player;
 import participant.Players;
 import java.util.Map;

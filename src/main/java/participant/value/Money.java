@@ -1,4 +1,4 @@
-package participant;
+package participant.value;
 
 public record Money(int price) {
     public static Money bet(int price) {
