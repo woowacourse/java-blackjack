@@ -31,7 +31,7 @@ class DealerTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            Dealer dealer = new Dealer(new CardHand());
+            Dealer dealer = new Dealer(new CardHand(17));
             dealer.addCards(cardDeck, 2);
 
             List<Card> cards = dealer.openInitialCards();
@@ -55,7 +55,7 @@ class DealerTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            Dealer dealer = new Dealer(new CardHand());
+            Dealer dealer = new Dealer(new CardHand(17));
             dealer.addCards(cardDeck, 2);
 
             assertThat(dealer.isPossibleToAdd()).isTrue();
@@ -70,7 +70,7 @@ class DealerTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            Dealer dealer = new Dealer(new CardHand());
+            Dealer dealer = new Dealer(new CardHand(17));
             dealer.addCards(cardDeck, 2);
 
             assertThat(dealer.isPossibleToAdd()).isFalse();
@@ -86,8 +86,8 @@ class DealerTest {
 
         @BeforeEach
         void initParticipants() {
-            player = new Player(new PlayerName("sana"), new CardHand());
-            dealer = new Dealer(new CardHand());
+            player = new Player(new PlayerName("sana"), new CardHand(21));
+            dealer = new Dealer(new CardHand(17));
         }
 
         @Test

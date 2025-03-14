@@ -47,12 +47,12 @@ public class BettingTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            Player player = new Player(new PlayerName("if"), new CardHand());
+            Player player = new Player(new PlayerName("if"), new CardHand(21));
             player.addCards(cardDeck, 2);
             Map<PlayerName, BetAmount> bettingTable = new LinkedHashMap<>(Map.of(player.getName(),
                 BetAmount.initialBetting(10000)));
 
-            Dealer dealer = new Dealer(new CardHand());
+            Dealer dealer = new Dealer(new CardHand(17));
             dealer.addCards(cardDeck, 2);
 
             Betting betting = new Betting(bettingTable);
@@ -74,12 +74,12 @@ public class BettingTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            Player player = new Player(new PlayerName("sana"), new CardHand());
+            Player player = new Player(new PlayerName("sana"), new CardHand(21));
             player.addCards(cardDeck, 3);
             Map<PlayerName, BetAmount> bettingTable = new LinkedHashMap<>(Map.of(player.getName(),
                 BetAmount.initialBetting(10000)));
 
-            Dealer dealer = new Dealer(new CardHand());
+            Dealer dealer = new Dealer(new CardHand(17));
             dealer.addCards(cardDeck, 2);
 
             Betting betting = new Betting(bettingTable);
@@ -100,12 +100,12 @@ public class BettingTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            Player player = new Player(new PlayerName("sana"), new CardHand());
+            Player player = new Player(new PlayerName("sana"), new CardHand(21));
             player.addCards(cardDeck, 2);
             Map<PlayerName, BetAmount> bettingTable = new LinkedHashMap<>(Map.of(player.getName(),
                 BetAmount.initialBetting(10000)));
 
-            Dealer dealer = new Dealer(new CardHand());
+            Dealer dealer = new Dealer(new CardHand(17));
             dealer.addCards(cardDeck, 2);
 
             Betting betting = new Betting(bettingTable);
@@ -126,12 +126,12 @@ public class BettingTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            Player player = new Player(new PlayerName("sana"), new CardHand());
+            Player player = new Player(new PlayerName("sana"), new CardHand(31));
             player.addCards(cardDeck, 2);
             Map<PlayerName, BetAmount> bettingTable = new LinkedHashMap<>(Map.of(player.getName(),
                 BetAmount.initialBetting(10000)));
 
-            Dealer dealer = new Dealer(new CardHand());
+            Dealer dealer = new Dealer(new CardHand(17));
             dealer.addCards(cardDeck, 2);
 
             Betting betting = new Betting(bettingTable);

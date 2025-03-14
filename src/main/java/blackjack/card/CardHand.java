@@ -10,13 +10,15 @@ public class CardHand {
     private static final int BLACKJACK_CARDS_SIZE = 2;
 
     private final List<Card> cards;
+    private final int additionThreshold;
 
-    public CardHand() {
+    public CardHand(final int additionThreshold) {
         this.cards = new ArrayList<>();
+        this.additionThreshold = additionThreshold;
     }
 
-    public void addCards(final CardDeck cardDeck, final int count, final int threshold) {
-        if (isImpossibleToAdd(threshold)) {
+    public void addCards(final CardDeck cardDeck, final int count) {
+        if (isImpossibleToAdd()) {
             throw new IllegalArgumentException("더 이상 카드를 추가할 수 없습니다.");
         }
 
@@ -61,11 +63,11 @@ public class CardHand {
         return cards.subList(0, Math.min(count, cards.size()));
     }
 
-    public boolean isPossibleToAdd(int threshold) {
-        return calculateDenominations() < threshold;
+    public boolean isPossibleToAdd() {
+        return calculateDenominations() < additionThreshold;
     }
 
-    private boolean isImpossibleToAdd(int threshold) {
-        return !isPossibleToAdd(threshold);
+    private boolean isImpossibleToAdd() {
+        return !isPossibleToAdd();
     }
 }

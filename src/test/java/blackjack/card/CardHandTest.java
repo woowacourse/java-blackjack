@@ -24,8 +24,8 @@ public class CardHandTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            CardHand cardHand = new CardHand();
-            cardHand.addCards(cardDeck, 2, 21);
+            CardHand cardHand = new CardHand(21);
+            cardHand.addCards(cardDeck, 2);
             List<Card> cards = cardHand.openCards();
 
             assertAll(() -> {
@@ -51,8 +51,8 @@ public class CardHandTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            CardHand cardHand = new CardHand();
-            cardHand.addCards(cardDeck, 2, 21);
+            CardHand cardHand = new CardHand(21);
+            cardHand.addCards(cardDeck, 2);
 
             assertThat(cardHand.isBlackjack()).isTrue();
         }
@@ -67,8 +67,8 @@ public class CardHandTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            CardHand cardHand = new CardHand();
-            cardHand.addCards(cardDeck, 3, 21);
+            CardHand cardHand = new CardHand(21);
+            cardHand.addCards(cardDeck, 3);
 
             assertThat(cardHand.isBust()).isTrue();
         }
@@ -87,8 +87,8 @@ public class CardHandTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            CardHand cardHand = new CardHand();
-            cardHand.addCards(cardDeck, 2, 21);
+            CardHand cardHand = new CardHand(21);
+            cardHand.addCards(cardDeck, 2);
             int cardSum = cardHand.calculateDenominations();
 
             assertThat(cardSum).isEqualTo(12);
@@ -103,8 +103,8 @@ public class CardHandTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            CardHand cardHand = new CardHand();
-            cardHand.addCards(cardDeck, 2, 21);
+            CardHand cardHand = new CardHand(21);
+            cardHand.addCards(cardDeck, 2);
             int cardSumWithAceValue11 = cardHand.calculateDenominations();
 
             assertThat(cardSumWithAceValue11).isEqualTo(21);
@@ -120,8 +120,8 @@ public class CardHandTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            CardHand cardHand = new CardHand();
-            cardHand.addCards(cardDeck, 3, 21);
+            CardHand cardHand = new CardHand(21);
+            cardHand.addCards(cardDeck, 3);
             int cardSumWithAceValue1 = cardHand.calculateDenominations();
 
             assertThat(cardSumWithAceValue1).isEqualTo(13);
@@ -141,8 +141,8 @@ public class CardHandTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            CardHand cardHand = new CardHand();
-            cardHand.addCards(cardDeck, 2, 21);
+            CardHand cardHand = new CardHand(21);
+            cardHand.addCards(cardDeck, 2);
 
             assertThat(cardHand.openCards()).hasSize(2);
         }
@@ -157,8 +157,8 @@ public class CardHandTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            CardHand cardHand = new CardHand();
-            cardHand.addCards(cardDeck, 3, 21);
+            CardHand cardHand = new CardHand(21);
+            cardHand.addCards(cardDeck, 3);
 
             assertThat(cardHand.openInitialCards(2)).hasSize(2);
         }
@@ -177,10 +177,10 @@ public class CardHandTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
 
-            CardHand cardHand = new CardHand();
-            cardHand.addCards(cardDeck, 2, 21);
+            CardHand cardHand = new CardHand(21);
+            cardHand.addCards(cardDeck, 2);
 
-            assertThat(cardHand.isPossibleToAdd(16)).isTrue();
+            assertThat(cardHand.isPossibleToAdd()).isTrue();
         }
     }
 }

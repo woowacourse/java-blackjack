@@ -9,8 +9,6 @@ import java.util.List;
 public class Dealer {
 
     private static final int DEALER_OPEN_INITIAL_CARD_COUNT = 1;
-    private static final int DEALER_DISTRIBUTE_CARD_THRESHOLD = 17;
-
     private final CardHand cards;
 
     public Dealer(CardHand cards) {
@@ -22,11 +20,11 @@ public class Dealer {
     }
 
     public void addCards(CardDeck cardDeck, int count) {
-        cards.addCards(cardDeck, count, DEALER_DISTRIBUTE_CARD_THRESHOLD);
+        cards.addCards(cardDeck, count);
     }
 
     public boolean isPossibleToAdd() {
-        return cards.isPossibleToAdd(DEALER_DISTRIBUTE_CARD_THRESHOLD);
+        return cards.isPossibleToAdd();
     }
 
     public GameResult judgePlayerResult(final Player player) {

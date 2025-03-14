@@ -19,11 +19,11 @@ public class ParticipantsTest {
         @Test
         @DisplayName("중복된 이름이 없는 경우 참가자를 생성할 수 있다.")
         void createParticipantsWithNotDuplicate() {
-            Dealer dealer = new Dealer(new CardHand());
+            Dealer dealer = new Dealer(new CardHand(17));
             List<Player> players = List.of(
-                new Player(new PlayerName("a"), new CardHand()),
-                new Player(new PlayerName("b"), new CardHand()),
-                new Player(new PlayerName("c"), new CardHand())
+                new Player(new PlayerName("a"), new CardHand(21)),
+                new Player(new PlayerName("b"), new CardHand(21)),
+                new Player(new PlayerName("c"), new CardHand(21))
             );
 
             assertThatCode(() -> new Participants(dealer, players)).doesNotThrowAnyException();
@@ -32,11 +32,11 @@ public class ParticipantsTest {
         @Test
         @DisplayName("중복된 이름이 없는 경우 참가자를 생성할 수 없다.")
         void createParticipantsWithDuplicate() {
-            Dealer dealer = new Dealer(new CardHand());
+            Dealer dealer = new Dealer(new CardHand(17));
             List<Player> players = List.of(
-                new Player(new PlayerName("a"), new CardHand()),
-                new Player(new PlayerName("a"), new CardHand()),
-                new Player(new PlayerName("c"), new CardHand())
+                new Player(new PlayerName("a"), new CardHand(21)),
+                new Player(new PlayerName("a"), new CardHand(21)),
+                new Player(new PlayerName("c"), new CardHand(21))
             );
 
             assertThatThrownBy(() -> new Participants(dealer, players))
@@ -47,9 +47,9 @@ public class ParticipantsTest {
         @Test
         @DisplayName("25명의 참가자는 게임을 진행할 수 없다.")
         void createParticipantsOver25() {
-            Dealer dealer = new Dealer(new CardHand());
+            Dealer dealer = new Dealer(new CardHand(17));
             List<Player> players = IntStream.rangeClosed('a', 'z')
-                .mapToObj(c -> new Player(new PlayerName(String.valueOf((char) c)), new CardHand()))
+                .mapToObj(c -> new Player(new PlayerName(String.valueOf((char) c)), new CardHand(21)))
                 .toList();
 
             assertThatThrownBy(() -> new Participants(dealer, players))

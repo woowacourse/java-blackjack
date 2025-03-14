@@ -5,8 +5,6 @@ import blackjack.card.CardHand;
 
 public class Player {
 
-    private static final int PLAYER_DISTRIBUTE_CARD_THRESHOLD = 21;
-
     private final PlayerName playerName;
     protected final CardHand cards;
 
@@ -16,11 +14,11 @@ public class Player {
     }
 
     public void addCards(CardDeck cardDeck, int count) {
-        cards.addCards(cardDeck, count, PLAYER_DISTRIBUTE_CARD_THRESHOLD);
+        cards.addCards(cardDeck, count);
     }
 
     public boolean isPossibleToAdd() {
-        return cards.isPossibleToAdd(PLAYER_DISTRIBUTE_CARD_THRESHOLD);
+        return cards.isPossibleToAdd();
     }
 
     public PlayerName getName() {

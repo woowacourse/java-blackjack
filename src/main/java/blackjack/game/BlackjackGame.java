@@ -15,6 +15,8 @@ public class BlackjackGame {
 
     private static final int INITIAL_DISTRIBUTE_CARD_NUMBER = 2;
     private static final int EXTRA_DISTRIBUTE_CARD_NUMBER = 1;
+    private static final int DEALER_DISTRIBUTE_CARD_THRESHOLD = 17;
+    private static final int PLAYER_DISTRIBUTE_CARD_THRESHOLD = 21;
 
     private final CardDeck cardDeck;
     private final Betting betting;
@@ -31,9 +33,9 @@ public class BlackjackGame {
         final List<PlayerName> names) {
         Betting betting = Betting.createWithEmptyTable();
 
-        Dealer dealer = new Dealer(new CardHand());
+        Dealer dealer = new Dealer(new CardHand(DEALER_DISTRIBUTE_CARD_THRESHOLD));
         List<Player> players = names.stream()
-            .map(name -> new Player(name, new CardHand()))
+            .map(name -> new Player(name, new CardHand(PLAYER_DISTRIBUTE_CARD_THRESHOLD)))
             .toList();
 
         return new BlackjackGame(cardDeck, betting, new Participants(dealer, players));
@@ -43,9 +45,9 @@ public class BlackjackGame {
         final Map<PlayerName, BetAmount> playerAmounts) {
         Betting betting = new Betting(playerAmounts);
 
-        Dealer dealer = new Dealer(new CardHand());
+        Dealer dealer = new Dealer(new CardHand(DEALER_DISTRIBUTE_CARD_THRESHOLD));
         List<Player> players = playerAmounts.keySet().stream()
-            .map(name -> new Player(name, new CardHand()))
+            .map(name -> new Player(name, new CardHand(PLAYER_DISTRIBUTE_CARD_THRESHOLD)))
             .toList();
 
         return new BlackjackGame(cardDeck, betting, new Participants(dealer, players));
