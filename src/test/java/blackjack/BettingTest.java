@@ -3,6 +3,8 @@ package blackjack;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import java.util.Map;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,6 +12,7 @@ import blackjack.domain.GameManager;
 import blackjack.domain.GameRound;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.gamer.Dealer;
+import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.fixture.DeckFixture;
 import blackjack.fixture.GameManagerFixture;
@@ -20,7 +23,8 @@ class BettingTest {
     @DisplayName("플레이어는 게임을 시작할 때 배팅 금액을 정한다.")
     void playerStartBettingTest() {
         Player player = new Player("pobi");
-        GameRound round = new GameRound();
+        Dealer dealer = new Dealer();
+        GameRound round = new GameRound(dealer);
         assertThatCode(() -> round.betting(player, 1000))
             .doesNotThrowAnyException();
     }
@@ -31,7 +35,8 @@ class BettingTest {
         int initialMoney = 1000;
 
         Player player = new Player("pobi");
-        GameRound round = new GameRound();
+        Dealer dealer = new Dealer();
+        GameRound round = new GameRound(dealer);
         round.betting(player, initialMoney);
         GameManager gameManager = GameManagerFixture.GameManagerWith(
             DeckFixture.deckOf(CardNumber.JACK, CardNumber.QUEEN, CardNumber.KING)
@@ -49,7 +54,8 @@ class BettingTest {
         int initialMoney = 10000;
 
         Player player = new Player("pobi");
-        GameRound round = new GameRound();
+        Dealer dealer = new Dealer();
+        GameRound round = new GameRound(dealer);
         round.betting(player, initialMoney);
         GameManager gameManager = GameManagerFixture.GameManagerWith(
             DeckFixture.deckOf(CardNumber.JACK, CardNumber.ACE)
@@ -66,7 +72,7 @@ class BettingTest {
 
         Player player = new Player("pobi");
         Dealer dealer = new Dealer();
-        GameRound round = new GameRound();
+        GameRound round = new GameRound(dealer);
         round.betting(player, initialMoney);
         GameManager gameManager = GameManagerFixture.GameManagerWith(
             DeckFixture.deckOf(CardNumber.JACK, CardNumber.ACE, CardNumber.JACK, CardNumber.ACE)
@@ -84,7 +90,7 @@ class BettingTest {
 
         Player player = new Player("pobi");
         Dealer dealer = new Dealer();
-        GameRound round = new GameRound();
+        GameRound round = new GameRound(dealer);
         round.betting(player, initialMoney);
         GameManager gameManager = GameManagerFixture.GameManagerWith(
             DeckFixture.deckOf(CardNumber.JACK, CardNumber.ACE, CardNumber.TWO, CardNumber.QUEEN, CardNumber.KING)
@@ -95,5 +101,33 @@ class BettingTest {
 
         round.dealerBust();
         assertThat(round.getFinalBettingMoney(player)).isEqualTo(initialMoney * 2);
+    }
+
+    @Test
+    @DisplayName("게임 종료 시 최종 수익을 출력한다.")
+    void finalBettingMoneyTest() {
+        int player1Money = 10000;
+        int player2Money = 5000;
+
+        Player player1 = new Player("pobi");
+        Player player2 = new Player("moko");
+        Dealer dealer = new Dealer();
+        GameRound round = new GameRound(dealer);
+        round.betting(player1, player1Money);
+        round.betting(player2, player2Money);
+        GameManager gameManager = GameManagerFixture.GameManagerWith(
+            DeckFixture.deckOf(
+                CardNumber.KING, CardNumber.SEVEN, // dealer
+                CardNumber.TWO, CardNumber.THREE, // player 2
+                CardNumber.JACK, CardNumber.ACE)); // player 1
+        gameManager.drawStartingCards(player1);
+        gameManager.drawStartingCards(player2);
+        gameManager.drawStartingCards(dealer);
+
+        round.computeResult();
+        Map<Gamer, Integer> profit = round.getAllProfit();
+        assertThat(profit.get(player1)).isEqualTo(player1Money);
+        assertThat(profit.get(player2)).isEqualTo(-player2Money);
+        assertThat(profit.get(dealer)).isEqualTo(-player1Money + player2Money);
     }
 }
