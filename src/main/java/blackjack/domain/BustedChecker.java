@@ -6,7 +6,8 @@ public enum BustedChecker {
     PLAYER_BUSTED((player, dealer) -> player.isBusted()),
     DEALER_BUSTED((player, dealer) -> dealer.isBusted()),
     ALL_BUSTED((player, dealer) -> player.isBusted() && dealer.isBusted()),
-    NONE((player, dealer) -> true);
+    NONE((player, dealer) -> true),
+    ;
 
     private final BiPredicate<Player, Dealer> predicate;
 

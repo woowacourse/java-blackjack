@@ -5,7 +5,8 @@ import java.util.Arrays;
 
 public enum Confirmation {
     Y("y"),
-    N("n");
+    N("n"),
+    ;
 
     private final String sign;
 

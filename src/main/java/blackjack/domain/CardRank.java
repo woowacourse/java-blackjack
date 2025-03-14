@@ -16,7 +16,8 @@ public enum CardRank {
     JACK(List.of(10)),
     QUEEN(List.of(10)),
     KING(List.of(10)),
-    ACE(List.of(1, 11));
+    ACE(List.of(1, 11)),
+    ;
 
     private final List<Integer> values;
 

@@ -7,7 +7,8 @@ public enum GameResultType {
 
     WIN((value, comparedValue) -> value > comparedValue),
     TIE(Integer::equals),
-    LOSE((value, comparedValue) -> value < comparedValue);
+    LOSE((value, comparedValue) -> value < comparedValue),
+    ;
 
     private final BiPredicate<Integer, Integer> condition;
 
