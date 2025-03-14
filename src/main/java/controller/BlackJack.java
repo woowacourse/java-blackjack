@@ -49,20 +49,8 @@ public class BlackJack {
     private void printResult(Players players, Dealer dealer, Accountant accountant) {
         printDealerExtraCardsCount(dealer);
         printEveryOneCardsNamesWithTotal(players, dealer);
-        Map<Player, Integer> profitPerParticipant = calculateProfit(players, dealer, accountant);
+        Map<Player, Integer> profitPerParticipant = accountant.calculateProfit(players, dealer);
         printProfitPerParticipant(profitPerParticipant, dealer);
-    }
-
-    private Map<Player, Integer> calculateProfit(Players players, Dealer dealer, Accountant accountant) {
-        Map<Player, Integer> profitPerParticipant = new LinkedHashMap<>();
-        int dealersProfit = 0;
-        for (Player player : players.getPlayers()) {
-            int playersProfit = accountant.getProfit(player, computeWinLoss(player, dealer));
-            profitPerParticipant.put(player, playersProfit);
-            dealersProfit -= playersProfit;
-        }
-        profitPerParticipant.put(dealer, dealersProfit);
-        return profitPerParticipant;
     }
 
     private WinLossResult computeWinLoss(Player player, Dealer dealer) {
