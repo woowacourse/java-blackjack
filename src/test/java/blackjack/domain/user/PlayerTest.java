@@ -28,7 +28,7 @@ class PlayerTest {
     @DisplayName("배팅 금액을 추가할 수 있다.")
     void canRegisterBettingAmount() {
         BettingAmount expectedBettingAmount = new BettingAmount(1000);
-        player.registerBettingAmount(expectedBettingAmount);
+        player.addBettingAmount(expectedBettingAmount);
 
         assertThat(player.getBettingAmount()).isEqualTo(expectedBettingAmount.getValue());
     }

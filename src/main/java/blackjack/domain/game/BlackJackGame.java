@@ -3,11 +3,11 @@ package blackjack.domain.game;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.io.GameInputOutput;
-import blackjack.domain.value.BettingAmount;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.GameUserStorage;
-import blackjack.domain.value.Nickname;
 import blackjack.domain.user.Player;
+import blackjack.domain.value.BettingAmount;
+import blackjack.domain.value.Nickname;
 import java.util.List;
 
 public class BlackJackGame {
@@ -39,7 +39,7 @@ public class BlackJackGame {
         List<Player> players = users.getPlayers();
         for (Player player : players) {
             BettingAmount bettingAmount = gameInputOutput.readBettingAmount(player.getNickname());
-            player.registerBettingAmount(bettingAmount);
+            player.addBettingAmount(bettingAmount);
         }
     }
 
@@ -79,7 +79,7 @@ public class BlackJackGame {
     private void processDealerTurns() {
         Dealer dealer = users.getDealer();
         int drawingCount = 0;
-        while (dealer.checkPossibilityOfDrawing()) {
+        while (dealer.canDraw()) {
             drawingCount++;
             Card card = cardDeck.drawCard(1).getFirst();
             dealer.addCardUntilLimit(card);

@@ -12,16 +12,6 @@ public final class Nickname {
         this.value = removeSideSpace(nickname);
     }
 
-    private String removeSideSpace(String nickname) {
-        return nickname.strip();
-    }
-
-    private void validateBlank(String nickname) {
-        if (nickname == null || nickname.isBlank()) {
-            throw new IllegalArgumentException(ExceptionMessage.NOT_ALLOWED_EMPTY_NICKNAME.getContent());
-        }
-    }
-
     public String getValue() {
         return value;
     }
@@ -41,5 +31,15 @@ public final class Nickname {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    private String removeSideSpace(String nickname) {
+        return nickname.strip();
+    }
+
+    private void validateBlank(String nickname) {
+        if (nickname == null || nickname.isBlank()) {
+            throw new IllegalArgumentException(ExceptionMessage.NOT_ALLOWED_EMPTY_NICKNAME.getContent());
+        }
     }
 }

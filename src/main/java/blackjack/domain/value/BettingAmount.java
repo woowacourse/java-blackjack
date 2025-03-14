@@ -20,12 +20,6 @@ public final class BettingAmount {
         return value;
     }
 
-    private void validateInvalidAmount(int value) {
-        if (value < 0) {
-            throw new IllegalArgumentException(ExceptionMessage.INVALID_BETTING_AMOUNT.getContent());
-        }
-    }
-
     @Override
     public boolean equals(Object object) {
         if (this == object) {
@@ -41,5 +35,11 @@ public final class BettingAmount {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    private void validateInvalidAmount(int value) {
+        if (value < 0) {
+            throw new IllegalArgumentException(ExceptionMessage.INVALID_BETTING_AMOUNT.getContent());
+        }
     }
 }

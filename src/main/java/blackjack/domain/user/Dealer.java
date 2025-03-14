@@ -19,12 +19,12 @@ public class Dealer {
         gameUser.addCardInHand(cards);
     }
 
-    public boolean checkPossibilityOfDrawing() {
+    public boolean canDraw() {
         return gameUser.getPoint() <= GameRule.DEALER_DRAW_THRESHOLD.getValue();
     }
 
     public void addCardUntilLimit(Card card) {
-        boolean isPossible = checkPossibilityOfDrawing();
+        boolean isPossible = canDraw();
         if (isPossible) {
             gameUser.addCardInHand(card);
         }
