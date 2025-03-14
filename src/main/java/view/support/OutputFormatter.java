@@ -2,15 +2,15 @@ package view.support;
 
 import static card.CardNumberType.*;
 import static card.CardType.*;
-import static result.GameResultStatus.*;
-import static result.GameResultStatus.LOSE;
-import static result.GameResultStatus.WIN;
+import static result.GameStatus.*;
+import static result.GameStatus.LOSE;
+import static result.GameStatus.WIN;
 
 import card.Card;
 import card.CardNumberType;
 import card.CardType;
 import card.Hand;
-import result.GameResultStatus;
+import result.GameStatus;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +46,7 @@ public class OutputFormatter {
         CARD_NUMBER_TYPE_FORMATTER.put(KING, "K");
     }
 
-    private static final Map<GameResultStatus, String> GAME_RESULT_FORMATTER = Map.of(
+    private static final Map<GameStatus, String> GAME_RESULT_FORMATTER = Map.of(
             WIN, "승",
             DRAW, "무",
             LOSE, "패"
@@ -67,7 +67,7 @@ public class OutputFormatter {
         return CARD_NUMBER_TYPE_FORMATTER.get(card.cardNumberType()) + CARD_TYPE_FORMATTER.get(card.cardType());
     }
 
-    public String formatGameResult(GameResultStatus gameResultStatus) {
-        return GAME_RESULT_FORMATTER.get(gameResultStatus);
+    public String formatGameResult(GameStatus gameStatus) {
+        return GAME_RESULT_FORMATTER.get(gameStatus);
     }
 }

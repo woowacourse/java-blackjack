@@ -3,7 +3,7 @@ import static view.AnswerType.*;
 import card.Deck;
 import participant.Players;
 import participant.Dealer;
-import result.GameResult;
+import result.PlayerResult;
 import participant.Player;
 import view.AnswerType;
 import view.InputView;
@@ -64,8 +64,8 @@ public class BlackjackApplication {
 
     private void calculateResult(Dealer dealer, Players players) {
         outputView.printCardsResult(dealer, players);
-        GameResult gameResult = players.judgeAgainstDealer(dealer);
-        outputView.printGameResults(gameResult);
+//        PlayerResult playerResult = players.judgeAgainstDealer(dealer);
+//        outputView.printGameResults(playerResult);
     }
 
     private void processPlayerCardRequest(Deck deck, Player player) {

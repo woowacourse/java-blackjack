@@ -1,11 +1,11 @@
 package view;
 
-import static result.GameResultStatus.*;
+import static result.GameStatus.*;
 
 import card.Hand;
 import participant.Dealer;
-import result.GameResult;
-import result.GameResultStatus;
+import result.PlayerResult;
+import result.GameStatus;
 import participant.Player;
 import participant.Players;
 import java.util.Map;
@@ -53,16 +53,16 @@ public class OutputView {
         });
     }
 
-    public void printGameResults(GameResult gameResult) {
-        int winCount = gameResult.calculateStatusCount(WIN);
-        int loseCount = gameResult.calculateStatusCount(LOSE);
-        int drawCount = gameResult.calculateStatusCount(DRAW);
+    public void printGameResults(PlayerResult playerResult) {
+        int winCount = playerResult.calculateStatusCount(WIN);
+        int loseCount = playerResult.calculateStatusCount(LOSE);
+        int drawCount = playerResult.calculateStatusCount(DRAW);
         System.out.println("\n## 최종 승패");
         System.out.printf("딜러: %d승 %d무 %d패\n", loseCount, drawCount, winCount);
-        gameResult.getAllPlayers()
+        playerResult.getAllPlayers()
                 .forEach(player -> {
-                    GameResultStatus gameResultStatus = gameResult.getGameResultstatus(player);
-                    String resultMessage = outputFormatter.formatGameResult(gameResultStatus);
+                    GameStatus gameStatus = playerResult.getGameResultStatus(player);
+                    String resultMessage = outputFormatter.formatGameResult(gameStatus);
                     System.out.printf("%s: %s\n", player.getName(), resultMessage);
                 });
     }

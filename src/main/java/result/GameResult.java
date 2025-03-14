@@ -1,27 +1,25 @@
 package result;
 
+import java.util.List;
+import participant.Dealer;
 import participant.Player;
-import java.util.Map;
-import java.util.Set;
 
 public class GameResult {
-    private final Map<Player, GameResultStatus> gameResults;
+    private final List<HandStatus> handStatuses;
 
-    public GameResult(Map<Player, GameResultStatus> gameResults) {
-        this.gameResults = gameResults;
+    public GameResult() {
+        this.handStatuses = List.of(
+                new Bust(),
+                new BlackJack(),
+                new ScoreComparison()
+        );
     }
 
-    public int calculateStatusCount(GameResultStatus status) {
-        return (int) getAllPlayers().stream()
-                .filter(player -> status.isEqualTo(gameResults.get(player)))
-                .count();
-    }
-
-    public Set<Player> getAllPlayers() {
-        return gameResults.keySet();
-    }
-
-    public GameResultStatus getGameResultstatus(Player key) {
-        return gameResults.get(key);
+    public GameStatus calculate(Player player, Dealer dealer) {
+        return handStatuses.stream()
+                .map(handStatus -> handStatus.calculateResult(player, dealer))
+                .filter(GameStatus::isDecided)
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
     }
 }

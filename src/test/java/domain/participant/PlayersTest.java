@@ -6,8 +6,8 @@ import card.Card;
 import card.CardNumberType;
 import card.CardType;
 import card.Hand;
-import result.GameResult;
-import result.GameResultStatus;
+import result.PlayerResult;
+import result.GameStatus;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -35,40 +35,5 @@ class PlayersTest {
                         new Player("pobi", Hand.createEmpty())
                 )
         );
-    }
-
-    @DisplayName("딜러와 참여자의 카드 합을 비교해 참여자의 승패 여부를 결정한다")
-    @Test
-    void test2() {
-        //given
-        Dealer dealer = Dealer.createEmpty();
-        dealer.getCards().add(new Card(CardNumberType.JACK, CardType.DIAMOND));
-        dealer.getCards().add(new Card(CardNumberType.QUEEN, CardType.DIAMOND));
-
-        Hand winHand = new Hand(List.of(
-                new Card(CardNumberType.ACE, CardType.DIAMOND),
-                new Card(CardNumberType.QUEEN, CardType.DIAMOND)
-        ));
-        Hand drawHand = new Hand(List.of(
-                new Card(CardNumberType.JACK, CardType.DIAMOND),
-                new Card(CardNumberType.QUEEN, CardType.SPACE)
-        ));
-        Hand loseHand = new Hand(List.of(
-                new Card(CardNumberType.FIVE, CardType.DIAMOND),
-                new Card(CardNumberType.EIGHT, CardType.DIAMOND)
-        ));
-        Player winner = new Player("mimi", winHand);
-        Player drawer = new Player("wade", drawHand);
-        Player loser = new Player("pobi", loseHand);
-        Players players = Players.create(List.of(winner, drawer, loser));
-
-        //when
-        GameResult gameResult = players.judgeAgainstDealer(dealer);
-
-        //then
-        assertSoftly(softly -> {
-            softly.assertThat(gameResult.getGameResultstatus(winner)).isEqualTo(GameResultStatus.WIN);
-            softly.assertThat(gameResult.getGameResultstatus(loser)).isEqualTo(GameResultStatus.LOSE);
-        });
     }
 }

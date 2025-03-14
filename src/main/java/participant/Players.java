@@ -1,8 +1,8 @@
 package participant;
 
 import card.Deck;
-import result.GameResult;
-import result.GameResultStatus;
+import result.PlayerResult;
+import result.GameStatus;
 import card.Hand;
 import java.util.Collections;
 import java.util.List;
@@ -29,13 +29,6 @@ public class Players {
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
-    }
-
-    public GameResult judgeAgainstDealer(Dealer dealer) {
-        Map<Player, GameResultStatus> gameResult = players.stream()
-                .collect(Collectors.toMap(player -> player,
-                        player -> player.calculateScore(dealer)));
-        return new GameResult(gameResult);
     }
 
     public Map<String, Hand> openNameAndInitialHand() {
