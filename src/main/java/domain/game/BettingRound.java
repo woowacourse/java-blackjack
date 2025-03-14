@@ -1,5 +1,6 @@
 package domain.game;
 
+import domain.participant.Dealer;
 import domain.participant.Player;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +31,12 @@ public class BettingRound {
         if (player.isBlackJack()) {
             int initialBetAmount = initialPlayerBets.get(player);
             finalPlayerBets.put(player, (int) (initialBetAmount * 1.5));
+        }
+    }
+
+    public void refundBetOnBlackjackPush(Player player, Dealer dealer) {
+        if (player.isBlackJack() && dealer.isBlackJack()) {
+            finalPlayerBets.put(player, initialPlayerBets.get(player));
         }
     }
 }

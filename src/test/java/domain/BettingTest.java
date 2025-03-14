@@ -11,8 +11,11 @@ import static domain.card.Suit.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.CardHand;
+import domain.card.Deck;
 import domain.game.BettingRound;
+import domain.participant.Dealer;
 import domain.participant.Player;
+import domain.shuffler.RandomShuffler;
 import fixture.CardFixture;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
@@ -65,5 +68,21 @@ public class BettingTest {
         bettingRound.extraPayoutOnBlackjack(player);
         // then
         assertThat(bettingRound.getPlayerFinalBetAmount(player)).isEqualTo((int) (BET_AMOUNT * 1.5));
+    }
+
+    @Test
+    @DisplayName("딜러와 플레이어가 모두 동시에 블랙잭인 경우 플레이어는 베팅한 금액을 돌려받는다")
+    void testWhenBothBlackJack() {
+        // given
+        CardHand cardHand = new CardHand(
+                Set.of(CardFixture.of(TEN, HEART), CardFixture.of(ACE, DIAMOND)));
+        Player player = new Player("pobi", cardHand);
+        Dealer dealer = new Dealer(new Deck(new RandomShuffler()), cardHand);
+        BettingRound bettingRound = new BettingRound();
+        // when
+        bettingRound.bet(player, BET_AMOUNT);
+        bettingRound.refundBetOnBlackjackPush(player, dealer);
+        // then
+        assertThat(bettingRound.getPlayerFinalBetAmount(player)).isEqualTo(BET_AMOUNT);
     }
 }
