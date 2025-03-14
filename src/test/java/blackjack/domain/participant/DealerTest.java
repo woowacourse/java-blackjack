@@ -9,7 +9,7 @@ import blackjack.domain.card.CardHand;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
 import java.util.List;
-import org.assertj.core.api.AssertionsForClassTypes;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -66,7 +66,7 @@ class DealerTest {
         // then
         assertThat(startCards).hasSize(1);
     }
-    
+
     @Nested
     @DisplayName("플레이어를 자신과 비교해 결과를 알려준다.")
     class informResultToPlayerTest {
@@ -257,6 +257,24 @@ class DealerTest {
             //then
             assertThat(playerResult).isEqualTo(GameResult.LOSE);
         }
+    }
+
+    @DisplayName("딜러의 수익은 플레이어 총 수익의 반대이다.")
+    @Test
+    void dealerProfit_is_negative_of_totalPlayersProfit() {
+        // given
+        Map<Player, Integer> playersProfit = Map.of(
+                TestUtil.createPlayerFromName("player1"), 1000,
+                TestUtil.createPlayerFromName("player1"), 2000
+        );
+
+        Dealer dealer = new Dealer(new CardHand());
+
+        // when
+        int dealerProfit = dealer.calculateProfit(playersProfit);
+
+        // then
+        assertThat(dealerProfit).isEqualTo(-3000);
     }
 
 }

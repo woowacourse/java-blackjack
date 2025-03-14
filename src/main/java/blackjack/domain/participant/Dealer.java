@@ -4,6 +4,7 @@ import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
 import java.util.List;
+import java.util.Map;
 
 public class Dealer extends Participant {
     private final static String DEALER_NAME = "딜러";
@@ -47,6 +48,13 @@ public class Dealer extends Participant {
             return GameResult.LOSE;
         }
         return GameResult.DRAW;
+    }
+
+    public int calculateProfit(Map<Player, Integer> playersProfit) {
+        int totalPlayersProfit = playersProfit.values().stream()
+                .mapToInt(Integer::intValue)
+                .sum();
+        return -totalPlayersProfit;
     }
 
     @Override

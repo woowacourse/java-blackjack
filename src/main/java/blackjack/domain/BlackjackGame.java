@@ -56,10 +56,7 @@ public class BlackjackGame {
 
     public int calculateDealerProfit() {
         Map<Player, Integer> playersProfit = calculatePlayersProfit();
-        int totalProfit = playersProfit.values().stream()
-                .mapToInt(Integer::intValue)
-                .sum();
-        return -totalProfit;
+        return dealer.calculateProfit(playersProfit);
     }
 
     public List<Player> getPlayers() {
