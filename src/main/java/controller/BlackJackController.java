@@ -50,17 +50,29 @@ public class BlackJackController {
     }
 
     private Players initializePlayerBets() {
+        Names names = getPlayerNamesUntilValidate();
+        return Players.from(registerPlayerBets(names));
+    }
+
+    private Map<Name, Money> registerPlayerBets(Names names) {
         try {
             Map<Name, Money> playerBets = new LinkedHashMap<>();
-            Names names = new Names(inputView.readPlayersName());
             for (Name name : names.getNames()) {
-                Money money = new Money(inputView.askPlayerBattingMoney(name));
-                playerBets.put(name, money);
+                playerBets.put(name, new Money(inputView.askPlayerBattingMoney(name)));
             }
-            return Players.from(playerBets);
+            return playerBets;
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            return initializePlayerBets();
+            return registerPlayerBets(names);
+        }
+    }
+
+    private Names getPlayerNamesUntilValidate() {
+        try {
+            return new Names(inputView.readPlayersName());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return getPlayerNamesUntilValidate();
         }
     }
 }
