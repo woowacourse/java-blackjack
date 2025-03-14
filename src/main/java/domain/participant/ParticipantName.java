@@ -1,22 +1,18 @@
 package domain.participant;
 
-import java.util.List;
+import java.util.Objects;
 
-public record ParticipantName(String name) {
+public class ParticipantName {
     private static final String BLANK_NAME = "닉네임은 공백일 수 없습니다";
+    private final String name;
 
-    public static ParticipantName nameOf(String name) {
+    public ParticipantName(String name) {
         validateName(name);
-        return new ParticipantName(name);
+        this.name = name;
     }
 
-    public static List<ParticipantName> namesOf(List<String> names) {
-        return names.stream()
-                .map(ParticipantName::new)
-                .toList();
-    }
 
-    private static void validateName(String name) {
+    private void validateName(String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException(BLANK_NAME);
         }
@@ -24,5 +20,26 @@ public record ParticipantName(String name) {
 
     public boolean isMatch(ParticipantName name) {
         return this.equals(name);
+    }
+
+    public String name() {
+        return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ParticipantName that = (ParticipantName) o;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

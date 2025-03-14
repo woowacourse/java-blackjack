@@ -13,8 +13,8 @@ class ParticipantNameTest {
     @Test
     void 이름이_같으면_true를_반환한다() {
         // given
-        ParticipantName name = ParticipantName.nameOf("루키");
-        ParticipantName name2 = ParticipantName.nameOf("루키");
+        ParticipantName name = new ParticipantName("루키");
+        ParticipantName name2 = new ParticipantName("루키");
 
         // when & then
         assertThat(name.isMatch(name2)).isTrue();
@@ -26,7 +26,7 @@ class ParticipantNameTest {
         String name = null;
 
         // when & then
-        assertThatThrownBy(() -> ParticipantName.nameOf(name))
+        assertThatThrownBy(() -> new ParticipantName(name))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("닉네임은 공백일 수 없습니다");
     }
@@ -37,7 +37,7 @@ class ParticipantNameTest {
         String name = "";
 
         // when & then
-        assertThatThrownBy(() -> ParticipantName.nameOf(name))
+        assertThatThrownBy(() -> new ParticipantName(name))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("닉네임은 공백일 수 없습니다");
     }

@@ -1,25 +1,86 @@
 package domain.participant;
 
+import domain.card.Deck;
 import domain.card.TrumpCard;
 import domain.game.GameResult;
-import domain.game.WinStatus;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Participants {
-
-    private final String PLAYER_NOT_EXIST = "존재하지 않는 플레이어입니다.";
+    private static final int INIT_CARD_COUNT = 2;
+    private static final String PLAYER_NOT_EXIST = "존재하지 않는 플레이어입니다.";
+    private static final String DUPLICATE_DEALER_NAME = "플레이어의 이름은 딜러일 수 없습니다.";
+    private static final String DUPLICATE_PLAYER_NAME = "플레이어의 이름은 중복될 수 없습니다.";
+    private static final String PLAYER_BET_MISMATCH = "플레이어의 이름수와 배팅 수가 일치하지 않습니다.";
 
     private final List<Player> players;
     private final Dealer dealer;
 
-    public Participants(List<ParticipantName> names, Dealer dealer) {
-        players = names.stream()
-                .map(Player::new)
-                .toList();
+    public Participants(List<String> names, List<Integer> betAmounts, Deck deck) {
+        List<ParticipantName> participantNames = toParticipantNames(names);
+        List<Bet> bets = toBets(betAmounts);
+        players = createPlayers(participantNames, bets, deck);
+        this.dealer = new Dealer(drawInitCard(deck));
+        validateBetCount(participantNames, bets);
+        validatePlayerNames(participantNames);
+    }
 
-        this.dealer = dealer;
+    private static void validateBetCount(List<ParticipantName> names, List<Bet> bets) {
+        if (names.size() != bets.size()) {
+            throw new IllegalStateException(PLAYER_BET_MISMATCH);
+        }
+    }
+
+    private TrumpCard[] drawInitCard(Deck deck) {
+        TrumpCard[] initCards = new TrumpCard[INIT_CARD_COUNT];
+        for (int i = 0; i < INIT_CARD_COUNT; i++) {
+            initCards[i] = deck.drawCard();
+        }
+        return initCards;
+    }
+
+    private List<Player> createPlayers(List<ParticipantName> names, List<Bet> playerBets, Deck deck) {
+        List<Player> players = new ArrayList<>();
+        IntStream.range(0, names.size())
+                .forEach(index -> {
+                    players.add(new Player(names.get(index), playerBets.get(index), drawInitCard(deck)));
+                });
+        return players;
+    }
+
+    private List<Bet> toBets(List<Integer> betAmounts) {
+        return betAmounts.stream()
+                .map(Bet::new)
+                .toList();
+    }
+
+    private List<ParticipantName> toParticipantNames(List<String> names) {
+        return names.stream()
+                .map(ParticipantName::new)
+                .toList();
+    }
+
+    private void validatePlayerNames(List<ParticipantName> names) {
+        validateDuplicateDealerName(names);
+        validateUniqueName(names);
+    }
+
+    private void validateUniqueName(List<ParticipantName> names) {
+        if (names.size() != new HashSet<>(names).size()) {
+            throw new IllegalArgumentException(DUPLICATE_PLAYER_NAME);
+        }
+    }
+
+    private void validateDuplicateDealerName(List<ParticipantName> names) {
+        ParticipantName dealerName = dealer.name();
+        boolean isDuplicateName = names.stream()
+                .anyMatch(name -> name.equals(dealerName));
+        if (isDuplicateName) {
+            throw new IllegalArgumentException(DUPLICATE_DEALER_NAME);
+        }
     }
 
     private Player findPlayer(ParticipantName name) {
@@ -45,11 +106,10 @@ public class Participants {
                 .toList();
     }
 
-    public GameResult playerResult(ParticipantName name) {
-        Player player = findPlayer(name);
-        Score sum = player.calculateCardSum();
-        List<TrumpCard> trumpCards = player.cards();
-        return new GameResult(name, trumpCards, sum);
+    public GameResult dealerResult() {
+        Score sum = dealer.calculateSum();
+        List<TrumpCard> trumpCards = dealer.cards();
+        return new GameResult(dealer.name(), trumpCards, sum);
     }
 
     public List<TrumpCard> playerCards(ParticipantName name) {
@@ -57,7 +117,7 @@ public class Participants {
         return player.cards();
     }
 
-    public List<TrumpCard> dealerCards(){
+    public List<TrumpCard> dealerCards() {
         return dealer.cards();
     }
 
@@ -70,14 +130,8 @@ public class Participants {
         return dealer.name();
     }
 
-    public boolean isBust(ParticipantName name) {
-        Player player = findPlayer(name);
-        return player.isBust();
-    }
-
-    public boolean isDrawable(ParticipantName name) {
-        Player player = findPlayer(name);
-        return player.isDrawable();
+    public boolean isDealerDrawable() {
+        return dealer.isDrawable();
     }
 
     public void addCard(ParticipantName name, TrumpCard trumpCard) {
@@ -85,12 +139,20 @@ public class Participants {
         player.addCard(trumpCard);
     }
 
-    public void dealDealerCard(TrumpCard trumpCard){
+    public void dealDealerCard(TrumpCard trumpCard) {
         dealer.addCard(trumpCard);
     }
 
-    public WinStatus determinePlayerResult(ParticipantName playerName) {
-        Player player = findPlayer(playerName);
-        return player.determineResult(dealer.calculateCardSum());
+    public int getPlayerProfit(ParticipantName name) {
+        Player player = findPlayer(name);
+        return player.getProfitFromOpponents(dealer.handState());
+    }
+
+    public void stayPlayer(ParticipantName name) {
+        findPlayer(name).stay();
+    }
+
+    public boolean isFinished(ParticipantName name) {
+        return findPlayer(name).isFinished();
     }
 }
