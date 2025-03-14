@@ -79,4 +79,36 @@ public class CardsTest {
         // then
         assertThat(isBurst).isFalse();
     }
+
+    @Test
+    void 블랙잭인_경우_TRUE를_반환한다() {
+        // given
+        Cards cards = new Cards();
+        cards.addAll(List.of(
+                new Card(CardSuit.SPADE, CardRank.QUEEN),
+                new Card(CardSuit.SPADE, CardRank.ACE))
+        );
+
+        // when
+        final boolean isBlackjack = cards.isBlackjack();
+
+        // then
+        assertThat(isBlackjack).isTrue();
+    }
+
+    @Test
+    void 블랙잭인이_아닌_경우_FALSE를_반환한다() {
+        // given
+        Cards cards = new Cards();
+        cards.addAll(List.of(
+                new Card(CardSuit.SPADE, CardRank.THREE),
+                new Card(CardSuit.SPADE, CardRank.ACE))
+        );
+
+        // when
+        final boolean isBlackjack = cards.isBlackjack();
+
+        // then
+        assertThat(isBlackjack).isFalse();
+    }
 }
