@@ -97,12 +97,12 @@ public class OutputView {
         customStringBuilder.print();
     }*/
 
-    public void outputFinalWinningMoney(final int dealerMoney, final Map<Participant, Integer> winningMoney) {
+    public void outputFinalWinningMoney(final Participants participants, final int dealerMoney, final Map<Participant, Integer> winningMoney) {
         System.out.println("## 최종 수익");
         CustomStringBuilder customStringBuilder = new CustomStringBuilder();
         customStringBuilder.appendLine(String.format("딜러: %d", dealerMoney));
-        for (Map.Entry<Participant, Integer> participantMoney : winningMoney.entrySet()) {
-            customStringBuilder.appendLine(String.format("%s: %s", participantMoney.getKey().getName(), participantMoney.getValue()));
+        for (Participant participant : participants.getParticipants()) {
+            customStringBuilder.appendLine(String.format("%s: %s", participant.getName(), winningMoney.get(participant)));
         }
         customStringBuilder.print();
     }

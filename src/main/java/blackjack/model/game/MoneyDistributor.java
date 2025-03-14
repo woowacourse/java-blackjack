@@ -3,6 +3,7 @@ package blackjack.model.game;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -15,40 +16,43 @@ public class MoneyDistributor {
     public static final double WINNING_MONEY_RATE = 1.5;
 
     public static Map<Participant, Integer> calculateWinningMoney(final Dealer dealer, final Map<Participant, ParticipantResult> participantResults) {
-        Map<Participant, Integer> winningMoneys = new LinkedHashMap<>();
+        Map<Participant, Integer> winningMoneys = new HashMap<>();
         for (Map.Entry<Participant, ParticipantResult> resultEntry : participantResults.entrySet()) {
             Participant participant = resultEntry.getKey();
-            if (participant.isBlackJack()) {
-                calculateWinningMoneyIfBlackJack(dealer, participant, winningMoneys);
-                continue;
-            }
-            calculateWinningMoneyNotBlackJack(participant, resultEntry.getValue(), winningMoneys);
+            winningMoneys.put(participant, calculateWinningMoney(dealer.isBlackJack(), participant, resultEntry.getValue()));
         }
         return winningMoneys;
     }
 
-    private static void calculateWinningMoneyIfBlackJack(final Dealer dealer, final Participant participant, final Map<Participant, Integer> winningMoneys) {
-        if (dealer.isBlackJack()) {
-            winningMoneys.put(participant, DRAW_MONEY);
-            return;
+    private static int calculateWinningMoney(final boolean isDealerBlackJack, final Participant participant, final ParticipantResult participantResult) {
+        if (isDealerBlackJack) {
+            return calculateWinningMoneyIfDealerBlackJack(participant);
         }
-        winningMoneys.put(participant, (int)(participant.getBettedMoney() * WINNING_MONEY_RATE));
+        return calculateWinningMoneyNotBlackJack(participant.getBettedMoney(), participant.isBlackJack(), participantResult);
     }
 
-    private static void calculateWinningMoneyNotBlackJack(final Participant participant, final ParticipantResult participantResult, final Map<Participant, Integer> winningMoneys) {
+    private static int calculateWinningMoneyIfDealerBlackJack(final Participant participant) {
+        if (participant.isBlackJack()) {
+            return DRAW_MONEY;
+        }
+        return -participant.getBettedMoney();
+    }
+
+    private static int calculateWinningMoneyNotBlackJack(final int bettedMoney, final boolean isBlackJack, final ParticipantResult participantResult) {
+        if (isBlackJack) {
+            return (int)(bettedMoney * WINNING_MONEY_RATE);
+        }
         if (participantResult == WIN) {
-            winningMoneys.put(participant, participant.getBettedMoney());
-            return;
+            return bettedMoney;
         }
         if (participantResult == LOSE) {
-            winningMoneys.put(participant, 0 - participant.getBettedMoney());
-            return;
+            return -bettedMoney;
         }
-        winningMoneys.put(participant, DRAW_MONEY);
+        return DRAW_MONEY;
     }
 
     public static int calculateDealerMoney(final Map<Participant, Integer> winningMoney) {
-        return - winningMoney.values().stream()
+        return -winningMoney.values().stream()
                 .mapToInt(Integer::intValue)
                 .sum();
     }
