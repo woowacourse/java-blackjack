@@ -1,9 +1,9 @@
 package blackjack.domain.round;
 
+import blackjack.domain.gamer.Gamer;
+
 import java.util.List;
 import java.util.function.BiFunction;
-
-import blackjack.domain.gamer.Gamer;
 
 public enum RoundResult {
     WIN("승"),
@@ -19,15 +19,15 @@ public enum RoundResult {
 
     public static RoundResult judgeResult(Gamer gamer, Gamer otherGamer) {
         return getResultOf(
-            List.of(
-                RoundResult::getBustResult,
-                RoundResult::getSumResult,
-                RoundResult::getBlackjackResult),
-            gamer, otherGamer);
+                List.of(
+                        RoundResult::getBustResult,
+                        RoundResult::getSumResult,
+                        RoundResult::getBlackjackResult),
+                gamer, otherGamer);
     }
 
     private static RoundResult getResultOf(List<BiFunction<Gamer, Gamer, RoundResult>> getResultFunctions, Gamer gamer,
-        Gamer otherGamer) {
+                                           Gamer otherGamer) {
         for (var function : getResultFunctions) {
             RoundResult roundResult = function.apply(gamer, otherGamer);
             if (roundResult != null) {
@@ -74,9 +74,5 @@ public enum RoundResult {
             return LOSE;
         }
         return null;
-    }
-
-    public String getDisplayName() {
-        return displayName;
     }
 }
