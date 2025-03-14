@@ -51,8 +51,7 @@
 - [x] 카드 추가 여부 판단
   - [x] 받은 카드가 21을 넘지 않은 경우 계속 카드 추가 가능
 
-### Game
-- [x] `CardDeck` 저장
+### GameParticipant
 - [x] 전체 `Participant` 저장
 
 - [x] 참여자 등록
