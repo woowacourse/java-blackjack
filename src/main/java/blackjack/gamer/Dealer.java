@@ -17,9 +17,13 @@ public class Dealer extends Gamer {
     private final CardMachine cardMachine;
     private final Money earnMoney;
 
-    public Dealer(final CardMachine cardMachine) {
+    private Dealer(final CardMachine cardMachine) {
         this.cardMachine = cardMachine;
         this.earnMoney = new Money(0);
+    }
+
+    public static Dealer getDealer(final CardMachine cardMachine) {
+        return new Dealer(cardMachine);
     }
 
     public void initCardMachine() {

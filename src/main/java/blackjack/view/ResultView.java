@@ -18,13 +18,13 @@ public class ResultView {
     private static final String PROFIT_FORMAT = "%s: %d";
     private static final String COMMA = ", ";
 
-    public void printCards(final Gamer gamer, final List<Card> gamerCards) {
-        final String message = makeCardMessage(gamer, gamerCards);
+    public void printCards(final String name, final List<Card> gamerCards) {
+        final String message = makeCardMessage(name, gamerCards);
         System.out.println(message);
     }
 
-    public void printCardsSum(final Gamer gamer, final List<Card> gamerCards, final int sum) {
-        final String message = makeCardSumMessage(gamer, gamerCards, sum);
+    public void printCardsSum(final String name, final List<Card> gamerCards, final int sum) {
+        final String message = makeCardSumMessage(name, gamerCards, sum);
         System.out.println(message);
     }
 
@@ -44,20 +44,20 @@ public class ResultView {
         System.out.println(String.format(PROFIT_FORMAT, gamer.getNickName(), profit));
     }
 
-    private String makeCardMessage(final Gamer gamer, List<Card> gamerCards) {
+    private String makeCardMessage(final String name, List<Card> gamerCards) {
         return String.format(
                 CARDS_FORMAT,
-                gamer.getNickName(),
+                name,
                 gamerCards.stream()
                         .map(card -> getDenominationName(card) + getShapeName(card))
                         .collect(Collectors.joining(COMMA))
         );
     }
 
-    private String makeCardSumMessage(final Gamer gamer, final List<Card> gamerCards, final int sum) {
+    private String makeCardSumMessage(final String name, final List<Card> gamerCards, final int sum) {
         return String.format(
                 CARDS_SUM_FORMAT,
-                makeCardMessage(gamer, gamerCards),
+                makeCardMessage(name, gamerCards),
                 sum
         );
     }
