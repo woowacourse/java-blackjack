@@ -18,7 +18,6 @@ import domain.card.Hand;
 import domain.participant.Dealer;
 import domain.participant.Money;
 import domain.participant.Name;
-import domain.participant.Player;
 import domain.participant.Players;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -97,7 +96,7 @@ public class BlackJackTest {
 
     @Test
     @DisplayName("결과 선출 테스트")
-    void calculatePlayerResultTest() {
+    void calculatePlayerProfitTest() {
         //given
         Map<Name, Money> playerBet = new LinkedHashMap<>(Map.of(new Name("pobi"), new Money(10000), new Name("lisa"), new Money(20000)));
         Players players = Players.from(playerBet);
@@ -110,7 +109,7 @@ public class BlackJackTest {
         blackJack.hitCardsToParticipant(deck);
 
         //then
-        assertDoesNotThrow(blackJack::calculatePlayerResult);
+        assertDoesNotThrow(blackJack::calculatePlayerProfit);
     }
 
     @Test

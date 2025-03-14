@@ -46,7 +46,7 @@ public class BlackJackController {
         outputView.printDrawDealer(dealer);
         blackJack.drawDealer(deck);
         outputView.printScore(players, dealer);
-        outputView.printResult(blackJack.calculateDealerProfit(), blackJack.calculatePlayerResult());
+        outputView.printResult(blackJack.calculateDealerProfit(), blackJack.calculatePlayerProfit());
     }
 
     private Players initializePlayerBets() {

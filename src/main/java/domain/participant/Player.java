@@ -35,7 +35,7 @@ public class Player extends Participant {
         }
     }
 
-    public int calculateWinner(final int dealerSum) {
+    public int calculateProfit(final int dealerSum) {
         if (calculateSum() > dealerSum && calculateSum() == BLACKJACK_NUMBER) {
             return (int) (getMoney() * BLACKJACK_PAYOUT_RATIO);
         }

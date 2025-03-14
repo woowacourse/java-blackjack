@@ -117,7 +117,7 @@ public class PlayerTest {
 
         Dealer dealer = new Dealer(new Hand(List.of()));
 
-        assertThat(player.calculateWinner(dealer.calculateSum())).isEqualTo(10000);
+        assertThat(player.calculateProfit(dealer.calculateSum())).isEqualTo(10000);
     }
 
     @Test
@@ -131,7 +131,7 @@ public class PlayerTest {
 
         Dealer dealer = new Dealer(new Hand(List.of()));
 
-        assertThat(player.calculateWinner(dealer.calculateSum())).isEqualTo(15000);
+        assertThat(player.calculateProfit(dealer.calculateSum())).isEqualTo(15000);
     }
 
     @Test
@@ -144,6 +144,6 @@ public class PlayerTest {
         player.addCard(cardDeck.hitCard());
         dealer.addCard(cardDeck.hitCard());
 
-        assertThat(player.calculateWinner(dealer.calculateSum())).isEqualTo(-10000);
+        assertThat(player.calculateProfit(dealer.calculateSum())).isEqualTo(-10000);
     }
 }
