@@ -102,7 +102,7 @@ class CardHandTest {
         CardHand cardHand = new CardHand(
                 Set.of(CardFixture.of(ACE, CLOVER), CardFixture.of(JACK, SPADE), CardFixture.of(QUEEN, SPADE)));
         // when & then
-        assertThat(cardHand.isBlackJack()).isTrue();
+        assertThat(cardHand.isBlackJack()).isFalse();
     }
 
     private static Stream<Arguments> cardArguments() {

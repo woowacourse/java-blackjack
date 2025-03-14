@@ -10,6 +10,7 @@ public class CardHand {
     private static final int MAX_ACE_SCORE = 11;
     private static final int DEALER_HIT_THRESHOLD = 16;
     private static final int MAX_SCORE = 21;
+    private static final int BLACKJACK_CARD_COUNT = 2;
 
     private final Set<Card> cards;
 
@@ -46,7 +47,7 @@ public class CardHand {
     }
 
     public boolean isBlackJack() {
-        return calculateScore() == MAX_SCORE;
+        return calculateScore() == MAX_SCORE && cards.size() == BLACKJACK_CARD_COUNT;
     }
 
     public boolean doesDealerNeedCard() {
