@@ -1,6 +1,5 @@
 package controller;
 
-import static view.InputView.accountBettingPrice;
 import static view.InputView.getContinueOrNot;
 import static view.InputView.getPlayerNamesInput;
 import static view.OutputView.printBust;
@@ -13,32 +12,39 @@ import static view.OutputView.printProfitPerParticipant;
 import domain.Accountant;
 import domain.Dealer;
 import domain.Deck;
+import domain.HitOrHoldPolicy;
+import domain.Participants;
 import domain.Player;
 import domain.Players;
-import domain.WinLossResult;
-import java.util.LinkedHashMap;
 import java.util.Map;
+import view.InputView;
 
 public class BlackJack {
 
     private static final String NO = "n";
 
     public void play() {
-        Dealer dealer = new Dealer();
+        Participants participants = new Participants(getPlayerNamesInput());
         Deck deck = new Deck();
         Accountant accountant = new Accountant();
-        Players players = preset(dealer, deck, accountant);
-        playersTurn(players, deck);
-        dealersTurn(dealer, deck);
-        printResult(players, dealer, accountant);
+
+        preset(participants, accountant, deck);
+        playersTurn(participants.getPlayers(), deck);
+        dealersTurn(participants.getDealer(), deck);
+        printResult(participants, accountant);
     }
 
-    private Players preset(Dealer dealer, Deck deck, Accountant accountant) {
-        Players players = new Players(getPlayerNamesInput());
-        accountBettingPrice(players, accountant);
-        deck.distributeCards(dealer, players);
-        printDistributeResult(players, dealer);
-        return players;
+    private void preset(Participants participants, Accountant accountant, Deck deck) {
+        accountBettingPrice(participants, accountant);
+        deck.distributeCards(participants);
+        printDistributeResult(participants);
+    }
+
+    private void accountBettingPrice(Participants participants, Accountant accountant) {
+        Map<Player, Integer> map = InputView.inputBettingPrice(participants.getPlayers());
+        for (Map.Entry<Player, Integer> entry : map.entrySet()) {
+            accountant.accountBettingPrice(entry.getKey(), entry.getValue());
+        }
     }
 
     private void playersTurn(Players players, Deck deck) {
@@ -81,7 +87,10 @@ public class BlackJack {
         });
     }
 
-    private void printResult(Players players, Dealer dealer, Accountant accountant) {
+    private void printResult(Participants participants, Accountant accountant) {
+        Players players = participants.getPlayers();
+        Dealer dealer = participants.getDealer();
+
         printDealerExtraCardsCount(dealer);
         printEveryOneCardsNamesWithTotal(players, dealer);
         Map<Player, Integer> profitPerParticipant = accountant.calculateProfit(players, dealer);
