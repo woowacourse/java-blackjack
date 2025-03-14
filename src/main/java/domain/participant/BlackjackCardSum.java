@@ -48,7 +48,6 @@ public class BlackjackCardSum {
     }
 
     public boolean isBlackjack() {
-        int drawCardCount = cardHands.size();
-        return drawCardCount == BLACKJACK_CARD_COUNT_STANDARD && BLACKJACK_STANDARD == cardSum;
+        return cardHands.size() == BLACKJACK_CARD_COUNT_STANDARD && BLACKJACK_STANDARD == cardSum;
     }
 }
