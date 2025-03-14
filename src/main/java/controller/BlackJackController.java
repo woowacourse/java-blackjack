@@ -104,7 +104,7 @@ public class BlackJackController {
 
     private boolean isMoreCard(final Deck deck, final Player player) {
         final String input = InputView.readQuestOneMoreCard(player.getDisplayName());
-        if (Command.find(input).equals(Command.YES)) {
+        if (Command.find(input) == Command.YES) {
             final Card card = deck.drawCard();
             player.hit(card);
         }
@@ -119,7 +119,7 @@ public class BlackJackController {
             return false;
         }
 
-        return Command.find(input).equals(Command.YES);
+        return Command.find(input) == Command.YES;
     }
 
     private void processAdditionalHit(final Deck deck, final Player player) {
