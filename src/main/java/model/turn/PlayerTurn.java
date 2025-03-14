@@ -7,7 +7,7 @@ import model.card.Deck;
 import model.participant.Player;
 import view.InputView;
 
-public class PlayerTurn extends Turn{
+public class PlayerTurn extends Turn {
     private final Player player;
     private final Betting betting;
     private boolean isSurrender;
@@ -21,37 +21,38 @@ public class PlayerTurn extends Turn{
 
     public void selectAtOnePlayerChoice(Deck deck) {
         PlayerChoice playerChoice = InputView.readFirstChoice(player);
-        if (playerChoice.equals(PlayerChoice.HIT)){
+        if (playerChoice.equals(PlayerChoice.HIT)) {
             processHit(deck);
         }
-        if (playerChoice.equals(PlayerChoice.DOUBLE_DOWN)){
+        if (playerChoice.equals(PlayerChoice.DOUBLE_DOWN)) {
             int additionalBet = InputView.inputAdditionalBet();
             processDoubleDown(deck, additionalBet);
         }
-        if (playerChoice.equals(PlayerChoice.SURRENDER)){
+        if (playerChoice.equals(PlayerChoice.SURRENDER)) {
             isSurrender = true;
-        }
-        if (playerChoice.equals(PlayerChoice.INSURANCE)){
-            int maxInsuranceAmount = betting.calculateMaxInsuranceAmount();
-            int insuranceBet =  InputView.readInsuranceBet(maxInsuranceAmount);
-            betting.takeInsurance(insuranceBet);
         }
     }
 
-    public void putBetting(Map<Player, Betting> playerBetting){
+    public void betInsurance() {
+        int maxInsuranceAmount = betting.calculateMaxInsuranceAmount();
+        int insuranceBet = InputView.readInsuranceBet(maxInsuranceAmount);
+        betting.takeInsurance(insuranceBet);
+    }
+
+    public void putBetting(Map<Player, Betting> playerBetting) {
         playerBetting.put(player, betting);
     }
 
-    private void processHit(Deck deck){
+    private void processHit(Deck deck) {
         player.receiveCard(deck.pick());
-        if (!player.isBust()){
+        if (!player.isBust()) {
             selectHitOrStand(deck);
         }
     }
 
-    private void selectHitOrStand(Deck deck){
+    private void selectHitOrStand(Deck deck) {
         PlayerChoice playerChoice = InputView.readHitOrStand(player);
-        if (playerChoice == PlayerChoice.HIT){
+        if (playerChoice == PlayerChoice.HIT) {
             processHit(deck);
         }
     }

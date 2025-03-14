@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import model.Betting;
+import model.card.CardRank;
 import model.card.Deck;
+import model.participant.Dealer;
 import model.participant.Player;
 
 public class PlayerTurnManager {
@@ -22,7 +24,7 @@ public class PlayerTurnManager {
 
     public void runPlayerTurn(Deck deck) {
         for (PlayerTurn playerTurn : playersGameRound) {
-            playerTurn.chooseAtOnePlayerChoice(deck);
+            playerTurn.selectAtOnePlayerChoice(deck);
         }
     }
 
@@ -34,7 +36,15 @@ public class PlayerTurnManager {
         return playersBet;
     }
 
-    public List<PlayerTurn> getPlayersGameRound() {
-        return playersGameRound;
+    public void betInsurance(Dealer dealer) {
+        if (dealer.openFirstCard().getCardRank() == CardRank.ACE){
+            runPlayersBetInsurance();
+        }
+    }
+
+    private void runPlayersBetInsurance() {
+        for (PlayerTurn playerTurn : playersGameRound){
+            playerTurn.betInsurance();
+        }
     }
 }
