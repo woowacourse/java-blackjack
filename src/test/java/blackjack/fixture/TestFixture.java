@@ -3,34 +3,9 @@ package blackjack.fixture;
 import blackjack.card.Card;
 import blackjack.card.Denomination;
 import blackjack.card.Shape;
-import blackjack.cardMachine.CardMachine;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class TestFixture {
-
-    public static class TestCardRandomMachine implements CardMachine {
-
-        private final List<Card> deck = List.of(
-                new Card(Shape.CLOB, Denomination.ACE),
-                new Card(Shape.CLOB, Denomination.TWO),
-                new Card(Shape.CLOB, Denomination.THREE)
-        );
-
-        @Override
-        public void receiveDeck(final List<Card> deck) {
-
-        }
-
-        @Override
-        public Card drawOneCard() {
-            final List<Card> mutableDeck = new ArrayList<>(deck);
-            Collections.shuffle(mutableDeck);
-            return mutableDeck.getFirst();
-        }
-
-    }
 
     public static List<Card> provideOneAceCards() {
         return List.of(
@@ -68,6 +43,13 @@ public class TestFixture {
                 new Card(Shape.SPADE, Denomination.TEN),
                 new Card(Shape.HEART, Denomination.TWO),
                 new Card(Shape.CLOB, Denomination.SEVEN)
+        );
+    }
+
+    public static List<Card> provideSum15Cards() {
+        return List.of(
+                new Card(Shape.DIAMOND, Denomination.SIX),
+                new Card(Shape.CLOB, Denomination.NINE)
         );
     }
 
