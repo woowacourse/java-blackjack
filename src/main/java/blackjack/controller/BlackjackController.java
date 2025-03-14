@@ -4,7 +4,7 @@ import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardDeckGenerator;
 import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.io.GameInputOutput;
-import blackjack.domain.user.Nickname;
+import blackjack.domain.value.Nickname;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;

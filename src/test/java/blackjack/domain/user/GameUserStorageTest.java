@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.game.GameRule;
+import blackjack.domain.value.Nickname;
 import blackjack.exception.ExceptionMessage;
 import java.util.List;
 import java.util.stream.IntStream;

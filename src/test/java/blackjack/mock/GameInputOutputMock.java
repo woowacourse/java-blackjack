@@ -3,7 +3,7 @@ package blackjack.mock;
 import blackjack.domain.card.Card;
 import blackjack.domain.game.PlayerProfit;
 import blackjack.domain.io.GameInputOutput;
-import blackjack.domain.user.BettingAmount;
+import blackjack.domain.value.BettingAmount;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import java.util.HashMap;

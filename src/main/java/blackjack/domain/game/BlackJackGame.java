@@ -3,10 +3,10 @@ package blackjack.domain.game;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.io.GameInputOutput;
-import blackjack.domain.user.BettingAmount;
+import blackjack.domain.value.BettingAmount;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.GameUserStorage;
-import blackjack.domain.user.Nickname;
+import blackjack.domain.value.Nickname;
 import blackjack.domain.user.Player;
 import java.util.List;
 

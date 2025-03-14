@@ -1,8 +1,8 @@
 package blackjack.fixture;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.user.BettingAmount;
-import blackjack.domain.user.Nickname;
+import blackjack.domain.value.BettingAmount;
+import blackjack.domain.value.Nickname;
 import blackjack.domain.user.Player;
 import java.util.List;
 

@@ -6,7 +6,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.CardValue;
-import blackjack.domain.user.Nickname;
+import blackjack.domain.value.Nickname;
 import blackjack.mock.GameInputOutputMock;
 import java.util.List;
 import java.util.Map;

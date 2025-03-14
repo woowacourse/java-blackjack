@@ -1,6 +1,7 @@
 package blackjack.domain.user;
 
 import blackjack.domain.game.GameRule;
+import blackjack.domain.value.Nickname;
 import blackjack.exception.ExceptionMessage;
 import java.util.Collections;
 import java.util.HashSet;

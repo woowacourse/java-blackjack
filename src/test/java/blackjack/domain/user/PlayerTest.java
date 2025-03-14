@@ -8,6 +8,8 @@ import blackjack.domain.card.CardShape;
 import blackjack.domain.card.CardValue;
 import blackjack.domain.game.GameResultType;
 import blackjack.domain.game.PlayerProfit;
+import blackjack.domain.value.BettingAmount;
+import blackjack.domain.value.Nickname;
 import blackjack.fixture.DealerFixture;
 import blackjack.fixture.PlayerFixture;
 import java.util.List;

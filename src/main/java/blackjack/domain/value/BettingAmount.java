@@ -1,4 +1,4 @@
-package blackjack.domain.user;
+package blackjack.domain.value;
 
 import blackjack.exception.ExceptionMessage;
 import java.util.Objects;

@@ -4,6 +4,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.game.GameResultType;
 import blackjack.domain.game.GameRule;
 import blackjack.domain.game.PlayerProfit;
+import blackjack.domain.value.BettingAmount;
+import blackjack.domain.value.Nickname;
 import java.util.List;
 
 public class Player {

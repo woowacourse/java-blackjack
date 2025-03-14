@@ -1,7 +1,7 @@
 package blackjack.domain.io;
 
 import blackjack.domain.game.PlayerProfit;
-import blackjack.domain.user.BettingAmount;
+import blackjack.domain.value.BettingAmount;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import java.util.List;

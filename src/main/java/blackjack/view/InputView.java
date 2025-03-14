@@ -1,7 +1,7 @@
 package blackjack.view;
 
-import blackjack.domain.user.BettingAmount;
-import blackjack.domain.user.Nickname;
+import blackjack.domain.value.BettingAmount;
+import blackjack.domain.value.Nickname;
 import java.util.List;
 import java.util.Scanner;
 
