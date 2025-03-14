@@ -10,11 +10,6 @@ public class Dealer extends Participant {
         super();
     }
 
-    @Override
-    public Hand getFirstOpenHand() {
-        return hand.firstOpenCards();
-    }
-
     public void draw(final CardDeck standard) {
         while (isUnderThreshold()) {
             hand.addCard(standard.hitCard());
@@ -23,6 +18,11 @@ public class Dealer extends Participant {
 
     public boolean isUnderThreshold() {
         return sum() <= DEALER_DRAW_THRESHOLD;
+    }
+
+    @Override
+    public Hand getFirstOpenHand() {
+        return hand.firstOpenCards();
     }
 
 }

@@ -40,7 +40,7 @@ public class MoneyTest {
         return Stream.of(
                 Arguments.of(WIN, 10000),
                 Arguments.of(DRAW, 0),
-                Arguments.of(BLACKJACK, 5000),
+                Arguments.of(BLACKJACK, 15000),
                 Arguments.of(LOSE, -10000)
         );
     }

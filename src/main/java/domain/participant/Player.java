@@ -29,11 +29,6 @@ public class Player extends Participant {
         }
     }
 
-    @Override
-    public Hand getFirstOpenHand() {
-        return hand;
-    }
-
     public int calculateProfit(Dealer dealer) {
         return money.calculateProfit(calculateResult(dealer));
     }
@@ -57,6 +52,11 @@ public class Player extends Participant {
             return WIN;
         }
         return DRAW;
+    }
+
+    @Override
+    public Hand getFirstOpenHand() {
+        return hand;
     }
 
     public String getName() {
