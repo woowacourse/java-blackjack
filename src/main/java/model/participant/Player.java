@@ -38,6 +38,14 @@ public class Player extends Participant {
     }
 
     private int compareToScore(Dealer dealer) {
+        if (isBust()) {
+            return -1;
+        }
+
+        if (dealer.isBust()) {
+            return 1;
+        }
+
         return this.getScore() - dealer.getScore();
     }
 }

@@ -22,7 +22,7 @@ public enum MatchResult {
         EnumMap<MatchResult, Integer> reverseMatchCounts = new EnumMap<>(MatchResult.class);
         for (MatchResult matchResult : matchCounts.keySet()) {
             MatchResult reverseMatchResult = reverse(matchResult);
-            reverseMatchCounts.put(reverseMatchResult, reverseMatchCounts.getOrDefault(matchResult, 0) + 1);
+            reverseMatchCounts.put(reverseMatchResult, matchCounts.get(matchResult));
         }
         return reverseMatchCounts;
     }
