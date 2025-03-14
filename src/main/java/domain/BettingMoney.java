@@ -2,13 +2,14 @@ package domain;
 
 public record BettingMoney(int bettingMoney) {
 
+    private static final int BETTING_UNIT = 10_000;
+
     public BettingMoney {
         validateMoney(bettingMoney);
     }
 
-
     private void validateMoney(int value) {
-        if (isNotNatural(value)) {
+        if (isNegative(value)) {
             throw new IllegalArgumentException("베팅 금액은 자연수여야 합니다.");
         }
 
@@ -17,11 +18,11 @@ public record BettingMoney(int bettingMoney) {
         }
     }
 
-    private boolean isNotNatural(int value) {
+    private boolean isNegative(int value) {
         return value <= 0;
     }
 
     private boolean isInvalidUnit(int value) {
-        return value % 10_000 != 0;
+        return value % BETTING_UNIT != 0;
     }
 }
