@@ -7,9 +7,6 @@ import java.util.List;
 import model.BlackjackGame;
 import model.cards.Cards;
 import model.cards.DealerCards;
-import model.cards.DealerCardsFactory;
-import model.cards.PlayerCardsFactory;
-import model.deck.DeckFactory;
 import model.result.GameResult;
 import model.result.GameResults;
 import view.InputView;
@@ -41,13 +38,12 @@ public class BlackjackController {
     }
 
     private BlackjackGame getBlackjackGame() {
-        DeckFactory deckFactory = new DeckFactory();
-        PlayerCardsFactory playerCardsFactory = new PlayerCardsFactory();
-        DealerCardsFactory dealerCardsFactory = new DealerCardsFactory();
+        List<String> playerNames = getPlayerNames();
+        List<Integer> playersBet = getPlayersBet(playerNames);
 
         return BlackjackGame.getBlackjackGame(
-                getPlayerNames(),
-                List.of(1,2,3,4,5) // TODO : 수정 !
+                playerNames,
+                playersBet
         );
     }
 
@@ -57,6 +53,22 @@ public class BlackjackController {
         } catch (IllegalBlackjackInputException e) {
             outputView.printExceptionMessage(e);
             return getPlayerNames();
+        }
+    }
+
+    private List<Integer> getPlayersBet(final List<String> playerNames) {
+        return playerNames.stream()
+                .map(this::getPlayerBet)
+                .toList();
+    }
+
+    private int getPlayerBet(final String name) {
+        try {
+            outputView.printNewLine();
+            return inputView.readPlayersBet(name);
+        } catch (IllegalBlackjackInputException e) {
+            outputView.printExceptionMessage(e);
+            return getPlayerBet(name);
         }
     }
 
