@@ -1,25 +1,25 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import blackjack.domain.game.GameScore;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public abstract class Player {
 
     private final PlayerName playerName;
-    private final List<Card> cards;
+    private final Cards cards;
 
     public Player(final String name) {
         this.playerName = new PlayerName(name);
-        cards = new ArrayList<>();
+        cards = new Cards();
     }
 
     public Player(PlayerName playerName) {
         this.playerName = playerName;
-        cards = new ArrayList<>();
+        cards = new Cards();
     }
 
     public void pushDealCards(final List<Card> cards) {
@@ -27,13 +27,7 @@ public abstract class Player {
     }
 
     public GameScore getGameScore() {
-        GameScore gameScore = new GameScore(cards.stream()
-                .mapToInt(Card::getValue)
-                .sum(), cards.size());
-        if (hasAce()) {
-            gameScore = gameScore.addAce();
-        }
-        return gameScore;
+        return cards.getGameScore();
     }
 
     public boolean isPlayerBust() {
@@ -51,12 +45,7 @@ public abstract class Player {
     abstract public List<Card> getOpenedCards();
 
     public List<Card> getCards() {
-        return cards;
-    }
-
-    private boolean hasAce() {
-        return cards.stream()
-                .anyMatch(Card::isAce);
+        return cards.getCards();
     }
 
     @Override

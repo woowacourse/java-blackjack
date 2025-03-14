@@ -71,8 +71,8 @@ public class OutputView {
     }
 
     private String getCardMessage(Card card) {
-        return CardNumberView.getNumberMessage(card.getNumber()) +
-                CardShapeView.getShapeMessage(card.getShape());
+        return CardNumberView.getNumberMessage(card.number()) +
+                CardShapeView.getShapeMessage(card.shape());
     }
 
     private List<Player> getDealerGamblerList(Dealer dealer, List<Gambler> gamblers) {
