@@ -63,7 +63,7 @@ public final class BlackJackController {
 
     private void drawMorePlayerCards(final Dealer dealer, final Player player) {
         while (player.canReceiveMoreCard() && inputView.readUserDrawMoreCard(player)) {
-            dealer.dealPlayerCards(player);
+            player.receiveCards(dealer.drawPlayerCards());
             outputView.printPlayerCards(player);
         }
     }

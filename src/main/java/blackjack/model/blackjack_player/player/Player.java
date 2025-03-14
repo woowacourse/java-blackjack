@@ -18,7 +18,7 @@ public final class Player {
         this.hand = Hand.empty();
     }
 
-    public boolean canDrawMoreCard() {
+    public boolean canReceiveMoreCard() {
         return getMinimumPoint() < DRAWABLE_POINT;
     }
 
@@ -55,6 +55,9 @@ public final class Player {
     }
 
     public void receiveCards(final BlackJackCards blackJackCards) {
+        if (!canReceiveMoreCard()) {
+            throw new IllegalStateException("카드를 더 받을 수 없습니다.");
+        }
         this.hand.addCards(blackJackCards);
     }
 

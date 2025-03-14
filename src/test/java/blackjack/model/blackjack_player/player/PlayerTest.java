@@ -2,6 +2,7 @@ package blackjack.model.blackjack_player.player;
 
 import static blackjack.model.card.CardCreator.createCard;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 import blackjack.model.card.BlackJackCards;
 import blackjack.model.card.CardNumber;
@@ -80,7 +81,7 @@ class PlayerTest {
 
         player.receiveCards(blackJackCards);
 
-        assertThat(player.canDrawMoreCard()).isEqualTo(expected);
+        assertThat(player.canReceiveMoreCard()).isEqualTo(expected);
     }
 
     @Test
@@ -90,6 +91,17 @@ class PlayerTest {
         ));
 
         assertThat(player.getCards().getValues()).hasSize(3);
+    }
+
+    @Test
+    void 카드를_더_받을_수_없는_경우_예외를_던진다() {
+        Player player = new Player("pobi", 1000);
+        player.receiveCards(new BlackJackCards(
+                List.of(createCard(CardNumber.TEN), createCard(CardNumber.SEVEN), createCard(CardNumber.FOUR))
+        ));
+
+        assertThatIllegalStateException()
+                .isThrownBy(() -> player.receiveCards(new BlackJackCards(List.of(createCard(CardNumber.ACE)))));
     }
 
     @Test

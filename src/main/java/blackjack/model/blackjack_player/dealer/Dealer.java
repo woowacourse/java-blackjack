@@ -42,12 +42,8 @@ public final class Dealer {
         return false;
     }
 
-    public void dealPlayerCards(final Player player) {
-        if (player.canDrawMoreCard()) {
-            player.receiveCards(drawCard(PLAYER_SINGLE_DRAW_AMOUNT));
-            return;
-        }
-        throw new IllegalStateException("카드를 더 뽑을 수 없습니다.");
+    public BlackJackCards drawPlayerCards() {
+        return drawCard(PLAYER_SINGLE_DRAW_AMOUNT);
     }
 
     public void fight(final Player player) {

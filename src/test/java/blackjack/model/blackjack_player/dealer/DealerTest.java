@@ -2,7 +2,6 @@ package blackjack.model.blackjack_player.dealer;
 
 import static blackjack.model.card.CardCreator.createCard;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 import blackjack.model.blackjack_player.Hand;
 import blackjack.model.blackjack_player.dealer.judgement.DefaultJudgementStrategy;
@@ -192,23 +191,8 @@ class DealerTest {
     @Test
     void 블랙잭_플레이어의_카드를_더_뽑는다() {
         Dealer dealer = new Dealer(new DefaultJudgementStrategy(), new DefaultCardDeckInitializer());
-        Player player = new Player("pobi", 1000);
 
-        dealer.dealPlayerCards(player);
-
-        assertThat(player.getCards().getValues()).hasSize(1);
-    }
-
-    @Test
-    void 블랙잭_플레이어가_카드를_더_뽑을_수_없는_경우_예외를_던진다() {
-        Dealer dealer = new Dealer(new DefaultJudgementStrategy(), new DefaultCardDeckInitializer());
-        Player player = new Player("pobi", 1000);
-        player.receiveCards(new BlackJackCards(
-                List.of(createCard(CardNumber.TEN), createCard(CardNumber.SEVEN), createCard(CardNumber.FIVE))
-        ));
-
-        assertThatIllegalStateException()
-                .isThrownBy(() -> dealer.dealPlayerCards(player));
+        assertThat(dealer.drawPlayerCards().getValues()).hasSize(1);
     }
 
     @ParameterizedTest
