@@ -26,7 +26,7 @@ public class PlayerHand {
     }
 
     public boolean isBlackjack() {
-        return hand.isBlackJack();
+        return hand.isBlackjack();
     }
 
     public void adjustBalance(GameResultType gameResultType) {
@@ -34,7 +34,7 @@ public class PlayerHand {
     }
 
     public int getOptimisticValue() {
-        return hand.getOptimisticValue();
+        return hand.getBestCardValue();
     }
 
     public List<Card> getAllCards() {

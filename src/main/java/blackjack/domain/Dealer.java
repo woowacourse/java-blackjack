@@ -30,7 +30,7 @@ public class Dealer implements Participant {
 
     @Override
     public boolean isBlackjack() {
-        return hand.isBlackJack();
+        return hand.isBlackjack();
     }
 
     @Override
@@ -40,7 +40,7 @@ public class Dealer implements Participant {
 
     @Override
     public int getOptimisticValue() {
-        return hand.getOptimisticValue();
+        return hand.getBestCardValue();
     }
 
     public Card revealFirstCard() {

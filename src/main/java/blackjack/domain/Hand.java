@@ -44,7 +44,7 @@ public class Hand {
         cards.add(newCard);
     }
 
-    public int getOptimisticValue() {
+    public int getBestCardValue() {
         return getPossibleSums().stream()
                 .filter(sum -> sum <= Constants.BUSTED_STANDARD_VALUE)
                 .max(Comparator.naturalOrder())
@@ -93,7 +93,7 @@ public class Hand {
         }
     }
 
-    public boolean isBlackJack() {
-        return cards.size() == BLACKJACK_CARD_SIZE && getOptimisticValue() == BLACKJACK_SUM;
+    public boolean isBlackjack() {
+        return cards.size() == BLACKJACK_CARD_SIZE && getBestCardValue() == BLACKJACK_SUM;
     }
 }

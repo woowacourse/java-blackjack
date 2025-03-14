@@ -31,7 +31,7 @@ public class Wallet {
     }
 
     public void calculate(GameResultType gameResultType, Hand hand) {
-        if (gameResultType == GameResultType.WIN && hand.isBlackJack()) {
+        if (gameResultType == GameResultType.WIN && hand.isBlackjack()) {
             this.balance += (int) (this.balance * BLACKJACK_BONUS_RATE);
             return;
         }

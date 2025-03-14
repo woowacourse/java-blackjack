@@ -91,6 +91,6 @@ class HandTest {
 
         Hand hand = Hand.of(card1, card2);
 
-        assertThat(hand.getOptimisticValue()).isEqualTo(16);
+        assertThat(hand.getBestCardValue()).isEqualTo(16);
     }
 }
