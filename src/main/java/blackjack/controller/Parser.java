@@ -1,7 +1,7 @@
 package blackjack.controller;
 
-import blackjack.model.player.Participant;
-import blackjack.model.player.Participants;
+import blackjack.model.player.Player;
+import blackjack.model.player.Players;
 import java.util.Arrays;
 
 public class Parser {
@@ -9,11 +9,11 @@ public class Parser {
     private final static String YES_COMMAND = "y";
     private static final String NO_COMMAND = "n";
 
-    public static Participants parseParticipants(String names) {
+    public static Players parseParticipants(String names) {
         String[] splittedNames = names.split(",");
         validateNameCount(splittedNames);
-        return new Participants(Arrays.stream(splittedNames)
-                .map(Participant::new)
+        return new Players(Arrays.stream(splittedNames)
+                .map(Player::new)
                 .toList());
     }
 
@@ -32,5 +32,9 @@ public class Parser {
         if (!(command.equals(YES_COMMAND) || command.equals(NO_COMMAND))) {
             throw new IllegalArgumentException("y 또는 n을 입력해 주세요.");
         }
+    }
+
+    public static int parseBettingMoney(String betMoney) {
+        return Integer.parseInt(betMoney);
     }
 }

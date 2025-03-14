@@ -1,6 +1,6 @@
 package blackjack.model.game;
 
-public enum ParticipantResult {
+public enum PlayerResult {
     WIN,
     LOSE,
     DRAW,

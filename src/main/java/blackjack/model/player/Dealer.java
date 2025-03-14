@@ -1,5 +1,5 @@
 package blackjack.model.player;
 
-public class Dealer extends Player {
+public class Dealer extends Participant {
 
 }
