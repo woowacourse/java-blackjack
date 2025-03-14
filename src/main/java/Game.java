@@ -1,5 +1,3 @@
-package controller;
-
 import domain.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.GameParticipant;
@@ -15,12 +13,12 @@ import exception.ExceptionHandler;
 import view.InputView;
 import view.OutputView;
 
-public class GameController {
+public class Game {
 
     private final GameParticipant gameParticipant;
     private final CardDeck cardDeck;
 
-    public GameController() {
+    public Game() {
         this.gameParticipant = new GameParticipant();
         this.cardDeck = new CardDeck();
     }
