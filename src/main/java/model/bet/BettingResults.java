@@ -13,4 +13,11 @@ public class BettingResults {
     public int getBettingResultByName(final String name) {
         return playerBettingResults.get(name);
     }
+
+    public int calculateDealerBettingResult() {
+        int playersBettingResultSum = playerBettingResults.values().stream()
+                .mapToInt(Integer::intValue)
+                .sum();
+        return playersBettingResultSum * (-1);
+    }
 }

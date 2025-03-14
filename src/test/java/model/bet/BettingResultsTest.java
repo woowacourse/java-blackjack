@@ -22,4 +22,15 @@ class BettingResultsTest {
                 () -> assertThat(bettingResults.getBettingResultByName("jason")).isEqualTo(-30_000)
         );
     }
+
+    @DisplayName("딜러의 베팅 수익 결과를 계산한다.")
+    @Test
+    void calculateDealerBettingResultTest() {
+        BettingResults bettingResults = new BettingResults(Map.of(
+                "pobi", 10_000,
+                "jason", -30_000
+        ));
+
+        assertThat(bettingResults.calculateDealerBettingResult()).isEqualTo(+20_000);
+    }
 }
