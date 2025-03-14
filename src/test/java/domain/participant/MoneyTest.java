@@ -72,4 +72,18 @@ class MoneyTest {
         // then
         assertThat(actual).isEqualTo(Money.of(200000));
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "1, 100000", "1.5, 150000", "0, 0", "-1, -100000"
+    })
+    void 돈을_곱할_수_있다(double count, int newValue) {
+        // given
+        Money money = Money.of(100000);
+        Money expected = Money.of(newValue);
+        // when
+        Money actual = money.times(count);
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
 }
