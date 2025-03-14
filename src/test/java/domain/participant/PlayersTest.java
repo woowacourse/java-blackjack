@@ -19,7 +19,9 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -35,8 +37,8 @@ public class PlayersTest {
     @DisplayName("카드 분배 테스트")
     void hitCardsTest(){
         //given
-        Names names = new Names(List.of("pobi", "lisa"));
-        Players players = Players.from(names);
+        Map<Name, Money> playerBet = new LinkedHashMap<>(Map.of(new Name("pobi"), new Money(10000), new Name("lisa"), new Money(20000)));
+        Players players = Players.from(playerBet);
 
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
         Deck deck = cardDeckFactory.create();
@@ -67,8 +69,8 @@ public class PlayersTest {
         OutputView testOutputView = new OutputView();
 
         Deck deck = new Deck(List.of(new Card(DIAMOND, QUEEN), new Card(SPADE, JACK), new Card(HEART, KING)));
-        Names names = new Names(List.of("pobi", "lisa"));
-        Players players = Players.from(names);
+        Map<Name, Money> playerBet = new LinkedHashMap<>(Map.of(new Name("pobi"), new Money(10000), new Name("lisa"), new Money(20000)));
+        Players players = Players.from(playerBet);
 
         //when-then
         assertDoesNotThrow(() -> players.draw(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck, deck));
