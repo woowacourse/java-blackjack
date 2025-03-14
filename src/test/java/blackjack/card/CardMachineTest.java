@@ -1,4 +1,4 @@
-package blackjack.domain.card;
+package blackjack.card;
 
 import blackjack.ConstantFixture;
 import org.junit.jupiter.api.DisplayName;

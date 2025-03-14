@@ -1,4 +1,4 @@
-package blackjack.domain.card;
+package blackjack.card;
 
 import java.util.Random;
 import java.util.stream.Stream;

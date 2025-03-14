@@ -1,6 +1,6 @@
-package blackjack.domain.gamer;
+package blackjack.participant;
 
-import blackjack.domain.card.CardFixture;
+import blackjack.card.CardFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

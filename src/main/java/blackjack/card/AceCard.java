@@ -1,6 +1,6 @@
-package blackjack.domain.card;
+package blackjack.card;
 
-import blackjack.domain.GameRule;
+import blackjack.GameRule;
 
 public class AceCard extends Card {
 

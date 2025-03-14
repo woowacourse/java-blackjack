@@ -1,6 +1,4 @@
-package blackjack.controller;
-
-import blackjack.view.OutputView;
+package blackjack.view;
 
 import java.util.function.Supplier;
 

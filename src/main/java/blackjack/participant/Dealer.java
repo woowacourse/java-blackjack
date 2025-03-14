@@ -1,8 +1,8 @@
-package blackjack.domain.gamer;
+package blackjack.participant;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardMachine;
-import blackjack.domain.card.Cards;
+import blackjack.card.Card;
+import blackjack.card.CardMachine;
+import blackjack.card.Cards;
 
 public class Dealer extends GameParticipant {
 

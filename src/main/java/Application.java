@@ -1,7 +1,4 @@
-package blackjack;
-
-
-import blackjack.controller.BlackjackGame;
+import blackjack.BlackjackGame;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
