@@ -1,5 +1,7 @@
 package blackjack.user;
 
+import java.util.Objects;
+
 public class PlayerName {
 
     private final String name;
@@ -27,5 +29,19 @@ public class PlayerName {
 
     public String getText() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        PlayerName that = (PlayerName) object;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name);
     }
 }

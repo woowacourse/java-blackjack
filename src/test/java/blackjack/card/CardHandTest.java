@@ -3,11 +3,6 @@ package blackjack.card;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.card.Card;
-import blackjack.card.CardDeck;
-import blackjack.card.CardHand;
-import blackjack.card.Denomination;
-import blackjack.card.Suit;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -40,6 +35,42 @@ public class CardHandTest {
                 assertThat(cards.getLast().suit()).isEqualTo(Suit.SPADE);
                 assertThat(cards.getLast().denomination()).isEqualTo(Denomination.KING);
             });
+        }
+    }
+
+    @Nested
+    @DisplayName("카드 상태 테스트")
+    class CardStatusTest {
+
+        @Test
+        @DisplayName("처음 두 장의 카드가 21인 경우 블랙잭이다.")
+        void checkBlackjack() {
+            List<Card> initialCards = new ArrayList<>(List.of(
+                new Card(Suit.HEART, Denomination.ACE),
+                new Card(Suit.SPADE, Denomination.KING)
+            ));
+            CardDeck cardDeck = new CardDeck(initialCards);
+
+            CardHand cardHand = new CardHand();
+            cardHand.addCards(cardDeck, 2, 21);
+
+            assertThat(cardHand.isBlackjack()).isTrue();
+        }
+
+        @Test
+        @DisplayName("카드의 합이 21을 넘는 경우 버스트이다.")
+        void checkBust() {
+            List<Card> initialCards = new ArrayList<>(List.of(
+                new Card(Suit.HEART, Denomination.SIX),
+                new Card(Suit.SPADE, Denomination.KING),
+                new Card(Suit.SPADE, Denomination.SEVEN)
+            ));
+            CardDeck cardDeck = new CardDeck(initialCards);
+
+            CardHand cardHand = new CardHand();
+            cardHand.addCards(cardDeck, 3, 21);
+
+            assertThat(cardHand.isBust()).isTrue();
         }
     }
 
@@ -94,6 +125,62 @@ public class CardHandTest {
             int cardSumWithAceValue1 = cardHand.calculateDenominations();
 
             assertThat(cardSumWithAceValue1).isEqualTo(13);
+        }
+    }
+
+    @Nested
+    @DisplayName("카드 공개 테스트")
+    class OpenCardTest {
+
+        @Test
+        @DisplayName("모든 카드를 공개 가능하다.")
+        void openAllCards() {
+            List<Card> initialCards = new ArrayList<>(List.of(
+                new Card(Suit.HEART, Denomination.ACE),
+                new Card(Suit.SPADE, Denomination.KING)
+            ));
+            CardDeck cardDeck = new CardDeck(initialCards);
+
+            CardHand cardHand = new CardHand();
+            cardHand.addCards(cardDeck, 2, 21);
+
+            assertThat(cardHand.openCards()).hasSize(2);
+        }
+
+        @Test
+        @DisplayName("처음 배부 카드는원하는 개수만큼 공개 가능하다.")
+        void openCardsWithCount() {
+            List<Card> initialCards = new ArrayList<>(List.of(
+                new Card(Suit.HEART, Denomination.SIX),
+                new Card(Suit.SPADE, Denomination.KING),
+                new Card(Suit.SPADE, Denomination.SEVEN)
+            ));
+            CardDeck cardDeck = new CardDeck(initialCards);
+
+            CardHand cardHand = new CardHand();
+            cardHand.addCards(cardDeck, 3, 21);
+
+            assertThat(cardHand.openInitialCards(2)).hasSize(2);
+        }
+    }
+
+    @Nested
+    @DisplayName("카드 추가 테스트")
+    class CardAddTest {
+
+        @Test
+        @DisplayName("기준치를 넘지 않으면 카드를 추가할 수 있다.")
+        void checkPossibleToAdd() {
+            List<Card> initialCards = new ArrayList<>(List.of(
+                new Card(Suit.HEART, Denomination.TWO),
+                new Card(Suit.SPADE, Denomination.KING)
+            ));
+            CardDeck cardDeck = new CardDeck(initialCards);
+
+            CardHand cardHand = new CardHand();
+            cardHand.addCards(cardDeck, 2, 21);
+
+            assertThat(cardHand.isPossibleToAdd(16)).isTrue();
         }
     }
 }

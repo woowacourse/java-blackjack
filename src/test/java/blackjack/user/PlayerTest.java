@@ -7,8 +7,6 @@ import blackjack.card.CardDeck;
 import blackjack.card.CardHand;
 import blackjack.card.Denomination;
 import blackjack.card.Suit;
-import blackjack.user.Player;
-import blackjack.user.PlayerName;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

@@ -14,6 +14,7 @@ import blackjack.user.Dealer;
 import blackjack.user.Player;
 import blackjack.user.PlayerName;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,11 +38,11 @@ class BlackjackGameTest {
 
             BlackjackGame game = BlackjackGame.createWithEmptyBet(CardDeck.shuffleCardDeck(),
                 names);
-            List<String> playerNames = game.getParticipants().getPlayerNames();
+            List<PlayerName> playerNames = game.getParticipants().getPlayerNames();
 
             assertAll(() -> {
-                assertThat(playerNames.getFirst()).isEqualTo("hula");
-                assertThat(playerNames.getLast()).isEqualTo("sana");
+                assertThat(playerNames.getFirst().getText()).isEqualTo("hula");
+                assertThat(playerNames.getLast().getText()).isEqualTo("sana");
             });
         }
     }
@@ -57,14 +58,11 @@ class BlackjackGameTest {
             BlackjackGame game = BlackjackGame.createWithEmptyBet(CardDeck.shuffleCardDeck(),
                 names);
 
-            assertAll(() -> {
-                assertThatCode(game::initCardsToParticipants).doesNotThrowAnyException();
-                assertThatCode(game::initCardsToPlayer).doesNotThrowAnyException();
-            });
+            assertThatCode(game::initCardsToParticipants).doesNotThrowAnyException();
         }
 
         @Test
-        @DisplayName("카드 한 장을 플레이어에게 추가로 배부할 수 있다.")
+        @DisplayName("카드 한 장을 플레이어의 숫자가 21미만이면 추가로 배부할 수 있다.")
         void distributeExtraCardToPlayer() {
             List<Card> initialCards = new ArrayList<>(List.of(
                 new Card(Suit.HEART, Denomination.TWO),
@@ -97,10 +95,12 @@ class BlackjackGameTest {
             List<PlayerName> names = List.of(new PlayerName("sana"));
 
             BlackjackGame game = BlackjackGame.createWithEmptyBet(cardDeck, names);
-            game.initCardsToParticipants();
-            game.addExtraCardToDealer();
+            Dealer dealer = game.getParticipants().getDealer();
 
-            assertThat(game.getParticipants().getDealer().getCards().openCards()).hasSize(3);
+            dealer.addCards(cardDeck, 2);
+            game.addExtraCardToDealer(dealer);
+
+            assertThat(dealer.getCards().openCards()).hasSize(3);
         }
 
         @Test
@@ -120,7 +120,7 @@ class BlackjackGameTest {
 
             dealer.addCards(cardDeck, 2);
 
-            assertThatThrownBy(() -> game.addExtraCardToDealer())
+            assertThatThrownBy(() -> game.addExtraCardToDealer(dealer))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("더 이상 카드를 추가할 수 없습니다.");
         }
@@ -145,18 +145,17 @@ class BlackjackGameTest {
                 new Card(Suit.SPADE, Denomination.KING)
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
-            Map<PlayerName, BetAmount> playerWallet = Map.of(
-                new PlayerName("hula"), BetAmount.initialBetting(10000), // 패
-                new PlayerName("sana"), BetAmount.initialBetting(10000), // 승(블랙잭)
-                new PlayerName("jason"), BetAmount.initialBetting(10000) // 패
-            );
-            game = BlackjackGame.createByBettingPlayers(cardDeck, playerWallet);
+            Map<PlayerName, BetAmount> bettingTable = new LinkedHashMap<>();
+            bettingTable.put(new PlayerName("hula"), BetAmount.initialBetting(10000)); // 패
+            bettingTable.put(new PlayerName("sana"), BetAmount.initialBetting(10000)); // 승(블랙잭)
+            bettingTable.put(new PlayerName("jason"), BetAmount.initialBetting(10000)); // 패
+
+            game = BlackjackGame.createWithActiveBet(cardDeck, bettingTable);
 
             Dealer dealer = game.getParticipants().getDealer();
             dealer.addCards(cardDeck, 2);
 
-            List<Player> players = game.getParticipants().getPlayers();
-            for (Player player : players) {
+            for (Player player : game.getParticipants().getPlayers()) {
                 player.addCards(cardDeck, 2);
             }
         }
@@ -164,9 +163,13 @@ class BlackjackGameTest {
         @Test
         @DisplayName("플레이어의 수익을 계산할 수 있다.")
         void calculatePlayerStatistics() {
-            int totalProfit = game.calculateProfitForPlayer();
+            Map<PlayerName, BetAmount> profits = game.calculateProfitForPlayers();
 
-            assertThat(totalProfit).isEqualTo(-5000);
+            assertAll(() -> {
+                assertThat(profits.get(new PlayerName("hula")).getProfit()).isEqualTo(-10000);
+                assertThat(profits.get(new PlayerName("sana")).getProfit()).isEqualTo(15000);
+                assertThat(profits.get(new PlayerName("jason")).getProfit()).isEqualTo(-10000);
+            });
         }
     }
 }
