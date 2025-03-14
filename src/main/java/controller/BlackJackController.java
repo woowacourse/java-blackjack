@@ -2,9 +2,8 @@ package controller;
 
 import domain.BlackJack;
 import domain.GameResult;
-import domain.Nickname;
+import domain.Money;
 import domain.participant.Player;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,9 +22,8 @@ public class BlackJackController {
 
     public void run() {
         try {
-            List<String> names = inputView.readPlayerNames();
-            List<Nickname> nicknames = names.stream().map(Nickname::new).toList();
-            BlackJack blackJack = BlackJack.init(nicknames);
+            Map<Player, Money> players = inputView.readPlayers();
+            BlackJack blackJack = BlackJack.init(players);
             runGameWith(blackJack);
         } catch (RuntimeException e) {
             outputView.printErrorMessage(e);

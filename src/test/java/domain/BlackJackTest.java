@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -49,7 +50,7 @@ class BlackJackTest {
                 player2, GameResult.WIN
         );
 
-        BlackJack blackJack = new BlackJack(dealer, new Players(List.of(player1, player2)));
+        BlackJack blackJack = new BlackJack(dealer, Players.withoutBetting(Set.of(player1, player2)));
 
         //when
         Map<Player, GameResult> actual = blackJack.getPlayersResult();
