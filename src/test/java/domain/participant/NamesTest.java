@@ -28,4 +28,14 @@ class NamesTest {
                 .hasMessage("[ERROR] 플레이어 인원은 1~6명 입니다.");
     }
 
+    @Test
+    @DisplayName("플레이어 중복 참가 테스트")
+    void validateIsDuplicateTest() {
+        List<String> names = List.of("pobi", "pobi");
+
+        assertThatThrownBy(() -> new Names(names))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 중복된 이름의 플레이어가 게임에 참여할 수 없습니다.");
+    }
+
 }
