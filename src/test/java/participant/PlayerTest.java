@@ -1,8 +1,8 @@
-package model.participant;
+package participant;
 
-import model.card.Card;
-import model.card.CardNumber;
-import model.card.CardType;
+import card.Card;
+import card.CardNumber;
+import card.CardType;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,9 +15,9 @@ class PlayerTest {
         // given
         Player player = new Player("율무");
 
-        player.receiveCard(new Card(CardType.DIAMOND, CardNumber.FOUR));
-        player.receiveCard(new Card(CardType.SPADE, CardNumber.TEN));
-        player.receiveCard(new Card(CardType.CLOVER, CardNumber.TEN));
+        player.hit(new Card(CardType.DIAMOND, CardNumber.FOUR));
+        player.hit(new Card(CardType.SPADE, CardNumber.TEN));
+        player.hit(new Card(CardType.CLOVER, CardNumber.TEN));
 
         // when
         boolean result = player.canReceiveCard();
@@ -33,8 +33,8 @@ class PlayerTest {
         // given
         Player player = new Player("율무");
 
-        player.receiveCard(new Card(CardType.SPADE, CardNumber.TEN));
-        player.receiveCard(new Card(CardType.CLOVER, CardNumber.TEN));
+        player.hit(new Card(CardType.SPADE, CardNumber.TEN));
+        player.hit(new Card(CardType.CLOVER, CardNumber.TEN));
 
         // when
         boolean result = player.canReceiveCard();

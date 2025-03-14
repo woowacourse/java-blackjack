@@ -1,4 +1,4 @@
-package model.card;
+package card;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -11,6 +11,10 @@ public class Cards {
 
     public Cards() {
         this.cards = new ArrayList<>();
+    }
+
+    public Cards(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
     }
 
     public void add(Card card) {
@@ -58,5 +62,9 @@ public class Cards {
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    public int size() {
+        return cards.size();
     }
 }

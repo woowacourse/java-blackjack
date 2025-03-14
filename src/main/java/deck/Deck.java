@@ -1,11 +1,10 @@
-package model.deck;
+package deck;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
-import java.util.stream.IntStream;
-import model.card.Card;
+import card.Card;
 
 public class Deck {
 

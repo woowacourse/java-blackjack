@@ -1,8 +1,8 @@
-package model.participant;
+package participant;
 
-import model.card.Card;
-import model.card.CardNumber;
-import model.card.CardType;
+import card.Card;
+import card.CardNumber;
+import card.CardType;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,9 +15,9 @@ class ParticipantTest {
         // given
         Participant participant = new Player("율무");
 
-        participant.receiveCard(new Card(CardType.DIAMOND, CardNumber.TEN));
-        participant.receiveCard(new Card(CardType.DIAMOND, CardNumber.NINE));
-        participant.receiveCard(new Card(CardType.DIAMOND, CardNumber.THREE));
+        participant.hit(new Card(CardType.DIAMOND, CardNumber.TEN));
+        participant.hit(new Card(CardType.DIAMOND, CardNumber.NINE));
+        participant.hit(new Card(CardType.DIAMOND, CardNumber.THREE));
 
         // when
         boolean result = participant.isBust();
@@ -33,9 +33,9 @@ class ParticipantTest {
         // given
         Participant participant = new Player("율무");
 
-        participant.receiveCard(new Card(CardType.DIAMOND, CardNumber.TEN));
-        participant.receiveCard(new Card(CardType.DIAMOND, CardNumber.NINE));
-        participant.receiveCard(new Card(CardType.DIAMOND, CardNumber.TWO));
+        participant.hit(new Card(CardType.DIAMOND, CardNumber.TEN));
+        participant.hit(new Card(CardType.DIAMOND, CardNumber.NINE));
+        participant.hit(new Card(CardType.DIAMOND, CardNumber.TWO));
 
         // when
         boolean result = participant.isBust();
@@ -51,9 +51,9 @@ class ParticipantTest {
         // given
         Participant participant = new Player("율무");
 
-        participant.receiveCard(new Card(CardType.DIAMOND, CardNumber.TEN));
-        participant.receiveCard(new Card(CardType.DIAMOND, CardNumber.NINE));
-        participant.receiveCard(new Card(CardType.DIAMOND, CardNumber.TWO));
+        participant.hit(new Card(CardType.DIAMOND, CardNumber.TEN));
+        participant.hit(new Card(CardType.DIAMOND, CardNumber.NINE));
+        participant.hit(new Card(CardType.DIAMOND, CardNumber.TWO));
 
         // when
         int result = participant.score();

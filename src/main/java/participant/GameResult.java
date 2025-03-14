@@ -1,7 +1,4 @@
-package model;
-
-import model.participant.Dealer;
-import model.participant.Player;
+package participant;
 
 public enum GameResult {
 

@@ -2,14 +2,14 @@ package view;
 
 import java.util.List;
 import java.util.Map;
-import model.card.Card;
-import model.card.CardNumber;
-import model.card.CardType;
-import model.participant.Dealer;
-import model.GameResult;
-import model.participant.Participant;
-import model.participant.Player;
-import model.participant.Players;
+import card.Card;
+import card.CardNumber;
+import card.CardType;
+import participant.Dealer;
+import participant.GameResult;
+import participant.Participant;
+import participant.Player;
+import participant.Players;
 
 public class OutputView {
 
@@ -35,18 +35,18 @@ public class OutputView {
     public static void printInitialCards(Dealer dealer, Players players) {
         printNewLine();
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", String.join(NICKNAME_SEPARATOR, players.getPlayers().stream()
-                .map(Participant::getNickname)
+                .map(Player::getNickname)
                 .toList()));
 
-        System.out.printf("딜러카드: %s%n", cardToString(dealer.getCard(1)));
+        System.out.printf("딜러카드: %s%n", cardToString(dealer.firstRoundCard()));
         for (Player player : players.getPlayers()) {
             printPlayerCards(player);
         }
         printNewLine();
     }
 
-    public static void printPlayerCards(Participant player) {
-        System.out.printf(ALL_CARDS, player.getNickname(), allCardToString(player.getCards()));
+    public static void printPlayerCards(Player player) {
+        System.out.printf(ALL_CARDS, player.getNickname(), allCardToString(player.cards()));
         printNewLine();
     }
 
@@ -57,7 +57,7 @@ public class OutputView {
 
     public static void printAllCardAndScore(Players players, Dealer dealer) {
         printNewLine();
-        printPlayerCardsWithScore(dealer);
+        printDealerCardsWithScore(dealer);
 
         for (Player player : players.getPlayers()) {
             printPlayerCardsWithScore(player);
@@ -65,8 +65,14 @@ public class OutputView {
         printNewLine();
     }
 
-    private static void printPlayerCardsWithScore(Participant player) {
-        System.out.printf(ALL_CARDS, player.getNickname(), allCardToString(player.getCards()));
+    private static void printDealerCardsWithScore(Dealer dealer) {
+        System.out.printf(ALL_CARDS, "딜러", allCardToString(dealer.cards()));
+        System.out.printf(RESULT, dealer.score());
+        printNewLine();
+    }
+
+    private static void printPlayerCardsWithScore(Player player) {
+        System.out.printf(ALL_CARDS, player.getNickname(), allCardToString(player.cards()));
         System.out.printf(RESULT, player.score());
         printNewLine();
     }

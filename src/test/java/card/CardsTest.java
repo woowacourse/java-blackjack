@@ -1,5 +1,9 @@
-package model.card;
+package card;
 
+import card.Card;
+import card.CardNumber;
+import card.CardType;
+import card.Cards;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

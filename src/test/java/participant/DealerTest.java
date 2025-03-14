@@ -1,8 +1,8 @@
-package model.participant;
+package participant;
 
-import model.card.Card;
-import model.card.CardNumber;
-import model.card.CardType;
+import card.Card;
+import card.CardNumber;
+import card.CardType;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,8 +14,8 @@ class DealerTest {
     void test1() {
         // given
         Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(CardType.DIAMOND, CardNumber.TEN));
-        dealer.receiveCard(new Card(CardType.DIAMOND, CardNumber.SEVEN));
+        dealer.hit(new Card(CardType.DIAMOND, CardNumber.TEN));
+        dealer.hit(new Card(CardType.DIAMOND, CardNumber.SEVEN));
 
         // when
         boolean result = dealer.canReceiveCard();
@@ -30,7 +30,7 @@ class DealerTest {
     void test2() {
         // given
         Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(CardType.DIAMOND, CardNumber.THREE));
+        dealer.hit(new Card(CardType.DIAMOND, CardNumber.THREE));
 
         // when
         boolean result = dealer.canReceiveCard();
