@@ -5,7 +5,6 @@ import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Name;
 import blackjack.model.participant.Player;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -16,7 +15,7 @@ public class OutputView {
              Welcome to the Blackjack Game!
             ================================
                 게임에 참여할 플레이어 이름은
-                 2~5글자의 한글만 허용되며,
+               2~10글자의 한글, 숫자만 허용되며,
                다른 플레이어와 중복될 수 없습니다.
             ================================
             """;
