@@ -1,5 +1,8 @@
 package view;
 
+import static domain.MatchResult.DRAW;
+import static domain.MatchResult.LOSE;
+import static domain.MatchResult.WIN;
 import static domain.card.Number.ACE;
 import static domain.card.Number.JACK;
 import static domain.card.Number.KING;
@@ -28,10 +31,8 @@ public class OutputView {
     private static final String HIT_DEALER_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다.\n";
     private static final String SCORE = " - 결과: %d";
     private static final String RESULT_INTRO = "## 최종 승패";
-    private static final String PLAYER_RESULT = "%s: %s";
-    private static final String DEALER_RESULT = "딜러: ";
-    private static final String BLANK_SPACE = " ";
-    private static final int ZERO_COUNT = 0;
+    private static final String PLAYER_RESULT = "%s: %s\n";
+    private static final String DEALER_RESULT = "딜러: %s\n";
 
     public void printParticipant(final Players players, final Dealer dealer) {
         printHitNotice(players);
@@ -80,17 +81,30 @@ public class OutputView {
         printNewLine();
         System.out.println(RESULT_INTRO);
 
-        printDealerResult(playerMatchResult);
+        int dealerProfit = 0;
 
         printNewLine();
-        playerMatchResult.forEach((player, matchResult) -> {
-            System.out.printf(PLAYER_RESULT, player.getName(), matchResult.getValue());
-            printNewLine();
-        });
+        for (Entry<Player, MatchResult> entry : playerMatchResult.entrySet()) {
+            if (entry.getValue() == WIN) {
+                System.out.printf(PLAYER_RESULT, entry.getKey().getName(), entry.getKey().getMoney());
+                dealerProfit -= entry.getKey().getMoney();
+            }
+            if (entry.getValue() == LOSE) {
+                System.out.printf(PLAYER_RESULT, entry.getKey().getName(), entry.getKey().getMoney() * -1);
+                dealerProfit += entry.getKey().getMoney();
+            }
+            if (entry.getValue() == DRAW) {
+                System.out.printf(PLAYER_RESULT, entry.getKey().getMoney(), 0);
+            }
+        }
+
+        System.out.printf(DEALER_RESULT, dealerProfit);
     }
 
+
     private void printDealerDeckWithHidden(final Dealer dealer) {
-        System.out.println(DEALER_CARDS + toSymbol(dealer.getCards().getHand().getFirst()));
+        List<Card> dealerHiddenCards = dealer.openInitialCards();
+        System.out.println(DEALER_CARDS + toSymbol(dealerHiddenCards.getFirst()));
     }
 
     private void printHitNotice(final Players players) {
@@ -116,25 +130,6 @@ public class OutputView {
         Number number = card.getNumber();
         Shape shape = card.getShape();
         return NUMBER_SYMBOL_MAP.getOrDefault(number, String.valueOf(number.getScore())) + shape.getShape();
-    }
-
-    private void printDealerResult(Map<Player, MatchResult> playerMatchResult) {
-        StringBuilder stringBuilder = new StringBuilder(DEALER_RESULT);
-        System.out.print(appendMatchResult(stringBuilder, MatchResult.calculateDealerResult(playerMatchResult)));
-    }
-
-    private StringBuilder appendMatchResult(StringBuilder stringBuilder, Map<MatchResult, Integer> dealerResult) {
-        for (Entry<MatchResult, Integer> map : dealerResult.entrySet()) {
-            appendMatchResultIfNotZero(stringBuilder, map);
-        }
-        return stringBuilder;
-    }
-
-    private static void appendMatchResultIfNotZero(StringBuilder stringBuilder, Entry<MatchResult, Integer> map) {
-        if (map.getValue() == ZERO_COUNT) {
-            return;
-        }
-        stringBuilder.append(map.getValue()).append(map.getKey().getValue()).append(BLANK_SPACE);
     }
 
     private void printNewLine() {
