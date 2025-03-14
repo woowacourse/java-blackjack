@@ -13,5 +13,4 @@ public class Deck {
     public Card hitCard() {
         return cards.removeFirst();
     }
-
 }
