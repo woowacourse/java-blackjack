@@ -36,7 +36,7 @@ public class OutputView {
         printDealerDeckWithHidden(dealer);
 
         for (Player player : players.getPlayers()) {
-            printPlayerDeck(player);
+            System.out.println(initialPlayerDeckMaker(player));
         }
         printNewLine();
     }
@@ -108,6 +108,16 @@ public class OutputView {
         System.out.printf(PLAYER_CARDS, player.getName());
         List<String> cardSymbols = new ArrayList<>();
         for (Card card : player.getCards().getHand()) {
+            cardSymbols.add(toSymbol(card));
+        }
+        return String.join(COMMA_DELIMITER, cardSymbols);
+    }
+
+    private String initialPlayerDeckMaker(final Player player) {
+        System.out.printf(PLAYER_CARDS, player.getName());
+        List<Card> initialDeck = player.openInitialCards();
+        List<String> cardSymbols = new ArrayList<>();
+        for (Card card : initialDeck) {
             cardSymbols.add(toSymbol(card));
         }
         return String.join(COMMA_DELIMITER, cardSymbols);
