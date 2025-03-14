@@ -6,6 +6,7 @@ import static domain.MatchResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Hand;
+import domain.participant.Money;
 import domain.participant.Name;
 import domain.participant.Player;
 import java.util.ArrayList;
@@ -51,9 +52,9 @@ class MatchResultTest {
     @DisplayName("딜러 결과 산출 테스트")
     void calculateDealerResultTest() {
         Map<Player, MatchResult> playerResult = new HashMap<>();
-        playerResult.put(new Player(new Hand(new ArrayList<>()), new Name("pobi")), WIN);
-        playerResult.put(new Player(new Hand(new ArrayList<>()), new Name("lisa")), DRAW);
-        playerResult.put(new Player(new Hand(new ArrayList<>()), new Name("neo")), LOSE);
+        playerResult.put(new Player(new Hand(new ArrayList<>()), new Name("pobi"), new Money(10000)), WIN);
+        playerResult.put(new Player(new Hand(new ArrayList<>()), new Name("lisa"), new Money(10000)), DRAW);
+        playerResult.put(new Player(new Hand(new ArrayList<>()), new Name("neo"), new Money(10000)), LOSE);
 
         Map<MatchResult, Integer> dealerResult = MatchResult.calculateDealerResult(playerResult);
 
