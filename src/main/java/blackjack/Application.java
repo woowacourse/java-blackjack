@@ -9,7 +9,7 @@ public class Application {
     public static void main(String[] args) {
         InputView inputVIew = new InputView();
         OutputView outputView = new OutputView();
-        CardDeck cardDeck = CardDeck.shuffledDeck();
+        CardDeck cardDeck = CardDeck.createShuffledDeck();
         BlackjackController controller = new BlackjackController(inputVIew, outputView, cardDeck);
         controller.run();
     }

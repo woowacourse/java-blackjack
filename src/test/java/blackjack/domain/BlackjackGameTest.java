@@ -24,7 +24,7 @@ class BlackjackGameTest {
 
         List<Player> players = List.of(player);
         Dealer dealer = new Dealer(new CardHand());
-        BlackjackGame game = new BlackjackGame(players, dealer, CardDeck.shuffledDeck());
+        BlackjackGame game = new BlackjackGame(players, dealer, CardDeck.createShuffledDeck());
 
         // when
         game.distributeInitialCards();
@@ -42,7 +42,7 @@ class BlackjackGameTest {
 
         List<Player> players = List.of(player);
         Dealer dealer = new Dealer(new CardHand());
-        BlackjackGame game = new BlackjackGame(players, dealer, CardDeck.shuffledDeck());
+        BlackjackGame game = new BlackjackGame(players, dealer, CardDeck.createShuffledDeck());
 
         // when
         game.dealerTurn();
@@ -74,7 +74,7 @@ class BlackjackGameTest {
         List<Player> players = List.of(player1, player2);
 
         // when
-        BlackjackGame game = new BlackjackGame(players, dealer, CardDeck.shuffledDeck());
+        BlackjackGame game = new BlackjackGame(players, dealer, CardDeck.createShuffledDeck());
         Map<Player, Integer> playersProfit = game.calculatePlayersProfit();
 
         // then
@@ -104,7 +104,7 @@ class BlackjackGameTest {
         List<Player> players = List.of(player1, player2);
 
         // when
-        BlackjackGame game = new BlackjackGame(players, dealer, CardDeck.shuffledDeck());
+        BlackjackGame game = new BlackjackGame(players, dealer, CardDeck.createShuffledDeck());
         int dealerProfit = game.calculateDealerProfit();
 
         // then

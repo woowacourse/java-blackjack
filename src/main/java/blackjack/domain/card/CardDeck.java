@@ -13,7 +13,7 @@ public class CardDeck {
         this.cardDeck = cardDeck;
     }
 
-    public static CardDeck shuffledDeck() {
+    public static CardDeck createShuffledDeck() {
         List<Card> cards = initializeCardDeck();
         Collections.shuffle(cards);
         return new CardDeck(cards);
