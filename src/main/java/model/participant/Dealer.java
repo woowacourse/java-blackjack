@@ -11,7 +11,7 @@ public class Dealer extends Participant {
         this.nickname = nickname;
     }
 
-    public static Dealer newInstance() {
+    public static Dealer create() {
         return new Dealer(DEALER_NAME);
     }
 

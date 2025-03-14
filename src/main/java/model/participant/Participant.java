@@ -7,6 +7,7 @@ import java.util.List;
 
 public abstract class Participant {
 
+    public static final int BLACK_JACK_SCORE = 21;
     private final List<Card> hands;
 
     protected Participant() {
@@ -19,23 +20,27 @@ public abstract class Participant {
     }
 
     private void adjustScoreIfNeeded() {
-        if (!isBust()) {
+        if (canHit() || isBlackjack()) {
             return;
         }
         for (Card card : hands) {
-            card.adjustRank();
-            if (!isBust()) {
+            card.findAdjustOrDefalutScore();
+            if (canHit() || isBlackjack()) {
                 return;
             }
         }
     }
 
     public boolean canHit() {
-        return getScore() < 21;
+        return getScore() < BLACK_JACK_SCORE;
     }
 
     public boolean isBust() {
-        return getScore() > 21;
+        return getScore() > BLACK_JACK_SCORE;
+    }
+
+    public boolean isBlackjack() {
+        return getScore() == BLACK_JACK_SCORE;
     }
 
     abstract public String getNickname();
@@ -46,7 +51,7 @@ public abstract class Participant {
 
     public int getScore() {
         return hands.stream()
-                .mapToInt(Card::getRankScore)
+                .mapToInt(Card::getScore)
                 .sum();
     }
 }

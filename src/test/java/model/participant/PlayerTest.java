@@ -1,9 +1,6 @@
 package model.participant;
 
-import model.card.Card;
-import model.card.CardDeck;
-import model.card.Rank;
-import model.card.Suit;
+import model.card.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,9 +17,9 @@ public class PlayerTest {
     @DisplayName("플레이어가 생성 확인")
     void newPlayer() {
         //given
-        String expected = "pobi";
+        String expected = "pobic";
         //when
-        Player player = Player.from("pobi");
+        Player player = Player.from("pobic");
         //then
         Assertions.assertThat(player.getNickname()).isEqualTo(expected);
     }
@@ -36,7 +33,7 @@ public class PlayerTest {
         final List<Card> cards = new CardDeck().pickCard(2);
 
         // when
-        Player player = Player.from("pobi");
+        Player player = Player.from("pobid");
         player.addCards(cards);
 
         // then
@@ -48,7 +45,7 @@ public class PlayerTest {
     @DisplayName("게임 진행 점수 조건이 충분한 지 : true")
     void isNotEnoughScoreConditionTrue(List<Card> cards) {
         //given
-        Participant player = Player.from("pobi");
+        Participant player = Player.from("pobie");
         player.addCards(cards);
         //when
         //then
@@ -59,16 +56,16 @@ public class PlayerTest {
         return Stream.of(
                 Arguments.arguments(
                         List.of(
-                                new Card(Suit.CLUBS, Rank.ACE),
-                                new Card(Suit.HEARTS, Rank.FIVE),
-                                new Card(Suit.SPADES, Rank.SEVEN)
+                                new MultiScoreCard(Suit.CLUBS, Rank.ACE),
+                                new SingleScoreCard(Suit.HEARTS, Rank.FIVE),
+                                new SingleScoreCard(Suit.SPADES, Rank.SEVEN)
                         )
                 ),
                 Arguments.arguments(
                         List.of(
-                                new Card(Suit.CLUBS, Rank.ACE),
-                                new Card(Suit.SPADES, Rank.FIVE),
-                                new Card(Suit.HEARTS, Rank.ACE)
+                                new MultiScoreCard(Suit.CLUBS, Rank.ACE),
+                                new SingleScoreCard(Suit.SPADES, Rank.FIVE),
+                                new MultiScoreCard(Suit.HEARTS, Rank.ACE)
                         )
                 )
         );
@@ -79,10 +76,14 @@ public class PlayerTest {
     void isNotEnoughScoreConditionFalse() {
         //given
         List<Card> cards = List.of(
-                new Card(Suit.CLUBS, Rank.ACE),
-                new Card(Suit.HEARTS, Rank.KING)
+                new MultiScoreCard(Suit.CLUBS, Rank.ACE),
+                new SingleScoreCard(Suit.HEARTS, Rank.KING)
         );
-        Participant player = Player.from("pobi");
+        Participant player = Player.from("pobie");
+
+        for (Card card : cards) {
+            System.out.println(card.getRank());
+        }
         player.addCards(cards);
         //when
         //then

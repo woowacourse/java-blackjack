@@ -8,6 +8,9 @@ public class InputView {
 
     private static final Scanner sc = new Scanner(System.in);
 
+    public static void welcomeMsg() {
+        System.out.println();
+    }
     public static List<String> readPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = sc.nextLine();

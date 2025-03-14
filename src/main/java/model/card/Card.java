@@ -1,28 +1,26 @@
 package model.card;
 
-public class Card {
+public abstract class Card {
 
-    private final Suit suit;
-    private final Rank rank;
+    protected final Suit suit;
+    protected final Rank rank;
 
     public Card(Suit suit, Rank rank) {
         this.suit = suit;
         this.rank = rank;
     }
 
-    public void adjustRank() {
-        rank.adjustRankScore();
-    }
+    public abstract int findAdjustOrDefalutScore();
 
-    public int getRankScore() {
-        return rank.getScore();
+    public Rank getRank() {
+        return rank;
     }
 
     public Suit getSuit() {
         return suit;
     }
 
-    public Rank getRank() {
-        return rank;
+    public int getScore() {
+        return rank.getDefaultScore();
     }
 }

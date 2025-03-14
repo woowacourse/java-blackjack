@@ -1,9 +1,6 @@
 package model.participant;
 
-import model.card.Card;
-import model.card.CardDeck;
-import model.card.Rank;
-import model.card.Suit;
+import model.card.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +14,7 @@ class DealerTest {
     void newDealer() {
 
         // given
-        final Participant dealer = Dealer.newInstance();
+        final Participant dealer = Dealer.create();
         String expected = "딜러";
 
         // when
@@ -36,7 +33,7 @@ class DealerTest {
         final List<Card> cards = new CardDeck().pickCard(2);
 
         // when
-        Participant dealer = Dealer.newInstance();
+        Participant dealer = Dealer.create();
         dealer.addCards(cards);
 
         // then
@@ -49,14 +46,14 @@ class DealerTest {
         // given
         // 총 합이 9
         List<Card> divideCards = List.of(
-                new Card(Suit.HEARTS, Rank.FIVE),
-                new Card(Suit.CLUBS, Rank.FOUR)
+                new SingleScoreCard(Suit.HEARTS, Rank.FIVE),
+                new SingleScoreCard(Suit.CLUBS, Rank.FOUR)
         );
         int expected = divideCards.stream()
-                .mapToInt(Card::getRankScore)
+                .mapToInt(Card::getScore)
                 .sum();
 
-        Participant dealer = Dealer.newInstance();
+        Participant dealer = Dealer.create();
         dealer.addCards(divideCards);
 
         // when
@@ -72,11 +69,11 @@ class DealerTest {
 
         // given
         List<Card> divideCards = List.of(
-                new Card(Suit.HEARTS, Rank.JACK),
-                new Card(Suit.CLUBS, Rank.FOUR)
+                new SingleScoreCard(Suit.HEARTS, Rank.JACK),
+                new SingleScoreCard(Suit.CLUBS, Rank.FOUR)
         );
 
-        Dealer dealer = Dealer.newInstance();
+        Dealer dealer = Dealer.create();
         dealer.addCards(divideCards);
 
         // when
@@ -90,11 +87,11 @@ class DealerTest {
 
         // given
         List<Card> divideCards = List.of(
-                new Card(Suit.HEARTS, Rank.JACK),
-                new Card(Suit.CLUBS, Rank.KING)
+                new SingleScoreCard(Suit.HEARTS, Rank.JACK),
+                new SingleScoreCard(Suit.CLUBS, Rank.KING)
         );
 
-        Dealer dealer = Dealer.newInstance();
+        Dealer dealer = Dealer.create();
         dealer.addCards(divideCards);
 
         // when

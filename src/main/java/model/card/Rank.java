@@ -19,28 +19,40 @@ public enum Rank {
     ACE(List.of(11, 1));
 
     private final List<Integer> scoreData;
-    private int scoreIdx;
 
     Rank(int score) {
         this.scoreData = List.of(score);
-        this.scoreIdx = 0;
     }
 
     Rank(List<Integer> score) {
         this.scoreData = score;
     }
 
-    public void adjustRankScore() {
-        if (!isLastValue()) {
-            scoreIdx++;
+    public boolean isMultiScores() {
+        return scoreData.size() > 1;
+    }
+
+    public int findScore(int idx) {
+        return scoreData.get(idx);
+    }
+
+    public int findNextScore(int idx) {
+        int nextIdx = findNextIdx(idx);
+        return scoreData.get(nextIdx);
+    }
+
+    private int findNextIdx(int idx) {
+        if (!isLastIdx(idx)) {
+            return idx + 1;
         }
+        return idx;
     }
 
-    public boolean isLastValue() {
-        return scoreIdx + 1 >= scoreData.size();
+    private boolean isLastIdx(int idx) {
+        return idx + 1 >= scoreData.size();
     }
 
-    public int getScore() {
-        return scoreData.get(scoreIdx);
+    public int getDefaultScore() {
+        return scoreData.getFirst();
     }
 }

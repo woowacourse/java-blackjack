@@ -2,6 +2,7 @@ package model.participant;
 
 import model.card.Card;
 import model.card.Rank;
+import model.card.SingleScoreCard;
 import model.card.Suit;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -40,14 +41,14 @@ public class PlayersTest {
         // given
         // 총 합이 9
         List<Card> divideCards = List.of(
-                new Card(Suit.HEARTS, Rank.FIVE),
-                new Card(Suit.CLUBS, Rank.FOUR)
+                new SingleScoreCard(Suit.HEARTS, Rank.FIVE),
+                new SingleScoreCard(Suit.CLUBS, Rank.FOUR)
         );
         int expected = divideCards.stream()
-                .mapToInt(Card::getRankScore)
+                .mapToInt(Card::getScore)
                 .sum();
 
-        String nickname = "pobi";
+        String nickname = "pobia";
         Player player = Player.from(nickname);
         player.addCards(divideCards);
 
@@ -63,8 +64,8 @@ public class PlayersTest {
     void validateDuplication() {
         //given
         List<String> actual = List.of(
-                "pobi",
-                "pobi"
+                "pobib",
+                "pobib"
         );
         //when
         //then
