@@ -17,9 +17,8 @@ import static domain.GameResult.getAllGameResults;
 
 public class GameManager {
     public static final int BLACKJACK_NUMBER = 21;
-    private static final int DEALER_HIT_SCORE = 16;
     public static final int START_RECEIVE_CARD = 2;
-
+    private static final int DEALER_HIT_SCORE = 16;
     private final Dealer dealer;
     private final List<Player> players;
     private final CardGenerator cardGenerator;
@@ -33,7 +32,7 @@ public class GameManager {
     public static GameManager create(final List<String> playerNames, CardGenerator cardGenerator) {
         Dealer dealer = GamerGenerator.generateDealer();
         List<Player> players = GamerGenerator.generatePlayer(playerNames, cardGenerator);
-        return new GameManager(dealer, players,cardGenerator);
+        return new GameManager(dealer, players, cardGenerator);
     }
 
     public void initOpeningCards() {
@@ -44,7 +43,7 @@ public class GameManager {
     }
 
     public void dealerHitUntilStand() {
-        while(dealer.isLessThen(DEALER_HIT_SCORE)){
+        while (dealer.isLessThen(DEALER_HIT_SCORE)) {
             dealCardToDealer();
         }
     }
@@ -65,21 +64,21 @@ public class GameManager {
                 ));
     }
 
-    public int getDealerBetResult(Map<String,Integer> playerBets){
+    public int getDealerBetResult(Map<String, Integer> playerBets) {
         BlackJackBetCalculator calculator = new BlackJackBetCalculator(playerBets);
-        return calculator.getDealerBetResult(dealer,players);
+        return calculator.getDealerBetResult(dealer, players);
     }
 
-    public Map<String,Integer> getPlayerBetResult(Map<String,Integer> playerBets){
+    public Map<String, Integer> getPlayerBetResult(Map<String, Integer> playerBets) {
         BlackJackBetCalculator calculator = new BlackJackBetCalculator(playerBets);
-        return calculator.getPlayerBetResult(dealer,players);
+        return calculator.getPlayerBetResult(dealer, players);
     }
 
     public void dealCardToPlayer(Player player) {
         player.receiveCard(cardGenerator.peekCard());
     }
 
-    public void dealCardToDealer(){
+    public void dealCardToDealer() {
         dealer.receiveCard(cardGenerator.peekCard());
     }
 

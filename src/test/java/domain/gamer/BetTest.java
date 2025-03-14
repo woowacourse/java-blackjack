@@ -4,12 +4,12 @@ import domain.bet.Bet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BetTest {
     @DisplayName("블랙잭인 경우 베팅 금액의 1.5배를 준다")
     @Test
-    void isBlackJackBetTest(){
+    void isBlackJackBetTest() {
         Bet bet = new Bet(10);
 
         int blackJackBet = bet.getBlackJackPrize();
@@ -19,7 +19,7 @@ class BetTest {
 
     @DisplayName("승리한 경우 베팅한 금액을 받는다")
     @Test
-    void winningBetTest(){
+    void winningBetTest() {
         Bet bet = new Bet(10);
 
         int winningBet = bet.getWinningPrize();
@@ -29,7 +29,7 @@ class BetTest {
 
     @DisplayName("패배한 경우 베팅한 금액을 잃는다")
     @Test
-    void losingBetTest(){
+    void losingBetTest() {
         Bet bet = new Bet(10);
 
         int losingBet = bet.getLosingPrize();
@@ -39,7 +39,7 @@ class BetTest {
 
     @DisplayName("무승부 경우 금액을 돌려받는다")
     @Test
-    void drawingBetTest(){
+    void drawingBetTest() {
         Bet bet = new Bet(10);
 
         int losingBet = bet.getDrawPrize();

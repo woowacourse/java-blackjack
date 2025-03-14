@@ -16,7 +16,9 @@ public class Gamer {
         this.cardGroup = cardGroup;
     }
 
-    public boolean isBlackjack(){return cardGroup.countCards() == START_RECEIVE_CARD && calculateScore() == BLACKJACK_NUMBER;}
+    public boolean isBlackjack() {
+        return cardGroup.countCards() == START_RECEIVE_CARD && calculateScore() == BLACKJACK_NUMBER;
+    }
 
     public void receiveCard(Card card) {
         cardGroup.addCard(card);

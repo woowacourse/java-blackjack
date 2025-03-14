@@ -13,11 +13,13 @@ public class Dealer {
         this.gamer = new Gamer(cardGroup);
     }
 
-    public void receiveCard(Card card){
+    public void receiveCard(Card card) {
         gamer.receiveCard(card);
     }
 
-    public boolean isBlackJack(){return gamer.isBlackjack();}
+    public boolean isBlackJack() {
+        return gamer.isBlackjack();
+    }
 
     public int calculateScore() {
         return gamer.calculateScore();

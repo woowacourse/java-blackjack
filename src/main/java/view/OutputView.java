@@ -61,6 +61,7 @@ public class OutputView {
         System.out.println(LINE_SEPARATOR + dealerMessage + LINE_SEPARATOR + playerMessage);
     }
 
+    @Deprecated
     public void printGameResult(final Map<GameResult, Integer> dealerGameResult,
                                 final Map<String, GameResult> playerGameResult) {
         final StringBuilder sb = new StringBuilder();

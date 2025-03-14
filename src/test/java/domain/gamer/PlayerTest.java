@@ -1,17 +1,20 @@
 package domain.gamer;
 
-import static domain.card.CardScore.*;
-import static domain.card.CardType.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
+import domain.GameResult;
+import domain.card.Card;
+import domain.card.CardGenerator;
+import domain.card.CardGroup;
+import domain.card.RandomCardGenerator;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import domain.GameResult;
-import domain.card.*;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static domain.card.CardScore.*;
+import static domain.card.CardType.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class PlayerTest {
     @Test
@@ -81,12 +84,12 @@ public class PlayerTest {
 
     @DisplayName("플레이어의 카드가 2장이고 합이 21인 경우 블랙잭이다.")
     @Test
-    void isBlackJackTest(){
+    void isBlackJackTest() {
         String name = "가이온";
         CardGroup cardGroup = new CardGroup();
         Player blackJackPlayer = new Player(name, cardGroup);
-        blackJackPlayer.receiveCard(new Card(CLOVER,ACE));
-        blackJackPlayer.receiveCard(new Card(CLOVER,JACK));
+        blackJackPlayer.receiveCard(new Card(CLOVER, ACE));
+        blackJackPlayer.receiveCard(new Card(CLOVER, JACK));
 
         boolean isBlackJack = blackJackPlayer.isBlackJack();
 
@@ -95,13 +98,13 @@ public class PlayerTest {
 
     @DisplayName("플레이어의 카드가 3장이고 합이 21인 경우 블랙잭이 아니다.")
     @Test
-    void isNotBlackJackTest1(){
+    void isNotBlackJackTest1() {
         String name = "가이온";
         CardGroup cardGroup = new CardGroup();
         Player blackJackPlayer = new Player(name, cardGroup);
-        blackJackPlayer.receiveCard(new Card(CLOVER,ACE));
-        blackJackPlayer.receiveCard(new Card(CLOVER,TWO));
-        blackJackPlayer.receiveCard(new Card(CLOVER,EIGHT));
+        blackJackPlayer.receiveCard(new Card(CLOVER, ACE));
+        blackJackPlayer.receiveCard(new Card(CLOVER, TWO));
+        blackJackPlayer.receiveCard(new Card(CLOVER, EIGHT));
 
         boolean isBlackJack = blackJackPlayer.isBlackJack();
 
@@ -110,12 +113,12 @@ public class PlayerTest {
 
     @DisplayName("플레이어의 카드가 2장이고 합이 21이 아닌 경우 블랙잭이 아니다.")
     @Test
-    void isNotBlackJackTest2(){
+    void isNotBlackJackTest2() {
         String name = "가이온";
         CardGroup cardGroup = new CardGroup();
         Player blackJackPlayer = new Player(name, cardGroup);
-        blackJackPlayer.receiveCard(new Card(CLOVER,JACK));
-        blackJackPlayer.receiveCard(new Card(CLOVER,TWO));
+        blackJackPlayer.receiveCard(new Card(CLOVER, JACK));
+        blackJackPlayer.receiveCard(new Card(CLOVER, TWO));
 
         boolean isNotBlackJack = blackJackPlayer.isBlackJack();
 

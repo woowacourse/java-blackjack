@@ -25,19 +25,19 @@ public class Bet {
         return Objects.hashCode(bettingCount);
     }
 
-    public int getBlackJackPrize(){
+    public int getBlackJackPrize() {
         return bettingCount * BLACKJACK_PRIZE_RATE / 10;
     }
 
-    public int getWinningPrize(){
+    public int getWinningPrize() {
         return bettingCount;
     }
 
-    public int getLosingPrize(){
+    public int getLosingPrize() {
         return -bettingCount;
     }
 
-    public int getDrawPrize(){
+    public int getDrawPrize() {
         return DRAW_BET_PRIZE;
     }
 }
