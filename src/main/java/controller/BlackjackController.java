@@ -12,8 +12,10 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import view.GamblerDto;
 import view.InputView;
 import view.OutputView;
 
@@ -33,14 +35,17 @@ public class BlackjackController {
         Gamblers gamblers = new Gamblers(dealer, players);
 
         gamblers.distributeSetUpCards(cardPack);
-        outputView.printSetUpCardDeck(dealer, toKeyList(players));
+        List<GamblerDto> gamblerDtos = toKeyList(players).stream().map(GamblerDto::from).toList();
+        outputView.printSetUpCardDeck(dealer.getOpenCard(), gamblerDtos);
 
         gamblers.distributeExtraCardsToPlayers(cardPack, new ViewPlayerAnswer(inputView, outputView));
         gamblers.distributeExtraCardsToDealer(cardPack, new ViewDealerAnswer(outputView));
         outputView.printFinalCardDeck(chainGamblers(dealer, toKeyList(players)));
 
-        Map<Gambler, Integer> gamblerProfits = gamblers.evaluateProfits();
-        outputView.printGamblerProfits(gamblerProfits);
+        Map<GamblerDto, Integer> gamblerDtoProfits = gamblers.evaluateProfits().entrySet()
+            .stream()
+            .collect(Collectors.toMap(e -> GamblerDto.from(e.getKey()), Entry::getValue));
+        outputView.printGamblerProfits(gamblerDtoProfits);
     }
 
     private Map<Player, GamblingMoney> createPlayers() {
@@ -57,21 +62,12 @@ public class BlackjackController {
             );
     }
 
-    private List<Gambler> chainGamblers(Dealer dealer, List<Player> players) {
+    private List<GamblerDto> chainGamblers(Dealer dealer, List<Player> players) {
         List<Gambler> gamblers = new ArrayList<>(players);
         gamblers.addFirst(dealer);
-        return gamblers;
-    }
-
-    private Map<Player, Winning> playerWinningsInOrder(List<Player> players,
-        Map<Player, Winning> playerWinnings) {
-        return players.stream()
-            .collect(Collectors.toMap(
-                Function.identity(),
-                playerWinnings::get,
-                (exist, replace) -> exist,
-                LinkedHashMap::new
-            ));
+        return gamblers.stream()
+            .map(GamblerDto::from)
+            .toList();
     }
 
     private <T> List<T> toKeyList(Map<T, ?> map) {

@@ -20,16 +20,15 @@ public class OutputView {
         this.printStream = printStream;
     }
 
-    public void printSetUpCardDeck(Dealer dealer, List<Player> players) {
-        Card dealerOpenCard = dealer.getOpenCard();
+    public void printSetUpCardDeck(Card dealerOpenCard, List<GamblerDto> players) {
         String playerNames = players.stream()
-            .map(Player::getName)
+            .map(GamblerDto::name)
             .collect(Collectors.joining(","));
 
         printStream.printf("딜러와 %s에게 2장을 나누었습니다.%n", playerNames);
         printStream.println("딜러카드: " + dealerOpenCard);
-        players.forEach(player -> printStream.printf("%s카드: %s%n", player.getName(),
-            formatCards(player.getCards())));
+        players.forEach(player -> printStream.printf("%s카드: %s%n",
+            player.name(), formatCards(player.cards())));
     }
 
     public void printTakenMoreCards(String name, List<Card> cards) {
@@ -40,17 +39,17 @@ public class OutputView {
         printStream.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printFinalCardDeck(List<Gambler> gamblers) {
+    public void printFinalCardDeck(List<GamblerDto> gamblers) {
         gamblers.forEach(gambler ->
             printStream.printf("%s카드: %s - 결과: %d\n",
-                gambler.getName(), formatCards(gambler.getCards()), gambler.calculateScore())
+                gambler.name(), formatCards(gambler.cards()), gambler.score())
         );
     }
 
-    public void printGamblerProfits(Map<Gambler, Integer> gamblerProfits) {
+    public void printGamblerProfits(Map<GamblerDto, Integer> gamblerProfits) {
         printStream.println("## 최종 수익");
         gamblerProfits.forEach((gambler, profit) ->
-            printStream.printf("%s: %d%n", gambler.getName(), profit));
+            printStream.printf("%s: %d%n", gambler.name(), profit));
     }
 
     private String formatCards(List<Card> cards) {
