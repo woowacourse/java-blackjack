@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.result;
 
 import java.util.HashMap;
 import java.util.Map;

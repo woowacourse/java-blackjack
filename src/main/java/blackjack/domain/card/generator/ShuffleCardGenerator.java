@@ -1,4 +1,4 @@
-package blackjack.domain.shuffle;
+package blackjack.domain.card.generator;
 
 import blackjack.domain.card.Card;
 import java.util.ArrayList;

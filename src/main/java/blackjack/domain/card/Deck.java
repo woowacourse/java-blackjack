@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-import blackjack.domain.shuffle.CardGenerator;
+import blackjack.domain.card.generator.CardGenerator;
 import java.util.stream.IntStream;
 
 public class Deck {

@@ -3,8 +3,8 @@ package blackjack.domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.domain.shuffle.CardGenerator;
-import blackjack.domain.shuffle.ShuffleCardGenerator;
+import blackjack.domain.card.generator.CardGenerator;
+import blackjack.domain.card.generator.ShuffleCardGenerator;
 import blackjack.fixture.TestFixture.TestCardGeneratorGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

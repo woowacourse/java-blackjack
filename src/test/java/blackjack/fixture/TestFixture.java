@@ -4,11 +4,9 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardScore;
 import blackjack.domain.card.Hand;
 import blackjack.domain.card.Shape;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participants;
+import blackjack.domain.card.generator.CardGenerator;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.shuffle.CardGenerator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +24,6 @@ public class TestFixture {
             }
             return new Card(Shape.DIAMOND, CardScore.THREE);
         }
-    }
-
-    public static Participants provideParticipants() {
-        return new Participants(new Dealer(provideEmptyCards()), providePlayers());
     }
 
     public static Hand provideCards(final int count) {

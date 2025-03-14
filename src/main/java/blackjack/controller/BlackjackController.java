@@ -1,13 +1,13 @@
 package blackjack.controller;
 
-import blackjack.domain.DealerWinningResult;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
+import blackjack.domain.card.generator.ShuffleCardGenerator;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Gamer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.shuffle.ShuffleCardGenerator;
+import blackjack.domain.result.DealerWinningResult;
 import blackjack.util.StringParser;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
@@ -67,6 +67,19 @@ public class BlackjackController {
     }
 
     private void spreadExtraCards(final Dealer dealer, final Players players, final Deck deck) {
+        spreadExtraCardsToPlayer(players, deck);
+        spreadExtraCardsToDealer(dealer, deck);
+    }
+
+    private void spreadExtraCardsToDealer(final Dealer dealer, final Deck deck) {
+        while (dealer.canHit()) {
+            final Hand hand = deck.spreadCards(SPREAD_SIZE);
+            dealer.receiveCards(new Hand(List.of(hand.getFirstCard())));
+            resultView.printDealerExtraCard();
+        }
+    }
+
+    private void spreadExtraCardsToPlayer(final Players players, final Deck deck) {
         Players availablePlayers = players.findHitAvailablePlayers();
         for (Gamer gamer : availablePlayers.getPlayers()) {
             while (gamer.canHit() && wantHit(gamer)) {
@@ -74,11 +87,6 @@ public class BlackjackController {
                 gamer.receiveCards(new Hand(List.of(hand.getFirstCard())));
                 resultView.printParticipantTotalCards(gamer.getNickname(), gamer.showAllCards());
             }
-        }
-        while (dealer.canHit()) {
-            final Hand hand = deck.spreadCards(SPREAD_SIZE);
-            dealer.receiveCards(new Hand(List.of(hand.getFirstCard())));
-            resultView.printDealerExtraCard();
         }
     }
 

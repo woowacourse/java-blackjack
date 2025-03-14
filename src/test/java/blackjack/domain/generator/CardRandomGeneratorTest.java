@@ -1,9 +1,11 @@
-package blackjack.domain.shuffle;
+package blackjack.domain.generator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.generator.CardGenerator;
+import blackjack.domain.card.generator.ShuffleCardGenerator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
