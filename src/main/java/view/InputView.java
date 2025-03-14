@@ -25,7 +25,7 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public Answer readYesOrNo(Player player) {
+    public Answer readPlayerHit(Player player) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", player.getName());
         return Answer.of(scanner.nextLine());
     }
