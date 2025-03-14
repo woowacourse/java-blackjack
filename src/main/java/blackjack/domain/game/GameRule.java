@@ -2,8 +2,8 @@ package blackjack.domain.game;
 
 public enum GameRule {
     INITIAL_CARD_COUNT(2),
-    LIMIT_POINT_BEFORE_BUST(21),
-    DEALER_LIMIT_POINT(16),
+    BUST_THRESHOLD(21),
+    DEALER_DRAW_THRESHOLD(16),
     SOFT_ACE(11),
     MAX_PLAYER_COUNT(10);
 
@@ -14,27 +14,17 @@ public enum GameRule {
     }
 
     public static boolean isBust(int point) {
-        return point > GameRule.LIMIT_POINT_BEFORE_BUST.getValue();
+        return point > GameRule.BUST_THRESHOLD.getValue();
     }
 
-    public static boolean checkPossibilityOfHit(int point) {
-        return point < GameRule.LIMIT_POINT_BEFORE_BUST.getValue();
-    }
-
-    public static boolean checkPossibilityOfDealerDrawing(int point) {
-        return point <= DEALER_LIMIT_POINT.getValue();
-    }
-
-    public static boolean checkBlackJack(int point) {
-        return point == LIMIT_POINT_BEFORE_BUST.getValue();
-    }
-
-    public static boolean checkInitialHand(int cardCountInHand) {
-        return INITIAL_CARD_COUNT.getValue() == cardCountInHand;
+    public static boolean isBlackJack(int cardCountInHand, int point) {
+        boolean isInitialHand = cardCountInHand == INITIAL_CARD_COUNT.getValue();
+        boolean isMaxPoint = point == BUST_THRESHOLD.getValue();
+        return isInitialHand && isMaxPoint;
     }
 
     public static int applyBustToPoint(int point) {
-        if (point > LIMIT_POINT_BEFORE_BUST.value) {
+        if (point > BUST_THRESHOLD.value) {
             return 0;
         }
         return point;

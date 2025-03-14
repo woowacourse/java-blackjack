@@ -68,10 +68,10 @@ public class BlackJackGame {
     }
 
     private void processPlayerTurn(Player player) {
-        while (player.checkHitPossibility() &&
+        while (player.canHit() &&
                 gameInputOutput.readIngWannaHit(player.getNickname())) {
             Card card = cardDeck.drawCard(1).getFirst();
-            player.hit(card);
+            player.hitUntilLimit(card);
             gameInputOutput.printingHitResult(player);
         }
     }

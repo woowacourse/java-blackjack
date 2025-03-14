@@ -50,7 +50,7 @@ class PlayerTest {
     void canHit() {
         Card newCard = new Card(CardShape.HEART, CardValue.EIGHT);
 
-        player.hit(newCard);
+        player.hitUntilLimit(newCard);
 
         assertThat(player.getHand()).hasSize(1);
         assertThat(player.getHand().getFirst()).isEqualTo(newCard);
@@ -62,7 +62,7 @@ class PlayerTest {
         List<Card> initialCards = List.of(make(CardValue.KING), make(CardValue.JACK), make(CardValue.ACE));
         player.addInitialCards(initialCards);
 
-        assertThatCode(() -> player.hit(make(CardValue.ACE)))
+        assertThatCode(() -> player.hitUntilLimit(make(CardValue.ACE)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ExceptionMessage.CANNOT_HIT.getContent());
     }
@@ -73,7 +73,7 @@ class PlayerTest {
     void canCalculateTotalPoint(List<Card> cards, boolean expectedIsHitPossible) {
         player.addInitialCards(cards);
 
-        boolean actualIsHitPossible = player.checkHitPossibility();
+        boolean actualIsHitPossible = player.canHit();
 
         assertThat(actualIsHitPossible).isEqualTo(expectedIsHitPossible);
     }

@@ -25,13 +25,13 @@ public class Player {
         gameUser.addCardInHand(cards);
     }
 
-    public void hit(Card card) {
-        validateHitPossibility();
-        gameUser.addCardInHand(card);
+    public boolean canHit() {
+        return gameUser.getPoint() < GameRule.BUST_THRESHOLD.getValue();
     }
 
-    public boolean checkHitPossibility() {
-        return GameRule.checkPossibilityOfHit(gameUser.getPoint());
+    public void hitUntilLimit(Card card) {
+        validateHitPossibility();
+        gameUser.addCardInHand(card);
     }
 
     public PlayerProfit calculateProfit(Dealer dealer) {
@@ -68,14 +68,12 @@ public class Player {
     }
 
     private void validateHitPossibility() {
-        if (!checkHitPossibility()) {
+        if (!canHit()) {
             throw new IllegalArgumentException(ExceptionMessage.CANNOT_HIT.getContent());
         }
     }
 
     private boolean checkBlackjackWithInitialCard() {
-        boolean isBlackjack = GameRule.checkBlackJack(gameUser.getPoint());
-        boolean isInitialHand = GameRule.checkInitialHand(gameUser.getHand().size());
-        return isBlackjack && isInitialHand;
+        return GameRule.isBlackJack(gameUser.getHand().size(), gameUser.getPoint());
     }
 }
