@@ -1,6 +1,8 @@
 package money;
 
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import paticipant.Player;
 
@@ -16,6 +18,11 @@ public class WagerMoney {
 	}
 
 	public Map<Player, Money> calculateWagerResult() {
-		return null;
+		final WagerResultCalculator wagerResultCalculator = new WagerResultCalculator();
+		return money.keySet().stream()
+			.collect(Collectors.toMap(
+				Function.identity(),
+				player -> money.get(player).minus(wagerResultCalculator.calculate(player, money.get(player)))
+			));
 	}
 }
