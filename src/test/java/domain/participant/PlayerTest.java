@@ -106,4 +106,16 @@ public class PlayerTest {
         //when-then
         assertThat(player.calculateWinner(dealer.calculateSum())).isEqualTo(LOSE);
     }
+
+    @Test
+    @DisplayName("플레이어 초기 카드 오픈 테스트")
+    void openInitialCardsTest() {
+        Player player = new Player(new Hand(new ArrayList<>()), new Name("pobi"));
+        Deck cardDeck = new Deck(List.of(new Card(DIAMOND, JACK), new Card(SPADE, ACE)));
+        player.addCard(cardDeck.hitCard());
+        player.addCard(cardDeck.hitCard());
+
+        assertThat(player.openInitialCards().getFirst()).isEqualTo(new Card(DIAMOND, JACK));
+        assertThat(player.openInitialCards().get(1)).isEqualTo(new Card(SPADE, ACE));
+    }
 }

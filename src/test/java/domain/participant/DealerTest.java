@@ -109,4 +109,15 @@ public class DealerTest {
 
         assertDoesNotThrow(() -> dealer.draw(deck.hitCard()));
     }
+
+    @Test
+    @DisplayName("딜러 초기 카드 오픈 테스트")
+    void openInitialCardsTest() {
+        Deck deck = new Deck(List.of(new Card(CLOVER, SEVEN), new Card(SPADE, JACK), new Card(DIAMOND, SEVEN)));
+        Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
+        dealer.addCard(deck.hitCard());
+        dealer.addCard(deck.hitCard());
+
+        assertThat(dealer.openInitialCards().getFirst()).isEqualTo(new Card(CLOVER, SEVEN));
+    }
 }
