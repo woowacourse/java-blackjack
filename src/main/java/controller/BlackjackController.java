@@ -94,7 +94,7 @@ public class BlackjackController {
     }
 
     private void askForAdditionalCardByName(final String name, final BlackjackGame blackjackGame) {
-        while (!blackjackGame.checkIsBustByName(name)) {
+        while (blackjackGame.canPlayerDrawCard(name)) {
             UserInput decision = getUserInput(name);
             if (decision == UserInput.NO) {
                 break;

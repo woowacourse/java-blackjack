@@ -80,7 +80,7 @@ class BlackjackGameTest {
         assertThat(blackjackGame.getPlayerCardsByName("pobi").getCards()).hasSize(3);
     }
 
-    @DisplayName("플레이어가 버스트인지 확인한다.")
+    @DisplayName("플레이어가 카드를 더 뽑을 수 있는지 확인한다.")
     @Test
     void checkIsBustByNameTest() {
         Cards hotteokCards = new PlayerCards(new ArrayList<>(List.of(
@@ -98,8 +98,8 @@ class BlackjackGameTest {
         ));
 
         assertAll(
-                () -> assertThat(blackjackGame.checkIsBustByName("pobi")).isFalse(),
-                () -> assertThat(blackjackGame.checkIsBustByName("hotteok")).isTrue()
+                () -> assertThat(blackjackGame.canPlayerDrawCard("pobi")).isTrue(),
+                () -> assertThat(blackjackGame.canPlayerDrawCard("hotteok")).isFalse()
         );
     }
 

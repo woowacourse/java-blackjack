@@ -40,8 +40,8 @@ public class BlackjackGame {
         participants.findCardsByName(name).addCard(deck.getCard());
     }
 
-    public boolean checkIsBustByName(final String name) {
-        return participants.findCardsByName(name).isBust();
+    public boolean canPlayerDrawCard(final String name) {
+        return participants.findCardsByName(name).canDraw();
     }
 
     public int getDealerAdditionalDrawCount() {

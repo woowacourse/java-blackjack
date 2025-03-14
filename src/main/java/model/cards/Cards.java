@@ -9,7 +9,7 @@ import model.card.CardNumber;
 
 public abstract class Cards {
 
-    private static final int BUST_THRESHOLD = 21;
+    protected static final int BUST_THRESHOLD = 21;
 
     protected final List<Card> cards;
 
@@ -46,7 +46,7 @@ public abstract class Cards {
         }
     }
 
-    private int calculateSum() {
+    protected int calculateSum() {
         return cards.stream()
                 .mapToInt(Card::getNumberValue)
                 .sum();
