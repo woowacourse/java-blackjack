@@ -51,7 +51,6 @@ public class BlackJack {
         printEveryOneCardsNamesWithTotal(players, dealer);
         Map<Player, Integer> profitPerParticipant = calculateProfit(players, dealer, accountant);
         printProfitPerParticipant(profitPerParticipant, dealer);
-//        printWinLossResult(players, dealer, countWinLoss(players, dealer));
     }
 
     private Map<Player, Integer> calculateProfit(Players players, Dealer dealer, Accountant accountant) {
@@ -66,7 +65,6 @@ public class BlackJack {
         return profitPerParticipant;
     }
 
-
     private WinLossResult computeWinLoss(Player player, Dealer dealer) {
         int playerScore = player.getHandTotal();
         if (player.isBlackJack() && !dealer.isBlackJack()) {
@@ -80,24 +78,5 @@ public class BlackJack {
         }
         return WinLossResult.LOSS;
     }
-
-//    public WinLossCountDto countWinLoss(Players players, Dealer dealer) {
-//        ArrayList<Integer> winLossDraw = new ArrayList<>(Arrays.asList(0,0,0));
-//        int dealerScore = dealer.getHandTotal();
-//        players.getPlayers().forEach(player -> {
-//            // winLossResult가 나옴
-//            int playerScore = player.getHandTotal();
-//            if (playerScore < dealerScore) {
-//                winLossDraw.add(0, 1);
-//            }
-//            if (playerScore > dealerScore) {
-//                winLossDraw.add(1, 1);
-//            }
-//            if (playerScore == dealerScore) {
-//                winLossDraw.add(2, 1);
-//            }
-//        });
-//        return new WinLossCountDto(winLossDraw.get(0), winLossDraw.get(1), winLossDraw.get(2));
-//    }
 
 }
