@@ -3,6 +3,7 @@ package domain.participant;
 import domain.blackJack.MatchResult;
 import domain.blackJack.Result;
 import domain.card.CardDeck;
+import domain.card.Hand;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -24,15 +25,20 @@ public class Player extends Participant {
         }
     }
 
+    @Override
+    public Hand getFirstOpenHand() {
+        return hand;
+    }
+
+    public int calculateProfit(MatchResult matchResult) {
+        return money.calculateProfit(matchResult);
+    }
+
     private boolean isBust() {
         return Result.isBust(sum());
     }
 
     public String getName() {
         return name;
-    }
-
-    public int calculateProfit(MatchResult matchResult) {
-        return money.calculateProfit(matchResult);
     }
 }

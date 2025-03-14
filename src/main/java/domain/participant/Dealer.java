@@ -1,9 +1,7 @@
 package domain.participant;
 
-import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.Hand;
-import java.util.List;
 
 public class Dealer extends Participant {
     private static final int DEALER_DRAW_THRESHOLD = 16;
@@ -13,7 +11,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public Hand getFirstOpenHand(){
+    public Hand getFirstOpenHand() {
         return hand.firstOpenCards();
     }
 

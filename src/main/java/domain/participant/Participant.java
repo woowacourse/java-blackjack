@@ -22,9 +22,7 @@ public abstract class Participant{
         return hand;
     }
 
-    public Hand getFirstOpenHand(){
-        return hand;
-    }
+    public abstract Hand getFirstOpenHand();
 
     public boolean isBlackJackCount() {
         return hand.isBlackJackCount();
