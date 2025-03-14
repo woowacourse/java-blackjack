@@ -7,7 +7,7 @@ public class Names {
 
     private final List<Name> names;
 
-    public Names(List<String> names) {
+    public Names(final List<String> names) {
         validatePlayerNumbers(names);
         validateIsDuplicate(names);
         this.names = names.stream()

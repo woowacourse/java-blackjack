@@ -7,7 +7,7 @@ import java.util.List;
 public class Dealer extends Participant {
     private static final int DEALER_DRAW_THRESHOLD = 16;
 
-    public Dealer(Hand hand) {
+    public Dealer(final Hand hand) {
         super(hand);
     }
 

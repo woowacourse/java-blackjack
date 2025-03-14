@@ -3,7 +3,7 @@ package domain.participant;
 public class Name {
     private final String name;
 
-    public Name(String name) {
+    public Name(final String name) {
         isEmptyName(name);
         this.name = name;
     }

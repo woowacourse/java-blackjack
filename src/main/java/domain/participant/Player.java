@@ -14,7 +14,7 @@ public class Player extends Participant {
 
     private final Name name;
 
-    public Player(Hand hand, final Name name) {
+    public Player(final Hand hand, final Name name) {
         super(hand);
         this.name = name;
     }

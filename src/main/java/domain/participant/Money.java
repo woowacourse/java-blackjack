@@ -3,7 +3,7 @@ package domain.participant;
 public class Money {
     private final int money;
 
-    public Money(int money) {
+    public Money(final int money) {
         isDivisibleByTenThousand(money);
         this.money = money;
     }

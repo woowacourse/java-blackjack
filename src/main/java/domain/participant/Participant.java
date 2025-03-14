@@ -7,11 +7,11 @@ import java.util.List;
 abstract public class Participant {
     private final Hand cards;
 
-    public Participant(Hand hand) {
+    public Participant(final Hand hand) {
         this.cards = hand;
     }
 
-    public void addCard(Card card) {
+    public void addCard(final Card card) {
         cards.addCard(card);
     }
 
