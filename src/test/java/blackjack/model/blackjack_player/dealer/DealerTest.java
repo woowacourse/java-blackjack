@@ -194,7 +194,7 @@ class DealerTest {
         Dealer dealer = new Dealer(new DefaultCardDeckInitializer());
         Player player = new Player("pobi", 1000);
 
-        dealer.drawPlayerCards(player);
+        dealer.dealPlayerCards(player);
 
         assertThat(player.getCards().getValues()).hasSize(1);
     }
@@ -208,7 +208,7 @@ class DealerTest {
         ));
 
         assertThatIllegalStateException()
-                .isThrownBy(() -> dealer.drawPlayerCards(player));
+                .isThrownBy(() -> dealer.dealPlayerCards(player));
     }
 
     @ParameterizedTest

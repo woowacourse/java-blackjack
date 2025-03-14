@@ -40,7 +40,7 @@ public final class Dealer {
         return false;
     }
 
-    public void drawPlayerCards(final Player player) {
+    public void dealPlayerCards(final Player player) {
         if (player.canDrawMoreCard()) {
             player.receiveCards(drawCard(PLAYER_SINGLE_DRAW_AMOUNT));
             return;
