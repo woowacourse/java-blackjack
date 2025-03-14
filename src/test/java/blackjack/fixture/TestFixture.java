@@ -61,4 +61,13 @@ public class TestFixture {
                 new Card(Shape.SPADE, Denomination.TEN)
         );
     }
+
+    public static List<Card> provideFourSizeCards() {
+        return List.of(
+                new Card(Shape.DIAMOND, Denomination.ACE),
+                new Card(Shape.SPADE, Denomination.TEN),
+                new Card(Shape.HEART, Denomination.TWO),
+                new Card(Shape.CLOB, Denomination.SEVEN)
+        );
+    }
 }
