@@ -2,9 +2,7 @@ package view;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 import model.Betting;
@@ -34,11 +32,14 @@ public class InputView {
         return Arrays.stream(names).toList();
     }
 
-    public static PlayerChoice readChoice(Player player) {
-        OutputView.printHitOrStand(player);
-        String choice = SCANNER.nextLine();
-        validateChoice(choice);
-        return PlayerChoice.findPlayerChoice(choice);
+    public static PlayerChoice readFirstChoice(Player player) {
+        OutputView.printChoiceResult(player);
+        return handleFirstTurnChoice(player);
+    }
+
+    public static PlayerChoice readHitOrStand(Player player) {
+        OutputView.printChoiceResult(player);
+        return handleSubsequentTurnChoice(player);
     }
 
     public static int inputAdditionalBet() {
@@ -74,11 +75,23 @@ public class InputView {
         }
     }
 
-    private static void validateChoice(String choice) {
-        boolean check = Arrays.stream(PlayerChoice.values())
-                .anyMatch(value-> value.getChoiceName().equals(choice));
-        if (!check) {
-            throw new IllegalArgumentException("[ERROR] 잘못된 입력입니다. 입력값 : " + choice);
+    private static PlayerChoice handleFirstTurnChoice(Player player) {
+        System.out.println(player.getName() + "는 선택지중 하나를 골라주세요 (선택지: hit, stand, double down, surrender)");
+        String choice = SCANNER.nextLine();
+        return PlayerChoice.findPlayerChoice(choice);
+    }
+
+    private static PlayerChoice handleSubsequentTurnChoice(Player player) {
+        System.out.println(player.getName() + "는 선택지중 하나를 골라주세요 (선택지: hit, stand)");
+        String choice = SCANNER.nextLine();
+        return validateHitOrStand(choice);
+    }
+
+    private static PlayerChoice validateHitOrStand(String choice){
+        PlayerChoice playerChoice = PlayerChoice.findPlayerChoice(choice);
+        if (playerChoice != PlayerChoice.HIT && playerChoice != PlayerChoice.STAND){
+            throw new IllegalArgumentException("[ERROR] 잘못된 선택지 입니다. 입력값 : " + choice);
         }
+        return playerChoice;
     }
 }

@@ -6,7 +6,6 @@ import model.PlayerChoice;
 import model.card.Deck;
 import model.participant.Player;
 import view.InputView;
-import view.OutputView;
 
 public class PlayerTurn extends Turn{
     private final Player player;
@@ -20,9 +19,8 @@ public class PlayerTurn extends Turn{
         this.isSurrender = false;
     }
 
-    public void chooseAtOnePlayerChoice(Deck deck) {
-        OutputView.printHitResult(player);
-        PlayerChoice playerChoice = InputView.readChoice(player);
+    public void selectAtOnePlayerChoice(Deck deck) {
+        PlayerChoice playerChoice = InputView.readFirstChoice(player);
         if (playerChoice.equals(PlayerChoice.HIT)){
             processHit(deck);
         }
@@ -47,7 +45,14 @@ public class PlayerTurn extends Turn{
     private void processHit(Deck deck){
         player.receiveCard(deck.pick());
         if (!player.isBust()){
-            chooseAtOnePlayerChoice(deck);
+            selectHitOrStand(deck);
+        }
+    }
+
+    private void selectHitOrStand(Deck deck){
+        PlayerChoice playerChoice = InputView.readHitOrStand(player);
+        if (playerChoice == PlayerChoice.HIT){
+            processHit(deck);
         }
     }
 

@@ -24,11 +24,7 @@ public class OutputView {
         }
     }
 
-    public static void printHitOrStand(Player player) {
-        System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 hit, 아니오는 stand)");
-    }
-
-    public static void printHitResult(Player player) {
+    public static void printChoiceResult(Player player) {
         List<String> cardsName = player.getHandCards().stream().map(Card::getCardName).toList();
         System.out.println(player.getName() + "카드: " + String.join(JOIN_DELIMITER, cardsName));
     }
@@ -68,5 +64,4 @@ public class OutputView {
                 .toList();
         System.out.printf("\n딜러와 %s에게 2장을 나누었습니다.\n", String.join(JOIN_DELIMITER, playerNames));
     }
-
 }
