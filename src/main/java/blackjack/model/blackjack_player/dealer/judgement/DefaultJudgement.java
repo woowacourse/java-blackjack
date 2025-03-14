@@ -8,7 +8,7 @@ public final class DefaultJudgement implements Judgement {
     private static final float BLACKJACK_REWARD_RATE = 1.5f;
 
     @Override
-    public boolean isDraw(Dealer dealer, Player player) {
+    public boolean isDraw(final Dealer dealer, final Player player) {
         if (player.isBust() || dealer.isBust() || player.isBlackjack() || dealer.isBlackjack()) {
             return false;
         }
@@ -16,7 +16,7 @@ public final class DefaultJudgement implements Judgement {
     }
 
     @Override
-    public boolean isDealerWin(Dealer dealer, Player player) {
+    public boolean isDealerWin(final Dealer dealer, final Player player) {
         if (player.isBlackjack() || dealer.isBust()) {
             return false;
         }
@@ -27,7 +27,7 @@ public final class DefaultJudgement implements Judgement {
     }
 
     @Override
-    public int calculatePlayerReward(Player player) {
+    public int calculatePlayerReward(final Player player) {
         int bettingMoney = player.getBettingMoney();
         if (player.isBlackjack()) {
             return Math.round(bettingMoney * BLACKJACK_REWARD_RATE);
