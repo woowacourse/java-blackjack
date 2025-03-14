@@ -25,4 +25,11 @@ public class BettingRound {
             finalPlayerBets.put(player, 0);
         }
     }
+
+    public void extraPayoutOnBlackjack(Player player) {
+        if (player.isBlackJack()) {
+            int initialBetAmount = initialPlayerBets.get(player);
+            finalPlayerBets.put(player, (int) (initialBetAmount * 1.5));
+        }
+    }
 }
