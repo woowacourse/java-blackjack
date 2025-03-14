@@ -80,13 +80,13 @@ public class HandTest {
         hand.addCard(new Card(SPADE, ACE));
 
         // when
-        Hand handForFirstOpen = hand.firstOpenCards();
+        Hand handExceptHidden = hand.getExceptHidden();
 
         // then
         assertSoftly(softly -> {
-            softly.assertThat(handForFirstOpen.getCards().size()).isEqualTo(1);
-            softly.assertThat(handForFirstOpen.getCards().getFirst().getShape()).isEqualTo(DIAMOND);
-            softly.assertThat(handForFirstOpen.getCards().getFirst().getNumber()).isEqualTo(TWO);
+            softly.assertThat(handExceptHidden.getCards().size()).isEqualTo(1);
+            softly.assertThat(handExceptHidden.getCards().getFirst().getShape()).isEqualTo(DIAMOND);
+            softly.assertThat(handExceptHidden.getCards().getFirst().getNumber()).isEqualTo(TWO);
         });
     }
 
