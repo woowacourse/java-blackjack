@@ -104,4 +104,35 @@ class DealerTest {
         // then
         assertThat(dealerFirstCard).isEqualTo(card1);
     }
+
+    @DisplayName("블랙잭이면 true를 반환한다.")
+    @Test
+    void 블랙잭이면_true를_반환한다() {
+
+        // given
+        final Dealer dealer = new Dealer(new Nickname("새로이"));
+
+        // when
+        dealer.hit(new Card(Rank.JACK, Shape.CLOVER));
+        dealer.hit(new Card(Rank.ACE, Shape.CLOVER));
+
+        // then
+        assertThat(dealer.isBlackJack()).isTrue();
+    }
+
+    @DisplayName("블랙잭이 아니라면 false를 반환한다.")
+    @Test
+    void 블랙잭이_아니라면_false를_반환한다() {
+
+        // given
+        final Dealer dealer = new Dealer(new Nickname("새로이"));
+
+        // when
+        dealer.hit(new Card(Rank.JACK, Shape.CLOVER));
+        dealer.hit(new Card(Rank.FIVE, Shape.CLOVER));
+        dealer.hit(new Card(Rank.SIX, Shape.CLOVER));
+
+        // then
+        assertThat(dealer.isBlackJack()).isFalse();
+    }
 }
