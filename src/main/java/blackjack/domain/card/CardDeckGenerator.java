@@ -7,19 +7,21 @@ import java.util.List;
 
 public class CardDeckGenerator {
 
-    public CardDeck makeShuffled() {
-        List<Card> newCards = makeCard();
-        Collections.shuffle(newCards);
-        return new CardDeck(newCards);
-    }
+    private final List<Card> DEFAULT_CARDS;
 
-    private List<Card> makeCard() {
+    public CardDeckGenerator() {
         List<Card> newCards = new ArrayList<>();
         for (CardShape shape : CardShape.values()) {
             Arrays.stream(CardValue.values())
                     .map(cardValue -> new Card(shape, cardValue))
                     .forEach(newCards::add);
         }
-        return newCards;
+        this.DEFAULT_CARDS = newCards.stream().toList();
+    }
+
+    public CardDeck makeShuffled() {
+        List<Card> cards = new ArrayList<>(DEFAULT_CARDS);
+        Collections.shuffle(cards);
+        return new CardDeck(cards);
     }
 }
