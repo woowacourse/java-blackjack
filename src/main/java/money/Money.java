@@ -16,6 +16,6 @@ public class Money {
 	}
 
 	public Money minus(final Money minusMoney) {
-		return null;
+		return new Money(value - minusMoney.value);
 	}
 }
