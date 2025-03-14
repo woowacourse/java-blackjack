@@ -1,6 +1,5 @@
 package domain.participant;
 
-import domain.MatchResult;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.card.Hand;
@@ -11,6 +10,8 @@ import java.util.function.Function;
 public class Player extends Participant {
     private static final int BLACKJACK_NUMBER = 21;
     private static final int INITIAL_HIT_COUNT = 2;
+    private static final double BLACKJACK_PAYOUT_RATIO = 1.5;
+    private static final int LOSS_PAYOUT_RATIO = -1;
 
     private final Name name;
     private final Money money;
@@ -34,8 +35,14 @@ public class Player extends Participant {
         }
     }
 
-    public MatchResult calculateWinner(final int dealerSum) {
-        return MatchResult.calculateWinner(dealerSum, this.calculateSum());
+    public int calculateWinner(final int dealerSum) {
+        if (calculateSum() > dealerSum && calculateSum() == BLACKJACK_NUMBER) {
+            return (int) (getMoney() * BLACKJACK_PAYOUT_RATIO);
+        }
+        if (calculateSum() > dealerSum) {
+            return getMoney();
+        }
+        return getMoney() * LOSS_PAYOUT_RATIO;
     }
 
     private boolean isBust() {
@@ -45,6 +52,12 @@ public class Player extends Participant {
     public String getName() {
         return name.getName();
     }
+
+    public Hand getCards() {
+        return super.getCards();
+    }
+
+    public int getMoney() { return money.getMoney(); }
 
     @Override
     public void addCard(Card card) {
@@ -59,13 +72,5 @@ public class Player extends Participant {
     @Override
     public List<Card> openInitialCards() {
         return List.of(getCards().getHand().getFirst(), getCards().getHand().get(1));
-    }
-
-    public Hand getCards() {
-        return super.getCards();
-    }
-
-    public int getMoney() {
-        return money.getMoney();
     }
 }
