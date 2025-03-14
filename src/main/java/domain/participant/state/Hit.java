@@ -25,7 +25,7 @@ public class Hit extends HandState {
     }
 
     @Override
-    public double calculateProfit() {
-        throw new IllegalStateException("HIT 상태입니다.");
+    public double calculateProfitRate(HandState other) {
+        throw new IllegalStateException("HIT 상태에서는 수익률을 계산할 수 없습니다.");
     }
 }

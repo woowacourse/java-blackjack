@@ -15,30 +15,50 @@ import org.junit.jupiter.api.Test;
 class HandStateTest {
 
     @Test
-    void 블랙잭에_맞는_이익률을_반환한다() {
+    void 블랙잭_승리_수익률을_반환한다() {
         // given
         TrumpCard[] initCards = {new TrumpCard(Suit.HEART, CardValue.A), new TrumpCard(Suit.CLOVER, CardValue.K)};
+        TrumpCard[] otherInitCards = {new TrumpCard(Suit.HEART, CardValue.A),
+                new TrumpCard(Suit.CLOVER, CardValue.FIVE)};
+        HandState state = HandState.start(initCards);
+        HandState other = HandState.start(otherInitCards);
+        other = other.stay();
 
         // when
-        HandState state = HandState.start(initCards);
+        double actual = state.calculateProfitRate(other);
 
         // then
-
-        assertThat(state.calculateProfit()).isEqualTo(2.5);
+        assertThat(actual).isEqualTo(2.5);
     }
 
     @Test
-    void 버스트일_경우_0의_이익률을_반환한다() {
+    void 블랙잭_무승부_수익률을_반환한다() {
+        // given
+        TrumpCard[] initCards = {new TrumpCard(Suit.HEART, CardValue.A), new TrumpCard(Suit.CLOVER, CardValue.K)};
+        TrumpCard[] otherInitCards = {new TrumpCard(Suit.CLOVER, CardValue.A), new TrumpCard(Suit.SPADE, CardValue.J)};
+        HandState state = HandState.start(initCards);
+        HandState other = HandState.start(otherInitCards);
+
+        // when
+        double actual = state.calculateProfitRate(other);
+
+        // then
+        assertThat(actual).isEqualTo(1.0);
+    }
+
+    @Test
+    void 버스트일_경우_0의_수익률을_반환한다() {
         // given
         TrumpCard[] initCards = {new TrumpCard(Suit.HEART, CardValue.K), new TrumpCard(Suit.CLOVER, CardValue.K)};
         TrumpCard drawCard = new TrumpCard(Suit.SPADE, CardValue.K);
+        HandState other = HandState.start(initCards);
+        HandState state = HandState.start(initCards);
 
         // when
-        HandState state = HandState.start(initCards);
         state = state.addCard(drawCard);
 
         // then
-        assertThat(state.calculateProfit()).isEqualTo(0);
+        assertThat(state.calculateProfitRate(other)).isEqualTo(0);
     }
 
     @Test
@@ -55,4 +75,59 @@ class HandStateTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Stay 상태에서는 카드를 추가할 수 없습니다.");
     }
+
+    @Test
+    void 블랙잭이_아닌상태로_승리한_경우_수익률을_반환한다() {
+        // given
+        TrumpCard[] initCards = {new TrumpCard(Suit.HEART, CardValue.J), new TrumpCard(Suit.CLOVER, CardValue.K)};
+        TrumpCard[] otherInitCards = {new TrumpCard(Suit.HEART, CardValue.FIVE),
+                new TrumpCard(Suit.CLOVER, CardValue.FIVE)};
+        HandState state = HandState.start(initCards);
+        HandState other = HandState.start(otherInitCards);
+        state = state.stay();
+        other = other.stay();
+
+        // when
+        double actual = state.calculateProfitRate(other);
+
+        // then
+        assertThat(actual).isEqualTo(2.0);
+    }
+
+    @Test
+    void 블랙잭이_아닌상태로_패배한_경우_수익률을_반환한다() {
+        // given
+        TrumpCard[] initCards = {new TrumpCard(Suit.HEART, CardValue.J), new TrumpCard(Suit.CLOVER, CardValue.TWO)};
+        TrumpCard[] otherInitCards = {new TrumpCard(Suit.HEART, CardValue.FIVE),
+                new TrumpCard(Suit.CLOVER, CardValue.A)};
+        HandState state = HandState.start(initCards);
+        HandState other = HandState.start(otherInitCards);
+        state = state.stay();
+        other = other.stay();
+
+        // when
+        double actual = state.calculateProfitRate(other);
+
+        // then
+        assertThat(actual).isEqualTo(0);
+    }
+
+    @Test
+    void 블랙잭이_아닌상태로_무승부한_경우_수익률을_반환한다() {
+        // given
+        TrumpCard[] initCards = {new TrumpCard(Suit.HEART, CardValue.J), new TrumpCard(Suit.CLOVER, CardValue.K)};
+        TrumpCard[] otherInitCards = {new TrumpCard(Suit.HEART, CardValue.A),
+                new TrumpCard(Suit.CLOVER, CardValue.NINE)};
+        HandState state = HandState.start(initCards);
+        HandState other = HandState.start(otherInitCards);
+        state = state.stay();
+        other = other.stay();
+
+        // when
+        double actual = state.calculateProfitRate(other);
+
+        // then
+        assertThat(actual).isEqualTo(1.0);
+    }
+
 }

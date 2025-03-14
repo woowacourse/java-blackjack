@@ -20,7 +20,7 @@ public class Bust extends HandState {
     }
 
     @Override
-    public double calculateProfit() {
+    public double calculateProfitRate(HandState other) {
         return 0;
     }
 }

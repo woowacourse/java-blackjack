@@ -27,7 +27,7 @@ public abstract class HandState {
 
     public abstract HandState addCard(TrumpCard card);
     public abstract HandState stay();
-    public abstract double calculateProfit();
+    public abstract double calculateProfitRate(HandState other);
 
     public boolean isBust(){
         Score totalScore = hand.calculateCardSum();

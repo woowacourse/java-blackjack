@@ -5,6 +5,7 @@ import domain.participant.ParticipantHand;
 
 public class Blackjack extends HandState {
     private static final double BLACKJACK_PROFIT = 2.5;
+    private static final double BLACKJACK_DRAW_PROFIT = 1.0;
 
     public Blackjack(ParticipantHand hand) {
         super(hand);
@@ -21,7 +22,10 @@ public class Blackjack extends HandState {
     }
 
     @Override
-    public double calculateProfit() {
+    public double calculateProfitRate(HandState other) {
+        if (other.isBlackjack()) {
+            return BLACKJACK_DRAW_PROFIT;
+        }
         return BLACKJACK_PROFIT;
     }
 }

@@ -22,7 +22,7 @@ public class Start extends HandState {
     }
 
     @Override
-    public double calculateProfit() {
-        throw new IllegalArgumentException("이익률을 계산할 수 없습니다.");
+    public double calculateProfitRate(HandState other) {
+        throw new IllegalStateException("시작 상태에서는 이익률을 계산할 수 없습니다.");
     }
 }

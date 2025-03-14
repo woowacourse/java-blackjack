@@ -2,9 +2,12 @@ package domain.participant.state;
 
 import domain.card.TrumpCard;
 import domain.participant.ParticipantHand;
+import domain.participant.Score;
 
 public class Stay extends HandState {
-    private static final double WINNER_PROFIT_RATE = 2.0;
+    private static final double WIN_PROFIT_RATE = 2.0;
+    private static final double DRAW_PROFIT_RATE = 1.0;
+    private static final double LOSE_PROFIT_RATE = 0;
 
     public Stay(ParticipantHand hand) {
         super(hand);
@@ -21,7 +24,23 @@ public class Stay extends HandState {
     }
 
     @Override
-    public double calculateProfit() {
-        return WINNER_PROFIT_RATE;
+    public double calculateProfitRate(HandState other) {
+        if(other.isBust()){
+            return WIN_PROFIT_RATE;
+        }
+
+        return calculateProfitFromOtherScore(other);
+    }
+
+    private double calculateProfitFromOtherScore(HandState other){
+        Score score = calculateCardSum();
+        Score otherScore = other.calculateCardSum();
+        if(score.isGreaterThan(otherScore)){
+            return WIN_PROFIT_RATE;
+        }
+        if(score.isLessThan(otherScore)){
+            return LOSE_PROFIT_RATE;
+        }
+        return DRAW_PROFIT_RATE;
     }
 }
