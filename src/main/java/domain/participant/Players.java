@@ -33,21 +33,11 @@ public class Players {
         }
     }
 
-    public LinkedHashMap<Player, Integer> calculateWinner(Dealer dealer) {
-        LinkedHashMap<Player, MatchResult> matchResultOfPlayer = new LinkedHashMap<>();
+    public LinkedHashMap<Player, Integer> calculateProfit(Dealer dealer) {
+        LinkedHashMap<Player, Integer> profitOfPlayer = new LinkedHashMap<>();
 
         for (Player player : players) {
-            matchResultOfPlayer.put(player, Result.calculateResultOfPlayer(player, dealer));
-        }
-
-        return calculateProfit(matchResultOfPlayer);
-    }
-
-    private LinkedHashMap<Player, Integer> calculateProfit(LinkedHashMap<Player, MatchResult> res) {
-        LinkedHashMap<Player, Integer> profitOfPlayer = new LinkedHashMap<>();
-        for (Entry<Player, MatchResult> playerMatchResult : res.entrySet()) {
-            Player player = playerMatchResult.getKey();
-            profitOfPlayer.put(player, player.calculateProfit(playerMatchResult.getValue()));
+            profitOfPlayer.put(player, player.calculateProfit(Result.calculateResultOfPlayer(player, dealer)));
         }
 
         return profitOfPlayer;

@@ -38,7 +38,7 @@ public class BlackJack {
     }
 
     public Map<Player, Integer> calculatePlayerResult() {
-        return players.calculateWinner(dealer);
+        return players.calculateProfit(dealer);
     }
 
     public int calculateDealerResult(Map<Player, Integer> profitOfPlayer) {

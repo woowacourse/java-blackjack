@@ -8,6 +8,8 @@ public class Hand {
     private static final int ACE_BONUS = 10;
     private static final int BLACKJACK_COUNT = 2;
 
+    private static final int BLACKJACK_NUMBER = 21;
+
     private final List<Card> cards;
 
     public Hand() {
@@ -46,11 +48,20 @@ public class Hand {
         return new Hand(firstOpenCards);
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public boolean isBust() {
+        return sumWithAce() > BLACKJACK_NUMBER;
+    }
+
+    public boolean isBlackJackNumber(){
+        return sumWithAce() == BLACKJACK_NUMBER;
     }
 
     public boolean isBlackJackCount() {
         return cards.size() == BLACKJACK_COUNT;
     }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
 }

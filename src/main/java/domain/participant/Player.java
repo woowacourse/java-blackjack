@@ -19,7 +19,7 @@ public class Player extends Participant {
 
     public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck,
                      final CardDeck standard) {
-        while (!isBust() && answer.apply(this)) {
+        while (!hand.isBust() && answer.apply(this)) {
             hand.addCard(standard.hitCard());
             playerDeck.accept(this);
         }
@@ -32,10 +32,6 @@ public class Player extends Participant {
 
     public int calculateProfit(MatchResult matchResult) {
         return money.calculateProfit(matchResult);
-    }
-
-    private boolean isBust() {
-        return Result.isBust(sum());
     }
 
     public String getName() {
