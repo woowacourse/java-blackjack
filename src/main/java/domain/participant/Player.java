@@ -30,6 +30,16 @@ public class Player extends Participant {
         return BlackjackResult.getPlayerResult(dealer, this);
     }
 
+    public void win(Dealer dealer) {
+        increaseAmount(betAmount.getAmount());
+        dealer.decreaseAmount(betAmount.getAmount());
+    }
+
+    public void lose(Dealer dealer) {
+        decreaseAmount(betAmount.getAmount());
+        dealer.increaseAmount(betAmount.getAmount());
+    }
+
     @Override
     public boolean canHit() {
         return getScore() < Card.BLACKJACK_SCORE;

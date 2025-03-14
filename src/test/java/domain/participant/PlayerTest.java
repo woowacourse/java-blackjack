@@ -80,6 +80,32 @@ public class PlayerTest {
         assertThat(result).isEqualTo(expectedResult);
     }
 
+    @Test
+    void 플레이어가_이겨서_베팅_금액을_얻는다() {
+        // given
+        final Dealer dealer = Dealer.of(CardDeck.of());
+        final Player player = Player.of("winner", Money.of(1000));
+
+        // when
+        player.win(dealer);
+
+        // then
+        assertThat(player.getTotalWinnings()).isEqualTo(1000);
+    }
+
+    @Test
+    void 플레이어가_져서_베팅_금액을_잃는다() {
+        // given
+        final Dealer dealer = Dealer.of(CardDeck.of());
+        final Player player = Player.of("winner", Money.of(1000));
+
+        // when
+        player.lose(dealer);
+
+        // then
+        assertThat(player.getTotalWinnings()).isEqualTo(-1000);
+    }
+
     private static Stream<Arguments> createPlayerAndResult() {
         final Player loser = Player.of("pobi", Money.of(1000));
         loser.receive(Card.of(TrumpNumber.ACE, TrumpShape.CLUB));

@@ -83,20 +83,16 @@ public class Players {
         BlackjackResult playerResult = player.getBlackjackResult(dealer);
 
         if (playerResult == BlackjackResult.LOSE) {
-            player.decreaseAmount(player.getBetAmount());
-            dealer.increaseAmount(player.getBetAmount());
+            player.lose(dealer);
         }
         if (playerResult == BlackjackResult.WIN) {
-            player.increaseAmount(player.getBetAmount());
-            dealer.decreaseAmount(player.getBetAmount());
+            player.win(dealer);
         }
     }
 
     private void handleBustDealerAmount(Dealer dealer, Player player) {
         if (!BlackjackResult.isBust(player)) {
-            int betAmount = player.getBetAmount();
-            player.increaseAmount(betAmount);
-            dealer.decreaseAmount(betAmount);
+            player.win(dealer);
         }
     }
 }
