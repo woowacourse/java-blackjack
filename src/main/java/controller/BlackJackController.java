@@ -23,9 +23,6 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackJackController {
-
-    private static final String DEALER_NAME = "딜러";
-
     public void run() {
         try {
             final Players players = createPlayers();
@@ -69,7 +66,7 @@ public class BlackJackController {
     }
 
     private Dealer createDealer() {
-        return new Dealer(new Nickname(DEALER_NAME));
+        return new Dealer();
     }
 
     private void setGame(final Players players, Dealer dealer, final Deck deck) {

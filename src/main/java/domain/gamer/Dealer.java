@@ -8,9 +8,10 @@ import java.util.List;
 public class Dealer extends Gamer {
 
     private static final int ACE_ADDITIONAL_NUMBER = 10;
+    private static final String DEALER_NAME = "딜러";
 
-    public Dealer(final Nickname nickname) {
-        super(nickname);
+    public Dealer() {
+        super(new Nickname(DEALER_NAME));
     }
 
     public boolean canHit() {

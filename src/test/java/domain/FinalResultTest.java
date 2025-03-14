@@ -38,9 +38,9 @@ class FinalResultTest {
         blackJackPlayer = new Player(new Nickname("블랙잭"), new Betting(1000));
         bustPlayer = new Player(new Nickname("버스트"), new Betting(1000));
 
-        defaultDealer = new Dealer(new Nickname("딜러"));
-        blackJackDealer = new Dealer(new Nickname("딜러"));
-        bustDealer = new Dealer(new Nickname("딜러"));
+        defaultDealer = new Dealer();
+        blackJackDealer = new Dealer();
+        bustDealer = new Dealer();
 
         cardQueen = new Card(Rank.QUEEN, Shape.CLOVER);
         cardKing = new Card(Rank.KING, Shape.CLOVER);
