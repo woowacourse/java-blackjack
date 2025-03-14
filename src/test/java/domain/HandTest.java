@@ -22,10 +22,12 @@ public class HandTest {
         //given
         Hand hand = Hand.empty();
         Card card = new Card(CardNumber.TWO, CardShape.CLOVER);
+
+        Hand expected = Hand.of(List.of(card));
         //when
         hand.add(card);
         //then
-        assertThat(hand.getCards()).contains(card);
+        assertThat(hand).isEqualTo(expected);
     }
 
     @DisplayName("숫자 카드의 합을 구할 수 있다")
