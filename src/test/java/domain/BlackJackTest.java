@@ -1,6 +1,5 @@
 package domain;
 
-import static domain.MatchResult.WIN;
 import static domain.card.Number.ACE;
 import static domain.card.Number.FIVE;
 import static domain.card.Number.JACK;
@@ -9,6 +8,7 @@ import static domain.card.Shape.CLOVER;
 import static domain.card.Shape.DIAMOND;
 import static domain.card.Shape.HEART;
 import static domain.card.Shape.SPADE;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import config.CardDeckFactory;
@@ -29,7 +29,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import view.InputView;
@@ -109,10 +108,25 @@ public class BlackJackTest {
 
         //when
         blackJack.hitCardsToParticipant(deck);
-        Map<Player, MatchResult> playerMatchResultMap = blackJack.calculatePlayerResult();
 
         //then
-        SoftAssertions softAssertions = new SoftAssertions();
-        playerMatchResultMap.forEach((key, value) -> softAssertions.assertThat(value).isEqualTo(WIN));
+        assertDoesNotThrow(blackJack::calculatePlayerResult);
+    }
+
+    @Test
+    @DisplayName("딜러 결과 산출 테스트")
+    void calculateDealerProfit() {
+        //given
+        Map<Name, Money> playerBet = new LinkedHashMap<>(Map.of(new Name("pobi"), new Money(10000)));
+        Deck deck = new Deck(List.of(new Card(DIAMOND, QUEEN), new Card(SPADE, JACK)));
+        Players players = Players.from(playerBet);
+        Dealer dealer = new Dealer(new Hand(List.of()));
+        BlackJack blackJack = new BlackJack(players, dealer);
+
+        //when
+        players.getPlayers().getFirst().addCard(deck.hitCard());
+
+        //then
+        assertThat(blackJack.calculateDealerProfit()).isEqualTo(-10000);
     }
 }
