@@ -13,4 +13,8 @@ public class Name {
             throw new IllegalArgumentException("[ERROR] 이름은 공백이 불가합니다.");
         }
     }
+
+    public String getName() {
+        return name;
+    }
 }

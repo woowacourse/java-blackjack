@@ -26,4 +26,8 @@ public class Names {
             throw new IllegalArgumentException("[ERROR] 중복된 이름의 플레이어가 게임에 참여할 수 없습니다.");
         }
     }
+
+    public List<Name> getNames() {
+        return names;
+    }
 }
