@@ -38,7 +38,7 @@ public class Dealer {
         if (playerCards.isBlackjack() || this.cards.isBust()) {
             return GameResult.WIN;
         }
-        return GameResult.FromDenominationsSum(this, player);
+        return GameResult.fromDenominationsSum(this, player);
     }
 
     public CardHand getCards() {
