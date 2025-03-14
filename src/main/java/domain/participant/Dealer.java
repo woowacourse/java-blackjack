@@ -33,10 +33,6 @@ public class Dealer extends Participant {
         participant.addCard(deck.pick());
     }
 
-    public int getRevenue(Cards playerCards, final int bettingCost) {
-        return 0;
-    }
-
     public GameResult getResult(Player player) {
         if (player.isBust()) {
             return GameResult.LOSE;
