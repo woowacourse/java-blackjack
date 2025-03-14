@@ -183,4 +183,29 @@ class PlayerTest {
         // when & then
         assertThat(player.isBlackJack()).isFalse();
     }
+
+    @DisplayName("손에 있는 카드의 최소 합이 21이 안넘어가면 카드를 뽑을 수 있다.")
+    @Test
+    void 손에_있는_카드의_최소_합이_21이_안넘어가면_카드를_뽑을_수_있다() {
+
+        // given
+        player.hit(new Card(Rank.TEN, Shape.SPADE));
+        player.hit(new Card(Rank.TEN, Shape.SPADE));
+
+        // when & then
+        assertThat(player.isImPossibleDrawCard()).isFalse();
+    }
+
+    @DisplayName("손에 있는 카드의 최소 합이 21이 넘어가면 카드를 뽑지 않는다.")
+    @Test
+    void 손에_있는_카드의_최소_합이_21이_넘어가면_카드를_뽑지_않는다() {
+
+        // given
+        player.hit(new Card(Rank.TEN, Shape.SPADE));
+        player.hit(new Card(Rank.TEN, Shape.SPADE));
+        player.hit(new Card(Rank.ACE, Shape.SPADE));
+
+        // when & then
+        assertThat(player.isImPossibleDrawCard()).isTrue();
+    }
 }
