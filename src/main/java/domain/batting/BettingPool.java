@@ -22,4 +22,12 @@ public class BettingPool {
         bets.put(player, bet);
         return true;
     }
+
+    public Bet getPlayerBet(Player player) {
+        try {
+            return bets.get(player);
+        } catch (ClassCastException | NullPointerException exception) {
+            throw new IllegalStateException();
+        }
+    }
 }

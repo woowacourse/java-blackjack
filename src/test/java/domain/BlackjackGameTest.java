@@ -2,7 +2,10 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.entry;
 
+import domain.batting.Bet;
+import domain.batting.BettingPool;
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.CardDeckGenerator;
@@ -12,6 +15,7 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class BlackjackGameTest {
@@ -151,5 +155,71 @@ class BlackjackGameTest {
 
         // then
         assertThat(result).isFalse();
+    }
+
+    @Test
+    void 배팅_풀을_통해_플레이어_승리의_이익을_반환한다() {
+        // given
+        Player player = Player.of("pobi");
+        Dealer dealer = Dealer.of();
+
+        BettingPool bettingPool = BettingPool.of();
+        bettingPool.wager(player, Bet.of(10000));
+
+        dealer.receive(Card.of(TrumpNumber.TWO, TrumpShape.HEART));
+        player.receive(Card.of(TrumpNumber.THREE, TrumpShape.HEART));
+
+        BlackjackGame blackjackGame = BlackjackGame.of(CardDeck.of(List.of()), dealer, Players.of(List.of(player)));
+
+        // when
+        Map<Player, Integer> profits = blackjackGame.calculatePlayerProfit(bettingPool);
+
+        // then
+        assertThat(profits).hasSize(1)
+                .contains(entry(Player.of("pobi"), 10000));
+    }
+
+    @Test
+    void 배팅_풀을_통해_플레이어_무승부의_이익을_반환한다() {
+        // given
+        Player player = Player.of("pobi");
+        Dealer dealer = Dealer.of();
+
+        BettingPool bettingPool = BettingPool.of();
+        bettingPool.wager(player, Bet.of(10000));
+
+        dealer.receive(Card.of(TrumpNumber.TWO, TrumpShape.HEART));
+        player.receive(Card.of(TrumpNumber.TWO, TrumpShape.HEART));
+
+        BlackjackGame blackjackGame = BlackjackGame.of(CardDeck.of(List.of()), dealer, Players.of(List.of(player)));
+
+        // when
+        Map<Player, Integer> profits = blackjackGame.calculatePlayerProfit(bettingPool);
+
+        // then
+        assertThat(profits).hasSize(1)
+                .contains(entry(Player.of("pobi"), 0));
+    }
+
+    @Test
+    void 배팅_풀을_통해_플레이어_패배의_이익을_반환한다() {
+        // given
+        Player player = Player.of("pobi");
+        Dealer dealer = Dealer.of();
+
+        BettingPool bettingPool = BettingPool.of();
+        bettingPool.wager(player, Bet.of(10000));
+
+        dealer.receive(Card.of(TrumpNumber.THREE, TrumpShape.HEART));
+        player.receive(Card.of(TrumpNumber.TWO, TrumpShape.HEART));
+
+        BlackjackGame blackjackGame = BlackjackGame.of(CardDeck.of(List.of()), dealer, Players.of(List.of(player)));
+
+        // when
+        Map<Player, Integer> profits = blackjackGame.calculatePlayerProfit(bettingPool);
+
+        // then
+        assertThat(profits).hasSize(1)
+                .contains(entry(Player.of("pobi"), -10000));
     }
 }

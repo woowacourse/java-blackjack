@@ -1,11 +1,16 @@
 package domain;
 
+import domain.batting.Bet;
+import domain.batting.BettingPool;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
+import domain.result.BlackjackResult;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackGame {
 
@@ -48,6 +53,19 @@ public class BlackjackGame {
 
     public boolean checkPlayerCanReceive(String name) {
         return players.canPlayerReceive(name);
+    }
+
+    public Map<Player, Integer> calculatePlayerProfit(BettingPool bettingPool) {
+        Map<Player, Integer> profits = new HashMap<>();
+        List<String> playersName = getPlayersName();
+        for (String name : playersName) {
+            Player player = getPlayerByName(name);
+            BlackjackResult result = player.getBlackjackResult(dealer);
+            Bet bet = bettingPool.getPlayerBet(player);
+            int profit = bet.calculateProfit(result);
+            profits.put(player, profit);
+        }
+        return profits;
     }
 
     public List<String> getPlayersName() {
