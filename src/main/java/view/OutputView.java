@@ -1,5 +1,6 @@
 package view;
 
+import domain.bet.BetMoney;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Hand;
@@ -76,20 +77,24 @@ public class OutputView {
         return stringBuilder.toString();
     }
 
-    public static void printAllResult(final Map<String, WinLossResult> playerResults, final String dealerName) {
+    public static void printAllResult(final Map<String, BetMoney> playerResults, final String dealerName) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("## 최종 승패\n");
+        stringBuilder.append("## 최종 수익\n");
 
-        Map<WinLossResult, Integer> dealerWinLossResult = calculateDealerResult(playerResults);
-        stringBuilder.append(String.format("%s: %d승 %d패 %d무\n", dealerName,
-                dealerWinLossResult.get(WinLossResult.LOSS),
-                dealerWinLossResult.get(WinLossResult.WIN),
-                dealerWinLossResult.get(WinLossResult.DRAW)));
-        for (Entry<String, WinLossResult> playerResult : playerResults.entrySet()) {
-            stringBuilder.append(String.format("%s: %s\n", playerResult.getKey(),
-                    playerResult.getValue().getWinLossMessage()));
+        double totalProfit = 0.0;
+        for (BetMoney money : playerResults.values()) {
+            totalProfit += money.getAmount();
+        }
+        stringBuilder.append(String.format("%s: %d\n", dealerName, (int) -totalProfit));
+        for (Entry<String, BetMoney> playerResult : playerResults.entrySet()) {
+            stringBuilder.append(String.format("%s: %d\n", playerResult.getKey(),
+                    (int) playerResult.getValue().getAmount()));
         }
         System.out.println(stringBuilder);
+    }
+
+    public static void printExceptionMessage(final IllegalArgumentException e) {
+        System.out.println(e.getMessage());
     }
 
     private static void printEveryoneCardsNames(Players players, Dealer dealer, StringBuilder stringBuilder) {

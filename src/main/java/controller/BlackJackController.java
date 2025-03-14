@@ -1,20 +1,19 @@
 package controller;
 
+import domain.bet.BetMoney;
+import domain.bet.BettingPool;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
-import domain.result.WinLossResult;
+import view.InputView;
+import view.OutputView;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
-
-import static view.InputView.getPlayerNamesInput;
-import static view.InputView.getYnInput;
-import static view.OutputView.*;
 
 public class BlackJackController {
 
@@ -26,23 +25,23 @@ public class BlackJackController {
     public void play() {
         try {
             Players players = enterPlayer();
-            Players betPlayers = betMoneyPlayers(players);
+            BettingPool bettingPool = betMoneyPlayers(players);
 
-            distributeCards(betPlayers);
+            distributeCards(players);
 
-            playersTurn(betPlayers);
+            playersTurn(players);
             dealerTurn();
 
-            printDealerExtraCardsCount(dealer.getName(), dealer.getExtraHandSize());
-            printEveryOneCardsNamesWithTotal(betPlayers, dealer);
-            printResult(betPlayers);
+            OutputView.printDealerExtraCardsCount(dealer.getName(), dealer.getExtraHandSize());
+            OutputView.printEveryOneCardsNamesWithTotal(players, dealer);
+            printResult(bettingPool);
         } catch (IllegalArgumentException e) {
-            printExceptionMessage(e);
+            OutputView.printExceptionMessage(e);
         }
     }
 
     private Players enterPlayer() {
-        String playerNamesInput = getPlayerNamesInput();
+        String playerNamesInput = InputView.getPlayerNamesInput();
         List<String> playerNames = Arrays.asList(playerNamesInput.split(DELIMITER));
 
         List<Player> players = playerNames.stream()
@@ -51,12 +50,12 @@ public class BlackJackController {
         return new Players(players);
     }
 
-    private Players betMoneyPlayers(final Players players) {
-        List<Player> betPlayers = new ArrayList<>();
+    private BettingPool betMoneyPlayers(final Players players) {
+        Map<Player, BetMoney> bettingPool = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
-            betPlayers.add(player.bet(getBetAmountInput(player.getName())));
+            bettingPool.put(player, new BetMoney(InputView.getBetAmountInput(player.getName())));
         }
-        return new Players(betPlayers);
+        return new BettingPool(bettingPool);
     }
 
     private void distributeCards(final Players players) {
@@ -65,7 +64,7 @@ public class BlackJackController {
         for (Player player : players.getPlayers()) {
             drawTwoCardFromDeck(player);
         }
-        printDistributeResult(players, dealer);
+        OutputView.printDistributeResult(players, dealer);
     }
 
     private void drawTwoCardFromDeck(final Participant participant) {
@@ -79,8 +78,8 @@ public class BlackJackController {
         }
     }
 
-    private void playerTurn(final Player player) {
-        playTurn(player, () -> getYnInput(player).equalsIgnoreCase(YES));
+    private void playerTurn(final Player player) { //player도 객체 안에 물어보기
+        playTurn(player, () -> InputView.getYnInput(player).equalsIgnoreCase(YES));
     }
 
     private void dealerTurn() {
@@ -88,9 +87,9 @@ public class BlackJackController {
     }
 
     private void playTurn(final Participant participant, final Supplier<Boolean> shouldDrawMore) {
-        if(participant.isMaxScore()) return;
+        if (participant.isMaxScore()) return;
         boolean isAlive = participant.resolveBust();
-        while (isAlive && !participant.isMaxScore() && shouldDrawMore.get()) {
+        while (isAlive && !participant.isMaxScore() && shouldDrawMore.get()) { //TODO: dealer는 isMaxScore()가 필요 없음
             isAlive = drawAdditionalCard(participant);
         }
         if (!isAlive) {
@@ -100,23 +99,20 @@ public class BlackJackController {
 
     private static void handleBust(final Participant participant) {
         participant.applyBustPenalty();
-        printBust();
+        OutputView.printBust();
     }
 
     private boolean drawAdditionalCard(final Participant participant) {
         participant.addCard(dealer.drawCard());
         if (participant.getClass().equals(Player.class)) {
-            printHandCardsNames(participant.getName(), participant.getHand());
+            OutputView.printHandCardsNames(participant.getName(), participant.getHand());
         }
         return participant.resolveBust();
     }
 
-    private void printResult(final Players players) {
-        Map<String, WinLossResult> playerResults = new LinkedHashMap<>();
-        for (Player player : players.getPlayers()) {
-            playerResults.put(player.getName(), WinLossResult.from(dealer, player));
-        }
+    private void printResult(final BettingPool bettingPool) {
+        Map<String,BetMoney> playerProfits =  bettingPool.computePlayersProfit(dealer);
 
-        printAllResult(playerResults, dealer.getName());
+        OutputView.printAllResult(playerProfits, dealer.getName());
     }
 }
