@@ -8,6 +8,8 @@ import java.util.List;
 
 public final class Card {
     
+    private final static Table<CardNumber, CardShape, Card> trumpCards = initTrumpCards();
+    
     private final CardNumber number;
     private final CardShape shape;
     
@@ -17,7 +19,7 @@ public final class Card {
         this.shape = shape;
     }
     
-    public static Table<CardNumber, CardShape, Card> createTrumpCards() {
+    private static Table<CardNumber, CardShape, Card> initTrumpCards() {
         Table<CardNumber, CardShape, Card> cards = HashBasedTable.create();
         for (CardNumber number : CardNumber.values()) {
             for (CardShape shape : CardShape.values()) {
@@ -25,6 +27,10 @@ public final class Card {
             }
         }
         return cards;
+    }
+    
+    public static Table<CardNumber, CardShape, Card> createTrumpCards() {
+        return trumpCards;
     }
     
     public CardNumber getNumber() {
