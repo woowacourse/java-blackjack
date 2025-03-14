@@ -1,8 +1,7 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -26,7 +25,7 @@ class GameTest {
         // when
         // then
         Cards dealerCards = game.getDealer().getCards();
-        assertThat(dealerCards.size()).isEqualTo(2);
+        assertTrue(dealerCards.isInitialHands());
     }
 
     @Test
@@ -37,16 +36,16 @@ class GameTest {
         // when
         // then
         Cards playerCards = game.getPlayerCards(username);
-        assertThat(playerCards.size()).isEqualTo(2);
+        assertTrue(playerCards.isInitialHands());
     }
 
     @Test
     @DisplayName("초기 참가자에게 카드가 2장씩 분배됐는지 확인합니다.")
     void distributeStartingHandsTest() {
-        assertAll(() -> assertEquals(2, game.getDealer().getCards().size()),
-                () -> assertEquals(2, game.getPlayerCards(new PlayerName("a")).size()),
-                () -> assertEquals(2, game.getPlayerCards(new PlayerName("b")).size()),
-                () -> assertEquals(2, game.getPlayerCards(new PlayerName("c")).size())
+        assertAll(() -> assertTrue(game.getDealer().getCards().isInitialHands()),
+                () -> assertTrue(game.getPlayerCards(new PlayerName("a")).isInitialHands()),
+                () -> assertTrue(game.getPlayerCards(new PlayerName("b")).isInitialHands()),
+                () -> assertTrue(game.getPlayerCards(new PlayerName("c")).isInitialHands())
         );
     }
 }
