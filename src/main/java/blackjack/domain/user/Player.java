@@ -1,7 +1,9 @@
 package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.game.GameResultType;
 import blackjack.domain.game.GameRule;
+import blackjack.domain.game.PlayerProfit;
 import blackjack.exception.ExceptionMessage;
 import java.util.List;
 
@@ -31,10 +33,21 @@ public class Player {
         return GameRule.checkPossibilityOfHit(gameUser.getPoint());
     }
 
-    public boolean checkBlackjackWithInitialCard() {
-        boolean isBlackjack = GameRule.checkBlackJack(gameUser.getPoint());
-        boolean isInitialHand = GameRule.checkInitialHand(gameUser.getHand().size());
-        return isBlackjack && isInitialHand;
+    public PlayerProfit calculateProfit(Dealer dealer) {
+        if (checkBlackjackWithInitialCard()) {
+            return PlayerProfit.createWhenPlayerBlackjackWithInitialCard(this);
+        }
+        if (dealer.isBust()) {
+            return PlayerProfit.createWhenDealerBust(this);
+        }
+        if (isBust()) {
+            return PlayerProfit.createWhenPlayerBust(this);
+        }
+        return PlayerProfit.createByWinningType(this, GameResultType.parse(getPoint(), dealer.getPoint()));
+    }
+
+    public boolean isBust() {
+        return gameUser.isBust();
     }
 
     public List<Card> getHand() {
@@ -53,13 +66,15 @@ public class Player {
         return bettingAmount.getValue();
     }
 
-    public boolean isBust() {
-        return gameUser.isBust();
-    }
-
     private void validateHitPossibility() {
         if (!checkHitPossibility()) {
             throw new IllegalArgumentException(ExceptionMessage.CANNOT_HIT.getContent());
         }
+    }
+
+    private boolean checkBlackjackWithInitialCard() {
+        boolean isBlackjack = GameRule.checkBlackJack(gameUser.getPoint());
+        boolean isInitialHand = GameRule.checkInitialHand(gameUser.getHand().size());
+        return isBlackjack && isInitialHand;
     }
 }

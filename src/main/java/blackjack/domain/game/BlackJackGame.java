@@ -97,7 +97,12 @@ public class BlackJackGame {
     }
 
     private void outputProfit() {
-        PlayerProfits playerProfits = new PlayerProfits(users.getDealer(), users.getPlayers());
+        Dealer dealer = users.getDealer();
+        List<Player> players = users.getPlayers();
+        List<PlayerProfit> profits = players.stream()
+                .map(player -> player.calculateProfit(dealer))
+                .toList();
+        PlayerProfits playerProfits = new PlayerProfits(profits);
         gameInputOutput.printPlayerProfits(playerProfits);
     }
 }
