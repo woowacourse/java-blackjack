@@ -34,14 +34,14 @@ public class BlackjackController {
 
         ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
         BettingResult bettingResult = new BettingResult(playerTurnManager.getPlayersBet(), participantWinningResult);
-        Map<Player, Integer> finalProfitByPlayer  = bettingResult.calculatePlayerBettingResult(players, dealer);
+        Map<Player, Integer> finalProfitByPlayer = bettingResult.calculatePlayerBettingResult(players, dealer);
         int finalProfitByDealer = bettingResult.calculateDealerFinalResult(finalProfitByPlayer);
 
         OutputView.printFinalScore(dealer, players);
         printFinalGameResult(finalProfitByPlayer, finalProfitByDealer);
     }
 
-    private void printFinalGameResult(Map<Player, Integer> playersProfit , int dealerProfit) {
+    private void printFinalGameResult(Map<Player, Integer> playersProfit, int dealerProfit) {
         System.out.println();
         OutputView.printDealerFinalResult(dealerProfit);
         OutputView.printPlayerFinalResult(playersProfit);

@@ -14,11 +14,11 @@ public enum PlayerChoice {
         this.choiceName = choiceName;
     }
 
-    public static PlayerChoice findPlayerChoice(String input){
+    public static PlayerChoice findPlayerChoice(String input) {
         return Arrays.stream(PlayerChoice.values())
                 .filter(playerChoice -> playerChoice.choiceName.equals(input))
                 .findFirst()
-                .orElseThrow(()-> new IllegalArgumentException("[ERROR] 잘못된 입력입니다. 입력값 : " + input));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 잘못된 입력입니다. 입력값 : " + input));
     }
 
     public String getChoiceName() {

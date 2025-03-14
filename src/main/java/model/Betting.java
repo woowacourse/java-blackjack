@@ -15,7 +15,7 @@ public class Betting {
     }
 
     public int calculateMaxInsuranceAmount() {
-        return bet/2;
+        return bet / 2;
     }
 
     public void takeInsurance(int insuranceBet) {
@@ -24,8 +24,8 @@ public class Betting {
         this.insuranceBet = insuranceBet;
     }
 
-    private void validateInsuranceBet(int insuranceBet){
-        if (insuranceBet < 0 || insuranceBet > calculateMaxInsuranceAmount()){
+    private void validateInsuranceBet(int insuranceBet) {
+        if (insuranceBet < 0 || insuranceBet > calculateMaxInsuranceAmount()) {
             throw new IllegalArgumentException("[ERROR] 설정가능한 보험금액이 아닙니다. 입력값 : " + insuranceBet);
         }
     }
@@ -39,14 +39,14 @@ public class Betting {
     }
 
     public int calculateInsurance(Dealer dealer) {
-        if (dealer.checkBlackjack()){
+        if (dealer.checkBlackjack()) {
             return insuranceBet * 2;
         }
         return insuranceBet;
     }
 
     public int calculateBlackJack() {
-        return bet * 3/2;
+        return bet * 3 / 2;
     }
 
     public int calculateWin() {

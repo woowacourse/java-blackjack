@@ -9,7 +9,7 @@ public class Card {
         this.cardSuit = cardSuit;
     }
 
-    public boolean isAce(){
+    public boolean isAce() {
         return cardRank == CardRank.ACE;
     }
 

@@ -7,7 +7,7 @@ import model.card.CardRank;
 
 public class ParticipantHand {
     private static final int BUST_SCORE_LIMIT = 21;
-    private static final int BLACKJACK_CONDITION_CARD_COUNT = 2;
+    private static final int INITIAL_CARD_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -24,7 +24,7 @@ public class ParticipantHand {
     }
 
     public boolean checkBlackjack() {
-        return cards.size() == BLACKJACK_CONDITION_CARD_COUNT && calculateFinalScore() == BUST_SCORE_LIMIT;
+        return cards.size() == INITIAL_CARD_COUNT && calculateFinalScore() == BUST_SCORE_LIMIT;
     }
 
     public boolean checkScoreBelow(int upperBound) {

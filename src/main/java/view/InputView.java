@@ -87,9 +87,9 @@ public class InputView {
         return validateHitOrStand(choice);
     }
 
-    private static PlayerChoice validateHitOrStand(String choice){
+    private static PlayerChoice validateHitOrStand(String choice) {
         PlayerChoice playerChoice = PlayerChoice.findPlayerChoice(choice);
-        if (playerChoice != PlayerChoice.HIT && playerChoice != PlayerChoice.STAND){
+        if (playerChoice != PlayerChoice.HIT && playerChoice != PlayerChoice.STAND) {
             throw new IllegalArgumentException("[ERROR] 잘못된 선택지 입니다. 입력값 : " + choice);
         }
         return playerChoice;

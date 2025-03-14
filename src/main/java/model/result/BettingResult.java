@@ -44,7 +44,8 @@ public class BettingResult {
         }
         return bet.calculateWin();
     }
-    private int computeInsuranceResult(Player player, Dealer dealer){
+
+    private int computeInsuranceResult(Player player, Dealer dealer) {
         Betting bet = betting.get(player);
         return bet.calculateInsurance(dealer);
     }

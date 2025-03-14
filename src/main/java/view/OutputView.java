@@ -46,15 +46,14 @@ public class OutputView {
         }
     }
 
-    public static void printDealerFinalResult(BettingResult bettingResult) {
+    public static void printDealerFinalResult(int bettingResult) {
         System.out.println("## 최종 수익");
-        System.out.println("딜러: " + bettingResult.calculateDealerFinalResult()); // 이거 뷰에 비즈니스 로직 있는 거 아닌가?
+        System.out.println("딜러: " + bettingResult);
     }
 
-    public static void printPlayerFinalResult(BettingResult bettingResult) {
-        Map<Player, Integer> playerResults = bettingResult.getBetting();
-        for (Player player : playerResults.keySet()) {
-            System.out.println(player.getName() + ": " + playerResults.get(player));
+    public static void printPlayerFinalResult(Map<Player, Integer> playerProfit) {
+        for (Player player : playerProfit.keySet()) {
+            System.out.println(player.getName() + ": " + playerProfit.get(player));
         }
     }
 

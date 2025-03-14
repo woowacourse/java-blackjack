@@ -4,7 +4,7 @@ import model.card.Deck;
 import model.participant.Dealer;
 import view.OutputView;
 
-public class DealerTurn extends Turn{
+public class DealerTurn extends Turn {
     private final Dealer dealer;
 
     public DealerTurn(Dealer dealer) {
@@ -17,5 +17,5 @@ public class DealerTurn extends Turn{
             OutputView.printDealerDealResult();
             dealer.receiveCard(deck.pick());
         }
-    } // DealerTurn으로 이동
+    }
 }
