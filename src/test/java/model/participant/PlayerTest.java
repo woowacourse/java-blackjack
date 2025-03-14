@@ -58,7 +58,7 @@ public class PlayerTest {
 
         //when
         //then
-        Assertions.assertThat(player.isHit()).isTrue();
+        Assertions.assertThat(player.canHit()).isTrue();
     }
 
     private static Stream<Arguments> createNotBustCards() {
@@ -87,6 +87,6 @@ public class PlayerTest {
         }
         //when
         //then
-        Assertions.assertThat(player.isHit()).isFalse();
+        Assertions.assertThat(player.canHit()).isFalse();
     }
 }

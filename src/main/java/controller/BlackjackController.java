@@ -32,7 +32,7 @@ public class BlackjackController {
     }
 
     private void receiveAdditionalCard(Player player, Dealer dealer, CardDeck deck) {
-        while (player.isHit() && agreeIntent(player)) {
+        while (player.canHit() && agreeIntent(player)) {
             dealer.divideCardByParticipant(player, deck, 1);
             player.applyAceRule();
             OutputView.printCurrentHands(player);
@@ -40,7 +40,7 @@ public class BlackjackController {
     }
 
     private void receiveAdditionalCard(Dealer dealer, CardDeck deck) {
-        while (dealer.isHit()) {
+        while (dealer.canHit()) {
             dealer.divideCardByParticipant(dealer, deck, 1);
             dealer.applyAceRule();
             OutputView.printStandingDealer(dealer);

@@ -88,7 +88,7 @@ class DealerTest {
 
         // when
         // then
-        assertThat(dealer.isHit()).isTrue();
+        assertThat(dealer.canHit()).isTrue();
     }
 
     @Test
@@ -106,7 +106,7 @@ class DealerTest {
 
         // when
         // then
-        assertThat(dealer.isHit()).isFalse();
+        assertThat(dealer.canHit()).isFalse();
     }
 
     @ParameterizedTest

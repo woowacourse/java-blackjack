@@ -35,7 +35,7 @@ public abstract class Participant {
         return cards.getCards();
     }
 
-    abstract public boolean isHit();
+    abstract public boolean canHit();
 
     abstract public String getNickname();
 }
