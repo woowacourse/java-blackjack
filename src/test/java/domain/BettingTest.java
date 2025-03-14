@@ -2,7 +2,9 @@ package domain;
 
 import static domain.card.Rank.ACE;
 import static domain.card.Rank.FIVE;
+import static domain.card.Rank.JACK;
 import static domain.card.Rank.NINE;
+import static domain.card.Rank.QUEEN;
 import static domain.card.Rank.TEN;
 import static domain.card.Rank.TWO;
 import static domain.card.Suit.CLOVER;
@@ -84,5 +86,29 @@ public class BettingTest {
         bettingRound.refundBetOnBlackjackPush(player, dealer);
         // then
         assertThat(bettingRound.getPlayerFinalBetAmount(player)).isEqualTo(BET_AMOUNT);
+    }
+
+    @Test
+    @DisplayName("딜러가 21을 초과하면 그 시점까지 남아 있던 플레이어들은 승리해 베팅 금액을 받는다")
+    void testPlayersReceiveBetIfDealerBusts() {
+        // given
+        CardHand playerCardHand = new CardHand(
+                Set.of(CardFixture.of(TEN, HEART), CardFixture.of(ACE, DIAMOND)));
+        CardHand dealerCardHand = new CardHand(
+                Set.of(CardFixture.of(TEN, CLOVER), CardFixture.of(JACK, DIAMOND)));
+        Player player1 = new Player("pobi", playerCardHand);
+        Player player2 = new Player("jason", playerCardHand);
+        Dealer dealer = new Dealer(new Deck(new RandomShuffler()), dealerCardHand);
+        BettingRound bettingRound = new BettingRound();
+        // when
+        int player2BetAmount = 20000;
+        bettingRound.bet(player1, BET_AMOUNT);
+        bettingRound.bet(player2, player2BetAmount);
+        dealer.hit(CardFixture.of(QUEEN, HEART));
+        bettingRound.PlayersReceiveBetIfDealerBusts(player1, dealer);
+        bettingRound.PlayersReceiveBetIfDealerBusts(player2, dealer);
+        // then
+        assertThat(bettingRound.getPlayerFinalBetAmount(player1)).isEqualTo(BET_AMOUNT * 2);
+        assertThat(bettingRound.getPlayerFinalBetAmount(player2)).isEqualTo(player2BetAmount * 2);
     }
 }

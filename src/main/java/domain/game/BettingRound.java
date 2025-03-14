@@ -39,4 +39,10 @@ public class BettingRound {
             finalPlayerBets.put(player, initialPlayerBets.get(player));
         }
     }
+
+    public void PlayersReceiveBetIfDealerBusts(Player player, Dealer dealer) {
+        if (dealer.isBust() && !player.isBust()) {
+            finalPlayerBets.put(player, initialPlayerBets.get(player) * 2);
+        }
+    }
 }
