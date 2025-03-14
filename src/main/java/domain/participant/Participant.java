@@ -2,23 +2,26 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Hand;
+import java.util.List;
 
-public class Participant {
-    private final Hand hand;
+abstract public class Participant {
+    private final Hand cards;
 
     public Participant(Hand hand) {
-        this.hand = hand;
+        this.cards = hand;
     }
 
     public void addCard(Card card) {
-        hand.addCard(card);
+        cards.addCard(card);
     }
 
     public int calculateSum() {
-        return hand.calculateSum();
+        return cards.calculateSum();
     }
 
-    public Hand getHand() {
-        return hand;
+    public abstract List<Card> openInitialCards();
+
+    public Hand getCards() {
+        return cards;
     }
 }
