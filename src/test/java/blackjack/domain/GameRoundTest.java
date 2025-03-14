@@ -48,7 +48,6 @@ class GameRoundTest {
         gameManager.drawCard(player);
 
         // then
-        assertThat(gameRound.loseIfBust(player)).isTrue();
         assertThat(gameRound.getEndBettingMoney(player)).isZero();
     }
 
@@ -66,7 +65,6 @@ class GameRoundTest {
         gameManager.drawStartingCards(player);
 
         // then
-        assertThat(gameRound.endGameIfBlackjack(player)).isTrue();
         assertThat(gameRound.getEndBettingMoney(player)).isEqualTo((int)(initialMoney * 1.5));
     }
 
@@ -85,7 +83,6 @@ class GameRoundTest {
         gameManager.drawStartingCards(dealer);
 
         // then
-        assertThat(gameRound.endGameIfBlackjack(dealer)).isTrue();
         assertThat(gameRound.getEndBettingMoney(player)).isEqualTo(initialMoney);
     }
 

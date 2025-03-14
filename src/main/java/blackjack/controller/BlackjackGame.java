@@ -68,7 +68,6 @@ public class BlackjackGame implements GameManager {
     private void drawPlayerCards() {
         for (var player : gamers.getPlayers()) {
             drawCardsFor(player);
-            gameRound.loseIfBust(player);
         }
     }
 

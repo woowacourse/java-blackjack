@@ -25,30 +25,22 @@ public class GameRound {
         bettingAmounts.put(player, BettingAmount.of(money));
     }
 
-    public boolean loseIfBust(Player player) {
-        return player.isBust();
-    }
-
     public double getEndBettingMoney(Player player) {
         return bettingAmounts.get(player).end();
     }
 
-    public boolean endGameIfBlackjack(Player player) {
+    public void endGameIfBlackjack(Player player) {
         if (player.isBlackjack()) {
             bettingAmounts.put(player, bettingAmounts.get(player).blackjack());
-            return true;
         }
-        return false;
     }
 
-    public boolean endGameIfBlackjack(Dealer dealer) {
+    public void endGameIfBlackjack(Dealer dealer) {
         if (dealer.isBlackjack()) {
             bettingAmounts.keySet().stream()
                 .filter(Gamer::isBlackjack)
                 .forEach(player -> bettingAmounts.put(player, bettingAmounts.get(player).draw()));
-            return true;
         }
-        return false;
     }
 
     public boolean endGameIfDealerBust() {
