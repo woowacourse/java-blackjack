@@ -11,14 +11,24 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public String inputCallOrStay(String name) {
+    public String inputHitOrStand(String name) {
         System.out.println(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name));
         return scanner.nextLine();
     }
 
-    public String inputBetting(String betMoney) {
-        System.out.println(String.format(""));
-        return scanner.nextLine();
+    public int inputBetting(String name) {
+        System.out.println(String.format("%s의 배팅 금액은?", name));
+        String input = scanner.nextLine();
+        return validateBetting(input);
     }
+
+    private int validateBetting(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("숫자를 입력해야 합니다.");
+        }
+    }
+
 
 }
