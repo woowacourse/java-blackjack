@@ -62,8 +62,6 @@ class FinalResultTest {
         bustDealer.hit(cardQueen);
         bustDealer.hit(cardJack);
         bustDealer.hit(cardKing);
-
-
     }
 
     @DisplayName("룰에 따라 승패를 결정한다.")

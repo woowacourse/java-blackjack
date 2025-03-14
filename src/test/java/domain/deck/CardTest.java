@@ -12,7 +12,7 @@ class CardTest {
     @DisplayName("주어진 카드의 점수를 반환한다.")
     @ParameterizedTest
     @CsvSource(value = {
-            "SPADE,ACE,1", "SPADE,THREE,3", "SPADE,JACK,10"
+            "SPADE, ACE, 1", "SPADE, THREE, 3", "SPADE, JACK, 10"
     })
     void 주어진_카드의_점수를_반환한다(final Shape shape, final Rank rank, final int expected) {
 
@@ -28,7 +28,7 @@ class CardTest {
     @CsvSource(value = {
             "ACE, SPADE, true", "THREE, SPADE, false", "JACK, SPADE, false"
     })
-    void 카드가_예이스면_true_아니면_false를_반환한다(final Rank rank, final Shape shape, final boolean expected) {
+    void 카드가_에이스면_true_아니면_false를_반환한다(final Rank rank, final Shape shape, final boolean expected) {
 
         // given
         // when & then

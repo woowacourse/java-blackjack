@@ -130,8 +130,8 @@ class PlayerTest {
     @DisplayName("플레이어의 카드 중 최고 값을 반환한다.")
     @ParameterizedTest
     @CsvSource(value = {
-            "TWO,EIGHT,ACE,21", "ACE,ACE,ACE,13",
-            "KING,JACK,ACE,21", "THREE,FOUR,FIVE,12",
+            "TWO, EIGHT, ACE, 21", "ACE, ACE, ACE, 13",
+            "KING, JACK, ACE, 21", "THREE, FOUR, FIVE, 12",
     })
     void 플레이어의_카드_중_최고_값을_반환한다(final Rank rank1, final Rank rank2, final Rank rank3, final int expected) {
 
@@ -225,9 +225,9 @@ class PlayerTest {
         assertThat(player.isImPossibleDrawCard()).isTrue();
     }
 
-    @DisplayName("플레이어가 블랙잭이 아니면서 승리시 배팅금액 만큼 수익을 얻는다.")
+    @DisplayName("플레이어가 블랙잭이 아니면서 승리 시 배팅금액 만큼 수익을 얻는다.")
     @Test
-    void 플레이어가_블랙잭이_아니면서_승리시_배팅금액_만큼_수익을_얻는다() {
+    void 플레이어가_블랙잭이_아니면서_승리_시_배팅금액_만큼_수익을_얻는다() {
 
         // given
         int profit = player.winBetting(0);
@@ -236,9 +236,9 @@ class PlayerTest {
         assertThat(profit).isEqualTo(1000);
     }
 
-    @DisplayName("플레이어가 블랙잭이면서 승리시 배팅금액 만큼 수익을 얻는다.")
+    @DisplayName("플레이어가 블랙잭이면서 승리 시 배팅금액 만큼 수익을 얻는다.")
     @Test
-    void 플레이어가_블랙잭이면서_승리시_배팅금액_만큼_수익을_얻는다() {
+    void 플레이어가_블랙잭이면서_승리_시_배팅금액_만큼_수익을_얻는다() {
 
         // given
         player.hit(new Card(Rank.ACE, Shape.SPADE));
@@ -249,9 +249,9 @@ class PlayerTest {
         assertThat(profit).isEqualTo(1500);
     }
 
-    @DisplayName("플레이어가 패배시 배팅금액 만큼 수익을 잃는다.")
+    @DisplayName("플레이어가 패배 시 배팅금액 만큼 수익을 잃는다.")
     @Test
-    void 플레이어가_패배시_배팅금액_만큼_수익을_잃는다() {
+    void 플레이어가_패배_시_배팅금액_만큼_수익을_잃는다() {
 
         // given
         player.hit(new Card(Rank.ACE, Shape.SPADE));

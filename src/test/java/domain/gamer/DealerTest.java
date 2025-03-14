@@ -90,7 +90,7 @@ class DealerTest {
 
     @DisplayName("딜러의 첫번째 카드를 가져온다.")
     @Test
-    void 딜러의_첫번쨰_카드를_가져온다() {
+    void 딜러의_첫번째_카드를_가져온다() {
 
         // given
         final Dealer dealer = new Dealer(new Nickname("새로이"));
