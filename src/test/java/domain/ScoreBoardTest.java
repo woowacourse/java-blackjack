@@ -15,13 +15,16 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 class ScoreBoardTest {
 
     @DisplayName("딜러 2패, 플레이어 1승, 플레이어 1승")
     @Test
     void 스코어보드_계산_확인1() {
         //given
-        Participants participants = new Participants(List.of(new Player("우가"), new Player("히스타"), new Dealer()));
+        List<Participant> originParticipants = List.of(new Player("우가"), new Player("베루스"), new Dealer());
+        Participants participants = new Participants(originParticipants);
 
         GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
         participants.drawTwoCards(gameCardDeck);
@@ -31,13 +34,18 @@ class ScoreBoardTest {
         ScoreBoard scoreBoard = new ScoreBoard(participants);
 
         Map<Participant, BattleResults> battleResultsMap = scoreBoard.getScoreBoard();
-        List<Participant> originParticipants = participants.getParticipants();
 
         //then
-        org.junit.jupiter.api.Assertions.assertAll(
-                () -> Assertions.assertThat(battleResultsMap.get(originParticipants.getFirst()).getResults().get(BattleResult.WIN)).isEqualTo(1),
-                () -> Assertions.assertThat(battleResultsMap.get(originParticipants.get(1)).getResults().get(BattleResult.WIN)).isEqualTo(1),
-                () -> Assertions.assertThat(battleResultsMap.get(originParticipants.getLast()).getResults().get(BattleResult.LOSE)).isEqualTo(2)
+        assertAll(
+                () -> Assertions.assertThat(
+                                battleResultsMap.get(originParticipants.getFirst()).getResults().get(BattleResult.WIN))
+                        .isEqualTo(1),
+                () -> Assertions.assertThat(
+                                battleResultsMap.get(originParticipants.get(1)).getResults().get(BattleResult.WIN))
+                        .isEqualTo(1),
+                () -> Assertions.assertThat(
+                                battleResultsMap.get(originParticipants.getLast()).getResults().get(BattleResult.LOSE))
+                        .isEqualTo(2)
         );
     }
 
@@ -45,16 +53,13 @@ class ScoreBoardTest {
     @Test
     void 스코어보드_계산_확인2() {
         //given
-        Player player1 = new Player("우가");
-        Player player2 = new Player("히스타");
-        Dealer dealer = new Dealer();
-
-        List<Participant> originParticipants = new ArrayList<>();
-        originParticipants.add(dealer);
-        originParticipants.add(player1);
-        originParticipants.add(player2);
-
+        List<Participant> originParticipants = List.of(new Player("우가"), new Player("베루스"), new Dealer());
         Participants participants = new Participants(originParticipants);
+
+        Participants onlyPlayers = participants.findPlayers();
+        Participant dealer = participants.findDealer();
+        Participant player1 = onlyPlayers.getParticipants().getFirst();
+        Participant player2 = onlyPlayers.getParticipants().getLast();
 
         GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
         player1.drawCard(gameCardDeck, 4);
@@ -67,11 +72,15 @@ class ScoreBoardTest {
         Map<Participant, BattleResults> battleResultsMap = scoreBoard.getScoreBoard();
 
         //then
-        org.junit.jupiter.api.Assertions.assertAll(
-                () -> Assertions.assertThat(battleResultsMap.get(player1).getResults().get(BattleResult.LOSE)).isEqualTo(1),
-                () -> Assertions.assertThat(battleResultsMap.get(player2).getResults().get(BattleResult.WIN)).isEqualTo(1),
-                () -> Assertions.assertThat(battleResultsMap.get(dealer).getResults().get(BattleResult.LOSE)).isEqualTo(1),
-                () -> Assertions.assertThat(battleResultsMap.get(dealer).getResults().get(BattleResult.WIN)).isEqualTo(1)
+        assertAll(
+                () -> Assertions.assertThat(battleResultsMap.get(player1).getResults().get(BattleResult.LOSE))
+                        .isEqualTo(1),
+                () -> Assertions.assertThat(battleResultsMap.get(player2).getResults().get(BattleResult.WIN))
+                        .isEqualTo(1),
+                () -> Assertions.assertThat(battleResultsMap.get(dealer).getResults().get(BattleResult.LOSE))
+                        .isEqualTo(1),
+                () -> Assertions.assertThat(battleResultsMap.get(dealer).getResults().get(BattleResult.WIN))
+                        .isEqualTo(1)
         );
     }
 
@@ -79,20 +88,14 @@ class ScoreBoardTest {
     @Test
     void 스코어보드_계산_확인3() {
         //given
-        Player player1 = new Player("우가");
-        Player player2 = new Player("히스타");
-        Dealer dealer = new Dealer();
-
-        List<Participant> originParticipants = new ArrayList<>();
-        originParticipants.add(player1);
-        originParticipants.add(dealer);
-        originParticipants.add(player2);
-
+        List<Participant> originParticipants = List.of(new Player("우가"), new Player("베루스"), new Dealer());
         Participants participants = new Participants(originParticipants);
+
+        Participant dealer = participants.findDealer();
 
         GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
         participants.drawTwoCards(gameCardDeck);
-        participants.drawTwoCards(gameCardDeck);
+        dealer.drawCard(gameCardDeck, 4);
 
         //when
         ScoreBoard scoreBoard = new ScoreBoard(participants);
@@ -100,27 +103,29 @@ class ScoreBoardTest {
         Map<Participant, BattleResults> battleResultsMap = scoreBoard.getScoreBoard();
 
         //then
-        org.junit.jupiter.api.Assertions.assertAll(
-                () -> Assertions.assertThat(battleResultsMap.get(player1).getResults().get(BattleResult.LOSE)).isEqualTo(1),
-                () -> Assertions.assertThat(battleResultsMap.get(player2).getResults().get(BattleResult.LOSE)).isEqualTo(1),
-                () -> Assertions.assertThat(battleResultsMap.get(dealer).getResults().get(BattleResult.WIN)).isEqualTo(2)
+        assertAll(
+                () -> Assertions.assertThat(battleResultsMap.get(dealer).getResults().get(BattleResult.WIN))
+                        .isEqualTo(2),
+                () -> Assertions.assertThat(battleResultsMap.get(participants.getParticipants().getFirst()).getResults()
+                        .get(BattleResult.LOSE)).isEqualTo(1),
+                () -> Assertions.assertThat(
+                                battleResultsMap.get(participants.getParticipants().get(1)).getResults().get(BattleResult.LOSE))
+                        .isEqualTo(1)
         );
     }
+
 
     @DisplayName("딜러 2무, 플레이어 1무, 플레이어 1무")
     @Test
     void 스코어보드_계산_확인4() {
         //given
-        Player player1 = new Player("우가");
-        Player player2 = new Player("히스타");
-        Dealer dealer = new Dealer();
-
-        List<Participant> originParticipants = new ArrayList<>();
-        originParticipants.add(player1);
-        originParticipants.add(dealer);
-        originParticipants.add(player2);
-
+        List<Participant> originParticipants = List.of(new Player("우가"), new Player("베루스"), new Dealer());
         Participants participants = new Participants(originParticipants);
+        Participants onlyPlayer = participants.findPlayers();
+
+        Participant dealer = participants.findDealer();
+        Participant player1 = onlyPlayer.getParticipants().getFirst();
+        Participant player2 = onlyPlayer.getParticipants().getLast();
 
         GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
         player1.drawCard(gameCardDeck, 1);
@@ -133,10 +138,13 @@ class ScoreBoardTest {
         Map<Participant, BattleResults> battleResultsMap = scoreBoard.getScoreBoard();
 
         //then
-        org.junit.jupiter.api.Assertions.assertAll(
-                () -> Assertions.assertThat(battleResultsMap.get(player1).getResults().get(BattleResult.DRAW)).isEqualTo(1),
-                () -> Assertions.assertThat(battleResultsMap.get(player2).getResults().get(BattleResult.DRAW)).isEqualTo(1),
-                () -> Assertions.assertThat(battleResultsMap.get(dealer).getResults().get(BattleResult.DRAW)).isEqualTo(2)
+        assertAll(
+                () -> Assertions.assertThat(battleResultsMap.get(player1).getResults().get(BattleResult.DRAW))
+                        .isEqualTo(1),
+                () -> Assertions.assertThat(battleResultsMap.get(player2).getResults().get(BattleResult.DRAW))
+                        .isEqualTo(1),
+                () -> Assertions.assertThat(battleResultsMap.get(dealer).getResults().get(BattleResult.DRAW))
+                        .isEqualTo(2)
         );
     }
 
@@ -144,25 +152,21 @@ class ScoreBoardTest {
     @Test
     void 스코어보드_계산_확인5() {
         //given
-        Player player1 = new Player("우가");
-        Player player2 = new Player("히스타");
-        Player garbagePlayer = new Player("임시");
-        Dealer dealer = new Dealer();
-
-        List<Participant> originParticipants = new ArrayList<>();
-        originParticipants.add(player1);
-        originParticipants.add(dealer);
-        originParticipants.add(player2);
-
+        List<Participant> originParticipants = List.of(new Player("우가"), new Player("베루스"), new Dealer());
         Participants participants = new Participants(originParticipants);
+
+        Participants onlyPlayers = participants.findPlayers();
+        Participant dealer = participants.findDealer();
+        Participant player1 = onlyPlayers.getParticipants().getFirst();
+        Participant player2 = onlyPlayers.getParticipants().getLast();
 
         GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
         player1.drawCard(gameCardDeck, 1);
         player2.drawCard(gameCardDeck, 1);
         dealer.drawCard(gameCardDeck, 1);
-        garbagePlayer.drawCard(gameCardDeck, 1);
-        dealer.drawCard(gameCardDeck, 1);
         player1.drawCard(gameCardDeck, 1);
+        dealer.drawCard(gameCardDeck, 1);
+        player2.drawCard(gameCardDeck, 1);
 
         //when
         ScoreBoard scoreBoard = new ScoreBoard(participants);
@@ -171,10 +175,14 @@ class ScoreBoardTest {
 
         //then
         org.junit.jupiter.api.Assertions.assertAll(
-                () -> Assertions.assertThat(battleResultsMap.get(player1).getResults().get(BattleResult.DRAW)).isEqualTo(1),
-                () -> Assertions.assertThat(battleResultsMap.get(player2).getResults().get(BattleResult.LOSE)).isEqualTo(1),
-                () -> Assertions.assertThat(battleResultsMap.get(dealer).getResults().get(BattleResult.DRAW)).isEqualTo(1),
-                () -> Assertions.assertThat(battleResultsMap.get(dealer).getResults().get(BattleResult.WIN)).isEqualTo(1)
+                () -> Assertions.assertThat(battleResultsMap.get(player1).getResults().get(BattleResult.LOSE))
+                        .isEqualTo(1),
+                () -> Assertions.assertThat(battleResultsMap.get(player2).getResults().get(BattleResult.DRAW))
+                        .isEqualTo(1),
+                () -> Assertions.assertThat(battleResultsMap.get(dealer).getResults().get(BattleResult.DRAW))
+                        .isEqualTo(1),
+                () -> Assertions.assertThat(battleResultsMap.get(dealer).getResults().get(BattleResult.WIN))
+                        .isEqualTo(1)
         );
     }
 
@@ -182,23 +190,18 @@ class ScoreBoardTest {
     @Test
     void 스코어보드_계산_확인6() {
         //given
-        Player player1 = new Player("우가");
-        Player player2 = new Player("히스타");
-        Player garbagePlayer = new Player("임시");
-        Dealer dealer = new Dealer();
-
-        List<Participant> originParticipants = new ArrayList<>();
-        originParticipants.add(player1);
-        originParticipants.add(dealer);
-        originParticipants.add(player2);
-
+        List<Participant> originParticipants = List.of(new Player("우가"), new Player("베루스"), new Dealer());
         Participants participants = new Participants(originParticipants);
+
+        Participants onlyPlayers = participants.findPlayers();
+        Participant dealer = participants.findDealer();
+        Participant player1 = onlyPlayers.getParticipants().getFirst();
+        Participant player2 = onlyPlayers.getParticipants().getLast();
 
         GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
         player1.drawCard(gameCardDeck, 1);
         player2.drawCard(gameCardDeck, 1);
         dealer.drawCard(gameCardDeck, 1);
-        garbagePlayer.drawCard(gameCardDeck, 1);
         player1.drawCard(gameCardDeck, 1);
 
         //when
@@ -208,10 +211,14 @@ class ScoreBoardTest {
 
         //then
         org.junit.jupiter.api.Assertions.assertAll(
-                () -> Assertions.assertThat(battleResultsMap.get(player1).getResults().get(BattleResult.WIN)).isEqualTo(1),
-                () -> Assertions.assertThat(battleResultsMap.get(player2).getResults().get(BattleResult.DRAW)).isEqualTo(1),
-                () -> Assertions.assertThat(battleResultsMap.get(dealer).getResults().get(BattleResult.DRAW)).isEqualTo(1),
-                () -> Assertions.assertThat(battleResultsMap.get(dealer).getResults().get(BattleResult.LOSE)).isEqualTo(1)
+                () -> Assertions.assertThat(battleResultsMap.get(player1).getResults().get(BattleResult.WIN))
+                        .isEqualTo(1),
+                () -> Assertions.assertThat(battleResultsMap.get(player2).getResults().get(BattleResult.DRAW))
+                        .isEqualTo(1),
+                () -> Assertions.assertThat(battleResultsMap.get(dealer).getResults().get(BattleResult.DRAW))
+                        .isEqualTo(1),
+                () -> Assertions.assertThat(battleResultsMap.get(dealer).getResults().get(BattleResult.LOSE))
+                        .isEqualTo(1)
         );
     }
 
@@ -219,16 +226,13 @@ class ScoreBoardTest {
     @Test
     void 스코어보드_계산_확인7() {
         //given
-        Player player1 = new Player("우가");
-        Player player2 = new Player("히스타");
-        Dealer dealer = new Dealer();
-
-        List<Participant> originParticipants = new ArrayList<>();
-        originParticipants.add(player1);
-        originParticipants.add(dealer);
-        originParticipants.add(player2);
-
+        List<Participant> originParticipants = List.of(new Player("우가"), new Player("베루스"), new Dealer());
         Participants participants = new Participants(originParticipants);
+
+        Participants onlyPlayers = participants.findPlayers();
+        Participant dealer = participants.findDealer();
+        Participant player1 = onlyPlayers.getParticipants().getFirst();
+        Participant player2 = onlyPlayers.getParticipants().getLast();
 
         GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
         player1.drawCard(gameCardDeck, 12);
@@ -242,9 +246,12 @@ class ScoreBoardTest {
 
         //then
         org.junit.jupiter.api.Assertions.assertAll(
-                () -> Assertions.assertThat(battleResultsMap.get(player1).getResults().get(BattleResult.DRAW)).isEqualTo(1),
-                () -> Assertions.assertThat(battleResultsMap.get(player2).getResults().get(BattleResult.DRAW)).isEqualTo(1),
-                () -> Assertions.assertThat(battleResultsMap.get(dealer).getResults().get(BattleResult.DRAW)).isEqualTo(2)
+                () -> Assertions.assertThat(battleResultsMap.get(player1).getResults().get(BattleResult.LOSE))
+                        .isEqualTo(1),
+                () -> Assertions.assertThat(battleResultsMap.get(player2).getResults().get(BattleResult.LOSE))
+                        .isEqualTo(1),
+                () -> Assertions.assertThat(battleResultsMap.get(dealer).getResults().get(BattleResult.WIN))
+                        .isEqualTo(2)
         );
     }
 
@@ -252,16 +259,13 @@ class ScoreBoardTest {
     @Test
     void 스코어보드_계산_확인8() {
         //given
-        Player player1 = new Player("우가");
-        Player player2 = new Player("히스타");
-        Dealer dealer = new Dealer();
-
-        List<Participant> originParticipants = new ArrayList<>();
-        originParticipants.add(player1);
-        originParticipants.add(dealer);
-        originParticipants.add(player2);
-
+        List<Participant> originParticipants = List.of(new Player("우가"), new Player("베루스"), new Dealer());
         Participants participants = new Participants(originParticipants);
+
+        Participants onlyPlayers = participants.findPlayers();
+        Participant dealer = participants.findDealer();
+        Participant player1 = onlyPlayers.getParticipants().getFirst();
+        Participant player2 = onlyPlayers.getParticipants().getLast();
 
         GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
         dealer.drawCard(gameCardDeck, 12);
@@ -275,9 +279,12 @@ class ScoreBoardTest {
 
         //then
         org.junit.jupiter.api.Assertions.assertAll(
-                () -> Assertions.assertThat(battleResultsMap.get(player1).getResults().get(BattleResult.WIN)).isEqualTo(1),
-                () -> Assertions.assertThat(battleResultsMap.get(player2).getResults().get(BattleResult.WIN)).isEqualTo(1),
-                () -> Assertions.assertThat(battleResultsMap.get(dealer).getResults().get(BattleResult.LOSE)).isEqualTo(2)
+                () -> Assertions.assertThat(battleResultsMap.get(player1).getResults().get(BattleResult.WIN))
+                        .isEqualTo(1),
+                () -> Assertions.assertThat(battleResultsMap.get(player2).getResults().get(BattleResult.WIN))
+                        .isEqualTo(1),
+                () -> Assertions.assertThat(battleResultsMap.get(dealer).getResults().get(BattleResult.LOSE))
+                        .isEqualTo(2)
         );
     }
 
@@ -285,16 +292,13 @@ class ScoreBoardTest {
     @Test
     void 스코어보드_계산_확인9() {
         //given
-        Player player1 = new Player("우가");
-        Player player2 = new Player("히스타");
-        Dealer dealer = new Dealer();
-
-        List<Participant> originParticipants = new ArrayList<>();
-        originParticipants.add(player1);
-        originParticipants.add(dealer);
-        originParticipants.add(player2);
-
+        List<Participant> originParticipants = List.of(new Player("우가"), new Player("베루스"), new Dealer());
         Participants participants = new Participants(originParticipants);
+
+        Participants onlyPlayers = participants.findPlayers();
+        Participant dealer = participants.findDealer();
+        Participant player1 = onlyPlayers.getParticipants().getFirst();
+        Participant player2 = onlyPlayers.getParticipants().getLast();
 
         GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
         player1.drawCard(gameCardDeck, 12);

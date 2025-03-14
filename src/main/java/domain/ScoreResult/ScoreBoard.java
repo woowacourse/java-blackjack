@@ -3,8 +3,6 @@ package domain.ScoreResult;
 import domain.game.GameRule;
 import domain.participant.Participant;
 import domain.participant.Participants;
-
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +24,7 @@ public class ScoreBoard {
     private void calculateScoreBoard() {
         Participant dealer = findDealer();
         for (Participant participant : scoreBoard.keySet()) {
-            if (!participant.areYouDealer()) {
+            if (!participant.isDealer()) {
                 determineOutcome(dealer, participant);
             }
         }
@@ -34,7 +32,7 @@ public class ScoreBoard {
 
     private Participant findDealer() {
         return scoreBoard.keySet().stream()
-                .filter(Participant::areYouDealer)
+                .filter(Participant::isDealer)
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("딜러가 존재하지 않습니다."));
     }
@@ -58,10 +56,7 @@ public class ScoreBoard {
     }
 
     private BattleResult determinePlayerResultBustCase(int dealerScore, int playerScore) {
-        if (GameRule.checkBust(playerScore) && GameRule.checkBust(dealerScore)) {
-            return BattleResult.DRAW;
-        }
-        if (GameRule.checkBust(playerScore)) {
+        if ((GameRule.checkBust(playerScore) && GameRule.checkBust(dealerScore)) || GameRule.checkBust(playerScore)) {
             return BattleResult.LOSE;
         }
         return BattleResult.WIN;
@@ -87,7 +82,22 @@ public class ScoreBoard {
         return BattleResult.DRAW;
     }
 
+    public int requestWinCounts(Participant participant) {
+        BattleResults battleResults = scoreBoard.get(participant);
+        return battleResults.requestWinCounts();
+    }
+
+    public int requestDrawCounts(Participant participant) {
+        BattleResults battleResults = scoreBoard.get(participant);
+        return battleResults.requestDrawCounts();
+    }
+
+    public int requestLoseCounts(Participant participant) {
+        BattleResults battleResults = scoreBoard.get(participant);
+        return battleResults.requestLoseCounts();
+    }
+
     public Map<Participant, BattleResults> getScoreBoard() {
-        return Collections.unmodifiableMap(scoreBoard);
+        return scoreBoard;
     }
 }
