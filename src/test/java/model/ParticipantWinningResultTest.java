@@ -10,7 +10,7 @@ import model.card.CardSuit;
 import model.participant.Dealer;
 import model.participant.Player;
 import model.participant.Players;
-import model.result.GameResult;
+import model.result.WinningResult;
 import model.result.ParticipantWinningResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -39,8 +39,8 @@ class ParticipantWinningResultTest {
 
         //when
         ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
-        GameResult result = participantWinningResult.getResult().get(player);
-        GameResult expect = GameResult.WIN;
+        WinningResult result = participantWinningResult.getResult().get(player);
+        WinningResult expect = WinningResult.WIN;
 
         //then
         assertEquals(expect, result);
@@ -58,8 +58,8 @@ class ParticipantWinningResultTest {
 
         //when
         ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
-        GameResult result = participantWinningResult.getResult().get(player);
-        GameResult expect = GameResult.LOSE;
+        WinningResult result = participantWinningResult.getResult().get(player);
+        WinningResult expect = WinningResult.LOSE;
 
         //then
         assertEquals(expect, result);
@@ -78,8 +78,8 @@ class ParticipantWinningResultTest {
 
         //when
         ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
-        GameResult result = participantWinningResult.getResult().get(player);
-        GameResult expect = GameResult.LOSE;
+        WinningResult result = participantWinningResult.getResult().get(player);
+        WinningResult expect = WinningResult.LOSE;
 
         //then
         assertEquals(expect, result);
@@ -96,8 +96,8 @@ class ParticipantWinningResultTest {
 
         //when
         ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
-        Map<Player, GameResult> gameResult = participantWinningResult.getResult();
-        GameResult expect = GameResult.WIN;
+        Map<Player, WinningResult> gameResult = participantWinningResult.getResult();
+        WinningResult expect = WinningResult.WIN;
 
         //then
         assertEquals(gameResult.get(player), expect);
@@ -114,8 +114,8 @@ class ParticipantWinningResultTest {
 
         //when
         ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
-        Map<Player, GameResult> gameResult = participantWinningResult.getResult();
-        GameResult expect = GameResult.LOSE;
+        Map<Player, WinningResult> gameResult = participantWinningResult.getResult();
+        WinningResult expect = WinningResult.LOSE;
 
         //then
         assertEquals(gameResult.get(player), expect);
@@ -132,8 +132,8 @@ class ParticipantWinningResultTest {
 
         //when
         ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
-        Map<Player, GameResult> gameResult = participantWinningResult.getResult();
-        GameResult expect = GameResult.DRAW;
+        Map<Player, WinningResult> gameResult = participantWinningResult.getResult();
+        WinningResult expect = WinningResult.DRAW;
 
         //then
         assertEquals(gameResult.get(player), expect);

@@ -1,5 +1,6 @@
 package model.turn;
 
+import java.util.Map;
 import model.Betting;
 import model.PlayerChoice;
 import model.card.Deck;
@@ -37,6 +38,10 @@ public class PlayerTurn extends Turn{
             int insuranceBet =  InputView.readInsuranceBet(maxInsuranceAmount);
             betting.takeInsurance(insuranceBet);
         }
+    }
+
+    public void putBetting(Map<Player, Betting> playerBetting){
+        playerBetting.put(player, betting);
     }
 
     private void processHit(Deck deck){

@@ -1,26 +1,30 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+import model.Betting;
 import model.participant.Player;
 import model.PlayerChoice;
 import model.participant.Players;
+import model.turn.PlayerTurn;
 
 public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public static Map<Player, Integer> inputBettingPrice(Players players) {
-        Map<Player, Integer> bettingResult = new HashMap<>();
+    public static List<PlayerTurn> startBettingTurn(Players players) {
+        List<PlayerTurn> turns = new ArrayList<>();
         for (Player player : players.getPlayers()) {
             System.out.println(player.getName() + "의 배팅 금액은?");
             int bettingPrice = validateInteger(SCANNER.nextLine());
-            bettingResult.put(player, bettingPrice);
+            Betting betting = new Betting(bettingPrice);
+            turns.add(new PlayerTurn(player, betting));
         }
-        return bettingResult;
+        return turns;
     }
 
     public static List<String> readPlayerNames() {

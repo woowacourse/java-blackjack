@@ -1,13 +1,16 @@
 package model.result;
 
 import java.util.Map;
+import model.Betting;
 import model.participant.Player;
 import model.participant.Players;
+import model.turn.PlayerTurn;
+import model.turn.PlayerTurnManager;
 
 public class BettingResult {
-    private final Map<Player, Integer> betting;
+    private final Map<Player, Betting> betting;
 
-    public BettingResult(Map<Player, Integer> betting) {
+    public BettingResult(Map<Player, Betting> betting) {
         this.betting = betting;
     }
 
