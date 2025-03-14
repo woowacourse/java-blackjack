@@ -7,19 +7,22 @@ import blackjack.model.participant.Name;
 import blackjack.model.participant.Player;
 import blackjack.model.card.RandomCardShuffler;
 import blackjack.model.participant.GamePlayers;
-import blackjack.view.InputView;
-import blackjack.view.OutputView;
+import blackjack.view.GamePlayView;
+import blackjack.view.GameResultView;
+import blackjack.view.GameSetupView;
 import java.util.List;
 import java.util.Map;
 
 public final class BlackjackController {
 
-    private final InputView inputView;
-    private final OutputView outputView;
+    private final GameSetupView gameSetupView;
+    private final GamePlayView gamePlayView;
+    private final GameResultView gameResultView;
 
-    public BlackjackController(InputView inputView, OutputView outputView) {
-        this.inputView = inputView;
-        this.outputView = outputView;
+    public BlackjackController(GameSetupView gameSetupView, GamePlayView gamePlayView, GameResultView gameResultView) {
+        this.gameSetupView = gameSetupView;
+        this.gamePlayView = gamePlayView;
+        this.gameResultView = gameResultView;
     }
 
     public void run() {
@@ -30,27 +33,27 @@ public final class BlackjackController {
         displayResult(dealer, gamePlayers, bettingTable);
     }
 
-    private BettingTable getBettingTable(GamePlayers gamePlayers) {
-        BettingTable bettingTable = new BettingTable();
-        for (Player player : gamePlayers) {
-            int betAmount = inputView.readBetAmount(player.getName());
-            bettingTable.bet(player, betAmount);
-        }
-        return bettingTable;
-    }
-
     private Dealer createDealer() {
         return new Dealer(Deck.createStandardDeck(new RandomCardShuffler()));
     }
 
     private GamePlayers getGamePlayers() {
-        outputView.printStartBanner();
+        gameSetupView.printStartBanner();
         List<Player> players = createPlayersFromInput();
         return GamePlayers.createForNewGame(players);
     }
 
+    private BettingTable getBettingTable(GamePlayers gamePlayers) {
+        BettingTable bettingTable = new BettingTable();
+        for (Player player : gamePlayers) {
+            int betAmount = gameSetupView.readBetAmount(player.getName());
+            bettingTable.bet(player, betAmount);
+        }
+        return bettingTable;
+    }
+
     private List<Player> createPlayersFromInput() {
-        return inputView.readPlayerNames()
+        return gameSetupView.readPlayerNames()
                 .stream()
                 .map(name -> new Player(new Name(name)))
                 .toList();
@@ -73,7 +76,7 @@ public final class BlackjackController {
     }
 
     private void displayInitialHand(Dealer dealer, GamePlayers gamePlayers) {
-        outputView.printInitialCards(dealer.getVisibleCard(), gamePlayers.getPlayers());
+        gamePlayView.printInitialCards(dealer.getVisibleCard(), gamePlayers.getPlayers());
     }
 
     private void askHitForAllPlayer(Dealer dealer, GamePlayers gamePlayers) {
@@ -85,12 +88,12 @@ public final class BlackjackController {
     private void askHit(Dealer dealer, Player player) {
         while (player.canHit() && wantsToHit(player)) {
             dealer.dealCard(player);
-            outputView.printPlayerHand(player);
+            gamePlayView.printPlayerHand(player);
         }
     }
 
     private boolean wantsToHit(Player player) {
-        return inputView.readHitOrNot(player.getName()).isHit();
+        return gamePlayView.readHitOrNot(player.getName()).isHit();
     }
 
     private void askHitForDealer(Dealer dealer) {
@@ -98,12 +101,12 @@ public final class BlackjackController {
         if (isDealerHitting) {
             dealer.dealCard(dealer);
         }
-        outputView.printDealerHit(isDealerHitting);
+        gamePlayView.printDealerHit(isDealerHitting);
     }
 
     private void displayResult(Dealer dealer, GamePlayers gamePlayers, BettingTable bettingTable) {
-        outputView.printDealerHandAndTotal(dealer.getHand(), dealer.getTotal());
-        outputView.printPlayerHandAndTotal(gamePlayers.getPlayers());
+        gameResultView.printDealerHandAndTotal(dealer.getHand(), dealer.getTotal());
+        gameResultView.printPlayerHandAndTotal(gamePlayers.getPlayers());
         displayFinalProfit(dealer, bettingTable);
     }
 
@@ -111,10 +114,10 @@ public final class BlackjackController {
         Map<Player, Integer> payouts = bettingTable.calculatePayouts(dealer);
         Map<Player, Integer> betting = bettingTable.getBetting();
         int dealerProfit = calculateDealerProfit(betting, payouts);
-        outputView.printFinalProfitHeader();
-        outputView.printDealerFinalProfit(dealerProfit);
+        gameResultView.printFinalProfitHeader();
+        gameResultView.printDealerFinalProfit(dealerProfit);
         betting.forEach((player, betAmount) ->
-                outputView.printPlayerFinalProfit(player.getName(), betAmount, payouts.get(player))
+                gameResultView.printPlayerFinalProfit(player.getName(), betAmount, payouts.get(player))
         );
     }
 
