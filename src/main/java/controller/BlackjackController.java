@@ -90,9 +90,7 @@ public class BlackjackController {
     }
 
     private void printDealerDrawCount(final Dealer dealer) {
-        for (int count = 0; count < dealer.getAdditionalDrawCount(); count++) {
-            outputView.printDealerDrawn();
-        }
+        outputView.printDealerDrawn(dealer.getAdditionalDrawCount());
     }
 
     private void printFinalGameState(final Dealer dealer, final Players players) {
@@ -115,7 +113,10 @@ public class BlackjackController {
     }
 
     private List<CardDto> getCardDtos(final Cards cards) {
-        return cards.getCards().stream().map(CardDto::from).toList();
+        return cards.getCards()
+                .stream()
+                .map(CardDto::from)
+                .toList();
     }
 
     private void printProfit(final Players players, final Dealer dealer) {
@@ -123,8 +124,7 @@ public class BlackjackController {
         GameResults gameResults = calculateGameResults(players, dealer);
         int dealerProfit = gameResults.calculateDealerProfit(players);
         outputView.printProfitWithName("딜러", dealerProfit);
-        players.getPlayers().forEach(player -> {
-            outputView.printProfitWithName(player.getName(), gameResults.calculatePlayerProfit(player));
-        });
+        players.getPlayers().forEach(player ->
+                outputView.printProfitWithName(player.getName(), gameResults.calculatePlayerProfit(player)));
     }
 }

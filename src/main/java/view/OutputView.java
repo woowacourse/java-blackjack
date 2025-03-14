@@ -18,8 +18,8 @@ public class OutputView {
         System.out.printf("%s카드: %s" + LINE, name, joinByDelimiter(cardOutputs));
     }
 
-    public void printDealerDrawn() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    public void printDealerDrawn(int drawCount) {
+        System.out.printf("딜러는 16이하라 %d장의 카드를 더 받았습니다." + LINE, drawCount);
     }
 
     public void printDealerFirstCard(final CardDto firstCard) {

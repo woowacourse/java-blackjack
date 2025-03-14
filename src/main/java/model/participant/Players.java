@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import model.bettingamount.BettingAmount;
-import model.deck.Deck;
 
 public class Players {
     private final List<Player> players;
@@ -13,12 +11,6 @@ public class Players {
     public Players(final List<Player> players) {
         validateDuplicateNames(players);
         this.players = players;
-    }
-
-    public static Players createByNames(final List<String> names, final Deck deck) {
-        return new Players(names.stream()
-                .map(name -> new Player(name, deck, new BettingAmount(0)))
-                .collect(Collectors.toList()));
     }
 
     private void validateDuplicateNames(List<Player> players) {
