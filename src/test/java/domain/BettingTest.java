@@ -1,5 +1,6 @@
 package domain;
 
+import static domain.card.Rank.FIVE;
 import static domain.card.Rank.NINE;
 import static domain.card.Rank.TEN;
 import static domain.card.Rank.TWO;
@@ -29,6 +30,22 @@ public class BettingTest {
         // when
         bettingRound.bet(player, 10000);
         // then
-        assertThat(bettingRound.getPlayerBetAmount(player)).isEqualTo(10000);
+        assertThat(bettingRound.getPlayerInitialBetAmount(player)).isEqualTo(10000);
+    }
+
+    @Test
+    @DisplayName("카드를 추가로 뽑아 21을 초과할 경우 배팅 금액을 모두 잃게 된다")
+    void testBetIsLostIfPlayerBusts() {
+        // given
+        CardHand cardHand = new CardHand(
+                Set.of(CardFixture.of(TEN, HEART), CardFixture.of(NINE, DIAMOND)));
+        Player player = new Player("pobi", cardHand);
+        BettingRound bettingRound = new BettingRound();
+        // when
+        bettingRound.bet(player, 10000);
+        player.hit(CardFixture.of(FIVE, CLOVER));
+        bettingRound.betIsLostIfPlayerBusts(player);
+        // then
+        assertThat(bettingRound.getPlayerFinalBetAmount(player)).isEqualTo(0);
     }
 }
