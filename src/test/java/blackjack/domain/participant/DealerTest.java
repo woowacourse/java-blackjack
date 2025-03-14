@@ -4,14 +4,19 @@ import static blackjack.fixture.TestFixture.provideBiggerAceCards;
 import static blackjack.fixture.TestFixture.provideBiggerAndSmallerAceCards;
 import static blackjack.fixture.TestFixture.provideCards;
 import static blackjack.fixture.TestFixture.provideEmptyCards;
+import static blackjack.fixture.TestFixture.provideOver16Cards;
 import static blackjack.fixture.TestFixture.provideSmallerAceCards;
+import static blackjack.fixture.TestFixture.provideUnder16Cards;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Hand;
 import blackjack.domain.card.CardScore;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.Shape;
+import blackjack.domain.result.DealerWinningResult;
+import blackjack.domain.result.ResultStatus;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -101,6 +106,31 @@ class DealerTest {
                 Arguments.of(provideSmallerAceCards(), 18),
                 Arguments.of(provideBiggerAceCards(), 21),
                 Arguments.of(provideBiggerAndSmallerAceCards(), 17)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    void 우승_결과를_계산한다(final Hand hand, final ResultStatus expected) {
+        // Given
+        String name = "밍트";
+        final Map<String, Integer> playerScores = Map.of(name, 16);
+        Dealer dealer1 = new Dealer(hand);
+
+        // When
+        DealerWinningResult dealerWinningResult = dealer1.makeDealerWinningResult(playerScores);
+
+        // Then
+        assertThat(dealerWinningResult).isEqualTo(new DealerWinningResult(Map.of(name, expected)));
+    }
+
+    private static Stream<Arguments> 우승_결과를_계산한다() {
+        Hand provide16Cards = new Hand(List.of(new Card(Shape.CLOB, CardScore.A), new Card(Shape.CLOB, CardScore.SIX)));
+        return Stream.of(
+                Arguments.of(provideEmptyCards(), ResultStatus.LOSE),
+                Arguments.of(provideUnder16Cards(), ResultStatus.LOSE),
+                Arguments.of(provide16Cards, ResultStatus.WIN),
+                Arguments.of(provideOver16Cards(), ResultStatus.WIN)
         );
     }
 }

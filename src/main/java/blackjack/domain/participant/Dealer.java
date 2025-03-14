@@ -1,8 +1,13 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.result.ResultStatus;
-import blackjack.domain.result.DealerWinningResult;
+import static blackjack.domain.card.Hand.BURST_THRESHOLD;
+import static blackjack.domain.result.ResultStatus.LOSE;
+import static blackjack.domain.result.ResultStatus.PUSH;
+import static blackjack.domain.result.ResultStatus.WIN;
+
 import blackjack.domain.card.Hand;
+import blackjack.domain.result.DealerWinningResult;
+import blackjack.domain.result.ResultStatus;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -38,8 +43,35 @@ public class Dealer extends Gamer {
         int dealerScore = calculateScore();
         Map<String, ResultStatus> result = playerScores.entrySet().stream()
                 .collect(Collectors.toMap(Entry::getKey,
-                        entry -> ResultStatus.calculateResultStatus(entry.getValue(), dealerScore)));
+                        entry -> calculateResultStatus(dealerScore, entry.getValue())));
         return new DealerWinningResult(result);
+    }
+
+    private ResultStatus calculateResultStatus(final int dealerScore, final int playerScore) {
+        if (dealerScore <= BURST_THRESHOLD) {
+            return calculateResultStatusUnderBlackjackNumber(dealerScore, playerScore);
+        }
+        if (playerScore > BURST_THRESHOLD) {
+            return WIN;
+        }
+        return LOSE;
+    }
+
+    private ResultStatus calculateResultStatusUnderBlackjackNumber(final int dealerScore, final int playerScore) {
+        if (playerScore <= BURST_THRESHOLD) {
+            return calculateResultStatusBothUnderBlackjackNumber(dealerScore, playerScore);
+        }
+        return WIN;
+    }
+
+    private ResultStatus calculateResultStatusBothUnderBlackjackNumber(final int dealerScore, final int playerScore) {
+        if (dealerScore > playerScore) {
+            return WIN;
+        }
+        if (dealerScore == playerScore) {
+            return PUSH;
+        }
+        return LOSE;
     }
 
     @Override
