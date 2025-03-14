@@ -1,13 +1,14 @@
 package view;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
     private final Scanner scanner = new Scanner(System.in);
 
-    public String inputUsers() {
+    public List<String> inputUsers() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
-        return scanner.next();
+        return Parser.parseStringToList(scanner.next());
     }
 
     public String inputYesOrNo(String playerName) {
@@ -15,9 +16,9 @@ public class InputView {
         return scanner.next();
     }
 
-    public String inputBettingMoney(String name) {
+    public Long inputBettingMoney(String name) {
         System.out.println(name + "의 배팅 금액은?");
-        return scanner.next();
+        return Parser.parseLong(scanner.next());
     }
 
     public void close() {

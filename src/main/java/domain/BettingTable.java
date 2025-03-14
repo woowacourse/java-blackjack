@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class BettingTable {
+    private static final double BLACKJACK_REWARD_RATE = 1.5;
+
     private final Map<User, Long> bet = new HashMap<>();
     private Long dealerBet = 0L;
 
@@ -15,28 +17,32 @@ public class BettingTable {
 
     public Map<User, Long> calculateRewards(Map<User, GameResult> gameResult, User dealer) {
         Map<User, Long> rewards = new HashMap<>();
+
         for (Entry<User, GameResult> userGameResult : gameResult.entrySet()) {
             User user = userGameResult.getKey();
-            rewards.put(user, calculateReward(user, userGameResult.getValue(), user.isBlackjack()));
+            GameResult result = userGameResult.getValue();
+            rewards.put(user, calculateReward(user, result));
         }
+
         rewards.put(dealer, dealerBet);
         return rewards;
     }
 
-    private Long calculateReward(User user, GameResult gameResult, boolean blackjack) {
+    private Long calculateReward(User user, GameResult gameResult) {
         Long bettingMoney = bet.getOrDefault(user, 0L);
-        if (blackjack && gameResult == GameResult.WIN) {
-            dealerBet -= (long) (bettingMoney * 1.5);
-            return (long) (bettingMoney * 1.5);
+        long reward = 0L;
+
+        if (user.isBlackjack() && gameResult == GameResult.WIN) {
+            reward = (long) (bettingMoney * BLACKJACK_REWARD_RATE);
         }
         if (gameResult == GameResult.WIN) {
-            dealerBet -= bettingMoney;
-            return bettingMoney;
+            reward = bettingMoney;
+            dealerBet -= reward;
         }
-        if (gameResult == GameResult.DRAW) {
-            return 0L;
+        if (gameResult == GameResult.LOSE) {
+            reward = -bettingMoney;
+            dealerBet += bettingMoney;
         }
-        dealerBet += bettingMoney;
-        return bettingMoney * -1;
+        return reward;
     }
 }

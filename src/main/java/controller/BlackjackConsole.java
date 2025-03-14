@@ -12,37 +12,44 @@ import java.util.List;
 import java.util.Map;
 import view.InputView;
 import view.OutputView;
-import view.Parser;
 
-public class BlackjackGame {
+public class BlackjackConsole {
     private final OutputView outputView;
     private final InputView inputView;
 
-    public BlackjackGame(OutputView outputView, InputView inputView) {
+    public BlackjackConsole(OutputView outputView, InputView inputView) {
         this.outputView = outputView;
         this.inputView = inputView;
     }
 
     public void run() {
-        List<String> playerNames = Parser.parseStringToList(inputView.inputUsers());
-        List<Player> users = playerNames.stream().map(Player::new).toList();
-        Dealer dealer = new Dealer();
+        List<String> playerNames = inputView.inputUsers();
+        List<Player> users = playerNames.stream()
+                .map(Player::new)
+                .toList();
 
+        // 블랙잭을 진행한다
+        Dealer dealer = new Dealer();
+        GameManger gameManger = new GameManger(users, dealer, new CardDeck());
+
+        // 배팅 결과를 계산한다
         BettingTable bettingTable = bettingMoney(users, dealer);
 
-        GameManger gameManger = new GameManger(users, dealer, new CardDeck());
+        // 첫 카드를 공개한다
         distributionFirstCard(gameManger, playerNames);
 
+        // 카드를 추가한다
         additionalPlayerCard(gameManger, playerNames);
         additionalDealerCard(gameManger);
 
+        // 카드를 공개한다
         displayScore(gameManger, playerNames);
 
-        // 배팅 금액을 계산한다
+        // 게임 결과를 계산한다
         Map<User, GameResult> gameResult = gameManger.calculatePlayerScore();
-
         calculateGameResult(gameManger, gameResult);
 
+        // 배팅 금액을 계산한다
         Map<User, Long> rewards = bettingTable.calculateRewards(gameResult, dealer);
         outputView.displayRewards(rewards);
         inputView.close();
@@ -52,8 +59,7 @@ public class BlackjackGame {
         BettingTable bettingTable = new BettingTable();
 
         for (Player user : users) {
-            String moneyInput = inputView.inputBettingMoney(user.getName());
-            Long bettingMoney = Parser.parseLong(moneyInput);
+            Long bettingMoney = inputView.inputBettingMoney(user.getName());
             bettingTable.bettingMoney(user, bettingMoney);
         }
         bettingTable.bettingMoney(dealer, 0L);
