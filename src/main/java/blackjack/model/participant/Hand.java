@@ -15,7 +15,7 @@ public class Hand {
 
     private final List<Card> hand;
 
-    protected Hand(List<Card> hand) {
+    public Hand(List<Card> hand) {
         this.hand = new ArrayList<>(hand);
     }
 

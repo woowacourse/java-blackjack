@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class BetAmount {
 
-    private static final int MINIMUM_STAKE = 0;
+    private static final int MINIMUM_STAKE = 1_000;
     private static final int MAX_STAKE = 1_000_000;
 
     private final int stake;
