@@ -4,7 +4,6 @@ import blackjack.model.game.Deck;
 import blackjack.model.game.DeckInitializer;
 import blackjack.model.game.GameResult;
 import blackjack.model.player.Dealer;
-import blackjack.model.player.Participant;
 import blackjack.model.player.Player;
 import blackjack.model.player.Players;
 import blackjack.view.InputView;
@@ -21,15 +20,15 @@ public class BlackJackGame {
 
     public BlackJackGame(InputView inputView) {
         this.deck = new DeckInitializer().generateDeck();
-        this.players = Parser.parseParticipants(inputView.inputParticipant());
+        this.players = Players.from(inputView.inputParticipant());
         this.dealer = new Dealer();
     }
 
     public void play(InputView inputView, OutputView outputView) {
-        initializeGame();
+        initializeGame(inputView);
         outputView.outputFirstCardDistributionResult(players, dealer);
 
-        giveParticipantsMoreCard(inputView, outputView);
+        givePlayersCard(inputView, outputView);
         giveMoreDealerCard(outputView);
 
         GameResult gameResult = new GameResult(dealer, players);
@@ -38,22 +37,18 @@ public class BlackJackGame {
                 gameResult.getDealerLoseCount());
     }
 
-    private void initializeGame() {
-        players.getParticipants().forEach(this::putTwoCard);
-        putTwoCard(dealer);
+    private void initializeGame(InputView inputView) {
+        players.getParticipants().forEach(p -> p.setBetting(inputView.inputBetting(p.getName())));
+        players.getParticipants().forEach(p -> p.initialCard(deck.drawCard(), deck.drawCard()));
     }
 
-    private void putTwoCard(Participant participant) {
-        participant.putCard(deck.drawCard());
-        participant.putCard(deck.drawCard());
-    }
 
-    private void giveParticipantsMoreCard(InputView inputView, OutputView outputView) {
+    private void givePlayersCard(InputView inputView, OutputView outputView) {
         Deque<Player> readyQueue = new LinkedList<>(players.getParticipants());
         while (!readyQueue.isEmpty()) {
             Player player = readyQueue.getFirst();
-            boolean isReceive = Parser.parseCommand(inputView.inputCallOrStay(player.getName()));
-            if (isReceive) {
+            HitOrStand hitOrStand = HitOrStand.from(inputView.inputHitOrStand(player.getName()));
+            if (hitOrStand == HitOrStand.HIT) {
                 player.putCard(deck.drawCard());
                 outputView.printPlayerCardStatus(player.getName(), player);
                 if (player.isBust()) {

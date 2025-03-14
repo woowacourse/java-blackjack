@@ -1,6 +1,7 @@
 package blackjack.model.player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -33,6 +34,22 @@ public class Players {
             throw new IllegalArgumentException("중복된 이름은 사용할 수 없습니다.");
         }
     }
+
+
+    public static Players from(String names) {
+        String[] splitNames = names.split(",");
+        validateNameCount(splitNames);
+        return new Players(Arrays.stream(splitNames)
+                .map(Player::new)
+                .toList());
+    }
+
+    private static void validateNameCount(String[] splitName) {
+        if (splitName.length == 0) {
+            throw new IllegalArgumentException("이름을 올바르게 입력해 주세요.");
+        }
+    }
+
 
     public List<Player> getParticipants() {
         return new ArrayList<>(players);

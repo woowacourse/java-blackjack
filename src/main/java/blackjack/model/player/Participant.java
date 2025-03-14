@@ -13,6 +13,11 @@ public abstract class Participant {
         receivedCards.receive(card);
     }
 
+    public void initialCard(Card card1, Card card2) {
+        putCard(card1);
+        putCard(card2);
+    }
+
     public ReceivedCards getReceivedCards() {
         return receivedCards;
     }
