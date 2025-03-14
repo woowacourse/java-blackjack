@@ -30,8 +30,7 @@ public class Application {
         List<String> players = InputSplitter.split(userNames);
         List<Integer> bettingAmounts = new ArrayList<>();
         inputBettingAmountOfPlayer(players, bettingAmounts);
-        return BlackJackGame.createBlackJackGameAndReceiveInitCardsOf(cardBundle, players,
-            bettingAmounts);
+        return BlackJackGame.ofInit(cardBundle, players, bettingAmounts);
     }
 
     private static void inputBettingAmountOfPlayer(List<String> players,

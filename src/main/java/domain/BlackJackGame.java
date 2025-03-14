@@ -25,7 +25,7 @@ public class BlackJackGame {
         participants.receiveCardProcessOfParticipants(cardDeck);
     }
 
-    public static BlackJackGame createBlackJackGameAndReceiveInitCardsOf(CardBundle cardBundle,
+    public static BlackJackGame ofInit(CardBundle cardBundle,
         List<String> userNames, List<Integer> bettingAmount) {
         return new BlackJackGame(cardBundle, userNames, bettingAmount);
     }
