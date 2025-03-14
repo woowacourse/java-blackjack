@@ -33,7 +33,6 @@ public class InputView {
     }
 
     public static PlayerChoice readFirstChoice(Player player) {
-        OutputView.printChoiceResult(player);
         return handleFirstTurnChoice(player);
     }
 
