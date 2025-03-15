@@ -3,10 +3,10 @@ package blackjack.view;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
-import blackjack.domain.participants.BettingMoney.Profit;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
+import blackjack.domain.participants.Profit;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -47,7 +47,7 @@ public class OutputView {
 
     public static void printDealerResult(Dealer dealer) {
         String cards = toKoreanCards(dealer.getCards());
-        System.out.println("딜러카드: " + cards + " - 결과: " + dealer.calculateMaxScore());
+        System.out.println("딜러카드: " + cards + " - 결과: " + dealer.calculateMaxScore().score());
     }
 
     public static void printPlayerResult(List<Player> players) {
