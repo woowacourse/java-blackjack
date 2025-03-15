@@ -34,10 +34,10 @@ class DealerTest {
 
         //when
         dealer.giveOneCardTo(player);
-        Cards cards = player.getCards();
+        List<Card> cards = player.getCards();
 
         //then
-        assertThat(cards.getValues()).contains(card);
+        assertThat(cards).contains(card);
     }
 
     @DisplayName("딜러 카드의 합이 17 이상이 될 때까지 뽑은 횟수를 반환한다")

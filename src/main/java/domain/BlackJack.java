@@ -53,7 +53,7 @@ public class BlackJack {
         return dealer.getCardScore();
     }
 
-    public Cards getDealerCards() {
+    public List<Card> getDealerCards() {
         return dealer.getCards();
     }
 

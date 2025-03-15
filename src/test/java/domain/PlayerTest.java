@@ -25,10 +25,10 @@ public class PlayerTest {
         player.addCard(card);
 
         // when
-        Cards cards = player.getCards();
+        List<Card> cards = player.getCards();
 
         // then
-        assertThat(cards.getValues()).contains(card);
+        assertThat(cards).contains(card);
     }
 
     @DisplayName("21 이하일 때, 최적의 결과를 선택할 수 있다.")

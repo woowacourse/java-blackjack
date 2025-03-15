@@ -25,7 +25,7 @@ public class Player extends Participant {
 
     @Override
     public List<Card> getShowCards() {
-        return getCards().getValues();
+        return getCards();
     }
 
     public String getName() {

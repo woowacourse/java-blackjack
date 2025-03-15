@@ -35,8 +35,8 @@ public abstract class Participant {
         return cards.isBlackjack();
     }
 
-    public Cards getCards() {
-        return cards;
+    public List<Card> getCards() {
+        return cards.getValues();
     }
 
     public abstract List<Card> getShowCards();
