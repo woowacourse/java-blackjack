@@ -3,6 +3,7 @@ package blackjack.model.participant;
 import blackjack.model.MatchResult;
 import blackjack.model.card.Card;
 import blackjack.model.card.Deck;
+import blackjack.model.card.RandomCardShuffler;
 import blackjack.model.state.State;
 import blackjack.model.state.finished.FinishedState;
 import blackjack.model.state.running.DealerDrawing;
@@ -18,6 +19,10 @@ public final class Dealer implements CardReceivable {
     public Dealer(Deck deck) {
         state = new DealerDrawing();
         this.deck = deck;
+    }
+
+    public static Dealer createWithShuffledStandardDeck() {
+        return new Dealer(Deck.createStandardDeck(new RandomCardShuffler()));
     }
 
     public void dealCard(CardReceivable cardReceivable) {

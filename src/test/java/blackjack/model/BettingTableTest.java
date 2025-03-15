@@ -53,6 +53,23 @@ class BettingTableTest {
                 .doesNotThrowAnyException();
     }
 
+    @DisplayName("딜러가 카드를 초기 핸드를 나눠줄 수 있다.")
+    @Test
+    void dealInitialCardsTest() {
+        // given
+        BettingTable bettingTable = BettingTable.createWithPlayerNames(List.of("포비"));
+        Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+
+        // when
+        bettingTable.dealInitialHand(dealer);
+
+        // then
+        assertThat(bettingTable.getParticipatingPlayers())
+                .allMatch(player -> player.getHandCards().size() == 2);
+        assertThat(dealer.getHandCards())
+                .hasSize(2);
+    }
+
     @DisplayName("플레이어 이름으로 배팅 금액을 확인한다.")
     @Test
     void getBetAmountTest() {

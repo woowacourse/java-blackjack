@@ -148,7 +148,7 @@ class DealerTest {
     @Test
     void shouldThrowException_WhenNoHandGetVisibleCardTest() {
         // given
-        Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+        Dealer dealer = Dealer.createWithShuffledStandardDeck();
 
         // when, then
         assertThatCode(dealer::getVisibleCard)

@@ -2,13 +2,10 @@ package blackjack.controller;
 
 import blackjack.model.BettingTable;
 import blackjack.model.participant.Dealer;
-import blackjack.model.card.Deck;
 import blackjack.model.participant.Player;
-import blackjack.model.card.RandomCardShuffler;
 import blackjack.view.GamePlayView;
 import blackjack.view.GameResultView;
 import blackjack.view.GameSetupView;
-import java.util.List;
 import java.util.Map;
 
 public final class BlackjackController {
@@ -24,50 +21,26 @@ public final class BlackjackController {
     }
 
     public void run() {
-        Dealer dealer = createDealer();
-        BettingTable bettingTable = createBettingTable(getPlayerNames());
+        gameSetupView.printStartBanner();
+        Dealer dealer = Dealer.createWithShuffledStandardDeck();
+        BettingTable bettingTable = BettingTable.createWithPlayerNames(gameSetupView.readPlayerNames());
+        betForAllPlayers(bettingTable);
         playBlackjack(dealer, bettingTable);
         displayResult(dealer, bettingTable);
     }
 
-    private Dealer createDealer() {
-        return new Dealer(Deck.createStandardDeck(new RandomCardShuffler()));
-    }
-
-    private BettingTable createBettingTable(List<String> playerNames) {
-        BettingTable bettingTable = new BettingTable(createPlayers(playerNames));
+    private void betForAllPlayers(BettingTable bettingTable) {
         for (Player player : bettingTable.getParticipatingPlayers()) {
             int betAmount = gameSetupView.readBetAmount(player.getName());
             bettingTable.bet(player, betAmount);
         }
-        return bettingTable;
-    }
-
-    private static List<Player> createPlayers(List<String> playerNames) {
-        return playerNames.stream()
-                .map(Player::new)
-                .toList();
-    }
-
-    private List<String> getPlayerNames() {
-        gameSetupView.printStartBanner();
-        return gameSetupView.readPlayerNames();
     }
 
     private void playBlackjack(Dealer dealer, BettingTable bettingTable) {
-        initializeHand(dealer, bettingTable);
+        bettingTable.dealInitialHand(dealer);
         displayInitialHand(dealer, bettingTable);
         askHitForAllPlayer(dealer, bettingTable);
         askHitForDealer(dealer);
-    }
-
-    private void initializeHand(Dealer dealer, BettingTable bettingTable) {
-        for (Player player : bettingTable.getParticipatingPlayers()) {
-            dealer.dealCard(player);
-            dealer.dealCard(player);
-        }
-        dealer.dealCard(dealer);
-        dealer.dealCard(dealer);
     }
 
     private void displayInitialHand(Dealer dealer, BettingTable bettingTable) {

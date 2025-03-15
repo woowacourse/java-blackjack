@@ -73,10 +73,6 @@ public class Hand {
                 .count();
     }
 
-    public boolean isEmpty() {
-        return cards.isEmpty();
-    }
-
     public List<Card> getCards() {
         return List.copyOf(cards);
     }
