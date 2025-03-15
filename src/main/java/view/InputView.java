@@ -1,6 +1,7 @@
 package view;
 
 import domain.Bet;
+import domain.player.User;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -21,6 +22,12 @@ public class InputView {
         String input = scanner.nextLine();
         validateInteger(input);
         return Integer.parseInt(input);
+    }
+
+    public static boolean inputWantHit(User user) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니다?(예는 y, 아니오는 n)%n", user.getName());
+        String input = scanner.nextLine();
+        return Decision.from(input) == Decision.HIT;
     }
 
     private static void validateInteger(String input) {
