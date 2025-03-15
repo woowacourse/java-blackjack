@@ -1,12 +1,10 @@
 package domain.participant;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class Players {
 
@@ -16,27 +14,8 @@ public class Players {
         this.players = players;
     }
 
-    public Map<Player, Integer> getTotalNumberSumByPlayer() {
-        return players.stream()
-                .collect(Collectors.toMap(player -> player, Player::getTotalNumberSum));
-    }
-
     public List<Player> findAllPlayers() {
         return Collections.unmodifiableList(players);
-    }
-
-    public Players editPlayer(Player newPlayer) {
-        List<Player> newPlayers = new ArrayList<>(players);
-        String name = newPlayer.getName();
-        Player originalPlayer = findOriginalPlayer(name);
-        newPlayers.set(players.indexOf(originalPlayer), newPlayer);
-        return new Players(newPlayers);
-    }
-
-    private Player findOriginalPlayer(String name) {
-        return players.stream()
-            .filter(player -> player.getName().equals(name))
-            .findFirst().orElseThrow();
     }
 
     public Map<Player, Integer> judgeAllPlayersIncomes(Dealer dealer) {
