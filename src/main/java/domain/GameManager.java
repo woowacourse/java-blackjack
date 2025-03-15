@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -31,7 +32,7 @@ public class GameManager {
         List<User> users = IntStream.range(0, names.size())
                 .mapToObj(i -> new Player(names.get(i), new Betting(playersBettingMoney.get(i))))
                 .collect(Collectors.toList());
-        User dealer = new Dealer();
+        Dealer dealer = new Dealer();
         users.add(dealer);
         return new GameManager(new Users(users), trumpCardManager);
     }
@@ -56,21 +57,28 @@ public class GameManager {
         user.receiveCard(trumpCardManager.drawCard());
     }
 
-    public Map<User, GameResult> createGameResult() {
-        Map<User, GameResult> gameResult = new LinkedHashMap<>();
+    public Map<User, Long> createGameResult() {
+        Map<User, Long> gameResult = new LinkedHashMap<>();
         Dealer dealer = users.findDealer();
         List<Player> players = users.findPlayers();
         if (dealer.isBurst()) {
             players.forEach((user) -> putGameResultBurst(user, gameResult));
             return gameResult;
         }
-        players.forEach((player) -> gameResult.put(player, compare(player, dealer)));
+        players.forEach((player) -> gameResult.put(player, calculateProfit(player, dealer)));
         return gameResult;
     }
 
+    private Long calculateProfit(Player player, Dealer dealer) {
+        return player.cacluateBettingResult(compare(player, dealer));
+    }
+
     public GameResult compare(final Player player, final Dealer dealer) {
-        if (dealer.isBurst()) {
+        if (player.isBurst()) {
             return GameResult.LOSE;
+        }
+        if (dealer.userScore() < player.userScore() && player.getCardDeck().isBlackjack()) {
+            return GameResult.BLACKJACK;
         }
         if (dealer.userScore() < player.userScore()) {
             return GameResult.WIN;
@@ -81,19 +89,19 @@ public class GameManager {
         return compareSameScore(player, dealer);
     }
 
-    private GameResult compareSameScore(final User player, final User dealer) {
+    private GameResult compareSameScore(final Player player, final Dealer dealer) {
         if (dealer.getCardDeck().isBlackjack() && !player.getCardDeck().isBlackjack()) {
             return GameResult.LOSE;
         }
         return GameResult.DRAW;
     }
 
-    private void putGameResultBurst(final User user, final Map<User, GameResult> gameResult) {
-        if (user.isBurst()) {
-            gameResult.put(user, GameResult.LOSE);
+    private void putGameResultBurst(final Player player, final Map<User, Long> gameResult) {
+        if (player.isBurst()) {
+            gameResult.put(player, player.cacluateBettingResult(GameResult.LOSE));
             return;
         }
-        gameResult.put(user, GameResult.WIN);
+        gameResult.put(player, player.cacluateBettingResult(GameResult.WIN));
     }
 
     public String findDealerName() {
@@ -106,5 +114,12 @@ public class GameManager {
 
     public Dealer getDealer() {
         return users.findDealer();
+    }
+
+    public long calculateDealerProfit(Map<User, Long> gameResult) {
+        long amount = gameResult.entrySet().stream()
+                .mapToLong(Entry::getValue)
+                .sum();
+        return -amount;
     }
 }
