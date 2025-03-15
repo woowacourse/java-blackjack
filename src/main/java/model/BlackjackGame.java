@@ -1,6 +1,6 @@
 package model;
 
-import controller.Intent;
+import view.Intent;
 import model.card.Card;
 import model.card.CardDeck;
 import model.participant.*;
