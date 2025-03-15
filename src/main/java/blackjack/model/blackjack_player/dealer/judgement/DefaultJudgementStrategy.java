@@ -9,7 +9,7 @@ public final class DefaultJudgementStrategy implements JudgementStrategy {
 
     @Override
     public boolean isDraw(final Dealer dealer, final Player player) {
-        if (player.isBust() || dealer.isBust()) {
+        if (isDealerOrPlayerBust(dealer, player)) {
             return false;
         }
         if (dealer.isBlackjack()) {
@@ -20,13 +20,36 @@ public final class DefaultJudgementStrategy implements JudgementStrategy {
 
     @Override
     public boolean isDealerWin(final Dealer dealer, final Player player) {
-        if (player.isBlackjack() || dealer.isBust()) {
+        if (dealer.isBust()) {
             return false;
         }
-        if (player.isBust() || dealer.isBlackjack()) {
+        if (isDealerOnlyBlackjack(dealer, player)) {
             return true;
         }
+        if (isPlayerOnlyBlackjack(dealer, player)) {
+            return false;
+        }
+        if (isPlayerOnlyBust(dealer, player)) {
+            return true;
+        }
+
         return dealer.getOptimalPoint() > player.getOptimalPoint();
+    }
+
+    private boolean isDealerOrPlayerBust(final Dealer dealer, final Player player) {
+        return dealer.isBust() || player.isBust();
+    }
+
+    private boolean isDealerOnlyBlackjack(final Dealer dealer, final Player player) {
+        return dealer.isBlackjack() && !player.isBlackjack();
+    }
+
+    private boolean isPlayerOnlyBlackjack(final Dealer dealer, final Player player) {
+        return player.isBlackjack() && !dealer.isBlackjack();
+    }
+
+    private boolean isPlayerOnlyBust(final Dealer dealer, final Player player) {
+        return player.isBust() && !dealer.isBust();
     }
 
     @Override
