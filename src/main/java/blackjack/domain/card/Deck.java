@@ -2,7 +2,6 @@ package blackjack.domain.card;
 
 import blackjack.domain.card.generator.DeckGenerator;
 import java.util.Deque;
-import java.util.NoSuchElementException;
 import java.util.stream.IntStream;
 
 public class Deck {
@@ -20,10 +19,10 @@ public class Deck {
     }
 
     private Card pickCard() {
-        try {
-            return cards.pollFirst();
-        } catch (NoSuchElementException | UnsupportedOperationException exception) {
+        Card card = cards.pollFirst();
+        if (card == null) {
             throw new IllegalStateException("[ERROR] 카드가 더이상 없습니다.");
         }
+        return card;
     }
 }
