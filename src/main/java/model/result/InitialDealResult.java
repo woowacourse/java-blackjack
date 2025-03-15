@@ -12,7 +12,7 @@ public class InitialDealResult {
     private final List<Player> loserPlayers;
 
     public static InitialDealResult from(Dealer dealer, Players players) {
-        if (dealer.isBlackJack()) {
+        if (dealer.isBlackjack()) {
             return createResultIfDealerBlackjack(players);
         }
         List<Player> blackjackPlayers = players.getPlayers().stream()

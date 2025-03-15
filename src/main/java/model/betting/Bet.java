@@ -6,14 +6,14 @@ import model.participant.Player;
 
 public class Bet {
     private final int money;
-    private final Player better;
-    private final Object owner; //TODO 인터페이스
+    private final Bettable better;
+    private final BetOwnable owner;
 
-    public Bet(int money, Player better) {
+    public Bet(int money, Bettable better) {
         this(money, better, better);
     }
 
-    public Bet(int money, Player better, Object owner) {
+    public Bet(int money, Bettable better, BetOwnable owner) {
         this.money = money;
         this.better = better;
         this.owner = owner;
@@ -39,10 +39,6 @@ public class Bet {
         return -calculateBetterRevenue();
     }
 
-    public boolean ownerEquals(Dealer dealer) {
-        return this.owner.equals(dealer);
-    }
-
     public boolean betterEquals(Player player) {
         return better.equals(player);
     }
@@ -53,10 +49,6 @@ public class Bet {
 
     public Object getOwner() {
         return owner;
-    }
-
-    public int getMoney() {
-        return money;
     }
 
     @Override

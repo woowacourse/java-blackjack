@@ -46,7 +46,7 @@ public class BlackjackController {
     private void receiveBets(Players players, Dealer dealer) {
         for (Player player : players.getPlayers()) {
             int betAmount = InputView.readBetAmount(player.getName());
-            dealer.receiveBet(new Bet(betAmount, player));
+            dealer.receiveBet(player.makeBet(betAmount));
         }
     }
 
@@ -97,7 +97,7 @@ public class BlackjackController {
     private void calculateRevenue(ParticipantWinningResult participantWinningResult, Players players, Dealer dealer) {
         for (Player player : players.getPlayers()) {
             GameResult gameResult = participantWinningResult.findResultByPlayer(player);
-            if (gameResult == GameResult.WIN && player.isBlackjack()) { //TODO : 책임 밀어넣기
+            if (gameResult == GameResult.WIN && player.isBlackjack()) { //TODO : 책임 밀어넣기 (이쪽이 젤 문제임)
                 dealer.updateBetAmountWhenBlackJack(player);
             }
             if (gameResult == GameResult.LOSE) {

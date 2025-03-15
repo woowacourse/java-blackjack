@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import model.betting.Bet;
 import model.deck.Card;
+import model.deck.Gameable;
 import model.participant.Dealer;
 import model.participant.Players;
 import model.result.GameResult;
@@ -45,7 +46,6 @@ public final class OutputView {
      */
     public static void printHitOrStandQuestion(final Player player) {
         System.out.println();
-//        System.out.println();
         System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
     }
 
@@ -63,22 +63,18 @@ public final class OutputView {
      */
     public static void printDealerFinalScore(Dealer dealer) {
         printParticipantAndHands(dealer.getHandCards(), DEALER_PRINT_MESSAGE);
-        printFinalScoreOfDealer(dealer);
+        printFinalScore(dealer);
     }
 
     public static void printPlayersFinalScore(final Players players) {
         players.getPlayers().forEach(player -> {
             printPlayerHitResult(player);
-            printFinalScoreOfPlayer(player);
+            printFinalScore(player);
         });
     }
 
-    private static void printFinalScoreOfPlayer(Player player) {
-        System.out.println(" - 결과: " + player.calculateFinalScore());
-    }
-
-    private static void printFinalScoreOfDealer(Dealer dealer) {
-        System.out.println(" - 결과: " + dealer.calculateFinalScore());
+    private static void printFinalScore(Gameable gameable) {
+        System.out.println(" - 결과: " + gameable.calculateFinalScore());
     }
 
     /**
