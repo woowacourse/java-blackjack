@@ -42,7 +42,8 @@ public class BlackJack {
     }
 
     public boolean canDraw(Participant participant) {
-        return !participant.isBust() && !participant.isHit();
+        Score score = participant.getScore();
+        return !score.isBust() && !score.isHit();
     }
 
     public int getDealerDrawnCount() {
@@ -50,7 +51,8 @@ public class BlackJack {
     }
 
     public int getDealerScore() {
-        return dealer.getCardScore();
+        Score score = dealer.getScore();
+        return score.value();
     }
 
     public List<Card> getDealerCards() {

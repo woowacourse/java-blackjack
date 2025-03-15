@@ -67,7 +67,7 @@ public class BlackJackController {
     private void showCardsResult(BlackJack blackJack) {
         outputView.printDealerCardsAndResult(blackJack.getDealerCards(), blackJack.getDealerScore());
         for (Player player : blackJack.getPlayers()) {
-            outputView.printCardsAndResult(player.getName(), player.getCards(), player.getCardScore());
+            outputView.printCardsAndResult(player.getName(), player.getCards(), player.getScore().value());
         }
     }
 

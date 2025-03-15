@@ -17,18 +17,8 @@ public abstract class Participant {
         cards.add(card);
     }
 
-    public int getCardScore() {
-        return cards.getScore().value();
-    }
-
-    public boolean isBust() {
-        Score score = cards.getScore();
-        return score.isBust();
-    }
-
-    public boolean isHit() {
-        Score score = cards.getScore();
-        return score.isHit();
+    public Score getScore() {
+        return cards.getScore();
     }
 
     public boolean isBlackjack() {

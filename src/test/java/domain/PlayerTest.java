@@ -34,13 +34,13 @@ public class PlayerTest {
     @DisplayName("21 이하일 때, 최적의 결과를 선택할 수 있다.")
     @ParameterizedTest
     @MethodSource("createCardsCase")
-    void 최적_결과_선택_21_이하(List<Card> inputCards, int expected) {
+    void 최적_결과_선택_21_이하(List<Card> inputCards, Score expected) {
         // given
         Cards cards = Cards.of(inputCards);
         Player player = Player.from(new Nickname("플레이어1"), cards);
 
         // when
-        final int result = player.getCardScore();
+        final Score result = player.getScore();
 
         // then
         assertThat(result).isEqualTo(expected);
@@ -53,7 +53,7 @@ public class PlayerTest {
                                 new Card(CardNumber.A, CardShape.CLOVER),
                                 new Card(CardNumber.KING, CardShape.CLOVER)
                         ),
-                        21
+                        new Score(21)
                 ),
                 Arguments.of(
                         List.of(
@@ -61,14 +61,14 @@ public class PlayerTest {
                                 new Card(CardNumber.KING, CardShape.CLOVER),
                                 new Card(CardNumber.FIVE, CardShape.CLOVER)
                         ),
-                        16
+                        new Score(16)
                 ),
                 Arguments.of(
                         List.of(
                                 new Card(CardNumber.A, CardShape.CLOVER),
                                 new Card(CardNumber.A, CardShape.DIAMOND)
                         ),
-                        12
+                        new Score(12)
                 )
         );
     }
@@ -76,13 +76,13 @@ public class PlayerTest {
     @DisplayName("21 초과할 때, 21에 가장 가까운 값을 선택할 수 있다")
     @ParameterizedTest
     @MethodSource("createBurstCardsCase")
-    void 가장_가까운_값_선택(List<Card> inputCards, int expected) {
+    void 가장_가까운_값_선택(List<Card> inputCards, Score expected) {
         //given
         Cards cards = Cards.of(inputCards);
         Player player = Player.from(new Nickname("플레이어1"), cards);
 
         //when
-        int actual = player.getCardScore();
+        Score actual = player.getScore();
 
         //then
         assertThat(actual).isEqualTo(expected);
@@ -97,7 +97,7 @@ public class PlayerTest {
                                 new Card(CardNumber.KING, CardShape.CLOVER),
                                 new Card(CardNumber.KING, CardShape.CLOVER)
                         ),
-                        22
+                        new Score(22)
                 ),
                 Arguments.of(
                         List.of(
@@ -106,41 +106,7 @@ public class PlayerTest {
                                 new Card(CardNumber.FIVE, CardShape.CLOVER),
                                 new Card(CardNumber.KING, CardShape.CLOVER)
                         ),
-                        26
-                )
-        );
-    }
-
-    @DisplayName("플레이어가 소유한 카드에 따라서 bust 여부를 판단한다.")
-    @ParameterizedTest
-    @MethodSource("createBurstCase")
-    void test1(List<Card> inputCard, boolean expected) {
-        //given
-        Cards cards = Cards.of(inputCard);
-        Player dealer = Player.from(new Nickname("플레이어1"), cards);
-        //when
-        final boolean actual = dealer.isBust();
-        //then
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    private static Stream createBurstCase() {
-        return Stream.of(
-                Arguments.of(
-                        List.of(
-                                new Card(CardNumber.TEN, CardShape.CLOVER),
-                                new Card(CardNumber.QUEEN, CardShape.CLOVER),
-                                new Card(CardNumber.TWO, CardShape.CLOVER)
-                        ),
-                        true
-                ),
-                Arguments.of(
-                        List.of(
-                                new Card(CardNumber.A, CardShape.CLOVER),
-                                new Card(CardNumber.QUEEN, CardShape.CLOVER),
-                                new Card(CardNumber.TWO, CardShape.CLOVER)
-                        ),
-                        false
+                        new Score(26)
                 )
         );
     }

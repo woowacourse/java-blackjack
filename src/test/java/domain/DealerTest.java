@@ -61,7 +61,7 @@ class DealerTest {
         //then
         SoftAssertions.assertSoftly(softly -> {
             softly.assertThat(count).isEqualTo(2);
-            softly.assertThat(dealer.getCardScore()).isEqualTo(17);
+            softly.assertThat(dealer.getScore().value()).isEqualTo(17);
         });
     }
 

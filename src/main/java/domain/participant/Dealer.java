@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.GameResult;
+import domain.Score;
 import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Deck;
@@ -8,7 +9,6 @@ import domain.card.Deck;
 import java.util.*;
 
 public class Dealer extends Participant {
-    private static final int DRAW_THRESHOLD = 16;
 
     private final Deck deck;
 
@@ -34,13 +34,15 @@ public class Dealer extends Participant {
     }
 
     public GameResult getResult(Player player) {
-        if (player.isBust()) {
+        Score playerScore = player.getScore();
+        Score dealerScore = getScore();
+        if (playerScore.isBust()) {
             return GameResult.LOSE;
         }
-        if (this.isBust() || player.getCardScore() > this.getCardScore()) {
+        if (dealerScore.isBust() || playerScore.compareTo(dealerScore) > 0) {
             return GameResult.WIN;
         }
-        if (player.getCardScore() < this.getCardScore()) {
+        if (playerScore.compareTo(dealerScore) < 0) {
             return GameResult.LOSE;
         }
         return GameResult.DRAW;
@@ -56,6 +58,6 @@ public class Dealer extends Participant {
     }
 
     private boolean hasToDraw() {
-        return this.getCardScore() <= DRAW_THRESHOLD;
+        return getScore().isDealerHasToDraw();
     }
 }
