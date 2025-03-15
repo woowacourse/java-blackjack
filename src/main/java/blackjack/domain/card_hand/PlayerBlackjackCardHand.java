@@ -13,7 +13,7 @@ public final class PlayerBlackjackCardHand {
     private final Player player;
     
     public PlayerBlackjackCardHand(final BlackjackCardHand cardHand, final Player player) {
-        GlobalValidator.validateNotNull(PlayerBlackjackCardHand.class, cardHand, player);
+        GlobalValidator.validateNotNull(cardHand, player);
         this.cardHand = cardHand;
         this.player = player;
     }
@@ -22,7 +22,7 @@ public final class PlayerBlackjackCardHand {
             final Player player,
             final BlackjackCardHandInitializer initializer
     ) {
-        GlobalValidator.validateNotNull(PlayerBlackjackCardHand.class, player, initializer);
+        GlobalValidator.validateNotNull(player, initializer);
         return new PlayerBlackjackCardHand(
                 BlackjackCardHand.createWithInitialCards(initializer),
                 player

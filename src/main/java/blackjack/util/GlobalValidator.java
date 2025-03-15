@@ -2,15 +2,11 @@ package blackjack.util;
 
 public final class GlobalValidator {
     
-    public static void validateNotNull(final Class<?> target, final Object... arguments) {
+    public static void validateNotNull(final Object... arguments) {
         for (final Object argument : arguments) {
             if (argument == null) {
-                throw new IllegalArgumentException(parseExceptionMessage(target));
+                throw new IllegalArgumentException("필수 입력값 중 하나가 null입니다.");
             }
         }
-    }
-    
-    private static String parseExceptionMessage(final Class<?> target) {
-        return "%s의 인자는 null이 될 수 없습니다.".formatted(target.getSimpleName());
     }
 }

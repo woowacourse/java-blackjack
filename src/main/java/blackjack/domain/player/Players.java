@@ -15,12 +15,12 @@ public final class Players {
     private final List<Player> players;
     
     private Players(final List<Player> players) {
-        GlobalValidator.validateNotNull(Players.class, players);
+        GlobalValidator.validateNotNull(players);
         this.players = players;
     }
     
     public static Players from(final List<String> playerNames) {
-        GlobalValidator.validateNotNull(Players.class, playerNames);
+        GlobalValidator.validateNotNull(playerNames);
         validatePlayerNamesNotDuplicated(playerNames);
         validatePlayerNamesSize(playerNames);
         final List<Player> players = playerNames.stream()

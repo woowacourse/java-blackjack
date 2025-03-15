@@ -15,12 +15,12 @@ public final class BlackjackCardHand {
     private final CardHand cardHand;
     
     private BlackjackCardHand(final CardHand cardHand) {
-        GlobalValidator.validateNotNull(BlackjackCardHand.class, cardHand);
+        GlobalValidator.validateNotNull(cardHand);
         this.cardHand = cardHand;
     }
     
     public static BlackjackCardHand createWithInitialCards(final BlackjackCardHandInitializer initializer) {
-        GlobalValidator.validateNotNull(BlackjackCardHand.class, initializer);
+        GlobalValidator.validateNotNull(initializer);
         final CardHand cardHand = new CardHand();
         cardHand.addCards(initializer.handoutInitialCards());
         return new BlackjackCardHand(cardHand);

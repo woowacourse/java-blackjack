@@ -10,7 +10,7 @@ public final class Player {
     private final String name;
     
     public Player(final String name) {
-        GlobalValidator.validateNotNull(Player.class, name);
+        GlobalValidator.validateNotNull(name);
         validateNameLength(name);
         this.name = name;
     }

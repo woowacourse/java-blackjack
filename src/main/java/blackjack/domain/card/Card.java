@@ -14,7 +14,7 @@ public final class Card {
     private final CardShape shape;
     
     private Card(final CardNumber number, final CardShape shape) {
-        GlobalValidator.validateNotNull(Card.class, number, shape);
+        GlobalValidator.validateNotNull(number, shape);
         this.number = number;
         this.shape = shape;
     }

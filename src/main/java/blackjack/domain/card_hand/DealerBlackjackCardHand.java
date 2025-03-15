@@ -14,12 +14,12 @@ public final class DealerBlackjackCardHand {
     private final BlackjackCardHand cardHand;
     
     private DealerBlackjackCardHand(final BlackjackCardHand cardHand) {
-        GlobalValidator.validateNotNull(DealerBlackjackCardHand.class, cardHand);
+        GlobalValidator.validateNotNull(cardHand);
         this.cardHand = cardHand;
     }
     
     public static DealerBlackjackCardHand createWithInitialCards(final BlackjackCardHandInitializer initializer) {
-        GlobalValidator.validateNotNull(DealerBlackjackCardHand.class, initializer);
+        GlobalValidator.validateNotNull(initializer);
         return new DealerBlackjackCardHand(BlackjackCardHand.createWithInitialCards(initializer));
     }
     
