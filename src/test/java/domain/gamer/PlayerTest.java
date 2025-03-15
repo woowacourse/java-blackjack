@@ -31,7 +31,7 @@ class PlayerTest {
         card2 = new Card(Rank.TWO, Shape.CLOVER);
         card3 = new Card(Rank.THREE, Shape.CLOVER);
         card4 = new Card(Rank.FOUR, Shape.CLOVER);
-        List<Card> cards = new ArrayList<>();
+        final List<Card> cards = new ArrayList<>();
         cards.add(card1);
         cards.add(card2);
         cards.add(card3);
@@ -230,7 +230,7 @@ class PlayerTest {
     void 플레이어가_블랙잭이_아니면서_승리_시_배팅금액_만큼_수익을_얻는다() {
 
         // given
-        int profit = player.winBetting(0);
+        final int profit = player.winBetting(0);
 
         // when & then
         assertThat(profit).isEqualTo(1000);
@@ -243,7 +243,7 @@ class PlayerTest {
         // given
         player.hit(new Card(Rank.ACE, Shape.SPADE));
         player.hit(new Card(Rank.JACK, Shape.SPADE));
-        int profit = player.winBetting(0);
+        final int profit = player.winBetting(0);
 
         // when & then
         assertThat(profit).isEqualTo(1500);
@@ -256,7 +256,7 @@ class PlayerTest {
         // given
         player.hit(new Card(Rank.ACE, Shape.SPADE));
         player.hit(new Card(Rank.JACK, Shape.SPADE));
-        int profit = player.loseBetting(0);
+        final int profit = player.loseBetting(0);
 
         // when & then
         assertThat(profit).isEqualTo(-1000);

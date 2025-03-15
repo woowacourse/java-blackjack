@@ -34,14 +34,14 @@ public class Players {
         throw new IllegalArgumentException("닉네임은 중복될 수 없습니다.");
     }
 
-    public void receiveInitialCards(Deck deck) {
+    public void receiveInitialCards(final Deck deck) {
         players.forEach(player -> player.receiveInitialCards(deck.getInitialGameCards()));
     }
 
     public Map<Player, FinalResult> createFinalResults(final Dealer dealer) {
         final Map<Player, FinalResult> finalResults = new LinkedHashMap<>();
-        for (Player player : players) {
-            FinalResult currentResult = FinalResult.selectResult(player, dealer);
+        for (final Player player : players) {
+            final FinalResult currentResult = FinalResult.selectResult(player, dealer);
             finalResults.put(player, currentResult);
         }
         return finalResults;

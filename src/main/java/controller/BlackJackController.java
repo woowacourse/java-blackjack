@@ -32,16 +32,16 @@ public class BlackJackController {
             printGameSetting(dealer, players);
             playGame(dealer, players, deck);
             finishGame(players, dealer);
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
         }
     }
 
     private Players createPlayers() {
-        List<Nickname> nicknames = readNicknames();
+        final List<Nickname> nicknames = readNicknames();
         return new Players(nicknames.stream()
                 .map(nickname -> {
-                    Betting betting = readBetAmount(nickname.getDisplayName());
+                    final Betting betting = readBetAmount(nickname.getDisplayName());
                     return new Player(nickname, betting);
                 })
                 .toList());
@@ -69,9 +69,9 @@ public class BlackJackController {
         return new Dealer();
     }
 
-    private void setGame(final Players players, Dealer dealer, final Deck deck) {
+    private void setGame(final Players players, final Dealer dealer, final Deck deck) {
         players.receiveInitialCards(deck);
-        List<Card> initialCards = deck.getInitialGameCards();
+        final List<Card> initialCards = deck.getInitialGameCards();
         dealer.receiveInitialCards(initialCards);
     }
 

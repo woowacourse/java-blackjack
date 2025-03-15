@@ -52,7 +52,7 @@ class DeckTest {
         final Deck deck = new Deck(cardSetGenerator.generate());
 
         // when
-        List<Card> initialCards = deck.getInitialGameCards();
+        final List<Card> initialCards = deck.getInitialGameCards();
 
         // when & then
         assertThat(initialCards.size()).isEqualTo(2);

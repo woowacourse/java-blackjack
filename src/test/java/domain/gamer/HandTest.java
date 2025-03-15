@@ -3,6 +3,7 @@ package domain.gamer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import domain.calculatestrategy.PlayerStrategy;
 import domain.deck.Card;
 import domain.deck.Rank;
 import domain.deck.Shape;
@@ -48,7 +49,7 @@ class HandTest {
     void 카드를_손에_추가한다() {
 
         // given
-        final Hand hand = new Hand();
+        final Hand hand = new Hand(new PlayerStrategy());
 
         // when & then
         assertThatCode(() -> {
@@ -62,38 +63,13 @@ class HandTest {
     void 손에_있는_카드의_합을_가져온다() {
 
         // given
-        final Hand hand = new Hand();
+        final Hand hand = new Hand(new PlayerStrategy());
 
         // when
         hand.add(card1);
         hand.add(card2);
 
         // then
-        assertThat(hand.getSumOfRank()).isEqualTo(3);
-    }
-
-    @DisplayName("손에 에이스가 있으면 true를 반환한다.")
-    @Test
-    void 손에_에이스가_있으면_true를_반환한다() {
-
-        // given
-        hand = new Hand();
-        hand.add(card1);
-        hand.add(card2);
-
-        // when & then
-        assertThat(hand.hasAce()).isTrue();
-    }
-
-    @DisplayName("손에 에이스가 없으면 false를 반환한다.")
-    @Test
-    void 손에_에이스가_없으면_false를_반환한다() {
-
-        // given
-        hand = new Hand();
-        hand.add(card2);
-
-        // when & then
-        assertThat(hand.hasAce()).isFalse();
+        assertThat(hand.getSumOfRank()).isEqualTo(13);
     }
 }
