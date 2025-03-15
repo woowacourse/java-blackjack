@@ -83,6 +83,92 @@ class BetSystemTest {
                 );
     }
 
+    @DisplayName("딜러가 21을 초과하면 그 시점까지 남아 있던 플레이어들은 가지고 있는 패에 상관없이 승리해 베팅 금액을 받는다.")
+    @Test
+    void dealerBustProfit() {
+        //given
+        Player dogi = new Player("도기");
+        Player pobi = new Player("포비");
+
+        List<Player> players = new ArrayList<>(
+                List.of(
+                        dogi,
+                        pobi
+                )
+        );
+
+        BetSystem betSystem = new BetSystem();
+        betSystem.betting(dogi, 1000);
+        betSystem.betting(pobi, 1000);
+
+        List<Card> cards = new ArrayList<>(
+                List.of(
+                        new Card(Symbol.COLVER, Rank.JACK),
+                        new Card(Symbol.COLVER, Rank.NINE),
+                        new Card(Symbol.COLVER, Rank.THREE)
+                )
+        );
+
+        Deck deck = Deck.from(cards);
+
+        Dealer dealer = new Dealer();
+
+        dealer.prepareGame(deck);
+        dealer.hit(deck);
+
+        //when
+        Map<Gamer, Integer> actual = betSystem.calculateProfit(dealer, players);
+
+        //then
+        assertThat(actual).containsExactlyInAnyOrderEntriesOf(
+                Map.of(
+                        dealer, -2000,
+                        dogi, 1000,
+                        pobi, 1000
+                )
+        );
+    }
+
+    @DisplayName("카드를 추가로 뽑아 21을 초과할 경우 배팅 금액을 모두 잃게 된다.")
+    @Test
+    void bustAllLoseBatAmount() {
+        //given
+        Player dogi = new Player("도기");
+
+        List<Player> players = new ArrayList<>(
+                List.of(dogi)
+        );
+
+        List<Card> cards = new ArrayList<>(
+                List.of(
+                        new Card(Symbol.COLVER, Rank.JACK),
+                        new Card(Symbol.COLVER, Rank.FOUR),
+                        new Card(Symbol.COLVER, Rank.EIGHT)
+                )
+        );
+
+        Dealer dealer = new Dealer();
+
+        Deck deck = Deck.from(cards);
+
+        dogi.prepareGame(deck);
+        dogi.hit(deck);
+
+        BetSystem betSystem = new BetSystem();
+        betSystem.betting(dogi, 1000);
+
+        //when
+        Map<Gamer, Integer> actual = betSystem.calculateProfit(dealer, players);
+
+        //then
+        assertThat(actual).containsExactlyInAnyOrderEntriesOf(
+                Map.of(
+                        dealer, 1000,
+                        dogi, -1000
+                )
+        );
+    }
+
     @DisplayName("플레이어가 블랙잭인 경우 딜러에게 베팅 금액의 1.5배를 받는다.")
     @Test
     void playerBlackjackReceiveOnePointFiveForBetAmount() {

@@ -37,37 +37,41 @@ public class BlackJackController {
         prepareGame(dealer, players, deck);
         outputView.printInitialCards(dealer, players);
 
+        if (isPrepareBlackjack(dealer, players, betSystem)) {
+            return;
+        }
+
+        processGame(players, dealer, deck);
+
+        outputView.printCardResult(dealer, players);
+        profitResult(betSystem, dealer, players);
+    }
+
+    private void profitResult(final BetSystem betSystem, final Dealer dealer, final List<Player> players) {
+        Map<Gamer, Integer> gamerIntegerMap = betSystem.calculateProfit(dealer, players);
+        outputView.printProfitResult(gamerIntegerMap);
+    }
+
+    private boolean isPrepareBlackjack(final Dealer dealer, final List<Player> players, final BetSystem betSystem) {
         if (isPrepareCardsBlackjack(dealer, players)) {
             Map<Gamer, Integer> gamerIntegerMap = betSystem.calculateProfit(dealer, players);
             outputView.printCardResult(dealer, players);
             outputView.printProfitResult(gamerIntegerMap);
-            return;
+            return true;
         }
-
-        processGame(players, deck);
-
-        dealerHit(dealer, deck);
-
-        outputView.printCardResult(dealer, players);
-
-        Map<Gamer, Integer> gamerIntegerMap = betSystem.calculateProfit(dealer, players);
-
-        outputView.printProfitResult(gamerIntegerMap);
+        return false;
     }
 
     private boolean isPrepareCardsBlackjack(final Dealer dealer, final List<Player> players) {
         if (dealer.isBlackjack()) {
             return true;
         }
-
         for (Player player : players) {
             if (player.isBlackjack()) {
                 return true;
             }
         }
-
         return false;
-
     }
 
     private void playerBetting(final List<Player> players, final BetSystem betSystem) {
@@ -101,10 +105,12 @@ public class BlackJackController {
         players.forEach(player -> player.prepareGame(deck));
     }
 
-    private void processGame(List<Player> players, Deck deck) {
+    private void processGame(List<Player> players, final Dealer dealer, Deck deck) {
         for (Player player : players) {
             selectChoice(player, deck);
         }
+        dealerHit(dealer, deck);
+
     }
 
     private void dealerHit(Dealer dealer, Deck deck) {
