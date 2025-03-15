@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.game.GameResults;
+import blackjack.domain.game.GameProfits;
 import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
@@ -46,22 +46,22 @@ public class OutputView {
                 System.out.printf("%s - 결과: %d\n", getCardsMessage(player.getName(), player.getCards()), player.getGameScore().getValue()));
     }
 
-    public void printGameResults(Players players, GameResults gameResults) {
+    public void printGameResults(Players players, GameProfits gameProfits) {
         List<Gambler> gamblers = players.getGamblers();
         Dealer dealer = players.getDealer();
         System.out.println("\n## 최종 수익");
-        System.out.printf("%s: %s\n", dealer.getName(), getDealerProfit(gameResults));
+        System.out.printf("%s: %s\n", dealer.getName(), getDealerProfit(gameProfits));
         gamblers.forEach(gambler ->
-                System.out.println(gambler.getName() + ": " + getGamblerProfit(gambler, gameResults)));
+                System.out.println(gambler.getName() + ": " + getGamblerProfit(gambler, gameProfits)));
     }
 
-    public String getDealerProfit(GameResults gameResults) {
-        Profit profit = gameResults.getDealerProfit();
+    public String getDealerProfit(GameProfits gameProfits) {
+        Profit profit = gameProfits.getDealerProfit();
         return profit.getValue() + "";
     }
 
-    private String getGamblerProfit(Gambler gambler, GameResults gameResults) {
-        Profit profit = gameResults.getGameResult(gambler);
+    private String getGamblerProfit(Gambler gambler, GameProfits gameProfits) {
+        Profit profit = gameProfits.getGameResult(gambler);
         return profit.getValue() + "";
     }
 

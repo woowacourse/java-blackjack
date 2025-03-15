@@ -8,24 +8,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GameResults {
+public class GameProfits {
 
-    Map<Gambler, Profit> gameResults;
+    Map<Gambler, Profit> gameProfits;
 
-    public GameResults(Dealer dealer, List<Gambler> gamblers) {
-        gameResults = new HashMap<>();
+    public GameProfits(Dealer dealer, List<Gambler> gamblers) {
+        gameProfits = new HashMap<>();
         gamblers.forEach(
                 gambler ->
-                        gameResults.put(gambler, gambler.getProfit(GameResult.getGameResult(dealer, gambler)))
+                        gameProfits.put(gambler, gambler.getProfit(GameResult.getGameResult(dealer, gambler)))
         );
     }
 
     public Profit getGameResult(Gambler gambler) {
-        return gameResults.get(gambler);
+        return gameProfits.get(gambler);
     }
 
     public Profit getDealerProfit() {
-        return gameResults.values().stream()
+        return gameProfits.values().stream()
                 .reduce(new Profit(0), Profit::addProfit).negate();
     }
 }

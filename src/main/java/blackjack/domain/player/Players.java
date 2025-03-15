@@ -1,7 +1,7 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.CardPack;
-import blackjack.domain.game.GameResults;
+import blackjack.domain.game.GameProfits;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,7 +42,7 @@ public class Players {
                 gambler.pushDealCards(cardPack.getDealCards(PLAYERS_INIT_CARD_COUNT)));
     }
 
-    public GameResults getGameResult() {
-        return new GameResults(dealer, gamblers);
+    public GameProfits getGameResult() {
+        return new GameProfits(dealer, gamblers);
     }
 }
