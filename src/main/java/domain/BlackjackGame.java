@@ -4,7 +4,6 @@ import domain.batting.Bet;
 import domain.batting.BettingPool;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
-import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import domain.result.GameResult;
@@ -20,7 +19,7 @@ public class BlackjackGame {
     public static final int BLACKJACK_SCORE = 21;
 
     private final CardDeck cardDeck;
-    private final Participant dealer;
+    private final Dealer dealer;
     private final Players players;
 
     private BlackjackGame(CardDeck cardDeck, Dealer dealer, Players players) {
@@ -78,7 +77,7 @@ public class BlackjackGame {
     }
 
     public Dealer getDealer() {
-        return (Dealer) dealer;
+        return dealer;
     }
 
     public Players getPlayers() {

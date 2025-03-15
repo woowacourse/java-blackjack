@@ -7,10 +7,9 @@ import static domain.BlackjackGame.INITIAL_CARDS;
 import domain.BlackjackGame;
 import domain.card.Card;
 import domain.card.Hand;
-import domain.result.GameResult;
 import java.util.List;
 
-public class Dealer implements Participant {
+public class Dealer implements CardOwner {
     private final Hand ownedHand;
 
     private Dealer() {
@@ -19,6 +18,14 @@ public class Dealer implements Participant {
 
     public static Dealer of() {
         return new Dealer();
+    }
+
+    public boolean isBust() {
+        return calculateScore() > BlackjackGame.BLACKJACK_SCORE;
+    }
+
+    public boolean isBlackjack() {
+        return countCard() == INITIAL_CARDS && calculateScore() == BLACKJACK_SCORE;
     }
 
     @Override
@@ -32,25 +39,11 @@ public class Dealer implements Participant {
     }
 
     @Override
-    public GameResult determineBlackjackResult(Participant opponent) {
-        throw new IllegalStateException("딜러는 승패를 계산할 수 없습니다.");
-    }
-
-    @Override
-    public boolean isBust() {
-        return calculateScore() > BlackjackGame.BLACKJACK_SCORE;
-    }
-
-    @Override
-    public boolean isBlackjack() {
-        return countCard() == INITIAL_CARDS && calculateScore() == BLACKJACK_SCORE;
-    }
-
-    @Override
     public int calculateScore() {
         return ownedHand.calculateScore();
     }
 
+    @Override
     public int countCard() {
         return ownedHand.getSize();
     }

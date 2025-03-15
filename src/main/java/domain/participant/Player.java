@@ -10,7 +10,7 @@ import domain.result.GameResult;
 import java.util.List;
 import java.util.Objects;
 
-public class Player implements Participant {
+public class Player implements CardOwner {
 
     private final String name;
     private final Hand ownedHand;
@@ -24,6 +24,46 @@ public class Player implements Participant {
         return new Player(name);
     }
 
+    public GameResult determineBlackjackResult(Dealer dealer) {
+        if (isBust()) {
+            return GameResult.LOSE;
+        }
+        if (dealer.isBust()) {
+            return GameResult.WIN;
+        }
+
+        return determineResultByScore(dealer);
+    }
+
+    private GameResult determineResultByScore(Dealer dealer) {
+        if (isBlackjack() && !dealer.isBlackjack()) {
+            return GameResult.WIN;
+        }
+        if (!isBlackjack() && dealer.isBlackjack()) {
+            return GameResult.LOSE;
+        }
+
+        return compareScoresWith(dealer);
+    }
+
+    private GameResult compareScoresWith(Dealer dealer) {
+        if (calculateScore() > dealer.calculateScore()) {
+            return GameResult.WIN;
+        }
+        if (calculateScore() < dealer.calculateScore()) {
+            return GameResult.LOSE;
+        }
+        return GameResult.DRAW;
+    }
+
+    public boolean isBust() {
+        return calculateScore() > BlackjackGame.BLACKJACK_SCORE;
+    }
+
+    public boolean isBlackjack() {
+        return countCard() == INITIAL_CARDS && calculateScore() == BLACKJACK_SCORE;
+    }
+
     @Override
     public void receive(final Card card) {
         ownedHand.add(card);
@@ -35,53 +75,11 @@ public class Player implements Participant {
     }
 
     @Override
-    public GameResult determineBlackjackResult(Participant opponent) {
-        if (isBust()) {
-            return GameResult.LOSE;
-        }
-        if (opponent.isBust()) {
-            return GameResult.WIN;
-        }
-
-        return determineResultByScore(opponent);
-    }
-
-    private GameResult determineResultByScore(Participant opponent) {
-        if (isBlackjack() && !opponent.isBlackjack()) {
-            return GameResult.WIN;
-        }
-        if (!isBlackjack() && opponent.isBlackjack()) {
-            return GameResult.LOSE;
-        }
-
-        return compareScoresWith(opponent);
-    }
-
-    private GameResult compareScoresWith(Participant opponent) {
-        if (calculateScore() > opponent.calculateScore()) {
-            return GameResult.WIN;
-        }
-        if (calculateScore() < opponent.calculateScore()) {
-            return GameResult.LOSE;
-        }
-        return GameResult.DRAW;
-    }
-
-    @Override
-    public boolean isBust() {
-        return calculateScore() > BlackjackGame.BLACKJACK_SCORE;
-    }
-
-    @Override
-    public boolean isBlackjack() {
-        return countCard() == INITIAL_CARDS && calculateScore() == BLACKJACK_SCORE;
-    }
-
-    @Override
     public int calculateScore() {
         return ownedHand.calculateScore();
     }
 
+    @Override
     public int countCard() {
         return ownedHand.getSize();
     }
