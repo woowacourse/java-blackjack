@@ -15,6 +15,7 @@ public class BlackJackGame {
     public BlackJackGame(final List<String> participantNames) {
         this.gameCardDeck = GameCardDeck.generateFullPlayingCard();
         this.participants = registerParticipants(participantNames);
+        shuffleGameCards();
     }
 
     private Participants registerParticipants(final List<String> participantNames) {
@@ -26,12 +27,26 @@ public class BlackJackGame {
         return new Participants(participants);
     }
 
-    public void shuffleGameCards() {
+    private void shuffleGameCards() {
         gameCardDeck.shuffle();
     }
 
-    public GameCardDeck getGameCardDeck() {
-        return gameCardDeck;
+    public void drawOneCards(Participant participant) {
+        participant.drawCard(gameCardDeck, 1);
+    }
+
+    public void drawTwoCards() {
+        participants.drawTwoCards(gameCardDeck);
+    }
+
+    public int drawDealer() {
+        Participant dealer = participants.findDealer();
+        int count = 0;
+        while (dealer.ableToDraw()) {
+            count += 1;
+            dealer.drawCard(gameCardDeck, 1);
+        }
+        return count;
     }
 
     public Participants getParticipants() {
