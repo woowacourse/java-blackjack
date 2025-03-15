@@ -32,6 +32,7 @@ public class BlackjackController {
     }
 
     private void dealInitially(final Players players, final Dealer dealer, final Deck deck) {
+        dealer.dealInitialCards(deck);
         players.getPlayers().forEach(participant ->
                 participant.dealInitialCards(deck)
         );

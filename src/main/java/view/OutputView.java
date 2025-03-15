@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import model.deck.Card;
 import model.participant.Dealer;
-import model.participant.Participant;
 import model.participant.Players;
 import model.result.GameResult;
 import model.participant.Player;
@@ -32,6 +31,7 @@ public final class OutputView {
 
     private static void printInitialDealerDeal(Dealer dealer) {
         printParticipantAndHands(dealer.openInitialDeal(), DEALER_PRINT_MESSAGE);
+        System.out.println();
     }
 
     private static void printInitialPlayersDeal(final Player player) {
@@ -42,6 +42,7 @@ public final class OutputView {
      * 카드 뽑기 1턴 결과 출력
      */
     public static void printHitOrStandQuestion(final Player player) {
+        System.out.println();
         System.out.println();
         System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
     }
@@ -59,19 +60,22 @@ public final class OutputView {
      */
     public static void printDealerFinalScore(Dealer dealer) {
         printParticipantAndHands(dealer.getHandCards(), DEALER_PRINT_MESSAGE);
-        printFinalScoreOf(dealer);
+        printFinalScoreOfDealer(dealer);
     }
 
     public static void printPlayersFinalScore(final Players players) {
-        System.out.println();
         players.getPlayers().forEach(player -> {
             printPlayerHitResult(player);
-            printFinalScoreOf(player);
+            printFinalScoreOfPlayer(player);
         });
     }
 
-    private static void printFinalScoreOf(Participant participant) {
-        System.out.println(" - 결과: " + participant.calculateFinalScore());
+    private static void printFinalScoreOfPlayer(Player player) {
+        System.out.println(" - 결과: " + player.calculateFinalScore());
+    }
+
+    private static void printFinalScoreOfDealer(Dealer dealer) {
+        System.out.println(" - 결과: " + dealer.calculateFinalScore());
     }
 
     /**
@@ -102,7 +106,7 @@ public final class OutputView {
 
     private static void printParticipantAndHands(List<Card> cards, String name) {
         List<String> cardsName = getCardNameMessagesFrom(cards);
-        System.out.printf("\n%s카드: %s", name, String.join(JOIN_DELIMITER, cardsName));
+        System.out.printf("%s카드: %s", name, String.join(JOIN_DELIMITER, cardsName));
     }
 
     private static List<String> getCardNameMessagesFrom(List<Card> cards) {
