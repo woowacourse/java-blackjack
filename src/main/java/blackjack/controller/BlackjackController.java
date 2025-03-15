@@ -1,13 +1,11 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.Dealer;
-import blackjack.domain.GameResult;
-import blackjack.domain.Player;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackController {
 
@@ -22,19 +20,27 @@ public class BlackjackController {
     public void start() {
         handleException(() -> {
             BlackjackGame blackjackGame = enterParticipants();
+            betPlayers(blackjackGame);
             distributeInitialCards(blackjackGame);
 
             distributeAdditionalCardsToPlayers(blackjackGame);
             distributeAdditionalCardsToDealer(blackjackGame);
 
             showFinalCards(blackjackGame);
-            showWinLoseResult(blackjackGame);
+            showBetResult(blackjackGame);
         });
     }
 
     private BlackjackGame enterParticipants() {
         List<String> names = inputView.readNames();
         return BlackjackGame.createByPlayerNames(names);
+    }
+
+    private void betPlayers(BlackjackGame blackjackGame) {
+        for (Player player : blackjackGame.getPlayers()) {
+            int betAmount = inputView.readBetAmount(player.getName());
+            player.bet(betAmount);
+        }
     }
 
     private void distributeInitialCards(final BlackjackGame blackjackGame) {
@@ -80,13 +86,13 @@ public class BlackjackController {
         }
     }
 
-    private void showWinLoseResult(final BlackjackGame blackjackGame) {
-        Map<GameResult, Integer> dealerResult = blackjackGame.calculateStatisticsForDealer();
-        Map<Player, GameResult> playerResults = blackjackGame.calculateStatisticsForPlayer();
-
-        outputView.printResultTitle();
-        outputView.printDealerResult(dealerResult);
-        playerResults.forEach((player, result) -> outputView.printPlayerResult(player.getName(), result));
+    private void showBetResult(final BlackjackGame blackjackGame) {
+        outputView.printBetResultTitle();
+        outputView.printBetResultByDealer(blackjackGame.calculateDealerPayout().value());
+        Dealer dealer = blackjackGame.getDealer();
+        for (Player player : blackjackGame.getPlayers()) {
+            outputView.printBetResultByPlayer(player.getName(), player.calculatePayout(dealer).value());
+        }
     }
 
     private void handleException(final Runnable action) {

@@ -2,13 +2,18 @@ package blackjack.domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.PlayerName;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-@Nested
 class GameResultTest {
 
     @Nested
@@ -20,7 +25,7 @@ class GameResultTest {
 
         @BeforeEach
         void initParticipants() {
-            player = new Player("sana");
+            player = new Player(new PlayerName("sana"));
             dealer = new Dealer();
         }
 
@@ -39,7 +44,7 @@ class GameResultTest {
             );
             dealer.addCards(blackjackCards2.get(0), blackjackCards2.get(1));
 
-            assertThat(GameResult.playerResultFrom(dealer, player)).isEqualTo(GameResult.DRAW);
+            assertThat(GameResult.getPlayerGameResultFrom(dealer, player)).isEqualTo(GameResult.DRAW);
         }
 
         @Test
@@ -59,7 +64,7 @@ class GameResultTest {
             );
             dealer.addCards(bustCards2.get(0), bustCards2.get(1), bustCards2.get(2));
 
-            assertThat(GameResult.playerResultFrom(dealer, player)).isEqualTo(GameResult.LOSE);
+            assertThat(GameResult.getPlayerGameResultFrom(dealer, player)).isEqualTo(GameResult.LOSE);
         }
 
         @Test
@@ -78,7 +83,7 @@ class GameResultTest {
             );
             dealer.addCards(generalCards.get(0), generalCards.get(1), generalCards.get(2));
 
-            assertThat(GameResult.playerResultFrom(dealer, player)).isEqualTo(GameResult.WIN);
+            assertThat(GameResult.getPlayerGameResultFrom(dealer, player)).isEqualTo(GameResult.WIN);
         }
 
         @Test
@@ -97,7 +102,7 @@ class GameResultTest {
             );
             dealer.addCards(generalCards2.get(0), generalCards2.get(1), generalCards2.get(2));
 
-            assertThat(GameResult.playerResultFrom(dealer, player)).isEqualTo(GameResult.WIN);
+            assertThat(GameResult.getPlayerGameResultFrom(dealer, player)).isEqualTo(GameResult.WIN);
         }
     }
 }

@@ -1,5 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
 import java.util.List;
 
 public class Dealer extends Participant {
@@ -12,7 +13,7 @@ public class Dealer extends Participant {
 
     @Override
     public List<Card> openInitialCards() {
-        return List.of(super.cards.getFirst());
+        return List.of(super.handCards.getCards().getFirst());
     }
 
     @Override

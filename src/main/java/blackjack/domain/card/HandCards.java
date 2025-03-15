@@ -1,34 +1,26 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class Participant {
+public class HandCards {
 
     private static final int BLACKJACK_VALUE = 21;
     private static final int BLACKJACK_CARDS_SIZE = 2;
 
-    protected final List<Card> cards;
+    private final List<Card> cards;
 
-    public Participant() {
+    public HandCards() {
         this.cards = new ArrayList<>();
     }
 
-    public void addInitialCards(final CardDeck cardDeck) {
-        Card card1 = cardDeck.pickRandomCard();
-        Card card2 = cardDeck.pickRandomCard();
-        addCards(card1, card2);
-    }
-
-    public void addCards(final Card... cards) {
-        this.cards.addAll(Arrays.asList(cards));
+    public void addCard(final Card card) {
+        this.cards.add(card);
     }
 
     public boolean isBlackjack() {
-        return cards.size() == BLACKJACK_CARDS_SIZE
-                && calculateDenominations() == BLACKJACK_VALUE;
+        return cards.size() == BLACKJACK_CARDS_SIZE && calculateDenominations() == BLACKJACK_VALUE;
     }
 
     public boolean isBust() {
@@ -48,13 +40,9 @@ public abstract class Participant {
         return sum;
     }
 
-    public List<Card> openCards() {
+    public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
-
-    public abstract List<Card> openInitialCards();
-
-    public abstract boolean isPossibleToAdd();
 
     private boolean hasACE() {
         return cards.stream()

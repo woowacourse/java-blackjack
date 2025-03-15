@@ -15,6 +15,21 @@ public class InputView {
         return parseStringToList(input);
     }
 
+    public int readBetAmount(String name) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.printf("%s의 배팅 금액은?%n", name);
+        String input = scanner.nextLine();
+        return convertToInt(input);
+    }
+
+    private int convertToInt(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("숫자를 입력해주십시오.");
+        }
+    }
+
     public boolean readGetOneMore(final String name) {
         Scanner scanner = new Scanner(System.in);
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);

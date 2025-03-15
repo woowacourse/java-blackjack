@@ -1,11 +1,16 @@
 package blackjack.domain;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardDeck;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Payout;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.PlayerName;
+import blackjack.domain.participant.Players;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class BlackjackGame {
 
@@ -24,7 +29,8 @@ public class BlackjackGame {
         List<Player> players = new ArrayList<>();
 
         for (String name : names) {
-            Player player = new Player(name);
+            PlayerName playerName = new PlayerName(name);
+            Player player = new Player(playerName);
             players.add(player);
         }
         return new BlackjackGame(cardDeck, new Dealer(), new Players(players));
@@ -48,19 +54,8 @@ public class BlackjackGame {
         return false;
     }
 
-    public Map<Player, GameResult> calculateStatisticsForPlayer() {
-        return players.calculateStatistics(dealer);
-    }
-
-    public Map<GameResult, Integer> calculateStatisticsForDealer() {
-        return calculateStatisticsForPlayer().values()
-                .stream()
-                .map(GameResult::changeStatusOpposite)
-                .collect(Collectors.toMap(
-                        Function.identity(),
-                        value -> 1,
-                        Integer::sum
-                ));
+    public Payout calculateDealerPayout() {
+        return players.calculateTotalPayout(dealer).negate();
     }
 
     public Dealer getDealer() {

@@ -1,17 +1,14 @@
 package blackjack.domain;
 
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+
 public enum GameResult {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    WIN,
+    DRAW,
+    LOSE;
 
-    private final String text;
-
-    GameResult(final String text) {
-        this.text = text;
-    }
-
-    public static GameResult playerResultFrom(final Dealer dealer, final Player player) {
+    public static GameResult getPlayerGameResultFrom(final Dealer dealer, final Player player) {
         if (player.isBust()) {
             return LOSE;
         }
@@ -35,19 +32,5 @@ public enum GameResult {
             return DRAW;
         }
         return LOSE;
-    }
-
-    public GameResult changeStatusOpposite() {
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == LOSE) {
-            return WIN;
-        }
-        return DRAW;
-    }
-
-    public String getText() {
-        return text;
     }
 }
