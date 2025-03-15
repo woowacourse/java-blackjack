@@ -5,7 +5,6 @@ import constant.WinningResult;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Players {
 
@@ -23,12 +22,13 @@ public class Players {
     }
 
     public Map<Player, WinningResult> deriveResults(int dealerScore) {
-        return players.stream()
-                .collect(Collectors.toMap(
-                        player -> player,
-                        player -> player.compareTo(dealerScore),
-                        (x, y) -> y, LinkedHashMap::new
-                ));
+        Map<Player, WinningResult> results = new LinkedHashMap<>();
+        for (Player player : players) {
+            WinningResult winningResult = player.compareTo(dealerScore);
+            results.put(player, winningResult);
+            
+        }
+        return results;
     }
 
     public List<Player> getPlayers() {
