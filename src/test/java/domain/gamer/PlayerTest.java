@@ -220,7 +220,7 @@ class PlayerTest {
     void 플레이어가_블랙잭이_아니면서_승리_시_배팅금액_만큼_수익을_얻는다() {
 
         // given
-        final int profit = player.winBetting(0);
+        final int profit = player.calculateWinProfit(0);
 
         // when & then
         assertThat(profit).isEqualTo(1000);
@@ -233,7 +233,7 @@ class PlayerTest {
         // given
         player.hit(new Card(Rank.ACE, Shape.SPADE));
         player.hit(new Card(Rank.JACK, Shape.SPADE));
-        final int profit = player.winBetting(0);
+        final int profit = player.calculateWinProfit(0);
 
         // when & then
         assertThat(profit).isEqualTo(1500);
@@ -246,7 +246,7 @@ class PlayerTest {
         // given
         player.hit(new Card(Rank.ACE, Shape.SPADE));
         player.hit(new Card(Rank.JACK, Shape.SPADE));
-        final int profit = player.loseBetting(0);
+        final int profit = player.calculateLoseProfit(0);
 
         // when & then
         assertThat(profit).isEqualTo(-1000);

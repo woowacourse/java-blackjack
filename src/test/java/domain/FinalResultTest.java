@@ -72,15 +72,15 @@ class FinalResultTest {
 
         //then
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(FinalResult.selectResult(defaultPlayer, defaultDealer)).isEqualTo(DRAW);
-            softly.assertThat(FinalResult.selectResult(defaultPlayer, blackJackDealer)).isEqualTo(LOSE);
-            softly.assertThat(FinalResult.selectResult(defaultPlayer, bustDealer)).isEqualTo(WIN);
-            softly.assertThat(FinalResult.selectResult(blackJackPlayer, defaultDealer)).isEqualTo(WIN);
-            softly.assertThat(FinalResult.selectResult(blackJackPlayer, blackJackDealer)).isEqualTo(DRAW);
-            softly.assertThat(FinalResult.selectResult(blackJackPlayer, bustDealer)).isEqualTo(WIN);
-            softly.assertThat(FinalResult.selectResult(bustPlayer, defaultDealer)).isEqualTo(LOSE);
-            softly.assertThat(FinalResult.selectResult(bustPlayer, blackJackDealer)).isEqualTo(LOSE);
-            softly.assertThat(FinalResult.selectResult(bustPlayer, bustDealer)).isEqualTo(LOSE);
+            softly.assertThat(FinalResult.determine(defaultPlayer, defaultDealer)).isEqualTo(DRAW);
+            softly.assertThat(FinalResult.determine(defaultPlayer, blackJackDealer)).isEqualTo(LOSE);
+            softly.assertThat(FinalResult.determine(defaultPlayer, bustDealer)).isEqualTo(WIN);
+            softly.assertThat(FinalResult.determine(blackJackPlayer, defaultDealer)).isEqualTo(WIN);
+            softly.assertThat(FinalResult.determine(blackJackPlayer, blackJackDealer)).isEqualTo(DRAW);
+            softly.assertThat(FinalResult.determine(blackJackPlayer, bustDealer)).isEqualTo(WIN);
+            softly.assertThat(FinalResult.determine(bustPlayer, defaultDealer)).isEqualTo(LOSE);
+            softly.assertThat(FinalResult.determine(bustPlayer, blackJackDealer)).isEqualTo(LOSE);
+            softly.assertThat(FinalResult.determine(bustPlayer, bustDealer)).isEqualTo(LOSE);
         });
     }
 }

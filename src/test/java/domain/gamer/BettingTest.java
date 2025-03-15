@@ -44,7 +44,7 @@ public class BettingTest {
         final Betting betting = new Betting(10000);
 
         // when
-        final int profit = betting.winBetting(10000);
+        final int profit = betting.calculateRegularWinProfit(10000);
 
         // then
         assertThat(profit).isEqualTo(20000);
@@ -58,7 +58,7 @@ public class BettingTest {
         final Betting betting = new Betting(10000);
 
         // when
-        final int profit = betting.loseBetting(0);
+        final int profit = betting.calculateRegularLoseProfit(0);
 
         // then
         assertThat(profit).isEqualTo(-10000);
@@ -72,7 +72,7 @@ public class BettingTest {
         final Betting betting = new Betting(10000);
 
         // when
-        final int profit = betting.winBlackJackBetting(10000);
+        final int profit = betting.calculateBlackjackWinProfit(10000);
 
         // then
         assertThat(profit).isEqualTo(25000);

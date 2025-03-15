@@ -10,7 +10,7 @@ public enum FinalResult {
     LOSE,
     DRAW;
 
-    public static FinalResult selectResult(final Player player, final Dealer dealer) {
+    public static FinalResult determine(final Player player, final Dealer dealer) {
         return RULES.stream()
                 .filter(rule -> rule.matches(player, dealer))
                 .findFirst()

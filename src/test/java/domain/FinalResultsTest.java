@@ -41,7 +41,7 @@ class FinalResultsTest {
         final FinalResults finalResults = new FinalResults(players.createFinalResults(dealer));
 
         // when
-        final Map<Gamer, Integer> profitResults = finalResults.createProfitResult(dealer);
+        final Map<Gamer, Integer> profitResults = finalResults.createProfitResults(dealer);
 
         // then
         SoftAssertions.assertSoftly(softly -> {

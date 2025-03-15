@@ -19,15 +19,15 @@ public class Betting {
         }
     }
 
-    public int winBlackJackBetting(final int profit) {
+    public int calculateBlackjackWinProfit(final int profit) {
         return (int) (profit + (betAmount * BLACKJACK_BONUS));
     }
 
-    public int winBetting(final int profit) {
+    public int calculateRegularWinProfit(final int profit) {
         return profit + betAmount;
     }
 
-    public int loseBetting(final int profit) {
+    public int calculateRegularLoseProfit(final int profit) {
         return profit - betAmount;
     }
 }

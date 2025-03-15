@@ -142,7 +142,7 @@ public class BlackJackController {
     private void finishGame(final Players players, final Dealer dealer) {
         OutputView.printCardsInHandWithResults(dealer, players);
         final FinalResults finalResults = new FinalResults(players.createFinalResults(dealer));
-        final Map<Gamer, Integer> profitResults = new LinkedHashMap<>(finalResults.createProfitResult(dealer));
+        final Map<Gamer, Integer> profitResults = new LinkedHashMap<>(finalResults.createProfitResults(dealer));
         OutputView.printProfitResults(profitResults);
     }
 }

@@ -15,7 +15,7 @@ public class FinalResults {
         this.finalResults = new HashMap<>(finalResults);
     }
 
-    public Map<Gamer, Integer> createProfitResult(final Dealer dealer) {
+    public Map<Gamer, Integer> createProfitResults(final Dealer dealer) {
         final Map<Gamer, Integer> profitResults = new LinkedHashMap<>();
         int dealerProfit = 0;
 
@@ -35,10 +35,10 @@ public class FinalResults {
 
     private int calculatePlayerProfit(final Player player, final FinalResult result) {
         if (result == FinalResult.WIN) {
-            return player.winBetting(0);
+            return player.calculateWinProfit(0);
         }
         if (result == FinalResult.LOSE) {
-            return player.loseBetting(0);
+            return player.calculateLoseProfit(0);
         }
         return 0;
     }

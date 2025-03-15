@@ -11,14 +11,14 @@ public class Player extends Gamer {
         this.betting = betting;
     }
 
-    public int winBetting(final int profit) {
+    public int calculateWinProfit(final int profit) {
         if (isBlackJack()) {
-            return betting.winBlackJackBetting(profit);
+            return betting.calculateBlackjackWinProfit(profit);
         }
-        return betting.winBetting(profit);
+        return betting.calculateRegularWinProfit(profit);
     }
 
-    public int loseBetting(final int profit) {
-        return betting.loseBetting(profit);
+    public int calculateLoseProfit(final int profit) {
+        return betting.calculateRegularLoseProfit(profit);
     }
 }

@@ -41,7 +41,7 @@ public class Players {
     public Map<Player, FinalResult> createFinalResults(final Dealer dealer) {
         final Map<Player, FinalResult> finalResults = new LinkedHashMap<>();
         for (final Player player : players) {
-            final FinalResult currentResult = FinalResult.selectResult(player, dealer);
+            final FinalResult currentResult = FinalResult.determine(player, dealer);
             finalResults.put(player, currentResult);
         }
         return finalResults;
