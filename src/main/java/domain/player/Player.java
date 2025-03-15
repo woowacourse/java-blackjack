@@ -4,6 +4,7 @@ import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Deck;
 import domain.state.State;
+import java.util.Objects;
 
 public abstract class Player {
 
@@ -23,6 +24,14 @@ public abstract class Player {
 
     public void stay() {
         this.state = state.stay();
+    }
+
+    public boolean isFinished() {
+        return state.isFinished();
+    }
+
+    public int computeOptimalSum() {
+        return state.cards().computeOptimalSum();
     }
 
     public void drawInitialCards(Deck deck) {
@@ -62,5 +71,21 @@ public abstract class Player {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (!(object instanceof Player player)) {
+            return false;
+        }
+        return Objects.equals(name, player.name) && Objects.equals(state, player.state);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, state);
     }
 }
