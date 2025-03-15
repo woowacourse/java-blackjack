@@ -4,7 +4,6 @@ import static blackjack.model.card.CardCreator.createCard;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -200,15 +199,6 @@ class BlackJackRuleTest {
                 Arguments.of(makeUserWithName("pobi"), cards,
                         new Cards(createCard(CardNumber.TEN), createCard(CardNumber.FIVE)))
         );
-    }
-
-    private static Map<GameResult, Integer> makeResultMap(final int winCount, final int drawCount, final int loseCount) {
-        Map<GameResult, Integer> result = new LinkedHashMap<>(GameResult.getResultBoard());
-        result.put(GameResult.WIN, winCount);
-        result.put(GameResult.DRAW, drawCount);
-        result.put(GameResult.LOSE, loseCount);
-
-        return result;
     }
 
     private static Player makeDealer(final Card... cards) {
