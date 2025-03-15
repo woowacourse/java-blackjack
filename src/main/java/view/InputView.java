@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class InputView {
     private final Scanner scanner;
 
-    public InputView(){
+    public InputView() {
         scanner = new Scanner(System.in);
     }
 
@@ -27,17 +27,17 @@ public class InputView {
         return AnswerCommand.findByAnswer(input);
     }
 
-    public Bet readBet(final String playerName){
+    public Bet readBet(final String playerName) {
         System.out.println(playerName + "의 배팅 금액은?");
         final String input = readInput();
         validateBetAmount(input);
         return new Bet(Integer.parseInt(input));
     }
 
-    private void validateBetAmount(String betAmountInput){
-        try{
+    private void validateBetAmount(String betAmountInput) {
+        try {
             Integer.parseInt(betAmountInput);
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             throw new IllegalArgumentException("[ERROR] 배팅 금액은 숫자만 가능합니다.");
         }
     }

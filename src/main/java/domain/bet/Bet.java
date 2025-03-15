@@ -13,8 +13,8 @@ public class Bet {
         this.bettingAmount = bettingAmount;
     }
 
-    private void validateBetAmountRange(int betAmount){
-        if(betAmount <= 0){
+    private void validateBetAmountRange(int betAmount) {
+        if (betAmount <= 0) {
             throw new IllegalArgumentException("[ERROR] 배팅 금액이 올바르지 않습니다.");
         }
     }
