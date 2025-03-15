@@ -7,6 +7,7 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
+import blackjack.domain.state.Created;
 import blackjack.domain.state.finished.Blackjack;
 import blackjack.domain.state.finished.Bust;
 import blackjack.domain.state.finished.Stay;
@@ -14,6 +15,30 @@ import blackjack.domain.state.running.Hit;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {
+
+    @Test
+    void 블랙잭_게임을_준비한다() {
+        //given
+        Deck deck = new Deck(
+                new Card(Suit.CLUB, Rank.EIGHT),
+                new Card(Suit.DIAMOND, Rank.NINE),
+                new Card(Suit.CLUB, Rank.TEN)
+        );
+        Player player = new Player("pobi", new Created(), new BettingMoney(1000));
+
+        //when
+        player.prepareBlackjack(deck);
+
+        //then
+        assertThat(player).isEqualTo(
+                new Player("pobi", new Hit(
+                        new Cards(
+                                new Card(Suit.CLUB, Rank.EIGHT),
+                                new Card(Suit.DIAMOND, Rank.NINE)
+                        )
+                ), new BettingMoney(1000))
+        );
+    }
 
     @Test
     void 카드를_한장_뽑는다() {
