@@ -31,7 +31,7 @@ public class WalletTest {
         wallet.betMoney(betMoney);
 
         // when
-        wallet.winBetRate(gameResult);
+        wallet.applyBetRateBy(gameResult);
 
         // then
         int actual = wallet.getProfit();

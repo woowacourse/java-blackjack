@@ -11,7 +11,7 @@ public class Wallet {
         this.earnedMoney = 0;
     }
 
-    public void winBetRate(GameResult gameResult) {
+    public void applyBetRateBy(GameResult gameResult) {
         double betRate = gameResult.getBetRate();
         earnMoney(betMoney * betRate);
     }

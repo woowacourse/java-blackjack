@@ -28,7 +28,7 @@ public class Player implements Participant {
     @Override
     public void applyGameRecord(GameResult result) {
         gameRecord.add(result);
-        wallet.winBetRate(result);
+        wallet.applyBetRateBy(result);
     }
 
     @Override
