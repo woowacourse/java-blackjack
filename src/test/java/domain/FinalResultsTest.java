@@ -24,7 +24,8 @@ class FinalResultsTest {
         // given
         final Player player1 = new Player(new Nickname("체체"), new Betting(1000));
         final Player player2 = new Player(new Nickname("제이미"), new Betting(1500));
-        final List<Player> playerGroup = List.of(player1, player2);
+        final Player player3 = new Player(new Nickname("추추"), new Betting(1500));
+        final List<Player> playerGroup = List.of(player1, player2, player3);
         final Players players = new Players(playerGroup);
         final Dealer dealer = new Dealer();
 
@@ -32,6 +33,8 @@ class FinalResultsTest {
         player1.hit(new Card(Rank.JACK, Shape.SPADE));
         player2.hit(new Card(Rank.ACE, Shape.SPADE));
         player2.hit(new Card(Rank.ACE, Shape.SPADE));
+        player3.hit(new Card(Rank.ACE, Shape.SPADE));
+        player3.hit(new Card(Rank.FIVE, Shape.SPADE));
         dealer.hit(new Card(Rank.ACE, Shape.SPADE));
         dealer.hit(new Card(Rank.FIVE, Shape.SPADE));
 
@@ -45,6 +48,7 @@ class FinalResultsTest {
             softly.assertThat(profitResults.get(dealer)).isEqualTo(0);
             softly.assertThat(profitResults.get(player1)).isEqualTo(1500);
             softly.assertThat(profitResults.get(player2)).isEqualTo(-1500);
+            softly.assertThat(profitResults.get(player3)).isEqualTo(0);
         });
     }
 
