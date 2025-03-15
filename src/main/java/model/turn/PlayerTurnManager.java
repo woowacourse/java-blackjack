@@ -29,7 +29,7 @@ public class PlayerTurnManager {
     }
 
     public void betInsurance(Dealer dealer) {
-        if (dealer.openFirstCard().getCardRank() == CardRank.ACE) {
+        if (dealer.isFirstCardAce()) {
             runPlayersBetInsurance();
         }
     }
