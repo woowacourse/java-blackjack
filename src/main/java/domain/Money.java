@@ -1,17 +1,24 @@
 package domain;
 
-public class Money {
-    private final int money;
+import java.math.BigDecimal;
 
-    public Money(final String money) {
-        this.money = validateNumber(money);
+public class Money {
+    private final BigDecimal amount;
+
+    public Money(final String amount) {
+        this.amount = new BigDecimal(amount);
     }
 
-    private int validateNumber(String inputMoney) {
-        try {
-            return Integer.parseInt(inputMoney);
-        } catch (NumberFormatException numberFormatException) {
-            throw new IllegalArgumentException();
-        }
+    private Money(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    public static Money multiply(Money money, double severalTimes) {
+        BigDecimal profit = money.amount.multiply(BigDecimal.valueOf(severalTimes));
+        return new Money(profit);
+    }
+
+    public BigDecimal getAmount() {
+        return amount.setScale(0);
     }
 }
