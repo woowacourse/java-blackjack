@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.IntStream;
 import model.betting.Bet;
 import model.deck.Card;
+import model.deck.CardRank;
+import model.deck.CardSuit;
 import model.deck.Deck;
 
 public final class Player {
@@ -23,6 +25,10 @@ public final class Player {
 
     public boolean isBurst() {
         return participantHand.checkBurst();
+    }
+
+    public boolean isBlackjack() {
+        return participantHand.checkBlackJack();
     }
 
     public void dealInitialCards(final Deck deck) {
@@ -47,12 +53,7 @@ public final class Player {
         return participantHand.getCards();
     }
 
-
     public String getName() {
         return name;
-    }
-
-    public boolean isBlackjack() {
-        return participantHand.checkBlackJack();
     }
 }

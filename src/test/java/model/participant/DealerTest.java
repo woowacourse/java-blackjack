@@ -95,7 +95,7 @@ class DealerTest {
         dealer.receiveBet(new Bet(20000, jason));
 
         //when
-        dealer.updateBetOwner(jason);
+        dealer.updateBetOwnerToDealerFrom(jason);
         List<Bet> bets = dealer.getBets();
 
         //then
@@ -113,7 +113,7 @@ class DealerTest {
         dealer.receiveBet(new Bet(20000, jason));
 
         //when
-        dealer.updateBetOwner(jason);
+        dealer.updateBetOwnerToDealerFrom(jason);
 
         //then
         assertThat(dealer.calculateRevenue()).isEqualTo(10000);
@@ -129,7 +129,7 @@ class DealerTest {
         dealer.receiveBet(new Bet(20000, jason));
 
         //when
-        dealer.updateBetOwner(pobi);
+        dealer.updateBetOwnerToDealerFrom(pobi);
 
         //then
         assertThat(dealer.calculateRevenue()).isEqualTo(-10000);

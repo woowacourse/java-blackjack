@@ -3,6 +3,9 @@ package controller;
 import java.util.List;
 import java.util.Map;
 import model.betting.Bet;
+import model.deck.Card;
+import model.deck.CardRank;
+import model.deck.CardSuit;
 import model.participant.Dealer;
 import model.deck.Deck;
 import model.participant.Players;
@@ -32,7 +35,9 @@ public class BlackjackController {
 
             printFinalScore(players, dealer);
             ParticipantWinningResult participantWinningResult = printWinningResult(players, dealer);
-            printRevenue(participantWinningResult, players, dealer);
+
+            calculateRevenue(participantWinningResult, players, dealer);
+            printRevenue(players, dealer);
         } catch (RuntimeException e) {
             OutputView.printExceptionMessage(e.getMessage());
         }
@@ -47,8 +52,8 @@ public class BlackjackController {
 
     private void dealInitially(final Players players, final Dealer dealer, final Deck deck) {
         dealer.dealInitialCards(deck);
-        players.getPlayers().forEach(participant ->
-                participant.dealInitialCards(deck)
+        players.getPlayers().forEach(player ->
+                player.dealInitialCards(deck)
         );
         OutputView.printInitialDeal(players, dealer);
     }
@@ -92,14 +97,19 @@ public class BlackjackController {
         return participantWinningResult;
     }
 
-    private void printRevenue(ParticipantWinningResult participantWinningResult, Players players, Dealer dealer) {
+    private void calculateRevenue(ParticipantWinningResult participantWinningResult, Players players, Dealer dealer) {
         for (Player player : players.getPlayers()) {
             GameResult gameResult = participantWinningResult.findResultByPlayer(player);
+            if (gameResult == GameResult.WIN && player.isBlackjack()) {
+                dealer.updateBetAmountWhenBlackJack(player);
+            }
             if (gameResult == GameResult.LOSE) {
-                dealer.updateBetOwner(player);
+                dealer.updateBetOwnerToDealerFrom(player);
             }
         }
+    }
 
+    private void printRevenue(Players players, Dealer dealer) {
         OutputView.printDealerRevenue(dealer);
         for (Player player : players.getPlayers()) {
             Bet bet = dealer.findBetByPlayer(player);

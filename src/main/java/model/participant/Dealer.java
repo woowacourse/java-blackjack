@@ -60,19 +60,12 @@ public final class Dealer {
     }
 
     public int calculateRevenue() {
-//        int revenue = 0;
-//        for (Bet bet : bets) {
-//            if (bet.ownerEquals(this)) {
-//                revenue += bet.getMoney();
-//                continue;
-//            }
-//            revenue -= bet.getMoney();
-//        }
-//        return revenue;
-        return bets.stream().mapToInt(Bet::calculateDealerRevenue).sum();
+        return bets.stream()
+                .mapToInt(Bet::calculateDealerRevenue)
+                .sum();
     }
 
-    public void updateBetOwner(Player player) {
+    public void updateBetOwnerToDealerFrom(Player player) {
         Bet updatingBet = bets.stream()
                 .filter(bet -> bet.getOwner().equals(player))
                 .findAny()
@@ -86,6 +79,12 @@ public final class Dealer {
                 .filter(bet -> bet.betterEquals(player))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("해당하는 플레이어를 찾을 수 없습니다."));
+    }
+
+    public void updateBetAmountWhenBlackJack(Player player) {
+        Bet bet = findBetByPlayer(player);
+        this.bets.remove(bet);
+        this.bets.add(bet.increase(1.5));
     }
 
     public List<Bet> getBets() {
