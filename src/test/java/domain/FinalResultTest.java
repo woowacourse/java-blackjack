@@ -18,17 +18,12 @@ import org.junit.jupiter.api.Test;
 
 class FinalResultTest {
 
-    Player defaultPlayer;
-    Player blackJackPlayer;
-    Player bustPlayer;
-    Dealer defaultDealer;
-    Dealer blackJackDealer;
-    Dealer bustDealer;
-
-    Card cardQueen;
-    Card cardKing;
-    Card cardJack;
-    Card cardAce;
+    private Player defaultPlayer;
+    private Player blackJackPlayer;
+    private Player bustPlayer;
+    private Dealer defaultDealer;
+    private Dealer blackJackDealer;
+    private Dealer bustDealer;
 
     @BeforeEach
     void setUp() {
@@ -41,10 +36,10 @@ class FinalResultTest {
         blackJackDealer = new Dealer();
         bustDealer = new Dealer();
 
-        cardQueen = new Card(Rank.QUEEN, Shape.CLOVER);
-        cardKing = new Card(Rank.KING, Shape.CLOVER);
-        cardJack = new Card(Rank.JACK, Shape.CLOVER);
-        cardAce = new Card(Rank.ACE, Shape.CLOVER);
+        final Card cardQueen = new Card(Rank.QUEEN, Shape.CLOVER);
+        final Card cardKing = new Card(Rank.KING, Shape.CLOVER);
+        final Card cardJack = new Card(Rank.JACK, Shape.CLOVER);
+        final Card cardAce = new Card(Rank.ACE, Shape.CLOVER);
 
         defaultPlayer.hit(cardJack);
         defaultDealer.hit(cardJack);
