@@ -7,14 +7,12 @@ public class Cards {
 
     public static final int BUST_STANDARD = 21;
     public static final int SOFT_ACE_DIFFERENCE = 10;
-    public static final int HIGHEST_SCORE = 21;
+    public static final int BLACKJACK_SCORE = 21;
 
     private final List<Card> cards;
-    private final boolean isBlackJack;
 
     public Cards(List<Card> cards) {
         this.cards = cards;
-        isBlackJack = checkBlackJack();
     }
 
     public boolean addOneCard(Card card) {
@@ -34,8 +32,8 @@ public class Cards {
         return cards.removeLast();
     }
 
-    public boolean checkBlackJack() {
-        return sumCardNumbers() == HIGHEST_SCORE;
+    public boolean isBlackJack() {
+        return sumCardNumbers() == BLACKJACK_SCORE && cards.size() == 2;
     }
 
     private int calculateSum() {
@@ -63,9 +61,5 @@ public class Cards {
 
     public List<Card> getCards() {
         return cards;
-    }
-
-    public boolean isBlackJack() {
-        return isBlackJack;
     }
 }
