@@ -106,6 +106,20 @@ public class BlackjackBetTest {
         assertThat(blackjackBet.calculateEarnMoney(cardSum, otherCardSum))
                 .isEqualTo(money * 2);
     }
+
+    @Test
+    void 블랙잭_배율_테스트() {
+        int money = 1000;
+        BlackjackBet blackjackBet = new BlackjackBet(money);
+        List<TrumpCard> trumpCards = List.of(new TrumpCard(Suit.CLOVER, CardValue.A),
+                new TrumpCard(Suit.SPADE, CardValue.J));
+        List<TrumpCard> dealerTrumpCards = List.of(new TrumpCard(Suit.HEART, CardValue.A),
+                new TrumpCard(Suit.SPADE, CardValue.A));
+        BlackjackHands cardSum = new BlackjackHands(trumpCards);
+        BlackjackHands otherCardSum = new BlackjackHands(dealerTrumpCards);
+        assertThat(blackjackBet.calculateEarnMoney(cardSum, otherCardSum))
+                .isEqualTo(2500);
+    }
 }
 
 
