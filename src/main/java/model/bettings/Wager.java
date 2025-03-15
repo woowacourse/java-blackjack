@@ -1,7 +1,10 @@
 package model.bettings;
 
 public class Wager {
-    private static final int VALUE_ZERO = 0;
+    private static final int INDEX_PLAYER_WAGER = 0;
+    private static final double VALUE_TIE = 0;
+    private static final double VALUE_NORMAL = 1.0;
+    private static final double VALUE_BLACKJACK = 1.5;
 
     private double wager;
 
@@ -11,20 +14,23 @@ public class Wager {
 
     public void updateWager(boolean isDealer, double multiplier, double... playerWager) {
         if (isDealer) {
-            updateDealerWager(multiplier, playerWager[VALUE_ZERO]);
+            updateDealerWager(multiplier, playerWager[INDEX_PLAYER_WAGER]);
             return;
         }
         updatePlayerWager(multiplier);
     }
 
     private void updatePlayerWager(double multiplier) {
-        if (multiplier == VALUE_ZERO) {
+        if (multiplier == VALUE_TIE) {
             return;
         }
         wager += wager * multiplier;
     }
 
     private void updateDealerWager(double multiplier, double playerWager) {
+        if (multiplier == VALUE_BLACKJACK) {
+            multiplier = VALUE_NORMAL;
+        }
         wager += playerWager * multiplier;
     }
 

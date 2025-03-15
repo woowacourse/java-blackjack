@@ -59,4 +59,8 @@ public class Hand {
     public int getScore() {
         return score;
     }
+
+    public int getHandSize() {
+        return cards.size();
+    }
 }

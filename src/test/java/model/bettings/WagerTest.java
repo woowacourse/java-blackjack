@@ -12,9 +12,9 @@ public class WagerTest {
     void wager_Dealer() {
         Wager dealerWager = new Wager(1000);
 
-        dealerWager.updateWager(true, 1.5, 1000);
+        dealerWager.updateWager(true, 1, 1000);
 
-        assertThat(dealerWager.getWager()).isEqualTo(2500);
+        assertThat(dealerWager.getWager()).isEqualTo(2000);
     }
 
     @DisplayName("플레이어의 배팅 금액을 갱신한다.")
