@@ -25,11 +25,11 @@ public class InputView {
         return playerNamesInput;
     }
 
-    public static double getBetAmountInput(String playerName) {
+    public static int getBetAmountInput(String playerName) {
         System.out.printf(ASK_PLAYER_BET_AMOUNT_MESSAGE,  playerName);
         String betAmountInput = sc.nextLine();
         try {
-            double parsedBetAmount = Integer.parseInt(betAmountInput);
+            int parsedBetAmount = Integer.parseInt(betAmountInput);
             validateBetAmount(parsedBetAmount);
             return parsedBetAmount;
         } catch (IllegalArgumentException e) {

@@ -8,9 +8,9 @@ public class BetMoney {
     private static final double BLACKJACK_BONUS = 1.5;
     private static final int WIN_BONUS = 2;
 
-    private final double amount;
+    private final int amount;
 
-    public BetMoney(final double amount) {
+    public BetMoney(final int amount) {
         this.amount = amount;
     }
 
@@ -28,7 +28,7 @@ public class BetMoney {
     }
 
     private BetMoney applyBlackJackBonus() {
-        return new BetMoney(amount * BLACKJACK_BONUS - amount);
+        return new BetMoney((int) (amount * BLACKJACK_BONUS - amount));
     }
 
     private BetMoney applyWinBonus() {
