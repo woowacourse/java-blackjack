@@ -1,8 +1,10 @@
 package domain.user;
 
+import domain.GameResult;
+
 public class Betting {
 
-    private final Long bettingMoney;
+    private final long bettingMoney;
 
     public Betting(Long bettingMoney) {
         validateBetting(bettingMoney);
@@ -18,7 +20,20 @@ public class Betting {
         }
     }
 
-    public Long getBettingMoney() {
+    public long getBettingMoney() {
         return bettingMoney;
+    }
+
+    public long calculateBetting(GameResult gameResult) {
+        if (gameResult == GameResult.BLACKJACK) {
+            return (long) (bettingMoney * 1.5);
+        }
+        if (gameResult == GameResult.LOSE) {
+            return -bettingMoney;
+        }
+        if (gameResult == GameResult.WIN) {
+            return bettingMoney;
+        }
+        return 0L;
     }
 }
