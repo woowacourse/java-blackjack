@@ -51,7 +51,7 @@ public class PlayerGroupTest {
     }
 
     @Test
-    void 플레이어와_딜러_둘_다_버스트_하는_경우_무승부() {
+    void 플레이어가_버스트_라면_플레이어_패배() {
         //given
         final List<String> playerNames = List.of("윌슨");
         final Dealer dealer = new Dealer(new CardGroup());
@@ -67,7 +67,7 @@ public class PlayerGroupTest {
         final Map<String, GameResult> playersGameResult = playerGroup.calculatePlayersGameResult(dealer);
 
         //then
-        assertThat(playersGameResult).containsEntry("윌슨", GameResult.DRAW);
+        assertThat(playersGameResult).containsEntry("윌슨", GameResult.LOSE);
     }
 
     @Test

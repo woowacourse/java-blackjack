@@ -58,8 +58,8 @@ public class PlayerGroup {
     }
 
     private GameResult calculateResult(final Player player, final Dealer dealer) {
-        if (dealer.isBust() && player.isBust()) {
-            return GameResult.DRAW;
+        if (player.isBust()) {
+            return GameResult.LOSE;
         }
         if (dealer.isBust()) {
             return GameResult.WIN;
