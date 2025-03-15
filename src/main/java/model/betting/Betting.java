@@ -32,7 +32,8 @@ public class Betting {
     }
 
     private void validateInsuranceBet(int insuranceBet) {
-        if (insuranceBet < 0 || insuranceBet > calculateMaxInsuranceAmount()) {
+        int maxInsuranceAmount = calculateMaxInsuranceAmount();
+        if (insuranceBet < 0 || insuranceBet > maxInsuranceAmount) {
             throw new IllegalArgumentException("[ERROR] 설정가능한 보험금액이 아닙니다. 입력값 : " + insuranceBet);
         }
     }
