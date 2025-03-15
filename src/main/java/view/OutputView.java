@@ -1,11 +1,11 @@
 package view;
 
-import domain.BlackJackGame;
-import domain.GamblingStatement;
-import domain.Money;
-import domain.card.Card;
-import domain.card.ParticipantCardDeck;
-import domain.participant.Participant;
+import game.BlackJackGame;
+import bank.GamblingStatement;
+import bank.Money;
+import card.Card;
+import card.ParticipantCardDeck;
+import participant.Participant;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;

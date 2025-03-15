@@ -1,9 +1,9 @@
 package view;
 
-import domain.BlackJackGame;
-import domain.Money;
-import domain.participant.Participant;
-import domain.participant.Participants;
+import game.BlackJackGame;
+import bank.Money;
+import participant.Participant;
+import participant.Participants;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

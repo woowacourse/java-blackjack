@@ -1,4 +1,4 @@
-import domain.BlackJackGameManager;
+import game.BlackJackGameManager;
 import view.InputView;
 import view.OutputView;
 
