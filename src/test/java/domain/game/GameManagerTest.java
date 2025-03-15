@@ -82,24 +82,4 @@ public class GameManagerTest {
             () -> assertThat(player.getCards()).hasSize(2)
         );
     }
-
-    @Test
-    void 딜러의_승무패_횟수를_계산한다() {
-        //given
-        setUpDealerAndPlayersCards();
-
-        //when
-        GameResult gameResult = gameManager.evaluateFinalScore();
-
-        int dealerWinCount = gameResult.countDealerWin();
-        int dealerDrawCount = gameResult.countDealerDraw();
-        int dealerLoseCount = gameResult.countDealerLose();
-
-        //then
-        assertAll(
-            () -> assertThat(dealerWinCount).isEqualTo(3),
-            () -> assertThat(dealerDrawCount).isEqualTo(2),
-            () -> assertThat(dealerLoseCount).isEqualTo(1)
-        );
-    }
 }

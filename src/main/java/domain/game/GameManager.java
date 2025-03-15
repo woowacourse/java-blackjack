@@ -5,7 +5,6 @@ import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 
-import java.awt.*;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,16 +36,16 @@ public class GameManager {
         participant.takeMoreCard(cardDeck.poll());
     }
 
-    public GameResult evaluateFinalScore() {
+    public EarningResult evaluateEarning(PlayerBets playerBets) {
         ScoreInfo dealerScoreInfo = new ScoreInfo(dealer.calculateScore(), dealer.getCardCount());
 
-        Map<Player, Winning> playerWinnings = players.stream()
+        Map<Player, Double> earningResult = players.stream()
                 .collect(Collectors.toMap(player -> player
                         , player -> Winning.determine(
                                 new ScoreInfo(player.calculateScore(), player.getCardCount()), dealerScoreInfo
-                        )
+                        ).getEarningRate() * playerBets.getBetAmountByPlayer(player)
                         , (player1, player2) -> player1, LinkedHashMap::new));
 
-        return new GameResult(playerWinnings);
+        return new EarningResult(earningResult);
     }
 }
