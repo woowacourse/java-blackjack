@@ -1,11 +1,13 @@
 package blackjack.domain.gamer;
 
+import blackjack.domain.card.Card;
+
 public class Dealer extends Gamer {
 
     private static final int MIN_SUM_OF_CARDS = 16;
 
-    public Dealer() {
-        super("딜러");
+    public Dealer(Card... cards) {
+        super("딜러", cards);
     }
 
     @Override

@@ -15,7 +15,7 @@ import java.util.List;
 public class BlackjackController {
 
     private final ProfitCalculator profitCalculator = new ProfitCalculator();
-    private Round round;
+    private final Round round = new Round();
 
     public void run() {
         setRound();
@@ -25,24 +25,16 @@ public class BlackjackController {
     }
 
     private void setRound() {
-        Dealer dealer = new Dealer();
-        List<Player> players = setPlayers();
-        getPlayerBets(players);
-        round = new Round(dealer, players);
-        OutputView.printStartingCards(round.initialize());
-    }
-
-    private List<Player> setPlayers() {
         NamesRequestDto namesRequestDto = InputView.readNames();
-        return namesRequestDto.names().stream()
-                .map(Player::new)
-                .toList();
+        getPlayerBets(namesRequestDto.names());
+        round.initialize(namesRequestDto.names());
+        OutputView.printStartingCards(round.getStartingCards());
     }
 
-    private void getPlayerBets(List<Player> players) {
-        for (Player player : players) {
-            BetsRequestDto betsRequestDto = InputView.readBets(player.getName());
-            profitCalculator.addPlayerBet(player, betsRequestDto.amount());
+    private void getPlayerBets(List<String> playerNames) {
+        for (String name : playerNames) {
+            BetsRequestDto betsRequestDto = InputView.readBets(name);
+            profitCalculator.addPlayerBet(name, betsRequestDto.amount());
         }
     }
 

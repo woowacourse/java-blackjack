@@ -1,7 +1,6 @@
 package blackjack.domain.round;
 
 import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 import blackjack.dto.response.ProfitsResponseDto;
 
@@ -16,10 +15,10 @@ public class ProfitCalculator {
     private static final double TIE_MULTIPLIER = 0;
     private static final double BLACKJACK_WIN_MULTIPLIER = 1.5;
 
-    private final LinkedHashMap<Gamer, Bet> playerBets = new LinkedHashMap<>();
+    private final LinkedHashMap<String, Bet> playerBets = new LinkedHashMap<>();
 
-    public void addPlayerBet(Gamer gamer, int amount) {
-        playerBets.put(gamer, new Bet(amount));
+    public void addPlayerBet(String playerName, int amount) {
+        playerBets.put(playerName, new Bet(amount));
     }
 
     public ProfitsResponseDto getProfits(Round round) {
@@ -38,7 +37,7 @@ public class ProfitCalculator {
     }
 
     private double getPlayerProfit(Player player, Dealer dealer) {
-        Bet playerBet = playerBets.get(player);
+        Bet playerBet = playerBets.get(player.getName());
         RoundResult roundResult = RoundResult.judgeResult(player, dealer);
         return getProfit(playerBet, roundResult);
     }

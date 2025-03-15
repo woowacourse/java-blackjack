@@ -1,21 +1,28 @@
 package blackjack.domain.gamer;
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import blackjack.domain.round.RoundResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
-import blackjack.domain.deck.Deck;
+
+import java.util.List;
 
 public abstract class Gamer {
 
     private final String name;
     protected final Cards cards = new Cards();
 
-    protected Gamer(String name) {
+    protected Gamer(String name, Card... cards) {
         this.name = name;
+        addStartingCards(cards);
+    }
+
+    private void addStartingCards(Card... startingCards) {
+        for (Card card : startingCards) {
+            cards.add(card);
+        }
+    }
+
+    public void addCard(Card card) {
+        cards.add(card);
     }
 
     public List<Card> getCards() {
@@ -36,29 +43,6 @@ public abstract class Gamer {
 
     public boolean isBlackjack() {
         return cards.isBlackjack();
-    }
-
-    public void initialize(Deck deck) {
-        drawCard(deck, 2);
-    }
-
-    public void drawCard(Deck deck) {
-        drawCard(deck, 1);
-    }
-
-    private void drawCard(Deck deck, int count) {
-        for (int i = 0; i < count; i++) {
-            cards.add(deck.draw());
-        }
-    }
-
-    public Map<RoundResult, Integer> getFinalResult(List<Gamer> otherGamers) {
-        return otherGamers.stream()
-            .map(otherGamer -> RoundResult.judgeResult(this, otherGamer))
-            .collect(Collectors.toMap(
-                result -> result,
-                result -> 1,
-                Integer::sum));
     }
 
     public abstract boolean canReceiveAdditionalCards();

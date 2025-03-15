@@ -12,21 +12,19 @@ import java.util.List;
 
 public class Round {
 
-    private final Dealer dealer;
-    private final List<Player> players;
+    private Dealer dealer;
+    private List<Player> players;
     private Deck deck;
 
-    public Round(Dealer dealer, List<Player> players) {
-        this.dealer = dealer;
-        this.players = players;
+    public void initialize(List<String> playerNames) {
+        deck = Deck.generateFrom(new RandomCardStrategy());
+        dealer = new Dealer(deck.draw(), deck.draw());
+        players = playerNames.stream()
+                .map(name -> new Player(name, deck.draw(), deck.draw()))
+                .toList();
     }
 
-    public StartingCardsResponseDto initialize() {
-        deck = Deck.generateFrom(new RandomCardStrategy());
-        dealer.initialize(deck);
-        for (Player player : players) {
-            player.initialize(deck);
-        }
+    public StartingCardsResponseDto getStartingCards() {
         return StartingCardsResponseDto.of(dealer, players);
     }
 
@@ -39,7 +37,7 @@ public class Round {
                 .filter(player -> player.getName().equals(playerName))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 이름의 플레이어가 없습니다."));
-        targetPlayer.drawCard(deck);
+        targetPlayer.addCard(deck.draw());
     }
 
     public Dealer getDealer() {
@@ -47,7 +45,7 @@ public class Round {
     }
 
     public void drawDealerCard() {
-        dealer.drawCard(deck);
+        dealer.addCard(deck.draw());
     }
 
     public RoundResultsResponseDto getRoundResults() {
