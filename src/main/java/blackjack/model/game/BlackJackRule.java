@@ -11,6 +11,7 @@ import blackjack.model.player.Player;
 public class BlackJackRule {
 
     public static final int BLACK_JACK_POINT = 21;
+    private static final int BLACK_JACK_SIZE = 2;
     private static final Predicate<Player> DEALER_DRAW_PREDICATE = dealer ->
             dealer.getMinimumPoint() < 17;
     private static final Predicate<Player> USER_DRAW_PREDICATE = user ->
@@ -61,38 +62,20 @@ public class BlackJackRule {
         currentResults.put(gameResult, currentResults.getOrDefault(gameResult, 0) + 1);
     }
 
-    public boolean isDraw(final Player player, final Player challenger) {
-        int point = calculateOptimalPoint(player);
-        int otherPoint = calculateOptimalPoint(challenger);
-        if (isBust(point) && isBust(otherPoint)) {
+    public boolean isDraw(final Player player, final Player otherPlayer) {
+        if (isBlackjack(player) && isBlackjack(otherPlayer)) {
             return true;
         }
-        return point == otherPoint;
+        return !isBust(calculateOptimalPoint(player)) && !isBust(calculateOptimalPoint(otherPlayer))
+                && (calculateOptimalPoint(player) == calculateOptimalPoint(otherPlayer));
     }
 
-    public Player getWinner(final Player player, final Player challenger) {
-        if (!isDraw(player, challenger)) {
-            return findWinner(player, challenger);
-        }
-        throw new IllegalStateException();
+    public boolean isBlackjack(final Player player) {
+        int playerPoint = calculateOptimalPoint(player);
+        return player.getCards().hasSize(BLACK_JACK_SIZE) && playerPoint == BLACK_JACK_POINT;
     }
 
-    private Player findWinner(final Player player, final Player challenger) {
-        int point = calculateOptimalPoint(player);
-        int otherPoint = calculateOptimalPoint(challenger);
-        if (isBust(point) && !isBust(otherPoint)) {
-            return challenger;
-        }
-        if (!isBust(point) && isBust(otherPoint)) {
-            return player;
-        }
-        if (point < otherPoint) {
-            return challenger;
-        }
-        return player;
-    }
-
-    private boolean isBust(final int point) {
+    public boolean isBust(final int point) {
         return point > BLACK_JACK_POINT;
     }
 
