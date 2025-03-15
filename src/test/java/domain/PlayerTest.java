@@ -4,7 +4,6 @@ import static domain.GameResult.BLACKJACK;
 import static domain.GameResult.LOSE;
 import static domain.GameResult.TIE;
 import static domain.GameResult.WIN;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,6 +115,34 @@ class PlayerTest {
         return Stream.of(
                 Arguments.of(List.of(Card.HEART_QUEEN, Card.CLOVER_JACK, Card.CLOVER_THREE), LOSE),
                 Arguments.of(List.of(Card.HEART_TWO, Card.CLOVER_JACK, Card.CLOVER_TEN), LOSE)
+        );
+    }
+
+    @Test
+    @DisplayName("같은 이름을 가졌는지 확인합니다.")
+    void isSameNameTest() {
+        Assertions.assertTrue(player.isSameName(new PlayerName("코기")));
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    @DisplayName("플레이어의 수익률을 계산합니다.")
+    void calculateProfitTest(List<Card> cards, int expected) {
+        Cards emptyCards = new Cards(new ArrayList<>());
+        Dealer dealer = new Dealer(new Deck(emptyCards));
+        dealer.receiveCards(new Cards(List.of(Card.HEART_JACK, Card.SPADE_FIVE))); // 15
+
+        player.receiveCards(new Cards(cards));
+
+        org.assertj.core.api.Assertions.assertThat(player.calculateProfit(dealer)).isEqualTo(expected);
+    }
+
+    public static Stream<Arguments> calculateProfitTest() {
+        return Stream.of(
+                Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_JACK), 15000), // 블랙잭
+                Arguments.of(List.of(Card.CLOVER_JACK, Card.CLOVER_QUEEN), 10000), // 일반승리
+                Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_ACE), -10000), // 패배
+                Arguments.of(List.of(Card.HEART_JACK, Card.CLOVER_FIVE), 0) // 무승부
         );
     }
 }
