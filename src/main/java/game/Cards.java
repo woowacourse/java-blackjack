@@ -29,6 +29,7 @@ public class Cards {
     }
 
     public Card drawCard() {
+        validateNonEmpty();
         return cards.removeLast();
     }
 
@@ -61,5 +62,11 @@ public class Cards {
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    private void validateNonEmpty() {
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 덱에 카드가 존재하지 않아 드로우할 수 없습니다.");
+        }
     }
 }
