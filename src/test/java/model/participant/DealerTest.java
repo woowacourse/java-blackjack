@@ -68,4 +68,20 @@ class DealerTest {
         //then
         assertThat(dealer.calculateRevenue()).isEqualTo(money);
     }
+
+    @DisplayName("플레이어가 승리하면 플레이어의 배팅 금액을 돌려준다")
+    @Test
+    void 플레이어_승리시_배팅금액을_돌려준다() {
+        //given
+        int money = 10000;
+        Player better = new Player("moda");
+        Bet bet = new Bet(money, better);
+        dealer.receiveBet(bet);
+
+        //then
+        Bet returnedBet = dealer.returnBetOf(better);
+
+        //then
+        assertThat(returnedBet.equals(bet)).isTrue();
+    }
 }

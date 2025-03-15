@@ -61,5 +61,12 @@ public final class Dealer {
     public int calculateRevenue() {
         return bets.stream().mapToInt(Bet::getMoney).sum();
     }
+
+    public Bet returnBetOf(Player player) {
+        return bets.stream()
+                .filter(bet -> bet.getBetter().equals(player))
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("플레이어의 배팅 금액이 저장되지 않았습니다."));
+    }
 }
 

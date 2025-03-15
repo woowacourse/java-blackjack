@@ -16,6 +16,10 @@ public class Bet {
         return money;
     }
 
+    public Player getBetter() {
+        return better;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -31,5 +35,10 @@ public class Bet {
     @Override
     public int hashCode() {
         return Objects.hash(money, better);
+    }
+
+    public Bet increase(double rate) {
+        int increaseAmount = (int) (money * rate);
+        return new Bet(increaseAmount, better);
     }
 }
