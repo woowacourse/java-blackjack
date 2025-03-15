@@ -79,7 +79,7 @@ public class DealerTest {
 
         //when
         boolean isPossibleDraw = dealerWithHands.shouldDrawCard();
-
+      
         //then
         assertThat(isPossibleDraw).isFalse();
     }

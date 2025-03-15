@@ -2,9 +2,11 @@ package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+
 import card.Card;
 import card.CardNumberType;
 import card.CardShapeType;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
