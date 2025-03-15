@@ -6,7 +6,7 @@ import domain.card.Cards;
 public class Hittable extends Running {
 
     public static final int DEFAULT_USER_HIT_THRESHOLD = 21;
-    public static final int DEFAULT_DEALER_HIT_THRESHOLD = 21;
+    public static final int DEFAULT_DEALER_HIT_THRESHOLD = 16;
 
     private final int hitThreshold;
 
