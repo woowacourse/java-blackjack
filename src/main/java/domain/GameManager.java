@@ -50,14 +50,6 @@ public class GameManager {
         }
     }
 
-    @Deprecated
-    public Map<GameResult, Integer> calculateDealerGameResult() {
-        final List<GameResult> playerGameResult = calculatePlayerGameResult().values().stream().toList();
-        return getAllGameResults().stream()
-                .filter(playerGameResult::contains)
-                .collect(Collectors.toMap(GameResult::swapGameResult, result -> Collections.frequency(playerGameResult, result), (newResult, oldResult) -> oldResult));
-    }
-
     public Map<String, GameResult> calculatePlayerGameResult() {
         return players.stream()
                 .collect(Collectors.toMap(
