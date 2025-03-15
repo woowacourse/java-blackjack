@@ -39,10 +39,16 @@ class BetCenterTest {
 
         Dealer dealer = new Dealer(() -> {
             List<Card> cards = new ArrayList<>();
+
+            // 플레이어 2
             cards.add(new Card(TrumpNumber.FIVE, TrumpEmblem.HEART));
             cards.add(new Card(TrumpNumber.EIGHT, TrumpEmblem.CLOVER));
+
+            // 플레이어 1
             cards.add(new Card(TrumpNumber.SIX, TrumpEmblem.HEART));
             cards.add(new Card(TrumpNumber.KING, TrumpEmblem.DIAMOND));
+
+            // 딜러
             cards.add(new Card(TrumpNumber.KING, TrumpEmblem.CLOVER));
             cards.add(new Card(TrumpNumber.ACE, TrumpEmblem.SPADE));
             return new Cards(cards);
@@ -50,6 +56,7 @@ class BetCenterTest {
 
         Player player1 = new Player(new Nickname("제프"), dealer.drawInitialCards());
         Player player2 = new Player(new Nickname("빙봉"), dealer.drawInitialCards());
+        player1.addOneCard(new Card(TrumpNumber.FIVE, TrumpEmblem.DIAMOND));
 
         BetCenter betCenter = new BetCenter(Map.of(
                 player1, new BetAmount(10000),
@@ -182,5 +189,49 @@ class BetCenterTest {
         assertThat(bettingResults.get(player1).getValue()).isEqualTo(15000);
         assertThat(bettingResults.get(player2).getValue()).isEqualTo(30000);
         assertThat(bettingResults.get(player3).getValue()).isEqualTo(12000);
+    }
+
+    @Test
+    void 딜러의_수익을_계산한다() {
+        Dealer dealer = new Dealer(() -> {
+            List<Card> cards = new ArrayList<>();
+
+            // 플레이어 3 초기 덱
+            cards.add(new Card(TrumpNumber.FIVE, TrumpEmblem.SPADE));
+            cards.add(new Card(TrumpNumber.FOUR, TrumpEmblem.HEART));
+
+            // 플레이어 2 초기 덱
+            cards.add(new Card(TrumpNumber.NINE, TrumpEmblem.SPADE));
+            cards.add(new Card(TrumpNumber.SIX, TrumpEmblem.CLOVER));
+
+            // 플레이어 1 초기 덱
+            cards.add(new Card(TrumpNumber.SIX, TrumpEmblem.HEART));
+            cards.add(new Card(TrumpNumber.KING, TrumpEmblem.DIAMOND));
+
+            // 딜러 초기 덱
+            cards.add(new Card(TrumpNumber.FIVE, TrumpEmblem.CLOVER));
+            cards.add(new Card(TrumpNumber.KING, TrumpEmblem.SPADE));
+            return new Cards(cards);
+        });
+        Player player1 = new Player(new Nickname("제프"), dealer.drawInitialCards());
+        Player player2 = new Player(new Nickname("짱수"), dealer.drawInitialCards());
+        Player player3 = new Player(new Nickname("빙봉"), dealer.drawInitialCards());
+
+        BetCenter betCenter = new BetCenter(Map.of(
+                player1, new BetAmount(15000),
+                player2, new BetAmount(30000),
+                player3, new BetAmount(12000)
+        ));
+
+        int dealerProfit = betCenter.calculateDealerProfit(dealer);
+
+        Map<Player, BetAmount> playerBetAmountMap = betCenter.deriveBettingResults(dealer);
+
+        System.out.println(playerBetAmountMap.get(player1).getValue());
+        System.out.println(playerBetAmountMap.get(player2).getValue());
+        System.out.println(playerBetAmountMap.get(player3).getValue());
+
+
+        assertThat(dealerProfit).isEqualTo(-3000); // -15000 + 12000
     }
 }
