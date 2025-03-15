@@ -2,6 +2,7 @@ package controller;
 
 import java.util.List;
 import java.util.Map;
+import model.betting.Bet;
 import model.participant.Dealer;
 import model.deck.Deck;
 import model.participant.Players;
@@ -21,6 +22,8 @@ public class BlackjackController {
             Dealer dealer = new Dealer();
             Deck deck = Deck.of();
 
+            receiveBets(players, dealer);
+
             dealInitially(players, dealer, deck);
             if (continueGame(players, dealer)) {
                 hitOrStandAtPlayersTurn(players, deck);
@@ -28,9 +31,17 @@ public class BlackjackController {
             }
 
             printFinalScore(players, dealer);
-            printWinningResult(players, dealer);
+            ParticipantWinningResult participantWinningResult = printWinningResult(players, dealer);
+            printRevenue(participantWinningResult, players, dealer);
         } catch (RuntimeException e) {
             OutputView.printExceptionMessage(e.getMessage());
+        }
+    }
+
+    private void receiveBets(Players players, Dealer dealer) {
+        for (Player player : players.getPlayers()) {
+            int betAmount = InputView.readBetAmount(player.getName());
+            dealer.receiveBet(new Bet(betAmount, player));
         }
     }
 
@@ -71,11 +82,28 @@ public class BlackjackController {
         OutputView.printPlayersFinalScore(players);
     }
 
-    private void printWinningResult(final Players players, final Dealer dealer) {
+    private ParticipantWinningResult printWinningResult(final Players players, final Dealer dealer) {
         ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
         Map<GameResult, Integer> dealerWinningResult = participantWinningResult.decideDealerWinning();
 
         OutputView.printDealerFinalResult(dealerWinningResult);
         OutputView.printPlayerFinalResult(participantWinningResult);
+
+        return participantWinningResult;
+    }
+
+    private void printRevenue(ParticipantWinningResult participantWinningResult, Players players, Dealer dealer) {
+        for (Player player : players.getPlayers()) {
+            GameResult gameResult = participantWinningResult.findResultByPlayer(player);
+            if (gameResult == GameResult.LOSE) {
+                dealer.updateBetOwner(player);
+            }
+        }
+
+        OutputView.printDealerRevenue(dealer);
+        for (Player player : players.getPlayers()) {
+            Bet bet = dealer.findBetByPlayer(player);
+            OutputView.printPlayersRevenue(player, bet);
+        }
     }
 }

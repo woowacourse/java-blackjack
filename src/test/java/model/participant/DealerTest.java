@@ -118,4 +118,20 @@ class DealerTest {
         //then
         assertThat(dealer.calculateRevenue()).isEqualTo(10000);
     }
+
+    @DisplayName("10000원을 배팅한 플레이어는 패배하고, 20000원을 배팅한 플레이어는 승리했을 때 딜러는 -10000원의 수익이 발생한다.")
+    @Test
+    void 딜러는_마이너스10000원의_수익이_발생한다() {
+        //given
+        Player pobi = new Player("pobi");
+        dealer.receiveBet(new Bet(10000, pobi));
+        Player jason = new Player("jason");
+        dealer.receiveBet(new Bet(20000, jason));
+
+        //when
+        dealer.updateBetOwner(pobi);
+
+        //then
+        assertThat(dealer.calculateRevenue()).isEqualTo(-10000);
+    }
 }

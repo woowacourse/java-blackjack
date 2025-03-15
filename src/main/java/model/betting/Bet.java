@@ -28,8 +28,27 @@ public class Bet {
         return new Bet(money, better, dealer);
     }
 
+    public int calculateBetterRevenue() {
+        if (isEqualOwnerAndBetter()) {
+            return money;
+        }
+        return -money;
+    }
+
+    public int calculateDealerRevenue() {
+        return -calculateBetterRevenue();
+    }
+
     public boolean ownerEquals(Dealer dealer) {
         return this.owner.equals(dealer);
+    }
+
+    public boolean betterEquals(Player player) {
+        return better.equals(player);
+    }
+
+    private boolean isEqualOwnerAndBetter() {
+        return better.equals(owner);
     }
 
     public Object getOwner() {

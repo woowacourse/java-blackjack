@@ -2,6 +2,7 @@ package view;
 
 import java.util.List;
 import java.util.Map;
+import model.betting.Bet;
 import model.deck.Card;
 import model.participant.Dealer;
 import model.participant.Players;
@@ -119,5 +120,15 @@ public final class OutputView {
 
     public static void printExceptionMessage(final String message) {
         System.out.println("[ERROR] " + message);
+    }
+
+    public static void printDealerRevenue(Dealer dealer) {
+        System.out.println("\n## 최종 수익");
+        System.out.printf("%s: %,d\n", DEALER_PRINT_MESSAGE, dealer.calculateRevenue());
+    }
+
+    public static void printPlayersRevenue(Player player, Bet bet) {
+        int revenue = bet.calculateBetterRevenue();
+        System.out.printf("%s: %,d\n", player.getName(), revenue);
     }
 }

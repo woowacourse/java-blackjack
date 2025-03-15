@@ -60,15 +60,16 @@ public final class Dealer {
     }
 
     public int calculateRevenue() {
-        int revenue = 0;
-        for (Bet bet : bets) {
-            if (bet.ownerEquals(this)) {
-                revenue += bet.getMoney();
-                continue;
-            }
-            revenue -= bet.getMoney();
-        }
-        return revenue;
+//        int revenue = 0;
+//        for (Bet bet : bets) {
+//            if (bet.ownerEquals(this)) {
+//                revenue += bet.getMoney();
+//                continue;
+//            }
+//            revenue -= bet.getMoney();
+//        }
+//        return revenue;
+        return bets.stream().mapToInt(Bet::calculateDealerRevenue).sum();
     }
 
     public void updateBetOwner(Player player) {
@@ -78,6 +79,13 @@ public final class Dealer {
                 .orElseThrow(() -> new IllegalStateException("플레이어의 배팅 금액이 저장되지 않았습니다."));
         this.bets.remove(updatingBet);
         this.bets.add(updatingBet.changeOwnerTo(this));
+    }
+
+    public Bet findBetByPlayer(Player player) {
+        return bets.stream()
+                .filter(bet -> bet.betterEquals(player))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("해당하는 플레이어를 찾을 수 없습니다."));
     }
 
     public List<Bet> getBets() {
