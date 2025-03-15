@@ -3,11 +3,13 @@ package model.participant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.IntStream;
 import model.deck.Card;
 import model.deck.CardRank;
 
 public final class ParticipantHand {
     private static final int BURST_SCORE_LIMIT = 21;
+
     private final List<Card> cards;
 
     public ParticipantHand() {

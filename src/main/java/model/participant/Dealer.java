@@ -28,8 +28,11 @@ public final class Dealer {
         return participantHand.checkBurst();
     }
 
-    public void dealInitialCards(final Deck deck) {
+    public void dealInitialCards(final Deck deck, final Players players) {
         //TODO : INITIAL_DEAL_COUNT 가 여기 있어야 할까?
+        players.getPlayers().forEach(player ->
+                player.dealInitialCards(deck)
+        );
         IntStream.range(0, INITIAL_DEAL_CARD_COUNT).forEach(
                 i -> receiveCard(deck.pick())
         );

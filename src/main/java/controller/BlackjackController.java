@@ -51,10 +51,7 @@ public class BlackjackController {
     }
 
     private void dealInitially(final Players players, final Dealer dealer, final Deck deck) {
-        dealer.dealInitialCards(deck);
-        players.getPlayers().forEach(player ->
-                player.dealInitialCards(deck)
-        );
+        dealer.dealInitialCards(deck, players);
         OutputView.printInitialDeal(players, dealer);
     }
 
@@ -100,7 +97,7 @@ public class BlackjackController {
     private void calculateRevenue(ParticipantWinningResult participantWinningResult, Players players, Dealer dealer) {
         for (Player player : players.getPlayers()) {
             GameResult gameResult = participantWinningResult.findResultByPlayer(player);
-            if (gameResult == GameResult.WIN && player.isBlackjack()) {
+            if (gameResult == GameResult.WIN && player.isBlackjack()) { //TODO : 책임 밀어넣기
                 dealer.updateBetAmountWhenBlackJack(player);
             }
             if (gameResult == GameResult.LOSE) {
