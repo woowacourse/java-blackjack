@@ -25,10 +25,6 @@ public class Deck {
 
     public Card pick() {
         validateDeckEmpty();
-        return drawCard();
-    }
-
-    private Card drawCard() {
         Card card = deckCards.getFirst();
         deckCards.remove(card);
         return card;
