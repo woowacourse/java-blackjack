@@ -1,7 +1,5 @@
 package domain.card;
 
-import java.util.List;
-
 public enum CardNumber {
     A(1),
     TWO(2),

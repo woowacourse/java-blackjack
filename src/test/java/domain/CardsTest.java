@@ -7,7 +7,6 @@ import domain.card.CardNumber;
 import domain.card.CardShape;
 import domain.card.Cards;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
