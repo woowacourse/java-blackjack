@@ -2,8 +2,8 @@ package domain.game;
 
 public class ScoreInfo {
 
-    public static final int BLACK_JACK_SCORE = 21;
-    public static final int BLACK_JACK_SIZE = 2;
+    public static final int BLACKJACK_SCORE = 21;
+    public static final int BLACKJACK_CARD_SIZE = 2;
 
     private final int score;
     private final int cardSize;
@@ -14,10 +14,14 @@ public class ScoreInfo {
     }
 
     public boolean isBlackJack() {
-        return (score == BLACK_JACK_SCORE && cardSize == BLACK_JACK_SIZE);
+        return (score == BLACKJACK_SCORE && cardSize == BLACKJACK_CARD_SIZE);
     }
 
     public boolean isBust() {
-        return (score > BLACK_JACK_SCORE);
+        return (score > BLACKJACK_SCORE);
+    }
+
+    public int getScore() {
+        return score;
     }
 }

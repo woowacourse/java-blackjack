@@ -1,6 +1,7 @@
 package domain.card;
 
-import domain.game.Winning;
+import domain.game.ScoreInfo;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class HandCards {
     }
 
     private int calculateOptimalScore(int sum){
-        if (sum + Rank.ACE_LOW_HIGH_GAP <= Winning.BLACK_JACK) {
+        if (sum + Rank.ACE_LOW_HIGH_GAP <= ScoreInfo.BLACKJACK_SCORE) {
             return sum + Rank.ACE_LOW_HIGH_GAP;
         }
         return sum;
