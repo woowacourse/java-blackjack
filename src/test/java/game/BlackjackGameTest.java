@@ -164,7 +164,7 @@ class BlackjackGameTest {
         dealer.receiveCard(new Card(CardShape.HEART, CardNumber.KING));
 
         // when
-        blackjackGame.updatePlayerMoney(dealer, miso);
+        blackjackGame.updatePlayerMoney(dealer, players);
 
         // then
         assertThat(miso.getEarnedMoney())
@@ -180,11 +180,11 @@ class BlackjackGameTest {
         dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.ACE));
         dealer.receiveCard(new Card(CardShape.HEART, CardNumber.ACE));
         dealer.receiveCard(new Card(CardShape.DIAMOND, CardNumber.ACE));
-        blackjackGame.updatePlayerMoney(dealer, miso);
+        blackjackGame.updatePlayerMoney(dealer, players);
 
         // when
-        Map<Player, Profit> playersGameResults = blackjackGame.calculatePlayersGameResults(players);
-        Profit profit = playersGameResults.get(miso);
+        Map<Playable, Profit> gameResults = blackjackGame.calculateParticipantGameResults(dealer, players);
+        Profit profit = gameResults.get(miso);
 
         // then
         assertThat(profit.getAmount())
@@ -201,11 +201,11 @@ class BlackjackGameTest {
         dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.ACE));
         dealer.receiveCard(new Card(CardShape.HEART, CardNumber.ACE));
         dealer.receiveCard(new Card(CardShape.DIAMOND, CardNumber.ACE));
-        blackjackGame.updatePlayerMoney(dealer, miso);
+        blackjackGame.updatePlayerMoney(dealer, players);
 
         // when
-        Map<Player, Profit> playersGameResults = blackjackGame.calculatePlayersGameResults(players);
-        Profit profit = playersGameResults.get(miso);
+        Map<Playable, Profit> gameResults = blackjackGame.calculateParticipantGameResults(dealer, players);
+        Profit profit = gameResults.get(miso);
 
         // then
         assertThat(profit.getAmount())
@@ -221,11 +221,11 @@ class BlackjackGameTest {
         dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.ACE));
         dealer.receiveCard(new Card(CardShape.HEART, CardNumber.ACE));
         dealer.receiveCard(new Card(CardShape.DIAMOND, CardNumber.ACE));
-        blackjackGame.updatePlayerMoney(dealer, miso);
+        blackjackGame.updatePlayerMoney(dealer, players);
 
         // when
-        Map<Player, Profit> playersGameResults = blackjackGame.calculatePlayersGameResults(players);
-        Profit profit = playersGameResults.get(miso);
+        Map<Playable, Profit> gameResults = blackjackGame.calculateParticipantGameResults(dealer, players);
+        Profit profit = gameResults.get(miso);
 
         // then
         assertThat(profit.getAmount())
@@ -242,11 +242,11 @@ class BlackjackGameTest {
         dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.ACE));
         dealer.receiveCard(new Card(CardShape.HEART, CardNumber.ACE));
         dealer.receiveCard(new Card(CardShape.DIAMOND, CardNumber.ACE));
-        blackjackGame.updatePlayerMoney(dealer, miso);
+        blackjackGame.updatePlayerMoney(dealer, players);
 
         // when
-        Map<Player, Profit> playersGameResults = blackjackGame.calculatePlayersGameResults(players);
-        Profit profit = playersGameResults.get(miso);
+        Map<Playable, Profit> gameResults = blackjackGame.calculateParticipantGameResults(dealer, players);
+        Profit profit = gameResults.get(miso);
 
         // then
         assertThat(profit.getAmount())
@@ -265,14 +265,13 @@ class BlackjackGameTest {
         miso.receiveCard(new Card(CardShape.HEART, CardNumber.TEN));
         yulmu.receiveCard(new Card(CardShape.SPADE, CardNumber.KING));
         yulmu.receiveCard(new Card(CardShape.HEART, CardNumber.TEN));
-        blackjackGame.updatePlayerMoney(dealer, miso);
-        blackjackGame.updatePlayerMoney(dealer, yulmu);
+        blackjackGame.updatePlayerMoney(dealer, players);
 
         // when
-        Profit dealerGameResults = blackjackGame.calculateDealerGameResults(players);
+        Map<Playable, Profit> gameResults = blackjackGame.calculateParticipantGameResults(dealer, players);
 
         // then
-        assertThat(dealerGameResults.getAmount())
+        assertThat(gameResults.get(dealer).getAmount())
                 .isEqualTo((int) ((misoBettingMoney * GameResult.WIN.getRate() +
                         yulmuBettingMoney * GameResult.WIN.getRate()) * -1));
     }

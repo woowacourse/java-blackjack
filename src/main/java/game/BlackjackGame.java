@@ -27,12 +27,18 @@ public class BlackjackGame {
         participant.receiveCard(deck.draw());
     }
 
-    public void updatePlayerMoney(Dealer dealer, Player player) {
-        GameResult gameResult = GameResult.judgePlayerResult(dealer, player);
-        player.updateMoney(gameResult.getRate());
+    public void updatePlayerMoney(Dealer dealer, Players players) {
+        players.updateMoney(dealer);
     }
 
-    public Map<Player, Profit> calculatePlayersGameResults(Players players) {
+    public Map<Playable, Profit> calculateParticipantGameResults(Dealer dealer, Players players) {
+        Map<Playable, Profit> gameResults = new LinkedHashMap<>();
+        gameResults.putAll(calculatePlayersGameResults(players));
+        gameResults.put(dealer, calculateDealerGameResults(players));
+        return gameResults;
+    }
+
+    private Map<Playable, Profit> calculatePlayersGameResults(Players players) {
         return players.getPlayers().stream()
                 .collect(Collectors.toMap(
                         player -> player,
@@ -42,7 +48,7 @@ public class BlackjackGame {
                 ));
     }
 
-    public Profit calculateDealerGameResults(Players players) {
+    private Profit calculateDealerGameResults(Players players) {
         return players.sumProfits().negate();
     }
 }
