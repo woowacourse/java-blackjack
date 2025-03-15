@@ -1,15 +1,14 @@
 package controller;
 
+import domain.BetSystem;
 import domain.Card;
 import domain.CardShuffler;
 import domain.CardsInitializer;
 import domain.Dealer;
 import domain.Deck;
-import domain.MatchResult;
+import domain.Gamer;
 import domain.Player;
 import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import view.InputView;
@@ -28,13 +27,22 @@ public class BlackJackController {
     }
 
     public void run() {
+        BetSystem betSystem = new BetSystem();
         Deck deck = prepareDeck();
-
         List<Player> players = setPlayers();
         Dealer dealer = new Dealer();
 
+        playerBetting(players, betSystem);
+
         prepareGame(dealer, players, deck);
         outputView.printInitialCards(dealer, players);
+
+        if (isPrepareCardsBlackjack(dealer, players)) {
+            Map<Gamer, Integer> gamerIntegerMap = betSystem.calculateProfit(dealer, players);
+            outputView.printCardResult(dealer, players);
+            outputView.printProfitResult(gamerIntegerMap);
+            return;
+        }
 
         processGame(players, deck);
 
@@ -42,7 +50,31 @@ public class BlackJackController {
 
         outputView.printCardResult(dealer, players);
 
-        showMatchResult(players, dealer);
+        Map<Gamer, Integer> gamerIntegerMap = betSystem.calculateProfit(dealer, players);
+
+        outputView.printProfitResult(gamerIntegerMap);
+    }
+
+    private boolean isPrepareCardsBlackjack(final Dealer dealer, final List<Player> players) {
+        if (dealer.isBlackjack()) {
+            return true;
+        }
+
+        for (Player player : players) {
+            if (player.isBlackjack()) {
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+
+    private void playerBetting(final List<Player> players, final BetSystem betSystem) {
+        for (Player player : players) {
+            int betAmount = inputView.readBetAmount(player);
+            betSystem.betting(player, betAmount);
+        }
     }
 
     private Deck prepareDeck() {
@@ -102,16 +134,4 @@ public class BlackJackController {
         return inputView.readYesOrNo(player);
     }
 
-    private void showMatchResult(List<Player> players, Dealer dealer) {
-        Map<MatchResult, Integer> dealerResult = new EnumMap<>(MatchResult.class);
-        Map<Player, MatchResult> playerResult = new HashMap<>();
-
-        for (Player player : players) {
-            MatchResult result = dealer.getMatchResult(player);
-            dealerResult.put(result, dealerResult.getOrDefault(result, 0) + 1);
-            playerResult.put(player, result.reverse());
-        }
-
-        outputView.printMatchResult(dealerResult, playerResult);
-    }
 }
