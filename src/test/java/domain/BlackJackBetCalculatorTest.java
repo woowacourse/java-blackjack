@@ -1,5 +1,6 @@
 package domain;
 
+import domain.bet.Bet;
 import domain.bet.BlackJackBetCalculator;
 import domain.card.Card;
 import domain.card.CardGroup;
@@ -21,13 +22,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 class BlackJackBetCalculatorTest {
     @Nested
     class playerBetTest {
-        Map<String, Integer> betMap;
+        Map<String, Bet> betMap;
         private BlackJackBetCalculator calculator;
 
         @BeforeEach
         void init() {
             betMap = new HashMap<>();
-            betMap.put("가이온", 1000);
+            betMap.put("가이온", new Bet(1000));
             calculator = new BlackJackBetCalculator(betMap);
         }
 
@@ -97,12 +98,12 @@ class BlackJackBetCalculatorTest {
 
     @Nested
     class betResultTest {
-        @DisplayName("플레이어가 1000원과 2000원을 베팅하면 딜러는 3000원을 얻는다")
+        @DisplayName("딜러가 승리하는 경우 플레이어가 배팅한 금액만큼 얻는다.")
         @Test
-        void blackJackDealerTest() {
-            Map<String, Integer> map = new HashMap<>();
-            map.put("가이온", 1000);
-            map.put("가이온1", 2000);
+        void blackJackDealerTest1() {
+            Map<String, Bet> map = new HashMap<>();
+            map.put("가이온", new Bet(1000));
+            map.put("가이온1", new Bet(2000));
             BlackJackBetCalculator blackJackBetCalculator = new BlackJackBetCalculator(map);
 
             CardGroup winningCardGroup = new CardGroup();
@@ -125,40 +126,12 @@ class BlackJackBetCalculatorTest {
             assertThat(winningBet).isEqualTo(3000);
         }
 
-        @DisplayName("플레이어가 1000원과 2000원을 베팅하고 딜러가 승리하면 딜러는 3000원을 얻는다")
-        @Test
-        void blackJackDealerTestTest1() {
-            Map<String, Integer> map = new HashMap<>();
-            map.put("가이온", 1000);
-            map.put("가이온1", 2000);
-            BlackJackBetCalculator blackJackBetCalculator = new BlackJackBetCalculator(map);
-
-            CardGroup winningCardGroup = new CardGroup();
-            Player winningPlayer = new Player("가이온", winningCardGroup);
-            winningPlayer.receiveCard(new Card(CardType.CLOVER, CardScore.TEN));
-
-            CardGroup winningCardGroup1 = new CardGroup();
-            Player winningPlayer1 = new Player("가이온1", winningCardGroup1);
-            winningPlayer1.receiveCard(new Card(CardType.CLOVER, CardScore.TEN));
-
-            CardGroup losingCardGroup = new CardGroup();
-            losingCardGroup.addCard(new Card(CardType.CLOVER, CardScore.ACE));
-            losingCardGroup.addCard(new Card(CardType.CLOVER, CardScore.JACK));
-            Dealer dealer = new Dealer(losingCardGroup);
-
-            int winningBet = blackJackBetCalculator.getDealerBetResult(dealer, List.of(
-                    winningPlayer,
-                    winningPlayer1));
-
-            assertThat(winningBet).isEqualTo(3000);
-        }
-
-        @DisplayName("플레이어가 1000원과 2000원을 베팅하고 딜러가 패배하면 딜러는 3000원을 잃는다")
+        @DisplayName("딜러가 패배하면 플레이어가 배팅한 만큼 잃는다.")
         @Test
         void blackJackDealerTestTest2() {
-            Map<String, Integer> map = new HashMap<>();
-            map.put("가이온", 1000);
-            map.put("가이온1", 2000);
+            Map<String, Bet> map = new HashMap<>();
+            map.put("가이온", new Bet(1000));
+            map.put("가이온1", new Bet(2000));
             BlackJackBetCalculator blackJackBetCalculator = new BlackJackBetCalculator(map);
 
             CardGroup winningCardGroup = new CardGroup();
@@ -182,12 +155,12 @@ class BlackJackBetCalculatorTest {
             assertThat(winningBet).isEqualTo(-3000);
         }
 
-        @DisplayName("플레이어가 1000원 배팅한 플레이어를 이기고 2000원 배팅한 플레이어에게 지면 딜러는 1000원을 잃는다.")
+        @DisplayName("딜러가 패배하면 승리한 플레이어에게 배팅한 만큼 주고 패배한 플레이어에게 배팅한 만큼 받는다.")
         @Test
         void blackJackDealerTestTest3() {
-            Map<String, Integer> map = new HashMap<>();
-            map.put("가이온", 1000);
-            map.put("가이온1", 2000);
+            Map<String, Bet> map = new HashMap<>();
+            map.put("가이온", new Bet(1000));
+            map.put("가이온1", new Bet(2000));
             BlackJackBetCalculator blackJackBetCalculator = new BlackJackBetCalculator(map);
 
             CardGroup winningCardGroup = new CardGroup();
@@ -210,11 +183,11 @@ class BlackJackBetCalculatorTest {
             assertThat(winningBet).isEqualTo(1000);
         }
 
-        @DisplayName("플레이어가 1000원 배팅한 플레이어를에게 패배하고 플레이어가 블랙잭이면 1500원을 잃는다")
+        @DisplayName("플레이어가 블랙잭으로 승리하면 배팅한 금액의 1.5배로 받는다.")
         @Test
         void blackJackDealerTestTest4() {
-            Map<String, Integer> map = new HashMap<>();
-            map.put("가이온", 1000);
+            Map<String, Bet> map = new HashMap<>();
+            map.put("가이온", new Bet(1000));
             BlackJackBetCalculator blackJackBetCalculator = new BlackJackBetCalculator(map);
 
             CardGroup winningCardGroup = new CardGroup();
@@ -232,11 +205,11 @@ class BlackJackBetCalculatorTest {
             assertThat(winningBet).isEqualTo(-1500);
         }
 
-        @DisplayName("플레이어가 1000원 배팅한 플레이어를에게 비기면 돈을 잃지 않는다.")
+        @DisplayName("딜러와 플레이어가 비기면 돈을 잃지 않는다.")
         @Test
         void blackJackDealerTestTest5() {
-            Map<String, Integer> map = new HashMap<>();
-            map.put("가이온", 1000);
+            Map<String, Bet> map = new HashMap<>();
+            map.put("가이온", new Bet(1000));
             BlackJackBetCalculator blackJackBetCalculator = new BlackJackBetCalculator(map);
 
             CardGroup winningCardGroup = new CardGroup();
