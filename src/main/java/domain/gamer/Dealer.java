@@ -17,10 +17,6 @@ public class Dealer {
         gamer.receiveCard(card);
     }
 
-    public boolean isBlackJack() {
-        return gamer.isBlackjack();
-    }
-
     public int calculateScore() {
         return gamer.calculateScore();
     }
