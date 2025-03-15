@@ -14,7 +14,7 @@ import blackjack.view.ResultView;
 import java.util.List;
 import java.util.Map;
 
-public class BlackjackGame {
+public final class BlackjackGame {
 
     private final InputView inputView;
     private final ResultView resultView;

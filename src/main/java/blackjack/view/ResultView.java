@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-public class ResultView {
+public final class ResultView {
 
     private static final Map<Shape, String> SHAPE_KOREAN = Map.of(
             Shape.SPADE, "스페이드",

@@ -3,7 +3,7 @@ package blackjack;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
 
-public class Application {
+public final class Application {
 
     public static void main(String[] args) {
         final BlackjackGame blackjackGame = makeBlackjackGame();

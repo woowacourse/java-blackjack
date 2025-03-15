@@ -15,7 +15,7 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class Dealer extends Gamer {
+public final class Dealer extends Gamer {
 
     private static final String NICKNAME = "딜러";
     private static final int DEALER_THRESHOLD = 16;

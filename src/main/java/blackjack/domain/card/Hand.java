@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class Hand {
+public final class Hand {
 
     public static final int BURST_THRESHOLD = 21;
     private static final int ACE_SUBTRACT = 10;

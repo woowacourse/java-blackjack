@@ -6,7 +6,7 @@ import blackjack.domain.card.Hand;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Player extends Gamer {
+public final class Player extends Gamer {
 
     private final String nickname;
 

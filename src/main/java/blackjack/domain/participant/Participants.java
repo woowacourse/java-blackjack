@@ -5,7 +5,7 @@ import blackjack.domain.result.DealerWinningResult;
 import java.util.List;
 import java.util.Map;
 
-public class Participants {
+public final class Participants {
 
     private static final int DEALER_SIZE = 1;
     private static final int SPREAD_CARD_SIZE = 2;

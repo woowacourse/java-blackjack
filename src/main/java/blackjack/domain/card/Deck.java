@@ -4,7 +4,7 @@ import blackjack.domain.card.generator.DeckGenerator;
 import java.util.Deque;
 import java.util.stream.IntStream;
 
-public class Deck {
+public final class Deck {
 
     private static final int INITIAL_SPREAD_SIZE = 2;
 

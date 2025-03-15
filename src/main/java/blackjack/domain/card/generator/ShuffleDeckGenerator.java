@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 
-public class ShuffleDeckGenerator implements DeckGenerator {
+public final class ShuffleDeckGenerator implements DeckGenerator {
 
     @Override
     public Deque<Card> makeDeck() {

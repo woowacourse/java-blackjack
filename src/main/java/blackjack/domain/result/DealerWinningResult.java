@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class DealerWinningResult {
+public final class DealerWinningResult {
 
     private final Map<String, ResultStatus> result;
 
