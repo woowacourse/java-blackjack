@@ -44,7 +44,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어의 배팅 여부에 따라서 수익을 반환한다.")
+    @DisplayName("플레이어의 돈을 업데이트한다.")
     void test3() {
         // given
         int bettingMoney = 10000;
@@ -55,7 +55,24 @@ class PlayerTest {
         player.updateMoney(gameResult.getRate());
 
         // then
-        Assertions.assertThat(player.getProfit())
+        Assertions.assertThat(player.getEarnedMoney())
+                .isEqualTo(bettingMoney * gameResult.getRate());
+    }
+
+    @Test
+    @DisplayName("플레이어의 배팅 여부에 따라서 수익을 반환한다.")
+    void test4() {
+        // given
+        int bettingMoney = 10000;
+        Player player = new Player("미소", bettingMoney);
+        GameResult gameResult = GameResult.WIN;
+        player.updateMoney(gameResult.getRate());
+
+        // when
+        double profit = player.calculateProfit();
+
+        // then
+        Assertions.assertThat(profit)
                 .isEqualTo(bettingMoney * gameResult.getRate());
     }
 }

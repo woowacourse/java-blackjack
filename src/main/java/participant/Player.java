@@ -55,7 +55,11 @@ public class Player implements Playable {
         wallet.updateMoney(rate);
     }
 
-    public double getProfit() {
+    public double calculateProfit() {
         return wallet.calculateProfit();
+    }
+
+    public double getEarnedMoney() {
+        return wallet.getEarnedMoney();
     }
 }

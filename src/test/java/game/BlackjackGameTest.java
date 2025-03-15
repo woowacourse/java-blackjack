@@ -166,8 +166,8 @@ class BlackjackGameTest {
         blackjackGame.updatePlayerMoney(dealer, miso);
 
         // then
-        assertThat(miso.getProfit())
-                .isEqualTo(misoBettingMoney * GameResult.BLACKJACK.getRate());
+        assertThat(miso.getEarnedMoney())
+                .isEqualTo(misoBettingMoney + misoBettingMoney * GameResult.BLACKJACK.getRate());
     }
 
     @Test

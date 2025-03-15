@@ -33,12 +33,12 @@ public class BlackjackGame {
 
     public Map<Player, Double> calculatePlayersGameResults(Players players) {
         return players.getPlayers().stream()
-            .collect(Collectors.toMap(
-                player -> player,
-                Player::getProfit,
-                (oldValue, newValue) -> oldValue,
-                LinkedHashMap::new
-            ));
+                .collect(Collectors.toMap(
+                        player -> player,
+                        Player::calculateProfit,
+                        (oldValue, newValue) -> oldValue,
+                        LinkedHashMap::new
+                ));
     }
 
     public double calculateDealerGameResults(Players players) {
