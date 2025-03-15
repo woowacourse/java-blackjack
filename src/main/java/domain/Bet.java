@@ -1,6 +1,7 @@
 package domain;
 
 import domain.participant.Role;
+import exceptions.BlackjackArgumentException;
 import java.util.List;
 import java.util.Objects;
 
@@ -47,7 +48,7 @@ public final class Bet {
     return calculated.stream()
         .map(Role::getBet)
         .reduce(Bet::plus)
-        .orElseThrow();
+        .orElseThrow(() -> new BlackjackArgumentException("배팅 정보가 없습니다."));
   }
 
   private Bet plus(Bet allocated) {

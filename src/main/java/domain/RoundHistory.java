@@ -22,11 +22,11 @@ public final class RoundHistory {
         .collect(Collectors.toUnmodifiableList());
   }
 
-  private Player getAllocatedPlayer(Entry<Role, RoundResult> entry) {
-    final Role past = entry.getKey();
-    final String pastName = past.getName();
-    final Bet pastBet = past.getBet();
-    final Bet allocated = entry.getValue().allocate(pastBet);
+  private Player getAllocatedPlayer(final Entry<Role, RoundResult> entry) {
+    final var past = entry.getKey();
+    final var pastName = past.getName();
+    final var pastBet = past.getBet();
+    final var allocated = entry.getValue().allocate(pastBet);
 
     return new Player(pastName, allocated.minus(pastBet));
   }

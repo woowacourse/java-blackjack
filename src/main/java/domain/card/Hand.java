@@ -15,10 +15,6 @@ public final class Hand {
     this.cards = new ArrayList<>(cards);
   }
 
-  public void add(final TrumpCard card) {
-    cards.add(card);
-  }
-
   public Score calculateScore() {
     final Score score = cards.stream()
         .map(TrumpCard::getScore)
@@ -30,20 +26,20 @@ public final class Hand {
     return score;
   }
 
-  public List<TrumpCard> getCards() {
-    return new ArrayList<>(cards);
-  }
-
-  public int getCount() {
-    return cards.size();
-  }
-
   public boolean isBlackjack() {
     return calculateScore().isBlackjack(getCount());
   }
 
   private boolean hasAce() {
-    return cards.stream().anyMatch(TrumpCard::isAce);
+    return cards.stream()
+        .anyMatch(TrumpCard::isAce);
   }
 
+  public List<TrumpCard> getCards() {
+    return new ArrayList<>(cards);
+  }
+
+  private int getCount() {
+    return cards.size();
+  }
 }

@@ -22,19 +22,19 @@ public enum RoundResult {
       final Participant<? extends Role> player,
       final Participant<? extends Role> dealer
   ) {
-    final var score = player.calculateScore();
+    final var playerScore = player.calculateScore();
     final var dealerScore = dealer.calculateScore();
 
-    if (score.isBust()) {
+    if (playerScore.isBust()) {
       return RoundResult.LOSE;
     }
-    if (score.equals(dealerScore)) {
+    if (playerScore.equals(dealerScore)) {
       return RoundResult.PUSH;
     }
     if (player.isBlackjack()) {
       return RoundResult.BLACKJACK;
     }
-    if (dealerScore.isBust() || score.isGreaterThan(dealerScore)) {
+    if (dealerScore.isBust() || playerScore.isGreaterThan(dealerScore)) {
       return RoundResult.WIN;
     }
     return RoundResult.LOSE;

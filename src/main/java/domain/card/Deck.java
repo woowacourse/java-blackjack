@@ -18,7 +18,7 @@ public final class Deck {
   }
 
   public static Deck createShuffledDecks(final int numberOfDeck) {
-    List<TrumpCard> deck = new ArrayList<>(IntStream.range(0, numberOfDeck)
+    final var deck = new ArrayList<>(IntStream.range(0, numberOfDeck)
         .boxed()
         .flatMap(i -> createSingleDeck().stream())
         .toList());

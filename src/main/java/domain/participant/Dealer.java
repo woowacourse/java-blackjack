@@ -13,7 +13,7 @@ public final class Dealer implements Role {
     this.bet = bet;
   }
 
-  public static Dealer generateFrom(final Collection<Bet> values) {
+  public static Dealer generateByTotalBet(final Collection<Bet> values) {
     final int total = values.stream()
         .mapToInt(Bet::getValue)
         .sum();
@@ -23,7 +23,7 @@ public final class Dealer implements Role {
 
   @Override
   public boolean isHit(final Score score) {
-    return score.isDealerNeedHit();
+    return score.isNeedHitByDealer();
   }
 
   @Override

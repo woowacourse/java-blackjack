@@ -19,7 +19,7 @@ public record Score(int value) {
     return this.isGreaterThan(BLACKJACK_SCORE);
   }
 
-  public boolean isDealerNeedHit() {
+  public boolean isNeedHitByDealer() {
     return DEALER_STAY_THRESHOLD.isGreaterThan(this);
   }
 

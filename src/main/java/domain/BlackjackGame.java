@@ -22,8 +22,8 @@ public final class BlackjackGame {
   }
 
   public static BlackjackGame from(final Map<String, Bet> participantNames) {
-    final Deck deck = Deck.createShuffledDecks(NUMBER_OF_DECK);
-    final Participants participants = Participants.initialDealOf(participantNames, deck);
+    final var deck = Deck.createShuffledDecks(NUMBER_OF_DECK);
+    final var participants = Participants.initialDealOf(participantNames, deck);
     return new BlackjackGame(participants, deck);
   }
 
@@ -45,7 +45,7 @@ public final class BlackjackGame {
 
   public TrumpCard openDealerFirstCard() {
     final var dealer = getDealer();
-    final List<TrumpCard> cards = dealer.getCards();
+    final var cards = dealer.getCards();
     return cards.getFirst();
   }
 

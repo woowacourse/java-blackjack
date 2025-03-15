@@ -22,8 +22,8 @@ public final class BlackjackController {
   }
 
   public void run() {
-    final var participants = inputView.readPlayerNames();
-    final var blackjack = BlackjackGame.from(participants);
+    final var participantsNames = inputView.readPlayerNames();
+    final var blackjack = BlackjackGame.from(participantsNames);
 
     startGame(blackjack);
   }
@@ -40,15 +40,16 @@ public final class BlackjackController {
     final var playerNames = converter.playersToNames(players);
 
     outputView.printDealIntroduce(playerNames);
-    outputDealerInitialDealResult(blackjack);
+    outputDealerInitialDeal(blackjack);
 
     final var convertedPlayers = converter.playersToEntries(players);
     outputView.printPlayersHand(convertedPlayers);
   }
 
-  private void outputDealerInitialDealResult(final BlackjackGame blackjack) {
+  private void outputDealerInitialDeal(final BlackjackGame blackjack) {
     final var firstCard = blackjack.openDealerFirstCard();
-    outputView.printDealerHitResult(converter.cardToText(firstCard));
+    final var card = converter.cardToText(firstCard);
+    outputView.printDealerHitResult(card);
   }
 
 
@@ -64,11 +65,11 @@ public final class BlackjackController {
       Participant<? extends Role> player,
       final BlackjackGame blackjack
   ) {
-    final var name = player.getName();
-    while (player.isHit() && inputView.readPlayerAnswer(name)) {
+    while (player.isHit() && inputView.readPlayerAnswer(player.getName())) {
       player = blackjack.hitByParticipant(player);
       final List<TrumpCard> hand = player.getCards();
-      outputView.printPlayerHand(player.getName(), converter.handToText(hand));
+      final var cards = converter.handToText(hand);
+      outputView.printPlayerHand(player.getName(), cards);
     }
   }
 

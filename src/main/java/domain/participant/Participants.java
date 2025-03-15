@@ -35,7 +35,7 @@ public final class Participants {
         .map(entry -> new Participant<>(Player.generateFrom(entry), deck.drawForInitialDeal()))
         .toList();
 
-    final var roleForDealer = Dealer.generateFrom(participants.values());
+    final var roleForDealer = Dealer.generateByTotalBet(participants.values());
     final var dealer = new Participant<>(roleForDealer, deck.drawForInitialDeal());
 
     return new Participants(dealer, players);
