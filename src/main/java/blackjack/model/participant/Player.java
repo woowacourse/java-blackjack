@@ -11,8 +11,8 @@ public final class Player implements CardReceivable {
     private final Name name;
     private State state;
 
-    public Player(Name name) {
-        this.name = name;
+    public Player(String name) {
+        this.name = new Name(name);
         state = new InitialDeal();
     }
 
@@ -29,8 +29,8 @@ public final class Player implements CardReceivable {
         return state.isFinished();
     }
 
-    public Name getName() {
-        return name;
+    public String getName() {
+        return name.value();
     }
 
     public State getState() {

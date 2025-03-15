@@ -25,7 +25,7 @@ class BettingTableTest {
     void betTest() {
         // given
         BettingTable bettingTable = new BettingTable();
-        Player player = new Player(new Name("포비"));
+        Player player = new Player("포비");
 
         // when, then
         assertThatCode(() -> bettingTable.bet(player, 1_000))
@@ -36,7 +36,7 @@ class BettingTableTest {
     @Test
     void getBetAmountTest() {
         // given
-        Player player = new Player(new Name("포비"));
+        Player player = new Player("포비");
         BettingTable bettingTable = new BettingTable();
         bettingTable.bet(player, 1_000);
 
@@ -53,7 +53,7 @@ class BettingTableTest {
     void shouldThrowException_WhenNotFoundBettingPlayer() {
         // given
         BettingTable bettingTable = new BettingTable();
-        Player player = new Player(new Name("포비"));
+        Player player = new Player("포비");
 
         // when, then
         assertThatCode(() -> bettingTable.getBetAmount(player))
@@ -71,7 +71,7 @@ class BettingTableTest {
     })
     void calculatePayoutsTest(CardValue playerCardValue1, CardValue playerCardValue2, double multiplier) {
         // given
-        Player player = new Player(new Name("포비"));
+        Player player = new Player("포비");
         player.receiveCard(createCard(Suit.SPADES, playerCardValue1));
         player.receiveCard(createCard(Suit.SPADES, playerCardValue2));
         if (!player.getState().isFinished()) {
@@ -96,7 +96,7 @@ class BettingTableTest {
     @Test
     void getBettingTest() {
         // given
-        Player player = new Player(new Name("포비"));
+        Player player = new Player("포비");
         BettingTable bettingTable = new BettingTable();
         int betAmount = 1_000;
         bettingTable.bet(player, betAmount);

@@ -15,7 +15,7 @@ class PlayerTest {
     @Test
     void createPlayerTest() {
         // given
-        Name pobiName = new Name("포비");
+        String pobiName = "포비";
 
         // when, then
         assertThatCode(() -> new Player(pobiName))
@@ -26,7 +26,7 @@ class PlayerTest {
     @Test
     void receiveHandTest() {
         // given
-        Player player = new Player(new Name("포비"));
+        Player player = new Player("포비");
 
         // when
         player.receiveCard(SPADE_ACE_CARD);
@@ -41,7 +41,7 @@ class PlayerTest {
     @Test
     void shouldThrowException_WhenReceiveCardAfterHandExceeds21() {
         // given
-        Player player = new Player(new Name("포비"));
+        Player player = new Player("포비");
 
         // when
         player.receiveCard(SPADE_ACE_CARD);
@@ -57,7 +57,7 @@ class PlayerTest {
     @Test
     void isFinishedTest() {
         // given
-        Player player = new Player(new Name("포비"));
+        Player player = new Player("포비");
         player.receiveCard(SPADE_ACE_CARD);
         player.receiveCard(SPADE_TEN_CARD);
 

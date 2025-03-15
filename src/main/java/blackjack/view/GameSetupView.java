@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.model.participant.Name;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -36,8 +35,8 @@ public class GameSetupView {
                 .toList();
     }
 
-    public int readBetAmount(Name name) {
-        System.out.printf("%n%s의 배팅 금액은?%n", name.value());
+    public int readBetAmount(String playerName) {
+        System.out.printf("%n%s의 배팅 금액은?%n", playerName);
         return parseInt(scanner.nextLine().trim());
     }
 

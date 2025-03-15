@@ -31,7 +31,7 @@ class DealerTest {
         List<Card> cards = List.of(SPADE_ACE_CARD);
         Deck deck = Deck.createDeckByCards(cards, NO_SHUFFLER);
         Dealer dealer = new Dealer(deck);
-        Player player = new Player(new Name("포비"));
+        Player player = new Player("포비");
 
         // when
         dealer.dealCard(player);
@@ -164,7 +164,7 @@ class DealerTest {
         @Test
         void lose_WhenPlayerBust() {
             // given
-            Player player = new Player(new Name("포비"));
+            Player player = new Player("포비");
             player.receiveCard(SPADE_TEN_CARD);
             player.receiveCard(SPADE_TEN_CARD);
             player.receiveCard(SPADE_TEN_CARD);
@@ -184,7 +184,7 @@ class DealerTest {
         @Test
         void win_WhenDealerBust() {
             // given
-            Player player = new Player(new Name("포비"));
+            Player player = new Player("포비");
             player.receiveCard(SPADE_TEN_CARD);
             player.receiveCard(SPADE_TEN_CARD);
             player.stand();
@@ -205,7 +205,7 @@ class DealerTest {
         @Test
         void draw_WhenAllBlackjack() {
             // given
-            Player player = new Player(new Name("포비"));
+            Player player = new Player("포비");
             player.receiveCard(SPADE_ACE_CARD);
             player.receiveCard(SPADE_TEN_CARD);
             Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
@@ -224,7 +224,7 @@ class DealerTest {
         @Test
         void win_WhenOnlyPlayerBlackjack() {
             // given
-            Player player = new Player(new Name("포비"));
+            Player player = new Player("포비");
             player.receiveCard(SPADE_ACE_CARD);
             player.receiveCard(SPADE_TEN_CARD);
             Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
@@ -243,7 +243,7 @@ class DealerTest {
         @Test
         void lose_WhenOnlyDealerBlackjack() {
             // given
-            Player player = new Player(new Name("포비"));
+            Player player = new Player("포비");
             player.receiveCard(SPADE_TEN_CARD);
             player.receiveCard(SPADE_TEN_CARD);
             player.stand();
@@ -270,7 +270,7 @@ class DealerTest {
                                  CardValue dealerCardValue1, CardValue dealerCardValue2,
                                  MatchResult expected) {
             // given
-            Player player = new Player(new Name("포비"));
+            Player player = new Player("포비");
             player.receiveCard(createCard(Suit.SPADES, playerCardValue1));
             player.receiveCard(createCard(Suit.SPADES, playerCardValue2));
             player.stand();
@@ -291,7 +291,7 @@ class DealerTest {
     @Test
     void shouldThrowException_WhenPlayerTurnNotFinished() {
         // given
-        Player player = new Player(new Name("포비"));
+        Player player = new Player("포비");
         player.receiveCard(SPADE_TEN_CARD);
         player.receiveCard(SPADE_TEN_CARD);
         Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
@@ -308,7 +308,7 @@ class DealerTest {
     @Test
     void shouldThrowException_WhenDealerTurnNotFinished() {
         // given
-        Player player = new Player(new Name("포비"));
+        Player player = new Player("포비");
         player.receiveCard(SPADE_TEN_CARD);
         player.receiveCard(SPADE_TEN_CARD);
         player.stand();

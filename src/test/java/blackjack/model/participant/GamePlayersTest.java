@@ -13,7 +13,7 @@ class GamePlayersTest {
     @Test
     void shouldThrowException_WhenDuplicatePlayerName() {
         // given
-        Name belloName = new Name("벨로");
+        String belloName = "벨로";
         Player bello1 = new Player(belloName);
         Player bello2 = new Player(belloName);
 
@@ -36,15 +36,15 @@ class GamePlayersTest {
     @Test
     void getGamePlayersImmutableTest() {
         // given
-        Player bello = new Player(new Name("벨로"));
-        Player pobi = new Player(new Name("포비"));
+        Player bello = new Player("벨로");
+        Player pobi = new Player("포비");
         GamePlayers gamePlayers = GamePlayers.createForNewGame(List.of(bello, pobi));
 
         // when
         List<Player> players = gamePlayers.getPlayers();
 
         //then
-        assertThatCode(() -> players.add(new Player(new Name("네오"))))
+        assertThatCode(() -> players.add(new Player("네오")))
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 }

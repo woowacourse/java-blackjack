@@ -2,7 +2,6 @@ package blackjack.view;
 
 import blackjack.model.card.Card;
 import blackjack.model.participant.Dealer;
-import blackjack.model.participant.Name;
 import blackjack.model.participant.Player;
 import java.util.List;
 import java.util.Scanner;
@@ -12,8 +11,8 @@ public class GamePlayView {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    public ParticipantAction readHitOrNot(Name playerName) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", playerName.value());
+    public ParticipantAction readHitOrNot(String playerName) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", playerName);
         return ParticipantAction.from(scanner.nextLine().trim());
     }
 
@@ -28,12 +27,12 @@ public class GamePlayView {
 
     private String joinPlayerNamesWithComma(List<Player> players) {
         return players.stream()
-                .map(player -> player.getName().value())
+                .map(Player::getName)
                 .collect(Collectors.joining(", "));
     }
 
     public void printPlayerHand(Player player) {
-        System.out.printf("%s: %s%n", player.getName().value(), getHand(player));
+        System.out.printf("%s: %s%n", player.getName(), getHand(player));
     }
 
     private String getHand(Player player) {

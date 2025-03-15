@@ -3,7 +3,6 @@ package blackjack.controller;
 import blackjack.model.BettingTable;
 import blackjack.model.participant.Dealer;
 import blackjack.model.card.Deck;
-import blackjack.model.participant.Name;
 import blackjack.model.participant.Player;
 import blackjack.model.card.RandomCardShuffler;
 import blackjack.model.participant.GamePlayers;
@@ -55,7 +54,7 @@ public final class BlackjackController {
     private List<Player> createPlayersFromInput() {
         return gameSetupView.readPlayerNames()
                 .stream()
-                .map(name -> new Player(new Name(name)))
+                .map(Player::new)
                 .toList();
     }
 

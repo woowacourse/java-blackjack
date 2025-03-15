@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import blackjack.model.card.Card;
-import blackjack.model.participant.Name;
 import blackjack.model.participant.Player;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,7 +19,7 @@ public class GameResultView {
 
     public void printPlayerHandAndTotal(List<Player> players) {
         for (Player player : players) {
-            System.out.printf("%s카드: %s - 결과: %d%n", player.getName().value(), getHand(player),
+            System.out.printf("%s카드: %s - 결과: %d%n", player.getName(), getHand(player),
                     player.getState().getHand().getTotal());
         }
         System.out.println();
@@ -41,8 +40,8 @@ public class GameResultView {
         System.out.printf("딜러: %d%n", dealerProfit);
     }
 
-    public void printPlayerFinalProfit(Name name, int betAmount, int payout) {
+    public void printPlayerFinalProfit(String playerName, int betAmount, int payout) {
         int finalProfit = payout - betAmount;
-        System.out.printf("%s: %d%n", name.value(), finalProfit);
+        System.out.printf("%s: %d%n", playerName, finalProfit);
     }
 }
