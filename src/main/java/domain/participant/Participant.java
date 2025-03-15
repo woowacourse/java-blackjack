@@ -3,6 +3,7 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.GameCardDeck;
 import domain.card.ParticipantCardDeck;
+import domain.game.GameRule;
 import java.util.List;
 
 public abstract class Participant {
@@ -14,8 +15,14 @@ public abstract class Participant {
     }
 
     public abstract boolean ableToDraw();
-    public abstract boolean areYouDealer();
+    public abstract boolean isDealer();
     public abstract String getNickname();
+
+    public boolean isBlackJack() {
+        int cardSize = cardDeck.requestSize();
+        int cardDeckScore = cardDeck.calculateScore();
+        return cardSize == 2 && cardDeckScore == GameRule.BLACK_JACK.getValue();
+    }
 
     public void drawCard(GameCardDeck gameCardDeck, int count) {
         List<Card> drawedCard = gameCardDeck.draw(count);
@@ -31,4 +38,5 @@ public abstract class Participant {
     public ParticipantCardDeck getCardDeck() {
         return new ParticipantCardDeck(cardDeck);
     }
+
 }
