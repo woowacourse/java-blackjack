@@ -2,11 +2,8 @@ package view;
 
 import domain.card.Card;
 import dto.FinalResultDTO;
-import domain.game.GameResult;
-import domain.card.Rank;
 import dto.SetUpCardsDTO;
-import domain.card.Shape;
-import domain.game.Winning;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -43,32 +40,6 @@ public class OutputView {
             dto -> System.out.printf("%s카드: %s - 결과: %d\n",
             dto.name(), cardNames(dto.cards()), dto.score())
         );
-    }
-
-    public void printGameResult(GameResult gameResult) {
-        System.out.println();
-        System.out.println("## 최종 승패");
-        printDealerWinnings(gameResult);
-
-        gameResult.getPlayerWinningResult()
-            .forEach(
-                (player, winning) -> System.out.printf("%s: %s\n",
-                    player.getName(), winning.getName())
-            );
-    }
-
-    private static void printDealerWinnings(GameResult gameResult) {
-        System.out.print("딜러: ");
-        if(gameResult.countDealerWin() > 0){
-            System.out.print(gameResult.countDealerWin() + "승 ");
-        }
-        if(gameResult.countDealerDraw() > 0){
-            System.out.print(gameResult.countDealerDraw() + "무 ");
-        }
-        if(gameResult.countDealerLose() > 0){
-            System.out.print(gameResult.countDealerLose() + "패 ");
-        }
-        System.out.println();
     }
 
     private String cardNames(List<Card> cards) {

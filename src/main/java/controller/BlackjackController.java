@@ -5,7 +5,6 @@ import domain.participant.Dealer;
 import domain.participant.Participant;
 import dto.FinalResultDTO;
 import domain.game.GameManager;
-import domain.game.GameResult;
 import domain.participant.Player;
 import dto.SetUpCardsDTO;
 
@@ -41,9 +40,6 @@ public class BlackjackController {
 
         List<FinalResultDTO> finalResultDTOS = createFinalResultDTOs(dealer, players);
         outputView.printFinalCardDeck(finalResultDTOS);
-
-        GameResult gameResult = gameManager.evaluateFinalScore();
-        outputView.printGameResult(gameResult);
     }
 
     private void distributeExtraCardToPlayers(GameManager gameManager, List<Player> players) {
