@@ -1,8 +1,10 @@
 package blackjack.model.state.finished;
 
 import blackjack.model.MatchResult;
+import blackjack.model.card.Card;
 import blackjack.model.state.Hand;
 import blackjack.model.state.State;
+import java.util.List;
 
 public abstract sealed class FinishedState
         implements State
@@ -24,8 +26,13 @@ public abstract sealed class FinishedState
     }
 
     @Override
-    public Hand getHand() {
-        return hand;
+    public List<Card> getHandCards() {
+        return hand.getCards();
+    }
+
+    @Override
+    public int getTotal() {
+        return hand.getTotal();
     }
 
     public MatchResult determineMatchResult(FinishedState other) {

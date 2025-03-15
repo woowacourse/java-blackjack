@@ -26,7 +26,7 @@ class HandTest {
 
         // then
         assertThat(newHand.size())
-            .isEqualTo(1);
+                .isEqualTo(1);
     }
 
     @DisplayName("카드의 총합을 계산한다.")

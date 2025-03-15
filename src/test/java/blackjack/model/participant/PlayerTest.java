@@ -32,7 +32,7 @@ class PlayerTest {
         player.receiveCard(SPADE_ACE_CARD);
 
         // then
-        assertThat(player.getState().getHand().getCards())
+        assertThat(player.getHandCards())
                 .contains(SPADE_ACE_CARD);
 
     }
@@ -67,5 +67,50 @@ class PlayerTest {
         // when
         assertThat(isFinished)
                 .isTrue();
+    }
+
+    @DisplayName("플레이어의 이름을 반환한다.")
+    @Test
+    void getNameTest() {
+        // given
+        String pobiName = "포비";
+        Player player = new Player(pobiName);
+
+        // when
+        String name = player.getName();
+
+        // then
+        assertThat(name)
+                .isEqualTo(pobiName);
+    }
+
+    @DisplayName("플레이어의 패를 반환한다.")
+    @Test
+    void getHandCardsTest() {
+        // given
+        Player player = new Player("포비");
+        player.receiveCard(SPADE_ACE_CARD);
+
+        // when
+        int size = player.getHandCards().size();
+
+        // then
+        assertThat(size)
+                .isEqualTo(1);
+    }
+
+    @DisplayName("플레이어의 패의 총합을 반환한다.")
+    @Test
+    void getTotalTest() {
+        // given
+        Player player = new Player("포비");
+        player.receiveCard(SPADE_ACE_CARD);
+
+        // when
+        int total = player.getTotal();
+
+        // then
+        assertThat(total)
+                .isEqualTo(11);
     }
 }

@@ -1,8 +1,10 @@
 package blackjack.model.state.running;
 
+import blackjack.model.card.Card;
 import blackjack.model.state.Hand;
 import blackjack.model.state.State;
 import blackjack.model.state.finished.Stand;
+import java.util.List;
 
 public abstract sealed class RunningState
         implements State
@@ -29,8 +31,8 @@ public abstract sealed class RunningState
     }
 
     @Override
-    public Hand getHand() {
-        return hand;
+    public List<Card> getHandCards() {
+        return hand.getCards();
     }
 
     public int getTotal() {

@@ -22,9 +22,8 @@ class BlackjackTest {
         State blackjackState = createBlackjackState();
 
         // when
-        Hand hand = blackjackState.getHand();
-        int total = hand.getTotal();
-        int size = hand.size();
+        int total = blackjackState.getTotal();
+        int size = blackjackState.getHandCards().size();
 
         // then
         assertThat(total)

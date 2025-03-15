@@ -110,7 +110,7 @@ public final class BlackjackController {
     }
 
     private void displayResult(Dealer dealer, BettingTable bettingTable) {
-        gameResultView.printDealerHandAndTotal(dealer.getState().getHand().getCards(), dealer.getState().getHand().getTotal());
+        gameResultView.printDealerHandAndTotal(dealer.getHandCards(), dealer.getTotal());
         gameResultView.printPlayerHandAndTotal(bettingTable.getParticipatingPlayers());
         displayFinalProfit(dealer, bettingTable);
     }

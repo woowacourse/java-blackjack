@@ -6,6 +6,7 @@ import blackjack.model.card.Deck;
 import blackjack.model.state.State;
 import blackjack.model.state.finished.FinishedState;
 import blackjack.model.state.running.DealerDrawing;
+import java.util.List;
 
 public final class Dealer implements CardReceivable {
 
@@ -32,20 +33,15 @@ public final class Dealer implements CardReceivable {
         state = state.receiveCard(card);
     }
 
-    public State getState() {
-        return state;
-    }
-
     public boolean isFinished() {
         return state.isFinished();
     }
 
     public Card getVisibleCard() {
-        if (state.getHand().isEmpty()) {
+        if (state.getHandCards().isEmpty()) {
             throw new IllegalStateException("딜러가 가진 패가 없습니다.");
         }
-        return state.getHand()
-                .getCards()
+        return state.getHandCards()
                 .getFirst();
     }
 
@@ -60,5 +56,13 @@ public final class Dealer implements CardReceivable {
             throw new IllegalArgumentException("딜러의 턴이 종료되지 않았습니다.");
         }
         return finishedState;
+    }
+
+    public List<Card> getHandCards() {
+        return state.getHandCards();
+    }
+
+    public int getTotal() {
+        return state.getTotal();
     }
 }

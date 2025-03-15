@@ -25,9 +25,8 @@ class StandTest {
         }
 
         // when
-        Hand hand = standState.getHand();
-        int total = hand.getTotal();
-        int size = hand.size();
+        int total = standState.getTotal();
+        int size = standState.getHandCards().size();
 
         // then
         assertThat(total)

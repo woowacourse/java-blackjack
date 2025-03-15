@@ -18,16 +18,15 @@ class InitialDealTest {
     @Test
     void initialDealTest() {
         // given
-        State firstTurn = new InitialDeal();
+        State initialDealState = new InitialDeal();
 
         // when
-        Hand hand = firstTurn.getHand();
-        int size = hand.size();
+        int size = initialDealState.getTotal();
 
         // when, then
         assertThat(size)
                 .isEqualTo(0);
-        assertThat(firstTurn.isFinished())
+        assertThat(initialDealState.isFinished())
                 .isFalse();
     }
 
@@ -35,10 +34,10 @@ class InitialDealTest {
     @Test
     void createTest() {
         // given
-        State firstTurn = new InitialDeal();
+        State initialDealState = new InitialDeal();
 
         // when
-        boolean finished = firstTurn.isFinished();
+        boolean finished = initialDealState.isFinished();
 
         // then
         assertThat(finished)
@@ -49,10 +48,10 @@ class InitialDealTest {
     @Test
     void shouldNotStand() {
         // given
-        State firstTurn = new InitialDeal();
+        State initialDealState = new InitialDeal();
 
         // when, then
-        assertThatCode(firstTurn::stand)
+        assertThatCode(initialDealState::stand)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("처음부터 바로 스탠드할 수 없습니다.");
     }
@@ -61,13 +60,13 @@ class InitialDealTest {
     @Test
     void initialDealStateTest() {
         // given
-        State firstTurn = new InitialDeal();
+        State initialDealState = new InitialDeal();
 
         // when
-        State state1 = firstTurn.receiveCard(SPADE_TEN_CARD);
+        State newInitialDealState = initialDealState.receiveCard(SPADE_TEN_CARD);
 
         // then
-        assertThat(state1)
+        assertThat(newInitialDealState)
                 .isInstanceOf(InitialDeal.class);
     }
 
@@ -75,14 +74,14 @@ class InitialDealTest {
     @Test
     void hitTest() {
         // given
-        State firstTurn = new InitialDeal();
+        State initialDeal = new InitialDeal();
 
         // when
-        State newState = firstTurn.receiveCard(SPADE_TEN_CARD)
+        State newInitialDeal = initialDeal.receiveCard(SPADE_TEN_CARD)
                 .receiveCard(SPADE_TEN_CARD);
 
         // then
-        assertThat(newState)
+        assertThat(newInitialDeal)
                 .isInstanceOf(Hit.class);
     }
 
@@ -90,18 +89,18 @@ class InitialDealTest {
     @Test
     void blackjackTest() {
         // given
-        State firstTurn = new InitialDeal();
+        State initialDeal = new InitialDeal();
 
         // when
-        State newState = firstTurn.receiveCard(SPADE_ACE_CARD)
+        State newInitialDeal = initialDeal.receiveCard(SPADE_ACE_CARD)
                 .receiveCard(SPADE_TEN_CARD);
 
         // then
-        assertThat(newState)
+        assertThat(newInitialDeal)
                 .isInstanceOf(Blackjack.class);
-        assertThat(newState.getHand().size())
+        assertThat(newInitialDeal.getHandCards().size())
                 .isEqualTo(2);
-        assertThat(newState.getHand().getTotal())
+        assertThat(newInitialDeal.getTotal())
                 .isEqualTo(21);
     }
 }

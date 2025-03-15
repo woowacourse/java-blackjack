@@ -36,9 +36,7 @@ public class GamePlayView {
     }
 
     private String getHand(Player player) {
-        return player.getState()
-                .getHand()
-                .getCards()
+        return player.getHandCards()
                 .stream()
                 .map(Card::getDisplayLabel)
                 .collect(Collectors.joining(", "));

@@ -21,9 +21,8 @@ class BustTest {
         State bustState = createBustState();
 
         // when
-        Hand hand = bustState.getHand();
-        int total = hand.getTotal();
-        int size = hand.size();
+        int total = bustState.getTotal();
+        int size = bustState.getHandCards().size();
 
         // then
         assertThat(total)

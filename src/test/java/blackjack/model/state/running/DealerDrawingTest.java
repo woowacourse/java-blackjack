@@ -7,7 +7,6 @@ import static blackjack.model.card.CardFixtures.SPADE_TWO_CARD;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.model.state.Hand;
 import blackjack.model.state.State;
 import blackjack.model.state.finished.Blackjack;
 import blackjack.model.state.finished.Bust;
@@ -25,8 +24,7 @@ class DealerDrawingTest {
         State dealerState = new DealerDrawing();
 
         // when
-        Hand hand = dealerState.getHand();
-        int total = hand.getTotal();
+        int total = dealerState.getTotal();
 
         // then
         assertThat(total)

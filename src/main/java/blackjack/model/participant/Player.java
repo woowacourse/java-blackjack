@@ -4,6 +4,7 @@ import blackjack.model.card.Card;
 import blackjack.model.state.State;
 import blackjack.model.state.finished.FinishedState;
 import blackjack.model.state.running.InitialDeal;
+import java.util.List;
 import java.util.Objects;
 
 public final class Player implements CardReceivable {
@@ -33,8 +34,12 @@ public final class Player implements CardReceivable {
         return name.value();
     }
 
-    public State getState() {
-        return state;
+    public List<Card> getHandCards() {
+        return state.getHandCards();
+    }
+
+    public int getTotal() {
+        return state.getTotal();
     }
 
     public FinishedState getFinishedState() {

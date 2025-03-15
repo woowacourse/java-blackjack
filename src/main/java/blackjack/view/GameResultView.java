@@ -20,13 +20,13 @@ public class GameResultView {
     public void printPlayerHandAndTotal(List<Player> players) {
         for (Player player : players) {
             System.out.printf("%s카드: %s - 결과: %d%n", player.getName(), getHand(player),
-                    player.getState().getHand().getTotal());
+                    player.getTotal());
         }
         System.out.println();
     }
 
     private String getHand(Player player) {
-        return player.getState().getHand().getCards()
+        return player.getHandCards()
                 .stream()
                 .map(Card::getDisplayLabel)
                 .collect(Collectors.joining(", "));

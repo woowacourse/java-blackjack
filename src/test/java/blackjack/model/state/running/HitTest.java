@@ -24,9 +24,8 @@ class HitTest {
         State hit = create16HitState();
 
         // when
-        Hand hand = hit.getHand();
-        int total = hand.getTotal();
-        int size = hand.size();
+        int total = hit.getTotal();
+        int size = hit.getHandCards().size();
 
         // when, then
         assertThat(total)

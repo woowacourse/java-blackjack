@@ -37,9 +37,9 @@ class DealerTest {
         dealer.dealCard(player);
 
         // then
-        assertThat(player.getState().getHand().getCards())
+        assertThat(player.getHandCards())
                 .contains(SPADE_ACE_CARD);
-        assertThat(player.getState().getHand().getCards())
+        assertThat(player.getHandCards())
                 .hasSize(1);
     }
 
@@ -54,9 +54,9 @@ class DealerTest {
         dealer.dealCard(dealer);
 
         // then
-        assertThat(dealer.getState().getHand().getCards())
+        assertThat(dealer.getHandCards())
                 .contains(SPADE_ACE_CARD);
-        assertThat(dealer.getState().getHand().getCards())
+        assertThat(dealer.getHandCards())
                 .hasSize(1);
     }
 
@@ -320,4 +320,20 @@ class DealerTest {
                 .hasMessage("딜러의 턴이 종료되지 않았습니다.");
     }
 
+    @DisplayName("딜러 패의 총합을 반환한다.")
+    @Test
+    void getHandTest() {
+        // given
+        List<Card> cards = List.of(SPADE_ACE_CARD, SPADE_TEN_CARD);
+        Dealer dealer = new Dealer(Deck.createDeckByCards(cards, NO_SHUFFLER));
+        dealer.dealCard(dealer);
+        dealer.dealCard(dealer);
+
+        // when
+        int total = dealer.getTotal();
+
+        // then
+        assertThat(total)
+                .isEqualTo(21);
+    }
 }
