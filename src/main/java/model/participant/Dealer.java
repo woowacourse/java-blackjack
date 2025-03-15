@@ -1,7 +1,9 @@
 package model.participant;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+import model.betting.Bet;
 import model.deck.Card;
 import model.deck.Deck;
 
@@ -10,9 +12,11 @@ public final class Dealer {
     private static final int INITIAL_DEAL_CARD_COUNT = 2;
 
     private final ParticipantHand participantHand;
+    private final List<Bet> bets;
 
     public Dealer() {
         this.participantHand = new ParticipantHand();
+        this.bets = new ArrayList<>();
     }
 
     public void receiveCard(final Card card) {
@@ -48,6 +52,14 @@ public final class Dealer {
 
     public boolean isBlackJack() {
         return participantHand.checkBlackJack();
+    }
+
+    public void receiveBet(Bet bet) {
+        this.bets.add(bet);
+    }
+
+    public int calculateRevenue() {
+        return bets.stream().mapToInt(Bet::getMoney).sum();
     }
 }
 

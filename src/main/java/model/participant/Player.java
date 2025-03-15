@@ -2,6 +2,7 @@ package model.participant;
 
 import java.util.List;
 import java.util.stream.IntStream;
+import model.betting.Bet;
 import model.deck.Card;
 import model.deck.Deck;
 

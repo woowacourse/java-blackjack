@@ -1,7 +1,9 @@
 package model.participant;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+import model.betting.Bet;
 import model.deck.Card;
 import model.deck.CardRank;
 import model.deck.CardSuit;
@@ -49,6 +51,21 @@ class DealerTest {
         dealer.receiveCard(new Card(CardRank.FOUR, CardSuit.DIAMOND));
 
         //when, then
-        Assertions.assertThat(dealer.openInitialDeal()).containsExactly(firstCard);
+        assertThat(dealer.openInitialDeal()).containsExactly(firstCard);
+    }
+
+    @DisplayName("플레이어가 제시한 배팅 금액을 딜러가 갖는다.")
+    @Test
+    void 플레이어_제시_배팅금액을_저장() {
+        //given
+        int money = 10000;
+        Player better = new Player("moda");
+        Bet bet = new Bet(money, better);
+
+        //when
+        dealer.receiveBet(bet);
+
+        //then
+        assertThat(dealer.calculateRevenue()).isEqualTo(money);
     }
 }
