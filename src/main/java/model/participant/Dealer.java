@@ -1,10 +1,9 @@
 package model.participant;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 import model.betting.Bet;
+import model.betting.Bets;
 import model.deck.Card;
 import model.deck.Deck;
 
@@ -13,11 +12,11 @@ public final class Dealer {
     private static final int INITIAL_DEAL_CARD_COUNT = 2;
 
     private final ParticipantHand participantHand;
-    private final List<Bet> bets;
+    private final Bets bets;
 
     public Dealer() {
         this.participantHand = new ParticipantHand();
-        this.bets = new ArrayList<>();
+        this.bets = new Bets();
     }
 
     public void receiveCard(final Card card) {
@@ -63,35 +62,19 @@ public final class Dealer {
     }
 
     public int calculateRevenue() {
-        return bets.stream()
-                .mapToInt(Bet::calculateDealerRevenue)
-                .sum();
+        return bets.calculateDealerRevenue();
     }
 
     public void updateBetOwnerToDealerFrom(Player player) {
-        Bet updatingBet = bets.stream()
-                .filter(bet -> bet.getOwner().equals(player))
-                .findAny()
-                .orElseThrow(() -> new IllegalStateException("플레이어의 배팅 금액이 저장되지 않았습니다."));
-        this.bets.remove(updatingBet);
-        this.bets.add(updatingBet.changeOwnerTo(this));
+        bets.updateOwner(player, this);
     }
 
     public Bet findBetByPlayer(Player player) {
-        return bets.stream()
-                .filter(bet -> bet.betterEquals(player))
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException("해당하는 플레이어를 찾을 수 없습니다."));
+        return bets.findByBetter(player);
     }
 
     public void updateBetAmountWhenBlackJack(Player player) {
-        Bet bet = findBetByPlayer(player);
-        this.bets.remove(bet);
-        this.bets.add(bet.increase(1.5));
-    }
-
-    public List<Bet> getBets() {
-        return Collections.unmodifiableList(bets);
+        bets.updateBetAmount(player);
     }
 }
 

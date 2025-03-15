@@ -79,7 +79,7 @@ class DealerTest {
         dealer.receiveBet(bet);
 
         //then
-        Bet returnedBet = dealer.getBets().getFirst();
+        Bet returnedBet = dealer.findBetByPlayer(better);
 
         //then
         assertThat(returnedBet.equals(bet)).isTrue();
@@ -96,11 +96,10 @@ class DealerTest {
 
         //when
         dealer.updateBetOwnerToDealerFrom(jason);
-        List<Bet> bets = dealer.getBets();
 
         //then
-        assertThat(bets.getFirst().getOwner()).isEqualTo(pobi);
-        assertThat(bets.getLast().getOwner()).isEqualTo(dealer);
+        assertThat(dealer.findBetByPlayer(pobi).getOwner()).isEqualTo(pobi);
+        assertThat(dealer.findBetByPlayer(jason).getOwner()).isEqualTo(dealer);
     }
 
     @DisplayName("10000원을 배팅한 플레이어는 승리하고, 20000원을 배팅한 플레이어는 패배했을 때 딜러는 10000원의 수익이 발생한다.")
