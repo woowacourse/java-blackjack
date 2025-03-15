@@ -61,21 +61,6 @@ class PlayerTest {
         assertThat(result).isEqualTo(expected);
     }
 
-    @DisplayName("주어진_Gambler_와의_점수_차이를_반환한다")
-    @CsvSource(value = {"TEN:TEN:2", "TEN:EIGHT:0", "TEN:SIX:-2"}, delimiterString = ":")
-    @ParameterizedTest
-    void calculateScoreDifference(CardType firstType, CardType secondType, int expected) {
-        // given
-        Dealer dealer = createDealerWithCards(TEN, EIGHT);
-        Player player = createPlayerWithCards(name, firstType, secondType);
-
-        // when
-        int result = player.calculateScoreDifference(dealer);
-
-        // then
-        assertThat(result).isEqualTo(expected);
-    }
-
     @DisplayName("처음_카드를_받은_후_플레이어는_두개의_카드를_오픈한다")
     @Test
     void getInitialCardsTest() {

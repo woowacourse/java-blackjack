@@ -4,11 +4,10 @@ import static blackjack.domain.gambler.Dealer.DEALER_NAME;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.gambler.Gambler;
+import blackjack.domain.gambler.Dealer;
 import blackjack.domain.gambler.Name;
 import blackjack.domain.gambler.Names;
 import blackjack.domain.gambler.Player;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Round {
@@ -20,70 +19,85 @@ public class Round {
     public static final String NOT_EXISTS_PLAYER = "존재하지 않는 플레이어입니다: %s";
 
     private final CardDeck cardDeck;
-    private final List<Gambler> gamblers = new ArrayList<>();
+    private final Dealer dealer;
+    private final List<Player> players;
 
     public Round(final CardDeck cardDeck, final Names playerNames) {
-        registerDealerAndPlayers(playerNames);
+        this.dealer = new Dealer();
+        this.players = registerPlayers(playerNames);
         this.cardDeck = cardDeck;
     }
 
-    private void registerDealerAndPlayers(final Names playerNames) {
-        gamblers.add(new Player(DEALER_NAME));
-        List<Player> players = playerNames.getNames()
+    private List<Player> registerPlayers(final Names playerNames) {
+        return playerNames.getNames()
                 .stream()
                 .map(Player::new)
                 .toList();
-        gamblers.addAll(players);
     }
 
-    public void distributeCards(final Name gamblerName, final int cardCount) {
-        Gambler gambler = findGambler(gamblerName);
+    public void distributeCards(final Name name, final int cardCount) {
+        if (dealer.isNameEquals(name)) {
+            for (int i = 0; i < cardCount; i++) {
+                Card card = cardDeck.getCard();
+                dealer.addCard(card);
+            }
+            return;
+        }
+        Player player = findPlayer(name);
         for (int i = 0; i < cardCount; i++) {
             Card card = cardDeck.getCard();
-            gambler.addCard(card);
+            player.addCard(card);
         }
     }
 
     public int getScore(final Name name) {
-        return findGambler(name).calculateScore();
+        if (dealer.isNameEquals(name)) {
+            return dealer.calculateScore();
+        }
+        return findPlayer(name).calculateScore();
     }
 
     public void distributeInitialCards() {
-        for (final Gambler gambler : gamblers) {
-            gambler.addCard(cardDeck.getCard());
-            gambler.addCard(cardDeck.getCard());
+        distributeCards(DEALER_NAME, 2);
+        for (final Player player : players) {
+            player.addCard(cardDeck.getCard());
+            player.addCard(cardDeck.getCard());
         }
     }
 
     public boolean dealerMustDraw() {
-        Gambler dealer = findGambler(DEALER_NAME);
         return dealer.isScoreBelow(DEALER_DRAW_THRESHOLD);
     }
 
     public boolean isBusted(final Name name) {
-        return !findGambler(name).isScoreBelow(BLACKJACK);
+        if (dealer.isNameEquals(name)) {
+            return !dealer.isScoreBelow(BLACKJACK);
+        }
+        return !findPlayer(name).isScoreBelow(BLACKJACK);
     }
 
     public List<Card> getCards(final Name name) {
-        return findGambler(name).getCards();
+        if (dealer.isNameEquals(name)) {
+            return dealer.getCards();
+        }
+        return findPlayer(name).getCards();
     }
 
     public List<Card> getInitialCards(final Name name) {
-        Gambler gambler = findGambler(name);
-        return gambler.getInitialCards();
+        if (dealer.isNameEquals(name)) {
+            return dealer.getInitialCards();
+        }
+        Player player = findPlayer(name);
+        return player.getInitialCards();
     }
 
     public WinningDiscriminator getWinningDiscriminator() {
-        Gambler dealer = findGambler(DEALER_NAME);
-        List<Gambler> players = gamblers.stream()
-                .filter(gambler -> !gambler.isNameEquals(DEALER_NAME))
-                .toList();
         return new WinningDiscriminator(dealer, players);
     }
 
-    private Gambler findGambler(final Name name) {
-        return gamblers.stream()
-                .filter(gambler -> gambler.isNameEquals(name))
+    private Player findPlayer(final Name name) {
+        return players.stream()
+                .filter(player -> player.isNameEquals(name))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(NOT_EXISTS_PLAYER.formatted(name)));
     }

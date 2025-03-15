@@ -11,10 +11,10 @@ import blackjack.domain.gambler.Player;
 
 public class GamblerFixture {
     public static Dealer createDealer() {
-        return new Dealer(new Player(DEALER_NAME));
+        return new Dealer();
     }
     public static Dealer createDealerWithCards(CardType... cardTypes) {
-        Dealer dealer = new Dealer(new Player(DEALER_NAME));
+        Dealer dealer = new Dealer();
         for (Card card : createCards(cardTypes)) {
             dealer.addCard(card);
         }
