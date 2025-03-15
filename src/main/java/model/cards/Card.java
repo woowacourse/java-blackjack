@@ -19,4 +19,9 @@ public class Card {
     public List<Integer> getRank() {
         return rank.getValue();
     }
+
+    @Override
+    public String toString() {
+        return rank.getSymbol() + suit.getName();
+    }
 }
