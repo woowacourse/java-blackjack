@@ -1,7 +1,7 @@
 package util;
 
-import model.card.Card;
-import model.participant.Participant;
+import card.Card;
+import participant.Participant;
 
 import java.util.List;
 

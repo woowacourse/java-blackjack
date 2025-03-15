@@ -1,4 +1,4 @@
-package model.card;
+package card;
 
 public enum NormalRank implements Rank {
     TWO(2),

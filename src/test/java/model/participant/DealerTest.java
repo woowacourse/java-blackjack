@@ -4,8 +4,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import model.card.*;
-import model.score.MatchType;
+import card.*;
+import game.BlackJack;
+import participant.Dealer;
+import participant.Participant;
+import participant.Player;
+import participant.Players;
+import score.MatchResultType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -67,7 +72,7 @@ class DealerTest {
         divideCard(cards,dealer);
 
         // when
-        int sum = dealer.getScore();
+        int sum = dealer.getScore().getValue();
 
         // then
         assertThat(sum).isEqualTo(expected);
@@ -113,7 +118,7 @@ class DealerTest {
     @MethodSource("createCards")
     @DisplayName("딜러의 게임 결과가 제대로 생성되는지")
     void dealerGameResult(List<Card> playerCards, List<Card> dealerCards,
-                          MatchType playerMatchType, MatchType dealerMatchType) {
+                          MatchResultType playerMatchResultType, MatchResultType dealerMatchResultType) {
         Dealer dealer = new Dealer();
         divideCard(dealerCards, dealer);
 
@@ -121,11 +126,12 @@ class DealerTest {
         Player player = players.getPlayers().getFirst();
         divideCard(playerCards, player);
 
-        Map<MatchType, Integer> dealerMatchResult = dealer.calculateVictory(players);
+        BlackJack blackJack = new BlackJack(players, dealer, deck);
+        Map<MatchResultType, Integer> dealerMatchResult = blackJack.calculateMatchResult();
 
         assertAll(
-                () -> assertThat(player.getMatchType()).isEqualTo(playerMatchType),
-                () -> assertThat(dealerMatchResult.get(dealerMatchType)).isEqualTo(1)
+                () -> assertThat(player.getMatchType()).isEqualTo(playerMatchResultType),
+                () -> assertThat(dealerMatchResult.get(dealerMatchResultType)).isEqualTo(1)
         );
     }
 
@@ -140,8 +146,8 @@ class DealerTest {
                                 new Card(Suit.HEARTS, NormalRank.TWO),
                                 new Card(Suit.CLUBS, NormalRank.KING)
                         ),
-                        MatchType.WIN,
-                        MatchType.LOSE
+                        MatchResultType.WIN,
+                        MatchResultType.LOSE
                 ),
                 Arguments.arguments(
                         List.of(
@@ -152,8 +158,8 @@ class DealerTest {
                                 new Card(Suit.HEARTS, NormalRank.TWO),
                                 new Card(Suit.CLUBS, AceRank.SOFT_ACE)
                         ),
-                        MatchType.LOSE,
-                        MatchType.WIN
+                        MatchResultType.LOSE,
+                        MatchResultType.WIN
                 ),
                 Arguments.arguments(
                         List.of(
@@ -164,8 +170,8 @@ class DealerTest {
                                 new Card(Suit.HEARTS, NormalRank.TWO),
                                 new Card(Suit.CLUBS, AceRank.SOFT_ACE)
                         ),
-                        MatchType.DRAW,
-                        MatchType.DRAW
+                        MatchResultType.DRAW,
+                        MatchResultType.DRAW
                 )
         );
     }

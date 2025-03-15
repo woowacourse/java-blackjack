@@ -1,12 +1,14 @@
 package model.participant;
 
-import model.card.*;
+import card.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import participant.Participant;
+import participant.Player;
 
 import java.util.ArrayList;
 import java.util.List;

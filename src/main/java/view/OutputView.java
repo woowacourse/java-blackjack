@@ -1,13 +1,13 @@
 package view;
 
-import model.card.Card;
-import model.card.Suit;
-import model.card.Rank;
-import model.participant.Dealer;
-import model.participant.Participant;
-import model.participant.Player;
-import model.participant.Players;
-import model.score.MatchType;
+import card.Card;
+import card.Suit;
+import card.Rank;
+import participant.Dealer;
+import participant.Participant;
+import participant.Player;
+import participant.Players;
+import score.MatchResultType;
 
 import java.util.List;
 import java.util.Map;
@@ -67,7 +67,7 @@ public class OutputView {
         System.out.println(formatHands(player));
     }
 
-    public static void printStandingDealer(Dealer dealer) {
+    public static void printHittingDealer(Dealer dealer) {
         String dealerNickname = dealer.getNickname();
         System.out.println();
         System.out.println(String.format("%s는 %d이하라 한장의 카드를 더 받았습니다.", dealerNickname, 16));
@@ -82,10 +82,10 @@ public class OutputView {
     }
 
     private static void printScore(Participant participant) {
-        System.out.printf("%s - 결과: %d%n", formatHands(participant), participant.getScore());
+        System.out.printf("%s - 결과: %d%n", formatHands(participant), participant.getScore().getValue());
     }
 
-    public static void printResult(Dealer dealer, Map<MatchType, Integer> dealerResult ,Players players) {
+    public static void printResult(Dealer dealer, Map<MatchResultType, Integer> dealerResult , Players players) {
         String dealerNickname = dealer.getNickname();
         String resultFormatByDealer = getResultFormatByDealer(dealerResult);
 
@@ -101,20 +101,20 @@ public class OutputView {
 
     }
 
-    public static String getResultFormatByDealer(Map<MatchType, Integer> matchResult) {
+    public static String getResultFormatByDealer(Map<MatchResultType, Integer> matchResult) {
         StringBuilder result = new StringBuilder();
-        for (MatchType matchType : matchResult.keySet()) {
-            int matchCount = matchResult.get(matchType);
+        for (MatchResultType matchResultType : matchResult.keySet()) {
+            int matchCount = matchResult.get(matchResultType);
             if (matchCount != 0) {
-                result.append(matchCount).append(MATCH_FORMAT.get(matchType.name()));
+                result.append(matchCount).append(MATCH_FORMAT.get(matchResultType.name()));
                 result.append(" ");
             }
         }
         return result.toString();
     }
 
-    public static String getResultFormatByPlayer(MatchType matchType) {
-        return MATCH_FORMAT.get(matchType.name());
+    public static String getResultFormatByPlayer(MatchResultType matchResultType) {
+        return MATCH_FORMAT.get(matchResultType.name());
     }
 
     public static String getCardFormat(Card card) {

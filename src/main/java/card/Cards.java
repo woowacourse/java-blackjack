@@ -1,6 +1,6 @@
-package model.card;
+package card;
 
-import model.score.Score;
+import score.Score;
 
 import java.util.ArrayList;
 import java.util.List;

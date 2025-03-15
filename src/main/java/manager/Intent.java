@@ -1,4 +1,4 @@
-package controller;
+package manager;
 
 import java.util.Arrays;
 

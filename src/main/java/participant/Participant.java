@@ -1,7 +1,8 @@
-package model.participant;
+package participant;
 
-import model.card.Cards;
-import model.card.Card;
+import card.Cards;
+import card.Card;
+import score.Score;
 
 import java.util.List;
 
@@ -25,8 +26,8 @@ public abstract class Participant {
         cards.applyAceRule();
     }
 
-    final public int getScore() {
-        return cards.calculateScore().getValue();
+    final public Score getScore() {
+        return cards.calculateScore();
     }
 
     final public List<Card> getCards() {

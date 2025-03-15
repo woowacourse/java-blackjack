@@ -1,6 +1,7 @@
 package model.card;
 
-import model.score.Score;
+import card.*;
+import score.Score;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -3,6 +3,7 @@ package model.score;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import score.Score;
 
 public class ScoreTest {
     @Test

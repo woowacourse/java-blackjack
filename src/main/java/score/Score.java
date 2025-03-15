@@ -1,4 +1,4 @@
-package model.score;
+package score;
 
 public class Score implements Comparable<Score> {
 
