@@ -3,11 +3,10 @@ package blackjack.view;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
+import blackjack.domain.participants.BettingMoney.Profit;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
-import blackjack.domain.winning.Profit;
-import blackjack.domain.winning.WinningResult;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -68,20 +67,6 @@ public class OutputView {
 
     public static void printCannotAdditionalCard() {
         System.out.println("더 이상 카드를 받을 수 없습니다.");
-    }
-
-    private static void printIfPresentWinningResult(Map<WinningResult, Integer> dealerVictoryResults) {
-        System.out.print("딜러:");
-        if (dealerVictoryResults.containsKey(WinningResult.WIN)) {
-            System.out.printf(" %d승", dealerVictoryResults.get(WinningResult.WIN));
-        }
-        if (dealerVictoryResults.containsKey(WinningResult.DRAW)) {
-            System.out.printf(" %d무", dealerVictoryResults.get(WinningResult.DRAW));
-        }
-        if (dealerVictoryResults.containsKey(WinningResult.LOSE)) {
-            System.out.printf(" %d패", dealerVictoryResults.get(WinningResult.LOSE));
-        }
-        System.out.println();
     }
 
     public static void printErrorMessage(RuntimeException e) {

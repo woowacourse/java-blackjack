@@ -1,6 +1,7 @@
 package blackjack.domain.participants;
 
-import blackjack.domain.winning.WinningResult;
+
+import java.util.Map;
 
 public record BettingMoney(
         int amount
@@ -11,7 +12,13 @@ public record BettingMoney(
         }
     }
 
-    public int calculateProfit(WinningResult winningResult) {
-        return winningResult.calculateWinningAmount(amount) - amount;
+    public static record Profit(
+            int dealerProfit,
+            Map<Player, Integer> playerProfit
+    ) {
+        public Profit(int dealerProfit, Map<Player, Integer> playerProfit) {
+            this.dealerProfit = dealerProfit;
+            this.playerProfit = playerProfit;
+        }
     }
 }

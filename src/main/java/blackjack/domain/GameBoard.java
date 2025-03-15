@@ -2,10 +2,10 @@ package blackjack.domain;
 
 import blackjack.domain.card.CardsShuffler;
 import blackjack.domain.card.Deck;
+import blackjack.domain.participants.BettingMoney.Profit;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
-import blackjack.domain.winning.Profit;
 
 public class GameBoard {
 
