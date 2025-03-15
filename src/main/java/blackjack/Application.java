@@ -92,7 +92,7 @@ public class Application {
 
     private static void processDealerTurn(final Round round) {
         if (round.dealerMustDraw()) {
-            round.distributeCards(DEALER_NAME, 1);
+            round.hit(DEALER_NAME);
             outputView.printDealerDraw();
         }
     }
@@ -100,7 +100,7 @@ public class Application {
     private static void processPlayerTurn(final Round round, final Name playerName) {
         boolean flag = false;
         while (isHit(playerName)) {
-            round.distributeCards(playerName, 1);
+            round.hit(playerName);
             outputView.printGamblerCards(playerName, round.getCards(playerName));
             boolean isBust = round.isBust(playerName);
             if (isBust) {

@@ -1,7 +1,5 @@
 package blackjack.domain.game;
 
-import static blackjack.domain.gambler.Dealer.DEALER_NAME;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.gambler.Dealer;
@@ -34,22 +32,13 @@ public class Round {
                 .toList();
     }
 
-    /**
-     * TODO
-     */
-    public void distributeCards(final Name name, final int cardCount) {
+    public void hit(final Name name) {
         if (dealer.isNameEquals(name)) {
-            for (int i = 0; i < cardCount; i++) {
-                Card card = cardDeck.getCard();
-                dealer.addCard(card);
-            }
+            dealer.hit(cardDeck.getCard());
             return;
         }
         Player player = findPlayer(name);
-        for (int i = 0; i < cardCount; i++) {
-            Card card = cardDeck.getCard();
-            player.addCard(card);
-        }
+        player.hit(cardDeck.getCard());
     }
 
     public int getScore(final Name name) {
@@ -60,10 +49,11 @@ public class Round {
     }
 
     public void distributeInitialCards() {
-        distributeCards(DEALER_NAME, 2);
+        dealer.hit(cardDeck.getCard());
+        dealer.hit(cardDeck.getCard());
         for (final Player player : players) {
-            player.addCard(cardDeck.getCard());
-            player.addCard(cardDeck.getCard());
+            player.hit(cardDeck.getCard());
+            player.hit(cardDeck.getCard());
         }
     }
 

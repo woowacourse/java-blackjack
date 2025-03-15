@@ -9,8 +9,8 @@ public class Dealer {
 
     private final Player player = new Player(DEALER_NAME);
 
-    public void addCard(final Card card) {
-        player.addCard(card);
+    public void hit(final Card card) {
+        player.hit(card);
     }
 
     public int calculateScore() {

@@ -15,7 +15,7 @@ public class GamblerFixture {
     public static Dealer createDealerWithCards(CardType... cardTypes) {
         Dealer dealer = new Dealer();
         for (Card card : createCards(cardTypes)) {
-            dealer.addCard(card);
+            dealer.hit(card);
         }
         return dealer;
     }
@@ -23,7 +23,7 @@ public class GamblerFixture {
     public static Player createPlayerWithCards(Name name, CardType... cardTypes) {
         Player player = new Player(name);
         for (Card card : createCards(cardTypes)) {
-            player.addCard(card);
+            player.hit(card);
         }
         return player;
     }

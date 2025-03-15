@@ -30,9 +30,9 @@ class RoundTest {
     private final Shuffler shuffler = new TestShuffler();
     private final Name name = new Name("라젤");
 
-    @DisplayName("특정 플레이어에게 지정한 장 수의 카드를 지급한다")
+    @DisplayName("특정 플레이어에게 한 장의 카드를 지급한다")
     @Test
-    void distributeCardsTest() {
+    void hit() {
         // given
         Card card1 = new Card(CardShape.CLOVER, TEN);
         Card card2 = new Card(CardShape.HEART, EIGHT);
@@ -42,12 +42,12 @@ class RoundTest {
         Round round = new Round(cardDeck, playerNames);
 
         // when
-        round.distributeCards(name, 2);
+        round.hit(name);
 
         // then
         assertAll(
-            () -> assertThat(round.getCards(name)).contains(card1, card2),
-            () -> assertThat(round.getScore(name)).isEqualTo(18)
+            () -> assertThat(round.getCards(name)).containsExactly(card1),
+            () -> assertThat(round.getScore(name)).isEqualTo(10)
         );
     }
 
@@ -88,7 +88,9 @@ class RoundTest {
         Names playerNames = new Names(List.of(name));
         Round round = new Round(cardDeck, playerNames);
 
-        round.distributeCards(name, 3);
+        round.hit(name);
+        round.hit(name);
+        round.hit(name);
 
         // when
         boolean result = round.isBust(name);
@@ -107,7 +109,9 @@ class RoundTest {
         Names playerNames = new Names(List.of(name));
         Round round = new Round(cardDeck, playerNames);
 
-        round.distributeCards(DEALER_NAME, 3);
+        round.hit(DEALER_NAME);
+        round.hit(DEALER_NAME);
+        round.hit(DEALER_NAME);
 
         // when
         boolean result = round.dealerMustDraw();

@@ -16,7 +16,7 @@ public class Player {
         this.name = name;
     }
 
-    public void addCard(final Card card) {
+    public void hit(final Card card) {
         hands.addCard(card);
     }
 

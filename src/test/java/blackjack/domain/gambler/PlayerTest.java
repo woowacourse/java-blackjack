@@ -3,6 +3,7 @@ package blackjack.domain.gambler;
 import static blackjack.domain.card.CardType.ACE;
 import static blackjack.domain.card.CardType.EIGHT;
 import static blackjack.domain.card.CardType.TEN;
+import static blackjack.domain.fixture.CardFixture.createCards;
 import static blackjack.domain.fixture.GamblerFixture.createPlayerWithCards;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -21,15 +22,18 @@ class PlayerTest {
 
     @DisplayName("플레이어의_패에_카드를_추가한다")
     @Test
-    void addCardTest() {
+    void hitTest() {
         // given
-        Player player = createPlayerWithCards(name, TEN, EIGHT);
+        Player player = new Player(name);
+        List<Card> cards = createCards(TEN, EIGHT);
 
         // when
-        int result = player.calculateScore();
+        for (Card card : cards) {
+            player.hit(card);
+        }
 
         // then
-        assertThat(result).isEqualTo(18);
+        assertThat(player.calculateScore()).isEqualTo(18);
     }
 
     @DisplayName("패에_카드가_2개이고_합이_21인지_여부를_반환한다")
@@ -53,8 +57,8 @@ class PlayerTest {
         Player player = new Player(name);
         Card card1 = new Card(CardShape.CLOVER, CardType.TEN);
         Card card2 = new Card(CardShape.HEART, CardType.EIGHT);
-        player.addCard(card1);
-        player.addCard(card2);
+        player.hit(card1);
+        player.hit(card2);
 
         // when
         List<Card> result = player.getInitialCards();

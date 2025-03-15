@@ -25,8 +25,8 @@ public class DealerTest {
         Dealer dealer = createDealer();
         Card card1 = new Card(CardShape.CLOVER, CardType.TEN);
         Card card2 = new Card(CardShape.HEART, CardType.EIGHT);
-        dealer.addCard(card1);
-        dealer.addCard(card2);
+        dealer.hit(card1);
+        dealer.hit(card2);
 
         // when
         List<Card> result = dealer.getInitialCards();
