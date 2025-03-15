@@ -19,8 +19,7 @@ import java.util.Map;
 public class Application {
     public static void main(String[] args) {
         final Blackjack blackjack = new Blackjack();
-        Dealer dealer = Dealer.getDealer(new CardRandomMachine());
-        dealer.initCardMachine();
+        Dealer dealer = makeDealer();
         Players players = makePlayers();
 
         betPlayers(blackjack, players);
@@ -38,6 +37,23 @@ public class Application {
         printCardsSum(dealer, players);
 
         printBettingResult(blackjack, isPush, dealer, players);
+    }
+
+    private static Dealer makeDealer() {
+        Dealer dealer = Dealer.getDealer(new CardRandomMachine());
+        dealer.initCardMachine();
+        return dealer;
+    }
+
+    private static Players makePlayers() {
+        final InputView inputView = new NameInputView();
+        final String joinedNames = inputView.read();
+        try {
+            return Players.from(joinedNames);
+        } catch (IllegalArgumentException e) {
+            inputView.printErrorMessage(e);
+        }
+        return makePlayers();
     }
 
     private static void betPlayers(final Blackjack blackjack, final Players players) {
@@ -134,16 +150,5 @@ public class Application {
         for (Player player : players.getPlayers()) {
             resultView.printProfit(player, player.getProfit());
         }
-    }
-
-    private static Players makePlayers() {
-        final InputView inputView = new NameInputView();
-        final String joinedNames = inputView.read();
-        try {
-            return Players.from(joinedNames);
-        } catch (IllegalArgumentException e) {
-            inputView.printErrorMessage(e);
-        }
-        return makePlayers();
     }
 }
