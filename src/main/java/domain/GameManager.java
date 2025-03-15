@@ -44,10 +44,6 @@ public class GameManager {
         return provider.provideCards(INITIAL_DRAW_SIZE);
     }
 
-    public Map<Player, Integer> calculateIncome() {
-        return players.judgeAllPlayersIncomes(dealer);
-    }
-
     public Dealer findDealer() {
         return dealer;
     }
