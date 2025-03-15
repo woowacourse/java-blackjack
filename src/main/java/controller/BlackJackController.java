@@ -98,17 +98,24 @@ public class BlackJackController {
 
         final String input = InputView.readQuestOneMoreCard(player.getDisplayName());
         if (Command.find(input) == Command.YES) {
-            final Card card = deck.drawCard();
-            player.hit(card);
+            drawCardForPlayer(deck, player);
         }
+
+        return isContinueDrawing(input, player);
+    }
+
+    private void drawCardForPlayer(final Deck deck, final Player player) {
+        final Card card = deck.drawCard();
+        player.hit(card);
         OutputView.printCardsInHand(player.getDisplayName(), player.getCards());
 
         if (player.isBust()) {
             OutputView.printBustMessage(player.getDisplayName());
-            return false;
         }
+    }
 
-        if (player.isImPossibleDrawCard()) {
+    private boolean isContinueDrawing(final String input, final Player player) {
+        if (player.isBust() || player.isImPossibleDrawCard()) {
             return false;
         }
 
@@ -116,16 +123,15 @@ public class BlackJackController {
     }
 
     private void processAdditionalHit(final Deck deck, final Player player) {
-        while (Command.find(InputView.readQuestOneMoreCard(player.getDisplayName())).equals(Command.YES)) {
-            final Card card = deck.drawCard();
-            player.hit(card);
-            OutputView.printCardsInHand(player.getDisplayName(), player.getCards());
-
-            if (player.isBust()) {
-                OutputView.printBustMessage(player.getDisplayName());
+        while (true) {
+            final String input = InputView.readQuestOneMoreCard(player.getDisplayName());
+            if (Command.find(input) != Command.YES) {
                 break;
             }
-            if (player.isImPossibleDrawCard()) {
+
+            drawCardForPlayer(deck, player);
+
+            if (player.isBust() || player.isImPossibleDrawCard()) {
                 break;
             }
         }
