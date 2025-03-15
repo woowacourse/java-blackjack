@@ -20,8 +20,4 @@ public enum PlayerChoice {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 잘못된 입력입니다. 입력값 : " + input));
     }
-
-    public String getChoiceName() {
-        return choiceName;
-    }
 }
