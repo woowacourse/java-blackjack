@@ -57,7 +57,9 @@ public class Player extends Participant {
         return super.getCards();
     }
 
-    public int getMoney() { return money.getMoney(); }
+    public int getMoney() {
+        return money.getMoney();
+    }
 
     @Override
     public void addCard(Card card) {

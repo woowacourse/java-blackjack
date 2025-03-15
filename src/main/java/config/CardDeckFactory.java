@@ -15,7 +15,7 @@ public class CardDeckFactory {
         List<Card> cards;
         cards = Arrays.stream(Shape.values())
                 .flatMap(shape -> Arrays.stream(Number.values())
-                .map(number -> new Card(shape, number)))
+                        .map(number -> new Card(shape, number)))
                 .collect(Collectors.toList());
 
         Collections.shuffle(cards);
