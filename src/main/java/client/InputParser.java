@@ -5,7 +5,6 @@ import static util.ExceptionConstants.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import participant.value.Money;
 
 public class InputParser {
     private static final String INVALID_ANSWER_TYPE = "응답은 y 혹은 n으로 해주세요.";

@@ -11,18 +11,14 @@ public abstract class Participant {
         this.hand = hand;
     }
 
-    public abstract Hand openInitialHand();
+    public abstract Hand openHand();
 
-    public Hand getCards() {
+    public abstract Participant initializeHandWith(Hand updatedHand);
+
+    public abstract Participant updateHandWith(Card card);
+
+    public Hand getHand() {
         return hand;
-    }
-
-    public void addCards(Hand receivedHand) {
-        hand.addAll(receivedHand);
-    }
-
-    public void addCard(Card receivedCard) {
-        hand.add(receivedCard);
     }
 
     public Score getScore() {
@@ -33,11 +29,11 @@ public abstract class Participant {
         return getScore().isBust();
     }
 
-    public boolean isBlackJack() {
-        return getScore().isBlackJackValue() && hand.isInitialStatus();
+    public boolean isNotBust() {
+        return !getScore().isBust();
     }
 
-    public void initializeHand(Hand hand) {
-        this.addCards(hand);
+    public boolean isBlackJack() {
+        return getScore().isBlackJackValue() && hand.isInitialStatus();
     }
 }

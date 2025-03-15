@@ -1,5 +1,6 @@
 package participant;
 
+import card.Card;
 import card.Hand;
 import java.util.Objects;
 import participant.value.Money;
@@ -26,6 +27,10 @@ public class Player extends Participant {
         this.bettingPrice = Money.ZERO;
     }
 
+    public static Player withBet(String name, Money bettingPrice) {
+        return new Player(name, bettingPrice);
+    }
+
     public String getName() {
         return name;
     }
@@ -35,8 +40,18 @@ public class Player extends Participant {
     }
 
     @Override
-    public Hand openInitialHand() {
+    public Hand openHand() {
         return hand;
+    }
+
+    @Override
+    public Participant initializeHandWith(Hand updatedHand) {
+        return new Player(this.getName(), updatedHand, this.bettingPrice);
+    }
+
+    @Override
+    public Participant updateHandWith(Card card) {
+        return new Player(this.getName(), hand.add(card), this.bettingPrice);
     }
 
     @Override

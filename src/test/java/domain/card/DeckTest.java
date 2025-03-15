@@ -23,7 +23,7 @@ public class DeckTest {
         Deck deck = new Deck(cards);
 
         //when
-        Card card = deck.draw();
+        Card card = deck.drawCard();
 
         //then
         assertThat(card).isEqualTo(new Card(CardNumberType.ACE, CardType.CLOVER));
@@ -37,7 +37,7 @@ public class DeckTest {
         Deck emptyDeck = new Deck(noCards);
 
         //when & then
-        assertThatThrownBy(emptyDeck::draw)
+        assertThatThrownBy(emptyDeck::drawCard)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining(ERROR_HEADER);
     }

@@ -1,11 +1,12 @@
-import client.InputProcessor;
-import client.OutputPrinter;
 import client.InputParser;
+import client.InputProcessor;
 import client.OutputFormatter;
+import client.OutputPrinter;
+import client.BlackjackGame;
 
 public class BlackjackConfig {
 
-    public BlackjackGame blackjackApplication() {
+    public BlackjackGame blackjackGame() {
         return new BlackjackGame(
                 inputView(),
                 outputView()

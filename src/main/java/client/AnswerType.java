@@ -4,7 +4,7 @@ public enum AnswerType {
     YES,
     NO;
 
-    public boolean isEqualTo(AnswerType answerType) {
-        return this == answerType;
+    public boolean isPositive() {
+        return this == YES;
     }
 }

@@ -1,12 +1,12 @@
-package result.handStatus;
+package result.handResult;
 
 import participant.Dealer;
 import participant.Player;
 import result.GameStatus;
 
-public class ScoreComparison implements HandStatus {
+public class ScoreComparison implements HandResult {
     @Override
-    public GameStatus calculateResult(Player player, Dealer dealer) {
+    public GameStatus calculate(Player player, Dealer dealer) {
         if (player.getScore().isGreaterThen(dealer.getScore())) {
             return GameStatus.WIN;
         }

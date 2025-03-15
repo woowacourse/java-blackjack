@@ -1,5 +1,7 @@
 package participant;
 
+import card.Card;
+import card.Deck;
 import card.Hand;
 
 public class Dealer extends Participant {
@@ -9,7 +11,7 @@ public class Dealer extends Participant {
         super(hand);
     }
 
-    public static Dealer createEmptyHand() {
+    public static Dealer createWithNoHand() {
         return new Dealer(Hand.createEmpty());
     }
 
@@ -18,7 +20,24 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public Hand openInitialHand() {
-        return new Hand(hand.getFirst());
+    public Hand openHand() {
+        return Hand.from(hand.getFirst());
+    }
+
+    @Override
+    public Participant initializeHandWith(Hand updatedHand) {
+        return new Dealer(updatedHand);
+    }
+
+    @Override
+    public Participant updateHandWith(Card card) {
+        return new Dealer(hand.add(card));
+    }
+
+    public Dealer drawCardIfNeeded(Deck deck) {
+        if (shouldDrawCard()) {
+            return (Dealer) this.updateHandWith(deck.drawCard());
+        }
+        return this;
     }
 }

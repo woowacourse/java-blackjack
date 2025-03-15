@@ -22,15 +22,15 @@ public class Deck {
         this.deck = cards;
     }
 
-    public Hand drawInitialHand() {
+    public Hand drawDefaultHand() {
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < INITIAL_HAND_COUNT; i++) {
-            cards.add(draw());
+            cards.add(drawCard());
         }
         return new Hand(cards);
     }
 
-    public Card draw() {
+    public Card drawCard() {
         checkRemainingCard();
         return deck.removeLast();
     }
