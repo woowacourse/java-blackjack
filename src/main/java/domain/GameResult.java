@@ -1,7 +1,8 @@
 package domain;
 
 public enum GameResult {
-     WIN,
+    WIN,
     LOSE,
-    DRAW;
+    DRAW,
+    BLACKJACK;
 }

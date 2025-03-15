@@ -1,7 +1,6 @@
 package controller;
 
 import domain.GameManager;
-import domain.GameResult;
 import domain.TrumpCard;
 import domain.TrumpCardManager;
 import domain.user.Dealer;
@@ -97,9 +96,9 @@ public class BlackjackController {
     }
 
     private void calculateGameResult(GameManager gameManager) {
-        Map<User, GameResult> gameResult = gameManager.createGameResult();
-
-        outputView.displayProfitResult();
+        Map<User, Long> gameResult = gameManager.createGameResult();
+        long dealerProfit = gameManager.calculateDealerProfit(gameResult);
+        outputView.displayProfitResult(dealerProfit, gameResult);
     }
 
 
