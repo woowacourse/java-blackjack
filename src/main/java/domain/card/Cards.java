@@ -6,7 +6,11 @@ import java.util.List;
 public class Cards {
 
     private static final int BUST_THRESHOLD = 21;
+    private static final int INITIAL_DRAW_COUNT = 2;
+    private static final int BLACKJACK_SUM = 21;
+
     private final List<Card> cards;
+
 
     public Cards(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
@@ -36,6 +40,18 @@ public class Cards {
         }
     }
 
+    public boolean isBustThreshold() {
+        return computeOptimalSum() == BUST_THRESHOLD;
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == INITIAL_DRAW_COUNT && computeOptimalSum() == BLACKJACK_SUM;
+    }
+
+    public boolean isBust() {
+        return computeOptimalSum() > BUST_THRESHOLD;
+    }
+
     public void addCard(Card card) {
         cards.add(card);
     }
@@ -48,5 +64,9 @@ public class Cards {
 
     public int size() {
         return cards.size();
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 }
