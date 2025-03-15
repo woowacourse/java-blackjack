@@ -1,15 +1,20 @@
 package domain;
 
 import static domain.card.Rank.ACE;
+import static domain.card.Rank.EIGHT;
 import static domain.card.Rank.FIVE;
 import static domain.card.Rank.JACK;
+import static domain.card.Rank.KING;
 import static domain.card.Rank.NINE;
 import static domain.card.Rank.QUEEN;
+import static domain.card.Rank.SEVEN;
 import static domain.card.Rank.TEN;
+import static domain.card.Rank.THREE;
 import static domain.card.Rank.TWO;
 import static domain.card.Suit.CLOVER;
 import static domain.card.Suit.DIAMOND;
 import static domain.card.Suit.HEART;
+import static domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.CardHand;
@@ -19,13 +24,14 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.shuffler.RandomShuffler;
 import fixture.CardFixture;
+import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class BettingTest {
 
-    public final int BET_AMOUNT = 10000;
+    private final int BET_AMOUNT = 10000;
 
     @Test
     @DisplayName("플레이어는 게임을 시작할 때 배팅 금액을 정해야 한다")
@@ -52,9 +58,9 @@ public class BettingTest {
         // when
         bettingRound.bet(player, BET_AMOUNT);
         player.hit(CardFixture.of(FIVE, CLOVER));
-        bettingRound.betIsLostIfPlayerBusts(player);
+        bettingRound.betIsLostIfPlayerLose(player);
         // then
-        assertThat(bettingRound.getPlayerFinalBetAmount(player)).isEqualTo(0);
+        assertThat(bettingRound.getPlayerFinalBetAmount(player)).isEqualTo(-1 * BET_AMOUNT);
     }
 
     @Test
@@ -93,7 +99,7 @@ public class BettingTest {
     void testPlayersReceiveBetIfDealerBusts() {
         // given
         CardHand playerCardHand = new CardHand(
-                Set.of(CardFixture.of(TEN, HEART), CardFixture.of(ACE, DIAMOND)));
+                Set.of(CardFixture.of(TEN, HEART), CardFixture.of(TWO, DIAMOND)));
         CardHand dealerCardHand = new CardHand(
                 Set.of(CardFixture.of(TEN, CLOVER), CardFixture.of(JACK, DIAMOND)));
         Player player1 = new Player("pobi", playerCardHand);
@@ -108,7 +114,60 @@ public class BettingTest {
         bettingRound.PlayersReceiveBetIfDealerBusts(player1, dealer);
         bettingRound.PlayersReceiveBetIfDealerBusts(player2, dealer);
         // then
-        assertThat(bettingRound.getPlayerFinalBetAmount(player1)).isEqualTo(BET_AMOUNT * 2);
-        assertThat(bettingRound.getPlayerFinalBetAmount(player2)).isEqualTo(player2BetAmount * 2);
+        assertThat(bettingRound.getPlayerFinalBetAmount(player1)).isEqualTo(BET_AMOUNT);
+        assertThat(bettingRound.getPlayerFinalBetAmount(player2)).isEqualTo(player2BetAmount);
+    }
+
+    @Test
+    @DisplayName("게임 결과를 바탕으로 플레이어가 승리할 경우 최종 수익을 계산한다")
+    void testCalculateProfitWhenPlayerWin() {
+        // given
+        CardHand player1CardHand = new CardHand(
+                Set.of(CardFixture.of(TEN, HEART), CardFixture.of(ACE, DIAMOND))); // 블랙잭 승리
+        CardHand player2CardHand = new CardHand(
+                Set.of(CardFixture.of(TEN, DIAMOND), CardFixture.of(TWO, DIAMOND))); // 승리
+        CardHand dealerCardHand = new CardHand(
+                Set.of(CardFixture.of(TEN, CLOVER), CardFixture.of(JACK, DIAMOND))); // 버스트
+        Player player1 = new Player("pobi", player1CardHand);
+        Player player2 = new Player("jason", player2CardHand);
+        Dealer dealer = new Dealer(new Deck(new RandomShuffler()), dealerCardHand);
+        BettingRound bettingRound = new BettingRound();
+        // when
+        int player2BetAmount = 20000;
+        bettingRound.bet(player1, BET_AMOUNT);
+        bettingRound.bet(player2, player2BetAmount);
+        player2.hit(CardFixture.of(ACE, SPADE));
+        dealer.hit(CardFixture.of(QUEEN, HEART));
+
+        bettingRound.calculateProfit(List.of(player1, player2), dealer);
+        // then
+        assertThat(bettingRound.getPlayerProfit(player1)).isEqualTo((int) (BET_AMOUNT * 1.5));
+        assertThat(bettingRound.getPlayerProfit(player2)).isEqualTo(player2BetAmount);
+    }
+
+    @Test
+    @DisplayName("게임 결과를 바탕으로 딜러가 1승 1패 했을 때 최종 수익을 계산한다")
+    void testCalculateProfitWhenDealer1Win1Lose() {
+        // given
+        CardHand player1CardHand = new CardHand(
+                Set.of(CardFixture.of(TWO, HEART), CardFixture.of(EIGHT, DIAMOND))); // 승리
+        CardHand player2CardHand = new CardHand(
+                Set.of(CardFixture.of(SEVEN, DIAMOND), CardFixture.of(KING, DIAMOND))); // 패배
+        CardHand dealerCardHand = new CardHand(
+                Set.of(CardFixture.of(THREE, CLOVER), CardFixture.of(NINE, DIAMOND))); // 1승 1패
+        Player player1 = new Player("pobi", player1CardHand);
+        Player player2 = new Player("jason", player2CardHand);
+        Dealer dealer = new Dealer(new Deck(new RandomShuffler()), dealerCardHand);
+        BettingRound bettingRound = new BettingRound();
+        // when
+        int player2BetAmount = 20000;
+        bettingRound.bet(player1, BET_AMOUNT);
+        bettingRound.bet(player2, player2BetAmount);
+        player1.hit(CardFixture.of(ACE, CLOVER));
+        dealer.hit(CardFixture.of(EIGHT, HEART));
+        bettingRound.calculateProfit(List.of(player1, player2), dealer);
+        // then
+        assertThat(bettingRound.getPlayerProfit(player1)).isEqualTo(BET_AMOUNT);
+        assertThat(bettingRound.getPlayerProfit(player2)).isEqualTo(-1 * player2BetAmount);
     }
 }

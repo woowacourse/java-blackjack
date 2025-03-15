@@ -3,6 +3,7 @@ package domain.game;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BettingRound {
@@ -21,10 +22,8 @@ public class BettingRound {
         return finalPlayerBets.get(player);
     }
 
-    public void betIsLostIfPlayerBusts(Player player) {
-        if (player.isBust()) {
-            finalPlayerBets.put(player, 0);
-        }
+    public void betIsLostIfPlayerLose(Player player) {
+        finalPlayerBets.put(player, initialPlayerBets.get(player) * -1);
     }
 
     public void extraPayoutOnBlackjack(Player player) {
@@ -41,8 +40,30 @@ public class BettingRound {
     }
 
     public void PlayersReceiveBetIfDealerBusts(Player player, Dealer dealer) {
-        if (dealer.isBust() && !player.isBust()) {
-            finalPlayerBets.put(player, initialPlayerBets.get(player) * 2);
+        if (dealer.isBust() && !player.isBust() && !player.isBlackJack()) {
+            finalPlayerBets.put(player, initialPlayerBets.get(player));
+        }
+    }
+
+    public int getPlayerProfit(Player player) {
+        return finalPlayerBets.get(player);
+    }
+
+    public void calculateProfit(List<Player> players, Dealer dealer) {
+        for (Player player : players) {
+            GameResult playerGameResult = GameResult.calculatePlayerGameResult(dealer, player);
+            if (playerGameResult == GameResult.LOSE) {
+                betIsLostIfPlayerLose(player);
+            }
+            if (playerGameResult == GameResult.WIN && player.isBlackJack()) {
+                extraPayoutOnBlackjack(player);
+            }
+            if (playerGameResult == GameResult.WIN && !player.isBlackJack()) {
+                finalPlayerBets.put(player, initialPlayerBets.get(player));
+            }
+            if (playerGameResult == GameResult.PUSH) {
+                refundBetOnBlackjackPush(player, dealer);
+            }
         }
     }
 }
