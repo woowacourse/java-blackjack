@@ -26,25 +26,26 @@ public class BlackjackController {
 
     public void gameStart() {
         BettingPool bettingPool = BettingPool.of();
+
+        BlackjackGame blackjackGame = initBlackjackGame(bettingPool);
+
+        distributeInitialCards(blackjackGame);
+
+        playGame(blackjackGame);
+
+        finishGame(blackjackGame, bettingPool);
+    }
+
+    private BlackjackGame initBlackjackGame(BettingPool bettingPool) {
         Dealer dealer = Dealer.of();
 
         List<Player> rawPlayers = readPlayers();
         readPlayersBet(rawPlayers, bettingPool);
 
         Players players = Players.of(rawPlayers);
-        BlackjackGame blackjackGame = BlackjackGame.of(
+        return BlackjackGame.of(
                 CardDeck.of(CardDeckGenerator.generateCardDeck()), dealer, players
         );
-
-        blackjackGame.distributeCards();
-        outputView.printInitCards(dealer, players);
-
-        drawToPlayers(blackjackGame);
-        drawToDealer(blackjackGame);
-
-        Map<Player, Integer> profits = blackjackGame.calculatePlayerProfit(bettingPool);
-        outputView.printFinalCardsContent(dealer, players);
-        outputView.printProfits(profits);
     }
 
     private List<Player> readPlayers() {
@@ -58,43 +59,64 @@ public class BlackjackController {
     private void readPlayersBet(List<Player> ps, BettingPool bettingPool) {
         for (Player p : ps) {
             String rawBet = inputView.getPlayerBetAmount(p);
-            int betMoney = Integer.parseInt(rawBet);
+            int betMoney = parseValidateInteger(rawBet);
             bettingPool.wager(p, Bet.of(betMoney));
         }
     }
 
-    private void drawToPlayers(BlackjackGame blackjackGame) {
-        List<String> playersNames = blackjackGame.getPlayersName();
-        for (String name : playersNames) {
-            processPlayerDecision(name, blackjackGame);
+    private int parseValidateInteger(String rawInt) {
+        try {
+            return Integer.parseInt(rawInt);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("유효하지 않은 숫자입니다.");
         }
     }
 
-    private void drawToDealer(BlackjackGame blackjackGame) {
-        boolean received = blackjackGame.passCardToDealer();
-        while (received) {
-            outputView.printDealerReceived();
-            received = blackjackGame.passCardToDealer();
+    private void distributeInitialCards(BlackjackGame game) {
+        game.distributeCards();
+        outputView.printInitCards(game.getDealer(), game.getPlayers());
+    }
+
+    private void playGame(BlackjackGame game) {
+        playPlayerTurns(game);
+        playDealerTurn(game);
+    }
+
+    private void playPlayerTurns(BlackjackGame game) {
+        for (String playerName : game.getPlayersName()) {
+            playPlayerTurn(game, playerName);
         }
     }
 
-    private void processPlayerDecision(String name, BlackjackGame blackjackGame) {
-        while (blackjackGame.checkPlayerCanReceive(name)) {
-            String answer = inputView.askReceive(name);
-            validateBinaryQuestion(answer);
+    private void playPlayerTurn(BlackjackGame game, String playerName) {
+        while (game.checkPlayerCanReceive(playerName)) {
+            String answer = inputView.askReceive(playerName);
+            if (!isValidAnswer(answer)) {
+                throw new IllegalArgumentException("유효하지 않은 입력입니다.");
+            }
+
             if (answer.equals("n")) {
-                outputView.printCardsByName(blackjackGame.getPlayerByName(name));
                 break;
             }
-            blackjackGame.passCardToPlayer(name);
-            outputView.printCardsByName(blackjackGame.getPlayerByName(name));
+
+            game.passCardToPlayer(playerName);
+            outputView.printCardsByName(game.getPlayerByName(playerName));
         }
     }
 
-    private void validateBinaryQuestion(String question) {
-        if (question.equals("y") || question.equals("n")) {
-            return;
+    private boolean isValidAnswer(String answer) {
+        return answer.equals("y") || answer.equals("n");
+    }
+
+    private void playDealerTurn(BlackjackGame game) {
+        while (game.passCardToDealer()) {
+            outputView.printDealerReceived();
         }
-        throw new IllegalArgumentException("유효하지 않은 입력입니다.");
+    }
+
+    private void finishGame(BlackjackGame game, BettingPool bettingPool) {
+        Map<Player, Integer> profits = game.calculatePlayerProfit(bettingPool);
+        outputView.printFinalCardsContent(game.getDealer(), game.getPlayers());
+        outputView.printProfits(profits);
     }
 }

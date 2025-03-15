@@ -76,4 +76,12 @@ public class BlackjackGame {
     public Player getPlayerByName(String name) {
         return players.findByName(name);
     }
+
+    public Dealer getDealer() {
+        return (Dealer) dealer;
+    }
+
+    public Players getPlayers() {
+        return players;
+    }
 }
