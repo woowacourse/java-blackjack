@@ -111,7 +111,12 @@ public class BlackJackManager {
 
     private List<Player> getBetPlayers() {
         final List<String> playerNames = inputView.askPlayerNames();
-
+        if (playerNames.isEmpty()) {
+            throw new IllegalArgumentException("플레이어를 입력해주세요. 최소 1명은 입력해야 합니다.");
+        }
+        if (playerNames.size() > 18) {
+            throw new IllegalArgumentException("18명을 초과해서 참가할 수 없습니다. 18명 이하로 입력해주세요.");
+        }
         return playerNames.stream()
                 .map(name -> {
                     Player player = Player.from(name);

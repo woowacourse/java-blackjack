@@ -9,7 +9,10 @@ public class InputView {
     public List<String> askPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = scanner.nextLine();
-        return List.of(input.split(","));
+        if (input.isBlank()) {
+            throw new IllegalArgumentException("빈 값을 입력할 수 없습니다.");
+        }
+        return List.of(input.split("\\s*,\\s*"));
     }
 
     public int askBetMoney(String nickname) {

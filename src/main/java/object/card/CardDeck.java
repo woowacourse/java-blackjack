@@ -64,6 +64,9 @@ public class CardDeck {
     }
 
     public Card draw() {
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException("카드가 모두 소진되어서, 더 이상 드로우 할 수 없습니다.");
+        }
         return cards.removeFirst();
     }
 
