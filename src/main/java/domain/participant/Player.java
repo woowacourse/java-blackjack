@@ -10,4 +10,9 @@ public class Player extends Participant {
     public boolean isPlayer() {
         return true;
     }
+
+    @Override
+    public boolean shouldDrawMore() {
+        return !isMaxScore();
+    }
 }

@@ -1,6 +1,6 @@
 package view;
 
-import domain.participant.Player;
+import domain.participant.Participant;
 
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -36,8 +36,8 @@ public class InputView {
         }
     }
 
-    public static String getYnInput(Player player) {
-        System.out.println(player.getName() + ASK_ONE_MORE_CARD_MESSAGE);
+    public static String getYnInput(Participant participant) {
+        System.out.println(participant.getName() + ASK_ONE_MORE_CARD_MESSAGE);
         String ynInput = sc.nextLine();
         if (!Pattern.matches(YN_REGEX, ynInput)) {
             throw new IllegalArgumentException(INVALID_YN_INPUT);

@@ -16,7 +16,6 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Supplier;
 
 public class BlackJackController {
 
@@ -66,40 +65,33 @@ public class BlackJackController {
 
     private void playBlackJack(final BlackJack blackJack, final Players players) {
         playersTurn(blackJack, players);
-        dealerTurn(blackJack);
+        playTurn(blackJack, blackJack.getDealer());
     }
 
     private void playersTurn(final BlackJack blackJack, final Players players) {
         for (Player player : players.getPlayers()) {
-            playerTurn(blackJack, player);
+            playTurn(blackJack, player);
         }
     }
 
-    private void playerTurn(final BlackJack blackJack, final Player player) {
-        playTurn(blackJack, player, () -> !player.isMaxScore() && InputView.getYnInput(player).equalsIgnoreCase(YES));
-    }
-
-    private void dealerTurn(final BlackJack blackJack) {
-        Dealer dealer = blackJack.getDealer();
-        playTurn(blackJack, dealer, () -> dealer.getHandTotal() <= THRESHOLD);
-    }
-
-    private void playTurn(final BlackJack blackJack, final Participant participant, final Supplier<Boolean> shouldDrawMore) {
+    private void playTurn(final BlackJack blackJack, final Participant participant) {
         if (participant.isMaxScore() || participant.isHandBust()) return;
 
-        while (!participant.isHandBust() && shouldDrawMore.get()) {
-            drawAdditionalCard(blackJack, participant);
+        boolean isAlive = participant.resolveBust();
+        while (isAlive && participant.shouldDrawMore() && (!participant.isPlayer() || InputView.getYnInput(participant).equalsIgnoreCase(YES))) {
+            isAlive = drawAdditionalCard(blackJack, participant);
         }
-        if (participant.isHandBust()) {
+        if (!isAlive) {
             handleBust(blackJack, participant);
         }
     }
 
-    private void drawAdditionalCard(final BlackJack blackJack, final Participant participant) {
+    private boolean drawAdditionalCard(final BlackJack blackJack, final Participant participant) {
         blackJack.passAdditionalCard(participant);
         if (participant.isPlayer()) {
             OutputView.printHandCardsNames(participant.getName(), participant.getHand());
         }
+        return participant.resolveBust();
     }
 
     private static void handleBust(final BlackJack blackJack, final Participant participant) {

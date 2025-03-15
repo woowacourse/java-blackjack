@@ -31,6 +31,8 @@ public abstract class Participant {
 
     public abstract boolean isPlayer();
 
+    public abstract boolean shouldDrawMore();
+
     public int getHandTotal() {
         return hand.getTotal();
     }
