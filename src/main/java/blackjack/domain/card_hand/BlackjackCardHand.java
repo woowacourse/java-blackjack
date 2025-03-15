@@ -74,8 +74,6 @@ public final class BlackjackCardHand {
                 .orElseThrow(IllegalStateException::new);
     }
     
-    // ↓ Forwarding Methods
-    
     public List<Card> getCards() {
         return cardHand.getCards();
     }

@@ -8,7 +8,7 @@ import blackjack.util.GlobalValidator;
 import java.util.List;
 
 public final class PlayerBlackjackCardHand {
-
+    
     private final BlackjackCardHand cardHand;
     private final Player player;
     
@@ -28,39 +28,37 @@ public final class PlayerBlackjackCardHand {
                 player
         );
     }
-
+    
     public List<Card> getInitialCards() {
         return cardHand.getCards().stream()
                 .limit(2)
                 .toList();
     }
-
-    // ↓ Forwarding Methods
-
+    
     public String getPlayerName() {
         return player.getName();
     }
-
+    
     public void addCard(final Card card) {
         cardHand.addCard(card);
     }
-
+    
     public List<Card> getCards() {
         return cardHand.getCards();
     }
-
+    
     public int getBlackjackSum() {
         return cardHand.getBlackjackSum();
     }
-
+    
     public boolean isBlackjack() {
         return cardHand.isBlackjack();
     }
-
+    
     public boolean isBust() {
         return cardHand.isBust();
     }
-
+    
     public boolean isAddedUpToMax() {
         return cardHand.isAddedUpToMax();
     }

@@ -8,7 +8,7 @@ public enum WinningStatus {
     무승부,
     플레이어_패배,
     ;
-
+    
     public static WinningStatus determineWinningStatus(
             final PlayerBlackjackCardHand player,
             final DealerBlackjackCardHand dealer

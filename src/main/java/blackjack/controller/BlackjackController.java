@@ -12,7 +12,7 @@ import blackjack.view.OutputView;
 import java.util.List;
 
 public final class BlackjackController {
-
+    
     private final InputView inputView;
     private final OutputView outputView;
     private final RetryHandler retryHandler;
@@ -58,7 +58,7 @@ public final class BlackjackController {
     }
     
     private void startAddingPlayerCards(final CardDrawer cardDrawer, final PlayerBettingBlackjackCardHand playerHand) {
-        while(true) {
+        while (true) {
             if (playerHand.isAddedUpToMax()) {
                 outputView.reachedMaxWarning();
                 return;

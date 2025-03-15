@@ -8,9 +8,9 @@ import blackjack.util.GlobalValidator;
 import java.util.List;
 
 public final class DealerBlackjackCardHand {
-
+    
     private static final int DEALER_DRAW_THRESHOLD = 16;
-
+    
     private final BlackjackCardHand cardHand;
     
     private DealerBlackjackCardHand(final BlackjackCardHand cardHand) {
@@ -22,11 +22,11 @@ public final class DealerBlackjackCardHand {
         GlobalValidator.validateNotNull(DealerBlackjackCardHand.class, initializer);
         return new DealerBlackjackCardHand(BlackjackCardHand.createWithInitialCards(initializer));
     }
-
+    
     public Card getInitialCard() {
         return cardHand.getCards().getFirst();
     }
-
+    
     public int startAddingAndGetAddedSize(final CardDrawer cardDrawer) {
         final int beforeCount = cardHand.getCardCount();
         while (cardHand.getBlackjackSum() <= DEALER_DRAW_THRESHOLD) {
@@ -34,21 +34,19 @@ public final class DealerBlackjackCardHand {
         }
         return cardHand.getCardCount() - beforeCount;
     }
-
-    // ↓ Forwarding Methods
-
+    
     public List<Card> getCards() {
         return cardHand.getCards();
     }
-
+    
     public int getBlackjackSum() {
         return cardHand.getBlackjackSum();
     }
-
+    
     public boolean isBust() {
         return cardHand.isBust();
     }
-
+    
     public boolean isBlackjack() {
         return cardHand.isBlackjack();
     }

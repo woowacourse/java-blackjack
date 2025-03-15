@@ -19,7 +19,7 @@ public enum CardNumber {
     ;
     
     private final List<Integer> blackjackValue;
-
+    
     CardNumber(final List<Integer> blackjackValue) {
         this.blackjackValue = blackjackValue;
     }

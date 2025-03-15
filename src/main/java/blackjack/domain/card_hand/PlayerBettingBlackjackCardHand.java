@@ -63,8 +63,6 @@ public final class PlayerBettingBlackjackCardHand {
         return winningStatus == WinningStatus.플레이어_승리 && hand.isBlackjack();
     }
     
-    // ↓ Forwarding Methods
-    
     public String getPlayerName() {
         return hand.getPlayerName();
     }

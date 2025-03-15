@@ -8,11 +8,11 @@ import blackjack.view.reader.SystemReader;
 import blackjack.view.writer.SystemWriter;
 
 public final class BlackjackApplication {
-
+    
     public static void main(String[] args) {
         getController().run();
     }
-
+    
     private static BlackjackController getController() {
         final SystemWriter writer = new SystemWriter();
         final OutputView outputView = new OutputView(writer);

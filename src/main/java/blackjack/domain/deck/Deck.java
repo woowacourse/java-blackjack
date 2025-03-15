@@ -5,19 +5,19 @@ import blackjack.domain.card.Card;
 import java.util.*;
 
 public final class Deck implements CardDrawer {
-
+    
     private final Deque<Card> cards;
-
+    
     public Deck() {
         this.cards = initCards();
     }
-
+    
     private Deque<Card> initCards() {
         final List<Card> cards = new ArrayList<>(Card.createTrumpCards().values());
         Collections.shuffle(cards);
         return new ArrayDeque<>(cards);
     }
-
+    
     @Override
     public Card draw() {
         if (cards.isEmpty()) {
