@@ -81,7 +81,130 @@ class BetSystemTest {
                                 jason, -20000
                         )
                 );
+    }
 
+    @DisplayName("플레이어가 블랙잭인 경우 딜러에게 베팅 금액의 1.5배를 받는다.")
+    @Test
+    void playerBlackjackReceiveOnePointFiveForBetAmount() {
+        //given
+        Player player = new Player("도기");
+
+        List<Player> players = new ArrayList<>(
+                List.of(
+                        player
+                )
+        );
+
+        BetSystem betSystem = new BetSystem();
+        betSystem.betting(player, 1000);
+
+        List<Card> cards = new ArrayList<>(
+                List.of(
+                        new Card(Symbol.COLVER, Rank.ACE),
+                        new Card(Symbol.COLVER, Rank.JACK)
+                )
+        );
+
+        Deck deck = Deck.from(cards);
+
+        player.prepareGame(deck);
+
+        Dealer dealer = new Dealer();
+
+        //when
+        Map<Gamer, Integer> actual = betSystem.calculateProfit(dealer, players);
+
+        //then
+        assertThat(actual).containsExactlyInAnyOrderEntriesOf(
+                Map.of(
+                        dealer, -1500,
+                        player, 2500
+                )
+        );
+    }
+
+    @DisplayName("플레어와 딜러가 동시에 블랙잭인 경우 플레이어는 배팅 금액을 돌려받는다.")
+    @Test
+    void bothPlayerDealerBlackjackGetBackBetAmount() {
+        //given
+        Player player = new Player("도기");
+
+        List<Player> players = new ArrayList<>(
+                List.of(
+                        player
+                )
+        );
+        Dealer dealer = new Dealer();
+
+        BetSystem betSystem = new BetSystem();
+        betSystem.betting(player, 1000);
+
+        List<Card> cards = new ArrayList<>(
+                List.of(
+                        new Card(Symbol.COLVER, Rank.ACE),
+                        new Card(Symbol.COLVER, Rank.JACK),
+                        new Card(Symbol.SPADE, Rank.ACE),
+                        new Card(Symbol.SPADE, Rank.JACK)
+                )
+        );
+
+        Deck deck = Deck.from(cards);
+
+        player.prepareGame(deck);
+        dealer.prepareGame(deck);
+
+        //when
+        Map<Gamer, Integer> actual = betSystem.calculateProfit(dealer, players);
+
+        //then
+        assertThat(actual).containsExactlyInAnyOrderEntriesOf(
+                Map.of(
+                        dealer, 0,
+                        player, 0)
+        );
+    }
+
+    @DisplayName("딜러가 블랙잭인 경우 플레이어는 베팅 금액을 모두 잃는다.")
+    @Test
+    void dealerBlackjackPlayerAllLoseBetAmount() {
+        //given
+        Player player = new Player("도기");
+
+        List<Player> players = new ArrayList<>(
+                List.of(
+                        player
+                )
+        );
+        Dealer dealer = new Dealer();
+
+        BetSystem betSystem = new BetSystem();
+        betSystem.betting(player, 1000);
+
+        List<Card> cards = new ArrayList<>(
+                List.of(
+                        new Card(Symbol.COLVER, Rank.ACE),
+                        new Card(Symbol.COLVER, Rank.EIGHT),
+                        new Card(Symbol.SPADE, Rank.ACE),
+                        new Card(Symbol.SPADE, Rank.JACK)
+                )
+        );
+
+        Deck deck = Deck.from(cards);
+
+        dealer.prepareGame(deck);
+        player.prepareGame(deck);
+
+        //when
+        Map<Gamer, Integer> actual = betSystem.calculateProfit(dealer, players);
+
+        //then
+        assertThat(actual)
+                .containsExactlyInAnyOrderEntriesOf(
+                        Map.of(
+                                dealer, 1000,
+                                player, -1000
+                        )
+                );
     }
 
     private List<Card> cardFixture() {
