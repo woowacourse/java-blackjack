@@ -1,6 +1,12 @@
 package domain;
 
-import controller.PlayerInfo;
+import domain.card.Card;
+import domain.card.CardProvider;
+import domain.card.Number;
+import domain.card.Symbol;
+import domain.dto.PlayerInfo;
+import domain.participant.Dealer;
+import domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -18,15 +24,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class GameManagerTest {
 
-    private class TestCardProvider implements CardProvider{
+    private class TestCardProvider implements CardProvider {
 
         private final Deque<Card> cardQueue = new ArrayDeque<>(List.of(
-            new Card(Symbol.CLOVER, Number.EIGHT),
-            new Card(Symbol.HEART, Number.JACK),
-            new Card(Symbol.DIAMOND, Number.EIGHT),
-            new Card(Symbol.SPADE, Number.ACE),
-            new Card(Symbol.SPADE, Number.KING),
-            new Card(Symbol.CLOVER, Number.ACE)
+            new Card(Symbol.CLOVER, domain.card.Number.EIGHT),
+            new Card(Symbol.HEART, domain.card.Number.JACK),
+            new Card(Symbol.DIAMOND, domain.card.Number.EIGHT),
+            new Card(Symbol.SPADE, domain.card.Number.ACE),
+            new Card(Symbol.SPADE, domain.card.Number.KING),
+            new Card(Symbol.CLOVER, domain.card.Number.ACE)
         ));
 
         @Override
@@ -44,7 +50,7 @@ public class GameManagerTest {
         GameManager gameManager = new GameManager(
             List.of(new PlayerInfo("drago", 2000), new PlayerInfo("duei", 1000)),
             new TestCardProvider());
-        List<Card> cardsOfDealer = List.of(new Card(Symbol.SPADE, Number.KING), new Card(Symbol.CLOVER, Number.ACE));
+        List<Card> cardsOfDealer = List.of(new Card(Symbol.SPADE, domain.card.Number.KING), new Card(Symbol.CLOVER, domain.card.Number.ACE));
 
         Dealer result = gameManager.findDealer();
 
@@ -61,9 +67,9 @@ public class GameManagerTest {
         Map<Player, Integer> incomes = gameManager.calculateIncomes();
 
         Map<Player, Integer> expected = Map.of(
-            new Player("drago", List.of(new Card(Symbol.CLOVER, Number.EIGHT), new Card(Symbol.HEART, Number.JACK)), 2000),
+            new Player("drago", List.of(new Card(Symbol.CLOVER, domain.card.Number.EIGHT), new Card(Symbol.HEART, domain.card.Number.JACK)), 2000),
             -2000,
-            new Player("duei", List.of(new Card(Symbol.DIAMOND, Number.EIGHT), new Card(Symbol.SPADE, Number.ACE)), 1000),
+            new Player("duei", List.of(new Card(Symbol.DIAMOND, domain.card.Number.EIGHT), new Card(Symbol.SPADE, Number.ACE)), 1000),
             -1000
         );
 
