@@ -20,67 +20,70 @@ public class BlackJackGame {
     private final Players players;
     private final Dealer dealer;
 
-    public BlackJackGame(InputView inputView) {
-        this.deck = new DeckInitializer().generateDeck();
-        this.players = Players.from(inputView.inputParticipant());
-        this.dealer = new Dealer();
+    public static BlackJackGame registerPlayers() {
+        Deck deck = new DeckInitializer().generateDeck();
+        Players players = Players.from(InputView.inputParticipant());
+        Dealer dealer = new Dealer();
+        return new BlackJackGame(deck, dealer, players);
     }
 
-    public void play(InputView inputView, OutputView outputView) {
-        initializeGame(inputView);
-        outputView.outputFirstCardDistributionResult(players, dealer);
+    private BlackJackGame(Deck deck, Dealer dealer, Players players) {
+        this.deck = deck;
+        this.dealer = dealer;
+        this.players = players;
+    }
 
-        givePlayersCard(inputView, outputView);
-        giveMoreDealerCard(outputView);
+    public void play() {
+        initializeGame();
+        OutputView.outputFirstCardDistributionResult(players, dealer);
+
+        givePlayersCard();
+        giveMoreDealerCard();
         BettingResult bettingResult = new BettingResult(GameResult.calculateGameResult(dealer, players));
 
-        outputView.outputFinalCardStatus(dealer, players);
-        outputView.outputFinalProfit(bettingResult.getBettingResult(), bettingResult.getDealerResult());
+        OutputView.outputFinalCardStatus(dealer, players);
+        OutputView.outputFinalProfit(bettingResult.getBettingResult(), bettingResult.getDealerResult());
     }
 
-
-    private void initializeGame(InputView inputView) {
-        players.getParticipants().forEach(p -> p.setBetting(inputView.inputBetting(p.getName())));
+    private void initializeGame() {
+        players.getParticipants().forEach(p -> p.setBetting(InputView.inputBetting(p.getName())));
         players.getParticipants().forEach(p -> p.initialCard(deck.drawCard(), deck.drawCard()));
         dealer.putCard(deck.drawCard());
     }
 
-
-    private void givePlayersCard(InputView inputView, OutputView outputView) {
+    private void givePlayersCard() {
         Deque<Player> readyQueue = new LinkedList<>(players.getParticipants());
         while (!readyQueue.isEmpty()) {
             Player player = readyQueue.getFirst();
-            processPlayerTurn(player, inputView, outputView, readyQueue);
+            processPlayerTurn(player, readyQueue);
         }
     }
 
-    private void processPlayerTurn(Player player, InputView inputView, OutputView outputView,
-                                   Deque<Player> readyQueue) {
-        HitOrStand hitOrStand = HitOrStand.from(inputView.inputHitOrStand(player.getName()));
+    private void processPlayerTurn(Player player, Deque<Player> readyQueue) {
+        HitOrStand hitOrStand = HitOrStand.from(InputView.inputHitOrStand(player.getName()));
         if (hitOrStand == HitOrStand.HIT) {
-            handlePlayerHit(player, outputView, readyQueue);
+            handlePlayerHit(player, readyQueue);
         } else {
             readyQueue.poll();
         }
     }
 
-    private void handlePlayerHit(Player player, OutputView outputView, Deque<Player> readyQueue) {
+    private void handlePlayerHit(Player player, Deque<Player> readyQueue) {
         player.putCard(deck.drawCard());
-        outputView.printPlayerCardStatus(player.getName(), player);
+        OutputView.printPlayerCardStatus(player.getName(), player);
 
         if (player.isBust()) {
-            outputView.printParticipantBust(player.getName());
+            OutputView.printParticipantBust(player.getName());
             readyQueue.poll();
         }
     }
 
-
-    private void giveMoreDealerCard(OutputView outputView) {
+    private void giveMoreDealerCard() {
         while (dealer.calculatePoint() <= ACE_THRESHOLD) {
             dealer.putCard(deck.drawCard());
-            outputView.outputDealerGetCard();
-            outputView.printPlayerCardStatus("딜러", dealer);
+            OutputView.outputDealerGetCard();
+            OutputView.printPlayerCardStatus("딜러", dealer);
         }
-        outputView.outputDealerCardFinish();
+        OutputView.outputDealerCardFinish();
     }
 }
