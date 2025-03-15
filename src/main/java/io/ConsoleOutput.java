@@ -1,6 +1,7 @@
 package io;
 
-import bet.BettingCenter;
+import bet.BetAmount;
+import bet.BetCenter;
 import game.Card;
 import participant.Dealer;
 import participant.Player;
@@ -101,10 +102,10 @@ public class ConsoleOutput {
         return card.getNumber().getName() + card.getEmblem().getName();
     }
 
-    public void printFinalProfit(BettingCenter bettingCenter, Dealer dealer) {
+    public void printFinalProfit(BetCenter betCenter, Dealer dealer) {
         System.out.println("\n## 최종 수익");
-        System.out.println("딜러: " + bettingCenter.calculateDealerProfit(dealer));
-        Map<Player, Integer> deriveBetResults = bettingCenter.deriveBettingResults(dealer);
+        System.out.println("딜러: " + betCenter.calculateDealerProfit(dealer));
+        Map<Player, BetAmount> deriveBetResults = betCenter.deriveBettingResults(dealer);
         for (Player player : deriveBetResults.keySet()) {
             System.out.println(player.getNickname() + ": " + deriveBetResults.get(player));
         }

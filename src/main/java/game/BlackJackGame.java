@@ -1,6 +1,6 @@
 package game;
 
-import bet.BettingCenter;
+import bet.BetCenter;
 import io.ConsoleInput;
 import io.ConsoleOutput;
 import participant.Dealer;
@@ -16,14 +16,14 @@ public class BlackJackGame {
     public void play(ConsoleInput input, ConsoleOutput output) {
         Dealer dealer = new Dealer(new DeckShuffleStrategy());
         Players players = Players.registerPlayers(input.readParticipantsNames(), dealer);
-        BettingCenter bettingCenter = new BettingCenter(input.readPlayerBetAmounts(players));
+        BetCenter betCenter = new BetCenter(input.readPlayerBetAmounts(players));
 
         output.printInitialGameSettings(players, dealer);
         performPlayerTurn(players, dealer, input, output);
         performDealerTurn(dealer, output);
 
         output.printGameResults(players, dealer);
-        output.printFinalProfit(bettingCenter, dealer);
+        output.printFinalProfit(betCenter, dealer);
     }
 
     private void performPlayerTurn(Players players, Dealer dealer, ConsoleInput input, ConsoleOutput output) {

@@ -1,5 +1,6 @@
 package io;
 
+import bet.BetAmount;
 import participant.Player;
 import participant.Players;
 
@@ -14,12 +15,12 @@ public class ConsoleInput {
         return splitNames(scanner.nextLine());
     }
 
-    public Map<Player, Integer> readPlayerBetAmounts(Players players) {
-        Map<Player, Integer> playerBetAmounts = new LinkedHashMap<>();
+    public Map<Player, BetAmount> readPlayerBetAmounts(Players players) {
+        Map<Player, BetAmount> playerBetAmounts = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
             System.out.println("\n" + player.getNickname() + "의 베팅 금액은?");
             int betAmount = getBetAmount();
-            playerBetAmounts.put(player, betAmount);
+            playerBetAmounts.put(player, new BetAmount(betAmount));
         }
         return playerBetAmounts;
     }

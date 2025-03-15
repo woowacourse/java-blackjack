@@ -7,44 +7,45 @@ import participant.Player;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class BettingCenter {
+public class BetCenter {
 
     private static final int HIGHEST_SCORE = 21;
 
-    private final Map<Player, Integer> playerBetAmounts;
+    private final Map<Player, BetAmount> playerBetAmounts;
 
-    public BettingCenter(Map<Player, Integer> playerBetAmounts) {
+    public BetCenter(Map<Player, BetAmount> playerBetAmounts) {
         this.playerBetAmounts = playerBetAmounts;
     }
 
     public int calculateDealerProfit(Dealer dealer) {
         return deriveBettingResults(dealer).values().stream()
-                .mapToInt(value -> -value)
+                .mapToInt(value -> -value.getValue())
                 .sum();
     }
 
-    public Map<Player, Integer> deriveBettingResults(Dealer dealer) {
-        Map<Player, Integer> bettingResults = new LinkedHashMap<>();
+    public Map<Player, BetAmount> deriveBettingResults(Dealer dealer) {
+        Map<Player, BetAmount> bettingResults = new LinkedHashMap<>();
         for (Player player : playerBetAmounts.keySet()) {
-            bettingResults.put(player, (int) calculateProfit(player, dealer));
+            bettingResults.put(player, new BetAmount(calculateProfit(player, dealer)));
         }
         return bettingResults;
     }
 
     private double calculateProfit(Player player, Dealer dealer) {
+        BetAmount betAmount = playerBetAmounts.get(player);
         if (isBothBlackJack(player, dealer) || isBothHighestScore(player, dealer)) {
-            return playerBetAmounts.get(player) * WinningResult.DRAW.getProfitRate();
+            return WinningResult.DRAW.calculateProfit(betAmount);
         }
 
         if (player.isBlackJack()) {
-            return (double) playerBetAmounts.get(player) * WinningResult.BLACKJACK.getProfitRate();
+            return WinningResult.BLACKJACK.calculateProfit(betAmount);
         }
 
         if (player.compareTo(dealer.sumCardNumbers()) == WinningResult.WIN) {
-            return playerBetAmounts.get(player) * WinningResult.WIN.getProfitRate();
+            return WinningResult.WIN.calculateProfit(betAmount);
         }
 
-        return playerBetAmounts.get(player) * WinningResult.LOSE.getProfitRate();
+        return WinningResult.LOSE.calculateProfit(betAmount);
     }
 
     private boolean isBothHighestScore(Player player, Dealer dealer) {
