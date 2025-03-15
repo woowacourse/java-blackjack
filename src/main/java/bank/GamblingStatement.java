@@ -24,7 +24,6 @@ public class GamblingStatement {
         return new GamblingStatement(profitStatement);
     }
 
-
     public Map<Participant, Money> getGamblingStatement() {
         return Collections.unmodifiableMap(gamblingStatement);
     }
