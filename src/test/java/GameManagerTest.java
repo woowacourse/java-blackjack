@@ -28,7 +28,7 @@ public class GameManagerTest {
     @MethodSource("userTestCase")
     void test(List<String> names) {
         assertThatCode(
-                () -> GameManager.initailizeGameManager(names, List.of(1L),
+                () -> GameManager.initailizeGameManager(names, List.of(1L, 1L, 1L, 1L, 1L, 1L, 1L),
                         new TrumpCardManager())).doesNotThrowAnyException();
     }
 
@@ -174,20 +174,22 @@ public class GameManagerTest {
         // given
         GameManager gameManager = GameManager.initailizeGameManager(List.of("유저"), List.of(1L),
                 new TrumpCardManager());
+
         Player player = gameManager.findPlayerByUsername("유저");
         player.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.J));
         player.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.Q));
         player.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.K));
 
-        gameManager.getDealer().getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.K));
-        gameManager.getDealer().getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.J));
-        gameManager.getDealer().getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.Q));
+        Dealer dealer = gameManager.getDealer();
+        dealer.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.K));
+        dealer.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.J));
+        dealer.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.Q));
 
         // when
-        Map<User, GameResult> gameResult = gameManager.createGameResult();
+        GameResult compare = gameManager.compare(player, dealer);
 
         // then
-        Assertions.assertThat(gameResult.get(player)).isEqualTo(GameResult.LOSE);
+        Assertions.assertThat(compare).isEqualTo(GameResult.LOSE);
     }
 
     @DisplayName("입력된 금액에 따라 배팅을 한다.")
@@ -205,4 +207,78 @@ public class GameManagerTest {
             softAssertions.assertThat(user2.getBetting().getBettingMoney()).isEqualTo(500000000L);
         });
     }
+
+    @DisplayName("플레이어는 게임에서 승리시 배팅금액만큼 얻는다.")
+    @Test
+    void test11() {
+        ///given
+        GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"),
+                List.of(300000000L), new TrumpCardManager());
+        Player player = gameManager.findPlayerByUsername("레몬");
+        Dealer dealer = gameManager.getDealer();
+
+        player.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.J));
+        player.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.Q));
+
+        dealer.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.FIVE));
+        dealer.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.TWO));
+        dealer.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.K));
+
+        //when
+        Map<User, Long> gameResult = gameManager.createGameResult();
+        //then
+        Assertions.assertThat(gameResult.get(player)).isEqualTo(300000000L);
+    }
+
+    @DisplayName("플레이어는 블랙잭으로 승리시 배팅금액의 1.5배를 얻는다.")
+    @Test
+    void test12() {
+        ///given
+        GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"),
+                List.of(300000000L), new TrumpCardManager());
+        Player player = gameManager.findPlayerByUsername("레몬");
+        Dealer dealer = gameManager.getDealer();
+
+        player.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.ACE));
+        player.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.Q));
+
+        dealer.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.FIVE));
+        dealer.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.TWO));
+        dealer.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.K));
+
+        //when
+        Map<User, Long> gameResult = gameManager.createGameResult();
+        GameResult compare = gameManager.compare(player, dealer);
+
+        //then
+        Assertions.assertThat(compare).isEqualTo(GameResult.BLACKJACK);
+        Assertions.assertThat(gameResult.get(player)).isEqualTo(450000000L);
+    }
+
+    @DisplayName("딜러는 최종 수익을 낸다.")
+    @Test
+    void test13() {
+        ///given
+        GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬", "륜도"),
+                List.of(300000000L, 20000L), new TrumpCardManager());
+        Player player1 = gameManager.findPlayerByUsername("레몬");
+        Player player2 = gameManager.findPlayerByUsername("륜도");
+        Dealer dealer = gameManager.getDealer();
+
+        player1.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.ACE));
+        player1.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.Q));
+        player2.getCardDeck().addTrumpCard(new TrumpCard(CardShape.HEART, CardNumber.FIVE));
+        player2.getCardDeck().addTrumpCard(new TrumpCard(CardShape.HEART, CardNumber.FOUR));
+
+        dealer.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.FIVE));
+        dealer.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.TWO));
+        dealer.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.K));
+
+        //when
+        Map<User, Long> gameResult = gameManager.createGameResult();
+        long dealerProfit = gameManager.calculateDealerProfit(gameResult);
+        //then
+        Assertions.assertThat(dealerProfit).isEqualTo(-449980000L);
+    }
+
 }
