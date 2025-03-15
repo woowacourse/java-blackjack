@@ -3,11 +3,11 @@ package view;
 import card.Card;
 import card.Suit;
 import card.Rank;
+import gameResult.MatchResultType;
 import participant.Dealer;
 import participant.Participant;
 import participant.Player;
 import participant.Players;
-import score.MatchResultType;
 
 import java.util.List;
 import java.util.Map;
@@ -85,26 +85,30 @@ public class OutputView {
         System.out.printf("%s - 결과: %d%n", formatHands(participant), participant.getScore().getValue());
     }
 
-    public static void printResult(Dealer dealer, Map<MatchResultType, Integer> dealerResult , Players players) {
+    public static void printResult(
+            Dealer dealer,
+            Map<MatchResultType, Long> dealerMatchResult,
+            Map<Player, MatchResultType> playerMatchResult
+    ) {
         String dealerNickname = dealer.getNickname();
-        String resultFormatByDealer = getResultFormatByDealer(dealerResult);
+        String resultFormatByDealer = getDealerResultFormat(dealerMatchResult);
 
         System.out.println();
         System.out.println("## 최종 승패");
         System.out.printf("%s: %s%n", dealerNickname, resultFormatByDealer);
 
-        for (Player player : players.getPlayers()) {
-            String nickname = player.getNickname();
-            String resultFormatByPlayer = getResultFormatByPlayer(player.getMatchType());
+        for (Map.Entry<Player, MatchResultType> entry : playerMatchResult.entrySet()) {
+            String nickname = entry.getKey().getNickname();
+            String resultFormatByPlayer = getResultFormatByPlayer(entry.getValue());
             System.out.printf("%s: %s%n", nickname, resultFormatByPlayer);
         }
 
     }
 
-    public static String getResultFormatByDealer(Map<MatchResultType, Integer> matchResult) {
+    public static String getDealerResultFormat(Map<MatchResultType, Long> matchResult) {
         StringBuilder result = new StringBuilder();
         for (MatchResultType matchResultType : matchResult.keySet()) {
-            int matchCount = matchResult.get(matchResultType);
+            long matchCount = matchResult.get(matchResultType);
             if (matchCount != 0) {
                 result.append(matchCount).append(MATCH_FORMAT.get(matchResultType.name()));
                 result.append(" ");

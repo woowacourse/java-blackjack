@@ -1,7 +1,5 @@
 package participant;
 
-import score.MatchResultType;
-
 import java.util.Objects;
 
 public class Player extends Participant {
@@ -9,18 +7,9 @@ public class Player extends Participant {
     private static final int HIT_CONDITION = 21;
 
     private final Nickname nickname;
-    private MatchResultType matchResultType;
 
     public Player(String nickname) {
         this.nickname = new Nickname(nickname);
-    }
-
-    public void updateResult(MatchResultType matchResultType) {
-        this.matchResultType = matchResultType;
-    }
-
-    public MatchResultType getMatchType() {
-        return matchResultType;
     }
 
     @Override

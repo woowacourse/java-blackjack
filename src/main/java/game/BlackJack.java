@@ -1,15 +1,10 @@
 package game;
 
 import card.CardDeck;
+import gameResult.GameResult;
 import participant.Dealer;
 import participant.Player;
 import participant.Players;
-import score.MatchResultType;
-import score.MatchResultCaseType;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class BlackJack {
 
@@ -40,7 +35,6 @@ public class BlackJack {
         }
     }
 
-
     public void dealCard(Dealer dealer, int amount) {
         for (int i = 0; i < amount; i++) {
             dealer.addCard(deck.pickCard());
@@ -56,34 +50,5 @@ public class BlackJack {
     public void receiveAdditionalCard(Dealer dealer) {
         dealCard(dealer, ADDITIONAL_CARD_DEFAULT_COUNT);
         dealer.applyAceRule();
-    }
-
-    public Map<MatchResultType, Integer> calculateMatchResult() {
-        Map<MatchResultType, Integer> matchResult = new HashMap<>();
-        for (Player player : players.getPlayers()) {
-            MatchResultCaseType matchResultCaseType = createGameResult(player);
-            List<MatchResultType> matches = matchResultCaseType.getMatches();
-            MatchResultType dealerMatchResultType = matches.getFirst();
-            MatchResultType playerMatchResultType = matches.getLast();
-            updateDealerMatchResult(matchResult, dealerMatchResultType);
-            player.updateResult(playerMatchResultType);
-        }
-        return matchResult;
-    }
-
-    private void updateDealerMatchResult(Map<MatchResultType, Integer> matchResult, MatchResultType dealerMatchResultType) {
-        matchResult.computeIfAbsent(dealerMatchResultType, k -> 0);
-        matchResult.put(dealerMatchResultType, matchResult.get(dealerMatchResultType) + 1);
-    }
-
-    private MatchResultCaseType createGameResult(Player player) {
-        if (player.isBust()) {
-            return MatchResultCaseType.WIN_LOSE;
-        }
-        if (dealer.isBust()) {
-            return MatchResultCaseType.LOSE_WIN;
-        }
-        return MatchResultCaseType.of(dealer.getScore().compareTo(player.getScore()));
-
     }
 }

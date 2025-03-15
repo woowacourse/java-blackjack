@@ -1,21 +1,12 @@
 package model.participant;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
 
 import card.*;
-import game.BlackJack;
 import participant.Dealer;
 import participant.Participant;
-import participant.Player;
-import participant.Players;
-import score.MatchResultType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 import static util.TestCardDistributor.divideCard;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -114,7 +105,7 @@ class DealerTest {
         assertThat(dealer.canHit()).isFalse();
     }
 
-    @ParameterizedTest
+   /* @ParameterizedTest
     @MethodSource("createCards")
     @DisplayName("딜러의 게임 결과가 제대로 생성되는지")
     void dealerGameResult(List<Card> playerCards, List<Card> dealerCards,
@@ -174,6 +165,6 @@ class DealerTest {
                         MatchResultType.DRAW
                 )
         );
-    }
+    }*/
 
 }

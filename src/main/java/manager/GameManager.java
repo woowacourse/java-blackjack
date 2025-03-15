@@ -3,6 +3,8 @@ package manager;
 import game.BlackJack;
 import card.CardDeck;
 import card.ShuffledDeckGenerator;
+import gameResult.GameResult;
+import gameResult.MatchResultType;
 import participant.Dealer;
 import participant.Player;
 import participant.Players;
@@ -10,6 +12,7 @@ import view.InputView;
 import view.OutputView;
 
 import java.util.List;
+import java.util.Map;
 
 public class GameManager {
 
@@ -27,13 +30,19 @@ public class GameManager {
 
         for (Player player : players.getPlayers()) {
             receiveAdditionalCard(player, blackJack);
-        };
+        }
 
         receiveAdditionalCard(dealer, blackJack);
         OutputView.printAllParticipantScore(dealer, players);
 
-        OutputView.printResult(dealer, blackJack.calculateMatchResult(), players);
+        GameResult gameResult = new GameResult();
+        Map<Player, MatchResultType> playerMatchResult = gameResult.calculatePlayersMatchResult(players, dealer);
+        Map<MatchResultType, Long> dealerMatchResult = gameResult.calculateDealerMatchResult(playerMatchResult);
+
+        OutputView.printResult(dealer,dealerMatchResult,playerMatchResult);
     }
+
+
 
     private void receiveAdditionalCard(Player player, BlackJack blackJack) {
         while (player.canHit() && agreeIntent(player)) {
