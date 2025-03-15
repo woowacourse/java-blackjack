@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Objects;
+
 public class Dealer extends Gamer {
 
     private static final String NAME = "딜러";
@@ -25,4 +27,13 @@ public class Dealer extends Gamer {
         }
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Dealer;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(NAME);
+    }
 }
