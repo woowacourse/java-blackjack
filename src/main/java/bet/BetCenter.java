@@ -9,8 +9,6 @@ import java.util.Map;
 
 public class BetCenter {
 
-    private static final int HIGHEST_SCORE = 21;
-
     private final Map<Player, BetAmount> playerBetAmounts;
 
     public BetCenter(Map<Player, BetAmount> playerBetAmounts) {
@@ -33,14 +31,15 @@ public class BetCenter {
 
     private double calculateProfit(Player player, Dealer dealer) {
         BetAmount betAmount = playerBetAmounts.get(player);
+
+        if (isOnlyPlayerBlackJack(player, dealer)) {
+            return WinningResult.BLACKJACK.calculateProfit(betAmount);
+        }
         if (isOnlyDealerBlackJack(player, dealer)) {
             return WinningResult.LOSE.calculateProfit(betAmount);
         }
         if (player.sumCardNumbers() == dealer.sumCardNumbers()) {
             return WinningResult.DRAW.calculateProfit(betAmount);
-        }
-        if (player.isBlackJack()) {
-            return WinningResult.BLACKJACK.calculateProfit(betAmount);
         }
         if (player.compareTo(dealer.sumCardNumbers()) == WinningResult.WIN) {
             return WinningResult.WIN.calculateProfit(betAmount);
@@ -50,6 +49,10 @@ public class BetCenter {
     }
 
     private boolean isOnlyDealerBlackJack(Player player, Dealer dealer) {
-        return (dealer.isBlackJack() && !player.isBlackJack());
+        return dealer.isBlackJack() && !player.isBlackJack();
+    }
+
+    private boolean isOnlyPlayerBlackJack(Player player, Dealer dealer) {
+        return !dealer.isBlackJack() && player.isBlackJack();
     }
 }
