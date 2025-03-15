@@ -2,7 +2,6 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Game {
     public static final int INITIAL_HANDS = 2;
@@ -10,13 +9,13 @@ public class Game {
     private final Dealer dealer;
     private final Players players;
 
-    private Game(List<PlayerName> playerNames) {
+    private Game(List<PlayerName> playerNames, List<BettingMoney> bettingMonies) {
         this.dealer = new Dealer(new Deck(Card.initializeCards()));
-        this.players = new Players(playerNames);
+        this.players = new Players(playerNames, bettingMonies);
     }
 
-    public static Game initialize(List<PlayerName> playerNames) {
-        Game game = new Game(playerNames);
+    public static Game initialize(List<PlayerName> playerNames, List<BettingMoney> bettingMonies) {
+        Game game = new Game(playerNames, bettingMonies);
         game.distributeStartingHands(playerNames);
         return game;
     }
@@ -31,11 +30,11 @@ public class Game {
     }
 
     public void giveCardToDealer(int count) {
-        dealer.addCard(drawCards(count));
+        dealer.receiveCards(drawCards(count));
     }
 
     public void giveCardToPlayer(PlayerName playerName, int count) {
-        players.giveCard(playerName, drawCards(count));
+        players.giveCardsToPlayer(playerName, drawCards(count));
     }
 
     public boolean isPlayerDrawable(PlayerName playerName) {
@@ -51,10 +50,6 @@ public class Game {
         return new Cards(cards);
     }
 
-    public Map<PlayerName, Player> getPlayersInfo() {
-        return players.getPlayersInfo();
-    }
-
     public Card getDealerOneCard() {
         return dealer.showAnyOneCard();
     }
@@ -63,11 +58,18 @@ public class Game {
         return dealer.isDrawable();
     }
 
-    public Gamer getDealer() {
+    public List<Player> getPlayers() {
+        return players.getPlayers();
+    }
+
+    public Dealer getDealer() {
         return Dealer.copyOf(dealer);
     }
 
-    public Map<PlayerName, GameResult> getGameResults() {
-        return players.calculateGameStatistics(dealer);
+    public int calculateDealerProfit() {
+        return -players.getPlayers().stream()
+                .map(player -> player.calculateProfit(dealer))
+                .mapToInt(i -> i)
+                .sum();
     }
 }

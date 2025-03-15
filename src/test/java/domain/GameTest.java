@@ -16,7 +16,9 @@ class GameTest {
     @BeforeEach
     void beforeEach() {
         List<PlayerName> usernames = Stream.of("a", "b", "c").map(PlayerName::new).toList();
-        game = Game.initialize(usernames);
+        List<BettingMoney> bettingMonies = Stream.of(10000, 10000, 10000).map(BettingMoney::new).toList();
+
+        game = Game.initialize(usernames, bettingMonies);
     }
 
     @Test
