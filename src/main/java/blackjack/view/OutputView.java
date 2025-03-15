@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import static blackjack.domain.game.Round.BLACKJACK;
-import static blackjack.domain.game.Round.DEALER_DRAW_THRESHOLD;
 import static blackjack.domain.gambler.Dealer.DEALER_NAME;
 import static java.util.stream.Collectors.joining;
 
@@ -31,7 +30,7 @@ public class OutputView {
     }
 
     public void printDealerDraw() {
-        System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.\n", DEALER_DRAW_THRESHOLD);
+        System.out.printf("딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
     }
 
     public void printGamblerResult(final Name name, final List<Card> cards, final int score) {

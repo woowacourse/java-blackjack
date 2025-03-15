@@ -24,8 +24,8 @@ public class Player {
         return hands.calculateScore();
     }
 
-    public boolean isScoreBelow(final int criteria) {
-        return hands.isScoreBelow(criteria);
+    public boolean isBust() {
+        return hands.isScoreExceed(BLACKJACK);
     }
 
     public boolean isBlackjack() {

@@ -1,6 +1,12 @@
 package blackjack.domain.game;
 
-import static blackjack.domain.card.CardType.*;
+import static blackjack.domain.card.CardType.ACE;
+import static blackjack.domain.card.CardType.EIGHT;
+import static blackjack.domain.card.CardType.FIVE;
+import static blackjack.domain.card.CardType.KING;
+import static blackjack.domain.card.CardType.NINE;
+import static blackjack.domain.card.CardType.SIX;
+import static blackjack.domain.card.CardType.TEN;
 import static blackjack.domain.fixture.CardFixture.createCards;
 import static blackjack.domain.gambler.Dealer.DEALER_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -85,7 +91,7 @@ class RoundTest {
         round.distributeCards(name, 3);
 
         // when
-        boolean result = round.isBusted(name);
+        boolean result = round.isBust(name);
 
         // then
         assertThat(result).isEqualTo(expected);

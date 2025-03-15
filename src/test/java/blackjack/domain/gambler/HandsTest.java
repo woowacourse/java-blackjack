@@ -38,17 +38,17 @@ class HandsTest {
         assertThat(result).isTrue();
     }
     
-    @DisplayName("카드의 합이 특정 값 이하인 지 여부를 반환한다")
-    @CsvSource(value = {"21:True", "18:True", "17:False"}, delimiterString = ":")
+    @DisplayName("카드의 합이 특정 값 초과인 지 여부를 반환한다")
+    @CsvSource(value = {"21:False", "18:False", "17:True"}, delimiterString = ":")
     @ParameterizedTest
-    void isScoreBelowTest(int score, boolean expected) {
+    void isScoreExceedTest(int score, boolean expected) {
         // given
         Hands hands = new Hands();
         hands.addCard(new Card(CardShape.CLOVER, TEN));
         hands.addCard(new Card(CardShape.HEART, EIGHT));
 
         // when
-        boolean result = hands.isScoreBelow(score);
+        boolean result = hands.isScoreExceed(score);
 
         // then
         assertThat(result).isEqualTo(expected);

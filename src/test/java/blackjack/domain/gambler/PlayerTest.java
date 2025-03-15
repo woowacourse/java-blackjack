@@ -3,7 +3,6 @@ package blackjack.domain.gambler;
 import static blackjack.domain.card.CardType.ACE;
 import static blackjack.domain.card.CardType.EIGHT;
 import static blackjack.domain.card.CardType.TEN;
-import static blackjack.domain.fixture.GamblerFixture.createDealerWithCards;
 import static blackjack.domain.fixture.GamblerFixture.createPlayerWithCards;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -47,20 +46,6 @@ class PlayerTest {
         assertThat(result).isTrue();
     }
 
-    @DisplayName("카드의_합이_특정 값 이하인지 확인한지 테스트")
-    @CsvSource(value = {"21:True", "16:False"}, delimiterString = ":")
-    @ParameterizedTest
-    void isBelowTest(int criteria, boolean expected) {
-        // given
-        Player player = createPlayerWithCards(name, TEN, EIGHT);
-
-        // when
-        boolean result = player.isScoreBelow(criteria);
-
-        // then
-        assertThat(result).isEqualTo(expected);
-    }
-
     @DisplayName("처음_카드를_받은_후_플레이어는_두개의_카드를_오픈한다")
     @Test
     void getInitialCardsTest() {
@@ -79,5 +64,19 @@ class PlayerTest {
                 () -> assertThat(result).hasSize(2),
                 () -> assertThat(result).contains(card1, card2)
         );
+    }
+    
+    @DisplayName("Bust인지_여부를_반환한다")
+    @CsvSource(value = {"TEN:EIGHT:THREE:False", "TEN:EIGHT:FOUR:True"}, delimiterString = ":")
+    @ParameterizedTest
+    void isBust(CardType type1, CardType type2, CardType type3, boolean expected) {
+        // given
+        Player player = createPlayerWithCards(name, type1, type2, type3);
+
+        // when
+        boolean result = player.isBust();
+
+        // then
+        assertThat(result).isEqualTo(expected);
     }
 }

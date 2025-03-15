@@ -15,7 +15,6 @@ public class Round {
     public static final int MAX_PLAYER_COUNT = 6;
     public static final int BLACKJACK = 21;
     public static final int BLACKJACK_CARD_COUNT = 2;
-    public static final int DEALER_DRAW_THRESHOLD = 16;
     public static final String NOT_EXISTS_PLAYER = "존재하지 않는 플레이어입니다: %s";
 
     private final CardDeck cardDeck;
@@ -35,6 +34,9 @@ public class Round {
                 .toList();
     }
 
+    /**
+     * TODO
+     */
     public void distributeCards(final Name name, final int cardCount) {
         if (dealer.isNameEquals(name)) {
             for (int i = 0; i < cardCount; i++) {
@@ -66,14 +68,14 @@ public class Round {
     }
 
     public boolean dealerMustDraw() {
-        return dealer.isScoreBelow(DEALER_DRAW_THRESHOLD);
+        return dealer.mustDraw();
     }
 
-    public boolean isBusted(final Name name) {
+    public boolean isBust(final Name name) {
         if (dealer.isNameEquals(name)) {
-            return !dealer.isScoreBelow(BLACKJACK);
+            return dealer.isBust();
         }
-        return !findPlayer(name).isScoreBelow(BLACKJACK);
+        return findPlayer(name).isBust();
     }
 
     public List<Card> getCards(final Name name) {

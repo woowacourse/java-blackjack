@@ -1,6 +1,5 @@
 package blackjack.domain.game;
 
-import static blackjack.domain.game.Round.BLACKJACK;
 import static blackjack.domain.game.WinningType.BLACKJACK_WIN;
 import static blackjack.domain.game.WinningType.DEFEAT;
 import static blackjack.domain.game.WinningType.DRAW;
@@ -29,10 +28,10 @@ public class WinningDiscriminator {
     }
 
     private WinningType judgePlayerResult(final Player player) {
-        if (!player.isScoreBelow(BLACKJACK)) {
+        if (player.isBust()) {
             return DEFEAT;
         }
-        if (!dealer.isScoreBelow(BLACKJACK)) {
+        if (dealer.isBust()) {
             return WIN;
         }
         if (player.isBlackjack() && !dealer.isBlackjack()) {

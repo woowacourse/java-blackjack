@@ -23,6 +23,10 @@ public class Hands {
         cards.add(card);
     }
 
+    public boolean isScoreExceed(final int criteria) {
+        return calculateScore() > criteria;
+    }
+
     public int calculateScore() {
         return adjustSumByAce(calculateCardsSum(), countAce());
     }
@@ -48,10 +52,6 @@ public class Hands {
             aceCount--;
         }
         return sum;
-    }
-
-    public boolean isScoreBelow(final int criteria) {
-        return calculateScore() <= criteria;
     }
 
     public List<Card> getCards() {

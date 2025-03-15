@@ -1,7 +1,6 @@
 package blackjack.domain.fixture;
 
 import static blackjack.domain.fixture.CardFixture.createCards;
-import static blackjack.domain.gambler.Dealer.DEALER_NAME;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardType;

@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Dealer {
     public static final Name DEALER_NAME = new Name("딜러");
+    private static final int DEALER_DRAW_THRESHOLD = 17;
 
     private final Player player = new Player(DEALER_NAME);
 
@@ -16,12 +17,8 @@ public class Dealer {
         return player.calculateScore();
     }
 
-    public boolean isScoreBelow(final int criteria) {
-        return player.isScoreBelow(criteria);
-    }
-
-    public int calculateScoreDifference(final Player player) {
-        return calculateScore() - player.calculateScore();
+    public boolean isBust() {
+        return player.isBust();
     }
 
     public boolean isBlackjack() {
@@ -32,8 +29,12 @@ public class Dealer {
         return player.isNameEquals(name);
     }
 
-    public Name getName() {
-        return player.getName();
+    public boolean mustDraw() {
+        return player.calculateScore() < DEALER_DRAW_THRESHOLD;
+    }
+
+    public int calculateScoreDifference(final Player other) {
+        return player.calculateScore() - other.calculateScore();
     }
 
     public List<Card> getCards() {
