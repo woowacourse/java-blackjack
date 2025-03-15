@@ -44,10 +44,6 @@ public abstract class Participant {
         return cards.cards();
     }
 
-    public int getBettingAmount() {
-        return 0;
-    }
-
     @Override
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) return false;

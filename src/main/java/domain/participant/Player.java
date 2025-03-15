@@ -12,13 +12,12 @@ public class Player extends Participant {
         this.bettingAmount = bettingAmount;
     }
 
-    @Override
-    public boolean shouldHit() {
-        return !cards.isBlackjackScoreExceeded() && !cards.equalToBlackjackScore();
+    public int getBettingAmount() {
+        return bettingAmount.amount();
     }
 
     @Override
-    public int getBettingAmount() {
-        return bettingAmount.amount();
+    public boolean shouldHit() {
+        return !cards.isBlackjackScoreExceeded() && !cards.equalToBlackjackScore();
     }
 }
