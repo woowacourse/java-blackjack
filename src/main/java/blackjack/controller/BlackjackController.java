@@ -10,7 +10,9 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
 
@@ -24,7 +26,7 @@ public class BlackjackController {
 
     public void start() {
         List<String> gamblerNames = inputView.readPlayerNames();
-        List<Gambler> gamblers = getGamblersWithBetAmount(gamblerNames);
+        List<Gambler> gamblers = getGamblers(gamblerNames);
         GameManager gameManager = new GameManager(gamblers);
         initPlayers(gameManager);
         dealMoreCards(gameManager);
@@ -32,15 +34,24 @@ public class BlackjackController {
         displayGameResults(gameManager);
     }
 
-    private List<Gambler> getGamblersWithBetAmount(List<String> gamblerNames) {
+    private List<Gambler> getGamblers(List<String> gamblerNames) {
+        Map<PlayerName, BetAmount> gamblersBetAmount = getGamblersBetAmount(gamblerNames);
         List<Gambler> gamblers = new ArrayList<>();
-        for (String gamblerName : gamblerNames) {
-            int amount = Integer.parseInt(inputView.readBetAmount(gamblerName));
-            BetAmount betAmount = new BetAmount(amount);
-            PlayerName playerName = new PlayerName(gamblerName);
-            gamblers.add(new Gambler(playerName, betAmount));
+        for (Map.Entry<PlayerName, BetAmount> entry : gamblersBetAmount.entrySet()) {
+            gamblers.add(new Gambler(entry.getKey(), entry.getValue()));
         }
         return gamblers;
+    }
+
+    private Map<PlayerName, BetAmount> getGamblersBetAmount(List<String> gamblerNames) {
+        Map<PlayerName, BetAmount> betAmounts = new HashMap<>();
+        for (String gamblerName : gamblerNames) {
+            int amount = Integer.parseInt(inputView.readBetAmount(gamblerName));
+            PlayerName playerName = new PlayerName(gamblerName);
+            BetAmount betAmount = new BetAmount(amount);
+            betAmounts.put(playerName, betAmount);
+        }
+        return betAmounts;
     }
 
     private void initPlayers(GameManager gameManager) {
