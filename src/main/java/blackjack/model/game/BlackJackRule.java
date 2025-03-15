@@ -44,10 +44,10 @@ public class BlackJackRule {
 
     public Map<Player, Map<GameResult, Integer>> calculateResult(final Player dealer, final List<Player> users) {
         Map<Player, Map<GameResult, Integer>> results = new LinkedHashMap<>();
-        results.put(dealer, new LinkedHashMap<>(GameResult.getResultBoard()));
+        results.put(dealer, new LinkedHashMap<>());
         users.forEach(
                 user -> {
-                    results.put(user, new LinkedHashMap<>(GameResult.getResultBoard()));
+                    results.put(user, new LinkedHashMap<>());
                     addResult(results, dealer, GameResult.calculateResult(dealer, user, this));
                     addResult(results, user, GameResult.calculateResult(user, dealer, this));
                 }
@@ -58,7 +58,7 @@ public class BlackJackRule {
 
     private void addResult(final Map<Player, Map<GameResult, Integer>> results, final Player player, final GameResult gameResult) {
         Map<GameResult, Integer> currentResults = results.get(player);
-        currentResults.put(gameResult, currentResults.get(gameResult) + 1);
+        currentResults.put(gameResult, currentResults.getOrDefault(gameResult, 0) + 1);
     }
 
     public boolean isDraw(final Player player, final Player challenger) {

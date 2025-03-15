@@ -1,11 +1,14 @@
 package blackjack.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import blackjack.model.card.Cards;
 import blackjack.model.card.initializer.DefaultCardDeckInitializer;
 import blackjack.model.game.BlackJackGame;
+import blackjack.model.game.GameResult;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
 import blackjack.model.player.User;
@@ -40,7 +43,9 @@ public class BlackJackController {
 
         dealerDrawMoreCards(blackJackGame, players.getFirst());
         outputView.printOptimalPoints(blackJackGame.calculateOptimalPoints(players));
-        outputView.printGameResult(blackJackGame.calculateResult(players));
+        Map<Player, Map<GameResult, Integer>> gameResults = blackJackGame.calculateResult(players);
+        Map<Player, BigDecimal> playerWinnings = blackJackGame.calculatePlayerWinnings(gameResults);
+        outputView.printFinalWinnings(playerWinnings);
     }
 
     private List<Player> makePlayers() {
@@ -77,8 +82,11 @@ public class BlackJackController {
     }
 
     private void dealerDrawMoreCards(final BlackJackGame blackJackGame, final Player dealer) {
-        boolean isDrawn = blackJackGame.canDrawMoreCard(dealer);
-        outputView.printDealerDrawnMoreCards(isDrawn);
+        boolean isDealerDrawn = blackJackGame.canDrawMoreCard(dealer);
+        if (isDealerDrawn) {
+            blackJackGame.drawCard(dealer, 1);
+        }
+        outputView.printDealerDrawnMoreCards(isDealerDrawn);
     }
 
 }

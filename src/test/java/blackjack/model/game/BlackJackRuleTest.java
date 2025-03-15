@@ -170,25 +170,25 @@ class BlackJackRuleTest {
                         new DealerWinBlackJackRule(), makeDealer(),
                         List.of(makeUserWithName("pobi"),
                                 makeUserWithName("json")),
-                        Map.of(makeDealer(), makeResultMap(2, 0, 0),
-                                makeUserWithName("pobi"), makeResultMap(0, 0, 1),
-                                makeUserWithName("json"), makeResultMap(0, 0, 1)
+                        Map.of(makeDealer(), Map.of(GameResult.WIN, 2),
+                                makeUserWithName("pobi"), Map.of(GameResult.LOSE, 1),
+                                makeUserWithName("json"), Map.of(GameResult.LOSE, 1)
                         )),
                 Arguments.of(
                         new DealerLoseBlackJackRule(), makeDealer(),
                         List.of(makeUserWithName("pobi"),
                                 makeUserWithName("json")),
-                        Map.of(makeDealer(), makeResultMap(0, 0, 2),
-                                makeUserWithName("pobi"), makeResultMap(1, 0, 0),
-                                makeUserWithName("json"), makeResultMap(1, 0, 0)
+                        Map.of(makeDealer(), Map.of(GameResult.LOSE, 2),
+                                makeUserWithName("pobi"), Map.of(GameResult.WIN, 1),
+                                makeUserWithName("json"), Map.of(GameResult.WIN, 1)
                         )),
                 Arguments.of(
                         new DrawBlackJackRule(), makeDealer(),
                         List.of(makeUserWithName("pobi"),
                                 makeUserWithName("json")),
-                        Map.of(makeDealer(), makeResultMap(0, 2, 0),
-                                makeUserWithName("pobi"), makeResultMap(0, 1, 0),
-                                makeUserWithName("json"), makeResultMap(0, 1, 0)
+                        Map.of(makeDealer(), Map.of(GameResult.DRAW, 2),
+                                makeUserWithName("pobi"), Map.of(GameResult.DRAW, 1),
+                                makeUserWithName("json"), Map.of(GameResult.DRAW, 1)
                         ))
         );
     }

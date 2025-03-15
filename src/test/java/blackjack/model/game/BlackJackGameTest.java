@@ -21,26 +21,24 @@ import blackjack.model.player.User;
 
 class BlackJackGameTest {
 
-    @MethodSource("딜러의_카드를_뽑아야_한다면_카드를_뽑는다_테스트_케이스")
+    @MethodSource("딜러의_카드를_뽑아야_하는지_알려준다_테스트_케이스")
     @ParameterizedTest
-    void 딜러의_카드를_뽑아야_한다면_카드를_뽑는다(Cards cards, Cards receivedCards, boolean expected, int expectedSize) {
+    void 딜러의_카드를_뽑아야_하는지_알려준다(Cards cards, Cards receivedCards, boolean expected) {
         BlackJackGame blackJackGame = new BlackJackGame(() -> cards);
 
         Dealer dealer = new Dealer();
         dealer.receiveCards(receivedCards);
 
         assertThat(blackJackGame.canDrawMoreCard(dealer)).isEqualTo(expected);
-        assertThat(dealer.getCards().getValues()).hasSize(expectedSize);
     }
 
-    private static Stream<Arguments> 딜러의_카드를_뽑아야_한다면_카드를_뽑는다_테스트_케이스() {
+    private static Stream<Arguments> 딜러의_카드를_뽑아야_하는지_알려준다_테스트_케이스() {
         Cards cards = new Cards(
                 of(createCard(CardNumber.TEN), createCard(CardNumber.SIX)));
         return Stream.of(
                 Arguments.of(cards, cards, true, 3),
-                Arguments.of(cards, new Cards(
-                        of(createCard(CardNumber.TEN), createCard(CardNumber.SEVEN))
-                ), false, 2)
+                Arguments.of(cards,
+                        new Cards(of(createCard(CardNumber.TEN), createCard(CardNumber.SEVEN))), false)
         );
     }
 
@@ -93,12 +91,12 @@ class BlackJackGameTest {
     private static Stream<Arguments> 플레이어들의_승패_결과를_계산한다_테스트_케이스() {
         return Stream.of(
                 Arguments.of(new Cards(createCard(CardNumber.THREE)), new Cards(createCard(CardNumber.TWO)),
-                        Map.of(new Dealer(), Map.of(GameResult.WIN, 1, GameResult.DRAW, 0, GameResult.LOSE, 0),
-                                new User("pobi"), Map.of(GameResult.WIN, 0, GameResult.DRAW, 0, GameResult.LOSE, 1)
+                        Map.of(new Dealer(), Map.of(GameResult.WIN, 1),
+                                new User("pobi"), Map.of(GameResult.LOSE, 1)
                         )),
                 Arguments.of(new Cards(createCard(CardNumber.THREE)), new Cards(createCard(CardNumber.THREE)),
-                        Map.of(new Dealer(), Map.of(GameResult.WIN, 0, GameResult.DRAW, 1, GameResult.LOSE, 0),
-                                new User("pobi"), Map.of(GameResult.WIN, 0, GameResult.DRAW, 1, GameResult.LOSE, 0)
+                        Map.of(new Dealer(), Map.of(GameResult.DRAW, 1),
+                                new User("pobi"), Map.of(GameResult.DRAW, 1)
                         ))
         );
     }

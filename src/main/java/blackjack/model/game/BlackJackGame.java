@@ -1,5 +1,7 @@
 package blackjack.model.game;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +67,45 @@ public class BlackJackGame {
 
     public void bet(final Player player, final int bettingAmount) {
         playersBetting.depositBettingMoney(player, new BettingMoney(bettingAmount));
+    }
+
+    public Map<Player, BigDecimal> calculatePlayerWinnings(final Map<Player, Map<GameResult, Integer>> gameResults) {
+        BigDecimal dealerWinnings = BigDecimal.ZERO;
+        Map<Player, BigDecimal> playerWinnings = new LinkedHashMap<>();
+        Player dealer = gameResults.keySet()
+                .stream()
+                .filter(Player::isDealer)
+                .findAny()
+                .orElseThrow(IllegalStateException::new);
+        playerWinnings.put(dealer, dealerWinnings);
+
+        for (Player player : gameResults.keySet()) {
+            if (player.isDealer()) {
+                continue;
+            }
+            Map<GameResult, Integer> playerGameResult = gameResults.get(player);
+            BettingMoney bettingMoney = playersBetting.withdrawMoney(player);
+            BigDecimal bettingMoneyAmount = bettingMoney.getAmount();
+            for (GameResult gameResult : playerGameResult.keySet()) {
+                if (gameResult == GameResult.WIN) {
+                    BigDecimal playerWinning = bettingMoneyAmount.multiply(BigDecimal.ONE)
+                            .setScale(0, RoundingMode.FLOOR);
+                    playerWinnings.put(player, playerWinning);
+                    dealerWinnings = dealerWinnings.subtract(playerWinning);
+                }
+                if (gameResult == GameResult.LOSE) {
+                    BigDecimal playerWinning = bettingMoneyAmount.multiply(BigDecimal.valueOf(-1))
+                            .setScale(0, RoundingMode.FLOOR);
+                    playerWinnings.put(player, playerWinning);
+                    dealerWinnings = dealerWinnings.subtract(playerWinning);
+                }
+                if (gameResult == GameResult.DRAW) {
+                    playerWinnings.put(player, BigDecimal.ZERO);
+                }
+            }
+        }
+        playerWinnings.put(dealer, dealerWinnings);
+        return playerWinnings;
     }
 
 }

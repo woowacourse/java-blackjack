@@ -1,12 +1,15 @@
 package blackjack.view;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import blackjack.model.card.Cards;
-import blackjack.model.game.GameResult;
 import blackjack.model.player.Player;
 
 public class OutputView {
@@ -51,25 +54,13 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printGameResult(final Map<Player, Map<GameResult, Integer>> gameResults) {
-        System.out.println("## 최종 승패");
-        gameResults.entrySet().stream()
-                .map(entry -> entry.getKey().getName() + ": " + formatResults(entry.getValue()))
+    public void printFinalWinnings(final Map<Player, BigDecimal> playerWinnings) {
+        System.out.println("## 최종 수익");
+        NumberFormat numberFormat = DecimalFormat.getInstance(Locale.KOREA);
+        playerWinnings.entrySet()
+                .stream()
+                .map(entry -> entry.getKey().getName() + ": " + numberFormat.format(entry.getValue()))
                 .forEach(System.out::println);
-    }
-
-    private String formatResults(Map<GameResult, Integer> resultStatistics) {
-        boolean hasMultipleResults = resultStatistics.values().stream().mapToInt(integer -> integer).sum() > 1;
-        if (hasMultipleResults) {
-            return resultStatistics.entrySet().stream()
-                    .filter(entry -> entry.getValue() > 0)
-                    .map(entry -> entry.getValue() + entry.getKey().getName())
-                    .collect(Collectors.joining(" "));
-        }
-        return resultStatistics.entrySet().stream()
-                .filter(entry -> entry.getValue() > 0)
-                .map(entry -> entry.getKey().getName())
-                .collect(Collectors.joining());
     }
 
 }
