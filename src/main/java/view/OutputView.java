@@ -61,6 +61,5 @@ public class OutputView {
         System.out.printf("딜러: %d\n", dealerBenefit);
         players.forEach(player -> System.out.printf("%s: %d\n", player.getPlayerName().username(),
                 player.calculateProfit(dealer)));
-
     }
 }
