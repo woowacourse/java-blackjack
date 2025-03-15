@@ -25,8 +25,8 @@ public class PlayersTest {
     void newPlayers() {
         // given
         List<Player> actual = List.of(
-                Player.from("pobi"),
-                Player.from("hippo")
+                new Player("pobi"),
+                new Player("hippo")
         );
         // when
         Players players = Players.from(List.of("pobi", "hippo"));
@@ -50,7 +50,7 @@ public class PlayersTest {
                 .mapToInt(card -> card.getRank().getScore())
                 .sum();
 
-        Player player = Player.from("pobi");
+        Player player = new Player("pobi");
         divideCard(cards, player);
 
         // when

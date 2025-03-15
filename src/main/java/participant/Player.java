@@ -11,12 +11,8 @@ public class Player extends Participant {
     private final Nickname nickname;
     private MatchResultType matchResultType;
 
-    private Player(String nickname) {
+    public Player(String nickname) {
         this.nickname = new Nickname(nickname);
-    }
-
-    public static Player from(String nickname) {
-        return new Player(nickname);
     }
 
     public void updateResult(MatchResultType matchResultType) {

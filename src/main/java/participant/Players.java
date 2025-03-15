@@ -12,9 +12,9 @@ public class Players {
         this.values = values;
     }
 
-    public static Players from(List<String> input) {
-        List<Player> inputPlayers = input.stream()
-                .map(Player::from)
+    public static Players from(List<String> inputs) {
+        List<Player> inputPlayers = inputs.stream()
+                .map(Player::new)
                 .toList();
         return new Players(inputPlayers);
     }

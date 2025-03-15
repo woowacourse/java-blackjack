@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import participant.Participant;
 import participant.Player;
 
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ public class PlayerTest {
         //given
         String expected = "pobi";
         //when
-        Player player = Player.from("pobi");
+        Player player = new Player("pobi");
         //then
         Assertions.assertThat(player.getNickname()).isEqualTo(expected);
     }
@@ -32,19 +31,15 @@ public class PlayerTest {
     @Test
     @DisplayName("카드 추가 기능이 잘 작동하는 지")
     void addCardsSuccess() {
-
         // given
         final List<Card> expectedCards = new ArrayList<>();
         for (int i = 0; i < 2; i++) {
             CardDeck deck = new CardDeck(new ShuffledDeckGenerator().generateDeck());
             expectedCards.add(deck.pickCard());
         }
-
         // when
-        Player player = Player.from("pobi");
+        Player player = new Player("pobi");
         divideCard(expectedCards, player);
-
-
         // then
         Assertions.assertThat(player.getCards()).containsAll(expectedCards);
     }
@@ -55,7 +50,7 @@ public class PlayerTest {
     void isNotEnoughScoreConditionTrue(List<Card> cards) {
         //given
 
-        Player player = Player.from("pobi");
+        Player player = new Player("pobi");
         divideCard(cards, player);
 
         //when
@@ -83,7 +78,7 @@ public class PlayerTest {
                 new Card(Suit.CLUBS, AceRank.SOFT_ACE),
                 new Card(Suit.HEARTS, NormalRank.KING)
         );
-        Participant player = Player.from("pobi");
+        Player player = new Player("pobi");
         for (Card card : cards) {
             player.addCard(card);
         }
