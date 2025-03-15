@@ -91,7 +91,7 @@ public class BlackJackController {
         outputView.displayProfitMessage();
         outputView.displayParticipantProfit("딜러", bettingSession.getDealerProfit());
         for (Player player : players) {
-            int profit = bettingSession.getPlayerProfit(player);
+            double profit = bettingSession.getPlayerProfit(player);
             outputView.displayParticipantProfit(player.getName(), profit);
         }
     }

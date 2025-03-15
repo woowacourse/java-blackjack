@@ -78,7 +78,7 @@ public class BettingTest {
         bettingSession.bet(player, PLAYER1_BET_AMOUNT);
         bettingSession.calculateProfit(List.of(player), dealer);
         // then
-        assertThat(bettingSession.getEarnings(player)).isEqualTo((int) (PLAYER1_BET_AMOUNT * 1.5));
+        assertThat(bettingSession.getEarnings(player)).isEqualTo(PLAYER1_BET_AMOUNT * 1.5);
     }
 
     @Test
@@ -125,7 +125,7 @@ public class BettingTest {
         dealer.hit(CardFixture.of(QUEEN, HEART));
         bettingSession.calculateProfit(List.of(player1, player2), dealer);
         // then
-        assertThat(bettingSession.getPlayerProfit(player1)).isEqualTo((int) (PLAYER1_BET_AMOUNT * 1.5));
+        assertThat(bettingSession.getPlayerProfit(player1)).isEqualTo(PLAYER1_BET_AMOUNT * 1.5);
         assertThat(bettingSession.getPlayerProfit(player2)).isEqualTo(PLAYER2_BET_AMOUNT);
         assertThat(bettingSession.getDealerProfit()).isEqualTo(
                 (int) (-PLAYER1_BET_AMOUNT * 1.5) - PLAYER2_BET_AMOUNT);

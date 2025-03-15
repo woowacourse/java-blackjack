@@ -7,66 +7,36 @@ import java.util.List;
 import java.util.Map;
 
 public class BettingSession {
-    Map<Player, Integer> bets = new HashMap<>();
-    Map<Player, Integer> earnings = new HashMap<>();
+    Map<Player, Bet> bets = new HashMap<>();
+    Map<Player, Earning> earnings = new HashMap<>();
 
-    public void bet(Player player, int betAmount) {
-        bets.put(player, betAmount);
+    public void bet(Player player, double betAmount) {
+        bets.put(player, new Bet(betAmount));
     }
 
     public void calculateProfit(List<Player> players, Dealer dealer) {
         for (Player player : players) {
             GameResult playerGameResult = GameResult.calculatePlayerGameResult(dealer, player);
-            if (playerGameResult == GameResult.LOSE) {
-                recordEarningsOnLoss(player);
-            }
-            if (playerGameResult == GameResult.WIN) {
-                recordEarningsOnWin(player);
-            }
-            if (playerGameResult == GameResult.PUSH) {
-                refundBetOnBlackjackPush(player, dealer);
-            }
+            Earning earning = Earning.calculate(playerGameResult, player, bets.get(player));
+            earnings.put(player, earning);
         }
     }
 
-    private void recordEarningsOnLoss(Player player) {
-        earnings.put(player, bets.get(player) * -1);
+    public double getPlayerProfit(Player player) {
+        return earnings.get(player).getAmount();
     }
 
-    private void recordEarningsOnWin(Player player) {
-        if (player.isBlackJack()) {
-            applyBlackjackBonus(player);
-            return;
-        }
-        earnings.put(player, bets.get(player));
-    }
-
-    private void applyBlackjackBonus(Player player) {
-        int betAmount = bets.get(player);
-        earnings.put(player, (int) (betAmount * 1.5));
-    }
-
-    private void refundBetOnBlackjackPush(Player player, Dealer dealer) {
-        if (player.isBlackJack() && dealer.isBlackJack()) {
-            earnings.put(player, bets.get(player));
-        }
-    }
-
-    public int getPlayerProfit(Player player) {
-        return earnings.get(player);
-    }
-
-    public int getDealerProfit() {
+    public double getDealerProfit() {
         return earnings.values().stream()
-                .mapToInt(value -> value * -1)
+                .mapToDouble(value -> value.getAmount() * -1)
                 .sum();
     }
 
-    public int getEarnings(Player player) {
-        return earnings.get(player);
+    public double getEarnings(Player player) {
+        return earnings.get(player).getAmount();
     }
 
-    public int getBetAmount(Player player) {
-        return bets.get(player);
+    public double getBetAmount(Player player) {
+        return bets.get(player).getAmount();
     }
 }

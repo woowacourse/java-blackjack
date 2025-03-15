@@ -65,8 +65,8 @@ public class OutputView {
         System.out.println("## 최종 수익");
     }
 
-    public void displayParticipantProfit(String name, int profit) {
-        System.out.printf("%s: %d", name, profit);
+    public void displayParticipantProfit(String name, double profit) {
+        System.out.printf("%s: %.0f", name, profit);
         displayEmptyLine();
     }
 }

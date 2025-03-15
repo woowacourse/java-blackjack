@@ -1,0 +1,29 @@
+package domain.game;
+
+public class Bet {
+    private final double BLACKJACK_BONUS = 1.5;
+    private final double amount;
+
+    public Bet(double amount) {
+        validateAmount(amount);
+        this.amount = amount;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public double getBlackjackWinAmount() {
+        return amount * BLACKJACK_BONUS;
+    }
+
+    public double getLossAmount() {
+        return -amount;
+    }
+
+    private void validateAmount(double amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("[ERROR] 배팅 금액은 0보다 커야 합니다.");
+        }
+    }
+}
