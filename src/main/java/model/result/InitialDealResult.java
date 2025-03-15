@@ -1,6 +1,7 @@
 package model.result;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import model.participant.Dealer;
 import model.participant.Player;
@@ -8,31 +9,45 @@ import model.participant.Players;
 
 public class InitialDealResult {
     private final List<Player> winnerPlayers;
-    private final boolean isDealerWins;
+    private final List<Player> loserPlayers;
 
     public static InitialDealResult from(Dealer dealer, Players players) {
-        List<Player> blackjackPlayers = new ArrayList<>();
         if (dealer.isBlackJack()) {
-            return new InitialDealResult(blackjackPlayers, true);
+            return createResultIfDealerBlackjack(players);
         }
-        for (Player player : players.getPlayers()) {
-            if (player.isBlackjack()) {
-                blackjackPlayers.add(player);
-            }
-        }
-        return new InitialDealResult(blackjackPlayers, false);
+        List<Player> blackjackPlayers = players.getPlayers().stream()
+                .filter(Player::isBlackjack)
+                .toList();
+        return new InitialDealResult(blackjackPlayers);
     }
 
-    public InitialDealResult(List<Player> winnerPlayers, boolean isDealerWins) {
+    private static InitialDealResult createResultIfDealerBlackjack(Players players) {
+        List<Player> winnerPlayers = new ArrayList<>();
+        List<Player> loserPlayers = new ArrayList<>();
+        for (Player player : players.getPlayers()) {
+            if (player.isBlackjack()) {
+                winnerPlayers.add(player);
+                continue;
+            }
+            loserPlayers.add(player);
+        }
+        return new InitialDealResult(winnerPlayers, loserPlayers);
+    }
+
+    public InitialDealResult(List<Player> winnerPlayers) {
+        this(winnerPlayers, List.of());
+    }
+
+    public InitialDealResult(List<Player> winnerPlayers, List<Player> loserPlayers) {
         this.winnerPlayers = winnerPlayers;
-        this.isDealerWins = isDealerWins;
+        this.loserPlayers = loserPlayers;
     }
 
     public List<Player> findWinnerPlayers() {
-        return this.winnerPlayers;
+        return Collections.unmodifiableList(winnerPlayers);
     }
 
-    public boolean isDealerWins() {
-        return isDealerWins;
+    public List<Player> findLoserPlayers() {
+        return Collections.unmodifiableList(loserPlayers);
     }
 }

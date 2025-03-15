@@ -63,6 +63,25 @@ class InitialDealResultTest {
 
         //then
         assertThat(initialDealResult.findWinnerPlayers()).isEmpty();
-        assertThat(initialDealResult.isDealerWins()).isTrue();
+        assertThat(initialDealResult.findLoserPlayers()).containsAll(List.of(player1, player2));
+    }
+
+    @Test
+    @DisplayName("최초 카드 분배 후 딜러와 플레이어가 모두 블랙잭일 경우 블랙잭인 플레이어는 승리하고, 나머지 플레이어는 패배한다.")
+    void blackjackPlayerWinsWhenPlayerAndDealerBlackjack() {
+        //given
+        player1.receiveCard(new Card(CardRank.ACE, CardSuit.CLOVER));
+        player1.receiveCard(new Card(CardRank.JACK, CardSuit.CLOVER));
+        player2.receiveCard(new Card(CardRank.FOUR, CardSuit.DIAMOND));
+        player2.receiveCard(new Card(CardRank.FIVE, CardSuit.DIAMOND));
+        dealer.receiveCard(new Card(CardRank.ACE, CardSuit.DIAMOND));
+        dealer.receiveCard(new Card(CardRank.JACK, CardSuit.DIAMOND));
+
+        //when
+        InitialDealResult initialDealResult = InitialDealResult.from(dealer, players);
+
+        //then
+        assertThat(initialDealResult.findWinnerPlayers()).containsExactly(player1);
+        assertThat(initialDealResult.findLoserPlayers()).containsExactly(player2);
     }
 }
