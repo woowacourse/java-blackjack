@@ -94,6 +94,10 @@ public class BlackJackController {
     }
 
     private boolean isMoreCard(final Deck deck, final Player player) {
+        if (player.isImPossibleDrawCard()) {
+            return false;
+        }
+
         final String input = InputView.readQuestOneMoreCard(player.getDisplayName());
         if (Command.find(input) == Command.YES) {
             final Card card = deck.drawCard();
