@@ -1,5 +1,6 @@
 package domain.player;
 
+import domain.card.Deck;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +36,17 @@ public class Users {
         }
     }
 
+    public void drawInitialCards(Deck deck) {
+        for (User user : users) {
+            user.drawInitialCards(deck);
+        }
+    }
+
     public int size() {
         return users.size();
+    }
+
+    public List<User> getUsers() {
+        return users;
     }
 }
