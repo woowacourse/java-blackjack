@@ -21,6 +21,7 @@ class HandTest {
 
     @BeforeEach
     void setUp() {
+        hand = new Hand(new PlayerStrategy());
         card1 = new Card(Rank.ACE, Shape.CLOVER);
         card2 = new Card(Rank.TWO, Shape.CLOVER);
         card10 = new Card(Rank.JACK, Shape.CLOVER);
@@ -31,7 +32,6 @@ class HandTest {
     void 카드를_손에_추가한다() {
 
         // given
-        final Hand hand = new Hand(new PlayerStrategy());
 
         // when & then
         assertThatCode(() -> {
@@ -45,7 +45,6 @@ class HandTest {
     void 손에_있는_카드의_합을_가져온다() {
 
         // given
-        final Hand hand = new Hand(new PlayerStrategy());
 
         // when
         hand.add(card1);
@@ -60,7 +59,6 @@ class HandTest {
     void 카드의_합이_21이면_카드를_뽑지_못한다() {
 
         // given
-        final Hand hand = new Hand(new PlayerStrategy());
 
         // when
         hand.add(card1);
@@ -75,7 +73,6 @@ class HandTest {
     void 카드의_합이_21_이하면_카드를_뽑을_수_있다() {
 
         // given
-        final Hand hand = new Hand(new PlayerStrategy());
 
         // when
         hand.add(card1);
@@ -84,12 +81,11 @@ class HandTest {
         assertThat(hand.isImPossibleDrawCard()).isFalse();
     }
 
-    @DisplayName("카드의 합이 21 미만이면 버스트가 아니다.")
+    @DisplayName("카드의 합이 21 이하면 버스트가 아니다.")
     @Test
-    void 카드의_합이_21_미만이면_버스트가_아니다() {
+    void 카드의_합이_21_이하면_버스트가_아니다() {
 
         // given
-        final Hand hand = new Hand(new PlayerStrategy());
 
         // when
         hand.add(card1);
@@ -99,12 +95,27 @@ class HandTest {
         assertThat(hand.isBust()).isFalse();
     }
 
+    @DisplayName("카드의 합이 21 초과면 버스트다.")
+    @Test
+    void 카드의_합이_21_초과면_버스트다() {
+
+        // given
+
+        // when
+        hand.add(card1);
+        hand.add(card10);
+        hand.add(card10);
+
+        // then
+        assertThat(hand.isBust()).isTrue();
+    }
+
+
     @DisplayName("카드의 합이 21이며 두장이면 블랙잭 상태다.")
     @Test
     void 카드의_합이_21이며_두장이면_블랙잭_상태다() {
 
         // given
-        final Hand hand = new Hand(new PlayerStrategy());
 
         // when
         hand.add(card1);
@@ -119,7 +130,6 @@ class HandTest {
     void 카드의_합이_21이며_두장이_아니면_블랙잭_상태가_아니다() {
 
         // given
-        final Hand hand = new Hand(new PlayerStrategy());
 
         // when
         hand.add(card1);

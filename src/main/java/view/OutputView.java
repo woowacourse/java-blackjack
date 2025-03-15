@@ -63,7 +63,7 @@ public final class OutputView {
 
     public static void printProfitResults(final Map<Gamer, Integer> profitResults) {
         print("## 최종 수익");
-        for (Map.Entry<Gamer, Integer> entry : profitResults.entrySet()) {
+        for (final Map.Entry<Gamer, Integer> entry : profitResults.entrySet()) {
             print(String.format(entry.getKey().getDisplayName() + ": " + entry.getValue()));
         }
     }

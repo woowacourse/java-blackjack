@@ -4,10 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import domain.deck.Card;
-import domain.deck.Deck;
 import domain.deck.Rank;
 import domain.deck.Shape;
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +20,6 @@ class PlayerTest {
     Card card2;
     Card card3;
     Card card4;
-    Deck deck;
 
     @BeforeEach
     void setUp() {
@@ -31,13 +28,6 @@ class PlayerTest {
         card2 = new Card(Rank.TWO, Shape.CLOVER);
         card3 = new Card(Rank.THREE, Shape.CLOVER);
         card4 = new Card(Rank.FOUR, Shape.CLOVER);
-        final List<Card> cards = new ArrayList<>();
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
-        cards.add(card4);
-        deck = new Deck(cards);
-
     }
 
     @DisplayName("플레이어의 카드 합을 구한다.")

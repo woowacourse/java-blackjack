@@ -29,7 +29,6 @@ class FinalResultTest {
     Card cardKing;
     Card cardJack;
     Card cardAce;
-    Card cardNine;
 
     @BeforeEach
     void setUp() {
@@ -46,7 +45,6 @@ class FinalResultTest {
         cardKing = new Card(Rank.KING, Shape.CLOVER);
         cardJack = new Card(Rank.JACK, Shape.CLOVER);
         cardAce = new Card(Rank.ACE, Shape.CLOVER);
-        cardNine = new Card(Rank.NINE, Shape.SPADE);
 
         defaultPlayer.hit(cardJack);
         defaultDealer.hit(cardJack);
