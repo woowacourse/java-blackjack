@@ -1,5 +1,10 @@
 package ScoreResult;
 
+import bank.BlackjackWinCalculator;
+import bank.Calculator;
+import bank.DrawCalculator;
+import bank.LoseCalculator;
+import bank.WinCalculator;
 import game.GameRule;
 import participant.Participant;
 import participant.Participants;
@@ -28,6 +33,23 @@ public class ScoreBoard {
                 determineOutcome(dealer, participant);
             }
         }
+    }
+
+    public Calculator selectCalculator(Participant participant) {
+        int winCounts = scoreBoard.get(participant).requestWinCounts();
+        if (participant.isBlackJack() && winCounts != 0) {
+            return new BlackjackWinCalculator();
+        }
+        if (winCounts != 0) {
+            return new WinCalculator();
+        }
+
+        int drawCounts = scoreBoard.get(participant).requestDrawCounts();
+        if (drawCounts != 0) {
+            return new DrawCalculator();
+        }
+
+        return new LoseCalculator();
     }
 
     private Participant findDealer() {
@@ -62,7 +84,7 @@ public class ScoreBoard {
         return BattleResult.WIN;
     }
 
-    private static BattleResult determinePlayerResultNormalCase(int dealerScore, int playerScore) {
+    private BattleResult determinePlayerResultNormalCase(int dealerScore, int playerScore) {
         if (playerScore > dealerScore) {
             return BattleResult.WIN;
         }
@@ -80,16 +102,6 @@ public class ScoreBoard {
             return BattleResult.WIN;
         }
         return BattleResult.DRAW;
-    }
-
-    public int requestWinCounts(Participant participant) {
-        BattleResults battleResults = scoreBoard.get(participant);
-        return battleResults.requestWinCounts();
-    }
-
-    public int requestDrawCounts(Participant participant) {
-        BattleResults battleResults = scoreBoard.get(participant);
-        return battleResults.requestDrawCounts();
     }
 
     public Map<Participant, BattleResults> getScoreBoard() {
