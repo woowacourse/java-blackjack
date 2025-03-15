@@ -1,0 +1,45 @@
+package model.rounds;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+import model.participants.Dealer;
+import model.participants.Players;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+public class OutcomeTest {
+    private Dealer dealer;
+    private Players players;
+
+    @BeforeEach
+    void setUp() {
+        Actors actors = new Actors();
+        actors.inviteDealer();
+        actors.invitePlayers(actors.getDealer(), List.of("player1", "player2"), List.of(1000, 2000));
+
+        this.dealer = actors.getDealer();
+        this.players = actors.getPlayers();
+    }
+
+    @DisplayName("딜러는 최종 게임 결과를 생성한다")
+    @Test
+    void testDealerOutcome() {
+        Outcome dealerOutcome = new Outcome();
+
+        dealerOutcome.checkFinalOutcome(dealer, players);
+
+        assertThat(dealerOutcome).isNotNull();
+    }
+
+    @DisplayName("플레이어는 최종 게임 결과를 생성한다")
+    @Test
+    void testPlayerOutcome() {
+        Outcome playersOutcome = new Outcome();
+
+        playersOutcome.checkFinalOutcome(dealer, players);
+
+        assertThat(playersOutcome).isNotNull();
+    }
+}
