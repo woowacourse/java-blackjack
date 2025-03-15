@@ -4,7 +4,6 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
 import blackjack.domain.card.generator.ShuffleDeckGenerator;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Gamer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.DealerWinningResult;
@@ -19,9 +18,6 @@ public class BlackjackGame {
     private static final int DEALER_COUNT = 1;
     private static final int SPREAD_CARD_SIZE_PER_PLAYER = 2;
     private static final int SPREAD_SIZE = 1;
-
-    private static final String YES = "y";
-    private static final String NO = "n";
 
     private final InputView inputView;
     private final ResultView resultView;
@@ -68,26 +64,13 @@ public class BlackjackGame {
 
     private void spreadExtraCardsToPlayer(final Players players, final Deck deck) {
         Players availablePlayers = players.findHitAvailablePlayers();
-        for (Gamer gamer : availablePlayers.getPlayers()) {
-            while (gamer.canHit() && wantHit(gamer)) {
+        for (Player player : availablePlayers.getPlayers()) {
+            while (player.canHit() && inputView.askHit(player)) {
                 final Hand hand = deck.spreadCards(SPREAD_SIZE);
-                gamer.receiveCards(new Hand(List.of(hand.getFirstCard())));
-                resultView.printParticipantTotalCards(gamer.getNickname(), gamer.showAllCards());
+                player.receiveCards(new Hand(List.of(hand.getFirstCard())));
+                resultView.printParticipantTotalCards(player.getNickname(), player.showAllCards());
             }
         }
-    }
-
-    private boolean wantHit(final Gamer player) {
-        String answer = inputView.askHit(player);
-        if (isValidAnswer(answer)) {
-            return answer.equals(YES);
-        }
-        resultView.showln("잘못된 응답입니다. 다시 입력해주세요.");
-        return wantHit(player);
-    }
-
-    private boolean isValidAnswer(final String answer) {
-        return answer.equals(YES) || answer.equals(NO);
     }
 
     private void spreadExtraCardsToDealer(final Dealer dealer, final Deck deck) {
