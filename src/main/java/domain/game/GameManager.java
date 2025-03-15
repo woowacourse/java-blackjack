@@ -1,11 +1,11 @@
 package domain.game;
 
-import domain.card.Card;
+import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
-import domain.card.CardDeck;
 
+import java.awt.*;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,11 +38,13 @@ public class GameManager {
     }
 
     public GameResult evaluateFinalScore() {
-        int dealerScore = dealer.calculateScore();
+        ScoreInfo dealerScoreInfo = new ScoreInfo(dealer.calculateScore(), dealer.getCardCount());
 
         Map<Player, Winning> playerWinnings = players.stream()
                 .collect(Collectors.toMap(player -> player
-                        , player -> Winning.determine(player.calculateScore(), dealerScore)
+                        , player -> Winning.determine(
+                                new ScoreInfo(player.calculateScore(), player.getCardCount()), dealerScoreInfo
+                        )
                         , (player1, player2) -> player1, LinkedHashMap::new));
 
         return new GameResult(playerWinnings);

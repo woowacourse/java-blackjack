@@ -41,6 +41,10 @@ public class HandCards {
         return sum;
     }
 
+    public int getCardCount() {
+        return deck.size();
+    }
+
     public List<Card> getCards() {
         return List.copyOf(deck);
     }

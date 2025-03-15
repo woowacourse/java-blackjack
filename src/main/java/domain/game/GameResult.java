@@ -20,7 +20,7 @@ public class GameResult {
     }
 
     public int countDealerLose() {
-        return convertWinning(Winning.WIN);
+        return convertWinning(Winning.WIN) + convertWinning(Winning.BLACKJACK);
     }
 
     private int convertWinning(Winning winningStatus) {
