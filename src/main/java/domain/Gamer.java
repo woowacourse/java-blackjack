@@ -18,7 +18,7 @@ public abstract class Gamer {
         return cards.calculateScore();
     }
 
-    public void addCard(Cards addedCards) {
+    public void receiveCards(Cards addedCards) {
         validateDuplicate(addedCards);
         cards.addCards(addedCards);
     }

@@ -22,7 +22,7 @@ class DealerTest {
         Cards emptyCards = new Cards(new ArrayList<>());
         Dealer dealer = new Dealer(new Deck(emptyCards));
         for (Card card : cards) {
-            dealer.addCard(new Cards(List.of(card)));
+            dealer.receiveCards(new Cards(List.of(card)));
         }
 
         //when & then
@@ -45,7 +45,7 @@ class DealerTest {
         //given
         Cards emptyCards = new Cards(new ArrayList<>());
         Dealer dealer = new Dealer(new Deck(emptyCards));
-        dealer.addCard(new Cards(cards));
+        dealer.receiveCards(new Cards(cards));
         //when & then
         assertThat(cards).contains(dealer.showAnyOneCard());
     }
