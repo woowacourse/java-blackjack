@@ -5,6 +5,7 @@ import java.util.Map;
 import participant.Dealer;
 import participant.Player;
 import participant.Players;
+import participant.Profit;
 import view.InputView;
 import view.OutputView;
 
@@ -61,8 +62,8 @@ public class BlackjackManager {
 
     private void processParticipantResults(Dealer dealer, Players players) {
         outputView.printAllCardAndScore(players, dealer);
-        Map<Player, Double> playersGameResults = blackjackGame.calculatePlayersGameResults(players);
-        double dealerGameResults = blackjackGame.calculateDealerGameResults(players);
+        Map<Player, Profit> playersGameResults = blackjackGame.calculatePlayersGameResults(players);
+        Profit dealerGameResults = blackjackGame.calculateDealerGameResults(players);
         outputView.printResult(dealerGameResults, playersGameResults);
     }
 }

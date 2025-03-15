@@ -2,27 +2,30 @@ package participant;
 
 public class Wallet {
 
-    private double earnedMoney;
-    private final int bettingMoney;
+    private final Money bettingMoney;
+    private Money earnedMoney;
+    private Profit profit;
 
-    private Wallet(double earnedMoney, int bettingMoney) {
+    public Wallet(Money earnedMoney, Money bettingMoney, Profit profit) {
         this.earnedMoney = earnedMoney;
         this.bettingMoney = bettingMoney;
+        this.profit = profit;
     }
 
     public static Wallet of(int bettingMoney) {
-        return new Wallet(0, bettingMoney);
+        return new Wallet(Money.of(0), Money.of(bettingMoney), Profit.of(0));
     }
 
     public void updateMoney(double rate) {
-        earnedMoney = bettingMoney + (bettingMoney * rate);
+        this.earnedMoney = bettingMoney.add(bettingMoney.multiply(rate).getAmount());
+        this.profit = Profit.from(bettingMoney, earnedMoney);
     }
 
-    public double calculateProfit() {
-        return earnedMoney - bettingMoney;
+    public int getEarnedMoney() {
+        return earnedMoney.getAmount();
     }
 
-    public double getEarnedMoney() {
-        return earnedMoney;
+    public Profit getProfit() {
+        return profit;
     }
 }

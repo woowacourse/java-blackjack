@@ -20,7 +20,7 @@ class WalletTest {
 
         // then
         assertThat(wallet.getEarnedMoney())
-                .isEqualTo(bettingMoney + bettingMoney * rate);
+                .isEqualTo((int) (bettingMoney + bettingMoney * rate));
     }
 
     @Test
@@ -33,10 +33,10 @@ class WalletTest {
         // when
         double rate = 1.5;
         wallet.updateMoney(rate);
-        double result = wallet.calculateProfit();
+        Profit profit = wallet.getProfit();
 
         // then
-        assertThat(result)
-                .isEqualTo(bettingMoney * rate);
+        assertThat(profit.getAmount())
+                .isEqualTo((int) (bettingMoney * rate));
     }
 }

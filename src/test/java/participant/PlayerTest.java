@@ -56,7 +56,7 @@ class PlayerTest {
 
         // then
         Assertions.assertThat(player.getEarnedMoney())
-                .isEqualTo(bettingMoney * gameResult.getRate());
+                .isEqualTo((int) (bettingMoney + bettingMoney * gameResult.getRate()));
     }
 
     @Test
@@ -69,10 +69,10 @@ class PlayerTest {
         player.updateMoney(gameResult.getRate());
 
         // when
-        double profit = player.calculateProfit();
+        Profit profit = player.calculateProfit();
 
         // then
-        Assertions.assertThat(profit)
-                .isEqualTo(bettingMoney * gameResult.getRate());
+        Assertions.assertThat(profit.getAmount())
+                .isEqualTo((int) (bettingMoney * gameResult.getRate()));
     }
 }

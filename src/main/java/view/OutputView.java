@@ -9,6 +9,7 @@ import java.util.Map;
 import participant.Dealer;
 import participant.Player;
 import participant.Players;
+import participant.Profit;
 
 public class OutputView {
 
@@ -26,8 +27,8 @@ public class OutputView {
         printNewLine();
         print("딜러와 ");
         print(String.join(NICKNAME_SEPARATOR, players.getPlayers().stream()
-            .map(Playable::getNickname)
-            .toList())
+                .map(Playable::getNickname)
+                .toList())
         );
         println("에게 2장을 나누었습니다.");
 
@@ -57,12 +58,12 @@ public class OutputView {
         printNewLine();
     }
 
-    public void printResult(double dealerGameResult, Map<Player, Double> playersGameResults) {
+    public void printResult(Profit dealerGameResult, Map<Player, Profit> playersGameResults) {
         println("## 최종 수익");
-        println(String.format("딜러: %.0f", dealerGameResult));
+        println(String.format("딜러: %d", dealerGameResult.getAmount()));
 
         for (Player player : playersGameResults.keySet()) {
-            println(String.format("%s: %.0f", player.getNickname(), playersGameResults.get(player)));
+            println(String.format("%s: %d", player.getNickname(), playersGameResults.get(player).getAmount()));
         }
     }
 
@@ -73,8 +74,8 @@ public class OutputView {
 
     private String allCardToString(List<Card> cards) {
         return String.join(NICKNAME_SEPARATOR, cards.stream()
-            .map(this::cardToString)
-            .toList());
+                .map(this::cardToString)
+                .toList());
     }
 
     private String cardToString(Card card) {

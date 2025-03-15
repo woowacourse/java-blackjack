@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import participant.Dealer;
 import participant.Player;
 import participant.Players;
+import participant.Profit;
 
 class BlackjackGameTest {
 
@@ -182,12 +183,12 @@ class BlackjackGameTest {
         blackjackGame.updatePlayerMoney(dealer, miso);
 
         // when
-        Map<Player, Double> playersGameResults = blackjackGame.calculatePlayersGameResults(players);
-        Double result = playersGameResults.get(miso);
+        Map<Player, Profit> playersGameResults = blackjackGame.calculatePlayersGameResults(players);
+        Profit profit = playersGameResults.get(miso);
 
         // then
-        assertThat(result)
-                .isEqualTo(misoBettingMoney * GameResult.BLACKJACK.getRate());
+        assertThat(profit.getAmount())
+                .isEqualTo((int) (misoBettingMoney * GameResult.BLACKJACK.getRate()));
     }
 
     @Test
@@ -203,12 +204,12 @@ class BlackjackGameTest {
         blackjackGame.updatePlayerMoney(dealer, miso);
 
         // when
-        Map<Player, Double> playersGameResults = blackjackGame.calculatePlayersGameResults(players);
-        Double result = playersGameResults.get(miso);
+        Map<Player, Profit> playersGameResults = blackjackGame.calculatePlayersGameResults(players);
+        Profit profit = playersGameResults.get(miso);
 
         // then
-        assertThat(result)
-                .isEqualTo(misoBettingMoney * GameResult.WIN.getRate());
+        assertThat(profit.getAmount())
+                .isEqualTo((int) (misoBettingMoney * GameResult.WIN.getRate()));
     }
 
     @Test
@@ -220,14 +221,15 @@ class BlackjackGameTest {
         dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.ACE));
         dealer.receiveCard(new Card(CardShape.HEART, CardNumber.ACE));
         dealer.receiveCard(new Card(CardShape.DIAMOND, CardNumber.ACE));
+        blackjackGame.updatePlayerMoney(dealer, miso);
 
         // when
-        Map<Player, Double> playersGameResults = blackjackGame.calculatePlayersGameResults(players);
-        Double result = playersGameResults.get(miso);
+        Map<Player, Profit> playersGameResults = blackjackGame.calculatePlayersGameResults(players);
+        Profit profit = playersGameResults.get(miso);
 
         // then
-        assertThat(result)
-                .isEqualTo(misoBettingMoney * GameResult.LOSE.getRate());
+        assertThat(profit.getAmount())
+                .isEqualTo((int) (misoBettingMoney * GameResult.LOSE.getRate()));
     }
 
     @Test
@@ -243,12 +245,12 @@ class BlackjackGameTest {
         blackjackGame.updatePlayerMoney(dealer, miso);
 
         // when
-        Map<Player, Double> playersGameResults = blackjackGame.calculatePlayersGameResults(players);
-        Double result = playersGameResults.get(miso);
+        Map<Player, Profit> playersGameResults = blackjackGame.calculatePlayersGameResults(players);
+        Profit profit = playersGameResults.get(miso);
 
         // then
-        assertThat(result)
-                .isEqualTo(misoBettingMoney * GameResult.DRAW.getRate());
+        assertThat(profit.getAmount())
+                .isEqualTo((int) (misoBettingMoney * GameResult.DRAW.getRate()));
     }
 
     @Test
@@ -267,11 +269,11 @@ class BlackjackGameTest {
         blackjackGame.updatePlayerMoney(dealer, yulmu);
 
         // when
-        double dealerGameResults = blackjackGame.calculateDealerGameResults(players);
+        Profit dealerGameResults = blackjackGame.calculateDealerGameResults(players);
 
         // then
-        assertThat(dealerGameResults)
-                .isEqualTo((misoBettingMoney * GameResult.WIN.getRate() +
-                        yulmuBettingMoney * GameResult.WIN.getRate()) * -1);
+        assertThat(dealerGameResults.getAmount())
+                .isEqualTo((int) ((misoBettingMoney * GameResult.WIN.getRate() +
+                        yulmuBettingMoney * GameResult.WIN.getRate()) * -1));
     }
 }

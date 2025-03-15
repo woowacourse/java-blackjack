@@ -24,10 +24,11 @@ class PlayersTest {
         player2.updateMoney(player2GameResult.getRate());
 
         // when
-        double result = players.sumProfits();
+        Profit profit = players.sumProfits();
 
         // then
-        assertThat(result).isEqualTo(
-                player1BettingMoney * player1GameResult.getRate() + player2BettingMoney * player2GameResult.getRate());
+        assertThat(profit.getAmount())
+                .isEqualTo((int) (player1BettingMoney * player1GameResult.getRate()
+                        + player2BettingMoney * player2GameResult.getRate()));
     }
 }

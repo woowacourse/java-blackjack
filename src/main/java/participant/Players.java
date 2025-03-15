@@ -11,10 +11,10 @@ public class Players {
         this.players = players;
     }
 
-    public double sumProfits() {
-        return players.stream()
-                .mapToDouble(Player::calculateProfit)
-                .sum();
+    public Profit sumProfits() {
+        return Profit.of(players.stream()
+                .mapToInt(player -> player.calculateProfit().getAmount())
+                .sum());
     }
 
     public List<Player> getPlayers() {

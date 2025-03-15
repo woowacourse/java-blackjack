@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import participant.Dealer;
 import participant.Player;
 import participant.Players;
+import participant.Profit;
 
 public class BlackjackGame {
 
@@ -31,7 +32,7 @@ public class BlackjackGame {
         player.updateMoney(gameResult.getRate());
     }
 
-    public Map<Player, Double> calculatePlayersGameResults(Players players) {
+    public Map<Player, Profit> calculatePlayersGameResults(Players players) {
         return players.getPlayers().stream()
                 .collect(Collectors.toMap(
                         player -> player,
@@ -41,7 +42,7 @@ public class BlackjackGame {
                 ));
     }
 
-    public double calculateDealerGameResults(Players players) {
-        return players.sumProfits() * -1;
+    public Profit calculateDealerGameResults(Players players) {
+        return players.sumProfits().negate();
     }
 }
