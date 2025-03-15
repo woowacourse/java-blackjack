@@ -5,18 +5,30 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class Players {
+    public static final int MAX_PLAYER_QUANTITY = 5;
     private final List<Player> players;
 
     public Players(List<PlayerName> playerNames, List<BettingMoney> bettingMonies) {
-        validateDuplicate(playerNames);
+        validatePlayers(playerNames);
         this.players = IntStream.range(0, playerNames.size())
                 .mapToObj(i -> new Player(playerNames.get(i), bettingMonies.get(i)))
                 .toList();
     }
 
+    private void validatePlayers(List<PlayerName> playerNames) {
+        validateDuplicate(playerNames);
+        validatePlayerQuantity(playerNames);
+    }
+
     private void validateDuplicate(List<PlayerName> playerNames) {
         if (playerNames.size() != new HashSet<>(playerNames).size()) {
             throw new IllegalArgumentException("플레이어 이름은 중복일 수 없습니다.");
+        }
+    }
+
+    private void validatePlayerQuantity(List<PlayerName> playerNames) {
+        if (playerNames.size() > MAX_PLAYER_QUANTITY) {
+            throw new IllegalArgumentException("플레이어는 최대 5명까지 참가 가능합니다.");
         }
     }
 

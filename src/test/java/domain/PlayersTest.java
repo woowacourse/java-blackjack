@@ -59,4 +59,15 @@ class PlayersTest {
                 Arguments.of(List.of(Card.DIA_JACK, Card.CLOVER_TWO), false)
         );
     }
+
+    @Test
+    @DisplayName("플레이어가 6명 이상이면 예외를 반환합니다.")
+    void validatePlayerQuantityTest() {
+        usernames = Stream.of("김", "이", "박", "정", "최", "유").map(PlayerName::new).toList();
+        bettingMonies = Stream.of(10000, 10000, 10000, 10000, 10000, 10000).map(BettingMoney::new).toList();
+
+        Assertions.assertThatThrownBy(() -> new Players(usernames, bettingMonies))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("플레이어는 최대 5명까지 참가 가능합니다.");
+    }
 }
