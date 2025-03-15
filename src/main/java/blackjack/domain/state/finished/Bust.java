@@ -7,6 +7,9 @@ import blackjack.domain.winning.WinningResult;
 public class Bust extends Finished {
     public Bust(Cards cards) {
         super(cards);
+        if (!cards.isBust()) {
+            throw new IllegalStateException("버스트가 아닙니다.");
+        }
     }
 
     @Override

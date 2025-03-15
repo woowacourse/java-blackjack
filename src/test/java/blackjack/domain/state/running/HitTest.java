@@ -1,4 +1,4 @@
-package blackjack.domain.state;
+package blackjack.domain.state.running;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -6,9 +6,9 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
+import blackjack.domain.state.State;
 import blackjack.domain.state.finished.Bust;
 import blackjack.domain.state.finished.Stay;
-import blackjack.domain.state.running.Hit;
 import org.junit.jupiter.api.Test;
 
 class HitTest {
