@@ -2,8 +2,8 @@ package domain.gamer;
 
 public class Betting {
 
-    private static final int BET_AMOUNT_MIN_VALUE = 1000;
-    private static final int BET_AMOUNT_MAX_VALUE = 100000;
+    private static final int BET_AMOUNT_MIN_VALUE = 1_000;
+    private static final int BET_AMOUNT_MAX_VALUE = 100_000;
     private static final double BLACKJACK_BONUS = 1.5;
 
     private final int betAmount;
