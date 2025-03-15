@@ -1,27 +1,35 @@
 package domain;
 
-import java.util.LinkedHashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Players {
-    private final Map<PlayerName, Player> players;
+    private final List<Player> players;
 
-    public Players(List<PlayerName> playerNames) {
-        this.players = playerNames.stream()
-                .collect(Collectors.toMap(
-                        Function.identity(),
-                        Player::new,
-                        (existing, replacement) -> existing,
-                        LinkedHashMap::new
-                ));
+    public Players(List<PlayerName> playerNames, List<BettingMoney> bettingMonies) {
+        validateDuplicate(playerNames);
+        this.players = IntStream.range(0, playerNames.size())
+                .mapToObj(i -> new Player(playerNames.get(i), bettingMonies.get(i)))
+                .toList();
     }
 
-    public void giveCard(PlayerName playerName, Cards cards) {
+    private void validateDuplicate(List<PlayerName> playerNames) {
+        if (playerNames.size() != new HashSet<>(playerNames).size()) {
+            throw new IllegalArgumentException("플레이어 이름은 중복일 수 없습니다.");
+        }
+    }
+
+    public void giveCardsToPlayer(PlayerName playerName, Cards cards) {
         Player selectedPlayer = selectPlayer(playerName);
-        selectedPlayer.addCard(cards);
+        selectedPlayer.receiveCards(cards);
+    }
+
+    private Player selectPlayer(PlayerName playerName) {
+        return players.stream()
+                .filter(player -> player.isSameName(playerName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("플레이어가 존재하지 않습니다."));
     }
 
     public boolean isDrawable(PlayerName playerName) {
@@ -29,38 +37,14 @@ public class Players {
         return player.isDrawable();
     }
 
-    private Player selectPlayer(PlayerName playerName) {
-        validatePlayerExist(playerName);
-        return players.get(playerName);
-    }
-
-    private void validatePlayerExist(PlayerName playerName) {
-        if (!players.containsKey(playerName)) {
-            throw new IllegalArgumentException("플레이어가 존재하지 않습니다.");
-        }
-    }
-
     public Cards getPlayerCard(PlayerName playerName) {
         Player selectedPlayer = selectPlayer(playerName);
         return selectedPlayer.getCards();
     }
 
-    public Map<PlayerName, GameResult> calculateGameStatistics(Dealer dealer) {
-        return players.entrySet().stream()
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        entry -> entry.getValue().decideGameResult(dealer)
-                ));
-
-    }
-
-    public Map<PlayerName, Player> getPlayersInfo() {
-        return players.entrySet().stream()
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        entry -> Player.copyOf(entry.getValue()),
-                        (existing, replacement) -> existing,
-                        LinkedHashMap::new
-                ));
+    public List<Player> getPlayers() {
+        return players.stream()
+                .map(Player::copyOf)
+                .toList();
     }
 }
