@@ -9,6 +9,7 @@ public enum RoundResult {
     WIN,
     LOSE,
     TIE,
+    BLACKJACK_WIN,
     ;
 
     public static RoundResult judgeResult(Gamer gamer, Gamer otherGamer) {
@@ -62,7 +63,7 @@ public enum RoundResult {
             return TIE;
         }
         if (gamer.isBlackjack()) {
-            return WIN;
+            return BLACKJACK_WIN;
         }
         if (otherGamer.isBlackjack()) {
             return LOSE;
