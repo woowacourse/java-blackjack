@@ -31,4 +31,28 @@ public class BettingTest {
         //then
         assertThatIllegalArgumentException().isThrownBy(() -> function.apply(amount));
     }
+
+    @Test
+    void 배팅_게임_결과에_따라_수익률을_계산한다() {
+        //given
+        final int amount = 10_000;
+        final GameResult gameResult1 = GameResult.LOSE;
+        final GameResult gameResult2 = GameResult.WIN;
+        final GameResult gameResult3 = GameResult.DRAW;
+        final boolean isBlackjack = true;
+        final boolean isNotBlackjack = false;
+
+        //when
+        final Betting betting = new Betting(amount);
+        final int result1 = betting.calculateBettingOfReturn(gameResult1, isNotBlackjack);
+        final int result2 = betting.calculateBettingOfReturn(gameResult2, isBlackjack);
+        final int result3 = betting.calculateBettingOfReturn(gameResult3, isNotBlackjack);
+        final int result4 = betting.calculateBettingOfReturn(gameResult2, isNotBlackjack);
+
+        //then
+        assertThat(result1).isEqualTo(-10_000);
+        assertThat(result2).isEqualTo(15_000);
+        assertThat(result3).isZero();
+        assertThat(result4).isEqualTo(10_000);
+    }
 }

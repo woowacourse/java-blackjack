@@ -13,4 +13,8 @@ public class Betting {
             throw new IllegalArgumentException("[ERROR] 배팅 금액은 음수가 될 수 없습니다.");
         }
     }
+
+    public int calculateBettingOfReturn(final GameResult gameResult, final boolean isBlackjack) {
+        return 0;
+    }
 }
