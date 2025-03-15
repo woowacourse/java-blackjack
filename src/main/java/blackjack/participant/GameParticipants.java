@@ -1,7 +1,7 @@
-package blackjack.domain.gamer;
+package blackjack.participant;
 
-import blackjack.domain.GameRule;
-import blackjack.domain.result.GameStatistics;
+import blackjack.GameRule;
+import blackjack.result.GameStatistics;
 
 import java.util.Collections;
 import java.util.List;
@@ -42,12 +42,7 @@ public class GameParticipants {
     }
 
     public GameStatistics calculateGameStatistics() {
-        GameStatistics statistics = GameStatistics.initialize(this);
-
-        players.forEach(player ->
-                statistics.markResult(player, dealer, player.judgeResult(dealer)));
-
-        return statistics;
+        return GameStatistics.from(this);
     }
 
     public List<GameParticipant> getGameParticipants() {

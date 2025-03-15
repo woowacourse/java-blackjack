@@ -1,14 +1,13 @@
-package blackjack.domain.gamer;
+package blackjack.participant;
 
 import blackjack.ConstantFixture;
-import blackjack.domain.GameRule;
-import blackjack.domain.result.GameResult;
-import blackjack.domain.result.GameStatistics;
+import blackjack.GameRule;
+import blackjack.result.Betting;
+import blackjack.result.GameStatistics;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -52,10 +51,10 @@ class GameParticipantsTest {
         Function<Player, Boolean> hitDecisionAlwaysReturnFalse = player -> false;
 
         List<Player> players = List.of(
-                GameParticipantFixture.createPlayer("겁쟁이1", hitDecisionAlwaysReturnFalse),
-                GameParticipantFixture.createPlayer("겁쟁이2", hitDecisionAlwaysReturnFalse),
-                GameParticipantFixture.createPlayer("강산", hitDecisionAlwaysReturnTrue),
-                GameParticipantFixture.createPlayer("재중", hitDecisionAlwaysReturnTrue)
+                GameParticipantFixture.createPlayer("겁쟁이1", Betting.from(10000), hitDecisionAlwaysReturnFalse),
+                GameParticipantFixture.createPlayer("겁쟁이2", Betting.from(10000), hitDecisionAlwaysReturnFalse),
+                GameParticipantFixture.createPlayer("강산", Betting.from(10000), hitDecisionAlwaysReturnTrue),
+                GameParticipantFixture.createPlayer("재중", Betting.from(10000), hitDecisionAlwaysReturnTrue)
         );
 
         Dealer dealer = GameParticipantFixture.createDealer(players.size());
@@ -97,29 +96,25 @@ class GameParticipantsTest {
     @DisplayName("모든 플레이어의 게임 결과를 계산할 수 있다")
     void canCalculateGameStatistics() {
         // given
-        Player p1 = GameParticipantFixture.createPlayer("내일점심", 16);
-        Player p2 = GameParticipantFixture.createPlayer("애슐리", 17);
-        Player p3 = GameParticipantFixture.createPlayer("강산", 18);
-        Player p4 = GameParticipantFixture.createPlayer("재중", 19);
-        Player p5 = GameParticipantFixture.createPlayer("고양이", 22);
+        Player p1 = GameParticipantFixture.createPlayer("내일점심", Betting.from(10000), 16);
+        Player p2 = GameParticipantFixture.createPlayer("애슐리", Betting.from(10000), 17);
+        Player p3 = GameParticipantFixture.createPlayer("강산", Betting.from(10000), 18);
+        Player p4 = GameParticipantFixture.createPlayer("재중", Betting.from(10000), 19);
+        Player p5 = GameParticipantFixture.createPlayer("고양이", Betting.from(10000), 22);
         List<Player> players = List.of(p1, p2, p3, p4, p5);
 
         Dealer dealer = GameParticipantFixture.createDealer(players.size(), 18);
         GameParticipants participants = GameParticipants.of(players, dealer);
 
-        // when
+//        // when
         GameStatistics gameStatistics = participants.calculateGameStatistics();
 
         // then
-        assertThat(gameStatistics.find(p1).getFirst()).isEqualTo(GameResult.LOSE);
-        assertThat(gameStatistics.find(p2).getFirst()).isEqualTo(GameResult.LOSE);
-        assertThat(gameStatistics.find(p3).getFirst()).isEqualTo(GameResult.DRAW);
-        assertThat(gameStatistics.find(p4).getFirst()).isEqualTo(GameResult.WIN);
-        assertThat(gameStatistics.find(p5).getFirst()).isEqualTo(GameResult.LOSE);
-
-        Map<GameResult, Integer> dealerResults = GameResult.count(gameStatistics.find(dealer));
-        assertThat(dealerResults.get(GameResult.WIN)).isEqualTo(3);
-        assertThat(dealerResults.get(GameResult.LOSE)).isEqualTo(1);
-        assertThat(dealerResults.get(GameResult.DRAW)).isEqualTo(1);
+        assertThat(gameStatistics.getProfit(p1).getAmount()).isEqualTo(-10000);
+        assertThat(gameStatistics.getProfit(p2).getAmount()).isEqualTo(-10000);
+        assertThat(gameStatistics.getProfit(p3).getAmount()).isEqualTo(0);
+        assertThat(gameStatistics.getProfit(p4).getAmount()).isEqualTo(10000);
+        assertThat(gameStatistics.getProfit(p5).getAmount()).isEqualTo(-10000);
+        assertThat(gameStatistics.getDealerProfit().getAmount()).isEqualTo(-10000 - 10000 + 0 + 10000 - 10000);
     }
 }
