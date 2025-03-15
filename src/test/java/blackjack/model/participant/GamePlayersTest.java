@@ -14,11 +14,9 @@ class GamePlayersTest {
     void shouldThrowException_WhenDuplicatePlayerName() {
         // given
         String belloName = "벨로";
-        Player bello1 = new Player(belloName);
-        Player bello2 = new Player(belloName);
 
         // when, then
-        assertThatCode(() -> GamePlayers.createForNewGame(List.of(bello1, bello2)))
+        assertThatCode(() -> GamePlayers.createByPlayerNames(List.of(belloName, belloName)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어 이름은 중복될 수 없습니다.");
     }
@@ -27,7 +25,7 @@ class GamePlayersTest {
     @Test
     void shouldThrowException_WhenNoPlayer() {
         // when, then
-        assertThatCode(() -> GamePlayers.createForNewGame(List.of()))
+        assertThatCode(() -> GamePlayers.createByPlayerNames(List.of()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("최소 1명 이상의 플레이어가 있어야 합니다.");
     }
@@ -36,9 +34,7 @@ class GamePlayersTest {
     @Test
     void getGamePlayersImmutableTest() {
         // given
-        Player bello = new Player("벨로");
-        Player pobi = new Player("포비");
-        GamePlayers gamePlayers = GamePlayers.createForNewGame(List.of(bello, pobi));
+        GamePlayers gamePlayers = GamePlayers.createByPlayerNames(List.of("벨로", "포비"));
 
         // when
         List<Player> players = gamePlayers.getPlayers();

@@ -9,7 +9,6 @@ import blackjack.model.participant.GamePlayers;
 import blackjack.view.GamePlayView;
 import blackjack.view.GameResultView;
 import blackjack.view.GameSetupView;
-import java.util.List;
 import java.util.Map;
 
 public final class BlackjackController {
@@ -38,8 +37,7 @@ public final class BlackjackController {
 
     private GamePlayers getGamePlayers() {
         gameSetupView.printStartBanner();
-        List<Player> players = createPlayersFromInput();
-        return GamePlayers.createForNewGame(players);
+        return GamePlayers.createByPlayerNames(gameSetupView.readPlayerNames());
     }
 
     private BettingTable getBettingTable(GamePlayers gamePlayers) {
@@ -49,13 +47,6 @@ public final class BlackjackController {
             bettingTable.bet(player, betAmount);
         }
         return bettingTable;
-    }
-
-    private List<Player> createPlayersFromInput() {
-        return gameSetupView.readPlayerNames()
-                .stream()
-                .map(Player::new)
-                .toList();
     }
 
     private void playBlackjack(Dealer dealer, GamePlayers gamePlayers) {

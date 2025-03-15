@@ -12,9 +12,16 @@ public class GamePlayers implements Iterable<Player> {
         this.players = List.copyOf(players);
     }
 
-    public static GamePlayers createForNewGame(List<Player> players) {
+    public static GamePlayers createByPlayerNames(List<String> playerNames) {
+        List<Player> players = createPlayers(playerNames);
         validatePlayers(players);
         return new GamePlayers(players);
+    }
+
+    private static List<Player> createPlayers(List<String> playerNames) {
+        return playerNames.stream()
+                .map(Player::new)
+                .toList();
     }
 
     private static void validatePlayers(List<Player> players) {
