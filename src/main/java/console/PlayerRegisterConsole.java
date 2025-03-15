@@ -5,24 +5,26 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import model.Bet;
 import model.Name;
 import model.Players;
 import view.PlayerNames;
 
 public final class PlayerRegisterConsole extends Console {
-    private final Controller controller = new Controller();
+    private final Controller controller;
+
+    public PlayerRegisterConsole(final Controller controller) {
+        this.controller = controller;
+    }
 
     public Players registerPlayers() {
-        Map<String, Integer> registerInput = new LinkedHashMap<>();
+        Map<Name, Bet> registerInput = new LinkedHashMap<>();
         PlayerNames playerNames = readPlayerNames();
-//        for (String playerName : playerNames) {
-//            String guideToBettingAmountView = controller.guideToBettingAmount(playerName);
-//            display(guideToBettingAmountView);
-//            int bettingAmount = readBettingAmount();
-//            registerInput.put(playerName, bettingAmount);
-//        }
-//        return controller.registerPlayers(registerInput);
-        return null;
+        for (Name playerName : playerNames.playerNames()) {
+            Bet bet = readBet(playerName);
+            registerInput.put(playerName, bet);
+        }
+        return new Players(registerInput);
     }
 
     private PlayerNames readPlayerNames() {
@@ -35,8 +37,13 @@ public final class PlayerRegisterConsole extends Console {
         return new PlayerNames(playerNames);
     }
 
-//    private int readBettingAmount() {
-//        String input = readLine(); // 검증 필요
-//        return Integer.parseInt(input);
-//    }
+    private Bet readBet(final Name playerName) {
+        display(controller.guideToBet(playerName));
+        String input = readLine();
+        try {
+            return new Bet(Integer.parseInt(input));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("[ERROR] 배팅 금액은 숫자만 입력할 수 있습니다.");
+        }
+    }
 }

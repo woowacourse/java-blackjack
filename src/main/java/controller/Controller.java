@@ -1,5 +1,6 @@
 package controller;
 
+import model.Name;
 import view.PlayerRegisterView;
 import view.View;
 
@@ -10,11 +11,7 @@ public final class Controller {
         return playerRegisterView.guideToInputName();
     }
 
-//    public String guideToBettingAmount(String playerName) {
-//        return playerRegisterView.readBattingAmount(playerName);
-//    }
-//
-//    public Players registerPlayers(Map<String, Integer> registerInput) {
-//        return null;
-//    }
+    public View guideToBet(Name playerName) {
+        return playerRegisterView.guideToBet(playerName);
+    }
 }
