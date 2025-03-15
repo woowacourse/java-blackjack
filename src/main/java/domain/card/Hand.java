@@ -1,8 +1,6 @@
 package domain.card;
 
-import exceptions.BlackjackArgumentException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public final class Hand {
@@ -33,10 +31,7 @@ public final class Hand {
   }
 
   public List<TrumpCard> getCards() {
-    if (cards.isEmpty()) {
-      throw new BlackjackArgumentException("핸드가 비었습니다.");
-    }
-    return Collections.unmodifiableList(cards);
+    return new ArrayList<>(cards);
   }
 
   public int getCount() {

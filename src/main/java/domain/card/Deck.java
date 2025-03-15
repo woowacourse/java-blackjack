@@ -33,14 +33,21 @@ public final class Deck {
         .toList();
   }
 
-  public int getNumberOfCards() {
-    return deck.size();
-  }
-
   public TrumpCard draw() {
     if (deck.isEmpty()) {
       throw new BlackjackArgumentException("덱에 남아있는 카드가 없습니다.");
     }
     return deck.poll();
+  }
+
+  public List<TrumpCard> drawForInitialDeal() {
+    final List<TrumpCard> cards = new ArrayList<>();
+    cards.add(draw());
+    cards.add(draw());
+    return cards;
+  }
+
+  public int getNumberOfCards() {
+    return deck.size();
   }
 }

@@ -1,7 +1,6 @@
 package domain.participant;
 
 import domain.Bet;
-import domain.card.Deck;
 import domain.card.Hand;
 import domain.card.Score;
 import domain.card.TrumpCard;
@@ -17,8 +16,6 @@ import java.util.Objects;
  */
 public final class Participant<T extends Role> {
 
-  private static final int INITIAL_DEAL_CARD_COUNT = 2;
-
   private final T role;
   private final Hand hand;
 
@@ -32,6 +29,20 @@ public final class Participant<T extends Role> {
     this.hand = new Hand(cards);
   }
 
+  public Participant<T> hit(final TrumpCard card) {
+    final List<TrumpCard> cards = getCards();
+    cards.add(card);
+    return new Participant<>(role, cards);
+  }
+
+  public Score calculateScore() {
+    return hand.calculateScore();
+  }
+
+  public boolean isBlackjack() {
+    return hand.isBlackjack();
+  }
+
   public boolean isHit() {
     return role.isHit(calculateScore());
   }
@@ -42,28 +53,6 @@ public final class Participant<T extends Role> {
 
   public Bet getBet() {
     return role.getBet();
-  }
-
-  public Participant<T> initialDeal(final Deck deck) {
-    for (int i = 0; i < INITIAL_DEAL_CARD_COUNT; i++) {
-      final TrumpCard card = deck.draw();
-      hit(card);
-    }
-    return new Participant<>(this.role, getCards());
-  }
-
-  public Participant<? extends Role> hit(final TrumpCard card) {
-    isHit();
-    hand.add(card);
-    return new Participant<>(role, getCards());
-  }
-
-  public boolean isBlackjack() {
-    return hand.isBlackjack();
-  }
-
-  public Score calculateScore() {
-    return hand.calculateScore();
   }
 
   public List<TrumpCard> getCards() {

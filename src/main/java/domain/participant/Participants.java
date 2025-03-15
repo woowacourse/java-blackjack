@@ -30,28 +30,15 @@ public final class Participants {
     this.participants = participants;
   }
 
-  public static Participants generateOf(final Map<String, Bet> participants, final Deck deck) {
-    List<Participant<Player>> players = participants.entrySet().stream()
-        .map(entry -> new Participant<>(Player.generateFrom(entry)))
+  public static Participants initialDealOf(final Map<String, Bet> participants, final Deck deck) {
+    final var players = participants.entrySet().stream()
+        .map(entry -> new Participant<>(Player.generateFrom(entry), deck.drawForInitialDeal()))
         .toList();
 
     final var roleForDealer = Dealer.generateFrom(participants.values());
-    Participant<Dealer> dealer = new Participant<>(roleForDealer);
+    final var dealer = new Participant<>(roleForDealer, deck.drawForInitialDeal());
 
-    final var initialDealer = dealer.initialDeal(deck);
-    final var initialParticipants = initialDealForPlayers(players, deck);
-    return new Participants(initialDealer, initialParticipants);
-  }
-
-  private static List<Participant<Player>> initialDealForPlayers(
-      final List<Participant<Player>> players,
-      final Deck deck
-  ) {
-    final List<Participant<Player>> newPlayers = new ArrayList<>();
-    for (final var player : players) {
-      newPlayers.add(player.initialDeal(deck));
-    }
-    return newPlayers;
+    return new Participants(dealer, players);
   }
 
   public Participant<? extends Role> hit(

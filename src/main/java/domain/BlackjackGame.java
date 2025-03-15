@@ -23,7 +23,7 @@ public final class BlackjackGame {
 
   public static BlackjackGame from(final Map<String, Bet> participantNames) {
     final Deck deck = Deck.createShuffledDecks(NUMBER_OF_DECK);
-    final Participants participants = Participants.generateOf(participantNames, deck);
+    final Participants participants = Participants.initialDealOf(participantNames, deck);
     return new BlackjackGame(participants, deck);
   }
 
