@@ -1,8 +1,11 @@
 package domain.player;
 
+import domain.card.Cards;
 import domain.card.Deck;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 public class Users {
     private static final int MAX_SIZE = 5;
@@ -53,6 +56,13 @@ public class Users {
     public void openInitialCards() {
         for (User user : users) {
             user.openInitialCards();
+        }
+    }
+
+    public void hitUntilStay(Deck deck,
+                             Function<User, Boolean> wantHit, BiConsumer<User, Cards> onHit) {
+        for (User user : users) {
+            user.hitUntilStay(deck, wantHit, onHit);
         }
     }
 }
