@@ -22,7 +22,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class GameManagerTest {
-
+  
     @DisplayName("유저는 최소 1명 이상 7명 이하여야 한다.")
     @ParameterizedTest
     @MethodSource("userTestCase")
@@ -280,5 +280,4 @@ public class GameManagerTest {
         //then
         Assertions.assertThat(dealerProfit).isEqualTo(-449980000L);
     }
-
 }

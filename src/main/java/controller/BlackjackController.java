@@ -31,18 +31,15 @@ public class BlackjackController {
         GameManager gameManager = GameManager.initailizeGameManager(playerNames, playersBettingMoney, trumpCardManager);
 
         distributionFirstCard(gameManager, playerNames);
-
         additionalPlayerCard(playerNames, gameManager);
         additionalDealerCard(gameManager);
 
         createGameResult(gameManager, playerNames);
-
         calculateGameResult(gameManager);
     }
 
     private List<Long> inputBettingMoney(List<String> playerNames) {
-        return playerNames.stream().map(inputView::inputBettingMoney)
-                .toList();
+        return playerNames.stream().map(inputView::inputBettingMoney).toList();
     }
 
     private void distributionFirstCard(GameManager gameManager, List<String> playerNames) {
@@ -51,7 +48,6 @@ public class BlackjackController {
         displayOpenCard(gameManager.findDealerName(), gameManager.getDealer());
         playerNames.forEach(playerName -> displayOpenCard(playerName, gameManager.findPlayerByUsername(playerName)));
     }
-
 
     private void displayOpenCard(String userName, User user) {
         List<String> cards = user.openCard().stream()
@@ -100,7 +96,6 @@ public class BlackjackController {
         long dealerProfit = gameManager.calculateDealerProfit(gameResult);
         outputView.displayProfitResult(dealerProfit, gameResult);
     }
-
 
     private void displayPlayers(GameManager gameManager, List<String> playerNames) {
         playerNames.stream()

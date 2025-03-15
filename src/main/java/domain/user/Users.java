@@ -41,5 +41,4 @@ public class Users {
     public void userCardDraw(TrumpCardManager trumpCardManager) {
         users.forEach((user) -> user.receiveCard(trumpCardManager.drawCard()));
     }
-
 }

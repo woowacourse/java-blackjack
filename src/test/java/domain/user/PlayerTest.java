@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test;
 public class PlayerTest {
 
     private final List<Long> playersBettingMoney = List.of(300000L);
-    
     private final List<TrumpCard> cardDeck = List.of(
             new TrumpCard(CardShape.CLOVER, CardNumber.J),
             new TrumpCard(CardShape.CLOVER, CardNumber.SEVEN),
@@ -59,7 +58,6 @@ public class PlayerTest {
                     .withMessage("dealer 혹은 딜러는 이름으로 사용할 수 없습니다.");
         });
     }
-
 
     private static class FakeTrumpCardManager extends TrumpCardManager {
 
