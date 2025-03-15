@@ -1,5 +1,6 @@
 package view;
 
+import domain.card.Card;
 import domain.card.Cards;
 import domain.player.Dealer;
 import domain.player.Player;
@@ -21,10 +22,14 @@ public class OutputView {
     }
 
     public static void printPlayerCards(Player player, Cards cards) {
-        System.out.printf("%s카드: %s%n", player.getName(),
+        System.out.printf("%s카드: %s%n",
+                player.getName(),
                 String.join(", ", cards.getCards().stream()
-                        .map(card -> String.format("%s%s", card.getRank().getTitle(),
-                                card.getSuit().getTitle()))
+                        .map(OutputView::convertToCardFormat)
                         .toList()));
+    }
+
+    private static String convertToCardFormat(Card card) {
+        return String.format("%s%s", card.getRank().getTitle(), card.getSuit().getTitle());
     }
 }

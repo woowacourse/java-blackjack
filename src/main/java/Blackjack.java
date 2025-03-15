@@ -2,6 +2,7 @@ import domain.card.Deck;
 import domain.card.DeckGenerator;
 import domain.player.Dealer;
 import domain.player.Users;
+import view.InputView;
 import view.OutputView;
 
 public class Blackjack {
@@ -29,10 +30,11 @@ public class Blackjack {
     }
 
     private void usersHitOrStayPhase(Users users, Deck deck) {
-
+        users.hitUntilStay(deck, InputView::inputWantHit, OutputView::printPlayerCards);
     }
 
     private void dealerHitWhileUnder16(Dealer dealer, Deck deck) {
+        dealer.hitWhileUnder16(deck);
     }
 
     private void printGameResult() {
