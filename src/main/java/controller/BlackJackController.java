@@ -1,13 +1,10 @@
 package controller;
 
-import domain.BettingCalculator;
 import domain.BettingMoney;
 import domain.Game;
-import domain.GameResult;
 import domain.PlayerName;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
@@ -24,30 +21,30 @@ public class BlackJackController {
 
     public void run() {
         List<PlayerName> playerNames = inputView.insertUsernames();
-        Map<PlayerName, BettingMoney> bettingResults = new LinkedHashMap<>();
+        Game game = initializeGame(playerNames);
+        showInitialState(game);
 
-        for (PlayerName playerName : playerNames) {
-            BettingMoney bettingMoney = inputView.insertBettingMoney(playerName);
-            bettingResults.put(playerName, bettingMoney);
-        }
-
-        Game game = showInitialState(playerNames);
         for (PlayerName playerName : playerNames) {
             askPlayer(game, playerName);
         }
         askDealer(game);
-        outputView.printFinalState(game.getPlayersInfo(), game.getDealer());
 
-        Map<PlayerName, GameResult> gameResults = game.getGameResults();
-
-        BettingCalculator bettingCalculator = new BettingCalculator(gameResults, bettingResults);
-        outputView.printFinalResult(bettingCalculator.getTotalPlayerProfit(), bettingCalculator.getTotalDealerProfit());
+        outputView.printFinalState(game.getPlayers(), game.getDealer());
+        outputView.printFinalResult(game.getPlayers(), game.calculateDealerProfit(), game.getDealer());
     }
 
-    private Game showInitialState(List<PlayerName> playerNames) {
-        Game game = Game.initialize(playerNames);
-        outputView.printInitialState(game.getPlayersInfo(), game.getDealerOneCard());
-        return game;
+    private Game initializeGame(List<PlayerName> playerNames) {
+        List<BettingMoney> bettingResults = new ArrayList<>();
+
+        for (PlayerName playerName : playerNames) {
+            BettingMoney bettingMoney = inputView.insertBettingMoney(playerName);
+            bettingResults.add(bettingMoney);
+        }
+        return Game.initialize(playerNames, bettingResults);
+    }
+
+    private void showInitialState(Game game) {
+        outputView.printInitialState(game.getPlayers(), game.getDealerOneCard());
     }
 
     private void askPlayer(Game game, PlayerName playerName) {
