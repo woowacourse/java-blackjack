@@ -8,7 +8,7 @@ public class Money {
         this.money = money;
     }
 
-    private void isDivisibleByTenThousand(int money) {
+    private void isDivisibleByTenThousand(final int money) {
         if (money % 10000 != 0) {
             throw new IllegalArgumentException("[ERROR] 배팅 금액은 만원 단위입니다.");
         }

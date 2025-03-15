@@ -11,7 +11,7 @@ public class Dealer extends Participant {
         super(hand);
     }
 
-    public void draw(Card card) {
+    public void draw(final Card card) {
         if (isUnderThreshold()) {
             addCard(card);
         }
@@ -22,7 +22,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public void addCard(Card card) {
+    public void addCard(final Card card) {
         super.addCard(card);
     }
 

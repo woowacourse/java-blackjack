@@ -9,11 +9,11 @@ public class Hand {
 
     private final List<Card> hand;
 
-    public Hand(List<Card> hand) {
+    public Hand(final List<Card> hand) {
         this.hand = new ArrayList<>(hand);
     }
 
-    public void addCard(Card card) {
+    public void addCard(final Card card) {
         hand.add(card);
     }
 
