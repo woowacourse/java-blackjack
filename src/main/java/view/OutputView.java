@@ -2,11 +2,8 @@ package view;
 
 import domain.card.Card;
 import domain.game.Game;
-import domain.game.GameResult;
 import domain.participant.GameParticipant;
 import domain.participant.Player;
-import java.util.Arrays;
-import java.util.EnumMap;
 import java.util.List;
 
 public class OutputView {
@@ -32,15 +29,6 @@ public class OutputView {
             displayParticipantAndCards(participant);
             System.out.printf(" - 결과: %d%n", participant.calculateScore());
         }
-    }
-
-    public void displayGameResult(Game game, EnumMap<GameResult, Integer> gameResults) {
-        displayEmptyLine();
-        System.out.println("## 최종 승패");
-        System.out.print("딜러: ");
-        displayDealerGameResult(gameResults);
-        displayEmptyLine();
-        displayPlayerGameResult(game);
     }
 
     public void displayParticipantAndCards(GameParticipant gameParticipant) {
@@ -72,15 +60,13 @@ public class OutputView {
                 .toList();
     }
 
-    private void displayPlayerGameResult(Game game) {
-        game.getPlayers()
-                .forEach(player -> System.out.printf("%s: %s%n", player.getName(),
-                        player.calculateGameResult(game.getDealer()).getName()));
+    public void displayProfitMessage() {
+        displayEmptyLine();
+        System.out.println("## 최종 수익");
     }
 
-    private void displayDealerGameResult(EnumMap<GameResult, Integer> gameResults) {
-        Arrays.stream(GameResult.values())
-                .filter((gameResult) -> gameResults.get(gameResult) != 0)
-                .forEach((gameResult) -> System.out.printf("%d%s ", gameResults.get(gameResult), gameResult.getName()));
+    public void displayParticipantProfit(String name, int profit) {
+        System.out.printf("%s: %d", name, profit);
+        displayEmptyLine();
     }
 }

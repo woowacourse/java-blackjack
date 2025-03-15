@@ -2,10 +2,10 @@ package controller;
 
 import domain.card.Card;
 import domain.card.Deck;
+import domain.game.BettingSession;
 import domain.game.Game;
-import domain.game.GameResult;
+import domain.participant.Player;
 import domain.shuffler.RandomShuffler;
-import java.util.EnumMap;
 import java.util.List;
 import java.util.function.Supplier;
 import view.Answer;
@@ -18,16 +18,22 @@ public class BlackJackController {
 
     public void run() {
         Game game = retryUntilSuccess(this::startGame);
+        BettingSession bettingSession = startBetting();
+        bet(game, bettingSession);
         outputView.displayInitialDeal(game);
         giveAdditionalCardsForPlayer(game);
         giveAdditionalCardsForDealer(game);
         displayScores(game);
-        calculateAndDisplayGameResult(game);
+        calculateAndDisplayBettingProfit(game, bettingSession);
     }
 
     public Game startGame() {
         List<String> playerNames = inputView.readPlayerNames();
         return new Game(playerNames, new Deck(new RandomShuffler()));
+    }
+
+    public BettingSession startBetting() {
+        return new BettingSession();
     }
 
     private void giveAdditionalCardsForPlayer(Game game) {
@@ -46,11 +52,6 @@ public class BlackJackController {
 
     private void displayScores(Game game) {
         outputView.displayScore(game);
-    }
-
-    private void calculateAndDisplayGameResult(Game game) {
-        EnumMap<GameResult, Integer> gameResults = game.getDealer().calculateGameResult(game.getPlayers());
-        outputView.displayGameResult(game, gameResults);
     }
 
     private void hitOrStay(Game game, String playerName) {
@@ -72,6 +73,27 @@ public class BlackJackController {
         List<Card> cards = game.getPlayerCards(playerName);
         outputView.displayNameAndCards(playerName, cards);
         outputView.displayEmptyLine();
+    }
+
+    public void bet(Game game, BettingSession bettingSession) {
+        List<Player> players = game.getPlayers();
+        players.forEach(player -> playerBet(bettingSession, player));
+    }
+
+    public void playerBet(BettingSession bettingSession, Player player) {
+        int betAmount = inputView.readBetAmount(player.getName());
+        bettingSession.bet(player, betAmount);
+    }
+
+    private void calculateAndDisplayBettingProfit(Game game, BettingSession bettingSession) {
+        List<Player> players = game.getPlayers();
+        bettingSession.calculateProfit(players, game.getDealer());
+        outputView.displayProfitMessage();
+        outputView.displayParticipantProfit("딜러", bettingSession.getDealerProfit(game.getDealer()));
+        for (Player player : players) {
+            int profit = bettingSession.getPlayerProfit(player);
+            outputView.displayParticipantProfit(player.getName(), profit);
+        }
     }
 
     private <T> T retryUntilSuccess(Supplier<T> supplier) {
