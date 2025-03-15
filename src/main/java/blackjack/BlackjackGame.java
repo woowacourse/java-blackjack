@@ -42,11 +42,6 @@ public class BlackjackGame {
         showWinningResult(dealer, players);
     }
 
-    private void showParticipantScore(final Dealer dealer, final Players players) {
-        resultView.makeParticipantsWithScoreMessage(Map.entry(dealer.getNickname(), dealer.showAllCards()),
-                players.showTotalCards());
-    }
-
     private Players makePlayers() {
         String names = inputView.readNames();
         List<String> parsedNames = StringParser.parseByComma(names);
@@ -71,14 +66,6 @@ public class BlackjackGame {
         spreadExtraCardsToDealer(dealer, deck);
     }
 
-    private void spreadExtraCardsToDealer(final Dealer dealer, final Deck deck) {
-        while (dealer.canHit()) {
-            final Hand hand = deck.spreadCards(SPREAD_SIZE);
-            dealer.receiveCards(new Hand(List.of(hand.getFirstCard())));
-            resultView.printDealerExtraCard();
-        }
-    }
-
     private void spreadExtraCardsToPlayer(final Players players, final Deck deck) {
         Players availablePlayers = players.findHitAvailablePlayers();
         for (Gamer gamer : availablePlayers.getPlayers()) {
@@ -101,6 +88,19 @@ public class BlackjackGame {
 
     private boolean isValidAnswer(final String answer) {
         return answer.equals(YES) || answer.equals(NO);
+    }
+
+    private void spreadExtraCardsToDealer(final Dealer dealer, final Deck deck) {
+        while (dealer.canHit()) {
+            final Hand hand = deck.spreadCards(SPREAD_SIZE);
+            dealer.receiveCards(new Hand(List.of(hand.getFirstCard())));
+            resultView.printDealerExtraCard();
+        }
+    }
+
+    private void showParticipantScore(final Dealer dealer, final Players players) {
+        resultView.makeParticipantsWithScoreMessage(Map.entry(dealer.getNickname(), dealer.showAllCards()),
+                players.showTotalCards());
     }
 
     private void showWinningResult(final Dealer dealer, final Players players) {
