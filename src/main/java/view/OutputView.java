@@ -1,4 +1,4 @@
-package console;
+package view;
 
 import card.Card;
 import card.CardDeck;
@@ -8,7 +8,7 @@ import game.Player;
 import game.Players;
 import java.util.List;
 
-public class Output {
+public class OutputView {
 
     public void printInitialGame(Card dealerCard, List<Player> players) {
         String playerNames = formatPlayerNames(players);

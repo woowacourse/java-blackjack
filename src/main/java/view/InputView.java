@@ -1,15 +1,15 @@
-package console;
+package view;
 
 import game.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class Input {
+public class InputView {
 
     private final Scanner scanner;
 
-    public Input(Scanner scanner) {
+    public InputView(Scanner scanner) {
         this.scanner = scanner;
     }
 
