@@ -51,7 +51,7 @@ public class Players {
     }
 
     public int getScoreOf(String name) {
-        return findByName(name).getScore();
+        return findByName(name).calculateScore();
     }
 
     public Player findByName(String name) {

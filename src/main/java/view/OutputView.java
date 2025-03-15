@@ -37,12 +37,13 @@ public class OutputView {
     }
 
     public void printFinalCardsContent(Dealer dealer, Players players) {
-        System.out.printf("딜러카드: %s - 결과: %d\n", getCardContents(dealer.getOwnedCards()), dealer.getScore());
+        System.out.printf("딜러카드: %s - 결과: %d\n", getCardContents(dealer.getOwnedCards()), dealer.calculateScore());
 
         List<String> playerNames = players.getPlayersName();
         for (String name : playerNames) {
             Player player = players.findByName(name);
-            System.out.printf("%s카드: %s - 결과: %d\n", name, getCardContents(player.getOwnedCards()), player.getScore());
+            System.out.printf("%s카드: %s - 결과: %d\n", name, getCardContents(player.getOwnedCards()),
+                    player.calculateScore());
         }
         System.out.println();
     }

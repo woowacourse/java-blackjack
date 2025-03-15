@@ -1,6 +1,7 @@
 package domain.participant;
 
 import static domain.BlackjackGame.BLACKJACK_SCORE;
+import static domain.BlackjackGame.INITIAL_CARDS;
 
 import domain.BlackjackGame;
 import domain.card.Card;
@@ -9,7 +10,7 @@ import domain.result.GameResult;
 import java.util.List;
 import java.util.Objects;
 
-public class Player {
+public class Player implements Participant {
 
     private final String name;
     private final Hand ownedHand;
@@ -23,39 +24,65 @@ public class Player {
         return new Player(name);
     }
 
+    @Override
     public void receive(final Card card) {
         ownedHand.add(card);
     }
 
+    @Override
     public boolean canReceive() {
-        return (getScore() < BLACKJACK_SCORE);
+        return (calculateScore() < BLACKJACK_SCORE);
     }
 
-    public GameResult getBlackjackResult(Dealer dealer) {
+    @Override
+    public GameResult determineBlackjackResult(Participant opponent) {
         if (isBust()) {
             return GameResult.LOSE;
         }
-        if (dealer.isBust()) {
+        if (opponent.isBust()) {
             return GameResult.WIN;
         }
-        if (getScore() > dealer.getScore()) {
+
+        return determineResultByScore(opponent);
+    }
+
+    private GameResult determineResultByScore(Participant opponent) {
+        if (isBlackjack() && !opponent.isBlackjack()) {
             return GameResult.WIN;
         }
-        if (getScore() < dealer.getScore()) {
+        if (!isBlackjack() && opponent.isBlackjack()) {
+            return GameResult.LOSE;
+        }
+
+        return compareScoresWith(opponent);
+    }
+
+    private GameResult compareScoresWith(Participant opponent) {
+        if (calculateScore() > opponent.calculateScore()) {
+            return GameResult.WIN;
+        }
+        if (calculateScore() < opponent.calculateScore()) {
             return GameResult.LOSE;
         }
         return GameResult.DRAW;
     }
 
+    @Override
     public boolean isBust() {
-        return getScore() > BlackjackGame.BLACKJACK_SCORE;
+        return calculateScore() > BlackjackGame.BLACKJACK_SCORE;
     }
 
-    public int getScore() {
+    @Override
+    public boolean isBlackjack() {
+        return countCard() == INITIAL_CARDS && calculateScore() == BLACKJACK_SCORE;
+    }
+
+    @Override
+    public int calculateScore() {
         return ownedHand.calculateScore();
     }
 
-    public int getCardCount() {
+    public int countCard() {
         return ownedHand.getSize();
     }
 

@@ -1,13 +1,16 @@
 package domain.participant;
 
+import static domain.BlackjackGame.BLACKJACK_SCORE;
 import static domain.BlackjackGame.DEALER_MIN_SCORE;
+import static domain.BlackjackGame.INITIAL_CARDS;
 
 import domain.BlackjackGame;
 import domain.card.Card;
 import domain.card.Hand;
+import domain.result.GameResult;
 import java.util.List;
 
-public class Dealer {
+public class Dealer implements Participant {
     private final Hand ownedHand;
 
     private Dealer() {
@@ -18,27 +21,41 @@ public class Dealer {
         return new Dealer();
     }
 
+    @Override
     public void receive(Card card) {
         ownedHand.add(card);
     }
 
-    public List<Card> getOwnedCards() {
-        return ownedHand.getCards();
-    }
-
+    @Override
     public boolean canReceive() {
-        return (getScore() <= DEALER_MIN_SCORE);
+        return (calculateScore() <= DEALER_MIN_SCORE);
     }
 
+    @Override
+    public GameResult determineBlackjackResult(Participant opponent) {
+        throw new IllegalStateException("딜러는 승패를 계산할 수 없습니다.");
+    }
+
+    @Override
     public boolean isBust() {
-        return getScore() > BlackjackGame.BLACKJACK_SCORE;
+        return calculateScore() > BlackjackGame.BLACKJACK_SCORE;
     }
 
-    public int getScore() {
+    @Override
+    public boolean isBlackjack() {
+        return countCard() == INITIAL_CARDS && calculateScore() == BLACKJACK_SCORE;
+    }
+
+    @Override
+    public int calculateScore() {
         return ownedHand.calculateScore();
     }
 
-    public int getCardCount() {
+    public int countCard() {
         return ownedHand.getSize();
+    }
+
+    public List<Card> getOwnedCards() {
+        return ownedHand.getCards();
     }
 }

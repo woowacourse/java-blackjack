@@ -4,6 +4,7 @@ import domain.batting.Bet;
 import domain.batting.BettingPool;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
+import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import domain.result.GameResult;
@@ -19,7 +20,7 @@ public class BlackjackGame {
     public static final int BLACKJACK_SCORE = 21;
 
     private final CardDeck cardDeck;
-    private final Dealer dealer;
+    private final Participant dealer;
     private final Players players;
 
     private BlackjackGame(CardDeck cardDeck, Dealer dealer, Players players) {
@@ -60,7 +61,7 @@ public class BlackjackGame {
         List<String> playersName = getPlayersName();
         for (String name : playersName) {
             Player player = getPlayerByName(name);
-            GameResult result = player.getBlackjackResult(dealer);
+            GameResult result = player.determineBlackjackResult(dealer);
             Bet bet = bettingPool.getPlayerBet(player);
             int profit = bet.calculateProfit(result);
             profits.put(player, profit);

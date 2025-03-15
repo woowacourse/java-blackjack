@@ -66,7 +66,7 @@ public class PlayerTest {
         player.receive(card);
 
         // when
-        int score = player.getScore();
+        int score = player.calculateScore();
 
         // then
         assertThat(score).isEqualTo(11);
@@ -86,7 +86,7 @@ public class PlayerTest {
         dealer.receive(cardDeck.popCard());
 
         // when
-        GameResult playerResult = player.getBlackjackResult(dealer);
+        GameResult playerResult = player.determineBlackjackResult(dealer);
 
         // then
         assertThat(playerResult).isEqualTo(result);
