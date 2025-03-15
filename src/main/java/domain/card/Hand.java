@@ -39,7 +39,7 @@ public final class Hand {
   }
 
   public boolean isBlackjack() {
-    return getCount() == 2 && calculateScore().isBlackjack();
+    return calculateScore().isBlackjack(getCount());
   }
 
   private boolean hasAce() {
