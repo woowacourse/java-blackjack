@@ -1,5 +1,7 @@
 package constant;
 
+import bet.BetAmount;
+
 public enum WinningResult {
     BLACKJACK(1.5),
     WIN(1),
@@ -13,6 +15,10 @@ public enum WinningResult {
 
     WinningResult(double profitRate) {
         this.profitRate = profitRate;
+    }
+
+    public double calculateProfit(BetAmount amount) {
+        return amount.getValue() * profitRate;
     }
 
     public static WinningResult getWinningResult(int playerScore, int dealerScore) {
