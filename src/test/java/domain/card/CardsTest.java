@@ -22,4 +22,16 @@ class CardsTest {
         final int afterSize = cards.size();
         Assertions.assertThat(afterSize).isEqualTo(beforeSize + 1);
     }
+
+    @Test
+    void 가진_카드로_최적의_합을_계산한다() {
+        // given
+        Cards cards = new Cards(List.of(FIVE_HEART, FOUR_HEART, ACE_HEART));
+
+        // when
+        final int sum = cards.computeOptimalSum();
+
+        // then
+        Assertions.assertThat(sum).isEqualTo(20);
+    }
 }

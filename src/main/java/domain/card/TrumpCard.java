@@ -1,10 +1,10 @@
 package domain.card;
 
 public abstract class TrumpCard {
-    private final Rank rank;
-    private final Suit suit;
+    protected final Rank rank;
+    protected final Suit suit;
 
-    public TrumpCard(Rank rank, Suit suit) {
+    protected TrumpCard(Rank rank, Suit suit) {
         this.rank = rank;
         this.suit = suit;
     }
