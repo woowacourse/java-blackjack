@@ -11,10 +11,6 @@ public record Score(int score) {
     private static final int ACE_ADDING_VALUE = 10;
     private static final int ACE_VALUE_ADDING_AVAILABLE_SUM = 11;
 
-    public Score(int score) {
-        this.score = score;
-    }
-
     public static Score from(Hand hand) {
         int score = calculateScore(hand.getCards());
         return new Score(score);

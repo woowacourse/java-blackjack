@@ -51,6 +51,10 @@ public class OutputPrinter {
         System.out.printf("%s카드: %s - 결과: %d\n", player.getName(), parsedPlayerCards, playerCardsSum);
     }
 
+    public void printBustMessage() {
+        System.out.println("\n카드의 합이 21을 초과하였습니다. 더이상 카드를 받을 수 없습니다.");
+    }
+
     public void printAllPlayerResult(AllPlayerResult allPlayerResult) {
         System.out.println("\n## 최종 수익");
         System.out.printf("딜러: %d\n", allPlayerResult.calculateDealerProfit().price());
@@ -58,9 +62,5 @@ public class OutputPrinter {
                 .forEach(playerResult -> {
                     System.out.printf("%s: %s\n", playerResult.getPlayerName(), playerResult.calculateProfit().price());
                 });
-    }
-
-    public void printBustMessage() {
-        System.out.println("\n카드의 합이 21을 초과하였습니다. 더이상 카드를 받을 수 없습니다.");
     }
 }

@@ -13,10 +13,6 @@ public enum GameStatus {
         this.payoutRate = payoutRate;
     }
 
-    public boolean isEqualTo(GameStatus gameStatus) {
-        return gameStatus == this;
-    }
-
     public boolean isDecided() {
         return this != UNDECIDED;
     }

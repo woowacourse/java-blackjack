@@ -31,15 +31,6 @@ public class GameTable {
         return players.openHand();
     }
 
-    public AllPlayerResult calculateAllPlayerResult() {
-        return players.calculateAllPlayerResult(dealer);
-    }
-
-    private void initializeHands() {
-        this.dealer = (Dealer) dealer.initializeHandWith(deck.drawDefaultHand());
-        this.players = players.initializeHandWith(deck);
-    }
-
     public void playPlayersRound(Function<Player, AnswerType> requestAdditionalCard) {
         players = players.updatePlayers(player -> {
             AnswerType answerType = requestAdditionalCard.apply(player);
@@ -68,5 +59,14 @@ public class GameTable {
 
     public Players openPlayersFinalHand() {
         return players;
+    }
+
+    public AllPlayerResult calculateAllPlayerResult() {
+        return players.calculateAllPlayerResult(dealer);
+    }
+
+    private void initializeHands() {
+        this.dealer = (Dealer) dealer.initializeHandWith(deck.drawDefaultHand());
+        this.players = players.initializeHandWith(deck);
     }
 }

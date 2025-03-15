@@ -7,8 +7,8 @@ import java.util.List;
 public record Hand(List<Card> cards) {
     private static final int INITIAL_HAND_SIZE = 2;
 
-    public Hand(List<Card> cards) {
-        this.cards = cards;
+    public static Hand createEmpty() {
+        return new Hand(new ArrayList<>());
     }
 
     public static Hand from(Card card) {
@@ -21,10 +21,6 @@ public record Hand(List<Card> cards) {
         List<Card> newCards = new ArrayList<>(cards);
         newCards.add(card);
         return new Hand(newCards);
-    }
-
-    public static Hand createEmpty() {
-        return new Hand(new ArrayList<>());
     }
 
     public List<Card> getCards() {

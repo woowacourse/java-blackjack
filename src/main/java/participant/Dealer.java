@@ -1,7 +1,6 @@
 package participant;
 
 import card.Card;
-import card.Deck;
 import card.Hand;
 
 public class Dealer extends Participant {
@@ -32,12 +31,5 @@ public class Dealer extends Participant {
     @Override
     public Participant updateHandWith(Card card) {
         return new Dealer(hand.add(card));
-    }
-
-    public Dealer drawCardIfNeeded(Deck deck) {
-        if (shouldDrawCard()) {
-            return (Dealer) this.updateHandWith(deck.drawCard());
-        }
-        return this;
     }
 }
