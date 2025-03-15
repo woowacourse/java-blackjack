@@ -1,19 +1,18 @@
 package card;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import constant.TrumpEmblem;
 import constant.TrumpNumber;
 import game.Card;
 import game.Cards;
 import game.Deck;
-import strategy.DeckSettingStrategy;
-import strategy.DeckShuffleStrategy;
 import org.junit.jupiter.api.Test;
+import strategy.DeckShuffleStrategy;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class DeckTest {
 
@@ -53,17 +52,16 @@ class DeckTest {
 
     @Test
     void 덱_세팅_전략에_따라_덱을_구성한다() {
-        Deck deck = new Deck(new DeckSettingStrategy() {
-            @Override
-            public Cards initialize() {
-                List<Card> cards = Arrays.stream(TrumpNumber.values())
-                        .flatMap(number -> Arrays.stream(TrumpEmblem.values())
-                                .map(emblem -> new Card(number, emblem)))
-                        .collect(Collectors.toList());
-                return new Cards(cards);
-            }
+        // given
+        Deck deck = new Deck(() -> {
+            List<Card> cards = Arrays.stream(TrumpNumber.values())
+                    .flatMap(number -> Arrays.stream(TrumpEmblem.values())
+                            .map(emblem -> new Card(number, emblem)))
+                    .collect(Collectors.toList());
+            return new Cards(cards);
         });
 
+        // when & then
         assertThat(deck.drawOneCard().getEmblem()).isEqualTo(TrumpEmblem.DIAMOND);
         assertThat(deck.drawOneCard().getNumber()).isEqualTo(TrumpNumber.KING);
     }

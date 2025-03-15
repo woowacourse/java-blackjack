@@ -1,19 +1,20 @@
 package participant;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-
-import game.Card;
-import game.Cards;
 import constant.TrumpEmblem;
 import constant.TrumpNumber;
 import constant.WinningResult;
-import java.util.ArrayList;
-import java.util.List;
+import game.Card;
+import game.Cards;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class PlayerTest {
 
@@ -23,7 +24,7 @@ class PlayerTest {
         List<Card> initialCards = makeCards(TrumpNumber.ACE, TrumpNumber.EIGHT);
         Cards cards = new Cards(initialCards);
 
-        // when // then
+        // when & then
         assertDoesNotThrow(() -> new Player(new Nickname("pobi"), cards));
     }
 
@@ -34,7 +35,7 @@ class PlayerTest {
         initialCards.add(new Card(TrumpNumber.EIGHT, TrumpEmblem.HEART));
         Cards cards = new Cards(initialCards);
 
-        // when // then
+        // when & then
         assertThatThrownBy(() -> new Player(new Nickname("pobi"), cards)).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 초기 카드는 2장을 받아야 합니다.");
     }

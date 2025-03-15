@@ -20,23 +20,26 @@ class BetCenterTest {
 
     @Test
     void 게임_시작_시_베팅_금액을_정한다() {
+        // given
         Integer bettingAmount1 = 10000;
         Integer bettingAmount2 = 20000;
         Integer bettingAmount3 = 30000;
 
         Map<Nickname, Integer> bettingAmounts = new HashMap<>();
 
+        // when
         bettingAmounts.put(new Nickname("제프"), bettingAmount1);
         bettingAmounts.put(new Nickname("짱수"), bettingAmount2);
         bettingAmounts.put(new Nickname("빙봉"), bettingAmount3);
 
+        // then
         assertThat(bettingAmounts.get(new Nickname("짱수"))).isEqualTo(20000);
 
     }
 
     @Test
     void 딜러만_블랙잭인_경우_모든_플레이어는_베팅금액을_잃는다() {
-
+        // given
         Dealer dealer = new Dealer(() -> {
             List<Card> cards = new ArrayList<>();
 
@@ -62,20 +65,25 @@ class BetCenterTest {
                 player1, new BetAmount(10000),
                 player2, new BetAmount(20000)
         ));
+
+        // when
         Map<Player, BetAmount> bettingResults = betCenter.deriveBettingResults(dealer);
 
+        // then
         assertThat(bettingResults.get(player1).getValue()).isEqualTo(-10000);
         assertThat(bettingResults.get(player2).getValue()).isEqualTo(-20000);
     }
 
     @Test
     void 플레이어만_블랙잭인_경우_베팅금액의_절반을_수익으로_얻는다() {
+        // given
         Dealer dealer = new Dealer(() -> {
             List<Card> cards = new ArrayList<>();
             cards.add(new Card(TrumpNumber.ACE, TrumpEmblem.HEART));
             cards.add(new Card(TrumpNumber.KING, TrumpEmblem.DIAMOND));
             cards.add(new Card(TrumpNumber.JACK, TrumpEmblem.CLOVER));
             cards.add(new Card(TrumpNumber.KING, TrumpEmblem.SPADE));
+
             return new Cards(cards);
         });
         Player player = new Player(new Nickname("제프"), dealer.drawInitialCards());
@@ -91,10 +99,15 @@ class BetCenterTest {
 
     @Test
     void 딜러와_플레이어가_블랙잭인_경우_수익은_0원이다() {
+        // given
         Dealer dealer = new Dealer(() -> {
             List<Card> cards = new ArrayList<>();
+
+            // 플레이어
             cards.add(new Card(TrumpNumber.ACE, TrumpEmblem.HEART));
             cards.add(new Card(TrumpNumber.KING, TrumpEmblem.DIAMOND));
+
+            // 딜러
             cards.add(new Card(TrumpNumber.ACE, TrumpEmblem.CLOVER));
             cards.add(new Card(TrumpNumber.KING, TrumpEmblem.SPADE));
             return new Cards(cards);
@@ -102,38 +115,53 @@ class BetCenterTest {
         Player player = new Player(new Nickname("제프"), dealer.drawInitialCards());
 
         BetCenter betCenter = new BetCenter(Map.of(player, new BetAmount(10000)));
+
+        // when
         Map<Player, BetAmount> bettingResults = betCenter.deriveBettingResults(dealer);
 
+        // then
         assertThat(bettingResults.get(player).getValue()).isEqualTo(0);
     }
 
     @Test
     void 플레이어가_승리하면서_점수가_21점인_경우_베팅금액만큼의_수익을_얻는다() {
+        // given
         Dealer dealer = new Dealer(() -> {
             List<Card> cards = new ArrayList<>();
+
+            // 플레이어
             cards.add(new Card(TrumpNumber.FIVE, TrumpEmblem.HEART));
             cards.add(new Card(TrumpNumber.SIX, TrumpEmblem.HEART));
             cards.add(new Card(TrumpNumber.KING, TrumpEmblem.DIAMOND));
+
+            // 딜러
             cards.add(new Card(TrumpNumber.FIVE, TrumpEmblem.CLOVER));
             cards.add(new Card(TrumpNumber.KING, TrumpEmblem.SPADE));
             return new Cards(cards);
         });
         Player player = new Player(new Nickname("제프"), dealer.drawInitialCards());
         player.addOneCard(dealer.drawCard());
-
         BetCenter betCenter = new BetCenter(Map.of(player, new BetAmount(10000)));
+
+        // when
         Map<Player, BetAmount> bettingResults = betCenter.deriveBettingResults(dealer);
 
+        // then
         assertThat(bettingResults.get(player).getValue()).isEqualTo(10000);
     }
 
     @Test
     void 플레이어의_점수가_21을_초과하는_경우_베팅금액을_잃는다() {
+        // given
         Dealer dealer = new Dealer(() -> {
             List<Card> cards = new ArrayList<>();
+
+            // 플레이어
             cards.add(new Card(TrumpNumber.NINE, TrumpEmblem.HEART));
             cards.add(new Card(TrumpNumber.SIX, TrumpEmblem.HEART));
             cards.add(new Card(TrumpNumber.KING, TrumpEmblem.DIAMOND));
+
+            // 딜러
             cards.add(new Card(TrumpNumber.FIVE, TrumpEmblem.CLOVER));
             cards.add(new Card(TrumpNumber.KING, TrumpEmblem.SPADE));
             return new Cards(cards);
@@ -144,13 +172,17 @@ class BetCenterTest {
         BetCenter betCenter = new BetCenter(Map.of(
                 player, new BetAmount(15000)
         ));
+
+        // when
         Map<Player, BetAmount> bettingResults = betCenter.deriveBettingResults(dealer);
 
+        // then
         assertThat(bettingResults.get(player).getValue()).isEqualTo(-15000);
     }
 
     @Test
     void 딜러의_점수가_21을_초과하는_경우_해당_시점의_플레이어는_모두_베팅금액만큼의_수익을_얻는다() {
+        // given
         Dealer dealer = new Dealer(() -> {
             List<Card> cards = new ArrayList<>();
 
@@ -184,8 +216,11 @@ class BetCenterTest {
                 player2, new BetAmount(30000),
                 player3, new BetAmount(12000)
         ));
+
+        // when
         Map<Player, BetAmount> bettingResults = betCenter.deriveBettingResults(dealer);
 
+        // then
         assertThat(bettingResults.get(player1).getValue()).isEqualTo(15000);
         assertThat(bettingResults.get(player2).getValue()).isEqualTo(30000);
         assertThat(bettingResults.get(player3).getValue()).isEqualTo(12000);
@@ -193,6 +228,7 @@ class BetCenterTest {
 
     @Test
     void 딜러의_수익을_계산한다() {
+        // given
         Dealer dealer = new Dealer(() -> {
             List<Card> cards = new ArrayList<>();
 
@@ -223,15 +259,10 @@ class BetCenterTest {
                 player3, new BetAmount(12000)
         ));
 
+        // when
         int dealerProfit = betCenter.calculateDealerProfit(dealer);
 
-        Map<Player, BetAmount> playerBetAmountMap = betCenter.deriveBettingResults(dealer);
-
-        System.out.println(playerBetAmountMap.get(player1).getValue());
-        System.out.println(playerBetAmountMap.get(player2).getValue());
-        System.out.println(playerBetAmountMap.get(player3).getValue());
-
-
-        assertThat(dealerProfit).isEqualTo(-3000); // -15000 + 12000
+        // then
+        assertThat(dealerProfit).isEqualTo(-3000);
     }
 }
