@@ -67,6 +67,6 @@ public class BlackjackController {
 
     private void printResult() {
         OutputView.printRoundResult(round.getRoundResults());
-        OutputView.printFinalResult(profitCalculator.getProfits(round));
+        OutputView.printFinalResult(profitCalculator.getProfits(round.getDealer(), round.getPlayers()));
     }
 }

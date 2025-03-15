@@ -21,9 +21,9 @@ public class ProfitCalculator {
         playerBets.put(playerName, new Bet(amount));
     }
 
-    public ProfitsResponseDto getProfits(Round round) {
-        Map<String, Double> playerProfits = getPlayerProfits(round.getDealer(), round.getPlayers());
-        Map<String, Double> dealerProfit = getDealerProfit(round.getDealer(), playerProfits);
+    public ProfitsResponseDto getProfits(Dealer dealer, List<Player> players) {
+        Map<String, Double> playerProfits = getPlayerProfits(dealer, players);
+        Map<String, Double> dealerProfit = getDealerProfit(dealer, playerProfits);
         return ProfitsResponseDto.of(dealerProfit, playerProfits);
     }
 
