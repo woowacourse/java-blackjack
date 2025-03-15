@@ -15,7 +15,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public boolean areYouDealer() {
+    public boolean isDealer() {
         return true;
     }
 
@@ -23,4 +23,5 @@ public class Dealer extends Participant {
     public String getNickname() {
         return NAME;
     }
+
 }

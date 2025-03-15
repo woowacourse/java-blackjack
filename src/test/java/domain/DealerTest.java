@@ -3,8 +3,6 @@ package domain;
 import domain.card.GameCardDeck;
 import domain.participant.Dealer;
 import domain.participant.Participant;
-import domain.participant.Participants;
-import domain.participant.Player;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -45,7 +43,7 @@ public class DealerTest {
         Participant dealer = new Dealer();
 
         //when & then
-        Assertions.assertThat(dealer.areYouDealer()).isTrue();
+        Assertions.assertThat(dealer.isDealer()).isTrue();
     }
 
 }
