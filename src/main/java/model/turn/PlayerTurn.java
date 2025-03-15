@@ -8,16 +8,15 @@ import model.participant.Player;
 import view.InputView;
 
 public class PlayerTurn extends Turn {
-    private final Player player;
     private final Betting betting;
 
     public PlayerTurn(Player player, Betting betting) {
         super(player);
-        this.player = player;
         this.betting = betting;
     }
 
     public void selectAtOnePlayerChoice(Deck deck) {
+        Player player = (Player) participant;
         PlayerChoice playerChoice = InputView.readFirstChoice(player);
         if (playerChoice.equals(PlayerChoice.HIT)) {
             processHit(deck);
@@ -38,10 +37,12 @@ public class PlayerTurn extends Turn {
     }
 
     public void putBetting(Map<Player, Betting> playerBetting) {
+        Player player = (Player) participant;
         playerBetting.put(player, betting);
     }
 
     private void processHit(Deck deck) {
+        Player player = (Player) participant;
         player.receiveCard(deck.pick());
         if (!player.isBust()) {
             selectHitOrStand(deck);
@@ -49,6 +50,7 @@ public class PlayerTurn extends Turn {
     }
 
     private void selectHitOrStand(Deck deck) {
+        Player player = (Player) participant;
         PlayerChoice playerChoice = InputView.readHitOrStand(player);
         if (playerChoice == PlayerChoice.HIT) {
             processHit(deck);
@@ -56,11 +58,12 @@ public class PlayerTurn extends Turn {
     }
 
     private void processDoubleDown(Deck deck, int additionalBet) {
+        Player player = (Player) participant;
         player.receiveCard(deck.pick());
         betting.addBet(additionalBet);
     }
 
     public Player getPlayer() {
-        return player;
+        return (Player) participant;
     }
 }
