@@ -5,7 +5,7 @@ import blackjack.domain.deck.BlackjackDeck;
 import blackjack.util.GlobalValidator;
 
 import java.util.List;
-import java.util.stream.IntStream;
+import java.util.Map;
 
 public final class Players {
     
@@ -51,10 +51,23 @@ public final class Players {
         return noDuplicatedNamesCount != playerNames.size();
     }
     
-    public List<PlayerBettingBlackjackCardHand> toBlackjackBettingCardHand(final BlackjackDeck deck, final List<Integer> bettingAmounts) {
-        return IntStream.range(0, players.size())
-                .mapToObj(i -> PlayerBettingBlackjackCardHand.createWithInitialCards(players.get(i), bettingAmounts.get(i), deck))
+    public List<PlayerBettingBlackjackCardHand> toBlackjackBettingCardHand(
+            final BlackjackDeck deck,
+            final Map<String, Integer> bettingAmounts
+    ) {
+        if (!isBettingAmountAllPresent(bettingAmounts)) {
+            throw new IllegalArgumentException("베팅 금액이 없는 플레이어가 존재합니다.");
+        }
+        return players.stream()
+                .map(player -> PlayerBettingBlackjackCardHand.createWithInitialCards(
+                        player,
+                        bettingAmounts.get(player.getName()),
+                        deck))
                 .toList();
+    }
+    
+    private boolean isBettingAmountAllPresent(final Map<String, Integer> bettingAmounts) {
+        return bettingAmounts.keySet().containsAll(getPlayerNames());
     }
     
     public List<String> getPlayerNames() {

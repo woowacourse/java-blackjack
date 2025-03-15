@@ -10,6 +10,7 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
+import java.util.Map;
 
 public final class BlackjackController {
     
@@ -44,7 +45,7 @@ public final class BlackjackController {
     
     private List<PlayerBettingBlackjackCardHand> createPlayerHandsUntilSuccess(final Players players, final BlackjackDeck deck) {
         return retryHandler.runWithRetry(() -> {
-            final List<Integer> bettingAmounts = inputView.getBettingAmounts(players.getPlayerNames());
+            final Map<String, Integer> bettingAmounts = inputView.getBettingAmounts(players.getPlayerNames());
             return players.toBlackjackBettingCardHand(deck, bettingAmounts);
         });
     }

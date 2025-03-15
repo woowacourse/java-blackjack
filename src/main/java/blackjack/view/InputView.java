@@ -4,9 +4,10 @@ package blackjack.view;
 import blackjack.view.reader.Reader;
 import blackjack.view.writer.Writer;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public final class InputView {
     
@@ -42,12 +43,12 @@ public final class InputView {
         throw new IllegalArgumentException("y나 n을 입력하세요.");
     }
     
-    public List<Integer> getBettingAmounts(List<String> names) {
-        final List<Integer> bettingAmounts = new ArrayList<>();
+    public Map<String, Integer> getBettingAmounts(List<String> names) {
+        final Map<String, Integer> bettingAmounts = new HashMap<>();
         for (String name : names) {
             writer.write("\n%s의 배팅 금액은?".formatted(name));
             String input = reader.readLine();
-            bettingAmounts.add(Integer.parseInt(input));
+            bettingAmounts.put(name, Integer.parseInt(input));
         }
         return bettingAmounts;
     }
