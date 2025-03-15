@@ -38,7 +38,7 @@ class ParticipantWinningResultTest {
         player.receiveCard(new Card(CardRank.FIVE, CardSuit.DIAMOND));
 
         //when
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
         WinningResult result = participantWinningResult.getResult().get(player);
         WinningResult expect = WinningResult.WIN;
 
@@ -57,7 +57,7 @@ class ParticipantWinningResultTest {
         player.receiveCard(new Card(CardRank.QUEEN, CardSuit.DIAMOND));
 
         //when
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
         WinningResult result = participantWinningResult.getResult().get(player);
         WinningResult expect = WinningResult.LOSE;
 
@@ -77,7 +77,7 @@ class ParticipantWinningResultTest {
         player.receiveCard(new Card(CardRank.QUEEN, CardSuit.DIAMOND));
 
         //when
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
         WinningResult result = participantWinningResult.getResult().get(player);
         WinningResult expect = WinningResult.LOSE;
 
@@ -95,7 +95,7 @@ class ParticipantWinningResultTest {
         player.receiveCard(new Card(CardRank.FOUR, CardSuit.DIAMOND));
 
         //when
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
         Map<Player, WinningResult> gameResult = participantWinningResult.getResult();
         WinningResult expect = WinningResult.WIN;
 
@@ -113,7 +113,7 @@ class ParticipantWinningResultTest {
         player.receiveCard(new Card(CardRank.THREE, CardSuit.DIAMOND));
 
         //when
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
         Map<Player, WinningResult> gameResult = participantWinningResult.getResult();
         WinningResult expect = WinningResult.LOSE;
 
@@ -131,7 +131,7 @@ class ParticipantWinningResultTest {
         player.receiveCard(new Card(CardRank.FOUR, CardSuit.DIAMOND));
 
         //when
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
         Map<Player, WinningResult> gameResult = participantWinningResult.getResult();
         WinningResult expect = WinningResult.DRAW;
 

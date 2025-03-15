@@ -35,7 +35,7 @@ class BettingResultTest {
         player.receiveCard(new Card(CardRank.EIGHT, CardSuit.CLOVER));
         dealer.receiveCard(new Card(CardRank.FIVE, CardSuit.CLOVER));
         Players players = new Players(List.of(player));
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
         Map<Player, Betting> map = new HashMap<>(Map.of(player, new Betting(10000)));
         BettingResult bettingResult = new BettingResult(map, participantWinningResult);
         Map<Player, Integer> finalResult =  bettingResult.calculatePlayerBettingResult(players, dealer);
@@ -50,7 +50,7 @@ class BettingResultTest {
         player.receiveCard(new Card(CardRank.FIVE, CardSuit.CLOVER));
         dealer.receiveCard(new Card(CardRank.EIGHT, CardSuit.CLOVER));
         Players players = new Players(List.of(player));
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
         Map<Player, Betting> map = new HashMap<>(Map.of(player, new Betting(10000)));
         BettingResult bettingResult = new BettingResult(map, participantWinningResult);
         Map<Player, Integer> finalResult =  bettingResult.calculatePlayerBettingResult(players, dealer);
@@ -65,7 +65,7 @@ class BettingResultTest {
         player.receiveCard(new Card(CardRank.FIVE, CardSuit.CLOVER));
         dealer.receiveCard(new Card(CardRank.FIVE, CardSuit.CLOVER));
         Players players = new Players(List.of(player));
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
         Map<Player, Betting> map = new HashMap<>(Map.of(player, new Betting(10000)));
         BettingResult bettingResult = new BettingResult(map, participantWinningResult);
         Map<Player, Integer> finalResult =  bettingResult.calculatePlayerBettingResult(players, dealer);
@@ -81,7 +81,7 @@ class BettingResultTest {
         player.receiveCard(new Card(CardRank.KING, CardSuit.CLOVER));
         dealer.receiveCard(new Card(CardRank.FIVE, CardSuit.CLOVER));
         Players players = new Players(List.of(player));
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
         Map<Player, Betting> map = new HashMap<>(Map.of(player, new Betting(10000)));
         BettingResult bettingResult = new BettingResult(map, participantWinningResult);
         Map<Player, Integer> finalResult =  bettingResult.calculatePlayerBettingResult(players, dealer);
@@ -102,7 +102,7 @@ class BettingResultTest {
         player.receiveCard(new Card(CardRank.KING, CardSuit.CLOVER));
         player.receiveCard(new Card(CardRank.KING, CardSuit.DIAMOND));
         Players players = new Players(List.of(player));
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
         Map<Player, Betting> map = new HashMap<>(Map.of(player, betting));
 
         BettingResult bettingResult = new BettingResult(map, participantWinningResult);
@@ -123,7 +123,7 @@ class BettingResultTest {
         player.receiveCard(new Card(CardRank.NINE, CardSuit.CLOVER));
         player.receiveCard(new Card(CardRank.KING, CardSuit.DIAMOND));
         Players players = new Players(List.of(player));
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
         Map<Player, Betting> map = new HashMap<>(Map.of(player, betting));
 
         BettingResult bettingResult = new BettingResult(map, participantWinningResult);
@@ -144,7 +144,7 @@ class BettingResultTest {
         player.receiveCard(new Card(CardRank.QUEEN, CardSuit.CLOVER));
         player.receiveCard(new Card(CardRank.KING, CardSuit.DIAMOND));
         Players players = new Players(List.of(player));
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
         Map<Player, Betting> map = new HashMap<>(Map.of(player, betting));
 
         BettingResult bettingResult = new BettingResult(map, participantWinningResult);
@@ -166,7 +166,7 @@ class BettingResultTest {
         player.receiveCard(new Card(CardRank.QUEEN, CardSuit.CLOVER));
         player.receiveCard(new Card(CardRank.KING, CardSuit.DIAMOND));
         Players players = new Players(List.of(player));
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
         Map<Player, Betting> map = new HashMap<>(Map.of(player, betting));
 
         BettingResult bettingResult = new BettingResult(map, participantWinningResult);
@@ -188,7 +188,7 @@ class BettingResultTest {
         player.receiveCard(new Card(CardRank.QUEEN, CardSuit.CLOVER));
         player.receiveCard(new Card(CardRank.KING, CardSuit.DIAMOND));
         Players players = new Players(List.of(player));
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
         Map<Player, Betting> map = new HashMap<>(Map.of(player, betting));
 
         BettingResult bettingResult = new BettingResult(map, participantWinningResult);

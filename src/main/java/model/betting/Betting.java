@@ -27,7 +27,7 @@ public class Betting {
 
     public void takeInsurance(int insuranceBet) {
         validateInsuranceBet(insuranceBet);
-        this.bet = this.bet - insuranceBet;
+        this.bet -= insuranceBet;
         this.insuranceBet = insuranceBet;
     }
 

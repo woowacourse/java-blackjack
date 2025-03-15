@@ -32,7 +32,7 @@ public class BlackjackController {
         playerTurnManager.runPlayerTurn(deck);
         dealerTurn.runDealerTurn(deck);
 
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
         BettingResult bettingResult = new BettingResult(playerTurnManager.getPlayersBet(), participantWinningResult);
         Map<Player, Integer> finalProfitByPlayer = bettingResult.calculatePlayerBettingResult(players, dealer);
         int finalProfitByDealer = bettingResult.calculateDealerFinalResult(finalProfitByPlayer);

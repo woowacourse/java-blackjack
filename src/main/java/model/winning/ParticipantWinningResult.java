@@ -10,12 +10,8 @@ import model.participant.Players;
 public class ParticipantWinningResult {
     private final Map<Player, WinningResult> result;
 
-    private ParticipantWinningResult(Players players, Dealer dealer) {
+    public ParticipantWinningResult(Players players, Dealer dealer) {
         this.result = calculateWinningResult(players, dealer);
-    }
-
-    public static ParticipantWinningResult of(Players players, Dealer dealer) {
-        return new ParticipantWinningResult(players, dealer);
     }
 
     private Map<Player, WinningResult> calculateWinningResult(Players players, Dealer dealer) {
