@@ -50,14 +50,6 @@ public class GameManager {
         }
     }
 
-    public Map<String, GameResult> calculatePlayerGameResult() {
-        return players.stream()
-                .collect(Collectors.toMap(
-                        Player::getName,
-                        player -> calculateResult(dealer, player)
-                ));
-    }
-
     public int getDealerBetResult(Map<String, Bet> playerBets) {
         BlackJackBetCalculator calculator = new BlackJackBetCalculator(playerBets);
         return calculator.getDealerBetResult(dealer, players);
