@@ -1,34 +1,32 @@
-package blackjack.model.participant;
+package blackjack.model.state;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.CardValue;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public abstract class Participant {
+public class Hand {
 
-    private static final int BLACKJACK_HAND_COUNT = 2;
-    private static final int BLACKJACK_VALUE_TOTAL = 21;
     private static final int SOFT_ACE_VALUE = 11;
     private static final int SOFT_HAND_AVAILABLE_THRESHOLD = 10;
 
-    protected final List<Card> hand;
+    private final List<Card> cards;
 
-    protected Participant(List<Card> hand) {
-        this.hand = new ArrayList<>(hand);
+    public Hand() {
+        cards = new ArrayList<>();
     }
 
-    public boolean canHit() {
-        return getTotal() < BLACKJACK_VALUE_TOTAL;
+    private Hand(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
     }
 
-    public void receiveHand(Card card) {
-        if (canHit()) {
-            hand.add(card);
-            return;
-        }
-        throw new IllegalArgumentException("더 이상 카드를 받을 수 없습니다.");
+    public Hand add(Card card) {
+        cards.add(card);
+        return new Hand(new ArrayList<>(cards));
+    }
+
+    public int size() {
+        return cards.size();
     }
 
     public int getTotal() {
@@ -49,13 +47,13 @@ public abstract class Participant {
     }
 
     private List<Card> getHandWithoutAce() {
-        return hand.stream()
+        return cards.stream()
                 .filter(card -> card.getCardValue() != CardValue.ACE)
                 .toList();
     }
 
     private boolean hasAce() {
-        return hand.stream()
+        return cards.stream()
                 .anyMatch(card -> card.getCardValue() == CardValue.ACE);
     }
 
@@ -70,21 +68,23 @@ public abstract class Participant {
     }
 
     private int getAceCountInHand() {
-        return (int) hand.stream()
+        return (int) cards.stream()
                 .filter(card -> card.getCardValue() == CardValue.ACE)
                 .count();
     }
 
-    public boolean isBlackjack() {
-        return hand.size() == BLACKJACK_HAND_COUNT
-                && getTotal() == BLACKJACK_VALUE_TOTAL;
+    public boolean isEmpty() {
+        return cards.isEmpty();
     }
 
-    public boolean isBust() {
-        return BLACKJACK_VALUE_TOTAL < getTotal();
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 
-    public List<Card> getHand() {
-        return Collections.unmodifiableList(hand);
+    @Override
+    public String toString() {
+        return "Hand{" +
+                "cards=" + cards +
+                '}';
     }
 }
