@@ -49,18 +49,18 @@ public class ParticipantHand {
                 .sum();
     }
 
-    private boolean checkScoreExceptAceBelow(int upperBound) {
-        return calculateExceptAceScore() <= upperBound;
-    }
-
     private boolean canOneAceConvertToMaxValue() {
-        int scoreOfAceAsMinValue = calculateTotalAceScore();
-        if (scoreOfAceAsMinValue == 0) {
+        int aceScoreWithMinValue = calculateTotalAceScore();
+        if (aceScoreWithMinValue == 0) {
             return false;
         }
-        int maxScoreOfAce = convertOneAceToMaxValueFrom(scoreOfAceAsMinValue);
-        int scoreExceptAceUpperBound = BUST_SCORE_LIMIT - maxScoreOfAce;
-        return checkScoreExceptAceBelow(scoreExceptAceUpperBound);
+        int aceScoreWithMaxValue = convertOneAceToMaxValueFrom(aceScoreWithMinValue);
+        int remainingScoreLimit = BUST_SCORE_LIMIT - aceScoreWithMaxValue;
+        return checkScoreExceptAceBelow(remainingScoreLimit);
+    }
+
+    private boolean checkScoreExceptAceBelow(int upperBound) {
+        return calculateExceptAceScore() <= upperBound;
     }
 
     private int calculateTotalAceScore() {
