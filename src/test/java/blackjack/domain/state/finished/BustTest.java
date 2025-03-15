@@ -1,11 +1,12 @@
 package blackjack.domain.state.finished;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import blackjack.domain.winning.WinningResult;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BustTest {
@@ -24,7 +25,7 @@ class BustTest {
         double profit = bust.profit(bettingMoney);
 
         //then
-        Assertions.assertThat(profit).isEqualTo(-1000);
+        assertThat(profit).isEqualTo(-1000);
     }
 
     @Test
@@ -41,6 +42,6 @@ class BustTest {
         WinningResult winningResult = bust.calculateWinningResult(stay);
 
         //then
-        Assertions.assertThat(winningResult).isEqualTo(WinningResult.LOSE);
+        assertThat(winningResult).isEqualTo(WinningResult.LOSE);
     }
 }
