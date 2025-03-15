@@ -2,26 +2,37 @@ package model.participant;
 
 import model.card.*;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import setupSettings.NicknameGenerator;
+import setupSettings.PlayerGenerator;
 
 import java.util.List;
 import java.util.stream.Stream;
 
 public class PlayerTest {
 
+    Player player;
+
+    @BeforeEach
+    void setUp() {
+        player = PlayerGenerator.generatePlayer();
+    }
+
     @Test
     @DisplayName("플레이어가 생성 확인")
     void newPlayer() {
+
         //given
-        String expected = "pobic";
+        Nickname nickname = NicknameGenerator.generateNickname();
         //when
-        Player player = Player.from("pobic");
+        player = PlayerGenerator.generatePlayerBy(nickname);
         //then
-        Assertions.assertThat(player.getNickname()).isEqualTo(expected);
+        Assertions.assertThat(player.getNickname()).isEqualTo(nickname.getValue());
     }
 
     @Test
@@ -33,7 +44,6 @@ public class PlayerTest {
         final List<Card> cards = new CardDeck().pickCard(2);
 
         // when
-        Player player = Player.from("pobid");
         player.addCards(cards);
 
         // then
@@ -45,7 +55,6 @@ public class PlayerTest {
     @DisplayName("게임 진행 점수 조건이 충분한 지 : true")
     void isNotEnoughScoreConditionTrue(List<Card> cards) {
         //given
-        Participant player = Player.from("pobie");
         player.addCards(cards);
         //when
         //then
@@ -79,7 +88,6 @@ public class PlayerTest {
                 new MultiScoreCard(Suit.CLUBS, Rank.ACE),
                 new SingleScoreCard(Suit.HEARTS, Rank.KING)
         );
-        Participant player = Player.from("pobie");
 
         for (Card card : cards) {
             System.out.println(card.getRank());

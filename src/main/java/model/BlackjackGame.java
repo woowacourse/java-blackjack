@@ -3,18 +3,13 @@ package model;
 import controller.Intent;
 import model.card.Card;
 import model.card.CardDeck;
-import model.participant.Dealer;
-import model.participant.Participant;
-import model.participant.Player;
-import model.participant.Players;
+import model.participant.*;
 import model.score.MatchResult;
 import view.InputView;
 import view.OutputView;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class BlackjackGame {
 
@@ -28,11 +23,10 @@ public class BlackjackGame {
     }
 
     public void start() {
-        Players players = Players.from(InputView.readPlayerNames());
-        this.players = players;
+        this.players = createPlayers();
         Dealer dealer = Dealer.create();
         this.dealer = dealer;
-        distributeAllParticipant();
+        distributeStartingHand();
         OutputView.printDivisionStart(dealer, players);
 
         for (Player player : players.getPlayers()) {
@@ -44,6 +38,25 @@ public class BlackjackGame {
 
         VictoryResultDto victoryResultDto = calculateVictory();
         OutputView.printResult(victoryResultDto);
+    }
+
+    private Players createPlayers() {
+        Map<Nickname, Money> batingMoneys = new HashMap<>();
+        for (Nickname nickname : readNicknames()) {
+            Money money = readBatingMoneyBy(nickname);
+            batingMoneys.put(nickname, money);
+        }
+        return Players.from(batingMoneys);
+    }
+
+    private Money readBatingMoneyBy(Nickname nickname) {
+        return Money.from(InputView.readMoney(nickname));
+    }
+
+    private List<Nickname> readNicknames() {
+        return InputView.readPlayerNames().stream()
+                .map(Nickname::new)
+                .collect(Collectors.toList());
     }
 
     private void receiveAdditionalCard(Player player) {
@@ -72,7 +85,7 @@ public class BlackjackGame {
         return Intent.from(InputView.readIntent(player.getNickname())).equals(Intent.Y);
     }
 
-    public void distributeAllParticipant() {
+    public void distributeStartingHand() {
         List<Participant> participants = new ArrayList<>();
         participants.add(dealer);
         participants.addAll(players.getPlayers());
@@ -81,7 +94,7 @@ public class BlackjackGame {
         }
     }
 
-    public void  distributeCardByParticipant(Participant participant, int amount) {
+    public void distributeCardByParticipant(Participant participant, int amount) {
         List<Card> pickCards = deck.pickCard(amount);
         participant.addCards(pickCards);
     }
@@ -94,4 +107,3 @@ public class BlackjackGame {
         return new VictoryResultDto(playersMatchResult, dealerMatchResult);
     }
 }
-

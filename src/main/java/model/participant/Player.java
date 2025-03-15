@@ -1,5 +1,6 @@
 package model.participant;
 
+import model.Money;
 import model.score.MatchResult;
 
 import java.util.Objects;
@@ -7,13 +8,11 @@ import java.util.Objects;
 public class Player extends Participant {
 
     private final Nickname nickname;
+    private final Money batingMoney;
 
-    private Player(String nickname) {
-        this.nickname = new Nickname(nickname);
-    }
-
-    public static Player from(String nickname) {
-        return new Player(nickname);
+    public Player(Nickname nickname, Money batingMoney) {
+        this.nickname = nickname;
+        this.batingMoney = batingMoney;
     }
 
     @Override

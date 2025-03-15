@@ -4,18 +4,15 @@ import java.util.Objects;
 
 public class Nickname {
 
-    private static final int LENGTH_MIN_RANGE = 2;
-    private static final int LENGTH_MAX_RANGE = 10;
-
     private final String value;
 
     public Nickname(final String value) {
-        validateLength(value);
+        validate(value);
         this.value = value;
     }
 
-    private void validateLength(String value) {
-        if (value.length() < LENGTH_MIN_RANGE || value.length() > LENGTH_MAX_RANGE) {
+    private void validate(String value) {
+        if (!value.matches("^[a-z]{2,10}$")) {
             throw new IllegalArgumentException("닉네임은 2~10자만 입력 가능합니다,");
         }
     }

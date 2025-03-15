@@ -17,7 +17,7 @@ class RankTest {
 
         // given
         // when
-        boolean actual = rank.isMultiScores();
+        boolean actual = rank.hasMultiScores();
 
         // then
         Assertions.assertThat(actual).isEqualTo(expected);

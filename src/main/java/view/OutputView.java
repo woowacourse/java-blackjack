@@ -4,10 +4,7 @@ import model.VictoryResultDto;
 import model.card.Card;
 import model.card.Rank;
 import model.card.Suit;
-import model.participant.Dealer;
-import model.participant.Participant;
-import model.participant.Player;
-import model.participant.Players;
+import model.participant.*;
 import model.score.MatchResult;
 
 import java.util.List;

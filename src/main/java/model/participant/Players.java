@@ -1,26 +1,28 @@
 package model.participant;
 
+import model.Money;
 import model.score.MatchResult;
 
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Players {
 
     private final List<Player> values;
 
     private Players(List<Player> values) {
-        validateDuplication(values);
         validateNumber(values);
+        validateDuplication(values);
         this.values = values;
     }
 
-    public static Players from(List<String> input) {
-        List<Player> inputPlayers = input.stream()
-                .map(Player::from)
-                .toList();
-        return new Players(inputPlayers);
+    public static Players from(Map<Nickname, Money> batingMoneys) {
+        List<Player> players = new ArrayList<>();
+        for (Nickname nickname : batingMoneys.keySet()) {
+            Money batingMoney = batingMoneys.get(nickname);
+            Player player = new Player(nickname, batingMoney);
+            players.add(player);
+        }
+        return new Players(players);
     }
 
     private void validateDuplication(List<Player> values) {
