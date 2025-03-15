@@ -1,6 +1,6 @@
-package blackjack.domain.result;
+package blackjack.result;
 
-import blackjack.domain.GameRule;
+import blackjack.GameRule;
 
 import java.util.EnumMap;
 import java.util.List;
@@ -8,13 +8,16 @@ import java.util.Map;
 
 public enum GameResult {
 
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무");
+    WIN(100, "승"),
+    BLACKJACK(50, "블랙잭"),
+    LOSE(-100, "패"),
+    DRAW(0, "무");
 
+    private final int profitPercent;
     private final String description;
 
-    GameResult(String description) {
+    GameResult(int profitPercent, String description) {
+        this.profitPercent = profitPercent;
         this.description = description;
     }
 
@@ -40,22 +43,6 @@ public enum GameResult {
         return gameResultToCount;
     }
 
-    public GameResult oppose() {
-        if (this == WIN) {
-            return LOSE;
-        }
-
-        if (this == LOSE) {
-            return WIN;
-        }
-
-        return DRAW;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
     private static boolean bothBust(int heroScore, int villainScore) {
         return GameRule.isBust(heroScore) && GameRule.isBust(villainScore);
     }
@@ -73,5 +60,25 @@ public enum GameResult {
         }
 
         return DRAW;
+    }
+
+    public GameResult oppose() {
+        if (this == WIN || this == BLACKJACK) {
+            return LOSE;
+        }
+
+        if (this == LOSE) {
+            return WIN;
+        }
+
+        return DRAW;
+    }
+
+    public int getProfitPercent() {
+        return profitPercent;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
