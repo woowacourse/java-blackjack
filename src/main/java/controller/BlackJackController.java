@@ -52,7 +52,8 @@ public class BlackJackController {
     }
 
     private Betting readBetAmount(final String playerName) {
-        return new Betting(Integer.parseInt(InputView.readPlayerBetAmount(playerName)));
+        final int betAmount = Integer.parseInt(InputView.readPlayerBetAmount(playerName));
+        return new Betting(betAmount);
     }
 
     private Deck generateDeck() {
