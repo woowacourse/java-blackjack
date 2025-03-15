@@ -7,40 +7,22 @@ import domain.calculatestrategy.PlayerStrategy;
 import domain.deck.Card;
 import domain.deck.Rank;
 import domain.deck.Shape;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class HandTest {
 
-    private List<Card> cards;
     private Card card1;
     private Card card2;
-    private Card card3;
-    private Card card4;
-    private Card card5;
-    private Card card6;
-    private Card card7;
-    private Card card8;
-    private Card card9;
     private Card card10;
 
     private Hand hand;
 
     @BeforeEach
     void setUp() {
-        cards = new ArrayList<>();
         card1 = new Card(Rank.ACE, Shape.CLOVER);
         card2 = new Card(Rank.TWO, Shape.CLOVER);
-        card3 = new Card(Rank.THREE, Shape.CLOVER);
-        card4 = new Card(Rank.FOUR, Shape.CLOVER);
-        card5 = new Card(Rank.FIVE, Shape.CLOVER);
-        card6 = new Card(Rank.SIX, Shape.CLOVER);
-        card7 = new Card(Rank.SEVEN, Shape.CLOVER);
-        card8 = new Card(Rank.EIGHT, Shape.CLOVER);
-        card9 = new Card(Rank.NINE, Shape.CLOVER);
         card10 = new Card(Rank.JACK, Shape.CLOVER);
     }
 
@@ -71,5 +53,80 @@ class HandTest {
 
         // then
         assertThat(hand.getSumOfRank()).isEqualTo(13);
+    }
+
+    @DisplayName("카드의 합이 21이면 카드를 뽑지 못한다.")
+    @Test
+    void 카드의_합이_21이면_카드를_뽑지_못한다() {
+
+        // given
+        final Hand hand = new Hand(new PlayerStrategy());
+
+        // when
+        hand.add(card1);
+        hand.add(card10);
+
+        // then
+        assertThat(hand.isImPossibleDrawCard()).isTrue();
+    }
+
+    @DisplayName("카드의 합이 21 이하면 카드를 뽑을 수 있다.")
+    @Test
+    void 카드의_합이_21_이하면_카드를_뽑을_수_있다() {
+
+        // given
+        final Hand hand = new Hand(new PlayerStrategy());
+
+        // when
+        hand.add(card1);
+
+        // then
+        assertThat(hand.isImPossibleDrawCard()).isFalse();
+    }
+
+    @DisplayName("카드의 합이 21 미만이면 버스트가 아니다.")
+    @Test
+    void 카드의_합이_21_미만이면_버스트가_아니다() {
+
+        // given
+        final Hand hand = new Hand(new PlayerStrategy());
+
+        // when
+        hand.add(card1);
+        hand.add(card10);
+
+        // then
+        assertThat(hand.isBust()).isFalse();
+    }
+
+    @DisplayName("카드의 합이 21이며 두장이면 블랙잭 상태다.")
+    @Test
+    void 카드의_합이_21이며_두장이면_블랙잭_상태다() {
+
+        // given
+        final Hand hand = new Hand(new PlayerStrategy());
+
+        // when
+        hand.add(card1);
+        hand.add(card10);
+
+        // then
+        assertThat(hand.isBlackJack()).isTrue();
+    }
+
+    @DisplayName("카드의 합이 21이며 두장이 아니면 블랙잭 상태가 아니다.")
+    @Test
+    void 카드의_합이_21이며_두장이_아니면_블랙잭_상태가_아니다() {
+
+        // given
+        final Hand hand = new Hand(new PlayerStrategy());
+
+        // when
+        hand.add(card1);
+        hand.add(card10);
+        hand.add(card10);
+
+        // then
+        assertThat(hand.isBlackJack()).isFalse();
     }
 }
