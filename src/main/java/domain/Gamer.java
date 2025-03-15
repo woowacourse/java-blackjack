@@ -28,6 +28,10 @@ public abstract class Gamer {
         return hand.calculateTotalScore();
     }
 
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
     public String getName() {
         return name;
     }

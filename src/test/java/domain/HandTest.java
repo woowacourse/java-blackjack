@@ -41,6 +41,28 @@ class HandTest {
         assertThat(score).isEqualTo(10);
     }
 
+    @DisplayName("2장의 카드가 21점이라면 블랙잭이다.")
+    @Test
+    void isBlackjack() {
+        //given
+        List<Card> cards = List.of(
+                new Card(Symbol.COLVER, Rank.JACK),
+                new Card(Symbol.SPADE, Rank.ACE)
+        );
+
+        Hand hand = new Hand();
+
+        for (Card card : cards) {
+            hand.hit(card);
+        }
+
+        //when
+        boolean actual = hand.isBlackjack();
+
+        //then
+        assertThat(actual).isTrue();
+    }
+
     @DisplayName("점수가 21점을 초과하면 버스트된다.")
     @Test
     void bust() {

@@ -79,4 +79,8 @@ public class Hand {
     public List<Card> getCards() {
         return cards;
     }
+
+    public boolean isBlackjack() {
+        return (calculateTotalScore() == 21 && cards.size() == 2);
+    }
 }
