@@ -19,18 +19,18 @@ public class BlackJack {
         this.dealer = dealer;
     }
 
-    public void hitCardsToParticipant(Deck cardDeck) {
-        players.hitCards(cardDeck);
-        dealer.addCard(cardDeck.hitCard());
-        dealer.addCard(cardDeck.hitCard());
+    public void hitCardsToParticipant(final Deck deck) {
+        players.hitCards(deck);
+        dealer.addCard(deck.hitCard());
+        dealer.addCard(deck.hitCard());
     }
 
     public void drawPlayers(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck, Deck deck) {
         players.draw(answer, playerDeck, deck);
     }
 
-    public void drawDealer(Deck cardDeck) {
-        dealer.draw(cardDeck.hitCard());
+    public void drawDealer(final Deck deck) {
+        dealer.draw(deck.hitCard());
     }
 
     public Map<Player, Integer> calculatePlayerProfit() {

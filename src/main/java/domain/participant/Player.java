@@ -22,15 +22,15 @@ public class Player extends Participant {
         this.money = money;
     }
 
-    public void hitCards(Deck cardDeck) {
+    public void hitCards(final Deck deck) {
         for (int i = 0; i < INITIAL_HIT_COUNT; i++) {
-            super.addCard(cardDeck.hitCard());
+            super.addCard(deck.hitCard());
         }
     }
 
-    public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck, final Deck cardDeck) {
+    public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck, final Deck deck) {
         while (!isBust() && answer.apply(this)) {
-            addCard(cardDeck.hitCard());
+            addCard(deck.hitCard());
             playerDeck.accept(this);
         }
     }

@@ -25,13 +25,13 @@ public class Players {
         this.players = players;
     }
 
-    public void hitCards(final Deck cardDeck) {
-        players.forEach(player -> player.hitCards(cardDeck));
+    public void hitCards(final Deck deck) {
+        players.forEach(player -> player.hitCards(deck));
     }
 
-    public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck, Deck cardDeck) {
+    public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck, final Deck deck) {
         for (Player player : players) {
-            player.draw(answer, playerDeck, cardDeck);
+            player.draw(answer, playerDeck, deck);
         }
     }
 
