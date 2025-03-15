@@ -21,6 +21,7 @@ public class Player extends Participant {
     }
 
     public boolean isBust() {
+        calculateHandScore();
         return hand.getScore() > PLAYER_HIT_THRESHOLD;
     }
 
@@ -30,6 +31,7 @@ public class Player extends Participant {
 
     @Override
     public boolean canHit() {
+        calculateHandScore();
         return hand.getScore() < PLAYER_HIT_THRESHOLD;
     }
 

@@ -37,6 +37,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canHit() {
+        calculateHandScore();
         return hand.getScore() < DEALER_HIT_THRESHOLD;
     }
 
