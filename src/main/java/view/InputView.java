@@ -1,6 +1,7 @@
 package view;
 
 import controller.AnswerCommand;
+import domain.bet.Bet;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,17 +22,16 @@ public class InputView {
         return AnswerCommand.findByAnswer(input);
     }
 
-    public int readBet(final String playerName){
+    public Bet readBet(final String playerName){
         System.out.println(playerName + "의 배팅 금액은?");
         final String input = readInput();
         validateBetAmount(input);
-        return Integer.parseInt(input);
+        return new Bet(Integer.parseInt(input));
     }
 
     private void validateBetAmount(String betAmountInput){
         try{
-            int betAmount = Integer.parseInt(betAmountInput);
-            validateBetAmountRange(betAmount);
+            Integer.parseInt(betAmountInput);
         }catch (NumberFormatException e){
             throw new IllegalArgumentException("[ERROR] 배팅 금액은 숫자만 가능합니다.");
         }
