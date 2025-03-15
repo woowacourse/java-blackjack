@@ -30,11 +30,13 @@ class InitialDealResultTest {
     }
 
     @Test
-    @DisplayName("최초 카드 분배 후 플레이어만 블랙잭 경우 해당 플레이어는 승리한다..")
-    void playerLoseWhenOnlyPlayerBurst() {
+    @DisplayName("최초 카드 분배 후 플레이어만 블랙잭 경우 해당 플레이어는 승리한다.")
+    void playerWinsAllWhenOnlyPlayerBlackjack() {
         //given
         player1.receiveCard(new Card(CardRank.ACE, CardSuit.DIAMOND));
         player1.receiveCard(new Card(CardRank.JACK, CardSuit.DIAMOND));
+        player2.receiveCard(new Card(CardRank.FOUR, CardSuit.DIAMOND));
+        player2.receiveCard(new Card(CardRank.JACK, CardSuit.DIAMOND));
         dealer.receiveCard(new Card(CardRank.FIVE, CardSuit.DIAMOND));
         dealer.receiveCard(new Card(CardRank.TWO, CardSuit.DIAMOND));
 
@@ -45,4 +47,22 @@ class InitialDealResultTest {
         assertThat(initialDealResult.findWinnerPlayers()).containsExactly(player1);
     }
 
+    @Test
+    @DisplayName("최초 카드 분배 후 딜러만 블랙잭일 경우 딜러가 전체 승리한다.")
+    void dealerWinsAllWhenOnlyDealerBlackjack() {
+        //given
+        player1.receiveCard(new Card(CardRank.TWO, CardSuit.DIAMOND));
+        player1.receiveCard(new Card(CardRank.THREE, CardSuit.DIAMOND));
+        player2.receiveCard(new Card(CardRank.FOUR, CardSuit.DIAMOND));
+        player2.receiveCard(new Card(CardRank.FIVE, CardSuit.DIAMOND));
+        dealer.receiveCard(new Card(CardRank.ACE, CardSuit.DIAMOND));
+        dealer.receiveCard(new Card(CardRank.JACK, CardSuit.DIAMOND));
+
+        //when
+        InitialDealResult initialDealResult = InitialDealResult.from(dealer, players);
+
+        //then
+        assertThat(initialDealResult.findWinnerPlayers()).isEmpty();
+        assertThat(initialDealResult.isDealerWins()).isTrue();
+    }
 }
