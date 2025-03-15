@@ -1,4 +1,7 @@
-package domain;
+package domain.participant;
+
+import domain.card.Card;
+import domain.result.ResultStatus;
 
 import java.util.List;
 import java.util.Objects;

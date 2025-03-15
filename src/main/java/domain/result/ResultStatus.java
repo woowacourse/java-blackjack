@@ -1,4 +1,7 @@
-package domain;
+package domain.result;
+
+import domain.participant.Dealer;
+import domain.participant.Player;
 
 import java.util.function.Function;
 

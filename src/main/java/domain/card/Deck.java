@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class Deck implements CardProvider {
     }
 
     private void addAllNumbers(Symbol symbol, List<Card> temp) {
-        for (Number number : Number.getAllNumbers()) {
+        for (domain.card.Number number : Number.getAllNumbers()) {
             temp.add(new Card(symbol, number));
         }
     }

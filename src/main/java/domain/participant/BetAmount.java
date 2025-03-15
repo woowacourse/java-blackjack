@@ -1,4 +1,6 @@
-package domain;
+package domain.participant;
+
+import domain.result.ResultStatus;
 
 import java.util.Objects;
 

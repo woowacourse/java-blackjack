@@ -1,5 +1,10 @@
-package domain;
+package domain.result;
 
+import domain.card.Card;
+import domain.card.Number;
+import domain.card.Symbol;
+import domain.participant.Dealer;
+import domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -18,15 +23,15 @@ public class ResultStatusTest {
     @Test
     void 플레이어가_가진_숫자들의_합이_21을_초과하면_플레이어는_패배한다() {
         Player player = new Player("drago",
-            List.of(new Card(Symbol.DIAMOND, Number.KING),
-                new Card(Symbol.CLOVER, Number.JACK),
-                new Card(Symbol.HEART, Number.TWO)),
+            List.of(new Card(Symbol.DIAMOND, domain.card.Number.KING),
+                new Card(Symbol.CLOVER, domain.card.Number.JACK),
+                new Card(Symbol.HEART, domain.card.Number.TWO)),
             1000);
 
         Dealer dealer = new Dealer(
-            List.of(new Card(Symbol.DIAMOND, Number.KING),
-                new Card(Symbol.HEART, Number.EIGHT),
-                new Card(Symbol.SPADE, Number.TWO)));
+            List.of(new Card(Symbol.DIAMOND, domain.card.Number.KING),
+                new Card(Symbol.HEART, domain.card.Number.EIGHT),
+                new Card(Symbol.SPADE, domain.card.Number.TWO)));
 
 
         assertThat(ResultStatus.judgeGameResult(player, dealer)).isEqualTo(ResultStatus.LOSE);
@@ -35,15 +40,15 @@ public class ResultStatusTest {
     @Test
     void 플레이어가_가진_숫자들의_합이_21을_초과하지않고_딜러숫자의합이_21을_초과하면_플레이어는_승리한다() {
         Player player = new Player("drago",
-            List.of(new Card(Symbol.DIAMOND, Number.KING),
-                new Card(Symbol.CLOVER, Number.EIGHT),
-                new Card(Symbol.HEART, Number.TWO)),
+            List.of(new Card(Symbol.DIAMOND, domain.card.Number.KING),
+                new Card(Symbol.CLOVER, domain.card.Number.EIGHT),
+                new Card(Symbol.HEART, domain.card.Number.TWO)),
             1000);
 
         Dealer dealer = new Dealer(
-            List.of(new Card(Symbol.DIAMOND, Number.KING),
-                new Card(Symbol.HEART, Number.JACK),
-                new Card(Symbol.SPADE, Number.TWO)));
+            List.of(new Card(Symbol.DIAMOND, domain.card.Number.KING),
+                new Card(Symbol.HEART, domain.card.Number.JACK),
+                new Card(Symbol.SPADE, domain.card.Number.TWO)));
 
         assertThat(ResultStatus.judgeGameResult(player, dealer)).isEqualTo(ResultStatus.WIN);
     }
@@ -51,15 +56,15 @@ public class ResultStatusTest {
     @Test
     void 플레이어와_딜러가_가진_숫자들의_합이_21을_초과하지않는경우_21에가까운_플레이어가_승리한다() {
         Player player = new Player("drago",
-            List.of(new Card(Symbol.DIAMOND, Number.KING),
-                new Card(Symbol.CLOVER, Number.EIGHT),
-                new Card(Symbol.HEART, Number.TWO)),
+            List.of(new Card(Symbol.DIAMOND, domain.card.Number.KING),
+                new Card(Symbol.CLOVER, domain.card.Number.EIGHT),
+                new Card(Symbol.HEART, domain.card.Number.TWO)),
             1000);
 
         Dealer dealer = new Dealer(
-            List.of(new Card(Symbol.DIAMOND, Number.KING),
-                new Card(Symbol.HEART, Number.SEVEN),
-                new Card(Symbol.SPADE, Number.TWO)));
+            List.of(new Card(Symbol.DIAMOND, domain.card.Number.KING),
+                new Card(Symbol.HEART, domain.card.Number.SEVEN),
+                new Card(Symbol.SPADE, domain.card.Number.TWO)));
 
         assertThat(ResultStatus.judgeGameResult(player, dealer)).isEqualTo(ResultStatus.WIN);
     }
@@ -67,14 +72,14 @@ public class ResultStatusTest {
     @Test
     void 플레이어와_딜러가_가진_숫자들의_합이_21을_초과하지않고_동일하면_무승부이다() {
         Player player = new Player("drago",
-            List.of(new Card(Symbol.DIAMOND, Number.KING),
-                new Card(Symbol.CLOVER, Number.EIGHT),
-                new Card(Symbol.HEART, Number.TWO)),
+            List.of(new Card(Symbol.DIAMOND, domain.card.Number.KING),
+                new Card(Symbol.CLOVER, domain.card.Number.EIGHT),
+                new Card(Symbol.HEART, domain.card.Number.TWO)),
             1000);
 
         Dealer dealer = new Dealer(
-            List.of(new Card(Symbol.DIAMOND, Number.KING),
-                new Card(Symbol.HEART, Number.EIGHT),
+            List.of(new Card(Symbol.DIAMOND, domain.card.Number.KING),
+                new Card(Symbol.HEART, domain.card.Number.EIGHT),
                 new Card(Symbol.SPADE, Number.TWO)));
 
         assertThat(ResultStatus.judgeGameResult(player, dealer)).isEqualTo(ResultStatus.PUSH);

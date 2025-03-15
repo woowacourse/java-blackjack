@@ -1,4 +1,6 @@
-package domain;
+package domain.card;
+
+import domain.GameManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,7 +59,7 @@ public class Cards {
     }
 
     public boolean isBlackJack() {
-        return cards.size() == GameMembers.INITIAL_DRAW_SIZE
+        return cards.size() == GameManager.INITIAL_DRAW_SIZE
             && calculateTotalCardNumber() == BLACKJACK_SCORE;
     }
 

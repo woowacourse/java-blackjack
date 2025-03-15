@@ -1,12 +1,12 @@
 package view;
 
-import domain.Card;
-import domain.Cards;
-import domain.Dealer;
-import domain.Number;
-import domain.Participant;
-import domain.Player;
-import domain.Symbol;
+import domain.card.Card;
+import domain.card.Cards;
+import domain.participant.Dealer;
+import domain.card.Number;
+import domain.participant.Participant;
+import domain.participant.Player;
+import domain.card.Symbol;
 
 import java.util.List;
 import java.util.Map;

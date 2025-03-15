@@ -1,9 +1,10 @@
 package controller;
 
-import domain.Dealer;
-import domain.Deck;
+import domain.participant.Dealer;
+import domain.card.Deck;
 import domain.GameManager;
-import domain.Player;
+import domain.participant.Player;
+import domain.dto.PlayerInfo;
 import view.InputView;
 import view.OutputView;
 
