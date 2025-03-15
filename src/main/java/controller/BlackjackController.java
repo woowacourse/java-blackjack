@@ -65,16 +65,14 @@ public class BlackjackController {
     }
 
     private void drawCard(Player player) {
-        boolean answer;
-
-        while (player.shouldHit()) {
-            answer = InputView.askForOneMoreCard(player.getParticipantName());
-            gameManager.drawCardForPlayer(player, answer);
+        while (player.shouldHit() && ifPlayerWantDrawMore(player)) {
+            gameManager.drawCardForPlayer(player);
             OutputView.printPlayerCard(player);
-            if (!answer) {
-                break;
-            }
         }
+    }
+
+    private boolean ifPlayerWantDrawMore(Player player) {
+        return InputView.askForOneMoreCard(player.getParticipantName());
     }
 
     private void drawMoreDealerCards() {

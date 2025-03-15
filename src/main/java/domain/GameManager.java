@@ -41,10 +41,8 @@ public class GameManager {
         return new Cards(provider.provideCards(INITIAL_DRAW_SIZE));
     }
 
-    public void drawCardForPlayer(Player player, boolean answer) {
-        if (answer) {
-            drawCard(player);
-        }
+    public void drawCardForPlayer(Player player) {
+        drawCard(player);
     }
 
     private void drawCard(Participant participant) {

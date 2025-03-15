@@ -48,34 +48,18 @@ public class GameManagerTest {
     }
 
     @Test
-    void 플레이어가_카드를_뽑는다고_대답하면_카드를_뽑는다() {
+    void 플레이어의_카드를_뽑는다() {
         ParticipantNames participantNames = new ParticipantNames(List.of(new ParticipantName("drago")));
         GameManager gameManager = new GameManager(participantNames,
                 Map.of(new ParticipantName("drago"), new BettingAmount(10000)), new GameManagerTest.TestCardProvider());
 
         List<Player> players = gameManager.getPlayers();
         Player player = players.getFirst();
-        gameManager.drawCardForPlayer(player, true);
+        gameManager.drawCardForPlayer(player);
 
         List<Card> expected = List.of(new Card(Suit.CLOVER, Rank.EIGHT),
                 new Card(Suit.HEART, Rank.JACK),
                 new Card(Suit.SPADE, Rank.KING));
-
-        assertThat(player.getCards()).isEqualTo(expected);
-    }
-
-    @Test
-    void 플레이어가_카드를_뽑지않겠다고_대답하면_카드를_뽑지_않는다() {
-        ParticipantNames participantNames = new ParticipantNames(List.of(new ParticipantName("drago")));
-        GameManager gameManager = new GameManager(participantNames,
-                Map.of(new ParticipantName("drago"), new BettingAmount(10000)), new GameManagerTest.TestCardProvider());
-
-        List<Player> players = gameManager.getPlayers();
-        Player player = players.getFirst();
-        gameManager.drawCardForPlayer(player, false);
-
-        List<Card> expected = List.of(new Card(Suit.CLOVER, Rank.EIGHT),
-                new Card(Suit.HEART, Rank.JACK));
 
         assertThat(player.getCards()).isEqualTo(expected);
     }
