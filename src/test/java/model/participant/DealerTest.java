@@ -4,32 +4,15 @@ import java.util.List;
 
 import card.*;
 import participant.Dealer;
-import participant.Participant;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static util.TestCardDistributor.divideCard;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
+import static util.TestCardDistributor.divideCardToDealer;
 
 class DealerTest {
 
     private final CardDeck deck = new CardDeck(new ShuffledDeckGenerator().generateDeck());
-
-    @Test
-    @DisplayName("딜러 객체가 잘 생성되는 지")
-    void newDealer() {
-
-        // given
-        final Participant dealer = new Dealer();
-        String expected = "딜러";
-
-        // when
-        String nickname = dealer.getNickname();
-
-        // then
-        assertThat(nickname).isEqualTo(expected);
-    }
 
     @Test
     @DisplayName("카드 추가 기능이 잘 작동하는 지")
@@ -60,7 +43,7 @@ class DealerTest {
                 .sum();
 
         Dealer dealer = new Dealer();
-        divideCard(cards,dealer);
+        divideCardToDealer(cards,dealer);
 
         // when
         int sum = dealer.getScore().getValue();
@@ -80,7 +63,7 @@ class DealerTest {
         );
 
         Dealer dealer = new Dealer();
-        divideCard(cards, dealer);
+        divideCardToDealer(cards, dealer);
 
         // when
         // then
@@ -98,7 +81,7 @@ class DealerTest {
         );
 
         Dealer dealer = new Dealer();
-        divideCard(cards, dealer);
+        divideCardToDealer(cards, dealer);
 
         // when
         // then

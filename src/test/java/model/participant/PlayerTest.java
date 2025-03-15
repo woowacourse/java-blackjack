@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static util.TestCardDistributor.divideCard;
+import static util.TestCardDistributor.divideCardToPlayer;
 
 public class PlayerTest {
 
@@ -39,7 +39,7 @@ public class PlayerTest {
         }
         // when
         Player player = new Player("pobi");
-        divideCard(expectedCards, player);
+        divideCardToPlayer(expectedCards, player);
         // then
         Assertions.assertThat(player.getCards()).containsAll(expectedCards);
     }
@@ -51,7 +51,7 @@ public class PlayerTest {
         //given
 
         Player player = new Player("pobi");
-        divideCard(cards, player);
+        divideCardToPlayer(cards, player);
 
         //when
         //then

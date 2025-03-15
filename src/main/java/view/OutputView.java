@@ -5,7 +5,6 @@ import card.Suit;
 import card.Rank;
 import gameResult.MatchResultType;
 import participant.Dealer;
-import participant.Participant;
 import participant.Player;
 import participant.Players;
 
@@ -14,6 +13,9 @@ import java.util.Map;
 
 public class OutputView {
     private static final String BASIC_FORM = "%s: %s";
+
+    private static final String DEALER_NICKNAME = "딜러";
+
     private static final Map<String, String> MATCH_FORMAT = Map.of(
             "WIN", "승",
             "DRAW", "무",
@@ -45,44 +47,42 @@ public class OutputView {
     );
 
     public static void printDivisionStart(Dealer dealer, List<Player> players) {
-        String dealerNickname = dealer.getNickname();
         List<String> playerNicknames = players.stream()
                 .map(Player::getNickname)
                 .toList();
 
-        System.out.println(formatDivideCommentByNickname(dealerNickname, playerNicknames));
+        System.out.println(formatDivideCommentByNickname(DEALER_NICKNAME, playerNicknames));
 
         Card card = dealer.getCards().getFirst();
         String formattedDealerCard = getCardFormat(card);
-        String handsHeader = formatHandsHeader(dealerNickname);
+        String handsHeader = formatHandsHeader(DEALER_NICKNAME);
         System.out.println(formatBasicForm(handsHeader, formattedDealerCard));
 
         for (Player player : players) {
-            System.out.println(formatHands(player));
+            System.out.println(formatHandsOfPlayer(player));
         }
         System.out.println();
     }
 
     public static void printCurrentHands(Player player) {
-        System.out.println(formatHands(player));
+        System.out.println(formatHandsOfPlayer(player));
     }
 
     public static void printHittingDealer(Dealer dealer) {
-        String dealerNickname = dealer.getNickname();
         System.out.println();
-        System.out.println(String.format("%s는 %d이하라 한장의 카드를 더 받았습니다.", dealerNickname, 16));
+        System.out.println(String.format("%s는 %d이하라 한장의 카드를 더 받았습니다.", DEALER_NICKNAME, 16));
     }
 
 
     public static void printAllParticipantScore(Dealer dealer, Players players) {
-        printScore(dealer);
+        printScore(formHandsOfDealer(dealer), dealer.getScore().getValue());
         for (Player player : players.getPlayers()) {
-            printScore(player);
+            printScore(formatHandsOfPlayer(player), player.getScore().getValue());
         }
     }
 
-    private static void printScore(Participant participant) {
-        System.out.printf("%s - 결과: %d%n", formatHands(participant), participant.getScore().getValue());
+    private static void printScore(String hands, int score) {
+        System.out.printf("%s - 결과: %d%n", hands, score);
     }
 
     public static void printResult(
@@ -90,12 +90,11 @@ public class OutputView {
             Map<MatchResultType, Long> dealerMatchResult,
             Map<Player, MatchResultType> playerMatchResult
     ) {
-        String dealerNickname = dealer.getNickname();
         String resultFormatByDealer = getDealerResultFormat(dealerMatchResult);
 
         System.out.println();
         System.out.println("## 최종 승패");
-        System.out.printf("%s: %s%n", dealerNickname, resultFormatByDealer);
+        System.out.printf("%s: %s%n", DEALER_NICKNAME, resultFormatByDealer);
 
         for (Map.Entry<Player, MatchResultType> entry : playerMatchResult.entrySet()) {
             String nickname = entry.getKey().getNickname();
@@ -127,14 +126,25 @@ public class OutputView {
         return RANK_FORMAT.get(rank.toString()) + SUIT_FORMAT.get(suit.name());
     }
 
-    private static String formatHands(Participant participant) {
-        String nickname = participant.getNickname();
-        List<String> joinedCards = participant.getCards().stream().map(
+    private static String formHandsOfDealer(Dealer dealer) {
+        String handsHeader = formatHandsHeader("딜러");
+        String dealerCards = formatHands(dealer.getCards());
+        return formatBasicForm(handsHeader, dealerCards);
+
+    }
+
+    private static String formatHandsOfPlayer(Player player) {
+        String nickname = player.getNickname();
+        String handsHeader = formatHandsHeader(nickname);
+        String playerCards = formatHands(player.getCards());
+        return formatBasicForm(handsHeader, playerCards);
+    }
+
+    private static String formatHands(List<Card> cards) {
+        List<String> joinedCards = cards.stream().map(
                 OutputView::getCardFormat
         ).toList();
-        String joinedHands = String.join(", ", joinedCards);
-        String handsHeader = formatHandsHeader(nickname);
-        return formatBasicForm(handsHeader, joinedHands);
+        return String.join(", ", joinedCards);
     }
 
     private static String formatDivideCommentByNickname(String nickname, List<String> nicknames) {

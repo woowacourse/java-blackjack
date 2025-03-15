@@ -1,7 +1,7 @@
 package model.participant;
 
-import static util.TestCardDistributor.divideCard;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static util.TestCardDistributor.divideCardToPlayer;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -51,7 +51,7 @@ public class PlayersTest {
                 .sum();
 
         Player player = new Player("pobi");
-        divideCard(cards, player);
+        divideCardToPlayer(cards, player);
 
         // when
         int sum = player.getScore().getValue();
