@@ -41,12 +41,16 @@ public class ParticipantCardDeck {
     }
 
     private int adjustAceScore(int aceCounts, int totalScore) {
-        int maxAdjustableAces = Math.min(aceCounts, (GameRule.BUST_THRESHOLD.getValue() - totalScore) / 10);
+        int maxAdjustableAces = Math.min(aceCounts, (GameRule.BLACK_JACK.getValue() - totalScore) / 10);
         return totalScore + (maxAdjustableAces * 10);
     }
 
     public void addCard(Card card) {
         cards.add(card);
+    }
+
+    public int requestSize() {
+        return cards.size();
     }
 
     public List<Card> getCards() {
