@@ -37,10 +37,13 @@ public class BlackjackGame implements GameManager {
         List<String> names = InputView.readNames().names();
         Dealer dealer = new Dealer();
         gameRound = GameRound.start(dealer);
-        gamers = Gamers.of(dealer,
-            names.stream()
-                .map(Player::new)
-                .toList());
+        gamers = Gamers.of(dealer, namesToPlayers(names));
+    }
+
+    private List<Player> namesToPlayers(List<String> names) {
+        return names.stream()
+            .map(Player::new)
+            .toList();
     }
 
     private void betPlayers() {
@@ -87,8 +90,8 @@ public class BlackjackGame implements GameManager {
         while (dealer.canReceiveAdditionalCards()) {
             drawCard(dealer);
             OutputView.printDealerDrawNotice();
-            if (gameRound.endGameIfDealerBust()) {
-                return;
+            if (dealer.isBust()) {
+                gameRound.endGameIfDealerBust();
             }
         }
     }

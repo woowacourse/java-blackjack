@@ -2,12 +2,15 @@ package blackjack.domain;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 
+// TODO: 클래스명 변경 고려. 배팅테이블?
 public class GameRound {
 
     private final Dealer dealer;
@@ -37,37 +40,37 @@ public class GameRound {
 
     public void endGameIfBlackjack(Dealer dealer) {
         if (dealer.isBlackjack()) {
-            bettingAmounts.keySet().stream()
-                .filter(Gamer::isBlackjack)
-                .forEach(player -> bettingAmounts.put(player, bettingAmounts.get(player).draw()));
+            putBettingAmountsWith(Gamer::isBlackjack, BettingAmount::draw);
         }
     }
 
-    public boolean endGameIfDealerBust() {
+    public void endGameIfDealerBust() {
         if (dealer.isBust()) {
-            bettingAmounts.keySet().stream()
-                .filter(player -> !player.isBust())
-                .forEach(player -> bettingAmounts.put(player, bettingAmounts.get(player).win()));
-            return true;
+            putBettingAmountsWith(player -> !player.isBust(), BettingAmount::win);
         }
-        return false;
     }
 
     public void computeResult() {
+        putBettingAmountsWith(player -> RoundResult.judgeResult(player, dealer) == RoundResult.WIN, BettingAmount::win);
+    }
+
+    private void putBettingAmountsWith(Predicate<Player> condition, UnaryOperator<BettingAmount> action) {
         bettingAmounts.keySet().stream()
-            .filter(player -> RoundResult.judgeResult(player, dealer) == RoundResult.WIN)
-            .forEach(player -> bettingAmounts.put(player, bettingAmounts.get(player).win()));
+            .filter(condition)
+            .forEach(player -> bettingAmounts.put(player, action.apply(bettingAmounts.get(player))));
     }
 
     public Map<Gamer, Double> getAllProfit() {
         Map<Gamer, Double> playerResults = bettingAmounts.keySet().stream()
-            .collect(Collectors.toMap(
-                player -> player,
-                player -> bettingAmounts.get(player).getProfit()));
+            .collect(Collectors.toMap(player -> player, player -> bettingAmounts.get(player).getProfit()));
         double playersProfitSum = playerResults.values().stream()
             .mapToDouble(Double::doubleValue)
             .sum();
 
+        return collectProfits(playersProfitSum, playerResults);
+    }
+
+    private Map<Gamer, Double> collectProfits(double playersProfitSum, Map<Gamer, Double> playerResults) {
         Map<Gamer, Double> allProfit = new LinkedHashMap<>();
         allProfit.put(dealer, -playersProfitSum);
         allProfit.putAll(playerResults);
