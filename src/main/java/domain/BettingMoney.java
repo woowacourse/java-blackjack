@@ -10,7 +10,7 @@ public record BettingMoney(int bettingMoney) {
 
     private void validateMoney(int value) {
         if (isNegative(value)) {
-            throw new IllegalArgumentException("베팅 금액은 자연수여야 합니다.");
+            throw new IllegalArgumentException("배팅 금액은 자연수여야 합니다.");
         }
 
         if (isInvalidUnit(value)) {
