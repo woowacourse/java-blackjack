@@ -1,5 +1,9 @@
 package blackjack.domain.game;
 
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toMap;
+
+import blackjack.domain.betting.BettingAmount;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.gambler.Dealer;
@@ -7,6 +11,7 @@ import blackjack.domain.gambler.Name;
 import blackjack.domain.gambler.Names;
 import blackjack.domain.gambler.Player;
 import java.util.List;
+import java.util.Map;
 
 public class Round {
     public static final int MIN_PLAYER_COUNT = 1;
@@ -68,6 +73,17 @@ public class Round {
         return findPlayer(name).isBust();
     }
 
+    public void bet(final Name name, final BettingAmount bettingAmount) {
+        findPlayer(name).bet(bettingAmount);
+    }
+
+    public WinningResult getWinningResult() {
+        WinningDiscriminator winningDiscriminator = new WinningDiscriminator();
+        Map<Player, WinningType> winningResult = players.stream()
+                .collect(toMap(identity(), player -> winningDiscriminator.judgePlayerResult(dealer, player)));
+        return new WinningResult(winningResult);
+    }
+
     public List<Card> getCards(final Name name) {
         if (dealer.isNameEquals(name)) {
             return dealer.getCards();
@@ -81,10 +97,6 @@ public class Round {
         }
         Player player = findPlayer(name);
         return player.getInitialCards();
-    }
-
-    public WinningDiscriminator getWinningDiscriminator() {
-        return new WinningDiscriminator(dealer, players);
     }
 
     private Player findPlayer(final Name name) {

@@ -1,46 +1,37 @@
 package blackjack;
 
 import static blackjack.domain.gambler.Dealer.DEALER_NAME;
-import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
 
-import blackjack.domain.betting.ProfitCalculator;
 import blackjack.domain.betting.BettingAmount;
 import blackjack.domain.gambler.Names;
 import blackjack.domain.game.Round;
-import blackjack.domain.game.WinningDiscriminator;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.CardShuffler;
 import blackjack.domain.card.CardType;
 import blackjack.domain.gambler.Name;
+import blackjack.domain.game.WinningResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import blackjack.domain.game.WinningType;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Application {
     private static final InputView inputView = new InputView();
     private static final OutputView outputView = new OutputView();
-    private static final ProfitCalculator profitCalculator = new ProfitCalculator();
 
     public static void main(String[] args) {
-        CardDeck cardDeck = createCardDeck();
         Names playerNames = getPlayerNames();
-        Map<Name, BettingAmount> bettingAmounts = getBettingAmounts(playerNames);
-        Round round = new Round(cardDeck, playerNames);
-        round.distributeInitialCards();
-        outputView.printInitialDistributionPrompt(playerNames);
+        Round round = new Round(createCardDeck(), playerNames);
+        bet(round, playerNames);
+        distributeInitialCards(round, playerNames);
         printInitialCards(round, playerNames);
         processPlayersTurn(playerNames, round);
         processDealerTurn(round);
         printGameResult(round, playerNames);
-        printProfits(round.getWinningDiscriminator(), bettingAmounts);
+        printWinningResult(round);
     }
 
     private static CardDeck createCardDeck() {
@@ -61,10 +52,15 @@ public class Application {
         }
     }
 
-    private static Map<Name, BettingAmount> getBettingAmounts(final Names playerNames) {
-        return playerNames.getNames()
-                .stream()
-                .collect(toMap(identity(), Application::getBettingAmount));
+    private static void bet(final Round round, final Names playerNames) {
+        for (final Name name : playerNames.getNames()) {
+            round.bet(name, getBettingAmount(name));
+        }
+    }
+
+    private static void distributeInitialCards(final Round round, final Names playerNames) {
+        round.distributeInitialCards();
+        outputView.printInitialDistributionPrompt(playerNames);
     }
 
     private static BettingAmount getBettingAmount(final Name playerName) {
@@ -132,23 +128,8 @@ public class Application {
         }
     }
 
-    private static void printProfits(final WinningDiscriminator winningDiscriminator,
-                                     final Map<Name, BettingAmount> bettingAmounts) {
-        Map<Name, WinningType> playersWinningResult = winningDiscriminator.judgePlayersResult();
-        Map<Name, Integer> playersProfit = calculatePlayersProfit(bettingAmounts, playersWinningResult);
-        int dealerProfit = profitCalculator.calculateDealerProfit(playersProfit);
-        outputView.printProfit(dealerProfit, playersProfit);
-    }
-
-    private static Map<Name, Integer> calculatePlayersProfit(final Map<Name, BettingAmount> bettingAmounts,
-                                                             final Map<Name, WinningType> playersWinningResult) {
-        Map<Name, Integer> playersProfit = new HashMap<>();
-        for (final Name name : playersWinningResult.keySet()) {
-            WinningType winningType = playersWinningResult.get(name);
-            BettingAmount bettingAmount = bettingAmounts.get(name);
-            int profit = profitCalculator.calculatePlayerProfit(winningType, bettingAmount);
-            playersProfit.put(name, profit);
-        }
-        return playersProfit;
+    private static void printWinningResult(final Round round) {
+        WinningResult winningResult = round.getWinningResult();
+        outputView.printWinningResult(winningResult);
     }
 }

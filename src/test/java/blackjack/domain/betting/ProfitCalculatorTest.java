@@ -3,6 +3,7 @@ package blackjack.domain.betting;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.gambler.Name;
+import blackjack.domain.gambler.Player;
 import blackjack.domain.game.WinningType;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +32,7 @@ class ProfitCalculatorTest {
     @DisplayName("딜러의_수익금은_플레이어의_수익/손실으로부터_계산한다")
     @MethodSource("returnPlayersProfitAndExpected")
     @ParameterizedTest
-    void calculateDealerProfit(Map<Name, Integer> playersProfit, int expected) {
+    void calculateDealerProfit(Map<Player, Integer> playersProfit, int expected) {
         // given
         ProfitCalculator profitCalculator = new ProfitCalculator();
 
@@ -48,12 +49,12 @@ class ProfitCalculatorTest {
                 Arguments.arguments(createPlayerProfit(-20_000, 20_000), 0));
     }
 
-    private static Map<Name, Integer> createPlayerProfit(int... profits) {
-        Map<Name, Integer> playersProfit = new HashMap<>();
+    private static Map<Player, Integer> createPlayerProfit(int... profits) {
+        Map<Player, Integer> playersProfit = new HashMap<>();
         int index = 0;
         for (int profit : profits) {
             Name name = new Name("레오" + index++);
-            playersProfit.put(name, profit);
+            playersProfit.put(new Player(name), profit);
         }
         return playersProfit;
     }

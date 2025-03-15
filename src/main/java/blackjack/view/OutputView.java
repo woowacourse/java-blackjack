@@ -7,6 +7,8 @@ import static java.util.stream.Collectors.joining;
 import blackjack.domain.card.Card;
 import blackjack.domain.gambler.Name;
 import blackjack.domain.gambler.Names;
+import blackjack.domain.gambler.Player;
+import blackjack.domain.game.WinningResult;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -44,19 +46,22 @@ public class OutputView {
                 .collect(joining(delimiter));
     }
 
-    public void printProfit(final int dealerProfit, final Map<Name, Integer> playersProfit) {
+    public void printWinningResult(final WinningResult winningResult) {
         System.out.println("## 최종 수익");
-        printDealerProfit(dealerProfit);
-        printPlayersProfit(playersProfit);
+        printDealerProfit(winningResult);
+        printPlayersProfit(winningResult);
     }
 
-    private void printDealerProfit(final int dealerProfit) {
+    private void printDealerProfit(final WinningResult winningResult) {
+        int dealerProfit = winningResult.calculateDealerProfit();
         System.out.printf("%s: %d\n", DEALER_NAME, dealerProfit);
     }
 
-    private void printPlayersProfit(final Map<Name, Integer> playersProfit) {
-        for (Entry<Name, Integer> entry : playersProfit.entrySet()) {
-            System.out.printf("%s: %d\n", entry.getKey(), entry.getValue());
+    private void printPlayersProfit(final WinningResult winningResult) {
+        Map<Player, Integer> playersProfit = winningResult.calculatePlayersProfit();
+        for (Entry<Player, Integer> entry : playersProfit.entrySet()) {
+            Player player = entry.getKey();
+            System.out.printf("%s: %d\n", player.getName(), entry.getValue());
         }
     }
 

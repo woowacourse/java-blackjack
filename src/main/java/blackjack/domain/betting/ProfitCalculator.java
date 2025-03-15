@@ -1,6 +1,6 @@
 package blackjack.domain.betting;
 
-import blackjack.domain.gambler.Name;
+import blackjack.domain.gambler.Player;
 import blackjack.domain.game.WinningType;
 import java.util.Map;
 
@@ -10,7 +10,7 @@ public class ProfitCalculator {
         return bettingAmount.subtractFrom(winningAmount);
     }
 
-    public int calculateDealerProfit(final Map<Name, Integer> playersProfit) {
+    public int calculateDealerProfit(final Map<Player, Integer> playersProfit) {
         return playersProfit.values()
                 .stream()
                 .mapToInt(Math::negateExact)

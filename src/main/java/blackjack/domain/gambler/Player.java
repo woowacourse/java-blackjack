@@ -3,6 +3,7 @@ package blackjack.domain.gambler;
 import static blackjack.domain.game.Round.BLACKJACK;
 import static blackjack.domain.game.Round.BLACKJACK_CARD_COUNT;
 
+import blackjack.domain.betting.BettingAmount;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hands;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Objects;
 public class Player {
     private final Name name;
     private final Hands hands = new Hands();
+    private BettingAmount bettingAmount;
 
     public Player(final Name name) {
         this.name = name;
@@ -32,12 +34,20 @@ public class Player {
         return hands.hasSize(BLACKJACK_CARD_COUNT) && calculateScore() == BLACKJACK;
     }
 
+    public void bet(BettingAmount bettingAmount) {
+        this.bettingAmount = bettingAmount;
+    }
+
     public boolean isNameEquals(final Name name) {
         return Objects.equals(name, this.name);
     }
 
     public Name getName() {
         return name;
+    }
+
+    public BettingAmount getBettingAmount() {
+        return bettingAmount;
     }
 
     public List<Card> getCards() {
