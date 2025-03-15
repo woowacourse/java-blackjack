@@ -33,14 +33,15 @@ public class BetCenter {
 
     private double calculateProfit(Player player, Dealer dealer) {
         BetAmount betAmount = playerBetAmounts.get(player);
-        if (isBothBlackJack(player, dealer) || isBothHighestScore(player, dealer)) {
+        if (isOnlyDealerBlackJack(player, dealer)) {
+            return WinningResult.LOSE.calculateProfit(betAmount);
+        }
+        if (player.sumCardNumbers() == dealer.sumCardNumbers()) {
             return WinningResult.DRAW.calculateProfit(betAmount);
         }
-
         if (player.isBlackJack()) {
             return WinningResult.BLACKJACK.calculateProfit(betAmount);
         }
-
         if (player.compareTo(dealer.sumCardNumbers()) == WinningResult.WIN) {
             return WinningResult.WIN.calculateProfit(betAmount);
         }
@@ -48,11 +49,7 @@ public class BetCenter {
         return WinningResult.LOSE.calculateProfit(betAmount);
     }
 
-    private boolean isBothHighestScore(Player player, Dealer dealer) {
-        return dealer.sumCardNumbers() == HIGHEST_SCORE && player.sumCardNumbers() == HIGHEST_SCORE;
-    }
-
-    private boolean isBothBlackJack(Player player, Dealer dealer) {
-        return dealer.isBlackJack() && player.isBlackJack();
+    private boolean isOnlyDealerBlackJack(Player player, Dealer dealer) {
+        return (dealer.isBlackJack() && !player.isBlackJack());
     }
 }
