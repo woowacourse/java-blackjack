@@ -5,7 +5,6 @@ import bank.Calculator;
 import bank.DrawCalculator;
 import bank.LoseCalculator;
 import bank.WinCalculator;
-import game.GameRule;
 import participant.Participant;
 import participant.Participants;
 import java.util.HashMap;
@@ -60,38 +59,11 @@ public class ScoreBoard {
     }
 
     private void determineOutcome(Participant dealer, Participant player) {
-        BattleResult playerResult = determinePlayerResult(dealer.getScore(), player.getScore());
+        BattleResultCalculator battleResultCalculator = new BattleResultCalculator();
+        BattleResult playerResult = battleResultCalculator.calculate(dealer.getScore(), player.getScore());
         BattleResult dealerResult = playerResult.reverse();
         scoreBoard.get(dealer).addResult(dealerResult);
         scoreBoard.get(player).addResult(playerResult);
-    }
-
-    private BattleResult determinePlayerResult(int dealerScore, int playerScore) {
-        if (hasBust(dealerScore, playerScore)) {
-            return determinePlayerResultBustCase(dealerScore, playerScore);
-        }
-        return determinePlayerResultNormalCase(dealerScore, playerScore);
-    }
-
-    private boolean hasBust(int dealerScore, int playerScore) {
-        return GameRule.checkBust(dealerScore) || GameRule.checkBust(playerScore);
-    }
-
-    private BattleResult determinePlayerResultBustCase(int dealerScore, int playerScore) {
-        if ((GameRule.checkBust(playerScore) && GameRule.checkBust(dealerScore)) || GameRule.checkBust(playerScore)) {
-            return BattleResult.LOSE;
-        }
-        return BattleResult.WIN;
-    }
-
-    private BattleResult determinePlayerResultNormalCase(int dealerScore, int playerScore) {
-        if (playerScore > dealerScore) {
-            return BattleResult.WIN;
-        }
-        if (playerScore < dealerScore) {
-            return BattleResult.LOSE;
-        }
-        return BattleResult.DRAW;
     }
 
     public Map<Participant, BattleResults> getScoreBoard() {
