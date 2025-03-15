@@ -2,7 +2,6 @@ package blackjack.model.card;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
@@ -22,7 +21,7 @@ public class Cards {
     }
 
     private Cards() {
-        this.values = new LinkedList<>();
+        this.values = new ArrayList<>();
     }
 
     public static Cards empty() {
