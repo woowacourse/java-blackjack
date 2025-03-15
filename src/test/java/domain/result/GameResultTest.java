@@ -5,7 +5,7 @@ import static card.CardNumberType.JACK;
 import static card.CardNumberType.KING;
 import static card.CardNumberType.THREE;
 import static card.CardNumberType.TWO;
-import static card.CardType.CLOVER;
+import static card.CardShapeType.CLOVER;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import card.Card;

@@ -6,7 +6,7 @@ import static util.ExceptionConstants.*;
 
 import card.Card;
 import card.CardNumberType;
-import card.CardType;
+import card.CardShapeType;
 import card.Deck;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +19,14 @@ public class DeckTest {
     void test19() {
         //given
         List<Card> cards = new ArrayList<>();
-        cards.add(new Card(CardNumberType.ACE, CardType.CLOVER));
+        cards.add(new Card(CardNumberType.ACE, CardShapeType.CLOVER));
         Deck deck = new Deck(cards);
 
         //when
         Card card = deck.drawCard();
 
         //then
-        assertThat(card).isEqualTo(new Card(CardNumberType.ACE, CardType.CLOVER));
+        assertThat(card).isEqualTo(new Card(CardNumberType.ACE, CardShapeType.CLOVER));
     }
 
     @DisplayName("덱에 카드가 남아있지 않을 때 카드를 뽑을 시 예외가 발생한다.")

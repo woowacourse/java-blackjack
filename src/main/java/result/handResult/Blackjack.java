@@ -6,7 +6,7 @@ import participant.Dealer;
 import participant.Player;
 import result.GameStatus;
 
-public class BlackJack implements HandResult {
+public class Blackjack implements HandResult {
     @Override
     public GameStatus calculate(Player player, Dealer dealer) {
         if (player.isBlackJack() && dealer.isBlackJack()) {

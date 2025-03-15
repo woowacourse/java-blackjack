@@ -1,9 +1,12 @@
-package participant;
+package game;
 
 import card.Deck;
 import card.Hand;
 import client.AnswerType;
 import java.util.function.Function;
+import participant.Dealer;
+import participant.Player;
+import participant.Players;
 import participant.value.Score;
 import result.AllPlayerResult;
 

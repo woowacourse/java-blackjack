@@ -2,7 +2,7 @@ import client.InputParser;
 import client.InputProcessor;
 import client.OutputFormatter;
 import client.OutputPrinter;
-import client.BlackjackGame;
+import game.BlackjackGame;
 
 public class BlackjackConfig {
 

@@ -1,13 +1,12 @@
 package client;
 
 import static card.CardNumberType.*;
-import static card.CardType.*;
+import static card.CardShapeType.*;
 
 import card.Card;
 import card.CardNumberType;
-import card.CardType;
+import card.CardShapeType;
 import card.Hand;
-import participant.Player;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +16,7 @@ public class OutputFormatter {
     private static final String NAME_SEPARATOR = ", ";
     private static final String CARD_SEPARATOR = ", ";
 
-    private static final Map<CardType, String> CARD_TYPE_FORMATTER = Map.of(
+    private static final Map<CardShapeType, String> CARD_TYPE_FORMATTER = Map.of(
             SPACE, "스페이드",
             HEART, "하트",
             CLOVER, "클로버",
@@ -55,6 +54,6 @@ public class OutputFormatter {
     }
 
     public String formatCard(Card card) {
-        return CARD_NUMBER_TYPE_FORMATTER.get(card.cardNumberType()) + CARD_TYPE_FORMATTER.get(card.cardType());
+        return CARD_NUMBER_TYPE_FORMATTER.get(card.cardNumberType()) + CARD_TYPE_FORMATTER.get(card.cardShapeType());
     }
 }

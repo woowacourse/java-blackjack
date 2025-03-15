@@ -2,7 +2,7 @@ package card;
 
 public record Card(
         CardNumberType cardNumberType,
-        CardType cardType
+        CardShapeType cardShapeType
 ) {
 
     public int getNumber() {

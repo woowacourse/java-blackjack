@@ -1,4 +1,4 @@
-import client.BlackjackGame;
+import game.BlackjackGame;
 
 public class Application {
 

@@ -4,21 +4,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import card.Card;
 import card.CardNumberType;
-import card.CardType;
+import card.CardShapeType;
 import card.Hand;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import participant.Dealer;
-import participant.Participant;
 
 public class DealerTest {
     @DisplayName("카드의 합계가 16 이하이면 True를 반환한다")
     @Test
     void test3() {
         //given
-        List<Card> testCards = List.of(new Card(CardNumberType.SIX, CardType.CLOVER),
-                new Card(CardNumberType.JACK, CardType.DIAMOND));
+        List<Card> testCards = List.of(new Card(CardNumberType.SIX, CardShapeType.CLOVER),
+                new Card(CardNumberType.JACK, CardShapeType.DIAMOND));
         Hand hand = new Hand(testCards);
         Dealer dealer = Dealer.createWithNoHand();
         Dealer dealerWithHands = (Dealer) dealer.initializeHandWith(hand);
@@ -33,9 +32,9 @@ public class DealerTest {
     @Test
     void test4() {
         //given
-        List<Card> testCards = List.of(new Card(CardNumberType.SIX, CardType.CLOVER),
-                new Card(CardNumberType.ACE, CardType.DIAMOND),
-                new Card(CardNumberType.JACK, CardType.DIAMOND));
+        List<Card> testCards = List.of(new Card(CardNumberType.SIX, CardShapeType.CLOVER),
+                new Card(CardNumberType.ACE, CardShapeType.DIAMOND),
+                new Card(CardNumberType.JACK, CardShapeType.DIAMOND));
         Hand hand = new Hand(testCards);
         Dealer dealer = Dealer.createWithNoHand();
         Dealer dealerWithHands = (Dealer) dealer.initializeHandWith(hand);
@@ -52,8 +51,8 @@ public class DealerTest {
     void test9() {
         //given
         List<Card> testCards = List.of(
-                new Card(CardNumberType.QUEEN, CardType.HEART),
-                new Card(CardNumberType.SIX, CardType.DIAMOND)
+                new Card(CardNumberType.QUEEN, CardShapeType.HEART),
+                new Card(CardNumberType.SIX, CardShapeType.DIAMOND)
         );
         Hand hand = new Hand(testCards);
         Dealer dealer = Dealer.createWithNoHand();
@@ -71,8 +70,8 @@ public class DealerTest {
     void test11() {
         //given
         List<Card> testCards = List.of(
-                new Card(CardNumberType.QUEEN, CardType.HEART),
-                new Card(CardNumberType.ACE, CardType.DIAMOND)
+                new Card(CardNumberType.QUEEN, CardShapeType.HEART),
+                new Card(CardNumberType.ACE, CardShapeType.DIAMOND)
         );
         Hand hand = new Hand(testCards);
         Dealer dealer = Dealer.createWithNoHand();
@@ -90,8 +89,8 @@ public class DealerTest {
     void test12() {
         //given
         List<Card> testCards = List.of(
-                new Card(CardNumberType.ACE, CardType.HEART),
-                new Card(CardNumberType.ACE, CardType.DIAMOND)
+                new Card(CardNumberType.ACE, CardShapeType.HEART),
+                new Card(CardNumberType.ACE, CardShapeType.DIAMOND)
         );
         Hand hand = new Hand(testCards);
         Dealer dealer = Dealer.createWithNoHand();

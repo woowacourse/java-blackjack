@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import card.Card;
 import card.CardNumberType;
-import card.CardType;
+import card.CardShapeType;
 import card.Hand;
 import participant.value.Score;
 import java.util.List;
@@ -37,8 +37,8 @@ public class ScoreTest {
     @Test
     void test5() {
         //given
-        List<Card> testCards = List.of(new Card(CardNumberType.SIX, CardType.CLOVER),
-                new Card(CardNumberType.JACK, CardType.DIAMOND));
+        List<Card> testCards = List.of(new Card(CardNumberType.SIX, CardShapeType.CLOVER),
+                new Card(CardNumberType.JACK, CardShapeType.DIAMOND));
         Hand hand = new Hand(testCards);
 
         //when
@@ -52,9 +52,9 @@ public class ScoreTest {
     @Test
     void test10() {
         //given
-        List<Card> testCards = List.of(new Card(CardNumberType.FIVE, CardType.CLOVER),
-                new Card(CardNumberType.SIX, CardType.DIAMOND),
-                new Card(CardNumberType.ACE, CardType.DIAMOND)
+        List<Card> testCards = List.of(new Card(CardNumberType.FIVE, CardShapeType.CLOVER),
+                new Card(CardNumberType.SIX, CardShapeType.DIAMOND),
+                new Card(CardNumberType.ACE, CardShapeType.DIAMOND)
         );
         Hand hand = new Hand(testCards);
 
@@ -69,9 +69,9 @@ public class ScoreTest {
     @Test
     void test6() {
         //given
-        List<Card> testCards = List.of(new Card(CardNumberType.FIVE, CardType.CLOVER),
-                new Card(CardNumberType.FIVE, CardType.DIAMOND),
-                new Card(CardNumberType.ACE, CardType.DIAMOND)
+        List<Card> testCards = List.of(new Card(CardNumberType.FIVE, CardShapeType.CLOVER),
+                new Card(CardNumberType.FIVE, CardShapeType.DIAMOND),
+                new Card(CardNumberType.ACE, CardShapeType.DIAMOND)
         );
         Hand hand = new Hand(testCards);
 
@@ -86,9 +86,9 @@ public class ScoreTest {
     @Test
     void test7() {
         //given
-        List<Card> testCards = List.of(new Card(CardNumberType.ACE, CardType.CLOVER),
-                new Card(CardNumberType.ACE, CardType.HEART),
-                new Card(CardNumberType.ACE, CardType.DIAMOND)
+        List<Card> testCards = List.of(new Card(CardNumberType.ACE, CardShapeType.CLOVER),
+                new Card(CardNumberType.ACE, CardShapeType.HEART),
+                new Card(CardNumberType.ACE, CardShapeType.DIAMOND)
         );
         Hand hand = new Hand(testCards);
 

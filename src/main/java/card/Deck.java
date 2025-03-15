@@ -36,7 +36,7 @@ public class Deck {
     }
 
     private List<Card> initializeDeck() {
-        return Arrays.stream(CardType.values())
+        return Arrays.stream(CardShapeType.values())
                 .flatMap(cardType -> Arrays.stream(CardNumberType.values())
                         .map(cardNumberType -> new Card(cardNumberType, cardType)))
                 .collect(Collectors.toList());

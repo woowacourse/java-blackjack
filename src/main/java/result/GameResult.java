@@ -3,7 +3,7 @@ package result;
 import java.util.List;
 import participant.Dealer;
 import participant.Player;
-import result.handResult.BlackJack;
+import result.handResult.Blackjack;
 import result.handResult.Bust;
 import result.handResult.HandResult;
 import result.handResult.ScoreComparison;
@@ -11,7 +11,7 @@ import result.handResult.ScoreComparison;
 public class GameResult {
     private static final List<HandResult> HAND_RESULTS = List.of(
             new Bust(),
-            new BlackJack(),
+            new Blackjack(),
             new ScoreComparison()
     );
 

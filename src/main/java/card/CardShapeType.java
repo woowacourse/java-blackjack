@@ -1,6 +1,6 @@
 package card;
 
-public enum CardType {
+public enum CardShapeType {
     SPACE,
     HEART,
     CLOVER,

@@ -1,6 +1,8 @@
-package client;
+package game;
 
-import participant.GameTable;
+import client.AnswerType;
+import client.InputProcessor;
+import client.OutputPrinter;
 import participant.Players;
 import participant.Dealer;
 import participant.Player;

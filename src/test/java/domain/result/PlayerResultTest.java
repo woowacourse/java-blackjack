@@ -6,7 +6,7 @@ import static result.GameStatus.*;
 
 import card.Card;
 import card.CardNumberType;
-import card.CardType;
+import card.CardShapeType;
 import card.Hand;
 import java.util.List;
 import participant.value.Money;
@@ -17,8 +17,8 @@ import result.PlayerResult;
 
 class PlayerResultTest {
     Hand blackJack = new Hand(List.of(
-            new Card(CardNumberType.JACK, CardType.CLOVER),
-            new Card(CardNumberType.ACE, CardType.CLOVER)));
+            new Card(CardNumberType.JACK, CardShapeType.CLOVER),
+            new Card(CardNumberType.ACE, CardShapeType.CLOVER)));
     Player blackjackPlayer = new Player("blackJack", blackJack, Money.bet(10000));
     Player winner = new Player("winner", Hand.createEmpty(), Money.bet(20000));
     Player drawer = new Player("drawer", Hand.createEmpty(), Money.bet(20000));
