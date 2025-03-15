@@ -1,4 +1,4 @@
-package domain.card;
+package domain.participant.value;
 
 import static org.assertj.core.api.Assertions.*;
 
