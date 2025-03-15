@@ -44,10 +44,10 @@ public class BettingTest {
 
         //when
         final Betting betting = new Betting(amount);
-        final int result1 = betting.calculateBettingOfReturn(gameResult1, isNotBlackjack);
-        final int result2 = betting.calculateBettingOfReturn(gameResult2, isBlackjack);
-        final int result3 = betting.calculateBettingOfReturn(gameResult3, isNotBlackjack);
-        final int result4 = betting.calculateBettingOfReturn(gameResult2, isNotBlackjack);
+        final double result1 = betting.calculateBettingOfReturn(gameResult1, isNotBlackjack);
+        final double result2 = betting.calculateBettingOfReturn(gameResult2, isBlackjack);
+        final double result3 = betting.calculateBettingOfReturn(gameResult3, isNotBlackjack);
+        final double result4 = betting.calculateBettingOfReturn(gameResult2, isNotBlackjack);
 
         //then
         assertThat(result1).isEqualTo(-10_000);

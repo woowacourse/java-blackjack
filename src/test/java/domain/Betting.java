@@ -14,7 +14,16 @@ public class Betting {
         }
     }
 
-    public int calculateBettingOfReturn(final GameResult gameResult, final boolean isBlackjack) {
+    public double calculateBettingOfReturn(final GameResult gameResult, final boolean isBlackjack) {
+        if (isBlackjack) {
+            return amount * 1.5;
+        }
+        if (gameResult == GameResult.WIN) {
+            return amount;
+        }
+        if (gameResult== GameResult.LOSE) {
+            return -amount;
+        }
         return 0;
     }
 }
