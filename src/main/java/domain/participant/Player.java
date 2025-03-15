@@ -12,11 +12,11 @@ public class Player extends Participant {
 
     @Override
     public boolean ableToDraw() {
-        return getScore() < GameRule.BUST_THRESHOLD.getValue();
+        return getScore() < GameRule.BLACK_JACK.getValue();
     }
 
     @Override
-    public boolean areYouDealer() {
+    public boolean isDealer() {
         return false;
     }
 
