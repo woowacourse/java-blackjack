@@ -1,7 +1,9 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
+import java.util.function.Function;
 import org.junit.jupiter.api.Test;
 
 public class BettingTest {
@@ -16,5 +18,17 @@ public class BettingTest {
 
         //then
         assertThat(betting).isInstanceOf(Betting.class);
+    }
+
+    @Test
+    void 배팅_금액이_음수이므로_예외가_발생한다() {
+        //given
+        final int amount = -1;
+
+        //when
+        Function<Integer, Betting> function = Betting::new;
+
+        //then
+        assertThatIllegalArgumentException().isThrownBy(() -> function.apply(amount));
     }
 }
