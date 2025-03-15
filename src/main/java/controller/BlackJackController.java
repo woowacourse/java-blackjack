@@ -89,7 +89,7 @@ public class BlackJackController {
         List<Player> players = game.getPlayers();
         bettingSession.calculateProfit(players, game.getDealer());
         outputView.displayProfitMessage();
-        outputView.displayParticipantProfit("딜러", bettingSession.getDealerProfit(game.getDealer()));
+        outputView.displayParticipantProfit("딜러", bettingSession.getDealerProfit());
         for (Player player : players) {
             int profit = bettingSession.getPlayerProfit(player);
             outputView.displayParticipantProfit(player.getName(), profit);

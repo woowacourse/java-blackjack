@@ -14,35 +14,6 @@ public class BettingSession {
         bets.put(player, betAmount);
     }
 
-    public void recordEarningsOnLoss(Player player) {
-        earnings.put(player, bets.get(player) * -1);
-    }
-
-    public void recordEarningsOnWin(Player player) {
-        if (player.isBlackJack()) {
-            applyBlackjackBonus(player);
-            return;
-        }
-        earnings.put(player, bets.get(player));
-    }
-
-    public void applyBlackjackBonus(Player player) {
-        int initialBetAmount = bets.get(player);
-        earnings.put(player, (int) (initialBetAmount * 1.5));
-    }
-
-    public void refundBetOnBlackjackPush(Player player, Dealer dealer) {
-        if (player.isBlackJack() && dealer.isBlackJack()) {
-            earnings.put(player, bets.get(player));
-        }
-    }
-
-    public void rewardEarningsOnDealerBust(Player player, Dealer dealer) {
-        if (dealer.isBust() && !player.isBust() && !player.isBlackJack()) {
-            earnings.put(player, bets.get(player));
-        }
-    }
-
     public void calculateProfit(List<Player> players, Dealer dealer) {
         for (Player player : players) {
             GameResult playerGameResult = GameResult.calculatePlayerGameResult(dealer, player);
@@ -58,21 +29,44 @@ public class BettingSession {
         }
     }
 
-    public int getBetAmount(Player player) {
-        return bets.get(player);
+    private void recordEarningsOnLoss(Player player) {
+        earnings.put(player, bets.get(player) * -1);
     }
 
-    public int getEarnings(Player player) {
-        return earnings.get(player);
+    private void recordEarningsOnWin(Player player) {
+        if (player.isBlackJack()) {
+            applyBlackjackBonus(player);
+            return;
+        }
+        earnings.put(player, bets.get(player));
+    }
+
+    private void applyBlackjackBonus(Player player) {
+        int betAmount = bets.get(player);
+        earnings.put(player, (int) (betAmount * 1.5));
+    }
+
+    private void refundBetOnBlackjackPush(Player player, Dealer dealer) {
+        if (player.isBlackJack() && dealer.isBlackJack()) {
+            earnings.put(player, bets.get(player));
+        }
     }
 
     public int getPlayerProfit(Player player) {
         return earnings.get(player);
     }
 
-    public int getDealerProfit(Dealer dealer) {
+    public int getDealerProfit() {
         return earnings.values().stream()
                 .mapToInt(value -> value * -1)
                 .sum();
+    }
+
+    public int getEarnings(Player player) {
+        return earnings.get(player);
+    }
+
+    public int getBetAmount(Player player) {
+        return bets.get(player);
     }
 }
