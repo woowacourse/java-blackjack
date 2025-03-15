@@ -23,18 +23,19 @@ public class BlackjackBet {
         }
     }
 
-    public double calculateEarnMoney(BlackjackHands playerCardSum, BlackjackHands otherPlayerCardSum) {
-        int cardSum = playerCardSum.calculateCardSum();
+    public double calculateEarnMoney(BlackjackHands calculateParticipantCardSum,
+                                     BlackjackHands againstParticipantCardSum) {
+        int cardSum = calculateParticipantCardSum.calculateCardSum();
         PlayerGameResult playerGameResult = BlackjackWinner.calculatePlayerWinStatus(
-                otherPlayerCardSum.calculateCardSum(),
+                againstParticipantCardSum.calculateCardSum(),
                 cardSum);
         if (playerGameResult.isDraw()) {
             return money;
         }
-        if (playerCardSum.isBust()) {
+        if (calculateParticipantCardSum.isBust()) {
             return 0;
         }
-        if (playerCardSum.isBlackjack()) {
+        if (calculateParticipantCardSum.isBlackjack()) {
             return money + (money * BLACKJACK_WIN_MULTIPLE);
         }
         return calculateEarnMoney(playerGameResult);
