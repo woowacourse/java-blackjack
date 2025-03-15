@@ -9,6 +9,10 @@ public class Card {
         this.cardSymbol = cardSymbol;
     }
 
+    public boolean isAceCard() {
+        return cardNumber == CardNumber.ACE;
+    }
+
     public int getNumber() {
         return cardNumber.getNumber();
     }
@@ -19,9 +23,5 @@ public class Card {
 
     public String getCardSymbol() {
         return cardSymbol.getName();
-    }
-
-    public boolean isAceCard() {
-        return cardNumber == CardNumber.ACE;
     }
 }
