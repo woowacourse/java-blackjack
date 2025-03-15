@@ -9,10 +9,12 @@ import java.util.Map;
 import java.util.function.Function;
 
 public enum GameResult {
+
     WIN(bettingAmount -> bettingAmount),
     LOSE(bettingAmount -> -bettingAmount),
     PUSH(bettingAmount -> 0),
-    BLACKJACK(bettingAmount -> (int) (bettingAmount * 1.5));
+    BLACKJACK(bettingAmount -> (int) (bettingAmount * 1.5)),
+    ;
 
     private final Function<Integer, Integer> profitsCalculator;
 
