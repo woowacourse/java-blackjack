@@ -9,6 +9,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class CardsTest {
+
     @Test
     void 카드를_한장_추가한다() {
         // given

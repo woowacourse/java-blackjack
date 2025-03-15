@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 ;
 
 class BustTest {
+
     @Test
     void 버스트_상태는_종료_상태다() {
         // given

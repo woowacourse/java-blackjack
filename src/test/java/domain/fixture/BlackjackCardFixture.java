@@ -5,6 +5,7 @@ import domain.card.Rank;
 import domain.card.Suit;
 
 public class BlackjackCardFixture {
+
     public static Card ACE_HEART = new Card(Rank.ACE, Suit.HEART);
     public static Card TWO_HEART = new Card(Rank.TWO, Suit.HEART);
     public static Card THREE_HEART = new Card(Rank.THREE, Suit.HEART);
