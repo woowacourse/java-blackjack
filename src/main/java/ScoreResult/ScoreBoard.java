@@ -61,7 +61,7 @@ public class ScoreBoard {
 
     private void determineOutcome(Participant dealer, Participant player) {
         BattleResult playerResult = determinePlayerResult(dealer.getScore(), player.getScore());
-        BattleResult dealerResult = reverseResult(playerResult);
+        BattleResult dealerResult = playerResult.reverse();
         scoreBoard.get(dealer).addResult(dealerResult);
         scoreBoard.get(player).addResult(playerResult);
     }
@@ -90,16 +90,6 @@ public class ScoreBoard {
         }
         if (playerScore < dealerScore) {
             return BattleResult.LOSE;
-        }
-        return BattleResult.DRAW;
-    }
-
-    private BattleResult reverseResult(BattleResult result) {
-        if (result == BattleResult.WIN) {
-            return BattleResult.LOSE;
-        }
-        if (result == BattleResult.LOSE) {
-            return BattleResult.WIN;
         }
         return BattleResult.DRAW;
     }
