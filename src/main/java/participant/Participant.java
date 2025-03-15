@@ -5,7 +5,7 @@ import card.Cards;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class Participant {
+public class Participant {
 
     private static final int BLACKJACK_NUMBER = 21;
     private static final int BUST_NUMBER = 22;
@@ -41,6 +41,4 @@ public abstract class Participant {
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards.getCards());
     }
-
-    public abstract boolean canReceiveCard();
 }

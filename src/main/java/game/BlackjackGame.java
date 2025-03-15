@@ -5,7 +5,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import participant.Dealer;
-import participant.Participant;
 import participant.Player;
 import participant.Players;
 
@@ -20,7 +19,7 @@ public class BlackjackGame {
         }
     }
 
-    public void runParticipantTurn(Participant participant, Deck deck) {
+    public void runParticipantTurn(Playable participant, Deck deck) {
         if (!participant.canReceiveCard()) {
             return;
         }
@@ -36,7 +35,7 @@ public class BlackjackGame {
         return players.getPlayers().stream()
             .collect(Collectors.toMap(
                 player -> player,
-                Player::calculateProfit,
+                Player::getProfit,
                 (oldValue, newValue) -> oldValue,
                 LinkedHashMap::new
             ));

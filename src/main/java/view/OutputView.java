@@ -3,10 +3,10 @@ package view;
 import card.Card;
 import card.CardNumber;
 import card.CardShape;
+import game.Playable;
 import java.util.List;
 import java.util.Map;
 import participant.Dealer;
-import participant.Participant;
 import participant.Player;
 import participant.Players;
 
@@ -26,8 +26,8 @@ public class OutputView {
         printNewLine();
         print("딜러와 ");
         print(String.join(NICKNAME_SEPARATOR, players.getPlayers().stream()
-                .map(Participant::getNickname)
-                .toList())
+            .map(Playable::getNickname)
+            .toList())
         );
         println("에게 2장을 나누었습니다.");
 
@@ -66,15 +66,15 @@ public class OutputView {
         }
     }
 
-    private void printPlayerCardsWithScore(Participant participant) {
+    private void printPlayerCardsWithScore(Playable participant) {
         print(String.format("%s: %s", participant.getNickname(), allCardToString(participant.getCards())));
         println(String.format(" - 결과: %s", participant.score()));
     }
 
     private String allCardToString(List<Card> cards) {
         return String.join(NICKNAME_SEPARATOR, cards.stream()
-                .map(this::cardToString)
-                .toList());
+            .map(this::cardToString)
+            .toList());
     }
 
     private String cardToString(Card card) {

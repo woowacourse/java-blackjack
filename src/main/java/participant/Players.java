@@ -13,8 +13,8 @@ public class Players {
 
     public double sumProfits() {
         return players.stream()
-                .mapToDouble(Player::calculateProfit)
-                .sum();
+            .mapToDouble(Player::getProfit)
+            .sum();
     }
 
     public List<Player> getPlayers() {
