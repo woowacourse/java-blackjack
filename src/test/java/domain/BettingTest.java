@@ -142,6 +142,8 @@ public class BettingTest {
         // then
         assertThat(bettingSession.getPlayerProfit(player1)).isEqualTo((int) (BET_AMOUNT * 1.5));
         assertThat(bettingSession.getPlayerProfit(player2)).isEqualTo(player2BetAmount);
+        assertThat(bettingSession.getDealerProfit(dealer)).isEqualTo(
+                (int) (-1 * BET_AMOUNT * 1.5) + -1 * player2BetAmount);
     }
 
     @Test
@@ -168,5 +170,6 @@ public class BettingTest {
         // then
         assertThat(bettingSession.getPlayerProfit(player1)).isEqualTo(BET_AMOUNT);
         assertThat(bettingSession.getPlayerProfit(player2)).isEqualTo(-1 * player2BetAmount);
+        assertThat(bettingSession.getDealerProfit(dealer)).isEqualTo(-1 * BET_AMOUNT + player2BetAmount);
     }
 }

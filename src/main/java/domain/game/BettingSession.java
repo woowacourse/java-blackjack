@@ -21,6 +21,7 @@ public class BettingSession {
     public void recordEarningsOnWin(Player player) {
         if (player.isBlackJack()) {
             applyBlackjackBonus(player);
+            return;
         }
         earnings.put(player, bets.get(player));
     }
@@ -67,5 +68,11 @@ public class BettingSession {
 
     public int getPlayerProfit(Player player) {
         return earnings.get(player);
+    }
+
+    public int getDealerProfit(Dealer dealer) {
+        return earnings.values().stream()
+                .mapToInt(value -> value * -1)
+                .sum();
     }
 }
