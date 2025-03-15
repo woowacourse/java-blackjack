@@ -1,52 +1,19 @@
 package blackjack.domain;
 
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
-
 public enum GameResult {
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무");
+    BLACKJACK_WIN(1.5),
+    WIN(1),
+    LOSE(-1),
+    DRAW(0);
 
-    private final String status;
+    private final double payoutRate;
 
-    GameResult(String status) {
-        this.status = status;
+    GameResult(double payoutRate) {
+        this.payoutRate = payoutRate;
     }
 
-    public static GameResult checkDealerWin(final Player player, final Dealer dealer) {
-        int playerScore = player.calculateScore();
-        int dealerScore = dealer.calculateScore();
-
-        if (player.isBust()) {
-            return GameResult.WIN;
-        }
-        if (dealer.isBust()) {
-            return GameResult.LOSE;
-        }
-
-        if (dealerScore > playerScore) {
-            return GameResult.WIN;
-        }
-        if (dealerScore < playerScore) {
-            return GameResult.LOSE;
-        }
-        return GameResult.DRAW;
+    public int calculatePayout(BettingMoney bettingMoney) {
+        return (int)(bettingMoney.intValue() * payoutRate);
     }
 
-    public static GameResult checkPlayerWin(final Player player, final Dealer dealer) {
-        GameResult gameResult = checkDealerWin(player, dealer);
-
-        if (gameResult == GameResult.WIN) {
-            return GameResult.LOSE;
-        }
-        if (gameResult == GameResult.LOSE) {
-            return GameResult.WIN;
-        }
-        return GameResult.DRAW;
-    }
-
-    public String getStatus() {
-        return status;
-    }
 }

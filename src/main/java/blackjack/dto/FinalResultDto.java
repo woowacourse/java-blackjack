@@ -1,5 +1,6 @@
 package blackjack.dto;
 
+import blackjack.domain.Score;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import java.util.List;
@@ -15,13 +16,13 @@ public record FinalResultDto(
         List<String> cardInfos = participant.getCardDeck().stream()
                 .map(card -> card.getRank().getName() + card.getSuit().getName())
                 .toList();
-        int score = participant.calculateScore();
+        Score score = participant.getScore();
         boolean isBust = participant.isBust();
 
-        return new FinalResultDto(name, cardInfos, score, isBust);
+        return new FinalResultDto(name, cardInfos, score.intValue(), isBust);
     }
 
-    public static List<FinalResultDto> fromPlayers(final List<Player> players) {
-        return players.stream().map(FinalResultDto::from).toList();
+    public static List<FinalResultDto> fromPlayers(final List<Player> scores) {
+        return scores.stream().map(FinalResultDto::from).toList();
     }
 }

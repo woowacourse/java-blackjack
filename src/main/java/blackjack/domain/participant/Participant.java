@@ -1,44 +1,44 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Score;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardDeck;
-import java.util.Collections;
+import blackjack.domain.card.CardHand;
 import java.util.List;
-import java.util.Set;
 
 public abstract class Participant {
-    static final int BLACKJACK_GOAL_SCORE = 21;
 
-    protected final CardDeck cardDeck;
+    protected final CardHand cardHand;
 
-    public Participant(CardDeck cardDeck) {
-        this.cardDeck = cardDeck;
+    public Participant(CardHand cardHand) {
+        this.cardHand = cardHand;
     }
 
     abstract boolean canHit();
+    public abstract List<Card> showStartCards();
 
-    public int calculateScore() {
-        Set<Integer> possibleSum = cardDeck.calculatePossibleSum();
-        return possibleSum.stream()
-                .filter(sum -> sum <= BLACKJACK_GOAL_SCORE)
-                .max(Integer::compareTo)
-                .orElse(Collections.min(possibleSum));
-    }
+    public abstract String getName();
 
     public boolean isBust() {
-        return calculateScore() > BLACKJACK_GOAL_SCORE;
+        return cardHand.isBust();
+    }
+
+    public boolean isBlackjack() {
+        return cardHand.isBlackjack();
     }
 
     public void receiveCard(Card card) {
-        cardDeck.add(card);
+        cardHand.add(card);
+    }
+
+    public Score getScore() {
+        return cardHand.getScore();
     }
 
     public List<Card> getCardDeck() {
-        return cardDeck.getCards();
+        return cardHand.getCards();
     }
 
     public int getCardSize() {
-        return cardDeck.getDeckSize();
+        return cardHand.deckSize();
     }
-    public abstract String getName();
 }

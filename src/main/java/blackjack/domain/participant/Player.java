@@ -1,27 +1,38 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.CardDeck;
-import java.util.Collections;
-import java.util.Set;
+import blackjack.domain.BettingMoney;
+import blackjack.domain.GameResult;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardHand;
+import java.util.List;
 
 public class Player extends Participant {
+    private final ParticipantName name;
+    private final BettingMoney bettingMoney;
 
-    private final String name;
-
-    public Player(String name, CardDeck cardDeck) {
-        super(cardDeck);
+    public Player(final ParticipantName name, final CardHand cardHand, final BettingMoney bettingMoney) {
+        super(cardHand);
         this.name = name;
+        this.bettingMoney = bettingMoney;
+    }
+
+    public int calculateProfit(GameResult gameResult) {
+        return gameResult.calculatePayout(bettingMoney);
     }
 
     @Override
     public boolean canHit() {
-        Set<Integer> possibleSum = cardDeck.calculatePossibleSum();
-        int minScore = Collections.min(possibleSum);
-        return minScore <= BLACKJACK_GOAL_SCORE;
+        return getScore().isUnderGoal();
+    }
+
+    @Override
+    public List<Card> showStartCards() {
+        List<Card> cards = cardHand.getCards();
+        return cards.subList(0,2);
     }
 
     @Override
     public String getName() {
-        return name;
+        return name.getValue();
     }
 }

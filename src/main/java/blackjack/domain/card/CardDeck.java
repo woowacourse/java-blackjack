@@ -1,34 +1,38 @@
 package blackjack.domain.card;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 public class CardDeck {
-    private final List<Card> cards = new ArrayList<>();
+    private static final String EMPTY_CARD_DECK = "[ERROR] 카드 덤프가 비어 있습니다!";
 
-    public void add(Card card) {
-        cards.add(card);
+    private final List<Card> cardDeck;
+
+    private CardDeck(List<Card> cardDeck) {
+        this.cardDeck = cardDeck;
     }
 
-    public Set<Integer> calculatePossibleSum() {
-        List<Integer> sums = new ArrayList<>();
-        sums.add(0);
+    public static CardDeck createShuffledDeck() {
+        List<Card> cards = initializeCardDeck();
+        Collections.shuffle(cards);
+        return new CardDeck(cards);
+    }
 
-        for (Card card : cards) {
-            sums = sums.stream()
-                    .flatMap(sum -> card.checkScore().stream().map(value -> sum + value))
-                    .toList();
+    private static List<Card> initializeCardDeck() {
+        List<Card> cards = new ArrayList<>();
+        for (CardSuit suit : CardSuit.values()) {
+            for (CardRank rank : CardRank.values()) {
+                cards.add(new Card(suit, rank));
+            }
         }
-        return new HashSet<>(sums);
-    }
-
-    public int getDeckSize() {
-        return cards.size();
-    }
-
-    public List<Card> getCards() {
         return cards;
+    }
+
+    public Card drawCard() {
+        if (cardDeck.isEmpty()) {
+            throw new IllegalStateException(EMPTY_CARD_DECK);
+        }
+        return cardDeck.removeFirst();
     }
 }

@@ -1,65 +1,46 @@
 package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.CardRank;
-import blackjack.domain.card.CardSuit;
+import java.util.HashSet;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class CardDeckTest {
 
-    @DisplayName("가지고있는 카드들의 총합 가능성을 계산한다.")
+    @DisplayName("카드 덤프에서 카드를 뽑아 반환한다.")
     @Test
-    void testCards() {
-        CardDeck cardDeck = new CardDeck();
-        cardDeck.add(new Card(CardSuit.HEART, CardRank.TWO));
-        cardDeck.add(new Card(CardSuit.CLUB, CardRank.EIGHT));
+    void testDrawRandomCardFromCardDeck() {
+        CardDeck cardDeck = CardDeck.createShuffledDeck();
+        Card card = cardDeck.drawCard();
 
-        Set<Integer> possibleSums = cardDeck.calculatePossibleSum();
-
-        assertThat(possibleSums).isEqualTo(Set.of(10));
+        assertThat(card).isNotNull();
     }
 
-    @DisplayName("총합 가능성 계산 시 에이스가 1인 경우와 11인 경우 모두 계산한다.")
+    @DisplayName("52장의 카드가 중복이 없다는 것을 확인한다.")
     @Test
-    void testCards_ace() {
-        CardDeck cardDeck = new CardDeck();
-        cardDeck.add(new Card(CardSuit.DIAMOND, CardRank.EIGHT));
-        cardDeck.add(new Card(CardSuit.HEART, CardRank.ACE));
+    void testCardDeckSize() {
+        CardDeck cardDeck = CardDeck.createShuffledDeck();
 
-        Set<Integer> possibleSums = cardDeck.calculatePossibleSum();
-
-        assertThat(possibleSums).isEqualTo(Set.of(9, 19));
+        Set<Card> cardSet = new HashSet<>();
+        for (int i = 0; i < 52; i++) {
+            Card card = cardDeck.drawCard();
+            cardSet.add(card);
+        }
+        assertThat(cardSet).hasSize(52);
     }
 
-    @DisplayName("에이스가 여러개인 경우에도 정상적으로 계산한다.")
+    @DisplayName("카드 덤프가 빈 경우 예외가 발생하는 것을 확인한다.")
     @Test
-    void testCards_multipleAce() {
-        CardDeck cardDeck = new CardDeck();
-        cardDeck.add(new Card(CardSuit.DIAMOND, CardRank.EIGHT));
-        cardDeck.add(new Card(CardSuit.HEART, CardRank.ACE));
-        cardDeck.add(new Card(CardSuit.HEART, CardRank.ACE));
-
-        Set<Integer> possibleSums = cardDeck.calculatePossibleSum();
-
-        assertThat(possibleSums).isEqualTo(Set.of(10, 20, 30));
-    }
-
-    @DisplayName("에이스가 4개인 경우에도 정상적으로 계산한다.")
-    @Test
-    void testCards_multipleAce4() {
-        CardDeck cardDeck = new CardDeck();
-        cardDeck.add(new Card(CardSuit.HEART, CardRank.ACE));
-        cardDeck.add(new Card(CardSuit.HEART, CardRank.ACE));
-        cardDeck.add(new Card(CardSuit.HEART, CardRank.ACE));
-        cardDeck.add(new Card(CardSuit.HEART, CardRank.ACE));
-
-        Set<Integer> possibleSums = cardDeck.calculatePossibleSum();
-
-        assertThat(possibleSums).isEqualTo(Set.of(4, 14, 24, 34, 44));
+    void testCarDeckError() {
+        CardDeck cardDeck = CardDeck.createShuffledDeck();
+        for (int i = 0; i < 52; i++) {
+            cardDeck.drawCard();
+        }
+        assertThatThrownBy(cardDeck::drawCard)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 카드 덤프가 비어 있습니다!");
     }
 }
