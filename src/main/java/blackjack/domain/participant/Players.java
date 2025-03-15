@@ -11,9 +11,9 @@ import java.util.stream.Collectors;
 
 public class Players {
 
-    private final List<Gamer> players;
+    private final List<Player> players;
 
-    public Players(final List<? extends Gamer> players) {
+    public Players(final List<Player> players) {
         validate(players);
         this.players = new ArrayList<>(players);
     }
@@ -84,11 +84,11 @@ public class Players {
         return players.size();
     }
 
-    public List<Gamer> getPlayers() {
+    public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 
-    public Gamer getPlayer(final int index) {
+    public Player getPlayer(final int index) {
         return players.get(index);
     }
 }
