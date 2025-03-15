@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,17 +18,23 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class PlayerTest {
+    Player player;
+
+    @BeforeEach
+    void makePlayer() {
+        player = new Player(new PlayerName("코기"), new BettingMoney(10000));
+    }
+
     @Test
     @DisplayName("특정 카드를 뽑는지 확인합니다.")
     void addCardTest() {
         //given
         Card card = Card.CLOVER_EIGHT;
-        Player player = new Player(new PlayerName("코기"));
 
         Cards newCards = new Cards(List.of(card));
 
         //when
-        player.addCard(newCards);
+        player.receiveCards(newCards);
 
         //then
         Assertions.assertTrue(player.getCards().hasCommonCard(newCards));
@@ -38,9 +45,8 @@ class PlayerTest {
     @DisplayName("플레이어가 카드를 더 받을 수 있는지 확인한다.")
     void canGetMoreCardTest(List<Card> cards, boolean expected) {
         //given
-        Player player = new Player(new PlayerName("코기"));
         for (Card card : cards) {
-            player.addCard(new Cards(List.of(card)));
+            player.receiveCards(new Cards(List.of(card)));
         }
 
         int playStandard = 20;
@@ -65,13 +71,12 @@ class PlayerTest {
     @DisplayName("딜러 숫자가 20일 때, 승무패를 계산하는지 확인합니다.")
     void decideGameResultTest(List<Card> cards, GameResult expected) {
         //given
-        Player player = new Player(new PlayerName("코기"));
         for (Card card : cards) {
-            player.addCard(new Cards(List.of(card)));
+            player.receiveCards(new Cards(List.of(card)));
         }
         Cards emptyCards = new Cards(new ArrayList<>());
         Dealer dealer = new Dealer(new Deck(emptyCards));
-        dealer.addCard(new Cards(List.of(Card.HEART_JACK, Card.SPADE_QUEEN))); // 20
+        dealer.receiveCards(new Cards(List.of(Card.HEART_JACK, Card.SPADE_QUEEN))); // 20
 
         //when & then
         Assertions.assertEquals(expected, player.decideGameResult(dealer));
@@ -91,9 +96,8 @@ class PlayerTest {
     @DisplayName("딜러나 플레이어가 버스트인 경우 승패를 확인합니다.")
     void decideGameResultBustTest(List<Card> cards, GameResult expected) {
         //given
-        Player player = new Player(new PlayerName("코기"));
         for (Card card : cards) {
-            player.addCard(new Cards(List.of(card)));
+            player.receiveCards(new Cards(List.of(card)));
         }
 
         Cards emptyCards = new Cards(new ArrayList<>());
@@ -101,7 +105,7 @@ class PlayerTest {
 
         List<Card> givenCards = List.of(Card.HEART_JACK, Card.SPADE_SIX, Card.CLOVER_SEVEN);
         for (Card givenCard : givenCards) {
-            dealer.addCard(new Cards(List.of(givenCard)));
+            dealer.receiveCards(new Cards(List.of(givenCard)));
         }
 
         //when & then
