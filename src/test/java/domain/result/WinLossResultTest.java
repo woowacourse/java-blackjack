@@ -16,10 +16,10 @@ class WinLossResultTest {
         CardsFactory cardsFactory = new CardsFactory();
 
         Dealer dealer = new Dealer();
-        dealer.addCard(cardsFactory.createScore19Cards1());
+        dealer.receiveCard(cardsFactory.createScore19Cards1());
 
         Player player = new Player("모루");
-        player.addCard(cardsFactory.createScore18Cards());
+        player.receiveCard(cardsFactory.createScore18Cards());
 
         assertThat(WinLossResult.from(dealer, player)).isEqualTo(WinLossResult.LOSS);
     }
@@ -30,10 +30,10 @@ class WinLossResultTest {
         CardsFactory cardsFactory = new CardsFactory();
 
         Dealer dealer = new Dealer();
-        dealer.addCard(cardsFactory.createScore18Cards());
+        dealer.receiveCard(cardsFactory.createScore18Cards());
 
         Player player = new Player("모루");
-        player.addCard(cardsFactory.createScore19Cards1());
+        player.receiveCard(cardsFactory.createScore19Cards1());
 
         assertThat(WinLossResult.from(dealer, player)).isEqualTo(WinLossResult.WIN);
     }
@@ -44,10 +44,10 @@ class WinLossResultTest {
         CardsFactory cardsFactory = new CardsFactory();
 
         Dealer dealer = new Dealer();
-        dealer.addCard(cardsFactory.createScore19Cards1());
+        dealer.receiveCard(cardsFactory.createScore19Cards1());
 
         Player player = new Player("모루");
-        player.addCard(cardsFactory.createScore19Cards2());
+        player.receiveCard(cardsFactory.createScore19Cards2());
 
         assertThat(WinLossResult.from(dealer, player)).isEqualTo(WinLossResult.DRAW);
     }
@@ -58,10 +58,10 @@ class WinLossResultTest {
         CardsFactory cardsFactory = new CardsFactory();
 
         Dealer dealer = new Dealer();
-        dealer.addCard(cardsFactory.createBlackJackCards1());
+        dealer.receiveCard(cardsFactory.createBlackJackCards1());
 
         Player player = new Player("모루");
-        player.addCard(cardsFactory.createBlackJackCards2());
+        player.receiveCard(cardsFactory.createBlackJackCards2());
 
         assertThat(WinLossResult.from(dealer, player)).isEqualTo(WinLossResult.DRAW);
     }
@@ -72,10 +72,10 @@ class WinLossResultTest {
         CardsFactory cardsFactory = new CardsFactory();
 
         Dealer dealer = new Dealer();
-        dealer.addCard(cardsFactory.createMaxScoreCards());
+        dealer.receiveCard(cardsFactory.createMaxScoreCards());
 
         Player player = new Player("모루");
-        player.addCard(cardsFactory.createBlackJackCards1());
+        player.receiveCard(cardsFactory.createBlackJackCards1());
 
         assertThat(WinLossResult.from(dealer, player)).isEqualTo(WinLossResult.BLACKJACK_WIN);
     }
@@ -86,10 +86,10 @@ class WinLossResultTest {
         CardsFactory cardsFactory = new CardsFactory();
 
         Dealer dealer = new Dealer();
-        dealer.addCard(cardsFactory.createBlackJackCards1());
+        dealer.receiveCard(cardsFactory.createBlackJackCards1());
 
         Player player = new Player("모루");
-        player.addCard(cardsFactory.createMaxScoreCards());
+        player.receiveCard(cardsFactory.createMaxScoreCards());
 
         assertThat(WinLossResult.from(dealer, player)).isEqualTo(WinLossResult.LOSS);
     }

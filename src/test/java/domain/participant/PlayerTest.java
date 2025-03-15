@@ -3,13 +3,7 @@ package domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.CardsFactory;
-import domain.bet.BetMoney;
-import domain.card.Card;
-import domain.card.Denomination;
-import domain.card.Suit;
-import domain.result.WinLossResult;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
@@ -20,7 +14,7 @@ public class PlayerTest {
         Player player = new Player("모루");
 
         CardsFactory cardsFactory = new CardsFactory();
-        player.addCard(cardsFactory.createScore18Cards());
+        player.receiveCard(cardsFactory.createScore18Cards());
 
         assertThat(player.getHandTotal()).isEqualTo(18);
     }

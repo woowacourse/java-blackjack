@@ -15,8 +15,8 @@ public class DealerTest {
     void test3() {
         Dealer dealer = new Dealer();
 
-        dealer.addCard(new Card(Denomination.TEN, Suit.SPADE));
-        dealer.addCard(new Card(Denomination.TWO, Suit.SPADE));
+        dealer.receiveCard(new Card(Denomination.TEN, Suit.SPADE));
+        dealer.receiveCard(new Card(Denomination.TWO, Suit.SPADE));
 
         assertThat(dealer.openOneCard()).isEqualTo(new Card(Denomination.TEN, Suit.SPADE));
     }
@@ -27,11 +27,11 @@ public class DealerTest {
         Dealer dealer = new Dealer();
 
         //기본 2장
-        dealer.addCard(new Card(Denomination.TEN, Suit.SPADE));
-        dealer.addCard(new Card(Denomination.JACK, Suit.SPADE));
+        dealer.receiveCard(new Card(Denomination.TEN, Suit.SPADE));
+        dealer.receiveCard(new Card(Denomination.JACK, Suit.SPADE));
 
-        dealer.addCard(new Card(Denomination.ACE, Suit.CLUB));
-        dealer.addCard(new Card(Denomination.TWO, Suit.CLUB));
+        dealer.receiveCard(new Card(Denomination.ACE, Suit.CLUB));
+        dealer.receiveCard(new Card(Denomination.TWO, Suit.CLUB));
 
         assertThat(dealer.getExtraHandSize()).isEqualTo(2);
     }

@@ -1,5 +1,6 @@
 package controller;
 
+import domain.BlackJack;
 import domain.bet.BetMoney;
 import domain.bet.BettingPool;
 import domain.bet.Profit;
@@ -23,18 +24,18 @@ public class BlackJackController {
     private static final String YES = "y";
     private static final int THRESHOLD = 16;
 
-    private final Dealer dealer = new Dealer();
     private final Deck deck = new Deck();
 
     public void play() {
         try {
             Players players = enterPlayer();
             BettingPool bettingPool = betMoneyPlayers(players);
-            distributeCards(players);
-            playersTurn(players);
-            dealerTurn();
+            BlackJack blackJack = new BlackJack(players, deck);
 
-            printResult(players, bettingPool);
+            prepareBlackJack(blackJack, players);
+            playBlackJack(blackJack, players);
+
+            printResult(players, blackJack.getDealer(), bettingPool);
         } catch (IllegalArgumentException e) {
             OutputView.printExceptionMessage(e);
         }
@@ -58,63 +59,58 @@ public class BlackJackController {
         return new BettingPool(bettingPool);
     }
 
-    private void distributeCards(final Players players) {
-        deck.shuffle();
+    private void prepareBlackJack(final BlackJack blackJack, final Players players) {
+        blackJack.prepareGame();
+        OutputView.printDistributeResult(players, blackJack.getDealer());
+    }
 
-        drawTwoCardFromDeck(dealer);
+    private void playBlackJack(final BlackJack blackJack, final Players players) {
+        playersTurn(blackJack, players);
+        dealerTurn(blackJack);
+    }
+
+    private void playersTurn(final BlackJack blackJack, final Players players) {
         for (Player player : players.getPlayers()) {
-            drawTwoCardFromDeck(player);
-        }
-        OutputView.printDistributeResult(players, dealer);
-    }
-
-    private void drawTwoCardFromDeck(final Participant participant) {
-        participant.addCard(deck.draw(), deck.draw());
-    }
-
-    private void playersTurn(final Players players) {
-        for (Player player : players.getPlayers()) {
-            playerTurn(player);
+            playerTurn(blackJack, player);
         }
     }
 
-    private void playerTurn(final Player player) {
-        playTurn(player, () -> !player.isMaxScore() && InputView.getYnInput(player).equalsIgnoreCase(YES));
+    private void playerTurn(final BlackJack blackJack, final Player player) {
+        playTurn(blackJack, player, () -> !player.isMaxScore() && InputView.getYnInput(player).equalsIgnoreCase(YES));
     }
 
-    private void dealerTurn() {
-        playTurn(dealer, () -> dealer.getHandTotal() <= THRESHOLD);
+    private void dealerTurn(final BlackJack blackJack) {
+        Dealer dealer = blackJack.getDealer();
+        playTurn(blackJack, dealer, () -> dealer.getHandTotal() <= THRESHOLD);
     }
 
-    private void playTurn(final Participant participant, final Supplier<Boolean> shouldDrawMore) {
-        if (participant.isMaxScore()) return;
+    private void playTurn(final BlackJack blackJack, final Participant participant, final Supplier<Boolean> shouldDrawMore) {
+        if (participant.isMaxScore() || participant.isHandBust()) return;
 
-        boolean isAlive = participant.resolveBust();
-        while (isAlive && shouldDrawMore.get()) {
-            isAlive = drawAdditionalCard(participant);
+        while (!participant.isHandBust() && shouldDrawMore.get()) {
+            drawAdditionalCard(blackJack, participant);
         }
-        if (!isAlive) {
-            handleBust(participant);
+        if (participant.isHandBust()) {
+            handleBust(blackJack, participant);
         }
     }
 
-    private boolean drawAdditionalCard(final Participant participant) {
-        participant.addCard(deck.draw());
+    private void drawAdditionalCard(final BlackJack blackJack, final Participant participant) {
+        blackJack.passAdditionalCard(participant);
         if (participant.isPlayer()) {
             OutputView.printHandCardsNames(participant.getName(), participant.getHand());
         }
-        return participant.resolveBust();
     }
 
-    private static void handleBust(final Participant participant) {
-        participant.applyBustPenalty();
+    private static void handleBust(final BlackJack blackJack, final Participant participant) {
+        blackJack.handleParticipantBust(participant);
 
         if(participant.isPlayer()) {
             OutputView.printBust();
         }
     }
 
-    private void printResult(final Players players, final BettingPool bettingPool) {
+    private void printResult(final Players players, final Dealer dealer, final BettingPool bettingPool) {
         OutputView.printDealerExtraCardsCount(dealer.getName(), dealer.getExtraHandSize());
         OutputView.printEveryOneCardsNamesWithTotal(players, dealer);
 

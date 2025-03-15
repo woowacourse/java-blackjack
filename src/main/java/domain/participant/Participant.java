@@ -13,8 +13,8 @@ public abstract class Participant {
         this.hand = new Hand();
     }
 
-    public void addCard(Card... card) {
-        hand.addCard(card);
+    public void receiveCard(Card... cardsInput) {
+        hand.addCard(cardsInput);
     }
 
     public boolean isBlackJack() { return hand.isBlackJack(); }
@@ -29,7 +29,7 @@ public abstract class Participant {
         return !isHandBust();
     }
 
-    abstract public boolean isPlayer();
+    public abstract boolean isPlayer();
 
     public int getHandTotal() {
         return hand.getTotal();

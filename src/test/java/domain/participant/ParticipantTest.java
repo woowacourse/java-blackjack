@@ -20,7 +20,7 @@ class ParticipantTest {
 
             // when
             CardsFactory cardsFactory = new CardsFactory();
-            player.addCard(cardsFactory.createScore19Cards1());
+            player.receiveCard(cardsFactory.createScore19Cards1());
 
             // then
             assertThat(player.resolveBust()).isTrue();
@@ -34,7 +34,7 @@ class ParticipantTest {
 
             // when
             CardsFactory cardsFactory = new CardsFactory();
-            player.addCard(cardsFactory.createBustCardsWithNoAce());
+            player.receiveCard(cardsFactory.createBustCardsWithNoAce());
 
             // then
             assertThat(player.resolveBust()).isFalse();
@@ -48,7 +48,7 @@ class ParticipantTest {
 
             // when
             CardsFactory cardsFactory = new CardsFactory();
-            player.addCard(cardsFactory.createCanResolveBustCardsWithOneAce());
+            player.receiveCard(cardsFactory.createCanResolveBustCardsWithOneAce());
 
             // then
             assertThat(player.resolveBust()).isTrue();
@@ -62,7 +62,7 @@ class ParticipantTest {
 
             // when
             CardsFactory cardsFactory = new CardsFactory();
-            player.addCard(cardsFactory.createCanResolveBustCardsWithTwoAce());
+            player.receiveCard(cardsFactory.createCanResolveBustCardsWithTwoAce());
 
             // then
             assertThat(player.resolveBust()).isTrue();
@@ -76,7 +76,7 @@ class ParticipantTest {
 
             // when
             CardsFactory cardsFactory = new CardsFactory();
-            player.addCard(cardsFactory.createCantResolveBustCardsWithTwoAce());
+            player.receiveCard(cardsFactory.createCantResolveBustCardsWithTwoAce());
 
             // then
             assertThat(player.resolveBust()).isFalse();
