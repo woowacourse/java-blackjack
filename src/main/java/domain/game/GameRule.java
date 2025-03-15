@@ -1,7 +1,7 @@
 package domain.game;
 
 public enum GameRule {
-    BUST_THRESHOLD(21),
+    BLACK_JACK(21),
     DEALER_STAY(16);
 
     private final int value;
@@ -15,6 +15,6 @@ public enum GameRule {
     }
 
     public static boolean checkBust(int score) {
-        return score > GameRule.BUST_THRESHOLD.getValue();
+        return score > GameRule.BLACK_JACK.getValue();
     }
 }
