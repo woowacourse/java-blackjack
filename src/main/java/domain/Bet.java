@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Bet {
 
-    private static final int MIN_BET = 1_000;
-    private static final int MAX_BET = 1_000_000;
+    public static final int MIN_BET = 1_000;
+    public static final int MAX_BET = 1_000_000;
     private static final Bet DEFAULT_BET = new Bet(MIN_BET);
 
     private final int value;

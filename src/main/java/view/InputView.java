@@ -1,5 +1,6 @@
 package view;
 
+import domain.Bet;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -16,7 +17,7 @@ public class InputView {
     }
 
     public static int inputBet(String name) {
-        System.out.printf("%s의 배팅 금액은?%n", name);
+        System.out.printf("%s의 배팅 금액은? (최소: %d, 최대: %d) %n", name, Bet.MIN_BET, Bet.MAX_BET);
         String input = scanner.nextLine();
         validateInteger(input);
         return Integer.parseInt(input);
