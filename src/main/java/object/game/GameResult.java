@@ -22,4 +22,35 @@ public enum GameResult {
     public double getBetRate() {
         return betRate;
     }
+
+    public static GameResult getGameResultOfPlayer(Score playerScore, Score dealerScore) {
+        if (playerScore.isBlackJack() && !dealerScore.isBlackJack()) {
+            return BLACKJACK_WIN;
+        }
+        if (playerScore.isBust()) {
+            return LOSE;
+        }
+        if (dealerScore.isBust()) {
+            return WIN;
+        }
+        if (playerScore.getScore() > dealerScore.getScore()) {
+            return WIN;
+        }
+        if (playerScore.getScore() < dealerScore.getScore()) {
+            return LOSE;
+        }
+
+        return DRAW;
+    }
+
+    public static GameResult getOppositeGameResult(GameResult gameResult) {
+        if (gameResult == WIN || gameResult == BLACKJACK_WIN) {
+            return LOSE;
+        }
+        if (gameResult == LOSE) {
+            return WIN;
+        }
+
+        return gameResult;
+    }
 }

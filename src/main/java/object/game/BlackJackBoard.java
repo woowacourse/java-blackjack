@@ -137,47 +137,10 @@ public class BlackJackBoard {
         }
 
         Score playerScore = getScoreOf(participant);
+        GameResult playerGameResult = GameResult.getGameResultOfPlayer(playerScore, dealerScore);
+        GameResult dealerGameResult = GameResult.getOppositeGameResult(playerGameResult);
 
-        if (playerScore.isBlackJack() && !dealerScore.isBlackJack()) {
-            updateGameResultBlackJack(participant, dealer);
-            return;
-        }
-
-        if (playerScore.isBust()) {
-            updateGameResult(dealer, participant);
-            return;
-        }
-
-        if (dealerScore.isBust()) {
-            updateGameResult(participant, dealer);
-            return;
-        }
-
-        if (playerScore.getScore() > dealerScore.getScore()) {
-            updateGameResult(participant, dealer);
-            return;
-        }
-
-        if (playerScore.getScore() < dealerScore.getScore()) {
-            updateGameResult(dealer, participant);
-            return;
-        }
-
-        updateGameResultDraw(dealer, participant);
-    }
-
-    private void updateGameResultDraw(Participant dealer, Participant player) {
-        dealer.applyGameRecord(GameResult.DRAW);
-        player.applyGameRecord(GameResult.DRAW);
-    }
-
-    private void updateGameResultBlackJack(Participant winner, Participant loser) {
-        winner.applyGameRecord(GameResult.BLACKJACK_WIN);
-        loser.applyGameRecord(GameResult.LOSE);
-    }
-
-    private void updateGameResult(Participant winner, Participant loser) {
-        winner.applyGameRecord(GameResult.WIN);
-        loser.applyGameRecord(GameResult.LOSE);
+        participant.applyGameRecord(playerGameResult);
+        dealer.applyGameRecord(dealerGameResult);
     }
 }
