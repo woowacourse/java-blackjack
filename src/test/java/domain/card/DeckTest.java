@@ -26,7 +26,7 @@ class DeckTest {
     @Test
     void 덱에_카드가_없는데_드로우하면_예외가_발생한다() {
         // given
-        Deck deck = new Deck(List.of(ACE_HEART));
+        Deck deck = new Deck(List.of());
 
         // when & then
         Assertions.assertThatThrownBy(deck::drawCard)
