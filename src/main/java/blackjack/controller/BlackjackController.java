@@ -34,6 +34,16 @@ public class BlackjackController {
         displayResult(game);
     }
 
+    private Players getPlayers() {
+        List<Player> players = new ArrayList<>();
+        List<String> playerNames = inputView.readPlayerNames();
+        for (String name : playerNames) {
+            BettingPlayerCreateDto bettingPlayerCreateDto = inputView.readPlayerBetAmount(name);
+            players.add(Player.of(bettingPlayerCreateDto));
+        }
+        return new Players(players);
+    }
+
     private Game createGame(Players players) {
         Deck deck = Deck.createShuffledDeck(Card.createDeck(), new RandomCardShuffler());
         Dealer dealer = new Dealer(deck);
@@ -47,27 +57,20 @@ public class BlackjackController {
 
     private void askHitForAllPlayer(Game game) {
         for (Player player : game.getPlayers()) {
-            while (player.canHit() && inputView.readHitOrNot(player.getName())) {
-                game.hitPlayer(player);
-                outputView.printPlayerHand(player);
-            }
+            askHitForPlayer(game, player);
+        }
+    }
+
+    private void askHitForPlayer(Game game, Player player) {
+        while (player.canHit() && inputView.readHitOrNot(player.getName())) {
+            game.hitPlayer(player);
+            outputView.printPlayerHand(player);
         }
     }
 
     private void dealerHitOrNot(Game game) {
         boolean isDealerHit = game.hitDealer();
         outputView.printDealerHit(isDealerHit);
-    }
-
-    private Players getPlayers() {
-        List<Player> players = new ArrayList<>();
-        List<String> playerNames = inputView.readPlayerNames();
-        for (String name : playerNames) {
-            BettingPlayerCreateDto bettingPlayerCreateDto = inputView.readPlayerBetAmount(name);
-            players.add(Player.of(bettingPlayerCreateDto));
-        }
-
-        return new Players(players);
     }
 
     private void displayResult(Game game) {

@@ -1,6 +1,6 @@
 package blackjack.model.participant;
 
-import blackjack.model.MatchResult;
+import blackjack.model.betting.MatchResult;
 import blackjack.model.betting.BetAmount;
 import blackjack.model.betting.Profit;
 import blackjack.model.card.Card;

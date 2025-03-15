@@ -1,20 +1,19 @@
-package blackjack.model;
+package blackjack.model.betting;
 
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
 
 public enum MatchResult {
 
-    BLACKJACK("블랙잭"),
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무"),
+    BLACKJACK(1.5),
+    WIN(1),
+    LOSE( -1),
+    DRAW(0),
     ;
+    private final double profitRate;
 
-    private final String label;
-
-    MatchResult(String label) {
-        this.label = label;
+    MatchResult(double profitRate) {
+        this.profitRate = profitRate;
     }
 
     public static MatchResult calculatePlayerResult(Dealer dealer, Player player) {
@@ -60,7 +59,7 @@ public enum MatchResult {
         return DRAW;
     }
 
-    public String getLabel() {
-        return label;
+    public double getProfitRate() {
+        return profitRate;
     }
 }

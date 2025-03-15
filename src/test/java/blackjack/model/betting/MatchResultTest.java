@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.betting;
 
 import static blackjack.TestFixtures.UNSHUFFLED_DECK;
 import static org.assertj.core.api.Assertions.assertThat;
