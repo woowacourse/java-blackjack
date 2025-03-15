@@ -4,6 +4,7 @@ import static domain.GameResult.BLACKJACK;
 import static domain.GameResult.LOSE;
 import static domain.GameResult.TIE;
 import static domain.GameResult.WIN;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,7 +135,7 @@ class PlayerTest {
 
         player.receiveCards(new Cards(cards));
 
-        org.assertj.core.api.Assertions.assertThat(player.calculateProfit(dealer)).isEqualTo(expected);
+        assertThat(player.calculateProfit(dealer)).isEqualTo(expected);
     }
 
     public static Stream<Arguments> calculateProfitTest() {

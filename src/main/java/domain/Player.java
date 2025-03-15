@@ -43,21 +43,21 @@ public class Player extends Gamer {
     }
 
     private GameResult decideGameResultWithBust(int playerScore) {
-        if (playerScore > GAMER_BUST_THRESHOLD) { // 플레이어 버스트인 경우 (딜러가 버스트여도 이 경우)
+        if (playerScore > GAMER_BUST_THRESHOLD) {
             return LOSE;
         }
-        return WIN; // 딜러만 버스트인 경우
+        return WIN;
     }
 
     private GameResult decideGameResultWithoutBust(Dealer dealer) {
-        if (isBlackJack() && !dealer.isBlackJack()) { // 플레이어만 블랙잭인 경우
+        if (isBlackJack() && !dealer.isBlackJack()) {
             return BLACKJACK;
         }
-        if (cards.calculateScore() == dealer.getScore()) { // 점수 무승부
+        if (cards.calculateScore() == dealer.getScore()) {
             return TIE;
         }
         if (isBlackJack() && dealer.isBlackJack()
-                || cards.calculateScore() > dealer.getScore()) { // 딜러 & 플레이어 모두 블랙잭 혹은 플레이어가 점수 높은 경우
+                || cards.calculateScore() > dealer.getScore()) {
             return WIN;
         }
         return LOSE;
