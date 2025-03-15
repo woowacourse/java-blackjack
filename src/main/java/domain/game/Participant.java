@@ -6,7 +6,7 @@ import domain.card.CardNumber;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Participant {
+public abstract class Participant {
 
     protected static final int BURST_BOUND = 21;
 
@@ -44,8 +44,7 @@ public class Participant {
 
     private int countAce() {
         return (int) cards.stream()
-                .map(Card::cardNumber)
-                .filter(number -> number == CardNumber.ACE)
+                .filter(card -> card.cardNumber() == CardNumber.ACE)
                 .count();
     }
 

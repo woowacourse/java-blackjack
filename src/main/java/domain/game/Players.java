@@ -4,6 +4,7 @@ import domain.card.CardDeck;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 public class Players {
 
@@ -11,11 +12,11 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<String> playerNames) {
+    public Players(List<String> playerNames, List<Integer> playerBettingAmount) {
         validatePlayerCount(playerNames);
         validateDuplicatePlayerName(playerNames);
-        this.players = playerNames.stream()
-                .map(Player::new)
+        this.players = IntStream.range(0, playerNames.size())
+                .mapToObj(index -> new Player(playerNames.get(index), playerBettingAmount.get(index)))
                 .toList();
     }
 

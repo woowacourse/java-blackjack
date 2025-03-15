@@ -1,37 +1,20 @@
 package domain.card;
 
-import java.util.List;
+import java.util.stream.IntStream;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-public class CardDeckTest {
+class CardDeckTest {
 
     @Test
-    void 카드를_1장_드로우한다() {
+    void 카드덱에_카드가_존재하지_않을_때_드로우하면_예외를_던진다() {
         //given
         CardDeck cardDeck = CardDeck.createCards();
+        IntStream.rangeClosed(1, 52)
+                .forEach(count -> cardDeck.drawCard());
 
-        //when
-        Card actual = cardDeck.drawCard();
-
-        //then
-        Card expected = new Card(Pattern.SPADE, CardNumber.KING);
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @Test
-    void 게임_시작을_위해_카드를_2장_드로우한다() {
-        //given
-        CardDeck cardDeck = CardDeck.createCards();
-
-        //when
-        List<Card> actual = cardDeck.drawCardWhenStart();
-
-        //then
-        List<Card> expected = List.of(
-                new Card(Pattern.SPADE, CardNumber.KING),
-                new Card(Pattern.SPADE, CardNumber.QUEEN));
-        assertThat(actual).containsExactlyElementsOf(expected);
+        //when & then
+        Assertions.assertThatThrownBy(cardDeck::drawCard)
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

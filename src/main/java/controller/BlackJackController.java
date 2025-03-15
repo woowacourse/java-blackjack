@@ -2,8 +2,8 @@ package controller;
 
 import domain.card.Card;
 import domain.card.CardDeck;
+import domain.game.BlackjackResultEvaluator;
 import domain.game.Dealer;
-import domain.game.GameResult;
 import domain.game.Player;
 import domain.game.Players;
 import java.util.List;
@@ -22,15 +22,23 @@ public class BlackJackController {
 
     public void run() {
         List<String> playerNames = inputView.readPlayerNames();
-        Players players = new Players(playerNames);
+        List<Integer> playerBettingAmount = readPlayerBettingAmount(playerNames);
+        Players players = new Players(playerNames, playerBettingAmount);
+        BlackjackResultEvaluator blackjackResultEvaluator = new BlackjackResultEvaluator();
         Dealer dealer = new Dealer();
 
         CardDeck cardDeck = CardDeck.createCards();
-        cardDeck.shuffle();
 
         startBlackJack(cardDeck, players, dealer);
         playBlackJack(cardDeck, players, dealer);
-        judgeGameResult(players, dealer);
+        blackjackResultEvaluator.judgeGameResult(players.getPlayers(), dealer);
+        calculateTotalBettingAmount(players, dealer);
+    }
+
+    private List<Integer> readPlayerBettingAmount(List<String> playerNames) {
+        return playerNames.stream()
+                .map(inputView::readPlayerBettingAmount)
+                .toList();
     }
 
     private void startBlackJack(CardDeck cardDeck, Players players, Dealer dealer) {
@@ -50,28 +58,20 @@ public class BlackJackController {
     }
 
     private void decidePlayerHitOrStand(CardDeck cardDeck, Player player) {
-        while (!player.isOverBurstBound() && inputView.readDrawMoreCard(player)) {
+        while (player.isUnderBurstBound() && inputView.readDrawMoreCard(player)) {
             player.drawCard(cardDeck);
             outputView.printPlayerCard(player);
         }
     }
 
     private void decideDealerHitOrStand(CardDeck cardDeck, Dealer dealer) {
-        while (!dealer.isOverBurstBound() && !dealer.isOverDrawBound()) {
+        while (dealer.isUnderDrawBound()) {
             dealer.drawCard(cardDeck);
             outputView.printDealerDrawMessage();
         }
     }
 
-    private void judgeGameResult(Players players, Dealer dealer) {
-        List<GameResult> gameResults = dealer.judgeGameResult(players.getPlayers());
-        List<String> playerNames = players.getAllPlayerNames();
-
-        int winCount = GameResult.WIN.countGameResultFromDealer(gameResults);
-        int loseCount = GameResult.LOSE.countGameResultFromDealer(gameResults);
-        int drawCount = GameResult.DRAW.countGameResultFromDealer(gameResults);
-
-        outputView.printDealerWinningResult(winCount, drawCount, loseCount);
-        outputView.printWinningResult(playerNames, gameResults);
+    private void calculateTotalBettingAmount(Players players, Dealer dealer) {
+        outputView.printBettingAmount(players.getPlayers(), dealer);
     }
 }

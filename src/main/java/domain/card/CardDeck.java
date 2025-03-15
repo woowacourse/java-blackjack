@@ -17,6 +17,7 @@ public class CardDeck {
                 .flatMap(pattern -> createCardNumbers().stream()
                         .map(cardNumber -> new Card(pattern, cardNumber)))
                 .collect(Collectors.toList());
+        Collections.shuffle(cards);
         return new CardDeck(cards);
     }
 
@@ -34,10 +35,6 @@ public class CardDeck {
         this.deck = deck;
     }
 
-    public void shuffle() {
-        Collections.shuffle(deck);
-    }
-
     public List<Card> drawCardWhenStart() {
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < DRAW_COUNT_WHEN_START; i++) {
@@ -53,7 +50,7 @@ public class CardDeck {
 
     private void validateEmptyCardDeck() {
         if (deck.isEmpty()) {
-            throw new IllegalArgumentException("카드 덱이 비었습니다.");
+            throw new IllegalArgumentException("[ERROR] 카드 덱이 비었습니다.");
         }
     }
 }

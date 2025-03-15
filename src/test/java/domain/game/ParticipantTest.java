@@ -9,13 +9,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ParticipantTest {
+class ParticipantTest {
 
     @Test
     void 카드_덱에서_카드_두_장을_받아온다() {
         //given
         CardDeck cardDeck = CardDeck.createCards();
-        Participant participant = new Participant();
+        Participant participant = new Participant() {
+        };
 
         //when
         participant.drawCardWhenStart(cardDeck);
@@ -28,7 +29,8 @@ public class ParticipantTest {
     void 카드_덱에서_카드_한_장을_받아온다() {
         //given
         CardDeck cardDeck = CardDeck.createCards();
-        Participant participant = new Participant();
+        Participant participant = new Participant() {
+        };
 
         //when
         participant.drawCard(cardDeck);
@@ -40,7 +42,8 @@ public class ParticipantTest {
     @Test
     void 보유한_카드의_합계를_계산한다() {
         //given
-        Participant participant = new Participant();
+        Participant participant = new Participant() {
+        };
         List<Card> drawnCards = participant.getCards();
         drawnCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
@@ -56,7 +59,8 @@ public class ParticipantTest {
     @Test
     void 보유한_카드의_합계를_계산한다_ace를_11로_판단() {
         //given
-        Participant participant = new Participant();
+        Participant participant = new Participant() {
+        };
         List<Card> drawnCards = participant.getCards();
         drawnCards.add(new Card(Pattern.SPADE, CardNumber.ACE));
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
@@ -71,7 +75,8 @@ public class ParticipantTest {
     @Test
     void 보유한_카드의_합계를_계산한다_ace를_1로_판단() {
         //given
-        Participant participant = new Participant();
+        Participant participant = new Participant() {
+        };
         List<Card> drawnCards = participant.getCards();
         drawnCards.add(new Card(Pattern.SPADE, CardNumber.ACE));
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
@@ -87,7 +92,8 @@ public class ParticipantTest {
     @Test
     void 보유한_카드의_합계를_계산한다_21초과해도_ace를_1로_판단() {
         //given
-        Participant participant = new Participant();
+        Participant participant = new Participant() {
+        };
         List<Card> drawnCards = participant.getCards();
         drawnCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
@@ -104,7 +110,8 @@ public class ParticipantTest {
     @Test
     void 보유한_카드의_합계가_21이_넘어가는지_판정한다_21초과_케이스() {
         //given
-        Participant participant = new Participant();
+        Participant participant = new Participant() {
+        };
         List<Card> drawnCards = participant.getCards();
         drawnCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
@@ -117,7 +124,8 @@ public class ParticipantTest {
     @Test
     void 보유한_카드의_합계가_21이_넘어가는지_판정한다_21이하_케이스() {
         //given
-        Participant participant = new Participant();
+        Participant participant = new Participant() {
+        };
         List<Card> drawnCards = participant.getCards();
         drawnCards.add(new Card(Pattern.SPADE, CardNumber.TEN));
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.NINE));
@@ -130,7 +138,8 @@ public class ParticipantTest {
     @Test
     void ace를_가진_경우_합계가_21이_넘어가는지_판정한다_ace를_11로_처리() {
         //given
-        Participant participant = new Participant();
+        Participant participant = new Participant() {
+        };
         List<Card> drawnCards = participant.getCards();
         drawnCards.add(new Card(Pattern.SPADE, CardNumber.ACE));
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
@@ -142,7 +151,8 @@ public class ParticipantTest {
     @Test
     void ace를_가진_경우_합계가_21이_넘어가는지_판정한다_ace를_1로_처리하면_통과() {
         //given
-        Participant participant = new Participant();
+        Participant participant = new Participant() {
+        };
         List<Card> drawnCards = participant.getCards();
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
@@ -155,7 +165,8 @@ public class ParticipantTest {
     @Test
     void ace를_가진_경우_합계가_21이_넘어가는지_판정한다_ace를_1로_처리해도_버스트() {
         //given
-        Participant participant = new Participant();
+        Participant participant = new Participant() {
+        };
         List<Card> drawnCards = participant.getCards();
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.TEN));
@@ -169,7 +180,8 @@ public class ParticipantTest {
     @Test
     void ace를_가진_경우_합계가_21이_넘어가는지_판정한다_ace_4개_케이스() {
         //given
-        Participant participant = new Participant();
+        Participant participant = new Participant() {
+        };
         List<Card> drawnCards = participant.getCards();
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
         drawnCards.add(new Card(Pattern.CLOVER, CardNumber.ACE));
