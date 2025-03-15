@@ -1,7 +1,5 @@
 package domain.calculatestrategy;
 
-import static domain.BlackJackConstants.BUST_NUMBER;
-
 import domain.deck.Card;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -12,6 +10,7 @@ public class PlayerStrategy implements CalculateStrategy {
 
     private static final int ACE_DEFAULT_NUMBER = 1;
     private static final int ACE_ADDITIONAL_NUMBER = 11;
+    private static final int BUST_NUMBER = 21;
 
     @Override
     public int calculateSum(final List<Card> cards) {

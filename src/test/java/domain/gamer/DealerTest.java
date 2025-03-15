@@ -1,6 +1,5 @@
 package domain.gamer;
 
-import static domain.BlackJackConstants.THRESHOLD;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.deck.Card;
@@ -27,7 +26,7 @@ class DealerTest {
 
         // then
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(dealer.getSumOfRank()).isEqualTo(THRESHOLD);
+            softly.assertThat(dealer.getSumOfRank()).isEqualTo(16);
             softly.assertThat(expected).isTrue();
         });
     }

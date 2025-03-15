@@ -14,13 +14,11 @@ public final class OutputView {
     }
 
     public static void printInitialSettingMessage(final String dealerName,
-                                                  final List<String> playerNames,
-                                                  final int cardAmount) {
+                                                  final List<String> playerNames) {
         final String message = String.format(
-                "%s와 %s에게 %d장을 나누었습니다.",
+                "%s와 %s에게 2장을 나누었습니다.",
                 dealerName,
-                String.join(", ", playerNames),
-                cardAmount
+                String.join(", ", playerNames)
         );
         print(message);
     }
@@ -34,8 +32,8 @@ public final class OutputView {
         print(message);
     }
 
-    public static void printDealerHit(final int threshold, final String dealerName) {
-        print(String.format("%s는 %d이하라 한 장의 카드를 더 받았습니다.", dealerName, threshold));
+    public static void printDealerHit(final String dealerName) {
+        print(String.format("%s는 16이하라 한 장의 카드를 더 받았습니다.", dealerName));
     }
 
     public static void printBustMessage(final String name) {

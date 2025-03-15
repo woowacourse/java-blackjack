@@ -1,8 +1,5 @@
 package controller;
 
-import static domain.BlackJackConstants.INITIAL_CARD_AMOUNT;
-import static domain.BlackJackConstants.THRESHOLD;
-
 import domain.Command;
 import domain.FinalResults;
 import domain.deck.Card;
@@ -77,7 +74,7 @@ public class BlackJackController {
 
     private void printGameSetting(final Dealer dealer, final Players players) {
         final List<String> playerNicknames = players.getPlayersDisplayNicknames();
-        OutputView.printInitialSettingMessage(dealer.getDisplayName(), playerNicknames, INITIAL_CARD_AMOUNT);
+        OutputView.printInitialSettingMessage(dealer.getDisplayName(), playerNicknames);
         OutputView.printCardsInHand(dealer.getDisplayName(), List.of(dealer.getFirstCard()));
         players.getPlayers().forEach(player -> OutputView.printCardsInHand(player.getDisplayName(), player.getCards()));
     }
@@ -137,7 +134,7 @@ public class BlackJackController {
         while (dealer.canHit()) {
             final Card card = deck.drawCard();
             dealer.hit(card);
-            OutputView.printDealerHit(THRESHOLD, dealer.getDisplayName());
+            OutputView.printDealerHit(dealer.getDisplayName());
         }
     }
 
