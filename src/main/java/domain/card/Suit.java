@@ -18,7 +18,8 @@ public enum Suit {
     }
 
     public static List<Suit> getAllSuits() {
-        return Arrays.stream(values()).toList();
+        return Arrays.stream(values())
+                .toList();
     }
 
     public String getName() {
