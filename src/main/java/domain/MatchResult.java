@@ -4,7 +4,8 @@ public enum MatchResult {
 
     WIN("승"),
     DRAW("무"),
-    LOSE("패");
+    LOSE("패"),
+    BLACKJACK_LOSE("블랙잭 패배");
 
     private final String state;
 

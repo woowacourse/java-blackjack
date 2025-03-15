@@ -52,10 +52,26 @@ public class Hand {
     }
 
     public MatchResult determineMatchResult(final Hand other) {
+        if (this.isBlackjack() || other.isBlackjack()) {
+            return checkBlackjackResult(other);
+        }
+
         if (this.isBust() || other.isBust()) {
             return checkBustResult(other);
         }
         return checkScoreResult(other);
+    }
+
+    private MatchResult checkBlackjackResult(final Hand other) {
+        if (!this.isBlackjack() && other.isBlackjack()) {
+            return MatchResult.BLACKJACK_LOSE;
+        }
+
+        if (this.isBlackjack() && other.isBlackjack()) {
+            return MatchResult.DRAW;
+        }
+
+        return MatchResult.WIN;
     }
 
     public boolean isBust() {
