@@ -1,6 +1,6 @@
-package blackjack.domain.card;
 package blackjack.card;
 
+import blackjack.GameRule;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,6 +49,10 @@ public class Cards {
         int sumWithoutAce = calculateSumWithoutAce(nonAces);
 
         return calculateTotalSum(sumWithoutAce, aces);
+    }
+
+    public boolean isBlackjack() {
+        return GameRule.isBlackjack(size(), calculateSum());
     }
 
     public void reverse(int cardIndex) {

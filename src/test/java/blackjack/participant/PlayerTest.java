@@ -1,5 +1,6 @@
-package blackjack.domain.gamer;
+package blackjack.participant;
 
+import blackjack.result.Betting;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +26,7 @@ class PlayerTest {
     void canDecideToHit() {
         // given
         Function<Player, Boolean> alwaysReturnTrueHitDecision = shouldHitIsAlwaysReturnTruePlayer -> true;
-        Player player = GameParticipantFixture.createPlayer("강산", alwaysReturnTrueHitDecision);
+        Player player = GameParticipantFixture.createPlayer("강산", Betting.from(0), alwaysReturnTrueHitDecision);
 
         // when
         // then
@@ -37,7 +38,7 @@ class PlayerTest {
     void canDecideNotToHit() {
         // given
         Function<Player, Boolean> alwaysReturnFalseHitDecision = shouldHitIsAlwaysReturnTruePlayer -> false;
-        Player player = GameParticipantFixture.createPlayer("강산", alwaysReturnFalseHitDecision);
+        Player player = GameParticipantFixture.createPlayer("강산", Betting.from(0), alwaysReturnFalseHitDecision);
 
         // when
         // then

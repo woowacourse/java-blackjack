@@ -1,6 +1,7 @@
-package blackjack.domain.gamer;
+package blackjack.participant;
 
-import blackjack.domain.card.CardFixture;
+import blackjack.card.CardFixture;
+import blackjack.result.Betting;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -15,13 +16,9 @@ public class GameParticipantFixture {
     private static final Runnable ignoreRunnable = () -> {
     };
 
-    @SuppressWarnings("unchecked")
-    public static Player createPlayer(String nickname) {
-        return Player.of(Nickname.from(nickname), (Function<Player, Boolean>) ignoreFunction, (Consumer<GameParticipant>) ignoreConsumer);
-    }
 
-    public static Player createPlayer(String nickname, int sumOfCards) {
-        Player player = createPlayer(nickname);
+    public static Player createPlayer(String nickname, Betting betting, int sumOfCards) {
+        Player player = createPlayer(nickname, betting);
 
         CardFixture.createCardsForSum(sumOfCards).getCards().forEach(
                 player::drawCard
@@ -30,15 +27,46 @@ public class GameParticipantFixture {
         return player;
     }
 
+    @SuppressWarnings("unchecked")
+    public static Player createPlayer(String nickname) {
+
+        return createPlayer(
+                nickname,
+                createBetting(0),
+                (Function<Player, Boolean>) ignoreFunction);
+    }
+
+    @SuppressWarnings("unchecked")
     public static Player createPlayer(String nickname,
+                                      Betting betting) {
+
+        return createPlayer(
+                nickname,
+                betting,
+                (Function<Player, Boolean>) ignoreFunction);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static Player createPlayer(String nickname,
+                                      Betting betting,
                                       Function<Player, Boolean> hitDecision) {
-        return Player.of(Nickname.from(nickname), hitDecision, System.out::println);
+        return createPlayer(
+                nickname,
+                betting,
+                hitDecision,
+                (Consumer<GameParticipant>) ignoreConsumer);
     }
 
     public static Player createPlayer(String nickname,
+                                      Betting betting,
                                       Function<Player, Boolean> hitDecision,
                                       Consumer<GameParticipant> handDisplay) {
-        return Player.of(Nickname.from(nickname), hitDecision, handDisplay);
+
+        return Player.of(
+                Nickname.from(nickname),
+                betting,
+                hitDecision,
+                handDisplay);
     }
 
     public static Dealer createDealer() {
@@ -62,5 +90,9 @@ public class GameParticipantFixture {
     public static Dealer createDealer(int playerCount,
                                       Runnable hitDecisionDisplay) {
         return Dealer.create(playerCount, hitDecisionDisplay);
+    }
+
+    public static Betting createBetting(int amount) {
+        return Betting.from(amount);
     }
 }

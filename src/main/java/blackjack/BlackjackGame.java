@@ -1,13 +1,15 @@
-package blackjack.controller;
+package blackjack;
 
-import blackjack.domain.gamer.Dealer;
-import blackjack.domain.gamer.GameParticipant;
-import blackjack.domain.gamer.GameParticipants;
-import blackjack.domain.gamer.Nickname;
-import blackjack.domain.gamer.Player;
-import blackjack.domain.result.GameStatistics;
+import blackjack.participant.Dealer;
+import blackjack.participant.GameParticipant;
+import blackjack.participant.GameParticipants;
+import blackjack.participant.Nickname;
+import blackjack.participant.Player;
+import blackjack.result.Betting;
+import blackjack.result.GameStatistics;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import blackjack.view.RepeatUntilCorrectInput;
 
 import java.util.List;
 
@@ -31,16 +33,20 @@ public class BlackjackGame {
         outputView.printCardsWithSum(participants);
 
         GameStatistics gameStatistics = participants.calculateGameStatistics();
-        outputView.printGameResults(participants, gameStatistics);
+        outputView.printProfit(participants, gameStatistics);
     }
 
     private GameParticipants initializeGameParticipants() {
         List<Player> players = inputView.readNicknames().stream()
-                .map(Nickname::from)
-                .map(nickname -> Player.of(nickname, this::askHit, this::showHands))
+                .map(nickname ->
+                        Player.of(Nickname.from(nickname),
+                                Betting.from(inputView.readBetting(nickname)),
+                                this::askHit,
+                                this::showHands))
                 .toList();
 
-        Dealer dealer = Dealer.create(players.size(), this::displayHitDecision);
+        Dealer dealer = Dealer.create(players.size(),
+                this::displayHitDecision);
 
         return GameParticipants.of(players, dealer);
     }
