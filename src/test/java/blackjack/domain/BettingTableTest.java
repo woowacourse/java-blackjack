@@ -15,18 +15,18 @@ import blackjack.domain.gamer.Player;
 import blackjack.fixture.DeckFixture;
 import blackjack.fixture.GameManagerFixture;
 
-class GameRoundTest {
+class BettingTableTest {
 
     private Player player = new Player("pobi");
     private Dealer dealer = new Dealer();
-    private GameRound gameRound = new GameRound(dealer);
+    private BettingTable bettingTable = new BettingTable(dealer);
 
     @Test
     @DisplayName("플레이어는 게임을 시작할 때 배팅 금액을 정한다.")
     void bettingTest() {
         // when
         Throwable throwable = catchThrowable(() -> {
-            gameRound.betting(player, 1000);
+            bettingTable.betting(player, 1000);
         });
 
         // then
@@ -38,7 +38,7 @@ class GameRoundTest {
     void loseIfBustTest() {
         // given
         double initialMoney = 1000;
-        gameRound.betting(player, initialMoney);
+        bettingTable.betting(player, initialMoney);
         GameManager gameManager = GameManagerFixture.GameManagerWith(
             DeckFixture.deckOf(CardNumber.JACK, CardNumber.QUEEN, CardNumber.KING)
         );
@@ -48,7 +48,7 @@ class GameRoundTest {
         gameManager.drawCard(player);
 
         // then
-        assertThat(gameRound.getEndBettingMoney(player)).isZero();
+        assertThat(bettingTable.getEndBettingMoney(player)).isZero();
     }
 
     @Test
@@ -56,17 +56,17 @@ class GameRoundTest {
     void endGameIfBlackjackTest() {
         // given
         double initialMoney = 10000;
-        gameRound.betting(player, initialMoney);
+        bettingTable.betting(player, initialMoney);
         GameManager gameManager = GameManagerFixture.GameManagerWith(
             DeckFixture.deckOf(CardNumber.JACK, CardNumber.ACE)
         );
 
         // when
         gameManager.drawStartingCards(player);
-        gameRound.endGameIfBlackjack(player);
+        bettingTable.endGameIfBlackjack(player);
 
         // then
-        assertThat(gameRound.getEndBettingMoney(player)).isEqualTo(initialMoney * 1.5);
+        assertThat(bettingTable.getEndBettingMoney(player)).isEqualTo(initialMoney * 1.5);
     }
 
     @Test
@@ -74,7 +74,7 @@ class GameRoundTest {
     void bothBlackjackTest() {
         // given
         double initialMoney = 10000;
-        gameRound.betting(player, initialMoney);
+        bettingTable.betting(player, initialMoney);
         GameManager gameManager = GameManagerFixture.GameManagerWith(
             DeckFixture.deckOf(CardNumber.JACK, CardNumber.ACE, CardNumber.JACK, CardNumber.ACE)
         );
@@ -83,10 +83,10 @@ class GameRoundTest {
         gameManager.drawStartingCards(player);
         gameManager.drawStartingCards(dealer);
 
-        gameRound.endGameIfBlackjack(dealer);
+        bettingTable.endGameIfBlackjack(dealer);
 
         // then
-        assertThat(gameRound.getEndBettingMoney(player)).isEqualTo(initialMoney);
+        assertThat(bettingTable.getEndBettingMoney(player)).isEqualTo(initialMoney);
     }
 
     @Test
@@ -94,7 +94,7 @@ class GameRoundTest {
     void endGameIfDealerBustTest() {
         // given
         double initialMoney = 10000;
-        gameRound.betting(player, initialMoney);
+        bettingTable.betting(player, initialMoney);
         GameManager gameManager = GameManagerFixture.GameManagerWith(
             DeckFixture.deckOf(
                 CardNumber.KING, CardNumber.SEVEN, CardNumber.QUEEN, // dealer
@@ -104,10 +104,10 @@ class GameRoundTest {
         gameManager.drawStartingCards(player);
         gameManager.drawStartingCards(dealer);
         gameManager.drawCard(dealer);
-        gameRound.endGameIfDealerBust();
+        bettingTable.endGameIfDealerBust();
 
         // then
-        assertThat(gameRound.getEndBettingMoney(player)).isEqualTo(initialMoney * 2);
+        assertThat(bettingTable.getEndBettingMoney(player)).isEqualTo(initialMoney * 2);
     }
 
     @Test
@@ -118,8 +118,8 @@ class GameRoundTest {
         int player2Money = 5000;
         Player player1 = new Player("pobi");
         Player player2 = new Player("moko");
-        gameRound.betting(player1, player1Money);
-        gameRound.betting(player2, player2Money);
+        bettingTable.betting(player1, player1Money);
+        bettingTable.betting(player2, player2Money);
         GameManager gameManager = GameManagerFixture.GameManagerWith(
             DeckFixture.deckOf(
                 CardNumber.KING, CardNumber.SEVEN, // dealer
@@ -130,10 +130,10 @@ class GameRoundTest {
         gameManager.drawStartingCards(dealer);
 
         // when
-        gameRound.computeResult();
+        bettingTable.computeResult();
 
         // then
-        Map<Gamer, Double> profit = gameRound.getAllProfit();
+        Map<Gamer, Double> profit = bettingTable.getAllProfit();
         assertThat(profit.get(player1)).isEqualTo(player1Money);
         assertThat(profit.get(player2)).isEqualTo(-player2Money);
         assertThat(profit.get(dealer)).isEqualTo(-player1Money + player2Money);

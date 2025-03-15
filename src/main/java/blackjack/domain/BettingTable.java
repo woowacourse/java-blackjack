@@ -10,18 +10,17 @@ import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
 
-// TODO: 클래스명 변경 고려. 배팅테이블?
-public class GameRound {
+public class BettingTable {
 
     private final Dealer dealer;
     private final Map<Player, BettingAmount> bettingAmounts = new LinkedHashMap<>();
 
-    public GameRound(Dealer dealer) {
+    public BettingTable(Dealer dealer) {
         this.dealer = dealer;
     }
 
-    public static GameRound start(Dealer dealer) {
-        return new GameRound(dealer);
+    public static BettingTable start(Dealer dealer) {
+        return new BettingTable(dealer);
     }
 
     public void betting(Player player, double money) {

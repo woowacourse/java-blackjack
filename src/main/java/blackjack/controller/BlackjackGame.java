@@ -2,8 +2,8 @@ package blackjack.controller;
 
 import java.util.List;
 
+import blackjack.domain.BettingTable;
 import blackjack.domain.GameManager;
-import blackjack.domain.GameRound;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.deck.RandomCardStrategy;
 import blackjack.domain.gamer.Dealer;
@@ -21,7 +21,7 @@ import blackjack.view.OutputView;
 public class BlackjackGame implements GameManager {
 
     private Gamers gamers;
-    private GameRound gameRound;
+    private BettingTable bettingTable;
     private final Deck deck = Deck.generateFrom(new RandomCardStrategy());
 
     public void run() {
@@ -36,7 +36,7 @@ public class BlackjackGame implements GameManager {
     private void setPlayers() {
         List<String> names = InputView.readNames().names();
         Dealer dealer = new Dealer();
-        gameRound = GameRound.start(dealer);
+        bettingTable = BettingTable.start(dealer);
         gamers = Gamers.of(dealer, namesToPlayers(names));
     }
 
@@ -48,7 +48,7 @@ public class BlackjackGame implements GameManager {
 
     private void betPlayers() {
         for (var player : gamers.getPlayers()) {
-            gameRound.betting(player, InputView.betting(player.getName()).bettingAmount());
+            bettingTable.betting(player, InputView.betting(player.getName()).bettingAmount());
         }
         OutputView.printStartingCards(drawStartingCards());
     }
@@ -59,11 +59,11 @@ public class BlackjackGame implements GameManager {
         for (var player : gamers.getPlayers()) {
             drawStartingCards(player);
             if (player.isBlackjack() && !dealerBlackjack) {
-                gameRound.endGameIfBlackjack(player);
+                bettingTable.endGameIfBlackjack(player);
             }
         }
         if (dealerBlackjack) {
-            gameRound.endGameIfBlackjack(gamers.getDealer());
+            bettingTable.endGameIfBlackjack(gamers.getDealer());
         }
         return StartingCardsResponseDto.of(gamers.getDealer(), gamers.getPlayers());
     }
@@ -91,7 +91,7 @@ public class BlackjackGame implements GameManager {
             drawCard(dealer);
             OutputView.printDealerDrawNotice();
             if (dealer.isBust()) {
-                gameRound.endGameIfDealerBust();
+                bettingTable.endGameIfDealerBust();
             }
         }
     }
@@ -102,8 +102,8 @@ public class BlackjackGame implements GameManager {
     }
 
     private void printProfit() {
-        gameRound.computeResult();
-        OutputView.printProfit(ProfitResponseDto.of(gameRound.getAllProfit()));
+        bettingTable.computeResult();
+        OutputView.printProfit(ProfitResponseDto.of(bettingTable.getAllProfit()));
     }
 
     @Override
