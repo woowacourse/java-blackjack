@@ -36,6 +36,7 @@ public final class OutputView {
 
     private static void printInitialPlayersDeal(final Player player) {
         printParticipantAndHands(player.openInitialDeal(), player.getName());
+        System.out.println();
     }
 
     /**
@@ -43,11 +44,12 @@ public final class OutputView {
      */
     public static void printHitOrStandQuestion(final Player player) {
         System.out.println();
-        System.out.println();
+//        System.out.println();
         System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
     }
 
     public static void printPlayerHitResult(final Player player) {
+        System.out.println();
         printParticipantAndHands(player.getHandCards(), player.getName());
     }
 

@@ -43,6 +43,10 @@ public class InitialDealResult {
         this.loserPlayers = loserPlayers;
     }
 
+    public boolean isAllPlayersLose(Players players) {
+        return loserPlayers.containsAll(players.getPlayers());
+    }
+
     public List<Player> findWinnerPlayers() {
         return Collections.unmodifiableList(winnerPlayers);
     }

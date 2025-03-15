@@ -51,6 +51,9 @@ public final class ParticipantWinningResult {
         if (dealerScore < playerScore){
             return GameResult.WIN;
         }
+        if (player.isBlackjack() && dealer.isBlackJack()) { //TODO 여기있어도 되는 거 맞나?
+            return GameResult.WIN;
+        }
         return GameResult.DRAW;
     }
 

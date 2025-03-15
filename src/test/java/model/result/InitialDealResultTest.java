@@ -62,6 +62,7 @@ class InitialDealResultTest {
         InitialDealResult initialDealResult = InitialDealResult.from(dealer, players);
 
         //then
+        assertThat(initialDealResult.isAllPlayersLose(players)).isTrue();
         assertThat(initialDealResult.findWinnerPlayers()).isEmpty();
         assertThat(initialDealResult.findLoserPlayers()).containsAll(List.of(player1, player2));
     }
@@ -81,6 +82,7 @@ class InitialDealResultTest {
         InitialDealResult initialDealResult = InitialDealResult.from(dealer, players);
 
         //then
+        assertThat(initialDealResult.isAllPlayersLose(players)).isFalse();
         assertThat(initialDealResult.findWinnerPlayers()).containsExactly(player1);
         assertThat(initialDealResult.findLoserPlayers()).containsExactly(player2);
     }

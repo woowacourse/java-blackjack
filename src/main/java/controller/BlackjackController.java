@@ -7,6 +7,7 @@ import model.deck.Deck;
 import model.participant.Players;
 import model.result.GameResult;
 import model.participant.Player;
+import model.result.InitialDealResult;
 import model.result.ParticipantWinningResult;
 import view.InputView;
 import view.OutputView;
@@ -21,8 +22,10 @@ public class BlackjackController {
             Deck deck = Deck.of();
 
             dealInitially(players, dealer, deck);
-            hitOrStandAtPlayersTurn(players, deck);
-            hitOrStandAtDealerTurn(dealer, deck);
+            if (continueGame(players, dealer)) {
+                hitOrStandAtPlayersTurn(players, deck);
+                hitOrStandAtDealerTurn(dealer, deck);
+            }
 
             printFinalScore(players, dealer);
             printWinningResult(players, dealer);
@@ -37,6 +40,11 @@ public class BlackjackController {
                 participant.dealInitialCards(deck)
         );
         OutputView.printInitialDeal(players, dealer);
+    }
+
+    private boolean continueGame(final Players players, final Dealer dealer) {
+        InitialDealResult initialDealResult = InitialDealResult.from(dealer, players);
+        return !initialDealResult.isAllPlayersLose(players);
     }
 
     private void hitOrStandAtPlayersTurn(final Players players, final Deck deck) {

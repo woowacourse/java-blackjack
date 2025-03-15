@@ -8,7 +8,6 @@ import model.deck.Card;
 import model.deck.CardRank;
 import model.deck.CardSuit;
 import model.participant.Dealer;
-import model.participant.ParticipantHand;
 import model.participant.Player;
 import model.participant.Players;
 import org.junit.jupiter.api.BeforeEach;
@@ -103,6 +102,7 @@ class ParticipantWinningResultTest {
         assertEquals(gameResult.get(player), expect);
     }
 
+
     @Test
     @DisplayName("플레이어가 패배할 경우 패배를 반환한다.")
     void 플레이어가_패배할_경우_테스트() {
@@ -161,5 +161,62 @@ class ParticipantWinningResultTest {
         assertEquals(loseCount, expect);
         assertEquals(drawCount, expect);
         assertEquals(winCount, winExpect);
+    }
+
+    /**
+     * 블랙잭 규칙 포함
+     */
+    @Test
+    @DisplayName("플레이어가 블랙잭 승리할 경우 승리를 반환한다")
+    void 플레이어가_블랙잭_승리할_경우_테스트() {
+        //given
+        dealer.receiveCard(new Card(CardRank.TWO, CardSuit.DIAMOND));
+        dealer.receiveCard(new Card(CardRank.THREE, CardSuit.DIAMOND));
+        player.receiveCard(new Card(CardRank.ACE, CardSuit.DIAMOND));
+        player.receiveCard(new Card(CardRank.JACK, CardSuit.DIAMOND));
+
+        //when
+        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        Map<Player, GameResult> gameResult = participantWinningResult.getResult();
+        GameResult expect = GameResult.WIN;
+
+        //then
+        assertEquals(gameResult.get(player), expect);
+    }
+
+    @Test
+    @DisplayName("플레이어가 블랙잭 승리할 경우 승리를 반환한다")
+    void 플레이어가_블랙잭_패배할_경우_테스트() {
+        //given
+        dealer.receiveCard(new Card(CardRank.ACE, CardSuit.DIAMOND));
+        dealer.receiveCard(new Card(CardRank.JACK, CardSuit.DIAMOND));
+        player.receiveCard(new Card(CardRank.TWO, CardSuit.DIAMOND));
+        player.receiveCard(new Card(CardRank.THREE, CardSuit.DIAMOND));
+
+        //when
+        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        Map<Player, GameResult> gameResult = participantWinningResult.getResult();
+        GameResult expect = GameResult.LOSE;
+
+        //then
+        assertEquals(gameResult.get(player), expect);
+    }
+
+    @Test
+    @DisplayName("플레이어과 딜러가 동시에 블랙잭일때 승리한 플레이어의 경우 승리를 반환한다")
+    void 동시에_블랙잭일때_플레이어가_블랙잭_승리할_경우_테스트() {
+        //given
+        dealer.receiveCard(new Card(CardRank.ACE, CardSuit.DIAMOND));
+        dealer.receiveCard(new Card(CardRank.JACK, CardSuit.DIAMOND));
+        player.receiveCard(new Card(CardRank.ACE, CardSuit.CLOVER));
+        player.receiveCard(new Card(CardRank.QUEEN, CardSuit.DIAMOND));
+
+        //when
+        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
+        Map<Player, GameResult> gameResult = participantWinningResult.getResult();
+        GameResult expect = GameResult.WIN;
+
+        //then
+        assertEquals(gameResult.get(player), expect);
     }
 }
