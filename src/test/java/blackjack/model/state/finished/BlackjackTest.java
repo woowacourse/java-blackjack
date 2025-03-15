@@ -112,23 +112,6 @@ class BlackjackTest {
                 .hasMessage("블랙잭이라 카드를 더 받을 수 없습니다.");
     }
 
-    @DisplayName("블랙잭의 배당률은 1.5이다.")
-    @Test
-    void earningsRateTest() {
-        // given
-        State blackjack = createBlackjackState();
-        if (!(blackjack instanceof Blackjack blackjackState)) {
-            throw new IllegalArgumentException("블랙잭 상태가 아닌 경우 테스트할 수 없습니다.");
-        }
-
-        // when
-        double earningsRate = blackjackState.earningsRate();
-
-        // then
-        assertThat(earningsRate)
-                .isEqualTo(1.5);
-    }
-
     private State createBlackjackState() {
         State firstTurn = new InitialDeal();
         return firstTurn.receiveCard(SPADE_ACE_CARD)

@@ -29,9 +29,4 @@ public final class Blackjack extends FinishedState {
     public boolean isBust() {
         return false;
     }
-
-    @Override
-    public double earningsRate() {
-        return 1.5;
-    }
 }

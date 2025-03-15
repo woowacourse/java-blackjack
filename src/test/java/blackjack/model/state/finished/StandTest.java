@@ -115,23 +115,6 @@ class StandTest {
                 .isFalse();
     }
 
-    @DisplayName("스탠드 상태의 배당률은 1이다.")
-    @Test
-    void earningsRateTest() {
-        // given
-        State stand = create16HitState();
-        if (!(stand.stand() instanceof Stand standState)) {
-            throw new IllegalArgumentException("스탠드 상태가 아닌 경우 테스트할 수 없습니다.");
-        }
-
-        // when
-        double earningsRate = standState.earningsRate();
-
-        // then
-        assertThat(earningsRate)
-                .isEqualTo(1);
-    }
-
     private State create16HitState() {
         State firstTurn = new InitialDeal();
         return firstTurn.receiveCard(SPADE_TEN_CARD)

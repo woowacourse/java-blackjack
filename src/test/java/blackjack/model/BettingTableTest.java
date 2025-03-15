@@ -9,8 +9,8 @@ import blackjack.model.card.CardValue;
 import blackjack.model.card.Deck;
 import blackjack.model.card.Suit;
 import blackjack.model.participant.Dealer;
-import blackjack.model.participant.Name;
 import blackjack.model.participant.Player;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,12 +20,33 @@ import org.junit.jupiter.params.provider.CsvSource;
 @DisplayName("배팅 테이블 테스트")
 class BettingTableTest {
 
+    @DisplayName("최소 1명 이상의 플레이어가 필요하다.")
+    @Test
+    void shouldThrowException_WhenNoPlayer() {
+        // when, then
+        assertThatCode(() -> new BettingTable(List.of()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("최소 1명 이상의 플레이어가 있어야 합니다.");
+    }
+
+    @DisplayName("중복된 플레이어 이름이 존재할 수 없다.")
+    @Test
+    void shouldThrowException_WhenDuplicatedPlayer() {
+        // given
+        Player player = new Player("포비");
+
+        // when, then
+        assertThatCode(() -> new BettingTable(List.of(player, player)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("중복된 이름을 가진 플레이어와 게임을 진행할 수 없습니다.");
+    }
+
     @DisplayName("플레이어 이름으로 배팅할 수 있다.")
     @Test
     void betTest() {
         // given
-        BettingTable bettingTable = new BettingTable();
         Player player = new Player("포비");
+        BettingTable bettingTable = new BettingTable(List.of(player));
 
         // when, then
         assertThatCode(() -> bettingTable.bet(player, 1_000))
@@ -37,7 +58,7 @@ class BettingTableTest {
     void getBetAmountTest() {
         // given
         Player player = new Player("포비");
-        BettingTable bettingTable = new BettingTable();
+        BettingTable bettingTable = new BettingTable(List.of(player));
         bettingTable.bet(player, 1_000);
 
         // when
@@ -52,8 +73,9 @@ class BettingTableTest {
     @Test
     void shouldThrowException_WhenNotFoundBettingPlayer() {
         // given
-        BettingTable bettingTable = new BettingTable();
-        Player player = new Player("포비");
+        Player player = new Player("굴비");
+        Player anotherPlayer = new Player("포비");
+        BettingTable bettingTable = new BettingTable(List.of(anotherPlayer));
 
         // when, then
         assertThatCode(() -> bettingTable.getBetAmount(player))
@@ -74,13 +96,13 @@ class BettingTableTest {
         Player player = new Player("포비");
         player.receiveCard(createCard(Suit.SPADES, playerCardValue1));
         player.receiveCard(createCard(Suit.SPADES, playerCardValue2));
-        if (!player.getState().isFinished()) {
+        if (!player.isFinished()) {
             player.stand();
         }
         Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
         dealer.receiveCard(createCard(Suit.SPADES, CardValue.NINE));
         dealer.receiveCard(createCard(Suit.SPADES, CardValue.NINE));
-        BettingTable bettingTable = new BettingTable();
+        BettingTable bettingTable = new BettingTable(List.of(player));
         int betAmount = 1_000;
         bettingTable.bet(player, betAmount);
 
@@ -97,7 +119,7 @@ class BettingTableTest {
     void getBettingTest() {
         // given
         Player player = new Player("포비");
-        BettingTable bettingTable = new BettingTable();
+        BettingTable bettingTable = new BettingTable(List.of(player));
         int betAmount = 1_000;
         bettingTable.bet(player, betAmount);
 

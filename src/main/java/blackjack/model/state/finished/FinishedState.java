@@ -18,8 +18,6 @@ public abstract sealed class FinishedState
 
     public abstract boolean isBust();
 
-    public abstract double earningsRate();
-
     @Override
     public boolean isFinished() {
         return true;

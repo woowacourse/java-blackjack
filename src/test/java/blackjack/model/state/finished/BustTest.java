@@ -108,23 +108,6 @@ class BustTest {
                 .isTrue();
     }
 
-    @DisplayName("버스트 상태의 배당률은 0이다.")
-    @Test
-    void earningsRateTest() {
-        // given
-        State state = createBustState();
-        if (!(state instanceof Bust bustState)) {
-            throw new IllegalArgumentException("버스트 상태가 아닌 경우 테스트할 수 없습니다.");
-        }
-
-        // when
-        double earningsRate = bustState.earningsRate();
-
-        // then
-        assertThat(earningsRate)
-                .isZero();
-    }
-
     private State createBustState() {
         State firstTurn = new InitialDeal();
         return firstTurn.receiveCard(SPADE_TEN_CARD)
