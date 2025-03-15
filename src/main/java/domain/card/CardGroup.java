@@ -7,6 +7,8 @@ import java.util.List;
 public class CardGroup {
 
     private static final int ACE_DISTANCE_SCORE = 10;
+    private static final int BUST_THRESHOLD = 21;
+
     private final List<Card> cards;
 
     public CardGroup() {
@@ -21,8 +23,17 @@ public class CardGroup {
         cards.add(card);
     }
 
-    public int calculateScore(int limit) {
-        return calculateScoreWithAce(calculateScoreWithOutAce(), limit, countAce());
+    public boolean isBust() {
+        return calculateScore() > BUST_THRESHOLD;
+    }
+
+
+    public boolean isBlackjack() {
+        return cards.size() == 2 && calculateScore() == BUST_THRESHOLD;
+    }
+
+    public int calculateScore() {
+        return calculateScoreWithAce(calculateScoreWithOutAce(), countAce());
     }
 
     private int calculateScoreWithOutAce() {
@@ -32,9 +43,9 @@ public class CardGroup {
                 .sum();
     }
 
-    private int calculateScoreWithAce(int sum, int limit, int aceCount) {
+    private int calculateScoreWithAce(int sum, int aceCount) {
         final int result = sum + aceCount;
-        return result + addScoreWithAce(0, limit - result, aceCount);
+        return result + addScoreWithAce(0, BUST_THRESHOLD - result, aceCount);
     }
 
     private int addScoreWithAce(int sum, int limit, int aceCount) {
@@ -52,9 +63,5 @@ public class CardGroup {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
-    }
-
-    public boolean isBlackjack() {
-        return true;
     }
 }

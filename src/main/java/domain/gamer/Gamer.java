@@ -6,7 +6,6 @@ import domain.card.CardGroup;
 import java.util.List;
 
 public abstract class Gamer {
-    public static final int LIMIT = 21;
 
     private final CardGroup cardGroup;
     private final int battingAmount;
@@ -26,18 +25,18 @@ public abstract class Gamer {
     }
 
     public boolean isBust() {
-        return this.cardGroup.calculateScore(LIMIT) > LIMIT;
+        return cardGroup.isBust();
     }
 
     public GameResult calculateGameResult(final int compareScore) {
         if (isBust()) {
             return GameResult.LOSE;
         }
-        return GameResult.findByScores(cardGroup.calculateScore(LIMIT), compareScore);
+        return GameResult.findByScores(cardGroup.calculateScore(), compareScore);
     }
 
     public int calculateScore() {
-        return cardGroup.calculateScore(LIMIT);
+        return cardGroup.calculateScore();
     }
 
     public List<Card> getCards() {
