@@ -3,6 +3,8 @@ package domain.gamer;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.deck.CardSetGenerator;
+import domain.deck.Deck;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -67,6 +69,23 @@ class PlayersTest {
         // when & then
         assertThatThrownBy(() -> new Players(playerGroup))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("플레이어들은 초키 카드를 받는다.")
+    @Test
+    void 플레이어들은_초기_카드를_받는다() {
+
+        // given
+        final Player player1 = new Player(new Nickname("체체"), new Betting(1000));
+        final Player player2 = new Player(new Nickname("체추"), new Betting(1000));
+        final List<Player> playerGroup = List.of(player1, player2);
+        final Players players = new Players(playerGroup);
+        final CardSetGenerator cardSetGenerator = new CardSetGenerator();
+        final Deck deck = new Deck(cardSetGenerator.generate());
+
+        // when & then
+        assertThatCode(() -> players.receiveInitialCards(deck))
+                .doesNotThrowAnyException();
     }
 
     private static Stream<Arguments> methodSources() {
