@@ -18,7 +18,7 @@ public class User extends Player {
     }
 
     public static User of(String name, int bet) {
-        return new User(name, new Bet(bet), Hittable.initialState());
+        return new User(name, new Bet(bet), Hittable.initialUserState());
     }
 
     @Override

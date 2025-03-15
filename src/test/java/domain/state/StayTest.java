@@ -50,17 +50,4 @@ class StayTest {
             stay.stay();
         }).isInstanceOf(IllegalStateException.class);
     }
-
-    @Test
-    void 스테이_상태의_수익률을_반환한다() {
-        // given
-        Cards cards = new Cards(
-                List.of(ACE_HEART, KING_HEART)
-        );
-        Stay stay = new Stay(cards);
-        final double earningRate = 1;
-
-        // when & then
-        Assertions.assertThat(stay.earningRate()).isEqualTo(earningRate);
-    }
 }

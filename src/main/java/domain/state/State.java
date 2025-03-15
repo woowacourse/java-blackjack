@@ -1,8 +1,5 @@
 package domain.state;
 
-import domain.BattleResult;
-import domain.Bet;
-import domain.Profit;
 import domain.card.Card;
 import domain.card.Cards;
 
@@ -15,6 +12,4 @@ public interface State {
     boolean isFinished();
 
     Cards cards();
-
-    Profit Profit(Bet bet, BattleResult battleResult);
 }

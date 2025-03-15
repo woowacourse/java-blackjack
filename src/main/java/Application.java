@@ -7,7 +7,7 @@ import view.InputView;
 public class Application {
 
     public static void main(String[] args) {
-        Blackjack blackjack = new Blackjack();
+        BlackjackGame blackjackGame = new BlackjackGame();
 
         List<String> userNames = InputView.inputUserNames();
         Map<String, Integer> betByName = new LinkedHashMap<>();
@@ -16,6 +16,6 @@ public class Application {
         }
         Users users = Users.from(betByName);
 
-        blackjack.start(users);
+        blackjackGame.start(users);
     }
 }

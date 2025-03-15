@@ -5,7 +5,7 @@ import domain.player.Users;
 import view.InputView;
 import view.OutputView;
 
-public class Blackjack {
+public class BlackjackGame {
 
     public void start(Users users) {
         Dealer dealer = Dealer.createDealer();
@@ -15,7 +15,7 @@ public class Blackjack {
         openInitialCards(dealer, users);
         usersHitOrStayPhase(users, deck);
         dealerHitWhileUnder16(dealer, deck);
-        printGameResult();
+        printGameResult(dealer, users);
     }
 
     private void distributeInitialCards(Dealer dealer, Users users, Deck deck) {
@@ -37,6 +37,6 @@ public class Blackjack {
         dealer.hitWhileUnder16(deck);
     }
 
-    private void printGameResult() {
+    private void printGameResult(Dealer dealer, Users users) {
     }
 }

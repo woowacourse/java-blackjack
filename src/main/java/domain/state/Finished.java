@@ -1,8 +1,5 @@
 package domain.state;
 
-import domain.BattleResult;
-import domain.Bet;
-import domain.Profit;
 import domain.card.Card;
 import domain.card.Cards;
 
@@ -26,11 +23,4 @@ public abstract class Finished extends Started {
     public boolean isFinished() {
         return true;
     }
-
-    @Override
-    public Profit Profit(Bet bet, BattleResult battleResult) {
-        return null;
-    }
-
-    abstract double earningRate();
 }

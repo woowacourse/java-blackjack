@@ -52,17 +52,4 @@ class BustTest {
             bust.stay();
         }).isInstanceOf(IllegalStateException.class);
     }
-
-    @Test
-    void 버스트_상태의_수익률을_반환한다() {
-        // given
-        Cards cards = new Cards(
-                List.of(ACE_HEART, KING_HEART)
-        );
-        Bust bust = new Bust(cards);
-        final double earningRate = -1;
-
-        // when & then
-        Assertions.assertThat(bust.earningRate()).isEqualTo(earningRate);
-    }
 }

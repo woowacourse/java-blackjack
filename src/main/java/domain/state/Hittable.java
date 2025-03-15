@@ -5,12 +5,23 @@ import domain.card.Cards;
 
 public class Hittable extends Running {
 
-    public Hittable(Cards cards) {
+    public static final int DEFAULT_USER_HIT_THRESHOLD = 21;
+    public static final int DEFAULT_DEALER_HIT_THRESHOLD = 21;
+
+    private final int hitThreshold;
+
+
+    public Hittable(Cards cards, int hitThreshold) {
         super(cards);
+        this.hitThreshold = hitThreshold;
     }
 
-    public static Hittable initialState() {
-        return new Hittable(Cards.emptyCards());
+    public static Hittable initialUserState() {
+        return new Hittable(Cards.emptyCards(), DEFAULT_USER_HIT_THRESHOLD);
+    }
+
+    public static Hittable initialDealerState() {
+        return new Hittable(Cards.emptyCards(), DEFAULT_DEALER_HIT_THRESHOLD);
     }
 
     @Override
@@ -21,10 +32,10 @@ public class Hittable extends Running {
             return new Blackjack(cards);
         } else if (cards.isBust()) {
             return new Bust(cards);
-        } else if (cards.isBustThreshold()) {
+        } else if (cards.isBustThreshold() || cards.computeOptimalSum() > this.hitThreshold) {
             return new Stay(cards);
         }
-        return new Hittable(cards);
+        return new Hittable(cards, this.hitThreshold);
     }
 
     @Override

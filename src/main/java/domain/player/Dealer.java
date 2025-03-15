@@ -14,7 +14,7 @@ public class Dealer extends Player {
     }
 
     public static Dealer createDealer() {
-        return new Dealer(DEALER_NAME, Hittable.initialState());
+        return new Dealer(DEALER_NAME, Hittable.initialDealerState());
     }
 
     @Override
@@ -23,7 +23,7 @@ public class Dealer extends Player {
     }
 
     public void hitWhileUnder16(Deck deck) {
-        while (!isFinished() && computeOptimalSum() <= FORCED_HIT_THRESHOLD) {
+        while (!isFinished()) {
             hit(deck);
         }
     }

@@ -50,17 +50,4 @@ class BlackjackTest {
             blackjack.stay();
         }).isInstanceOf(IllegalStateException.class);
     }
-
-    @Test
-    void 블랙잭_상태의_수익률을_반환한다() {
-        // given
-        Cards cards = new Cards(
-                List.of(ACE_HEART, KING_HEART)
-        );
-        Blackjack blackjack = new Blackjack(cards);
-        final double earningRate = 1.5;
-
-        // when & then
-        Assertions.assertThat(blackjack.earningRate()).isEqualTo(earningRate);
-    }
 }
