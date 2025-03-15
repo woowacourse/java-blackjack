@@ -21,6 +21,8 @@ public class GameBoard {
 
     public void prepareGame(CardsShuffler cardsShuffler) {
         deck.shuffleCards(cardsShuffler);
+        dealer.prepareBlackjack(deck);
+        players.prepareBlackjack(deck);
     }
 
     public void drawCard(Player player) {

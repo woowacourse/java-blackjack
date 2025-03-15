@@ -35,6 +35,10 @@ public class Players {
         }
     }
 
+    public void prepareBlackjack(Deck deck) {
+        players.forEach(player -> player.prepareBlackjack(deck));
+    }
+
     public void drawCard(Deck deck, Player player) {
         if (!players.contains(player)) {
             throw new IllegalArgumentException("해당 플레이어는 존재하지 않습니다.");

@@ -3,6 +3,7 @@ package blackjack.domain.participants;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
+import blackjack.domain.state.Start;
 import blackjack.domain.state.State;
 import java.util.Objects;
 
@@ -14,6 +15,10 @@ public class Dealer {
 
     public Dealer(State state) {
         this.state = state;
+    }
+
+    public void prepareBlackjack(Deck deck) {
+        state = Start.of(deck.draw(), deck.draw());
     }
 
     public void drawAdditionalCard(Deck deck) {

@@ -7,7 +7,7 @@ import blackjack.domain.participants.BettingMoney;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
-import blackjack.domain.state.Start;
+import blackjack.domain.state.Created;
 import blackjack.domain.winning.Profit;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -17,9 +17,8 @@ public class BlackjackController {
     public void run() {
         try {
             Deck deck = Deck.defaultDeck();
-            deck.shuffleCards(new RandomCardsShuffler());
-            Dealer dealer = new Dealer(Start.of(deck.draw(), deck.draw()));
-            Players players = createPlayers(deck);
+            Dealer dealer = new Dealer(new Created());
+            Players players = createPlayers();
             GameBoard gameBoard = new GameBoard(deck, dealer, players);
             handOutCards(gameBoard);
             additionalCard(gameBoard, players);
@@ -31,16 +30,16 @@ public class BlackjackController {
         }
     }
 
-    private Players createPlayers(Deck deck) {
+    private Players createPlayers() {
         List<String> playerNames = InputView.inputPlayerNames();
-        return new Players(toPlayers(playerNames, deck));
+        return new Players(toPlayers(playerNames));
     }
 
-    private List<Player> toPlayers(List<String> playerNames, Deck deck) {
+    private List<Player> toPlayers(List<String> playerNames) {
         return playerNames.stream()
                 .map(name -> new Player(
                         name,
-                        Start.of(deck.draw(), deck.draw()),
+                        new Created(),
                         new BettingMoney(InputView.inputBattingAmount(name))))
                 .toList();
     }
