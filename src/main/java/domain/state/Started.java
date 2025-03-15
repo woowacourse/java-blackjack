@@ -7,7 +7,7 @@ public abstract class Started implements State {
     private final Cards cards;
 
     public Started(Cards cards) {
-        this.cards = cards;
+        this.cards = new Cards(cards.getCards());
     }
 
     public Cards cards() {
