@@ -38,4 +38,18 @@ public class InputView {
         }
     }
 
+    public int readUserBettingAmount(final Player player) {
+        System.out.println();
+        System.out.printf("%s의 배팅 금액은?%n", player.getName());
+        return validateInteger(scanner.nextLine());
+    }
+
+    private int validateInteger(final String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("숫자를 입력해 주세요.");
+        }
+    }
+
 }

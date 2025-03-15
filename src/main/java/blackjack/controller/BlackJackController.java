@@ -26,6 +26,13 @@ public class BlackJackController {
         BlackJackGame blackJackGame = new BlackJackGame(new DefaultCardDeckInitializer());
 
         List<Player> players = makePlayers();
+        for (Player player : players) {
+            if (player.isDealer()) {
+                continue;
+            }
+            int bettingAmount = inputView.readUserBettingAmount(player);
+        }
+
         blackJackGame.dealInitialCards(players);
         List<Cards> openCards = players.stream()
                 .map(blackJackGame::openInitialCards)
