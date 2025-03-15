@@ -1,4 +1,4 @@
-package blackjack.controller;
+package blackjack;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
@@ -14,7 +14,7 @@ import blackjack.view.ResultView;
 import java.util.List;
 import java.util.Map;
 
-public class BlackjackController {
+public class BlackjackGame {
 
     private static final int DEALER_COUNT = 1;
     private static final int SPREAD_CARD_SIZE_PER_PLAYER = 2;
@@ -26,7 +26,7 @@ public class BlackjackController {
     private final InputView inputView;
     private final ResultView resultView;
 
-    public BlackjackController(InputView inputView, ResultView resultView) {
+    public BlackjackGame(InputView inputView, ResultView resultView) {
         this.inputView = inputView;
         this.resultView = resultView;
     }
