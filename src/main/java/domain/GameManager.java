@@ -1,5 +1,6 @@
 package domain;
 
+import domain.bet.Bet;
 import domain.bet.BlackJackBetCalculator;
 import domain.card.CardGenerator;
 import domain.gamer.Dealer;
@@ -19,6 +20,7 @@ public class GameManager {
     public static final int BLACKJACK_NUMBER = 21;
     public static final int START_RECEIVE_CARD = 2;
     private static final int DEALER_HIT_SCORE = 16;
+
     private final Dealer dealer;
     private final List<Player> players;
     private final CardGenerator cardGenerator;
@@ -64,12 +66,12 @@ public class GameManager {
                 ));
     }
 
-    public int getDealerBetResult(Map<String, Integer> playerBets) {
+    public int getDealerBetResult(Map<String, Bet> playerBets) {
         BlackJackBetCalculator calculator = new BlackJackBetCalculator(playerBets);
         return calculator.getDealerBetResult(dealer, players);
     }
 
-    public Map<String, Integer> getPlayerBetResult(Map<String, Integer> playerBets) {
+    public Map<String, Integer> getPlayerBetResult(Map<String, Bet> playerBets) {
         BlackJackBetCalculator calculator = new BlackJackBetCalculator(playerBets);
         return calculator.getPlayerBetResult(dealer, players);
     }

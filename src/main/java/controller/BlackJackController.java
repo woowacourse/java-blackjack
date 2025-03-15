@@ -1,6 +1,7 @@
 package controller;
 
 import domain.GameManager;
+import domain.bet.Bet;
 import domain.card.CardGenerator;
 import domain.card.RandomCardGenerator;
 import domain.gamer.Player;
@@ -26,7 +27,7 @@ public class BlackJackController {
         final List<String> playersNames = requestPlayerNames();
         final CardGenerator randomCardGenerator = new RandomCardGenerator();
         final GameManager gameManager = GameManager.create(playersNames, randomCardGenerator);
-        final Map<String, Integer> playerBets = requestPlayerBets(playersNames);
+        final Map<String, Bet> playerBets = requestPlayerBets(playersNames);
         gameManager.initOpeningCards();
 
         requestHit(gameManager);
@@ -39,18 +40,17 @@ public class BlackJackController {
                 gameManager.getPlayerBetResult(playerBets));
     }
 
-    private Map<String, Integer> requestPlayerBets(List<String> playerNames) {
+    private Map<String, Bet> requestPlayerBets(List<String> playerNames) {
         return playerNames.stream()
                 .collect(Collectors.toMap(name -> name, this::requestBetAmount));
     }
 
     private List<String> requestPlayerNames() {
-        return LoopTemplate.tryCatchLoop(() ->
-                LoopTemplate.tryCatchLoop(inputView::readPlayers));
+        return LoopTemplate.tryCatchLoop(inputView::readPlayers);
     }
 
-    private Integer requestBetAmount(String playerName) {
-        return LoopTemplate.tryCatchLoop(() -> LoopTemplate.tryCatchLoop(() -> inputView.readBet(playerName)));
+    private Bet requestBetAmount(String playerName) {
+        return LoopTemplate.tryCatchLoop(() -> inputView.readBet(playerName));
     }
 
     private void requestHit(GameManager gameManager) {

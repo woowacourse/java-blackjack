@@ -37,12 +37,6 @@ public class InputView {
         }
     }
 
-    private void validateBetAmountRange(int betAmount){
-        if(betAmount <= 0){
-            throw new IllegalArgumentException("[ERROR] 배팅 금액이 올바르지 않습니다.");
-        }
-    }
-
     private String readInput() {
         final Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();

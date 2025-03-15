@@ -4,18 +4,15 @@ import domain.GameResult;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackJackBetCalculator {
-    private Map<String, Bet> playersBet = new HashMap<>();
+    private final Map<String, Bet> playersBet;
 
-    public BlackJackBetCalculator(Map<String, Integer> playersBet) {
-        this.playersBet = playersBet.entrySet().stream()
-                .collect(Collectors
-                        .toMap(Map.Entry::getKey, entry -> new Bet(entry.getValue())));
+    public BlackJackBetCalculator(Map<String, Bet> playersBet) {
+        this.playersBet = playersBet;
     }
 
     public int determineBettingAmount(Dealer dealer, Player player) {
