@@ -1,7 +1,7 @@
 package card;
 
-import constant.TrumpEmblem;
-import constant.TrumpNumber;
+import constant.Suit;
+import constant.Rank;
 import game.Card;
 import game.Cards;
 import game.Deck;
@@ -35,7 +35,7 @@ class DeckTest {
         Card card = deck.drawOneCard();
 
         // then
-        assertThat(card.getNumber().getValue()).isBetween(1, 11);
+        assertThat(card.getNumber().getScore()).isBetween(1, 11);
     }
 
     @Test
@@ -54,15 +54,15 @@ class DeckTest {
     void 덱_세팅_전략에_따라_덱을_구성한다() {
         // given
         Deck deck = new Deck(() -> {
-            List<Card> cards = Arrays.stream(TrumpNumber.values())
-                    .flatMap(number -> Arrays.stream(TrumpEmblem.values())
+            List<Card> cards = Arrays.stream(Rank.values())
+                    .flatMap(number -> Arrays.stream(Suit.values())
                             .map(emblem -> new Card(number, emblem)))
                     .collect(Collectors.toList());
             return new Cards(cards);
         });
 
         // when & then
-        assertThat(deck.drawOneCard().getEmblem()).isEqualTo(TrumpEmblem.DIAMOND);
-        assertThat(deck.drawOneCard().getNumber()).isEqualTo(TrumpNumber.KING);
+        assertThat(deck.drawOneCard().getEmblem()).isEqualTo(Suit.DIAMOND);
+        assertThat(deck.drawOneCard().getNumber()).isEqualTo(Rank.KING);
     }
 }

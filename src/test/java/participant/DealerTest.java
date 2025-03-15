@@ -1,7 +1,7 @@
 package participant;
 
-import constant.TrumpEmblem;
-import constant.TrumpNumber;
+import constant.Suit;
+import constant.Rank;
 import game.Card;
 import game.Cards;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ class DealerTest {
     @Test
     void 초기_카드_두장을_받아_딜러를_생성한다() {
         // given
-        List<Card> initialCards = makeCards(TrumpNumber.FIVE, TrumpNumber.FOUR);
+        List<Card> initialCards = makeCards(Rank.FIVE, Rank.FOUR);
 
         // when & then
         assertDoesNotThrow(
@@ -34,11 +34,11 @@ class DealerTest {
             "KING, KING, TWO, false",
             "QUEEN, JACK, KING, false"
     })
-    void 카드를_한장_받았을_때_21이_넘는지_확인한다(TrumpNumber number1, TrumpNumber number2, TrumpNumber number3, boolean expected) {
+    void 카드를_한장_받았을_때_21이_넘는지_확인한다(Rank number1, Rank number2, Rank number3, boolean expected) {
         // given
         List<Card> initialCards = makeCards(number1, number2);
         Dealer dealer = new Dealer(() -> new Cards(initialCards));
-        Card card = new Card(number3, TrumpEmblem.SPADE);
+        Card card = new Card(number3, Suit.SPADE);
 
         // when
         boolean isUnderBustStandard = dealer.addOneCard(card);
@@ -53,11 +53,11 @@ class DealerTest {
             "ACE, THREE, FOUR, 18",
             "ACE, THREE, KING, 14",
     })
-    void 카드들의_합을_구한다(TrumpNumber number1, TrumpNumber number2, TrumpNumber number3, int expected) {
+    void 카드들의_합을_구한다(Rank number1, Rank number2, Rank number3, int expected) {
         // given
         List<Card> initialCards = makeCards(number1, number2);
         Dealer dealer = new Dealer(() -> new Cards(initialCards));
-        dealer.addOneCard(new Card(number3, TrumpEmblem.HEART));
+        dealer.addOneCard(new Card(number3, Suit.HEART));
 
         // when
         int sumCards = dealer.sumCardNumbers();
@@ -73,7 +73,7 @@ class DealerTest {
             "ACE, SIX, false",
             "ACE, KING, false"
     })
-    void 딜러의_카드_총합이_16이하인지_확인한다(TrumpNumber number1, TrumpNumber number2, boolean expected) {
+    void 딜러의_카드_총합이_16이하인지_확인한다(Rank number1, Rank number2, boolean expected) {
         // given
         List<Card> initialCards = makeCards(number1, number2);
         Dealer dealer = new Dealer(() -> new Cards(initialCards));
@@ -88,21 +88,21 @@ class DealerTest {
     @Test
     void 초기_딜러의_카드중_작은_숫자_한장을_오픈한다() {
         // given
-        List<Card> initialCards = makeCards(TrumpNumber.ACE, TrumpNumber.KING);
+        List<Card> initialCards = makeCards(Rank.ACE, Rank.KING);
         Dealer dealer = new Dealer(() -> new Cards(initialCards));
 
         // when
         Card card = dealer.openOneCard();
 
         // then
-        assertThat(card.getNumber()).isEqualTo(TrumpNumber.KING);
-        assertThat(card.getEmblem()).isEqualTo(TrumpEmblem.HEART);
+        assertThat(card.getNumber()).isEqualTo(Rank.KING);
+        assertThat(card.getEmblem()).isEqualTo(Suit.HEART);
     }
 
-    private List<Card> makeCards(TrumpNumber number1, TrumpNumber number2) {
+    private List<Card> makeCards(Rank number1, Rank number2) {
         List<Card> initialCards = new ArrayList<>();
-        initialCards.add(new Card(number1, TrumpEmblem.DIAMOND));
-        initialCards.add(new Card(number2, TrumpEmblem.HEART));
+        initialCards.add(new Card(number1, Suit.DIAMOND));
+        initialCards.add(new Card(number2, Suit.HEART));
         return initialCards;
     }
 }

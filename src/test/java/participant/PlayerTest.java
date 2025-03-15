@@ -1,7 +1,7 @@
 package participant;
 
-import constant.TrumpEmblem;
-import constant.TrumpNumber;
+import constant.Suit;
+import constant.Rank;
 import constant.WinningResult;
 import game.Card;
 import game.Cards;
@@ -21,7 +21,7 @@ class PlayerTest {
     @Test
     void 초기_카드_두장을_받아_플레이어를_생성한다() {
         // given
-        List<Card> initialCards = makeCards(TrumpNumber.ACE, TrumpNumber.EIGHT);
+        List<Card> initialCards = makeCards(Rank.ACE, Rank.EIGHT);
         Cards cards = new Cards(initialCards);
 
         // when & then
@@ -31,8 +31,8 @@ class PlayerTest {
     @Test
     void 초기_카드_세장을_받으면_예외를_발생시킨다() {
         // given
-        List<Card> initialCards = makeCards(TrumpNumber.ACE, TrumpNumber.EIGHT);
-        initialCards.add(new Card(TrumpNumber.EIGHT, TrumpEmblem.HEART));
+        List<Card> initialCards = makeCards(Rank.ACE, Rank.EIGHT);
+        initialCards.add(new Card(Rank.EIGHT, Suit.HEART));
         Cards cards = new Cards(initialCards);
 
         // when & then
@@ -47,10 +47,10 @@ class PlayerTest {
             "KING, KING, TWO, false",
             "QUEEN, JACK, KING, false"
     })
-    void 카드를_한장_받았을_때_21이_넘는지_확인한다(TrumpNumber number1, TrumpNumber number2, TrumpNumber number3, boolean expected) {
+    void 카드를_한장_받았을_때_21이_넘는지_확인한다(Rank number1, Rank number2, Rank number3, boolean expected) {
         // given
         List<Card> initialCards = makeCards(number1, number2);
-        Card card = new Card(number3, TrumpEmblem.SPADE);
+        Card card = new Card(number3, Suit.SPADE);
         Cards cards = new Cards(initialCards);
         Player player = new Player(new Nickname("pobi"),cards);
 
@@ -67,12 +67,12 @@ class PlayerTest {
             "ACE, THREE, FOUR, 18",
             "ACE, THREE, KING, 14",
     })
-    void 카드들의_합을_구한다(TrumpNumber number1, TrumpNumber number2, TrumpNumber number3, int expected) {
+    void 카드들의_합을_구한다(Rank number1, Rank number2, Rank number3, int expected) {
         // given
         List<Card> initialCards = makeCards(number1, number2);
         Cards cards = new Cards(initialCards);
         Player player = new Player(new Nickname("pobi"), cards);
-        player.addOneCard(new Card(number3, TrumpEmblem.HEART));
+        player.addOneCard(new Card(number3, Suit.HEART));
 
         // when
         int sumCards = player.sumCardNumbers();
@@ -92,13 +92,13 @@ class PlayerTest {
             "KING, THREE, FOUR, 18, LOSE",
             "KING, THREE, EIGHT, 21, DRAW"
     })
-    void 딜러와의_승무패를_정한다(TrumpNumber number1, TrumpNumber number2, TrumpNumber number3, int dealerScore,
+    void 딜러와의_승무패를_정한다(Rank number1, Rank number2, Rank number3, int dealerScore,
                        WinningResult expected) {
         // given
         List<Card> initialCards = makeCards(number1, number2);
         Cards cards = new Cards(initialCards);
         Player player = new Player(new Nickname("pobi"), cards);
-        player.addOneCard(new Card(number3, TrumpEmblem.HEART));
+        player.addOneCard(new Card(number3, Suit.HEART));
 
         // when
         WinningResult winningResult = player.compareTo(dealerScore);
@@ -107,10 +107,10 @@ class PlayerTest {
         assertThat(winningResult).isEqualTo(expected);
     }
 
-    private List<Card> makeCards(TrumpNumber number1, TrumpNumber number2) {
+    private List<Card> makeCards(Rank number1, Rank number2) {
         List<Card> initialCards = new ArrayList<>();
-        initialCards.add(new Card(number1, TrumpEmblem.DIAMOND));
-        initialCards.add(new Card(number2, TrumpEmblem.HEART));
+        initialCards.add(new Card(number1, Suit.DIAMOND));
+        initialCards.add(new Card(number2, Suit.HEART));
         return initialCards;
     }
 }

@@ -1,7 +1,7 @@
 package participant;
 
-import constant.TrumpEmblem;
-import constant.TrumpNumber;
+import constant.Suit;
+import constant.Rank;
 import constant.WinningResult;
 import game.Card;
 import game.Cards;
@@ -22,20 +22,20 @@ class PlayersTest {
             List<Card> cards = new ArrayList<>();
 
             // 플레이어 3 초기 덱
-            cards.add(new Card(TrumpNumber.FIVE, TrumpEmblem.SPADE));
-            cards.add(new Card(TrumpNumber.FOUR, TrumpEmblem.HEART));
+            cards.add(new Card(Rank.FIVE, Suit.SPADE));
+            cards.add(new Card(Rank.FOUR, Suit.HEART));
 
             // 플레이어 2 초기 덱
-            cards.add(new Card(TrumpNumber.SEVEN, TrumpEmblem.SPADE));
-            cards.add(new Card(TrumpNumber.KING, TrumpEmblem.HEART));
+            cards.add(new Card(Rank.SEVEN, Suit.SPADE));
+            cards.add(new Card(Rank.KING, Suit.HEART));
 
             // 플레이어 1 초기 덱
-            cards.add(new Card(TrumpNumber.EIGHT, TrumpEmblem.HEART));
-            cards.add(new Card(TrumpNumber.KING, TrumpEmblem.DIAMOND));
+            cards.add(new Card(Rank.EIGHT, Suit.HEART));
+            cards.add(new Card(Rank.KING, Suit.DIAMOND));
 
             // 딜러 덱
-            cards.add(new Card(TrumpNumber.SEVEN, TrumpEmblem.CLOVER));
-            cards.add(new Card(TrumpNumber.KING, TrumpEmblem.DIAMOND));
+            cards.add(new Card(Rank.SEVEN, Suit.CLOVER));
+            cards.add(new Card(Rank.KING, Suit.DIAMOND));
 
             return new Cards(cards);
         });

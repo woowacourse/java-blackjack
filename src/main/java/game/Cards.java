@@ -1,6 +1,6 @@
 package game;
 
-import constant.TrumpNumber;
+import constant.Rank;
 import java.util.List;
 
 public class Cards {
@@ -39,13 +39,13 @@ public class Cards {
 
     private int calculateSum() {
         return cards.stream()
-                .mapToInt(card -> card.getNumber().getValue())
+                .mapToInt(card -> card.getNumber().getScore())
                 .sum();
     }
 
     private int countAces() {
         return (int) cards.stream()
-                .filter(card -> card.getNumber() == TrumpNumber.ACE)
+                .filter(card -> card.getNumber() == Rank.ACE)
                 .count();
     }
 

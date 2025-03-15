@@ -22,7 +22,7 @@ public class Dealer {
 
     public Card openOneCard() {
         return cards.getCards().stream()
-                .min(Comparator.comparingInt(card -> card.getNumber().getValue()))
+                .min(Comparator.comparingInt(card -> card.getNumber().getScore()))
                 .orElse(cards.getCards().getFirst());
     }
 

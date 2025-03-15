@@ -1,7 +1,7 @@
 package bet;
 
-import constant.TrumpEmblem;
-import constant.TrumpNumber;
+import constant.Suit;
+import constant.Rank;
 import game.Card;
 import game.Cards;
 import org.junit.jupiter.api.Test;
@@ -44,22 +44,22 @@ class BetCenterTest {
             List<Card> cards = new ArrayList<>();
 
             // 플레이어 2
-            cards.add(new Card(TrumpNumber.FIVE, TrumpEmblem.HEART));
-            cards.add(new Card(TrumpNumber.EIGHT, TrumpEmblem.CLOVER));
+            cards.add(new Card(Rank.FIVE, Suit.HEART));
+            cards.add(new Card(Rank.EIGHT, Suit.CLOVER));
 
             // 플레이어 1
-            cards.add(new Card(TrumpNumber.SIX, TrumpEmblem.HEART));
-            cards.add(new Card(TrumpNumber.KING, TrumpEmblem.DIAMOND));
+            cards.add(new Card(Rank.SIX, Suit.HEART));
+            cards.add(new Card(Rank.KING, Suit.DIAMOND));
 
             // 딜러
-            cards.add(new Card(TrumpNumber.KING, TrumpEmblem.CLOVER));
-            cards.add(new Card(TrumpNumber.ACE, TrumpEmblem.SPADE));
+            cards.add(new Card(Rank.KING, Suit.CLOVER));
+            cards.add(new Card(Rank.ACE, Suit.SPADE));
             return new Cards(cards);
         });
 
         Player player1 = new Player(new Nickname("제프"), dealer.drawInitialCards());
         Player player2 = new Player(new Nickname("빙봉"), dealer.drawInitialCards());
-        player1.addOneCard(new Card(TrumpNumber.FIVE, TrumpEmblem.DIAMOND));
+        player1.addOneCard(new Card(Rank.FIVE, Suit.DIAMOND));
 
         BetCenter betCenter = new BetCenter(Map.of(
                 player1, new BetAmount(10000),
@@ -79,10 +79,10 @@ class BetCenterTest {
         // given
         Dealer dealer = new Dealer(() -> {
             List<Card> cards = new ArrayList<>();
-            cards.add(new Card(TrumpNumber.ACE, TrumpEmblem.HEART));
-            cards.add(new Card(TrumpNumber.KING, TrumpEmblem.DIAMOND));
-            cards.add(new Card(TrumpNumber.JACK, TrumpEmblem.CLOVER));
-            cards.add(new Card(TrumpNumber.KING, TrumpEmblem.SPADE));
+            cards.add(new Card(Rank.ACE, Suit.HEART));
+            cards.add(new Card(Rank.KING, Suit.DIAMOND));
+            cards.add(new Card(Rank.JACK, Suit.CLOVER));
+            cards.add(new Card(Rank.KING, Suit.SPADE));
 
             return new Cards(cards);
         });
@@ -104,12 +104,12 @@ class BetCenterTest {
             List<Card> cards = new ArrayList<>();
 
             // 플레이어
-            cards.add(new Card(TrumpNumber.ACE, TrumpEmblem.HEART));
-            cards.add(new Card(TrumpNumber.KING, TrumpEmblem.DIAMOND));
+            cards.add(new Card(Rank.ACE, Suit.HEART));
+            cards.add(new Card(Rank.KING, Suit.DIAMOND));
 
             // 딜러
-            cards.add(new Card(TrumpNumber.ACE, TrumpEmblem.CLOVER));
-            cards.add(new Card(TrumpNumber.KING, TrumpEmblem.SPADE));
+            cards.add(new Card(Rank.ACE, Suit.CLOVER));
+            cards.add(new Card(Rank.KING, Suit.SPADE));
             return new Cards(cards);
         });
         Player player = new Player(new Nickname("제프"), dealer.drawInitialCards());
@@ -130,13 +130,13 @@ class BetCenterTest {
             List<Card> cards = new ArrayList<>();
 
             // 플레이어
-            cards.add(new Card(TrumpNumber.FIVE, TrumpEmblem.HEART));
-            cards.add(new Card(TrumpNumber.SIX, TrumpEmblem.HEART));
-            cards.add(new Card(TrumpNumber.KING, TrumpEmblem.DIAMOND));
+            cards.add(new Card(Rank.FIVE, Suit.HEART));
+            cards.add(new Card(Rank.SIX, Suit.HEART));
+            cards.add(new Card(Rank.KING, Suit.DIAMOND));
 
             // 딜러
-            cards.add(new Card(TrumpNumber.FIVE, TrumpEmblem.CLOVER));
-            cards.add(new Card(TrumpNumber.KING, TrumpEmblem.SPADE));
+            cards.add(new Card(Rank.FIVE, Suit.CLOVER));
+            cards.add(new Card(Rank.KING, Suit.SPADE));
             return new Cards(cards);
         });
         Player player = new Player(new Nickname("제프"), dealer.drawInitialCards());
@@ -157,13 +157,13 @@ class BetCenterTest {
             List<Card> cards = new ArrayList<>();
 
             // 플레이어
-            cards.add(new Card(TrumpNumber.NINE, TrumpEmblem.HEART));
-            cards.add(new Card(TrumpNumber.SIX, TrumpEmblem.HEART));
-            cards.add(new Card(TrumpNumber.KING, TrumpEmblem.DIAMOND));
+            cards.add(new Card(Rank.NINE, Suit.HEART));
+            cards.add(new Card(Rank.SIX, Suit.HEART));
+            cards.add(new Card(Rank.KING, Suit.DIAMOND));
 
             // 딜러
-            cards.add(new Card(TrumpNumber.FIVE, TrumpEmblem.CLOVER));
-            cards.add(new Card(TrumpNumber.KING, TrumpEmblem.SPADE));
+            cards.add(new Card(Rank.FIVE, Suit.CLOVER));
+            cards.add(new Card(Rank.KING, Suit.SPADE));
             return new Cards(cards);
         });
         Player player = new Player(new Nickname("제프"), dealer.drawInitialCards());
@@ -187,23 +187,23 @@ class BetCenterTest {
             List<Card> cards = new ArrayList<>();
 
             // 딜러 추가 카드
-            cards.add(new Card(TrumpNumber.EIGHT, TrumpEmblem.SPADE));
+            cards.add(new Card(Rank.EIGHT, Suit.SPADE));
 
             // 플레이어 3 초기 덱
-            cards.add(new Card(TrumpNumber.FIVE, TrumpEmblem.SPADE));
-            cards.add(new Card(TrumpNumber.FOUR, TrumpEmblem.HEART));
+            cards.add(new Card(Rank.FIVE, Suit.SPADE));
+            cards.add(new Card(Rank.FOUR, Suit.HEART));
 
             // 플레이어 2 초기 덱
-            cards.add(new Card(TrumpNumber.NINE, TrumpEmblem.SPADE));
-            cards.add(new Card(TrumpNumber.SEVEN, TrumpEmblem.HEART));
+            cards.add(new Card(Rank.NINE, Suit.SPADE));
+            cards.add(new Card(Rank.SEVEN, Suit.HEART));
 
             // 플레이어 1 초기 덱
-            cards.add(new Card(TrumpNumber.SIX, TrumpEmblem.HEART));
-            cards.add(new Card(TrumpNumber.KING, TrumpEmblem.DIAMOND));
+            cards.add(new Card(Rank.SIX, Suit.HEART));
+            cards.add(new Card(Rank.KING, Suit.DIAMOND));
 
             // 딜러 초기 덱
-            cards.add(new Card(TrumpNumber.FIVE, TrumpEmblem.CLOVER));
-            cards.add(new Card(TrumpNumber.KING, TrumpEmblem.SPADE));
+            cards.add(new Card(Rank.FIVE, Suit.CLOVER));
+            cards.add(new Card(Rank.KING, Suit.SPADE));
             return new Cards(cards);
         });
         Player player1 = new Player(new Nickname("제프"), dealer.drawInitialCards());
@@ -233,20 +233,20 @@ class BetCenterTest {
             List<Card> cards = new ArrayList<>();
 
             // 플레이어 3 초기 덱
-            cards.add(new Card(TrumpNumber.FIVE, TrumpEmblem.SPADE));
-            cards.add(new Card(TrumpNumber.FOUR, TrumpEmblem.HEART));
+            cards.add(new Card(Rank.FIVE, Suit.SPADE));
+            cards.add(new Card(Rank.FOUR, Suit.HEART));
 
             // 플레이어 2 초기 덱
-            cards.add(new Card(TrumpNumber.NINE, TrumpEmblem.SPADE));
-            cards.add(new Card(TrumpNumber.SIX, TrumpEmblem.CLOVER));
+            cards.add(new Card(Rank.NINE, Suit.SPADE));
+            cards.add(new Card(Rank.SIX, Suit.CLOVER));
 
             // 플레이어 1 초기 덱
-            cards.add(new Card(TrumpNumber.SIX, TrumpEmblem.HEART));
-            cards.add(new Card(TrumpNumber.KING, TrumpEmblem.DIAMOND));
+            cards.add(new Card(Rank.SIX, Suit.HEART));
+            cards.add(new Card(Rank.KING, Suit.DIAMOND));
 
             // 딜러 초기 덱
-            cards.add(new Card(TrumpNumber.FIVE, TrumpEmblem.CLOVER));
-            cards.add(new Card(TrumpNumber.KING, TrumpEmblem.SPADE));
+            cards.add(new Card(Rank.FIVE, Suit.CLOVER));
+            cards.add(new Card(Rank.KING, Suit.SPADE));
             return new Cards(cards);
         });
         Player player1 = new Player(new Nickname("제프"), dealer.drawInitialCards());

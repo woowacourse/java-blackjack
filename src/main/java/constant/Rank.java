@@ -1,6 +1,6 @@
 package constant;
 
-public enum TrumpNumber {
+public enum Rank {
     ACE(11, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
@@ -16,16 +16,16 @@ public enum TrumpNumber {
     KING(10, "K"),
     ;
 
-    private final int value;
+    private final int score;
     private final String name;
 
-    TrumpNumber(int value, String name) {
-        this.value = value;
+    Rank(int score, String name) {
+        this.score = score;
         this.name = name;
     }
 
-    public int getValue() {
-        return value;
+    public int getScore() {
+        return score;
     }
 
     public String getName() {

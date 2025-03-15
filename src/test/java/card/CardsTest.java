@@ -2,8 +2,8 @@ package card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import constant.TrumpEmblem;
-import constant.TrumpNumber;
+import constant.Suit;
+import constant.Rank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +21,10 @@ class CardsTest {
             "KING, KING, TWO, false",
             "QUEEN, JACK, KING, false"
     })
-    void 카드를_한장_받았을_때_21이_넘는지_확인한다(TrumpNumber number1, TrumpNumber number2, TrumpNumber number3, boolean expected) {
+    void 카드를_한장_받았을_때_21이_넘는지_확인한다(Rank number1, Rank number2, Rank number3, boolean expected) {
         // given
         Cards cards = makeCards(number1, number2);
-        Card card = new Card(number3, TrumpEmblem.SPADE);
+        Card card = new Card(number3, Suit.SPADE);
 
         // when
         boolean isOverBustStandard = cards.addOneCard(card);
@@ -39,10 +39,10 @@ class CardsTest {
             "ACE, THREE, FOUR, 18",
             "ACE, THREE, KING, 14",
     })
-    void 카드들의_합을_구한다(TrumpNumber number1, TrumpNumber number2, TrumpNumber number3, int expected) {
+    void 카드들의_합을_구한다(Rank number1, Rank number2, Rank number3, int expected) {
         // given
         Cards cards = makeCards(number1, number2);
-        cards.addOneCard(new Card(number3, TrumpEmblem.HEART));
+        cards.addOneCard(new Card(number3, Suit.HEART));
 
         // when
         int sumCards = cards.sumCardNumbers();
@@ -51,10 +51,10 @@ class CardsTest {
         assertThat(sumCards).isEqualTo(expected);
     }
 
-    private Cards makeCards(TrumpNumber number1, TrumpNumber number2) {
+    private Cards makeCards(Rank number1, Rank number2) {
         List<Card> initialCards = new ArrayList<>();
-        initialCards.add(new Card(number1, TrumpEmblem.DIAMOND));
-        initialCards.add(new Card(number2, TrumpEmblem.HEART));
+        initialCards.add(new Card(number1, Suit.DIAMOND));
+        initialCards.add(new Card(number2, Suit.HEART));
         return new Cards(initialCards);
     }
 }

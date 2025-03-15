@@ -1,23 +1,23 @@
 package game;
 
-import constant.TrumpEmblem;
-import constant.TrumpNumber;
+import constant.Suit;
+import constant.Rank;
 
 public class Card {
 
-    private final TrumpNumber number;
-    private final TrumpEmblem emblem;
+    private final Rank number;
+    private final Suit emblem;
 
-    public Card(TrumpNumber number, TrumpEmblem emblem) {
+    public Card(Rank number, Suit emblem) {
         this.number = number;
         this.emblem = emblem;
     }
 
-    public TrumpNumber getNumber() {
+    public Rank getNumber() {
         return number;
     }
 
-    public TrumpEmblem getEmblem() {
+    public Suit getEmblem() {
         return emblem;
     }
 }
