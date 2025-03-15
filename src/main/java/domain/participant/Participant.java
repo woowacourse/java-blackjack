@@ -29,6 +29,8 @@ public abstract class Participant {
         return !isHandBust();
     }
 
+    abstract public boolean isPlayer();
+
     public int getHandTotal() {
         return hand.getTotal();
     }

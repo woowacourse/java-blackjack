@@ -16,6 +16,11 @@ public class Dealer extends Participant {
         return hand.getFirstCard();
     }
 
+    @Override
+    public boolean isPlayer() {
+        return false;
+    }
+
     public int getExtraHandSize() {
         Hand hand = getHand();
         return hand.getExtraSize();
