@@ -2,16 +2,10 @@ package game;
 
 public enum GameResult {
 
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무"),
-    BLACKJACK("블랙잭");
-
-    private final String result;
-
-    GameResult(String result) {
-        this.result = result;
-    }
+    WIN,
+    LOSE,
+    DRAW,
+    BLACKJACK;
 
     public static GameResult of(Dealer dealer, Player player) {
         if (player.isBlackJack() && dealer.isBlackJack()) {
