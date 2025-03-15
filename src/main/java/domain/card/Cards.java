@@ -9,4 +9,12 @@ public class Cards {
     public Cards(List<Card> cards) {
         this.cards = cards;
     }
+
+    public void addCard(Card trumpCard) {
+        cards.add(trumpCard);
+    }
+
+    public int size() {
+        return cards.size();
+    }
 }

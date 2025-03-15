@@ -1,11 +1,19 @@
 package domain.card;
 
-public abstract class Card {
-    private final Rank rank;
-    private final Suit suit;
+public class Card extends TrumpCard {
+
+    private boolean isOpened;
 
     public Card(Rank rank, Suit suit) {
-        this.rank = rank;
-        this.suit = suit;
+        super(rank, suit);
+        isOpened = false;
+    }
+
+    public boolean isOpened() {
+        return isOpened;
+    }
+
+    public void open() {
+        isOpened = true;
     }
 }
