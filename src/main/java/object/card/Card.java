@@ -18,11 +18,10 @@ public class Card {
     }
 
     public String getName() {
-        return cardNumber.getName();
+        return cardNumber.getName() + cardSymbol.getName();
     }
 
     public String getCardSymbol() {
         return cardSymbol.getName();
     }
-
 }

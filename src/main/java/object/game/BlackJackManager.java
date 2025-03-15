@@ -3,6 +3,7 @@ package object.game;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import object.card.Card;
 import object.participant.Dealer;
 import object.participant.Participant;
 import object.participant.Player;
@@ -119,7 +120,7 @@ public class BlackJackManager {
         String playerNickname = player.getNickname();
         List<String> playerCardNames = blackJackBoard.getCardDeckOf(player)
                 .getCards().stream()
-                .map(card -> card.getName() + card.getCardSymbol())
+                .map(Card::getName)
                 .toList();
 
         return new BlackJackResultResponse(playerNickname, playerCardNames, blackJackBoard.getScoreOf(player).getScore());
@@ -130,7 +131,7 @@ public class BlackJackManager {
         String dealerNickname = dealer.getNickname();
         List<String> dealerCardNames = blackJackBoard.getCardDeckOf(dealer)
                 .getCards().stream()
-                .map(card -> card.getName() + card.getCardSymbol())
+                .map(Card::getName)
                 .toList();
 
         return new BlackJackResultResponse(dealerNickname, dealerCardNames, blackJackBoard.getScoreOf(dealer).getScore());

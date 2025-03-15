@@ -21,7 +21,7 @@ public record CardDeckStatusResponse(Map<String, List<String>> cardDeckNamesOfPa
             String participantName = participant.getNickname();
             List<Card> participantCards = new ArrayList<>(ownedCardDeck.getCards());
 
-            List<String> cardDisplayNames = new ArrayList<>(participantCards.stream().map(card -> card.getName() + card.getCardSymbol()).toList());
+            List<String> cardDisplayNames = new ArrayList<>(participantCards.stream().map(Card::getName).toList());
 
             if (participant.isDealer()) {
                 cardDisplayNames.removeLast();
@@ -40,7 +40,7 @@ public record CardDeckStatusResponse(Map<String, List<String>> cardDeckNamesOfPa
         Map<String, List<String>> cardDeckNamesOfParticipant = new HashMap<>();
 
         List<Card> participantCards = cardDeck.getCards();
-        List<String> cardDisplayNames = participantCards.stream().map(card -> card.getName() + card.getCardSymbol()).toList();
+        List<String> cardDisplayNames = participantCards.stream().map(Card::getName).toList();
 
         cardDeckNamesOfParticipant.put(nickname, cardDisplayNames);
         return new CardDeckStatusResponse(cardDeckNamesOfParticipant);
