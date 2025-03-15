@@ -9,8 +9,6 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackJackController {
-    public static final int DEFAULT_CARDS_PER_TURN = 1;
-
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -49,14 +47,14 @@ public class BlackJackController {
 
     private void askPlayer(Game game, PlayerName playerName) {
         while (game.isPlayerDrawable(playerName) && inputView.requestHitOrStand(playerName.username()).isHit()) {
-            game.giveCardToPlayer(playerName, DEFAULT_CARDS_PER_TURN);
+            game.giveDefaultCardsToPlayer(playerName);
             outputView.printGamerCards(playerName.username(), game.getPlayerCards(playerName));
         }
     }
 
     private void askDealer(Game game) {
         while (game.isDealerDrawable()) {
-            game.giveCardToDealer(DEFAULT_CARDS_PER_TURN);
+            game.giveDefaultCardsToDealer();
             outputView.printDealerDrawMoreCard();
         }
     }

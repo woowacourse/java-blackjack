@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
-    public static final int INITIAL_HANDS = 2;
+    private static final int INITIAL_HANDS = 2;
+    private static final int DEFAULT_CARDS_PER_TURN = 1;
 
     private final Dealer dealer;
     private final Players players;
@@ -29,16 +30,20 @@ public class Game {
         playerNames.forEach(playerName -> giveCardToPlayer(playerName, INITIAL_HANDS));
     }
 
-    public void giveCardToDealer(int count) {
+    public void giveDefaultCardsToDealer() {
+        giveCardToDealer(DEFAULT_CARDS_PER_TURN);
+    }
+
+    public void giveDefaultCardsToPlayer(PlayerName playerName) {
+        giveCardToPlayer(playerName, DEFAULT_CARDS_PER_TURN);
+    }
+
+    private void giveCardToDealer(int count) {
         dealer.receiveCards(drawCards(count));
     }
 
-    public void giveCardToPlayer(PlayerName playerName, int count) {
+    private void giveCardToPlayer(PlayerName playerName, int count) {
         players.giveCardsToPlayer(playerName, drawCards(count));
-    }
-
-    public boolean isPlayerDrawable(PlayerName playerName) {
-        return players.isDrawable(playerName);
     }
 
     private Cards drawCards(int count) {
@@ -48,6 +53,10 @@ public class Game {
             cards.add(newCard);
         }
         return new Cards(cards);
+    }
+
+    public boolean isPlayerDrawable(PlayerName playerName) {
+        return players.isDrawable(playerName);
     }
 
     public Card getDealerOneCard() {
