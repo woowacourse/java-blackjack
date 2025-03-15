@@ -2,6 +2,7 @@ package controller;
 
 import domain.bet.BetMoney;
 import domain.bet.BettingPool;
+import domain.bet.Profit;
 import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Participant;
@@ -118,7 +119,7 @@ public class BlackJackController {
         OutputView.printDealerExtraCardsCount(dealer.getName(), dealer.getExtraHandSize());
         OutputView.printEveryOneCardsNamesWithTotal(players, dealer);
 
-        Map<String,BetMoney> playerProfits =  bettingPool.computePlayersProfit(dealer);
+        Map<String, Profit> playerProfits =  bettingPool.computePlayersProfit(dealer);
 
         OutputView.printAllResult(playerProfits, dealer.getName());
     }

@@ -1,6 +1,6 @@
 package view;
 
-import domain.bet.BetMoney;
+import domain.bet.Profit;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Hand;
@@ -74,18 +74,18 @@ public class OutputView {
         return stringBuilder.toString();
     }
 
-    public static void printAllResult(final Map<String, BetMoney> playerResults, final String dealerName) {
+    public static void printAllResult(final Map<String, Profit> playerResults, final String dealerName) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("## 최종 수익\n");
 
         double totalProfit = 0.0;
-        for (BetMoney money : playerResults.values()) {
-            totalProfit += money.getAmount();
+        for (Profit profit : playerResults.values()) {
+            totalProfit += profit.getProfit();
         }
         stringBuilder.append(String.format("%s: %d\n", dealerName, (int) -totalProfit));
-        for (Entry<String, BetMoney> playerResult : playerResults.entrySet()) {
+        for (Entry<String, Profit> playerResult : playerResults.entrySet()) {
             stringBuilder.append(String.format("%s: %d\n", playerResult.getKey(),
-                    (int) playerResult.getValue().getAmount()));
+                    playerResult.getValue().getProfit()));
         }
         System.out.println(stringBuilder);
     }

@@ -15,13 +15,13 @@ public class BettingPool {
         this.bettingPool = new LinkedHashMap<>(bettingPool);
     }
 
-    public Map<String, BetMoney> computePlayersProfit(Dealer dealer) {
-        Map<String, BetMoney> playerProfits = new LinkedHashMap<>();
+    public Map<String, Profit> computePlayersProfit(Dealer dealer) {
+        Map<String, Profit> playerProfits = new LinkedHashMap<>();
         for (Map.Entry<Player, BetMoney> playersBetMoney : bettingPool.entrySet()) {
             Player player = playersBetMoney.getKey();
             BetMoney betMoney = playersBetMoney.getValue();
 
-            playerProfits.put(player.getName(), betMoney.computeProfit(WinLossResult.from(dealer, player)));
+            playerProfits.put(player.getName(), new Profit(WinLossResult.from(dealer, player), betMoney.getAmount()));
         }
         return playerProfits;
     }
