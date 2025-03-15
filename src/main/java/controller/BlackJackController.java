@@ -3,7 +3,9 @@ package controller;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.game.Game;
+import domain.game.GameResult;
 import domain.shuffler.RandomShuffler;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.function.Supplier;
 import view.Answer;
@@ -47,7 +49,8 @@ public class BlackJackController {
     }
 
     private void calculateAndDisplayGameResult(Game game) {
-        outputView.displayGameResult(game);
+        EnumMap<GameResult, Integer> gameResults = game.getDealer().calculateGameResult(game.getPlayers());
+        outputView.displayGameResult(game, gameResults);
     }
 
     private void hitOrStay(Game game, String playerName) {

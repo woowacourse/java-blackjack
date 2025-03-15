@@ -34,11 +34,11 @@ public class OutputView {
         }
     }
 
-    public void displayGameResult(Game game) {
+    public void displayGameResult(Game game, EnumMap<GameResult, Integer> gameResults) {
         displayEmptyLine();
         System.out.println("## 최종 승패");
         System.out.print("딜러: ");
-        displayDealerGameResult(game);
+        displayDealerGameResult(gameResults);
         displayEmptyLine();
         displayPlayerGameResult(game);
     }
@@ -78,8 +78,7 @@ public class OutputView {
                         player.calculateGameResult(game.getDealer()).getName()));
     }
 
-    private void displayDealerGameResult(Game game) {
-        EnumMap<GameResult, Integer> gameResults = game.getDealer().calculateGameResult(game.getPlayers());
+    private void displayDealerGameResult(EnumMap<GameResult, Integer> gameResults) {
         Arrays.stream(GameResult.values())
                 .filter((gameResult) -> gameResults.get(gameResult) != 0)
                 .forEach((gameResult) -> System.out.printf("%d%s ", gameResults.get(gameResult), gameResult.getName()));
