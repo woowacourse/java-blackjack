@@ -21,7 +21,6 @@ public class BlackJackController {
 
     private static final String DELIMITER = ",";
     private static final String YES = "y";
-    private static final int THRESHOLD = 16;
 
     private final Deck deck = new Deck();
 
