@@ -10,14 +10,14 @@ public enum RoundResult {
     LOSE,
     TIE,
     BLACKJACK_WIN,
-    ;
+    BUST;
 
     public static RoundResult judgeResult(Gamer gamer, Gamer otherGamer) {
         return getResultOf(
                 List.of(
                         RoundResult::getBustResult,
-                        RoundResult::getSumResult,
-                        RoundResult::getBlackjackResult),
+                        RoundResult::getBlackjackResult,
+                        RoundResult::getSumResult),
                 gamer, otherGamer);
     }
 
@@ -37,7 +37,7 @@ public enum RoundResult {
             return TIE;
         }
         if (gamer.isBust()) {
-            return LOSE;
+            return BUST;
         }
         if (otherGamer.isBust()) {
             return WIN;

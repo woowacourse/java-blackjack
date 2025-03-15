@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.dto.GamerDto;
-import blackjack.dto.response.FinalResultResponseDto;
+import blackjack.dto.response.ProfitsResponseDto;
 import blackjack.dto.response.RoundResultsResponseDto;
 import blackjack.dto.response.StartingCardsResponseDto;
 
@@ -40,7 +40,7 @@ public class OutputView {
         }
     }
 
-    public static void printFinalResult(FinalResultResponseDto responseDto) {
+    public static void printFinalResult(ProfitsResponseDto responseDto) {
         System.out.println("## 최종 수익");
         for (var gamer : responseDto.gamers()) {
             System.out.println(gamer);

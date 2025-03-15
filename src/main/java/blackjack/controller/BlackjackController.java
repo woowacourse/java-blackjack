@@ -1,8 +1,8 @@
 package blackjack.controller;
 
-import blackjack.domain.PlayerBets;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
+import blackjack.domain.round.ProfitCalculator;
 import blackjack.domain.round.Round;
 import blackjack.dto.GamerDto;
 import blackjack.dto.request.BetsRequestDto;
@@ -14,8 +14,8 @@ import java.util.List;
 
 public class BlackjackController {
 
+    private final ProfitCalculator profitCalculator = new ProfitCalculator();
     private Round round;
-    private PlayerBets playerBets;
 
     public void run() {
         setRound();
@@ -27,7 +27,7 @@ public class BlackjackController {
     private void setRound() {
         Dealer dealer = new Dealer();
         List<Player> players = setPlayers();
-        playerBets = setBets(players);
+        getPlayerBets(players);
         round = new Round(dealer, players);
         OutputView.printStartingCards(round.initialize());
     }
@@ -39,13 +39,11 @@ public class BlackjackController {
                 .toList();
     }
 
-    private PlayerBets setBets(List<Player> players) {
-        PlayerBets playerBets = new PlayerBets();
+    private void getPlayerBets(List<Player> players) {
         for (Player player : players) {
             BetsRequestDto betsRequestDto = InputView.readBets(player.getName());
-            playerBets.add(player, betsRequestDto.amount());
+            profitCalculator.addPlayerBet(player, betsRequestDto.amount());
         }
-        return playerBets;
     }
 
     private void drawPlayerCards() {
@@ -77,6 +75,6 @@ public class BlackjackController {
 
     private void printResult() {
         OutputView.printRoundResult(round.getRoundResults());
-        OutputView.printFinalResult(round.getFinalResult(playerBets));
+        OutputView.printFinalResult(profitCalculator.getProfits(round));
     }
 }
