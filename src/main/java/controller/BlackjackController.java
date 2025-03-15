@@ -29,9 +29,9 @@ public class BlackjackController {
     }
 
     private void readyGame() {
-        ParticipantNames participantNames = getParticipantNames();
-        Map<ParticipantName, BettingAmount> bettingAmounts = getBettingAmounts(participantNames);
-        gameManager = new GameManager(participantNames, bettingAmounts, new Deck());
+        ParticipantNames playerNames = getParticipantNames();
+        Map<ParticipantName, BettingAmount> bettingAmounts = getBettingAmounts(playerNames);
+        gameManager = new GameManager(playerNames, bettingAmounts, new Deck());
     }
 
     private ParticipantNames getParticipantNames() {
@@ -42,10 +42,10 @@ public class BlackjackController {
     }
 
     private Map<ParticipantName, BettingAmount> getBettingAmounts(ParticipantNames playerNames) {
-        return playerNames.getParticipantNames().stream()
+        return playerNames.participantNames().stream()
                 .collect(Collectors.toMap(
-                        name -> name,
-                        name -> new BettingAmount(InputView.readBettingAmount(name.getName())),
+                        playerName -> playerName,
+                        playerName -> new BettingAmount(InputView.readBettingAmount(playerName.name())),
                         (existing, replacement) -> existing,
                         LinkedHashMap::new
                 ));

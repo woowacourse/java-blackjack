@@ -3,8 +3,6 @@ package domain.participant;
 import domain.BettingAmount;
 import domain.card.Cards;
 
-import java.util.Objects;
-
 public class Player extends Participant {
 
     private final BettingAmount bettingAmount;
@@ -21,6 +19,6 @@ public class Player extends Participant {
 
     @Override
     public int getBettingAmount() {
-        return bettingAmount.getAmount();
+        return bettingAmount.amount();
     }
 }

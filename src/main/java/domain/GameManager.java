@@ -28,7 +28,7 @@ public class GameManager {
     }
 
     private Players createPlayers(ParticipantNames playerNames, Map<ParticipantName, BettingAmount> bettingAmounts) {
-        List<Player> players = playerNames.getParticipantNames()
+        List<Player> players = playerNames.participantNames()
                 .stream()
                 .map(name -> {
                     Cards cards = drawInitialCards();

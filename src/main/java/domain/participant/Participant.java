@@ -37,11 +37,11 @@ public abstract class Participant {
     }
 
     public String getParticipantName() {
-        return participantName.getName();
+        return participantName.name();
     }
 
     public List<Card> getCards() {
-        return cards.getCards();
+        return cards.cards();
     }
 
     public int getBettingAmount() {

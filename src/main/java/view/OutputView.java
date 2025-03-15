@@ -53,8 +53,8 @@ public class OutputView {
     }
 
     private static String convertCardToMessage(Card card) {
-        Suit suit = card.getSuit();
-        Rank rank = card.getRank();
+        Suit suit = card.suit();
+        Rank rank = card.rank();
         return rank.getFaceValue() + suit.getName();
     }
 

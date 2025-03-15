@@ -1,19 +1,16 @@
 package domain.participant;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class ParticipantNames {
+public record ParticipantNames(List<ParticipantName> participantNames) {
 
     private static final int MAXIMUM_NAMES_SIZE = 4;
-    private final List<ParticipantName> participantNames;
 
-    public ParticipantNames(List<ParticipantName> participantNames) {
+    public ParticipantNames {
         validateRange(participantNames);
         validateDuplicate(participantNames);
-        this.participantNames = participantNames;
     }
 
     private void validateRange(List<ParticipantName> participantNames) {
@@ -27,9 +24,5 @@ public class ParticipantNames {
         if (removeDuplicatedNames.size() != participantNames.size()) {
             throw new IllegalArgumentException("[ERROR] 이름은 중복될 수 없습니다.");
         }
-    }
-
-    public List<ParticipantName> getParticipantNames() {
-        return Collections.unmodifiableList(participantNames);
     }
 }
