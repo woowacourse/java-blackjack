@@ -16,6 +16,10 @@ public class Cards {
         this.cards = new ArrayList<>(cards);
     }
 
+    public static Cards emptyCards() {
+        return new Cards(new ArrayList<>());
+    }
+
     public int computeOptimalSum() {
         List<Integer> candidates = new ArrayList<>();
         computeCandidates(0, 0, cards, candidates);

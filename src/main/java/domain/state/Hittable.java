@@ -9,6 +9,10 @@ public class Hittable extends Running {
         super(cards);
     }
 
+    public static Hittable initialState() {
+        return new Hittable(Cards.emptyCards());
+    }
+
     @Override
     public State hit(Card card) {
         Cards cards = cards();
