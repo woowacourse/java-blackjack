@@ -35,4 +35,34 @@ class BlackJackGameTest {
         Assertions.assertThat(originParticipants.getLast().getNickname()).isEqualTo("베루스");
     }
 
+    @Test
+    void 한장_나눠주기() {
+        //given
+        List<String> nicknames = List.of("우가","베루스");
+
+        BlackJackGame blackJackGame = new BlackJackGame(nicknames);
+        Participants participants = blackJackGame.getParticipants();
+        Participant participant = participants.getParticipants().getLast();
+
+        //when
+        blackJackGame.drawOneCards(participant);
+
+        //then
+        Assertions.assertThat(participant.getCardDeck().getCards().size()).isEqualTo(1);
+    }
+
+    @Test
+    void 두장_나눠주기() {
+        //given
+        List<String> nicknames = List.of("우가","베루스");
+
+        BlackJackGame blackJackGame = new BlackJackGame(nicknames);
+
+        //when
+        blackJackGame.drawTwoCards();
+
+        //then
+        Assertions.assertThat(blackJackGame.getParticipants().getParticipants().getFirst().getCardDeck().getCards().size()).isEqualTo(2);
+    }
+
 }
