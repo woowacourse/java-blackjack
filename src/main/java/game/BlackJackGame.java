@@ -11,29 +11,37 @@ import strategy.DeckShuffleStrategy;
 
 public class BlackJackGame {
 
+    private final ConsoleInput input;
+    private final ConsoleOutput output;
+
+    public BlackJackGame(ConsoleInput input, ConsoleOutput output) {
+        this.input = input;
+        this.output = output;
+    }
+
     public static final String HIT_COMMAND = "y";
 
-    public void play(ConsoleInput input, ConsoleOutput output) {
+    public void play() {
         Dealer dealer = new Dealer(new DeckShuffleStrategy());
         Players players = Players.registerPlayers(input.readParticipantsNames(), dealer);
         BetCenter betCenter = new BetCenter(input.readPlayerBetAmounts(players));
 
         output.printInitialGameSettings(players, dealer);
-        performPlayerTurn(players, dealer, input, output);
+        performPlayerTurn(players, dealer);
         performDealerTurn(dealer, output);
 
         output.printGameResults(players, dealer);
         output.printFinalProfit(betCenter, dealer);
     }
 
-    private void performPlayerTurn(Players players, Dealer dealer, ConsoleInput input, ConsoleOutput output) {
+    private void performPlayerTurn(Players players, Dealer dealer) {
         for (Player player : players.getPlayers()) {
-            selectHitOrStand(player, dealer, input, output);
+            selectHitOrStand(player, dealer);
             output.printPlayerCards(player);
         }
     }
 
-    private void selectHitOrStand(Player player, Dealer dealer, ConsoleInput input, ConsoleOutput output) {
+    private void selectHitOrStand(Player player, Dealer dealer) {
         while (input.readShouldHit(player.getNickname()).equals(HIT_COMMAND) && player.addOneCard(dealer.drawCard())) {
             output.printPlayerCards(player);
         }
