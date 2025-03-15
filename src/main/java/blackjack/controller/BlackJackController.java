@@ -66,6 +66,7 @@ public class BlackJackController {
             return;
         }
         while (blackJackGame.canDrawMoreCard(player) && inputView.readUserDrawMoreCard(player)) {
+            blackJackGame.drawCard(player, 1);
             outputView.printPlayerCards(player, player.getCards());
         }
     }

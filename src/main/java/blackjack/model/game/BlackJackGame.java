@@ -35,14 +35,10 @@ public class BlackJackGame {
     }
 
     public boolean canDrawMoreCard(final Player player) {
-        if (blackJackRule.canDrawMoreCard(player)) {
-            drawCard(player, SINGLE_DRAW_AMOUNT);
-            return true;
-        }
-        return false;
+        return blackJackRule.canDrawMoreCard(player);
     }
 
-    private void drawCard(final Player player, final int amount) {
+    public void drawCard(final Player player, final int amount) {
         player.receiveCards(cardDeck.draw(amount));
     }
 
