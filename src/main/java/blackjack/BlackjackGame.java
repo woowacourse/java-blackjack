@@ -1,4 +1,4 @@
-package blackjack.controller;
+package blackjack;
 
 import java.util.List;
 
