@@ -17,7 +17,6 @@ import blackjack.model.player.Player;
 public class BlackJackGame {
 
     private static final int INITIAL_DRAW_AMOUNT = 2;
-    private static final int SINGLE_DRAW_AMOUNT = 1;
 
     private final CardDeck cardDeck;
     private final BlackJackRule blackJackRule;
