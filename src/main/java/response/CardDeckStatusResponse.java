@@ -7,11 +7,13 @@ import java.util.List;
 import java.util.Map;
 import object.card.Card;
 import object.card.CardDeck;
+import object.game.BlackJackBoard;
 import object.participant.Participant;
 
 public record CardDeckStatusResponse(Map<String, List<String>> cardDeckNamesOfParticipant) {
 
-    public static CardDeckStatusResponse generateInitCardResponse(Map<Participant, CardDeck> cardDeckOfParticipant) {
+    public static CardDeckStatusResponse makeInitCardsResponseFrom(BlackJackBoard blackJackBoard) {
+        Map<Participant, CardDeck> cardDeckOfParticipant = blackJackBoard.getCardDeckOfParticipant();
         Map<String, List<String>> cardDeckNamesOfParticipant = new LinkedHashMap<>();
 
         for (Map.Entry<Participant, CardDeck> entry : cardDeckOfParticipant.entrySet()) {
@@ -36,7 +38,10 @@ public record CardDeckStatusResponse(Map<String, List<String>> cardDeckNamesOfPa
         return new CardDeckStatusResponse(cardDeckNamesOfParticipant);
     }
 
-    public static CardDeckStatusResponse of(String nickname, CardDeck cardDeck) {
+    public static CardDeckStatusResponse makeResponseOf(Participant participant, BlackJackBoard blackJackBoard) {
+        String nickname = participant.getNickname();
+        CardDeck cardDeck = blackJackBoard.getCardDeckOf(participant);
+
         Map<String, List<String>> cardDeckNamesOfParticipant = new HashMap<>();
 
         List<Card> participantCards = cardDeck.getCards();
