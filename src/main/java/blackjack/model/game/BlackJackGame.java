@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import blackjack.model.BettingMoney;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.Cards;
 import blackjack.model.card.initializer.CardDeckInitializer;
@@ -18,10 +19,12 @@ public class BlackJackGame {
 
     private final CardDeck cardDeck;
     private final BlackJackRule blackJackRule;
+    private final PlayersBetting playersBetting;
 
     public BlackJackGame(final CardDeckInitializer cardDeckInitializer) {
         this.cardDeck = CardDeck.initializeFrom(cardDeckInitializer);
         this.blackJackRule = new BlackJackRule();
+        this.playersBetting = new PlayersBetting();
     }
 
     public void dealInitialCards(final List<Player> players) {
@@ -58,6 +61,10 @@ public class BlackJackGame {
                         (x, y) -> y,
                         LinkedHashMap::new
                 ));
+    }
+
+    public void bet(final Player player, final int bettingAmount) {
+        playersBetting.depositBettingMoney(player, new BettingMoney(bettingAmount));
     }
 
 }

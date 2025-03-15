@@ -27,10 +27,7 @@ public class BlackJackController {
 
         List<Player> players = makePlayers();
         for (Player player : players) {
-            if (player.isDealer()) {
-                continue;
-            }
-            int bettingAmount = inputView.readUserBettingAmount(player);
+            betEachPlayer(player, blackJackGame);
         }
 
         blackJackGame.dealInitialCards(players);
@@ -53,6 +50,14 @@ public class BlackJackController {
             players.add(new User(username));
         }
         return players;
+    }
+
+    private void betEachPlayer(final Player player, final BlackJackGame blackJackGame) {
+        if (player.isDealer()) {
+            return;
+        }
+        int bettingAmount = inputView.readUserBettingAmount(player);
+        blackJackGame.bet(player, bettingAmount);
     }
 
     private void usersDrawMoreCards(final List<Player> players, final BlackJackGame blackJackGame) {
