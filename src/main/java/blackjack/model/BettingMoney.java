@@ -11,10 +11,16 @@ public class BettingMoney {
     private final BigDecimal amount;
 
     public BettingMoney(final int amount) {
-        if (amount < MIN_BETTING_AMOUNT || amount > MAX_BETTING_AMOUNT) {
-            throw new IllegalArgumentException("베틍 금액은 최소 %d원 최대 %d원 까지 가능합니다.");
-        }
+        validateBettingMoneyRange(amount);
         this.amount = BigDecimal.valueOf(amount);
+    }
+
+    private void validateBettingMoneyRange(final int amount) {
+        if (amount < MIN_BETTING_AMOUNT || amount > MAX_BETTING_AMOUNT) {
+            throw new IllegalArgumentException("베틍 금액은 최소 %d원 최대 %d원 까지 가능합니다.".formatted(
+                    MIN_BETTING_AMOUNT, MAX_BETTING_AMOUNT
+            ));
+        }
     }
 
     @Override
