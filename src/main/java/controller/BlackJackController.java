@@ -48,7 +48,7 @@ public class BlackJackController {
     }
 
     private void askPlayer(Game game, PlayerName playerName) {
-        while (game.isPlayerDrawable(playerName) && inputView.isYes(playerName.username())) {
+        while (game.isPlayerDrawable(playerName) && inputView.requestHitOrStand(playerName.username()).isHit()) {
             game.giveCardToPlayer(playerName, DEFAULT_CARDS_PER_TURN);
             outputView.printGamerCards(playerName.username(), game.getPlayerCards(playerName));
         }
