@@ -61,27 +61,6 @@ public class OutputView {
         System.out.println(LINE_SEPARATOR + dealerMessage + LINE_SEPARATOR + playerMessage);
     }
 
-    @Deprecated
-    public void printGameResult(final Map<GameResult, Integer> dealerGameResult,
-                                final Map<String, GameResult> playerGameResult) {
-        final StringBuilder sb = new StringBuilder();
-        final String dealerGameResultMessage = dealerGameResult.entrySet().stream()
-                .map(entry -> String.format("%d%s", entry.getValue(), entry.getKey().getDescription()))
-                .collect(Collectors.joining(" "));
-
-        final String dealerMessage = String.format("딜러: %s", dealerGameResultMessage);
-        final String playerMessage = playerGameResult.entrySet().stream()
-                .map(entry -> String.format("%s: %s", entry.getKey(), entry.getValue().getDescription()))
-                .collect(Collectors.joining(LINE_SEPARATOR));
-        sb.append(LINE_SEPARATOR);
-        sb.append("## 최종 승패");
-        sb.append(LINE_SEPARATOR);
-        sb.append(dealerMessage);
-        sb.append(LINE_SEPARATOR);
-        sb.append(playerMessage);
-        System.out.println(sb);
-    }
-
     private String createCardsMessage(final String name, final Card... cards) {
         final String cardsMessage = Arrays.stream(cards)
                 .map(card -> String.format("%s%s", card.getScore().getSymbol(), card.getType().getName()))
