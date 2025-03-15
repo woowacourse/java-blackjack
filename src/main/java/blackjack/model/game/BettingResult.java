@@ -39,7 +39,7 @@ public class BettingResult {
     }
 
     public int getDealerResult() {
-        return bettingResult.values().stream()
+        return -bettingResult.values().stream()
                 .mapToInt(Integer::intValue)
                 .sum();
     }
