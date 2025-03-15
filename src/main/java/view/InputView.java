@@ -38,8 +38,4 @@ public class InputView {
         return Answer.from(scanner.nextLine());
     }
 
-    public void closeScanner() {
-        scanner.close();
-    }
-
 }
