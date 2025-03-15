@@ -34,6 +34,10 @@ public class Hand {
         hand.addAll(givenHand.getHand());
     }
 
+    public void add(final Card card) {
+        hand.add(card);
+    }
+
     private int calculateMaxScore(final List<Card> cards) {
         return cards.stream()
                 .mapToInt(Card::getCardMaxNumber)

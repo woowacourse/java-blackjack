@@ -33,9 +33,9 @@ public class ResultView {
     private static final String WINNING_DEALER_RESULT_FORMAT = "딜러: %d승 %d무 %d패";
     private static final String WINNING_PLAYER_RESULT_FORMAT = "%s: %s";
 
-    public void printSpreadCard(final List<String> names, final Entry<String, Hand> dealerCards,
+    public void printSpreadCard(final List<String> playerNames, final Entry<String, Hand> dealerCards,
                                 final Map<String, Hand> playersCards) {
-        printNames(names);
+        printNames(playerNames);
         printDealerCards(dealerCards);
         printPlayersCards(playersCards);
     }

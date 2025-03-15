@@ -6,14 +6,20 @@ import java.util.stream.IntStream;
 
 public class Deck {
 
+    private static final int INITIAL_SPREAD_SIZE = 2;
+
     private final Deque<Card> cards;
 
     public Deck(final DeckGenerator deckGenerator) {
         this.cards = deckGenerator.makeDeck();
     }
 
-    public Hand spreadCards(final int count) {
-        return new Hand(IntStream.range(0, count)
+    public Card spreadOneCard() {
+        return pickCard();
+    }
+
+    public Hand spreadInitialCards(final int participantsSize) {
+        return new Hand(IntStream.range(0, INITIAL_SPREAD_SIZE * participantsSize)
                 .mapToObj(o -> pickCard())
                 .toList());
     }

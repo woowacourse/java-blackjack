@@ -47,13 +47,13 @@ public class PlayersTest {
 
     @DisplayName("플레이어들이 카드를 받는다.")
     @Test
-    void receiveCards() {
+    void receiveCardsByCount() {
         // given
         final Hand hand = provideCards(4);
         final int count = 2;
 
         // when
-        players.receiveCards(hand, count);
+        players.receiveCardsByCount(hand, count);
 
         // then
         assertAll(

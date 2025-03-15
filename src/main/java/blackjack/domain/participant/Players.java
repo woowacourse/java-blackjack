@@ -18,9 +18,9 @@ public class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public void receiveCards(final Hand hand, final int count) {
+    public void receiveCardsByCount(final Hand hand, final int count) {
         for (int i = 0; i < players.size(); i++) {
-            final Gamer player = players.get(i);
+            final Player player = players.get(i);
             player.receiveCards(hand.getPartialCards(i * count, (i + 1) * count));
         }
     }
