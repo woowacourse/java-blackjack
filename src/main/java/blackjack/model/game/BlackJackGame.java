@@ -70,42 +70,53 @@ public class BlackJackGame {
     }
 
     public Map<Player, BigDecimal> calculatePlayerWinnings(final Map<Player, Map<GameResult, Integer>> gameResults) {
-        BigDecimal dealerWinnings = BigDecimal.ZERO;
-        Map<Player, BigDecimal> playerWinnings = new LinkedHashMap<>();
-        Player dealer = gameResults.keySet()
-                .stream()
+        Player dealer = findDealer(gameResults);
+        Map<Player, BigDecimal> winnings = createPlayersWinnings(dealer);
+        BigDecimal dealerWinnings = winnings.get(dealer);
+        for (Player player : getUsers(gameResults)) {
+            BigDecimal playerWinnings = calculateWinnings(gameResults.get(player),
+                    playersBetting.withdrawMoney(player).getAmount());
+            winnings.put(player, playerWinnings);
+            dealerWinnings = dealerWinnings.subtract(playerWinnings);
+        }
+        winnings.put(dealer, dealerWinnings);
+        return winnings;
+    }
+
+    private Player findDealer(final Map<Player, Map<GameResult, Integer>> gameResults) {
+        return gameResults.keySet().stream()
                 .filter(Player::isDealer)
                 .findAny()
                 .orElseThrow(IllegalStateException::new);
-        playerWinnings.put(dealer, dealerWinnings);
+    }
 
-        for (Player player : gameResults.keySet()) {
-            if (player.isDealer()) {
-                continue;
-            }
-            Map<GameResult, Integer> playerGameResult = gameResults.get(player);
-            BettingMoney bettingMoney = playersBetting.withdrawMoney(player);
-            BigDecimal bettingMoneyAmount = bettingMoney.getAmount();
-            for (GameResult gameResult : playerGameResult.keySet()) {
-                if (gameResult == GameResult.WIN) {
-                    BigDecimal playerWinning = bettingMoneyAmount.multiply(BigDecimal.ONE)
-                            .setScale(0, RoundingMode.FLOOR);
-                    playerWinnings.put(player, playerWinning);
-                    dealerWinnings = dealerWinnings.subtract(playerWinning);
-                }
-                if (gameResult == GameResult.LOSE) {
-                    BigDecimal playerWinning = bettingMoneyAmount.multiply(BigDecimal.valueOf(-1))
-                            .setScale(0, RoundingMode.FLOOR);
-                    playerWinnings.put(player, playerWinning);
-                    dealerWinnings = dealerWinnings.subtract(playerWinning);
-                }
-                if (gameResult == GameResult.DRAW) {
-                    playerWinnings.put(player, BigDecimal.ZERO);
-                }
-            }
+    private Map<Player, BigDecimal> createPlayersWinnings(final Player dealer) {
+        Map<Player, BigDecimal> winnings = new LinkedHashMap<>();
+        winnings.put(dealer, BigDecimal.ZERO);
+        return winnings;
+    }
+
+    private List<Player> getUsers(final Map<Player, Map<GameResult, Integer>> gameResults) {
+        return gameResults.keySet().stream()
+                .filter(player -> !player.isDealer())
+                .toList();
+    }
+
+    private BigDecimal calculateWinnings(final Map<GameResult, Integer> results, final BigDecimal bettingMoneyAmount) {
+        GameResult gameResult = results.keySet()
+                .iterator()
+                .next();
+        return computePlayerWinning(gameResult, bettingMoneyAmount);
+    }
+
+    private BigDecimal computePlayerWinning(final GameResult result, final BigDecimal bettingMoneyAmount) {
+        if (result == GameResult.WIN) {
+            return bettingMoneyAmount.setScale(0, RoundingMode.FLOOR);
         }
-        playerWinnings.put(dealer, dealerWinnings);
-        return playerWinnings;
+        if (result == GameResult.LOSE) {
+            return bettingMoneyAmount.negate().setScale(0, RoundingMode.FLOOR);
+        }
+        return BigDecimal.ZERO;
     }
 
 }
