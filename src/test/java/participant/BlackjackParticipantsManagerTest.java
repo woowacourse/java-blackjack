@@ -1,4 +1,4 @@
-package test.participant;
+package participant;
 
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

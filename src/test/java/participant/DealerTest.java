@@ -1,3 +1,5 @@
+package participant;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.blackjackgame.BlackjackDeck;

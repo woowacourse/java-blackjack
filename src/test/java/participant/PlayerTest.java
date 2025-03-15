@@ -1,3 +1,5 @@
+package participant;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.blackjackgame.BlackjackDeck;
@@ -39,7 +41,9 @@ public class PlayerTest {
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new TestDeckGenerateStrategy(trumpCards));
 
-        Player player = new Player("루키", List.of(deck.drawCard(), deck.drawCard()));
+        Player player = new Player("루키", new ArrayList<>());
+        player.addDraw(deck.drawCard());
+        player.addDraw(deck.drawCard());
         player.addDraw(deck.drawCard());
         assertThat(player.isDrawable()).isFalse();
     }
@@ -53,7 +57,9 @@ public class PlayerTest {
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new TestDeckGenerateStrategy(trumpCards));
 
-        Player player = new Player("루키", List.of(deck.drawCard(), deck.drawCard()));
+        Player player = new Player("루키", new ArrayList<>());
+        player.addDraw(deck.drawCard());
+        player.addDraw(deck.drawCard());
         player.addDraw(deck.drawCard());
 
         assertThat(player.calculateCardSum()).isEqualTo(21);
@@ -67,7 +73,9 @@ public class PlayerTest {
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new TestDeckGenerateStrategy(trumpCards));
 
-        Player player = new Player("루키", List.of(deck.drawCard(), deck.drawCard()));
+        Player player = new Player("루키", new ArrayList<>());
+        player.addDraw(deck.drawCard());
+        player.addDraw(deck.drawCard());
 
         assertThat(player.calculateCardSum()).isEqualTo(21);
     }

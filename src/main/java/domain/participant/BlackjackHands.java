@@ -63,7 +63,7 @@ public class BlackjackHands {
         if (cardHands.isEmpty()) {
             throw new BlackJackStateException(INVALID_HANDS_STATE);
         }
-        return cardHands.get(0);
+        return cardHands.getFirst();
     }
 
     public List<TrumpCard> cards() {
