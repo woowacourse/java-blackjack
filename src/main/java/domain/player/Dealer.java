@@ -14,4 +14,9 @@ public class Dealer extends Player {
     public static Dealer createDealer() {
         return new Dealer(DEALER_NAME, Hittable.initialState());
     }
+
+    @Override
+    public void openInitialCards() {
+        openCards(1);
+    }
 }

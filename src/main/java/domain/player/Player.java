@@ -17,12 +17,6 @@ public abstract class Player {
         this.state = state;
     }
 
-    public void drawInitialCards(Deck deck) {
-        for (int count = 0; count < INITIAL_DRAW_COUNT; count++) {
-            hit(deck);
-        }
-    }
-
     public void hit(Deck deck) {
         this.state = state.hit(deck.drawCard());
     }
@@ -31,15 +25,38 @@ public abstract class Player {
         this.state = state.stay();
     }
 
+    public void drawInitialCards(Deck deck) {
+        for (int count = 0; count < INITIAL_DRAW_COUNT; count++) {
+            hit(deck);
+        }
+    }
+
+    public abstract void openInitialCards();
+
+    public void openCards(int count) {
+        while (count > 0) {
+            Card willBeOpened = findNotOpenedCard();
+            willBeOpened.open();
+            count--;
+        }
+    }
+
+    private Card findNotOpenedCard() {
+        return cards().getCards().stream()
+                .filter(card -> !card.isOpened())
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("오픈할 카드가 없습니다."));
+    }
+
     public Cards openedCards() {
         return new Cards(
-                allCards().getCards().stream()
+                cards().getCards().stream()
                         .filter(Card::isOpened)
                         .toList()
         );
     }
 
-    public Cards allCards() {
+    public Cards cards() {
         return state.cards();
     }
 

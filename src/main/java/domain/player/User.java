@@ -17,7 +17,8 @@ public class User extends Player {
         return new User(name, new Bet(bet), Hittable.initialState());
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public void openInitialCards() {
+        openCards(2);
     }
 }

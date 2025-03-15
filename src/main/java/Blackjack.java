@@ -2,6 +2,7 @@ import domain.card.Deck;
 import domain.card.DeckGenerator;
 import domain.player.Dealer;
 import domain.player.Users;
+import view.OutputView;
 
 public class Blackjack {
 
@@ -22,6 +23,9 @@ public class Blackjack {
     }
 
     private void openInitialCards(Dealer dealer, Users users) {
+        dealer.openInitialCards();
+        users.openInitialCards();
+        OutputView.printInitialCards(dealer, users);
     }
 
     private void usersHitOrStayPhase(Users users, Deck deck) {

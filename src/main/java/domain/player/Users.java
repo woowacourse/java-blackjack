@@ -49,4 +49,10 @@ public class Users {
     public List<User> getUsers() {
         return users;
     }
+
+    public void openInitialCards() {
+        for (User user : users) {
+            user.openInitialCards();
+        }
+    }
 }

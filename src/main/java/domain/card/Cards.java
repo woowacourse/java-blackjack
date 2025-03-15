@@ -60,10 +60,10 @@ public class Cards {
         cards.add(card);
     }
 
-    public List<Card> openedCards() {
-        return cards.stream()
+    public Cards openedCards() {
+        return new Cards(cards.stream()
                 .filter(Card::isOpened)
-                .toList();
+                .toList());
     }
 
     public int size() {
