@@ -22,16 +22,6 @@ public enum GameResult {
         return Arrays.stream(GameResult.values()).toList();
     }
 
-    public static GameResult swapGameResult(final GameResult gameResult) {
-        if (gameResult == WIN) {
-            return LOSE;
-        }
-        if (gameResult == LOSE) {
-            return WIN;
-        }
-        return DRAW;
-    }
-
     public static GameResult findByScores(int score, int compareScore) {
         if (score > compareScore) {
             return WIN;
