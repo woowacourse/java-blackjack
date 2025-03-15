@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.CardHand;
 import domain.card.Deck;
-import domain.game.BettingRound;
+import domain.game.BettingSession;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.shuffler.RandomShuffler;
@@ -38,13 +38,13 @@ public class BettingTest {
     void playerBettingTest() {
         // given
         CardHand cardHand = new CardHand(
-                Set.of(CardFixture.of(TEN, HEART), CardFixture.of(NINE, DIAMOND), CardFixture.of(TWO, CLOVER)));
+                Set.of(CardFixture.of(TEN, HEART), CardFixture.of(NINE, DIAMOND)));
         Player player = new Player("pobi", cardHand);
-        BettingRound bettingRound = new BettingRound();
+        BettingSession bettingSession = new BettingSession();
         // when
-        bettingRound.bet(player, BET_AMOUNT);
+        bettingSession.bet(player, BET_AMOUNT);
         // then
-        assertThat(bettingRound.getPlayerInitialBetAmount(player)).isEqualTo(BET_AMOUNT);
+        assertThat(bettingSession.getBetAmount(player)).isEqualTo(BET_AMOUNT);
     }
 
     @Test
@@ -54,13 +54,13 @@ public class BettingTest {
         CardHand cardHand = new CardHand(
                 Set.of(CardFixture.of(TEN, HEART), CardFixture.of(NINE, DIAMOND)));
         Player player = new Player("pobi", cardHand);
-        BettingRound bettingRound = new BettingRound();
+        BettingSession bettingSession = new BettingSession();
         // when
-        bettingRound.bet(player, BET_AMOUNT);
+        bettingSession.bet(player, BET_AMOUNT);
         player.hit(CardFixture.of(FIVE, CLOVER));
-        bettingRound.betIsLostIfPlayerLose(player);
+        bettingSession.recordEarningsOnLoss(player);
         // then
-        assertThat(bettingRound.getPlayerFinalBetAmount(player)).isEqualTo(-1 * BET_AMOUNT);
+        assertThat(bettingSession.getEarnings(player)).isEqualTo(-1 * BET_AMOUNT);
     }
 
     @Test
@@ -70,12 +70,12 @@ public class BettingTest {
         CardHand cardHand = new CardHand(
                 Set.of(CardFixture.of(TEN, HEART), CardFixture.of(ACE, DIAMOND)));
         Player player = new Player("pobi", cardHand);
-        BettingRound bettingRound = new BettingRound();
+        BettingSession bettingSession = new BettingSession();
         // when
-        bettingRound.bet(player, BET_AMOUNT);
-        bettingRound.extraPayoutOnBlackjack(player);
+        bettingSession.bet(player, BET_AMOUNT);
+        bettingSession.applyBlackjackBonus(player);
         // then
-        assertThat(bettingRound.getPlayerFinalBetAmount(player)).isEqualTo((int) (BET_AMOUNT * 1.5));
+        assertThat(bettingSession.getEarnings(player)).isEqualTo((int) (BET_AMOUNT * 1.5));
     }
 
     @Test
@@ -86,12 +86,12 @@ public class BettingTest {
                 Set.of(CardFixture.of(TEN, HEART), CardFixture.of(ACE, DIAMOND)));
         Player player = new Player("pobi", cardHand);
         Dealer dealer = new Dealer(new Deck(new RandomShuffler()), cardHand);
-        BettingRound bettingRound = new BettingRound();
+        BettingSession bettingSession = new BettingSession();
         // when
-        bettingRound.bet(player, BET_AMOUNT);
-        bettingRound.refundBetOnBlackjackPush(player, dealer);
+        bettingSession.bet(player, BET_AMOUNT);
+        bettingSession.refundBetOnBlackjackPush(player, dealer);
         // then
-        assertThat(bettingRound.getPlayerFinalBetAmount(player)).isEqualTo(BET_AMOUNT);
+        assertThat(bettingSession.getEarnings(player)).isEqualTo(BET_AMOUNT);
     }
 
     @Test
@@ -105,17 +105,17 @@ public class BettingTest {
         Player player1 = new Player("pobi", playerCardHand);
         Player player2 = new Player("jason", playerCardHand);
         Dealer dealer = new Dealer(new Deck(new RandomShuffler()), dealerCardHand);
-        BettingRound bettingRound = new BettingRound();
+        BettingSession bettingSession = new BettingSession();
         // when
         int player2BetAmount = 20000;
-        bettingRound.bet(player1, BET_AMOUNT);
-        bettingRound.bet(player2, player2BetAmount);
+        bettingSession.bet(player1, BET_AMOUNT);
+        bettingSession.bet(player2, player2BetAmount);
         dealer.hit(CardFixture.of(QUEEN, HEART));
-        bettingRound.PlayersReceiveBetIfDealerBusts(player1, dealer);
-        bettingRound.PlayersReceiveBetIfDealerBusts(player2, dealer);
+        bettingSession.rewardEarningsOnDealerBust(player1, dealer);
+        bettingSession.rewardEarningsOnDealerBust(player2, dealer);
         // then
-        assertThat(bettingRound.getPlayerFinalBetAmount(player1)).isEqualTo(BET_AMOUNT);
-        assertThat(bettingRound.getPlayerFinalBetAmount(player2)).isEqualTo(player2BetAmount);
+        assertThat(bettingSession.getEarnings(player1)).isEqualTo(BET_AMOUNT);
+        assertThat(bettingSession.getEarnings(player2)).isEqualTo(player2BetAmount);
     }
 
     @Test
@@ -131,18 +131,17 @@ public class BettingTest {
         Player player1 = new Player("pobi", player1CardHand);
         Player player2 = new Player("jason", player2CardHand);
         Dealer dealer = new Dealer(new Deck(new RandomShuffler()), dealerCardHand);
-        BettingRound bettingRound = new BettingRound();
+        BettingSession bettingSession = new BettingSession();
         // when
         int player2BetAmount = 20000;
-        bettingRound.bet(player1, BET_AMOUNT);
-        bettingRound.bet(player2, player2BetAmount);
+        bettingSession.bet(player1, BET_AMOUNT);
+        bettingSession.bet(player2, player2BetAmount);
         player2.hit(CardFixture.of(ACE, SPADE));
         dealer.hit(CardFixture.of(QUEEN, HEART));
-
-        bettingRound.calculateProfit(List.of(player1, player2), dealer);
+        bettingSession.calculateProfit(List.of(player1, player2), dealer);
         // then
-        assertThat(bettingRound.getPlayerProfit(player1)).isEqualTo((int) (BET_AMOUNT * 1.5));
-        assertThat(bettingRound.getPlayerProfit(player2)).isEqualTo(player2BetAmount);
+        assertThat(bettingSession.getPlayerProfit(player1)).isEqualTo((int) (BET_AMOUNT * 1.5));
+        assertThat(bettingSession.getPlayerProfit(player2)).isEqualTo(player2BetAmount);
     }
 
     @Test
@@ -158,16 +157,16 @@ public class BettingTest {
         Player player1 = new Player("pobi", player1CardHand);
         Player player2 = new Player("jason", player2CardHand);
         Dealer dealer = new Dealer(new Deck(new RandomShuffler()), dealerCardHand);
-        BettingRound bettingRound = new BettingRound();
+        BettingSession bettingSession = new BettingSession();
         // when
         int player2BetAmount = 20000;
-        bettingRound.bet(player1, BET_AMOUNT);
-        bettingRound.bet(player2, player2BetAmount);
+        bettingSession.bet(player1, BET_AMOUNT);
+        bettingSession.bet(player2, player2BetAmount);
         player1.hit(CardFixture.of(ACE, CLOVER));
         dealer.hit(CardFixture.of(EIGHT, HEART));
-        bettingRound.calculateProfit(List.of(player1, player2), dealer);
+        bettingSession.calculateProfit(List.of(player1, player2), dealer);
         // then
-        assertThat(bettingRound.getPlayerProfit(player1)).isEqualTo(BET_AMOUNT);
-        assertThat(bettingRound.getPlayerProfit(player2)).isEqualTo(-1 * player2BetAmount);
+        assertThat(bettingSession.getPlayerProfit(player1)).isEqualTo(BET_AMOUNT);
+        assertThat(bettingSession.getPlayerProfit(player2)).isEqualTo(-1 * player2BetAmount);
     }
 }
