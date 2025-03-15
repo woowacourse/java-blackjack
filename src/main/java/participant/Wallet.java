@@ -21,4 +21,8 @@ public class Wallet {
     public double calculateProfit() {
         return earnedMoney - bettingMoney;
     }
+
+    public double getEarnedMoney() {
+        return earnedMoney;
+    }
 }
