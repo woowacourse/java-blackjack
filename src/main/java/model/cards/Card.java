@@ -16,7 +16,7 @@ public class Card {
         this.suit = suit;
     }
 
-    public List<Integer> getRank() {
+    public List<Integer> getRankValue() {
         return rank.getValue();
     }
 

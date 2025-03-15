@@ -31,7 +31,7 @@ public class CardTest {
     void testCardScore_Ace() {
         Card card = new Card("A", "하트");
 
-        List<Integer> scores = card.getRank();
+        List<Integer> scores = card.getRankValue();
 
         assertThat(scores).containsAll(List.of(1, 11));
     }
@@ -42,7 +42,7 @@ public class CardTest {
     void testCardScore_Face(Rank rank) {
         Card card = new Card(rank, Suit.CLUBS);
 
-        List<Integer> scores = card.getRank();
+        List<Integer> scores = card.getRankValue();
 
         assertThat(scores).isEqualTo(List.of(10));
     }
@@ -52,7 +52,7 @@ public class CardTest {
     void testCardScore_Number() {
         Card card = new Card(Rank.SEVEN, Suit.HEARTS);
 
-        List<Integer> scores = card.getRank();
+        List<Integer> scores = card.getRankValue();
 
         assertThat(scores).isEqualTo(List.of(7));
     }
