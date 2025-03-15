@@ -13,8 +13,7 @@ public class InputView {
     private static final String YN_REGEX = "^[yYnN]$";
     private static final String ASK_ONE_MORE_CARD_MESSAGE = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String ASK_PLAYER_BET_AMOUNT_MESSAGE = "%s의 베팅 금액은?\n";
-    private static final String INVALID_BET_AMOUNT_INPUT = "1000원 단위의 숫자로 베팅 금액을 입력해주세요.";
-    private static final int BET_AMOUNT_UNIT = 1000;
+    private static final String INVALID_BET_AMOUNT_INPUT = "양수로 베팅 금액을 입력해주세요.";
 
     private static final Scanner sc = new Scanner(System.in);
 
@@ -52,8 +51,8 @@ public class InputView {
         }
     }
 
-    private static void validateBetAmount(final double parsedBetAmount) {
-        if(parsedBetAmount % BET_AMOUNT_UNIT != 0) {
+    private static void validateBetAmount(final int parsedBetAmount) {
+        if (parsedBetAmount <= 0) {
             throw new IllegalArgumentException(INVALID_BET_AMOUNT_INPUT);
         }
     }
