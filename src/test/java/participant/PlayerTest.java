@@ -24,7 +24,7 @@ class PlayerTest {
 
         // then
         Assertions.assertThat(result)
-            .isFalse();
+                .isFalse();
     }
 
     @Test
@@ -40,7 +40,7 @@ class PlayerTest {
 
         // then
         Assertions.assertThat(result)
-            .isTrue();
+                .isTrue();
     }
 
     @Test
@@ -56,6 +56,6 @@ class PlayerTest {
 
         // then
         Assertions.assertThat(player.getProfit())
-            .isEqualTo(bettingMoney * gameResult.getRate());
+                .isEqualTo(bettingMoney * gameResult.getRate());
     }
 }

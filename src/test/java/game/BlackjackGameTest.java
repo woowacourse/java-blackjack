@@ -32,12 +32,12 @@ class BlackjackGameTest {
         dealer = new Dealer();
         players = new Players(List.of(miso, yulmu));
         deck = new Deck(() -> List.of(
-            new Card(CardShape.SPADE, CardNumber.THREE),
-            new Card(CardShape.SPADE, CardNumber.TEN),
-            new Card(CardShape.CLOVER, CardNumber.TEN),
-            new Card(CardShape.HEART, CardNumber.TEN),
-            new Card(CardShape.DIAMOND, CardNumber.TEN),
-            new Card(CardShape.DIAMOND, CardNumber.THREE)
+                new Card(CardShape.SPADE, CardNumber.THREE),
+                new Card(CardShape.SPADE, CardNumber.TEN),
+                new Card(CardShape.CLOVER, CardNumber.TEN),
+                new Card(CardShape.HEART, CardNumber.TEN),
+                new Card(CardShape.DIAMOND, CardNumber.TEN),
+                new Card(CardShape.DIAMOND, CardNumber.THREE)
         ));
         blackjackGame = new BlackjackGame();
     }
@@ -53,7 +53,7 @@ class BlackjackGameTest {
         // then
         for (Player player : players.getPlayers()) {
             assertThat(player.getCards().size())
-                .isEqualTo(2);
+                    .isEqualTo(2);
         }
     }
 
@@ -70,7 +70,7 @@ class BlackjackGameTest {
 
         // then
         assertThat(miso.getCards().size())
-            .isEqualTo(4);
+                .isEqualTo(4);
     }
 
     @Test
@@ -86,7 +86,7 @@ class BlackjackGameTest {
 
         // then
         assertThat(miso.getCards().size())
-            .isEqualTo(4);
+                .isEqualTo(4);
     }
 
     @Test
@@ -102,7 +102,7 @@ class BlackjackGameTest {
 
         // then
         assertThat(miso.getCards().size())
-            .isEqualTo(3);
+                .isEqualTo(3);
     }
 
     @Test
@@ -118,7 +118,7 @@ class BlackjackGameTest {
 
         // then
         assertThat(dealer.getCards().size())
-            .isEqualTo(4);
+                .isEqualTo(4);
     }
 
     @Test
@@ -134,7 +134,7 @@ class BlackjackGameTest {
 
         // then
         assertThat(dealer.getCards().size())
-            .isEqualTo(4);
+                .isEqualTo(4);
     }
 
     @Test
@@ -150,7 +150,7 @@ class BlackjackGameTest {
 
         // then
         assertThat(dealer.getCards().size())
-            .isEqualTo(3);
+                .isEqualTo(3);
     }
 
     @Test
@@ -167,7 +167,7 @@ class BlackjackGameTest {
 
         // then
         assertThat(miso.getProfit())
-            .isEqualTo(misoBettingMoney * GameResult.BLACKJACK.getRate());
+                .isEqualTo(misoBettingMoney * GameResult.BLACKJACK.getRate());
     }
 
     @Test
@@ -187,7 +187,7 @@ class BlackjackGameTest {
 
         // then
         assertThat(result)
-            .isEqualTo(misoBettingMoney * GameResult.BLACKJACK.getRate());
+                .isEqualTo(misoBettingMoney * GameResult.BLACKJACK.getRate());
     }
 
     @Test
@@ -208,7 +208,7 @@ class BlackjackGameTest {
 
         // then
         assertThat(result)
-            .isEqualTo(misoBettingMoney * GameResult.WIN.getRate());
+                .isEqualTo(misoBettingMoney * GameResult.WIN.getRate());
     }
 
     @Test
@@ -227,7 +227,7 @@ class BlackjackGameTest {
 
         // then
         assertThat(result)
-            .isEqualTo(misoBettingMoney * GameResult.LOSE.getRate());
+                .isEqualTo(misoBettingMoney * GameResult.LOSE.getRate());
     }
 
     @Test
@@ -248,7 +248,7 @@ class BlackjackGameTest {
 
         // then
         assertThat(result)
-            .isEqualTo(misoBettingMoney * GameResult.DRAW.getRate());
+                .isEqualTo(misoBettingMoney * GameResult.DRAW.getRate());
     }
 
     @Test
@@ -271,7 +271,7 @@ class BlackjackGameTest {
 
         // then
         assertThat(dealerGameResults)
-            .isEqualTo((misoBettingMoney * GameResult.WIN.getRate() +
-                yulmuBettingMoney * GameResult.WIN.getRate()) * -1);
+                .isEqualTo((misoBettingMoney * GameResult.WIN.getRate() +
+                        yulmuBettingMoney * GameResult.WIN.getRate()) * -1);
     }
 }

@@ -13,8 +13,7 @@ class DeckTest {
         // given
         Deck deck = new Deck(List::of);
 
-        // when
-        // then
+        // when & then
         Assertions.assertThatThrownBy(deck::draw)
                 .isInstanceOf(IllegalStateException.class);
     }

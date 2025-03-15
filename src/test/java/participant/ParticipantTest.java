@@ -22,7 +22,7 @@ class ParticipantTest {
 
         // then
         Assertions.assertThat(result)
-            .isTrue();
+                .isTrue();
     }
 
     @Test
@@ -39,7 +39,7 @@ class ParticipantTest {
 
         // then
         Assertions.assertThat(result)
-            .isFalse();
+                .isFalse();
     }
 
     @Test
@@ -55,7 +55,7 @@ class ParticipantTest {
 
         // then
         Assertions.assertThat(result)
-            .isFalse();
+                .isFalse();
     }
 
     @Test
@@ -72,7 +72,7 @@ class ParticipantTest {
 
         // then
         Assertions.assertThat(result)
-            .isTrue();
+                .isTrue();
     }
 
     @Test
@@ -90,7 +90,7 @@ class ParticipantTest {
 
         // then
         Assertions.assertThat(result)
-            .isFalse();
+                .isFalse();
     }
 
     @Test
@@ -108,6 +108,6 @@ class ParticipantTest {
 
         // then
         Assertions.assertThat(result)
-            .isEqualTo(21);
+                .isEqualTo(21);
     }
 }
