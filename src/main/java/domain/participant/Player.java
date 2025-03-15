@@ -2,9 +2,10 @@ package domain.participant;
 
 import static domain.BlackjackGame.BLACKJACK_SCORE;
 
+import domain.BlackjackGame;
 import domain.card.Card;
 import domain.card.Hand;
-import domain.result.BlackjackResult;
+import domain.result.GameResult;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,16 +31,32 @@ public class Player {
         return (getScore() < BLACKJACK_SCORE);
     }
 
+    public GameResult getBlackjackResult(Dealer dealer) {
+        if (isBust()) {
+            return GameResult.LOSE;
+        }
+        if (dealer.isBust()) {
+            return GameResult.WIN;
+        }
+        if (getScore() > dealer.getScore()) {
+            return GameResult.WIN;
+        }
+        if (getScore() < dealer.getScore()) {
+            return GameResult.LOSE;
+        }
+        return GameResult.DRAW;
+    }
+
+    public boolean isBust() {
+        return getScore() > BlackjackGame.BLACKJACK_SCORE;
+    }
+
     public int getScore() {
         return ownedHand.calculateScore();
     }
 
     public int getCardCount() {
         return ownedHand.getSize();
-    }
-
-    public BlackjackResult getBlackjackResult(Dealer dealer) {
-        return BlackjackResult.getPlayerResult(this, dealer);
     }
 
     public List<Card> getOwnedCards() {

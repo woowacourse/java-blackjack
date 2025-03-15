@@ -1,24 +1,16 @@
 package domain.result;
 
 import static domain.BlackjackGame.BLACKJACK_SCORE;
+import static domain.result.GameResult.DRAW;
+import static domain.result.GameResult.LOSE;
+import static domain.result.GameResult.WIN;
 
 import domain.participant.Dealer;
 import domain.participant.Player;
 
-public enum BlackjackResult {
+public class BlackjackRule {
 
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패"),
-    ;
-
-    private final String value;
-
-    BlackjackResult(String value) {
-        this.value = value;
-    }
-
-    public static BlackjackResult getPlayerResult(Player player, Dealer dealer) {
+    public static GameResult getPlayerResult(Player player, Dealer dealer) {
         if (isPlayerLose(player, dealer)) {
             return LOSE;
         }
@@ -56,9 +48,5 @@ public enum BlackjackResult {
 
     private static boolean isBlackjack(int score, int cardCount) {
         return score == BLACKJACK_SCORE && cardCount == 2;
-    }
-
-    public String getValue() {
-        return value;
     }
 }

@@ -2,6 +2,7 @@ package domain.participant;
 
 import static domain.BlackjackGame.DEALER_MIN_SCORE;
 
+import domain.BlackjackGame;
 import domain.card.Card;
 import domain.card.Hand;
 import java.util.List;
@@ -27,6 +28,10 @@ public class Dealer {
 
     public boolean canReceive() {
         return (getScore() <= DEALER_MIN_SCORE);
+    }
+
+    public boolean isBust() {
+        return getScore() > BlackjackGame.BLACKJACK_SCORE;
     }
 
     public int getScore() {

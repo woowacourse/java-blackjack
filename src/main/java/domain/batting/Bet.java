@@ -1,6 +1,6 @@
 package domain.batting;
 
-import domain.result.BlackjackResult;
+import domain.result.GameResult;
 
 public class Bet {
 
@@ -30,11 +30,11 @@ public class Bet {
         }
     }
 
-    public int calculateProfit(BlackjackResult result) {
-        if (result == BlackjackResult.LOSE) {
+    public int calculateProfit(GameResult result) {
+        if (result == GameResult.LOSE) {
             return money * (-1);
         }
-        if (result == BlackjackResult.WIN) {
+        if (result == GameResult.WIN) {
             return money;
         }
         return 0;

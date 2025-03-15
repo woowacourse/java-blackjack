@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.result.BlackjackResult;
+import domain.result.GameResult;
 import org.junit.jupiter.api.Test;
 
 class BetTest {
@@ -55,7 +55,7 @@ class BetTest {
     @Test
     void 패에_대한_손실_수익_반환() {
         // given
-        BlackjackResult lose = BlackjackResult.LOSE;
+        GameResult lose = GameResult.LOSE;
         Bet bet = Bet.of(10000);
 
         // when
@@ -68,7 +68,7 @@ class BetTest {
     @Test
     void 승에_대한_손실_수익_반환() {
         // given
-        BlackjackResult lose = BlackjackResult.WIN;
+        GameResult lose = GameResult.WIN;
         Bet bet = Bet.of(10000);
 
         // when
@@ -81,7 +81,7 @@ class BetTest {
     @Test
     void 무에_대한_손실_수익_반환() {
         // given
-        BlackjackResult lose = BlackjackResult.DRAW;
+        GameResult lose = GameResult.DRAW;
         Bet bet = Bet.of(10000);
 
         // when

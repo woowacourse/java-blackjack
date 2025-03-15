@@ -11,7 +11,7 @@ import domain.participant.Player;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-class BlackjackResultTest {
+class BlackjackRuleTest {
 
     @Test
     void 딜러와_플레이어를_입력받아_딜러의_승패를_반환한다() {
@@ -29,9 +29,9 @@ class BlackjackResultTest {
         player.receive(Card.of(TrumpNumber.SEVEN, TrumpShape.CLUB));
 
         // when
-        BlackjackResult result = BlackjackResult.getPlayerResult(player, dealer);
+        GameResult result = BlackjackRule.getPlayerResult(player, dealer);
 
         // then
-        assertThat(result).isEqualTo(BlackjackResult.WIN);
+        assertThat(result).isEqualTo(GameResult.WIN);
     }
 }

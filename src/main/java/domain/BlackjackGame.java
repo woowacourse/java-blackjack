@@ -6,7 +6,7 @@ import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
-import domain.result.BlackjackResult;
+import domain.result.GameResult;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -60,7 +60,7 @@ public class BlackjackGame {
         List<String> playersName = getPlayersName();
         for (String name : playersName) {
             Player player = getPlayerByName(name);
-            BlackjackResult result = player.getBlackjackResult(dealer);
+            GameResult result = player.getBlackjackResult(dealer);
             Bet bet = bettingPool.getPlayerBet(player);
             int profit = bet.calculateProfit(result);
             profits.put(player, profit);
