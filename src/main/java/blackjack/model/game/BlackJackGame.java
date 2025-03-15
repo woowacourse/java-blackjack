@@ -73,7 +73,7 @@ public class BlackJackGame {
         Map<Player, BigDecimal> winnings = createPlayersWinnings(dealer);
         BigDecimal dealerWinnings = winnings.get(dealer);
         for (Player player : getUsers(gameResults)) {
-            BigDecimal playerWinnings = calculateWinnings(gameResults.get(player),
+            BigDecimal playerWinnings = calculateWinnings(player, gameResults.get(player),
                     playersBetting.withdrawMoney(player).getAmount());
             winnings.put(player, playerWinnings);
             dealerWinnings = dealerWinnings.subtract(playerWinnings);
@@ -101,14 +101,21 @@ public class BlackJackGame {
                 .toList();
     }
 
-    private BigDecimal calculateWinnings(final Map<GameResult, Integer> results, final BigDecimal bettingMoneyAmount) {
+    private BigDecimal calculateWinnings(final Player player, final Map<GameResult, Integer> results,
+                                         final BigDecimal bettingMoneyAmount) {
         GameResult gameResult = results.keySet()
                 .iterator()
                 .next();
-        return computePlayerWinning(gameResult, bettingMoneyAmount);
+        return computePlayerWinning(player, gameResult, bettingMoneyAmount);
     }
 
-    private BigDecimal computePlayerWinning(final GameResult result, final BigDecimal bettingMoneyAmount) {
+    private BigDecimal computePlayerWinning(
+            final Player player, final GameResult result, final BigDecimal bettingMoneyAmount
+    ) {
+        if (result == GameResult.WIN && blackJackRule.isBlackjack(player)) {
+            return bettingMoneyAmount.multiply(BigDecimal.valueOf(1.5))
+                    .setScale(0, RoundingMode.FLOOR);
+        }
         if (result == GameResult.WIN) {
             return bettingMoneyAmount.setScale(0, RoundingMode.FLOOR);
         }
