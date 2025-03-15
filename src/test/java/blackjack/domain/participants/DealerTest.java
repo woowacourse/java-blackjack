@@ -7,8 +7,8 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
-import blackjack.domain.state.Hit;
-import blackjack.domain.state.Stay;
+import blackjack.domain.state.finished.Stay;
+import blackjack.domain.state.running.Hit;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {

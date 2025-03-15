@@ -1,35 +1,17 @@
-package blackjack.domain.state;
+package blackjack.domain.state.finished;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Score;
+import blackjack.domain.state.State;
 import blackjack.domain.winning.WinningResult;
 
-public class Stay extends Start {
+public class Stay extends Finished {
     public Stay(Cards cards) {
         super(cards);
     }
 
     @Override
-    public State draw(Card card) {
-        throw new IllegalStateException("더이상 카드를 뽑을 수 없습니다.");
-    }
-
-    @Override
-    public State stay() {
-        return this;
-    }
-
-    @Override
-    public double profit(double bettingMoney) {
-        return bettingMoney;
-    }
-
-    @Override
-    public WinningResult decide(State state) {
-        if (!state.isFinished()) {
-            throw new IllegalArgumentException("끝난 상태와 승패를 결정할 수 있습니다.");
-        }
+    protected WinningResult calculateWinningResult(State state) {
         if (state instanceof Bust) {
             return WinningResult.WIN;
         }
@@ -40,8 +22,8 @@ public class Stay extends Start {
     }
 
     @Override
-    public boolean isFinished() {
-        return true;
+    protected double earningsRate() {
+        return 2;
     }
 
     private WinningResult compareScore(State state) {

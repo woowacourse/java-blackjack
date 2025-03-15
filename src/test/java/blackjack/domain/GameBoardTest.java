@@ -11,8 +11,8 @@ import blackjack.domain.participants.BettingMoney;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
-import blackjack.domain.state.Hit;
-import blackjack.domain.state.Stay;
+import blackjack.domain.state.finished.Stay;
+import blackjack.domain.state.running.Hit;
 import org.junit.jupiter.api.Test;
 
 class GameBoardTest {

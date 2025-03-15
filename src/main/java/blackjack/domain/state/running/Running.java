@@ -1,21 +1,14 @@
-package blackjack.domain.state;
+package blackjack.domain.state.running;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
+import blackjack.domain.state.Started;
+import blackjack.domain.state.State;
+import blackjack.domain.state.finished.Stay;
 import blackjack.domain.winning.WinningResult;
 
-public class Hit extends Start {
-    public Hit(Cards cards) {
+public abstract class Running extends Started {
+    protected Running(Cards cards) {
         super(cards);
-    }
-
-    @Override
-    public State draw(Card card) {
-        cards.take(card);
-        if (cards.isBust()) {
-            return new Bust(cards);
-        }
-        return new Hit(cards);
     }
 
     @Override

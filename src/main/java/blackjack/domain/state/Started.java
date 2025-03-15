@@ -3,13 +3,15 @@ package blackjack.domain.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Score;
+import blackjack.domain.state.finished.Blackjack;
+import blackjack.domain.state.running.Hit;
 import java.util.Objects;
 
-public abstract class Start implements State {
+public abstract class Started implements State {
 
     protected final Cards cards;
 
-    protected Start(Cards cards) {
+    protected Started(Cards cards) {
         this.cards = cards;
     }
 
@@ -40,8 +42,8 @@ public abstract class Start implements State {
             return false;
         }
 
-        Start start = (Start) object;
-        return Objects.equals(cards, start.cards);
+        Started started = (Started) object;
+        return Objects.equals(cards, started.cards);
     }
 
     @Override
