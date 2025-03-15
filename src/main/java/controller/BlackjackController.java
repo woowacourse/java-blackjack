@@ -1,12 +1,12 @@
 package controller;
 
 import domain.BettingAmount;
-import domain.card.Deck;
 import domain.GameManager;
-import domain.participant.Participant;
+import domain.card.Deck;
+import domain.participant.Dealer;
 import domain.participant.ParticipantName;
 import domain.participant.ParticipantNames;
-import domain.participant.Participants;
+import domain.participant.Player;
 import view.InputView;
 import view.OutputView;
 
@@ -52,22 +52,22 @@ public class BlackjackController {
     }
 
     private void printInitialCards() {
-        Participants participants = gameManager.findParticipants();
-        OutputView.printInitialParticipants(participants);
+        Dealer dealer = gameManager.getDealer();
+        List<Player> players = gameManager.getPlayers();
+        OutputView.printInitialCards(dealer, players);
     }
 
     private void drawMorePlayersCards() {
-        Participants participants = gameManager.findParticipants();
-        List<Participant> players = participants.findPlayers();
-        for (Participant player : players) {
+        List<Player> players = gameManager.getPlayers();
+        for (Player player : players) {
             drawCard(player);
         }
     }
 
-    private void drawCard(Participant player) {
+    private void drawCard(Player player) {
         boolean answer;
 
-        while (gameManager.shouldPlayerHit(player)) {
+        while (player.shouldHit()) {
             answer = InputView.askForOneMoreCard(player.getParticipantName());
             gameManager.drawCardForPlayer(player, answer);
             OutputView.printPlayerCard(player);
@@ -85,12 +85,13 @@ public class BlackjackController {
     }
 
     private void printFinalCards() {
-        Participants participants = gameManager.findParticipants();
-        OutputView.printFinalCards(participants);
+        Dealer dealer = gameManager.getDealer();
+        List<Player> players = gameManager.getPlayers();
+        OutputView.printFinalCards(dealer, players);
     }
 
     private void printProfits() {
-        Map<Participant, Integer> profits = gameManager.findPlayersProfits();
+        Map<Player, Integer> profits = gameManager.findPlayersProfits();
         int profitOfDealer = gameManager.findDealerProfit();
         OutputView.printProfits(profits, profitOfDealer);
     }

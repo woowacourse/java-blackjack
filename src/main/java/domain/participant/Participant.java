@@ -18,8 +18,6 @@ public abstract class Participant {
         this.cards = cards;
     }
 
-    public abstract boolean isDealer();
-
     public void drawCard(List<Card> providedCards) {
         cards = cards.addCards(providedCards);
     }
@@ -46,7 +44,9 @@ public abstract class Participant {
         return cards.getCards();
     }
 
-    public abstract int getBettingAmount();
+    public int getBettingAmount() {
+        return 0;
+    }
 
     @Override
     public boolean equals(Object object) {

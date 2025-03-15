@@ -1,10 +1,11 @@
 package view;
 
 import domain.card.Card;
-import domain.participant.Participant;
 import domain.card.Rank;
 import domain.card.Suit;
-import domain.participant.Participants;
+import domain.participant.Dealer;
+import domain.participant.Participant;
+import domain.participant.Player;
 
 import java.util.List;
 import java.util.Map;
@@ -16,26 +17,24 @@ public class OutputView {
 
     private OutputView() {}
 
-    public static void printInitialParticipants(Participants participants) {
-        Participant dealer = participants.findDealer();
-        List<Participant> players = participants.findPlayers();
+    public static void printInitialCards(Dealer dealer, List<Player> players) {
         System.out.printf("%n%s와 %s에게 2장을 나누었습니다.%n", dealer.getParticipantName(), findPlayerNames(players));
 
         printInitialDealerCard(dealer);
         printInitialPlayersCards(players);
     }
 
-    private static String findPlayerNames(List<Participant> players) {
+    private static String findPlayerNames(List<Player> players) {
         return players.stream()
                 .map(Participant::getParticipantName)
                 .collect(Collectors.joining(", "));
     }
 
-    private static void printInitialDealerCard(Participant dealer) {
+    private static void printInitialDealerCard(Dealer dealer) {
         System.out.printf("%s카드: %s%n", dealer.getParticipantName(), convertCardToMessage(dealer.getCards().getFirst()));
     }
 
-    private static void printInitialPlayersCards(List<Participant> players) {
+    private static void printInitialPlayersCards(List<Player> players) {
         for (Participant player : players) {
             System.out.printf("%s카드: %s%n", player.getParticipantName(), convertCardsToMessage(player.getCards()));
         }
@@ -63,19 +62,19 @@ public class OutputView {
         System.out.printf("%s카드: %s%n", player.getParticipantName(), convertCardsToMessage(player.getCards()));
     }
 
-    public static void printFinalCards(Participants participants) {
-        printFinalDealerCard(participants.findDealer());
-        printFinalPlayersCards(participants.findPlayers());
+    public static void printFinalCards(Dealer dealer, List<Player> players) {
+        printFinalDealerCard(dealer);
+        printFinalPlayersCards(players);
     }
 
-    private static void printFinalDealerCard(Participant dealer) {
+    private static void printFinalDealerCard(Dealer dealer) {
         System.out.printf("%n%s카드: %s - 결과: %d%n",
                 dealer.getParticipantName(),
                 convertCardsToMessage(dealer.getCards()),
                 dealer.getTotalRankSum());
     }
 
-    private static void printFinalPlayersCards(List<Participant> players) {
+    private static void printFinalPlayersCards(List<Player> players) {
         for (Participant player : players) {
             System.out.printf("%s카드: %s - 결과: %d%n",
                     player.getParticipantName(),
@@ -84,11 +83,11 @@ public class OutputView {
         }
     }
 
-    public static void printProfits(Map<Participant, Integer> profits, int profitOfDealer) {
+    public static void printProfits(Map<Player, Integer> profits, int profitOfDealer) {
         System.out.print(NEW_LINE);
         System.out.println("## 최종 수익");
         System.out.printf("딜러: %d%n", profitOfDealer);
-        for (Participant player : profits.keySet()) {
+        for (Player player : profits.keySet()) {
             System.out.printf("%s: %d%n", player.getParticipantName(), profits.get(player));
         }
     }

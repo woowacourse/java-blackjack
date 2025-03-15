@@ -27,7 +27,7 @@ public class PlayerTest {
                 List.of(new Card(Suit.HEART, Rank.ACE),
                         new Card(Suit.DIAMOND, Rank.NINE))
         );
-        Participant player = new Player(participantName, bettingAmount, cards);
+        Player player = new Player(participantName, bettingAmount, cards);
         player.drawCard(List.of(new Card(Suit.CLOVER, Rank.TWO)));
 
         List<Card> expected = List.of(new Card(Suit.HEART, Rank.ACE),
@@ -45,7 +45,7 @@ public class PlayerTest {
                 List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
                         new Card(Suit.DIAMOND, Rank.JACK),
                         new Card(Suit.HEART, Rank.FOUR)));
-        Participant exceedPlayer = new Player(participantName, bettingAmount, exceedBlackjackScoreCards);
+        Player exceedPlayer = new Player(participantName, bettingAmount, exceedBlackjackScoreCards);
 
         assertThat(exceedPlayer.isBust()).isTrue();
     }
@@ -57,7 +57,7 @@ public class PlayerTest {
         Cards notExceedBlackjackScoreCards = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.ACE),
                         new Card(Suit.DIAMOND, Rank.JACK)));
-        Participant notExceedPlayer = new Player(participantName, bettingAmount, notExceedBlackjackScoreCards);
+        Player notExceedPlayer = new Player(participantName, bettingAmount, notExceedBlackjackScoreCards);
 
         assertThat(notExceedPlayer.isBust()).isFalse();
     }
@@ -70,7 +70,7 @@ public class PlayerTest {
                 List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
                         new Card(Suit.DIAMOND, Rank.JACK),
                         new Card(Suit.HEART, Rank.FOUR)));
-        Participant player = new Player(participantName, bettingAmount, cards);
+        Player player = new Player(participantName, bettingAmount, cards);
 
         assertThat(player.getTotalRankSum()).isEqualTo(22);
     }
@@ -82,7 +82,7 @@ public class PlayerTest {
         Cards cards = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
                         new Card(Suit.DIAMOND, Rank.JACK)));
-        Participant player = new Player(participantName, bettingAmount, cards);
+        Player player = new Player(participantName, bettingAmount, cards);
 
         List<Card> expected = List.of(new Card(Suit.DIAMOND, Rank.EIGHT), new Card(Suit.DIAMOND, Rank.JACK));
 
@@ -94,7 +94,7 @@ public class PlayerTest {
         ParticipantName participantName = new ParticipantName("duei");
         BettingAmount bettingAmount = new BettingAmount(10000);
         Cards cards = new Cards(List.of(new Card(Suit.DIAMOND, Rank.EIGHT)));
-        Participant player = new Player(participantName, bettingAmount, cards);
+        Player player = new Player(participantName, bettingAmount, cards);
 
         assertThat(player.getParticipantName()).isEqualTo("duei");
     }
@@ -106,7 +106,7 @@ public class PlayerTest {
         Cards equalToBlackjackScoreCards = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.ACE),
                         new Card(Suit.DIAMOND, Rank.JACK)));
-        Participant isBlackjackPlayer = new Player(participantName, bettingAmount, equalToBlackjackScoreCards);
+        Player isBlackjackPlayer = new Player(participantName, bettingAmount, equalToBlackjackScoreCards);
 
         assertThat(isBlackjackPlayer.isBlackjack()).isTrue();
     }
@@ -118,7 +118,7 @@ public class PlayerTest {
         Cards exceedBlackjackScoreCards = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.ACE),
                         new Card(Suit.HEART, Rank.ACE)));
-        Participant exceedPlayer = new Player(participantName, bettingAmount, exceedBlackjackScoreCards);
+        Player exceedPlayer = new Player(participantName, bettingAmount, exceedBlackjackScoreCards);
 
         assertThat(exceedPlayer.isBlackjack()).isFalse();
     }
@@ -130,7 +130,7 @@ public class PlayerTest {
         Cards notExceedBlackjackScoreCards = new Cards(
                 List.of(new Card(Suit.DIAMOND, Rank.QUEEN),
                         new Card(Suit.DIAMOND, Rank.JACK)));
-        Participant notExceedPlayer = new Player(participantName, bettingAmount, notExceedBlackjackScoreCards);
+        Player notExceedPlayer = new Player(participantName, bettingAmount, notExceedBlackjackScoreCards);
 
         assertThat(notExceedPlayer.isBlackjack()).isFalse();
     }
@@ -143,8 +143,45 @@ public class PlayerTest {
                 List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
                         new Card(Suit.DIAMOND, Rank.JACK),
                         new Card(Suit.HEART, Rank.THREE)));
-        Participant sizeNotTwoPlayer = new Player(participantName, bettingAmount, sizeNotTwoCards);
+        Player sizeNotTwoPlayer = new Player(participantName, bettingAmount, sizeNotTwoCards);
 
         assertThat(sizeNotTwoPlayer.isBlackjack()).isFalse();
+    }
+
+    @Test
+    void 플레이어가_카드를_뽑아야하는_상황이면_true를_반환한다() {
+        ParticipantName participantName = new ParticipantName("duei");
+        BettingAmount bettingAmount = new BettingAmount(10000);
+        Cards shouldHitCards = new Cards(
+                List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
+                        new Card(Suit.DIAMOND, Rank.JACK),
+                        new Card(Suit.HEART, Rank.TWO)));
+
+        Player shouldHitPlayer = new Player(participantName, bettingAmount, shouldHitCards);
+
+        assertThat(shouldHitPlayer.shouldHit()).isTrue();
+    }
+
+    @Test
+    void 플레이어가_카드를_뽑지않아도_되는_상황이면_false를_반환한다() {
+        ParticipantName participantName = new ParticipantName("duei");
+        BettingAmount bettingAmount = new BettingAmount(10000);
+        Cards equalToBlackjackScoreCards = new Cards(
+                List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
+                        new Card(Suit.DIAMOND, Rank.JACK),
+                        new Card(Suit.HEART, Rank.THREE)));
+
+        Cards exceedBlackjackScoreCards = new Cards(
+                List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
+                        new Card(Suit.DIAMOND, Rank.JACK),
+                        new Card(Suit.HEART, Rank.FOUR)));
+
+        Player shouldNotHitPlayer1 = new Player(participantName, bettingAmount, equalToBlackjackScoreCards);
+        Player shouldNotHitPlayer2 = new Player(participantName, bettingAmount, exceedBlackjackScoreCards);
+
+        assertAll(
+                () -> assertThat(shouldNotHitPlayer1.shouldHit()).isFalse(),
+                () -> assertThat(shouldNotHitPlayer2.shouldHit()).isFalse()
+        );
     }
 }

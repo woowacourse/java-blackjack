@@ -11,17 +11,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public boolean isDealer() {
-        return true;
-    }
-
-    @Override
     public boolean shouldHit() {
         return !cards.isDealerDrawLimitExceeded();
-    }
-
-    @Override
-    public int getBettingAmount() {
-        return 0;
     }
 }

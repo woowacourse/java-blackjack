@@ -6,12 +6,11 @@ import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.ParticipantName;
 import domain.participant.ParticipantNames;
-import domain.participant.Participants;
 import domain.participant.Player;
+import domain.participant.Players;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class GameManager {
 
@@ -19,69 +18,60 @@ public class GameManager {
     private static final int DEFAULT_DRAW_SIZE = 1;
 
     private final CardProvider provider;
-    private final Participants participants;
+    private final Players players;
+    private final Dealer dealer;
 
     public GameManager(ParticipantNames playerNames, Map<ParticipantName, BettingAmount> bettingAmounts, CardProvider provider) {
         this.provider = provider;
-        this.participants = createParticipants(playerNames, bettingAmounts);
+        this.players = createPlayers(playerNames, bettingAmounts);
+        this.dealer = new Dealer(drawInitialCards());
     }
 
-    private Participants createParticipants(ParticipantNames playerNames, Map<ParticipantName, BettingAmount> bettingAmounts) {
-        List<Participant> participants = initPlayers(playerNames, bettingAmounts);
-        initDealer(participants);
-        return new Participants(participants);
-    }
-
-    private List<Participant> initPlayers(ParticipantNames playerNames, Map<ParticipantName, BettingAmount> bettingAmounts) {
-        return playerNames.getParticipantNames()
+    private Players createPlayers(ParticipantNames playerNames, Map<ParticipantName, BettingAmount> bettingAmounts) {
+        List<Player> players = playerNames.getParticipantNames()
                 .stream()
                 .map(name -> {
                     Cards cards = drawInitialCards();
                     return new Player(name, bettingAmounts.get(name), cards);
-                }).collect(Collectors.toList());
-    }
-
-    private void initDealer(List<Participant> participants) {
-        participants.add(new Dealer(drawInitialCards()));
+                }).toList();
+        return new Players(players);
     }
 
     private Cards drawInitialCards() {
         return new Cards(provider.provideCards(INITIAL_DRAW_SIZE));
     }
 
-    public boolean shouldPlayerHit(Participant player) {
-        return player.shouldHit();
-    }
-
-    public void drawCardForPlayer(Participant player, boolean answer) {
+    public void drawCardForPlayer(Player player, boolean answer) {
         if (answer) {
             drawCard(player);
         }
     }
 
-    private void drawCard(Participant player) {
-        player.drawCard(provider.provideCards(DEFAULT_DRAW_SIZE));
+    private void drawCard(Participant participant) {
+        participant.drawCard(provider.provideCards(DEFAULT_DRAW_SIZE));
     }
 
     public boolean shouldDealerHit() {
-        Participant dealer = participants.findDealer();
         return dealer.shouldHit();
     }
 
     public void drawCardForDealer() {
-        Participant dealer = participants.findDealer();
         drawCard(dealer);
     }
 
-    public Map<Participant, Integer> findPlayersProfits() {
-        return GameResult.calculateProfits(participants);
+    public Map<Player, Integer> findPlayersProfits() {
+        return GameResult.calculateProfits(dealer, players);
     }
 
     public int findDealerProfit() {
-        return GameResult.calculateDealerProfits(participants);
+        return GameResult.calculateDealerProfits(dealer, players);
     }
 
-    public Participants findParticipants() {
-        return participants;
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public List<Player> getPlayers() {
+        return players.getPlayers();
     }
 }
