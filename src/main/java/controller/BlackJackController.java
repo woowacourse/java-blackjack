@@ -100,7 +100,7 @@ public class BlackJackController {
 
     private boolean drawAdditionalCard(final Participant participant) {
         participant.addCard(deck.draw());
-        if (participant.getClass().equals(Player.class)) {
+        if (participant.isPlayer()) {
             OutputView.printHandCardsNames(participant.getName(), participant.getHand());
         }
         return participant.resolveBust();
@@ -108,7 +108,10 @@ public class BlackJackController {
 
     private static void handleBust(final Participant participant) {
         participant.applyBustPenalty();
-        OutputView.printBust();
+
+        if(participant.isPlayer()) {
+            OutputView.printBust();
+        }
     }
 
     private void printResult(final Players players, final BettingPool bettingPool) {
