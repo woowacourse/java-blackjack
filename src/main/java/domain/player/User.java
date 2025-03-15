@@ -8,7 +8,7 @@ public class User extends Player {
 
     private final Bet bet;
 
-    public User(String name, Bet bet, State state) {
+    private User(String name, Bet bet, State state) {
         super(name, state);
         this.bet = bet;
     }
