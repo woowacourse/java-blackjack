@@ -28,7 +28,7 @@ public enum Rank {
         this.scoreData = score;
     }
 
-    public boolean isMultiScores() {
+    public boolean hasMultiScores() {
         return scoreData.size() > 1;
     }
 

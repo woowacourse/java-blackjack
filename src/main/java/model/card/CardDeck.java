@@ -19,7 +19,7 @@ public final class CardDeck {
     }
 
     private static Card createCard(Suit suit, Rank rank) {
-        if (rank.isMultiScores()) {
+        if (rank.hasMultiScores()) {
             return new MultiScoreCard(suit, rank);
         }
         return new SingleScoreCard(suit, rank);
