@@ -1,20 +1,20 @@
 package bank;
 
 import ScoreResult.ScoreBoard;
+import java.util.LinkedHashMap;
 import participant.Participant;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 public class GamblingStatement {
     private final Map<Participant, Money> gamblingStatement;
 
     public GamblingStatement(final Map<Participant, Money> gamblingStatement) {
-        this.gamblingStatement = new HashMap<>(gamblingStatement);
+        this.gamblingStatement = new LinkedHashMap<>(gamblingStatement);
     }
 
     public GamblingStatement calculateProfit(final ScoreBoard scoreBoard) {
-        Map<Participant, Money> profitStatement = new HashMap<>();
+        Map<Participant, Money> profitStatement = new LinkedHashMap<>();
         for (Map.Entry<Participant, Money> entry : gamblingStatement.entrySet()) {
             Participant participant = entry.getKey();
             int winCounts = scoreBoard.requestWinCounts(participant);

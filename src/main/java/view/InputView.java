@@ -2,6 +2,7 @@ package view;
 
 import game.BlackJackGame;
 import bank.Money;
+import java.util.LinkedHashMap;
 import participant.Participant;
 import participant.Participants;
 import java.util.HashMap;
@@ -24,7 +25,7 @@ public class InputView {
 
     public Map<Participant, Money> askBettingMoney(BlackJackGame blackJackGame) {
         Participants participants = blackJackGame.getParticipants().findPlayers();
-        Map<Participant, Money> gamblingStatement = new HashMap<>();
+        Map<Participant, Money> gamblingStatement = new LinkedHashMap<>();
         for (Participant onlyPlayer : participants.getParticipants()) {
             System.out.printf("%s의 배팅 금액은?%n", onlyPlayer.getNickname());
             gamblingStatement.put(onlyPlayer, new Money(scanner.nextLine()));

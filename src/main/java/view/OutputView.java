@@ -5,6 +5,7 @@ import bank.GamblingStatement;
 import bank.Money;
 import card.Card;
 import card.ParticipantCardDeck;
+import java.math.BigDecimal;
 import participant.Participant;
 import java.util.List;
 import java.util.Map;
@@ -63,12 +64,12 @@ public class OutputView {
         System.out.println("## 최종 수익");
         Map<Participant, Money> participantProfit = gamblingStatement.getGamblingStatement();
         StringBuilder playerStringBuilder = new StringBuilder();
-        double dealerProfit = 0;
+        BigDecimal dealerProfit = BigDecimal.valueOf(0);
         for (Map.Entry<Participant, Money> entry : participantProfit.entrySet()) {
             String name = entry.getKey().getNickname();
-            String profit = String.valueOf(entry.getValue().getAmount());
-            dealerProfit += (-Double.parseDouble(profit));
-            playerStringBuilder.append(name).append(" : ").append(profit).append("\n");
+            BigDecimal profit = entry.getValue().getAmount();
+            dealerProfit = dealerProfit.subtract(profit);
+            playerStringBuilder.append(name).append(" : ").append(profit).append(System.lineSeparator());
         }
         System.out.println("딜러 : " + dealerProfit);
         System.out.println(playerStringBuilder);
