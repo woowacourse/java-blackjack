@@ -50,4 +50,8 @@ public final class Player {
     public String getName() {
         return name;
     }
+
+    public boolean isBlackjack() {
+        return participantHand.checkBlackJack();
+    }
 }

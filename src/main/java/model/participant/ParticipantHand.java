@@ -25,6 +25,11 @@ public final class ParticipantHand {
         }
     }
 
+    public boolean checkBlackJack() {
+        return this.cards.size() == 2
+                && calculateFinalScore() == 21;
+    }
+
     public boolean checkBurst() {
         return calculateTotalScoreWithAceAsMinValue() > BURST_SCORE_LIMIT;
     }

@@ -8,6 +8,7 @@ import model.deck.Card;
 import model.deck.CardRank;
 import model.deck.CardSuit;
 import model.participant.Dealer;
+import model.participant.ParticipantHand;
 import model.participant.Player;
 import model.participant.Players;
 import org.junit.jupiter.api.BeforeEach;

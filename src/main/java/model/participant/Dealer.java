@@ -45,5 +45,9 @@ public final class Dealer {
     public List<Card> getHandCards() {
         return participantHand.getCards();
     }
+
+    public boolean isBlackJack() {
+        return participantHand.checkBlackJack();
+    }
 }
 
