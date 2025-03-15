@@ -2,6 +2,7 @@ package model.betting;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import model.participant.Dealer;
 import model.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,5 +36,21 @@ class BetTest {
 
         //then
         assertThat(increasedBet.equals(new Bet(15000, player))).isTrue();
+    }
+
+    @Test
+    @DisplayName("배팅금액의 소유자가 플레이어에서 딜러로 변화한다.")
+    void 배팅금액의_소유자가_플레이어에서_딜러로_변화() {
+        //given
+        Player player = new Player("moda");
+        Dealer dealer = new Dealer();
+        int money = 10000;
+        Bet bet = new Bet(money, player);
+
+        //when
+        Bet newBet = bet.changeOwnerTo(dealer);
+
+        //then
+        assertThat(newBet.getOwner()).isEqualTo(dealer);
     }
 }

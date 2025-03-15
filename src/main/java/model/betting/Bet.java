@@ -1,23 +1,43 @@
 package model.betting;
 
 import java.util.Objects;
+import model.participant.Dealer;
 import model.participant.Player;
 
 public class Bet {
     private final int money;
     private final Player better;
+    private final Object owner; //TODO 인터페이스
 
     public Bet(int money, Player better) {
+        this(money, better, better);
+    }
+
+    public Bet(int money, Player better, Object owner) {
         this.money = money;
         this.better = better;
+        this.owner = owner;
+    }
+
+    public Bet increase(double rate) {
+        int increaseAmount = (int) (money * rate);
+        return new Bet(increaseAmount, better);
+    }
+
+    public Bet changeOwnerTo(Dealer dealer) {
+        return new Bet(money, better, dealer);
+    }
+
+    public boolean ownerEquals(Dealer dealer) {
+        return this.owner.equals(dealer);
+    }
+
+    public Object getOwner() {
+        return owner;
     }
 
     public int getMoney() {
         return money;
-    }
-
-    public Player getBetter() {
-        return better;
     }
 
     @Override
@@ -29,16 +49,11 @@ public class Bet {
             return false;
         }
         Bet bet = (Bet) o;
-        return money == bet.money && Objects.equals(better, bet.better);
+        return money == bet.money && Objects.equals(owner, bet.owner);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(money, better);
-    }
-
-    public Bet increase(double rate) {
-        int increaseAmount = (int) (money * rate);
-        return new Bet(increaseAmount, better);
+        return Objects.hash(money, owner);
     }
 }
