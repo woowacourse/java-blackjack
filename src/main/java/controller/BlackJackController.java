@@ -1,7 +1,6 @@
 package controller;
 
 import domain.BlackJack;
-import domain.GameResult;
 import domain.Money;
 import domain.participant.Player;
 import java.util.Map;
@@ -69,12 +68,6 @@ public class BlackJackController {
         for (Player player : blackJack.getPlayers()) {
             outputView.printCardsAndResult(player.getName(), player.getCards(), player.getScore().value());
         }
-    }
-
-    private void showGameResult(BlackJack blackJack) {
-        Map<Player, GameResult> playerResult = blackJack.getPlayersResult();
-        Map<GameResult, Integer> dealerResult = blackJack.getDealerResult();
-        outputView.printResult(dealerResult, playerResult);
     }
 
     private void showRevenues(BlackJack blackJack) {
