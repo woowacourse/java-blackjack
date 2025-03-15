@@ -40,12 +40,20 @@ public class Player {
         return hand.isBlackJack();
     }
 
+    public int evaluate(GameResult gameResult) {
+        return betting.evaluate(gameResult);
+    }
+
     public Hand getHand() {
         return hand;
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getPlayerBettingMoney() {
+        return betting.getBetting();
     }
 
     @Override
@@ -62,13 +70,5 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hashCode(name);
-    }
-
-    public int getPlayerBettingMoney() {
-        return betting.getBetting();
-    }
-
-    public int evaluate(GameResult gameResult) {
-        return betting.evaluate(gameResult);
     }
 }

@@ -9,8 +9,8 @@ public class InputView {
 
     private final Scanner scanner;
 
-    public InputView(Scanner scanner) {
-        this.scanner = scanner;
+    public InputView() {
+        this.scanner = new Scanner(System.in);
     }
 
     public List<String> readPlayerNames() {

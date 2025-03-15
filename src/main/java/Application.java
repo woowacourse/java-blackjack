@@ -9,21 +9,19 @@ import game.GameResult;
 import game.Player;
 import game.Players;
 import java.util.List;
-import java.util.Scanner;
 import view.InputView;
 import view.OutputView;
 
-public class BlackjackApplication {
+public class Application {
 
     public static void main(String[] args) {
-        InputView inputView = new InputView(new Scanner(System.in));
+        InputView inputView = new InputView();
         OutputView outputView = new OutputView();
 
         CardDeck cardDeck = CardDeck.prepareDeck(new RandomCardShuffler());
 
         List<String> playerNames = inputView.readPlayerNames();
         List<Integer> playerBetting = inputView.readBettingMoney(playerNames);
-
         Players players = Players.of(playerNames, playerBetting);
         Dealer dealer = new Dealer();
 
@@ -35,14 +33,14 @@ public class BlackjackApplication {
         for (Player player : players.getPlayers()) {
             while (!player.isBust() && inputView.readDrawMoreCard(player)) {
                 player.draw(cardDeck.drawCard(DRAW_COUNT_WHEN_HIT));
-                outputView.printPlayerCard(player);
+                outputView.printPlayerDraw(player);
             }
         }
         while (!dealer.isBust() && !dealer.isOverDrawBound()) {
             dealer.draw(cardDeck.drawCard(DRAW_COUNT_WHEN_HIT));
             outputView.printDealerDrawMessage();
         }
-        outputView.printGameResult(dealer, players);
+        outputView.printHitProcess(dealer, players);
 
         List<GameResult> gameResults = players.judgeGameResult(dealer);
         List<Integer> playerProfits = players.evaluate(gameResults);

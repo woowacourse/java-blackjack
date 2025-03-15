@@ -28,11 +28,11 @@ public class OutputView {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 플레이어 포맷팅에 실패하였습니다."));
     }
 
-    public void printPlayerCard(Player player) {
+    public void printPlayerDraw(Player player) {
         System.out.printf("%s카드: %s%n", player.getName(), formatHand(player.getHand().getCards()));
     }
 
-    public void printGameResult(Dealer dealer, Players players) {
+    public void printHitProcess(Dealer dealer, Players players) {
         String dealerResult = formatHand(dealer.getHand().getCards());
         System.out.printf("%n딜러카드: %s - 결과: %d%n", dealerResult, dealer.calculateTotalPoints());
         for (Player player : players.getPlayers()) {
