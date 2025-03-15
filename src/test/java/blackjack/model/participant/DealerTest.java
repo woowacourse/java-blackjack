@@ -2,9 +2,9 @@ package blackjack.model.participant;
 
 import static blackjack.model.card.CardFixtures.NO_SHUFFLER;
 import static blackjack.model.card.CardFixtures.SPADE_ACE_CARD;
+import static blackjack.model.card.CardFixtures.SPADE_FIVE_CARD;
 import static blackjack.model.card.CardFixtures.SPADE_SIX_CARD;
 import static blackjack.model.card.CardFixtures.SPADE_TEN_CARD;
-import static blackjack.model.card.CardFixtures.SPADE_TWO_CARD;
 import static blackjack.model.card.CardFixtures.createCard;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -37,9 +37,9 @@ class DealerTest {
         dealer.dealCard(player);
 
         // then
-        assertThat(player.getHand())
+        assertThat(player.getState().getHand().getCards())
                 .contains(SPADE_ACE_CARD);
-        assertThat(player.getHand())
+        assertThat(player.getState().getHand().getCards())
                 .hasSize(1);
     }
 
@@ -54,9 +54,9 @@ class DealerTest {
         dealer.dealCard(dealer);
 
         // then
-        assertThat(dealer.getHand())
+        assertThat(dealer.getState().getHand().getCards())
                 .contains(SPADE_ACE_CARD);
-        assertThat(dealer.getHand())
+        assertThat(dealer.getState().getHand().getCards())
                 .hasSize(1);
     }
 
@@ -74,66 +74,14 @@ class DealerTest {
         // then
         assertThatCode(() -> dealer.dealCard(dealer))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("더 이상 카드를 받을 수 없습니다.");
+                .hasMessage("블랙잭이라 카드를 더 받을 수 없습니다.");
     }
 
-    @DisplayName("가진 패의 총합을 계산한다.")
-    @Test
-    void calculateHandTotalTest() {
-        // given
-        List<Card> cards = List.of(SPADE_TEN_CARD, SPADE_SIX_CARD);
-        Dealer dealer = new Dealer(Deck.createDeckByCards(cards, NO_SHUFFLER));
-        dealer.dealCard(dealer);
-        dealer.dealCard(dealer);
-
-        // when
-        int total = dealer.getTotal();
-
-        // then
-        assertThat(total)
-                .isEqualTo(16);
-    }
-
-    @DisplayName("ACE를 가진 채, ACE를 제외한 총합이 11 이하인 경우 ACE를 11로 간주한다.")
-    @Test
-    void calculateHandTotalWithAceTest() {
-        // given
-        List<Card> cards = List.of(SPADE_ACE_CARD, SPADE_TEN_CARD);
-        Dealer dealer = new Dealer(Deck.createDeckByCards(cards, NO_SHUFFLER));
-        dealer.dealCard(dealer);
-        dealer.dealCard(dealer);
-
-        // when
-        int total = dealer.getTotal();
-
-        // then
-        assertThat(total)
-                .isEqualTo(21);
-    }
-
-    @DisplayName("ACE를 가진 채, ACE를 제외한 총합이 11 초과인 경우 ACE를 1로 간주한다.")
-    @Test
-    void calculateHandTotalWithAceTestOver11() {
-        // given
-        List<Card> cards = List.of(SPADE_ACE_CARD, SPADE_TWO_CARD, SPADE_TEN_CARD);
-        Dealer dealer = new Dealer(Deck.createDeckByCards(cards, NO_SHUFFLER));
-        dealer.dealCard(dealer);
-        dealer.dealCard(dealer);
-        dealer.dealCard(dealer);
-
-        // when
-        int total = dealer.getTotal();
-
-        // then
-        assertThat(total)
-                .isEqualTo(13);
-    }
-
-    @DisplayName("패가 2장만 있고, 합이 21이면 블랙잭이다.")
+    @DisplayName("블랙잭이면 끝난다.")
     @ParameterizedTest
     @CsvSource({
             "TEN, ACE, true",
-            "TEN, TEN, false",
+            "TEN, FIVE, false",
     })
     void isBlackjackTest(CardValue cardValue1, CardValue cardValue2, boolean expected) {
         // given
@@ -145,17 +93,17 @@ class DealerTest {
         dealer.dealCard(dealer);
 
         // when
-        boolean isBlackjack = dealer.isBlackjack();
+        boolean isFinished = dealer.isFinished();
 
         // then
-        assertThat(isBlackjack)
+        assertThat(isFinished)
                 .isSameAs(expected);
     }
 
-    @DisplayName("21이 초과하면 버스트이다.")
+    @DisplayName("21이 초과하면 끝난다.")
     @ParameterizedTest
     @CsvSource({
-            "TEN, TEN, TEN, true",
+            "TEN, FIVE, TEN, true",
             "TWO, TWO, ACE, false",
     })
     void isBustTest(CardValue cardValue1, CardValue cardValue2, CardValue cardValue3, boolean expected) {
@@ -170,10 +118,10 @@ class DealerTest {
         dealer.dealCard(dealer);
 
         // when
-        boolean isBust = dealer.isBust();
+        boolean isFinished = dealer.isFinished();
 
         // then
-        assertThat(isBust)
+        assertThat(isFinished)
                 .isSameAs(expected);
     }
 
@@ -208,51 +156,6 @@ class DealerTest {
                 .hasMessage("딜러가 가진 패가 없습니다.");
     }
 
-    @DisplayName("가진 패의 총합이 16이하인 경우 히트한다.")
-    @ParameterizedTest
-    @CsvSource({
-            "TEN, SIX, true",
-            "TEN, SEVEN, false"
-    })
-    void canHitTrueTest(CardValue cardValue1, CardValue cardValue2, boolean expected) {
-        // given
-        Card card1 = createCard(Suit.SPADES, cardValue1);
-        Card card2 = createCard(Suit.SPADES, cardValue2);
-        List<Card> cards = List.of(card1, card2);
-        Dealer dealer = new Dealer(Deck.createDeckByCards(cards, NO_SHUFFLER));
-        dealer.dealCard(dealer);
-        dealer.dealCard(dealer);
-
-        // when
-        boolean isHit = dealer.decideHit();
-
-        // then
-        assertThat(isHit)
-                .isSameAs(expected);
-    }
-
-    @DisplayName("딜러는 카드가 2장일 때만 히트를 결정한다.")
-    @ParameterizedTest
-    @CsvSource({
-            "TEN, THREE, THREE",
-    })
-    void canHitTrueTest(CardValue cardValue1, CardValue cardValue2, CardValue cardValue3) {
-        // given
-        Card card1 = createCard(Suit.SPADES, cardValue1);
-        Card card2 = createCard(Suit.SPADES, cardValue2);
-        Card card3 = createCard(Suit.SPADES, cardValue3);
-        List<Card> cards = List.of(card1, card2, card3);
-        Dealer dealer = new Dealer(Deck.createDeckByCards(cards, NO_SHUFFLER));
-        dealer.dealCard(dealer);
-        dealer.dealCard(dealer);
-        dealer.dealCard(dealer);
-
-        // when, then
-        assertThatCode(dealer::decideHit)
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("딜러가 가진 패가 2장이 아니어서 히트 여부를 결정할 수 없습니다.");
-    }
-
     @DisplayName("딜러는 참가자와 비교하여 승부를 낼 수 있다.")
     @Nested
     class CompareWithTest {
@@ -262,10 +165,12 @@ class DealerTest {
         void lose_WhenPlayerBust() {
             // given
             Player player = new Player(new Name("포비"));
-            player.receiveHand(SPADE_TEN_CARD);
-            player.receiveHand(SPADE_TEN_CARD);
-            player.receiveHand(SPADE_TEN_CARD);
+            player.receiveCard(SPADE_TEN_CARD);
+            player.receiveCard(SPADE_TEN_CARD);
+            player.receiveCard(SPADE_TEN_CARD);
             Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+            dealer.receiveCard(SPADE_TEN_CARD);
+            dealer.receiveCard(SPADE_TEN_CARD);
 
             // when
             MatchResult matchResult = dealer.evaluateOutcome(player);
@@ -280,10 +185,13 @@ class DealerTest {
         void win_WhenDealerBust() {
             // given
             Player player = new Player(new Name("포비"));
+            player.receiveCard(SPADE_TEN_CARD);
+            player.receiveCard(SPADE_TEN_CARD);
+            player.stand();
             Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
-            dealer.receiveHand(SPADE_TEN_CARD);
-            dealer.receiveHand(SPADE_TEN_CARD);
-            dealer.receiveHand(SPADE_TEN_CARD);
+            dealer.receiveCard(SPADE_TEN_CARD);
+            dealer.receiveCard(SPADE_FIVE_CARD);
+            dealer.receiveCard(SPADE_TEN_CARD);
 
             // when
             MatchResult matchResult = dealer.evaluateOutcome(player);
@@ -298,11 +206,11 @@ class DealerTest {
         void draw_WhenAllBlackjack() {
             // given
             Player player = new Player(new Name("포비"));
-            player.receiveHand(SPADE_ACE_CARD);
-            player.receiveHand(SPADE_TEN_CARD);
+            player.receiveCard(SPADE_ACE_CARD);
+            player.receiveCard(SPADE_TEN_CARD);
             Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
-            dealer.receiveHand(SPADE_ACE_CARD);
-            dealer.receiveHand(SPADE_TEN_CARD);
+            dealer.receiveCard(SPADE_ACE_CARD);
+            dealer.receiveCard(SPADE_TEN_CARD);
 
             // when
             MatchResult matchResult = dealer.evaluateOutcome(player);
@@ -317,11 +225,11 @@ class DealerTest {
         void win_WhenOnlyPlayerBlackjack() {
             // given
             Player player = new Player(new Name("포비"));
-            player.receiveHand(SPADE_ACE_CARD);
-            player.receiveHand(SPADE_TEN_CARD);
+            player.receiveCard(SPADE_ACE_CARD);
+            player.receiveCard(SPADE_TEN_CARD);
             Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
-            dealer.receiveHand(SPADE_TEN_CARD);
-            dealer.receiveHand(SPADE_TEN_CARD);
+            dealer.receiveCard(SPADE_TEN_CARD);
+            dealer.receiveCard(SPADE_TEN_CARD);
 
             // when
             MatchResult matchResult = dealer.evaluateOutcome(player);
@@ -336,11 +244,12 @@ class DealerTest {
         void lose_WhenOnlyDealerBlackjack() {
             // given
             Player player = new Player(new Name("포비"));
-            player.receiveHand(SPADE_TEN_CARD);
-            player.receiveHand(SPADE_TEN_CARD);
+            player.receiveCard(SPADE_TEN_CARD);
+            player.receiveCard(SPADE_TEN_CARD);
+            player.stand();
             Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
-            dealer.receiveHand(SPADE_ACE_CARD);
-            dealer.receiveHand(SPADE_TEN_CARD);
+            dealer.receiveCard(SPADE_ACE_CARD);
+            dealer.receiveCard(SPADE_TEN_CARD);
 
             // when
             MatchResult matchResult = dealer.evaluateOutcome(player);
@@ -357,16 +266,17 @@ class DealerTest {
                 "KING, NINE, KING, NINE, DRAW",
                 "KING, KING, KING, EIGHT, WIN"
         })
-        void compareWithTest(CardValue playerCardValue1, CardValue playerCardValue2,
-                       CardValue dealerCardValue1, CardValue dealerCardValue2,
-                       MatchResult expected) {
+        void evaluateOutcomeTest(CardValue playerCardValue1, CardValue playerCardValue2,
+                                 CardValue dealerCardValue1, CardValue dealerCardValue2,
+                                 MatchResult expected) {
             // given
             Player player = new Player(new Name("포비"));
-            player.receiveHand(createCard(Suit.SPADES, playerCardValue1));
-            player.receiveHand(createCard(Suit.SPADES, playerCardValue2));
+            player.receiveCard(createCard(Suit.SPADES, playerCardValue1));
+            player.receiveCard(createCard(Suit.SPADES, playerCardValue2));
+            player.stand();
             Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
-            dealer.receiveHand(createCard(Suit.SPADES, dealerCardValue1));
-            dealer.receiveHand(createCard(Suit.SPADES, dealerCardValue2));
+            dealer.receiveCard(createCard(Suit.SPADES, dealerCardValue1));
+            dealer.receiveCard(createCard(Suit.SPADES, dealerCardValue2));
 
             // when
             MatchResult matchResult = dealer.evaluateOutcome(player);
@@ -376,4 +286,38 @@ class DealerTest {
                     .isSameAs(expected);
         }
     }
+
+    @DisplayName("플레이어의 턴이 종료되지 않은 경우, 승부를 판단할 때 예외가 발생한다.")
+    @Test
+    void shouldThrowException_WhenPlayerTurnNotFinished() {
+        // given
+        Player player = new Player(new Name("포비"));
+        player.receiveCard(SPADE_TEN_CARD);
+        player.receiveCard(SPADE_TEN_CARD);
+        Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+        dealer.receiveCard(SPADE_TEN_CARD);
+        dealer.receiveCard(SPADE_TEN_CARD);
+
+        // when, then
+        assertThatCode(() -> dealer.evaluateOutcome(player))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("플레이어의 턴이 종료되지 않았습니다.");
+    }
+
+    @DisplayName("딜러의 턴이 종료되지 않은 경우, 승부를 판단할 때 예외가 발생한다.")
+    @Test
+    void shouldThrowException_WhenDealerTurnNotFinished() {
+        // given
+        Player player = new Player(new Name("포비"));
+        player.receiveCard(SPADE_TEN_CARD);
+        player.receiveCard(SPADE_TEN_CARD);
+        player.stand();
+        Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
+
+        // when, then
+        assertThatCode(() -> dealer.evaluateOutcome(player))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("딜러의 턴이 종료되지 않았습니다.");
+    }
+
 }

@@ -86,26 +86,36 @@ public final class BlackjackController {
     }
 
     private void askHit(Dealer dealer, Player player) {
-        while (player.canHit() && wantsToHit(player)) {
+        while (!player.isFinished()) {
+            playerHitOrStand(dealer, player);
+        }
+    }
+
+    private void playerHitOrStand(Dealer dealer, Player player) {
+        if (wantsToHit(player)) {
             dealer.dealCard(player);
             gamePlayView.printPlayerHand(player);
+            return;
         }
+        player.stand();
+        gamePlayView.printPlayerHand(player);
     }
 
     private boolean wantsToHit(Player player) {
-        return gamePlayView.readHitOrNot(player.getName()).isHit();
+        return gamePlayView.readHitOrNot(player.getName())
+                .isHit();
     }
 
     private void askHitForDealer(Dealer dealer) {
-        boolean isDealerHitting = dealer.canHit() && dealer.decideHit();
-        if (isDealerHitting) {
+        while (!dealer.isFinished()) {
             dealer.dealCard(dealer);
+            gamePlayView.printDealerHit(true);
         }
-        gamePlayView.printDealerHit(isDealerHitting);
+        gamePlayView.printDealerHit(false);
     }
 
     private void displayResult(Dealer dealer, GamePlayers gamePlayers, BettingTable bettingTable) {
-        gameResultView.printDealerHandAndTotal(dealer.getHand(), dealer.getTotal());
+        gameResultView.printDealerHandAndTotal(dealer.getState().getHand().getCards(), dealer.getState().getHand().getTotal());
         gameResultView.printPlayerHandAndTotal(gamePlayers.getPlayers());
         displayFinalProfit(dealer, bettingTable);
     }

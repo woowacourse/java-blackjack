@@ -26,13 +26,22 @@ public class GamePlayView {
         System.out.println();
     }
 
+    private String joinPlayerNamesWithComma(List<Player> players) {
+        return players.stream()
+                .map(player -> player.getName().value())
+                .collect(Collectors.joining(", "));
+    }
+
     public void printPlayerHand(Player player) {
         System.out.printf("%s: %s%n", player.getName().value(), getHand(player));
     }
 
-    private String joinPlayerNamesWithComma(List<Player> players) {
-        return players.stream()
-                .map(player -> player.getName().value())
+    private String getHand(Player player) {
+        return player.getState()
+                .getHand()
+                .getCards()
+                .stream()
+                .map(Card::getDisplayLabel)
                 .collect(Collectors.joining(", "));
     }
 
@@ -42,12 +51,5 @@ public class GamePlayView {
             return;
         }
         System.out.println();
-    }
-
-    private String getHand(Player player) {
-        return player.getHand()
-                .stream()
-                .map(Card::getDisplayLabel)
-                .collect(Collectors.joining(", "));
     }
 }

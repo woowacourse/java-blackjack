@@ -72,11 +72,14 @@ class BettingTableTest {
     void calculatePayoutsTest(CardValue playerCardValue1, CardValue playerCardValue2, double multiplier) {
         // given
         Player player = new Player(new Name("포비"));
-        player.receiveHand(createCard(Suit.SPADES, playerCardValue1));
-        player.receiveHand(createCard(Suit.SPADES, playerCardValue2));
+        player.receiveCard(createCard(Suit.SPADES, playerCardValue1));
+        player.receiveCard(createCard(Suit.SPADES, playerCardValue2));
+        if (!player.getState().isFinished()) {
+            player.stand();
+        }
         Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
-        dealer.receiveHand(createCard(Suit.SPADES, CardValue.NINE));
-        dealer.receiveHand(createCard(Suit.SPADES, CardValue.NINE));
+        dealer.receiveCard(createCard(Suit.SPADES, CardValue.NINE));
+        dealer.receiveCard(createCard(Suit.SPADES, CardValue.NINE));
         BettingTable bettingTable = new BettingTable();
         int betAmount = 1_000;
         bettingTable.bet(player, betAmount);
