@@ -35,11 +35,4 @@ public class BattleResults {
         return 0;
     }
 
-    public int requestLoseCounts() {
-        if (battleResults.containsKey(BattleResult.LOSE)) {
-            return battleResults.get(BattleResult.LOSE);
-        }
-
-        return 0;
-    }
 }

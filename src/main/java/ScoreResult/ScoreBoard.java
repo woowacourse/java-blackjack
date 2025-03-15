@@ -92,11 +92,6 @@ public class ScoreBoard {
         return battleResults.requestDrawCounts();
     }
 
-    public int requestLoseCounts(Participant participant) {
-        BattleResults battleResults = scoreBoard.get(participant);
-        return battleResults.requestLoseCounts();
-    }
-
     public Map<Participant, BattleResults> getScoreBoard() {
         return scoreBoard;
     }
