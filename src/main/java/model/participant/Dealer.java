@@ -1,6 +1,7 @@
 package model.participant;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 import model.betting.Bet;
@@ -59,14 +60,28 @@ public final class Dealer {
     }
 
     public int calculateRevenue() {
-        return bets.stream().mapToInt(Bet::getMoney).sum();
+        int revenue = 0;
+        for (Bet bet : bets) {
+            if (bet.ownerEquals(this)) {
+                revenue += bet.getMoney();
+                continue;
+            }
+            revenue -= bet.getMoney();
+        }
+        return revenue;
     }
 
-    public Bet returnBetOf(Player player) {
-        return bets.stream()
-                .filter(bet -> bet.getBetter().equals(player))
+    public void updateBetOwner(Player player) {
+        Bet updatingBet = bets.stream()
+                .filter(bet -> bet.getOwner().equals(player))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("플레이어의 배팅 금액이 저장되지 않았습니다."));
+        this.bets.remove(updatingBet);
+        this.bets.add(updatingBet.changeOwnerTo(this));
+    }
+
+    public List<Bet> getBets() {
+        return Collections.unmodifiableList(bets);
     }
 }
 

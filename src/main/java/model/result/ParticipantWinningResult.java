@@ -61,6 +61,10 @@ public final class ParticipantWinningResult {
         dealerResult.merge(gameResult.findReverse(), 1, Integer::sum);
     }
 
+    public GameResult findResultByPlayer(Player player) {
+        return result.get(player);
+    }
+
     public Map<Player, GameResult> getResult() {
         return Collections.unmodifiableMap(result);
     }

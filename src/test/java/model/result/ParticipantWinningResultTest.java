@@ -10,6 +10,7 @@ import model.deck.CardSuit;
 import model.participant.Dealer;
 import model.participant.Player;
 import model.participant.Players;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -218,5 +219,22 @@ class ParticipantWinningResultTest {
 
         //then
         assertEquals(gameResult.get(player), expect);
+    }
+
+    @Test
+    @DisplayName("특정 플레이어의 승패 결과를 반환한다")
+    void 특정_플레이어의_승패_결과를_반환한다() {
+        //given
+        GameResult playerResult = GameResult.WIN;
+        Map<Player, GameResult> playerGameResult = Map.of(
+                player, playerResult
+        );
+        ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(playerGameResult);
+
+        //when
+        GameResult gameResult = participantWinningResult.findResultByPlayer(player);
+
+        //then
+        Assertions.assertThat(gameResult).isEqualTo(playerResult);
     }
 }

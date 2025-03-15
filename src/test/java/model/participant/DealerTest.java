@@ -3,11 +3,11 @@ package model.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
 import model.betting.Bet;
 import model.deck.Card;
 import model.deck.CardRank;
 import model.deck.CardSuit;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -54,7 +54,7 @@ class DealerTest {
         assertThat(dealer.openInitialDeal()).containsExactly(firstCard);
     }
 
-    @DisplayName("플레이어가 제시한 배팅 금액을 딜러가 갖는다.")
+    @DisplayName("플레이어가 제시한 배팅 금액을 딜러가 보관한다.")
     @Test
     void 플레이어_제시_배팅금액을_저장() {
         //given
@@ -66,7 +66,7 @@ class DealerTest {
         dealer.receiveBet(bet);
 
         //then
-        assertThat(dealer.calculateRevenue()).isEqualTo(money);
+        assertThat(bet.getOwner()).isEqualTo(better);
     }
 
     @DisplayName("플레이어가 승리하면 플레이어의 배팅 금액을 돌려준다")
@@ -79,9 +79,43 @@ class DealerTest {
         dealer.receiveBet(bet);
 
         //then
-        Bet returnedBet = dealer.returnBetOf(better);
+        Bet returnedBet = dealer.getBets().getFirst();
 
         //then
         assertThat(returnedBet.equals(bet)).isTrue();
+    }
+
+    @DisplayName("패배한 플레이어의 베팅금액을 딜러의 것으로 만든다.")
+    @Test
+    void 패배한_플레이어의_배팅금액은_딜러의_것이_된다() {
+        //given
+        Player pobi = new Player("pobi");
+        dealer.receiveBet(new Bet(10000, pobi));
+        Player jason = new Player("jason");
+        dealer.receiveBet(new Bet(20000, jason));
+
+        //when
+        dealer.updateBetOwner(jason);
+        List<Bet> bets = dealer.getBets();
+
+        //then
+        assertThat(bets.getFirst().getOwner()).isEqualTo(pobi);
+        assertThat(bets.getLast().getOwner()).isEqualTo(dealer);
+    }
+
+    @DisplayName("10000원을 배팅한 플레이어는 승리하고, 20000원을 배팅한 플레이어는 패배했을 때 딜러는 10000원의 수익이 발생한다.")
+    @Test
+    void 딜러는_10000원의_수익이_발생한다() {
+        //given
+        Player pobi = new Player("pobi");
+        dealer.receiveBet(new Bet(10000, pobi));
+        Player jason = new Player("jason");
+        dealer.receiveBet(new Bet(20000, jason));
+
+        //when
+        dealer.updateBetOwner(jason);
+
+        //then
+        assertThat(dealer.calculateRevenue()).isEqualTo(10000);
     }
 }
