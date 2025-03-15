@@ -21,16 +21,16 @@ public class GameParticipant {
         return cardHand.calculateScore();
     }
 
+    public boolean canHit() {
+        return !isBlackJack() && !isBust();
+    }
+
     public boolean isBust() {
         return cardHand.isBust();
     }
 
     public boolean isBlackJack() {
         return cardHand.isBlackJack();
-    }
-
-    public boolean canHit() {
-        return !isBlackJack() && !isBust();
     }
 
     public String getName() {

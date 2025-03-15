@@ -26,6 +26,18 @@ public enum GameResult {
         return PUSH;
     }
 
+    private static boolean isDealerWinning(Dealer dealer, int dealerScore, int playerScore) {
+        return dealerScore > playerScore && !dealer.isBust();
+    }
+
+    private static boolean isDealerLosing(int dealerScore, int playerScore) {
+        return dealerScore < playerScore;
+    }
+
+    public static GameResult calculatePlayerGameResult(Dealer dealer, Player player) {
+        return getOppositeResult(calculateDealerGameResult(dealer, player));
+    }
+
     public static GameResult getOppositeResult(GameResult gameResult) {
         if (gameResult == WIN) {
             return LOSE;
@@ -36,19 +48,7 @@ public enum GameResult {
         return PUSH;
     }
 
-    public static GameResult calculatePlayerGameResult(Dealer dealer, Player player) {
-        return getOppositeResult(calculateDealerGameResult(dealer, player));
-    }
-
     public String getName() {
         return name;
-    }
-
-    private static boolean isDealerLosing(int dealerScore, int playerScore) {
-        return dealerScore < playerScore;
-    }
-
-    private static boolean isDealerWinning(Dealer dealer, int dealerScore, int playerScore) {
-        return dealerScore > playerScore && !dealer.isBust();
     }
 }

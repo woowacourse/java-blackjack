@@ -9,6 +9,12 @@ public class Bet {
         this.amount = amount;
     }
 
+    private void validateAmount(double amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("[ERROR] 배팅 금액은 0보다 커야 합니다.");
+        }
+    }
+
     public double getAmount() {
         return amount;
     }
@@ -19,11 +25,5 @@ public class Bet {
 
     public double getLossAmount() {
         return -amount;
-    }
-
-    private void validateAmount(double amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("[ERROR] 배팅 금액은 0보다 커야 합니다.");
-        }
     }
 }

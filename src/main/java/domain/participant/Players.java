@@ -17,13 +17,13 @@ public class Players {
         players.add(player);
     }
 
-    public List<Player> getPlayers() {
-        return players;
-    }
-
     public List<String> getPlayerNames() {
         return players.stream()
                 .map(Player::getName)
                 .toList();
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }

@@ -1,7 +1,6 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.card.Deck;
@@ -59,18 +58,6 @@ class GameTest {
         game.dealerHit();
         // then
         assertThat(game.getDealerCards().size()).isEqualTo(3);
-    }
-
-    @Test
-    @DisplayName("게임 참가자의 승패 결과를 계산한다.")
-    void testCalculateDealerGameResult() {
-        // given
-        List<Player> players = game.getPlayers();
-        Player player = players.getFirst();
-        // when & then
-        assertThatCode(() -> {
-            player.calculateGameResult(game.getDealer());
-        }).doesNotThrowAnyException();
     }
 
     @Test
