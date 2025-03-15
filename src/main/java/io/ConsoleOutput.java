@@ -107,7 +107,7 @@ public class ConsoleOutput {
         System.out.println("딜러: " + betCenter.calculateDealerProfit(dealer));
         Map<Player, BetAmount> deriveBetResults = betCenter.deriveBettingResults(dealer);
         for (Player player : deriveBetResults.keySet()) {
-            System.out.println(player.getNickname() + ": " + deriveBetResults.get(player));
+            System.out.println(player.getNickname() + ": " + deriveBetResults.get(player).getValue());
         }
     }
 }
