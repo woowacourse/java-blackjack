@@ -31,16 +31,26 @@ public class BlackjackController {
         Players players = PlayersFactory.generate(names, bettingMoneyList);
         Dealer dealer = DealerFactory.generate();
 
-        executeGameFlow(deck, players, dealer);
+        giveCards(deck, players, dealer);
 
         printResult(players, dealer);
     }
 
-    private void executeGameFlow(Deck deck, Players players, Dealer dealer) {
+    private void giveCards(Deck deck, Players players, Dealer dealer) {
         giveStartingCards(deck, players, dealer);
 
         giveMoreCardFor(deck, players);
         giveMoreCardFor(deck, dealer);
+    }
+
+    private void printResult(Players players, Dealer dealer) {
+        players.adjustBalance(dealer);
+
+        int playersTotalRevenue = players.getTotalRevenue();
+        Map<Player, Integer> revenueMap = players.getRevenueMap();
+
+        OutputView.printCardResult(players, dealer);
+        OutputView.printRevenue(playersTotalRevenue, revenueMap);
     }
 
     private void giveStartingCards(Deck deck, Players players, Dealer dealer) {
@@ -66,40 +76,29 @@ public class BlackjackController {
         }
     }
 
-    private void giveMoreCardFor(Deck deck, Player player) {
-        // 10줄 줄여야함
-        Confirmation confirmation = InputView.askToGetMoreCard(player);
-        if (confirmation == Confirmation.N) {
-            OutputView.printCardResult(player);
-            return;
-        }
-
-        giveCard(Deck::takeOneCard, deck, player);
-        OutputView.printCardResult(player);
-
-        if (player.isBusted()) {
-            OutputView.printBustedPlayer(player);
-            return;
-        }
-
-        if (player.canTakeCard()) {
-            giveMoreCardFor(deck, player);
-        }
-    }
-
     private void giveCard(Function<Deck, List<Card>> function, Deck deck, Participant participant) {
         List<Card> cards = function.apply(deck);
 
         cards.forEach(participant::takeCard);
     }
 
-    private void printResult(Players players, Dealer dealer) {
-        players.adjustBalance(dealer);
+    private void giveMoreCardFor(Deck deck, Player player) {
+        while (canReceiveMoreCard(player)) {
+            giveCard(Deck::takeOneCard, deck, player);
+            OutputView.printCardStatus(player);
+        }
+    }
 
-        int playersTotalRevenue = players.getTotalRevenue();
-        Map<Player, Integer> revenueMap = players.getRevenueMap();
+    private boolean canReceiveMoreCard(Player player) {
+        return notIsBustedFor(player) && player.canTakeCard() && InputView.askToGetMoreCard(player) != Confirmation.N;
+    }
 
-        OutputView.printCardResult(players, dealer);
-        OutputView.printRevenue(playersTotalRevenue, revenueMap);
+    private boolean notIsBustedFor(Player player) {
+        boolean busted = player.isBusted();
+        if (busted) {
+            OutputView.printBustedPlayer(player);
+        }
+
+        return !busted;
     }
 }
