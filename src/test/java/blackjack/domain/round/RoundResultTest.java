@@ -1,30 +1,25 @@
 package blackjack.domain.round;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.fixture.DeckFixture;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class RoundResultTest {
-
-    private Player player= new Player("Pobi");
-    private Dealer dealer = new Dealer();
 
     @Test
     @DisplayName("상대방만 버스트했다면 카드 숫자 합에 상관없이 승리한다")
     void judgeResultTest1() {
         // given
         Deck playerDeck = DeckFixture.deckOf(CardNumber.JACK, CardNumber.TWO);
-        player.initialize(playerDeck);
         Deck dealerDeck = DeckFixture.deckOf(CardNumber.KING, CardNumber.QUEEN, CardNumber.NINE);
-        dealer.initialize(dealerDeck);
-        dealer.drawCard(dealerDeck);
+        Player player = new Player("Pobi", playerDeck.draw(), playerDeck.draw());
+        Dealer dealer = new Dealer(dealerDeck.draw(), dealerDeck.draw(), dealerDeck.draw());
 
         // when
         RoundResult roundResult = RoundResult.judgeResult(player, dealer);
@@ -38,9 +33,9 @@ class RoundResultTest {
     void judgeResultTest2() {
         // given
         Deck playerDeck = DeckFixture.deckOf(CardNumber.JACK, CardNumber.TWO);
-        player.initialize(playerDeck);
         Deck dealerDeck = DeckFixture.deckOf(CardNumber.THREE, CardNumber.QUEEN);
-        dealer.initialize(dealerDeck);
+        Player player = new Player("Pobi", playerDeck.draw(), playerDeck.draw());
+        Dealer dealer = new Dealer(dealerDeck.draw(), dealerDeck.draw());
 
         // when
         RoundResult roundResult = RoundResult.judgeResult(player, dealer);
@@ -54,16 +49,15 @@ class RoundResultTest {
     void judgeResultTest3() {
         // given
         Deck playerDeck = DeckFixture.deckOf(CardNumber.JACK, CardNumber.ACE);
-        player.initialize(playerDeck);
         Deck dealerDeck = DeckFixture.deckOf(CardNumber.QUEEN, CardNumber.NINE, CardNumber.TWO);
-        dealer.initialize(dealerDeck);
-        dealer.drawCard(dealerDeck);
+        Player player = new Player("Pobi", playerDeck.draw(), playerDeck.draw());
+        Dealer dealer = new Dealer(dealerDeck.draw(), dealerDeck.draw(), dealerDeck.draw());
 
         // when
         RoundResult roundResult = RoundResult.judgeResult(player, dealer);
 
         // then
-        assertThat(roundResult).isEqualTo(RoundResult.WIN);
+        assertThat(roundResult).isEqualTo(RoundResult.BLACKJACK_WIN);
     }
 
     @Test
@@ -71,9 +65,9 @@ class RoundResultTest {
     void judgeResultTest4() {
         // given
         Deck playerDeck = DeckFixture.deckOf(CardNumber.JACK, CardNumber.ACE);
-        player.initialize(playerDeck);
         Deck dealerDeck = DeckFixture.deckOf(CardNumber.JACK, CardNumber.ACE);
-        dealer.initialize(dealerDeck);
+        Player player = new Player("Pobi", playerDeck.draw(), playerDeck.draw());
+        Dealer dealer = new Dealer(dealerDeck.draw(), dealerDeck.draw());
 
         // when
         RoundResult roundResult = RoundResult.judgeResult(player, dealer);
@@ -83,18 +77,34 @@ class RoundResultTest {
     }
 
     @Test
-    @DisplayName("블랙잭이 없다면 무승부로 처리한다.")
+    @DisplayName("블랙잭이 없다면 무승부로 처리한다")
     void judgeResultTest5() {
         // given
         Deck playerDeck = DeckFixture.deckOf(CardNumber.JACK, CardNumber.TWO);
-        player.initialize(playerDeck);
         Deck dealerDeck = DeckFixture.deckOf(CardNumber.JACK, CardNumber.TWO);
-        dealer.initialize(dealerDeck);
+        Player player = new Player("Pobi", playerDeck.draw(), playerDeck.draw());
+        Dealer dealer = new Dealer(dealerDeck.draw(), dealerDeck.draw());
 
         // when
         RoundResult roundResult = RoundResult.judgeResult(player, dealer);
 
         // then
         assertThat(roundResult).isEqualTo(RoundResult.TIE);
+    }
+
+    @Test
+    @DisplayName("버스트될 경우 상대방의 결과와 상관없이 버스트로 패한다")
+    void judgeResultTest6() {
+        // given
+        Deck playerDeck = DeckFixture.deckOf(CardNumber.JACK, CardNumber.SEVEN, CardNumber.EIGHT);
+        Deck dealerDeck = DeckFixture.deckOf(CardNumber.KING, CardNumber.QUEEN);
+        Player player = new Player("Pobi", playerDeck.draw(), playerDeck.draw(), playerDeck.draw());
+        Dealer dealer = new Dealer(dealerDeck.draw(), dealerDeck.draw());
+
+        // when
+        RoundResult roundResult = RoundResult.judgeResult(player, dealer);
+
+        // then
+        assertThat(roundResult).isEqualTo(RoundResult.BUST);
     }
 }
