@@ -1,7 +1,6 @@
 package domain;
 
 import domain.card.GameCardDeck;
-import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import org.assertj.core.api.Assertions;
@@ -45,6 +44,6 @@ public class PlayerTest {
         Participant dealer = new Player("우가");
 
         //when & then
-        Assertions.assertThat(dealer.areYouDealer()).isFalse();
+        Assertions.assertThat(dealer.isDealer()).isFalse();
     }
 }
