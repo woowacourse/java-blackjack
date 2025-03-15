@@ -1,5 +1,6 @@
 package domain.card;
 
+import domain.CardsFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -25,12 +26,12 @@ public class HandTest {
     void test2() {
         Hand hand = new Hand();
 
-        hand.addCard(new Card(Denomination.TWO, Suit.CLUB));    // 2
-        hand.addCard(new Card(Denomination.THREE, Suit.CLUB));  // 3
-        hand.addCard(new Card(Denomination.JACK, Suit.CLUB));   // 10
+        CardsFactory cardsFactory = new CardsFactory();
+        hand.addCard(cardsFactory.createScore18Cards());
 
-        assertThat(hand.getTotal()).isEqualTo(15);
+        assertThat(hand.getTotal()).isEqualTo(18);
     }
+
     @Nested
     @DisplayName("ACE 고유 숫자값 테스트")
     class AceDetectTest{
@@ -39,9 +40,8 @@ public class HandTest {
         void test3() {
             Hand hand = new Hand();
 
-            hand.addCard(new Card(Denomination.TWO, Suit.CLUB));
-            hand.addCard(new Card(Denomination.THREE, Suit.CLUB));
-            hand.addCard(new Card(Denomination.ACE, Suit.CLUB));
+            CardsFactory cardsFactory = new CardsFactory();
+            hand.addCard(cardsFactory.createScore18CardsWithAce());
 
             assertThat(hand.containsOriginalAce()).isTrue();
         }
@@ -52,7 +52,6 @@ public class HandTest {
             Hand hand = new Hand();
 
             hand.addCard(new Card(Denomination.TWO, Suit.CLUB));
-            hand.addCard(new Card(Denomination.THREE, Suit.CLUB));
 
             assertThat(hand.containsOriginalAce()).isFalse();
         }
@@ -62,7 +61,6 @@ public class HandTest {
         void test5() {
             Hand hand = new Hand();
 
-            hand.addCard(new Card(Denomination.TWO, Suit.CLUB));
             hand.addCard(new Card(Denomination.ACE, Suit.CLUB));
 
             hand.setOriginalAceValueToOne();
@@ -76,10 +74,10 @@ public class HandTest {
     void test6() {
         Hand hand = new Hand();
 
-        hand.addCard(new Card(Denomination.TWO, Suit.CLUB));
-        hand.addCard(new Card(Denomination.ACE, Suit.CLUB));
+        CardsFactory cardsFactory = new CardsFactory();
+        hand.addCard(cardsFactory.createCanResolveBustCardsWithOneAce());
 
-        assertThat(hand.isBust()).isFalse();
+        assertThat(hand.isBust()).isTrue();
     }
 
     @Nested
@@ -90,8 +88,8 @@ public class HandTest {
         void test7() {
             Hand hand = new Hand();
 
-            hand.addCard(new Card(Denomination.TEN, Suit.CLUB));
-            hand.addCard(new Card(Denomination.ACE, Suit.CLUB));
+            CardsFactory cardsFactory = new CardsFactory();
+            hand.addCard(cardsFactory.createBlackJackCards1());
 
             assertThat(hand.isBlackJack()).isTrue();
         }
@@ -101,8 +99,8 @@ public class HandTest {
         void test8() {
             Hand hand = new Hand();
 
-            hand.addCard(new Card(Denomination.TEN, Suit.CLUB));
-            hand.addCard(new Card(Denomination.TEN, Suit.CLUB));
+            CardsFactory cardsFactory = new CardsFactory();
+            hand.addCard(cardsFactory.createScore19TwoCards());
 
             assertThat(hand.isBlackJack()).isFalse();
         }
@@ -112,9 +110,8 @@ public class HandTest {
         void test9() {
             Hand hand = new Hand();
 
-            hand.addCard(new Card(Denomination.TEN, Suit.CLUB));
-            hand.addCard(new Card(Denomination.NINE, Suit.CLUB));
-            hand.addCard(new Card(Denomination.TWO, Suit.CLUB));
+            CardsFactory cardsFactory = new CardsFactory();
+            hand.addCard(cardsFactory.createMaxScoreCards());
 
             assertThat(hand.isBlackJack()).isFalse();
         }
@@ -125,9 +122,8 @@ public class HandTest {
     void test7() {
         Hand hand = new Hand();
 
-        hand.addCard(new Card(Denomination.TEN, Suit.CLUB));
-        hand.addCard(new Card(Denomination.NINE, Suit.CLUB));
-        hand.addCard(new Card(Denomination.TWO, Suit.CLUB));
+        CardsFactory cardsFactory = new CardsFactory();
+        hand.addCard(cardsFactory.createMaxScoreCards());
 
         assertThat(hand.isMaxScore()).isTrue();
     }

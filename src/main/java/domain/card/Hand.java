@@ -1,6 +1,7 @@
 package domain.card;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
@@ -17,8 +18,8 @@ public class Hand {
         cards = new ArrayList<>();
     }
 
-    public void addCard(final Card card) {
-        cards.add(card);
+    public void addCard(final Card... cardsInput) {
+        cards.addAll(Arrays.asList(cardsInput));
     }
 
     public boolean containsOriginalAce() {

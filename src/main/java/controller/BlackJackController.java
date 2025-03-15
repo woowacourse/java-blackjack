@@ -69,8 +69,7 @@ public class BlackJackController {
     }
 
     private void drawTwoCardFromDeck(final Participant participant) {
-        participant.addCard(deck.draw());
-        participant.addCard(deck.draw());
+        participant.addCard(deck.draw(), deck.draw());
     }
 
     private void playersTurn(final Players players) {

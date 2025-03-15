@@ -2,6 +2,7 @@ package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.CardsFactory;
 import domain.bet.BetMoney;
 import domain.card.Card;
 import domain.card.Denomination;
@@ -17,10 +18,10 @@ public class PlayerTest {
     @DisplayName("플레이어는 핸드의 총합값을 반환할 수 있다")
     void test1() {
         Player player = new Player("모루");
-        player.addCard(new Card(Denomination.TWO, Suit.CLUB));
-        player.addCard(new Card(Denomination.FOUR, Suit.CLUB));
-        player.addCard(new Card(Denomination.FIVE, Suit.DIAMOND));
 
-        assertThat(player.getHandTotal()).isEqualTo(11);
+        CardsFactory cardsFactory = new CardsFactory();
+        player.addCard(cardsFactory.createScore18Cards());
+
+        assertThat(player.getHandTotal()).isEqualTo(18);
     }
 }

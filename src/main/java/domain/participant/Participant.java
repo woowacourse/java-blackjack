@@ -13,7 +13,7 @@ public abstract class Participant {
         this.hand = new Hand();
     }
 
-    public void addCard(Card card) {
+    public void addCard(Card... card) {
         hand.addCard(card);
     }
 
