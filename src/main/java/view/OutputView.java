@@ -1,6 +1,6 @@
 package view;
 
-import domain.blackjackgame.PlayerGameResult;
+import domain.blackjackgame.ParticipantGameResult;
 import domain.blackjackgame.TrumpCard;
 import java.util.List;
 import java.util.Map;
@@ -74,7 +74,7 @@ public class OutputView {
         System.out.printf(DEALER_WIN_STATUS_FORMAT, name, win, lose);
     }
 
-    public void playerWinStatus(String name, PlayerGameResult status) {
+    public void playerWinStatus(String name, ParticipantGameResult status) {
         System.out.printf(PLAYER_WIN_STATUS_FORMAT, name, status.getStatus());
     }
 

@@ -8,13 +8,11 @@ import domain.blackjackgame.BlackjackResult;
 import domain.blackjackgame.BlackjackWinner;
 import domain.blackjackgame.CardValue;
 import domain.blackjackgame.DealerWinStatus;
-import domain.blackjackgame.PlayerGameResult;
+import domain.blackjackgame.ParticipantGameResult;
 import domain.blackjackgame.Suit;
 import domain.blackjackgame.TrumpCard;
-import domain.participant.Dealer;
 import domain.strategy.BlackjackDrawStrategy;
 import domain.strategy.DeckGenerator;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -31,9 +29,8 @@ public class BlackjackWinnerTest {
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new TestDeckGenerateStrategy(trumpCards));
 
-        Dealer dealer = new Dealer(new ArrayList<>());
         List<String> names = List.of("포비", "루키");
-        BlackjackGame blackjackGame = BlackjackGame.nonBettingBlackjackGame(deck, dealer, names);
+        BlackjackGame blackjackGame = BlackjackGame.nonBettingBlackjackGame(deck, names);
         BlackjackResult blackjackDealerResult = blackjackGame.currentDealerBlackjackResult();
         List<BlackjackResult> blackjackPlayerResults = blackjackGame.currentPlayerBlackjackResult();
         BlackjackWinner blackjackWinner = new BlackjackWinner(blackjackDealerResult, blackjackPlayerResults);
@@ -41,9 +38,9 @@ public class BlackjackWinnerTest {
         assertThat(blackjackWinner.getDealerWinStatus())
                 .isEqualTo(new DealerWinStatus(0, 1));
         assertThat(blackjackWinner.getPlayerWinStatuses().get("포비"))
-                .isEqualTo(PlayerGameResult.DRAW);
+                .isEqualTo(ParticipantGameResult.DRAW);
         assertThat(blackjackWinner.getPlayerWinStatuses().get("루키"))
-                .isEqualTo(PlayerGameResult.WIN);
+                .isEqualTo(ParticipantGameResult.WIN);
     }
 
     @Test
@@ -55,9 +52,8 @@ public class BlackjackWinnerTest {
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new TestDeckGenerateStrategy(trumpCards));
 
-        Dealer dealer = new Dealer(new ArrayList<>());
         List<String> names = List.of("포비");
-        BlackjackGame blackjackGame = BlackjackGame.nonBettingBlackjackGame(deck, dealer, names);
+        BlackjackGame blackjackGame = BlackjackGame.nonBettingBlackjackGame(deck, names);
         blackjackGame.drawCard("포비");
         blackjackGame.dealerHit();
         BlackjackResult blackjackDealerResult = blackjackGame.currentDealerBlackjackResult();
@@ -67,7 +63,7 @@ public class BlackjackWinnerTest {
         assertThat(blackjackWinner.getDealerWinStatus())
                 .isEqualTo(new DealerWinStatus(0, 1));
         assertThat(blackjackWinner.getPlayerWinStatuses().get("포비"))
-                .isEqualTo(PlayerGameResult.WIN);
+                .isEqualTo(ParticipantGameResult.WIN);
     }
 
     @Test
@@ -79,9 +75,8 @@ public class BlackjackWinnerTest {
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new TestDeckGenerateStrategy(trumpCards));
 
-        Dealer dealer = new Dealer(new ArrayList<>());
         List<String> names = List.of("포비");
-        BlackjackGame blackjackGame = BlackjackGame.nonBettingBlackjackGame(deck, dealer, names);
+        BlackjackGame blackjackGame = BlackjackGame.nonBettingBlackjackGame(deck, names);
         blackjackGame.drawCard("포비");
 
         blackjackGame.dealerHit();
@@ -103,9 +98,8 @@ public class BlackjackWinnerTest {
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new TestDeckGenerateStrategy(trumpCards));
 
-        Dealer dealer = new Dealer(new ArrayList<>());
         List<String> names = List.of("포비", "투다");
-        BlackjackGame blackjackGame = BlackjackGame.nonBettingBlackjackGame(deck, dealer, names);
+        BlackjackGame blackjackGame = BlackjackGame.nonBettingBlackjackGame(deck, names);
         blackjackGame.drawCard("포비");
         blackjackGame.drawCard("투다");
 

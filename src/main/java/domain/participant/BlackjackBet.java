@@ -1,7 +1,7 @@
 package domain.participant;
 
 import domain.blackjackgame.BlackjackWinner;
-import domain.blackjackgame.PlayerGameResult;
+import domain.blackjackgame.ParticipantGameResult;
 import exception.BlackJackException;
 
 public class BlackjackBet {
@@ -26,10 +26,10 @@ public class BlackjackBet {
     public double calculateEarnMoney(BlackjackHands calculateParticipantCardSum,
                                      BlackjackHands againstParticipantCardSum) {
         int cardSum = calculateParticipantCardSum.calculateCardSum();
-        PlayerGameResult playerGameResult = BlackjackWinner.calculatePlayerWinStatus(
+        ParticipantGameResult participantGameResult = BlackjackWinner.calculatePlayerWinStatus(
                 againstParticipantCardSum.calculateCardSum(),
                 cardSum);
-        if (playerGameResult.isDraw()) {
+        if (participantGameResult.isDraw()) {
             return money;
         }
         if (calculateParticipantCardSum.isBust()) {
@@ -38,11 +38,11 @@ public class BlackjackBet {
         if (calculateParticipantCardSum.isBlackjack()) {
             return money + (money * BLACKJACK_WIN_MULTIPLE);
         }
-        return calculateEarnMoney(playerGameResult);
+        return calculateEarnMoney(participantGameResult);
     }
 
-    private double calculateEarnMoney(PlayerGameResult playerGameResult) {
-        if (playerGameResult.isWin()) {
+    private double calculateEarnMoney(ParticipantGameResult participantGameResult) {
+        if (participantGameResult.isWin()) {
             return money + money * WINNING_MULTIPLE;
         }
         return 0;

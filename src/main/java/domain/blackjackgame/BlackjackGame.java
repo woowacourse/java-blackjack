@@ -20,7 +20,7 @@ public class BlackjackGame {
     private final BlackjackParticipantsManager blackjackParticipantsManager;
     private final BlackjackDeck deck;
 
-    public static BlackjackGame nonBettingBlackjackGame(BlackjackDeck deck, Dealer dealer, List<String> names) {
+    public static BlackjackGame nonBettingBlackjackGame(BlackjackDeck deck, List<String> names) {
         return new BlackjackGame(names, deck);
     }
 

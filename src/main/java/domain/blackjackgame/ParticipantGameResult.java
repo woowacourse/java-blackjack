@@ -1,6 +1,6 @@
 package domain.blackjackgame;
 
-public enum PlayerGameResult {
+public enum ParticipantGameResult {
 
     WIN("승"),
     LOSE("패"),
@@ -8,7 +8,7 @@ public enum PlayerGameResult {
 
     private final String status;
 
-    PlayerGameResult(String status) {
+    ParticipantGameResult(String status) {
         this.status = status;
     }
 

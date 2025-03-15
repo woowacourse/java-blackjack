@@ -6,8 +6,6 @@ import domain.blackjackgame.BlackjackResult;
 import domain.blackjackgame.TrumpCard;
 import domain.participant.BetManager;
 import domain.participant.BlackjackBet;
-import domain.participant.Dealer;
-import domain.participant.Player;
 import domain.strategy.BlackjackDeckGenerateStrategy;
 import domain.strategy.BlackjackDrawStrategy;
 import domain.strategy.DeckGenerator;
@@ -51,21 +49,13 @@ public class BlackjackController {
 
     private List<String> handleNames() {
         outputView.inputNames();
-        List<String> names = inputView.inputNames();
-        validateNames(names);
-        return names;
-    }
-
-    private void validateNames(List<String> names) {
-        for (String name : names) {
-            new Player(name, new ArrayList<>());
-        }
+        return inputView.inputNames();
     }
 
     private void startBlackjack(List<String> names, List<Integer> bets) {
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new BlackjackDeckGenerateStrategy());
-        BlackjackGame blackjackGame = BlackjackGame.nonBettingBlackjackGame(deck, new Dealer(new ArrayList<>()), names);
+        BlackjackGame blackjackGame = BlackjackGame.nonBettingBlackjackGame(deck, names);
         BetManager betManager = new BetManager(names, bets);
         outputView.printInitiateDraw(names);
         openFirstDealerCard(blackjackGame);
