@@ -9,8 +9,8 @@ import blackjack.cardMachine.CardRandomMachine;
 import blackjack.gamer.Dealer;
 import blackjack.gamer.Player;
 import blackjack.gamer.Players;
-import blackjack.view.BettingMoneyInput;
-import blackjack.view.HitOrStandView;
+import blackjack.view.BettingMoneyInputView;
+import blackjack.view.HitOrStandInputView;
 import blackjack.view.InputView;
 import blackjack.view.NameInputView;
 import blackjack.view.ResultView;
@@ -63,7 +63,7 @@ public class Application {
     }
 
     private static void betPlayer(final Blackjack blackjack, final Player player) {
-        final InputView inputView = new BettingMoneyInput(player.getNickName());
+        final InputView inputView = new BettingMoneyInputView(player.getNickName());
         try {
             final String amount = inputView.read();
             blackjack.betMoney(player, amount);
@@ -116,7 +116,7 @@ public class Application {
     }
 
     private static boolean readIfHit(final Player player) {
-        final InputView inputView = new HitOrStandView(player.getNickName());
+        final InputView inputView = new HitOrStandInputView(player.getNickName());
         try {
             final String answer = inputView.read();
             final UserAnswer userAnswer = UserAnswer.of(answer);
