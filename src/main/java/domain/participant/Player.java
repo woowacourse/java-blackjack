@@ -7,8 +7,8 @@ public class Player extends Participant {
 
     private static final int PICK_DECISION_VALUE = 21;
 
-    public Player(String name) {
-        super(name);
+    public Player(String name, Betting betting) {
+        super(name, betting);
     }
 
     @Override

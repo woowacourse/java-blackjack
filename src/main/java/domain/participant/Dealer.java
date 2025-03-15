@@ -19,7 +19,7 @@ public class Dealer extends Participant {
 
     @Override
     public List<Card> getShownCard() {
-        return List.of(getCards().getFirst());
+        return List.of(getFirstCard());
     }
 
     @Override

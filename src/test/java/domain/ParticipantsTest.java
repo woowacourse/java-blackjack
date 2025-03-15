@@ -8,6 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Shape;
+import domain.participant.Betting;
 import domain.participant.Dealer;
 import domain.participant.GameResult;
 import domain.participant.Participant;
@@ -33,8 +34,8 @@ class ParticipantsTest {
     void init() {
         List<Participant> tmpParticipants = new ArrayList<>();
         dealer = new Dealer();
-        player1 = new Player("pobi");
-        player2 = new Player("james");
+        player1 = new Player("pobi", new Betting(10000));
+        player2 = new Player("james", new Betting(20000));
         tmpParticipants.add(dealer);
         tmpParticipants.add(player1);
         tmpParticipants.add(player2);
@@ -56,8 +57,8 @@ class ParticipantsTest {
             player2.addCard(new Card(Shape.HEART, Rank.SEVEN));
 
             //when
-            ParticipantsResult participantsResult = participants.calculate();
-            Map<Player, GameResult> playersResult = participantsResult.getPlayersResult();
+            ParticipantsResult participantsResult = participants.calculateOfResult();
+            Map<Participant, GameResult> playersResult = participantsResult.getPlayersResult();
             Map<GameResult, Integer> dealerResult = participantsResult.getDealerResult();
 
             //then
@@ -72,14 +73,15 @@ class ParticipantsTest {
         void when_dealer_one_win_one_lose() {
             //given
             dealer.addCard(new Card(Shape.HEART, Rank.KING));
-            dealer.addCard(new Card(Shape.HEART, Rank.JACK));
+            dealer.addCard(new Card(Shape.HEART, Rank.NINE));
             player1.addCard(new Card(Shape.HEART, Rank.QUEEN));
-            player1.addCard(new Card(Shape.HEART, Rank.A));
+            player1.addCard(new Card(Shape.HEART, Rank.EIGHT));
+            player1.addCard(new Card(Shape.HEART, Rank.THREE));
             player2.addCard(new Card(Shape.SPADE, Rank.FIVE));
 
             //when
-            ParticipantsResult participantsResult = participants.calculate();
-            Map<Player, GameResult> playersResult = participantsResult.getPlayersResult();
+            ParticipantsResult participantsResult = participants.calculateOfResult();
+            Map<Participant, GameResult> playersResult = participantsResult.getPlayersResult();
             Map<GameResult, Integer> dealerResult = participantsResult.getDealerResult();
 
             //then
@@ -99,8 +101,8 @@ class ParticipantsTest {
             player2.addCard(new Card(Shape.HEART, Rank.SEVEN));
 
             //when
-            ParticipantsResult participantsResult = participants.calculate();
-            Map<Player, GameResult> playersResult = participantsResult.getPlayersResult();
+            ParticipantsResult participantsResult = participants.calculateOfResult();
+            Map<Participant, GameResult> playersResult = participantsResult.getPlayersResult();
             Map<GameResult, Integer> dealerResult = participantsResult.getDealerResult();
 
             //then
@@ -120,8 +122,8 @@ class ParticipantsTest {
             player2.addCard(new Card(Shape.SPADE, Rank.FIVE));
 
             //when
-            ParticipantsResult participantsResult = participants.calculate();
-            Map<Player, GameResult> playersResult = participantsResult.getPlayersResult();
+            ParticipantsResult participantsResult = participants.calculateOfResult();
+            Map<Participant, GameResult> playersResult = participantsResult.getPlayersResult();
             Map<GameResult, Integer> dealerResult = participantsResult.getDealerResult();
 
             //then

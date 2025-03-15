@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Shape;
+import domain.participant.Betting;
 import domain.participant.Participant;
 import domain.participant.Player;
 import java.util.List;
@@ -19,7 +20,7 @@ class PlayerTest {
 
     @BeforeEach
     void initPlayer() {
-        player = new Player("james");
+        player = new Player("james", new Betting(10000));
     }
 
     @Test
@@ -145,10 +146,15 @@ class PlayerTest {
     @Test
     @DisplayName("현재 카드의 합이 카드를 뽑을 수 있는 조건인 21 이하일 경우, true를 반환한다")
     void should_return_true_when_can_pick() {
+        //given
         player.addCard(new Card(Shape.HEART, Rank.KING));
         player.addCard(new Card(Shape.HEART, Rank.QUEEN));
         player.addCard(new Card(Shape.HEART, Rank.ONE));
+
+        //when
         boolean canPick = player.canPick();
+
+        //then
         assertThat(canPick).isTrue();
     }
 

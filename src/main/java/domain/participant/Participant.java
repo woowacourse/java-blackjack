@@ -1,75 +1,65 @@
 package domain.participant;
 
+import domain.card.BlackJackCards;
 import domain.card.Card;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public abstract class Participant {
 
-    private static final int BURST_UPPER_BOUND = 21;
-
     private final String name;
-    private final List<Card> cards;
+    private final BlackJackCards blackJackCards;
+    private final Betting betting;
+
+    protected Participant(String name, Betting betting) {
+        this.name = name;
+        this.blackJackCards = new BlackJackCards();
+        this.betting = betting;
+    }
 
     protected Participant(String name) {
         this.name = name;
-        this.cards = new ArrayList<>();
+        this.blackJackCards = new BlackJackCards();
+        this.betting = new Betting(0);
     }
 
-    public void addCard(Card card) {
-        cards.add(card);
+    public abstract boolean canPick();
+
+    public abstract boolean isPlayer();
+
+    public int getBettingAmount() {
+        return betting.amount();
     }
 
     public String getName() {
         return name;
     }
 
-    public static boolean isBust(int value) {
-        return value > BURST_UPPER_BOUND;
+    public boolean isBlackJack() {
+        return blackJackCards.isBlackJack();
+    }
+
+    public boolean isBust(int value) {
+        return blackJackCards.isBustBy(value);
+    }
+
+    public void addCard(Card card) {
+        blackJackCards.add(card);
     }
 
     public abstract List<Card> getShownCard();
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return blackJackCards.getCards();
+    }
+
+    public Card getFirstCard() {
+        return blackJackCards.getFirstCard();
     }
 
     public int getTotalValue() {
-        final int constTotalValue = calculateConstValue(cards);
-        final int aceCount = getAceCount();
-        return calculateTotalValue(constTotalValue, aceCount);
+        return blackJackCards.getTotalValue();
     }
-
-    private int calculateTotalValue(int baseValue, int aceCount) {
-        int candidateResult = baseValue;
-        for (int oneValueCount = 0; oneValueCount <= aceCount; ++oneValueCount) {
-            candidateResult = baseValue + (oneValueCount * 1) + ((aceCount - oneValueCount) * 11);
-            if (Participant.isBust(candidateResult)) {
-                continue;
-            }
-            return candidateResult;
-        }
-        return candidateResult;
-    }
-
-    private int getAceCount() {
-        return (int) cards.stream()
-            .filter(Card::isAce)
-            .count();
-    }
-
-    private int calculateConstValue(List<Card> cards) {
-        return cards.stream()
-            .filter(card -> !card.isAce())
-            .mapToInt(Card::getValue)
-            .sum();
-    }
-
-    public abstract boolean canPick();
-
-    public abstract boolean isPlayer();
 
     @Override
     public boolean equals(Object o) {
@@ -92,7 +82,7 @@ public abstract class Participant {
     public String toString() {
         return "Participant{" +
             "name='" + name + '\'' +
-            ", cards=" + cards +
+            ", cards=" + blackJackCards +
             '}';
     }
 }
