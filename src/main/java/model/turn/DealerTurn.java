@@ -5,14 +5,13 @@ import model.participant.Dealer;
 import view.OutputView;
 
 public class DealerTurn extends Turn {
-    private final Dealer dealer;
 
     public DealerTurn(Dealer dealer) {
         super(dealer);
-        this.dealer = dealer;
     }
 
     public void runDealerTurn(Deck deck) {
+        Dealer dealer = (Dealer) participant;
         while (dealer.checkScoreUnderSixteen()) {
             OutputView.printDealerDealResult();
             dealer.receiveCard(deck.pick());

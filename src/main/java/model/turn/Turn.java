@@ -6,7 +6,7 @@ import model.participant.Participant;
 public class Turn {
     private static final int INITIAL_DEAL_CARD_COUNT = 2;
 
-    private final Participant participant;
+    protected final Participant participant;
 
     public Turn(Participant participant) {
         this.participant = participant;
