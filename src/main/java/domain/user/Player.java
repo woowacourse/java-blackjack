@@ -1,6 +1,7 @@
 package domain.user;
 
 import domain.CardDeck;
+import domain.GameResult;
 import domain.TrumpCard;
 import java.util.List;
 
@@ -48,5 +49,9 @@ public class Player extends User {
 
     public Betting getBetting() {
         return betting;
+    }
+
+    public Long cacluateBettingResult(GameResult gameResult) {
+        return betting.calculateBetting(gameResult);
     }
 }
