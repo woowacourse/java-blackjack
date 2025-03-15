@@ -44,19 +44,20 @@ class BlackjackGameTest {
   }
 
   @Nested
-  @DisplayName("딜러와 플레이어 구분없이 hit을 진행한다.")
+  @DisplayName("참가자의 히트를 진행한다.")
   class BlackjackHitByParticipantTest {
 
     @Test
     @DisplayName("딜러에 대한 hit을 진행시킨다.")
     void test_hitByParticipantForDealer() {
       //given
-      var bet = new Bet(1000);
-      Participant<Dealer> dealer = new Participant<>(new Dealer(bet));
-      List<Participant<Player>> players = List.of(new Participant<>(new Player("test", bet)));
+      final var bet = new Bet(1000);
+      final Participant<Dealer> dealer = new Participant<>(new Dealer(bet));
+      final List<Participant<Player>> players = List.of(new Participant<>(new Player("test", bet)));
       final Participants participants = new Participants(dealer, players);
-      List<TrumpCard> trumpCards = List.of(new TrumpCard(Rank.ACE, Suit.CLUB));
+      final List<TrumpCard> trumpCards = List.of(new TrumpCard(Rank.ACE, Suit.CLUB));
       final var deck = new Deck(new ArrayDeque<>(trumpCards));
+
       final BlackjackGame blackjackGame = new BlackjackGame(participants, deck);
       //then
       final var newDealer = blackjackGame.hitByParticipant(dealer);

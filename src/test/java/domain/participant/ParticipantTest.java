@@ -2,13 +2,11 @@ package domain.participant;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
-import domain.card.Deck;
 import domain.card.Rank;
 import domain.card.Score;
 import domain.card.Suit;
 import domain.card.TrumpCard;
 import domain.stub.StubRole;
-import java.util.ArrayDeque;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -31,23 +29,6 @@ class ParticipantTest {
       assertThat(participant.isHit()).isEqualTo(stubRole.isHit(new Score(0)));
       assertThat(participant.getName()).isEqualTo(stubRole.getName());
       assertThat(participant.getBet()).isEqualTo(stubRole.getBet());
-    }
-
-    @Test
-    @DisplayName("초기 핸드를 올바르게 생성한다")
-    void test_initialDeal() {
-      // given
-      final StubRole stubRole = new StubRole();
-      final Participant<StubRole> participant = new Participant<>(stubRole);
-      final var trumpCards = List.of(
-          new TrumpCard(Rank.ACE, Suit.DIAMOND),
-          new TrumpCard(Rank.TWO, Suit.DIAMOND));
-      final var deck = new Deck(new ArrayDeque<>(trumpCards));
-      //when
-      final Participant<StubRole> actual = participant.initialDeal(deck);
-      //then
-      assertThat(actual.getCards()).isEqualTo(trumpCards);
-      assertThat(actual).isNotSameAs(participant);
     }
 
     @Test
@@ -78,5 +59,4 @@ class ParticipantTest {
       assertThat(actual).isNotSameAs(participant);
     }
   }
-
 }

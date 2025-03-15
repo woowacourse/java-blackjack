@@ -63,8 +63,33 @@ class ParticipantsTest {
     }
 
     @Test
-    @DisplayName("참가자를 올바르게 생성한다.")
-    void test_generateOf() {
+    @DisplayName("딜을 시작할 때, 참가자를 올바르게 생성한다.")
+    void test_initialDealOf() {
+      //given
+      final String name = "Test";
+      final Bet value = new Bet(1000);
+      final Map<String, Bet> given = new HashMap<>();
+      given.put(name, value);
+      final var expect = new Player(name, value);
+      //when
+      final var participants = Participants.initialDealOf(given, Deck.createShuffledDecks(1));
+      //then
+      final var actualDealer = participants.getDealer();
+      assertThat(actualDealer.getCards().size()).isEqualTo(2);
+
+      final var actualPlayer = participants.getPlayers().getFirst();
+      assertThat(actualPlayer.getName()).isEqualTo(expect.getName());
+      assertThat(actualPlayer.getCards().size()).isEqualTo(2);
+    }
+  }
+
+  @Nested
+  @DisplayName("전체 참가자 반환 테스트")
+  class ParticipantFindAndGetTest {
+
+    @Test
+    @DisplayName("딜러와 플레이어를 모두 반환한다.")
+    void test_getAllParticipants() {
       //given
       final String name = "Test";
       final Bet value = new Bet(1000);
@@ -72,35 +97,12 @@ class ParticipantsTest {
       given.put(name, value);
 
       //when
-      final var participants = Participants.generateOf(given, Deck.createShuffledDecks(1));
+      final var participants = Participants.initialDealOf(given, Deck.createShuffledDecks(1));
       //then
-      final var expect = new Player(name, value);
-      final var actual = participants.getPlayers().getFirst();
-      assertThat(actual.getName()).isEqualTo(expect.getName());
-      assertThat(actual.getCards().size()).isEqualTo(2);
-    }
-
-    @Nested
-    @DisplayName("전체 참가자 반환 테스트")
-    class ParticipantFindAndGetTest {
-
-      @Test
-      @DisplayName("딜러와 플레이어를 모두 반환한다.")
-      void test_getAllParticipants() {
-        //given
-        final String name = "Test";
-        final Bet value = new Bet(1000);
-        final Map<String, Bet> given = new HashMap<>();
-        given.put(name, value);
-
-        //when
-        final var participants = Participants.generateOf(given, Deck.createShuffledDecks(1));
-        //then
-        final var actual = participants.getAllParticipants();
-        assertThat(actual.size()).isEqualTo(2);
-        assertThat(actual.getFirst().getName()).isEqualTo(DealerRoster.DEFAULT.getName());
-        assertThat(actual.getLast().getName()).isEqualTo(name);
-      }
+      final var actual = participants.getAllParticipants();
+      assertThat(actual.size()).isEqualTo(2);
+      assertThat(actual.getFirst().getName()).isEqualTo(DealerRoster.DEFAULT.getName());
+      assertThat(actual.getLast().getName()).isEqualTo(name);
     }
   }
 }
