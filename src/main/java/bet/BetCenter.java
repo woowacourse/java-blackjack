@@ -31,7 +31,6 @@ public class BetCenter {
 
     private double calculateProfit(Player player, Dealer dealer) {
         BetAmount betAmount = playerBetAmounts.get(player);
-
         if (isOnlyPlayerBlackJack(player, dealer)) {
             return WinningResult.BLACKJACK.calculateProfit(betAmount);
         }
@@ -44,7 +43,6 @@ public class BetCenter {
         if (player.compareTo(dealer.sumCardNumbers()) == WinningResult.WIN) {
             return WinningResult.WIN.calculateProfit(betAmount);
         }
-
         return WinningResult.LOSE.calculateProfit(betAmount);
     }
 
