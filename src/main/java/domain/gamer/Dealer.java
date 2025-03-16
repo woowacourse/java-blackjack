@@ -1,23 +1,37 @@
 package domain.gamer;
 
+import domain.card.CardDeck;
+import domain.card.Hand;
 import domain.rule.BlackjackMatchResult;
+import domain.state.started.finished.Stay;
 
 public class Dealer extends Gamer {
 
-    private static final Nickname NAME = new Nickname("딜러");
+    private static final String NAME = "딜러";
     private static final int HIT_THRESHOLD = 16;
 
-    public Dealer() {
-        super(NAME);
+    public Dealer(Hand hand) {
+        super(hand);
+        checkState(hand);
     }
 
-    public BlackjackMatchResult determineMatchResultAgainst(Player player) {
-        return getHand().determineMatchResultAgainst(player.getHand());
+    private void checkState(Hand hand) {
+        if (hand.calculateTotalPoint() > HIT_THRESHOLD) {
+            state = new Stay(hand);
+        }
+    }
+
+    public BlackjackMatchResult determineMatchResultFor(Player player) {
+        return getHand().determineMatchResultFor(player.getHand());
     }
 
     @Override
-    public boolean canHit() {
-        return getHand().calculateTotalPoint() <= HIT_THRESHOLD && !isBurst();
+    public String getNickname() {
+        return NAME;
     }
 
+    @Override
+    public void hit(CardDeck deck) {
+        super.hit(deck);
+    }
 }
