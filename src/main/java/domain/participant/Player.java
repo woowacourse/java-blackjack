@@ -6,10 +6,10 @@ import static domain.blackJack.MatchResult.LOSE;
 import static domain.blackJack.MatchResult.WIN;
 
 import domain.blackJack.MatchResult;
+import domain.blackJack.PlayerAnswer;
+import domain.blackJack.ShowDeck;
 import domain.card.CardDeck;
 import domain.card.Hand;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class Player extends Participant {
     private final String name;
@@ -21,11 +21,11 @@ public class Player extends Participant {
         this.money = money;
     }
 
-    public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck,
+    public void draw(final PlayerAnswer answer, final ShowDeck playerDeck,
                      final CardDeck standard) {
         while (!hand.isBust() && answer.apply(this)) {
             hand.addCard(standard.hitCard());
-            playerDeck.accept(this);
+            playerDeck.show(this);
         }
     }
 

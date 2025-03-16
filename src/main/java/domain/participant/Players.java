@@ -1,10 +1,10 @@
 package domain.participant;
 
+import domain.blackJack.PlayerAnswer;
+import domain.blackJack.ShowDeck;
 import domain.card.CardDeck;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class Players {
     private static final int MAXIMUM_PLAYER_NUMBER = 6;
@@ -23,7 +23,7 @@ public class Players {
         players.forEach(player -> player.hitCard(standard));
     }
 
-    public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck,
+    public void draw(final PlayerAnswer answer, final ShowDeck playerDeck,
                      final CardDeck standard) {
         for (Player player : players) {
             player.draw(answer, playerDeck, standard);
