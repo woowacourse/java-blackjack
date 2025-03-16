@@ -27,11 +27,11 @@ public class Players {
         return Collections.unmodifiableList(players);
     }
 
-    public ProfitResults calculateProfitResults(Dealer dealer) {
+    public ProfitResults calculateProfitResults(Hand dealerHand) {
         Map<Player, Profit> profitResults = players.stream()
                 .collect(Collectors.toMap(
                         player -> player,
-                        player -> player.calculateProfit(dealer.getHand())
+                        player -> player.calculateProfit(dealerHand)
                 ));
         return new ProfitResults(profitResults);
     }

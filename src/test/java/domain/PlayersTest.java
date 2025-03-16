@@ -53,7 +53,7 @@ class PlayersTest {
         Players players = new Players(List.of(winner, drawer, loser));
 
         //when
-        ProfitResults profitResults = players.calculateProfitResults(dealer);
+        ProfitResults profitResults = players.calculateProfitResults(dealer.getHand());
 
         //then
         assertSoftly(softly -> {

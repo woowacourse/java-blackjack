@@ -1,11 +1,11 @@
 package domain;
 
-public record BettingHistory(
+public record BettingRecord(
         BettingMoney bettingMoney,
         GameResultStatus gameResultStatus
 ) {
 
-    public BettingHistory(BettingMoney bettingMoney) {
+    public BettingRecord(BettingMoney bettingMoney) {
         this(bettingMoney, GameResultStatus.IN_PROGRESS);
     }
 }

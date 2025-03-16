@@ -45,6 +45,6 @@ public class BlackjackParticipants {
     }
 
     public ProfitResults calculateProfitResults() {
-        return players.calculateProfitResults(dealer);
+        return players.calculateProfitResults(dealer.getHand());
     }
 }

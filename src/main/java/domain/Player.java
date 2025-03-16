@@ -9,20 +9,20 @@ import java.util.Objects;
 
 public class Player extends Participant {
 
-    private final BettingHistory bettingHistory;
+    private final BettingRecord bettingRecord;
 
-    public Player(String name, Hand hand, BettingHistory bettingHistory) {
+    public Player(String name, Hand hand, BettingRecord bettingRecord) {
         super(name, hand);
-        this.bettingHistory = bettingHistory;
+        this.bettingRecord = bettingRecord;
     }
 
-    public Player(String name, BettingHistory bettingHistory) {
+    public Player(String name, BettingRecord bettingRecord) {
         super(name, Hand.createEmpty());
-        this.bettingHistory = bettingHistory;
+        this.bettingRecord = bettingRecord;
     }
 
     public Player(String name, BettingMoney bettingMoney) {
-        this(name, new BettingHistory(bettingMoney));
+        this(name, new BettingRecord(bettingMoney));
     }
 
     public Player(String name, Hand hand) {
@@ -56,7 +56,7 @@ public class Player extends Participant {
         return compareCardsSum(hand, dealerHand);
     }
 
-    public Profit calculateProfit(Hand hand) {
+    public Profit calculateProfit(Hand dealerHand) {
         return null;
     }
 

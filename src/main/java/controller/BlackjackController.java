@@ -62,8 +62,7 @@ public class BlackjackController {
 
     public List<ProfitResultResponse> calculateAllProfitResult() {
         ProfitResults profitResults = blackjackParticipants.calculateProfitResults();
-        Dealer dealer = blackjackParticipants.getDealer();
-        return toProfitResultResponses(profitResults, dealer);
+        return toProfitResultResponses(profitResults, blackjackParticipants.getDealer());
     }
 
     private List<Player> toPlayers(List<BettingRequest> bettingRequests) {
