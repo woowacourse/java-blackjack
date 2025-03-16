@@ -72,10 +72,17 @@ public class BlackjackController {
     }
 
     private void dealCardByInputs(GameManager gameManager, Gambler gambler) {
-        while (gambler.isPlayerNotBust() && inputView.readOneMoreDealCard(gambler)) {
+        while (gambler.isPlayerNotBust()) {
+            if (wantsNoMoreCard(gambler)) {
+                return;
+            }
             gameManager.dealAddCard(gambler);
             outputView.printCardsMessage(gambler);
         }
+    }
+
+    private boolean wantsNoMoreCard(Gambler gambler) {
+        return inputView.readOneMoreDealCard(gambler);
     }
 
     private void dealMoreDealerCards(GameManager gameManager) {
