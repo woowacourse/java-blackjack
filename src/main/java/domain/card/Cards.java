@@ -1,12 +1,12 @@
 package domain.card;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import domain.Score;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Cards {
+    private final static int BLACKJACK_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -26,8 +26,28 @@ public class Cards {
         this.cards.add(card);
     }
 
-    public Set<Integer> getCoordinateSums() {
-        return getCoordinateSumsByDfs(0, 0, new HashSet<>());
+    public List<Card> getValues() {
+        return Collections.unmodifiableList(cards);
+    }
+
+    public boolean isBlackjack() {
+        return getScore().isHit() && cards.size() == BLACKJACK_COUNT;
+    }
+
+    public Score getScore() {
+        Set<Score> coordinates = getCoordinateScores();
+        if (coordinates.stream().allMatch(Score::isBust)) {
+            return getMinSum(coordinates);
+        }
+        Set<Score> filtered = coordinates.stream()
+                .filter(score -> !score.isBust())
+                .collect(Collectors.toSet());
+        return getMaxSum(filtered);
+    }
+
+    private Set<Score> getCoordinateScores() {
+        Set<Integer> coordinates = getCoordinateSumsByDfs(0, 0, new HashSet<>());
+        return coordinates.stream().map(Score::new).collect(Collectors.toSet());
     }
 
     private Set<Integer> getCoordinateSumsByDfs(int index, int sum, Set<Integer> result) {
@@ -35,15 +55,23 @@ public class Cards {
             result.add(sum);
             return result;
         }
-
         Card card = cards.get(index);
-        for (int coordinateNumber : card.getCoordinateNumbers()) {
-            result = getCoordinateSumsByDfs(index + 1, sum + coordinateNumber, result);
+        result = getCoordinateSumsByDfs(index + 1, sum + card.getNumberValue(), result);
+        if (card.getCardNumber() == CardNumber.A) {
+            result = getCoordinateSumsByDfs(index + 1, sum + 11, result);
         }
         return result;
     }
 
-    public List<Card> getValues() {
-        return Collections.unmodifiableList(cards);
+    private Score getMinSum(Set<Score> coordinates) {
+        return coordinates.stream()
+                .min(Comparator.comparing(Score::value))
+                .orElseThrow(() -> new IllegalStateException("카드가 존재하지 않는 플레이어입니다."));
+    }
+
+    private Score getMaxSum(Set<Score> coordinates) {
+        return coordinates.stream()
+                .max(Comparator.comparing(Score::value))
+                .orElseThrow(() -> new IllegalStateException("카드가 존재하지 않는 플레이어입니다."));
     }
 }

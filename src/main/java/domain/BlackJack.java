@@ -9,6 +9,7 @@ import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,11 +18,15 @@ public class BlackJack {
     private final Dealer dealer;
     private final Players players;
 
-    public BlackJack(List<String> names) {
-        List<Player> players = names.stream().map(Player::init).toList();
+    public BlackJack(Dealer dealer, Players players) {
+        this.dealer = dealer;
+        this.players = players;
+    }
+
+    public static BlackJack init(Map<Player, Money> players) {
         Deck deck = new Deck(new RandomCardsGenerator());
-        this.dealer = new Dealer(Cards.empty(), deck);
-        this.players = new Players(players);
+        Dealer dealer = new Dealer(Cards.empty(), deck);
+        return new BlackJack(dealer, new Players(players));
     }
 
     public void handoutCards() {
@@ -37,7 +42,8 @@ public class BlackJack {
     }
 
     public boolean canDraw(Participant participant) {
-        return !participant.isBurst() && !participant.isWin();
+        Score score = participant.getScore();
+        return !score.isBust() && !score.isHit();
     }
 
     public int getDealerDrawnCount() {
@@ -45,22 +51,41 @@ public class BlackJack {
     }
 
     public int getDealerScore() {
-        return dealer.getCardScore();
+        Score score = dealer.getScore();
+        return score.value();
     }
 
-    public Cards getDealerCards() {
+    public List<Card> getDealerCards() {
         return dealer.getCards();
     }
 
-    public Map<Player, GameResult> getPlayersResult() {
-        return dealer.getGameResult(players);
-    }
-
-    public Map<GameResult, Integer> getDealerResult() {
-        return dealer.getResult();
-    }
-
     public Set<Player> getPlayers() {
-        return players.getPlayers();
+        return players.get();
+    }
+
+    public Map<Player, GameResult> getPlayersResult() {
+        Map<Player, GameResult> gameResult = new HashMap<>();
+        for (Player player : players.get()) {
+            GameResult playerResult = dealer.getResult(player);
+            gameResult.put(player, playerResult);
+        }
+        return gameResult;
+    }
+
+    public int getDealerRevenue() {
+        Map<Player, Integer> revenues = getPlayerRevenues();
+        return -1 * revenues.values().stream().mapToInt(i -> i).sum();
+    }
+
+    public Map<Player, Integer> getPlayerRevenues() {
+        Map<Player, Integer> revenues = new HashMap<>();
+        for (Player player : players.get()) {
+            GameResult gameResult = dealer.getResult(player);
+            PlayerRevenuePolicy policy = PlayerRevenuePolicy.from(gameResult, player.isBlackjack());
+            Money bettingMoney = players.getBettingMoneyOf(player);
+            final int playerRevenue = policy.getRevenue(bettingMoney.value());
+            revenues.put(player, playerRevenue);
+        }
+        return revenues;
     }
 }

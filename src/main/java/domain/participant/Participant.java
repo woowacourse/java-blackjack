@@ -1,43 +1,32 @@
 package domain.participant;
 
+import domain.Score;
 import domain.card.Card;
 import domain.card.Cards;
-import domain.rule.BlackjackRule;
-import domain.rule.GameRule;
 
 import java.util.List;
 
 public abstract class Participant {
     private final Cards cards;
-    private final GameRule rule;
 
     protected Participant(Cards cards) {
         this.cards = cards;
-        this.rule = new BlackjackRule();
     }
 
     public void addCard(Card card) {
         cards.add(card);
     }
 
-    public int getCardScore() {
-        return rule.getScore(cards);
+    public Score getScore() {
+        return cards.getScore();
     }
 
-    public boolean isBurst() {
-        return rule.isBurst(cards);
+    public boolean isBlackjack() {
+        return cards.isBlackjack();
     }
 
-    public boolean isWin() {
-        return rule.isWin(cards);
-    }
-
-    public Cards getCards() {
-        return cards;
-    }
-
-    public GameRule getRule() {
-        return rule;
+    public List<Card> getCards() {
+        return cards.getValues();
     }
 
     public abstract List<Card> getShowCards();

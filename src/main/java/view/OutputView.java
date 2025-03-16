@@ -4,7 +4,6 @@ import domain.GameResult;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;
-import domain.card.Cards;
 import domain.participant.Player;
 import java.util.List;
 import java.util.Map;
@@ -32,11 +31,11 @@ public class OutputView {
         System.out.printf("딜러는 16이하라 %d장의 카드를 더 받았습니다.\n", count);
     }
 
-    public void printDealerCardsAndResult(Cards cards, final int score) {
+    public void printDealerCardsAndResult(List<Card> cards, final int score) {
         System.out.printf("딜러카드: %s - 결과: %d\n", getCardsText(cards), score);
     }
 
-    public void printCardsAndResult(String name, Cards cards, final int score) {
+    public void printCardsAndResult(String name, List<Card> cards, final int score) {
         System.out.printf("%s카드: %s - 결과: %d\n", name, getCardsText(cards), score);
     }
 
@@ -76,13 +75,6 @@ public class OutputView {
         };
     }
 
-    private String getCardsText(Cards cards) {
-        List<String> formatted = cards.getValues().stream()
-                .map(this::getCardText)
-                .toList();
-        return String.join(", ", formatted);
-    }
-
     private String getCardsText(List<Card> cards) {
         List<String> formatted = cards.stream()
                 .map(this::getCardText)
@@ -100,7 +92,7 @@ public class OutputView {
             case KING -> "K";
             case QUEEN -> "Q";
             case JACK -> "J";
-            default -> String.valueOf(cardNumber.getCoordinates().getFirst());
+            default -> String.valueOf(cardNumber.value);
         };
     }
 
@@ -111,5 +103,13 @@ public class OutputView {
             case CLOVER -> "클로버";
             case DIAMOND -> "다이아몬드";
         };
+    }
+
+    public void printRevenueResult(final int dealerRevenue, Map<Player, Integer> playerRevenues) {
+        System.out.println("## 최종 수익");
+        System.out.printf("딜러: %d\n", dealerRevenue);
+        for (Player player : playerRevenues.keySet()) {
+            System.out.printf("%s: %d\n", player.getName(), playerRevenues.get(player));
+        }
     }
 }

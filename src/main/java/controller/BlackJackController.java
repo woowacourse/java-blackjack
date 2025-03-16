@@ -1,9 +1,8 @@
 package controller;
 
 import domain.BlackJack;
-import domain.GameResult;
+import domain.Money;
 import domain.participant.Player;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -22,8 +21,8 @@ public class BlackJackController {
 
     public void run() {
         try {
-            List<String> names = inputView.readPlayerNames();
-            BlackJack blackJack = new BlackJack(names);
+            Map<Player, Money> players = inputView.readPlayers();
+            BlackJack blackJack = BlackJack.init(players);
             runGameWith(blackJack);
         } catch (RuntimeException e) {
             outputView.printErrorMessage(e);
@@ -33,10 +32,14 @@ public class BlackJackController {
     private void runGameWith(BlackJack blackJack) {
         blackJack.handoutCards();
         outputView.printHandoutCards(blackJack.getShowDealerCards(), blackJack.getPlayers());
+        runBlackjack(blackJack);
+    }
+
+    private void runBlackjack(BlackJack blackJack) {
         askNewCardToAllPlayers(blackJack);
         setupDealerCards(blackJack);
         showCardsResult(blackJack);
-        showGameResult(blackJack);
+        showRevenues(blackJack);
     }
 
     private void askNewCardToAllPlayers(BlackJack blackJack) {
@@ -63,13 +66,13 @@ public class BlackJackController {
     private void showCardsResult(BlackJack blackJack) {
         outputView.printDealerCardsAndResult(blackJack.getDealerCards(), blackJack.getDealerScore());
         for (Player player : blackJack.getPlayers()) {
-            outputView.printCardsAndResult(player.getName(), player.getCards(), player.getCardScore());
+            outputView.printCardsAndResult(player.getName(), player.getCards(), player.getScore().value());
         }
     }
 
-    private void showGameResult(BlackJack blackJack) {
-        Map<Player, GameResult> playerResult = blackJack.getPlayersResult();
-        Map<GameResult, Integer> dealerResult = blackJack.getDealerResult();
-        outputView.printResult(dealerResult, playerResult);
+    private void showRevenues(BlackJack blackJack) {
+        final int dealerRevenue = blackJack.getDealerRevenue();
+        Map<Player, Integer> playerRevenues = blackJack.getPlayerRevenues();
+        outputView.printRevenueResult(dealerRevenue, playerRevenues);
     }
 }
