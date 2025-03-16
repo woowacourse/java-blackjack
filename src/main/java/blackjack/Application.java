@@ -2,6 +2,7 @@ package blackjack;
 
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
+import java.util.Scanner;
 
 public final class Application {
 
@@ -11,7 +12,7 @@ public final class Application {
     }
 
     private static BlackjackGame makeBlackjackGame() {
-        final InputView inputView = new InputView();
+        final InputView inputView = new InputView(new Scanner(System.in));
         final ResultView resultView = new ResultView();
         return new BlackjackGame(inputView, resultView);
     }
