@@ -1,6 +1,6 @@
 package controller;
 
-import domain.BlackJackManager;
+import domain.BlackJackGame;
 import domain.BlackJackResultCalculator;
 import domain.CardBundle;
 import domain.CardDeck;
@@ -27,17 +27,17 @@ public class BlackJackController {
     public void start(CardBundle cardBundle) {
         Participants participants = createGameParticipants();
         CardDeck cardDeck = new CardDeck(cardBundle.getShuffledAllCards());
-        BlackJackManager blackJackManager = new BlackJackManager(participants, cardDeck);
-        giveStartingCardsToParticipants(blackJackManager);
-        processPlayersCardReceiving(blackJackManager);
-        processDealerCardReceiving(blackJackManager);
+        BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
+        giveStartingCardsToParticipants(blackJackGame);
+        processPlayersCardReceiving(blackJackGame);
+        processDealerCardReceiving(blackJackGame);
         calculateBackJackResultProcess(participants);
     }
 
-    private void giveStartingCardsToParticipants(BlackJackManager blackJackManager) {
-        blackJackManager.giveStartingCardsToParticipants();
-        outputView.printInitialParticipantHandsMessage(blackJackManager.getPlayerNames());
-        outputView.printInitialParticipantHands(blackJackManager.getParticipants());
+    private void giveStartingCardsToParticipants(BlackJackGame blackJackGame) {
+        blackJackGame.giveStartingCardsToParticipants();
+        outputView.printInitialParticipantHandsMessage(blackJackGame.getPlayerNames());
+        outputView.printInitialParticipantHands(blackJackGame.getParticipants());
     }
 
     private void calculateBackJackResultProcess(Participants participants) {
@@ -54,30 +54,30 @@ public class BlackJackController {
         outputView.printParticipantsFullInfo(participants.getParticipants());
     }
 
-    private void processDealerCardReceiving(BlackJackManager blackJackManager) {
-        while(blackJackManager.canDealerPick()) {
-            blackJackManager.giveCardToDealer();
+    private void processDealerCardReceiving(BlackJackGame blackJackGame) {
+        while (blackJackGame.canDealerPick()) {
+            blackJackGame.giveCardToDealer();
             outputView.printDealerReceivingCardMessage();
         }
         outputView.printBlankLine();
     }
 
-    private void processPlayersCardReceiving(BlackJackManager blackJackManager) {
-        for (String playerName : blackJackManager.getPlayerNames()) {
-            processPlayerCardReceiving(blackJackManager, playerName);
+    private void processPlayersCardReceiving(BlackJackGame blackJackGame) {
+        for (String playerName : blackJackGame.getPlayerNames()) {
+            processPlayerCardReceiving(blackJackGame, playerName);
         }
         outputView.printBlankLine();
     }
 
-    private void processPlayerCardReceiving(BlackJackManager blackJackManager, String playerName) {
+    private void processPlayerCardReceiving(BlackJackGame blackJackGame, String playerName) {
         boolean isFinalHandsPrinted = false;
-        while (blackJackManager.canPlayerPick(playerName) && doesPlayerWantToReceiveCard(playerName)) {
-            blackJackManager.giveCardToPlayer(playerName);
-            outputView.printParticipantHand(playerName, blackJackManager.getPlayerShownCards(playerName));
+        while (blackJackGame.canPlayerPick(playerName) && doesPlayerWantToReceiveCard(playerName)) {
+            blackJackGame.giveCardToPlayer(playerName);
+            outputView.printParticipantHand(playerName, blackJackGame.getPlayerShownCards(playerName));
             isFinalHandsPrinted = true;
         }
         if (!isFinalHandsPrinted) {
-            outputView.printParticipantHand(playerName, blackJackManager.getPlayerShownCards(playerName));
+            outputView.printParticipantHand(playerName, blackJackGame.getPlayerShownCards(playerName));
         }
     }
 

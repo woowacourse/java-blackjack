@@ -15,7 +15,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class BlackJackManagerTest {
+class BlackJackGameTest {
 
     static CardBundle cardBundle;
 
@@ -34,19 +34,19 @@ class BlackJackManagerTest {
                 new Player("b")
         ));
         CardDeck cardDeck = new CardDeck(cardBundle.getShuffledAllCards());
-        BlackJackManager blackJackManager = new BlackJackManager(participants, cardDeck);
+        BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
 
         // when
-        blackJackManager.giveStartingCardsToParticipants();
+        blackJackGame.giveStartingCardsToParticipants();
 
         // then
-        assertAll(() -> assertThat(blackJackManager.getParticipants()
+        assertAll(() -> assertThat(blackJackGame.getParticipants()
                         .get(0)
                         .getCards()).hasSize(2),
-                () -> assertThat(blackJackManager.getParticipants()
+                () -> assertThat(blackJackGame.getParticipants()
                         .get(1)
                         .getCards()).hasSize(2),
-                () -> assertThat(blackJackManager.getParticipants()
+                () -> assertThat(blackJackGame.getParticipants()
                         .get(2)
                         .getCards()).hasSize(2)
         );
@@ -62,10 +62,10 @@ class BlackJackManagerTest {
                 new Player("b")
         ));
         CardDeck cardDeck = new CardDeck(cardBundle.getShuffledAllCards());
-        BlackJackManager blackJackManager = new BlackJackManager(participants, cardDeck);
+        BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
 
         // when
-        List<Participant> playerParticipants = blackJackManager.getParticipants();
+        List<Participant> playerParticipants = blackJackGame.getParticipants();
 
         // then
         assertThat(playerParticipants).hasSize(3);
@@ -81,10 +81,10 @@ class BlackJackManagerTest {
                 new Player("b")
         ));
         CardDeck cardDeck = new CardDeck(cardBundle.getShuffledAllCards());
-        BlackJackManager blackJackManager = new BlackJackManager(participants, cardDeck);
+        BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
 
         // when
-        List<String> playerNames = blackJackManager.getPlayerNames();
+        List<String> playerNames = blackJackGame.getPlayerNames();
 
         // then
         assertThat(playerNames).containsExactly("a", "b");
@@ -122,10 +122,10 @@ class BlackJackManagerTest {
                 player
         ));
         CardDeck cardDeck = new CardDeck(cardBundle.getShuffledAllCards());
-        BlackJackManager blackJackManager = new BlackJackManager(participants, cardDeck);
+        BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
 
         // when
-        boolean canPick = blackJackManager.canPlayerPick(playerName);
+        boolean canPick = blackJackGame.canPlayerPick(playerName);
 
         // then
         assertThat(canPick).isEqualTo(expected);
@@ -141,13 +141,13 @@ class BlackJackManagerTest {
                 new Player(playerName)
         ));
         CardDeck cardDeck = new CardDeck(cardBundle.getShuffledAllCards());
-        BlackJackManager blackJackManager = new BlackJackManager(participants, cardDeck);
+        BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
 
         // when
-        blackJackManager.giveCardToPlayer(playerName);
+        blackJackGame.giveCardToPlayer(playerName);
 
         // then
-        assertThat(blackJackManager.getParticipants()
+        assertThat(blackJackGame.getParticipants()
                 .get(1)
                 .getCards()).hasSize(1);
     }
@@ -169,10 +169,10 @@ class BlackJackManagerTest {
                 player
         ));
         CardDeck cardDeck = new CardDeck(cardBundle.getShuffledAllCards());
-        BlackJackManager blackJackManager = new BlackJackManager(participants, cardDeck);
+        BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
 
         // when
-        List<Card> playerShownCards = blackJackManager.getPlayerShownCards(playerName);
+        List<Card> playerShownCards = blackJackGame.getPlayerShownCards(playerName);
 
         // then
         assertThat(playerShownCards).hasSize(2);
@@ -204,11 +204,11 @@ class BlackJackManagerTest {
                 dealer,
                 new Player("a")
         ));
-        BlackJackManager blackJackManager = new BlackJackManager(participants,
+        BlackJackGame blackJackGame = new BlackJackGame(participants,
                 new CardDeck(cardBundle.getShuffledAllCards()));
 
         // when
-        boolean canPick = blackJackManager.canDealerPick();
+        boolean canPick = blackJackGame.canDealerPick();
 
         // then
         assertThat(canPick).isEqualTo(expected);
@@ -223,13 +223,13 @@ class BlackJackManagerTest {
                 new Player("a")
         ));
         CardDeck cardDeck = new CardDeck(cardBundle.getShuffledAllCards());
-        BlackJackManager blackJackManager = new BlackJackManager(participants, cardDeck);
+        BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
 
         // when
-        blackJackManager.giveCardToDealer();
+        blackJackGame.giveCardToDealer();
 
         // then
-        assertThat(blackJackManager.getParticipants()
+        assertThat(blackJackGame.getParticipants()
                 .get(0)
                 .getCards()).hasSize(1);
     }

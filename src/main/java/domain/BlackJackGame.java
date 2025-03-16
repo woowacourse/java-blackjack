@@ -4,11 +4,11 @@ import domain.card.Card;
 import java.util.Collections;
 import java.util.List;
 
-public class BlackJackManager {
+public class BlackJackGame {
     private final Participants participants;
     private final CardDeck cardDeck;
 
-    public BlackJackManager(Participants participants, CardDeck cardDeck) {
+    public BlackJackGame(Participants participants, CardDeck cardDeck) {
         this.participants = participants;
         this.cardDeck = cardDeck;
     }
@@ -29,7 +29,8 @@ public class BlackJackManager {
     }
 
     public boolean canPlayerPick(String playerName) {
-        return participants.findByName(playerName).canPick();
+        return participants.findByName(playerName)
+                .canPick();
     }
 
     public void giveCardToPlayer(String playerName) {
@@ -38,11 +39,13 @@ public class BlackJackManager {
     }
 
     public List<Card> getPlayerShownCards(String playerName) {
-        return participants.findByName(playerName).getShownCard();
+        return participants.findByName(playerName)
+                .getShownCard();
     }
 
     public boolean canDealerPick() {
-        return participants.getDealer().canPick();
+        return participants.getDealer()
+                .canPick();
     }
 
     public void giveCardToDealer() {
