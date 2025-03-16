@@ -37,6 +37,11 @@ public record Count(int value) {
 		return value == count.value;
 	}
 
+	@Override
+	public int hashCode() {
+		return value;
+	}
+
 	public boolean isGreaterThan(final Count count) {
 		return value > count.value;
 	}

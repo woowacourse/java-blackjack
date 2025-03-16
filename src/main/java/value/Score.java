@@ -42,4 +42,8 @@ public record Score(int value) {
 		return value == score.value;
 	}
 
+	@Override
+	public int hashCode() {
+		return value;
+	}
 }
