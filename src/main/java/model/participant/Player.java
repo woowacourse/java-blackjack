@@ -12,16 +12,19 @@ public final class Player implements Bettable, Gameable {
     private static final int INITIAL_DEAL_CARD_COUNT = 2;
 
     private final String name;
-    private final ParticipantHand participantHand;
+    private ParticipantHand participantHand; //TODO : not final
     //TODO : player가 bet을 가져야할까?
 
     public Player(final String name) {
         this.name = name;
-        this.participantHand = new ParticipantHand();
+        this.participantHand = new HardHand();
     }
 
     @Override
     public void receiveCard(final Card card) {
+        if (card.isSoftCard()) {
+            this.participantHand = this.participantHand.cloneToSoftHand();
+        }
         participantHand.add(card);
     }
 

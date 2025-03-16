@@ -9,12 +9,12 @@ public final class Card {
         this.cardSuit = cardSuit;
     }
 
-    public int getCardRankDefaultValue() {
-        return cardRank.getDefaultValue();
+    public boolean isSoftCard() {
+        return this.cardRank.hasMaxValue();
     }
 
-    public CardRank getCardRank() {
-        return cardRank;
+    public int getCardRankDefaultValue() {
+        return cardRank.getDefaultValue();
     }
 
     public String getCardName() {

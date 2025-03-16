@@ -15,7 +15,7 @@ class ParticipantHandTest {
 
     @BeforeEach
     void setUp() {
-        participantHand = new ParticipantHand();
+        participantHand = new HardHand();
     }
 
     @Test
@@ -50,6 +50,7 @@ class ParticipantHandTest {
     @DisplayName("받은 카드 중에 ace가 있으면, ace가 1일때 합이 21 이하일때 burst인지 확인한다.")
     void 받은카드가_ace포함일때_isBurst_계산() {
         //given
+        participantHand = new SoftHand();
         participantHand.add(new Card(CardRank.ACE, CardSuit.DIAMOND));
         participantHand.add(new Card(CardRank.KING, CardSuit.HEART));
         participantHand.add(new Card(CardRank.KING, CardSuit.DIAMOND));
@@ -65,6 +66,7 @@ class ParticipantHandTest {
     @DisplayName("받은 카드 중에 ace가 있으면, ace가 1일때 합이 21 초과일때 burst인지 확인한다.")
     void 받은카드가_ace포함일때_계산_합_21_초과일때_isBurst_계산() {
         //given
+        participantHand = new SoftHand();
         participantHand.add(new Card(CardRank.ACE, CardSuit.DIAMOND));
         participantHand.add(new Card(CardRank.ACE, CardSuit.DIAMOND));
         participantHand.add(new Card(CardRank.KING, CardSuit.HEART));
@@ -92,6 +94,7 @@ class ParticipantHandTest {
     @DisplayName("ACE를 뺀 나머지의 합이 10 이하일 경우 ACE 한 장을 11로 계산한다")
     void ACE_를_뺸_나머지의_합이_10이하일_경우_ACE_한_장을_11로_계산() {
         //given
+        participantHand = new SoftHand();
         participantHand.add(new Card(CardRank.ACE, CardSuit.DIAMOND));
         participantHand.add(new Card(CardRank.EIGHT, CardSuit.HEART));
         participantHand.add(new Card(CardRank.TWO, CardSuit.DIAMOND));
@@ -108,6 +111,7 @@ class ParticipantHandTest {
     @DisplayName("ACE가 2장일때, 뺀 나머지의 합이 10 이하일 경우 ACE 한 장을 11로 계산한다")
     void ACE가_두장일때_ACE를_뺸_나머지의_합이_10이하일_경우_ACE_한_장을_11로_계산() {
         //given
+        participantHand = new SoftHand();
         participantHand.add(new Card(CardRank.ACE, CardSuit.DIAMOND));
         participantHand.add(new Card(CardRank.ACE, CardSuit.DIAMOND));
         participantHand.add(new Card(CardRank.SEVEN, CardSuit.HEART));

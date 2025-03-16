@@ -14,16 +14,19 @@ public final class Dealer implements BetOwnable, Gameable {
     private static final int DEALER_HIT_THRESHOLD = 16;
     private static final int INITIAL_DEAL_CARD_COUNT = 2;
 
-    private final ParticipantHand participantHand;
+    private ParticipantHand participantHand; //TODO not final
     private final Bets bets;
 
     public Dealer() {
-        this.participantHand = new ParticipantHand();
+        this.participantHand = new HardHand();
         this.bets = new Bets();
     }
 
     @Override
     public void receiveCard(final Card card) {
+        if (card.isSoftCard()) {
+            this.participantHand = this.participantHand.cloneToSoftHand();
+        }
         participantHand.add(card);
     }
 
