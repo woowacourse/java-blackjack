@@ -43,7 +43,7 @@ class ParticipantResultsTest {
     void 챌린저의_결과만_조회할_수_있다() {
         // given
         Dealer dealer = new Dealer(new Hand());
-        Player player = new Player("히로", new Hand());
+        Player player = new Player("히로", new Hand(), new BetAmount(1_000));
 
         ParticipantResults participantResults = new ParticipantResults();
 
@@ -64,7 +64,7 @@ class ParticipantResultsTest {
     void 디펜더의_결과만_조회할_수_있다() {
         // given
         Dealer dealer = new Dealer(new Hand());
-        Player player = new Player("히로", new Hand());
+        Player player = new Player("히로", new Hand(), new BetAmount(1_000));
 
         ParticipantResults participantResults = new ParticipantResults();
 

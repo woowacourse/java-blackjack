@@ -12,7 +12,7 @@ class ParticipantResultTest {
     @Test
     void 같은_참가자에_대한_결과는_동일한_객체로_취급한다() {
         // given
-        Player player = new Player("히로", new Hand());
+        Player player = new Player("히로", new Hand(), new BetAmount(1_000));
 
         ParticipantResult participantResult = new ParticipantResult(player, GameResultType.WIN, 21);
         ParticipantResult anotherResult = new ParticipantResult(player, GameResultType.LOSE, 21);

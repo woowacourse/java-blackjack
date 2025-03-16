@@ -5,6 +5,7 @@ import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
 import blackjack.domain.game.Hand;
 import blackjack.domain.game.Player;
+import blackjack.domain.result.BetAmount;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -23,7 +24,7 @@ class PlayerTest {
         hand.takeCard(card2);
 
         // when & then
-        assertThatCode(() -> new Player("히로", hand))
+        assertThatCode(() -> new Player("히로", hand, new BetAmount(1_000)))
                 .doesNotThrowAnyException();
     }
 
@@ -37,7 +38,7 @@ class PlayerTest {
         hand.takeCard(card1);
         hand.takeCard(card2);
 
-        Player player = new Player("꾹이", hand);
+        Player player = new Player("꾹이", hand, new BetAmount(1_000));
 
         List<Card> expect = List.of(card1, card2);
 
@@ -56,7 +57,7 @@ class PlayerTest {
         hand.takeCard(card2);
 
         Card newCard = new Card(CardSuit.SPADE, CardRank.KING);
-        Player player = new Player("꾹이", hand);
+        Player player = new Player("꾹이", hand, new BetAmount(1_000));
 
         List<Card> expect = List.of(card1, card2, newCard);
 
@@ -77,7 +78,7 @@ class PlayerTest {
         hand.takeCard(card1);
         hand.takeCard(card2);
 
-        Player player = new Player("히로", hand);
+        Player player = new Player("히로", hand, new BetAmount(1_000));
 
         // when
         boolean actual = player.ableToTakeMoreCards();
@@ -98,7 +99,7 @@ class PlayerTest {
         hand.takeCard(card2);
         hand.takeCard(card3);
 
-        Player player = new Player("히로", hand);
+        Player player = new Player("히로", hand, new BetAmount(1_000));
 
         // when
         boolean overLimit = player.isOverLimit(21);
@@ -109,26 +110,26 @@ class PlayerTest {
 
     @Test
     void 플레이어는_챌린저이다() {
-        Player player = new Player("히로", new Hand());
+        Player player = new Player("히로", new Hand(), new BetAmount(1_000));
         assertThat(player.isChallenger()).isTrue();
     }
 
     @Test
     void 플레이어는_추가로_카드를_뽑을_지_결정할_수_있다() {
-        Player player = new Player("히로", new Hand());
+        Player player = new Player("히로", new Hand(), new BetAmount(1_000));
         assertThat(player.canDecideToTakeMoreCard()).isTrue();
     }
 
     @Test
     void 플레이어는_이름을_가지고_있다() {
-        Player player = new Player("히로", new Hand());
+        Player player = new Player("히로", new Hand(), new BetAmount(1_000));
         assertThat(player.getName()).isEqualTo("히로");
     }
 
     @Test
     void 플레이어는_가장_처음에_두장을_공개한다() {
         // given
-        Player player = new Player("히로", new Hand());
+        Player player = new Player("히로", new Hand(), new BetAmount(1_000));
         Card card1 = new Card(CardSuit.SPADE, CardRank.TWO);
         Card card2 = new Card(CardSuit.HEART, CardRank.TWO);
 

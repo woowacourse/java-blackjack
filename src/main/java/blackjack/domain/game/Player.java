@@ -1,16 +1,19 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.result.BetAmount;
 import java.util.List;
 
 public class Player implements Participant {
 
     private final String name;
     private final Hand hand;
+    private final BetAmount betAmount;
 
-    public Player(String name, Hand hand) {
+    public Player(String name, Hand hand, BetAmount betAmount) {
         this.name = name;
         this.hand = hand;
+        this.betAmount = betAmount;
     }
 
     @Override

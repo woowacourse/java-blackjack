@@ -20,6 +20,11 @@ public final class InputView {
         return parseNames(rawNames);
     }
 
+    public static int askBetAmount(String name) {
+        System.out.println(name + "의 배팅 금액은?");
+        return parseBetAmount(scanner.next());
+    }
+
     public static Confirmation askToGetMoreCard(Participant participant) {
         if (participant.canDecideToTakeMoreCard()) {
             Player player = (Player) participant;
@@ -37,4 +42,11 @@ public final class InputView {
         return Arrays.stream(rawNames.split(",")).toList();
     }
 
+    private static int parseBetAmount(String amount) {
+        try {
+            return Integer.parseInt(amount);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("배팅 금액의 형태가 잘못되었습니다.");
+        }
+    }
 }

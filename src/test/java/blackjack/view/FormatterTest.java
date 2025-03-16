@@ -1,10 +1,11 @@
 package blackjack.view;
 
-import blackjack.domain.game.Hand;
-import blackjack.domain.game.Player;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
+import blackjack.domain.game.Hand;
+import blackjack.domain.game.Player;
+import blackjack.domain.result.BetAmount;
 import blackjack.domain.result.GameResultType;
 import blackjack.domain.result.ParticipantResult;
 import java.util.List;
@@ -36,7 +37,7 @@ class FormatterTest {
     @Test
     void 챌린저의_게임_결과를_포맷한다() {
         // given
-        Player player = new Player("히로", new Hand());
+        Player player = new Player("히로", new Hand(), new BetAmount(1_000));
         ParticipantResult participantResult = new ParticipantResult(player, GameResultType.LOSE, 1);
 
         // when

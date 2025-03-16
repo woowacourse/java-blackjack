@@ -7,6 +7,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
 import blackjack.domain.game.GameRuleEvaluator;
+import blackjack.domain.result.BetAmount;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,7 @@ class GameRuleEvaluatorTest {
         // given
         GameRuleEvaluator gameRuleEvaluator = new GameRuleEvaluator();
         Hand hand = new Hand();
-        Player player = new Player("히로", hand);
+        Player player = new Player("히로", hand, new BetAmount(1_000));
         hand.takeCard(new Card(CardSuit.SPADE, CardRank.KING));
         hand.takeCard(new Card(CardSuit.SPADE, CardRank.QUEEN));
         hand.takeCard(new Card(CardSuit.SPADE, CardRank.JACK));

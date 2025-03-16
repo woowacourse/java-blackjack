@@ -8,11 +8,13 @@ import blackjack.domain.game.Hand;
 import blackjack.domain.game.Participant;
 import blackjack.domain.game.Player;
 import blackjack.domain.game.Players;
+import blackjack.domain.result.BetAmount;
 import blackjack.domain.result.Judge;
 import blackjack.domain.result.ParticipantResults;
 import blackjack.view.Confirmation;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackController {
@@ -88,9 +90,15 @@ public class BlackjackController {
     }
 
     private Players savePlayers(List<String> names) {
-        List<Player> players = new java.util.ArrayList<>(names.stream()
-                .map(name -> new Player(name, new Hand()))
-                .toList());
+        List<Player> players = new ArrayList<>();
+
+        for (String name : names) {
+            int rawBetAmount = InputView.askBetAmount(name);
+            BetAmount betAmount = new BetAmount(rawBetAmount);
+
+            players.add(new Player(name, new Hand(), betAmount));
+        }
+
         return new Players(players);
     }
 }
