@@ -44,7 +44,7 @@ public class BlackJackRule {
 
     public static Map<Participant, Integer> calculateWinningMoney(final Dealer dealer, final Participants participants) {
         Map<Participant, ParticipantResult> participantResults = ParticipantResult.calculateParticipantResults(dealer, participants);
-        return MoneyDistributor.calculateWinningMoney(dealer, participantResults);
+        return MoneyDistributor.calculateWinningMoneys(dealer, participantResults);
     }
 
     public static int calculateDealerWinningMoney(final Map<Participant, Integer> winningMoney) {

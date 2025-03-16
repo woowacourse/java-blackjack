@@ -14,7 +14,7 @@ public class MoneyDistributor {
     public static final int DRAW_MONEY = 0;
     public static final double WINNING_MONEY_RATE = 1.5;
 
-    public static Map<Participant, Integer> calculateWinningMoney(final Dealer dealer, final Map<Participant, ParticipantResult> participantResults) {
+    public static Map<Participant, Integer> calculateWinningMoneys(final Dealer dealer, final Map<Participant, ParticipantResult> participantResults) {
         Map<Participant, Integer> winningMoneys = new HashMap<>();
         for (Map.Entry<Participant, ParticipantResult> resultEntry : participantResults.entrySet()) {
             Participant participant = resultEntry.getKey();

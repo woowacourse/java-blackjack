@@ -13,7 +13,7 @@ public class BettedMoney {
 
     private void validate(final int money) {
         if (money < MINIMUM_AVAILABLE_MONEY) {
-            throw new IllegalArgumentException("0원 이상 베팅 가능합니다.");
+            throw new IllegalArgumentException(String.format("%d원 이상 베팅 가능합니다.", MINIMUM_AVAILABLE_MONEY));
         }
         if (money > MAXIMUM_AVAILABLE_MONEY) {
             throw new IllegalArgumentException("최대 10억 원까지 베팅 가능합니다.");

@@ -25,7 +25,7 @@ public class Participants {
 
     private void validateParticipantCount(final List<Participant> participants) {
         if (participants.size() < MINIMUM_PARTICIPANTS_COUNT || participants.size() > MAXIMUM_PARTICIPANTS_COUNT) {
-            throw new IllegalArgumentException("참가자는 2~8명 이여야 합니다.");
+            throw new IllegalArgumentException(String.format("참가자는 %d~%d명 이여야 합니다.", MINIMUM_PARTICIPANTS_COUNT, MAXIMUM_PARTICIPANTS_COUNT));
         }
     }
 

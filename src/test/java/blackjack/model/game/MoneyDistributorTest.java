@@ -34,7 +34,7 @@ public class MoneyDistributorTest {
         Map<Participant, ParticipantResult> winningResult = ParticipantResult.calculateParticipantResults(dealer, participants);
 
         // When
-        Map<Participant, Integer> winningMoneys = MoneyDistributor.calculateWinningMoney(dealer, winningResult);
+        Map<Participant, Integer> winningMoneys = MoneyDistributor.calculateWinningMoneys(dealer, winningResult);
 
         // Then
         assertThat(winningMoneys).isEqualTo(Map.of(participant, 15_000, participant2, 10_000, participant3, 0, participant4, -10_000));
@@ -56,7 +56,7 @@ public class MoneyDistributorTest {
         participant4.putCard(new Card(CardShape.SPADE, CardType.NORMAL_2));
         Participants participants = new Participants(List.of(participant, participant2, participant3, participant4));
         Map<Participant, ParticipantResult> winningResult = ParticipantResult.calculateParticipantResults(dealer, participants);
-        Map<Participant, Integer> winningMoneys = MoneyDistributor.calculateWinningMoney(dealer, winningResult);
+        Map<Participant, Integer> winningMoneys = MoneyDistributor.calculateWinningMoneys(dealer, winningResult);
 
         // When & Then
         assertThat(MoneyDistributor.calculateDealerMoney(winningMoneys)).isEqualTo(-15_000);
