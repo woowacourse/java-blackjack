@@ -32,7 +32,7 @@ public class DealerTest {
 
     @Test
     @DisplayName("모두에게 보여줄 딜러의 카드를 가져온다")
-    void should_return_public_able_cards() {
+    void should_return_cards_to_show_when_blackjack_started() {
         //given
         Participant dealer = new Dealer();
         Card cardOfHeartAce = new Card(Shape.HEART, Rank.ACE);
@@ -48,7 +48,7 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("현재 카드의 합이 카드를 뽑을 수 있는 조건인 16 이하일 경우, true를 반환한다")
+    @DisplayName("현재 딜러가 카드를 받을 수 있는지 여부를 반환한다")
     void should_return_true_when_can_pick() {
         //given
         Participant dealer = new Dealer();
@@ -65,8 +65,8 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("현재 카드의 합이 카드를 뽑을 수 있는 조건인 17 이상일 경우, false를 반환한다")
-    void should_return_false_when_cannot_pick() {
+    @DisplayName("현재 딜러가 카드를 받을 수 있는지 여부를 반환한다")
+    void should_return_false_when_can_not_pick() {
         //given
         Participant dealer = new Dealer();
         Card cardOfHeartEight = new Card(Shape.HEART, Rank.EIGHT);
