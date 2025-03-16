@@ -2,15 +2,18 @@ package participant;
 
 import card.Card;
 import java.util.List;
+import state.finished.Blackjack;
+import state.finished.Bust;
 import state.started.Started;
 
 public class Player extends Participant {
 
-    private final String nickname;
+    private final Nickname nickname;
+    private final BettingMoney bettingMoney;
 
-    public Player(final String nickname, final State start) {
-        super(start);
+    public Player(Nickname nickname, BettingMoney bettingMoney) {
         this.nickname = nickname;
+        this.bettingMoney = bettingMoney;
     }
 
     public void prepareGame(final Card card1, final Card card2) {
@@ -23,7 +26,7 @@ public class Player extends Participant {
     }
 
     public String getNickname() {
-        return this.nickname;
+        return this.nickname.getNickname();
     }
 
     public List<Card> cards() {
