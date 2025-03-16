@@ -57,12 +57,12 @@ public class OutputView {
 
     public String getDealerProfit(GameProfits gameProfits) {
         Profit profit = gameProfits.getDealerProfit();
-        return profit.getValue() + "";
+        return profit.value() + "";
     }
 
     private String getGamblerProfit(Gambler gambler, GameProfits gameProfits) {
         Profit profit = gameProfits.getGameResult(gambler);
-        return profit.getValue() + "";
+        return profit.value() + "";
     }
 
     private String getCardsMessage(String name, List<Card> cards) {

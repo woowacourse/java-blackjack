@@ -15,6 +15,6 @@ public record BetAmount(int amount) {
     }
 
     public Profit getProfit(GameResult gameResult) {
-        return new Profit(amount, gameResult);
+        return Profit.calculateFrom(amount, gameResult);
     }
 }
