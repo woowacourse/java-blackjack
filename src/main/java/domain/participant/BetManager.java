@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class BetManager {
 
-    private BlackjackGame blackjackGame;
+    private final BlackjackGame blackjackGame;
 
     public BetManager(BlackjackGame blackjackGame) {
         this.blackjackGame = blackjackGame;
