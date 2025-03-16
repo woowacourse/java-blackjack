@@ -4,7 +4,6 @@ import controller.converter.DomainToTextConverter;
 import domain.BlackjackGame;
 import domain.card.TrumpCard;
 import domain.participant.Participant;
-import domain.participant.Role;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -62,7 +61,7 @@ public final class BlackjackController {
 
 
   private void processPlayerHits(
-      Participant<? extends Role> player,
+      Participant player,
       final BlackjackGame blackjack
   ) {
     while (player.isHit() && inputView.readPlayerAnswer(player.getName())) {
@@ -88,7 +87,7 @@ public final class BlackjackController {
     }
   }
 
-  private void outputParticipantHandResult(final Participant<? extends Role> participant) {
+  private void outputParticipantHandResult(final Participant participant) {
     final var convertedCards = converter.participantCardToText(participant.getCards());
     final var score = participant.calculateScore();
     outputView.printParticipantRoundResult(participant.getName(), convertedCards, score.value());

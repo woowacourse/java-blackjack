@@ -34,8 +34,8 @@ class RoundResultTest {
       final var roleForPlayer = new Player("name", bet);
       final var roleForDealer = new Dealer(bet);
 
-      final Participant<Player> player = new Participant<>(roleForPlayer, playerCards);
-      final Participant<Dealer> dealer = new Participant<>(roleForDealer, dealerCards);
+      final Participant player = new Participant(roleForPlayer, playerCards);
+      final Participant dealer = new Participant(roleForDealer, dealerCards);
       //when
       final var actual = RoundResult.round(player, dealer);
       //then

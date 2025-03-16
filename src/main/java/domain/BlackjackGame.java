@@ -28,8 +28,8 @@ public final class BlackjackGame {
   }
 
 
-  public Participant<? extends Role> hitByParticipant(
-      final Participant<? extends Role> participant) {
+  public Participant hitByParticipant(
+      final Participant participant) {
     final var card = deck.draw();
     return participants.hit(participant, card);
   }
@@ -49,15 +49,15 @@ public final class BlackjackGame {
     return cards.getFirst();
   }
 
-  public Participant<? extends Role> getDealer() {
+  public Participant getDealer() {
     return participants.getDealer();
   }
 
-  public List<Participant<? extends Role>> getPlayers() {
+  public List<Participant> getPlayers() {
     return participants.getPlayers();
   }
 
-  public List<Participant<? extends Role>> getParticipant() {
+  public List<Participant> getParticipant() {
     return participants.getAllParticipants();
   }
 }

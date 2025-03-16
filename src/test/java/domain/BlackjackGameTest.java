@@ -52,8 +52,8 @@ class BlackjackGameTest {
     void test_hitByParticipantForDealer() {
       //given
       final var bet = new Bet(1000);
-      final Participant<Dealer> dealer = new Participant<>(new Dealer(bet));
-      final List<Participant<Player>> players = List.of(new Participant<>(new Player("test", bet)));
+      final Participant dealer = new Participant(new Dealer(bet));
+      final List<Participant> players = List.of(new Participant(new Player("test", bet)));
       final Participants participants = new Participants(dealer, players);
       final List<TrumpCard> trumpCards = List.of(new TrumpCard(Rank.ACE, Suit.CLUB));
       final var deck = new Deck(new ArrayDeque<>(trumpCards));
@@ -69,9 +69,9 @@ class BlackjackGameTest {
     void test_hitByParticipantForPlayer() {
       //given
       var bet = new Bet(1000);
-      Participant<Dealer> dealer = new Participant<>(new Dealer(bet));
-      Participant<Player> player = new Participant<>(new Player("test", bet));
-      List<Participant<Player>> players = List.of(player);
+      Participant dealer = new Participant(new Dealer(bet));
+      Participant player = new Participant(new Player("test", bet));
+      List<Participant> players = List.of(player);
       final Participants participants = new Participants(dealer, players);
       List<TrumpCard> trumpCards = List.of(new TrumpCard(Rank.ACE, Suit.CLUB));
       final var deck = new Deck(new ArrayDeque<>(trumpCards));

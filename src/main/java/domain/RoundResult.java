@@ -1,7 +1,6 @@
 package domain;
 
 import domain.participant.Participant;
-import domain.participant.Role;
 import java.util.function.Function;
 
 public enum RoundResult {
@@ -19,8 +18,8 @@ public enum RoundResult {
 
 
   public static RoundResult round(
-      final Participant<? extends Role> player,
-      final Participant<? extends Role> dealer
+      final Participant player,
+      final Participant dealer
   ) {
     final var playerScore = player.calculateScore();
     final var dealerScore = dealer.calculateScore();

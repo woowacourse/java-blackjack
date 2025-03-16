@@ -23,7 +23,7 @@ class ParticipantTest {
     void test_usingGenericRole() {
       // given
       final StubRole stubRole = new StubRole();
-      final Participant<StubRole> participant = new Participant<>(stubRole);
+      final Participant participant = new Participant(stubRole);
 
       // when&then
       assertThat(participant.isHit()).isEqualTo(stubRole.isHit(new Score(0)));
@@ -36,10 +36,10 @@ class ParticipantTest {
     void test_hit() {
       // given
       final StubRole stubRole = new StubRole();
-      final Participant<StubRole> participant = new Participant<>(stubRole);
+      final Participant participant = new Participant(stubRole);
       final TrumpCard card = new TrumpCard(Rank.TWO, Suit.DIAMOND);
       //when
-      final Participant<? extends Role> actual = participant.hit(card);
+      final Participant actual = participant.hit(card);
       //then
       assertThat(actual.getCards()).isEqualTo(List.of(card));
       assertThat(actual).isNotSameAs(participant);
@@ -50,10 +50,10 @@ class ParticipantTest {
     void test_equals() {
       // given
       final StubRole stubRole = new StubRole();
-      final Participant<StubRole> participant = new Participant<>(stubRole);
+      final Participant participant = new Participant(stubRole);
       final TrumpCard card = new TrumpCard(Rank.TWO, Suit.DIAMOND);
       //when
-      final Participant<? extends Role> actual = participant.hit(card);
+      final Participant actual = participant.hit(card);
       //then
       assertThat(actual).isEqualTo(participant);
       assertThat(actual).isNotSameAs(participant);

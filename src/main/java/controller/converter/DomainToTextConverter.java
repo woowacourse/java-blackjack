@@ -2,7 +2,6 @@ package controller.converter;
 
 import domain.card.TrumpCard;
 import domain.participant.Participant;
-import domain.participant.Role;
 import java.util.AbstractMap;
 import java.util.List;
 import java.util.Map;
@@ -22,20 +21,20 @@ public final class DomainToTextConverter {
     return converter;
   }
 
-  public List<String> playersToNames(final List<Participant<? extends Role>> players) {
+  public List<String> playersToNames(final List<Participant> players) {
     return players.stream()
         .map(Participant::getName)
         .collect(Collectors.toList());
   }
 
   public List<Map.Entry<String, List<String>>> playersToEntries(
-      final List<Participant<? extends Role>> players) {
+      final List<Participant> players) {
     return players.stream()
         .map(this::playerToEntry)
         .collect(Collectors.toList());
   }
 
-  public Map.Entry<String, List<String>> playerToEntry(final Participant<? extends Role> player) {
+  public Map.Entry<String, List<String>> playerToEntry(final Participant player) {
     return new AbstractMap.SimpleEntry<>(player.getName(),
         participantCardToText(player.getCards()));
   }

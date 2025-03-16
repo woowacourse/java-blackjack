@@ -24,8 +24,8 @@ class ParticipantsTest {
     @DisplayName("참가자가 없다면 예외를 발생시킨다.")
     void error_whenNoDealer() {
       //given
-      final List<Participant<Player>> given = new ArrayList<>();
-      final var dealer = new Participant<>(new Dealer(new Bet(0)));
+      final List<Participant> given = new ArrayList<>();
+      final var dealer = new Participant(new Dealer(new Bet(0)));
       //then
       assertThatThrownBy(() -> new Participants(dealer, given))
           .isInstanceOf(BlackjackArgumentException.class)
@@ -37,11 +37,11 @@ class ParticipantsTest {
     void error_whenDuplicatePlayer() {
       //given
       final Bet bet = new Bet(0);
-      final var dealer = new Participant<>(new Dealer(bet));
-      final List<Participant<Player>> given = new ArrayList<>();
+      final var dealer = new Participant(new Dealer(bet));
+      final List<Participant> given = new ArrayList<>();
       final Player duplicate = new Player("duplicate", bet);
-      given.add(new Participant<>(duplicate));
-      given.add(new Participant<>(duplicate));
+      given.add(new Participant(duplicate));
+      given.add(new Participant(duplicate));
       //then
       assertThatThrownBy(() -> new Participants(dealer, given))
           .isInstanceOf(BlackjackArgumentException.class)
@@ -53,9 +53,9 @@ class ParticipantsTest {
     void error_whenEmptyDealer() {
       //given
       final Bet bet = new Bet(0);
-      final List<Participant<Player>> players = new ArrayList<>();
+      final List<Participant> players = new ArrayList<>();
       final Player player = new Player("given", bet);
-      players.add(new Participant<>(player));
+      players.add(new Participant(player));
       //then
       assertThatThrownBy(() -> new Participants(null, players))
           .isInstanceOf(BlackjackArgumentException.class)
