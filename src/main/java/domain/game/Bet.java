@@ -2,6 +2,7 @@ package domain.game;
 
 public class Bet {
     private final double BLACKJACK_BONUS = 1.5;
+
     private final double amount;
 
     public Bet(double amount) {
