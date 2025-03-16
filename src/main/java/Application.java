@@ -1,4 +1,5 @@
 import console.GamePlayConsole;
+import console.GameResultConsole;
 import console.GameSetupConsole;
 import model.card.Deck;
 import model.card.DeckGenerator;
@@ -13,5 +14,7 @@ public final class Application {
         GamePlayConsole gamePlayConsole = new GamePlayConsole();
         gamePlayConsole.drawAllPlayerCards(participants.getPlayers(), deck);
         gamePlayConsole.drawDealerCards(participants.getDealer(), deck);
+        GameResultConsole gameResultConsole = new GameResultConsole();
+        gameResultConsole.getFinalScores(participants);
     }
 }

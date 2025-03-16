@@ -3,6 +3,7 @@ package model.participant;
 import java.util.List;
 import model.card.Card;
 import model.card.CardHand;
+import model.card.GameScore;
 import model.state.State;
 
 public abstract class Participant {
@@ -34,5 +35,9 @@ public abstract class Participant {
 
     public List<Card> getCards() {
         return getCardHand().getCards();
+    }
+
+    public GameScore getScore() {
+        return getCardHand().calculateScore();
     }
 }
