@@ -1,5 +1,6 @@
 package blackjack.model.card;
 
+import java.util.Collections;
 import java.util.List;
 
 public enum CardNumber {
@@ -31,6 +32,7 @@ public enum CardNumber {
     }
 
     public List<Integer> getPoints() {
-        return points;
+        return Collections.unmodifiableList(points);
     }
+
 }
