@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -14,7 +14,7 @@ public class CardTest {
 
     @Test
     void 카드가_에이스이면_true를_아니면_false를_반환한다() {
-        Card aceCard = new Card(Symbol.DIAMOND, Number.ACE);
+        Card aceCard = new Card(Symbol.DIAMOND, domain.card.Number.ACE);
         Card notAceCard = new Card(Symbol.DIAMOND, Number.TWO);
 
         assertAll(

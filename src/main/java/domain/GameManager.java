@@ -1,31 +1,47 @@
 package domain;
 
+
+import domain.card.Card;
+import domain.card.CardProvider;
+import domain.dto.PlayerInfo;
+import domain.participant.Dealer;
+import domain.participant.Participant;
+import domain.participant.Player;
+import domain.participant.Players;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class GameManager {
 
-    private static final int INITIAL_DRAW_SIZE = 2;
     private static final int DEFAULT_DRAW_SIZE = 1;
+    public static final int INITIAL_DRAW_SIZE = 2;
 
     private final CardProvider provider;
     private Players players;
     private Dealer dealer;
 
-    public GameManager(List<String> playerNames, CardProvider provider) {
+    public GameManager(List<PlayerInfo> playerInfos, CardProvider provider) {
         this.provider = provider;
-        this.players = new Players(createPlayers(playerNames));
-        this.dealer = new Dealer(new Cards(drawInitialCards()));
+        this.players = new Players(createPlayers(playerInfos, provider));
+        this.dealer = new Dealer(drawInitialCards(provider));
     }
 
-    private List<Player> createPlayers(List<String> playerNames) {
-        return playerNames.stream()
-            .map(name -> new Player(name, new Cards(drawInitialCards())))
-            .toList();
+    private List<Player> createPlayers(List<PlayerInfo> playerInfos, CardProvider provider) {
+        List<Player> createdPlayers = new ArrayList<>();
+        for (PlayerInfo playerInfo : playerInfos) {
+            createdPlayers.add(
+                new Player(playerInfo.name(),
+                    drawInitialCards(provider),
+                    playerInfo.betAmount())
+            );
+        }
+        return createdPlayers;
     }
 
-    private List<Card> drawInitialCards() {
-        return this.provider.provideCards(INITIAL_DRAW_SIZE);
+    private List<Card> drawInitialCards(CardProvider provider) {
+        return provider.provideCards(INITIAL_DRAW_SIZE);
     }
 
     public Dealer findDealer() {
@@ -36,20 +52,12 @@ public class GameManager {
         return players.findAllPlayers();
     }
 
-    public <T extends Participant<T>> T drawCard(T participant) {
-        return participant.createParticipant(provider.provideCards(DEFAULT_DRAW_SIZE));
+    public void drawCard(Participant participant) {
+        participant.drawCard(provider.provideCards(DEFAULT_DRAW_SIZE));
     }
 
-    public void editPlayers(Player newPlayer) {
-        players = players.editPlayer(newPlayer);
-    }
-
-    public void editDealer(Dealer newDealer) {
-        this.dealer = newDealer;
-    }
-
-    public Map<Player, ResultStatus> findGameResult() {
-        return ResultStatus.judgeGameResult(players, dealer);
+    public Map<Player, Integer> calculateIncomes() {
+        return players.judgeAllPlayersIncomes(dealer);
     }
 
     public boolean isPlayerBurst(Player player) {

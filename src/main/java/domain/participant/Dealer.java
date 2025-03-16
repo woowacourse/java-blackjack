@@ -1,15 +1,17 @@
-package domain;
+package domain.participant;
+
+import domain.card.Card;
 
 import java.util.List;
 import java.util.Objects;
 
-public class Dealer extends Participant<Dealer>{
+public class Dealer extends Participant {
 
     private static final int DEALER_DRAW_LIMIT = 16;
 
     private static final String DEALER_DEFAULT_NAME = "딜러";
 
-    public Dealer(Cards cards) {
+    public Dealer(List<Card> cards) {
         super(DEALER_DEFAULT_NAME, cards);
     }
 
@@ -19,11 +21,6 @@ public class Dealer extends Participant<Dealer>{
 
     public Card getInitialCard() {
         return cards.getInitialCard();
-    }
-
-    @Override
-    public Dealer createParticipant(List<Card> providedCards) {
-        return new Dealer(cards.addCards(providedCards));
     }
 
     @Override

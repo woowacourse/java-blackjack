@@ -1,19 +1,19 @@
-package domain;
+package domain.card;
 
 import java.util.Objects;
 
 public class Card {
 
     private final Symbol symbol;
-    private final Number number;
+    private final domain.card.Number number;
 
-    public Card(Symbol symbol, Number number) {
+    public Card(Symbol symbol, domain.card.Number number) {
         this.symbol = symbol;
         this.number = number;
     }
 
     public boolean isAce() {
-        return number.equals(Number.ACE);
+        return number.equals(domain.card.Number.ACE);
     }
 
     public Symbol getSymbol() {

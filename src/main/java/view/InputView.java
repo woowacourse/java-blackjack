@@ -1,6 +1,6 @@
 package view;
 
-import domain.Player;
+import domain.participant.Player;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,5 +25,12 @@ public class InputView {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", player.getName());
         String input = scanner.nextLine();
         return Answer.selectAnswer(input);
+    }
+
+    public static int readBetAmount(String playerName) {
+        System.out.printf("%s의 배팅 금액은?%n", playerName);
+        String input = scanner.nextLine();
+        InputValidator.validateBetAmount(input);
+        return Integer.parseInt(input);
     }
 }
