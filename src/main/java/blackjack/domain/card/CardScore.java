@@ -1,31 +1,31 @@
 package blackjack.domain.card;
 
-import java.util.Collections;
 import java.util.List;
 
 public enum CardScore {
 
-    A(List.of(1, 11)),
-    TWO(List.of(2)),
-    THREE(List.of(3)),
-    FOUR(List.of(4)),
-    FIVE(List.of(5)),
-    SIX(List.of(6)),
-    SEVEN(List.of(7)),
-    EIGHT(List.of(8)),
-    NINE(List.of(9)),
-    TEN(List.of(10)),
-    K(List.of(10)),
-    Q(List.of(10)),
-    J(List.of(10));
+    A(1),
+    TWO(2),
+    THREE(3),
+    FOUR(4),
+    FIVE(5),
+    SIX(6),
+    SEVEN(7),
+    EIGHT(8),
+    NINE(9),
+    TEN(10),
+    K(10),
+    Q(10),
+    J(10);
 
     private static final List<CardScore> SPECIAL_CARD_SCORE = List.of(CardScore.A, CardScore.K,
             CardScore.Q, CardScore.J);
+    private static final int ACE_MAX_NUMBER = 11;
 
-    private final List<Integer> scores;
+    private final int score;
 
-    CardScore(final List<Integer> scores) {
-        this.scores = scores;
+    CardScore(final int score) {
+        this.score = score;
     }
 
     public String getName() {
@@ -34,14 +34,17 @@ public enum CardScore {
         if (isSpecialCardScore) {
             return this.name();
         }
-        return String.valueOf(scores.getFirst());
+        return String.valueOf(score);
     }
 
     public int getMinNumber() {
-        return Collections.min(scores);
+        return score;
     }
 
     public int getMaxNumber() {
-        return Collections.max(scores);
+        if (this == A) {
+            return ACE_MAX_NUMBER;
+        }
+        return score;
     }
 }
