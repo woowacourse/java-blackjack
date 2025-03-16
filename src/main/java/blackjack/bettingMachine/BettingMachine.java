@@ -3,6 +3,8 @@ package blackjack.bettingMachine;
 public class BettingMachine {
 
     private static final int UNIT_BETTING_MONEY = 100;
+    private static final int DOUBLE_RATE = 2;
+    private static final int TRIPLE_RATE = 3;
 
     private final Money bettingMoney;
     private final Money earnedMoney;
@@ -14,25 +16,25 @@ public class BettingMachine {
 
     public void bet(final String bettingAmount) {
         validateBettingAmount(bettingAmount);
-        this.bettingMoney.increase(Integer.parseInt(bettingAmount));
+        this.bettingMoney.add(Integer.parseInt(bettingAmount));
     }
 
     public void earnDouble() {
-        earnedMoney.increase(bettingMoney.getDouble());
+        earnedMoney.add(bettingMoney.getMoney() * DOUBLE_RATE);
     }
 
     public void earnSingle() {
-        earnedMoney.increase(bettingMoney.getMoney());
+        earnedMoney.add(bettingMoney.getMoney());
     }
 
     public void earnOneAndHalf() {
-        earnedMoney.increase(bettingMoney.getOneAndHalf());
+        earnedMoney.add(bettingMoney.getMoney() * TRIPLE_RATE / DOUBLE_RATE);
     }
 
     public long getProfit() {
         return earnedMoney.getMoney() - bettingMoney.getMoney();
     }
-    
+
     private void validateBettingAmount(final String bettingAmount) {
         validateIsDigit(bettingAmount);
         validateIsUnitSize(bettingAmount);

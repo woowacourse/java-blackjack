@@ -46,7 +46,7 @@ public class Dealer extends Gamer {
     }
 
     public void updateEarnedMoney(final long money) {
-        earnMoney.increase(money);
+        earnMoney.add(money);
     }
 
     public long getProfit() {
