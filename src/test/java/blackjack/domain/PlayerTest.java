@@ -48,6 +48,6 @@ public class PlayerTest {
         // expected
         org.assertj.core.api.Assertions.assertThatThrownBy(() -> new Player(null))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Player의 인자는 null이 될 수 없습니다.");
+                .hasMessage("필수 입력값 중 하나가 null입니다.");
     }
 }

@@ -33,10 +33,10 @@ public class PlayerBlackjackCardHandTest {
         assertAll(
                 () -> assertThatThrownBy(() -> PlayerBlackjackCardHand.createWithInitialCards(null, List::of))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("PlayerBlackjackCardHand의 인자는 null이 될 수 없습니다."),
+                        .hasMessage("필수 입력값 중 하나가 null입니다."),
                 () -> assertThatThrownBy(() -> PlayerBlackjackCardHand.createWithInitialCards(DEFAULT_PLAYER, null))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("PlayerBlackjackCardHand의 인자는 null이 될 수 없습니다.")
+                        .hasMessage("필수 입력값 중 하나가 null입니다.")
         );
     }
 

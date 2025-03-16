@@ -25,7 +25,7 @@ public class DealerBlackjackCardHandTest {
         // expected
         assertThatThrownBy(() -> DealerBlackjackCardHand.createWithInitialCards(null))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("DealerBlackjackCardHand의 인자는 null이 될 수 없습니다.");
+                .hasMessage("필수 입력값 중 하나가 null입니다.");
     }
 
     @Test
