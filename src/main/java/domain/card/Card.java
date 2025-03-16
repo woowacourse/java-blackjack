@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Card extends TrumpCard {
 
-    Map<Rank, List<Integer>> RANK_TO_SCORES = Map.ofEntries(
+    private static final Map<Rank, List<Integer>> RANK_TO_SCORES = Map.ofEntries(
             Map.entry(Rank.ACE, List.of(1, 11)),
             Map.entry(Rank.TWO, List.of(2)),
             Map.entry(Rank.THREE, List.of(3)),
