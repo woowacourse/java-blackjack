@@ -9,12 +9,14 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
-public class SingleDeckFactory implements DeckGenerator {
+public final class SingleDeckFactory {
 
     private static final int DECK_SIZE = 52;
 
-    @Override
-    public Deck generate() {
+    private SingleDeckFactory() {
+    }
+
+    public static Deck generate() {
         List<Card> cards = Arrays.stream(CardSuit.values())
                 .flatMap(suit -> Arrays.stream(CardRank.values())
                         .map(rank -> new Card(suit, rank)))
@@ -24,7 +26,7 @@ public class SingleDeckFactory implements DeckGenerator {
         return Deck.shuffled(cards);
     }
 
-    private void validate(List<Card> cards) {
+    private static void validate(List<Card> cards) {
         if (cards.size() != DECK_SIZE) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_DECK_SIZE.getMessage());
         }

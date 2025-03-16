@@ -2,10 +2,8 @@ package blackjack.factory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.Card;
 import blackjack.domain.Deck;
 import java.util.HashSet;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,11 +12,9 @@ class SingDeckGeneratorTest {
     @DisplayName("덱을 만들 때 카드의 개수는 52개이다")
     @Test
     void test1() {
-        // given
-        SingleDeckFactory singDeckGenerator = new SingleDeckFactory();
 
-        // when
-        Deck deck = singDeckGenerator.generate();
+        // given & when
+        Deck deck = SingleDeckFactory.generate();
 
         // then
         assertThat(deck.getCards()).hasSize(52);
@@ -28,12 +24,12 @@ class SingDeckGeneratorTest {
     @Test
     void test2() {
         // given
-        SingleDeckFactory singDeckGenerator = new SingleDeckFactory();
+        Deck deck = SingleDeckFactory.generate();
 
-        Deck deck = singDeckGenerator.generate();
-
+        // when
         int uniqueCardSize = new HashSet<>(deck.getCards()).size();
 
+        // then
         assertThat(uniqueCardSize).isEqualTo(52);
     }
 }

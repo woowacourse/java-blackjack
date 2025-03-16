@@ -7,8 +7,8 @@ import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.factory.DealerFactory;
-import blackjack.factory.DeckGenerator;
 import blackjack.factory.PlayersFactory;
+import blackjack.factory.SingleDeckFactory;
 import blackjack.view.Confirmation;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -18,16 +18,10 @@ import java.util.function.Function;
 
 public class BlackjackController {
 
-    private final DeckGenerator deckGenerator;
-
-    public BlackjackController(DeckGenerator deckGenerator) {
-        this.deckGenerator = deckGenerator;
-    }
-
     public void run() {
         List<String> names = InputView.readNames();
         List<Integer> bettingMoneyList = InputView.readBettingMoneyList(names);
-        Deck deck = deckGenerator.generate();
+        Deck deck = SingleDeckFactory.generate();
         Players players = PlayersFactory.generate(names, bettingMoneyList);
         Dealer dealer = DealerFactory.generate();
 
