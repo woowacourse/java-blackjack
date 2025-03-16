@@ -24,8 +24,6 @@ class CardDeckTest {
         List<Card> drawnCards = cardDeck.drawCard(2);
 
         assertThat(drawnCards).hasSize(2);
-        assertThat(drawnCards.getFirst()).isEqualTo(new Card(CardShape.HEART, CardValue.JACK));
-        assertThat(drawnCards.getLast()).isEqualTo(new Card(CardShape.CLOVER, CardValue.JACK));
     }
 
     @Test

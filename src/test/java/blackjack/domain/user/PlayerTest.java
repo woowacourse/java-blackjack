@@ -2,6 +2,7 @@ package blackjack.domain.user;
 
 import static blackjack.fixture.CardFixture.make;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardShape;
@@ -52,8 +53,9 @@ class PlayerTest {
 
         player.hitUntilLimit(newCard);
 
-        assertThat(player.getHand()).hasSize(1);
-        assertThat(player.getHand().getFirst()).isEqualTo(newCard);
+        assertAll(
+                () -> assertThat(player.getHand()).hasSize(1),
+                () -> assertThat(player.getHand().getFirst()).isEqualTo(newCard));
     }
 
     @Test
@@ -101,8 +103,9 @@ class PlayerTest {
 
         int expectedProfit = PlayerFixture.DEFAULT_BETTING_AMOUNT.calculateMultiplication(
                 GameResultType.WIN_WITH_INITIAL_HAND_BLACKJACK.getProfitRate());
-        assertThat(profit.getNickname()).isEqualTo("플레이어");
-        assertThat(profit.getProfit()).isEqualTo(expectedProfit);
+        assertAll(
+                () -> assertThat(profit.getNickname()).isEqualTo("플레이어"),
+                () -> assertThat(profit.getProfit()).isEqualTo(expectedProfit));
     }
 
     @ParameterizedTest
@@ -114,8 +117,9 @@ class PlayerTest {
         PlayerProfit profit = player.calculateProfit(dealer.getPoint());
 
         int expectedProfit = PlayerFixture.DEFAULT_BETTING_AMOUNT.calculateMultiplication(expectedType.getProfitRate());
-        assertThat(profit.getNickname()).isEqualTo(player.getNickname());
-        assertThat(profit.getProfit()).isEqualTo(expectedProfit);
+        assertAll(
+                () -> assertThat(profit.getNickname()).isEqualTo(player.getNickname()),
+                () -> assertThat(profit.getProfit()).isEqualTo(expectedProfit));
     }
 
     static Stream<Arguments> canCalculateProfitWhenDealerBust() {
@@ -138,8 +142,9 @@ class PlayerTest {
         PlayerProfit profit = player.calculateProfit(dealer.getPoint());
 
         int expectedProfit = PlayerFixture.DEFAULT_BETTING_AMOUNT.calculateMultiplication(expectedType.getProfitRate());
-        assertThat(profit.getNickname()).isEqualTo("플레이어");
-        assertThat(profit.getProfit()).isEqualTo(expectedProfit);
+        assertAll(
+                () -> assertThat(profit.getNickname()).isEqualTo("플레이어"),
+                () -> assertThat(profit.getProfit()).isEqualTo(expectedProfit));
     }
 
     static Stream<Arguments> canCalculateProfitByGameResult() {
