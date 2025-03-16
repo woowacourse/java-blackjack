@@ -1,7 +1,7 @@
 package view;
 
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -33,7 +33,7 @@ public class InputView {
 	}
 
 	public Map<Player, Money> readPlayersMoney(final Blackjack blackjack) {
-		final Map<Player, Money> playersMoney = new HashMap<>();
+		final Map<Player, Money> playersMoney = new LinkedHashMap<>();
 		for (final Player player : blackjack.getPlayers().getPlayers()) {
 			System.out.printf("%s의 배팅 금액은?" + System.lineSeparator(), player.getName());
 			final int input = readInt();
