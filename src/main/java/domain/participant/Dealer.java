@@ -22,7 +22,7 @@ public class Dealer extends Participant {
 
     @Override
     public Hand getFirstOpenHand() {
-        return hand.getExceptHidden();
+        return hand.getFirstCard();
     }
 
 }

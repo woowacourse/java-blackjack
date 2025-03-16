@@ -12,7 +12,6 @@ import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
-import domain.participant.Dealer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -80,7 +79,7 @@ public class HandTest {
         hand.addCard(new Card(SPADE, ACE));
 
         // when
-        Hand handExceptHidden = hand.getExceptHidden();
+        Hand handExceptHidden = hand.getFirstCard();
 
         // then
         assertSoftly(softly -> {

@@ -53,7 +53,7 @@ public class Hand {
         return cards.size() == BLACKJACK_COUNT;
     }
 
-    public Hand getExceptHidden() {
+    public Hand getFirstCard() {
         List<Card> firstOpenCards = new ArrayList<>(cards);
         firstOpenCards.removeLast();
 
