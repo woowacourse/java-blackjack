@@ -7,8 +7,9 @@ import domain.participant.Dealer;
 import domain.participant.GameParticipant;
 import domain.participant.Player;
 import domain.participant.Players;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Game {
     private final Dealer dealer;
@@ -17,49 +18,43 @@ public class Game {
     public Game(List<String> playerNames, Deck deck) {
         dealer = new Dealer(deck, deck.getInitialDeal());
         this.players = new Players(playerNames);
-        playerNames.forEach(this::registerPlayer);
+        registerPlayer(playerNames);
     }
 
-    private void registerPlayer(String playerName) {
-        CardHand initialDeal = dealer.pickInitialDeal();
-        players.registerPlayer(playerName, initialDeal);
+    private void registerPlayer(List<String> playerNames) {
+        playerNames.forEach(name -> {
+            CardHand initialDeal = dealer.pickInitialDeal();
+            players.registerPlayer(name, initialDeal);
+        });
     }
 
-    public void playerHit(String playerName) {
+    public void hit(String name) {
         Card card = dealer.pickCard();
-        players.hit(playerName, card);
+        findParticipantByName(name).hit(card);
     }
 
-    public void dealerHit() {
-        Card card = dealer.pickCard();
-        dealer.hit(card);
+    public boolean canHit(String name) {
+        return findParticipantByName(name).canHit();
     }
 
-    public boolean canHit(String playerName) {
-        return players.canHit(playerName);
-    }
-
-    public boolean doesDealerNeedCard() {
-        return dealer.doesNeedCard();
+    public GameParticipant findParticipantByName(String name) {
+        if (dealer.getName().equals(name)) {
+            return dealer;
+        }
+        return players.findPlayerByName(name);
     }
 
     public List<GameParticipant> getParticipants() {
-        List<GameParticipant> participants = new ArrayList<>();
-        participants.add(dealer);
-        participants.addAll(players.getPlayers());
-        return participants;
+        return Stream.concat(Stream.of(dealer), players.getPlayers().stream())
+                .collect(Collectors.toList());
     }
 
     public List<Player> getPlayers() {
         return players.getPlayers();
     }
 
-    public List<Card> getDealerCards() {
-        return dealer.getCards();
-    }
-
-    public List<Card> getPlayerCards(String playerName) {
-        return players.findPlayerByName(playerName).getCards();
+    public List<Card> getCardsOf(String name) {
+        return findParticipantByName(name).getCards();
     }
 
     public List<String> getPlayerNames() {
