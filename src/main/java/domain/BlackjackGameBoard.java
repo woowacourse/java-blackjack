@@ -14,9 +14,9 @@ import java.util.function.Function;
 
 public class BlackjackGameBoard {
 
-    private final int INITIAL_DRAW_COUNT = 2;
-    private final int INITIAL_USER_OPEN_COUNT = 2;
-    private final int INITIAL_DEALER_OPEN_COUNT = 1;
+    private static final int INITIAL_DRAW_COUNT = 2;
+    private static final int INITIAL_USER_OPEN_COUNT = 2;
+    private static final int INITIAL_DEALER_OPEN_COUNT = 1;
 
     private final Deck deck;
 
