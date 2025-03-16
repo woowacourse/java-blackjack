@@ -105,8 +105,8 @@ class HandTest {
         hand.add(card1);
         hand.add(card10);
         hand.add(card10);
-
-        // then
+        hand.add(card10);
+        
         assertThat(hand.isBust()).isTrue();
     }
 
