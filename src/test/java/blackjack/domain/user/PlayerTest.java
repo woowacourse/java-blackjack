@@ -26,7 +26,7 @@ class PlayerTest {
 
     @Test
     @DisplayName("배팅 금액을 추가할 수 있다.")
-    void canRegisterBettingAmount() {
+    void canAddBettingAmount() {
         BettingAmount expectedBettingAmount = new BettingAmount(1000);
         player.addBettingAmount(expectedBettingAmount);
 
@@ -47,7 +47,7 @@ class PlayerTest {
 
     @Test
     @DisplayName("히트를 할 수 있다.")
-    void canHit() {
+    void canHitUntilLimit() {
         Card newCard = new Card(CardShape.HEART, CardValue.EIGHT);
 
         player.hitUntilLimit(newCard);
@@ -58,7 +58,7 @@ class PlayerTest {
 
     @Test
     @DisplayName("히트가 불가능한 상태에서 히트를 수행할 경우 예외가 발생한다.")
-    void cannotHit() {
+    void cannotHitUntilLimit() {
         List<Card> initialCards = List.of(make(CardValue.KING), make(CardValue.JACK), make(CardValue.ACE));
         player.addInitialCards(initialCards);
 
@@ -70,7 +70,7 @@ class PlayerTest {
     @ParameterizedTest
     @DisplayName("히트 가능 여부를 확인할 수 있다.")
     @MethodSource()
-    void canCalculateTotalPoint(List<Card> cards, boolean expectedIsHitPossible) {
+    void checkCanHit(List<Card> cards, boolean expectedIsHitPossible) {
         player.addInitialCards(cards);
 
         boolean actualIsHitPossible = player.canHit();
@@ -78,7 +78,7 @@ class PlayerTest {
         assertThat(actualIsHitPossible).isEqualTo(expectedIsHitPossible);
     }
 
-    static Stream<Arguments> canCalculateTotalPoint() {
+    static Stream<Arguments> checkCanHit() {
         return Stream.of(
                 Arguments.of(List.of(make(CardValue.EIGHT), make(CardValue.EIGHT)), true),
                 Arguments.of(List.of(make(CardValue.EIGHT), make(CardValue.EIGHT), make(CardValue.EIGHT)), false),
@@ -93,7 +93,7 @@ class PlayerTest {
 
     @Test
     @DisplayName("플레이어가 초기카드로 블랙잭을 만들 경우 수익을 구할 수 있다.")
-    void canCreateWhenPlayerBlackjackWithInitialCard() {
+    void canCalculateProfitWhenBlackjack() {
         Dealer dealer = DealerFixture.createBust();
         Player player = PlayerFixture.createBlackJackWithInitialHand("플레이어");
 
@@ -108,7 +108,7 @@ class PlayerTest {
     @ParameterizedTest
     @DisplayName("딜러가 버스트일 경우 플레이어의 수익을 구할 수 있다.")
     @MethodSource()
-    void canCreateWhenDealerBust(Player player, GameResultType expectedType) {
+    void canCalculateProfitWhenDealerBust(Player player, GameResultType expectedType) {
         Dealer dealer = DealerFixture.createBust();
 
         PlayerProfit profit = player.calculateProfit(dealer.getPoint());
@@ -118,7 +118,7 @@ class PlayerTest {
         assertThat(profit.getProfit()).isEqualTo(expectedProfit);
     }
 
-    static Stream<Arguments> canCreateWhenDealerBust() {
+    static Stream<Arguments> canCalculateProfitWhenDealerBust() {
         return Stream.of(
                 Arguments.of(PlayerFixture.createBust("플레이어1"),
                         GameResultType.WIN),
@@ -134,7 +134,7 @@ class PlayerTest {
     @ParameterizedTest
     @DisplayName("승패에 따라 플레이어의 수익을 구할 수 있다.")
     @MethodSource()
-    void canCreateByWinningType(Dealer dealer, Player player, GameResultType expectedType) {
+    void canCalculateProfitByGameResult(Dealer dealer, Player player, GameResultType expectedType) {
         PlayerProfit profit = player.calculateProfit(dealer.getPoint());
 
         int expectedProfit = PlayerFixture.DEFAULT_BETTING_AMOUNT.calculateMultiplication(expectedType.getProfitRate());
@@ -142,7 +142,7 @@ class PlayerTest {
         assertThat(profit.getProfit()).isEqualTo(expectedProfit);
     }
 
-    static Stream<Arguments> canCreateByWinningType() {
+    static Stream<Arguments> canCalculateProfitByGameResult() {
         return Stream.of(
                 Arguments.of(
                         DealerFixture.createBlackJackWithFinalHand(),

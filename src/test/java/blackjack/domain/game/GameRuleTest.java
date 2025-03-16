@@ -18,7 +18,7 @@ class GameRuleTest {
     @ParameterizedTest
     @DisplayName("버스트 여부를 확인할 수 있다.")
     @CsvSource({"20,false", "21,false", "22,true"})
-    void canCheckIsBust(int point, boolean expectedIsBust) {
+    void canCheckBust(int point, boolean expectedIsBust) {
         boolean actualIsBust = isBust(point);
         assertThat(actualIsBust).isEqualTo(expectedIsBust);
     }

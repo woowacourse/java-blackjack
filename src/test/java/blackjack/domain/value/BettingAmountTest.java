@@ -21,8 +21,8 @@ class BettingAmountTest {
     }
 
     @Test
-    @DisplayName("게임 결과에 따른 수익을 구할 수 있다.")
-    void calculateProfit() {
+    @DisplayName("배팅금액에 배율을 곱한 것을 구할 수 있다.")
+    void calculateMultiplication() {
         BettingAmount bettingAmount = new BettingAmount(1000);
 
         int actualAmount = bettingAmount.calculateMultiplication(1.5);
