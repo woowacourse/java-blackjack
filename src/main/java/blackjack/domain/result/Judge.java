@@ -31,7 +31,22 @@ public class Judge {
                 DealerResult dealerResult = new DealerResult(GameResultType.TIE, dealerScore);
                 dealerResults.add(player, dealerResult);
                 playerResults.add(playerResult);
+                return;
             }
+
+            // 블랙잭이 아닌 경우
+            PlayerResult playerResult = new PlayerResult(player, GameResultType.LOSE, playerScore);
+            DealerResult dealerResult = new DealerResult(GameResultType.WIN, dealerScore);
+            dealerResults.add(player, dealerResult);
+            playerResults.add(playerResult);
+            return;
+        }
+
+        if (playerScore.isBlackJack()) {
+            PlayerResult playerResult = new PlayerResult(player, GameResultType.WIN, playerScore);
+            DealerResult dealerResult = new DealerResult(GameResultType.LOSE, dealerScore);
+            dealerResults.add(player, dealerResult);
+            playerResults.add(playerResult);
         }
     }
 
