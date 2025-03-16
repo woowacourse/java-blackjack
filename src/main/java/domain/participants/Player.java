@@ -8,6 +8,7 @@ import domain.game.GameResult;
 
 public class Player extends Gamer {
     private static final int BUST_THRESHOLD = 21;
+
     private final PlayerName playerName;
     private final BettingAmount bettingAmount;
 
@@ -21,6 +22,11 @@ public class Player extends Gamer {
         super(player);
         this.playerName = player.playerName;
         this.bettingAmount = player.bettingAmount;
+    }
+
+    @Override
+    public Gamer newInstance() {
+        return new Player(this);
     }
 
     public boolean isDrawable() {
@@ -38,17 +44,13 @@ public class Player extends Gamer {
         return this.playerName.equals(playerName);
     }
 
+
     public PlayerName getPlayerName() {
         return playerName;
     }
 
     public BettingAmount getBettingAmount() {
         return bettingAmount;
-    }
-
-    @Override
-    public Gamer newInstance() {
-        return new Player(this);
     }
 
     private GameResult decideGameResultWithBust(Dealer dealer) {

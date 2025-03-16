@@ -19,6 +19,11 @@ public class Dealer extends Gamer {
         this.deck = dealer.deck;
     }
 
+    @Override
+    public Gamer newInstance() {
+        return new Dealer(this);
+    }
+
     public boolean isDrawable() {
         return this.isDrawable(BUST_THRESHOLD);
     }
@@ -33,10 +38,5 @@ public class Dealer extends Gamer {
             throw new IllegalStateException("카드가 없습니다.");
         }
         return dealerCard.getFirst();
-    }
-
-    @Override
-    public Gamer newInstance() {
-        return new Dealer(this);
     }
 }

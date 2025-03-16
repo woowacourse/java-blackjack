@@ -16,6 +16,10 @@ public class PlayerNames {
         this.playerNames = playerNames;
     }
 
+    public List<PlayerName> getPlayerNames() {
+        return Collections.unmodifiableList(playerNames);
+    }
+
     private void validateDuplicate(List<PlayerName> playerNames) {
         Set playerNamesSet = new HashSet(playerNames);
         if (playerNamesSet.size() != playerNames.size()) {
@@ -23,7 +27,4 @@ public class PlayerNames {
         }
     }
 
-    public List<PlayerName> getPlayerNames() {
-        return Collections.unmodifiableList(playerNames);
-    }
 }
