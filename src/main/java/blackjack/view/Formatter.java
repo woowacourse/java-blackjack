@@ -26,19 +26,11 @@ public final class Formatter {
     }
 
     public static String formatPlayerCardStatus(Participant participant) {
-        if (participant.doesHaveName()) {
-            Player player = (Player) participant;
-            return player.getName() + "카드: " + formatStartingCardStatus(player);
-        }
-        throw new IllegalArgumentException("해당 참가자는 이름이 없습니다.");
+        return participant.getName() + "카드: " + formatStartingCardStatus(participant);
     }
 
     public static String formatMultipleCardStatusWithName(Participant participant) {
-        if (participant.doesHaveName()) {
-            Player player = (Player) participant;
-            return player.getName() + "카드: " + formatStartingCardStatus(player);
-        }
-        throw new IllegalArgumentException("이름이 없는 참가자의 상태를 출력할 수 없습니다.");
+        return participant.getName() + "카드: " + formatStartingCardStatus(participant);
     }
 
     public static String formatSingleCardStatus(Participant participant) {

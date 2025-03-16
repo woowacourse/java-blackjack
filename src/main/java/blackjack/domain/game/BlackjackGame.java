@@ -6,15 +6,15 @@ import java.util.List;
 
 public class BlackjackGame {
     private final Deck deck;
-    private final Participants participants;
+    private final Players players;
 
-    public BlackjackGame(Deck deck, Participants participants) {
+    public BlackjackGame(Deck deck, Players players) {
         this.deck = deck;
-        this.participants = participants;
+        this.players = players;
     }
 
     public void giveStartingCards() {
-        participants.getParticipants().forEach(this::giveStartingCards);
+        players.getPlayers().forEach(this::giveStartingCards);
     }
 
     private void giveStartingCards(Participant participant) {
@@ -27,7 +27,7 @@ public class BlackjackGame {
         participant.takeCard(card);
     }
 
-    public Participants getParticipants() {
-        return participants;
+    public Players getParticipants() {
+        return players;
     }
 }

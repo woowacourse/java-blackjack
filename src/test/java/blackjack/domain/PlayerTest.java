@@ -122,7 +122,7 @@ class PlayerTest {
     @Test
     void 플레이어는_이름을_가지고_있다() {
         Player player = new Player("히로", new Hand());
-        assertThat(player.doesHaveName()).isTrue();
+        assertThat(player.getName()).isEqualTo("히로");
     }
 
     @Test

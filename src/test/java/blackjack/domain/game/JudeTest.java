@@ -1,12 +1,7 @@
 package blackjack.domain.game;
 
-import blackjack.domain.game.Dealer;
-import blackjack.domain.game.GameRuleEvaluator;
-import blackjack.domain.game.Hand;
-import blackjack.domain.result.Judge;
-import blackjack.domain.game.Participants;
-import blackjack.domain.game.Player;
 import blackjack.domain.result.GameResultType;
+import blackjack.domain.result.Judge;
 import blackjack.domain.result.ParticipantResult;
 import blackjack.domain.result.ParticipantResults;
 import java.util.List;
@@ -21,11 +16,11 @@ public class JudeTest {
         Player player = new Player("히로", new Hand());
         Dealer dealer = new Dealer(new Hand());
         GameRuleEvaluator gameRuleEvaluator = new GameRuleEvaluator();
-        Participants participants = new Participants(List.of(player, dealer));
+        Players players = new Players(List.of(player));
         Judge judge = new Judge(participantResults);
 
         // when
-        judge.calculateAllResults(participants, gameRuleEvaluator);
+        judge.calculateAllResults(dealer, players, gameRuleEvaluator);
 
         // then
         ParticipantResult result = participantResults.findResult(dealer);

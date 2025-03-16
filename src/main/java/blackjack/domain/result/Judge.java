@@ -1,8 +1,9 @@
 package blackjack.domain.result;
 
+import blackjack.domain.game.Dealer;
 import blackjack.domain.game.GameRuleEvaluator;
-import blackjack.domain.game.Participant;
-import blackjack.domain.game.Participants;
+import blackjack.domain.game.Player;
+import blackjack.domain.game.Players;
 
 public class Judge {
     private final ParticipantResults participantResults;
@@ -11,54 +12,49 @@ public class Judge {
         this.participantResults = participantResults;
     }
 
-    public void calculateAllResults(Participants participants, GameRuleEvaluator gameRuleEvaluator) {
-        Participant defender = participants.findDefender();
-
-        for (Participant participant : participants.getParticipants()) {
-            if (participant.equals(defender)) {
-                continue;
-            }
-            calculateResult(defender, participant, gameRuleEvaluator);
+    public void calculateAllResults(Dealer dealer, Players players, GameRuleEvaluator gameRuleEvaluator) {
+        for (Player player : players.getPlayers()) {
+            calculateResult(dealer, player, gameRuleEvaluator);
         }
     }
 
-    private void calculateResult(Participant defender, Participant challenger, GameRuleEvaluator gameRuleEvaluator) {
-        boolean isDefenderBusted = gameRuleEvaluator.isBusted(defender);
-        boolean isChallengerBusted = gameRuleEvaluator.isBusted(challenger);
+    private void calculateResult(Dealer dealer, Player player, GameRuleEvaluator gameRuleEvaluator) {
+        boolean isDefenderBusted = gameRuleEvaluator.isBusted(dealer);
+        boolean isChallengerBusted = gameRuleEvaluator.isBusted(player);
 
-        int challengerValue = challenger.getOptimisticValue();
-        int defenderValue = defender.getOptimisticValue();
+        int challengerValue = player.getOptimisticValue();
+        int defenderValue = dealer.getOptimisticValue();
 
         if (isDefenderBusted) {
-            processWhenDefenderIsBusted(challenger, defender, isChallengerBusted, challengerValue, defenderValue);
+            processWhenDefenderIsBusted(player, dealer, isChallengerBusted, challengerValue, defenderValue);
             return;
         }
 
         if (isChallengerBusted) {
-            saveResult(challenger, defender, GameResultType.LOSE, challengerValue, defenderValue);
+            saveResult(player, dealer, GameResultType.LOSE, challengerValue, defenderValue);
             return;
         }
 
         GameResultType resultOfChallenger = GameResultType.find(challengerValue, defenderValue);
-        saveResult(challenger, defender, resultOfChallenger, challengerValue, defenderValue);
+        saveResult(player, dealer, resultOfChallenger, challengerValue, defenderValue);
     }
 
-    private void processWhenDefenderIsBusted(Participant challenger, Participant defender, boolean isBustedChallenger,
+    private void processWhenDefenderIsBusted(Player player, Dealer dealer, boolean isBustedChallenger,
                                              int challengerValue, int defenderValue) {
         if (isBustedChallenger) {
-            saveResult(challenger, defender, GameResultType.TIE, challengerValue, defenderValue);
+            saveResult(player, dealer, GameResultType.TIE, challengerValue, defenderValue);
             return;
         }
 
-        saveResult(challenger, defender, GameResultType.WIN, challengerValue, defenderValue);
+        saveResult(player, dealer, GameResultType.WIN, challengerValue, defenderValue);
     }
 
-    private void saveResult(Participant challenger, Participant defender, GameResultType resultTypeOfChallenger,
+    private void saveResult(Player player, Dealer dealer, GameResultType resultTypeOfChallenger,
                             int challengerValue, int defenderValue) {
         GameResultType resultTypeOfDefender = resultTypeOfChallenger.getOppositeType();
 
-        ParticipantResult challengerResult = new ParticipantResult(challenger, resultTypeOfChallenger, challengerValue);
-        ParticipantResult defenderResult = new ParticipantResult(defender, resultTypeOfDefender,
+        ParticipantResult challengerResult = new ParticipantResult(player, resultTypeOfChallenger, challengerValue);
+        ParticipantResult defenderResult = new ParticipantResult(dealer, resultTypeOfDefender,
                 defenderValue);
 
         participantResults.add(challengerResult);

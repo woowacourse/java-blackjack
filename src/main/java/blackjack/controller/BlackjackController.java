@@ -6,8 +6,8 @@ import blackjack.domain.game.Dealer;
 import blackjack.domain.game.GameRuleEvaluator;
 import blackjack.domain.game.Hand;
 import blackjack.domain.game.Participant;
-import blackjack.domain.game.Participants;
 import blackjack.domain.game.Player;
+import blackjack.domain.game.Players;
 import blackjack.domain.result.Judge;
 import blackjack.domain.result.ParticipantResults;
 import blackjack.view.Confirmation;
@@ -27,14 +27,15 @@ public class BlackjackController {
 
     public void run() {
         List<String> names = InputView.readNames();
-        Participants participants = saveParticipants(names);
+        Players players = savePlayers(names);
+        Dealer dealer = new Dealer(new Hand());
 
-        BlackjackGame blackjackGame = new BlackjackGame(new Deck(), participants);
+        BlackjackGame blackjackGame = new BlackjackGame(new Deck(), players);
         giveStartingCards(blackjackGame);
 
-        participants.getParticipants().forEach(participant -> giveMoreCard(participant, blackjackGame));
+        players.getPlayers().forEach(participant -> giveMoreCard(participant, blackjackGame));
 
-        ParticipantResults participantResults = calculateResultOfParticipants(participants);
+        ParticipantResults participantResults = calculateResultOfParticipants(players, dealer);
 
         OutputView.printCardResult(participantResults);
         OutputView.printGameResult(participantResults);
@@ -82,16 +83,15 @@ public class BlackjackController {
         OutputView.printStartingCardsStatuses(blackjackGame.getParticipants());
     }
 
-    private ParticipantResults calculateResultOfParticipants(Participants participants) {
-        judge.calculateAllResults(participants, gameRuleEvaluator);
+    private ParticipantResults calculateResultOfParticipants(Players players, Dealer dealer) {
+        judge.calculateAllResults(dealer, players, gameRuleEvaluator);
         return judge.getParticipantResults();
     }
 
-    private Participants saveParticipants(List<String> names) {
-        List<Participant> participants = new java.util.ArrayList<>(names.stream()
-                .map(name -> (Participant) new Player(name, new Hand()))
+    private Players savePlayers(List<String> names) {
+        List<Player> players = new java.util.ArrayList<>(names.stream()
+                .map(name -> new Player(name, new Hand()))
                 .toList());
-        participants.add(new Dealer(new Hand()));
-        return new Participants(participants);
+        return new Players(players);
     }
 }

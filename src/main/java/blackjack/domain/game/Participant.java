@@ -6,7 +6,7 @@ import java.util.List;
 public interface Participant {
     List<Card> getStartingCards();
 
-    boolean doesHaveName();
+    String getName();
 
     List<Card> getCards();
 

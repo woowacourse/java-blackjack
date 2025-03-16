@@ -20,11 +20,6 @@ public class Player implements Participant {
     }
 
     @Override
-    public boolean doesHaveName() {
-        return true;
-    }
-
-    @Override
     public List<Card> getCards() {
         return hand.getAllCards();
     }
@@ -39,8 +34,6 @@ public class Player implements Participant {
         return hand.getOptimisticValue();
     }
 
-    // TODO: isOverLimit 과 합쳐야 할까?
-    // TODO: 21 을 내부에서 알아도 될까?
     @Override
     public boolean ableToTakeMoreCards() {
         return hand.calculatePossibleSums().stream()
@@ -63,6 +56,7 @@ public class Player implements Participant {
         return true;
     }
 
+    @Override
     public String getName() {
         return name;
     }

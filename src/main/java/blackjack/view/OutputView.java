@@ -2,8 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.Participant;
-import blackjack.domain.game.Participants;
-import blackjack.domain.game.Player;
+import blackjack.domain.game.Players;
 import blackjack.domain.result.ParticipantResult;
 import blackjack.domain.result.ParticipantResults;
 import java.util.List;
@@ -15,12 +14,12 @@ public final class OutputView {
     private OutputView() {
     }
 
-    public static void printStartingCardsStatuses(Participants participants) {
-        String names = String.join(DELIMITER, participants.getNamesOfParticipants());
+    public static void printStartingCardsStatuses(Players players) {
+        String names = String.join(DELIMITER, players.getNamesOfParticipants());
 
         System.out.println("딜러와 " + names + "에게 2장을 나누었습니다.");
 
-        for (Participant participant : participants.getParticipants()) {
+        for (Participant participant : players.getPlayers()) {
             List<Card> startingCards = participant.getStartingCards();
 
             if (startingCards.size() == 1) {
@@ -50,12 +49,7 @@ public final class OutputView {
     }
 
     public static void printBustedParticipantWithName(Participant participant) {
-        if (participant.doesHaveName()) {
-            Player player = (Player) participant;
-            System.out.println(player.getName() + "는 버스트되어 더 이상 카드를 뽑을 수 없습니다!");
-            return;
-        }
-        throw new IllegalArgumentException("해당 참가자는 이름이 존재하지 않습니다.");
+        System.out.println(participant.getName() + "는 버스트되어 더 이상 카드를 뽑을 수 없습니다!");
     }
 
     public static void printGameResult(ParticipantResults participantResults) {

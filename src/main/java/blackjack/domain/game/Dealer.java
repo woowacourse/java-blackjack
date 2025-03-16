@@ -17,8 +17,8 @@ public class Dealer implements Participant {
     }
 
     @Override
-    public boolean doesHaveName() {
-        return false;
+    public String getName() {
+        throw new IllegalArgumentException("딜러의 이름은 존재하지 않습니다.");
     }
 
     @Override
