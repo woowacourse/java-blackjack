@@ -12,6 +12,10 @@ public final class Card {
         this.cardValue = cardValue;
     }
 
+    public boolean isAce() {
+        return cardValue == CardValue.ACE;
+    }
+
     public String getDisplayLabel() {
         return cardValue.getLabel() + suit.getLabel();
     }

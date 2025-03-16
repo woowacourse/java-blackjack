@@ -48,13 +48,13 @@ public class Hand {
 
     private List<Card> getHandWithoutAce() {
         return cards.stream()
-                .filter(card -> card.getCardValue() != CardValue.ACE)
+                .filter(card -> !card.isAce())
                 .toList();
     }
 
     private boolean hasAce() {
         return cards.stream()
-                .anyMatch(card -> card.getCardValue() == CardValue.ACE);
+                .anyMatch(Card::isAce);
     }
 
     private int calculateAceValue(int total) {
@@ -69,7 +69,7 @@ public class Hand {
 
     private int getAceCountInHand() {
         return (int) cards.stream()
-                .filter(card -> card.getCardValue() == CardValue.ACE)
+                .filter(Card::isAce)
                 .count();
     }
 
