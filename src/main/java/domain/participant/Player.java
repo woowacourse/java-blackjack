@@ -8,7 +8,7 @@ public class Player {
     private final Participant participant;
     private final Bet betMoney;
 
-    public Player(ParticipantName name, Bet betMoney, TrumpCard... initCards) {
+    public Player(ParticipantName name, Bet betMoney, List<TrumpCard> initCards) {
         participant = new Participant(name, initCards);
         this.betMoney = betMoney;
     }

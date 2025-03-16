@@ -7,6 +7,7 @@ import domain.card.Deck;
 import domain.card.Suit;
 import domain.card.TrumpCard;
 import domain.fixture.BlackjackDeckTestFixture;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -42,7 +43,7 @@ class ParticipantTest {
     void 에이스가_포함된_경우에_에이스를_최적의_값으로_계산한다(List<TrumpCard> hand, Score expected) {
         // given
         Deck deck = BlackjackDeckTestFixture.createSequentialDeck(hand);
-        Participant participant = new Participant(new ParticipantName("루키"));
+        Participant participant = new Participant(new ParticipantName("루키"), new ArrayList<>());
 
         // when
         int cardCount = hand.size();

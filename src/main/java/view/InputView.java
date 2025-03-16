@@ -50,11 +50,11 @@ public class InputView {
         String input = scanner.nextLine();
         validateInput(input);
         validateBoolean(input);
-        return input.equals(YES);
+        return input.equalsIgnoreCase(YES);
     }
 
     private void validateBoolean(String input) {
-        if (input.equals(YES) || input.equals(NO)) {
+        if (input.equalsIgnoreCase(YES) || input.equalsIgnoreCase(NO)) {
             return;
         }
         throw new IllegalArgumentException(INVALID_BOOLEAN_INPUT);

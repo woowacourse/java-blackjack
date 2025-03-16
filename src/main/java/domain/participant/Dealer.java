@@ -10,7 +10,7 @@ public class Dealer {
     private static final Score DEALER_STOP_HIT_STANDARD_SCORE = Score.from(16);
     private final Participant participant;
 
-    public Dealer(TrumpCard... initCards) {
+    public Dealer(List<TrumpCard> initCards) {
         ParticipantName dealerName = new ParticipantName(DEALER_NAME);
         participant = new Participant(dealerName, initCards);
     }

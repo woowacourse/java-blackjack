@@ -9,7 +9,7 @@ public class Participant {
     private HandState hand;
     private final ParticipantName name;
 
-    public Participant(ParticipantName name, TrumpCard... initCards) {
+    public Participant(ParticipantName name, List<TrumpCard> initCards) {
         this.name = name;
         this.hand = HandState.start(initCards);
     }

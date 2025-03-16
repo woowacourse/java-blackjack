@@ -2,9 +2,10 @@ package domain.participant.state;
 
 import domain.card.TrumpCard;
 import domain.participant.ParticipantHand;
+import java.util.List;
 
 public class Start extends HandState {
-    public Start(TrumpCard... initCards) {
+    public Start(List<TrumpCard> initCards) {
         super(new ParticipantHand());
         for (TrumpCard initCard : initCards) {
             hand.addCard(initCard);

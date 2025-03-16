@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.CardValue;
 import domain.card.Suit;
 import domain.card.TrumpCard;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -34,7 +35,7 @@ class DealerTest {
     @MethodSource("createCardsUpperThan16")
     void 카드의_합이_16_초과면_뽑을수_없다(List<TrumpCard> hand) {
         // given
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(new ArrayList<>());
         for (TrumpCard drawCard : hand) {
             dealer.addCard(drawCard);
         }
@@ -63,7 +64,7 @@ class DealerTest {
     @MethodSource("createCards16OrLess")
     void 카드의_합이_16_이하면_뽑을수_있다(List<TrumpCard> hand) {
         // given
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(new ArrayList<>());
         for (TrumpCard drawCard : hand) {
             dealer.addCard(drawCard);
         }

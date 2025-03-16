@@ -13,7 +13,7 @@ public abstract class HandState {
         this.hand = hand;
     }
 
-    public static HandState start(TrumpCard... initCards) {
+    public static HandState start(List<TrumpCard> initCards) {
         HandState start = new Start(initCards);
 
         if (start.isBlackjack()) {

@@ -33,10 +33,10 @@ public class Participants {
         }
     }
 
-    private TrumpCard[] drawInitCard(Deck deck) {
-        TrumpCard[] initCards = new TrumpCard[INIT_CARD_COUNT];
+    private List<TrumpCard> drawInitCard(Deck deck) {
+        List<TrumpCard> initCards = new ArrayList<>();
         for (int i = 0; i < INIT_CARD_COUNT; i++) {
-            initCards[i] = deck.drawCard();
+            initCards.add(deck.drawCard());
         }
         return initCards;
     }
@@ -46,7 +46,7 @@ public class Participants {
         IntStream.range(0, names.size())
                 .forEach(index -> {
                     ParticipantName name = names.get(index);
-                    players.add(new Player(name, playerBets.get(name.name()), drawInitCard(deck)));
+                    players.add(new Player(name, playerBets.get(name), drawInitCard(deck)));
                 });
         return players;
     }

@@ -7,6 +7,7 @@ import domain.card.Deck;
 import domain.card.Suit;
 import domain.card.TrumpCard;
 import domain.fixture.BlackjackDeckTestFixture;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -47,7 +48,7 @@ class PlayerTest {
         // given
         Deck deck = BlackjackDeckTestFixture.createSequentialDeck(hand);
         Bet bet = new Bet(10000);
-        Player player = new Player(new ParticipantName("루키"), bet);
+        Player player = new Player(new ParticipantName("루키"), bet, new ArrayList<>());
 
         // when
         int cardCount = hand.size();
@@ -84,7 +85,7 @@ class PlayerTest {
         // given
         Deck deck = BlackjackDeckTestFixture.createSequentialDeck(hand);
         Bet bet = new Bet(10000);
-        Player player = new Player(new ParticipantName("루키"), bet);
+        Player player = new Player(new ParticipantName("루키"), bet, new ArrayList<>());
 
         // when
         int cardCount = hand.size();
@@ -125,7 +126,7 @@ class PlayerTest {
         // given
         Deck deck = BlackjackDeckTestFixture.createSequentialDeck(hand);
         Bet bet = new Bet(10000);
-        Player player = new Player(new ParticipantName("루키"), bet);
+        Player player = new Player(new ParticipantName("루키"), bet, new ArrayList<>());
 
         int cardCount = hand.size();
         for (int i = 0; i < cardCount; i++) {
@@ -144,8 +145,10 @@ class PlayerTest {
     @Test
     void 베팅의_수익_금액을_반환한다() {
         // given
-        TrumpCard[] rookieCards = {new TrumpCard(Suit.CLOVER, CardValue.A), new TrumpCard(Suit.HEART, CardValue.EIGHT)};
-        TrumpCard[] otherCards = {new TrumpCard(Suit.HEART, CardValue.A), new TrumpCard(Suit.SPADE, CardValue.J)};
+        List<TrumpCard> rookieCards = List.of(new TrumpCard(Suit.CLOVER, CardValue.A),
+                new TrumpCard(Suit.HEART, CardValue.EIGHT));
+        List<TrumpCard> otherCards = List.of(new TrumpCard(Suit.HEART, CardValue.A),
+                new TrumpCard(Suit.SPADE, CardValue.J));
         Bet rookieBet = new Bet(100_000);
         Bet otherBet = new Bet(100_000);
         Player player = new Player(new ParticipantName("루키"), rookieBet, rookieCards);
