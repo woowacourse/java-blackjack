@@ -1,7 +1,7 @@
 package blackjack.game;
 
-import blackjack.user.Dealer;
-import blackjack.user.Player;
+import blackjack.user.dealer.Dealer;
+import blackjack.user.player.Player;
 import java.util.Arrays;
 
 public enum GameResult {
@@ -27,8 +27,8 @@ public enum GameResult {
     public abstract boolean matches(int dealerSum, int playerSum);
 
     public static GameResult fromDenominationsSum(Dealer dealer, Player player) {
-        int dealerSum = dealer.getCards().calculateDenominations();
-        int playerSum = player.getCards().calculateDenominations();
+        int dealerSum = dealer.getCardHand().calculateDenominations();
+        int playerSum = player.getCardHand().calculateDenominations();
 
         return Arrays.stream(values())
             .filter(result -> result.matches(dealerSum, playerSum))

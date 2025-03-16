@@ -1,25 +1,22 @@
-package blackjack.user;
+package blackjack.user.player;
 
-import blackjack.card.CardDeck;
+import blackjack.card.Card;
+import blackjack.user.dealer.Dealer;
 import java.util.Collections;
 import java.util.List;
 
-public class Participants {
+public class Players {
 
     private static final int PARTICIPANTS_MIN_SIZE = 1;
     private static final int PARTICIPANTS_MAX_SIZE = 25;
-    private static final int INITIAL_DISTRIBUTE_CARD_NUMBER = 2;
-    private static final int EXTRA_DISTRIBUTE_CARD_NUMBER = 1;
 
-    private final Dealer dealer;
-    private final List<Player> players;
+    private final List<Player> joinedPlayers;
 
-    public Participants(final Dealer dealer, final List<Player> players) {
-        validatePlayerNumber(players);
-        validateDuplicatePlayerNames(players);
+    public Players(final List<Player> joinedPlayers) {
+        validatePlayerNumber(joinedPlayers);
+        validateDuplicatePlayerNames(joinedPlayers);
 
-        this.dealer = dealer;
-        this.players = players;
+        this.joinedPlayers = joinedPlayers;
     }
 
     private void validatePlayerNumber(final List<Player> players) {
@@ -42,43 +39,45 @@ public class Participants {
         }
     }
 
-    public void addInitialCardsToDealer(CardDeck cardDeck) {
-        dealer.addCards(cardDeck, INITIAL_DISTRIBUTE_CARD_NUMBER);
-    }
-
-    public void addInitialCardsToPlayers(CardDeck cardDeck) {
-        for(Player player : players) {
-            player.addCards(cardDeck, INITIAL_DISTRIBUTE_CARD_NUMBER);
+    public void addPickedCards(Dealer dealer, int count) {
+        for(Player player : joinedPlayers) {
+            List<Card> cards = dealer.pickCards(count);
+            player.addCards(cards);
         }
     }
 
-    public void addExtraCardToDealer(CardDeck cardDeck) {
-        dealer.addCards(cardDeck, EXTRA_DISTRIBUTE_CARD_NUMBER);
-    }
-
-    public void addExtraCardToPlayer(CardDeck cardDeck, PlayerName name) {
+    public void addExtraCardToPlayer(Dealer dealer, PlayerName name, int count) {
         Player player = findPlayerByName(name);
-        player.addCards(cardDeck, EXTRA_DISTRIBUTE_CARD_NUMBER);
+        List<Card> cards = dealer.pickCards(count);
+
+        player.addCards(cards);
     }
 
     private Player findPlayerByName(PlayerName name) {
-        return players.stream()
+        return joinedPlayers.stream()
             .filter(player -> player.getName().equals(name))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("플레이어를 찾을 수 없습니다."));
     }
 
+    public int calculatePlayersProfit(Dealer dealer) {
+        int totalProfit = 0;
+        for(Player player : joinedPlayers) {
+            int profit = dealer.calculateProfitForPlayer(player);
+
+            totalProfit += profit;
+            player.updateAmount(new BetAmount(player.getBetAmount().getPrincipal(), profit));
+        }
+        return totalProfit;
+    }
+
     public List<PlayerName> getPlayerNames() {
-        return players.stream()
+        return joinedPlayers.stream()
             .map(Player::getName)
             .toList();
     }
 
-    public Dealer getDealer() {
-        return dealer;
-    }
-
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
+    public List<Player> getJoinedPlayers() {
+        return Collections.unmodifiableList(joinedPlayers);
     }
 }

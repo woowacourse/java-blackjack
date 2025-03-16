@@ -10,6 +10,10 @@ import blackjack.card.CardDeck;
 import blackjack.card.CardHand;
 import blackjack.card.Denomination;
 import blackjack.card.Suit;
+import blackjack.user.dealer.Dealer;
+import blackjack.user.player.Player;
+import blackjack.user.player.PlayerName;
+import blackjack.user.player.Players;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -17,7 +21,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-public class ParticipantsTest {
+public class PlayersTest {
 
     @Nested
     @DisplayName("중복 이름 테스트")
@@ -33,7 +37,7 @@ public class ParticipantsTest {
                 new Player(new PlayerName("c"), new CardHand(21))
             );
 
-            assertThatCode(() -> new Participants(dealer, players)).doesNotThrowAnyException();
+            assertThatCode(() -> new Players(dealer, players)).doesNotThrowAnyException();
         }
 
         @Test
@@ -46,7 +50,7 @@ public class ParticipantsTest {
                 new Player(new PlayerName("c"), new CardHand(21))
             );
 
-            assertThatThrownBy(() -> new Participants(dealer, players))
+            assertThatThrownBy(() -> new Players(dealer, players))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중복된 이름을 가진 플레이어가 있습니다.");
         }
@@ -60,7 +64,7 @@ public class ParticipantsTest {
                     c -> new Player(new PlayerName(String.valueOf((char) c)), new CardHand(21)))
                 .toList();
 
-            assertThatThrownBy(() -> new Participants(dealer, players))
+            assertThatThrownBy(() -> new Players(dealer, players))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어는 25명까지만 참가 가능합니다.");
         }
@@ -82,10 +86,10 @@ public class ParticipantsTest {
             Dealer dealer = new Dealer(new CardHand(17));
             List<Player> players = List.of(new Player(new PlayerName("sana"), new CardHand(21)));
 
-            Participants participants = new Participants(dealer, players);
+            Players participants = new Players(dealer, players);
             participants.addInitialCardsToDealer(cardDeck);
 
-            assertThat(dealer.getCards().openCards()).hasSize(2);
+            assertThat(dealer.getCardHand().openCards()).hasSize(2);
         }
 
         @Test
@@ -104,12 +108,12 @@ public class ParticipantsTest {
                 new Player(new PlayerName("sana"), new CardHand(21)),
                 new Player(new PlayerName("iffff"), new CardHand(21)));
 
-            Participants participants = new Participants(dealer, players);
+            Players participants = new Players(dealer, players);
             participants.addInitialCardsToPlayers(cardDeck);
 
             assertAll(() -> {
-                assertThat(players.getFirst().getCards().openCards()).hasSize(2);
-                assertThat(players.getLast().getCards().openCards()).hasSize(2);
+                assertThat(players.getFirst().getCardHand().openCards()).hasSize(2);
+                assertThat(players.getLast().getCardHand().openCards()).hasSize(2);
             });
         }
 
@@ -126,11 +130,11 @@ public class ParticipantsTest {
             Dealer dealer = new Dealer(new CardHand(17));
             List<Player> players = List.of(new Player(new PlayerName("sana"), new CardHand(21)));
 
-            Participants participants = new Participants(dealer, players);
+            Players participants = new Players(dealer, players);
             participants.addInitialCardsToDealer(cardDeck);
             participants.addExtraCardToDealer(cardDeck); // 총 3장
 
-            assertThat(dealer.getCards().openCards()).hasSize(3);
+            assertThat(dealer.getCardHand().openCards()).hasSize(3);
         }
 
         @Test
@@ -151,15 +155,15 @@ public class ParticipantsTest {
                 new Player(new PlayerName("sana"), new CardHand(21)),
                 new Player(new PlayerName("iffff"), new CardHand(21)));
 
-            Participants participants = new Participants(dealer, players);
+            Players participants = new Players(dealer, players);
             participants.addInitialCardsToPlayers(cardDeck);
 
             participants.addExtraCardToPlayer(cardDeck, new PlayerName("sana"));
             participants.addExtraCardToPlayer(cardDeck, new PlayerName("iffff"));
 
             assertAll(() -> {
-                assertThat(players.getFirst().getCards().openCards()).hasSize(3);
-                assertThat(players.getLast().getCards().openCards()).hasSize(3);
+                assertThat(players.getFirst().getCardHand().openCards()).hasSize(3);
+                assertThat(players.getLast().getCardHand().openCards()).hasSize(3);
             });
         }
     }

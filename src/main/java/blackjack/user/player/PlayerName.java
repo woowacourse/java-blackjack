@@ -1,4 +1,4 @@
-package blackjack.user;
+package blackjack.user.player;
 
 import java.util.Objects;
 

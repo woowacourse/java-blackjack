@@ -1,79 +1,56 @@
 package blackjack.game;
 
 import blackjack.card.CardDeck;
-import blackjack.card.CardHand;
-import blackjack.game.betting.Betting;
-import blackjack.game.betting.BetAmount;
-import blackjack.user.Dealer;
-import blackjack.user.Participants;
-import blackjack.user.Player;
-import blackjack.user.PlayerName;
+import blackjack.user.dealer.Dealer;
+import blackjack.user.player.Players;
+import blackjack.user.player.PlayerName;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackGame {
 
-    private static final int DEALER_DISTRIBUTE_CARD_THRESHOLD = 17;
-    private static final int PLAYER_DISTRIBUTE_CARD_THRESHOLD = 21;
+    private static final int INITIAL_DISTRIBUTE_CARD_NUMBER = 2;
+    private static final int EXTRA_DISTRIBUTE_CARD_NUMBER = 1;
 
-    private final CardDeck cardDeck;
-    private final Betting betting;
-    private final Participants participants;
+    private final Dealer dealer;
+    private final Players players;
 
-    private BlackjackGame(final CardDeck cardDeck, Betting betting,
-        final Participants participants) {
-        this.cardDeck = cardDeck;
-        this.betting = betting;
-        this.participants = participants;
+    private BlackjackGame(final Dealer dealer, final Players players) {
+        this.dealer = dealer;
+        this.players = players;
     }
 
-    public static BlackjackGame createWithEmptyBet(final CardDeck cardDeck,
-        final List<PlayerName> names) {
-        Betting betting = Betting.createWithEmptyTable();
-
-        Dealer dealer = new Dealer(new CardHand(DEALER_DISTRIBUTE_CARD_THRESHOLD));
-        List<Player> players = names.stream()
-            .map(name -> new Player(name, new CardHand(PLAYER_DISTRIBUTE_CARD_THRESHOLD)))
-            .toList();
-
-        return new BlackjackGame(cardDeck, betting, new Participants(dealer, players));
+    public static BlackjackGame createGameWith(final CardDeck cardDeck, final Players players) {
+        Dealer dealer = Dealer.createDealer(cardDeck);
+        return new BlackjackGame(dealer, players);
     }
 
-    public static BlackjackGame createWithActiveBet(final CardDeck cardDeck,
-        final Map<PlayerName, BetAmount> playerAmounts) {
-        Betting betting = new Betting(playerAmounts);
-
-        Dealer dealer = new Dealer(new CardHand(DEALER_DISTRIBUTE_CARD_THRESHOLD));
-        List<Player> players = playerAmounts.keySet().stream()
-            .map(name -> new Player(name, new CardHand(PLAYER_DISTRIBUTE_CARD_THRESHOLD)))
-            .toList();
-
-        return new BlackjackGame(cardDeck, betting, new Participants(dealer, players));
-    }
-
-    public void initCardsToParticipants() {
-        participants.addInitialCardsToDealer(cardDeck);
-        participants.addInitialCardsToPlayers(cardDeck);
+    public void initCardsToUsers() {
+        dealer.addCards(INITIAL_DISTRIBUTE_CARD_NUMBER);
+        players.addPickedCards(dealer, INITIAL_DISTRIBUTE_CARD_NUMBER);
     }
 
     public void addExtraCardToDealer() {
-        participants.addExtraCardToDealer(cardDeck);
+        dealer.addCards(EXTRA_DISTRIBUTE_CARD_NUMBER);
     }
 
     public void addExtraCardToPlayer(final PlayerName name) {
-        participants.addExtraCardToPlayer(cardDeck, name);
+        players.addExtraCardToPlayer(dealer, name, EXTRA_DISTRIBUTE_CARD_NUMBER);
     }
 
-    public Map<PlayerName, BetAmount> calculateProfitForPlayers() {
-        betting.calculateProfitForPlayer(participants.getDealer(), participants.getPlayers());
-        return betting.getBettingTable();
+    public int calculateProfitForPlayers() {
+        int totalProfit = players.calculatePlayersProfit(dealer);
+        return totalProfit;
     }
 
-    public Participants getParticipants() {
-        return participants;
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public Players getPlayers() {
+        return players;
     }
 
     public List<PlayerName> getPlayerNames() {
-        return participants.getPlayerNames();
+        return players.getPlayerNames();
     }
 }

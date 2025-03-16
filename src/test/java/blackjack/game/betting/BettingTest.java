@@ -7,9 +7,10 @@ import blackjack.card.CardDeck;
 import blackjack.card.CardHand;
 import blackjack.card.Denomination;
 import blackjack.card.Suit;
-import blackjack.user.Dealer;
-import blackjack.user.Player;
-import blackjack.user.PlayerName;
+import blackjack.user.dealer.Dealer;
+import blackjack.user.player.BetAmount;
+import blackjack.user.player.Player;
+import blackjack.user.player.PlayerName;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -50,7 +51,7 @@ public class BettingTest {
             Player player = new Player(new PlayerName("if"), new CardHand(21));
             player.addCards(cardDeck, 2);
             Map<PlayerName, BetAmount> bettingTable = new LinkedHashMap<>(Map.of(player.getName(),
-                BetAmount.initialBetting(10000)));
+                BetAmount.initAmount(10000)));
 
             Dealer dealer = new Dealer(new CardHand(17));
             dealer.addCards(cardDeck, 2);
@@ -77,7 +78,7 @@ public class BettingTest {
             Player player = new Player(new PlayerName("sana"), new CardHand(21));
             player.addCards(cardDeck, 3);
             Map<PlayerName, BetAmount> bettingTable = new LinkedHashMap<>(Map.of(player.getName(),
-                BetAmount.initialBetting(10000)));
+                BetAmount.initAmount(10000)));
 
             Dealer dealer = new Dealer(new CardHand(17));
             dealer.addCards(cardDeck, 2);
@@ -103,7 +104,7 @@ public class BettingTest {
             Player player = new Player(new PlayerName("sana"), new CardHand(21));
             player.addCards(cardDeck, 2);
             Map<PlayerName, BetAmount> bettingTable = new LinkedHashMap<>(Map.of(player.getName(),
-                BetAmount.initialBetting(10000)));
+                BetAmount.initAmount(10000)));
 
             Dealer dealer = new Dealer(new CardHand(17));
             dealer.addCards(cardDeck, 2);
@@ -129,7 +130,7 @@ public class BettingTest {
             Player player = new Player(new PlayerName("sana"), new CardHand(31));
             player.addCards(cardDeck, 2);
             Map<PlayerName, BetAmount> bettingTable = new LinkedHashMap<>(Map.of(player.getName(),
-                BetAmount.initialBetting(10000)));
+                BetAmount.initAmount(10000)));
 
             Dealer dealer = new Dealer(new CardHand(17));
             dealer.addCards(cardDeck, 2);

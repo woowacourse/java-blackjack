@@ -1,69 +1,57 @@
 package blackjack.view;
 
-import blackjack.user.Player;
-import blackjack.user.PlayerName;
-import blackjack.game.betting.BetAmount;
+import blackjack.user.player.Player;
+import blackjack.user.player.PlayerName;
+import blackjack.user.player.BetAmount;
+import blackjack.user.player.Players;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 public class InputView {
 
+    private static final String ERROR_MESSAGE_SUFFIX = " 다시 입력해주세요.";
+
     private final Scanner scanner = new Scanner(System.in);
 
-    public List<PlayerName> readNames() {
+    public Players readPlayers() {
         try {
             String input = scanner.nextLine();
             validateBlank(input);
 
-            return parseStringToList(input).stream()
-                .map(PlayerName::new)
+            List<Player> players = parseStringToList(input).stream()
+                .map(name -> Player.createPlayer(new PlayerName(name), BetAmount.initAmount()))
                 .toList();
+            return new Players(players);
         } catch (IllegalArgumentException e) {
-            printMessage(e.getMessage());
-            return readNames();
+            printErrorMessage(e.getMessage() + ERROR_MESSAGE_SUFFIX);
+            return readPlayers();
         }
     }
 
-    public Map<PlayerName, BetAmount> readPlayerPrincipals(List<PlayerName> names) {
-        Map<PlayerName, BetAmount> playerAmounts = new LinkedHashMap<>();
-        for (PlayerName name : names) {
-            System.out.println();
-            printMessage(String.format("%s의 배팅 금액은?(1만원에서 1,000만원까지 배팅 가능합니다.)", name.getText()));
-            BetAmount betAmount = readPlayerPrincipal();
-
-            playerAmounts.put(name, betAmount);
-        }
-        return playerAmounts;
-    }
-
-    private BetAmount readPlayerPrincipal() {
+    public BetAmount readPlayerPrincipal() {
         try {
             int principal = parseStringToInteger(scanner.nextLine());
-            return BetAmount.initialBetting(principal);
+            return BetAmount.initAmountWithPrincipal(principal);
         } catch (IllegalArgumentException e) {
-            printMessage(e.getMessage());
+            printErrorMessage(e.getMessage() + ERROR_MESSAGE_SUFFIX);
             return readPlayerPrincipal();
         }
     }
 
-    public boolean readGetOneMore(final Player player) {
+    public boolean readGetOneMore() {
         try {
-            printMessage(
-                String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", player.getName().getText()));
             String input = scanner.nextLine();
             validateBlank(input);
 
             return YorN.fromText(input).toBoolean();
         } catch (IllegalArgumentException e) {
-            printMessage(e.getMessage());
-            return readGetOneMore(player);
+            printErrorMessage(e.getMessage() + ERROR_MESSAGE_SUFFIX);
+            return readGetOneMore();
         }
     }
 
-    public void printMessage(String message) {
+    public void printErrorMessage(String message) {
         System.out.println(message);
     }
 

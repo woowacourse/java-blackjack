@@ -9,10 +9,10 @@ import blackjack.card.Card;
 import blackjack.card.CardDeck;
 import blackjack.card.Denomination;
 import blackjack.card.Suit;
-import blackjack.game.betting.BetAmount;
-import blackjack.user.Dealer;
-import blackjack.user.Player;
-import blackjack.user.PlayerName;
+import blackjack.user.player.BetAmount;
+import blackjack.user.dealer.Dealer;
+import blackjack.user.player.Player;
+import blackjack.user.player.PlayerName;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -26,7 +26,7 @@ class BlackjackGameTest {
 
     @Nested
     @DisplayName("플레이어 여러명 생성 테스트")
-    class CreateParticipantsTest {
+    class CreatePlayersTest {
 
         @Test
         @DisplayName("2명 이상의 플레이어를 입력 받을 수 있다.")
@@ -38,7 +38,7 @@ class BlackjackGameTest {
 
             BlackjackGame game = BlackjackGame.createWithEmptyBet(CardDeck.shuffleCardDeck(),
                 names);
-            List<PlayerName> playerNames = game.getParticipants().getPlayerNames();
+            List<PlayerName> playerNames = game.getPlayers().getPlayerNames();
 
             assertAll(() -> {
                 assertThat(playerNames.getFirst().getText()).isEqualTo("hula");
@@ -58,7 +58,7 @@ class BlackjackGameTest {
             BlackjackGame game = BlackjackGame.createWithEmptyBet(CardDeck.shuffleCardDeck(),
                 names);
 
-            assertThatCode(game::initCardsToParticipants).doesNotThrowAnyException();
+            assertThatCode(game::initCardsToUsers).doesNotThrowAnyException();
         }
 
         @Test
@@ -74,12 +74,12 @@ class BlackjackGameTest {
             List<PlayerName> names = List.of(new PlayerName("sana"));
 
             BlackjackGame game = BlackjackGame.createWithEmptyBet(cardDeck, names);
-            Player player = game.getParticipants().getPlayers().getFirst();
+            Player player = game.getPlayers().getJoinedPlayers().getFirst();
 
             player.addCards(cardDeck, 2);
             game.addExtraCardToPlayer(player.getName()); // 총 3장 카드 보유
 
-            assertThat(player.getCards().openCards()).hasSize(3);
+            assertThat(player.getCardHand().openCards()).hasSize(3);
         }
 
         @Test
@@ -95,12 +95,12 @@ class BlackjackGameTest {
             List<PlayerName> names = List.of(new PlayerName("sana"));
 
             BlackjackGame game = BlackjackGame.createWithEmptyBet(cardDeck, names);
-            Dealer dealer = game.getParticipants().getDealer();
+            Dealer dealer = game.getPlayers().getDealer();
 
             dealer.addCards(cardDeck, 2);
             game.addExtraCardToDealer();
 
-            assertThat(dealer.getCards().openCards()).hasSize(3);
+            assertThat(dealer.getCardHand().openCards()).hasSize(3);
         }
 
         @Test
@@ -116,7 +116,7 @@ class BlackjackGameTest {
             List<PlayerName> names = List.of(new PlayerName("sana"));
 
             BlackjackGame game = BlackjackGame.createWithEmptyBet(cardDeck, names);
-            Dealer dealer = game.getParticipants().getDealer();
+            Dealer dealer = game.getPlayers().getDealer();
 
             dealer.addCards(cardDeck, 2);
 
@@ -146,16 +146,16 @@ class BlackjackGameTest {
             ));
             CardDeck cardDeck = new CardDeck(initialCards);
             Map<PlayerName, BetAmount> bettingTable = new LinkedHashMap<>();
-            bettingTable.put(new PlayerName("hula"), BetAmount.initialBetting(10000)); // 패
-            bettingTable.put(new PlayerName("sana"), BetAmount.initialBetting(10000)); // 승(블랙잭)
-            bettingTable.put(new PlayerName("jason"), BetAmount.initialBetting(10000)); // 패
+            bettingTable.put(new PlayerName("hula"), BetAmount.initAmount(10000)); // 패
+            bettingTable.put(new PlayerName("sana"), BetAmount.initAmount(10000)); // 승(블랙잭)
+            bettingTable.put(new PlayerName("jason"), BetAmount.initAmount(10000)); // 패
 
             game = BlackjackGame.createWithActiveBet(cardDeck, bettingTable);
 
-            Dealer dealer = game.getParticipants().getDealer();
+            Dealer dealer = game.getPlayers().getDealer();
             dealer.addCards(cardDeck, 2);
 
-            for (Player player : game.getParticipants().getPlayers()) {
+            for (Player player : game.getPlayers().getJoinedPlayers()) {
                 player.addCards(cardDeck, 2);
             }
         }

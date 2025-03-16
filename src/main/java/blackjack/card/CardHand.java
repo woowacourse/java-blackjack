@@ -17,15 +17,11 @@ public class CardHand {
         this.additionThreshold = additionThreshold;
     }
 
-    public void addCards(final CardDeck cardDeck, final int count) {
+    public void addCards(List<Card> cards) {
         if (isImpossibleToAdd()) {
             throw new IllegalArgumentException("더 이상 카드를 추가할 수 없습니다.");
         }
-
-        for (int i = 0; i < count; i++) {
-            Card card = cardDeck.pickRandomCard();
-            cards.add(card);
-        }
+        this.cards.addAll(cards);
     }
 
     public boolean isBlackjack() {
