@@ -169,7 +169,7 @@ class BlackjackGameBoardTest {
         Profit profit = gameBoard.computeDealerProfit(dealer, users, DefaultProfitStrategy.getInstance());
 
         // then
-        final int expected = profit.getValue();
+        final int expected = profit.value();
         final int actual = 1_000 - (int) (100_000 * 1.5);
         Assertions.assertThat(expected).isEqualTo(actual);
     }

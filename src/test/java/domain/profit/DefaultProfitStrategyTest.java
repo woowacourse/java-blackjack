@@ -16,7 +16,7 @@ class DefaultProfitStrategyTest {
         Profit profit = DefaultProfitStrategy.getInstance().calculateProfit(bet, userBattleResult);
 
         // then
-        Assertions.assertThat(profit.getValue()).isEqualTo(1501);
+        Assertions.assertThat(profit.value()).isEqualTo(1501);
     }
 
     @Test
@@ -30,7 +30,7 @@ class DefaultProfitStrategyTest {
         Profit profit = DefaultProfitStrategy.getInstance().calculateProfit(bet, userBattleResult);
 
         // then
-        Assertions.assertThat(profit.getValue()).isEqualTo(1001);
+        Assertions.assertThat(profit.value()).isEqualTo(1001);
     }
 
     @Test
@@ -44,7 +44,7 @@ class DefaultProfitStrategyTest {
         Profit profit = DefaultProfitStrategy.getInstance().calculateProfit(bet, userBattleResult);
 
         // then
-        Assertions.assertThat(profit.getValue()).isEqualTo(-1001);
+        Assertions.assertThat(profit.value()).isEqualTo(-1001);
     }
 
     @Test
@@ -58,6 +58,6 @@ class DefaultProfitStrategyTest {
         Profit profit = DefaultProfitStrategy.getInstance().calculateProfit(bet, userBattleResult);
 
         // then
-        Assertions.assertThat(profit.getValue()).isEqualTo(0);
+        Assertions.assertThat(profit.value()).isEqualTo(0);
     }
 }

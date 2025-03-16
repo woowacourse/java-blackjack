@@ -37,7 +37,7 @@ public class OutputView {
     }
 
     public static void printPlayerProfit(String name, Profit profit) {
-        System.out.printf("%s: %d%n", name, profit.getValue());
+        System.out.printf("%s: %d%n", name, profit.value());
     }
 
     private static String convertToCardsFormat(Cards cards) {

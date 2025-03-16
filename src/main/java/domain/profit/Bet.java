@@ -1,18 +1,13 @@
 package domain.profit;
 
-import java.util.Objects;
-
-public class Bet {
+public record Bet(int value) {
 
     public static final int MIN_BET = 1_000;
     public static final int MAX_BET = 1_000_000;
     private static final Bet DEFAULT_BET = new Bet(MIN_BET);
 
-    private final int value;
-
-    public Bet(int value) {
+    public Bet {
         validateRange(value);
-        this.value = value;
     }
 
     public static Bet defaultBet() {
@@ -23,25 +18,5 @@ public class Bet {
         if (value < MIN_BET || value > MAX_BET) {
             throw new IllegalArgumentException("베팅 금액은 " + MIN_BET + "이상 " + MAX_BET + "이하여야 합니다.");
         }
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) {
-            return true;
-        }
-        if (!(object instanceof Bet bet)) {
-            return false;
-        }
-        return value == bet.value;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(value);
-    }
-
-    public int getValue() {
-        return value;
     }
 }

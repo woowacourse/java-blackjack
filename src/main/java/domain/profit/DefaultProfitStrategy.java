@@ -21,6 +21,6 @@ public class DefaultProfitStrategy implements ProfitStrategy {
 
     @Override
     public Profit calculateProfit(Bet bet, UserBattleResult userBattleResult) {
-        return new Profit((int) (bet.getValue() * EARNING_RATE_BY_BATTLE_RESULT.get(userBattleResult)));
+        return new Profit((int) (bet.value() * EARNING_RATE_BY_BATTLE_RESULT.get(userBattleResult)));
     }
 }

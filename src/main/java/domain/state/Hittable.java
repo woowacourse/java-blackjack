@@ -9,8 +9,7 @@ public class Hittable extends Running {
     public static final int DEFAULT_DEALER_HITTABLE_THRESHOLD = 16;
 
     private final int hittableThreshold;
-
-
+    
     public Hittable(Cards cards, int hittableThreshold) {
         super(cards);
         this.hittableThreshold = hittableThreshold;
