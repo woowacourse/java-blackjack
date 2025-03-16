@@ -67,12 +67,6 @@ public class GameManager {
         return dealer.calculateBettingAmountOfReturn(calculatePlayerBettingAmountOfReturn());
     }
 
-    public void betAmountPlayers(final Map<String, Integer> playersBettingAmount) {
-        for (Entry<String, Integer> entry : playersBettingAmount.entrySet()) {
-            playerGroup.betAmountByPlayerName(entry);
-        }
-    }
-
     private void giveCardsToPlayers(final List<String> playerNames) {
         for (String playerName : playerNames) {
             playerGroup.giveCardByName(playerName, deck.pollCard());

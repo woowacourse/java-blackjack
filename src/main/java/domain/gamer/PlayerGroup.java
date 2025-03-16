@@ -53,9 +53,9 @@ public class PlayerGroup {
         return player.calculateBettingScore(playerGameResult.getValue(),isBlackjackOnlyPlayer(player, dealer));
     }
 
-    public void betAmountByPlayerName(final Entry<String, Integer> playerAmount) {
-        final Player player = findByPlayerByName(playerAmount.getKey());
-        player.betAmount(new Betting(playerAmount.getValue()));
+    public void betAmountByPlayerName(final String playerName, final Betting betting) {
+        final Player player = findByPlayerByName(playerName);
+        player.betAmount(betting);
     }
 
     private boolean isBlackjackOnlyPlayer(final Player player, final Dealer dealer) {

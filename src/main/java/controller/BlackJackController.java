@@ -1,6 +1,7 @@
 package controller;
 
 import domain.AnswerCommand;
+import domain.Betting;
 import domain.GameManager;
 import domain.card.CardGroup;
 import domain.card.Deck;
@@ -10,7 +11,6 @@ import domain.gamer.PlayerGroup;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import util.LoopTemplate;
 import view.InputView;
 import view.OutputView;
@@ -28,10 +28,10 @@ public class BlackJackController {
     public void gameStart() {
         final List<String> playerNames = LoopTemplate.tryCatchLoop(inputView::readPlayers);
         final PlayerGroup playerGroup = LoopTemplate.tryCatchLoop(() -> PlayerGroup.of(playerNames));
+        collectPlayerBets(playerNames, playerGroup);
         final Dealer dealer = new Dealer(new CardGroup(new ArrayList<>()));
         final Deck deck = Deck.of(new RandomCardGenerator());
         final GameManager gameManager = new GameManager(dealer, playerGroup, deck);
-        gameManager.betAmountPlayers(requestPlayersBettingAmount(playerNames));
         gameManager.initializeGame(playerNames);
         outputView.printDealerAndPlayersCards(dealer, playerGroup.getPlayers());
         requestHit(playerNames, gameManager);
@@ -40,13 +40,12 @@ public class BlackJackController {
         responseBettingOfReturn(gameManager);
     }
 
-    private Map<String, Integer> requestPlayersBettingAmount(final List<String> playerNames) {
-        return playerNames.stream()
-                .collect(Collectors.toMap(
-                        playerName -> playerName,
-                        playerName -> LoopTemplate.tryCatchLoop(() -> inputView.readBettingAmount(playerName)),
-                        (newValue, oldValue) -> newValue
-                ));
+    private void collectPlayerBets (final List<String> playerNames, final PlayerGroup playerGroup) {
+        for (String playerName : playerNames) {
+            final Betting betting = LoopTemplate.tryCatchLoop(
+                    () -> new Betting(inputView.readBettingAmount(playerName)));
+            playerGroup.betAmountByPlayerName(playerName, betting);
+        }
     }
 
     private void responseBettingOfReturn(final GameManager gameManager) {
