@@ -36,7 +36,7 @@ public class BlackjackController implements Controller {
         final Players players = Players.createPlayers(playerNames);
         processBetting(playerNames, players, bettingBoard);
         
-        final List<PlayerBlackjackCardHand> playerBlackjackCardHands = createPlayerBlackjackCardHands(playerNames, players, deck);
+        final List<PlayerBlackjackCardHand> playerBlackjackCardHands = createPlayerBlackjackCardHands(players, deck);
         final DealerBlackjackCardHand dealerBlackjackCardHand = new DealerBlackjackCardHand(deck);
         
         processBlackjackGame(dealerBlackjackCardHand, playerBlackjackCardHands, deck);
@@ -50,12 +50,8 @@ public class BlackjackController implements Controller {
         }
     }
     
-    private List<PlayerBlackjackCardHand> createPlayerBlackjackCardHands(List<String> playerNames, Players players,
-                                                                         BlackjackDeck deck) {
-        return playerNames.stream()
-                .map(players::findPlayerByName)
-                .map(player -> new PlayerBlackjackCardHand(player, deck))
-                .toList();
+    private List<PlayerBlackjackCardHand> createPlayerBlackjackCardHands(Players players, BlackjackDeck deck) {
+        return players.drawCardsAndGetCardHands(deck);
     }
     
     private void processBlackjackGame(DealerBlackjackCardHand dealerBlackjackCardHand, List<PlayerBlackjackCardHand> playerBlackjackCardHands, BlackjackDeck deck) {

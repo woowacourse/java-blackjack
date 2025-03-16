@@ -1,5 +1,9 @@
 package blackjack.domain.player;
 
+import blackjack.domain.card_hand.PlayerBlackjackCardHand;
+import blackjack.domain.deck.BlackjackCardHandInitializer;
+import blackjack.domain.deck.CardDrawer;
+
 import java.util.HashSet;
 import java.util.List;
 
@@ -25,6 +29,12 @@ public class Players {
                 .filter(player -> player.isSameName(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("플레이어를 찾을 수 없습니다."));
+    }
+    
+    public List<PlayerBlackjackCardHand> drawCardsAndGetCardHands(final BlackjackCardHandInitializer initializer) {
+        return players.stream()
+                .map(player -> new PlayerBlackjackCardHand(player, initializer))
+                .toList();
     }
     
     private static void validatePlayers(final List<String> playerNames) {

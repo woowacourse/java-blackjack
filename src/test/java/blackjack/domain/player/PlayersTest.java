@@ -1,8 +1,14 @@
 package blackjack.domain.player;
 
+import static blackjack.test_util.TestConstants.*;
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.card_hand.PlayerBlackjackCardHand;
+import blackjack.test_util.TestConstants;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -69,5 +75,18 @@ public class PlayersTest {
         // expected
         assertThatThrownBy(() -> players.findPlayerByName("멍구"))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+    
+    @Test
+    void 플레이어들이_카드를_2장씩_뽑을_수_있다() {
+        // given
+        final List<String> playerNames = List.of("돔푸");
+        Players players = Players.createPlayers(playerNames);
+        
+        // when
+        List<PlayerBlackjackCardHand> cardHands = players.drawCardsAndGetCardHands(() -> List.of(HEART_1, HEART_2));
+        
+        // expected
+        assertThat(cardHands.get(0).getCards()).containsExactly(HEART_1,HEART_2);
     }
 }
