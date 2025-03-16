@@ -9,19 +9,25 @@ public enum GameResult {
     DRAW;
 
     public static GameResult createFromCards(final Cards dealerCards, final Cards playerCards) {
-        boolean playerBust = playerCards.isBust();
-        boolean dealerBust = dealerCards.isBust();
-        boolean playerBlackjack = playerCards.isBlackjack();
-        boolean dealerBlackjack = dealerCards.isBlackjack();
-        int playerScore = playerCards.calculateResult();
-        int dealerScore = dealerCards.calculateResult();
-
-        if (playerBust) {
+        if (playerCards.isBust()) {
             return GameResult.LOSE;
         }
-        if (dealerBust) {
+        if (dealerCards.isBust()) {
             return GameResult.WIN;
         }
+
+        GameResult blackjackResult = checkBlackjack(dealerCards, playerCards);
+        if (blackjackResult != null) {
+            return blackjackResult;
+        }
+
+        return compareScores(dealerCards.calculateResult(), playerCards.calculateResult());
+    }
+
+    private static GameResult checkBlackjack(final Cards dealerCards, final Cards playerCards) {
+        boolean playerBlackjack = playerCards.isBlackjack();
+        boolean dealerBlackjack = dealerCards.isBlackjack();
+
         if (playerBlackjack && dealerBlackjack) {
             return GameResult.DRAW;
         }
@@ -31,6 +37,11 @@ public enum GameResult {
         if (dealerBlackjack) {
             return GameResult.LOSE;
         }
+
+        return null;
+    }
+
+    private static GameResult compareScores(int dealerScore, int playerScore) {
         if (playerScore > dealerScore) {
             return GameResult.WIN;
         }
