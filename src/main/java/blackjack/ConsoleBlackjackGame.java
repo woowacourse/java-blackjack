@@ -29,6 +29,7 @@ public class ConsoleBlackjackGame {
         PlayerResult playerResult = new PlayerResult(blackjack.getDealer(), blackjack.getParticipants());
         outputView.printPlayersCardsAndSum(blackjack.getDealer(),
                 blackjack.getParticipants(), blackjack.getNameAndSumOfAllPlayers());
+        calculateBettingResult(betManager);
     }
 
     private void addInitialBet(Blackjack blackjack, BetManager betManager) {
@@ -69,6 +70,11 @@ public class ConsoleBlackjackGame {
 
     private void addMoreCardsIfNotBust(Blackjack blackjack, Player participant) {
         addMoreCards(blackjack, participant);
+    }
+
+    private void calculateBettingResult(BetManager betManager) {
+        betManager.calculateBettingResult(true, true, true);
+        outputView.printBettingResult(betManager.calculateDealerBettingResult(), betManager.getWager());
     }
 
     private void printMatchResults(PlayerResult playerResult) {

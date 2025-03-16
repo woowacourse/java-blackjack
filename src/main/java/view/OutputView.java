@@ -1,5 +1,6 @@
 package view;
 
+import bet.Bet;
 import card.Card;
 import result.MatchResult;
 import player.Player;
@@ -51,6 +52,13 @@ public class OutputView {
         System.out.printf("딜러: %s%n", convertToDealerMatchResultFormat(dealerResult));
 
         participantsResult.forEach((key, value) -> System.out.printf("%s: %s%n", key.getName(), value.getTitle()));
+    }
+
+    public void printBettingResult(int dealerTotalAmount, Map<Player, Bet> wager) {
+        System.out.println("## 최종 수익");
+        System.out.printf("딜러: %d%n", dealerTotalAmount);
+        wager.forEach((key, value) -> System.out.printf("%s: %d%n", key.getName(), value.getAmount()));
+
     }
 
     private String convertToDealerMatchResultFormat(Map<MatchResult, Integer> dealerResult) {

@@ -34,7 +34,7 @@ public class Players {
     }
 
     public Map<String, List<Card>> openInitialCards() {
-        Map<String, List<Card>> initialCards = new HashMap<>();
+        Map<String, List<Card>> initialCards = new LinkedHashMap<>();
         players.forEach(player -> initialCards.put(player.getName(), player.openInitialCards()));
 
         return initialCards;
