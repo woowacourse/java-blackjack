@@ -20,7 +20,7 @@ class HittableTest {
         Cards cards = new Cards(
                 List.of(ACE_HEART(), NINE_HEART())
         );
-        State hittable = new Hittable(cards, Hittable.DEFAULT_USER_HIT_THRESHOLD);
+        State hittable = new Hittable(cards, Hittable.DEFAULT_USER_HITTABLE_THRESHOLD);
 
         // when & then
         Assertions.assertThat(hittable.isFinished()).isFalse();
@@ -32,7 +32,7 @@ class HittableTest {
         Cards cards = new Cards(
                 List.of(ACE_HEART())
         );
-        State hittable = new Hittable(cards, Hittable.DEFAULT_USER_HIT_THRESHOLD);
+        State hittable = new Hittable(cards, Hittable.DEFAULT_USER_HITTABLE_THRESHOLD);
 
         // when
         State newState = hittable.hit(TEN_HEART());
@@ -47,7 +47,7 @@ class HittableTest {
         Cards cards = new Cards(
                 List.of(KING_HEART(), QUEEN_HEART())
         );
-        State hittable = new Hittable(cards, Hittable.DEFAULT_USER_HIT_THRESHOLD);
+        State hittable = new Hittable(cards, Hittable.DEFAULT_USER_HITTABLE_THRESHOLD);
 
         // when
         State newState = hittable.hit(TWO_HEART());
@@ -62,7 +62,7 @@ class HittableTest {
         Cards cards = new Cards(
                 List.of(ACE_HEART(), NINE_HEART())
         );
-        State hittable = new Hittable(cards, Hittable.DEFAULT_USER_HIT_THRESHOLD);
+        State hittable = new Hittable(cards, Hittable.DEFAULT_USER_HITTABLE_THRESHOLD);
 
         // when
         State newState = hittable.hit(ACE_HEART());
@@ -77,7 +77,7 @@ class HittableTest {
         Cards cards = new Cards(
                 List.of(ACE_HEART(), NINE_HEART())
         );
-        State hittable = new Hittable(cards, Hittable.DEFAULT_USER_HIT_THRESHOLD);
+        State hittable = new Hittable(cards, Hittable.DEFAULT_USER_HITTABLE_THRESHOLD);
 
         // when
         State newState = hittable.stay();

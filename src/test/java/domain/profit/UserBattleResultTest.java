@@ -37,7 +37,7 @@ class UserBattleResultTest {
         gameBoard.distributeInitialCards(user);
 
         // when
-        UserBattleResult result = UserBattleResult.compare(user, dealer);
+        UserBattleResult result = UserBattleResult.compare(user.getState(), dealer.getState());
 
         // then
         Assertions.assertThat(result).isEqualTo(UserBattleResult.DRAW);
@@ -62,7 +62,7 @@ class UserBattleResultTest {
         gameBoard.hitUntilUnder16(dealer, onHit);
 
         // when
-        UserBattleResult result = UserBattleResult.compare(user, dealer);
+        UserBattleResult result = UserBattleResult.compare(user.getState(), dealer.getState());
 
         // then
         Assertions.assertThat(result).isEqualTo(UserBattleResult.BLACKJACK_WIN);
@@ -83,7 +83,7 @@ class UserBattleResultTest {
         gameBoard.distributeInitialCards(user);
 
         // when
-        UserBattleResult result = UserBattleResult.compare(user, dealer);
+        UserBattleResult result = UserBattleResult.compare(user.getState(), dealer.getState());
 
         // then
         Assertions.assertThat(result).isEqualTo(UserBattleResult.NORMAL_WIN);
@@ -104,7 +104,7 @@ class UserBattleResultTest {
         gameBoard.distributeInitialCards(user);
 
         // when
-        UserBattleResult result = UserBattleResult.compare(user, dealer);
+        UserBattleResult result = UserBattleResult.compare(user.getState(), dealer.getState());
 
         // then
         Assertions.assertThat(result).isEqualTo(UserBattleResult.LOSE);
@@ -134,7 +134,7 @@ class UserBattleResultTest {
         gameBoard.hitUntilUnder16(dealer, dealerOnHit);
 
         // when
-        UserBattleResult result = UserBattleResult.compare(user, dealer);
+        UserBattleResult result = UserBattleResult.compare(user.getState(), dealer.getState());
 
         // then
         Assertions.assertThat(result).isEqualTo(UserBattleResult.LOSE);

@@ -14,9 +14,9 @@ import java.util.function.Function;
 
 public class BlackjackGameBoard {
 
-    private static final int INITIAL_DRAW_COUNT = 2;
-    private static final int INITIAL_USER_OPEN_COUNT = 2;
-    private static final int INITIAL_DEALER_OPEN_COUNT = 1;
+    public static final int INITIAL_DRAW_COUNT = 2;
+    public static final int INITIAL_USER_OPEN_COUNT = 2;
+    public static final int INITIAL_DEALER_OPEN_COUNT = 1;
 
     private final Deck deck;
 
@@ -66,7 +66,8 @@ public class BlackjackGameBoard {
 
 
     public Profit computeUserProfit(User user, Dealer dealer, ProfitStrategy profitStrategy) {
-        return profitStrategy.calculateProfit(user.getBet(), UserBattleResult.compare(user, dealer));
+        return profitStrategy.calculateProfit(user.getBet(),
+                UserBattleResult.compare(user.getState(), dealer.getState()));
     }
 
     public Profit computeDealerProfit(Dealer dealer, Users users, ProfitStrategy profitStrategy) {

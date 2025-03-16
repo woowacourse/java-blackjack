@@ -1,12 +1,13 @@
 package domain.card;
 
+import static domain.BlackjackGameBoard.INITIAL_DRAW_COUNT;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
 
     private static final int BUST_THRESHOLD = 21;
-    private static final int INITIAL_DRAW_COUNT = 2;
     private static final int BLACKJACK_SUM = 21;
 
     private final List<Card> cards;

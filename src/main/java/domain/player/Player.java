@@ -27,14 +27,6 @@ public abstract class Player {
         return !state.isFinished();
     }
 
-    public boolean isBlackjack() {
-        return cards().isBlackjack();
-    }
-
-    public boolean isBust() {
-        return cards().isBust();
-    }
-
     public int computeOptimalSum() {
         return cards().computeOptimalSum();
     }
@@ -46,7 +38,7 @@ public abstract class Player {
     public Cards openedCards() {
         return cards().openedCards();
     }
-    
+
     public Cards cards() {
         return state.cards();
     }

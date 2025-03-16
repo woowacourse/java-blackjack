@@ -39,7 +39,7 @@ class BlackjackGameBoardTest {
 
         // when & then
         Assertions.assertThat(user.cards().size())
-                .isEqualTo(2);
+                .isEqualTo(BlackjackGameBoard.INITIAL_DRAW_COUNT);
     }
 
 
@@ -58,7 +58,7 @@ class BlackjackGameBoardTest {
 
         // when & then
         Assertions.assertThat(dealer.cards().size())
-                .isEqualTo(2);
+                .isEqualTo(BlackjackGameBoard.INITIAL_DRAW_COUNT);
     }
 
     @Test
@@ -77,7 +77,7 @@ class BlackjackGameBoardTest {
 
         // when & then
         Assertions.assertThat(user.openedCards().size())
-                .isEqualTo(2);
+                .isEqualTo(BlackjackGameBoard.INITIAL_USER_OPEN_COUNT);
     }
 
     @Test
@@ -96,7 +96,7 @@ class BlackjackGameBoardTest {
 
         // when & then
         Assertions.assertThat(dealer.openedCards().size())
-                .isEqualTo(1);
+                .isEqualTo(BlackjackGameBoard.INITIAL_DEALER_OPEN_COUNT);
     }
 
     @Test

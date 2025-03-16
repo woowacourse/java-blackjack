@@ -5,8 +5,8 @@ import domain.card.Cards;
 
 public class Hittable extends Running {
 
-    public static final int DEFAULT_USER_HIT_THRESHOLD = 21;
-    public static final int DEFAULT_DEALER_HIT_THRESHOLD = 16;
+    public static final int DEFAULT_USER_HITTABLE_THRESHOLD = 21;
+    public static final int DEFAULT_DEALER_HITTABLE_THRESHOLD = 16;
 
     private final int hittableThreshold;
 
@@ -17,11 +17,11 @@ public class Hittable extends Running {
     }
 
     public static Hittable initialUserState() {
-        return new Hittable(Cards.emptyCards(), DEFAULT_USER_HIT_THRESHOLD);
+        return new Hittable(Cards.emptyCards(), DEFAULT_USER_HITTABLE_THRESHOLD);
     }
 
     public static Hittable initialDealerState() {
-        return new Hittable(Cards.emptyCards(), DEFAULT_DEALER_HIT_THRESHOLD);
+        return new Hittable(Cards.emptyCards(), DEFAULT_DEALER_HITTABLE_THRESHOLD);
     }
 
     @Override
@@ -41,5 +41,10 @@ public class Hittable extends Running {
     @Override
     public State stay() {
         return new Stay(cards());
+    }
+
+    @Override
+    public StateType type() {
+        return StateType.HITTABLE;
     }
 }

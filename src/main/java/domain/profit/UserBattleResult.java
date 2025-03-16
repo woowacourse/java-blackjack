@@ -1,7 +1,7 @@
 package domain.profit;
 
-import domain.player.Dealer;
-import domain.player.User;
+import domain.state.State;
+import domain.state.StateType;
 
 public enum UserBattleResult {
 
@@ -11,19 +11,19 @@ public enum UserBattleResult {
     DRAW,
     ;
 
-    public static UserBattleResult compare(User user, Dealer dealer) {
-        if (user.isBust()) {
+    public static UserBattleResult compare(State user, State dealer) {
+        if (user.type() == StateType.BUST) {
             return UserBattleResult.LOSE;
-        } else if (dealer.isBust()) {
+        } else if (dealer.type() == StateType.BUST) {
             return UserBattleResult.NORMAL_WIN;
         }
 
-        if (user.isBlackjack() && dealer.isBlackjack()) {
+        if (user.type() == StateType.BLACKJACK && dealer.type() == StateType.BLACKJACK) {
             return UserBattleResult.DRAW;
-        } else if (user.isBlackjack()) {
+        } else if (user.type() == StateType.BLACKJACK) {
             return UserBattleResult.BLACKJACK_WIN;
         }
-        return compareBySum(user.computeOptimalSum(), dealer.computeOptimalSum());
+        return compareBySum(user.cards().computeOptimalSum(), dealer.cards().computeOptimalSum());
     }
 
     private static UserBattleResult compareBySum(int sum1, int sum2) {
