@@ -17,4 +17,12 @@ public class DealerProfits {
         }
         this.playerProfits.put(player, dealerProfit);
     }
+
+    public DealerProfit findByPlayer(Player player) {
+        return playerProfits.entrySet().stream()
+                .filter(entry -> entry.getKey().equals(player))
+                .findAny()
+                .map(Map.Entry::getValue)
+                .orElseThrow(() -> new IllegalArgumentException("플레이어에 해당하는 결과가 존재하지 않습니다."));
+    }
 }

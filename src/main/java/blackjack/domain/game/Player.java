@@ -64,7 +64,7 @@ public class Player implements Participant {
         return name;
     }
 
-    public BetAmount getBetAmount() {
-        return betAmount;
+    public int getBetAmount() {
+        return betAmount.getAmount();
     }
 }

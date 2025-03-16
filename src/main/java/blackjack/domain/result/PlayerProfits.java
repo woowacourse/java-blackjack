@@ -15,7 +15,7 @@ public class PlayerProfits {
         this.playerProfits.add(playerProfit);
     }
 
-    public PlayerProfit findPlayerProfitByPlayer(Player player) {
+    public PlayerProfit findByPlayer(Player player) {
         return playerProfits.stream()
                 .filter(profit -> profit.isResultOf(player))
                 .findAny()

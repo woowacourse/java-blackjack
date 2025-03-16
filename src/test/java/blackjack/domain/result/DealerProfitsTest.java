@@ -2,6 +2,7 @@ package blackjack.domain.result;
 
 import blackjack.domain.game.Hand;
 import blackjack.domain.game.Player;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.Test;
@@ -30,5 +31,18 @@ class DealerProfitsTest {
         // when & then
         assertThatCode(() -> dealerProfits.add(player, new DealerProfit(1_000)))
                 .doesNotThrowAnyException();
+    }
+
+    @Test
+    void 플레이어에_대한_수익_결과를_찾는다() {
+        // given
+        Player player = new Player("히로", new Hand(), new BetAmount(1_000));
+
+        DealerProfits dealerProfits = new DealerProfits();
+        DealerProfit dealerProfit = new DealerProfit(0);
+        dealerProfits.add(player, dealerProfit);
+
+        // when & then
+        assertThat(dealerProfits.findByPlayer(player)).isEqualTo(dealerProfit);
     }
 }

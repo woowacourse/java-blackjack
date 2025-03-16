@@ -6,4 +6,8 @@ public class DealerProfit {
     public DealerProfit(int profit) {
         this.profit = profit;
     }
+
+    public int getProfit() {
+        return profit;
+    }
 }

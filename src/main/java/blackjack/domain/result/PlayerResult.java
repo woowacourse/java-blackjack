@@ -17,6 +17,10 @@ public class PlayerResult {
         return player == this.player;
     }
 
+    public boolean isBlackjack() {
+        return score.isBlackJack();
+    }
+
     public GameResultType getGameResultType() {
         return gameResultType;
     }
