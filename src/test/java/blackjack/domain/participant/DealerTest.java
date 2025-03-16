@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import static blackjack.fixture.TestFixture.provide16Cards;
 import static blackjack.fixture.TestFixture.provideBiggerAceCards;
 import static blackjack.fixture.TestFixture.provideBiggerAndSmallerAceCards;
 import static blackjack.fixture.TestFixture.provideBlackjack;
@@ -116,12 +117,12 @@ class DealerTest {
     @MethodSource
     void 우승_결과를_계산한다(final Hand dealerHand, final Hand playerHand, final ResultStatus expected) {
         // Given
+        dealer = new Dealer(dealerHand);
         Player player = providePlayer("밍트", 10_000);
         final Map<Player, Hand> playerScores = Map.of(player, playerHand);
-        Dealer dealer1 = new Dealer(dealerHand);
 
         // When
-        DealerWinningResult dealerWinningResult = dealer1.makeDealerWinningResult(playerScores);
+        DealerWinningResult dealerWinningResult = dealer.makeDealerWinningResult(playerScores);
 
         // Then
         assertThat(dealerWinningResult).isEqualTo(new DealerWinningResult(Map.of(player, expected)));
@@ -132,14 +133,9 @@ class DealerTest {
                 Arguments.of(provideBlackjack(), provideBlackjack(), ResultStatus.PUSH),
                 Arguments.of(provideBlackjack(), provideUnder16Cards(), ResultStatus.WIN),
                 Arguments.of(provideUnder16Cards(), provideBlackjack(), ResultStatus.BLACKJACK),
-
                 Arguments.of(provideUnder16Cards(), provideEmptyCards(), ResultStatus.WIN),
                 Arguments.of(provideEmptyCards(), provideUnder16Cards(), ResultStatus.LOSE),
                 Arguments.of(provide16Cards(), provide16Cards(), ResultStatus.PUSH)
         );
-    }
-
-    private static Hand provide16Cards() {
-        return new Hand(List.of(new Card(Shape.CLOB, CardScore.A), new Card(Shape.CLOB, CardScore.SIX)));
     }
 }

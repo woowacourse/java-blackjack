@@ -31,12 +31,12 @@ class DeckTest {
                 new Card(Shape.DIAMOND, CardScore.SIX))));
 
         // when
-        Hand hand = deck.spreadInitialCards(2);
+        final Hand hand = deck.spreadInitialCards(2);
 
         // then
         assertAll(
                 () -> assertThat(hand.getFirstCard()).isEqualTo(new Card(Shape.CLOB, CardScore.A)),
-                () -> assertThat(hand.getPartialCards(1, hand.getSize())).isEqualTo(
+                () -> assertThat(hand.subHand(1, hand.getSize())).isEqualTo(
                         new Hand(List.of(new Card(Shape.DIAMOND, CardScore.SIX))))
         );
     }

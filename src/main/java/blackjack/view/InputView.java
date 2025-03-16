@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.participant.gamer.Gamer;
+import blackjack.domain.participant.gamer.Player;
 import java.util.Scanner;
 
 public final class InputView {
@@ -23,7 +23,7 @@ public final class InputView {
         return readLine();
     }
 
-    public boolean askHit(Gamer player) {
+    public boolean askHit(final Player player) {
         System.out.printf(TITLE_ASK_MORE_CARD + LINE, player.getNickname());
         String answer = readLine();
         if (answer.equals(YES) || answer.equals(NO)) {

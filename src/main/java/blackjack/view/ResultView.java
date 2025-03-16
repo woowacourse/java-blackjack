@@ -3,7 +3,6 @@ package blackjack.view;
 import blackjack.domain.card.Hand;
 import blackjack.domain.card.Shape;
 import blackjack.domain.participant.gamer.Gamer;
-import blackjack.domain.participant.gamer.Player;
 import blackjack.domain.result.ResultStatus;
 import java.util.List;
 import java.util.Map;
@@ -29,10 +28,6 @@ public final class ResultView {
     private static final String CARD_FORMAT = "%s카드: %s";
     private static final String TITLE_DEALER_EXTRA_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String CARD_SCORE_FORMAT = "%s카드: %s - 결과: %d";
-
-    private static final String TITLE_WINNING_RESULT = "## 최종 승패";
-    private static final String WINNING_DEALER_RESULT_FORMAT = "딜러: %d승 %d무 %d패";
-    private static final String WINNING_PLAYER_RESULT_FORMAT = "%s: %s";
 
     private static final String TITLE_PROFITS = "## 최종 수익";
     private static final String PROFITS_FORMAT = "%s: %d";
@@ -94,13 +89,6 @@ public final class ResultView {
                 .forEach(System.out::println);
     }
 
-    private void showPlayerResultStatus(final Map<Player, ResultStatus> result) {
-        for (Entry<Player, ResultStatus> entry : result.entrySet()) {
-            System.out.printf(WINNING_PLAYER_RESULT_FORMAT + LINE, entry.getKey().getNickname(),
-                    getResultStatusName(entry.getValue()));
-        }
-    }
-
     private String makeParticipantsWithScoreMessage(final Entry<String, Hand> entry) {
         return String.format(CARD_SCORE_FORMAT, entry.getKey(),
                 getCardMessage(entry.getValue()), entry.getValue().calculateResult());
@@ -108,10 +96,6 @@ public final class ResultView {
 
     private String getShapeName(final Shape shape) {
         return SHAPE_KOREAN.get(shape);
-    }
-
-    private String getResultStatusName(final ResultStatus resultStatus) {
-        return RESULT_STATUS_KOREAN.get(resultStatus);
     }
 
     private void showln(final String line) {

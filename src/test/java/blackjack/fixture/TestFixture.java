@@ -66,4 +66,8 @@ public class TestFixture {
     public static Hand provideEmptyCards() {
         return new Hand(new ArrayList<>());
     }
+
+    public static Hand provide16Cards() {
+        return new Hand(List.of(new Card(Shape.CLOB, CardScore.A), new Card(Shape.CLOB, CardScore.SIX)));
+    }
 }

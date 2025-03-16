@@ -18,9 +18,9 @@ class DealerWinningResultTest {
     @Test
     void 딜러_우승_결과를_조회한다() {
         // Given
-        Player mint = providePlayer("밍트", 10_000);
-        Player mj = providePlayer("엠제이", 20_000);
-        DealerWinningResult winningResult = new DealerWinningResult(
+        final Player mint = providePlayer("밍트", 10_000);
+        final Player mj = providePlayer("엠제이", 20_000);
+        final DealerWinningResult winningResult = new DealerWinningResult(
                 Map.of(mint, ResultStatus.WIN, mj, ResultStatus.LOSE)
         );
 
@@ -36,17 +36,17 @@ class DealerWinningResultTest {
     @DisplayName("수익을 계산한다")
     void calculateProfit() {
         // Given
-        Dealer dealer = new Dealer(provideEmptyCards());
-        Player mint = providePlayer("밍트", 10_000);
-        Player mj = providePlayer("엠제이", 20_000);
-        Player pobi = providePlayer("포비", 30_000);
-        Player norang = providePlayer("노랑", 50_000);
-        DealerWinningResult winningResult = new DealerWinningResult(
+        final Dealer dealer = new Dealer(provideEmptyCards());
+        final Player mint = providePlayer("밍트", 10_000);
+        final Player mj = providePlayer("엠제이", 20_000);
+        final Player pobi = providePlayer("포비", 30_000);
+        final Player norang = providePlayer("노랑", 50_000);
+        final DealerWinningResult winningResult = new DealerWinningResult(
                 new LinkedHashMap<>(Map.of(mint, ResultStatus.WIN, mj, ResultStatus.LOSE, pobi, ResultStatus.PUSH,
                         norang, ResultStatus.BLACKJACK)));
 
         // When
-        Map<Gamer, Integer> profits = winningResult.calculateProfit(dealer);
+        final Map<Gamer, Integer> profits = winningResult.calculateProfit(dealer);
 
         // Then
         Assertions.assertAll(
