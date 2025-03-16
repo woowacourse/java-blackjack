@@ -3,6 +3,7 @@ package blackjack.controller;
 import blackjack.domain.GameManager;
 import blackjack.domain.card.CardPack;
 import blackjack.domain.card.RandomBlackjackShuffle;
+import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Players;
 import blackjack.view.InputView;
@@ -36,20 +37,24 @@ public class BlackjackController {
 
     private GameManager createGameManager() {
         CardPack cardPack = new CardPack(new RandomBlackjackShuffle());
-        List<Gambler> players = readAndParseNames();
+        Players players = readAndParseNames();
         return new GameManager(cardPack, players);
     }
 
-    private List<Gambler> readAndParseNames() {
+    private Players readAndParseNames() {
         String playerNamesInput = inputView.readPlayerNames();
         return createGamblers(playerNamesInput);
     }
 
-    private List<Gambler> createGamblers(String namesInput) {
+    private Players createGamblers(String namesInput) {
         List<String> names = List.of(namesInput.split(PLAYER_NAME_DELIMITER));
-        return names.stream()
+
+        Dealer dealer = new Dealer();
+        List<Gambler> gamblers = names.stream()
                 .map(this::createGambler)
                 .collect(Collectors.toList());
+
+        return new Players(dealer, gamblers);
     }
 
     private Gambler createGambler(final String name) {
