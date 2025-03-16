@@ -51,7 +51,7 @@ public class GameManagerTest {
 
         //when
         final GameManager gameManager = new GameManager(dealer, playerGroup, deck);
-        final Map<String, Double> result = gameManager.calculatePlayerBattingAmountOfReturn();
+        final Map<String, Double> result = gameManager.calculatePlayerBettingAmountOfReturn();
 
         //then
         assertThat(result).containsEntry("윌슨", 15_000.0)

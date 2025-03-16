@@ -2,7 +2,6 @@ package controller;
 
 import domain.AnswerCommand;
 import domain.GameManager;
-import domain.GameResult;
 import domain.card.CardGroup;
 import domain.card.Deck;
 import domain.card.RandomCardGenerator;
@@ -37,14 +36,14 @@ public class BlackJackController {
         outputView.printDealerAndPlayersCards(dealer, playerGroup.getPlayers());
         requestHit(playerNames, gameManager);
         printDealerReceiveCardCount(gameManager);
-        responseGameResult(dealer, playerGroup);
+        outputView.printGamerCardsAndScore(dealer, playerGroup.getPlayers());
+        responseBettingOfReturn(gameManager);
     }
 
-    private void responseGameResult(final Dealer dealer, final PlayerGroup playerGroup) {
-        final Map<String, GameResult> playersGameResult = playerGroup.calculatePlayersGameResult(dealer);
-        outputView.printGamerCardsAndScore(dealer, playerGroup.getPlayers());
-        outputView.printGameResult(dealer.calculateDealerGameResult(playersGameResult),
-                playerGroup.calculatePlayersGameResult(dealer));
+    private void responseBettingOfReturn(final GameManager gameManager) {
+        final double dealerBettingAmountOfReturn = gameManager.calculateDealerBettingAmountOfReturn();
+        final Map<String, Double> playerBettingAmountOfReturn = gameManager.calculatePlayerBettingAmountOfReturn();
+        outputView.printBettingAmountOfReturn(dealerBettingAmountOfReturn, playerBettingAmountOfReturn);
     }
 
     private void requestHit(final List<String> playerNames, final GameManager gameManager) {

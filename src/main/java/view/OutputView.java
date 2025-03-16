@@ -4,6 +4,7 @@ import domain.GameResult;
 import domain.card.Card;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ public class OutputView {
             4, "네장",
             5, "다섯장"
     );
+    private static final DecimalFormat BETTING_AMONUT_RETURN = new DecimalFormat("#.#");
 
     public void printDealerAndPlayersCards(final Dealer dealer, final List<Player> players) {
         final StringBuilder sb = new StringBuilder();
@@ -86,5 +88,21 @@ public class OutputView {
                 .map(card -> String.format("%s%s", card.getScore().getSymbol(), card.getType().getName()))
                 .collect(Collectors.joining(", "));
         return String.format("%s카드: %s", name, cardsMessage);
+    }
+
+    public void printBettingAmountOfReturn(final double dealerBettingAmountOfReturn, final Map<String, Double> playerBettingAmountOfReturn) {
+        final String dealerMessage = String.format("딜러: %s", BETTING_AMONUT_RETURN.format(dealerBettingAmountOfReturn));
+        final String playerMessage = playerBettingAmountOfReturn.entrySet()
+                .stream()
+                .map(entry -> String.format("%s: %s", entry.getKey(),
+                        BETTING_AMONUT_RETURN.format(entry.getValue())))
+                .collect(Collectors.joining(LINE_SEPARATOR));
+        final StringBuilder sb = new StringBuilder();
+        sb.append("## 최종 수익")
+                .append(LINE_SEPARATOR)
+                .append(dealerMessage)
+                .append(LINE_SEPARATOR)
+                .append(playerMessage);
+        System.out.println(sb);
     }
 }

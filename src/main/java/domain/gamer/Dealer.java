@@ -31,6 +31,13 @@ public class Dealer extends Gamer {
                 ));
     }
 
+    public double calculateBettingAmountOfReturn(final Map<String, Double> playerBettingOfReturns) {
+        return playerBettingOfReturns.values()
+                .stream()
+                .mapToDouble(value -> -value)
+                .sum();
+    }
+
     @Override
     public boolean canReceiveCard() {
         return super.calculateScore() <= DEALER_MUST_HIT_THRESHOLD;
