@@ -11,6 +11,7 @@ public class Participants {
 
     public Participants(List<Participant> participants) {
         validateParticipantSize(participants);
+        validateParticipantNameDuplication(participants);
         this.participants = participants;
     }
 
@@ -18,6 +19,16 @@ public class Participants {
         if (participants.size() > PLAYER_MAX_SIZE + DEALER) {
             throw new IllegalArgumentException("게임의 최대 참여자는 %d명을 넘을 수 없습니다.".formatted(
                     PLAYER_MAX_SIZE));
+        }
+    }
+
+    private void validateParticipantNameDuplication(List<Participant> participants) {
+        long distinctCount = participants.stream()
+                .map(Participant::getName)
+                .distinct()
+                .count();
+        if (distinctCount != participants.size()) {
+            throw new IllegalArgumentException("참여자의 이름은 중복될 수 없습니다.");
         }
     }
 
