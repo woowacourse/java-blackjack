@@ -9,14 +9,23 @@ import java.util.Objects;
 public final class Player extends Gamer {
 
     private final String nickname;
+    private final int bettingAmount;
 
-    public Player(final String nickname, final Hand hand) {
+    public Player(final Hand hand, final String nickname, final int bettingAmount) {
         super(hand);
+        validate(bettingAmount);
         this.nickname = nickname;
+        this.bettingAmount = bettingAmount;
     }
 
-    public static Player createEmpty(final String nickname) {
-        return new Player(nickname, new Hand(new ArrayList<>()));
+    private void validate(final int bettingAmount) {
+        if (bettingAmount <= 0) {
+            throw new IllegalArgumentException("[ERROR] 베팅 금액을 양수로 입력해주세요.");
+        }
+    }
+
+    public static Player from(final String nickname, final int bettingAmount) {
+        return new Player(new Hand(new ArrayList<>()), nickname, bettingAmount);
     }
 
     @Override

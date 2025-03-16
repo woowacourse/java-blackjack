@@ -26,7 +26,8 @@ public class PlayersTest {
     @Test
     void createPlayers() {
         // given
-        List<Player> players = List.of(new Player("엠제이", provideEmptyCards()), new Player("밍트", provideEmptyCards()));
+        List<Player> players = List.of(new Player(provideEmptyCards(), "엠제이", 10_000),
+                new Player(provideEmptyCards(), "밍트", 20_000));
 
         // when & then
         Assertions.assertThatCode(() -> new Players(players))
@@ -37,7 +38,8 @@ public class PlayersTest {
     @Test
     void createDuplicatePlayers() {
         // given
-        List<Player> players = List.of(new Player("엠제이", provideEmptyCards()), new Player("엠제이", provideEmptyCards()));
+        List<Player> players = List.of(new Player(provideEmptyCards(), "엠제이", 10_000),
+                new Player(provideEmptyCards(), "엠제이", 20_000));
 
         // when & then
         Assertions.assertThatThrownBy(() -> new Players(players))
@@ -58,8 +60,9 @@ public class PlayersTest {
         // then
         assertAll(
                 () -> assertThat(players.getPlayers().getFirst()).isEqualTo(
-                        new Player("엠제이", hand.getPartialCards(0, 2))),
-                () -> assertThat(players.getPlayers().get(1)).isEqualTo(new Player("밍트", hand.getPartialCards(2, 4)))
+                        new Player(hand.getPartialCards(0, 2), "엠제이", 10_000)),
+                () -> assertThat(players.getPlayers().get(1)).isEqualTo(
+                        new Player(hand.getPartialCards(2, 4), "밍트", 20_000))
         );
     }
 }

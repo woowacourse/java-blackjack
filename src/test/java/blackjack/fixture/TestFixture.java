@@ -24,16 +24,18 @@ public class TestFixture {
     }
 
     public static Players providePlayers() {
-        return new Players(List.of(new Player("엠제이", provideEmptyCards()), new Player("밍트", provideEmptyCards())));
+        return new Players(
+                List.of(new Player(provideEmptyCards(), "엠제이", 10_000), new Player(provideEmptyCards(), "밍트", 20_000)));
     }
 
     public static List<Player> provideTwoPlayersWithCards(final Hand hand1, final Hand hand2) {
-        return List.of(new Player("엠제이", hand1), new Player("밍트", hand2));
+        return List.of(new Player(hand1, "엠제이", 10_000), new Player(hand2, "밍트", 20_000));
     }
 
     public static List<Player> provideThreePlayersWithCards(final Hand hand1, final Hand hand2,
                                                             final Hand hand3) {
-        return List.of(new Player("엠제이", hand1), new Player("밍트", hand2), new Player("포비", hand3));
+        return List.of(new Player(hand1, "엠제이", 10_000), new Player(hand2, "밍트", 20_000),
+                new Player(hand3, "포비", 30_000));
     }
 
     public static Hand provideOver21Cards() {

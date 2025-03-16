@@ -15,4 +15,12 @@ public final class StringParser {
             throw new IllegalArgumentException("[ERROR] 입력 형식이 잘못되었습니다.");
         }
     }
+
+    public static int parseInt(final String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException("[ERROR] 숫자 형식이 아닙니다.");
+        }
+    }
 }

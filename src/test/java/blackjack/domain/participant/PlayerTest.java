@@ -14,12 +14,14 @@ import blackjack.domain.card.Hand;
 import blackjack.domain.card.Shape;
 import java.util.List;
 import java.util.stream.Stream;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class PlayerTest {
 
@@ -27,18 +29,30 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player("엠제이", provideEmptyCards());
+        player = new Player(provideEmptyCards(), "엠제이", 10_000);
     }
 
-    @DisplayName("이름으로 Player 객체를 생성한다.")
+    @DisplayName("이름과 베팅 금액으로 Player 객체를 생성한다.")
     @Test
     void createAttendee() {
         // given
         String nickname = "pobi";
 
         // when & then
-        assertThatCode(() -> new Player(nickname, provideEmptyCards()))
+        assertThatCode(() -> new Player(provideEmptyCards(), nickname, 10_000))
                 .doesNotThrowAnyException();
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, -10000})
+    @DisplayName("베팅 금액이 음수일 경우 예외가 발생한다")
+    void createWithBettingAmountBelowZero(final int bettingAmount) {
+        // Given
+
+        // When & Then
+        Assertions.assertThatThrownBy(() -> new Player(provideEmptyCards(), "밍트", bettingAmount))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR] 베팅 금액을 양수로 입력해주세요.");
     }
 
     @DisplayName("카드들을 받는다.")
@@ -51,7 +65,7 @@ public class PlayerTest {
         player.receiveCards(hand);
 
         // then
-        assertThat(player).isEqualTo(new Player("엠제이", hand));
+        assertThat(player).isEqualTo(new Player(hand, "엠제이", 10_000));
     }
 
     @DisplayName("플레이어는 모든 카드를 보여준다.")
@@ -88,7 +102,7 @@ public class PlayerTest {
     @MethodSource
     void canHit(final Hand hand, final boolean expected) {
         // given
-        final Player player = new Player("엠제이", hand);
+        final Player player = new Player(hand, "엠제이", 10_000);
 
         // when & then
         assertThat(player.canHit()).isEqualTo(expected);
