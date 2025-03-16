@@ -46,10 +46,4 @@ public class Dealer implements Participant {
     public boolean canDecideToTakeMoreCard() {
         return false;
     }
-
-    @Override
-    public boolean isOverLimit(int limit) {
-        return hand.calculatePossibleSums().stream()
-                .allMatch(sum -> sum > limit);
-    }
 }

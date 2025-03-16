@@ -49,12 +49,6 @@ public class Player implements Participant {
     }
 
     @Override
-    public boolean isOverLimit(int limit) {
-        return hand.calculatePossibleSums().stream()
-                .allMatch(sum -> sum >= limit);
-    }
-
-    @Override
     public String getName() {
         return name;
     }

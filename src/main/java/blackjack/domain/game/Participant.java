@@ -17,6 +17,4 @@ public interface Participant {
     boolean ableToTakeMoreCards();
 
     boolean canDecideToTakeMoreCard();
-
-    boolean isOverLimit(int limit);
 }
