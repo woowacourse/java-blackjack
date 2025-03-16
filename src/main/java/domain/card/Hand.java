@@ -45,7 +45,7 @@ public class Hand {
         return sumWithAce() > BLACKJACK_NUMBER;
     }
 
-    public boolean isBlackJackNumber(){
+    public boolean isBlackJackNumber() {
         return sumWithAce() == BLACKJACK_NUMBER;
     }
 
