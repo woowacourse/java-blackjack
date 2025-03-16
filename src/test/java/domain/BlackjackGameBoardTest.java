@@ -128,9 +128,11 @@ class BlackjackGameBoardTest {
         BlackjackGameBoard gameBoard = new BlackjackGameBoard(deck);
         gameBoard.distributeInitialCards(dealer);
         gameBoard.openInitialCards(dealer);
+        Runnable onHit = () -> {
+        };
 
         // when
-        gameBoard.hitUntilUnder16(dealer);
+        gameBoard.hitUntilUnder16(dealer, onHit);
 
         // then
         Assertions.assertThat(dealer.computeOptimalSum()).isGreaterThan(16);

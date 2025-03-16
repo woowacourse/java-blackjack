@@ -54,7 +54,9 @@ class UserBattleResultTest {
         BlackjackGameBoard gameBoard = new BlackjackGameBoard(deck);
         gameBoard.distributeInitialCards(dealer);
         gameBoard.distributeInitialCards(user);
-        gameBoard.hitUntilUnder16(dealer);
+        Runnable onHit = () -> {
+        };
+        gameBoard.hitUntilUnder16(dealer, onHit);
 
         // when
         UserBattleResult result = UserBattleResult.compare(user, dealer);

@@ -26,6 +26,10 @@ public class OutputView {
                 player.getName(), convertToCardsFormat(cards));
     }
 
+    public static void printDealerHitMessage() {
+        System.out.printf("딜러는 16이하라 한장의 카드를 더 받았습니다.%n%n");
+    }
+    
     public static void printPlayerCardsAndSum(String name, Cards cards, int sum) {
         System.out.printf("%s카드: %s - 결과: %d%n",
                 name, convertToCardsFormat(cards), sum);

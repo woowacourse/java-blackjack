@@ -3,6 +3,7 @@ import domain.card.DeckGenerator;
 import domain.player.Dealer;
 import domain.player.User;
 import domain.player.Users;
+import domain.profit.DefaultProfitStrategy;
 import view.InputView;
 import view.OutputView;
 
@@ -42,7 +43,7 @@ public class BlackjackGameManager {
         for (User user : users.getUsers()) {
             blackjackGameBoard.hitUntilStay(user, InputView::inputWantHit, OutputView::printPlayerCards);
         }
-        blackjackGameBoard.hitUntilUnder16(dealer);
+        blackjackGameBoard.hitUntilUnder16(dealer, OutputView::printDealerHitMessage);
     }
 
     private void printPlayerCardsAndSum(BlackjackGameBoard blackjackGameBoard) {
@@ -56,10 +57,10 @@ public class BlackjackGameManager {
 
     private void printPlayerProfit(BlackjackGameBoard blackjackGameBoard) {
         // TODO: 수익 출력
-//        blackjackGameBoard.computeDealerProfit(dealer, users, DefaultProfitStrategy.getInstance());
-//
-//        for (User user : users.getUsers()) {
-//            blackjackGameBoard.computeUserProfit(user, dealer, DefaultProfitStrategy.getInstance());
-//        }
+        blackjackGameBoard.computeDealerProfit(dealer, users, DefaultProfitStrategy.getInstance());
+
+        for (User user : users.getUsers()) {
+            blackjackGameBoard.computeUserProfit(user, dealer, DefaultProfitStrategy.getInstance());
+        }
     }
 }
