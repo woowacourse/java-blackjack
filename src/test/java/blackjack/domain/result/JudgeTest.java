@@ -84,6 +84,36 @@ public class JudgeTest {
         );
     }
 
+    @Test
+    void 딜러의_결과가_더_클_경우_딜러는_이긴다() {
+        testGameResult(
+                createHandWithCards(CardRank.TEN, CardRank.FIVE, CardRank.TWO),  // 딜러 일반
+                createHandWithCards(CardRank.TEN, CardRank.FIVE),
+                GameResultType.WIN,
+                GameResultType.LOSE
+        );
+    }
+
+    @Test
+    void 플레이어의_결과가_더_클_경우_플레이어는_이긴다() {
+        testGameResult(
+                createHandWithCards(CardRank.TEN, CardRank.FIVE),
+                createHandWithCards(CardRank.TEN, CardRank.FIVE, CardRank.TWO),
+                GameResultType.LOSE,
+                GameResultType.WIN
+        );
+    }
+
+    @Test
+    void 딜러와_플레이어의_결과가_같을_경우_무승부로_저장된다() {
+        testGameResult(
+                createHandWithCards(CardRank.TEN, CardRank.FIVE, CardRank.TWO),
+                createHandWithCards(CardRank.TEN, CardRank.FIVE, CardRank.TWO),
+                GameResultType.TIE,
+                GameResultType.TIE
+        );
+    }
+
 
     private Hand createHandWithCards(CardRank... ranks) {
         Hand hand = new Hand();
