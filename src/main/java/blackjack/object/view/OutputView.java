@@ -36,21 +36,21 @@ public class OutputView {
         System.out.printf("%s카드: %s - 결과: %d\n", name, ownCards, score);
     }
 
-    private static <T> String joinToStringByDelimiter(final List<T> components, final String delimiter) {
-        return components.stream()
-                .map(T::toString)
-                .collect(joining(delimiter));
-    }
-
     public static void printWinning(final ProfitCalculator profitCalculator) {
         System.out.println("##최종 수익");
         printGamblerProfits(profitCalculator);
     }
 
     private static void printGamblerProfits(ProfitCalculator profitCalculator) {
-        Map<Name, Integer> gamlberProfits = profitCalculator.calculateGamblerProfit();
-        for (final Entry<Name, Integer> entry : gamlberProfits.entrySet()) {
+        Map<Name, Integer> gamblerProfits = profitCalculator.calculateGamblerProfit();
+        for (final Entry<Name, Integer> entry : gamblerProfits.entrySet()) {
             System.out.printf("%s: %d\n", entry.getKey(), entry.getValue());
         }
+    }
+
+    private static <T> String joinToStringByDelimiter(final List<T> components, final String delimiter) {
+        return components.stream()
+                .map(T::toString)
+                .collect(joining(delimiter));
     }
 }
