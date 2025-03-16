@@ -39,4 +39,10 @@ public class Participants {
     public List<Participant> getParticipants() {
         return Collections.unmodifiableList(participants);
     }
+
+    public List<String> getAllNames() {
+        return participants.stream()
+                .map(Participant::getName)
+                .toList();
+    }
 }

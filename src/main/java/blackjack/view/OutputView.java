@@ -27,9 +27,7 @@ public class OutputView {
     private static String makeFirstDistributionPlayersText(final Participants participants) {
         return String.format(
                 "%n딜러와 %s에게 2장을 나누었습니다.",
-                participants.getParticipants()
-                        .stream()
-                        .map(Participant::getName)
+                participants.getAllNames().stream()
                         .collect(Collectors.joining(NAME_DELIMITER))
         );
     }
