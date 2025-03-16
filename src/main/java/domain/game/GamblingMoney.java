@@ -49,7 +49,9 @@ public class GamblingMoney {
 
     @Override
     public String toString() {
-        return amount + "";
+        return "GamblingMoney{" +
+            "amount=" + amount +
+            '}';
     }
 
     public static GamblingMoney bet(int amount) {
