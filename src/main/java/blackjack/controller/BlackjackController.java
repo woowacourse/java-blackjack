@@ -18,11 +18,9 @@ import java.util.List;
 public class BlackjackController {
 
     private final GameRuleEvaluator gameRuleEvaluator;
-    private final Judge judge;
 
-    public BlackjackController(GameRuleEvaluator gameRuleEvaluator, Judge judge) {
+    public BlackjackController(GameRuleEvaluator gameRuleEvaluator) {
         this.gameRuleEvaluator = gameRuleEvaluator;
-        this.judge = judge;
     }
 
     public void run() {
@@ -35,7 +33,8 @@ public class BlackjackController {
 
         players.getPlayers().forEach(participant -> giveMoreCard(participant, blackjackGame));
 
-        ParticipantResults participantResults = calculateResultOfParticipants(players, dealer);
+        Judge judge = new Judge(new ParticipantResults());
+        ParticipantResults participantResults = calculateResultOfParticipants(players, dealer, judge);
 
         OutputView.printCardResult(participantResults);
         OutputView.printGameResult(participantResults);
@@ -83,7 +82,7 @@ public class BlackjackController {
         OutputView.printStartingCardsStatuses(blackjackGame.getParticipants());
     }
 
-    private ParticipantResults calculateResultOfParticipants(Players players, Dealer dealer) {
+    private ParticipantResults calculateResultOfParticipants(Players players, Dealer dealer, Judge judge) {
         judge.calculateAllResults(dealer, players, gameRuleEvaluator);
         return judge.getParticipantResults();
     }
