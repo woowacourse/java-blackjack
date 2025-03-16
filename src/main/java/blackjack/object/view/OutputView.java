@@ -1,8 +1,5 @@
 package blackjack.object.view;
 
-import static blackjack.object.WinningType.DEFEAT;
-import static blackjack.object.WinningType.DRAW;
-import static blackjack.object.WinningType.WIN;
 import static java.util.stream.Collectors.joining;
 
 import blackjack.object.Round;
@@ -47,23 +44,14 @@ public class OutputView {
     }
 
     public static void printWinning(final WinningDiscriminator winningDiscriminator) {
-        System.out.println("##최종 승패");
-        printDealerWinning(winningDiscriminator);
-        printPlayerWinning(winningDiscriminator);
+        System.out.println("##최종 수익");
+        printGamblerProfits(winningDiscriminator);
     }
 
-    private static void printDealerWinning(WinningDiscriminator winningDiscriminator) {
-        Map<WinningType, Integer> dealerWinning = winningDiscriminator.judgeDealerResult();
-        Integer winCount = dealerWinning.get(WIN);
-        Integer drawCount = dealerWinning.get(DRAW);
-        Integer defeatCount = dealerWinning.get(DEFEAT);
-        System.out.printf("딜러: %d승 %d무 %d패\n", winCount, drawCount, defeatCount);
-    }
-
-    private static void printPlayerWinning(WinningDiscriminator winningDiscriminator) {
-        Map<Name, WinningType> playerWinning = winningDiscriminator.judgePlayersResult();
-        for (final Entry<Name, WinningType> entry : playerWinning.entrySet()) {
-            System.out.printf("%s: %s\n", entry.getKey(), entry.getValue().getDisplayName());
+    private static void printGamblerProfits(WinningDiscriminator winningDiscriminator) {
+        Map<Name, Integer> gamlberProfits = winningDiscriminator.calculateGamblerProfit();
+        for (final Entry<Name, Integer> entry : gamlberProfits.entrySet()) {
+            System.out.printf("%s: %d\n", entry.getKey(), entry.getValue());
         }
     }
 }
