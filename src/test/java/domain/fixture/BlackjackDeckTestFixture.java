@@ -1,7 +1,6 @@
 package domain.fixture;
 
 import domain.card.Deck;
-import domain.card.DeckGenerator;
 import domain.card.TrumpCard;
 import domain.card.strategy.BlackjackDrawStrategy;
 import domain.card.strategy.TestDrawStrategy;
@@ -13,11 +12,11 @@ import java.util.stream.Collectors;
 public class BlackjackDeckTestFixture {
     public static Deck createSequentialDeck(List<TrumpCard>... orders) {
         List<TrumpCard> drawOrder = toDrawOrder(orders);
-        return DeckGenerator.generateDeck(new TestDrawStrategy(new LinkedList<>(drawOrder)));
+        return new Deck(new TestDrawStrategy(new LinkedList<>(drawOrder)));
     }
 
     public static Deck createRandomDeck() {
-        return DeckGenerator.generateDeck(new BlackjackDrawStrategy());
+        return new Deck(new BlackjackDrawStrategy());
     }
 
     private static List<TrumpCard> toDrawOrder(List<TrumpCard>... orders) {

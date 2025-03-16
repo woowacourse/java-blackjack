@@ -1,8 +1,11 @@
 package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.card.strategy.BlackjackDrawStrategy;
+import domain.card.strategy.DrawStrategy;
 import domain.fixture.BlackjackDeckTestFixture;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -11,6 +14,16 @@ import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class DeckTest {
+
+    @Test
+    void 트럼프_카드_덱을_생성한다(){
+        //given
+        DrawStrategy drawStrategy = new BlackjackDrawStrategy();
+
+        // when & then
+        assertThatCode(() -> new Deck(drawStrategy))
+                .doesNotThrowAnyException();
+    }
 
     @Test
     void 트럼프_카드를_덱에서_뽑을_수_있다() {

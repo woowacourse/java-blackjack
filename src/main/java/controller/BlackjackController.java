@@ -1,7 +1,6 @@
 package controller;
 
 import domain.card.Deck;
-import domain.card.DeckGenerator;
 import domain.card.TrumpCard;
 import domain.card.strategy.BlackjackDrawStrategy;
 import domain.game.BlackjackGame;
@@ -28,7 +27,7 @@ public class BlackjackController {
     public void run() {
         List<String> names = handleInput(this::handleNames);
         List<Integer> betAmounts = inputBetAmounts(names);
-        Deck deck = DeckGenerator.generateDeck(new BlackjackDrawStrategy());
+        Deck deck = new Deck(new BlackjackDrawStrategy());
 
         BlackjackGame blackjackGame = new BlackjackGame(names, betAmounts, deck);
         outputView.printInitiateDraw(names);
