@@ -11,7 +11,6 @@ import paticipant.Dealer;
 import paticipant.Participant;
 import paticipant.Player;
 import paticipant.Players;
-import value.Score;
 
 public class Blackjack {
 	public static final int INIT_PICK_CARD_COUNT = 2;
@@ -56,7 +55,7 @@ public class Blackjack {
 		}
 	}
 
-	public Score calculateScore(final Participant participant) {
+	public GameScore calculateScore(final Participant participant) {
 		return participant.calculateAllScore();
 	}
 
@@ -65,9 +64,9 @@ public class Blackjack {
 	}
 
 	private void duelDealerVsPlayer(final Player player) {
-		final Score playerScore = player.calculateAllScore();
-		final Score dealerScore = dealer.calculateAllScore();
-		if (playerScore.equals(dealerScore) || (player.isBust() && dealer.isBust())) {
+		final GameScore playerGameScore = player.calculateAllScore();
+		final GameScore dealerGameScore = dealer.calculateAllScore();
+		if (playerGameScore.equals(dealerGameScore) || (player.isBust() && dealer.isBust())) {
 			draw(player);
 			return;
 		}
@@ -75,7 +74,7 @@ public class Blackjack {
 			dealerWin(player);
 			return;
 		}
-		if (dealer.isBust() || playerScore.isGreaterThan(dealerScore)) {
+		if (dealer.isBust() || playerGameScore.isGreaterThan(dealerGameScore)) {
 			playerWin(player);
 			return;
 		}

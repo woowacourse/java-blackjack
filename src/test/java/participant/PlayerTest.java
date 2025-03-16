@@ -91,7 +91,7 @@ public class PlayerTest {
 
 	@Nested
 	@DisplayName("player의 점수를 계산한다.")
-	class CalculateAllScore {
+	class CalculateAllGameScore {
 
 		@DisplayName("player의 현재 점수를 계산한다.")
 		@Test

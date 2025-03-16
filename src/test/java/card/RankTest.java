@@ -7,14 +7,14 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import game.GameScore;
 import value.Count;
-import value.Score;
 
 public class RankTest {
 
 	@Nested
 	@DisplayName("주어진 점수가 Bust되어 있고, ACE가 존재한다면 ACE를 최소점수로 만들어 계산한다.")
-	class IfOverThanBustScoreAceIsMIN {
+	class IfOverThanBustGameScoreAceIsMIN {
 
 		@DisplayName("점수가 bustScore를 초과했다면, ACE의 점수를 최소값으로 계산한다.")
 		@ParameterizedTest
@@ -24,8 +24,8 @@ public class RankTest {
 			final int bustScore = 21;
 
 			// when
-			final var actual = Rank.ifOverThanBustScoreAceIsMIN(Score.from(score), Count.from(aceCount),
-				Score.from(bustScore));
+			final var actual = Rank.ifOverThanBustScoreAceIsMIN(GameScore.from(score), Count.from(aceCount),
+				GameScore.from(bustScore));
 
 			// then
 			assertThat(actual.value()).isEqualTo(expected);

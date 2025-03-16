@@ -1,7 +1,7 @@
 package card;
 
+import game.GameScore;
 import value.Count;
-import value.Score;
 
 public enum Rank {
 	ACE(11),
@@ -18,25 +18,26 @@ public enum Rank {
 	QUEEN(10),
 	KING(10);
 
-	private static final Score ACE_MIN = Score.from(1);
+	private static final GameScore ACE_MIN = GameScore.from(1);
 
-	private final Score score;
+	private final GameScore gameScore;
 
 	Rank(final int score) {
-		this.score = Score.from(score);
+		this.gameScore = GameScore.from(score);
 	}
 
-	public static Score ifOverThanBustScoreAceIsMIN(Score score, Count aceCount, final Score bustScore) {
-		while (score.isGreaterThan(bustScore) && !aceCount.isZero()) {
-			score = score
-				.minus(ACE.score)
+	public static GameScore ifOverThanBustScoreAceIsMIN(
+		GameScore gameScore, Count aceCount, final GameScore bustGameScore) {
+		while (gameScore.isGreaterThan(bustGameScore) && !aceCount.isZero()) {
+			gameScore = gameScore
+				.minus(ACE.gameScore)
 				.plus(ACE_MIN);
 			aceCount = aceCount.decrement();
 		}
-		return score;
+		return gameScore;
 	}
 
-	public Score sum(final Score score) {
-		return score.plus(this.score);
+	public GameScore sum(final GameScore gameScore) {
+		return gameScore.plus(this.gameScore);
 	}
 }

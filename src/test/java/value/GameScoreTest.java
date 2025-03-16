@@ -6,7 +6,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-public class ScoreTest {
+import game.GameScore;
+
+public class GameScoreTest {
 
 	@Nested
 	@DisplayName("score 더하기")
@@ -16,11 +18,11 @@ public class ScoreTest {
 		@Test
 		void plusScore() {
 			// given
-			final Score score = Score.from(0);
-			final Score plusValue = Score.from(10);
+			final GameScore gameScore = GameScore.from(0);
+			final GameScore plusValue = GameScore.from(10);
 
 			// when
-			final Score actual = score.plus(plusValue);
+			final GameScore actual = gameScore.plus(plusValue);
 
 			// then
 			assertThat(actual).isEqualTo(plusValue);
@@ -35,14 +37,14 @@ public class ScoreTest {
 		@Test
 		void minusScore() {
 			// given
-			final Score score = Score.from(100);
-			final Score minusValue = Score.from(10);
+			final GameScore gameScore = GameScore.from(100);
+			final GameScore minusValue = GameScore.from(10);
 
 			// when
-			final Score actual = score.minus(minusValue);
+			final GameScore actual = gameScore.minus(minusValue);
 
 			// then
-			assertThat(actual).isEqualTo(Score.from(90));
+			assertThat(actual).isEqualTo(GameScore.from(90));
 		}
 	}
 
@@ -54,11 +56,11 @@ public class ScoreTest {
 		@Test
 		void isGreaterThanScore() {
 			// given
-			final Score score = Score.from(100);
-			final Score moreThanValue = Score.from(99);
+			final GameScore gameScore = GameScore.from(100);
+			final GameScore moreThanValue = GameScore.from(99);
 
 			// when
-			final boolean actual = score.isGreaterThan(moreThanValue);
+			final boolean actual = gameScore.isGreaterThan(moreThanValue);
 
 			// then
 			assertThat(actual).isTrue();
@@ -68,11 +70,11 @@ public class ScoreTest {
 		@Test
 		void isLessThanScore() {
 			// given
-			final Score score = Score.from(100);
-			final Score moreThanValue = Score.from(101);
+			final GameScore gameScore = GameScore.from(100);
+			final GameScore moreThanValue = GameScore.from(101);
 
 			// when
-			final boolean actual = score.isLessThan(moreThanValue);
+			final boolean actual = gameScore.isLessThan(moreThanValue);
 
 			// then
 			assertThat(actual).isTrue();

@@ -20,7 +20,6 @@ import paticipant.Participant;
 import paticipant.Player;
 import paticipant.Players;
 import value.Count;
-import value.Score;
 
 public class BlackjackTest {
 	private static final Count ZERO = Count.from(0);
@@ -83,7 +82,7 @@ public class BlackjackTest {
 			final List<String> names = List.of("부기", "파랑", "히스타");
 			final Blackjack blackjack = Blackjack.from(names);
 			final Function<String, Boolean> alwaysYes = (name) -> true;
-			final Score bustScore = Score.from(21);
+			final GameScore bustGameScore = GameScore.from(21);
 
 			// when
 			blackjack.pickCardPlayersIfNotBust(alwaysYes, x -> {
@@ -93,7 +92,8 @@ public class BlackjackTest {
 			assertSoftly(s -> {
 				for (final Player player : blackjack.getPlayers().getPlayers()) {
 					s.assertThat(
-							player.getParticipant().getCardHand().calculateAllScore(bustScore).isGreaterThan(bustScore))
+							player.getParticipant().getCardHand().calculateAllScore(bustGameScore).isGreaterThan(
+								bustGameScore))
 						.isTrue();
 				}
 			});
@@ -120,7 +120,7 @@ public class BlackjackTest {
 
 	@Nested
 	@DisplayName("BUST_SCORE를 기준으로 점수를 계산한다.")
-	class CalculateScore {
+	class CalculateGameScore {
 
 		@DisplayName("BUST_SCORE를 기준으로 점수를 계산한다.")
 		@Test

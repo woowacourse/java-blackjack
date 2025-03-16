@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import game.GameScore;
 import value.Count;
-import value.Score;
 
 public class CardHand {
 
@@ -23,14 +23,14 @@ public class CardHand {
 		this.cards.addAll(cards);
 	}
 
-	public Score calculateAllScore(final Score bustScore) {
-		Score score = Score.from(0);
+	public GameScore calculateAllScore(final GameScore bustGameScore) {
+		GameScore gameScore = GameScore.from(0);
 
 		for (final Card card : cards) {
-			score = card.sumNumber(score);
+			gameScore = card.sumNumber(gameScore);
 		}
 
-		return Rank.ifOverThanBustScoreAceIsMIN(score, calculateAceCount(), bustScore);
+		return Rank.ifOverThanBustScoreAceIsMIN(gameScore, calculateAceCount(), bustGameScore);
 	}
 
 	private Count calculateAceCount() {

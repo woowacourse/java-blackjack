@@ -89,7 +89,7 @@ public class DealerTest {
 
 	@Nested
 	@DisplayName("딜러의 점수를 계산한다.")
-	class CalculateAllScore {
+	class CalculateAllGameScore {
 
 		@DisplayName("딜러의 현재 점수를 계산한다.")
 		@Test

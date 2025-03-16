@@ -4,7 +4,7 @@ import java.util.List;
 
 import card.Card;
 import duel.DuelResult;
-import value.Score;
+import game.GameScore;
 
 public class Player {
 	private final String name;
@@ -28,7 +28,7 @@ public class Player {
 		return !participant.isBust();
 	}
 
-	public Score calculateAllScore() {
+	public GameScore calculateAllScore() {
 		return participant.calculateAllScore();
 	}
 

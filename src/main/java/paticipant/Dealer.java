@@ -4,10 +4,10 @@ import java.util.List;
 
 import card.Card;
 import duel.DuelResult;
-import value.Score;
+import game.GameScore;
 
 public class Dealer {
-	private static final Score DEALER_PICK_CARD_SCORE_MAX = Score.from(16);
+	private static final GameScore DEALER_PICK_CARD_GAME_SCORE_MAX = GameScore.from(16);
 
 	private final Participant participant;
 
@@ -24,11 +24,12 @@ public class Dealer {
 	}
 
 	public boolean isPickCard() {
-		final Score score = participant.calculateAllScore();
-		return score.isLessThan(DEALER_PICK_CARD_SCORE_MAX) || score.equals(DEALER_PICK_CARD_SCORE_MAX);
+		final GameScore gameScore = participant.calculateAllScore();
+		return gameScore.isLessThan(DEALER_PICK_CARD_GAME_SCORE_MAX) || gameScore.equals(
+			DEALER_PICK_CARD_GAME_SCORE_MAX);
 	}
 
-	public Score calculateAllScore() {
+	public GameScore calculateAllScore() {
 		return participant.calculateAllScore();
 	}
 

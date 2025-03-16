@@ -2,7 +2,7 @@ package card;
 
 import java.util.Objects;
 
-import value.Score;
+import game.GameScore;
 
 public record Card(
 	Rank rank,
@@ -12,7 +12,7 @@ public record Card(
 		return Objects.equals(this.rank, rank);
 	}
 
-	public Score sumNumber(final Score score) {
-		return rank.sum(score);
+	public GameScore sumNumber(final GameScore gameScore) {
+		return rank.sum(gameScore);
 	}
 }

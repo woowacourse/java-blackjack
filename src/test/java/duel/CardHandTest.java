@@ -16,14 +16,14 @@ import card.Card;
 import card.CardHand;
 import card.Rank;
 import card.Suit;
+import game.GameScore;
 import value.Count;
-import value.Score;
 
 class CardHandTest {
 
 	@Nested
 	@DisplayName("모든 Card의 점수 합을 계산한다.")
-	class CalculateAllScore {
+	class CalculateAllGameScore {
 
 		@ParameterizedTest
 		@MethodSource("getCardList")
@@ -31,10 +31,10 @@ class CardHandTest {
 		void test_calculateAllScore(List<Card> cards, int expected) {
 			//given
 			final var cardHand = new CardHand(cards);
-			final Score bustScore = Score.from(21);
+			final GameScore bustGameScore = GameScore.from(21);
 
 			//when&then
-			assertThat(cardHand.calculateAllScore(bustScore)).isEqualTo(Score.from(expected));
+			assertThat(cardHand.calculateAllScore(bustGameScore)).isEqualTo(GameScore.from(expected));
 		}
 
 		private static Stream<Arguments> getCardList() {

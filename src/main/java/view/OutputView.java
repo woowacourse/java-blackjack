@@ -6,10 +6,10 @@ import java.util.stream.Collectors;
 
 import card.Card;
 import game.Blackjack;
+import game.GameScore;
 import money.Money;
 import money.WagerMoney;
 import paticipant.Player;
-import value.Score;
 
 public class OutputView {
 	private static final String PLAYER_NAME_DELIMITER = ", ";
@@ -73,7 +73,7 @@ public class OutputView {
 			getDealerScore(blackjack).value());
 	}
 
-	private Score getDealerScore(final Blackjack blackjack) {
+	private GameScore getDealerScore(final Blackjack blackjack) {
 		return blackjack.getDealer().getParticipant().calculateAllScore();
 	}
 
@@ -85,7 +85,7 @@ public class OutputView {
 		}
 	}
 
-	private Score getPlayerScore(final Player player) {
+	private GameScore getPlayerScore(final Player player) {
 		return player.getParticipant().calculateAllScore();
 	}
 
