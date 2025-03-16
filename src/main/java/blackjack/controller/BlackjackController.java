@@ -32,13 +32,13 @@ public class BlackjackController {
     }
 
     private void takeCards(Deck deck, Players players, Dealer dealer) {
-        initialDeal(deck, players, dealer);
+        dealInitialCards(deck, players, dealer);
 
         hitCard(deck, players);
         hitCard(deck, dealer);
     }
 
-    private void initialDeal(Deck deck, Players players, Dealer dealer) {
+    private void dealInitialCards(Deck deck, Players players, Dealer dealer) {
         for (Player player : players.getPlayers()) {
             takeCards(Deck::startingHand, deck, player);
         }
