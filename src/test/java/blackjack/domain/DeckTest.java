@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.common.ErrorMessage;
 import java.util.Arrays;
@@ -37,15 +36,30 @@ class DeckTest {
     @DisplayName("카드뽑을 때")
     @Nested
     class DrawCard {
+
         @DisplayName("시작 카드는 2개를 뽑는다")
         @Test
-        void test4() {
+        void test1() {
             // given
             Deck deck = Deck.shuffled(cards);
             int expect = 2;
 
             // when
             List<Card> takeCards = deck.startingHand();
+
+            // then
+            assertThat(takeCards).hasSize(expect);
+        }
+
+        @DisplayName("카드 한 장을 뽑는다")
+        @Test
+        void test2() {
+            // given
+            Deck deck = Deck.shuffled(cards);
+            int expect = 1;
+
+            // when
+            List<Card> takeCards = deck.takeOneCard();
 
             // then
             assertThat(takeCards).hasSize(expect);
