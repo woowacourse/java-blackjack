@@ -4,6 +4,7 @@ import domain.card.Card;
 import domain.card.Deck;
 import domain.game.BettingSession;
 import domain.game.Game;
+import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.shuffler.RandomShuffler;
 import java.util.List;
@@ -21,75 +22,76 @@ public class BlackJackController {
         BettingSession bettingSession = startBetting();
         bet(game, bettingSession);
         outputView.displayInitialDeal(game);
-        giveAdditionalCardsForPlayer(game);
-        giveAdditionalCardsForDealer(game);
-        displayScores(game);
-        calculateAndDisplayBettingProfit(game, bettingSession);
+
+        dealAdditionalCardsToPlayers(game);
+        dealAdditionalCardsToDealer(game);
+
+        outputView.displayScore(game);
+        displayAllProfits(game, bettingSession);
     }
 
-    public Game startGame() {
+    private Game startGame() {
         List<String> playerNames = inputView.readPlayerNames();
         return new Game(playerNames, new Deck(new RandomShuffler()));
     }
 
-    public BettingSession startBetting() {
+    private BettingSession startBetting() {
         return new BettingSession();
     }
 
-    private void giveAdditionalCardsForPlayer(Game game) {
+    private void bet(Game game, BettingSession bettingSession) {
+        game.getPlayers().forEach(player -> {
+            int betAmount = inputView.readBetAmount(player.getName());
+            bettingSession.bet(player, betAmount);
+        });
+    }
+
+    private void dealAdditionalCardsToPlayers(Game game) {
         game.getPlayerNames()
                 .forEach((name) -> hitOrStay(game, name));
     }
 
-    private void giveAdditionalCardsForDealer(Game game) {
-        outputView.displayEmptyLine();
-        while (game.doesDealerNeedCard()) {
-            game.dealerHit();
-            outputView.displayDealerHitResult();
-        }
-        outputView.displayEmptyLine();
-    }
-
-    private void displayScores(Game game) {
-        outputView.displayScore(game);
-    }
-
     private void hitOrStay(Game game, String playerName) {
-        Answer answer = Answer.YES;
-        while (game.canHit(playerName) && answer == Answer.YES) {
-            answer = retryUntilSuccess(() -> inputView.readHitOrStay(playerName));
-            hitByAnswer(game, playerName, answer);
+        while (game.canHit(playerName)) {
+            Answer answer = retryUntilSuccess(() -> inputView.readHitOrStay(playerName));
+            if (answer == Answer.NO) {
+                displayPlayerCards(game, playerName);
+                return;
+            }
+            game.hit(playerName);
             displayPlayerCards(game, playerName);
         }
     }
 
-    private void hitByAnswer(Game game, String playerName, Answer answer) {
-        if (answer == Answer.YES) {
-            game.playerHit(playerName);
-        }
-    }
-
     private void displayPlayerCards(Game game, String playerName) {
-        List<Card> cards = game.getPlayerCards(playerName);
+        List<Card> cards = game.getCardsOf(playerName);
         outputView.displayNameAndCards(playerName, cards);
         outputView.displayEmptyLine();
     }
 
-    public void bet(Game game, BettingSession bettingSession) {
-        List<Player> players = game.getPlayers();
-        players.forEach(player -> playerBet(bettingSession, player));
+    private void dealAdditionalCardsToDealer(Game game) {
+        outputView.displayEmptyLine();
+        while (game.canHit(Dealer.NAME)) {
+            game.hit(Dealer.NAME);
+            outputView.displayDealerHitMessage();
+        }
+        outputView.displayEmptyLine();
     }
 
-    public void playerBet(BettingSession bettingSession, Player player) {
-        int betAmount = inputView.readBetAmount(player.getName());
-        bettingSession.bet(player, betAmount);
-    }
-
-    private void calculateAndDisplayBettingProfit(Game game, BettingSession bettingSession) {
+    private void displayAllProfits(Game game, BettingSession bettingSession) {
         List<Player> players = game.getPlayers();
         bettingSession.calculateProfit(players, game.getDealer());
+
         outputView.displayProfitMessage();
-        outputView.displayParticipantProfit("딜러", bettingSession.getDealerProfit());
+        displayDealerProfit(bettingSession);
+        displayPlayersProfit(players, bettingSession);
+    }
+
+    private void displayDealerProfit(BettingSession bettingSession) {
+        outputView.displayParticipantProfit(Dealer.NAME, bettingSession.getDealerProfit());
+    }
+
+    private void displayPlayersProfit(List<Player> players, BettingSession bettingSession) {
         for (Player player : players) {
             double profit = bettingSession.getPlayerProfit(player);
             outputView.displayParticipantProfit(player.getName(), profit);
