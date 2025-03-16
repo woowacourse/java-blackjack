@@ -3,11 +3,11 @@ package domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static domain.RevenuePolicy.*;
+import static domain.PlayerRevenuePolicy.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class RevenuePolicyTest {
+class PlayerRevenuePolicyTest {
     @DisplayName("플레이어가 블랙잭이 아니면서 승리한 경우, NORMAL_WIN 정책을 반환할 수 있다.")
     @Test
     void winningWithNotBlackjack() {
@@ -16,7 +16,7 @@ class RevenuePolicyTest {
         final boolean isBlackjack = false;
 
         // when
-        RevenuePolicy policy = RevenuePolicy.from(gameResult, isBlackjack);
+        PlayerRevenuePolicy policy = PlayerRevenuePolicy.from(gameResult, isBlackjack);
 
         // then
         assertThat(policy).isSameAs(NORMAL_WIN);
@@ -30,7 +30,7 @@ class RevenuePolicyTest {
         final boolean isBlackjack = true;
 
         // when
-        RevenuePolicy policy = RevenuePolicy.from(gameResult, isBlackjack);
+        PlayerRevenuePolicy policy = PlayerRevenuePolicy.from(gameResult, isBlackjack);
 
         // then
         assertThat(policy).isSameAs(BLACKJACK_WIN);
@@ -44,7 +44,7 @@ class RevenuePolicyTest {
         final boolean isBlackjack = true;
 
         // when
-        RevenuePolicy policy = RevenuePolicy.from(gameResult, isBlackjack);
+        PlayerRevenuePolicy policy = PlayerRevenuePolicy.from(gameResult, isBlackjack);
 
         // then
         assertThat(policy).isSameAs(BLACKJACK_DRAW);
@@ -58,7 +58,7 @@ class RevenuePolicyTest {
         final boolean isBlackjack = false;
 
         // when
-        RevenuePolicy policy = RevenuePolicy.from(gameResult, isBlackjack);
+        PlayerRevenuePolicy policy = PlayerRevenuePolicy.from(gameResult, isBlackjack);
 
         // then
         assertThat(policy).isSameAs(NORMAL_DRAW);
@@ -72,7 +72,7 @@ class RevenuePolicyTest {
         final boolean isBlackjack = false;
 
         // when
-        RevenuePolicy policy = RevenuePolicy.from(gameResult, isBlackjack);
+        PlayerRevenuePolicy policy = PlayerRevenuePolicy.from(gameResult, isBlackjack);
 
         // then
         assertThat(policy).isSameAs(LOSE);
@@ -87,7 +87,7 @@ class RevenuePolicyTest {
 
         // when & then
         assertThatThrownBy(() -> {
-            RevenuePolicy.from(gameResult, isBlackjack);
+            PlayerRevenuePolicy.from(gameResult, isBlackjack);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -96,7 +96,7 @@ class RevenuePolicyTest {
     void blackjackWinRevenue() {
         // given
         final int bettingCost = 10000;
-        RevenuePolicy policy = BLACKJACK_WIN;
+        PlayerRevenuePolicy policy = BLACKJACK_WIN;
 
         // when
         final int revenue = policy.getRevenue(bettingCost);
@@ -110,7 +110,7 @@ class RevenuePolicyTest {
     void notBlackjackWinRevenue() {
         // given
         final int bettingCost = 10000;
-        RevenuePolicy policy = NORMAL_WIN;
+        PlayerRevenuePolicy policy = NORMAL_WIN;
 
         // when
         final int revenue = policy.getRevenue(bettingCost);
@@ -124,7 +124,7 @@ class RevenuePolicyTest {
     void normalDrawRevenue() {
         // given
         final int bettingCost = 10000;
-        RevenuePolicy policy = NORMAL_DRAW;
+        PlayerRevenuePolicy policy = NORMAL_DRAW;
 
         // when
         final int revenue = policy.getRevenue(bettingCost);
@@ -138,7 +138,7 @@ class RevenuePolicyTest {
     void blackjackDrawRevenue() {
         // given
         final int bettingCost = 10000;
-        RevenuePolicy policy = BLACKJACK_DRAW;
+        PlayerRevenuePolicy policy = BLACKJACK_DRAW;
 
         // when
         final int revenue = policy.getRevenue(bettingCost);
@@ -152,7 +152,7 @@ class RevenuePolicyTest {
     void loseRevenue() {
         // given
         final int bettingCost = 10000;
-        RevenuePolicy policy = LOSE;
+        PlayerRevenuePolicy policy = LOSE;
 
         // when
         final int revenue = policy.getRevenue(bettingCost);

@@ -3,7 +3,7 @@ package domain;
 import java.util.Arrays;
 import java.util.function.Function;
 
-public enum RevenuePolicy {
+public enum PlayerRevenuePolicy {
     BLACKJACK_WIN(GameResult.WIN, true, cost -> (int) (cost * 1.5)),
     NORMAL_WIN(GameResult.WIN, false, cost -> cost),
     BLACKJACK_DRAW(GameResult.DRAW, true, cost -> 0),
@@ -15,13 +15,13 @@ public enum RevenuePolicy {
     private final boolean isPlayerBlackjack;
     private final Function<Integer, Integer> function;
 
-    RevenuePolicy(GameResult gameResult, boolean isPlayerBlackjack, Function<Integer, Integer> function) {
+    PlayerRevenuePolicy(GameResult gameResult, boolean isPlayerBlackjack, Function<Integer, Integer> function) {
         this.gameResult = gameResult;
         this.isPlayerBlackjack = isPlayerBlackjack;
         this.function = function;
     }
 
-    public static RevenuePolicy from(GameResult gameResult, final boolean isPlayerBlackjack) {
+    public static PlayerRevenuePolicy from(GameResult gameResult, final boolean isPlayerBlackjack) {
         return Arrays.stream(values())
                 .filter(policy -> policy.gameResult == gameResult && policy.isPlayerBlackjack == isPlayerBlackjack)
                 .findFirst()
