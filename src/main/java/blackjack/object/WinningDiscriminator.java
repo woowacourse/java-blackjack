@@ -2,8 +2,7 @@ package blackjack.object;
 
 import blackjack.object.gambler.Name;
 
-import java.util.Arrays;
-import java.util.Map;
+import java.util.*;
 
 import static blackjack.object.WinningType.*;
 import static java.util.function.Function.identity;
@@ -11,28 +10,25 @@ import static java.util.stream.Collectors.toMap;
 
 public class WinningDiscriminator {
     public static final int BLACK_JACK = 21;
-    private final int dealerScore;
-    private final Map<Name, Integer> playerScores;
+    private final Map<Name, Integer> gamblerScores;
 
-    public WinningDiscriminator(Map<Name, Integer> gamblerScores) {
-        this.dealerScore = gamblerScores.get(Name.getDealerName());
-        this.playerScores = getPlayerScores(gamblerScores);
-    }
-
-    private Map<Name, Integer> getPlayerScores(Map<Name, Integer> gamblerScores) {
-        gamblerScores.remove(Name.getDealerName());
-        return gamblerScores;
+    public WinningDiscriminator(final Map<Name, Integer> gamblerScores, final Map<Name, Integer> bettingRecords) {
+        this.gamblerScores = gamblerScores;
     }
 
     public Map<Name, WinningType> judgePlayersResult() {
-        return playerScores.keySet()
+        return gamblerScores.keySet()
                 .stream()
+                .filter(name -> !name.equals(Name.getDealerName()))
                 .collect(toMap(identity(), this::judgePlayerResult));
     }
 
     public Map<WinningType, Integer> judgeDealerResult() {
         Map<WinningType, Integer> winningResult = createWinningResult();
-        for (final Name playerName : playerScores.keySet()) {
+        List<Name> playerNames = new ArrayList<>(gamblerScores.keySet());
+        playerNames.remove(Name.getDealerName());
+
+        for (final Name playerName : playerNames) {
             countDealerWinning(playerName, winningResult);
         }
         return winningResult;
@@ -49,7 +45,9 @@ public class WinningDiscriminator {
     }
 
     private WinningType judgePlayerResult(final Name name) {
-        int playerScore = playerScores.get(name);
+        int playerScore = gamblerScores.get(name);
+        int dealerScore = gamblerScores.get(Name.getDealerName());
+
         if (playerScore > BLACK_JACK) {
             return DEFEAT;
         }

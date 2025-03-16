@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.object.gambler.Name;
 
+import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,6 +16,13 @@ class WinningTypeDiscriminatorTest {
     @ParameterizedTest
     void judgeDealerResult_DealerIsNotBust_Test(WinningType type, int expected) {
         // given
+        Map<Name, Integer> bettingRecords = new HashMap<>(Map.of(
+                new Name("라젤"), 10000,
+                new Name("레오"), 10000,
+                new Name("비타"), 10000,
+                new Name("새로이"), 10000,
+                new Name("꾹이"), 10000
+        ));
         Map<Name, Integer> gamblerScores = Map.of(
                 Name.getDealerName(), 18,
                 new Name("라젤"), 19, // 딜러 패배
@@ -22,7 +30,7 @@ class WinningTypeDiscriminatorTest {
                 new Name("비타"), 17, // 딜러 승리
                 new Name("새로이"), 30, // 딜러 승리 (플레이어 버스트)
                 new Name("꾹이"), 18); // 무승부
-        WinningDiscriminator winningDiscriminator = new WinningDiscriminator(gamblerScores);
+        WinningDiscriminator winningDiscriminator = new WinningDiscriminator(gamblerScores, bettingRecords);
 
         // when
         Map<WinningType, Integer> result = winningDiscriminator.judgeDealerResult();
@@ -36,13 +44,19 @@ class WinningTypeDiscriminatorTest {
     @ParameterizedTest
     void judgeDealerResult_DealerIsBust_Test(WinningType type, int expected) {
         // given
+        Map<Name, Integer> bettingRecords = new HashMap<>(Map.of(
+                new Name("라젤"), 10000,
+                new Name("레오"), 10000,
+                new Name("비타"), 10000,
+                new Name("새로이"), 10000
+        ));
         Map<Name, Integer> gamblerScores = Map.of(
                 Name.getDealerName(), 24,
                 new Name("라젤"), 19, // 딜러 패배
                 new Name("레오"), 21, // 딜러 패배 (플레이어 블랙잭 승리)
                 new Name("비타"), 24, // 딜러 승리 (플레이어 버스트, 딜러와 점수가 같은 경우)
                 new Name("새로이"), 30); // 딜러 승리 (플레이어 버스트)
-        WinningDiscriminator winningDiscriminator = new WinningDiscriminator(gamblerScores);
+        WinningDiscriminator winningDiscriminator = new WinningDiscriminator(gamblerScores, bettingRecords);
 
         // when
         Map<WinningType, Integer> result = winningDiscriminator.judgeDealerResult();
@@ -56,6 +70,13 @@ class WinningTypeDiscriminatorTest {
     @CsvSource(value = {"라젤:WIN", "레오:WIN", "비타:DEFEAT", "꾹이:DEFEAT", "새로이:DRAW"}, delimiterString = ":")
     void judgePlayerResultT_DealerIsNotBust_est(String playerName, WinningType expected) {
         // given
+        Map<Name, Integer> bettingRecords = new HashMap<>(Map.of(
+                new Name("라젤"), 10000,
+                new Name("레오"), 10000,
+                new Name("비타"), 10000,
+                new Name("꾹이"), 10000,
+                new Name("새로이"), 10000
+        ));
         Map<Name, Integer> gamblerScores = Map.of(
                 Name.getDealerName(), 19,
                 new Name("라젤"), 20, // 플레이어 승리
@@ -63,7 +84,7 @@ class WinningTypeDiscriminatorTest {
                 new Name("비타"), 18, // 플레이어 패배
                 new Name("꾹이"), 30, // 플레이어 버스트 패배
                 new Name("새로이"), 19); // 플레이어 무승부
-        WinningDiscriminator winningDiscriminator = new WinningDiscriminator(gamblerScores);
+        WinningDiscriminator winningDiscriminator = new WinningDiscriminator(gamblerScores, bettingRecords);
 
         // when
         Map<Name, WinningType> result = winningDiscriminator.judgePlayersResult();
@@ -78,13 +99,19 @@ class WinningTypeDiscriminatorTest {
     @CsvSource(value = {"라젤:WIN", "레오:WIN", "비타:DEFEAT", "꾹이:DEFEAT"}, delimiterString = ":")
     void judgePlayerResult_DealerIsBust_Test(String playerName, WinningType expected) {
         // given
+        Map<Name, Integer> bettingRecords = new HashMap<>(Map.of(
+                new Name("라젤"), 10000,
+                new Name("레오"), 10000,
+                new Name("비타"), 10000,
+                new Name("꾹이"), 10000
+        ));
         Map<Name, Integer> gamblerScores = Map.of(
                 Name.getDealerName(), 24,
                 new Name("라젤"), 19, // 플레이어 승리
                 new Name("레오"), 21, // 플레이어 블랙잭 승리
                 new Name("비타"), 24, // 플레이어 버스트 패배, 딜러와 점수가 같은 경우
                 new Name("꾹이"), 30); // 플레이어 버스트 패배
-        WinningDiscriminator winningDiscriminator = new WinningDiscriminator(gamblerScores);
+        WinningDiscriminator winningDiscriminator = new WinningDiscriminator(gamblerScores, bettingRecords);
 
         // when
         Map<Name, WinningType> result = winningDiscriminator.judgePlayersResult();

@@ -10,6 +10,7 @@ import blackjack.object.card.Shuffler;
 import blackjack.object.fake.TestShuffler;
 import blackjack.object.gambler.Name;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -80,11 +81,14 @@ class RoundTest {
 
         Name playerName = new Name("라젤");
         List<Name> playerNames = List.of(playerName);
+        Map<Name, Integer> bettingRecords = new HashMap<>(Map.of(
+                playerName, 10000
+        ));
         Round round = new Round(cardDeck, playerNames);
         round.distributeInitialCards();
 
         // when
-        WinningDiscriminator result = round.getWinningDiscriminator();
+        WinningDiscriminator result = round.getWinningDiscriminator(bettingRecords);
         Map<WinningType, Integer> dealerWinning = result.judgeDealerResult();
 
         // then

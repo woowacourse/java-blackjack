@@ -1,7 +1,6 @@
 package blackjack;
 
-import static blackjack.object.view.InputView.inputPlayerHit;
-import static blackjack.object.view.InputView.inputPlayerName;
+import static blackjack.object.view.InputView.*;
 import static blackjack.object.view.OutputView.printBusted;
 import static blackjack.object.view.OutputView.printDealerReceiveCard;
 import static blackjack.object.view.OutputView.printGamblerCards;
@@ -19,7 +18,9 @@ import blackjack.object.card.CardShuffler;
 import blackjack.object.card.CardType;
 import blackjack.object.gambler.Name;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -27,13 +28,21 @@ public class Application {
     public static void main(String[] args) {
         CardDeck cardDeck = createCardDeck();
         List<Name> playerNames = getPlayerNames();
+        Map<Name, Integer> bettingRecords = new HashMap<>();
+
+        for (Name playerName : playerNames) {
+            int money = getBettingAmountByName(playerName);
+            bettingRecords.put(playerName, money);
+        }
+
         Round round = new Round(cardDeck, playerNames);
+
         round.distributeInitialCards();
         printInitialDistributionPrompt(playerNames);
         printInitialCards(round, playerNames);
         processPlayersTurn(playerNames, round);
         processDealerTurn(round);
-        printGameResult(round, playerNames);
+        printGameResult(round, bettingRecords);
     }
 
     private static CardDeck createCardDeck() {
@@ -54,6 +63,15 @@ public class Application {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return getPlayerNames();
+        }
+    }
+
+    private static int getBettingAmountByName(Name playerName) {
+        try {
+            return inputBettingAmount(playerName);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return getBettingAmountByName(playerName);
         }
     }
 
@@ -99,14 +117,14 @@ public class Application {
         }
     }
 
-    private static void printGameResult(final Round round, final List<Name> playerNames) {
+    private static void printGameResult(final Round round, final Map<Name, Integer> bettingRecords) {
         printGamblerResult(Name.getDealerName(), round.getCards(Name.getDealerName()), round.getScore(Name.getDealerName()));
-        for (Name playerName : playerNames) {
+        for (Name playerName : bettingRecords.keySet()) {
             List<Card> cards = round.getCards(playerName);
             int score = round.getScore(playerName);
             printGamblerResult(playerName, cards, score);
         }
-        WinningDiscriminator discriminator = round.getWinningDiscriminator();
+        WinningDiscriminator discriminator = round.getWinningDiscriminator(bettingRecords);
         printWinning(discriminator);
     }
 }
