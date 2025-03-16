@@ -1,6 +1,5 @@
 package domain.player;
 
-import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Deck;
 import domain.state.State;
@@ -47,11 +46,7 @@ public abstract class Player {
     public Cards openedCards() {
         return cards().openedCards();
     }
-
-    private Card findNotOpenedCard() {
-        return cards().findNotOpenedCard();
-    }
-
+    
     public Cards cards() {
         return state.cards();
     }
@@ -72,11 +67,11 @@ public abstract class Player {
         if (!(object instanceof Player player)) {
             return false;
         }
-        return Objects.equals(name, player.name) && Objects.equals(state, player.state);
+        return Objects.equals(name, player.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, state);
+        return Objects.hash(name);
     }
 }
