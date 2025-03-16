@@ -1,6 +1,5 @@
 package view;
 
-import domain.GameStatus;
 import domain.card.Card;
 import domain.dto.GameResultDto;
 import domain.dto.ParticipantCardsDto;
@@ -57,12 +56,12 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    public static  void printFinalGameResult(GameResultDto dealerGameResultDto, List<GameResultDto> playerGameResultDtos) {
+    public static void printFinalGameResult(GameResultDto dealerGameResultDto, List<GameResultDto> playerGameResultDtos) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(GAME_RESULT_HEADER).append(System.lineSeparator());
-        stringBuilder.append(formatDealerGameResult(dealerGameResultDto)).append(System.lineSeparator());
+        stringBuilder.append(formatParticipantGameResult(dealerGameResultDto)).append(System.lineSeparator());
         for (GameResultDto playerGameResultDto : playerGameResultDtos) {
-            stringBuilder.append(formatPlayerGameResult(playerGameResultDto)).append(System.lineSeparator());
+            stringBuilder.append(formatParticipantGameResult(playerGameResultDto)).append(System.lineSeparator());
         }
         System.out.println(stringBuilder);
     }
@@ -86,9 +85,9 @@ public class OutputView {
 
     private static String formatDealerExtraCard(ParticipantCardsDto dealerCardsDto, boolean dealerExtraCard) {
         if (dealerExtraCard) {
-            return java.lang.String.format(DEALER_EXTRA_CARD_TRUE_FORMAT, dealerCardsDto.name());
+            return String.format(DEALER_EXTRA_CARD_TRUE_FORMAT, dealerCardsDto.name());
         }
-        return java.lang.String.format(DEALER_EXTRA_CARD_FALSE_FORMAT, dealerCardsDto.name());
+        return String.format(DEALER_EXTRA_CARD_FALSE_FORMAT, dealerCardsDto.name());
     }
 
     public static String formatFinalParticipantCards(ParticipantCardsDto participantCardsDto) {
@@ -98,34 +97,12 @@ public class OutputView {
         return stringBuilder.toString();
     }
 
-    private static String formatDealerGameResult(GameResultDto gameResultDto) {
+    private static String formatParticipantGameResult(GameResultDto gameResultDto) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(gameResultDto.name()).append(": ");
-        for (GameStatus gameStatus : GameStatus.values()) {
-            int count = gameResultDto.gameResults().get(gameStatus);
-            if (count == 0) {
-                continue;
-            }
-            stringBuilder.append(formatGameResult(gameStatus, count));
-        }
+        stringBuilder.append(gameResultDto.name())
+                .append(": ")
+                .append(gameResultDto.gameProfit());
         return stringBuilder.toString();
-    }
-
-    private static String formatPlayerGameResult(GameResultDto gameResultDto) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(gameResultDto.name()).append(": ");
-        for (GameStatus gameStatus : GameStatus.values()) {
-            int count = gameResultDto.gameResults().get(gameStatus);
-            if (count == 0) {
-                continue;
-            }
-            stringBuilder.append(gameStatus.getName());
-        }
-        return stringBuilder.toString();
-    }
-
-    private static String formatGameResult(GameStatus gameStatus, int count) {
-        return String.format(DEALER_GAME_RESULT_FORMAT, count, gameStatus.getName());
     }
 
     private static String formatParticipantName(ParticipantCardsDto participantCardsDto) {

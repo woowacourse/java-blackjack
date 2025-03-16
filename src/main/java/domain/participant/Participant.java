@@ -1,7 +1,6 @@
 package domain.participant;
 
 import domain.Cards;
-import domain.GameStatus;
 import domain.card.Card;
 import java.util.List;
 
@@ -23,8 +22,12 @@ public abstract class Participant {
         cards.addCard(card);
     }
 
-    public GameStatus determineGameStatus(Participant participant) {
-        return cards.determineGameStatus(participant.cards);
+    public boolean isBlackjack() {
+        return cards.isBlackjack();
+    }
+
+    public boolean isBust() {
+        return cards.isBust();
     }
 
     public String getName() {

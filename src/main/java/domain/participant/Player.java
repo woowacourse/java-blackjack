@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.GameStatus;
 import domain.card.Card;
 import java.util.List;
 
@@ -9,6 +10,10 @@ public class Player extends Participant {
 
     protected Player(String name) {
         super(name);
+    }
+
+    public GameStatus determineGameStatusByScore(Participant participant) {
+        return cards.determineGameStatusByScore(participant.cards);
     }
 
     @Override

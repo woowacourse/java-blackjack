@@ -41,12 +41,6 @@ public class ParticipantFactory {
         return cardsOfRanks;
     }
 
-    public static List<Card> createCardListOfRanks(List<Rank> ranks) {
-        return ranks.stream()
-                .map(rank -> new Card(rank, Suit.DIAMOND))
-                .toList();
-    }
-
     public static List<Rank> createRanks(String rankNames) {
         return Arrays.stream(rankNames.split(","))
                 .map(Rank::valueOf)

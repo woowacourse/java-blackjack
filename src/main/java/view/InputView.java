@@ -8,17 +8,26 @@ import java.util.Scanner;
 
 public class InputView {
 
+    private static final String PLAYER_BETTING_MONEY_FORMAT = "%s의 배팅 금액은?";
     private static final String ADD_PLAYER_CARD_FORMAT = "%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)";
     private static final String YES_OR_NO_FORMAT = "%s 또는 %s만 입력해주세요.";
     private static final String YES_KEY = "y";
     private static final String NO_KEY = "n";
-    private static final String PLAYER_NAMES_DELIMITER  =",";
+    private static final String PLAYER_NAMES_DELIMITER = ",";
 
     private static final Scanner scanner = new Scanner(System.in);
 
     public static List<String> readPlayerNames() {
         String response = prompt("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         return validateAndParsePlayerNames(response);
+    }
+
+    public static int readPlayerBettingMoney(String name) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(System.lineSeparator())
+                .append(String.format(PLAYER_BETTING_MONEY_FORMAT, name));
+        String response = prompt(stringBuilder.toString());
+        return validateAndParsePlayerBettingMoney(response);
     }
 
     public static boolean readAddPlayerCard(String name) {
@@ -39,6 +48,16 @@ public class InputView {
         validatePlayerNamesBlank(playerNames);
         validatePlayerNamesSize(playerNames);
         return playerNames;
+    }
+
+    private static int validateAndParsePlayerBettingMoney(String response) {
+        try {
+            int money = Integer.parseInt(response);
+            validateBettingMoneyRange(money);
+            return money;
+        } catch (NumberFormatException e) {
+            throw new ErrorException("배팅 금액은 숫자여야 합니다.");
+        }
     }
 
     private static void validatePlayerNamesBlank(List<String> playerNames) {
@@ -62,6 +81,12 @@ public class InputView {
     private static void validateYesOrNo(String response) {
         if (!response.equals(YES_KEY) && !response.equals(NO_KEY)) {
             throw new ErrorException(String.format(YES_OR_NO_FORMAT, YES_KEY, NO_KEY));
+        }
+    }
+
+    private static void validateBettingMoneyRange(int money) {
+        if (money < 0) {
+            throw new ErrorException("배팅 금액은 0 이상의 금액을 입력해야 합니다.");
         }
     }
 }
