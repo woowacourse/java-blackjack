@@ -8,6 +8,7 @@ import static domain.card.Shape.HEART;
 import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import config.CardDeckFactory;
 import domain.card.Card;
@@ -74,6 +75,21 @@ public class PlayersTest {
 
         //when-then
         assertDoesNotThrow(() -> players.draw(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck, deck));
+    }
+
+    @Test
+    @DisplayName("플레이어 결과 산출 테스트")
+    void calculatePlayerProfitTest() {
+        //given
+        Players players = Players.from(Map.of(new Name("pobi"), new Money(10000)));
+        Deck deck = new Deck(List.of(new Card(DIAMOND, QUEEN), new Card(SPADE, JACK), new Card(HEART, KING)));
+        Player player = players.getPlayers().getFirst();
+        player.addCard(deck.hitCard());
+        //when
+        Map<Player, Integer> playerProfit = players.calculatePlayerProfit(9);
+
+        //then
+        assertEquals(10000, playerProfit.get(player));
     }
 
 }
