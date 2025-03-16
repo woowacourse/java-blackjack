@@ -2,7 +2,6 @@ package domain.card;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class Card extends TrumpCard {
 
@@ -39,21 +38,5 @@ public class Card extends TrumpCard {
 
     public List<Integer> scores() {
         return RANK_TO_SCORES.get(rank);
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) {
-            return true;
-        }
-        if (!(object instanceof Card card)) {
-            return false;
-        }
-        return isOpened == card.isOpened && Objects.equals(RANK_TO_SCORES, card.RANK_TO_SCORES);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(RANK_TO_SCORES, isOpened);
     }
 }
