@@ -7,12 +7,13 @@ public class Names {
 
     private final List<Name> names;
 
-    public Names(final List<String> names) {
-        validatePlayerNumbers(names);
-        validateIsDuplicate(names);
-        this.names = names.stream()
+    public Names(final List<String> playerNames) {
+        List<Name> names = playerNames.stream()
                 .map(Name::new)
                 .toList();
+        validatePlayerNumbers(playerNames);
+        validateIsDuplicate(playerNames);
+        this.names = names;
     }
 
     private void validatePlayerNumbers(final List<String> names) {
