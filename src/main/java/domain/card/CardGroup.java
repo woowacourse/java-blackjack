@@ -11,10 +11,6 @@ public class CardGroup {
 
     private final List<Card> cards;
 
-    public CardGroup() {
-        cards = new ArrayList<>();
-    }
-
     public CardGroup(final List<Card> cards) {
         this.cards = new ArrayList<>(cards);
     }

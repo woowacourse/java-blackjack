@@ -60,6 +60,7 @@ public class GameManager {
     public boolean canPlayerReceiveCard(final String playerName) {
         return playerGroup.canPlayerReceiveCard(playerName);
     }
+
     public Map<String, Double> calculatePlayerBettingAmountOfReturn() {
         return playerGroup.calculatePlayersGameResult(dealer)
                 .entrySet()

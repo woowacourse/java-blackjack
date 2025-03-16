@@ -3,6 +3,7 @@ package domain.gamer;
 import domain.GameResult;
 import domain.card.Card;
 import domain.card.CardGroup;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ public class PlayerGroup {
     public static PlayerGroup of(final List<String> playerNames) {
         validateDuplicate(playerNames);
         final List<Player> players = playerNames.stream()
-                .map(playerName -> new Player(playerName, new CardGroup()))
+                .map(playerName -> new Player(playerName, new CardGroup(new ArrayList<>())))
                 .toList();
         return new PlayerGroup(players);
     }

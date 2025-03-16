@@ -7,6 +7,7 @@ import domain.card.CardGroup;
 import domain.card.CardScore;
 import domain.card.CardType;
 import domain.gamer.Dealer;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,7 @@ public class DealerTest {
         final Map<String, GameResult> playerResults = Map.of("윌슨", GameResult.DRAW, "가이온", GameResult.WIN);
 
         //when
-        final Dealer dealer = new Dealer(new CardGroup());
+        final Dealer dealer = new Dealer(new CardGroup(new ArrayList<>()));
         final Map<GameResult, Integer> result = dealer.calculateDealerGameResult(playerResults);
 
         //then

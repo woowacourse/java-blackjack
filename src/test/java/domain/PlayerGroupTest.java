@@ -8,6 +8,7 @@ import domain.card.CardScore;
 import domain.card.CardType;
 import domain.gamer.Dealer;
 import domain.gamer.PlayerGroup;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,7 @@ public class PlayerGroupTest {
     void 플레이어가_버스트_하지_않고_딜러보다_점수가_높아야_승리() {
         //given
         final List<String> playerNames = List.of("윌슨", "가이온");
-        final Dealer dealer = new Dealer(new CardGroup());
+        final Dealer dealer = new Dealer(new CardGroup(new ArrayList<>()));
 
         //when
         final PlayerGroup playerGroup = PlayerGroup.of(playerNames);
@@ -38,7 +39,7 @@ public class PlayerGroupTest {
     void 딜러와_플레이어의_점수가_같은_경우_무승부() {
         //given
         final List<String> playerNames = List.of("윌슨", "가이온");
-        final Dealer dealer = new Dealer(new CardGroup());
+        final Dealer dealer = new Dealer(new CardGroup(new ArrayList<>()));
 
         //when
         final PlayerGroup playerGroup = PlayerGroup.of(playerNames);
@@ -54,7 +55,7 @@ public class PlayerGroupTest {
     void 플레이어가_버스트_라면_플레이어_패배() {
         //given
         final List<String> playerNames = List.of("윌슨");
-        final Dealer dealer = new Dealer(new CardGroup());
+        final Dealer dealer = new Dealer(new CardGroup(new ArrayList<>()));
 
         //when
         final PlayerGroup playerGroup = PlayerGroup.of(playerNames);
