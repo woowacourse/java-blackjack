@@ -8,7 +8,7 @@ class CardTest {
 
     @DisplayName("카드를 생성한다.")
     @Test
-    void test() {
+    void createCard() {
         // given
         final Shape shape = Shape.DIAMOND;
         final CardScore cardScore = CardScore.A;
