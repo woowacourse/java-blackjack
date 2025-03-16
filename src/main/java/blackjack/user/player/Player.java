@@ -24,11 +24,11 @@ public class Player {
         return new Player(playerName, cardHand, betAmount);
     }
 
-    public void addCards(List<Card> cards) {
+    public void addCards(final List<Card> cards) {
         cardHand.addCards(cards);
     }
 
-    public void updateAmount(BetAmount betAmount) {
+    public void updateAmount(final BetAmount betAmount) {
         this.betAmount = betAmount;
     }
 

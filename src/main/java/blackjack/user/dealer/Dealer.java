@@ -29,41 +29,43 @@ public class Dealer {
         return new Dealer(cardDeck, cardHand);
     }
 
-    public List<Card> pickCards(int count) {
+    public void addCards(final int count) {
+        List<Card> cards = pickCards(count);
+        cardHand.addCards(cards);
+    }
+
+    public List<Card> pickCards(final int count) {
         return Stream.generate(cardDeck::pickRandomCard)
             .limit(count)
             .collect(Collectors.toList());
-    }
-
-    public void addCards(int count) {
-        List<Card> cards = pickCards(count);
-        cardHand.addCards(cards);
     }
 
     public List<Card> openInitialCards() {
         return cardHand.openInitialCards(DEALER_OPEN_INITIAL_CARD_COUNT);
     }
 
-    public GameResult judgePlayerResult(final Player player) {
-        CardHand playerCards = player.getCardHand();
-        if (playerCards.isBust()) {
+    public int calculateProfitForPlayer(final Player player) {
+        GameResult playerGameResult = judgePlayerResult(player.getCardHand());
+        return calculateProfit(playerGameResult, player.getCardHand().isBlackjack(),
+            player.getBetAmount().getPrincipal());
+    }
+
+    private GameResult judgePlayerResult(final CardHand playerHand) {
+        if (playerHand.isBust()) {
             return GameResult.LOSE;
         }
-        if (playerCards.isBlackjack() && this.cardHand.isBlackjack()) {
+        if (playerHand.isBlackjack() && this.cardHand.isBlackjack()) {
             return GameResult.DRAW;
         }
-        if (playerCards.isBlackjack() || this.cardHand.isBust()) {
+        if (playerHand.isBlackjack() || this.cardHand.isBust()) {
             return GameResult.WIN;
         }
-        return GameResult.fromDenominationsSum(this, player);
+        return GameResult.fromDenominationsSum(this.getCardHand().calculateDenominations(),
+            playerHand.calculateDenominations());
     }
 
-    public int calculateProfitForPlayer(final Player player) {
-        GameResult playerGameResult = judgePlayerResult(player);
-        return calculateProfit(playerGameResult, player.getCardHand().isBlackjack(), player.getBetAmount().getPrincipal());
-    }
-
-    private int calculateProfit(final GameResult gameResult, final boolean isBlackjack, final int principal) {
+    private int calculateProfit(final GameResult gameResult, final boolean isBlackjack,
+        final int principal) {
         if (gameResult.isWin() && isBlackjack) {
             return (int) (principal * BLACKJACK_PROFIT_RATE);
         }

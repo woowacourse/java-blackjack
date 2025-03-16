@@ -11,7 +11,7 @@ public class GameView {
     private final InputView inputView;
     private final OutputView outputView;
 
-    public GameView(InputView inputView, OutputView outputView) {
+    public GameView(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
@@ -69,7 +69,7 @@ public class GameView {
         try {
             action.run();
         } catch (IllegalArgumentException e) {
-            inputView.printErrorMessage(e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 

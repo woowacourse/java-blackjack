@@ -1,35 +1,30 @@
 package blackjack.game;
 
-import blackjack.user.dealer.Dealer;
-import blackjack.user.player.Player;
 import java.util.Arrays;
 
 public enum GameResult {
     WIN {
         @Override
-        public boolean matches(int dealerSum, int playerSum) {
+        public boolean matches(final int dealerSum, final int playerSum) {
             return playerSum > dealerSum;
         }
     },
     DRAW {
         @Override
-        public boolean matches(int dealerSum, int playerSum) {
+        public boolean matches(final int dealerSum, final int playerSum) {
             return playerSum == dealerSum;
         }
     },
     LOSE {
         @Override
-        public boolean matches(int dealerSum, int playerSum) {
+        public boolean matches(final int dealerSum, final int playerSum) {
             return playerSum < dealerSum;
         }
     };
 
-    public abstract boolean matches(int dealerSum, int playerSum);
+    public abstract boolean matches(final int dealerSum, final int playerSum);
 
-    public static GameResult fromDenominationsSum(Dealer dealer, Player player) {
-        int dealerSum = dealer.getCardHand().calculateDenominations();
-        int playerSum = player.getCardHand().calculateDenominations();
-
+    public static GameResult fromDenominationsSum(final int dealerSum, final int playerSum) {
         return Arrays.stream(values())
             .filter(result -> result.matches(dealerSum, playerSum))
             .findFirst()

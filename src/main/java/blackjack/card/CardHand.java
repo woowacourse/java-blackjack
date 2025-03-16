@@ -17,7 +17,7 @@ public class CardHand {
         this.additionThreshold = additionThreshold;
     }
 
-    public void addCards(List<Card> cards) {
+    public void addCards(final List<Card> cards) {
         if (isImpossibleToAdd()) {
             throw new IllegalArgumentException("더 이상 카드를 추가할 수 없습니다.");
         }
@@ -55,7 +55,7 @@ public class CardHand {
         return Collections.unmodifiableList(cards);
     }
 
-    public List<Card> openInitialCards(int count) {
+    public List<Card> openInitialCards(final int count) {
         return cards.subList(0, Math.min(count, cards.size()));
     }
 

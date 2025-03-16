@@ -39,30 +39,30 @@ public class Players {
         }
     }
 
-    public void addPickedCards(Dealer dealer, int count) {
-        for(Player player : joinedPlayers) {
+    public void addPickedCards(final Dealer dealer, final int count) {
+        for (Player player : joinedPlayers) {
             List<Card> cards = dealer.pickCards(count);
             player.addCards(cards);
         }
     }
 
-    public void addExtraCardToPlayer(Dealer dealer, PlayerName name, int count) {
+    public void addExtraCardToPlayer(final Dealer dealer, final PlayerName name, final int count) {
         Player player = findPlayerByName(name);
         List<Card> cards = dealer.pickCards(count);
 
         player.addCards(cards);
     }
 
-    private Player findPlayerByName(PlayerName name) {
+    private Player findPlayerByName(final PlayerName name) {
         return joinedPlayers.stream()
             .filter(player -> player.getName().equals(name))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("플레이어를 찾을 수 없습니다."));
     }
 
-    public int calculatePlayersProfit(Dealer dealer) {
+    public int calculatePlayersProfit(final Dealer dealer) {
         int totalProfit = 0;
-        for(Player player : joinedPlayers) {
+        for (Player player : joinedPlayers) {
             int profit = dealer.calculateProfitForPlayer(player);
 
             totalProfit += profit;

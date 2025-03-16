@@ -4,6 +4,7 @@ import blackjack.card.CardDeck;
 import blackjack.user.dealer.Dealer;
 import blackjack.user.player.Players;
 import blackjack.user.player.PlayerName;
+import java.util.Collections;
 import java.util.List;
 
 public class BlackjackGame {
@@ -51,6 +52,6 @@ public class BlackjackGame {
     }
 
     public List<PlayerName> getPlayerNames() {
-        return players.getPlayerNames();
+        return Collections.unmodifiableList(players.getPlayerNames());
     }
 }

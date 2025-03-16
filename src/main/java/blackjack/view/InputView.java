@@ -51,10 +51,6 @@ public class InputView {
         }
     }
 
-    public void printErrorMessage(String message) {
-        System.out.println(message);
-    }
-
     private List<String> parseStringToList(final String input) {
         return Arrays.asList(input.split(","));
     }
@@ -71,6 +67,10 @@ public class InputView {
         if (input.isBlank()) {
             throw new IllegalArgumentException("입력값이 없습니다.");
         }
+    }
+
+    private void printErrorMessage(final String message) {
+        System.out.println(message);
     }
 
     enum YorN {

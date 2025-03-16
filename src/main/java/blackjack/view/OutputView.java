@@ -14,7 +14,7 @@ public class OutputView {
         System.out.println("게임에 참여할 사람의 이름을 영어/한글로 입력하세요. 최대 25명 참가 가능합니다.(쉼표 기준으로 분리)");
     }
 
-    public void printBettingAmountQuestion(PlayerName name) {
+    public void printBettingAmountQuestion(final PlayerName name) {
         System.out.printf("%s의 배팅 금액은?(1만원에서 1,000만원까지 배팅 가능합니다.)%n", name.getText());
     }
 
@@ -77,8 +77,8 @@ public class OutputView {
 
     public void printPlayerProfitResult(final Players players) {
         players.getJoinedPlayers().forEach(player ->
-                System.out.printf("%s: %,d%n",
-                    player.getName().getText(), player.getBetAmount().getProfit()));
+            System.out.printf("%s: %,d%n",
+                player.getName().getText(), player.getBetAmount().getProfit()));
     }
 
     private String parseCardToString(final List<Card> cards) {
