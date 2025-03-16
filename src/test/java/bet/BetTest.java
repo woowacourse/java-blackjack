@@ -11,7 +11,7 @@ class BetTest {
     @ParameterizedTest
     @ValueSource(ints = {0, -1000, 100_001_000})
     void 베팅_금액이_0_또는_음수이거나_1억원보다_큰_경우_예외가_발생한다(int value) {
-        Assertions.assertThatThrownBy(() -> new Bet(value))
+        Assertions.assertThatThrownBy(() -> Bet.createInitialBet(value))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -20,7 +20,7 @@ class BetTest {
         final int amount = 10000;
 
         Assertions.assertThatNoException()
-                .isThrownBy(() -> new Bet(amount));
+                .isThrownBy(() -> Bet.createInitialBet(amount));
     }
 
     @Test
@@ -28,8 +28,8 @@ class BetTest {
         final int amount = 10000;
         final int expected = 10000;
 
-        Bet bet = new Bet(amount);
-        bet.calculateBettingResult(MatchResult.WIN);
+        Bet bet = Bet.createInitialBet(amount);
+        bet = bet.calculateBettingResult(MatchResult.WIN);
 
         Assertions.assertThat(bet.getAmount())
                 .isEqualTo(expected);
@@ -40,8 +40,8 @@ class BetTest {
         final int amount = 10000;
         final int expected = 15000;
 
-        Bet bet = new Bet(amount);
-        bet.calculateBettingResult(MatchResult.WIN_WITH_BLACKJACK);
+        Bet bet = Bet.createInitialBet(amount);
+        bet = bet.calculateBettingResult(MatchResult.WIN_WITH_BLACKJACK);
 
         Assertions.assertThat(bet.getAmount())
                 .isEqualTo(expected);
@@ -52,8 +52,8 @@ class BetTest {
         final int amount = 10000;
         final int expected = 0;
 
-        Bet bet = new Bet(amount);
-        bet.calculateBettingResult(MatchResult.DRAW);
+        Bet bet = Bet.createInitialBet(amount);
+        bet = bet.calculateBettingResult(MatchResult.DRAW);
 
         Assertions.assertThat(bet.getAmount())
                 .isEqualTo(expected);
@@ -64,8 +64,8 @@ class BetTest {
         final int amount = 10000;
         final int expected = -10000;
 
-        Bet bet = new Bet(amount);
-        bet.calculateBettingResult(MatchResult.LOSE);
+        Bet bet = Bet.createInitialBet(amount);
+        bet = bet.calculateBettingResult(MatchResult.LOSE);
 
         Assertions.assertThat(bet.getAmount())
                 .isEqualTo(expected);

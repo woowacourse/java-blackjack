@@ -13,11 +13,11 @@ public class BetManager {
     }
 
     public void addBet(Player player, int amount) {
-        wager.put(player, new Bet(amount));
+        wager.put(player, Bet.createInitialBet(amount));
     }
 
     public void calculateBettingResult(Map<Player, MatchResult> matchResults) {
-        wager.forEach((key, value) -> value.calculateBettingResult(matchResults.get(key)));
+        wager.forEach((key, value) -> wager.put(key, value.calculateBettingResult(matchResults.get(key))));
     }
 
     public Bet getBet(Player player) {
