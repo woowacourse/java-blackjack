@@ -1,12 +1,15 @@
 package view;
 
-import model.VictoryResultDto;
 import model.card.Card;
 import model.card.Rank;
 import model.card.Suit;
-import model.participant.*;
+import model.participant.Dealer;
+import model.participant.Participant;
+import model.participant.Player;
+import model.participant.Players;
 import model.score.MatchResult;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -78,22 +81,6 @@ public class OutputView {
         System.out.printf("%s - 결과: %d%n", formatHands(participant), participant.getScore());
     }
 
-    public static void printResult(VictoryResultDto dto) {
-        String dealerNickname = "딜러"; // TODO: 딜러 닉네임 어떻게 가져율 것인지
-        String resultFormatByDealer = getResultFormatByDealer(dto.dealerMatchResult());
-
-        System.out.println();
-        System.out.println("## 최종 승패");
-        System.out.printf("%s: %s%n", dealerNickname, resultFormatByDealer);
-
-        for (Player player : dto.playersMatchResult().keySet()) {
-            String nickname = player.getNickname();
-            String resultFormatByPlayer = getResultFormatByPlayer(dto.playersMatchResult().get(player));
-            System.out.printf("%s: %s%n", nickname, resultFormatByPlayer);
-        }
-
-    }
-
     public static String getResultFormatByDealer(Map<MatchResult, Integer> matchResult) {
         StringBuilder result = new StringBuilder();
         for (MatchResult matchType : matchResult.keySet()) {
@@ -104,10 +91,6 @@ public class OutputView {
             }
         }
         return result.toString();
-    }
-
-    public static String getResultFormatByPlayer(MatchResult matchType) {
-        return MATCH_FORMAT.get(matchType.name());
     }
 
     public static String getCardFormat(Card card) {
@@ -136,5 +119,18 @@ public class OutputView {
 
     private static String formatHandsHeader(String nickname) {
         return String.format("%s카드", nickname);
+    }
+
+    public static void printBatingResult(HashMap<Player, Integer> playersBatingResult) {
+        System.out.println();
+        System.out.println("## 최종 수익");
+
+        int dealerEarnings = 0;
+        for (Player player : playersBatingResult.keySet()) {
+            int earnings = playersBatingResult.get(player);
+            dealerEarnings -= earnings;
+            System.out.println(player.getNickname() + ": " + earnings);
+        }
+        System.out.println("딜러: " + dealerEarnings);
     }
 }

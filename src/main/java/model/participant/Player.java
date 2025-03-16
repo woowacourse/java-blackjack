@@ -37,20 +37,44 @@ public class Player extends Participant {
         return Objects.hashCode(nickname);
     }
 
-    public MatchResult matchFrom(Dealer dealer) {
-        return MatchResult.fromCompare(compareToScore(dealer));
+    public int calculateEarnings(Dealer dealer) {
+        MatchResult result = compareToScore(dealer);
+
+        switch (result) {
+            case WIN:
+                return batingMoney.getValue();
+            case BLACKJACK:
+                return (int) (batingMoney.getValue() * 1.5);
+            case LOSE:
+            case BUST:
+                return -1 * batingMoney.getValue();
+            case PUSH:
+                return 0;
+            default:
+                throw new IllegalStateException("Unexpected result: " + result);
+        }
     }
 
     // TODO: DL: 승패 판단 compare 반환값: https://www.notion.so/DL-compare-1b6cfbb673e4804685c7f7f9f3ce9504?pvs=4
-    private int compareToScore(Dealer dealer) {
-        if (isBust()) {
-            return -1;
+    private MatchResult compareToScore(Dealer dealer) {
+        if (isBlackjack() && dealer.isBlackjack()) {
+            return MatchResult.PUSH;
         }
-
+        if (isBlackjack()) {
+            return MatchResult.BLACKJACK;
+        }
         if (dealer.isBust()) {
-            return 1;
+            return MatchResult.WIN;
         }
-
-        return this.getScore() - dealer.getScore();
+        if (isBust()) {
+            return MatchResult.BUST;
+        }
+        if (getScore() > dealer.getScore()) {
+            return MatchResult.WIN;
+        }
+        if (getScore() < dealer.getScore()) {
+            return MatchResult.LOSE;
+        }
+        return MatchResult.PUSH;
     }
 }

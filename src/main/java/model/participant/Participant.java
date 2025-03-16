@@ -38,7 +38,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        return getScore() == BLACK_JACK_SCORE;
+        return getHands().size() == 2 && getScore() == 21;
     }
 
     abstract public String getNickname();

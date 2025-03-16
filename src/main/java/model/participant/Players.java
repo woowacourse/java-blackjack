@@ -1,9 +1,11 @@
 package model.participant;
 
 import model.Money;
-import model.score.MatchResult;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Players {
 
@@ -47,21 +49,12 @@ public class Players {
                 .toList();
     }
 
-    public HashMap<Player, MatchResult> getMatchResult(Dealer dealer) {
-        HashMap<Player, MatchResult> matchResults = new HashMap<>();
+    public HashMap<Player, Integer> getMatchResult(Dealer dealer) {
+        HashMap<Player, Integer> batingResults = new HashMap<>();
         for (Player player : getPlayers()) {
-            MatchResult matchResult = player.matchFrom(dealer);
-            matchResults.put(player, matchResult);
+            int earnings = player.calculateEarnings(dealer);
+            batingResults.put(player, earnings);
         }
-        return matchResults;
-    }
-
-    public EnumMap<MatchResult, Integer> getMatchCount(Dealer dealer) {
-        EnumMap<MatchResult, Integer> matchCounts = new EnumMap<>(MatchResult.class);
-        for (Player player : getPlayers()) {
-            MatchResult matchResult = player.matchFrom(dealer);
-            matchCounts.put(matchResult, matchCounts.getOrDefault(matchResult, 0) + 1);
-        }
-        return matchCounts;
+        return batingResults;
     }
 }
