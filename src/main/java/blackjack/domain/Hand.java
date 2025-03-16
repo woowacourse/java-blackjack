@@ -11,7 +11,7 @@ import java.util.Set;
 
 public class Hand {
 
-    private static final int BLACKJACK_SUM = 21;
+    private static final int BLACKJACK_TWENTY_ONE = 21;
     private static final int BLACKJACK_CARD_SIZE = 2;
 
     private final List<Card> cards;
@@ -94,6 +94,6 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return cards.size() == BLACKJACK_CARD_SIZE && getBestCardValue() == BLACKJACK_SUM;
+        return cards.size() == BLACKJACK_CARD_SIZE && getBestCardValue() == BLACKJACK_TWENTY_ONE;
     }
 }
