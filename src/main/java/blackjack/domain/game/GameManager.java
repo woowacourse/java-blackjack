@@ -2,20 +2,17 @@ package blackjack.domain.game;
 
 import blackjack.domain.card.CardPack;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
-
-import java.util.List;
 
 public class GameManager {
 
     private final CardPack cardPack;
     private final Players players;
 
-    public GameManager(List<Gambler> gamblers) {
-        cardPack = new CardPack();
-        players = new Players(gamblers);
+    public GameManager(CardPack cardPack, Players players) {
+        this.cardPack = cardPack;
+        this.players = players;
     }
 
     public void dealInitCards() {

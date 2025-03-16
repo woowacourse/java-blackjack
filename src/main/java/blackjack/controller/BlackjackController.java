@@ -1,5 +1,7 @@
 package blackjack.controller;
 
+import blackjack.domain.card.CardPack;
+import blackjack.domain.card.Cards;
 import blackjack.domain.game.GameManager;
 import blackjack.domain.player.BetAmount;
 import blackjack.domain.player.Dealer;
@@ -27,7 +29,8 @@ public class BlackjackController {
     public void start() {
         List<String> gamblerNames = inputView.readPlayerNames();
         List<Gambler> gamblers = getGamblers(gamblerNames);
-        GameManager gameManager = new GameManager(gamblers);
+        Dealer dealer = new Dealer(new Cards());
+        GameManager gameManager = new GameManager(CardPack.createShuffled(), new Players(dealer, gamblers));
         initPlayers(gameManager);
         dealMoreCards(gameManager);
         dealMoreDealerCards(gameManager);
@@ -38,7 +41,7 @@ public class BlackjackController {
         Map<PlayerName, BetAmount> gamblersBetAmount = getGamblersBetAmount(gamblerNames);
         List<Gambler> gamblers = new ArrayList<>();
         for (Map.Entry<PlayerName, BetAmount> entry : gamblersBetAmount.entrySet()) {
-            gamblers.add(new Gambler(entry.getKey(), entry.getValue()));
+            gamblers.add(new Gambler(entry.getKey(), entry.getValue(), new Cards()));
         }
         return gamblers;
     }

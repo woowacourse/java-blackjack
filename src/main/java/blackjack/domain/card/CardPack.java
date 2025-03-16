@@ -11,16 +11,8 @@ public class CardPack {
 
     private final List<Card> cards;
 
-    public CardPack() {
-        this.cards = initCards();
-        Collections.shuffle(this.cards);
-    }
-
-    private List<Card> initCards() {
-        return Arrays.stream(CardShape.values())
-                .flatMap(shape -> Arrays.stream(CardNumber.values())
-                        .map(number -> new Card(number, shape)))
-                .collect(Collectors.toList());
+    private CardPack(List<Card> cards) {
+        this.cards = cards;
     }
 
     public List<Card> getDealCards(int count) {
@@ -28,5 +20,18 @@ public class CardPack {
         IntStream.range(0, count).forEach(i ->
                 dealCards.add(cards.removeLast()));
         return Collections.unmodifiableList(dealCards);
+    }
+
+    public static CardPack createShuffled() {
+        List<Card> shuffledCards = createCards();
+        Collections.shuffle(shuffledCards);
+        return new CardPack(shuffledCards);
+    }
+
+    private static List<Card> createCards() {
+        return Arrays.stream(CardShape.values())
+                .flatMap(shape -> Arrays.stream(CardNumber.values())
+                        .map(number -> new Card(number, shape)))
+                .collect(Collectors.toList());
     }
 }

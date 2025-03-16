@@ -16,8 +16,8 @@ public class Players {
 
     private static final int PLAYERS_INIT_CARD_COUNT = 2;
 
-    public Players(List<Gambler> gamblers) {
-        this.dealer = new Dealer();
+    public Players(Dealer dealer, List<Gambler> gamblers) {
+        this.dealer = dealer;
         validateHasDuplication(gamblers);
         this.gamblers = new ArrayList<>(gamblers);
     }

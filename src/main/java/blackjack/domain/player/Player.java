@@ -12,14 +12,9 @@ public abstract class Player {
     private final PlayerName playerName;
     private final Cards cards;
 
-    public Player(final String name) {
-        this.playerName = new PlayerName(name);
-        cards = new Cards();
-    }
-
-    public Player(PlayerName playerName) {
+    public Player(PlayerName playerName, Cards cards) {
         this.playerName = playerName;
-        cards = new Cards();
+        this.cards = cards;
     }
 
     public void pushDealCards(final List<Card> cards) {
