@@ -1,4 +1,4 @@
-package domain.constant;
+package blackjack.constant;
 
 public enum TrumpSuit {
     SPADE("스페이드"),

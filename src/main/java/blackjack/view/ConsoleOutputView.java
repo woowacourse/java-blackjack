@@ -1,10 +1,10 @@
-package view;
+package blackjack.view;
 
-import domain.card.Card;
-import domain.gambler.Dealer;
-import domain.gambler.Player;
-import domain.gambler.Players;
-import domain.constant.MatchResult;
+import blackjack.card.Card;
+import blackjack.gambler.Dealer;
+import blackjack.gambler.Player;
+import blackjack.gambler.Players;
+import blackjack.constant.MatchResult;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;

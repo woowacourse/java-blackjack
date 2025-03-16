@@ -1,7 +1,7 @@
-package domain.card;
+package blackjack.card;
 
-import domain.constant.TrumpSuit;
-import domain.constant.TrumpRank;
+import blackjack.constant.TrumpSuit;
+import blackjack.constant.TrumpRank;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;

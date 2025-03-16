@@ -1,7 +1,7 @@
-package domain.gambler;
+package blackjack.gambler;
 
-import domain.card.Card;
-import domain.card.Cards;
+import blackjack.card.Card;
+import blackjack.card.Cards;
 import java.util.List;
 
 public class Dealer extends Gambler {

@@ -1,9 +1,9 @@
-package view;
+package blackjack.view;
 
-import domain.constant.MatchResult;
-import domain.gambler.Dealer;
-import domain.gambler.Player;
-import domain.gambler.Players;
+import blackjack.constant.MatchResult;
+import blackjack.gambler.Dealer;
+import blackjack.gambler.Player;
+import blackjack.gambler.Players;
 import java.util.Map;
 
 public interface OutputView {

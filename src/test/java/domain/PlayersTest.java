@@ -2,14 +2,14 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.card.Card;
-import domain.card.Cards;
-import domain.constant.TrumpSuit;
-import domain.constant.TrumpRank;
-import domain.constant.MatchResult;
-import domain.gambler.Nickname;
-import domain.gambler.Player;
-import domain.gambler.Players;
+import blackjack.card.Card;
+import blackjack.card.Cards;
+import blackjack.constant.TrumpSuit;
+import blackjack.constant.TrumpRank;
+import blackjack.constant.MatchResult;
+import blackjack.gambler.Nickname;
+import blackjack.gambler.Player;
+import blackjack.gambler.Players;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;

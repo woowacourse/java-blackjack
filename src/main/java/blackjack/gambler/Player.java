@@ -1,8 +1,8 @@
-package domain.gambler;
+package blackjack.gambler;
 
-import domain.card.Card;
-import domain.card.Cards;
-import domain.constant.MatchResult;
+import blackjack.card.Card;
+import blackjack.card.Cards;
+import blackjack.constant.MatchResult;
 import java.util.List;
 
 public class Player extends Gambler {

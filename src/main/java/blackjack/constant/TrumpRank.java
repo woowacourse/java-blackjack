@@ -1,4 +1,4 @@
-package domain.constant;
+package blackjack.constant;
 
 public enum TrumpRank {
     ACE(11, "A"),

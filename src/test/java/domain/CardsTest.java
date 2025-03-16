@@ -2,10 +2,10 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.card.Card;
-import domain.card.Cards;
-import domain.constant.TrumpSuit;
-import domain.constant.TrumpRank;
+import blackjack.card.Card;
+import blackjack.card.Cards;
+import blackjack.constant.TrumpSuit;
+import blackjack.constant.TrumpRank;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;

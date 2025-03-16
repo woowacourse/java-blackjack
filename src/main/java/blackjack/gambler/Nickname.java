@@ -1,4 +1,4 @@
-package domain.gambler;
+package blackjack.gambler;
 
 public class Nickname {
 

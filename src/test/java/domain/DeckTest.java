@@ -2,9 +2,9 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.card.Card;
-import domain.card.Cards;
-import domain.card.Deck;
+import blackjack.card.Card;
+import blackjack.card.Cards;
+import blackjack.card.Deck;
 import org.junit.jupiter.api.Test;
 
 class DeckTest {

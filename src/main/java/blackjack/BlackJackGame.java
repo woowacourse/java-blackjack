@@ -1,22 +1,22 @@
 package controller;
 
-import domain.card.Deck;
-import domain.gambler.Dealer;
-import domain.gambler.Nickname;
-import domain.gambler.Player;
-import domain.gambler.Players;
+import blackjack.card.Deck;
+import blackjack.gambler.Dealer;
+import blackjack.gambler.Nickname;
+import blackjack.gambler.Player;
+import blackjack.gambler.Players;
 import java.util.List;
-import view.InputView;
-import view.OutputView;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
 
-public class BlackJackController {
+public class BlackJackGame {
 
     public static final String HIT_COMMAND = "y";
 
     private final InputView inputView;
     private final OutputView outputView;
 
-    public BlackJackController(InputView inputView, OutputView outputView) {
+    public BlackJackGame(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }

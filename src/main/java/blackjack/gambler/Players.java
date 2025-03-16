@@ -1,6 +1,6 @@
-package domain.gambler;
+package blackjack.gambler;
 
-import domain.constant.MatchResult;
+import blackjack.constant.MatchResult;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;

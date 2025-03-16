@@ -4,11 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import domain.card.Card;
-import domain.card.Cards;
-import domain.constant.TrumpSuit;
-import domain.constant.TrumpRank;
-import domain.gambler.Dealer;
+import blackjack.card.Card;
+import blackjack.card.Cards;
+import blackjack.constant.TrumpSuit;
+import blackjack.constant.TrumpRank;
+import blackjack.gambler.Dealer;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
