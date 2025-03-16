@@ -29,7 +29,7 @@ public class BlackjackBetManagerTest {
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new TestDeckGenerateStrategy(trumpCards));
 
-        BlackjackGame blackjackGame = new BlackjackGame(List.of("투다"), deck);
+        BlackjackGame blackjackGame = BlackjackGame.bettingBlackjackGame(deck, List.of("투다"), List.of(1000));
         BetManager betManager = new BetManager(blackjackGame);
         Map<String, Double> blackjackBettingResult = betManager.blackjackBettingResult();
         Double earnMoney = blackjackBettingResult.get("투다");

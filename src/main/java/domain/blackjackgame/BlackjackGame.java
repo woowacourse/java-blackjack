@@ -25,7 +25,11 @@ public class BlackjackGame {
         return new BlackjackGame(names, deck);
     }
 
-    public BlackjackGame(List<String> names, BlackjackDeck deck) {
+    public static BlackjackGame bettingBlackjackGame(BlackjackDeck deck, List<String> names, List<Integer> bets) {
+        return new BlackjackGame(names, deck, bets);
+    }
+
+    private BlackjackGame(List<String> names, BlackjackDeck deck) {
         validatePlayerSize(names.size());
         this.deck = deck;
         List<BlackjackParticipant> players = names.stream()
@@ -35,12 +39,14 @@ public class BlackjackGame {
         this.blackjackParticipantsManager = new BlackjackParticipantsManager(players, dealer);
     }
 
-    public BlackjackGame(List<String> names, BlackjackDeck deck, List<Integer> bets) {
+    private BlackjackGame(List<String> names, BlackjackDeck deck, List<Integer> bets) {
         validatePlayerSize(names.size());
         this.deck = deck;
-        List<BlackjackParticipant> players = names.stream()
-                .map(name -> new Player(name, drawFirstCards(deck)))
-                .collect(Collectors.toList());
+        List<BlackjackParticipant> players = new ArrayList<>();
+        for (int playerIdx = 0; playerIdx < names.size(); playerIdx++) {
+            players.add(new Player(names.get(playerIdx), drawFirstCards(deck), bets.get(playerIdx)));
+        }
+
         BlackjackParticipant dealer = new Dealer(drawFirstCards(deck));
         this.blackjackParticipantsManager = new BlackjackParticipantsManager(players, dealer);
     }
