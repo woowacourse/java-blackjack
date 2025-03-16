@@ -13,4 +13,8 @@ public class Deck {
     public Card hitCard() {
         return cards.removeFirst();
     }
+
+    public List<Card> getCards() {
+        return cards;
+    }
 }

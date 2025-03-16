@@ -146,4 +146,17 @@ public class PlayerTest {
 
         assertThat(player.calculateProfit(dealer.calculateSum())).isEqualTo(-10000);
     }
+
+    @Test
+    @DisplayName("수익률 계산 테스트 (무승부)")
+    void calculateDrawProfitTest() {
+        Player player = new Player(new Hand(List.of()), new Name("pobi"), new Money(10000));
+        Deck cardDeck = new Deck(List.of(new Card(DIAMOND, TWO), new Card(SPADE, TWO)));
+        Dealer dealer = new Dealer(new Hand(List.of()));
+
+        player.addCard(cardDeck.hitCard());
+        dealer.addCard(cardDeck.hitCard());
+
+        assertThat(player.calculateProfit(dealer.calculateSum())).isEqualTo(0);
+    }
 }
