@@ -1,6 +1,6 @@
 package game;
 
-import strategy.DeckSettingStrategy;
+import strategy.setting.DeckSettingStrategy;
 
 import java.util.ArrayList;
 import java.util.List;

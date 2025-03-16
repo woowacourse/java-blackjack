@@ -6,7 +6,7 @@ import game.Card;
 import game.Cards;
 import game.Deck;
 import org.junit.jupiter.api.Test;
-import strategy.DeckShuffleStrategy;
+import strategy.setting.DeckShuffleStrategy;
 
 import java.util.Arrays;
 import java.util.List;

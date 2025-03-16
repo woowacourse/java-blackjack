@@ -6,7 +6,7 @@ import io.ConsoleOutput;
 import participant.Dealer;
 import participant.Player;
 import participant.Players;
-import strategy.DeckShuffleStrategy;
+import strategy.setting.DeckShuffleStrategy;
 
 
 public class BlackJackGame {

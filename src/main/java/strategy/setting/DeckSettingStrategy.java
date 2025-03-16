@@ -1,4 +1,4 @@
-package strategy;
+package strategy.setting;
 
 import game.Cards;
 

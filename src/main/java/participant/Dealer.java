@@ -3,7 +3,7 @@ package participant;
 import game.Card;
 import game.Cards;
 import game.Deck;
-import strategy.DeckSettingStrategy;
+import strategy.setting.DeckSettingStrategy;
 
 import java.util.Comparator;
 import java.util.List;
