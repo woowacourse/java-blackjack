@@ -11,14 +11,18 @@ import domain.strategy.BlackjackDrawStrategy;
 import domain.strategy.DeckGenerator;
 import exception.BlackJackException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Supplier;
 import view.InputView;
 import view.OutputView;
 
 public class BlackjackController {
 
+    private static final String NAMES_CANNOT_BE_DUPLICATE = "이름은 중복될 수 없습니다";
+    
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -49,7 +53,15 @@ public class BlackjackController {
 
     private List<String> handleNames() {
         outputView.inputNames();
-        return inputView.inputNames();
+        List<String> names = inputView.inputNames();
+        validateDuplicateNames(names);
+    }
+
+    private void validateDuplicateNames(List<String> names) {
+        Set<String> duplicateNames = new HashSet<>(names);
+        if (names.size() != duplicateNames.size()) {
+            throw new BlackJackException(NAMES_CANNOT_BE_DUPLICATE);
+        }
     }
 
     private void startBlackjack(List<String> names, List<Integer> bets) {
