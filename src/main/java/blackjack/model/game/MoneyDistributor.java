@@ -4,7 +4,6 @@ import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static blackjack.model.game.ParticipantResult.LOSE;

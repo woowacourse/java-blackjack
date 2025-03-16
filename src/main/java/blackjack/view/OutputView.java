@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import blackjack.model.card.Card;
-import blackjack.model.game.ParticipantResult;
 import blackjack.model.game.ReceivedCards;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
@@ -9,9 +8,6 @@ import blackjack.model.player.Participants;
 import blackjack.model.player.Player;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import static blackjack.model.game.ParticipantResult.LOSE;
-import static blackjack.model.game.ParticipantResult.WIN;
 
 public class OutputView {
 
