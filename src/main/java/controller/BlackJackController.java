@@ -1,9 +1,10 @@
 package controller;
 
 import controller.dto.CardScoreDto;
-import domain.BlackJackGame;
 import domain.Dealer;
+import domain.Deck;
 import domain.GameResult;
+import domain.Money;
 import domain.Player;
 import domain.TrumpCard;
 import java.util.ArrayList;
@@ -17,64 +18,79 @@ public class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final BlackJackGame blackJackGame;
 
-    public BlackJackController(InputView inputView, OutputView outputView, BlackJackGame blackJackGame) {
+    public BlackJackController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.blackJackGame = blackJackGame;
     }
 
     public void run() {
-        List<Player> players = executeInitializeCards();
+        Deck deck = createDeck();
+        Dealer dealer = createDealer(deck);
+        List<Player> players = createPlayers(deck);
 
-        players.forEach(this::executePlayerHit);
-        executeDealerHit();
+        displayFirstTwoCards(players, dealer);
 
-        displayCardResult(players);
-        displayGameResult(players);
+        executePlayersHit(players);
+
+        executeDealerHit(dealer);
+
+        displayCardResult(players, dealer);
+
+        executeBetting(players, dealer);
+
+        displayGameResult(players, dealer);
     }
 
-    private List<Player> executeInitializeCards() {
-        List<Player> players = createPlayers();
-        Map<String, List<TrumpCard>> playerCards = convertPlayerCards(players);
-        TrumpCard dealerFirstCard = blackJackGame.getDealer().retrieveFirstCard();
+    private static Deck createDeck() {
+        return Deck.create();
+    }
 
+    private static Dealer createDealer(Deck deck) {
+        return Dealer.initiallizeDealer(deck);
+    }
+
+    private void displayFirstTwoCards(List<Player> players, Dealer dealer) {
+        Map<String, List<TrumpCard>> playerCards = createPlayerCards(players);
+        TrumpCard dealerFirstCard = dealer.retrieveFirstCard();
         outputView.printInitialCards(playerCards, dealerFirstCard);
-
-        return players;
     }
 
-    private List<Player> createPlayers() {
-        List<String> playerNames = inputView.readPlayerNames();
-        List<Player> players = new ArrayList<>();
-        playerNames.forEach(name -> {
-            players.add(new Player(name, blackJackGame.createStartingHands()));
-        });
-        return players;
-    }
-
-    private Map<String, List<TrumpCard>> convertPlayerCards(List<Player> players) {
+    private Map<String, List<TrumpCard>> createPlayerCards(List<Player> players) {
         return players.stream()
                 .collect(Collectors.toMap(Player::getName, player -> player.getHand().getCards()));
+    }
+
+    private List<Player> createPlayers(Deck deck) {
+        List<String> playerNames = inputView.readPlayerNames();
+        List<Player> players = new ArrayList<>();
+        Map<String, Integer> money = inputView.readPlayerBetting(playerNames);
+        money.forEach(
+                (playerName, playerMoney) -> players.add(Player.of(playerName, deck, Money.makeMoneyInt(playerMoney))));
+
+        return players;
+    }
+
+    private void executePlayersHit(List<Player> players) {
+        players.forEach(this::executePlayerHit);
     }
 
     private void executePlayerHit(Player player) {
         while (!player.isBust() &&
                 inputView.readProcessHit(player.getName())) {
-            blackJackGame.processPlayerHit(player);
+            player.addCard();
             outputView.printPlayerCards(player.getName(), player.getCards());
         }
     }
 
-    private void executeDealerHit() {
-        int dealerHitCount = blackJackGame.processDealerHit();
+    private void executeDealerHit(Dealer dealer) {
+        int dealerHitCount = dealer.processDealerHit();
         outputView.printDealerHitInfo(dealerHitCount);
     }
 
-    private void displayCardResult(List<Player> players) {
+    private void displayCardResult(List<Player> players, Dealer dealer) {
         Map<String, CardScoreDto> playerCardScoreDto = convertPlayerCardScoreDto(players);
-        CardScoreDto dealerCardScoreDto = convertDealerCardScoreDto(blackJackGame.getDealer());
+        CardScoreDto dealerCardScoreDto = convertDealerCardScoreDto(dealer);
         outputView.printCardsResult(playerCardScoreDto, dealerCardScoreDto);
     }
 
@@ -92,37 +108,20 @@ public class BlackJackController {
 
     private CardScoreDto convertDealerCardScoreDto(Dealer dealer) {
         List<TrumpCard> cards = dealer.getCards();
-        int totalScore = blackJackGame.calculateScore(dealer);
+        int totalScore = dealer.getTotalScore();
 
         return new CardScoreDto(cards, totalScore);
     }
 
-    private void displayGameResult(List<Player> players) {
-        Map<String, GameResult> playerGameResults = blackJackGame.calculateGameResults(players);
-        List<GameResult> dealerGameResult = createDealerGameResult(playerGameResults);
-        outputView.printGameResult(playerGameResults, dealerGameResult);
-    }
-
-    private List<GameResult> createDealerGameResult(Map<String, GameResult> playerGameResults) {
-        List<GameResult> dealerGameResults = new ArrayList<>();
-        playerGameResults.values().forEach(gameResult -> {
-            calculateDealerGameResult(gameResult, dealerGameResults);
+    private void executeBetting(List<Player> players, Dealer dealer) {
+        players.forEach(player -> {
+            GameResult gameResult = GameResult.from(player, dealer);
+            player.processBetting(gameResult.getRate());
+            dealer.processBetting(-player.getEarnMoney());
         });
-
-        return dealerGameResults;
     }
 
-    private static void calculateDealerGameResult(GameResult gameResult, List<GameResult> dealerGameResults) {
-        if (gameResult == GameResult.WIN) {
-            dealerGameResults.add(GameResult.LOSE);
-            return;
-        }
-
-        if (gameResult == GameResult.LOSE) {
-            dealerGameResults.add(GameResult.WIN);
-            return;
-        }
-
-        dealerGameResults.add(GameResult.DRAW);
+    private void displayGameResult(List<Player> players, Dealer dealer) {
+        outputView.printGameResult(dealer.getTotalMoney(), players);
     }
 }
