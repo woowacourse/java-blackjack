@@ -2,8 +2,8 @@ package blackjack.view;
 
 import blackjack.domain.card.Hand;
 import blackjack.domain.card.Shape;
-import blackjack.domain.participant.Gamer;
-import blackjack.domain.participant.Player;
+import blackjack.domain.participant.gamer.Gamer;
+import blackjack.domain.participant.gamer.Player;
 import blackjack.domain.result.ResultStatus;
 import java.util.List;
 import java.util.Map;

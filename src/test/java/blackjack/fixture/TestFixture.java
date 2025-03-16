@@ -6,7 +6,7 @@ import blackjack.domain.card.Hand;
 import blackjack.domain.card.Shape;
 import blackjack.domain.card.generator.DeckGenerator;
 import blackjack.domain.card.generator.ShuffleDeckGenerator;
-import blackjack.domain.participant.Player;
+import blackjack.domain.participant.gamer.Player;
 import blackjack.domain.participant.Players;
 import java.util.ArrayList;
 import java.util.Deque;

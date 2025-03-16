@@ -4,9 +4,9 @@ import static blackjack.fixture.TestFixture.provideEmptyCards;
 import static blackjack.fixture.TestFixture.providePlayer;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Gamer;
-import blackjack.domain.participant.Player;
+import blackjack.domain.participant.gamer.Dealer;
+import blackjack.domain.participant.gamer.Gamer;
+import blackjack.domain.participant.gamer.Player;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Assertions;

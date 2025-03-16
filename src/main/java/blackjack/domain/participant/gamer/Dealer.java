@@ -1,4 +1,4 @@
-package blackjack.domain.participant;
+package blackjack.domain.participant.gamer;
 
 import static blackjack.domain.card.Hand.BURST_THRESHOLD;
 import static blackjack.domain.result.ResultStatus.BLACKJACK;
