@@ -16,7 +16,7 @@ public enum GameResult {
         return determineResultAfterBustCheck(dealerScore, gamblerScore);
     }
 
-    private static GameResult determineResultAfterBustCheck(GameScore gamblerScore, GameScore dealerScore) {
+    private static GameResult determineResultAfterBustCheck(GameScore dealerScore, GameScore gamblerScore) {
         if (gamblerScore.isBust()) {
             return GameResult.LOSE;
         }
@@ -26,7 +26,7 @@ public enum GameResult {
         return checkIsBlackjack(gamblerScore, dealerScore);
     }
 
-    private static GameResult checkIsBlackjack(GameScore gamblerScore, GameScore dealerScore) {
+    private static GameResult checkIsBlackjack(GameScore dealerScore, GameScore gamblerScore) {
         if (gamblerScore.isBlackJack() && dealerScore.isBlackJack()) {
             return GameResult.DRAW;
         }
@@ -36,7 +36,7 @@ public enum GameResult {
         return compareScores(gamblerScore, dealerScore);
     }
 
-    private static GameResult compareScores(GameScore gamblerScore, GameScore dealerScore) {
+    private static GameResult compareScores(GameScore dealerScore, GameScore gamblerScore) {
         if (gamblerScore.isBiggerThan(dealerScore)) {
             return GameResult.WIN;
         }
