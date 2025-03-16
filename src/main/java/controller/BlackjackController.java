@@ -22,7 +22,7 @@ import view.OutputView;
 public class BlackjackController {
 
     private static final String NAMES_CANNOT_BE_DUPLICATE = "이름은 중복될 수 없습니다";
-    
+
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -102,6 +102,11 @@ public class BlackjackController {
         }
     }
 
+    private void openPlayerCards(String name, BlackjackGame blackjackGame) {
+        List<TrumpCard> cardHands = blackjackGame.playerCards(name);
+        openPlayerCard(cardHands, name);
+    }
+
     private void handleAskDraw(String name, BlackjackGame blackjackGame) {
         while (!blackjackGame.isBust(name) && handleAskDrawToUser(name)) {
             blackjackGame.drawCard(name);
@@ -114,11 +119,6 @@ public class BlackjackController {
             outputView.askDraw(name);
             return inputView.askDraw();
         });
-    }
-
-    private void openPlayerCards(String name, BlackjackGame blackjackGame) {
-        List<TrumpCard> cardHands = blackjackGame.playerCards(name);
-        openPlayerCard(cardHands, name);
     }
 
     private void dealerHit(BlackjackGame blackjackGame) {
