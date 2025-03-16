@@ -18,6 +18,11 @@ public class Player {
         this.bettingAmount = new BettingAmount(0);
     }
 
+    public Player(Nickname nickname, BettingAmount bettingAmount) {
+        this.gameUser = new GameUser(nickname);
+        this.bettingAmount = bettingAmount;
+    }
+
     public void addBettingAmount(BettingAmount bettingAmount) {
         this.bettingAmount = bettingAmount;
     }
