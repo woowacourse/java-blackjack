@@ -53,13 +53,19 @@ public class Gambler {
     }
 
     protected int adjustSumByAce(int sum, int aceCount) {
-        int differenceBetweenMaxAndMinValue = CardType.ACE.getValue() - MIN_ACE_VALUE;
-        sum -= differenceBetweenMaxAndMinValue * (aceCount - 1);
-
-        if (sum > ProfitCalculator.BLACK_JACK) {
-            sum -= differenceBetweenMaxAndMinValue;
+        int minSum = minSum(sum, aceCount);
+        if (minSum > ProfitCalculator.BLACK_JACK) {
+            return minSum - differenceBetweenMaxAndMinValue();
         }
-        return sum;
+        return minSum;
+    }
+
+    private int minSum(int sum, int aceCount) {
+        return sum - differenceBetweenMaxAndMinValue() * (aceCount - 1);
+    }
+
+    private int differenceBetweenMaxAndMinValue() {
+        return CardType.ACE.getValue() - MIN_ACE_VALUE;
     }
 
     public Name getName() {
