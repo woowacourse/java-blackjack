@@ -53,10 +53,10 @@ public class ProfitCalculator {
         if (dealerScore == BLACK_JACK) {
             return -bettingAmount;
         }
-        return judgeNormalCase(playerName, bettingAmount);
+        return judgeNonBlackJackCase(playerName, bettingAmount);
     }
 
-    private int judgeNormalCase(Name playerName, int bettingAmount) {
+    private int judgeNonBlackJackCase(Name playerName, int bettingAmount) {
         WinningType result = judgePlayerResult(playerName);
 
         if (result == WIN) {
@@ -69,19 +69,30 @@ public class ProfitCalculator {
     }
 
     private WinningType judgePlayerResult(final Name name) {
-        int playerScore = gamblerScores.get(name);
         int dealerScore = gamblerScores.get(Name.getDealerName());
 
-        if (playerScore > BLACK_JACK) {
+        if (hasBust(name)) {
+            return judgeBustCase(name);
+        }
+        return judgeNonBustCase(name, dealerScore);
+    }
+
+    private boolean hasBust(final Name name) {
+        return gamblerScores.get(Name.getDealerName()) > BLACK_JACK || gamblerScores.get(name) > BLACK_JACK;
+    }
+
+    private WinningType judgeBustCase(final Name name) {
+        if (gamblerScores.get(name) > BLACK_JACK) {
             return DEFEAT;
         }
-        if (dealerScore > BLACK_JACK) {
+        return WIN;
+    }
+
+    private WinningType judgeNonBustCase(final Name name, final int dealerScore) {
+        if (gamblerScores.get(name) > dealerScore) {
             return WIN;
         }
-        if (playerScore > dealerScore) {
-            return WIN;
-        }
-        if (playerScore < dealerScore) {
+        if (gamblerScores.get(name) < dealerScore) {
             return DEFEAT;
         }
         return DRAW;
