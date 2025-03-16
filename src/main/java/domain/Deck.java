@@ -40,8 +40,9 @@ public class Deck {
 
     public static Deck create() {
         List<TrumpCard> cards = initializeCards();
-
-        return new Deck(cards);
+        Deck deck = new Deck(cards);
+        deck.shuffle();
+        return deck;
     }
 
     private static List<TrumpCard> initializeCards() {
@@ -66,6 +67,10 @@ public class Deck {
         Collections.shuffle(cards);
     }
 
+    public List<TrumpCard> getCards() {
+        return cards;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {
@@ -80,3 +85,4 @@ public class Deck {
         return Objects.hashCode(cards);
     }
 }
+
