@@ -1,8 +1,13 @@
 package model.participant;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import card.*;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import participant.Dealer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -88,66 +93,51 @@ class DealerTest {
         assertThat(dealer.canHit()).isFalse();
     }
 
-   /* @ParameterizedTest
-    @MethodSource("createCards")
-    @DisplayName("딜러의 게임 결과가 제대로 생성되는지")
-    void dealerGameResult(List<Card> playerCards, List<Card> dealerCards,
-                          MatchResultType playerMatchResultType, MatchResultType dealerMatchResultType) {
-        Dealer dealer = new Dealer();
-        divideCard(dealerCards, dealer);
-
-        Players players = Players.from(List.of("hippo"));
-        Player player = players.getPlayers().getFirst();
-        divideCard(playerCards, player);
-
-        BlackJack blackJack = new BlackJack(players, dealer, deck);
-        Map<MatchResultType, Integer> dealerMatchResult = blackJack.calculateMatchResult();
-
-        assertAll(
-                () -> assertThat(player.getMatchType()).isEqualTo(playerMatchResultType),
-                () -> assertThat(dealerMatchResult.get(dealerMatchResultType)).isEqualTo(1)
+    @DisplayName("딜러가 블랙잭인 경우: true")
+    @Test
+    void isBlackJackTest() {
+        //given
+        List<Card> cards = List.of(
+                new Card(Suit.HEARTS, AceRank.SOFT_ACE),
+                new Card(Suit.CLUBS, NormalRank.KING)
         );
+
+        Dealer dealer = new Dealer();
+        divideCardToDealer(cards, dealer);
+
+        //when
+        //then
+        Assertions.assertThat(dealer.isBlackJack()).isTrue();
     }
 
-    private static Stream<Arguments> createCards() {
+    @DisplayName("딜러가 블랙잭이 아닌 경우: false")
+    @ParameterizedTest
+    @MethodSource("makeNoneBlackJackDeck")
+    void isNotBlackJackTest(List<Card> cards) {
+        //given
+        Dealer dealer = new Dealer();
+        divideCardToDealer(cards, dealer);
+
+        //when
+        //then
+        Assertions.assertThat(dealer.isBlackJack()).isFalse();
+    }
+
+    private static Stream<Arguments> makeNoneBlackJackDeck() {
         return Stream.of(
                 Arguments.arguments(
                         List.of(
+                                new Card(Suit.HEARTS, AceRank.HARD_ACE),
+                                new Card(Suit.CLUBS, NormalRank.KING)
+                        )
+                ),
+                Arguments.arguments(
+                        List.of(
                                 new Card(Suit.HEARTS, NormalRank.JACK),
-                                new Card(Suit.CLUBS, NormalRank.KING)
-                        ),
-                        List.of(
-                                new Card(Suit.HEARTS, NormalRank.TWO),
-                                new Card(Suit.CLUBS, NormalRank.KING)
-                        ),
-                        MatchResultType.WIN,
-                        MatchResultType.LOSE
-                ),
-                Arguments.arguments(
-                        List.of(
-                                new Card(Suit.HEARTS, NormalRank.THREE),
                                 new Card(Suit.CLUBS, NormalRank.FIVE)
-                        ),
-                        List.of(
-                                new Card(Suit.HEARTS, NormalRank.TWO),
-                                new Card(Suit.CLUBS, AceRank.SOFT_ACE)
-                        ),
-                        MatchResultType.LOSE,
-                        MatchResultType.WIN
-                ),
-                Arguments.arguments(
-                        List.of(
-                                new Card(Suit.HEARTS, NormalRank.THREE),
-                                new Card(Suit.CLUBS, NormalRank.TEN)
-                        ),
-                        List.of(
-                                new Card(Suit.HEARTS, NormalRank.TWO),
-                                new Card(Suit.CLUBS, AceRank.SOFT_ACE)
-                        ),
-                        MatchResultType.DRAW,
-                        MatchResultType.DRAW
+                        )
                 )
         );
-    }*/
+    }
 
 }

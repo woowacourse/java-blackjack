@@ -86,4 +86,51 @@ public class PlayerTest {
         //then
         Assertions.assertThat(player.canHit()).isFalse();
     }
+
+    @DisplayName("플레이어가 블랙잭인 경우: true")
+    @Test
+    void isBlackJackTest() {
+        //given
+        List<Card> cards = List.of(
+                new Card(Suit.HEARTS, AceRank.SOFT_ACE),
+                new Card(Suit.CLUBS, NormalRank.KING)
+        );
+
+        Player player = new Player("pobi");
+        divideCardToPlayer(cards, player);
+
+        //when
+        //then
+        Assertions.assertThat(player.isBlackJack()).isTrue();
+    }
+
+    @DisplayName("플레이어가 블랙잭이 아닌 경우: false")
+    @ParameterizedTest
+    @MethodSource("makeNoneBlackJackDeck")
+    void isNotBlackJackTest(List<Card> cards) {
+        //given
+        Player player = new Player("pobi");
+        divideCardToPlayer(cards, player);
+
+        //when
+        //then
+        Assertions.assertThat(player.isBlackJack()).isFalse();
+    }
+
+    private static Stream<Arguments> makeNoneBlackJackDeck() {
+        return Stream.of(
+                Arguments.arguments(
+                        List.of(
+                                new Card(Suit.HEARTS, AceRank.HARD_ACE),
+                                new Card(Suit.CLUBS, NormalRank.KING)
+                        )
+                ),
+                Arguments.arguments(
+                        List.of(
+                                new Card(Suit.HEARTS, NormalRank.JACK),
+                                new Card(Suit.CLUBS, NormalRank.FIVE)
+                        )
+                )
+        );
+    }
 }
