@@ -6,49 +6,36 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Shape;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class BlackJackGameTest {
 
-    static CardBundle cardBundle;
-
-    @BeforeAll
-    static void setUp() {
-        cardBundle = new CardBundle();
-    }
-
     @Test
     @DisplayName("모든 플레이어에게 카드를 2장씩 나눠준다.")
     void should_give_starting_cards_to_participants() {
         // given
-        Participants participants = new Participants(List.of(
-                new Dealer(),
-                new Player("a"),
-                new Player("b")
-        ));
-        CardDeck cardDeck = new CardDeck(cardBundle.getShuffledAllCards());
+        List<String> playerNames = List.of("a", "b");
+        Participants participants = ParticipantsFixture.createParticipants(playerNames);
+        CardDeck cardDeck = CardDeckFixture.createCardDeck();
         BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
 
         // when
         blackJackGame.giveStartingCardsToParticipants();
 
         // then
-        assertAll(() -> assertThat(blackJackGame.getParticipants()
-                        .get(0)
-                        .getCards()).hasSize(2),
-                () -> assertThat(blackJackGame.getParticipants()
-                        .get(1)
-                        .getCards()).hasSize(2),
-                () -> assertThat(blackJackGame.getParticipants()
-                        .get(2)
-                        .getCards()).hasSize(2)
+        assertAll(
+                blackJackGame.getParticipants()
+                        .stream()
+                        .map(player -> (Executable) () -> assertThat(player.getCards()).hasSize(2))
+                        .toArray(Executable[]::new)
         );
     }
 
@@ -56,12 +43,9 @@ class BlackJackGameTest {
     @DisplayName("딜러를 포함한 모든 참가자들 List를 반환한다")
     void should_return_player_participants_except_dealer() {
         // given
-        Participants participants = new Participants(List.of(
-                new Dealer(),
-                new Player("a"),
-                new Player("b")
-        ));
-        CardDeck cardDeck = new CardDeck(cardBundle.getShuffledAllCards());
+        List<String> playerNames = List.of("a", "b");
+        Participants participants = ParticipantsFixture.createParticipants(playerNames);
+        CardDeck cardDeck = CardDeckFixture.createCardDeck();
         BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
 
         // when
@@ -75,19 +59,16 @@ class BlackJackGameTest {
     @DisplayName("딜러를 제외한 플레이어들의 이름 List를 반환한다")
     void should_return_player_names_except_dealer() {
         // given
-        Participants participants = new Participants(List.of(
-                new Dealer(),
-                new Player("a"),
-                new Player("b")
-        ));
-        CardDeck cardDeck = new CardDeck(cardBundle.getShuffledAllCards());
+        List<String> playerNames = List.of("a", "b");
+        Participants participants = ParticipantsFixture.createParticipants(playerNames);
+        CardDeck cardDeck = CardDeckFixture.createCardDeck();
         BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
 
         // when
-        List<String> playerNames = blackJackGame.getPlayerNames();
+        List<String> playerNamesExceptDealer = blackJackGame.getPlayerNames();
 
         // then
-        assertThat(playerNames).containsExactly("a", "b");
+        assertThat(playerNamesExceptDealer).containsExactlyElementsOf(playerNames);
     }
 
     private static Stream<Arguments> playerCardsArguments() {
@@ -113,16 +94,13 @@ class BlackJackGameTest {
     void should_return_true_when_can_player_pick_by_name(List<Card> cards, boolean expected) {
         // given
         String playerName = "a";
-        Participant player = new Player(playerName);
-        for (Card card : cards) {
-            player.addCard(card);
-        }
-        Participants participants = new Participants(List.of(
-                new Dealer(),
-                player
-        ));
-        CardDeck cardDeck = new CardDeck(cardBundle.getShuffledAllCards());
+        List<String> playerNames = List.of(playerName);
+        Participants participants = ParticipantsFixture.createParticipants(playerNames);
+        CardDeck cardDeck = new CardDeck(cards);
         BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
+        for (int cardIndex = 0; cardIndex < cards.size(); ++cardIndex) {
+            blackJackGame.giveCardToPlayer(playerName);
+        }
 
         // when
         boolean canPick = blackJackGame.canPlayerPick(playerName);
@@ -136,11 +114,9 @@ class BlackJackGameTest {
     void should_give_card_to_player_by_name() {
         // given
         String playerName = "a";
-        Participants participants = new Participants(List.of(
-                new Dealer(),
-                new Player(playerName)
-        ));
-        CardDeck cardDeck = new CardDeck(cardBundle.getShuffledAllCards());
+        List<String> playerNames = List.of(playerName);
+        Participants participants = ParticipantsFixture.createParticipants(playerNames);
+        CardDeck cardDeck = CardDeckFixture.createCardDeck();
         BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
 
         // when
@@ -157,19 +133,14 @@ class BlackJackGameTest {
     void should_return_player_shown_cards_by_name() {
         // given
         String playerName = "a";
-        Participant player = new Player(playerName);
-        List<Card> cards = List.of(
-                new Card(Shape.HEART, Rank.KING),
-                new Card(Shape.HEART, Rank.NINE));
-        for (Card card : cards) {
-            player.addCard(card);
-        }
-        Participants participants = new Participants(List.of(
-                new Dealer(),
-                player
-        ));
-        CardDeck cardDeck = new CardDeck(cardBundle.getShuffledAllCards());
-        BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
+        List<String> playerNames = List.of(playerName);
+        Participants participants = ParticipantsFixture.createParticipants(playerNames);
+        Card cardOfHeartAce = new Card(Shape.HEART, Rank.ACE);
+        Card cardOfHeartQueen = new Card(Shape.HEART, Rank.QUEEN);
+        CardDeck cardDeck = new CardDeck(List.of(cardOfHeartAce, cardOfHeartQueen));
+        BlackJackGame blackJackGame = new BlackJackGame(participants, CardDeckFixture.createCardDeck());
+        blackJackGame.giveCardToPlayer(playerName);
+        blackJackGame.giveCardToPlayer(playerName);
 
         // when
         List<Card> playerShownCards = blackJackGame.getPlayerShownCards(playerName);
@@ -196,16 +167,12 @@ class BlackJackGameTest {
     @MethodSource("dealerCardsArguments")
     void should_return_true_when_can_dealer_pick(List<Card> cards, boolean expected) {
         // given
-        Participant dealer = new Dealer();
-        for (Card card : cards) {
-            dealer.addCard(card);
+        Participants participants = ParticipantsFixture.createParticipants(List.of("_"));
+        CardDeck cardDeck = new CardDeck(cards);
+        BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
+        for (int cardIndex = 0; cardIndex < cards.size(); ++cardIndex) {
+            blackJackGame.giveCardToDealer();
         }
-        Participants participants = new Participants(List.of(
-                dealer,
-                new Player("a")
-        ));
-        BlackJackGame blackJackGame = new BlackJackGame(participants,
-                new CardDeck(cardBundle.getShuffledAllCards()));
 
         // when
         boolean canPick = blackJackGame.canDealerPick();
@@ -218,11 +185,8 @@ class BlackJackGameTest {
     @DisplayName("딜러에게 카드를 한 장 준다")
     void should_give_card_to_dealer() {
         // given
-        Participants participants = new Participants(List.of(
-                new Dealer(),
-                new Player("a")
-        ));
-        CardDeck cardDeck = new CardDeck(cardBundle.getShuffledAllCards());
+        Participants participants = ParticipantsFixture.createParticipants(List.of("_"));
+        CardDeck cardDeck = CardDeckFixture.createCardDeck();
         BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
 
         // when
@@ -238,17 +202,16 @@ class BlackJackGameTest {
     @DisplayName("플레이어가 카드를 추가로 받았는지 확인한다")
     void should_return_true_when_player_has_received_card() {
         // given
-        Participants participants = new Participants(List.of(
-                new Dealer(),
-                new Player("a")
-        ));
-        CardDeck cardDeck = new CardDeck(cardBundle.getShuffledAllCards());
+        String playerName = "a";
+        List<String> playerNames = List.of(playerName);
+        Participants participants = ParticipantsFixture.createParticipants(playerNames);
+        CardDeck cardDeck = CardDeckFixture.createCardDeck();
         BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
         blackJackGame.giveStartingCardsToParticipants();
-        blackJackGame.giveCardToPlayer("a");
+        blackJackGame.giveCardToPlayer(playerName);
 
         // when
-        boolean hasReceivedCard = blackJackGame.hasPlayerReceivedCard("a");
+        boolean hasReceivedCard = blackJackGame.hasPlayerReceivedCard(playerName);
 
         // then
         assertThat(hasReceivedCard).isEqualTo(true);
@@ -258,19 +221,39 @@ class BlackJackGameTest {
     @DisplayName("플레이어가 카드를 추가로 받았는지 확인한다")
     void should_return_false_when_player_has_not_received_card() {
         // given
-        Participants participants = new Participants(List.of(
-                new Dealer(),
-                new Player("a")
-        ));
-        CardDeck cardDeck = new CardDeck(cardBundle.getShuffledAllCards());
+        String playerName = "a";
+        List<String> playerNames = List.of(playerName);
+        Participants participants = ParticipantsFixture.createParticipants(playerNames);
+        CardDeck cardDeck = CardDeckFixture.createCardDeck();
         BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
         blackJackGame.giveStartingCardsToParticipants();
 
         // when
-        boolean hasReceivedCard = blackJackGame.hasPlayerReceivedCard("a");
+        boolean hasReceivedCard = blackJackGame.hasPlayerReceivedCard(playerName);
 
         // then
         assertThat(hasReceivedCard).isEqualTo(false);
     }
 }
+
+class ParticipantsFixture {
+    public static Participants createParticipants(List<String> playerNames) {
+        List<Participant> participants = new ArrayList<>();
+        participants.add(new Dealer());
+        playerNames.forEach(name -> participants.add(new Player(name)));
+        return new Participants(participants);
+    }
+}
+
+class CardBundleFixture {
+    public static CardBundle createCardBundle() {
+        return new CardBundle();
+    }
+}
+
+class CardDeckFixture {
+    public static CardDeck createCardDeck() {
+        return new CardDeck(CardBundleFixture.createCardBundle()
+                .getShuffledAllCards());
+    }
 }
