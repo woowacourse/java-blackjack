@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class MoneyTest {
 
@@ -37,13 +38,18 @@ class MoneyTest {
     @DisplayName("0% 수익률을 적용하면 수익이 0이 된다")
     void applyZeroProfit() {
         // given
-        Money money = Money.from(10000);
+        Money money1 = Money.from(10000);
+        Money money2 = Money.from(0);
 
         // when
-        Money result = money.applyProfitRate(0);
+        Money result1 = money1.applyProfitRate(0);
+        Money result2 = money2.applyProfitRate(0);
 
         // then
-        assertThat(result).isEqualTo(Money.from(0));
+        assertAll(() -> {
+            assertThat(result1).isEqualTo(Money.from(0));
+            assertThat(result2).isEqualTo(Money.from(0));
+        });
     }
 
     @Test
@@ -60,8 +66,8 @@ class MoneyTest {
     }
 
     @Test
-    @DisplayName("소숫점 절삭: 1원의 25% 수익률을 적용하면 0원이 된다")
-    void applyProfitWithRoundingDown() {
+    @DisplayName("소숫점 절삭: 1원의 25% 수익률을 적용하면 수익금은 0원이 된다")
+    void applyProfitWithRoundingDown1() {
         // given
         Money money = Money.from(1);
 
@@ -70,6 +76,19 @@ class MoneyTest {
 
         // then
         assertThat(result).isEqualTo(Money.from(0));
+    }
+
+    @Test
+    @DisplayName("소숫점 절삭: 101원의 25% 수익률을 적용하면 수익금은 25원이 된다")
+    void applyProfitWithRoundingDown2() {
+        // given
+        Money money = Money.from(101);
+
+        // when
+        Money result = money.applyProfitRate(25);
+
+        // then
+        assertThat(result).isEqualTo(Money.from(25));
     }
 
     @Test
@@ -84,9 +103,13 @@ class MoneyTest {
         Money result3 = money.applyProfitRate(-50);
 
         // then
-        assertThat(result1).isEqualTo(Money.from(0));
-        assertThat(result2).isEqualTo(Money.from(0));
-        assertThat(result3).isEqualTo(Money.from(0));
+        assertAll(
+                () -> {
+                    assertThat(result1).isEqualTo(Money.from(0));
+                    assertThat(result2).isEqualTo(Money.from(0));
+                    assertThat(result3).isEqualTo(Money.from(0));
+                }
+        );
     }
 
     @Test
