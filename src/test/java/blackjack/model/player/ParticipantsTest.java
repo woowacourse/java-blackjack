@@ -1,5 +1,6 @@
 package blackjack.model.player;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
@@ -34,5 +35,21 @@ public class ParticipantsTest {
                 new Participant(new PlayerName("프리"), new BettedMoney(10_000)),
                 new Participant(new PlayerName("프리"), new BettedMoney(10_000))
         ))).hasMessage("중복된 이름은 사용할 수 없습니다.");
+    }
+
+    @Test
+    void 블랙잭에_참가한_모든_참가자들의_이름을_가져온다() {
+        // Given
+        Participants participants = new Participants(List.of(
+                new Participant(new PlayerName("프리"), new BettedMoney(10_000)),
+                new Participant(new PlayerName("포비"), new BettedMoney(10_000)),
+                new Participant(new PlayerName("제이슨"), new BettedMoney(10_000))
+        ));
+
+        // When
+        List<String> participantNames = participants.getAllNames();
+
+        // Then
+        assertThat(participantNames).isEqualTo(List.of("프리", "포비", "제이슨"));
     }
 }
