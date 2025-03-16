@@ -24,6 +24,10 @@ public class DuelHistory {
 		count.put(duelResult, count.get(duelResult).increment());
 	}
 
+	public DuelResult calculateDuelResult() {
+		return null;
+	}
+
 	public boolean isWin() {
 		return get(DuelResult.WIN).isGreaterThan(get(DuelResult.LOSE))
 			&& get(DuelResult.WIN).isGreaterThan(get(DuelResult.DRAW));

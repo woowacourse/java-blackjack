@@ -1,6 +1,7 @@
 package duel;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.SoftAssertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -110,6 +111,37 @@ public class DuelHistoryTest {
 			assertThat(actualWin).isFalse();
 			assertThat(actualDraw).isFalse();
 			assertThat(actualLose).isTrue();
+		}
+	}
+
+	@Nested
+	@DisplayName("결과 계산")
+	class CalculateDuelResult {
+
+		@DisplayName("가장 많은 값에 따라 DuelResult를 반환한다.")
+		@Test
+		void isWin() {
+			// given
+			final var win = new DuelHistory();
+			final var lose = new DuelHistory();
+			final var draw = new DuelHistory();
+			win.write(DuelResult.WIN);
+			draw.write(DuelResult.WIN);
+			draw.write(DuelResult.DRAW);
+			draw.write(DuelResult.DRAW);
+			lose.write(DuelResult.LOSE);
+
+			// when
+			final DuelResult actualWin = win.calculateDuelResult();
+			final DuelResult actualDraw = draw.calculateDuelResult();
+			final DuelResult actualLose = lose.calculateDuelResult();
+
+			// then
+			assertSoftly(s -> {
+				s.assertThat(actualWin).isEqualTo(DuelResult.WIN);
+				s.assertThat(actualDraw).isEqualTo(DuelResult.DRAW);
+				s.assertThat(actualLose).isEqualTo(DuelResult.LOSE);
+			});
 		}
 	}
 }
