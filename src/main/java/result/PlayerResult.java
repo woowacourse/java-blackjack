@@ -15,16 +15,6 @@ public class PlayerResult {
         this.matchResults = computeParticipantsMatchResult(dealer, participants);
     }
 
-    public Map<Player, MatchResult> computeParticipantsMatchResult(Dealer dealer, List<Player> participants) {
-        Map<Player, MatchResult> participantNameAndMatchResult = new LinkedHashMap<>();
-
-        for (Player participant : participants) {
-            MatchResult matchResult = MatchResult.calculateParticipantMatchResult(dealer, participant);
-            participantNameAndMatchResult.put(participant, matchResult);
-        }
-        return participantNameAndMatchResult;
-    }
-
     public Map<MatchResult, Integer> computeDealerMatchResult() {
         Map<MatchResult, Integer> matchResultCount = new EnumMap<>(MatchResult.class);
 
@@ -36,5 +26,15 @@ public class PlayerResult {
 
     public Map<Player, MatchResult> getMatchResults() {
         return matchResults;
+    }
+
+    private Map<Player, MatchResult> computeParticipantsMatchResult(Dealer dealer, List<Player> participants) {
+        Map<Player, MatchResult> participantNameAndMatchResult = new LinkedHashMap<>();
+
+        for (Player participant : participants) {
+            MatchResult matchResult = MatchResult.calculateParticipantMatchResult(dealer, participant);
+            participantNameAndMatchResult.put(participant, matchResult);
+        }
+        return participantNameAndMatchResult;
     }
 }

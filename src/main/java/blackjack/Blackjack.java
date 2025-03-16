@@ -25,19 +25,6 @@ public class Blackjack {
         this.deck = deck;
     }
 
-    private Players createPlayers(Player dealer, List<Player> participants) {
-        List<Player> players = new ArrayList<>();
-        players.add(dealer);
-        players.addAll(participants);
-        return new Players(players);
-    }
-
-    private List<Player> createParticipants(List<String> names) {
-        return names.stream()
-                .map(Participant::new)
-                .collect(Collectors.toList());
-    }
-
     public void distributeInitialCards() {
         players.distributeInitialCards(deck);
     }
@@ -64,5 +51,18 @@ public class Blackjack {
 
     public List<Player> getParticipants() {
         return players.getParticipants();
+    }
+
+    private Players createPlayers(Player dealer, List<Player> participants) {
+        List<Player> players = new ArrayList<>();
+        players.add(dealer);
+        players.addAll(participants);
+        return new Players(players);
+    }
+
+    private List<Player> createParticipants(List<String> names) {
+        return names.stream()
+                .map(Participant::new)
+                .collect(Collectors.toList());
     }
 }

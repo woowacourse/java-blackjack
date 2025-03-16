@@ -1,12 +1,12 @@
 package player;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import card.Card;
 import card.CardRank;
 import card.CardSuit;
 import card.Deck;
 import card.DeckGenerator;
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.ArrayList;
 import java.util.List;
 import org.assertj.core.api.Assertions;
