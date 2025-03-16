@@ -1,6 +1,5 @@
 package duel;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.SoftAssertions.*;
 
 import org.junit.jupiter.api.DisplayName;
@@ -31,9 +30,11 @@ public class DuelHistoryTest {
 			duelHistory.write(duelResult);
 
 			// then
-			assertThat(duelHistory.getWinCount()).isEqualTo(expectedWinCount);
-			assertThat(duelHistory.getDrawCount()).isEqualTo(expectedDrawCount);
-			assertThat(duelHistory.getLoseCount()).isEqualTo(expectedLoseCount);
+			assertSoftly(s -> {
+				s.assertThat(duelHistory.getWinCount()).isEqualTo(expectedWinCount);
+				s.assertThat(duelHistory.getDrawCount()).isEqualTo(expectedDrawCount);
+				s.assertThat(duelHistory.getLoseCount()).isEqualTo(expectedLoseCount);
+			});
 		}
 	}
 
@@ -60,9 +61,11 @@ public class DuelHistoryTest {
 			final boolean actualLose = lose.isWin();
 
 			// then
-			assertThat(actualWin).isTrue();
-			assertThat(actualDraw).isFalse();
-			assertThat(actualLose).isFalse();
+			assertSoftly(s -> {
+				s.assertThat(actualWin).isTrue();
+				s.assertThat(actualDraw).isFalse();
+				s.assertThat(actualLose).isFalse();
+			});
 		}
 
 		@DisplayName("무승부가 가장 많다면 true, 아니라면 false를 반환하라")
@@ -84,9 +87,11 @@ public class DuelHistoryTest {
 			final boolean actualLose = lose.isDraw();
 
 			// then
-			assertThat(actualWin).isFalse();
-			assertThat(actualDraw).isTrue();
-			assertThat(actualLose).isFalse();
+			assertSoftly(s -> {
+				s.assertThat(actualWin).isFalse();
+				s.assertThat(actualDraw).isTrue();
+				s.assertThat(actualLose).isFalse();
+			});
 		}
 
 		@DisplayName("패배가 가장 많다면 true, 아니라면 false를 반환하라")
@@ -108,9 +113,11 @@ public class DuelHistoryTest {
 			final boolean actualLose = lose.isLose();
 
 			// then
-			assertThat(actualWin).isFalse();
-			assertThat(actualDraw).isFalse();
-			assertThat(actualLose).isTrue();
+			assertSoftly(s -> {
+				s.assertThat(actualWin).isFalse();
+				s.assertThat(actualDraw).isFalse();
+				s.assertThat(actualLose).isTrue();
+			});
 		}
 	}
 

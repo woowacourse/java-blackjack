@@ -40,9 +40,11 @@ public class BlackjackTest {
 			final Blackjack blackjack = Blackjack.from(names);
 
 			// then
-			assertThat(blackjack.getPlayers().getPlayers()).hasSize(3);
-			assertThat(blackjack.getDealer()).isNotNull();
-			assertThat(blackjack.getDeck()).isNotNull();
+			assertSoftly(s -> {
+				s.assertThat(blackjack.getPlayers().getPlayers()).hasSize(3);
+				s.assertThat(blackjack.getDealer()).isNotNull();
+				s.assertThat(blackjack.getDeck()).isNotNull();
+			});
 		}
 	}
 
