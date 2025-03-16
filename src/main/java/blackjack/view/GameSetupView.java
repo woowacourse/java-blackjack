@@ -7,7 +7,12 @@ import java.util.regex.Pattern;
 
 public class GameSetupView {
 
-    private static final String GAME_BANNER = """
+    private static final Pattern COMMA_WITH_OPTIONAL_SPACES_PATTERN = Pattern.compile("\\s*,\\s*");
+
+    private final Scanner scanner = new Scanner(System.in);
+
+    public void printStartBanner() {
+        System.out.println("""
             
             ================================
              Welcome to the Blackjack Game!
@@ -16,13 +21,7 @@ public class GameSetupView {
                2~10글자의 한글, 숫자만 허용되며,
                다른 플레이어와 중복될 수 없습니다.
             ================================
-            """;
-    private static final Pattern COMMA_WITH_OPTIONAL_SPACES_PATTERN = Pattern.compile("\\s*,\\s*");
-
-    private final Scanner scanner = new Scanner(System.in);
-
-    public void printStartBanner() {
-        System.out.println(GAME_BANNER);
+            """);
     }
 
     public List<String> readPlayerNames() {
