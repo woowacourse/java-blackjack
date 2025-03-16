@@ -73,4 +73,34 @@ class BettingResultTest {
                 () -> assertThat(dealerProfit.getProfit()).isEqualTo(-1500)
         );
     }
+
+    @Test
+    void 플레이어가_블랙잭은_아니지만_이긴_경우_1배의_수익을_얻는다() {
+        // given
+        Hand playerHand = new Hand();
+        Player player = new Player("히로", playerHand, new BetAmount(1_000));
+
+        Dealer dealer = new Dealer(new Hand());
+
+        PlayerResults playerResults = new PlayerResults();
+        playerResults.add(new PlayerResult(player, GameResultType.WIN, new Score(player)));// 블랙잭 조건 충족
+
+        DealerResults dealerResults = new DealerResults();
+        dealerResults.add(player, new DealerResult(GameResultType.TIE, new Score(dealer)));
+
+        PlayerProfits playerProfits = bettingResult.getPlayerProfits();
+        DealerProfits dealerProfits = bettingResult.getDealerProfits();
+
+        // when
+        bettingResult.calculateAllResults(playerResults, dealerResults);
+
+        // then
+        PlayerProfit playerProfit = playerProfits.findByPlayer(player);
+        DealerProfit dealerProfit = dealerProfits.findByPlayer(player);
+
+        assertAll(
+                () -> assertThat(playerProfit.getProfit()).isEqualTo(1_000),
+                () -> assertThat(dealerProfit.getProfit()).isEqualTo(-1_000)
+        );
+    }
 }
