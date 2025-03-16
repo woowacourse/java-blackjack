@@ -14,6 +14,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class DealerTest {
 
+    private static Stream<Arguments> canHitArgument() {
+        return Stream.of(Arguments.arguments(HandFixture.createHandWithOptimisticValue15(), true),
+                Arguments.arguments(HandFixture.createHandWithOptimisticValue20(), false));
+    }
+
     @DisplayName("딜러는 카드를 가진다.")
     @Test
     void test1() {
@@ -107,11 +112,6 @@ class DealerTest {
 
         // then
         assertThat(actual).isFalse();
-    }
-
-    private static Stream<Arguments> canHitArgument() {
-        return Stream.of(Arguments.arguments(HandFixture.createHandWithOptimisticValue15(), true),
-                Arguments.arguments(HandFixture.createHandWithOptimisticValue20(), false));
     }
 
     @DisplayName("딜러의 카드가 16을 넘으면 카드를 받을 수 없다.")

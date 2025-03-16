@@ -112,7 +112,6 @@ class PlayerHandTest {
         assertThat(playerHand.getRevenue()).isEqualTo(1500);
     }
 
-
     @DisplayName("초기 금액과 베팅 후 금액에 대한 수익을 반환한다.")
     @ParameterizedTest
     @MethodSource("betArguments")

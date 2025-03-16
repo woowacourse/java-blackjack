@@ -128,6 +128,5 @@ class PlayerTest {
 
         // then
         assertThat(player.getRevenue()).isEqualTo(1500);
-
     }
 }

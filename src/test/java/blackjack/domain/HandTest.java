@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class HandTest {
+
     @DisplayName("Hand 생성 시에 카드는 두 장을 넣을 수 있다")
     @Test
     void test1() {

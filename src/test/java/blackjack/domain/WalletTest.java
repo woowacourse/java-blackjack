@@ -15,6 +15,12 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class WalletTest {
 
+    public static Stream<Arguments> betArguments() {
+        return Stream.of(Arguments.of(1000, GameResultType.WIN, 1000),
+                Arguments.of(1000, GameResultType.LOSE, -1000),
+                Arguments.of(1000, GameResultType.PUSH, 0));
+    }
+
     @DisplayName("배팅 금액을 입력받는다")
     @ParameterizedTest
     @ValueSource(ints = {1000, 50000, 1000000})
@@ -41,12 +47,6 @@ class WalletTest {
                 .hasMessage(ErrorMessage.BETTING_MONEY_IS_POSITIVE.getMessage());
     }
 
-    public static Stream<Arguments> betArguments() {
-        return Stream.of(Arguments.of(1000, GameResultType.WIN, 1000),
-                Arguments.of(1000, GameResultType.LOSE, -1000),
-                Arguments.of(1000, GameResultType.PUSH, 0));
-    }
-
     @DisplayName("초기 금액과 베팅 후 금액에 대한 수익을 반환한다.")
     @ParameterizedTest
     @MethodSource("betArguments")
@@ -61,5 +61,4 @@ class WalletTest {
         // then
         assertThat(wallet.getRevenue()).isEqualTo(expect);
     }
-
 }

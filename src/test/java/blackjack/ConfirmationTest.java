@@ -14,6 +14,7 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class ConfirmationTest {
+
     static Stream<Arguments> getTestCasesForFind() {
         return Stream.of(
                 Arguments.of("y", Confirmation.Y),

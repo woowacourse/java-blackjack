@@ -39,6 +39,8 @@ class PlayersFactoryTest {
 
         Players generate = PlayersFactory.generate(names, moneys);
 
-        assertThat(generate.getPlayers().get(0).getName()).isEqualTo("꾹이");
+        assertThat(generate.getPlayers()
+                .get(0)
+                .getName()).isEqualTo("꾹이");
     }
 }
