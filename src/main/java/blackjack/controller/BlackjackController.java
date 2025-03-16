@@ -4,6 +4,7 @@ import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardDeckGenerator;
 import blackjack.domain.game.BlackJackGame;
 import blackjack.domain.io.GameInputOutput;
+import blackjack.domain.user.GameUserStorage;
 import blackjack.domain.value.Nickname;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -22,15 +23,19 @@ public class BlackjackController {
     }
 
     public void run() {
+        List<Nickname> nicknames = inputView.readNicknames();
         BlackJackGame blackjackGame = makeBlackjackGame();
-        blackjackGame.runGame();
+        blackjackGame.processPreparation(nicknames);
+        blackjackGame.processPlayerTurns();
+        blackjackGame.processDealerTurns();
+        blackjackGame.processOutputResult();
     }
 
     private BlackJackGame makeBlackjackGame() {
-        List<Nickname> nicknames = inputView.readNicknames();
+        GameUserStorage gameUserStorage = new GameUserStorage();
         CardDeck cardDeck = cardDeckGenerator.makeShuffled();
         GameInputOutput gameInputOutput = makeGameInputOutput();
-        return new BlackJackGame(nicknames, cardDeck, gameInputOutput);
+        return new BlackJackGame(gameUserStorage, cardDeck, gameInputOutput);
     }
 
     private GameInputOutput makeGameInputOutput() {

@@ -18,7 +18,9 @@ class GameUserStorageTest {
     @Test
     @DisplayName("입력된 닉네임으로 플레이어를 등록할 수 있다.")
     void canRegisterPlayer() {
-        GameUserStorage gameUserStorage = new GameUserStorage(NICKNAMES);
+        GameUserStorage gameUserStorage = new GameUserStorage();
+
+        gameUserStorage.registerPlayer(NICKNAMES);
 
         assertThat(gameUserStorage.getPlayers())
                 .extracting(Player::getNickname)

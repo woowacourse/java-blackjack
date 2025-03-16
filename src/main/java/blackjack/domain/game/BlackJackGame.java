@@ -17,22 +17,45 @@ public class BlackJackGame {
     private final GameInputOutput gameInputOutput;
 
     public BlackJackGame(
-            List<Nickname> playerNicknames,
+            GameUserStorage gameUserStorage,
             CardDeck cardDeck,
             GameInputOutput gameInputOutput
     ) {
-        this.users = new GameUserStorage(playerNicknames);
+        this.users = gameUserStorage;
         this.cardDeck = cardDeck;
         this.gameInputOutput = gameInputOutput;
     }
 
-    public void runGame() {
+    public void processPreparation(List<Nickname> playerNicknames) {
+        registerPlayer(playerNicknames);
         addBettingAmount();
         distributeInitialCard();
-        processPlayerTurns();
-        processDealerTurns();
+        outputInitialHand();
+    }
+
+    public void processPlayerTurns() {
+        users.getPlayers()
+                .forEach(this::processPlayerTurn);
+    }
+
+    public void processDealerTurns() {
+        Dealer dealer = users.getDealer();
+        int drawingCount = 0;
+        while (dealer.canDraw()) {
+            drawingCount++;
+            Card card = cardDeck.drawCard(1).getFirst();
+            dealer.addCardUntilLimit(card);
+        }
+        gameInputOutput.printDealerDrawing(drawingCount);
+    }
+
+    public void processOutputResult() {
         outputFinalHand();
         outputProfit();
+    }
+
+    private void registerPlayer(List<Nickname> nicknames) {
+        users.registerPlayer(nicknames);
     }
 
     private void addBettingAmount() {
@@ -48,7 +71,6 @@ public class BlackJackGame {
         for (Player player : users.getPlayers()) {
             distributeInitialCardToPlayer(player);
         }
-        gameInputOutput.printInitialHands(users.getDealer(), users.getPlayers());
     }
 
     private void distributeInitialCardToDealer() {
@@ -62,9 +84,8 @@ public class BlackJackGame {
         player.addInitialCards(initialPlayerCards);
     }
 
-    private void processPlayerTurns() {
-        users.getPlayers()
-                .forEach(this::processPlayerTurn);
+    private void outputInitialHand() {
+        gameInputOutput.printInitialHands(users.getDealer(), users.getPlayers());
     }
 
     private void processPlayerTurn(Player player) {
@@ -74,17 +95,6 @@ public class BlackJackGame {
             player.hitUntilLimit(card);
             gameInputOutput.printingHitResult(player);
         }
-    }
-
-    private void processDealerTurns() {
-        Dealer dealer = users.getDealer();
-        int drawingCount = 0;
-        while (dealer.canDraw()) {
-            drawingCount++;
-            Card card = cardDeck.drawCard(1).getFirst();
-            dealer.addCardUntilLimit(card);
-        }
-        gameInputOutput.printDealerDrawing(drawingCount);
     }
 
     private void outputFinalHand() {
