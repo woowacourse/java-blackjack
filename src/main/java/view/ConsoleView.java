@@ -6,7 +6,6 @@ import controller.dto.InitialDealResponse;
 import controller.dto.PlayerHitResponse;
 import controller.dto.ProfitResultResponse;
 import domain.Dealer;
-import domain.ProfitResults;
 import domain.Player;
 import domain.Players;
 import java.util.List;
@@ -53,10 +52,6 @@ public class ConsoleView {
 
     public void printCardsResult(Dealer dealer, Players players) {
         outputView.printCardsResult(dealer, players);
-    }
-
-    public void printGameResults(ProfitResults profitResults) {
-        outputView.printGameResults(profitResults);
     }
 
     public void printCardsResults(List<CardsResultResponse> cardsResultResponses) {

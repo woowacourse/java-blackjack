@@ -23,7 +23,7 @@ public class BlackjackController {
     private final BlackjackParticipants blackjackParticipants;
     private final CardGiver cardGiver;
 
-    public BlackjackController(BlackjackParticipants blackjackParticipants, CardGiver cardGiver {
+    public BlackjackController(BlackjackParticipants blackjackParticipants, CardGiver cardGiver) {
         this.blackjackParticipants = blackjackParticipants;
         this.cardGiver = cardGiver;
     }
