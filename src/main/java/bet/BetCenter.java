@@ -31,19 +31,21 @@ public class BetCenter {
 
     private double calculateProfit(Player player, Dealer dealer) {
         BetAmount betAmount = playerBetAmounts.get(player);
+        WinningResult result = determineWinningResult(player, dealer);
+        return result.calculateProfit(betAmount);
+    }
+
+    private WinningResult determineWinningResult(Player player, Dealer dealer) {
         if (isOnlyPlayerBlackJack(player, dealer)) {
-            return WinningResult.BLACKJACK.calculateProfit(betAmount);
+            return WinningResult.BLACKJACK;
         }
         if (isOnlyDealerBlackJack(player, dealer)) {
-            return WinningResult.LOSE.calculateProfit(betAmount);
+            return WinningResult.LOSE;
         }
         if (player.sumCardNumbers() == dealer.sumCardNumbers()) {
-            return WinningResult.DRAW.calculateProfit(betAmount);
+            return WinningResult.DRAW;
         }
-        if (player.compareTo(dealer.sumCardNumbers()) == WinningResult.WIN) {
-            return WinningResult.WIN.calculateProfit(betAmount);
-        }
-        return WinningResult.LOSE.calculateProfit(betAmount);
+        return player.compareTo(dealer.sumCardNumbers());
     }
 
     private boolean isOnlyDealerBlackJack(Player player, Dealer dealer) {
