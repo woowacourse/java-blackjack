@@ -20,4 +20,8 @@ public class PlayerResult {
     public GameResultType getGameResultType() {
         return gameResultType;
     }
+
+    public Player getPlayer() {
+        return player;
+    }
 }

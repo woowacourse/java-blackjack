@@ -22,4 +22,7 @@ public class PlayerResults {
                 .orElseThrow(() -> new IllegalArgumentException("플레이어에 해당하는 결과가 존재하지 않습니다."));
     }
 
+    public List<PlayerResult> getPlayerResults() {
+        return playerResults;
+    }
 }
