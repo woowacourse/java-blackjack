@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ProfitCalculatorTest {
 
-    private ProfitCalculator profitCalculator = new ProfitCalculator();
+    private final ProfitCalculator profitCalculator = new ProfitCalculator();
 
     @Test
     @DisplayName("플레이어가 블랙잭 없이 승리할 경우 베팅 금액의 1배를 수익으로 계산한다")
@@ -71,6 +71,28 @@ class ProfitCalculatorTest {
         Deck dealerDeck = DeckFixture.deckOf(CardNumber.EIGHT, CardNumber.NINE);
         Player player = new Player("Pobi", playerDeck.draw(), playerDeck.draw());
         Dealer dealer = new Dealer(dealerDeck.draw(), dealerDeck.draw());
+
+        // when
+        profitCalculator.addPlayerBet("Pobi", 20_000);
+        ProfitsResponseDto response = profitCalculator.getProfits(dealer, List.of(player));
+        double actual = response.gamers().stream()
+                .filter(gamer -> gamer.name().equals("Pobi"))
+                .findFirst()
+                .orElseThrow()
+                .profit();
+
+        // then
+        assertThat(actual).isEqualTo(-20_000);
+    }
+
+    @Test
+    @DisplayName("플레이어가 버스트일 경우 딜러의 버스트 여부와 상관없이 수익을 0에서 베팅 금액을 차감한 값으로 계산한다")
+    void playerBustTest() {
+        // given
+        Deck playerDeck = DeckFixture.deckOf(CardNumber.EIGHT, CardNumber.NINE, CardNumber.JACK);
+        Deck dealerDeck = DeckFixture.deckOf(CardNumber.EIGHT, CardNumber.NINE, CardNumber.JACK);
+        Player player = new Player("Pobi", playerDeck.draw(), playerDeck.draw(), playerDeck.draw());
+        Dealer dealer = new Dealer(dealerDeck.draw(), dealerDeck.draw(), dealerDeck.draw());
 
         // when
         profitCalculator.addPlayerBet("Pobi", 20_000);
@@ -155,7 +177,7 @@ class ProfitCalculatorTest {
                 .profit();
 
         // then
-        assertThat(actual).isEqualTo(0);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @ParameterizedTest
@@ -182,6 +204,6 @@ class ProfitCalculatorTest {
                 .profit();
 
         // then
-        assertThat(actual).isEqualTo(0);
+        assertThat(actual).isEqualTo(expected);
     }
 }
