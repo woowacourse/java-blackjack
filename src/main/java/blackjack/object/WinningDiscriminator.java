@@ -14,9 +14,14 @@ public class WinningDiscriminator {
     private final int dealerScore;
     private final Map<Name, Integer> playerScores;
 
-    public WinningDiscriminator(final int dealerScore, final Map<Name, Integer> playerScores) {
-        this.dealerScore = dealerScore;
-        this.playerScores = playerScores;
+    public WinningDiscriminator(Map<Name, Integer> gamblerScores) {
+        this.dealerScore = gamblerScores.get(Name.getDealerName());
+        this.playerScores = getPlayerScores(gamblerScores);
+    }
+
+    private Map<Name, Integer> getPlayerScores(Map<Name, Integer> gamblerScores) {
+        gamblerScores.remove(Name.getDealerName());
+        return gamblerScores;
     }
 
     public Map<Name, WinningType> judgePlayersResult() {
