@@ -233,4 +233,44 @@ class BlackJackGameTest {
                 .get(0)
                 .getCards()).hasSize(1);
     }
+
+    @Test
+    @DisplayName("플레이어가 카드를 추가로 받았는지 확인한다")
+    void should_return_true_when_player_has_received_card() {
+        // given
+        Participants participants = new Participants(List.of(
+                new Dealer(),
+                new Player("a")
+        ));
+        CardDeck cardDeck = new CardDeck(cardBundle.getShuffledAllCards());
+        BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
+        blackJackGame.giveStartingCardsToParticipants();
+        blackJackGame.giveCardToPlayer("a");
+
+        // when
+        boolean hasReceivedCard = blackJackGame.hasPlayerReceivedCard("a");
+
+        // then
+        assertThat(hasReceivedCard).isEqualTo(true);
+    }
+
+    @Test
+    @DisplayName("플레이어가 카드를 추가로 받았는지 확인한다")
+    void should_return_false_when_player_has_not_received_card() {
+        // given
+        Participants participants = new Participants(List.of(
+                new Dealer(),
+                new Player("a")
+        ));
+        CardDeck cardDeck = new CardDeck(cardBundle.getShuffledAllCards());
+        BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
+        blackJackGame.giveStartingCardsToParticipants();
+
+        // when
+        boolean hasReceivedCard = blackJackGame.hasPlayerReceivedCard("a");
+
+        // then
+        assertThat(hasReceivedCard).isEqualTo(false);
+    }
+}
 }

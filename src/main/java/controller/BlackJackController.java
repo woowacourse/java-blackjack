@@ -70,13 +70,11 @@ public class BlackJackController {
     }
 
     private void processPlayerCardReceiving(BlackJackGame blackJackGame, String playerName) {
-        boolean isFinalHandsPrinted = false;
         while (blackJackGame.canPlayerPick(playerName) && doesPlayerWantToReceiveCard(playerName)) {
             blackJackGame.giveCardToPlayer(playerName);
             outputView.printParticipantHand(playerName, blackJackGame.getPlayerShownCards(playerName));
-            isFinalHandsPrinted = true;
         }
-        if (!isFinalHandsPrinted) {
+        if (!blackJackGame.hasPlayerReceivedCard(playerName)) {
             outputView.printParticipantHand(playerName, blackJackGame.getPlayerShownCards(playerName));
         }
     }

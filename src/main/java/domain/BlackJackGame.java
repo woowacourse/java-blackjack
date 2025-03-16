@@ -43,6 +43,10 @@ public class BlackJackGame {
                 .getShownCard();
     }
 
+    public boolean hasPlayerReceivedCard(String playerName) {
+        return participants.findByName(playerName).getCards().size() > 2;
+    }
+
     public boolean canDealerPick() {
         return participants.getDealer()
                 .canPick();
