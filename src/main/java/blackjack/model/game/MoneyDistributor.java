@@ -12,7 +12,7 @@ import static blackjack.model.game.ParticipantResult.WIN;
 public class MoneyDistributor {
 
     public static final int DRAW_MONEY = 0;
-    public static final double WINNING_MONEY_RATE = 1.5;
+    public static final double BLACKJACK_MONEY_RATE = 1.5;
 
     public static Map<Participant, Long> calculateWinningMoneys(final Dealer dealer, final Map<Participant, ParticipantResult> participantResults) {
         Map<Participant, Long> winningMoneys = new HashMap<>();
@@ -27,7 +27,7 @@ public class MoneyDistributor {
         if (isDealerBlackJack) {
             return calculateWinningMoneyIfDealerBlackJack(participant);
         }
-        return calculateWinningMoneyNotBlackJack(participant.getBettedMoney(), participant.isBlackJack(), participantResult);
+        return calculateWinningMoneyNotBlackJack(participant, participantResult);
     }
 
     private static long calculateWinningMoneyIfDealerBlackJack(final Participant participant) {
@@ -37,21 +37,21 @@ public class MoneyDistributor {
         return -participant.getBettedMoney();
     }
 
-    private static long calculateWinningMoneyNotBlackJack(final long bettedMoney, final boolean isBlackJack, final ParticipantResult participantResult) {
-        if (isBlackJack) {
-            return (int)(bettedMoney * WINNING_MONEY_RATE);
+    private static long calculateWinningMoneyNotBlackJack(final Participant participant, final ParticipantResult participantResult) {
+        if (participant.isBlackJack()) {
+            return (long)(participant.getBettedMoney() * BLACKJACK_MONEY_RATE);
         }
         if (participantResult == WIN) {
-            return bettedMoney;
+            return participant.getBettedMoney();
         }
         if (participantResult == LOSE) {
-            return -bettedMoney;
+            return -participant.getBettedMoney();
         }
         return DRAW_MONEY;
     }
 
-    public static long calculateDealerMoney(final Map<Participant, Long> winningMoney) {
-        return -winningMoney.values().stream()
+    public static long calculateDealerMoney(final Map<Participant, Long> winningMoneys) {
+        return -winningMoneys.values().stream()
                 .mapToLong(Long::longValue)
                 .sum();
     }

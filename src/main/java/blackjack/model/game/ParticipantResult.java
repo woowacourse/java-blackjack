@@ -50,10 +50,4 @@ public enum ParticipantResult {
         }
         return participantResults;
     }
-
-    public static Map<ParticipantResult, Integer> countResults(final Map<Participant, ParticipantResult> participantResults) {
-        return participantResults.values().stream()
-                        .collect(Collectors.toMap(value -> value, value -> 1, Integer::sum,
-                                () -> new HashMap<>(Map.of(WIN, 0, DRAW, 0, LOSE, 0))));
-    }
 }

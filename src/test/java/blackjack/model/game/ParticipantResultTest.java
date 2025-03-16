@@ -135,25 +135,4 @@ class ParticipantResultTest {
         // Then
         assertThat(participantResults).isEqualTo(Map.of(participant, LOSE, participant2, WIN));
     }
-
-    @Test
-    void 여러_참가자의_승패_결과를_가지고_승무패_개수를_구한다() {
-        // Given
-        Dealer dealer = new Dealer();
-        dealer.putCard(new Card(CardShape.CLOVER, CardType.JACK));
-        dealer.putCard(new Card(CardShape.CLOVER, CardType.QUEEN));
-        Participant participant = new Participant(new PlayerName("프리"), new BettedMoney(10_000));
-        participant.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_8));
-        Participant participant2 = new Participant(new PlayerName("포비"), new BettedMoney(20_000));
-        participant2.putCard(new Card(CardShape.CLOVER, CardType.ACE));
-        participant2.putCard(new Card(CardShape.CLOVER, CardType.KING));
-        Participants participants = new Participants(List.of(participant, participant2));
-        Map<Participant, ParticipantResult> participantResults = ParticipantResult.calculateParticipantResults(dealer, participants);
-
-        // When
-        Map<ParticipantResult, Integer> counts = ParticipantResult.countResults(participantResults);
-
-        // Then
-        assertThat(counts).isEqualTo(Map.of(WIN, 1, DRAW, 0, LOSE, 1));
-    }
 }

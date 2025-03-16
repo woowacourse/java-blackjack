@@ -47,7 +47,7 @@ public class ReceivedCards {
                 );
     }
 
-    private int plusTenPoint(int currentPoint) {
+    private int plusTenPoint(final int currentPoint) {
         if (isBust(currentPoint + ACE_INCREASABLE_POINT)) {
             return currentPoint;
         }

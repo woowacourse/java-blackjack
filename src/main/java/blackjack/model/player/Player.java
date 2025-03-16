@@ -13,10 +13,6 @@ public abstract class Player {
         receivedCards.receive(card);
     }
 
-    public ReceivedCards getReceivedCards() {
-        return receivedCards;
-    }
-
     public boolean isBust() {
         return receivedCards.isBust();
     }
@@ -27,5 +23,9 @@ public abstract class Player {
 
     public int calculatePoint() {
         return receivedCards.calculateTotalPoint();
+    }
+
+    public ReceivedCards getReceivedCards() {
+        return receivedCards;
     }
 }
