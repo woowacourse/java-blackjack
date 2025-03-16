@@ -19,7 +19,6 @@ public class DealerFixture {
         return dealer;
     }
 
-
     public static Dealer createBust() {
         Dealer dealer = new Dealer();
         List<Card> bustCard = CardFixture.makeBust();

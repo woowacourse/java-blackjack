@@ -43,5 +43,4 @@ public class PlayerFixture {
         player.addInitialCards(bustCard);
         return player;
     }
-
 }
