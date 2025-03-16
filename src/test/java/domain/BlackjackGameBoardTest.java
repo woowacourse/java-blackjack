@@ -3,6 +3,7 @@ package domain;
 import static domain.fixture.BlackjackCardFixture.ACE_HEART;
 import static domain.fixture.BlackjackCardFixture.JACK_HEART;
 import static domain.fixture.BlackjackCardFixture.KING_HEART;
+import static domain.fixture.BlackjackCardFixture.NINE_HEART;
 import static domain.fixture.BlackjackCardFixture.TEN_HEART;
 import static domain.fixture.BlackjackCardFixture.TWO_HEART;
 
@@ -10,8 +11,12 @@ import domain.card.Cards;
 import domain.card.Deck;
 import domain.player.Dealer;
 import domain.player.User;
+import domain.player.Users;
+import domain.profit.DefaultProfitStrategy;
+import domain.profit.Profit;
 import domain.state.Stay;
 import java.util.List;
+import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import org.assertj.core.api.Assertions;
@@ -136,5 +141,32 @@ class BlackjackGameBoardTest {
 
         // then
         Assertions.assertThat(dealer.computeOptimalSum()).isGreaterThan(16);
+    }
+
+    @Test
+    void 딜러의_수익을_계산한다() {
+        // given
+        Deck deck = new Deck(List.of(
+                ACE_HEART(), TEN_HEART(),   // 앤지: 블랙잭
+                NINE_HEART(), TEN_HEART(),  // 헤일러: 19
+                KING_HEART(), TEN_HEART()    // dealer: 20
+        ));
+        Dealer dealer = Dealer.createDefaultDealer();
+        Users users = Users.from(Map.ofEntries(
+                Map.entry("헤일러", 1000),
+                Map.entry("앤지", 100000)
+        ));
+        BlackjackGameBoard gameBoard = new BlackjackGameBoard(deck);
+
+        gameBoard.distributeInitialCards(dealer);
+        for (User user : users.getUsers()) {
+            gameBoard.distributeInitialCards(user);
+        }
+
+        // when
+        Profit profit = gameBoard.computeDealerProfit(dealer, users, DefaultProfitStrategy.getInstance());
+
+        // then
+        Assertions.assertThat(profit.getValue()).isEqualTo(1000 - (int) (100000 * 1.5));
     }
 }

@@ -72,7 +72,7 @@ public class BlackjackGameBoard {
     public Profit computeDealerProfit(Dealer dealer, Users users, ProfitStrategy profitStrategy) {
         int usersProfitSum = 0;
         for (User user : users.getUsers()) {
-            usersProfitSum = computeUserProfit(user, dealer, profitStrategy).getValue();
+            usersProfitSum += computeUserProfit(user, dealer, profitStrategy).getValue();
         }
         return new Profit(-usersProfitSum);
     }
