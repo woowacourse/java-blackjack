@@ -1,34 +1,36 @@
 package console;
 
-import controller.Controller;
+import controller.GameSetupController;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import model.Bet;
-import model.Name;
-import model.Players;
+import model.card.Deck;
+import model.participant.Bet;
+import model.participant.Dealer;
+import model.participant.Name;
+import model.participant.Players;
 import view.PlayerNames;
 
-public final class PlayerRegisterConsole extends Console {
-    private final Controller controller;
+public final class GameSetupConsole extends Console {
+    private final GameSetupController gameSetupController = new GameSetupController();
 
-    public PlayerRegisterConsole(final Controller controller) {
-        this.controller = controller;
-    }
-
-    public Players registerPlayers() {
+    public Players registerPlayers(final Deck deck) {
         Map<Name, Bet> registerInput = new LinkedHashMap<>();
         PlayerNames playerNames = readPlayerNames();
         for (Name playerName : playerNames.playerNames()) {
             Bet bet = readBet(playerName);
             registerInput.put(playerName, bet);
         }
-        return new Players(registerInput);
+        return new Players(registerInput, deck);
+    }
+
+    public Dealer registerDealer(final Deck deck) {
+        return null;
     }
 
     private PlayerNames readPlayerNames() {
-        display(controller.guideToInputName());
+        display(gameSetupController.guideToInputName());
         List<Name> playerNames = Arrays.stream(readLine().split(","))
                 .map(String::trim)
                 .filter(name -> !name.isBlank() && !name.isEmpty())
@@ -38,7 +40,7 @@ public final class PlayerRegisterConsole extends Console {
     }
 
     private Bet readBet(final Name playerName) {
-        display(controller.guideToBet(playerName));
+        display(gameSetupController.guideToBet(playerName));
         String input = readLine();
         try {
             return new Bet(Integer.parseInt(input));

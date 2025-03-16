@@ -1,6 +1,6 @@
 package view;
 
-import model.Name;
+import model.participant.Name;
 
 public final class PlayerRegisterView {
     public View guideToInputName() {

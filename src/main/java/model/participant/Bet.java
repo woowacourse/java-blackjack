@@ -1,4 +1,4 @@
-package model;
+package model.participant;
 
 public final class Bet {
     private static final int amountUnit = 10000;

@@ -2,7 +2,7 @@ package view;
 
 import java.util.List;
 import java.util.Set;
-import model.Name;
+import model.participant.Name;
 
 public record PlayerNames(List<Name> playerNames) {
     private static final int MAX_PLAYER_COUNT = 5;
