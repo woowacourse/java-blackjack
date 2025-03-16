@@ -3,112 +3,52 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
+import blackjack.domain.game.Dealer;
 import blackjack.domain.game.Participant;
-import blackjack.domain.game.Player;
-import blackjack.domain.result.GameResultType;
-import blackjack.domain.result.ParticipantResult;
-import java.util.ArrayList;
-import java.util.Arrays;
+import blackjack.domain.result.DealerResults;
+import blackjack.domain.result.PlayerResult;
+import blackjack.domain.result.Score;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class Formatter {
 
-    private static final int BUSTED_STANDARD_VALUE = 21;
-
     private Formatter() {
     }
 
-    public static String formatPlayerCardResult(ParticipantResult participantResult) {
-        String message = formatPlayerCardStatus(participantResult.getParticipant()) + " - 결과: ";
-        return message + formatCardResultValue(participantResult);
+    public static String formatPlayerCardResult(PlayerResult playerResult) {
+        String message = formatPlayerCardStatus(playerResult.getPlayer()) + " - 결과: ";
+        return message + formatCardResultValue(playerResult);
     }
 
     public static String formatPlayerCardStatus(Participant participant) {
-        return participant.getName() + "카드: " + formatStartingCardStatus(participant);
+        return participant.getName() + "카드: " + formatCardStatus(participant);
     }
 
-    public static String formatMultipleCardStatusWithName(Participant participant) {
-        return participant.getName() + "카드: " + formatStartingCardStatus(participant);
-    }
-
-    public static String formatSingleCardStatus(Participant participant) {
-        List<Card> cards = participant.getCards();
+    public static String formatDealerCardStatus(Dealer dealer) {
+        List<Card> cards = dealer.getCards();
         return "딜러카드: " + Formatter.formatCard(cards.getFirst());
     }
 
-    public static List<String> formatDefenderCardResult(List<ParticipantResult> participantResults) {
-        return participantResults.stream()
-                .map(result -> formatDefendersCardStatus(result.getParticipant()) + " - 결과: " + formatCardResultValue(
-                        result))
-                .toList();
+    public static String formatDealerCardResult(Dealer dealer, DealerResults dealerResults) {
+        int scoreValue = dealerResults.getScoreValue();
+        return "딜러 카드: " + formatCardStatus(dealer) + " - 결과: " + scoreValue;
     }
 
-    private static String formatDefendersCardStatus(Participant participant) {
-        return "딜러카드: " + formatStartingCardStatus(participant);
-    }
+    private static String formatCardResultValue(PlayerResult playerResult) {
+        Score score = playerResult.getScore();
 
-    private static String formatCardResultValue(ParticipantResult participantResult) {
-        int value = participantResult.getValue();
-
-        if (value > BUSTED_STANDARD_VALUE) {
+        if (score.isBusted()) {
             return "Busted!";
         }
 
-        return java.lang.String.valueOf(value);
+        return java.lang.String.valueOf(score.getScoreValue());
     }
 
-    private static String formatStartingCardStatus(Participant participant) {
+    private static String formatCardStatus(Participant participant) {
         return participant.getCards().stream()
                 .map(Formatter::formatCard)
                 .collect(Collectors.joining(", "));
-    }
-
-    public static String formatDefenderGameResult(ParticipantResult participantResult) {
-        Map<GameResultType, Integer> countsOfResultTypes = participantResult.getCountsOfResultTypes();
-
-        return Arrays.stream(GameResultType.values())
-                .map(gameResultType -> formatResultCount(countsOfResultTypes, gameResultType))
-                .collect(Collectors.joining(" "));
-    }
-
-    public static String formatChallengerGameResult(List<ParticipantResult> participantResults) {
-        List<String> result = new ArrayList<>();
-
-        for (ParticipantResult participantResult : participantResults) {
-            Player player = (Player) participantResult.getParticipant();
-
-            String nameOfPlayer = player.getName();
-
-            Map<GameResultType, Integer> countsOfResultTypes = participantResult.getCountsOfResultTypes();
-            for (GameResultType gameResultType : countsOfResultTypes.keySet()) {
-                result.add(nameOfPlayer + ": " + formatGameResult(gameResultType));
-            }
-        }
-
-        return result.stream().collect(Collectors.joining(System.lineSeparator()));
-    }
-
-    private static String formatResultCount(Map<GameResultType, Integer> results, GameResultType gameResultType) {
-        Integer count = results.getOrDefault(gameResultType, 0);
-        if (count == 0) {
-            return "";
-        }
-
-        return count + formatGameResult(gameResultType);
-    }
-
-    private static String formatGameResult(GameResultType gameResultType) {
-        if (gameResultType.equals(GameResultType.WIN)) {
-            return "승";
-        }
-
-        if (gameResultType.equals(GameResultType.LOSE)) {
-            return "패";
-        }
-
-        return "무";
     }
 
     public static String formatCard(Card card) {

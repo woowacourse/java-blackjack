@@ -12,4 +12,8 @@ public class DealerResult {
     public GameResultType getGameResultType() {
         return gameResultType;
     }
+
+    public int getScoreValue() {
+        return score.getScoreValue();
+    }
 }

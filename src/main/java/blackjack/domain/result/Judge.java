@@ -87,7 +87,6 @@ public class Judge {
             DealerResult dealerResult = new DealerResult(GameResultType.WIN, dealerScore);
             dealerResults.add(player, dealerResult);
             playerResults.add(playerResult);
-            return;
         }
     }
 

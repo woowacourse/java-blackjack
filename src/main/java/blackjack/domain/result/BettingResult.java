@@ -21,7 +21,7 @@ public class BettingResult {
                 DealerProfit dealerProfit = new DealerProfit(0);
                 dealerProfits.add(player, dealerProfit);
                 playerProfits.add(playerProfit);
-                return;
+                continue;
             }
 
             if (playerResult.getGameResultType() == GameResultType.WIN && playerResult.isBlackjack()) {
@@ -32,7 +32,7 @@ public class BettingResult {
 
                 dealerProfits.add(player, dealerProfit);
                 playerProfits.add(playerProfit);
-                return;
+                continue;
             }
 
             if (playerResult.getGameResultType() == GameResultType.WIN) {
@@ -41,7 +41,7 @@ public class BettingResult {
 
                 dealerProfits.add(player, dealerProfit);
                 playerProfits.add(playerProfit);
-                return;
+                continue;
             }
 
             if (playerResult.getGameResultType() == GameResultType.LOSE) {
@@ -50,7 +50,6 @@ public class BettingResult {
 
                 dealerProfits.add(player, dealerProfit);
                 playerProfits.add(playerProfit);
-                return;
             }
         }
     }

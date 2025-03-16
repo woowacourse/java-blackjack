@@ -15,7 +15,7 @@ class BlackjackGameTest {
     void init() {
         Deck deck = new Deck();
         Player player = new Player("히로", new Hand(), new BetAmount(1_000));
-        blackjackGame = new BlackjackGame(deck, new Players(List.of(player)));
+        blackjackGame = new BlackjackGame(deck, new Players(List.of(player)), new Dealer(new Hand()));
     }
 
     @Test
@@ -34,7 +34,7 @@ class BlackjackGameTest {
         Hand hand = new Hand();
         Player player = new Player("히로", hand, new BetAmount(1_000));
         Players players = new Players(List.of(player));
-        BlackjackGame blackjackGame = new BlackjackGame(new Deck(), players);
+        BlackjackGame blackjackGame = new BlackjackGame(new Deck(), players, new Dealer(new Hand()));
 
         // when
         blackjackGame.giveStartingCards();

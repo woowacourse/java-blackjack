@@ -28,4 +28,8 @@ public class PlayerResult {
     public Player getPlayer() {
         return player;
     }
+
+    public Score getScore() {
+        return score;
+    }
 }

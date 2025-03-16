@@ -2,6 +2,7 @@ package blackjack.domain.result;
 
 import blackjack.domain.game.Player;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DealerResults {
@@ -26,4 +27,11 @@ public class DealerResults {
                 .orElseThrow(() -> new IllegalArgumentException("플레이어에 해당하는 결과가 존재하지 않습니다."));
     }
 
+    public int getScoreValue() {
+        List<Integer> scoreValues = dealerResults.values().stream()
+                .map(DealerResult::getScoreValue)
+                .toList();
+
+        return scoreValues.getFirst();
+    }
 }

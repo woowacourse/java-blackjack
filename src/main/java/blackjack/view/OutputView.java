@@ -1,12 +1,13 @@
 package blackjack.view;
 
-import blackjack.domain.card.Card;
+import blackjack.domain.game.Dealer;
 import blackjack.domain.game.Participant;
 import blackjack.domain.game.Players;
 import blackjack.domain.result.DealerProfits;
+import blackjack.domain.result.DealerResults;
 import blackjack.domain.result.PlayerProfit;
 import blackjack.domain.result.PlayerProfits;
-import java.util.List;
+import blackjack.domain.result.PlayerResults;
 
 public final class OutputView {
 
@@ -15,19 +16,14 @@ public final class OutputView {
     private OutputView() {
     }
 
-    public static void printStartingCardsStatuses(Players players) {
+    public static void printStartingCardsStatuses(Dealer dealer, Players players) {
         String names = String.join(DELIMITER, players.getNamesOfParticipants());
 
         System.out.println("딜러와 " + names + "에게 2장을 나누었습니다.");
+        System.out.println(Formatter.formatDealerCardStatus(dealer));
 
         for (Participant participant : players.getPlayers()) {
-            List<Card> startingCards = participant.getStartingCards();
-
-            if (startingCards.size() == 1) {
-                System.out.println(Formatter.formatSingleCardStatus(participant));
-                continue;
-            }
-            System.out.println(Formatter.formatMultipleCardStatusWithName(participant));
+            System.out.println(Formatter.formatPlayerCardStatus(participant));
         }
     }
 
@@ -35,10 +31,8 @@ public final class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-
-
     public static void printCardResult(Participant participant) {
-        System.out.println(Formatter.formatMultipleCardStatusWithName(participant));
+        System.out.println(Formatter.formatPlayerCardStatus(participant));
     }
 
     public static void printBustedParticipantWithName(Participant participant) {
@@ -62,5 +56,11 @@ public final class OutputView {
             String name = playerProfit.getPlayerName();
             System.out.println(name + ": " + profit);
         }
+    }
+
+    public static void printCardResults(Dealer dealer, DealerResults dealerResults, PlayerResults playerResults) {
+        System.out.println(Formatter.formatDealerCardResult(dealer, dealerResults));
+        playerResults.getPlayerResults()
+                .forEach(result -> System.out.println(Formatter.formatPlayerCardResult(result)));
     }
 }
