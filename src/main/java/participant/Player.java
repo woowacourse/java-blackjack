@@ -47,6 +47,7 @@ public class Player {
         return nickname.getValue();
     }
 
+    @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Player player = (Player) o;
