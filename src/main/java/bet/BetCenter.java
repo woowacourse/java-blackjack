@@ -17,14 +17,14 @@ public class BetCenter {
 
     public int calculateDealerProfit(Dealer dealer) {
         return deriveBettingResults(dealer).values().stream()
-                .mapToInt(value -> -value.getValue())
+                .mapToInt(value -> -value)
                 .sum();
     }
 
-    public Map<Player, BetAmount> deriveBettingResults(Dealer dealer) {
-        Map<Player, BetAmount> bettingResults = new LinkedHashMap<>();
+    public Map<Player, Integer> deriveBettingResults(Dealer dealer) {
+        Map<Player, Integer> bettingResults = new LinkedHashMap<>();
         for (Player player : playerBetAmounts.keySet()) {
-            bettingResults.put(player, new BetAmount(calculateProfit(player, dealer)));
+            bettingResults.put(player, (int) calculateProfit(player, dealer));
         }
         return bettingResults;
     }

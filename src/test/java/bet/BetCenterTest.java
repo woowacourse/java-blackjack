@@ -67,11 +67,11 @@ class BetCenterTest {
         ));
 
         // when
-        Map<Player, BetAmount> bettingResults = betCenter.deriveBettingResults(dealer);
+        Map<Player, Integer> bettingResults = betCenter.deriveBettingResults(dealer);
 
         // then
-        assertThat(bettingResults.get(player1).getValue()).isEqualTo(-10000);
-        assertThat(bettingResults.get(player2).getValue()).isEqualTo(-20000);
+        assertThat(bettingResults.get(player1)).isEqualTo(-10000);
+        assertThat(bettingResults.get(player2)).isEqualTo(-20000);
     }
 
     @Test
@@ -91,9 +91,9 @@ class BetCenterTest {
         BetCenter betCenter = new BetCenter(Map.of(
                 player, new BetAmount(10000)
         ));
-        Map<Player, BetAmount> bettingResults = betCenter.deriveBettingResults(dealer);
+        Map<Player, Integer> bettingResults = betCenter.deriveBettingResults(dealer);
 
-        assertThat(bettingResults.get(player).getValue()).isEqualTo(15000);
+        assertThat(bettingResults.get(player)).isEqualTo(15000);
     }
 
 
@@ -117,10 +117,10 @@ class BetCenterTest {
         BetCenter betCenter = new BetCenter(Map.of(player, new BetAmount(10000)));
 
         // when
-        Map<Player, BetAmount> bettingResults = betCenter.deriveBettingResults(dealer);
+        Map<Player, Integer> bettingResults = betCenter.deriveBettingResults(dealer);
 
         // then
-        assertThat(bettingResults.get(player).getValue()).isEqualTo(0);
+        assertThat(bettingResults.get(player)).isEqualTo(0);
     }
 
     @Test
@@ -144,10 +144,10 @@ class BetCenterTest {
         BetCenter betCenter = new BetCenter(Map.of(player, new BetAmount(10000)));
 
         // when
-        Map<Player, BetAmount> bettingResults = betCenter.deriveBettingResults(dealer);
+        Map<Player, Integer> bettingResults = betCenter.deriveBettingResults(dealer);
 
         // then
-        assertThat(bettingResults.get(player).getValue()).isEqualTo(10000);
+        assertThat(bettingResults.get(player)).isEqualTo(10000);
     }
 
     @Test
@@ -174,10 +174,10 @@ class BetCenterTest {
         ));
 
         // when
-        Map<Player, BetAmount> bettingResults = betCenter.deriveBettingResults(dealer);
+        Map<Player, Integer> bettingResults = betCenter.deriveBettingResults(dealer);
 
         // then
-        assertThat(bettingResults.get(player).getValue()).isEqualTo(-15000);
+        assertThat(bettingResults.get(player)).isEqualTo(-15000);
     }
 
     @Test
@@ -218,12 +218,12 @@ class BetCenterTest {
         ));
 
         // when
-        Map<Player, BetAmount> bettingResults = betCenter.deriveBettingResults(dealer);
+        Map<Player, Integer> bettingResults = betCenter.deriveBettingResults(dealer);
 
         // then
-        assertThat(bettingResults.get(player1).getValue()).isEqualTo(15000);
-        assertThat(bettingResults.get(player2).getValue()).isEqualTo(30000);
-        assertThat(bettingResults.get(player3).getValue()).isEqualTo(12000);
+        assertThat(bettingResults.get(player1)).isEqualTo(15000);
+        assertThat(bettingResults.get(player2)).isEqualTo(30000);
+        assertThat(bettingResults.get(player3)).isEqualTo(12000);
     }
 
     @Test
