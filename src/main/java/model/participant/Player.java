@@ -18,4 +18,9 @@ public final class Player extends Participant {
     public List<Card> openInitialCard() {
         return cardHand.getCards();
     }
+
+    @Override
+    public Name getName() {
+        return name;
+    }
 }

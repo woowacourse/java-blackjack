@@ -7,30 +7,30 @@ import java.util.List;
 import java.util.Map;
 import model.card.Deck;
 import model.participant.Bet;
-import model.participant.Dealer;
 import model.participant.Name;
-import model.participant.Players;
+import model.participant.Participants;
 import view.PlayerNames;
 
 public final class GameSetupConsole extends Console {
     private final GameSetupController gameSetupController = new GameSetupController();
 
-    public Players registerPlayers(final Deck deck) {
+    public Participants registerParticipants(final Deck deck) {
         Map<Name, Bet> registerInput = new LinkedHashMap<>();
         PlayerNames playerNames = readPlayerNames();
         for (Name playerName : playerNames.playerNames()) {
             Bet bet = readBet(playerName);
             registerInput.put(playerName, bet);
         }
-        return new Players(registerInput, deck);
+        return Participants.initialize(registerInput, deck);
     }
 
-    public Dealer registerDealer(final Deck deck) {
-        return null;
+    public void displaySetupResult(final Participants participants) {
+        String setupResult = gameSetupController.getSetupResult(participants);
+        display(setupResult);
     }
 
     private PlayerNames readPlayerNames() {
-        display(gameSetupController.guideToInputName());
+        display(gameSetupController.getInputNameGuide());
         List<Name> playerNames = Arrays.stream(readLine().split(","))
                 .map(String::trim)
                 .filter(name -> !name.isBlank() && !name.isEmpty())
@@ -40,7 +40,7 @@ public final class GameSetupConsole extends Console {
     }
 
     private Bet readBet(final Name playerName) {
-        display(gameSetupController.guideToBet(playerName));
+        display(gameSetupController.getBettingGuide(playerName));
         String input = readLine();
         try {
             return new Bet(Integer.parseInt(input));

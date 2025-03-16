@@ -5,7 +5,7 @@ import java.util.List;
 import model.card.Card;
 import model.card.Deck;
 
-public class CardHand {
+public final class CardHand {
     private final List<Card> cards;
 
     private CardHand(final Card card1, final Card card2) {

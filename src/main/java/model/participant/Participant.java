@@ -13,4 +13,6 @@ public abstract class Participant {
     }
 
     public abstract List<Card> openInitialCard();
+
+    public abstract Name getName();
 }

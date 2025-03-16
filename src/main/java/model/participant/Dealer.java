@@ -13,4 +13,9 @@ public final class Dealer extends Participant {
     public List<Card> openInitialCard() {
         return List.of(cardHand.getFirstCard());
     }
+
+    @Override
+    public Name getName() {
+        return new Name("딜러");
+    }
 }

@@ -1,17 +1,21 @@
 package controller;
 
 import model.participant.Name;
-import view.PlayerRegisterView;
-import view.View;
+import model.participant.Participants;
+import view.GameSetupView;
 
 public final class GameSetupController {
-    private final PlayerRegisterView playerRegisterView = new PlayerRegisterView();
+    private final GameSetupView gameSetupView = new GameSetupView();
 
-    public View guideToInputName() {
-        return playerRegisterView.guideToInputName();
+    public String getInputNameGuide() {
+        return gameSetupView.getInputNameGuide();
     }
 
-    public View guideToBet(Name playerName) {
-        return playerRegisterView.guideToBet(playerName);
+    public String getBettingGuide(final Name playerName) {
+        return gameSetupView.getBettingGuide(playerName);
+    }
+
+    public String getSetupResult(final Participants participants) {
+        return gameSetupView.getSetupResult(participants);
     }
 }

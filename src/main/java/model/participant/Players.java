@@ -12,4 +12,8 @@ public final class Players {
                 .map(registerEntry -> new Player(registerEntry.getKey(), registerEntry.getValue(), deck))
                 .toList();
     }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 }

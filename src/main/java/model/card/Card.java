@@ -11,21 +11,21 @@ public final class Card {
         this.suit = suit;
     }
 
-    public int score() {
-        return rank.getValue();
-    }
-
-    public boolean isAce() {
-        return rank == Rank.ACE;
-    }
-
-//    public Rank getRank() {
-//        return rank;
+//    public int score() {
+//        return rank.getValue();
 //    }
 //
-//    public Suit getSuit() {
-//        return suit;
+//    public boolean isAce() {
+//        return rank == Rank.ACE;
 //    }
+
+    public Rank getRank() {
+        return rank;
+    }
+
+    public Suit getSuit() {
+        return suit;
+    }
 
     @Override
     public boolean equals(Object o) {

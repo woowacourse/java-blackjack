@@ -1,7 +1,7 @@
 package model.participant;
 
 public final class Bet {
-    private static final int amountUnit = 10000;
+    private static final int AMOUNT_UNIT = 10000;
 
     private final int amount;
 
@@ -11,7 +11,7 @@ public final class Bet {
     }
 
     private void validate(final int amount) {
-        if (amount <= 0 || amount % amountUnit != 0) {
+        if (amount <= 0 || amount % AMOUNT_UNIT != 0) {
             throw new IllegalArgumentException("[ERROR] 배팅은 10,000원 단위로만 가능합니다.");
         }
     }

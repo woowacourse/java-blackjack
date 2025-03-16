@@ -1,10 +1,10 @@
 package model.card;
 
 public enum Suit {
-    SPADE("스페이드"),
-    CLOVER("클로버"),
-    HEART("하트"),
-    DIAMOND("다이아몬드");
+    SPADE("♠︎"),
+    CLOVER("♣︎"),
+    HEART("♥︎"),
+    DIAMOND("♦︎");
 
     private final String name;
 
