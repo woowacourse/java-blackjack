@@ -72,17 +72,6 @@ public class BlackJack {
         return gameResult;
     }
 
-    public Map<GameResult, Integer> getDealerResult() {
-        Map<GameResult, Integer> result = new HashMap<>();
-        Map<Player, GameResult> gameResult = getPlayersResult();
-        for (GameResult playerResult : gameResult.values()) {
-            GameResult dealerResult = playerResult.getReverse();
-            final int updated = result.getOrDefault(dealerResult, 0) + 1;
-            result.put(dealerResult, updated);
-        }
-        return result;
-    }
-
     public int getDealerRevenue() {
         Map<Player, Integer> revenues = getPlayerRevenues();
         return -1 * revenues.values().stream().mapToInt(i -> i).sum();
