@@ -9,8 +9,13 @@ public class Player extends GameParticipant {
     }
 
     private void validatePlayerName(String playerName) {
-        if (playerName.equals("딜러")) {
-            throw new IllegalArgumentException("[ERROR] '딜러'는 플레이어 이름으로 사용할 수 없습니다.");
+        if (playerName.equals(Dealer.NAME)) {
+            throw new IllegalArgumentException(String.format("[ERROR] '%s'는 플레이어 이름으로 사용할 수 없습니다.", Dealer.NAME));
         }
+    }
+
+    @Override
+    public boolean canHit() {
+        return !isBlackJack() && !isBust();
     }
 }

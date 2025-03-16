@@ -67,6 +67,6 @@ class DealerTest {
                 Set.of(CardFixture.of(TEN, HEART), CardFixture.of(SIX, DIAMOND)));
         Dealer dealer = new Dealer(deck, cardHand);
         // when & then
-        assertThat(dealer.doesNeedCard()).isTrue();
+        assertThat(dealer.canHit()).isTrue();
     }
 }

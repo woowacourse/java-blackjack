@@ -44,7 +44,7 @@ public record Score(int value) {
     }
 
     public static boolean doesDealerNeedCard(Set<Card> cards) {
-        return calculate(cards).value == DEALER_HIT_THRESHOLD.value();
+        return calculate(cards).value <= DEALER_HIT_THRESHOLD.value();
     }
 
     private Score addScore(Score other) {

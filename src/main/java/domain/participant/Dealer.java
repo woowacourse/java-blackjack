@@ -5,22 +5,24 @@ import domain.card.CardHand;
 import domain.card.Deck;
 
 public class Dealer extends GameParticipant {
+    public static final String NAME = "딜러";
     private final Deck deck;
 
     public Dealer(Deck deck, CardHand cardHand) {
-        super("딜러", cardHand);
+        super(NAME, cardHand);
         this.deck = deck;
-    }
-
-    public Card pickCard() {
-        return deck.drawCard();
     }
 
     public CardHand pickInitialDeal() {
         return deck.getInitialDeal();
     }
 
-    public boolean doesNeedCard() {
+    public Card pickCard() {
+        return deck.drawCard();
+    }
+
+    @Override
+    public boolean canHit() {
         return cardHand.doesDealerNeedCard();
     }
 }
