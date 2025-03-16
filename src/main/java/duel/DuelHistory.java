@@ -25,7 +25,13 @@ public class DuelHistory {
 	}
 
 	public DuelResult calculateDuelResult() {
-		return null;
+		if (isWin()) {
+			return DuelResult.WIN;
+		}
+		if (isDraw()) {
+			return DuelResult.DRAW;
+		}
+		return DuelResult.LOSE;
 	}
 
 	public boolean isWin() {
