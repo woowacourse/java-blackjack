@@ -65,7 +65,8 @@ public class BlackJackGame {
     public Map<GameResult, Integer> calculateDealerWinningCount() {
         Map<Player, GameResult> playerResult = calculateGameResult();
         Map<GameResult, Integer> dealerWinningCount = new HashMap<>();
-        playerResult.values().stream()
+        playerResult.values()
+                .stream()
                 .map(GameResult::getReverse)
                 .forEach((result) -> dealerWinningCount.put(result, dealerWinningCount.getOrDefault(result, 0) + 1));
 
@@ -74,7 +75,11 @@ public class BlackJackGame {
 
     public Money calculateDealerRevenue() {
         Map<Player, Money> results = calculateRevenue();
-        return results.values().stream().reduce(Money::plus).map(money -> money.times(-1)).orElse(Money.of(0));
+        return results.values()
+                .stream()
+                .reduce(Money::plus)
+                .map(money -> money.times(-1))
+                .orElse(Money.of(0));
     }
 
     public int calculateDealerDrawCount() {
