@@ -31,7 +31,6 @@ public class GameManager {
         for (Player player : players.getPlayers()) {
             receiveAdditionalCard(player, blackJack);
         }
-
         receiveAdditionalCard(dealer, blackJack);
         OutputView.printAllParticipantScore(dealer, players);
 
