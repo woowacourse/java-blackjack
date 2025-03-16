@@ -7,16 +7,16 @@ import java.util.List;
 
 public class CardDeckGenerator {
 
-    private final List<Card> DEFAULT_CARDS;
+    private static final List<Card> DEFAULT_CARDS;
 
-    public CardDeckGenerator() {
+    static {
         List<Card> newCards = new ArrayList<>();
         for (CardShape shape : CardShape.values()) {
             Arrays.stream(CardValue.values())
                     .map(cardValue -> new Card(shape, cardValue))
                     .forEach(newCards::add);
         }
-        this.DEFAULT_CARDS = newCards.stream().toList();
+        DEFAULT_CARDS = newCards.stream().toList();
     }
 
     public CardDeck makeShuffled() {
