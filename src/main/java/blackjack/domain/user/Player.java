@@ -38,7 +38,7 @@ public class Player {
 
     public PlayerProfit calculateProfit(int dealerPoint) {
         GameResultType gameResult = GameResultType.parse(gameUser.getHand().size(), gameUser.getPoint(), dealerPoint);
-        int profit = bettingAmount.calculateProfitAmount(gameResult.getProfitRate());
+        int profit = bettingAmount.calculateMultiplication(gameResult.getProfitRate());
         return new PlayerProfit(gameUser.getNickname(), profit);
     }
 

@@ -99,7 +99,7 @@ class PlayerTest {
 
         PlayerProfit profit = player.calculateProfit(dealer.getPoint());
 
-        int expectedProfit = PlayerFixture.DEFAULT_BETTING_AMOUNT.calculateProfitAmount(
+        int expectedProfit = PlayerFixture.DEFAULT_BETTING_AMOUNT.calculateMultiplication(
                 GameResultType.WIN_WITH_INITIAL_HAND_BLACKJACK.getProfitRate());
         assertThat(profit.getNickname()).isEqualTo("플레이어");
         assertThat(profit.getProfit()).isEqualTo(expectedProfit);
@@ -113,7 +113,7 @@ class PlayerTest {
 
         PlayerProfit profit = player.calculateProfit(dealer.getPoint());
 
-        int expectedProfit = PlayerFixture.DEFAULT_BETTING_AMOUNT.calculateProfitAmount(expectedType.getProfitRate());
+        int expectedProfit = PlayerFixture.DEFAULT_BETTING_AMOUNT.calculateMultiplication(expectedType.getProfitRate());
         assertThat(profit.getNickname()).isEqualTo(player.getNickname());
         assertThat(profit.getProfit()).isEqualTo(expectedProfit);
     }
@@ -137,7 +137,7 @@ class PlayerTest {
     void canCreateByWinningType(Dealer dealer, Player player, GameResultType expectedType) {
         PlayerProfit profit = player.calculateProfit(dealer.getPoint());
 
-        int expectedProfit = PlayerFixture.DEFAULT_BETTING_AMOUNT.calculateProfitAmount(expectedType.getProfitRate());
+        int expectedProfit = PlayerFixture.DEFAULT_BETTING_AMOUNT.calculateMultiplication(expectedType.getProfitRate());
         assertThat(profit.getNickname()).isEqualTo("플레이어");
         assertThat(profit.getProfit()).isEqualTo(expectedProfit);
     }

@@ -3,7 +3,6 @@ package blackjack.domain.value;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.value.BettingAmount;
 import blackjack.exception.ExceptionMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,7 +25,7 @@ class BettingAmountTest {
     void calculateProfit() {
         BettingAmount bettingAmount = new BettingAmount(1000);
 
-        int actualAmount = bettingAmount.calculateProfitAmount(1.5);
+        int actualAmount = bettingAmount.calculateMultiplication(1.5);
 
         assertThat(actualAmount).isEqualTo(1500);
     }

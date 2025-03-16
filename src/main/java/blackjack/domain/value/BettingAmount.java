@@ -12,7 +12,7 @@ public final class BettingAmount {
         this.value = value;
     }
 
-    public int calculateProfitAmount(double rate) {
+    public int calculateMultiplication(double rate) {
         return (int) (value * rate);
     }
 
