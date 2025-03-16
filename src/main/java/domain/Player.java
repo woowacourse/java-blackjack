@@ -4,6 +4,7 @@ import static domain.GameResultStatus.DRAW;
 import static domain.GameResultStatus.LOSE;
 import static domain.GameResultStatus.WIN;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Player extends Participant {
@@ -33,6 +34,10 @@ public class Player extends Participant {
 
     public String getName() {
         return name;
+    }
+
+    public List<Card> getDealCards() {
+        return hand.getCards();
     }
 
     public boolean hasBustCards() {

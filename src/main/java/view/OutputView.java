@@ -4,8 +4,8 @@ import static domain.GameResultStatus.*;
 
 import controller.dto.CardsResultResponse;
 import controller.dto.InitialDealResponse;
-import controller.dto.InitialDealResponse.DealerInitialDealResult;
-import controller.dto.InitialDealResponse.PlayerInitialDealResult;
+import controller.dto.InitialDealResponse.DealerDealResult;
+import controller.dto.InitialDealResponse.PlayerDealResult;
 import controller.dto.PlayerHitResponse;
 import controller.dto.ProfitResultResponse;
 import domain.Dealer;
@@ -30,7 +30,7 @@ public class OutputView {
         String parsedPlayerNames = outputFormatter.formatPlayerNames(playerNames);
 
         System.out.printf("\n딜러와 %s에게 2장을 나누었습니다.\n", parsedPlayerNames);
-        System.out.printf("딜러카드: %s\n", outputFormatter.formatCard(dealer.getFirstCard()));
+        System.out.printf("딜러카드: %s\n", outputFormatter.formatCard(dealer.getDealCard()));
         players.getPlayers().forEach(
                 player ->
                         System.out.printf("%s카드: %s\n", player.getName(),
@@ -39,15 +39,15 @@ public class OutputView {
     }
 
     public void printInitialDealResult(InitialDealResponse initialDealResponses) {
-        DealerInitialDealResult dealerInitialDealResult = initialDealResponses.dealerInitialDealResult();
-        List<PlayerInitialDealResult> playerInitialDealResult = initialDealResponses.playerInitialDealResults();
+        DealerDealResult dealerDealResult = initialDealResponses.dealerDealResult();
+        List<PlayerDealResult> playerInitialDealResult = initialDealResponses.playerInitialDealResults();
 
         List<String> playerNames = playerInitialDealResult.stream()
-                .map(PlayerInitialDealResult::name)
+                .map(PlayerDealResult::name)
                 .toList();
         String parsedPlayerNames = outputFormatter.formatPlayerNames(playerNames);
-        System.out.printf("\n%s와 %s에게 2장을 나누었습니다.\n", dealerInitialDealResult.name(), parsedPlayerNames);
-        System.out.printf("딜러카드: %s\n", outputFormatter.formatCard(dealerInitialDealResult.card()));
+        System.out.printf("\n%s와 %s에게 2장을 나누었습니다.\n", dealerDealResult.name(), parsedPlayerNames);
+        System.out.printf("딜러카드: %s\n", outputFormatter.formatCard(dealerDealResult.card()));
         playerInitialDealResult.forEach(
                 result -> System.out.printf("%s카드: %s\n", result.name(), outputFormatter.formatCards(result.cards()))
         );

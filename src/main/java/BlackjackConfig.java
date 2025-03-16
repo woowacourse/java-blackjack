@@ -3,7 +3,7 @@ import controller.BlackjackFrontController;
 import domain.CardFactory;
 import domain.CardGiver;
 import domain.Deck;
-import domain.Participants;
+import domain.BlackjackParticipants;
 import view.ConsoleView;
 import view.InputView;
 import view.OutputView;
@@ -21,7 +21,7 @@ public class BlackjackConfig {
     }
 
     private BlackjackController blackjackController() {
-        return new BlackjackController(new Participants());
+        return new BlackjackController(new BlackjackParticipants(), cardGiver());
     }
 
     private InputView inputView() {

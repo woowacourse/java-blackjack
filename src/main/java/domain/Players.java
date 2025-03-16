@@ -1,5 +1,7 @@
 package domain;
 
+import static util.ExceptionConstants.ERROR_HEADER;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -38,5 +40,12 @@ public class Players {
         return players.stream()
                 .map(Player::getName)
                 .toList();
+    }
+
+    public Player findPlayerByName(String playerName) {
+        return players.stream()
+                .filter(player -> player.getName().equals(playerName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(ERROR_HEADER + "해당 이름을 가진 플레이어가 없습니다."));
     }
 }

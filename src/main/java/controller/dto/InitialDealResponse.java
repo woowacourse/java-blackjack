@@ -4,17 +4,17 @@ import domain.Card;
 import java.util.List;
 
 public record InitialDealResponse(
-        DealerInitialDealResult dealerInitialDealResult,
-        List<PlayerInitialDealResult> playerInitialDealResults
+        DealerDealResult dealerDealResult,
+        List<PlayerDealResult> playerInitialDealResults
 ) {
 
-    public record DealerInitialDealResult(
+    public record DealerDealResult(
             String name,
             Card card
     ) {
     }
 
-    public record PlayerInitialDealResult(
+    public record PlayerDealResult(
             String name,
             List<Card> cards
     ) {
