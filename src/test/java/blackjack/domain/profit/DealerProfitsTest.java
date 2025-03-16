@@ -9,6 +9,19 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.Test;
 
 class DealerProfitsTest {
+
+    @Test
+    void 플레이어의_수익_결과에_따라_딜러의_수익_결과를_저장한다() {
+        // given
+        int playerProfitAmount = 1_000;
+
+        // when
+        DealerProfit dealerProfit = DealerProfit.createWithPlayerProfit(playerProfitAmount);
+
+        // then
+        assertThat(dealerProfit.getProfit()).isEqualTo(-1_000);
+    }
+
     @Test
     void 이미_저장된_플레이어에_대한_딜러의_수익_결과인_경우_예외를_던진다() {
         // given

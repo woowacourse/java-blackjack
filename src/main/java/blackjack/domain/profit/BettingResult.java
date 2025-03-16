@@ -42,8 +42,10 @@ public class BettingResult {
     }
 
     private void saveProfitWhenPlayerTies(Player player) {
-        PlayerProfit playerProfit = new PlayerProfit(player, 0);
-        DealerProfit dealerProfit = new DealerProfit(0);
+        int playerProfitAmount = 0;
+
+        PlayerProfit playerProfit = new PlayerProfit(player, playerProfitAmount);
+        DealerProfit dealerProfit = DealerProfit.createWithPlayerProfit(playerProfitAmount);
         saveProfit(player, dealerProfit, playerProfit);
     }
 
@@ -51,21 +53,23 @@ public class BettingResult {
         int playerProfitAmount = (int) Math.round(betAmount * 1.5);
 
         PlayerProfit playerProfit = new PlayerProfit(player, playerProfitAmount);
-        DealerProfit dealerProfit = new DealerProfit(playerProfitAmount * -1);
+        DealerProfit dealerProfit = DealerProfit.createWithPlayerProfit(playerProfitAmount);
 
         saveProfit(player, dealerProfit, playerProfit);
     }
 
     private void saveProfitWhenPlayerWins(Player player, int betAmount) {
         PlayerProfit playerProfit = new PlayerProfit(player, betAmount);
-        DealerProfit dealerProfit = new DealerProfit(betAmount * -1);
+        DealerProfit dealerProfit = DealerProfit.createWithPlayerProfit(betAmount);
 
         saveProfit(player, dealerProfit, playerProfit);
     }
 
     private void saveProfitWhenPlayerLoses(Player player, int betAmount) {
-        PlayerProfit playerProfit = new PlayerProfit(player, betAmount * -1);
-        DealerProfit dealerProfit = new DealerProfit(betAmount);
+        int playerProfitAmount = betAmount * -1;
+
+        PlayerProfit playerProfit = new PlayerProfit(player, playerProfitAmount);
+        DealerProfit dealerProfit = DealerProfit.createWithPlayerProfit(playerProfitAmount);
 
         saveProfit(player, dealerProfit, playerProfit);
     }
