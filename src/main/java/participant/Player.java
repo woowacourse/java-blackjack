@@ -21,10 +21,6 @@ public class Player extends Participant {
     }
 
     public int calculateProfit(GameResult result) {
-        if (state instanceof Bust) {
-            return -bettingMoney.getMoney();
-        }
-
         if (result == GameResult.WIN) {
             return -(int) state.profit(bettingMoney.getMoney());
         }
