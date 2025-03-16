@@ -46,7 +46,7 @@ class GameTest {
         List<Player> players = game.getPlayers();
         Player player = players.getFirst();
         // when
-        game.hit(player.getName());
+        game.playerHit(player.getName());
         // then
         assertThat(player.getCards().size()).isEqualTo(3);
     }
@@ -54,10 +54,12 @@ class GameTest {
     @Test
     @DisplayName("딜러에게 카드를 지급할 수 있다.")
     void testDealerHit() {
-        // given & when
-        game.hit(Dealer.NAME);
+        // given
+        Dealer dealer = game.getDealer();
+        // when
+        game.dealerHit();
         // then
-        assertThat(game.getCardsOf(Dealer.NAME).size()).isEqualTo(3);
+        assertThat(dealer.getCards().size()).isEqualTo(3);
     }
 
     @Test
@@ -66,7 +68,7 @@ class GameTest {
         // given
         Dealer dealer = game.getDealer();
         // when
-        boolean actual = game.canHit(Dealer.NAME);
+        boolean actual = game.canDealerHit();
         // then
         boolean expected = dealer.calculateScore() <= 16;
         assertThat(actual).isEqualTo(expected);

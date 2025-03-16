@@ -52,13 +52,13 @@ public class BlackJackController {
     }
 
     private void hitOrStay(Game game, String playerName) {
-        while (game.canHit(playerName)) {
+        while (game.canPlayerHit(playerName)) {
             Answer answer = retryUntilSuccess(() -> inputView.readHitOrStay(playerName));
             if (answer == Answer.NO) {
                 displayPlayerCards(game, playerName);
                 return;
             }
-            game.hit(playerName);
+            game.playerHit(playerName);
             displayPlayerCards(game, playerName);
         }
     }
@@ -71,8 +71,8 @@ public class BlackJackController {
 
     private void dealAdditionalCardsToDealer(Game game) {
         outputView.displayEmptyLine();
-        while (game.canHit(Dealer.NAME)) {
-            game.hit(Dealer.NAME);
+        while (game.canDealerHit()) {
+            game.dealerHit();
             outputView.displayDealerHitMessage();
         }
         outputView.displayEmptyLine();

@@ -1,20 +1,19 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.CardHand;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Players {
     private static final int MAX_PLAYER_COUNT = 5;
 
     private final List<Player> players;
 
-    public Players(List<String> playerNames) {
+    public Players(List<String> playerNames, Dealer dealer) {
         validatePlayerCount(playerNames);
         validateDuplicateName(playerNames);
-        this.players = new ArrayList<>();
+        this.players = registerPlayer(playerNames, dealer);
     }
 
     private void validatePlayerCount(List<String> playerNames) {
@@ -29,8 +28,10 @@ public class Players {
         }
     }
 
-    public void registerPlayer(String playerName, CardHand initialDeal) {
-        players.add(new Player(playerName, initialDeal));
+    private List<Player> registerPlayer(List<String> playerNames, Dealer dealer) {
+        return playerNames.stream()
+                .map(name -> new Player(name, dealer.pickInitialDeal()))
+                .collect(Collectors.toList());
     }
 
     public void hit(String playerName, Card card) {
@@ -56,5 +57,9 @@ public class Players {
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public List<Card> getCardsOf(String playerName) {
+        return findPlayerByName(playerName).getCards();
     }
 }
