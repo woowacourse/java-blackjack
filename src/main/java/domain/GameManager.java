@@ -45,25 +45,14 @@ public class GameManager {
     }
 
     public Map<String, Integer> calculatePlayerBattingAmountOfReturn(final Map<String, GameResult> playersGameResult) {
-        return playersGameResult.entrySet()
+    public Map<String, Double> calculatePlayerBattingAmountOfReturn() {
+        return playerGroup.calculatePlayersGameResult(dealer)
+                .entrySet()
                 .stream()
                 .collect(Collectors.toMap(
                         Entry::getKey,
-                        this::calculateBattingAmountOfReturn,
+                        entry -> playerGroup.calculateBettingOfReturn(entry, dealer),
                         (newValue, oldValue) -> newValue
                 ));
-    }
-
-    private int calculateBattingAmountOfReturn(final Entry<String, GameResult> entry) {
-        final String playerName = entry.getKey();
-        final GameResult gameResult = entry.getValue();
-        final int battingOfReturnByName = playerGroup.getBattingOfReturnByName(playerName);
-        if (gameResult.isWin()) {
-            return battingOfReturnByName;
-        }
-        if (gameResult.isDraw()) {
-            return 0;
-        }
-        return -battingOfReturnByName;
     }
 }

@@ -49,10 +49,9 @@ public abstract class Gamer {
         return cardGroup;
     }
 
-    public boolean canReceiveCard(final AnswerCommand answerCommand) {
-        if (!answerCommand.isYes()) {
-            return false;
-        }
-        return !(isBust() && cardGroup.isBlackjack());
+    public double calculateBettingScore(final GameResult gameResult, final boolean isBlackjackOnlyPlayer) {
+        return betting.calculateBettingOfReturn(gameResult, isBlackjackOnlyPlayer);
     }
+
+    public abstract boolean canReceiveCard();
 }

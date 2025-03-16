@@ -44,6 +44,15 @@ public class PlayerGroup {
         findByPlayerByName(playerName).giveCard(card);
     }
 
+    public double calculateBettingOfReturn(final Entry<String, GameResult> playerGameResult, final Dealer dealer) {
+        final Player player = findByPlayerByName(playerGameResult.getKey());
+        return player.calculateBettingScore(playerGameResult.getValue(),isBlackjackOnlyPlayer(player, dealer));
+    }
+
+    private boolean isBlackjackOnlyPlayer(final Player player, final Dealer dealer) {
+        return player.isBlackjack() && !dealer.isBlackjack();
+    }
+
     private Player findByPlayerByName(final String playerName) {
         return players.stream()
                 .filter(player -> Objects.equals(playerName, player.getName()))
