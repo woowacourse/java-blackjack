@@ -1,8 +1,5 @@
-package blackjack.domain;
+package blackjack.domain.game;
 
-import blackjack.domain.game.Hand;
-import blackjack.domain.game.Player;
-import blackjack.domain.game.Players;
 import blackjack.domain.result.BetAmount;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;

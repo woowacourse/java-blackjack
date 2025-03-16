@@ -1,8 +1,8 @@
-package blackjack.domain.result;
+package blackjack.domain.profit;
 
 import blackjack.domain.game.Hand;
 import blackjack.domain.game.Player;
-import blackjack.domain.profit.PlayerProfit;
+import blackjack.domain.result.BetAmount;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package blackjack.domain.result;
+package blackjack.domain.profit;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
@@ -6,11 +6,13 @@ import blackjack.domain.card.CardSuit;
 import blackjack.domain.game.Dealer;
 import blackjack.domain.game.Hand;
 import blackjack.domain.game.Player;
-import blackjack.domain.profit.BettingResult;
-import blackjack.domain.profit.DealerProfit;
-import blackjack.domain.profit.DealerProfits;
-import blackjack.domain.profit.PlayerProfit;
-import blackjack.domain.profit.PlayerProfits;
+import blackjack.domain.result.BetAmount;
+import blackjack.domain.result.DealerResult;
+import blackjack.domain.result.DealerResults;
+import blackjack.domain.result.GameResultType;
+import blackjack.domain.result.PlayerResult;
+import blackjack.domain.result.PlayerResults;
+import blackjack.domain.result.Score;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import org.junit.jupiter.api.BeforeEach;

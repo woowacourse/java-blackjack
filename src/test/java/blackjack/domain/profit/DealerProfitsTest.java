@@ -1,9 +1,8 @@
-package blackjack.domain.result;
+package blackjack.domain.profit;
 
 import blackjack.domain.game.Hand;
 import blackjack.domain.game.Player;
-import blackjack.domain.profit.DealerProfit;
-import blackjack.domain.profit.DealerProfits;
+import blackjack.domain.result.BetAmount;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
