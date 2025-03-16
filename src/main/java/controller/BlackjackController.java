@@ -33,7 +33,7 @@ public class BlackjackController {
             printFinalScore(players, dealer);
             WinningResults winningResults = printWinningResult(players, dealer);
 
-            calculateRevenue(winningResults, players, dealer);
+            adjustRevenue(winningResults, players, dealer);
             printRevenue(players, dealer);
         } catch (RuntimeException e) {
             OutputView.printExceptionMessage(e.getMessage());
@@ -94,7 +94,7 @@ public class BlackjackController {
         return winningResults;
     }
 
-    private void calculateRevenue(WinningResults winningResults, Players players, Dealer dealer) {
+    private void adjustRevenue(WinningResults winningResults, Players players, Dealer dealer) {
         for (Player player : players.getPlayers()) {
             if (winningResults.isLose(player)) {
                 dealer.updateBetOwnerFrom(player);

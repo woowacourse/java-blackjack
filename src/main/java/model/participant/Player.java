@@ -61,11 +61,6 @@ public final class Player implements Bettable, Gameable {
         return new Bet(betAmount, this);
     }
 
-    @Override
-    public int calculateRevenue() {
-        return 0; //TODO 수정해야함
-    }
-
     public String getName() {
         return name;
     }

@@ -64,18 +64,12 @@ public final class Dealer implements BetOwnable, Gameable, GameProcessable {
     }
 
     @Override
-    public int calculateRevenue() {
-        return bets.calculateDealerRevenue();
-    }
-
-    @Override
     public void splitInitialDeck(Deck deck, Gameable gamer) {
         IntStream.range(0, INITIAL_DEAL_CARD_COUNT).forEach(
                 i -> gamer.receiveCard(deck.pick())
         );
     }
 
-    //TODO 꼭 dealer에게 있어야 할까?
     @Override
     public void receiveBet(Bet bet) {
         this.bets.add(bet);
@@ -91,8 +85,13 @@ public final class Dealer implements BetOwnable, Gameable, GameProcessable {
         bets.updateBetAmount(better);
     }
 
+    @Override
     public Bet findBetByBetter(Bettable better) {
         return bets.findByBetter(better);
+    }
+
+    public int calculateRevenue() {
+        return bets.calculateDealerRevenue();
     }
 }
 

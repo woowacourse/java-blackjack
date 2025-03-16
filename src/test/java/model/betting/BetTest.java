@@ -53,4 +53,6 @@ class BetTest {
         //then
         assertThat(newBet.getOwner()).isEqualTo(dealer);
     }
+
+
 }

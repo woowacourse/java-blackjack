@@ -102,7 +102,6 @@ class DealerTest {
         assertThat(dealer.findBetByBetter(jason).getOwner()).isEqualTo(dealer);
     }
 
-    //TODO player.calculateRevenue 작성 후 수정하기
     @DisplayName("10000원을 배팅한 플레이어는 승리하고, 20000원을 배팅한 플레이어는 패배했을 때 딜러는 10000원의 수익이 발생한다.")
     @Disabled
     @Test
@@ -114,7 +113,7 @@ class DealerTest {
         dealer.receiveBet(new Bet(20000, jason));
 
         //when
-        dealer.updateBetAmountOf(jason);
+        dealer.updateBetOwnerFrom(jason);
 
         //then
         assertThat(dealer.calculateRevenue()).isEqualTo(10000);
