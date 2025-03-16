@@ -25,13 +25,13 @@ public class BlackjackBettingMoney {
     }
     
     public Money getProfit(WinningStatus winningStatus) {
-        if (winningStatus.equals(WinningStatus.BLACKJACK_WIN)) {
+        if (winningStatus == WinningStatus.BLACKJACK_WIN) {
             return bettingMoney.multiply(BLACKJACK_WINNING_PROFIT_RATE);
         }
-        if (winningStatus.equals(WinningStatus.WIN)) {
+        if (winningStatus == WinningStatus.WIN) {
             return bettingMoney.multiply(WINNING_PROFIT_RATE);
         }
-        if (winningStatus.equals(WinningStatus.DRAW)) {
+        if (winningStatus == WinningStatus.DRAW) {
             return bettingMoney.multiply(DRAWING_PROFIT_RATE);
         }
         return bettingMoney.multiply(LOSING_PROFIT_RATE);
