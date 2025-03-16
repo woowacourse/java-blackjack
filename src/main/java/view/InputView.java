@@ -24,7 +24,7 @@ public class InputView {
             stringBuilder.append(player.getName())
                     .append("의 배팅 금액은?");
             System.out.println(stringBuilder);
-            bettingPrices.put(player, sc.nextInt());
+            bettingPrices.put(player, Integer.parseInt(sc.nextLine()));
         }
         return bettingPrices;
     }
