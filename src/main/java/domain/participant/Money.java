@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Money {
 
-    public static final int AMOUNT_VALUE = 100000;
+    private static final int AMOUNT_VALUE = 100000;
 
     private final int value;
 
