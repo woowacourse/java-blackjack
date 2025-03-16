@@ -17,8 +17,11 @@ public class Cards {
         int totalScore = cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
-
         return new Score(totalScore);
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == 2 && hasSoftAce() && calculateScore().isSatisfiedBlackJackScore();
     }
 
     public boolean isBust() {

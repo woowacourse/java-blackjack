@@ -18,6 +18,10 @@ public class Score implements Comparable<Score> {
         return value < hitCondition;
     }
 
+    public boolean isSatisfiedBlackJackScore() {
+        return value == BUST_CONDITION;
+    }
+
     public int getValue() {
         return value;
     }

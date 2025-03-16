@@ -23,6 +23,10 @@ public class Player {
         cards.add(findCard);
     }
 
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
+    }
+
     public boolean isBust() {
         return cards.isBust();
     }
