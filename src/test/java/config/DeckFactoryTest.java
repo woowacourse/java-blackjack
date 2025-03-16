@@ -11,8 +11,8 @@ public class DeckFactoryTest {
     @DisplayName("카드 덱 생성 테스트")
     void createCardDeckTest(){
         //given
-        CardDeckFactory cardDeckFactory = new CardDeckFactory();
+        DeckFactory deckFactory = new DeckFactory();
 
-        assertThat(cardDeckFactory.create()).isInstanceOf(Deck.class);
+        assertThat(deckFactory.create()).isInstanceOf(Deck.class);
     }
 }

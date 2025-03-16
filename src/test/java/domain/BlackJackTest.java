@@ -11,7 +11,7 @@ import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import config.CardDeckFactory;
+import config.DeckFactory;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.card.Hand;
@@ -38,8 +38,8 @@ public class BlackJackTest {
     @DisplayName("카드 분배 테스트")
     void hitCardsToParticipantTest(){
         //given
-        CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        Deck deck = cardDeckFactory.create();
+        DeckFactory deckFactory = new DeckFactory();
+        Deck deck = deckFactory.create();
         Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
         Map<Name, Money> playerBet = new LinkedHashMap<>(Map.of(new Name("pobi"), new Money(10000), new Name("lisa"), new Money(20000)));
         Players players = Players.from(playerBet);
@@ -65,8 +65,8 @@ public class BlackJackTest {
         InputView testInputView = new InputView(new Scanner(System.in));
         OutputView testOutputView = new OutputView();
 
-        CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        Deck deck = cardDeckFactory.create();
+        DeckFactory deckFactory = new DeckFactory();
+        Deck deck = deckFactory.create();
         Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
         Map<Name, Money> playerBet = new LinkedHashMap<>(Map.of(new Name("pobi"), new Money(10000), new Name("lisa"), new Money(20000)));
         Players players = Players.from(playerBet);
@@ -81,8 +81,8 @@ public class BlackJackTest {
     @DisplayName("딜러 드로우 테스트")
     void drawDealerTest(){
         //given
-        CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        Deck deck = cardDeckFactory.create();
+        DeckFactory deckFactory = new DeckFactory();
+        Deck deck = deckFactory.create();
         Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
         Map<Name, Money> playerBet = new LinkedHashMap<>(Map.of(new Name("pobi"), new Money(10000), new Name("lisa"), new Money(20000)));
         Players players = Players.from(playerBet);

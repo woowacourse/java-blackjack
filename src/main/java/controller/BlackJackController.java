@@ -1,6 +1,6 @@
 package controller;
 
-import config.CardDeckFactory;
+import config.DeckFactory;
 import domain.BlackJack;
 import domain.card.Deck;
 import domain.card.Hand;
@@ -26,8 +26,8 @@ public class BlackJackController {
     }
 
     public void start() {
-        CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        Deck deck = cardDeckFactory.create();
+        DeckFactory deckFactory = new DeckFactory();
+        Deck deck = deckFactory.create();
         Players players = initializePlayerBets();
         Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
 

@@ -13,7 +13,7 @@ import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import config.CardDeckFactory;
+import config.DeckFactory;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.card.Hand;
@@ -38,8 +38,8 @@ public class PlayerTest {
         // given
         Hand hand = new Hand(new ArrayList<>());
         Player player = new Player(hand, new Name("pobi"), new Money(10000));
-        CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        Deck cardDeck = cardDeckFactory.create();
+        DeckFactory deckFactory = new DeckFactory();
+        Deck cardDeck = deckFactory.create();
 
         // when - then
         assertDoesNotThrow(() -> player.hitCards(cardDeck));
@@ -49,8 +49,8 @@ public class PlayerTest {
     @DisplayName("카드 추가 테스트")
     void addCardTest() {
         //given
-        CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        Deck cardDeck = cardDeckFactory.create();
+        DeckFactory deckFactory = new DeckFactory();
+        Deck cardDeck = deckFactory.create();
         Hand hand = new Hand(new ArrayList<>());
         Player player = new Player(hand, new Name("pobi"), new Money(10000));
 

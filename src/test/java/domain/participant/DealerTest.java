@@ -11,7 +11,7 @@ import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import config.CardDeckFactory;
+import config.DeckFactory;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.card.Hand;
@@ -29,8 +29,8 @@ public class DealerTest {
     @DisplayName("카드 추가 테스트")
     void addCardsTest() {
         // given
-        CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        Deck deck = cardDeckFactory.create();
+        DeckFactory deckFactory = new DeckFactory();
+        Deck deck = deckFactory.create();
         Hand hand = new Hand(List.of(new Card(DIAMOND, TWO)));
         Dealer dealer = new Dealer(hand);
         //when-then

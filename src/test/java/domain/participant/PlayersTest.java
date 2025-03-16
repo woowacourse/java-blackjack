@@ -10,26 +10,19 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import config.CardDeckFactory;
+import config.DeckFactory;
 import domain.card.Card;
 import domain.card.Deck;
-import domain.card.Hand;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import view.InputView;
 import view.OutputView;
 
@@ -41,8 +34,8 @@ public class PlayersTest {
         Map<Name, Money> playerBet = new LinkedHashMap<>(Map.of(new Name("pobi"), new Money(10000), new Name("lisa"), new Money(20000)));
         Players players = Players.from(playerBet);
 
-        CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        Deck deck = cardDeckFactory.create();
+        DeckFactory deckFactory = new DeckFactory();
+        Deck deck = deckFactory.create();
 
         //when-then
 
