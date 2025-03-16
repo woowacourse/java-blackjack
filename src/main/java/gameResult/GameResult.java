@@ -25,8 +25,9 @@ public class GameResult {
                         HashMap::new,
                         Collectors.counting()));
         return countingResult.entrySet().stream()
-                .collect(Collectors.toMap(Map.Entry::getKey,
-                        entry -> countingResult.get(entry.getKey().calculateReverseResult()),
+                .collect(Collectors.toMap(
+                        entry -> entry.getKey().calculateReverseResult(),
+                        entry -> countingResult.get(entry.getKey()),
                         (existing, replacement) -> existing,
                         HashMap::new));
     }
