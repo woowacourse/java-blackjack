@@ -31,4 +31,8 @@ public final class Participants {
     public Players getPlayers() {
         return players;
     }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
 }
