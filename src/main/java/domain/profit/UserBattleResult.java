@@ -19,7 +19,7 @@ public enum UserBattleResult {
 
     // TODO: 라인 수 줄이기
     public static UserBattleResult compare(User user, Dealer dealer) {
-        if (dealer.isBust()) {
+        if (user.isBust()) {
             return UserBattleResult.LOSE;
         }
         if (dealer.isBust()) {

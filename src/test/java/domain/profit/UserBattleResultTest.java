@@ -10,10 +10,13 @@ import static domain.fixture.BlackjackCardFixture.SIX_HEART;
 import static domain.fixture.BlackjackCardFixture.TEN_HEART;
 
 import domain.BlackjackGameBoard;
+import domain.card.Cards;
 import domain.card.Deck;
 import domain.player.Dealer;
 import domain.player.User;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -87,7 +90,7 @@ class UserBattleResultTest {
     }
 
     @Test
-    void 딜러의_카드합이_유저의_카드합보다_높으면_유저의_패배다() {
+    void 유저의_카드합이_딜러의_카드합보다_낮으면_유저의_패배다() {
         // given
         Deck deck = new Deck(List.of(
                 TEN_HEART(), NINE_HEART(),    // user
@@ -99,6 +102,36 @@ class UserBattleResultTest {
         BlackjackGameBoard gameBoard = new BlackjackGameBoard(deck);
         gameBoard.distributeInitialCards(dealer);
         gameBoard.distributeInitialCards(user);
+
+        // when
+        UserBattleResult result = UserBattleResult.compare(user, dealer);
+
+        // then
+        Assertions.assertThat(result).isEqualTo(UserBattleResult.LOSE);
+    }
+
+    @Test
+    void 유저가_버스트_상태고_딜러가_버스트_상태면_유저의_패배다() {
+        // given
+        Deck deck = new Deck(List.of(
+                TEN_HEART(), TEN_HEART(),
+                TEN_HEART(), NINE_HEART(),    // user
+                KING_HEART(), JACK_HEART()  // dealer
+        ));
+        Dealer dealer = Dealer.createDefaultDealer();
+        User user = User.of("부기", 2000);
+
+        BlackjackGameBoard gameBoard = new BlackjackGameBoard(deck);
+        gameBoard.distributeInitialCards(dealer);
+        gameBoard.distributeInitialCards(user);
+
+        Function<User, Boolean> alwaysYes = u -> true;
+        BiConsumer<User, Cards> userOnnHit = (u, c) -> {
+        };
+        Runnable dealerOnHit = () -> {
+        };
+        gameBoard.hitUntilStay(user, alwaysYes, userOnnHit);
+        gameBoard.hitUntilUnder16(dealer, dealerOnHit);
 
         // when
         UserBattleResult result = UserBattleResult.compare(user, dealer);
