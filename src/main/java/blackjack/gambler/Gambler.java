@@ -10,9 +10,11 @@ public abstract class Gambler {
     public static final int MAX_SCORE = 21;
     public static final int INITIAL_CARD_COUNT = 2;
 
-    protected final Cards cards;
+    protected Cards cards;
 
-    protected Gambler(Cards cards) {
+    protected Gambler() {}
+
+    public void initializeHand(Cards cards) {
         validateInitialCardsSize(cards);
         this.cards = cards;
     }

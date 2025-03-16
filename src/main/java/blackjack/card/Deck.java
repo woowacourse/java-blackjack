@@ -19,7 +19,7 @@ public class Deck {
     public static Deck initialize() {
         List<Card> cards = Arrays.stream(TrumpRank.values())
                 .flatMap(rank -> Arrays.stream(TrumpSuit.values())
-                        .map(suit -> new Card(rank, suit)))
+                .map(suit -> new Card(rank, suit)))
                 .collect(Collectors.toList());
         Collections.shuffle(cards);
         return new Deck(new Cards(cards));
@@ -27,6 +27,14 @@ public class Deck {
 
     public Cards drawInitialCards() {
         return new Cards(new ArrayList<>(List.of(cards.drawOneCard(), cards.drawOneCard())));
+    }
+
+    public List<Cards> drawInitialCards(int count) {
+        List<Cards> cards = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            cards.add(drawInitialCards());
+        }
+        return new ArrayList<>(cards);
     }
 
     public Card drawOneCard() {

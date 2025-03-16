@@ -7,7 +7,7 @@ import blackjack.card.Cards;
 import blackjack.constant.TrumpSuit;
 import blackjack.constant.TrumpRank;
 import blackjack.constant.MatchResult;
-import blackjack.gambler.Nickname;
+import blackjack.gambler.PlayerName;
 import blackjack.gambler.Player;
 import blackjack.gambler.Players;
 import java.util.List;
@@ -22,9 +22,9 @@ class PlayersTest {
         Cards cards = makeCards(TrumpRank.ACE, TrumpRank.KING);
         Cards cards2 = makeCards(TrumpRank.SIX, TrumpRank.KING);
         Cards cards3 = makeCards(TrumpRank.EIGHT, TrumpRank.QUEEN);
-        Player player1 = new Player(new Nickname("pobi"),cards);
-        Player player2 = new Player(new Nickname("pobi"),cards2);
-        Player player3 = new Player(new Nickname("pobi"),cards3);
+        Player player1 = new Player(new PlayerName("pobi"),cards);
+        Player player2 = new Player(new PlayerName("pobi"),cards2);
+        Player player3 = new Player(new PlayerName("pobi"),cards3);
         Players players = new Players(List.of(player1, player2, player3));
 
         // when

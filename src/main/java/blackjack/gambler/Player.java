@@ -4,16 +4,17 @@ import blackjack.card.Card;
 import blackjack.card.Cards;
 import blackjack.constant.MatchResult;
 import java.util.List;
+import java.util.Objects;
 
 public class Player extends Gambler {
 
     public static final int MAX_SCORE = 21;
 
-    private final Nickname nickname;
+    private final PlayerName playerName;
 
-    public Player(Nickname nickname, Cards cards) {
+    public Player(PlayerName playerName, Cards cards) {
         super(cards);
-        this.nickname = nickname;
+        this.playerName = playerName;
     }
 
     public MatchResult compareTo(int dealerScore) {
@@ -46,7 +47,22 @@ public class Player extends Gambler {
         return MatchResult.LOSE;
     }
 
-    public String getNickname() {
-        return nickname.getValue();
+    public String getUsername() {
+        return playerName.getValue();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Player player = (Player) o;
+        return Objects.equals(playerName, player.playerName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(playerName);
+    }
+
 }

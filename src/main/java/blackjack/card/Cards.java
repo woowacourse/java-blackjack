@@ -39,6 +39,10 @@ public class Cards {
         return cards.removeLast();
     }
 
+    public List<Card> drawTwoCards() {
+        return new ArrayList<>(List.of(drawOneCard(), drawOneCard()));
+    }
+
     private int calculateScore() {
         return cards.stream()
                 .mapToInt(Card::getRankScore)

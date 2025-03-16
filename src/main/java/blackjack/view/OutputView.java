@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.BlackjackTable;
 import blackjack.constant.MatchResult;
 import blackjack.gambler.Dealer;
 import blackjack.gambler.Player;
@@ -8,15 +9,15 @@ import java.util.Map;
 
 public interface OutputView {
 
-    void printInitialGameSettings(Players players, Dealer dealer);
-
-    void printPlayerCards(Player player);
-
-    void printPlayerIsOverBust(Player player);
+    void printInitialGameSettings(BlackjackTable table);
 
     void printDealerOneMoreCardMessage();
 
-    void printGameSummary(Players players, Dealer dealer);
 
     void printGameResult(Map<Player, MatchResult> playerResults);
+
+    void printGameSummary(BlackjackTable gameTable);
+
+    void printPlayerCards(BlackjackTable gameTable, String playerName);
+
 }

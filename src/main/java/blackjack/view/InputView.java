@@ -1,10 +1,11 @@
 package blackjack.view;
 
+import blackjack.constant.UserAction;
 import java.util.List;
 
 public interface InputView {
 
     List<String> readParticipantsNames();
 
-    String readOneMoreCardResponse(String name);
+    UserAction readOneMoreCardResponse(String name);
 }

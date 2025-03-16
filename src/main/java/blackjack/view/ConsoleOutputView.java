@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.BlackjackTable;
 import blackjack.card.Card;
 import blackjack.gambler.Dealer;
 import blackjack.gambler.Player;
@@ -13,24 +14,17 @@ import java.util.Map.Entry;
 public class ConsoleOutputView implements OutputView {
 
     @Override
-    public void printInitialGameSettings(Players players, Dealer dealer) {
+    public void printInitialGameSettings(BlackjackTable table) {
+        Players players = table.getPlayers();
+        Dealer dealer = table.getDealer();
+
         String joinedPlayers = String.join(", ", players.getPlayerNames());
         System.out.println("\n딜러와 " + joinedPlayers + "에게 2장을 나누었습니다.");
 
         System.out.println("딜러카드: " + processCardsInfo(dealer.openInitialCards()));
-        for (Player player : players.getPlayers()) {
-            printPlayerCards(player);
+        for (String playerName : players.getPlayerNames()) {
+            printPlayerCards(table, playerName);
         }
-    }
-
-    @Override
-    public void printPlayerCards(Player player) {
-        System.out.println(player.getNickname() + "카드: " + processCardsInfo(player.openCards()));
-    }
-
-    @Override
-    public void printPlayerIsOverBust(Player player) {
-        System.out.println(player.getNickname() + " BUST!!!");
     }
 
     @Override
@@ -39,10 +33,18 @@ public class ConsoleOutputView implements OutputView {
     }
 
     @Override
-    public void printGameSummary(Players players, Dealer dealer) {
+    public void printPlayerCards(BlackjackTable gameTable, String playerName) {
+        Player player = gameTable.findPlayer(playerName);
+        System.out.println(player.getUsername() + "카드: " + processCardsInfo(player.openCards()));
+    }
+
+    @Override
+    public void printGameSummary(BlackjackTable gameTable) {
+        Players players = gameTable.getPlayers();
+        Dealer dealer = gameTable.getDealer();
         System.out.println("딜러카드: " + processCardsInfo(dealer.openCards()) + " - 결과: " + dealer.sumCardScores());
         for (Player player : players.getPlayers()) {
-            System.out.println(player.getNickname() + "카드: " + processCardsInfo(player.openCards()) + " - 결과: "
+            System.out.println(player.getUsername() + "카드: " + processCardsInfo(player.openCards()) + " - 결과: "
                     + player.sumCardScores());
         }
     }
@@ -53,7 +55,9 @@ public class ConsoleOutputView implements OutputView {
         System.out.println("## 최종 승패");
         printDealerResult(playerResults);
         printPlayerResults(playerResults);
+
     }
+
 
     private void printDealerResult(Map<Player, MatchResult> playerMatchResultMap) {
         Map<MatchResult, Integer> matchResultCounts = getMatchResultCounts();
@@ -75,7 +79,7 @@ public class ConsoleOutputView implements OutputView {
 
     private void printPlayerResults(Map<Player, MatchResult> playerResults) {
         for (Entry<Player, MatchResult> entry : playerResults.entrySet()) {
-            System.out.println(entry.getKey().getNickname() + ": " + entry.getValue().getMessage());
+            System.out.println(entry.getKey().getUsername() + ": " + entry.getValue().getMessage());
         }
     }
 

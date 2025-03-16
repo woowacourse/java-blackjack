@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.constant.UserAction;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,11 +15,11 @@ public class ConsoleInputView implements InputView {
     }
 
     @Override
-    public String readOneMoreCardResponse(String name) {
+    public UserAction readOneMoreCardResponse(String name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", name);
         String response = scanner.nextLine();
         validateYesOrNo(response);
-        return response;
+        return UserAction.from(response);
     }
 
     private List<String> splitNames(String names) {

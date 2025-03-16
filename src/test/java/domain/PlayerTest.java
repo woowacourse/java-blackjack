@@ -9,7 +9,7 @@ import blackjack.card.Cards;
 import blackjack.constant.TrumpSuit;
 import blackjack.constant.TrumpRank;
 import blackjack.constant.MatchResult;
-import blackjack.gambler.Nickname;
+import blackjack.gambler.PlayerName;
 import blackjack.gambler.Player;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ class PlayerTest {
         Cards cards = new Cards(initialCards);
 
         // when // then
-        assertDoesNotThrow(() -> new Player(new Nickname("pobi"), cards));
+        assertDoesNotThrow(() -> new Player(new PlayerName("pobi"), cards));
     }
 
     @Test
@@ -37,7 +37,7 @@ class PlayerTest {
         Cards cards = new Cards(initialCards);
 
         // when // then
-        assertThatThrownBy(() -> new Player(new Nickname("pobi"), cards)).isInstanceOf(IllegalArgumentException.class)
+        assertThatThrownBy(() -> new Player(new PlayerName("pobi"), cards)).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 초기 카드는 2장을 받아야 합니다.");
     }
 
@@ -53,7 +53,7 @@ class PlayerTest {
         List<Card> initialCards = makeCards(rank1, rank2);
         Card card = new Card(rank3, TrumpSuit.SPADE);
         Cards cards = new Cards(initialCards);
-        Player player = new Player(new Nickname("pobi"),cards);
+        Player player = new Player(new PlayerName("pobi"),cards);
         player.addOneCard(card);
 
         // when
@@ -73,7 +73,7 @@ class PlayerTest {
         // given
         List<Card> initialCards = makeCards(rank1, rank2);
         Cards cards = new Cards(initialCards);
-        Player player = new Player(new Nickname("pobi"), cards);
+        Player player = new Player(new PlayerName("pobi"), cards);
         player.addOneCard(new Card(rank3, TrumpSuit.HEART));
 
         // when
@@ -99,7 +99,7 @@ class PlayerTest {
         // given
         List<Card> initialCards = makeCards(rank1, rank2);
         Cards cards = new Cards(initialCards);
-        Player player = new Player(new Nickname("pobi"), cards);
+        Player player = new Player(new PlayerName("pobi"), cards);
         player.addOneCard(new Card(rank3, TrumpSuit.HEART));
 
         // when

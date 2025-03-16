@@ -1,18 +1,14 @@
 package blackjack.gambler;
 
 import blackjack.card.Card;
-import blackjack.card.Cards;
 import java.util.List;
 
 public class Dealer extends Gambler {
 
     public static final int DEALER_HIT_THRESHOLD = 16;
 
-    private final Cards cards;
-
-    public Dealer(Cards cards) {
-        super(cards);
-        this.cards = cards;
+    public Dealer() {
+        super();
     }
 
     @Override
