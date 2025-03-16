@@ -66,11 +66,15 @@ public final class BlackjackGame {
     private void spreadExtraCardsToPlayer(final Participants participants, final Deck deck) {
         Players availablePlayers = participants.findHitAvailablePlayers();
         for (Player player : availablePlayers.getPlayers()) {
-            while (player.canHit() && inputView.askHit(player)) {
-                final Card card = deck.spreadOneCard();
-                player.receiveCard(card);
-                resultView.printParticipantTotalCards(player.getNickname(), player.showAllCards());
-            }
+            askPlayerMoreCard(deck, player);
+        }
+    }
+
+    private void askPlayerMoreCard(final Deck deck, final Player player) {
+        while (player.canHit() && inputView.askHit(player)) {
+            final Card card = deck.spreadOneCard();
+            player.receiveCard(card);
+            resultView.printParticipantTotalCards(player.getNickname(), player.showAllCards());
         }
     }
 
