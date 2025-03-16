@@ -4,6 +4,7 @@ import static blackjack.model.card.CardCreator.createCard;
 import static java.util.List.of;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -15,6 +16,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.Cards;
+import blackjack.model.card.initializer.DefaultCardDeckInitializer;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
 import blackjack.model.player.User;
@@ -112,6 +114,55 @@ class BlackJackGameTest {
 
         assertThat(blackJackGame.calculateOptimalPoints(of(pobi, json)))
                 .containsExactlyInAnyOrderEntriesOf(Map.of(pobi, 21, json, 22));
+    }
+
+    @MethodSource("플레이어의_수익을_계산한다_테스트_케이스")
+    @ParameterizedTest
+    void 플레이어의_수익을_계산한다(Cards dealerCards, Cards playerCards, Map<Player, BigDecimal> expected) {
+        BlackJackGame blackJackGame = new BlackJackGame(new DefaultCardDeckInitializer());
+        Player dealer = new Dealer();
+        dealer.receiveCards(dealerCards);
+        Player pobi = new User("pobi");
+        blackJackGame.bet(pobi, 10_000);
+        pobi.receiveCards(playerCards);
+
+        assertThat(blackJackGame.calculatePlayerWinnings(blackJackGame.calculateResult(of(dealer, pobi))))
+                .containsExactlyInAnyOrderEntriesOf(expected);
+    }
+
+    private static Stream<Arguments> 플레이어의_수익을_계산한다_테스트_케이스() {
+        Player pobi = new User("pobi");
+        Player dealer = new Dealer();
+        return Stream.of(
+                Arguments.of(
+                        new Cards(createCard(CardNumber.TEN), createCard(CardNumber.JACK)),
+                        new Cards(createCard(CardNumber.ACE), createCard(CardNumber.JACK)),
+                        Map.ofEntries(Map.entry(pobi, BigDecimal.valueOf(15_000)),
+                                Map.entry(dealer, BigDecimal.valueOf(-15_000))
+                        )
+                ), Arguments.of(
+                        new Cards(createCard(CardNumber.TEN), createCard(CardNumber.JACK)),
+                        new Cards(createCard(CardNumber.TEN), createCard(CardNumber.JACK), createCard(CardNumber.ACE)),
+                        Map.ofEntries(Map.entry(pobi, BigDecimal.valueOf(10_000)),
+                                Map.entry(dealer, BigDecimal.valueOf(-10_000))
+                        )
+                ), Arguments.of(
+                        new Cards(createCard(CardNumber.ACE), createCard(CardNumber.JACK)),
+                        new Cards(createCard(CardNumber.ACE), createCard(CardNumber.JACK)),
+                        Map.ofEntries(Map.entry(pobi, BigDecimal.valueOf(0)), Map.entry(dealer, BigDecimal.valueOf(0)))
+                ), Arguments.of(
+                        new Cards(createCard(CardNumber.ACE), createCard(CardNumber.NINE)),
+                        new Cards(createCard(CardNumber.ACE), createCard(CardNumber.NINE)),
+                        Map.ofEntries(Map.entry(pobi, BigDecimal.valueOf(0)), Map.entry(dealer, BigDecimal.valueOf(0)))
+                ), Arguments.of(
+                        new Cards(createCard(CardNumber.ACE), createCard(CardNumber.JACK)),
+                        new Cards(createCard(CardNumber.TEN), createCard(CardNumber.JACK), createCard(CardNumber.TWO)),
+                        Map.ofEntries(Map.entry(pobi, BigDecimal.valueOf(-10_000)),
+                                Map.entry(dealer, BigDecimal.valueOf(10_000))
+                        )
+                )
+        );
+
     }
 
 }
