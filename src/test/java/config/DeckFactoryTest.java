@@ -1,6 +1,7 @@
 package config;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import domain.card.Deck;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +13,9 @@ public class DeckFactoryTest {
     void createCardDeckTest(){
         //given
         DeckFactory deckFactory = new DeckFactory();
+        Deck deck = deckFactory.create();
 
-        assertThat(deckFactory.create()).isInstanceOf(Deck.class);
+        //when-then
+        assertEquals(52, deck.getCards().size());
     }
 }
