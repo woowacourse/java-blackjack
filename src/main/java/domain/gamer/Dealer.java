@@ -20,10 +20,6 @@ public class Dealer extends Gamer {
         super(cardGroup, batting);
     }
 
-    public boolean isLessThen(int score) {
-        return this.getCardGroup().calculateScore() <= score;
-    }
-
     public Map<GameResult, Integer> calculateDealerGameResult(final Map<String, GameResult> playerGameResults) {
         final List<GameResult> results = playerGameResults.values().stream().toList();
         return GameResult.getAllGameResults().stream()

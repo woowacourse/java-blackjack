@@ -35,7 +35,7 @@ public class BlackJackController {
         gameManager.giveCardsToDealer();
         gameManager.giveCardsToPlayers(playerNames);
         outputView.printDealerAndPlayersCards(dealer, playerGroup.getPlayers());
-        requestHit(playerNames, playerGroup, gameManager);
+        requestHit(playerNames, gameManager);
         printDealerReceiveCardCount(gameManager);
         responseGameResult(dealer, playerGroup);
     }
@@ -47,30 +47,22 @@ public class BlackJackController {
                 playerGroup.calculatePlayersGameResult(dealer));
     }
 
-    private void requestHit(final List<String> playerNames, final PlayerGroup playerGroup,
-                            final GameManager gameManager) {
+    private void requestHit(final List<String> playerNames, final GameManager gameManager) {
         for (String playerName : playerNames) {
-            giveCardToPlayer(playerName, playerGroup, gameManager);
+            processPlayerHit(playerName, gameManager);
         }
     }
 
-    private void giveCardToPlayer(final String playerName, final PlayerGroup playerGroup,
-                                  final GameManager gameManager) {
-        if (!playerGroup.isBustByPlayerName(playerName)) {
-            receiveCardIsAbleToGetCard(playerName, playerGroup, gameManager);
-        }
-    }
-
-    private void receiveCardIsAbleToGetCard(final String playerName, final PlayerGroup playerGroup,
-                                            final GameManager gameManager) {
-        if (!requestAnswerCommand(playerName).isYes()) {
-            outputView.printPlayerCards(playerName, playerGroup.getCardsByName(playerName));
+    private void processPlayerHit(final String playerName, final GameManager gameManager) {
+        if (!gameManager.canPlayerReceiveCard(playerName)) {
             return;
         }
-        do {
-            gameManager.giveOneCardToPlayerByName(playerName);
-            outputView.printPlayerCards(playerName, playerGroup.getCardsByName(playerName));
-        } while (playerGroup.isBustByPlayerName(playerName) && requestAnswerCommand(playerName).isYes());
+        final boolean shouldContinue = gameManager.shouldContinuePlayerHit(playerName,
+                requestAnswerCommand(playerName));
+        outputView.printPlayerCards(playerName, gameManager.getPlayerCardsByName(playerName));
+        if (shouldContinue) {
+            processPlayerHit(playerName, gameManager);
+        }
     }
 
     private AnswerCommand requestAnswerCommand(final String playerName) {

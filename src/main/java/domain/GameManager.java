@@ -45,7 +45,21 @@ public class GameManager {
         return count;
     }
 
-    public Map<String, Integer> calculatePlayerBattingAmountOfReturn(final Map<String, GameResult> playersGameResult) {
+    public List<Card> getPlayerCardsByName(final String playerName) {
+        return playerGroup.getCardsByName(playerName);
+    }
+
+    public boolean shouldContinuePlayerHit(final String playerName, final AnswerCommand answerCommand) {
+        final boolean wantsToHit = answerCommand.isYes();
+        if (wantsToHit) {
+            playerGroup.giveCardByName(playerName, deck.pollCard());
+        }
+        return wantsToHit;
+    }
+
+    public boolean canPlayerReceiveCard(final String playerName) {
+        return playerGroup.canPlayerReceiveCard(playerName);
+    }
     public Map<String, Double> calculatePlayerBattingAmountOfReturn() {
         return playerGroup.calculatePlayersGameResult(dealer)
                 .entrySet()

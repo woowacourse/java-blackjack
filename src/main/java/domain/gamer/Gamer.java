@@ -40,6 +40,10 @@ public abstract class Gamer {
         return cardGroup.calculateScore();
     }
 
+    public boolean isBlackjack() {
+        return cardGroup.isBlackjack();
+    }
+
     public List<Card> getCards() {
         return cardGroup.getCards();
     }
