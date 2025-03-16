@@ -2,52 +2,42 @@ package domain.gamer;
 
 import domain.card.CardDeck;
 import domain.card.Hand;
+import domain.state.State;
+import domain.state.started.finished.Blackjack;
+import domain.state.started.running.Hit;
 
 public abstract class Gamer {
+    protected State state;
 
-    private final Nickname name;
-    private final Hand hand = new Hand();
-
-    protected Gamer(Nickname name) {
-        this.name = name;
-    }
-
-    public void prepareGame(CardDeck deck) {
-        addFrom(deck);
-        addFrom(deck);
-    }
-
-    public boolean isBurst() {
-        return hand.isBurst();
+    public Gamer(Hand hand) {
+        if (hand.isBlackjack()) {
+            state = new Blackjack(hand);
+            return;
+        }
+        state = new Hit(hand);
     }
 
     public int getScore() {
-        return hand.calculateTotalPoint();
-    }
-
-    private void addFrom(CardDeck deck) {
-        hand.add(deck.drawCard());
+        return state.getHand().calculateTotalPoint();
     }
 
     public Hand getHand() {
-        return hand;
+        return state.getHand();
     }
 
-    public String getName() {
-        return this.name.getName();
+    public abstract String getNickname();
+
+    public void stay() {
+        state = state.stay();
     }
 
     public void hit(CardDeck deck) {
-        validateHitState();
-        addFrom(deck);
-    }
-
-    private void validateHitState() {
-        if (!canHit()) {
-            throw new IllegalStateException("[ERROR] 카드를 더 뽑을 수 없는 상태입니다.");
+        if (!state.isFinished()) {
+            state = state.hit(deck.drawCard());
         }
     }
 
-    public abstract boolean canHit();
+    public boolean isFinished() {
+        return state.isFinished();
+    }
 }
-
