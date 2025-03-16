@@ -39,7 +39,7 @@ public final class OutputView {
         System.out.println(participant.getName() + "는 버스트되어 더 이상 카드를 뽑을 수 없습니다!");
     }
 
-    public static void printProfit(DealerProfits dealerProfits, PlayerProfits playerProfits) {
+    public static void printProfitResult(DealerProfits dealerProfits, PlayerProfits playerProfits) {
         System.out.println("## 최종 수익");
         printDealerProfit(dealerProfits);
         printPlayerProfit(playerProfits);

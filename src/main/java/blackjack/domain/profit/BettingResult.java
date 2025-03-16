@@ -21,41 +21,58 @@ public class BettingResult {
             int betAmount = player.getBetAmount();
 
             if (playerResult.getGameResultType() == GameResultType.TIE) {
-                PlayerProfit playerProfit = new PlayerProfit(player, 0);
-                DealerProfit dealerProfit = new DealerProfit(0);
-                dealerProfits.add(player, dealerProfit);
-                playerProfits.add(playerProfit);
+                saveProfitWhenPlayerTies(player);
                 continue;
             }
 
             if (playerResult.getGameResultType() == GameResultType.WIN && playerResult.isBlackjack()) {
-                int playerProfitAmount = (int) Math.round(betAmount * 1.5);
-
-                PlayerProfit playerProfit = new PlayerProfit(player, playerProfitAmount);
-                DealerProfit dealerProfit = new DealerProfit(playerProfitAmount * -1);
-
-                dealerProfits.add(player, dealerProfit);
-                playerProfits.add(playerProfit);
+                saveProfitWhenPlayerIsBlackjack(player, betAmount);
                 continue;
             }
 
             if (playerResult.getGameResultType() == GameResultType.WIN) {
-                PlayerProfit playerProfit = new PlayerProfit(player, betAmount);
-                DealerProfit dealerProfit = new DealerProfit(betAmount * -1);
-
-                dealerProfits.add(player, dealerProfit);
-                playerProfits.add(playerProfit);
+                saveProfitWhenPlayerWins(player, betAmount);
                 continue;
             }
 
             if (playerResult.getGameResultType() == GameResultType.LOSE) {
-                PlayerProfit playerProfit = new PlayerProfit(player, betAmount * -1);
-                DealerProfit dealerProfit = new DealerProfit(betAmount);
-
-                dealerProfits.add(player, dealerProfit);
-                playerProfits.add(playerProfit);
+                saveProfitWhenPlayerLoses(player, betAmount);
             }
         }
+    }
+
+    private void saveProfitWhenPlayerTies(Player player) {
+        PlayerProfit playerProfit = new PlayerProfit(player, 0);
+        DealerProfit dealerProfit = new DealerProfit(0);
+        saveProfit(player, dealerProfit, playerProfit);
+    }
+
+    private void saveProfitWhenPlayerIsBlackjack(Player player, int betAmount) {
+        int playerProfitAmount = (int) Math.round(betAmount * 1.5);
+
+        PlayerProfit playerProfit = new PlayerProfit(player, playerProfitAmount);
+        DealerProfit dealerProfit = new DealerProfit(playerProfitAmount * -1);
+
+        saveProfit(player, dealerProfit, playerProfit);
+    }
+
+    private void saveProfitWhenPlayerWins(Player player, int betAmount) {
+        PlayerProfit playerProfit = new PlayerProfit(player, betAmount);
+        DealerProfit dealerProfit = new DealerProfit(betAmount * -1);
+
+        saveProfit(player, dealerProfit, playerProfit);
+    }
+
+    private void saveProfitWhenPlayerLoses(Player player, int betAmount) {
+        PlayerProfit playerProfit = new PlayerProfit(player, betAmount * -1);
+        DealerProfit dealerProfit = new DealerProfit(betAmount);
+
+        saveProfit(player, dealerProfit, playerProfit);
+    }
+
+    private void saveProfit(Player player, DealerProfit dealerProfit, PlayerProfit playerProfit) {
+        dealerProfits.add(player, dealerProfit);
+        playerProfits.add(playerProfit);
     }
 
     public DealerProfits getDealerProfits() {

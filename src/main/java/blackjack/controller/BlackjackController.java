@@ -34,21 +34,36 @@ public class BlackjackController {
         players.getPlayers().forEach(participant -> giveMoreCard(participant, blackjackGame));
         takeCardManually(dealer, blackjackGame);
 
-        Judge judge = new Judge(new DealerResults(), new PlayerResults());
-        judge.calculateAllResults(dealer, players);
-
+        Judge judge = judgeResults(dealer, players);
         DealerResults dealerResults = judge.getDealerResults();
         PlayerResults playerResults = judge.getPlayerResults();
 
         OutputView.printCardResults(dealer, dealerResults, playerResults);
 
-        BettingResult bettingResult = new BettingResult(new DealerProfits(), new PlayerProfits());
-        bettingResult.calculateAllResults(playerResults, dealerResults);
-
+        BettingResult bettingResult = calculateBettingResult(playerResults, dealerResults);
         DealerProfits dealerProfits = bettingResult.getDealerProfits();
         PlayerProfits playerProfits = bettingResult.getPlayerProfits();
 
-        OutputView.printProfit(dealerProfits, playerProfits);
+        OutputView.printProfitResult(dealerProfits, playerProfits);
+    }
+
+    private Players savePlayers(List<String> names) {
+        List<Player> players = new ArrayList<>();
+
+        for (String name : names) {
+            int rawBetAmount = InputView.askBetAmount(name);
+            BetAmount betAmount = new BetAmount(rawBetAmount);
+
+            players.add(new Player(name, new Hand(), betAmount));
+        }
+
+        return new Players(players);
+    }
+
+    private void giveStartingCards(BlackjackGame blackjackGame) {
+        blackjackGame.giveStartingCards();
+
+        OutputView.printStartingCardsStatuses(blackjackGame.getDealer(), blackjackGame.getPlayers());
     }
 
     private void giveMoreCard(Participant participant, BlackjackGame blackjackGame) {
@@ -84,23 +99,15 @@ public class BlackjackController {
         }
     }
 
-
-    private void giveStartingCards(BlackjackGame blackjackGame) {
-        blackjackGame.giveStartingCards();
-
-        OutputView.printStartingCardsStatuses(blackjackGame.getDealer(), blackjackGame.getPlayers());
+    private Judge judgeResults(Dealer dealer, Players players) {
+        Judge judge = new Judge(new DealerResults(), new PlayerResults());
+        judge.calculateAllResults(dealer, players);
+        return judge;
     }
 
-    private Players savePlayers(List<String> names) {
-        List<Player> players = new ArrayList<>();
-
-        for (String name : names) {
-            int rawBetAmount = InputView.askBetAmount(name);
-            BetAmount betAmount = new BetAmount(rawBetAmount);
-
-            players.add(new Player(name, new Hand(), betAmount));
-        }
-
-        return new Players(players);
+    private BettingResult calculateBettingResult(PlayerResults playerResults, DealerResults dealerResults) {
+        BettingResult bettingResult = new BettingResult(new DealerProfits(), new PlayerProfits());
+        bettingResult.calculateAllResults(playerResults, dealerResults);
+        return bettingResult;
     }
 }
