@@ -13,7 +13,6 @@ import blackjack.view.InputView;
 import blackjack.view.ResultView;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 public final class BlackjackGame {
 
@@ -38,7 +37,7 @@ public final class BlackjackGame {
     private Participants makeParticipants() {
         List<String> names = readNames();
         List<Integer> bettingAmounts = askBettingAmount(names);
-        return Participants.of(makePlayers(names, bettingAmounts));
+        return Participants.of(Players.from(names, bettingAmounts));
     }
 
     private List<String> readNames() {
@@ -50,12 +49,6 @@ public final class BlackjackGame {
                 .map(inputView::askBettingAmount)
                 .map(StringParser::parseInt)
                 .toList();
-    }
-
-    private Players makePlayers(final List<String> names, final List<Integer> bettingAmounts) {
-        return new Players(IntStream.range(0, names.size())
-                .mapToObj(index -> Player.from(names.get(index), bettingAmounts.get(index)))
-                .toList());
     }
 
     private void spreadInitialCards(final Participants participants, final Deck deck) {

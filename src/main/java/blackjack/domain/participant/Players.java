@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public final class Players {
 
@@ -16,6 +17,12 @@ public final class Players {
     public Players(final List<Player> players) {
         validate(players);
         this.players = new ArrayList<>(players);
+    }
+
+    public static Players from(final List<String> names, final List<Integer> bettingAmounts) {
+        return new Players(IntStream.range(0, names.size())
+                .mapToObj(index -> Player.from(names.get(index), bettingAmounts.get(index)))
+                .toList());
     }
 
     public void receiveCardsByCount(final Hand hand, final int count) {
