@@ -3,8 +3,7 @@ package blackjack.object.view;
 import static java.util.stream.Collectors.joining;
 
 import blackjack.object.Round;
-import blackjack.object.WinningDiscriminator;
-import blackjack.object.WinningType;
+import blackjack.object.ProfitCalculator;
 import blackjack.object.card.Card;
 import blackjack.object.gambler.Name;
 import java.util.List;
@@ -25,7 +24,7 @@ public class OutputView {
     }
 
     public static void printBusted(final Name playerName) {
-        System.out.printf("[Bust] %s의 카드 합이 %d을 초과하여 패배하였습니다.\n", playerName, WinningDiscriminator.BLACK_JACK);
+        System.out.printf("[Bust] %s의 카드 합이 %d을 초과하여 패배하였습니다.\n", playerName, ProfitCalculator.BLACK_JACK);
     }
 
     public static void printDealerReceiveCard() {
@@ -43,13 +42,13 @@ public class OutputView {
                 .collect(joining(delimiter));
     }
 
-    public static void printWinning(final WinningDiscriminator winningDiscriminator) {
+    public static void printWinning(final ProfitCalculator profitCalculator) {
         System.out.println("##최종 수익");
-        printGamblerProfits(winningDiscriminator);
+        printGamblerProfits(profitCalculator);
     }
 
-    private static void printGamblerProfits(WinningDiscriminator winningDiscriminator) {
-        Map<Name, Integer> gamlberProfits = winningDiscriminator.calculateGamblerProfit();
+    private static void printGamblerProfits(ProfitCalculator profitCalculator) {
+        Map<Name, Integer> gamlberProfits = profitCalculator.calculateGamblerProfit();
         for (final Entry<Name, Integer> entry : gamlberProfits.entrySet()) {
             System.out.printf("%s: %d\n", entry.getKey(), entry.getValue());
         }

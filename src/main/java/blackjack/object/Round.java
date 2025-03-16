@@ -64,9 +64,9 @@ public class Round {
         return findGambler(name).isScoreBelow(score);
     }
 
-    public WinningDiscriminator getWinningDiscriminator(Map<Name, Integer> bettingRecords) {
+    public ProfitCalculator getWinningDiscriminator(Map<Name, Integer> bettingRecords) {
         Map<Name, Integer> gamblerScores = createGamblerScores();
-        return new WinningDiscriminator(gamblerScores, bettingRecords);
+        return new ProfitCalculator(gamblerScores, bettingRecords);
     }
 
     private Gambler findGambler(final Name name) {

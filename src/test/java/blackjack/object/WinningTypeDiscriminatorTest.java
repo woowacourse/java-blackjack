@@ -30,10 +30,10 @@ class WinningTypeDiscriminatorTest {
                 new Name("비타"), 17, // 딜러 승리
                 new Name("새로이"), 30, // 딜러 승리 (플레이어 버스트)
                 new Name("꾹이"), 18); // 무승부
-        WinningDiscriminator winningDiscriminator = new WinningDiscriminator(gamblerScores, bettingRecords);
+        ProfitCalculator profitCalculator = new ProfitCalculator(gamblerScores, bettingRecords);
 
         // when
-        Map<Name, Integer> result = winningDiscriminator.calculateGamblerProfit();
+        Map<Name, Integer> result = profitCalculator.calculateGamblerProfit();
 
         // then
         assertThat(result.get(name)).isEqualTo(expected);
@@ -56,10 +56,10 @@ class WinningTypeDiscriminatorTest {
                 new Name("레오"), 21, // 딜러 패배 (플레이어 블랙잭 승리)
                 new Name("비타"), 24, // 딜러 승리 (플레이어 버스트, 딜러와 점수가 같은 경우)
                 new Name("새로이"), 30); // 딜러 승리 (플레이어 버스트)
-        WinningDiscriminator winningDiscriminator = new WinningDiscriminator(gamblerScores, bettingRecords);
+        ProfitCalculator profitCalculator = new ProfitCalculator(gamblerScores, bettingRecords);
 
         // when
-        Map<Name, Integer> result = winningDiscriminator.calculateGamblerProfit();
+        Map<Name, Integer> result = profitCalculator.calculateGamblerProfit();
 
         // then
         assertThat(result.get(name)).isEqualTo(expected);
@@ -84,10 +84,10 @@ class WinningTypeDiscriminatorTest {
                 new Name("비타"), 18, // 플레이어 패배
                 new Name("꾹이"), 30, // 플레이어 버스트 패배
                 new Name("새로이"), 19); // 플레이어 무승부
-        WinningDiscriminator winningDiscriminator = new WinningDiscriminator(gamblerScores, bettingRecords);
+        ProfitCalculator profitCalculator = new ProfitCalculator(gamblerScores, bettingRecords);
 
         // when
-        Map<Name, WinningType> result = winningDiscriminator.judgePlayersResult();
+        Map<Name, WinningType> result = profitCalculator.judgePlayersResult();
 
         // then
         Name name = new Name(playerName);
@@ -111,10 +111,10 @@ class WinningTypeDiscriminatorTest {
                 new Name("레오"), 21, // 플레이어 블랙잭 승리
                 new Name("비타"), 24, // 플레이어 버스트 패배, 딜러와 점수가 같은 경우
                 new Name("꾹이"), 30); // 플레이어 버스트 패배
-        WinningDiscriminator winningDiscriminator = new WinningDiscriminator(gamblerScores, bettingRecords);
+        ProfitCalculator profitCalculator = new ProfitCalculator(gamblerScores, bettingRecords);
 
         // when
-        Map<Name, WinningType> result = winningDiscriminator.judgePlayersResult();
+        Map<Name, WinningType> result = profitCalculator.judgePlayersResult();
 
         // then
         Name name = new Name(playerName);

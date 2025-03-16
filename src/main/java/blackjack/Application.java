@@ -10,7 +10,7 @@ import static blackjack.object.view.OutputView.printWinning;
 import static java.util.stream.Collectors.toList;
 
 import blackjack.object.Round;
-import blackjack.object.WinningDiscriminator;
+import blackjack.object.ProfitCalculator;
 import blackjack.object.card.Card;
 import blackjack.object.card.CardDeck;
 import blackjack.object.card.CardShape;
@@ -96,11 +96,11 @@ public class Application {
     }
 
     private static void processPlayerTurn(final Round round, final Name playerName) {
-        while (round.isGamblerCanReceiveCard(playerName, WinningDiscriminator.BLACK_JACK) && isHit(playerName)) {
+        while (round.isGamblerCanReceiveCard(playerName, ProfitCalculator.BLACK_JACK) && isHit(playerName)) {
             round.distributeCards(playerName, 1);
             printGamblerCards(playerName, round.getCards(playerName));
         }
-        if (!round.isGamblerCanReceiveCard(playerName, WinningDiscriminator.BLACK_JACK)) {
+        if (!round.isGamblerCanReceiveCard(playerName, ProfitCalculator.BLACK_JACK)) {
             printBusted(playerName);
         }
         if (!round.isPlayerOwnsCardExceptInitialCards(playerName)) {
@@ -124,7 +124,7 @@ public class Application {
             int score = round.getScore(playerName);
             printGamblerResult(playerName, cards, score);
         }
-        WinningDiscriminator discriminator = round.getWinningDiscriminator(bettingRecords);
+        ProfitCalculator discriminator = round.getWinningDiscriminator(bettingRecords);
         printWinning(discriminator);
     }
 }

@@ -88,7 +88,7 @@ class RoundTest {
         round.distributeInitialCards();
 
         // when
-        WinningDiscriminator result = round.getWinningDiscriminator(bettingRecords);
+        ProfitCalculator result = round.getWinningDiscriminator(bettingRecords);
         Map<Name, Integer> dealerWinning = result.calculateGamblerProfit();
 
         // then
@@ -113,7 +113,7 @@ class RoundTest {
         round.distributeCards(playerName, 1);
 
         // when
-        boolean result = !round.isGamblerCanReceiveCard(playerName, WinningDiscriminator.BLACK_JACK);
+        boolean result = !round.isGamblerCanReceiveCard(playerName, ProfitCalculator.BLACK_JACK);
 
         // then
         assertThat(result).isTrue();

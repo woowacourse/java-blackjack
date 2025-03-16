@@ -8,12 +8,12 @@ import static blackjack.object.WinningType.*;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
-public class WinningDiscriminator {
+public class ProfitCalculator {
     public static final int BLACK_JACK = 21;
     private final Map<Name, Integer> gamblerScores;
     private final Map<Name, Integer> bettingRecords;
 
-    public WinningDiscriminator(final Map<Name, Integer> gamblerScores, final Map<Name, Integer> bettingRecords) {
+    public ProfitCalculator(final Map<Name, Integer> gamblerScores, final Map<Name, Integer> bettingRecords) {
         this.gamblerScores = gamblerScores;
         this.bettingRecords = bettingRecords;
     }

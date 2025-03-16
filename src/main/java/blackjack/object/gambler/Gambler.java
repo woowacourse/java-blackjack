@@ -1,6 +1,6 @@
 package blackjack.object.gambler;
 
-import blackjack.object.WinningDiscriminator;
+import blackjack.object.ProfitCalculator;
 import blackjack.object.card.Card;
 import blackjack.object.card.CardType;
 
@@ -56,7 +56,7 @@ public class Gambler {
         int differenceBetweenMaxAndMinValue = CardType.ACE.getValue() - MIN_ACE_VALUE;
         sum -= differenceBetweenMaxAndMinValue * (aceCount - 1);
 
-        if (sum > WinningDiscriminator.BLACK_JACK) {
+        if (sum > ProfitCalculator.BLACK_JACK) {
             sum -= differenceBetweenMaxAndMinValue;
         }
         return sum;
