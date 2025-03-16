@@ -5,18 +5,12 @@ import domain.player.User;
 
 public enum UserBattleResult {
 
-    BLACKJACK_WIN(1.5),
-    NORMAL_WIN(1.0),
-    LOSE(-1.0),
-    DRAW(0.0),
+    BLACKJACK_WIN,
+    NORMAL_WIN,
+    LOSE,
+    DRAW,
     ;
 
-    private final double earningRate;
-
-    UserBattleResult(double earningRate) {
-        this.earningRate = earningRate;
-    }
-    
     public static UserBattleResult compare(User user, Dealer dealer) {
         if (user.isBust()) {
             return UserBattleResult.LOSE;
@@ -40,9 +34,5 @@ public enum UserBattleResult {
             return LOSE;
         }
         return DRAW;
-    }
-
-    public double getEarningRate() {
-        return earningRate;
     }
 }

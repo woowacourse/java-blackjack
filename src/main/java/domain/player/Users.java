@@ -1,7 +1,7 @@
 package domain.player;
 
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Users {
     private static final int MAX_SIZE = 5;
@@ -14,7 +14,7 @@ public class Users {
         this.users = users;
     }
 
-    public static Users from(Map<String, Integer> betByName) {
+    public static Users from(LinkedHashMap<String, Integer> betByName) {
         return new Users(betByName.entrySet().stream()
                 .map(entry -> User.of(entry.getKey(), entry.getValue()))
                 .toList());

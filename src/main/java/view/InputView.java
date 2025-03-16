@@ -5,15 +5,14 @@ import domain.profit.Bet;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static Map<String, Integer> inputUsers() {
+    public static LinkedHashMap<String, Integer> inputUsers() {
         List<String> userNames = InputView.inputUserNames();
-        Map<String, Integer> betByName = new LinkedHashMap<>();
+        LinkedHashMap<String, Integer> betByName = new LinkedHashMap<>();
         for (String name : userNames) {
             betByName.put(name, InputView.inputBet(name));
         }

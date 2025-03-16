@@ -15,8 +15,8 @@ import domain.player.Users;
 import domain.profit.DefaultProfitStrategy;
 import domain.profit.Profit;
 import domain.state.Stay;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import org.assertj.core.api.Assertions;
@@ -152,10 +152,12 @@ class BlackjackGameBoardTest {
                 KING_HEART(), TEN_HEART()    // dealer: 20
         ));
         Dealer dealer = Dealer.createDefaultDealer();
-        Users users = Users.from(Map.ofEntries(
-                Map.entry("헤일러", 1000),
-                Map.entry("앤지", 100000)
-        ));
+        Users users = Users.from(
+                new LinkedHashMap<>() {{
+                    put("헤일러", 1_000);
+                    put("앤지", 100_000);
+                }}
+        );
         BlackjackGameBoard gameBoard = new BlackjackGameBoard(deck);
 
         gameBoard.distributeInitialCards(dealer);
@@ -167,6 +169,8 @@ class BlackjackGameBoardTest {
         Profit profit = gameBoard.computeDealerProfit(dealer, users, DefaultProfitStrategy.getInstance());
 
         // then
-        Assertions.assertThat(profit.getValue()).isEqualTo(1000 - (int) (100000 * 1.5));
+        final int expected = profit.getValue();
+        final int actual = 1_000 - (int) (100_000 * 1.5);
+        Assertions.assertThat(expected).isEqualTo(actual);
     }
 }
