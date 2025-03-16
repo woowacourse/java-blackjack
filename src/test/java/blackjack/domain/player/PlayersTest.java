@@ -42,11 +42,11 @@ class PlayersTest {
 
         List<Gambler> gamblers = List.of(
                 new Gambler("비타", 0),
-                new Gambler("비타", 0)
+                new Gambler("두리", 0)
         );
 
         Players players = new Players(new Dealer(), gamblers);
-        players.distributeInitialCards(cardPack.getDealByCount(2));
+        players.distributeInitialCards(() -> cardPack.getDealByCount(2));
 
         for (Gambler gambler : gamblers) {
             assertThat(gambler.getHand().getCards().getCards())
