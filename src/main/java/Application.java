@@ -18,12 +18,11 @@ public class Application {
     public static void main(String[] args) {
         BlackjackGame blackjackGame = new BlackjackGame();
 
-        Deck deck = new Deck(new ShuffledDeckCreator());
-
         List<Nickname> nicknames = InputView.readNicknames().stream()
                 .map(Nickname::new)
                 .toList();
-        Players players = bettingPlayers(nicknames);
+        Deck deck = new Deck(new ShuffledDeckCreator());
+        Players players = betPlayers(nicknames);
         Dealer dealer = new Dealer();
 
         for (Player player : players.getPlayers()) {
@@ -33,7 +32,7 @@ public class Application {
         OutputView.printInitialCards(dealer, players);
 
         for (Player player : players.getPlayers()) {
-            while (!player.isFinished() && InputView.readDrawOneMore(player.getNickname())) {
+            while (!player.isFinished()) {
                 player.hit(deck.draw());
                 OutputView.printPlayerCards(player);
             }
@@ -59,7 +58,7 @@ public class Application {
         OutputView.printResult(dealerProfit, playersResult);
     }
 
-    private static Players bettingPlayers(List<Nickname> nicknames) {
+    private static Players betPlayers(List<Nickname> nicknames) {
         List<Player> players = new ArrayList<>();
         for (Nickname nickname : nicknames) {
             int bettingMoney = InputView.readPlayerBettingMoney(nickname.getNickname());
