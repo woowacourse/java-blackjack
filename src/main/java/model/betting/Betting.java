@@ -62,7 +62,7 @@ public class Betting {
         if (dealer.checkBlackjack()) {
             return insuranceBet * INSURANCE_PAYOUT_RATIO;
         }
-        return insuranceBet;
+        return 0;
     }
 
     public int calculateBlackJack() {
