@@ -80,9 +80,9 @@ public class PlayerGroupTest {
         playerGroup.giveCardByName("윌슨", new Card(CardType.HEART, CardScore.JACK));
         playerGroup.giveCardByName("윌슨",new Card(CardType.CLOVER, CardScore.QUEEN));
         playerGroup.giveCardByName("윌슨", new Card(CardType.DIAMOND, CardScore.TEN));
-        final boolean result = playerGroup.isBustByPlayerName("윌슨");
+        final boolean result = playerGroup.canPlayerReceiveCard("윌슨");
 
         //then
-        assertThat(result).isTrue();
+        assertThat(result).isFalse();
     }
 }

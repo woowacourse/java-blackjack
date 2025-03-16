@@ -18,7 +18,7 @@ public class DealerTest {
         CardGroup cardGroup = new CardGroup(cards);
         Dealer dealer = new Dealer(cardGroup);
 
-        boolean status = dealer.isLessThen(16);
+        boolean status = dealer.canReceiveCard();
 
         assertThat(status).isTrue();
     }

@@ -36,8 +36,8 @@ public class PlayerGroup {
         return findByPlayerByName(playerName).getCards();
     }
 
-    public boolean isBustByPlayerName(final String playerName) {
-        return findByPlayerByName(playerName).isBust();
+    public boolean canPlayerReceiveCard(final String playerName) {
+        return findByPlayerByName(playerName).canReceiveCard();
     }
 
     public void giveCardByName(final String playerName, final Card card) {

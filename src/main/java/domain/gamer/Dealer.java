@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Dealer extends Gamer {
+
+    private static final int DEALER_MUST_HIT_THRESHOLD = 16;
+
     public Dealer(CardGroup cardGroup) {
         super(cardGroup);
     }
@@ -30,5 +33,10 @@ public class Dealer extends Gamer {
                         result -> Collections.frequency(results, result),
                         (newResult, oldResult) -> oldResult
                 ));
+    }
+
+    @Override
+    public boolean canReceiveCard() {
+        return super.calculateScore() <= DEALER_MUST_HIT_THRESHOLD;
     }
 }

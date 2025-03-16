@@ -31,6 +31,11 @@ public class Player extends Gamer {
     }
 
     @Override
+    public boolean canReceiveCard() {
+        return !(isBust() || isBlackjack());
+    }
+
+    @Override
     public boolean equals(final Object o) {
         if (!(o instanceof final Player player)) {
             return false;

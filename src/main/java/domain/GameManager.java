@@ -1,5 +1,6 @@
 package domain;
 
+import domain.card.Card;
 import domain.card.Deck;
 import domain.gamer.Dealer;
 import domain.gamer.PlayerGroup;
@@ -37,7 +38,7 @@ public class GameManager {
 
     public int giveCardsToDealer() {
         int count = 0;
-        while (dealer.isLessThen(16)) {
+        while (dealer.canReceiveCard()) {
             dealer.giveCard(deck.pollCard());
             count++;
         }
