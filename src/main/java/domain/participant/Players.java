@@ -36,11 +36,11 @@ public class Players {
     }
 
     public Map<Player, Integer> calculatePlayerProfit(final int dealerSum) {
-        LinkedHashMap<Player, Integer> res = new LinkedHashMap<>();
+        LinkedHashMap<Player, Integer> bettingResults = new LinkedHashMap<>();
         for (Player player : players) {
-            res.put(player, player.calculateProfit(dealerSum));
+            bettingResults.put(player, player.calculateProfit(dealerSum));
         }
-        return res;
+        return bettingResults;
     }
 
     public List<Player> getPlayers() {
