@@ -40,7 +40,7 @@ public class BlackjackController {
         List<String> playerNames = getPlayerNames();
         List<Integer> playersBet = getPlayersBet(playerNames);
 
-        return BlackjackGame.getBlackjackGame(
+        return BlackjackGame.createBlackjackGame(
                 playerNames,
                 playersBet
         );

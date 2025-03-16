@@ -68,7 +68,7 @@ public class BlackjackGame {
                 )));
     }
 
-    public static BlackjackGame getBlackjackGame(
+    public static BlackjackGame createBlackjackGame(
             final List<String> rawPlayers,
             final List<Integer> betAmount
     ) {
