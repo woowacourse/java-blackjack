@@ -1,8 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.card_hand;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card_hand.DealerBlackjackCardHand;
-import blackjack.domain.card_hand.PlayerBettingBlackjackCardHand;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

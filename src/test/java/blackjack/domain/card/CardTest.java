@@ -1,8 +1,5 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

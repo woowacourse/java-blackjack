@@ -1,7 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.card_hand;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card_hand.DealerBlackjackCardHand;
 import blackjack.domain.deck.BlackjackDeck;
 import blackjack.test_util.CardDrawerStub;
 import org.junit.jupiter.api.Test;

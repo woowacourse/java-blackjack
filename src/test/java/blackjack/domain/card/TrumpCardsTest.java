@@ -1,9 +1,5 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
-import blackjack.domain.card.TrumpCards;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
