@@ -1,6 +1,6 @@
 package fixture;
 
-import domain.gamer.Nickname;
+import blackjack.gamer.Nickname;
 
 public class NicknameFixture {
     public static Nickname createNickname(String name) {

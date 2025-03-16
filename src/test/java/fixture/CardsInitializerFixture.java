@@ -1,7 +1,7 @@
 package fixture;
 
-import domain.card.Card;
-import domain.card.CardsInitializer;
+import blackjack.card.Card;
+import blackjack.card.initializer.CardsInitializer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

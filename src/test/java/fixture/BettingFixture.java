@@ -1,6 +1,6 @@
 package fixture;
 
-import domain.gamer.Betting;
+import blackjack.gamer.Betting;
 
 public class BettingFixture {
     public static Betting createBetting(Integer bettingAmount) {

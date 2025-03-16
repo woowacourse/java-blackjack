@@ -1,8 +1,8 @@
 package fixture;
 
-import domain.card.Card;
-import domain.card.CardDeck;
-import domain.card.Hand;
+import blackjack.card.Card;
+import blackjack.card.CardDeck;
+import blackjack.card.Hand;
 
 public class HandFixture {
     public static Hand createHand(Card card1, Card card2) {

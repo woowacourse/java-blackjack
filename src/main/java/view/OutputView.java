@@ -1,9 +1,10 @@
 package view;
 
-import domain.card.Card;
-import domain.gamer.Dealer;
-import domain.gamer.Gamer;
-import domain.gamer.Player;
+import blackjack.card.Card;
+import blackjack.gamer.Dealer;
+import blackjack.gamer.Gamer;
+import blackjack.gamer.Player;
+import blackjack.result.ProfitResult;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,12 +63,12 @@ public class OutputView {
         System.out.printf(" - 결과: %d%n", gamer.getScore());
     }
 
-    public void printProfitResult(Dealer dealer, int dealerProfit, List<Player> players, List<Integer> playerProfit) {
+    public void printProfitResult(ProfitResult profitResult) {
         System.out.println("\n## 최종 수익");
-        System.out.println(dealer.getNickname() + ": " + dealerProfit + "원");
-        for (int i = 0; i < players.size(); i++) {
-            System.out.println(players.get(i).getNickname() + ": " + playerProfit.get(i) + "원");
-        }
+        System.out.printf("딜러: %d원\n", profitResult.getDealerProfit());
 
+        profitResult.getPlayerProfits().forEach(
+                (player, profit) -> System.out.printf("%s: %d원\n", player.getNickname(), profit)
+        );
     }
 }

@@ -1,7 +1,7 @@
 package fixture;
 
-import domain.card.Card;
-import domain.card.CardDeck;
+import blackjack.card.Card;
+import blackjack.card.CardDeck;
 
 public class CardDeckFixture {
     public static CardDeck createCardDeck(Card... cards) {

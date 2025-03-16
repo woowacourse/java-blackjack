@@ -1,7 +1,7 @@
 package view;
 
-import domain.gamer.Nickname;
-import domain.gamer.Player;
+import blackjack.gamer.Nickname;
+import blackjack.gamer.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
