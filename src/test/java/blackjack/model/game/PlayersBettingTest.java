@@ -1,6 +1,7 @@
 package blackjack.model.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Map;
 
@@ -22,6 +23,26 @@ class PlayersBettingTest {
 
         assertThat(playersBetting.getPlayersBettingMoney())
                 .containsExactlyInAnyOrderEntriesOf(Map.of(new User("pobi"), new BettingMoney(1_000)));
+    }
+
+    @Test
+    void 플레이어의_베팅_머니를_출금한다() {
+        PlayersBetting playersBetting = new PlayersBetting();
+        Player pobi = new User("pobi");
+        playersBetting.depositBettingMoney(pobi, new BettingMoney(1_000));
+
+        assertThat(playersBetting.withdrawMoney(pobi)).isEqualTo(new BettingMoney(1_000));
+    }
+
+    @Test
+    void 존재하지_않는_플레이어의_베팅_머니를_출금할_수_없다() {
+        PlayersBetting playersBetting = new PlayersBetting();
+        Player pobi = new User("pobi");
+        playersBetting.depositBettingMoney(pobi, new BettingMoney(1_000));
+
+        assertThatThrownBy(() -> playersBetting.withdrawMoney(new User("json")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("존재하지 않는 플레이어입니다.");
     }
 
 }

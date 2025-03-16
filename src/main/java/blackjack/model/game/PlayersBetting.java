@@ -24,10 +24,10 @@ public class PlayersBetting {
     }
 
     public BettingMoney withdrawMoney(final Player player) {
-        if (!playersBettingMoney.containsKey(player)) {
-            throw new IllegalArgumentException("존재하지 않는 플레이어입니다.");
+        if (playersBettingMoney.containsKey(player)) {
+            return playersBettingMoney.get(player);
         }
-        return playersBettingMoney.get(player);
+        throw new IllegalArgumentException("존재하지 않는 플레이어입니다.");
     }
 
 }
