@@ -2,6 +2,7 @@ package domain;
 
 import static util.ExceptionConstants.ERROR_HEADER;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,7 @@ public class Players {
     }
 
     public Players() {
-        this(Collections.emptyList());
+        this(new ArrayList<>());
     }
 
     public void addAll(List<Player> players) {
@@ -25,15 +26,6 @@ public class Players {
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
-    }
-
-    public ProfitResults calculateProfitResults(Hand dealerHand) {
-        Map<Player, Profit> profitResults = players.stream()
-                .collect(Collectors.toMap(
-                        player -> player,
-                        player -> player.calculateProfit(dealerHand)
-                ));
-        return new ProfitResults(profitResults);
     }
 
     public List<String> getAllPlayersName() {
@@ -47,5 +39,14 @@ public class Players {
                 .filter(player -> player.isEqualName(playerName))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_HEADER + "해당 이름을 가진 플레이어가 없습니다."));
+    }
+
+    public ProfitResults calculateProfitResults(Hand dealerHand) {
+        Map<Player, Profit> profitResults = players.stream()
+                .collect(Collectors.toMap(
+                        player -> player,
+                        player -> player.calculateProfit(dealerHand)
+                ));
+        return new ProfitResults(profitResults);
     }
 }

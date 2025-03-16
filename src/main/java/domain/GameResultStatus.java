@@ -1,12 +1,18 @@
 package domain;
 
 public enum GameResultStatus {
-    WIN,
-    DRAW,
-    LOSE,
-    IN_PROGRESS;
+    BLACKJACK(1.5),
+    WIN(1),
+    DRAW(0),
+    LOSE(-1);
 
-    public boolean isEqualTo(GameResultStatus gameResultStatus) {
-        return gameResultStatus == this;
+    private double payout;
+
+    GameResultStatus(double payout) {
+        this.payout = payout;
+    }
+
+    public double getPayout() {
+        return payout;
     }
 }

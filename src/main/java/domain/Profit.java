@@ -1,7 +1,12 @@
 package domain;
 
+import java.math.BigDecimal;
+
 public record Profit(
-        int value
+        BigDecimal value
 ) {
 
+    public int toIntValue() {
+        return value.intValue();
+    }
 }

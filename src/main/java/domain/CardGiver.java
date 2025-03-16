@@ -14,12 +14,6 @@ public class CardGiver {
         this.deck = deck;
     }
 
-    public void giveOneTo(Participant participant) {
-        if (participant.isPossibleDraw()) {
-            participant.addCard(deck.drawCard());
-        }
-    }
-
     public void dealingTo(List<Participant> participants) {
         participants.forEach(participant -> participant.addDefaultCards(deck.drawCards(DEFAULT_CARD_GIVE_COUNT)));
     }
@@ -28,7 +22,7 @@ public class CardGiver {
         if (!isRequestHit) {
             return;
         }
-        if (player.isPossibleHit()) {
+        if (player.isImpossibleHit()) {
             throw new IllegalStateException(ERROR_HEADER + "카드의 합이 21을 초과하였습니다. 더이상 카드를 받을 수 없습니다.");
         }
         player.addCard(deck.drawCard());

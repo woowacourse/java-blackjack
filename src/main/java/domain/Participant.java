@@ -32,6 +32,4 @@ public abstract class Participant {
     public void addCard(Card receivedCard) {
         hand.add(receivedCard);
     }
-
-    abstract boolean isPossibleDraw();
 }

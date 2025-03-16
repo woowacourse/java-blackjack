@@ -18,8 +18,11 @@ public class Dealer extends Participant {
         return hand.getFirst();
     }
 
-    @Override
     public boolean isPossibleDraw() {
         return hand.calculateSum() <= VALID_DRAW_LIMIT;
+    }
+
+    public boolean isBust() {
+        return hand.isBust();
     }
 }

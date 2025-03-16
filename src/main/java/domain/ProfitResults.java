@@ -16,12 +16,12 @@ public class ProfitResults {
     }
 
     public int getProfitValue(Player key) {
-        return profitResults.get(key).value();
+        return profitResults.get(key).toIntValue();
     }
 
     public int calculateDealerProfit() {
         return -profitResults.values().stream()
-                .mapToInt(Profit::value)
+                .mapToInt(Profit::toIntValue)
                 .sum();
     }
 }
