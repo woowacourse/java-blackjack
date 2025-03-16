@@ -1,14 +1,12 @@
 package domain;
 
-import static domain.card.CardScore.*;
-import static domain.card.CardType.*;
-import static org.assertj.core.api.Assertions.assertThat;
-
 import domain.card.Card;
-import domain.card.CardScore;
-import domain.card.CardType;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import static domain.card.CardScore.ACE;
+import static domain.card.CardType.CLOVER;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class CardTest {
     @Nested

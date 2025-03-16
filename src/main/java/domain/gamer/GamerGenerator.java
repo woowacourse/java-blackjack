@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class GamerGenerator {
+    private static final int MAX_PLAYER = 7;
 
     private GamerGenerator() {
     }
@@ -30,7 +31,7 @@ public class GamerGenerator {
     }
 
     private static void validatePLayerNumber(final List<String> playerNames) {
-        if (playerNames.size() > 7) {
+        if (playerNames.size() > MAX_PLAYER) {
             throw new IllegalArgumentException("[ERROR] 플레이어 인원 수느 7명을 초과할 수 없습니다.");
         }
     }

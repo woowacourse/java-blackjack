@@ -1,11 +1,12 @@
 package domain;
 
-import static domain.card.CardScore.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.Assertions.assertThat;
-
-import domain.card.*;
+import domain.card.Card;
+import domain.card.CardGenerator;
+import domain.card.RandomCardGenerator;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class RandomCardGeneratorTest {
     @Test
@@ -20,9 +21,9 @@ public class RandomCardGeneratorTest {
     }
 
     @Test
-    void 카드를_모두_소진한_경우_에러가_발생한다(){
+    void 카드를_모두_소진한_경우_에러가_발생한다() {
         CardGenerator cardGenerator = new RandomCardGenerator();
-        for(int i=0; i<52; i++){
+        for (int i = 0; i < 52; i++) {
             cardGenerator.peekCard();
         }
 

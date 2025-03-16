@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static domain.GameManager.LIMIT;
+import static domain.GameManager.BLACKJACK_NUMBER;
 import static domain.card.Card.ACE_HIGH_SCORE;
 import static domain.card.Card.ACE_LOW_SCORE;
 
@@ -44,7 +44,7 @@ public class CardGroup {
     }
 
     private boolean isOverHitRule(int score) {
-        return score > LIMIT;
+        return score > BLACKJACK_NUMBER;
     }
 
     public int calculateScore() {

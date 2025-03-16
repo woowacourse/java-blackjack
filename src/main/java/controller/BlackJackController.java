@@ -1,6 +1,7 @@
 package controller;
 
 import domain.GameManager;
+import domain.bet.Bet;
 import domain.card.CardGenerator;
 import domain.card.RandomCardGenerator;
 import domain.gamer.Player;
@@ -9,6 +10,8 @@ import view.InputView;
 import view.OutputView;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackJackController {
 
@@ -24,6 +27,7 @@ public class BlackJackController {
         final List<String> playersNames = requestPlayerNames();
         final CardGenerator randomCardGenerator = new RandomCardGenerator();
         final GameManager gameManager = GameManager.create(playersNames, randomCardGenerator);
+        final Map<String, Bet> playerBets = requestPlayerBets(playersNames);
         gameManager.initOpeningCards();
 
         requestHit(gameManager);
@@ -31,12 +35,22 @@ public class BlackJackController {
         printDealerReceiveCardCount(gameManager);
 
         outputView.printGamerCardsAndScore(gameManager.getDealer(), gameManager.getPlayers());
-        outputView.printGameResult(gameManager.calculateDealerGameResult(), gameManager.calculatePlayerGameResult());
+        outputView.printGamerBetResult(
+                gameManager.getDealerBetResult(playerBets),
+                gameManager.getPlayerBetResult(playerBets));
+    }
+
+    private Map<String, Bet> requestPlayerBets(List<String> playerNames) {
+        return playerNames.stream()
+                .collect(Collectors.toMap(name -> name, this::requestBetAmount));
     }
 
     private List<String> requestPlayerNames() {
-        return LoopTemplate.tryCatchLoop(() ->
-                LoopTemplate.tryCatchLoop(inputView::readPlayers));
+        return LoopTemplate.tryCatchLoop(inputView::readPlayers);
+    }
+
+    private Bet requestBetAmount(String playerName) {
+        return LoopTemplate.tryCatchLoop(() -> inputView.readBet(playerName));
     }
 
     private void requestHit(GameManager gameManager) {

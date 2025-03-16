@@ -1,18 +1,17 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import domain.card.Card;
 import domain.card.CardGroup;
 import domain.card.CardScore;
 import domain.card.CardType;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class GameResultTest {
     @DisplayName("플레이어 20점 vs 딜러 18점")
@@ -27,7 +26,7 @@ public class GameResultTest {
         cardGroup1.addCard(new Card(CardType.CLOVER, CardScore.JACK));
         cardGroup2.addCard(new Card(CardType.CLOVER, CardScore.TEN));
         cardGroup2.addCard(new Card(CardType.CLOVER, CardScore.JACK));
-        cardGroup3.addCard(new Card(CardType.CLOVER,CardScore.ACE));
+        cardGroup3.addCard(new Card(CardType.CLOVER, CardScore.ACE));
         cardGroup3.addCard(new Card(CardType.CLOVER, CardScore.EIGHT));
 
         final List<Player> players = List.of(
@@ -37,8 +36,8 @@ public class GameResultTest {
         final Dealer dealer = new Dealer(cardGroup3);
 
         //then
-        assertThat(GameResult.calculateResult(dealer,players.get(0))).isEqualTo(GameResult.WIN);
-        assertThat(GameResult.calculateResult(dealer,players.get(1))).isEqualTo(GameResult.WIN);
+        assertThat(GameResult.calculateResult(dealer, players.get(0))).isEqualTo(GameResult.WIN);
+        assertThat(GameResult.calculateResult(dealer, players.get(1))).isEqualTo(GameResult.WIN);
     }
 
     @DisplayName("Face 카드 3장을 받아 30점의 경우 버스트하여 패배")
@@ -57,7 +56,7 @@ public class GameResultTest {
         final Dealer dealer = new Dealer(cardGroup3);
 
         //then
-        assertThat(GameResult.calculateResult(dealer,player1)).isEqualTo(GameResult.LOSE);
+        assertThat(GameResult.calculateResult(dealer, player1)).isEqualTo(GameResult.LOSE);
     }
 
     @Test
@@ -70,7 +69,7 @@ public class GameResultTest {
         final Dealer dealer = new Dealer(cardGroup3);
 
         //then
-        assertThat(GameResult.calculateResult(dealer,player1)).isEqualTo(GameResult.DRAW);
+        assertThat(GameResult.calculateResult(dealer, player1)).isEqualTo(GameResult.DRAW);
     }
 
     @Test
@@ -79,18 +78,18 @@ public class GameResultTest {
         CardGroup cardGroup1 = new CardGroup();
         CardGroup cardGroup3 = new CardGroup();
 
-        cardGroup1.addCard(new Card(CardType.CLOVER,CardScore.JACK));
-        cardGroup1.addCard(new Card(CardType.CLOVER,CardScore.JACK));
-        cardGroup1.addCard(new Card(CardType.CLOVER,CardScore.JACK));
+        cardGroup1.addCard(new Card(CardType.CLOVER, CardScore.JACK));
+        cardGroup1.addCard(new Card(CardType.CLOVER, CardScore.JACK));
+        cardGroup1.addCard(new Card(CardType.CLOVER, CardScore.JACK));
 
-        cardGroup3.addCard(new Card(CardType.CLOVER,CardScore.JACK));
-        cardGroup3.addCard(new Card(CardType.CLOVER,CardScore.JACK));
-        cardGroup3.addCard(new Card(CardType.CLOVER,CardScore.JACK));
+        cardGroup3.addCard(new Card(CardType.CLOVER, CardScore.JACK));
+        cardGroup3.addCard(new Card(CardType.CLOVER, CardScore.JACK));
+        cardGroup3.addCard(new Card(CardType.CLOVER, CardScore.JACK));
 
         final Player player1 = new Player("윌슨", cardGroup1);
 
         final Dealer dealer = new Dealer(cardGroup3);
 
-        assertThat(GameResult.calculateResult(dealer,player1)).isEqualTo(GameResult.DRAW);
+        assertThat(GameResult.calculateResult(dealer, player1)).isEqualTo(GameResult.DRAW);
     }
 }

@@ -16,5 +16,4 @@ public class LoopTemplate {
             return tryCatchLoop(callback);
         }
     }
-
 }

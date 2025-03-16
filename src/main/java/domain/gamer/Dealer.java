@@ -13,7 +13,7 @@ public class Dealer {
         this.gamer = new Gamer(cardGroup);
     }
 
-    public void receiveCard(Card card){
+    public void receiveCard(Card card) {
         gamer.receiveCard(card);
     }
 

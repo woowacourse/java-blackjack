@@ -1,6 +1,5 @@
 package view;
 
-import domain.GameResult;
 import domain.card.Card;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
@@ -61,30 +60,19 @@ public class OutputView {
         System.out.println(LINE_SEPARATOR + dealerMessage + LINE_SEPARATOR + playerMessage);
     }
 
-    public void printGameResult(final Map<GameResult, Integer> dealerGameResult,
-                                final Map<String, GameResult> playerGameResult) {
-        final StringBuilder sb = new StringBuilder();
-        final String dealerGameResultMessage = dealerGameResult.entrySet().stream()
-                .map(entry -> String.format("%d%s", entry.getValue(), entry.getKey().getDescription()))
-                .collect(Collectors.joining(" "));
-
-        final String dealerMessage = String.format("딜러: %s", dealerGameResultMessage);
-        final String playerMessage = playerGameResult.entrySet().stream()
-                .map(entry -> String.format("%s: %s", entry.getKey(), entry.getValue().getDescription()))
-                .collect(Collectors.joining(LINE_SEPARATOR));
-        sb.append(LINE_SEPARATOR);
-        sb.append("## 최종 승패");
-        sb.append(LINE_SEPARATOR);
-        sb.append(dealerMessage);
-        sb.append(LINE_SEPARATOR);
-        sb.append(playerMessage);
-        System.out.println(sb);
-    }
-
     private String createCardsMessage(final String name, final Card... cards) {
         final String cardsMessage = Arrays.stream(cards)
                 .map(card -> String.format("%s%s", card.getScore().getSymbol(), card.getType().getName()))
                 .collect(Collectors.joining(", "));
         return String.format("%s카드: %s", name, cardsMessage);
+    }
+
+    public void printGamerBetResult(int dealerBetResult, Map<String, Integer> playerBetResult) {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(LINE_SEPARATOR);
+        sb.append("## 최종수익").append(LINE_SEPARATOR)
+                .append("딜러: ").append(dealerBetResult).append(LINE_SEPARATOR);
+        playerBetResult.forEach((key, value) -> sb.append(key).append(": ").append(value).append(LINE_SEPARATOR));
+        System.out.println(sb);
     }
 }

@@ -20,6 +20,10 @@ public class Player {
         gamer.receiveCard(card);
     }
 
+    public boolean isBlackJack() {
+        return gamer.isBlackjack();
+    }
+
     public boolean isBust() {
         return gamer.isBust();
     }

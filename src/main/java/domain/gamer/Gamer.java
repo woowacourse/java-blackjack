@@ -6,7 +6,8 @@ import domain.card.CardGroup;
 
 import java.util.List;
 
-import static domain.GameManager.LIMIT;
+import static domain.GameManager.BLACKJACK_NUMBER;
+import static domain.GameManager.START_RECEIVE_CARD;
 
 public class Gamer {
     private final CardGroup cardGroup;
@@ -15,12 +16,16 @@ public class Gamer {
         this.cardGroup = cardGroup;
     }
 
+    public boolean isBlackjack() {
+        return cardGroup.countCards() == START_RECEIVE_CARD && calculateScore() == BLACKJACK_NUMBER;
+    }
+
     public void receiveCard(Card card) {
         cardGroup.addCard(card);
     }
 
     public boolean isBust() {
-        return this.cardGroup.calculateScore() > LIMIT;
+        return this.cardGroup.calculateScore() > BLACKJACK_NUMBER;
     }
 
     public GameResult calculateGameResult(final int compareScore) {
