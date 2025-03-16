@@ -1,6 +1,5 @@
 package domain.gamer;
 
-import domain.Betting;
 import domain.GameResult;
 import domain.card.CardGroup;
 import java.util.Collections;
@@ -14,10 +13,6 @@ public class Dealer extends Gamer {
 
     public Dealer(CardGroup cardGroup) {
         super(cardGroup);
-    }
-
-    public Dealer(final CardGroup cardGroup, final Betting batting) {
-        super(cardGroup, batting);
     }
 
     public Map<GameResult, Integer> calculateDealerGameResult(final Map<String, GameResult> playerGameResults) {
