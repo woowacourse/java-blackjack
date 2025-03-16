@@ -9,7 +9,7 @@ import model.participant.Dealer;
 import model.participant.Players;
 import model.result.GameResult;
 import model.participant.Player;
-import model.result.ParticipantWinningResult;
+import model.result.WinningResults;
 
 public final class OutputView {
     private static final String JOIN_DELIMITER = ", ";
@@ -85,10 +85,10 @@ public final class OutputView {
         System.out.printf("%s: %s\n", DEALER_PRINT_MESSAGE, getGameResultMessage(dealerWinning));
     }
 
-    public static void printPlayerFinalResult(final ParticipantWinningResult participantWinningResult) {
-        Map<Player, GameResult> playerResults = participantWinningResult.getResult();
+    public static void printPlayerFinalResult(final WinningResults winningResults) {
+        Map<Player, GameResult> playerResults = winningResults.getResults();
         for (Player player : playerResults.keySet()) {
-            GameResult playerResult = participantWinningResult.getResult().get(player);
+            GameResult playerResult = winningResults.getResults().get(player);
             System.out.println(player.getName() + ": " + playerResult.getResultMeaning());
         }
     }

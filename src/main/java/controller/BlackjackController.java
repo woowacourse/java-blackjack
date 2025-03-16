@@ -9,7 +9,7 @@ import model.participant.Players;
 import model.result.GameResult;
 import model.participant.Player;
 import model.result.InitialDealResult;
-import model.result.ParticipantWinningResult;
+import model.result.WinningResults;
 import view.InputView;
 import view.OutputView;
 
@@ -31,9 +31,9 @@ public class BlackjackController {
             }
 
             printFinalScore(players, dealer);
-            ParticipantWinningResult participantWinningResult = printWinningResult(players, dealer);
+            WinningResults winningResults = printWinningResult(players, dealer);
 
-            calculateRevenue(participantWinningResult, players, dealer);
+            calculateRevenue(winningResults, players, dealer);
             printRevenue(players, dealer);
         } catch (RuntimeException e) {
             OutputView.printExceptionMessage(e.getMessage());
@@ -84,22 +84,22 @@ public class BlackjackController {
         OutputView.printPlayersFinalScore(players);
     }
 
-    private ParticipantWinningResult printWinningResult(final Players players, final Dealer dealer) {
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
-        Map<GameResult, Integer> dealerWinningResult = participantWinningResult.decideDealerWinning();
+    private WinningResults printWinningResult(final Players players, final Dealer dealer) {
+        WinningResults winningResults = WinningResults.of(players, dealer);
+        Map<GameResult, Integer> dealerWinningResult = winningResults.decideDealerWinning();
 
         OutputView.printDealerFinalResult(dealerWinningResult);
-        OutputView.printPlayerFinalResult(participantWinningResult);
+        OutputView.printPlayerFinalResult(winningResults);
 
-        return participantWinningResult;
+        return winningResults;
     }
 
-    private void calculateRevenue(ParticipantWinningResult participantWinningResult, Players players, Dealer dealer) {
+    private void calculateRevenue(WinningResults winningResults, Players players, Dealer dealer) {
         for (Player player : players.getPlayers()) {
-            if (participantWinningResult.isLose(player)) {
+            if (winningResults.isLose(player)) {
                 dealer.updateBetOwnerFrom(player);
             }
-            if (participantWinningResult.isBlackJackWin(player)) {
+            if (winningResults.isBlackjackWin(player)) {
                 dealer.updateBetAmountOf(player);
             }
         }

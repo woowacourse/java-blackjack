@@ -85,7 +85,7 @@ public final class Dealer implements BetOwnable, Gameable, GameProcessable {
     }
 
     @Override
-    public void updateBetAmountOf(Bettable better) { //TODO 매개변수에 player 넣을 수 없음
+    public void updateBetAmountOf(Bettable better) {
         bets.updateBetAmount(better);
     }
 

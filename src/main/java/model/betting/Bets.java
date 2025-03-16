@@ -16,7 +16,7 @@ public class Bets {
         this.bets.add(bet);
     }
 
-    public void updateOwner(BetOwnable owner, BetOwnable newOwner) { //TODO : 매개변수 추상화
+    public void updateOwner(BetOwnable owner, BetOwnable newOwner) {
         Bet updatingBet = findByOwner(owner);
         this.bets.remove(updatingBet);
         this.bets.add(updatingBet.changeOwnerTo(newOwner));
