@@ -47,7 +47,7 @@ public abstract class Cards {
         int aceCount = findAceElevenCount();
         while (isBust() && aceCount > 0) {
             aceCount--;
-            changeAceElevenToOne();
+            changeAceElevenToOneOrThrow();
         }
     }
 
@@ -63,7 +63,7 @@ public abstract class Cards {
                 .count();
     }
 
-    private void changeAceElevenToOne() {
+    private void changeAceElevenToOneOrThrow() {
         Card aceElevenCard = cards.stream()
                 .filter(card -> card.isSameNumber(CardNumber.ACE_ELEVEN))
                 .findAny()
