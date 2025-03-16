@@ -14,4 +14,8 @@ public class Betting {
             throw new IllegalArgumentException("[ERROR] 베팅은 최소 1000원 이상이어야합니다.");
         }
     }
+
+    public Integer getAmount() {
+        return amount;
+    }
 }

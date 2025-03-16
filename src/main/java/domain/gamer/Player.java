@@ -1,20 +1,24 @@
 package domain.gamer;
 
+import domain.card.Hand;
+import domain.rule.BlackjackMatchResult;
+
 public class Player extends Gamer {
+    private final Nickname nickname;
     private final Betting betting;
 
-    public Player(Nickname name, Betting betting) {
-        super(name);
+    public Player(Hand hand, Nickname nickname, Betting betting) {
+        super(hand);
+        this.nickname = nickname;
         this.betting = betting;
     }
 
-    @Override
-    public boolean canHit() {
-        return !isBurst();
+    public double getProfit(BlackjackMatchResult result) {
+        return (result.getRatio() * state.getProfit(betting.getAmount()));
     }
 
     @Override
-    public String getName() {
-        return super.getName();
+    public String getNickname() {
+        return nickname.getName();
     }
 }
