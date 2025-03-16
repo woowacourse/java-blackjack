@@ -19,6 +19,15 @@ public class InputView {
         return AnswerCommand.findByAnswer(input);
     }
 
+    public int readBettingAmount(final String playerName) {
+        System.out.println(String.format(OutputView.LINE_SEPARATOR + "%s의 배팅 금액은?", playerName));
+        try {
+            return Integer.parseInt(readInput());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("[ERROR] 배팅 금액은 양의 정수여야 합니다.");
+        }
+    }
+
     private String readInput() {
         final Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();

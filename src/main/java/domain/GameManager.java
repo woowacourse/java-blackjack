@@ -21,19 +21,11 @@ public class GameManager {
         this.deck = deck;
     }
 
-    public void shuffleCards() {
+    public void initializeGame(final List<String> playerNames) {
         deck.shuffleCards();
-    }
-
-    public void giveOneCardToPlayerByName(final String playerName) {
-        playerGroup.giveCardByName(playerName, deck.pollCard());
-    }
-
-    public void giveCardsToPlayers(final List<String> playerNames) {
-        for (String playerName : playerNames) {
-            playerGroup.giveCardByName(playerName, deck.pollCard());
-            playerGroup.giveCardByName(playerName, deck.pollCard());
-        }
+        giveCardsToPlayers(playerNames);
+        dealer.giveCard(deck.pollCard());
+        dealer.giveCard(deck.pollCard());
     }
 
     public int giveCardsToDealer() {
@@ -71,7 +63,6 @@ public class GameManager {
                         (newValue, oldValue) -> newValue
                 ));
     }
-
     public double calculateDealerBettingAmountOfReturn() {
         return dealer.calculateBettingAmountOfReturn(calculatePlayerBettingAmountOfReturn());
     }
