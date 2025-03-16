@@ -20,7 +20,7 @@ public class Players {
     }
 
     private void validatePlayerNumber(final List<Player> players) {
-        if (players.size() < PARTICIPANTS_MIN_SIZE) {
+        if (players.isEmpty()) {
             throw new IllegalArgumentException("플레이어는 한 명 이상 참가해야 합니다.");
         }
 

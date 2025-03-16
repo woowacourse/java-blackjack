@@ -32,11 +32,8 @@ public class PlayerName {
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (object == null || getClass() != object.getClass()) {
-            return false;
-        }
-        PlayerName that = (PlayerName) object;
+    public boolean equals(Object o) {
+        if (!(o instanceof PlayerName that)) return false;
         return Objects.equals(name, that.name);
     }
 
