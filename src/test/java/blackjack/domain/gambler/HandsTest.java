@@ -12,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardShape;
+import blackjack.domain.card.Hands;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -22,17 +23,32 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class HandsTest {
-    @DisplayName("카드의 합이 특정 값 이하인 지 여부를 반환한다")
-    @CsvSource(value = {"21:True", "18:True", "17:False"}, delimiterString = ":")
-    @ParameterizedTest
-    void isScoreBelowTest(int score, boolean expected) {
+    @DisplayName("카드의_개수가_주어진_사이즈와_일치하는_지_여부를_반환한다")
+    @Test
+    void hasSize() {
         // given
         Hands hands = new Hands();
         hands.addCard(new Card(CardShape.CLOVER, TEN));
         hands.addCard(new Card(CardShape.HEART, EIGHT));
 
         // when
-        boolean result = hands.isScoreBelow(score);
+        boolean result = hands.hasSize(2);
+
+        // then
+        assertThat(result).isTrue();
+    }
+    
+    @DisplayName("카드의 합이 특정 값 초과인 지 여부를 반환한다")
+    @CsvSource(value = {"21:False", "18:False", "17:True"}, delimiterString = ":")
+    @ParameterizedTest
+    void isScoreExceedTest(int score, boolean expected) {
+        // given
+        Hands hands = new Hands();
+        hands.addCard(new Card(CardShape.CLOVER, TEN));
+        hands.addCard(new Card(CardShape.HEART, EIGHT));
+
+        // when
+        boolean result = hands.isScoreExceed(score);
 
         // then
         assertThat(result).isEqualTo(expected);

@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,16 +17,21 @@ class CardTest {
         Card card = new Card(shape, type);
 
         //then
-        assertThat(card).extracting("shape").isEqualTo(shape);
-        assertThat(card).extracting("type").isEqualTo(type);
+        assertAll(
+            () -> assertThat(card).extracting("shape").isEqualTo(shape),
+            () -> assertThat(card).extracting("type").isEqualTo(type)
+        );
     }
 
     @DisplayName("상태가 같으면 같은 객체이다.")
     @Test
     void equalsTest() {
+        // given
         Card card1 = new Card(CardShape.DIAMOND, CardType.ACE);
         Card card2 = new Card(CardShape.DIAMOND, CardType.ACE);
 
+        // when
+        // then
         assertThat(card1).isEqualTo(card2);
     }
 }

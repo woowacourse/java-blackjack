@@ -1,21 +1,20 @@
 package blackjack.view;
 
-import static blackjack.domain.Round.BLACK_JACK;
-import static blackjack.domain.Round.DEALER_DRAW_THRESHOLD;
-import static blackjack.view.WinningType.DEFEAT;
-import static blackjack.view.WinningType.DRAW;
-import static blackjack.view.WinningType.WIN;
+import static blackjack.domain.game.Round.BLACKJACK;
+import static blackjack.domain.gambler.Dealer.DEALER_NAME;
 import static java.util.stream.Collectors.joining;
 
-import blackjack.domain.gambler.Names;
-import blackjack.domain.WinningDiscriminator;
 import blackjack.domain.card.Card;
 import blackjack.domain.gambler.Name;
+import blackjack.domain.gambler.Names;
+import blackjack.domain.gambler.Player;
+import blackjack.domain.game.WinningResult;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 public class OutputView {
+    private static final String ERROR_PREFIX = "[ERROR] ";
     private static final String JOIN_DELIMITER = ", ";
 
     public void printInitialDistributionPrompt(final Names playerNames) {
@@ -29,11 +28,11 @@ public class OutputView {
     }
 
     public void printBusted(final Name playerName) {
-        System.out.printf("[Bust] %s의 카드 합이 %d을 초과하여 패배하였습니다.\n", playerName, BLACK_JACK);
+        System.out.printf("[Bust] %s의 카드 합이 %d을 초과하여 패배하였습니다.\n", playerName, BLACKJACK);
     }
 
     public void printDealerDraw() {
-        System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.\n", DEALER_DRAW_THRESHOLD);
+        System.out.printf("딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
     }
 
     public void printGamblerResult(final Name name, final List<Card> cards, final int score) {
@@ -47,24 +46,26 @@ public class OutputView {
                 .collect(joining(delimiter));
     }
 
-    public void printWinning(final WinningDiscriminator winningDiscriminator) {
-        System.out.println("##최종 승패");
-        printDealerWinning(winningDiscriminator);
-        printPlayerWinning(winningDiscriminator);
+    public void printWinningResult(final WinningResult winningResult) {
+        System.out.println("## 최종 수익");
+        printDealerProfit(winningResult);
+        printPlayersProfit(winningResult);
     }
 
-    private void printDealerWinning(final WinningDiscriminator winningDiscriminator) {
-        Map<WinningType, Integer> dealerWinning = winningDiscriminator.judgeDealerResult();
-        Integer winCount = dealerWinning.get(WIN);
-        Integer drawCount = dealerWinning.get(DRAW);
-        Integer defeatCount = dealerWinning.get(DEFEAT);
-        System.out.printf("딜러: %d승 %d무 %d패\n", winCount, drawCount, defeatCount);
+    private void printDealerProfit(final WinningResult winningResult) {
+        int dealerProfit = winningResult.calculateDealerProfit();
+        System.out.printf("%s: %d\n", DEALER_NAME, dealerProfit);
     }
 
-    private void printPlayerWinning(final WinningDiscriminator winningDiscriminator) {
-        Map<Name, WinningType> playerWinning = winningDiscriminator.judgePlayersResult();
-        for (final Entry<Name, WinningType> entry : playerWinning.entrySet()) {
-            System.out.printf("%s: %s\n", entry.getKey(), entry.getValue().getDisplayName());
+    private void printPlayersProfit(final WinningResult winningResult) {
+        Map<Player, Integer> playersProfit = winningResult.calculatePlayersProfit();
+        for (Entry<Player, Integer> entry : playersProfit.entrySet()) {
+            Player player = entry.getKey();
+            System.out.printf("%s: %d\n", player.getName(), entry.getValue());
         }
+    }
+
+    public void printErrorMessage(final String errorMessage) {
+        System.out.println(ERROR_PREFIX + errorMessage);
     }
 }

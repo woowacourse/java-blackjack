@@ -3,15 +3,16 @@ package blackjack;
 import static blackjack.domain.gambler.Dealer.DEALER_NAME;
 import static java.util.stream.Collectors.toList;
 
+import blackjack.domain.betting.BettingAmount;
 import blackjack.domain.gambler.Names;
-import blackjack.domain.Round;
-import blackjack.domain.WinningDiscriminator;
+import blackjack.domain.game.Round;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.CardShuffler;
 import blackjack.domain.card.CardType;
 import blackjack.domain.gambler.Name;
+import blackjack.domain.game.WinningResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.Arrays;
@@ -22,15 +23,15 @@ public class Application {
     private static final OutputView outputView = new OutputView();
 
     public static void main(String[] args) {
-        CardDeck cardDeck = createCardDeck();
         Names playerNames = getPlayerNames();
-        Round round = new Round(cardDeck, playerNames);
-        round.distributeInitialCards();
-        outputView.printInitialDistributionPrompt(playerNames);
+        Round round = new Round(createCardDeck(), playerNames);
+        bet(round, playerNames);
+        distributeInitialCards(round, playerNames);
         printInitialCards(round, playerNames);
         processPlayersTurn(playerNames, round);
         processDealerTurn(round);
         printGameResult(round, playerNames);
+        printWinningResult(round);
     }
 
     private static CardDeck createCardDeck() {
@@ -46,8 +47,29 @@ public class Application {
             List<Name> names = inputView.inputPlayerName();
             return new Names(names);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            outputView.printErrorMessage(e.getMessage());
             return getPlayerNames();
+        }
+    }
+
+    private static void bet(final Round round, final Names playerNames) {
+        for (final Name name : playerNames.getNames()) {
+            round.bet(name, getBettingAmount(name));
+        }
+    }
+
+    private static void distributeInitialCards(final Round round, final Names playerNames) {
+        round.distributeInitialCards();
+        outputView.printInitialDistributionPrompt(playerNames);
+    }
+
+    private static BettingAmount getBettingAmount(final Name playerName) {
+        try {
+            int bettingAmount = inputView.inputBettingAmount(playerName);
+            return new BettingAmount(bettingAmount);
+        } catch (final IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+            return getBettingAmount(playerName);
         }
     }
 
@@ -66,7 +88,7 @@ public class Application {
 
     private static void processDealerTurn(final Round round) {
         if (round.dealerMustDraw()) {
-            round.distributeCards(DEALER_NAME, 1);
+            round.hit(DEALER_NAME);
             outputView.printDealerDraw();
         }
     }
@@ -74,10 +96,10 @@ public class Application {
     private static void processPlayerTurn(final Round round, final Name playerName) {
         boolean flag = false;
         while (isHit(playerName)) {
-            round.distributeCards(playerName, 1);
+            round.hit(playerName);
             outputView.printGamblerCards(playerName, round.getCards(playerName));
-            boolean isBusted = round.isPlayerBusted(playerName);
-            if (isBusted) {
+            boolean isBust = round.isBust(playerName);
+            if (isBust) {
                 outputView.printBusted(playerName);
                 break;
             }
@@ -92,7 +114,7 @@ public class Application {
         try {
             return inputView.inputPlayerHit(playerName);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            outputView.printErrorMessage(e.getMessage());
             return isHit(playerName);
         }
     }
@@ -104,7 +126,10 @@ public class Application {
             int score = round.getScore(playerName);
             outputView.printGamblerResult(playerName, cards, score);
         }
-        WinningDiscriminator discriminator = round.getWinningDiscriminator();
-        outputView.printWinning(discriminator);
+    }
+
+    private static void printWinningResult(final Round round) {
+        WinningResult winningResult = round.getWinningResult();
+        outputView.printWinningResult(winningResult);
     }
 }
