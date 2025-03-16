@@ -4,33 +4,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import model.betting.Betting;
-import model.card.CardRank;
 import model.card.Deck;
 import model.participant.Dealer;
 import model.participant.Player;
+import view.InputView;
 
-public class PlayerTurnManager {
+public class PlayersTurn {
     private final List<PlayerTurn> playersGameRound;
 
-    public PlayerTurnManager(List<PlayerTurn> playersGameRound) {
+    public PlayersTurn(List<PlayerTurn> playersGameRound) {
         this.playersGameRound = playersGameRound;
     }
 
     public void dealInitialCardsToAllPlayers(Deck deck) {
         for (PlayerTurn playerTurn : playersGameRound) {
             playerTurn.dealInitialCards(deck);
-        }
-    }
-
-    public void runPlayerTurn(Deck deck) {
-        for (PlayerTurn playerTurn : playersGameRound) {
-            playerTurn.selectAtOnePlayerChoice(deck);
-        }
-    }
-
-    public void betInsurance(Dealer dealer) {
-        if (dealer.isFirstCardAce()) {
-            runPlayersBetInsurance();
         }
     }
 
@@ -42,9 +30,7 @@ public class PlayerTurnManager {
         return playersBet;
     }
 
-    private void runPlayersBetInsurance() {
-        for (PlayerTurn playerTurn : playersGameRound) {
-            playerTurn.betInsurance();
-        }
+    public List<PlayerTurn> getPlayersGameRound() {
+        return playersGameRound;
     }
 }

@@ -10,7 +10,7 @@ import model.winning.ParticipantWinningResult;
 import model.participant.Players;
 import model.turn.DealerTurn;
 import model.turn.PlayerTurn;
-import model.turn.PlayerTurnManager;
+import model.turn.PlayersTurn;
 import view.InputView;
 import view.OutputView;
 
@@ -20,20 +20,18 @@ public class BlackjackController {
         List<String> playerNames = inputPlayersName();
         Players players = Players.from(playerNames);
         Dealer dealer = new Dealer();
-        Deck deck = Deck.of();
         List<PlayerTurn> startBetting = inputPlayersBetting(players);
-        PlayerTurnManager playerTurnManager = new PlayerTurnManager(startBetting);
+        PlayersTurn playersTurn = new PlayersTurn(startBetting);
         DealerTurn dealerTurn = new DealerTurn(dealer);
+        TurnController turnController = new TurnController(playersTurn, dealerTurn);
 
-        playerTurnManager.dealInitialCardsToAllPlayers(deck);
-        dealerTurn.dealInitialCards(deck);
+        turnController.dealInitialCards();
         OutputView.printInitialDealResult(dealer, players);
-        playerTurnManager.betInsurance(dealer);
-        playerTurnManager.runPlayerTurn(deck);
-        dealerTurn.runDealerTurn(deck);
+        turnController.betInsurance();
+        turnController.runParticipantsTurn();
 
         ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
-        BettingResult bettingResult = new BettingResult(playerTurnManager.getPlayersBet(), participantWinningResult);
+        BettingResult bettingResult = new BettingResult(playersTurn.getPlayersBet(), participantWinningResult);
         Map<Player, Integer> finalProfitByPlayer = bettingResult.calculatePlayerBettingResult(players, dealer);
         int finalProfitByDealer = bettingResult.calculateDealerFinalResult(finalProfitByPlayer);
 
