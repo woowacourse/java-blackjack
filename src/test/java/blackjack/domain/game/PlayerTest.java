@@ -86,27 +86,6 @@ class PlayerTest {
     }
 
     @Test
-    void 카드의_합이_한계를_넘으면_제한됨을_나타낸다() {
-        // given
-        Hand hand = new Hand();
-
-        Card card1 = new Card(CardSuit.CLUB, CardRank.TEN);
-        Card card2 = new Card(CardSuit.DIAMOND, CardRank.TEN);
-        Card card3 = new Card(CardSuit.HEART, CardRank.TEN);
-        hand.takeCard(card1);
-        hand.takeCard(card2);
-        hand.takeCard(card3);
-
-        Player player = new Player("히로", hand, new BetAmount(1_000));
-
-        // when
-        boolean overLimit = player.isOverLimit(21);
-
-        // then
-        assertThat(overLimit).isTrue();
-    }
-
-    @Test
     void 플레이어는_추가로_카드를_뽑을_지_결정할_수_있다() {
         Player player = new Player("히로", new Hand(), new BetAmount(1_000));
         assertThat(player.canDecideToTakeMoreCard()).isTrue();

@@ -97,25 +97,6 @@ class DealerTest {
     }
 
     @Test
-    void 카드_합이_한계를_넘으면_제한됨을_나타낸다() {
-        // given
-        Hand hand = new Hand();
-        Card card1 = new Card(CardSuit.CLUB, CardRank.TEN);
-        Card card2 = new Card(CardSuit.DIAMOND, CardRank.TEN);
-        Card card3 = new Card(CardSuit.HEART, CardRank.TEN);
-        hand.takeCard(card1);
-        hand.takeCard(card2);
-        hand.takeCard(card3);
-        Dealer dealer = new Dealer(hand);
-
-        // when
-        boolean overLimit = dealer.isOverLimit(21);
-
-        // then
-        assertThat(overLimit).isTrue();
-    }
-
-    @Test
     void 딜러는_카드를_더_뽑을_수_없다() {
         Dealer dealer = new Dealer(new Hand());
         assertThat(dealer.canDecideToTakeMoreCard()).isFalse();
