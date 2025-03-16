@@ -17,7 +17,7 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 class PlayerTest {
 
-    private static Stream<Arguments> canTakeCardArgument() {
+    private static Stream<Arguments> canHitArgument() {
         return Stream.of(Arguments.arguments(HandFixture.createHandWithOptimisticValue15(), true),
                 Arguments.arguments(HandFixture.busted(), false));
     }
@@ -100,7 +100,7 @@ class PlayerTest {
 
     @DisplayName("플레이어의 카드가 21을 넘지 않는다면 카드를 받을 수 있다.")
     @ParameterizedTest
-    @MethodSource("canTakeCardArgument")
+    @MethodSource("canHitArgument")
     void test8(Hand hand, boolean expect) {
         //given
         Wallet wallet = Wallet.bet(1000);
@@ -109,7 +109,7 @@ class PlayerTest {
         Player player = new Player("꾹이", playerHand);
 
         // when & then
-        assertThat(player.canTakeCard()).isEqualTo(expect);
+        assertThat(player.canHit()).isEqualTo(expect);
     }
 
     @DisplayName("플레이어의 패가 블랙잭이라면 1.5배 더 받을 수 있다.")

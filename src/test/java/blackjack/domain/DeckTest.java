@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.common.ErrorMessage;
-import blackjack.factory.SingleDeckFactory;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,7 +45,7 @@ class DeckTest {
             int expect = 2;
 
             // when
-            List<Card> takeCards = deck.takeStartCards();
+            List<Card> takeCards = deck.startingHand();
 
             // then
             assertThat(takeCards).hasSize(expect);
@@ -57,7 +56,7 @@ class DeckTest {
         void test5() {
             Deck deck = Deck.shuffled(List.of());
 
-            assertThatThrownBy(deck::takeStartCards).isInstanceOf(IllegalArgumentException.class)
+            assertThatThrownBy(deck::startingHand).isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ErrorMessage.EMPTY_DECK_SIZE.getMessage());
         }
     }

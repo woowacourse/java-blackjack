@@ -24,7 +24,7 @@ public class Deck {
         return new Deck(copiedCards);
     }
 
-    public List<Card> takeStartCards() {
+    public List<Card> startingHand() {
         return takeCards(STARTING_CARD_SIZE);
     }
 

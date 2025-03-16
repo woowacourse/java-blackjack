@@ -33,19 +33,18 @@ public class BlackjackController {
 
         giveCards(deck, players, dealer);
 
+        players.adjustBalance(dealer);
         printResult(players, dealer);
     }
 
     private void giveCards(Deck deck, Players players, Dealer dealer) {
-        giveStartingCards(deck, players, dealer);
+        initialDeal(deck, players, dealer);
 
-        giveMoreCardFor(deck, players);
-        giveMoreCardFor(deck, dealer);
+        hitCard(deck, players);
+        hitCard(deck, dealer);
     }
 
     private void printResult(Players players, Dealer dealer) {
-        players.adjustBalance(dealer);
-
         int playersTotalRevenue = players.getTotalRevenue();
         Map<Player, Integer> revenueMap = players.getRevenueMap();
 
@@ -53,47 +52,51 @@ public class BlackjackController {
         OutputView.printRevenue(playersTotalRevenue, revenueMap);
     }
 
-    private void giveStartingCards(Deck deck, Players players, Dealer dealer) {
+    private void initialDeal(Deck deck, Players players, Dealer dealer) {
         for (Player player : players.getPlayers()) {
-            giveCard(Deck::takeStartCards, deck, player);
+            startingHand(Deck::startingHand, deck, player);
         }
 
-        giveCard(Deck::takeStartCards, deck, dealer);
+        startingHand(Deck::startingHand, deck, dealer);
 
-        OutputView.printStartingCardsStatuses(dealer, players);
+        OutputView.printHand(dealer, players);
     }
 
-    private void giveMoreCardFor(Deck deck, Players players) {
+    private void hitCard(Deck deck, Players players) {
         for (Player player : players.getPlayers()) {
-            giveMoreCardFor(deck, player);
+            hitCard(deck, player);
         }
     }
 
-    private void giveMoreCardFor(Deck deck, Dealer dealer) {
-        while (dealer.canTakeCard()) {
+    private void hitCard(Deck deck, Dealer dealer) {
+        while (dealer.canHit()) {
             OutputView.printMoreCard();
-            giveCard(Deck::takeOneCard, deck, dealer);
+            startingHand(Deck::takeOneCard, deck, dealer);
         }
     }
 
-    private void giveCard(Function<Deck, List<Card>> function, Deck deck, Participant participant) {
+    private void startingHand(Function<Deck, List<Card>> function, Deck deck, Participant participant) {
         List<Card> cards = function.apply(deck);
 
         cards.forEach(participant::takeCard);
     }
 
-    private void giveMoreCardFor(Deck deck, Player player) {
+    private void hitCard(Deck deck, Player player) {
+        if (player.isBlackjack()) {
+            return;
+        }
+
         while (canReceiveMoreCard(player)) {
-            giveCard(Deck::takeOneCard, deck, player);
-            OutputView.printCardStatus(player);
+            startingHand(Deck::takeOneCard, deck, player);
+            OutputView.printHand(player);
         }
     }
 
     private boolean canReceiveMoreCard(Player player) {
-        return notIsBustedFor(player) && player.canTakeCard() && InputView.askToGetMoreCard(player) != Confirmation.N;
+        return isNotBustedFor(player) && player.canHit() && InputView.askToGetMoreCard(player) != Confirmation.N;
     }
 
-    private boolean notIsBustedFor(Player player) {
+    private boolean isNotBustedFor(Player player) {
         boolean busted = player.isBusted();
         if (busted) {
             OutputView.printBustedPlayer(player);

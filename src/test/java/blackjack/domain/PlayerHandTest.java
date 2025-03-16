@@ -14,7 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class PlayerHandTest {
 
-    private static Stream<Arguments> canTakeCardArgument() {
+    private static Stream<Arguments> canHitArgument() {
         return Stream.of(
                 Arguments.arguments(HandFixture.createHandWithOptimisticValue15(), true),
                 Arguments.arguments(HandFixture.busted(), false)
@@ -25,7 +25,7 @@ class PlayerHandTest {
         return Stream.of(
                 Arguments.of(1000, GameResultType.WIN, 1000),
                 Arguments.of(1000, GameResultType.LOSE, -1000),
-                Arguments.of(1000, GameResultType.TIE, 0)
+                Arguments.of(1000, GameResultType.PUSH, 0)
         );
     }
 
@@ -87,7 +87,7 @@ class PlayerHandTest {
 
     @DisplayName("플레이어의 카드가 21을 넘지 않는다면 카드를 받을 수 있다.")
     @ParameterizedTest
-    @MethodSource("canTakeCardArgument")
+    @MethodSource("canHitArgument")
     void test8(Hand hand, boolean expect) {
         //given
         Wallet wallet = Wallet.bet(1000);

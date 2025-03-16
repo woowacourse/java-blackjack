@@ -6,7 +6,7 @@ import java.util.function.BiPredicate;
 public enum GameResultType {
 
     WIN((value, comparedValue) -> value > comparedValue),
-    TIE(Integer::equals),
+    PUSH(Integer::equals),
     LOSE((value, comparedValue) -> value < comparedValue),
     ;
 
@@ -33,7 +33,7 @@ public enum GameResultType {
 
     private static GameResultType judgeForPlayerWithBlackjack(Player player, Dealer dealer) {
         if (player.isBlackjack() && dealer.isBlackjack()) {
-            return GameResultType.TIE;
+            return GameResultType.PUSH;
         }
 
         if (player.isBlackjack()) {

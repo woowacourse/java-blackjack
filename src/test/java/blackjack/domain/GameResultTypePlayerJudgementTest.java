@@ -17,7 +17,7 @@ public class GameResultTypePlayerJudgementTest {
                         HandFixture.createHandWithOptimisticValue15(), GameResultType.WIN),
                 Arguments.of(HandFixture.normal(), HandFixture.busted(), GameResultType.WIN),
                 Arguments.of(HandFixture.createHandWithOptimisticValue20(),
-                        HandFixture.createHandWithOptimisticValue20(), GameResultType.TIE),
+                        HandFixture.createHandWithOptimisticValue20(), GameResultType.PUSH),
                 Arguments.of(HandFixture.busted(), HandFixture.busted(), GameResultType.LOSE),
                 Arguments.of(HandFixture.createHandWithOptimisticValue15(),
                         HandFixture.createHandWithOptimisticValue20(), GameResultType.LOSE),

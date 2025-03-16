@@ -16,16 +16,16 @@ public final class OutputView {
     private OutputView() {
     }
 
-    public static void printStartingCardsStatuses(Dealer dealer, Players players) {
+    public static void printHand(Dealer dealer, Players players) {
         String names = players.getPlayers()
                 .stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(DELIMITER));
 
         System.out.println("딜러와 " + names + "에게 2장을 나누었습니다.");
-        System.out.println(Formatter.parseStartCardStatus(dealer));
+        System.out.println(Formatter.parseUpCard(dealer));
         for (Player player : players.getPlayers()) {
-            System.out.println(Formatter.parseCardStatus(player));
+            System.out.println(Formatter.parseHand(player));
         }
     }
 
@@ -33,12 +33,8 @@ public final class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printCardStatus(Player player) {
-        System.out.println(Formatter.parseCardStatus(player));
-    }
-
-    public static void printCardResult(Player player) {
-        System.out.println(Formatter.parseCardResult(player));
+    public static void printHand(Player player) {
+        System.out.println(Formatter.parseHand(player));
     }
 
     public static void printBustedPlayer(Player player) {

@@ -26,7 +26,7 @@ public class Player implements Participant {
     }
 
     @Override
-    public boolean canTakeCard() {
+    public boolean canHit() {
         return playerHand.canTakeCard();
     }
 

@@ -8,7 +8,6 @@ import blackjack.common.ErrorMessage;
 import blackjack.utils.HandFixture;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -45,7 +44,7 @@ class WalletTest {
     public static Stream<Arguments> betArguments() {
         return Stream.of(Arguments.of(1000, GameResultType.WIN, 1000),
                 Arguments.of(1000, GameResultType.LOSE, -1000),
-                Arguments.of(1000, GameResultType.TIE, 0));
+                Arguments.of(1000, GameResultType.PUSH, 0));
     }
 
     @DisplayName("초기 금액과 베팅 후 금액에 대한 수익을 반환한다.")

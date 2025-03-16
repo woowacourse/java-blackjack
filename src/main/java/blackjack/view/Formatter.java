@@ -18,12 +18,12 @@ public final class Formatter {
     }
 
     public static String parseCardResult(Player player) {
-        String message = parseCardStatus(player) + " - 결과: ";
+        String message = parseHand(player) + " - 결과: ";
 
         return message + parseCardResultValue(player);
     }
 
-    public static String parseCardStatus(Player player) {
+    public static String parseHand(Player player) {
         return player.getName() + "카드: " + parseStartingCardStatus(player);
     }
 
@@ -53,14 +53,14 @@ public final class Formatter {
 
     public static String parseCardResult(Dealer dealer) {
 
-        return parseCardStatus(dealer) + " - 결과: " + parseCardResultValue(dealer);
+        return parseHand(dealer) + " - 결과: " + parseCardResultValue(dealer);
     }
 
-    private static String parseCardStatus(Dealer dealer) {
+    private static String parseHand(Dealer dealer) {
         return "딜러카드: " + parseStartingCardStatus(dealer);
     }
 
-    public static String parseStartCardStatus(Dealer dealer) {
+    public static String parseUpCard(Dealer dealer) {
         return "딜러카드: " + parseCardName(dealer.revealFirstCard());
     }
 
@@ -71,7 +71,6 @@ public final class Formatter {
                     String name = entry.getKey()
                             .getName();
                     int revenue = entry.getValue();
-
                     return name + ": " + revenue;
                 })
                 .collect(Collectors.joining(LINE_SEPARATOR));

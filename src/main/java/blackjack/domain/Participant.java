@@ -6,7 +6,7 @@ public interface Participant {
 
     void takeCard(Card newCard);
 
-    boolean canTakeCard();
+    boolean canHit();
 
     boolean isBusted();
 

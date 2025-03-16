@@ -14,7 +14,7 @@ class GameResultTypeTest {
     public static Stream<Arguments> gameResultTypeArguments() {
         return Stream.of(Arguments.of(HandFixture.blackjack(), HandFixture.normal(), GameResultType.WIN),
                 Arguments.of(HandFixture.normal(), HandFixture.blackjack(), GameResultType.LOSE),
-                Arguments.of(HandFixture.blackjack(), HandFixture.blackjack(), GameResultType.TIE),
+                Arguments.of(HandFixture.blackjack(), HandFixture.blackjack(), GameResultType.PUSH),
                 Arguments.of(HandFixture.blackjack(), HandFixture.createHandWithOptimisticValue21(),
                         GameResultType.WIN));
     }

@@ -109,19 +109,19 @@ class DealerTest {
         assertThat(actual).isFalse();
     }
 
-    private static Stream<Arguments> canTakeCardArgument() {
+    private static Stream<Arguments> canHitArgument() {
         return Stream.of(Arguments.arguments(HandFixture.createHandWithOptimisticValue15(), true),
                 Arguments.arguments(HandFixture.createHandWithOptimisticValue20(), false));
     }
 
     @DisplayName("딜러의 카드가 16을 넘으면 카드를 받을 수 없다.")
     @ParameterizedTest
-    @MethodSource("canTakeCardArgument")
+    @MethodSource("canHitArgument")
     void test8(Hand hand, boolean expect) {
         //given
         Dealer dealer = new Dealer(hand);
 
         // when & then
-        assertThat(dealer.canTakeCard()).isEqualTo(expect);
+        assertThat(dealer.canHit()).isEqualTo(expect);
     }
 }
