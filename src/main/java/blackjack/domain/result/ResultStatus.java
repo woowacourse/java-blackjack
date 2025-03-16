@@ -2,6 +2,7 @@ package blackjack.domain.result;
 
 public enum ResultStatus {
 
+    BLACKJACK,
     WIN,
     LOSE,
     PUSH;

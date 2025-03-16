@@ -28,6 +28,10 @@ public class TestFixture {
                 List.of(new Player(provideEmptyCards(), "엠제이", 10_000), new Player(provideEmptyCards(), "밍트", 20_000)));
     }
 
+    public static Player providePlayer(final String nickname, final int bettingAmount) {
+        return new Player(provideEmptyCards(), nickname, bettingAmount);
+    }
+
     public static List<Player> provideTwoPlayersWithCards(final Hand hand1, final Hand hand2) {
         return List.of(new Player(hand1, "엠제이", 10_000), new Player(hand2, "밍트", 20_000));
     }

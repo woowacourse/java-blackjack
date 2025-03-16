@@ -1,9 +1,16 @@
 package blackjack.domain.result;
 
+import static blackjack.fixture.TestFixture.provideEmptyCards;
+import static blackjack.fixture.TestFixture.providePlayer;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Gamer;
+import blackjack.domain.participant.Player;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DealerWinningResultTest {
@@ -11,35 +18,43 @@ class DealerWinningResultTest {
     @Test
     void 딜러_우승_결과를_조회한다() {
         // Given
+        Player mint = providePlayer("밍트", 10_000);
+        Player mj = providePlayer("엠제이", 20_000);
         DealerWinningResult winningResult = new DealerWinningResult(
-                Map.of("밍트", ResultStatus.WIN, "엠제이", ResultStatus.LOSE));
+                Map.of(mint, ResultStatus.WIN, mj, ResultStatus.LOSE)
+        );
 
         // When & then
-        assertAll(
-                () -> assertThat(winningResult.countResultStatus(ResultStatus.WIN)).isEqualTo(1),
-                () -> assertThat(winningResult.countResultStatus(ResultStatus.LOSE)).isEqualTo(1),
-                () -> assertThat(winningResult.countResultStatus(ResultStatus.PUSH)).isEqualTo(0)
-        );
+        assertThat(winningResult).isEqualTo(new DealerWinningResult(Map.of(
+                mint, ResultStatus.WIN,
+                mj, ResultStatus.LOSE
+        )));
     }
 
+
     @Test
-    void 플레이어의_우승_결과를_조회한다() {
+    @DisplayName("수익을 계산한다")
+    void calculateProfit() {
         // Given
-        String mint = "밍트";
-        String mj = "엠제이";
-        String pobi = "포비";
+        Dealer dealer = new Dealer(provideEmptyCards());
+        Player mint = providePlayer("밍트", 10_000);
+        Player mj = providePlayer("엠제이", 20_000);
+        Player pobi = providePlayer("포비", 30_000);
+        Player norang = providePlayer("노랑", 50_000);
         DealerWinningResult winningResult = new DealerWinningResult(
-                Map.of(mint, ResultStatus.WIN, mj, ResultStatus.LOSE, pobi, ResultStatus.PUSH)
-        );
+                new LinkedHashMap<>(Map.of(mint, ResultStatus.WIN, mj, ResultStatus.LOSE, pobi, ResultStatus.PUSH,
+                        norang, ResultStatus.BLACKJACK)));
 
         // When
-        Map<String, ResultStatus> playerWinningResult = winningResult.makePlayerWinningResult();
+        Map<Gamer, Integer> profits = winningResult.calculateProfit(dealer);
 
         // Then
-        assertAll(
-                () -> assertThat(playerWinningResult.get(mint)).isEqualTo(ResultStatus.LOSE),
-                () -> assertThat(playerWinningResult.get(mj)).isEqualTo(ResultStatus.WIN),
-                () -> assertThat(playerWinningResult.get(pobi)).isEqualTo(ResultStatus.PUSH)
+        Assertions.assertAll(
+                () -> assertThat(profits.get(dealer)).isEqualTo(-85_000),
+                () -> assertThat(profits.get(mint)).isEqualTo(-10_000),
+                () -> assertThat(profits.get(mj)).isEqualTo(20_000),
+                () -> assertThat(profits.get(pobi)).isEqualTo(0),
+                () -> assertThat(profits.get(norang)).isEqualTo(75_000)
         );
     }
 }

@@ -1,9 +1,10 @@
 package blackjack.view;
 
-import blackjack.domain.result.DealerWinningResult;
-import blackjack.domain.result.ResultStatus;
 import blackjack.domain.card.Hand;
 import blackjack.domain.card.Shape;
+import blackjack.domain.participant.Gamer;
+import blackjack.domain.participant.Player;
+import blackjack.domain.result.ResultStatus;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -32,6 +33,9 @@ public final class ResultView {
     private static final String TITLE_WINNING_RESULT = "## 최종 승패";
     private static final String WINNING_DEALER_RESULT_FORMAT = "딜러: %d승 %d무 %d패";
     private static final String WINNING_PLAYER_RESULT_FORMAT = "%s: %s";
+
+    private static final String TITLE_PROFITS = "## 최종 수익";
+    private static final String PROFITS_FORMAT = "%s: %d";
 
     public void printSpreadCard(final List<String> playerNames, final Entry<String, Hand> dealerCards,
                                 final Map<String, Hand> playersCards) {
@@ -75,17 +79,11 @@ public final class ResultView {
                 .collect(Collectors.joining(COMMA));
     }
 
-    public void showDealerWinningResult(final DealerWinningResult result) {
-        System.out.println(LINE + TITLE_WINNING_RESULT);
-        int winCount = result.countResultStatus(ResultStatus.WIN);
-        int drawCount = result.countResultStatus(ResultStatus.PUSH);
-        int loseCount = result.countResultStatus(ResultStatus.LOSE);
-        System.out.printf(WINNING_DEALER_RESULT_FORMAT + LINE, winCount, drawCount, loseCount);
-        showPlayerResultStatus(result.makePlayerWinningResult());
-    }
-
-    public void showln(final String line) {
-        System.out.println(line);
+    public void showProfit(final Map<Gamer, Integer> profits) {
+        showln(LINE + TITLE_PROFITS);
+        profits.entrySet().stream()
+                .map(entry -> String.format(PROFITS_FORMAT, entry.getKey().getNickname(), entry.getValue()))
+                .forEach(System.out::println);
     }
 
     public void makeParticipantsWithScoreMessage(final Entry<String, Hand> dealer,
@@ -96,9 +94,9 @@ public final class ResultView {
                 .forEach(System.out::println);
     }
 
-    private void showPlayerResultStatus(final Map<String, ResultStatus> result) {
-        for (Entry<String, ResultStatus> entry : result.entrySet()) {
-            System.out.printf(WINNING_PLAYER_RESULT_FORMAT + LINE, entry.getKey(),
+    private void showPlayerResultStatus(final Map<Player, ResultStatus> result) {
+        for (Entry<Player, ResultStatus> entry : result.entrySet()) {
+            System.out.printf(WINNING_PLAYER_RESULT_FORMAT + LINE, entry.getKey().getNickname(),
                     getResultStatusName(entry.getValue()));
         }
     }
@@ -114,5 +112,9 @@ public final class ResultView {
 
     private String getResultStatusName(final ResultStatus resultStatus) {
         return RESULT_STATUS_KOREAN.get(resultStatus);
+    }
+
+    private void showln(final String line) {
+        System.out.println(line);
     }
 }

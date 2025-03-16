@@ -69,6 +69,10 @@ public final class Participants {
     }
 
     public DealerWinningResult makeWinningResult() {
-        return dealer.makeDealerWinningResult(players.calculateScores());
+        return dealer.makeDealerWinningResult(players.showAllCards());
+    }
+
+    public Dealer getDealer() {
+        return dealer;
     }
 }

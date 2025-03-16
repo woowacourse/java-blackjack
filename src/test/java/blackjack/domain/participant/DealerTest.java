@@ -5,6 +5,7 @@ import static blackjack.fixture.TestFixture.provideBiggerAndSmallerAceCards;
 import static blackjack.fixture.TestFixture.provideBlackjack;
 import static blackjack.fixture.TestFixture.provideCards;
 import static blackjack.fixture.TestFixture.provideEmptyCards;
+import static blackjack.fixture.TestFixture.providePlayer;
 import static blackjack.fixture.TestFixture.provideSmallerAceCards;
 import static blackjack.fixture.TestFixture.provideUnder16Cards;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -113,22 +114,22 @@ class DealerTest {
     @MethodSource
     void 우승_결과를_계산한다(final Hand dealerHand, final Hand playerHand, final ResultStatus expected) {
         // Given
-        String name = "밍트";
-        final Map<String, Hand> playerScores = Map.of(name, playerHand);
+        Player player = providePlayer("밍트", 10_000);
+        final Map<Player, Hand> playerScores = Map.of(player, playerHand);
         Dealer dealer1 = new Dealer(dealerHand);
 
         // When
         DealerWinningResult dealerWinningResult = dealer1.makeDealerWinningResult(playerScores);
 
         // Then
-        assertThat(dealerWinningResult).isEqualTo(new DealerWinningResult(Map.of(name, expected)));
+        assertThat(dealerWinningResult).isEqualTo(new DealerWinningResult(Map.of(player, expected)));
     }
 
     private static Stream<Arguments> 우승_결과를_계산한다() {
         return Stream.of(
                 Arguments.of(provideBlackjack(), provideBlackjack(), ResultStatus.PUSH),
                 Arguments.of(provideBlackjack(), provideUnder16Cards(), ResultStatus.WIN),
-                Arguments.of(provideUnder16Cards(), provideBlackjack(), ResultStatus.LOSE),
+                Arguments.of(provideUnder16Cards(), provideBlackjack(), ResultStatus.BLACKJACK),
 
                 Arguments.of(provideUnder16Cards(), provideEmptyCards(), ResultStatus.WIN),
                 Arguments.of(provideEmptyCards(), provideUnder16Cards(), ResultStatus.LOSE),

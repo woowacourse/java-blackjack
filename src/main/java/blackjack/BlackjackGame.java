@@ -32,7 +32,7 @@ public final class BlackjackGame {
         spreadInitialCards(participants, deck);
         spreadExtraCards(participants, deck);
         showParticipantScore(participants);
-        showWinningResult(participants);
+        showProfit(participants);
     }
 
     private Participants makeParticipants() {
@@ -95,8 +95,8 @@ public final class BlackjackGame {
                 participants.showAllDealerCard()), participants.showAllPlayersCard());
     }
 
-    private void showWinningResult(final Participants participants) {
+    private void showProfit(final Participants participants) {
         DealerWinningResult result = participants.makeWinningResult();
-        resultView.showDealerWinningResult(result);
+        resultView.showProfit(result.calculateProfit(participants.getDealer()));
     }
 }

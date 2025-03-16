@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import static blackjack.domain.card.Hand.BURST_THRESHOLD;
+import static blackjack.domain.result.ResultStatus.BLACKJACK;
 import static blackjack.domain.result.ResultStatus.LOSE;
 import static blackjack.domain.result.ResultStatus.PUSH;
 import static blackjack.domain.result.ResultStatus.WIN;
@@ -9,6 +10,7 @@ import blackjack.domain.card.Hand;
 import blackjack.domain.result.DealerWinningResult;
 import blackjack.domain.result.ResultStatus;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -39,10 +41,11 @@ public final class Dealer extends Gamer {
         return score <= DEALER_THRESHOLD;
     }
 
-    public DealerWinningResult makeDealerWinningResult(final Map<String, Hand> playerScores) {
-        Map<String, ResultStatus> result = playerScores.entrySet().stream()
+    public DealerWinningResult makeDealerWinningResult(final Map<Player, Hand> playerScores) {
+        Map<Player, ResultStatus> result = playerScores.entrySet().stream()
                 .collect(Collectors.toMap(Entry::getKey,
-                        entry -> calculateResultStatus(entry.getValue())));
+                        entry -> calculateResultStatus(entry.getValue()),
+                        (e1, e2) -> e1, LinkedHashMap::new));
         return new DealerWinningResult(result);
     }
 
@@ -51,7 +54,7 @@ public final class Dealer extends Gamer {
             return WIN;
         }
         if (!hand.isBlackjack() && playerHand.isBlackjack()) {
-            return LOSE;
+            return BLACKJACK;
         }
         return compareToScore(hand, playerHand);
     }

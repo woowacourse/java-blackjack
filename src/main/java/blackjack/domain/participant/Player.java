@@ -56,4 +56,8 @@ public final class Player extends Gamer {
     public String getNickname() {
         return nickname;
     }
+
+    public int getBettingAmount() {
+        return bettingAmount;
+    }
 }
