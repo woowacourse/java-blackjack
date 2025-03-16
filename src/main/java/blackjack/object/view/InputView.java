@@ -83,7 +83,7 @@ public class InputView {
     }
 
     private static void validateBettingAmountFormat(String answer) {
-        if (answer.matches("^\\d+$")) {
+        if (!answer.matches("^\\d+$")) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_BETTING_AMOUNT_FORMAT.getMessage());
         }
     }
