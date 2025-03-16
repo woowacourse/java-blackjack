@@ -17,31 +17,34 @@ import view.OutputView;
 
 public class BlackjackGame {
 
-    private final GameParticipant gameParticipant;
-    private final CardDeck cardDeck;
+    private final InputView inputView;
+    private final OutputView outputView;
 
-    public BlackjackGame() {
-        this.gameParticipant = new GameParticipant();
-        this.cardDeck = new CardDeck();
+    public BlackjackGame(InputView inputView, OutputView outputView) {
+        this.inputView = inputView;
+        this.outputView = outputView;
     }
 
-    public void run() {
-        registerGamePlayers();
-        Map<String, Integer> playersBettings = registerParticipantBettings();
-        distributeGameInitialCards();
-        distributeParticipantExtraCards();
-        determineParticipantFinalCards();
-        determineGameResult(playersBettings);
+    public void play() {
+        GameParticipant gameParticipant = new GameParticipant();
+        CardDeck cardDeck = new CardDeck();
+        
+        registerGamePlayers(gameParticipant);
+        Map<String, Integer> bettings = registerParticipantBettings(gameParticipant);
+        distributeGameInitialCards(gameParticipant, cardDeck);
+        distributeParticipantExtraCards(gameParticipant, cardDeck);
+        determineParticipantFinalCards(gameParticipant);
+        determineGameResult(gameParticipant, bettings);
     }
 
-    private void registerGamePlayers() {
+    private void registerGamePlayers(GameParticipant gameParticipant) {
         ExceptionHandler.repeatUntilSuccess(() -> {
-            List<String> names = InputView.readPlayerNames();
+            List<String> names = inputView.readPlayerNames();
             gameParticipant.registerPlayers(names);
         });
     }
 
-    private Map<String, Integer> registerParticipantBettings() {
+    private Map<String, Integer> registerParticipantBettings(GameParticipant gameParticipant) {
         Map<String, Integer> bettings = new HashMap<>();
         Dealer dealer = gameParticipant.getDealer();
         bettings.put(dealer.getName(), 0);
@@ -55,79 +58,67 @@ public class BlackjackGame {
     private void registerPlayerBettingMoney(Map<String, Integer> bettings, Player player) {
         ExceptionHandler.repeatUntilSuccess(() -> {
             String playerName = player.getName();
-            int bettingMoney = InputView.readPlayerBettingMoney(playerName);
+            int bettingMoney = inputView.readPlayerBettingMoney(playerName);
             bettings.put(playerName, bettingMoney);
         });
     }
 
-    private void distributeGameInitialCards() {
+    private void distributeGameInitialCards(GameParticipant gameParticipant, CardDeck cardDeck) {
         List<List<Card>> cardsStack = cardDeck.pickInitialCardsStack(gameParticipant.countParticipants());
         gameParticipant.distributeInitialCards(cardsStack);
-        displayDistributedGameInitialCards();
+        displayDistributedGameInitialCards(gameParticipant);
     }
 
-    private void distributeParticipantExtraCards() {
+    private void distributeParticipantExtraCards(GameParticipant gameParticipant, CardDeck cardDeck) {
         List<Player> players = gameParticipant.getPlayers();
         for (Player player : players) {
-            distributePlayerExtraCards(player);
+            distributePlayerExtraCards(gameParticipant, cardDeck, player);
         }
-        distributeDealerExtraCard();
+        distributeDealerExtraCard(gameParticipant, cardDeck);
     }
 
-    private void distributePlayerExtraCards(Player player) {
-        while (player.ableToAddCard() && InputView.readAddPlayerCard(player.getName())) {
+    private void distributePlayerExtraCards(GameParticipant gameParticipant, CardDeck cardDeck, Player player) {
+        while (player.ableToAddCard() && inputView.readAddPlayerCard(player.getName())) {
             gameParticipant.addExtraCard(player, cardDeck);
         }
         ParticipantCardsDto participantCardsDto = createParticipantCardsDto(player);
-        OutputView.printParticipantCards(participantCardsDto);
+        outputView.printParticipantCards(participantCardsDto);
     }
 
-    private void distributeDealerExtraCard() {
+    private void distributeDealerExtraCard(GameParticipant gameParticipant, CardDeck cardDeck) {
         Dealer dealer = gameParticipant.getDealer();
         boolean dealerExtraCard = dealer.ableToAddCard();
         if (dealerExtraCard) {
             gameParticipant.addExtraCard(dealer, cardDeck);
         }
         ParticipantCardsDto dealerCardsDto = createParticipantCardsDto(dealer);
-        OutputView.printDealerExtraCard(dealerCardsDto, dealerExtraCard);
+        outputView.printDealerExtraCard(dealerCardsDto, dealerExtraCard);
     }
 
-    private void determineParticipantFinalCards() {
+    private void determineParticipantFinalCards(GameParticipant gameParticipant) {
         List<ParticipantCardsDto> participantCardsDtos = new ArrayList<>();
         participantCardsDtos.add(createParticipantCardsDto(gameParticipant.getDealer()));
         List<Player> players = gameParticipant.getPlayers();
         for (Player player : players) {
             participantCardsDtos.add(createParticipantCardsDto(player));
         }
-        OutputView.printParticipantsFinalCards(participantCardsDtos);
+        outputView.printParticipantsFinalCards(participantCardsDtos);
     }
 
-    private void determineGameResult(Map<String, Integer> bettings) {
+    private void determineGameResult(GameParticipant gameParticipant, Map<String, Integer> bettings) {
         Dealer dealer = gameParticipant.getDealer();
         List<Player> players = gameParticipant.getPlayers();
         for (Player player : players) {
             int bettingMoney = bettings.get(player.getName());
-            GameStatus gameStatus = determineGameeStatus(dealer, player);
+            GameStatus gameStatus = determineGameStatus(dealer, player);
             int betting = (int) (bettingMoney * gameStatus.getProfiteRate());
             bettings.put(player.getName(), betting);
             bettings.put(dealer.getName(), bettings.get(dealer.getName()) - betting);
         }
-        createGameResultDtos(bettings);
+        displayGameResults(gameParticipant, bettings);
     }
 
-    private void createGameResultDtos(Map<String, Integer> bettings) {
-        Dealer dealer = gameParticipant.getDealer();
-        List<Player> players = gameParticipant.getPlayers();
-        GameResultDto dealerGameResultDto = createGameResultDto(dealer, bettings);
-        List<GameResultDto> playersGameResultDtos = new ArrayList<>();
-        for (Player player : players) {
-            GameResultDto playersResultDto = createGameResultDto(player, bettings);
-            playersGameResultDtos.add(playersResultDto);
-        }
-        OutputView.printFinalGameResult(dealerGameResultDto, playersGameResultDtos);
-    }
-
-    private GameStatus determineGameeStatus(Dealer dealer, Player player) {
+    private GameStatus determineGameStatus(Dealer dealer, Player player) {
         if (dealer.isBust()) {
             return GameStatus.WIN;
         }
@@ -143,7 +134,7 @@ public class BlackjackGame {
         return player.determineGameStatusByScore(dealer);
     }
 
-    private void displayDistributedGameInitialCards() {
+    private void displayDistributedGameInitialCards(GameParticipant gameParticipant) {
         Dealer dealer = gameParticipant.getDealer();
         List<Player> players = gameParticipant.getPlayers();
         List<ParticipantCardsDto> playerCardsDtos = new ArrayList<>();
@@ -151,7 +142,19 @@ public class BlackjackGame {
             playerCardsDtos.add(createParticipantInitialCardsDto(player));
         }
         ParticipantCardsDto dealerCardsDto = createParticipantInitialCardsDto(dealer);
-        OutputView.printParticipantInitialCards(dealerCardsDto, playerCardsDtos);
+        outputView.printParticipantInitialCards(dealerCardsDto, playerCardsDtos);
+    }
+
+    private void displayGameResults(GameParticipant gameParticipant, Map<String, Integer> bettings) {
+        Dealer dealer = gameParticipant.getDealer();
+        List<Player> players = gameParticipant.getPlayers();
+        GameResultDto dealerGameResultDto = createGameResultDto(dealer, bettings);
+        List<GameResultDto> playersGameResultDtos = new ArrayList<>();
+        for (Player player : players) {
+            GameResultDto playersResultDto = createGameResultDto(player, bettings);
+            playersGameResultDtos.add(playersResultDto);
+        }
+        outputView.printFinalGameResult(dealerGameResultDto, playersGameResultDtos);
     }
 
     private ParticipantCardsDto createParticipantInitialCardsDto(Participant participant) {

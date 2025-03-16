@@ -15,7 +15,6 @@ public class OutputView {
     private static final String DEALER_EXTRA_CARD_TRUE_FORMAT = "%s는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String DEALER_EXTRA_CARD_FALSE_FORMAT = "%s는 16초과라 한장카드를 더 받지 않았습니다.";
     private static final String GAME_RESULT_HEADER = "## 최종 승패";
-    private static final String DEALER_GAME_RESULT_FORMAT = "%d%s";
     private static final String PLAYER_NAMES_DELIMITER  =",";
     private static final String CARDS_DELIMITER = ",";
 
@@ -23,7 +22,7 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public static void printParticipantInitialCards(ParticipantCardsDto dealerCardsDto, List<ParticipantCardsDto> playerCardsDtos) {
+    public void printParticipantInitialCards(ParticipantCardsDto dealerCardsDto, List<ParticipantCardsDto> playerCardsDtos) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(System.lineSeparator()).append(formatParticipantInitialCardsHeader(dealerCardsDto, playerCardsDtos)).append(System.lineSeparator());
         stringBuilder.append(formatParticipantCards(dealerCardsDto)).append(System.lineSeparator());
@@ -33,13 +32,13 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    public static void printParticipantCards(ParticipantCardsDto participantCardsDto) {
+    public void printParticipantCards(ParticipantCardsDto participantCardsDto) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(formatParticipantCards(participantCardsDto));
         System.out.println(stringBuilder);
     }
 
-    public static void printDealerExtraCard(ParticipantCardsDto dealerCardsDto, boolean dealerExtraCard) {
+    public void printDealerExtraCard(ParticipantCardsDto dealerCardsDto, boolean dealerExtraCard) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(System.lineSeparator())
                 .append(formatDealerExtraCard(dealerCardsDto, dealerExtraCard))
@@ -47,7 +46,7 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    public static void printParticipantsFinalCards(List<ParticipantCardsDto> participantCardsDtos) {
+    public void printParticipantsFinalCards(List<ParticipantCardsDto> participantCardsDtos) {
         StringBuilder stringBuilder = new StringBuilder();
         for (ParticipantCardsDto participantCardsDto : participantCardsDtos) {
             stringBuilder.append(formatFinalParticipantCards(participantCardsDto))
@@ -56,7 +55,7 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    public static void printFinalGameResult(GameResultDto dealerGameResultDto, List<GameResultDto> playerGameResultDtos) {
+    public void printFinalGameResult(GameResultDto dealerGameResultDto, List<GameResultDto> playerGameResultDtos) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(GAME_RESULT_HEADER).append(System.lineSeparator());
         stringBuilder.append(formatParticipantGameResult(dealerGameResultDto)).append(System.lineSeparator());
@@ -66,38 +65,38 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    private static String formatParticipantInitialCardsHeader(ParticipantCardsDto dealerCardsDto, List<ParticipantCardsDto> playerCardsDtos) {
+    private String formatParticipantInitialCardsHeader(ParticipantCardsDto dealerCardsDto, List<ParticipantCardsDto> playerCardsDtos) {
         return String.format(PARTICIPANT_INITIAL_CARDS_HEADER_FORMAT, dealerCardsDto.name(), formatPlayerNames(playerCardsDtos));
     }
 
-    private static String formatPlayerNames(List<ParticipantCardsDto> participantCardsDtos) {
+    private String formatPlayerNames(List<ParticipantCardsDto> participantCardsDtos) {
         return participantCardsDtos.stream()
                 .map(ParticipantCardsDto::name)
                 .collect(Collectors.joining(PLAYER_NAMES_DELIMITER));
     }
 
-    private static String formatParticipantCards(ParticipantCardsDto participantCardsDto) {
+    private String formatParticipantCards(ParticipantCardsDto participantCardsDto) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(formatParticipantName(participantCardsDto));
         stringBuilder.append(formatCards(participantCardsDto.cards()));
         return stringBuilder.toString();
     }
 
-    private static String formatDealerExtraCard(ParticipantCardsDto dealerCardsDto, boolean dealerExtraCard) {
+    private String formatDealerExtraCard(ParticipantCardsDto dealerCardsDto, boolean dealerExtraCard) {
         if (dealerExtraCard) {
             return String.format(DEALER_EXTRA_CARD_TRUE_FORMAT, dealerCardsDto.name());
         }
         return String.format(DEALER_EXTRA_CARD_FALSE_FORMAT, dealerCardsDto.name());
     }
 
-    public static String formatFinalParticipantCards(ParticipantCardsDto participantCardsDto) {
+    public String formatFinalParticipantCards(ParticipantCardsDto participantCardsDto) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(formatParticipantCards(participantCardsDto));
         stringBuilder.append(formatCardsScore(participantCardsDto));
         return stringBuilder.toString();
     }
 
-    private static String formatParticipantGameResult(GameResultDto gameResultDto) {
+    private String formatParticipantGameResult(GameResultDto gameResultDto) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(gameResultDto.name())
                 .append(": ")
@@ -105,17 +104,17 @@ public class OutputView {
         return stringBuilder.toString();
     }
 
-    private static String formatParticipantName(ParticipantCardsDto participantCardsDto) {
-        return String.format(PARTICIPANT_CARDS_FORMAT, participantCardsDto.name());
+    private String formatParticipantName(ParticipantCardsDto participantCardsDto) {
+        return java.lang.String.format(PARTICIPANT_CARDS_FORMAT, participantCardsDto.name());
     }
 
-    private static String formatCards(List<Card> cards) {
+    private String formatCards(List<Card> cards) {
         return cards.stream()
                 .map(card -> java.lang.String.format(CARD_FORMAT, card.rank().getName(), card.suit().getName()))
                 .collect(Collectors.joining(CARDS_DELIMITER));
     }
 
-    private static String formatCardsScore(ParticipantCardsDto participantCardsDto) {
-        return java.lang.String.format(CARDS_SCORE_FORMAT, participantCardsDto.cardsScore());
+    private String formatCardsScore(ParticipantCardsDto participantCardsDto) {
+        return String.format(CARDS_SCORE_FORMAT, participantCardsDto.cardsScore());
     }
 }

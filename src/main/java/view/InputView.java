@@ -17,12 +17,12 @@ public class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static List<String> readPlayerNames() {
+    public List<String> readPlayerNames() {
         String response = prompt("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         return validateAndParsePlayerNames(response);
     }
 
-    public static int readPlayerBettingMoney(String name) {
+    public int readPlayerBettingMoney(String name) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(System.lineSeparator())
                 .append(String.format(PLAYER_BETTING_MONEY_FORMAT, name));
@@ -30,7 +30,7 @@ public class InputView {
         return validateAndParsePlayerBettingMoney(response);
     }
 
-    public static boolean readAddPlayerCard(String name) {
+    public boolean readAddPlayerCard(String name) {
         return ExceptionHandler.repeatUntilSuccess(() -> {
             String response = prompt(String.format(ADD_PLAYER_CARD_FORMAT, name, YES_KEY, NO_KEY));
             validateYesOrNo(response);
@@ -38,19 +38,19 @@ public class InputView {
         });
     }
 
-    private static String prompt(String message) {
+    private String prompt(String message) {
         System.out.println(message);
         return scanner.nextLine();
     }
 
-    private static List<String> validateAndParsePlayerNames(String response) {
+    private List<String> validateAndParsePlayerNames(String response) {
         List<String> playerNames = Arrays.asList(response.split(PLAYER_NAMES_DELIMITER, -1));
         validatePlayerNamesBlank(playerNames);
         validatePlayerNamesSize(playerNames);
         return playerNames;
     }
 
-    private static int validateAndParsePlayerBettingMoney(String response) {
+    private int validateAndParsePlayerBettingMoney(String response) {
         try {
             int money = Integer.parseInt(response);
             validateBettingMoneyRange(money);
@@ -60,31 +60,31 @@ public class InputView {
         }
     }
 
-    private static void validatePlayerNamesBlank(List<String> playerNames) {
+    private void validatePlayerNamesBlank(List<String> playerNames) {
         for (String playerName : playerNames) {
             validatePlayerNameBlank(playerName);
         }
     }
 
-    private static void validatePlayerNameBlank(String playerName) {
+    private void validatePlayerNameBlank(String playerName) {
         if (playerName.isBlank()) {
             throw new ErrorException("공백이 아닌 플레이어 이름을 입력해야 합니다.");
         }
     }
 
-    private static void validatePlayerNamesSize(List<String> playerNames) {
+    private void validatePlayerNamesSize(List<String> playerNames) {
         if (playerNames.isEmpty()) {
             throw new ErrorException("최소 1명 이상의 플레이어 이름을 입력해야 합니다.");
         }
     }
 
-    private static void validateYesOrNo(String response) {
+    private void validateYesOrNo(String response) {
         if (!response.equals(YES_KEY) && !response.equals(NO_KEY)) {
             throw new ErrorException(String.format(YES_OR_NO_FORMAT, YES_KEY, NO_KEY));
         }
     }
 
-    private static void validateBettingMoneyRange(int money) {
+    private void validateBettingMoneyRange(int money) {
         if (money < 0) {
             throw new ErrorException("배팅 금액은 0 이상의 금액을 입력해야 합니다.");
         }
