@@ -12,6 +12,7 @@ public class Player extends Participant {
     private static final int INITIAL_HIT_COUNT = 2;
     private static final double BLACKJACK_PAYOUT_RATIO = 1.5;
     private static final int LOSS_PAYOUT_RATIO = -1;
+    private static final int PUSH_PROFIT = 0;
 
     private final Name name;
     private final Money money;
@@ -36,6 +37,9 @@ public class Player extends Participant {
     }
 
     public int calculateProfit(final int dealerSum) {
+        if (calculateSum() == dealerSum) {
+            return PUSH_PROFIT;
+        }
         if (calculateSum() > dealerSum && calculateSum() == BLACKJACK_NUMBER) {
             return (int) (getMoney() * BLACKJACK_PAYOUT_RATIO);
         }
