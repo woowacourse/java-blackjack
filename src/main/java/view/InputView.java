@@ -20,9 +20,13 @@ public class InputView {
         return Arrays.stream(names).map(String::trim).toList();
     }
 
-    public String readBettingAmount(String name) {
+    public int readBettingAmount(String name) {
         System.out.printf("%s의 배팅 금액은?%n", name);
-        return scanner.nextLine();
+        try {
+            return scanner.nextInt();
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("정수 형식이 아닙니다.");
+        }
     }
 
     public Answer readPlayerHit(Player player) {

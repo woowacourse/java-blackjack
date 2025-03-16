@@ -32,8 +32,8 @@ class BlackJackGameTest {
                 new Card(CardNumber.TEN, CardShape.CLOVER),
                 new Card(CardNumber.SEVEN, CardShape.CLOVER)
         ));
-        Player player1 = Player.of(playerHand1, "player1", Money.of("100000"));
-        Player player2 = Player.of(playerHand2, "player2", Money.of("100000"));
+        Player player1 = Player.of(playerHand1, "player1", Money.of(100000));
+        Player player2 = Player.of(playerHand2, "player2", Money.of(100000));
         Players players = Players.of(List.of(player1, player2));
 
         Dealer dealer = Dealer.of(dealerHand, new StaticCardGenerator());

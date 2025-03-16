@@ -17,36 +17,20 @@ public class Money {
         return new Money(value);
     }
 
-    public static Money of(String rawValue) {
-        validateNullOrBlank(rawValue);
-        validateIntegerFormat(rawValue);
-        validatePositiveNumber(rawValue);
-        validateAmountUnit(rawValue);
-        return new Money(Integer.parseInt(rawValue));
+    public static Money createBettingMoney(int value) {
+        validatePositiveNumber(value);
+        validateAmountUnit(value);
+        return new Money(value);
     }
 
-    private static void validateNullOrBlank(String rawValue) {
-        if (rawValue == null || rawValue.isBlank()) {
-            throw new IllegalArgumentException("입력이 공백이거나 null 입니다.");
-        }
-    }
-
-    private static void validateIntegerFormat(String rawValue) {
-        try {
-            Integer.parseInt(rawValue);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("입력이 정수 형식이 아닙니다.");
-        }
-    }
-
-    private static void validatePositiveNumber(String rawValue) {
-        if (Integer.parseInt(rawValue) <= 0) {
+    private static void validatePositiveNumber(int value) {
+        if (value <= 0) {
             throw new IllegalArgumentException("입력은 0보다 커야 합니다.");
         }
     }
 
-    private static void validateAmountUnit(String rawValue) {
-        if (Integer.parseInt(rawValue) % AMOUNT_VALUE != 0) {
+    private static void validateAmountUnit(int value) {
+        if (value % AMOUNT_VALUE != 0) {
             throw new IllegalArgumentException("입력은 10만원 단위입니다.");
         }
     }
