@@ -25,6 +25,46 @@ public class Judge {
         Score dealerScore = new Score(dealer);
         Score playerScore = new Score(player);
 
+        if (dealerScore.isBlackJack() || playerScore.isBlackJack()) {
+            processOfBlackjack(player, dealerScore, playerScore);
+            return;
+        }
+
+        if (dealerScore.isBusted() || playerScore.isBusted()) {
+            processOfBusted(player, dealerScore, playerScore);
+        }
+    }
+
+    private void processOfBusted(Player player, Score dealerScore, Score playerScore) {
+        boolean isDealerBusted = dealerScore.isBusted();
+        boolean isPlayerBusted = playerScore.isBusted();
+
+        if (isDealerBusted && isPlayerBusted) {
+            PlayerResult playerResult = new PlayerResult(player, GameResultType.TIE, playerScore);
+            DealerResult dealerResult = new DealerResult(GameResultType.TIE, dealerScore);
+            dealerResults.add(player, dealerResult);
+            playerResults.add(playerResult);
+            return;
+        }
+
+        if (isDealerBusted) {
+            PlayerResult playerResult = new PlayerResult(player, GameResultType.WIN, playerScore);
+            DealerResult dealerResult = new DealerResult(GameResultType.LOSE, dealerScore);
+            dealerResults.add(player, dealerResult);
+            playerResults.add(playerResult);
+            return;
+        }
+
+        if (isPlayerBusted) {
+            PlayerResult playerResult = new PlayerResult(player, GameResultType.LOSE, playerScore);
+            DealerResult dealerResult = new DealerResult(GameResultType.WIN, dealerScore);
+            dealerResults.add(player, dealerResult);
+            playerResults.add(playerResult);
+            return;
+        }
+    }
+
+    private void processOfBlackjack(Player player, Score dealerScore, Score playerScore) {
         if (dealerScore.isBlackJack()) {
             if (playerScore.isBlackJack()) {
                 PlayerResult playerResult = new PlayerResult(player, GameResultType.TIE, playerScore);
@@ -34,7 +74,6 @@ public class Judge {
                 return;
             }
 
-            // 블랙잭이 아닌 경우
             PlayerResult playerResult = new PlayerResult(player, GameResultType.LOSE, playerScore);
             DealerResult dealerResult = new DealerResult(GameResultType.WIN, dealerScore);
             dealerResults.add(player, dealerResult);
