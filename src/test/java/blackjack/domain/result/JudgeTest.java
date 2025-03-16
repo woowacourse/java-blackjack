@@ -6,6 +6,8 @@ import blackjack.domain.card.CardSuit;
 import blackjack.domain.game.Dealer;
 import blackjack.domain.game.Hand;
 import blackjack.domain.game.Player;
+import blackjack.domain.game.Players;
+import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -130,7 +132,7 @@ public class JudgeTest {
         Dealer dealer = new Dealer(dealerHand);
         Player player = new Player("히로", playerHand, new BetAmount(1_000));
 
-        judge.calculateResult(dealer, player);
+        judge.calculateAllResults(dealer, new Players(List.of(player)));
 
         assertResults(player, expectedDealerResult, expectedPlayerResult);
     }
