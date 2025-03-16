@@ -29,10 +29,6 @@ public class Dealer {
         return hand.getCards();
     }
 
-    public void addCard(TrumpCard drawnCard) {
-        hand.addCard(drawnCard);
-    }
-
     public int getTotalScore() {
         return hand.calculateTotalScore();
     }
@@ -61,7 +57,7 @@ public class Dealer {
         int hitCount = 0;
 
         while (isHitable()) {
-            addCard(deck.draw());
+            hand.addCard(deck.draw());
             hitCount++;
         }
 
