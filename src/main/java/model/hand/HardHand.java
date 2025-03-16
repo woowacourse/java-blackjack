@@ -1,4 +1,4 @@
-package model.participant;
+package model.hand;
 
 public final class HardHand extends ParticipantHand {
 

@@ -3,6 +3,8 @@ package model.participant;
 import java.util.List;
 import java.util.stream.IntStream;
 import model.betting.Bet;
+import model.hand.HardHand;
+import model.hand.ParticipantHand;
 import model.participant.role.BetOwnable;
 import model.betting.Bets;
 import model.deck.Card;

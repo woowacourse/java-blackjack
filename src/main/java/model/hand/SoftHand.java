@@ -1,4 +1,4 @@
-package model.participant;
+package model.hand;
 
 import java.util.List;
 import model.deck.Card;

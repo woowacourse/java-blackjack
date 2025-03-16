@@ -1,4 +1,4 @@
-package model.participant;
+package model.hand;
 
 import java.util.ArrayList;
 import java.util.Collections;

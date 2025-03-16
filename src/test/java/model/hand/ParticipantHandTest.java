@@ -1,4 +1,4 @@
-package model.participant;
+package model.hand;
 
 import static org.junit.jupiter.api.Assertions.*;
 

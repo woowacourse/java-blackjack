@@ -2,6 +2,8 @@ package model.participant;
 
 import java.util.List;
 import model.betting.Bet;
+import model.hand.HardHand;
+import model.hand.ParticipantHand;
 import model.participant.role.Bettable;
 import model.deck.Card;
 import model.participant.role.Gameable;
