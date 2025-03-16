@@ -17,7 +17,11 @@ public final class Card {
         return cardRank.getDefaultValue();
     }
 
-    public String getCardName() {
-        return cardRank.getName() + cardSuit.getShapeMeaning();
+    public String getCardRankName() {
+        return cardRank.getName();
+    }
+
+    public String getCardSuitMeaning() {
+        return cardSuit.getShapeMeaning();
     }
 }

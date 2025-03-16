@@ -110,14 +110,17 @@ public final class OutputView {
 
     private static List<String> getCardNameMessagesFrom(List<Card> cards) {
         return cards.stream()
-                .map(Card::getCardName)
+                .map(OutputView::getCardNameMessage)
                 .toList();
     }
 
-    public static void printExceptionMessage(final String message) {
-        System.out.println("[ERROR] " + message);
+    private static String getCardNameMessage(Card card) {
+        return card.getCardRankName() + card.getCardSuitMeaning();
     }
 
+    /**
+     * 최종 수익 출력
+     */
     public static void printDealerRevenue(Dealer dealer) {
         System.out.println("\n## 최종 수익");
         System.out.printf("%s: %,d\n", DEALER_PRINT_MESSAGE, dealer.calculateRevenue());
@@ -126,5 +129,9 @@ public final class OutputView {
     public static void printPlayersRevenue(Player player, Bet bet) {
         int revenue = bet.calculateBetterRevenue();
         System.out.printf("%s: %,d\n", player.getName(), revenue);
+    }
+
+    public static void printExceptionMessage(final String message) {
+        System.out.println("[ERROR] " + message);
     }
 }
