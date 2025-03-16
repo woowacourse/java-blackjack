@@ -2,7 +2,10 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
 import domain.card.CardGroup;
+import domain.card.CardScore;
+import domain.card.CardType;
 import domain.card.Deck;
 import domain.card.RandomCardGenerator;
 import domain.gamer.Dealer;
@@ -30,27 +33,29 @@ public class GameManagerTest {
     }
 
     @Test
-    void 플레이어의_배팅_결과를_계산한다() {
+    void 플레이어만_블랙잭인_경우_수익률_결과를_계산한다() {
         //given
+        final List<Card> cards1 = List.of(new Card(CardType.HEART, CardScore.JACK),
+                new Card(CardType.DIAMOND, CardScore.ACE));
+        final List<Card> cards2 = List.of(new Card(CardType.DIAMOND, CardScore.TWO),
+                new Card(CardType.HEART, CardScore.QUEEN));
+        final List<Card> cards3 = List.of(new Card(CardType.CLOVER, CardScore.TWO),
+                new Card(CardType.HEART, CardScore.TWO));
         final List<Player> players = List.of(
-                new Player("윌슨", new CardGroup(), 10_000),
-                new Player("가이온", new CardGroup(), 10_000),
-                new Player("수달", new CardGroup(), 20_000));
+                new Player("윌슨", new CardGroup(cards1), new Betting(10_000)),
+                new Player("가이온", new CardGroup(cards2), new Betting(10_000)),
+                new Player("수달", new CardGroup(cards3), new Betting(20_000)));
         final PlayerGroup playerGroup = new PlayerGroup(players);
-        final Dealer dealer = new Dealer(new CardGroup());
+        final Dealer dealer = new Dealer(new CardGroup(cards2));
         final Deck deck = Deck.of(new RandomCardGenerator());
-        final Map<String, GameResult> playersGameResult = Map.of("윌슨", GameResult.WIN, "가이온", GameResult.DRAW, "수달",
-                GameResult.LOSE);
 
         //when
         final GameManager gameManager = new GameManager(dealer, playerGroup, deck);
-        final Map<String, Integer> result = gameManager.calculatePlayerBattingAmountOfReturn(
-                playersGameResult);
+        final Map<String, Double> result = gameManager.calculatePlayerBattingAmountOfReturn();
 
         //then
-        assertThat(result).containsEntry("윌슨", 10_000)
-                .containsEntry("가이온", 0)
-                .containsEntry("수달", -20_000);
-
+        assertThat(result).containsEntry("윌슨", 15_000.0)
+                .containsEntry("가이온", 0.0)
+                .containsEntry("수달", -20_000.0);
     }
 }
