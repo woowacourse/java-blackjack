@@ -13,12 +13,4 @@ public record Money(int money) {
     public Money multiply(double factor) {
         return new Money((int) (this.money * factor));
     }
-    
-    public boolean isLessThan(Money bettingMinimumMoney) {
-        return this.money < bettingMinimumMoney.money;
-    }
-    
-    public boolean isGreaterThan(Money bettingMinimumMoney) {
-        return this.money > bettingMinimumMoney.money;
-    }
 }

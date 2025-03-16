@@ -26,28 +26,6 @@ public class MoneyTest {
         assertThat(Money.getTotalMoney(amounts)).isEqualTo(25000);
     }
     
-    @ParameterizedTest
-    @CsvSource({"10000, 20000, false", "20000, 19999, true"})
-    void 내_돈이_더_큰지_비교할_수_있다(int myMoneyAmount, int yourMoneyAmount, boolean expected) {
-        // given
-        Money myMoney = new Money(myMoneyAmount);
-        Money yourMoney = new Money(yourMoneyAmount);
-        
-        // expected
-        assertThat(myMoney.isGreaterThan(yourMoney)).isEqualTo(expected);
-    }
-    
-    @ParameterizedTest
-    @CsvSource({"10000, 20000, true", "20000, 19999, false"})
-    void 내_돈이_더_작은지_비교할_수_있다(int myMoneyAmount, int yourMoneyAmount, boolean expected) {
-        // given
-        Money myMoney = new Money(myMoneyAmount);
-        Money yourMoney = new Money(yourMoneyAmount);
-        
-        // expected
-        assertThat(myMoney.isLessThan(yourMoney)).isEqualTo(expected);
-    }
-    
     @Test
     void 돈을_곱할_수_있다() {
         // given
