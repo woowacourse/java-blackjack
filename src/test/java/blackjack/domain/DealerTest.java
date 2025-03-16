@@ -135,8 +135,19 @@ class DealerTest {
     }
 
     @Test
-    void 딜러는_첫번째_카드만_공개해야_한다() {
+    void 딜러는_가장_처음에_한장만을_공개한다() {
+        // given
         Dealer dealer = new Dealer(new Hand());
-        assertThat(dealer.shouldRevealSingleCard()).isTrue();
+        Card card1 = new Card(CardSuit.SPADE, CardRank.TWO);
+        Card card2 = new Card(CardSuit.HEART, CardRank.TWO);
+
+        dealer.takeCard(card1);
+        dealer.takeCard(card2);
+
+        // when
+        List<Card> startingCards = dealer.getStartingCards();
+
+        // then
+        assertThat(startingCards).hasSize(1);
     }
 }

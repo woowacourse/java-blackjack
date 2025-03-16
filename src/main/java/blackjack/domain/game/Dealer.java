@@ -12,8 +12,8 @@ public class Dealer implements Participant {
     }
 
     @Override
-    public boolean shouldRevealSingleCard() {
-        return true;
+    public List<Card> getStartingCards() {
+        return List.of(hand.getAllCards().getFirst());
     }
 
     @Override

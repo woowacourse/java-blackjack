@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.game.Participant;
 import blackjack.domain.game.Participants;
 import blackjack.domain.game.Player;
@@ -20,7 +21,9 @@ public final class OutputView {
         System.out.println("딜러와 " + names + "에게 2장을 나누었습니다.");
 
         for (Participant participant : participants.getParticipants()) {
-            if (participant.shouldRevealSingleCard()) {
+            List<Card> startingCards = participant.getStartingCards();
+
+            if (startingCards.size() == 1) {
                 System.out.println(Formatter.formatSingleCardStatus(participant));
                 continue;
             }

@@ -4,7 +4,7 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public interface Participant {
-    boolean shouldRevealSingleCard();
+    List<Card> getStartingCards();
 
     boolean doesHaveName();
 

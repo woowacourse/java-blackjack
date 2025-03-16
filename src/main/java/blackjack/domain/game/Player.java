@@ -14,8 +14,9 @@ public class Player implements Participant {
     }
 
     @Override
-    public boolean shouldRevealSingleCard() {
-        return false;
+    public List<Card> getStartingCards() {
+        List<Card> cards = hand.getAllCards();
+        return cards.subList(0, 2);
     }
 
     @Override

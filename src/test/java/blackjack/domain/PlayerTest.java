@@ -126,8 +126,19 @@ class PlayerTest {
     }
 
     @Test
-    void 플레이어는_첫번째_카드만을_공개하지_않는다() {
+    void 플레이어는_가장_처음에_두장을_공개한다() {
+        // given
         Player player = new Player("히로", new Hand());
-        assertThat(player.shouldRevealSingleCard()).isFalse();
+        Card card1 = new Card(CardSuit.SPADE, CardRank.TWO);
+        Card card2 = new Card(CardSuit.HEART, CardRank.TWO);
+
+        player.takeCard(card1);
+        player.takeCard(card2);
+
+        // when
+        List<Card> startingCards = player.getStartingCards();
+
+        // then
+        assertThat(startingCards).hasSize(2);
     }
 }
