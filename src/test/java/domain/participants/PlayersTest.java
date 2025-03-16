@@ -17,6 +17,7 @@ import static domain.card.Card.SPADE_QUEEN;
 import static domain.card.Card.SPADE_TEN;
 import static domain.card.Card.SPADE_TWO;
 import static org.assertj.core.api.Assertions.assertThat;
+import static testFixture.PlayerNameFixture.*;
 
 import domain.card.Card;
 import domain.card.Deck;
@@ -29,29 +30,36 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import testFixture.PlayerNameFixture;
 
 class PlayersTest {
+
+    @BeforeAll
+    public static void setUp(){
+        PlayerNameFixture.setUp();
+    }
+
     @Test
     @DisplayName("특정 이름을 가진 플레이어에게 카드를 제공한다.")
     void giveCardToGamerTest() {
         // given
         Map<PlayerName, BettingAmount> playersInfo = Map.of(
-                new PlayerName("김"), new BettingAmount(10000),
-                new PlayerName("이"), new BettingAmount(10000),
-                new PlayerName("박"), new BettingAmount(10000)
+                playerNameA, new BettingAmount(10000),
+                playerNameB, new BettingAmount(10000),
+                playerNameC, new BettingAmount(10000)
         );
         Players players = new Players(playersInfo);
-        PlayerName username = new PlayerName("이");
         Card card = HEART_JACK;
         // when
-        players.giveCard(username, List.of(card));
+        players.giveCard(playerNameB, List.of(card));
         // then
-        List<Card> cards = players.getPlayerCard(username);
+        List<Card> cards = players.getPlayerCard(playerNameB);
         assertThat(cards).contains(card);
     }
 
@@ -61,15 +69,15 @@ class PlayersTest {
     void canGetMoreCardTest(List<Card> cards, boolean expected) {
         //given
         Map<PlayerName, BettingAmount> playersInfo = Map.of(
-                new PlayerName("김"), new BettingAmount(10000),
-                new PlayerName("이"), new BettingAmount(10000),
-                new PlayerName("박"), new BettingAmount(10000)
+                playerNameA, new BettingAmount(10000),
+                playerNameB, new BettingAmount(10000),
+                playerNameC, new BettingAmount(10000)
         );
         Players players = new Players(playersInfo);
-        players.giveCard(new PlayerName("김"), cards);
+        players.giveCard(playerNameA, cards);
 
         //when & then
-        assertThat(players.isDrawable(new PlayerName("김"))).isEqualTo(expected);
+        assertThat(players.isDrawable(playerNameA)).isEqualTo(expected);
     }
 
     public static Stream<Arguments> canGetMoreCardTest() {
@@ -86,16 +94,16 @@ class PlayersTest {
     void getPlayerInfoTest() {
         // given
         Map<PlayerName, BettingAmount> playersInfo = Map.of(
-                new PlayerName("김"), new BettingAmount(10000),
-                new PlayerName("이"), new BettingAmount(10000),
-                new PlayerName("박"), new BettingAmount(10000)
+                playerNameA, new BettingAmount(10000),
+                playerNameB, new BettingAmount(10000),
+                playerNameC, new BettingAmount(10000)
         );
         Players players = new Players(playersInfo);
         // when
         Map<PlayerName, Gamer> playerInfo = players.getPlayersInfo();
         // then
         assertThat(playerInfo.keySet()).containsAll(
-                Set.of(new PlayerName("김"), new PlayerName("이"), new PlayerName("박")));
+                Set.of(playerNameA, playerNameB, playerNameC));
     }
 
     @Test
@@ -112,10 +120,10 @@ class PlayersTest {
         assertThat(gameStatistics.getDealerLoseCount()).isEqualTo(1);
         assertThat(gameStatistics.getDealerWinCount()).isEqualTo(2);
         Map<PlayerName, GameResult> results = gameStatistics.getResults();
-        assertThat(results.get(new PlayerName("a"))).isEqualTo(GameResult.WIN);
-        assertThat(results.get(new PlayerName("b"))).isEqualTo(GameResult.LOSE);
-        assertThat(results.get(new PlayerName("c"))).isEqualTo(GameResult.LOSE);
-        assertThat(results.get(new PlayerName("d"))).isEqualTo(GameResult.DRAW);
+        assertThat(results.get(playerNameA)).isEqualTo(GameResult.WIN);
+        assertThat(results.get(playerNameB)).isEqualTo(GameResult.LOSE);
+        assertThat(results.get(playerNameC)).isEqualTo(GameResult.LOSE);
+        assertThat(results.get(playerNameD)).isEqualTo(GameResult.DRAW);
     }
 
     @Test
@@ -130,18 +138,18 @@ class PlayersTest {
         // then
         assertThat(bettingStatistics.calculateDealerBettingResult()).isEqualTo(new BettingResultAmount(40000));
         Map<PlayerName, BettingResultAmount> bettingResult = bettingStatistics.getBettingResult();
-        assertThat(bettingResult.get(new PlayerName("a"))).isEqualTo(new BettingResultAmount(10000));
-        assertThat(bettingResult.get(new PlayerName("b"))).isEqualTo(new BettingResultAmount(-20000));
-        assertThat(bettingResult.get(new PlayerName("c"))).isEqualTo(new BettingResultAmount(-30000));
-        assertThat(bettingResult.get(new PlayerName("d"))).isEqualTo(new BettingResultAmount(0));
+        assertThat(bettingResult.get(playerNameA)).isEqualTo(new BettingResultAmount(10000));
+        assertThat(bettingResult.get(playerNameB)).isEqualTo(new BettingResultAmount(-20000));
+        assertThat(bettingResult.get(playerNameC)).isEqualTo(new BettingResultAmount(-30000));
+        assertThat(bettingResult.get(playerNameD)).isEqualTo(new BettingResultAmount(0));
     }
 
     private Players getPlayers() {
         Map<PlayerName, BettingAmount> playersInfo = Map.of(
-                new PlayerName("a"), new BettingAmount(10000),
-                new PlayerName("b"), new BettingAmount(20000),
-                new PlayerName("c"), new BettingAmount(30000),
-                new PlayerName("d"), new BettingAmount(40000)
+                playerNameA, new BettingAmount(10000),
+                playerNameB, new BettingAmount(20000),
+                playerNameC, new BettingAmount(30000),
+                playerNameD, new BettingAmount(40000)
         );
         Players players = new Players(playersInfo);
         players.giveCard(new PlayerName("a"), List.of(HEART_TEN, HEART_ACE));

@@ -1,24 +1,33 @@
 package domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static testFixture.PlayerNameFixture.*;
 
 import domain.participants.PlayerName;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import testFixture.PlayerNameFixture;
 
 class GameStatisticsTest {
+
+    @BeforeAll
+    public static void setUp(){
+        PlayerNameFixture.setUp();
+    }
+
     @Test
     @DisplayName("딜러의 게임 결과를 정확히 반환하는지 테스트")
     void getDealerWinCount() {
         // given
         Map<PlayerName, GameResult> result = Map.of(
-                new PlayerName("a"), GameResult.WIN,
-                new PlayerName("b"), GameResult.DRAW,
-                new PlayerName("c"), GameResult.LOSE,
-                new PlayerName("d"), GameResult.WIN,
-                new PlayerName("e"), GameResult.DRAW,
-                new PlayerName("f"), GameResult.DRAW);
+                playerNameA, GameResult.WIN,
+                playerNameB, GameResult.DRAW,
+                playerNameC, GameResult.LOSE,
+                playerNameD, GameResult.WIN,
+                playerNameE, GameResult.DRAW,
+                playerNameF, GameResult.DRAW);
         GameStatistics gameStatistics = new GameStatistics(result);
         // when
         int winCount = gameStatistics.getDealerWinCount();

@@ -55,7 +55,7 @@ class GameTest {
         // when
         game.distributeStartingHands();
         // then
-        assertThat(game.getDealer().getCards().size()).isEqualTo(2);
+        assertThat(game.getDealer().getCards()).hasSize(2);
         assertThat(game.getPlayerCards(new PlayerName("a")).size()).isEqualTo(2);
         assertThat(game.getPlayerCards(new PlayerName("b")).size()).isEqualTo(2);
         assertThat(game.getPlayerCards(new PlayerName("c")).size()).isEqualTo(2);
