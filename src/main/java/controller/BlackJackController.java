@@ -11,7 +11,6 @@ import domain.ParticipantsResult;
 import domain.Player;
 import java.util.ArrayList;
 import java.util.List;
-import utils.InputSplitter;
 import view.InputView;
 import view.OutputView;
 
@@ -91,8 +90,7 @@ public class BlackJackController {
         List<Participant> participants = new ArrayList<>();
         // 초기 딜러 설정
         participants.add(new Dealer());
-        String inputUserNames = inputView.inputUserNames();
-        List<String> userNames = InputSplitter.split(inputUserNames);
+        List<String> userNames = inputView.inputPlayerNames();
         for (String userName : userNames) {
             Participant participant = new Player(userName);
             participants.add(participant);
