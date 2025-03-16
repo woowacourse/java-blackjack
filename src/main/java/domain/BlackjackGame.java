@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import view.YesOrNo;
 
 public class BlackjackGame {
     private static final int INIT_CARD_NUMBER = 2;
@@ -109,5 +110,11 @@ public class BlackjackGame {
     public List<Card> openFirstDealerCard() {
         User dealer = getDealer();
         return dealer.openInitialCard();
+    }
+
+    public void controlTurn(User user, YesOrNo yesOrNo) {
+        if (yesOrNo == YesOrNo.YES && user.isDrawable()) {
+            user.drawCard(cardDeck.drawCard());
+        }
     }
 }

@@ -38,27 +38,7 @@ public class BlackjackConsole {
         blackjackGame.firstHandOutCard();
         openFirstCards(blackjackGame);
 
-        // 카드를 추가한다
-        for (Player player : players) {
-
-        }
-
-        for (String playerName : playerNames) {
-            User player = blackjackGame.findUserByUsername(playerName);
-            while (player.isDrawable()) {
-                YesOrNo yesOrNo = inputView.inputYesOrNo(playerName);
-                if (yesOrNo == YesOrNo.NO) {
-                    return;
-                }
-                player.drawCard(blackjackGame.handOutCard());
-                displayOpenCard(playerName, player);
-            }
-        }
-
-        while (!dealer.isDrawable()) {
-            dealer.drawCard(blackjackGame.handOutCard());
-            outputView.displayDealerAddCard();
-        }
+        controlTurn(players, blackjackGame, dealer);
 
         // 카드를 공개한다
         List<Card> dealerCards = dealer.openAllCard();
@@ -87,6 +67,20 @@ public class BlackjackConsole {
         inputView.close();
     }
 
+    private void controlTurn(List<Player> players, BlackjackGame blackjackGame, Dealer dealer) {
+        for (Player player : players) {
+            while (player.isDrawable()) {
+                YesOrNo yesOrNo = inputView.inputYesOrNo(player.getName());
+                blackjackGame.controlTurn(player, yesOrNo);
+                displayOpenCard(player);
+            }
+        }
+        while (dealer.isDrawable()) {
+            blackjackGame.controlTurn(dealer, YesOrNo.YES);
+            outputView.displayDealerAddCard();
+        }
+    }
+
     private void openFirstCards(BlackjackGame blackjackGame) {
         List<Card> dealerCards = blackjackGame.openFirstDealerCard();
         outputView.displayOpenCards(Dealer.DEALER_NAME, dealerCards);
@@ -108,8 +102,8 @@ public class BlackjackConsole {
         return bettingTable;
     }
 
-    private void displayOpenCard(String playerName, User user) {
+    private void displayOpenCard(User user) {
         List<Card> cards = user.openInitialCard();
-        outputView.displayOpenCards(playerName, cards);
+        outputView.displayOpenCards(user.getName(), cards);
     }
 }
