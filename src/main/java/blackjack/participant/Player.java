@@ -49,7 +49,7 @@ public class Player extends GameParticipant {
         return GameResult.of(this.calculateSumOfCards(), dealer.calculateSumOfCards());
     }
 
-    public Money calcProfit(GameResult result) {
+    public Money calculateProfit(GameResult result) {
         return betting.applyProfit(result);
     }
 }

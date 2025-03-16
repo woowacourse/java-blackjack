@@ -24,7 +24,7 @@ public class GameStatistics {
     }
 
     public Money getProfit(Player player) {
-        return player.calcProfit(playerToResult.get(player));
+        return player.calculateProfit(playerToResult.get(player));
     }
 
     public Money getDealerProfit() {
