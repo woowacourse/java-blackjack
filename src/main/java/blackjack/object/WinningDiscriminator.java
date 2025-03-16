@@ -11,37 +11,61 @@ import static java.util.stream.Collectors.toMap;
 public class WinningDiscriminator {
     public static final int BLACK_JACK = 21;
     private final Map<Name, Integer> gamblerScores;
+    private final Map<Name, Integer> bettingRecords;
 
     public WinningDiscriminator(final Map<Name, Integer> gamblerScores, final Map<Name, Integer> bettingRecords) {
         this.gamblerScores = gamblerScores;
+        this.bettingRecords = bettingRecords;
     }
 
     public Map<Name, WinningType> judgePlayersResult() {
-        return gamblerScores.keySet()
+        return bettingRecords.keySet()
                 .stream()
-                .filter(name -> !name.equals(Name.getDealerName()))
                 .collect(toMap(identity(), this::judgePlayerResult));
     }
 
-    public Map<WinningType, Integer> judgeDealerResult() {
-        Map<WinningType, Integer> winningResult = createWinningResult();
-        List<Name> playerNames = new ArrayList<>(gamblerScores.keySet());
-        playerNames.remove(Name.getDealerName());
+    public Map<Name, Integer> calculateGamblerProfit() {
+        Map<Name, Integer> gamblerProfit = new HashMap<>();
+        int dealerProfit = 0;
 
-        for (final Name playerName : playerNames) {
-            countDealerWinning(playerName, winningResult);
+        for (Name playerName : bettingRecords.keySet()) {
+            int bettingAmount = bettingRecords.get(playerName);
+            int playerProfit = judgeBlackJackCase(playerName, bettingAmount);
+
+            gamblerProfit.put(playerName, playerProfit);
+            dealerProfit -= playerProfit;
         }
-        return winningResult;
+        gamblerProfit.put(Name.getDealerName(), dealerProfit);
+        return gamblerProfit;
     }
 
-    private Map<WinningType, Integer> createWinningResult() {
-        return Arrays.stream(WinningType.values())
-                .collect(toMap(identity(), type -> 0));
+    private int judgeBlackJackCase(Name playerName, int bettingAmount) {
+        int dealerScore = gamblerScores.get(Name.getDealerName());
+        int playerScore = gamblerScores.get(playerName);
+
+        if (playerScore == BLACK_JACK && dealerScore == BLACK_JACK) {
+            return 0;
+        }
+        if (playerScore == BLACK_JACK) {
+            double profit = bettingAmount * 1.5 ;
+           return (int) profit;
+        }
+        if (dealerScore == BLACK_JACK) {
+            return -bettingAmount;
+        }
+        return judgeNormalCase(playerName, bettingAmount);
     }
 
-    private void countDealerWinning(final Name name, final Map<WinningType, Integer> winningResult) {
-        WinningType dealerResult = judgePlayerResult(name).reverse();
-        winningResult.put(dealerResult, winningResult.get(dealerResult) + 1);
+    private int judgeNormalCase(Name playerName, int bettingAmount) {
+        WinningType result = judgePlayerResult(playerName);
+
+        if (result == WIN) {
+            return bettingAmount;
+        }
+        if (result == DEFEAT) {
+            return -bettingAmount;
+        }
+        return 0; // DRAW
     }
 
     private WinningType judgePlayerResult(final Name name) {

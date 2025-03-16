@@ -11,15 +11,15 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class WinningTypeDiscriminatorTest {
-    @DisplayName("딜러의 합계가 21이 넘지 않는 경우 딜러의 승패를 계산 한다.")
-    @CsvSource(value = {"WIN:2", "DEFEAT:2", "DRAW:1"}, delimiterString = ":")
+    @DisplayName("딜러의 합계가 21이 넘지 않는 경우 겜블러의 수익을 구한다.")
+    @CsvSource(value = {"라젤:5000", "레오:15000", "비타:-5000",  "새로이:-10000", "꾹이:0", "딜러:-5000"}, delimiterString = ":")
     @ParameterizedTest
-    void judgeDealerResult_DealerIsNotBust_Test(WinningType type, int expected) {
+    void calculateGamblerProfit_DealerIsNotBust_Test(Name name, int expected) {
         // given
         Map<Name, Integer> bettingRecords = new HashMap<>(Map.of(
-                new Name("라젤"), 10000,
+                new Name("라젤"), 5000,
                 new Name("레오"), 10000,
-                new Name("비타"), 10000,
+                new Name("비타"), 5000,
                 new Name("새로이"), 10000,
                 new Name("꾹이"), 10000
         ));
@@ -33,21 +33,21 @@ class WinningTypeDiscriminatorTest {
         WinningDiscriminator winningDiscriminator = new WinningDiscriminator(gamblerScores, bettingRecords);
 
         // when
-        Map<WinningType, Integer> result = winningDiscriminator.judgeDealerResult();
+        Map<Name, Integer> result = winningDiscriminator.calculateGamblerProfit();
 
         // then
-        assertThat(result.get(type)).isEqualTo(expected);
+        assertThat(result.get(name)).isEqualTo(expected);
     }
 
-    @DisplayName("딜러의 합계가 21이 넘는 경우 딜러의 승패를 계산 한다.")
-    @CsvSource(value = {"WIN:2", "DEFEAT:2", "DRAW:0"}, delimiterString = ":")
+    @DisplayName("딜러의 합계가 21이 넘는 경우 겜블러의 수익을 구한다.")
+    @CsvSource(value = {"라젤:5000", "레오:15000", "비타:-5000",  "새로이:-10000", "딜러:-5000"}, delimiterString = ":")
     @ParameterizedTest
-    void judgeDealerResult_DealerIsBust_Test(WinningType type, int expected) {
+    void calculateGamblerProfit_DealerIsBust_Test(Name name, int expected) {
         // given
         Map<Name, Integer> bettingRecords = new HashMap<>(Map.of(
-                new Name("라젤"), 10000,
+                new Name("라젤"), 5000,
                 new Name("레오"), 10000,
-                new Name("비타"), 10000,
+                new Name("비타"), 5000,
                 new Name("새로이"), 10000
         ));
         Map<Name, Integer> gamblerScores = Map.of(
@@ -59,10 +59,10 @@ class WinningTypeDiscriminatorTest {
         WinningDiscriminator winningDiscriminator = new WinningDiscriminator(gamblerScores, bettingRecords);
 
         // when
-        Map<WinningType, Integer> result = winningDiscriminator.judgeDealerResult();
+        Map<Name, Integer> result = winningDiscriminator.calculateGamblerProfit();
 
         // then
-        assertThat(result.get(type)).isEqualTo(expected);
+        assertThat(result.get(name)).isEqualTo(expected);
     }
 
     @DisplayName("딜러의 합계가 21을 넘지 않는 경우 플레이어의 승패 여부를 계산한다")
