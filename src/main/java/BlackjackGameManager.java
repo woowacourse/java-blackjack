@@ -22,7 +22,7 @@ public class BlackjackGameManager {
         initialCardsDistribution(blackjackGameBoard);
         hitOrStayPhase(blackjackGameBoard);
         printPlayerCardsAndSum(blackjackGameBoard);
-        // TODO: 수익 출력
+        printPlayerProfit(blackjackGameBoard);
     }
 
     private void initialCardsDistribution(BlackjackGameBoard blackjackGameBoard) {
@@ -52,5 +52,14 @@ public class BlackjackGameManager {
             OutputView.printPlayerCardsAndSum(user.getName(),
                     blackjackGameBoard.playerCards(user), blackjackGameBoard.playerCardsSum(user));
         }
+    }
+
+    private void printPlayerProfit(BlackjackGameBoard blackjackGameBoard) {
+        // TODO: 수익 출력
+//        blackjackGameBoard.computeDealerProfit(dealer, users, DefaultProfitStrategy.getInstance());
+//
+//        for (User user : users.getUsers()) {
+//            blackjackGameBoard.computeUserProfit(user, dealer, DefaultProfitStrategy.getInstance());
+//        }
     }
 }

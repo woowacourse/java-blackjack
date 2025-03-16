@@ -5,6 +5,10 @@ import domain.card.Deck;
 import domain.player.Dealer;
 import domain.player.Player;
 import domain.player.User;
+import domain.player.Users;
+import domain.profit.Profit;
+import domain.profit.ProfitStrategy;
+import domain.profit.UserBattleResult;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -55,5 +59,19 @@ public class BlackjackGameBoard {
 
     public int playerCardsSum(Player player) {
         return player.computeOptimalSum();
+    }
+
+
+    public Profit computeUserProfit(User user, Dealer dealer, ProfitStrategy profitStrategy) {
+        return profitStrategy.calculateProfit(user.getBet(), UserBattleResult.compare(user, dealer));
+    }
+
+    public Profit computeDealerProfit(Dealer dealer, Users users, ProfitStrategy profitStrategy) {
+        int usersProfitSum = 0;
+        for (User user : users.getUsers()) {
+            usersProfitSum = profitStrategy.calculateProfit(user.getBet(), UserBattleResult.compare(user, dealer))
+                    .getValue();
+        }
+        return new Profit(-usersProfitSum);
     }
 }

@@ -1,6 +1,6 @@
 package domain.player;
 
-import domain.Bet;
+import domain.profit.Bet;
 import domain.state.Hittable;
 import domain.state.State;
 
@@ -15,5 +15,9 @@ public class User extends Player {
 
     public static User of(String name, int bet) {
         return new User(name, new Bet(bet), Hittable.initialUserState());
+    }
+
+    public Bet getBet() {
+        return bet;
     }
 }

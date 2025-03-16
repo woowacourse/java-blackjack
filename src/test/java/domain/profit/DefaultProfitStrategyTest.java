@@ -1,21 +1,19 @@
 package domain.profit;
 
-import domain.BattleResult;
-import domain.Bet;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class DefaultProfitStrategyTest {
-    
+
     @Test
-    void 블랙잭으로_이긴_경우_베팅_금액의_일점오배_수익을_반환한다_소숫점은_버린다() {
+    void 블랙잭_상태로_이긴_경우_베팅_금액의_일점오배_수익을_반환한다_소숫점은_버린다() {
         // given
         final int betAmount = 1001;
         Bet bet = new Bet(betAmount);
-        BattleResult battleResult = BattleResult.BLACKJACK;
+        UserBattleResult userBattleResult = UserBattleResult.BLACKJACK_WIN;
 
         // when
-        Profit profit = DefaultProfitStrategy.getInstance().calculateProfit(bet, battleResult);
+        Profit profit = DefaultProfitStrategy.getInstance().calculateProfit(bet, userBattleResult);
 
         // then
         Assertions.assertThat(profit.getValue()).isEqualTo(1501);
@@ -26,10 +24,10 @@ class DefaultProfitStrategyTest {
         // given
         final int betAmount = 1001;
         Bet bet = new Bet(betAmount);
-        BattleResult battleResult = BattleResult.NORMAL_WIN;
+        UserBattleResult userBattleResult = UserBattleResult.NORMAL_WIN;
 
         // when
-        Profit profit = DefaultProfitStrategy.getInstance().calculateProfit(bet, battleResult);
+        Profit profit = DefaultProfitStrategy.getInstance().calculateProfit(bet, userBattleResult);
 
         // then
         Assertions.assertThat(profit.getValue()).isEqualTo(1001);
@@ -40,10 +38,10 @@ class DefaultProfitStrategyTest {
         // given
         final int betAmount = 1001;
         Bet bet = new Bet(betAmount);
-        BattleResult battleResult = BattleResult.LOSE;
+        UserBattleResult userBattleResult = UserBattleResult.LOSE;
 
         // when
-        Profit profit = DefaultProfitStrategy.getInstance().calculateProfit(bet, battleResult);
+        Profit profit = DefaultProfitStrategy.getInstance().calculateProfit(bet, userBattleResult);
 
         // then
         Assertions.assertThat(profit.getValue()).isEqualTo(-1001);
@@ -54,10 +52,10 @@ class DefaultProfitStrategyTest {
         // given
         final int betAmount = 1001;
         Bet bet = new Bet(betAmount);
-        BattleResult battleResult = BattleResult.DRAW;
+        UserBattleResult userBattleResult = UserBattleResult.DRAW;
 
         // when
-        Profit profit = DefaultProfitStrategy.getInstance().calculateProfit(bet, battleResult);
+        Profit profit = DefaultProfitStrategy.getInstance().calculateProfit(bet, userBattleResult);
 
         // then
         Assertions.assertThat(profit.getValue()).isEqualTo(0);

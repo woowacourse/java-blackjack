@@ -1,4 +1,4 @@
-package domain;
+package domain.profit;
 
 import java.util.Objects;
 
