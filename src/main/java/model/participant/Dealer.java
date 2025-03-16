@@ -14,7 +14,7 @@ public class Dealer extends Participant {
         return getParticipantHand().openFirstCard();
     }
 
-    public boolean isFirstCardAce(){
+    public boolean isFirstCardAce() {
         return openFirstCard().getCardRank() == CardRank.ACE;
     }
 

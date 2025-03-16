@@ -35,7 +35,7 @@ public class InputView {
     public static PlayerChoice readFirstChoice(Player player) {
         try {
             return handleFirstTurnChoice(player);
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return readFirstChoice(player);
         }
@@ -43,9 +43,9 @@ public class InputView {
 
     public static PlayerChoice readHitOrStand(Player player) {
         OutputView.printChoiceResult(player);
-        try{
+        try {
             return handleSubsequentTurnChoice(player);
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return readHitOrStand(player);
         }

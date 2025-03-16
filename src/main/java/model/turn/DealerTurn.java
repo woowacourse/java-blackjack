@@ -8,7 +8,7 @@ public class DealerTurn extends Turn {
         super(dealer);
     }
 
-    public Dealer getDealer(){
+    public Dealer getDealer() {
         return (Dealer) participant;
     }
 }

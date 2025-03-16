@@ -33,8 +33,8 @@ public class PlayerTurn extends Turn {
         betting.addBet(additionalBet);
     }
 
-    public void processSurrender(){
-        betting.surrender();;
+    public void processSurrender() {
+        betting.surrender();
     }
 
     public int getMaxInsuranceAmount() {

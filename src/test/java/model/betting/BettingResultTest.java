@@ -1,4 +1,4 @@
-package model;
+package model.betting;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -6,14 +6,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import model.betting.Betting;
 import model.card.Card;
 import model.card.CardRank;
 import model.card.CardSuit;
 import model.participant.Dealer;
 import model.participant.Player;
 import model.participant.Players;
-import model.betting.BettingResult;
 import model.winning.ParticipantWinningResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

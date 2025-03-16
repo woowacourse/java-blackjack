@@ -1,11 +1,10 @@
-package model;
+package model.participant;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import model.card.Card;
 import model.card.CardRank;
 import model.card.CardSuit;
-import model.participant.ParticipantHand;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

@@ -1,4 +1,4 @@
-package model;
+package model.winning;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,8 +10,6 @@ import model.card.CardSuit;
 import model.participant.Dealer;
 import model.participant.Player;
 import model.participant.Players;
-import model.winning.WinningResult;
-import model.winning.ParticipantWinningResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

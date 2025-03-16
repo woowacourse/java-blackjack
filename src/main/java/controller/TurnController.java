@@ -73,7 +73,6 @@ public class TurnController {
         }
         if (playerChoice.equals(PlayerChoice.SURRENDER)) {
             playerTurn.processSurrender();
-            ;
         }
     }
 
