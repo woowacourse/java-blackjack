@@ -9,19 +9,12 @@ public class Players {
 
     private final List<Player> players;
 
-    private Players(List<Player> players) {
+    public Players(List<Player> players) {
         this.players = players;
     }
 
-    public static Players createByNames(List<String> playerNames) {
-        List<Player> players = playerNames.stream()
-                .map(playerName -> new Player(playerName, Hand.createEmpty()))
-                .toList();
-        return new Players(players);
-    }
-
-    public static Players create(List<Player> players) {
-        return new Players(players);
+    public Players() {
+        this(Collections.emptyList());
     }
 
     public List<Player> getPlayers() {
