@@ -71,27 +71,24 @@ public class Gamblers {
             Player player = entry.getKey();
             Winning winning = entry.getValue();
 
-            computePlayerProfits(player, winning, moneys);
-            var playerProfit = moneys.get(player);
-            dealerProfit = dealerProfit - playerProfit;
+            GamblingMoney playerProfit = computePlayerProfits(player, winning);
+            int profitAmount = playerProfit.getAmount();
+
+            moneys.put(player, profitAmount);
+            dealerProfit = dealerProfit - profitAmount;
         }
 
         moneys.putFirst(dealer, dealerProfit);
         return moneys;
     }
 
-    private void computePlayerProfits(Player player, Winning winning, Map<Gambler, Integer> moneys) {
+    private GamblingMoney computePlayerProfits(Player player, Winning winning) {
         GamblingMoney gamblingMoney = playerBettings.get(player);
 
         if (player.isBlackJack() && !dealer.isBlackJack()) {
-            moneys.put(player, gamblingMoney.onceHalf().getAmount());
+            return gamblingMoney.onceHalf();
         }
-
-        switch (winning) {
-            case WIN -> moneys.putIfAbsent(player, gamblingMoney.getAmount());
-            case DRAW -> moneys.putIfAbsent(player, 0);
-            case LOSE -> moneys.put(player, -1 * gamblingMoney.getAmount());
-        }
+        return gamblingMoney.calculateProfit(winning);
     }
 
     private void validatePlayers(Collection<Player> players) {

@@ -14,17 +14,32 @@ public class GamblingMoney {
         return new GamblingMoney((int) (amount * 1.5));
     }
 
+    public GamblingMoney calculateProfit(Winning winning) {
+        GamblingMoney finalized = finalize(winning);
+        return new GamblingMoney(finalized.amount - amount);
+    }
+
+    private GamblingMoney finalize(Winning winning) {
+        if (winning == Winning.WIN) {
+            return new GamblingMoney(amount * 2);
+        }
+        if (winning == Winning.LOSE) {
+            return ZERO;
+        }
+        return this;
+    }
+
     public int getAmount() {
         return amount;
     }
 
     @Override
     public final boolean equals(Object o) {
-        if (!(o instanceof GamblingMoney betting)) {
+        if (!(o instanceof GamblingMoney money)) {
             return false;
         }
 
-        return amount == betting.amount;
+        return amount == money.amount;
     }
 
     @Override

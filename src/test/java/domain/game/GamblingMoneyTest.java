@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
@@ -57,5 +58,14 @@ public class GamblingMoneyTest {
             () -> assertThatCode(money::onceHalf).doesNotThrowAnyException(),
             () -> assertThat(money.onceHalf().getAmount()).isEqualTo(1_500_000)
         );
+    }
+
+    @ParameterizedTest
+    @CsvSource({"WIN,10000", "DRAW,0", "LOSE,-10000"})
+    void 승무패_여부에_따른_수익금을_반환한다(Winning winning, int expectedFinalAmount) {
+        GamblingMoney money = GamblingMoney.bet(10000);
+
+        GamblingMoney finalMoney = money.calculateProfit(winning);
+        assertThat(finalMoney.getAmount()).isEqualTo(expectedFinalAmount);
     }
 }
