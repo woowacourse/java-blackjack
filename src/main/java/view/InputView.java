@@ -3,6 +3,7 @@ package view;
 import controller.Answer;
 import domain.participant.Player;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -24,7 +25,7 @@ public class InputView {
         System.out.printf("%s의 배팅 금액은?%n", name);
         try {
             return scanner.nextInt();
-        } catch (NumberFormatException e) {
+        } catch (InputMismatchException e) {
             throw new IllegalArgumentException("정수 형식이 아닙니다.");
         }
     }
