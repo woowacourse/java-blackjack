@@ -183,18 +183,18 @@ class WinningStatusTest {
     }
 
     private static PlayerBlackjackCardHand playerWith(Card... cards) {
-        return PlayerBlackjackCardHand.createWithInitialCards(DEFAULT_PLAYER, () -> List.of(cards));
+        return new PlayerBlackjackCardHand(() -> List.of(cards), DEFAULT_PLAYER);
     }
 
     private static PlayerBlackjackCardHand playerWith(List<Card> cards) {
-        return PlayerBlackjackCardHand.createWithInitialCards(DEFAULT_PLAYER, () -> cards);
+        return new PlayerBlackjackCardHand(() -> cards, DEFAULT_PLAYER);
     }
 
     private static DealerBlackjackCardHand dealerWith(Card... cards) {
-        return DealerBlackjackCardHand.createWithInitialCards(() -> List.of(cards));
+        return new DealerBlackjackCardHand(() -> List.of(cards));
     }
 
     private static DealerBlackjackCardHand dealerWith(List<Card> cards) {
-        return DealerBlackjackCardHand.createWithInitialCards(() -> cards);
+        return new DealerBlackjackCardHand(() -> cards);
     }
 }

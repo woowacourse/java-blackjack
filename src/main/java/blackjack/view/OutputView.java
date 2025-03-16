@@ -25,7 +25,7 @@ public final class OutputView {
     public void outputInitialCards(final DealerBlackjackCardHand dealerHand, final List<PlayerBettingBlackjackCardHand> playerHands) {
         StringJoiner sj = new StringJoiner(LINE_SEPARATOR);
         sj.add(outputInitialCardOpeningMessage(extractPlayerNames(playerHands)));
-        sj.add(parseNameAndCards("딜러", List.of(dealerHand.getInitialCard())));
+        sj.add(parseNameAndCards("딜러", dealerHand.getInitialCards()));
         for (PlayerBettingBlackjackCardHand playerHand : playerHands) {
             sj.add(parseNameAndCards(playerHand.getPlayerName(), playerHand.getInitialCards()));
         }

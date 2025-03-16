@@ -27,7 +27,7 @@ public final class PlayerBettingBlackjackCardHand {
     ) {
         GlobalValidator.validateNotNull(player, initializer);
         return new PlayerBettingBlackjackCardHand(
-                PlayerBlackjackCardHand.createWithInitialCards(player, initializer),
+                new PlayerBlackjackCardHand(initializer, player),
                 new BlackjackBetting(bettingAmount)
         );
     }

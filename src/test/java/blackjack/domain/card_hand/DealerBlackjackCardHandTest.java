@@ -22,7 +22,7 @@ public class DealerBlackjackCardHandTest {
         // given
 
         // expected
-        assertThatThrownBy(() -> DealerBlackjackCardHand.createWithInitialCards(null))
+        assertThatThrownBy(() -> new DealerBlackjackCardHand(null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("필수 입력값 중 하나가 null입니다.");
     }
@@ -30,7 +30,7 @@ public class DealerBlackjackCardHandTest {
     @Test
     void 딜러_손패_숫자의_합이_16_이하인_경우_카드를_뽑는다() {
         // given
-        DealerBlackjackCardHand dealerBlackjackCardHand = DealerBlackjackCardHand.createWithInitialCards(List::of);
+        DealerBlackjackCardHand dealerBlackjackCardHand = new DealerBlackjackCardHand(List::of);
 
         // when
         dealerBlackjackCardHand.startAddingAndGetAddedSize(new BlackjackDeck());
@@ -47,7 +47,7 @@ public class DealerBlackjackCardHandTest {
             int expectedSum
     ) {
         // given
-        DealerBlackjackCardHand dealerBlackjackCardHand = DealerBlackjackCardHand.createWithInitialCards(() -> initCards);
+        DealerBlackjackCardHand dealerBlackjackCardHand = new DealerBlackjackCardHand(() -> initCards);
 
         // when
         dealerBlackjackCardHand.startAddingAndGetAddedSize(new CardDrawerStub(deckCards));
@@ -59,7 +59,7 @@ public class DealerBlackjackCardHandTest {
     @Test
     void 딜러_손패가_추가_카드를_뽑으면_뽑은_개수를_반환한다() {
         // given
-        DealerBlackjackCardHand dealerBlackjackCardHand = DealerBlackjackCardHand.createWithInitialCards(() -> List.of(DIAMOND_9, DIAMOND_5));
+        DealerBlackjackCardHand dealerBlackjackCardHand = new DealerBlackjackCardHand(() -> List.of(DIAMOND_9, DIAMOND_5));
         final List<Card> addedCards = List.of(HEART_1, HEART_2, HEART_3);
 
         // when
@@ -92,9 +92,9 @@ public class DealerBlackjackCardHandTest {
     @Test
     void 딜러는_처음에_한_장만_공개해야_한다() {
         // given
-        DealerBlackjackCardHand dealerBlackjackCardHand = DealerBlackjackCardHand.createWithInitialCards(() -> List.of(HEART_3, HEART_5));
+        DealerBlackjackCardHand dealerBlackjackCardHand = new DealerBlackjackCardHand(() -> List.of(HEART_3, HEART_5));
 
         // expected
-        assertThat(dealerBlackjackCardHand.getInitialCard()).isEqualTo(HEART_3);
+        assertThat(dealerBlackjackCardHand.getInitialCards()).containsExactly(HEART_3);
     }
 }

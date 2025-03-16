@@ -7,59 +7,29 @@ import blackjack.util.GlobalValidator;
 
 import java.util.List;
 
-public final class PlayerBlackjackCardHand {
+public final class PlayerBlackjackCardHand extends AbstractBlackjackCardHand {
     
-    private final BlackjackCardHand cardHand;
     private final Player player;
     
-    public PlayerBlackjackCardHand(final BlackjackCardHand cardHand, final Player player) {
-        GlobalValidator.validateNotNull(cardHand, player);
-        this.cardHand = cardHand;
+    public PlayerBlackjackCardHand(final BlackjackCardHandInitializer initializer, final Player player) {
+        super(initializer);
+        GlobalValidator.validateNotNull(player);
         this.player = player;
     }
     
-    public static PlayerBlackjackCardHand createWithInitialCards(
-            final Player player,
-            final BlackjackCardHandInitializer initializer
-    ) {
-        GlobalValidator.validateNotNull(player, initializer);
-        return new PlayerBlackjackCardHand(
-                BlackjackCardHand.createWithInitialCards(initializer),
-                player
-        );
-    }
-    
+    @Override
     public List<Card> getInitialCards() {
-        return cardHand.getCards().stream()
+        return getCards().stream()
                 .limit(2)
                 .toList();
     }
     
+    @Override
+    public void addCard(final Card card) {
+        super.addCard(card);
+    }
+    
     public String getPlayerName() {
         return player.getName();
-    }
-    
-    public void addCard(final Card card) {
-        cardHand.addCard(card);
-    }
-    
-    public List<Card> getCards() {
-        return cardHand.getCards();
-    }
-    
-    public int getBlackjackSum() {
-        return cardHand.getBlackjackSum();
-    }
-    
-    public boolean isBlackjack() {
-        return cardHand.isBlackjack();
-    }
-    
-    public boolean isBust() {
-        return cardHand.isBust();
-    }
-    
-    public boolean isAddedUpToMax() {
-        return cardHand.isAddedUpToMax();
     }
 }

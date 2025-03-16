@@ -27,7 +27,7 @@ public final class BlackjackController {
     public void run() {
         final Players players = createPlayersUntilSuccess();
         final BlackjackDeck deck = new BlackjackDeck();
-        final DealerBlackjackCardHand dealerHands = DealerBlackjackCardHand.createWithInitialCards(deck);
+        final DealerBlackjackCardHand dealerHands = new DealerBlackjackCardHand(deck);
         final List<PlayerBettingBlackjackCardHand> playerHands = createPlayerHandsUntilSuccess(players, deck);
         outputView.outputInitialCards(dealerHands, playerHands);
         addPlayerCards(playerHands, deck);

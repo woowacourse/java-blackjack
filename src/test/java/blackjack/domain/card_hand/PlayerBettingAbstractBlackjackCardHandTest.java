@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 import static blackjack.test_util.TestConstants.*;
 
-public class PlayerBettingBlackjackCardHandTest {
+public class PlayerBettingAbstractBlackjackCardHandTest {
 
     @Test
     void 베팅_금액이_1000원보다_적으면_예외가_발생한다() {
@@ -225,10 +225,10 @@ public class PlayerBettingBlackjackCardHandTest {
     }
 
     private static DealerBlackjackCardHand dealerWith(Card... cards) {
-        return DealerBlackjackCardHand.createWithInitialCards(() -> List.of(cards));
+        return new DealerBlackjackCardHand(() -> List.of(cards));
     }
 
     private static DealerBlackjackCardHand dealerWith(List<Card> cards) {
-        return DealerBlackjackCardHand.createWithInitialCards(() -> cards);
+        return new DealerBlackjackCardHand(() -> cards);
     }
 }

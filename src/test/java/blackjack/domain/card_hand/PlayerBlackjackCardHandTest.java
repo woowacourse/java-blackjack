@@ -30,10 +30,10 @@ public class PlayerBlackjackCardHandTest {
 
         // expected
         assertAll(
-                () -> assertThatThrownBy(() -> PlayerBlackjackCardHand.createWithInitialCards(null, List::of))
+                () -> assertThatThrownBy(() -> new PlayerBlackjackCardHand(List::of, null))
                         .isInstanceOf(IllegalArgumentException.class)
                         .hasMessage("필수 입력값 중 하나가 null입니다."),
-                () -> assertThatThrownBy(() -> PlayerBlackjackCardHand.createWithInitialCards(DEFAULT_PLAYER, null))
+                () -> assertThatThrownBy(() -> new PlayerBlackjackCardHand(null, DEFAULT_PLAYER))
                         .isInstanceOf(IllegalArgumentException.class)
                         .hasMessage("필수 입력값 중 하나가 null입니다.")
         );
@@ -42,9 +42,8 @@ public class PlayerBlackjackCardHandTest {
     @Test
     void 손패를_가진_플레이어의_이름을_확인할_수_있다() {
         // given
-        final PlayerBlackjackCardHand playerBlackjackCardHand = PlayerBlackjackCardHand.createWithInitialCards(
-                new Player("may"),
-                new BlackjackDeck()
+        final PlayerBlackjackCardHand playerBlackjackCardHand = new PlayerBlackjackCardHand(
+                new BlackjackDeck(), new Player("may")
         );
 
         // expected
@@ -54,9 +53,8 @@ public class PlayerBlackjackCardHandTest {
     @Test
     void 카드를_2개_받고_시작한다() {
         // given
-        final PlayerBlackjackCardHand playerBlackjackCardHand = PlayerBlackjackCardHand.createWithInitialCards(
-                DEFAULT_PLAYER,
-                new BlackjackDeck()
+        final PlayerBlackjackCardHand playerBlackjackCardHand = new PlayerBlackjackCardHand(
+                new BlackjackDeck(), DEFAULT_PLAYER
         );
 
         // expected
@@ -66,8 +64,8 @@ public class PlayerBlackjackCardHandTest {
     @Test
     void 카드_손패에_카드를_추가할_수_있다() {
         // given
-        final PlayerBlackjackCardHand playerBlackjackCardHand = PlayerBlackjackCardHand.createWithInitialCards(
-                DEFAULT_PLAYER, List::of
+        final PlayerBlackjackCardHand playerBlackjackCardHand = new PlayerBlackjackCardHand(
+                List::of, DEFAULT_PLAYER
         );
         final Card newCard = DIAMOND_1;
 
@@ -78,9 +76,8 @@ public class PlayerBlackjackCardHandTest {
     @Test
     void 카드_손패에_있는_카드들을_확인할_수_있다() {
         // given
-        final PlayerBlackjackCardHand playerBlackjackCardHand = PlayerBlackjackCardHand.createWithInitialCards(
-                DEFAULT_PLAYER, 
-                List::of
+        final PlayerBlackjackCardHand playerBlackjackCardHand = new PlayerBlackjackCardHand(
+                List::of, DEFAULT_PLAYER
         );
         playerBlackjackCardHand.addCard(DIAMOND_1);
         playerBlackjackCardHand.addCard(HEART_2);
@@ -100,7 +97,7 @@ public class PlayerBlackjackCardHandTest {
     @Test
     void 카드_손패에_있는_카드들의_숫자의_합을_계산할_수_있다() {
         // given
-        final PlayerBlackjackCardHand playerBlackjackCardHand = PlayerBlackjackCardHand.createWithInitialCards(DEFAULT_PLAYER, List::of);
+        final PlayerBlackjackCardHand playerBlackjackCardHand = new PlayerBlackjackCardHand(List::of, DEFAULT_PLAYER);
         playerBlackjackCardHand.addCard(DIAMOND_1);
         playerBlackjackCardHand.addCard(HEART_2);
 
@@ -114,7 +111,7 @@ public class PlayerBlackjackCardHandTest {
     @Test
     void JQK를_10으로_계산하여_숫자의_합을_반환한다() {
         // given
-        final PlayerBlackjackCardHand playerBlackjackCardHand = PlayerBlackjackCardHand.createWithInitialCards(DEFAULT_PLAYER, List::of);
+        final PlayerBlackjackCardHand playerBlackjackCardHand = new PlayerBlackjackCardHand(List::of, DEFAULT_PLAYER);
         playerBlackjackCardHand.addCard(HEART_11);
         playerBlackjackCardHand.addCard(HEART_12);
         playerBlackjackCardHand.addCard(HEART_13);
@@ -129,7 +126,7 @@ public class PlayerBlackjackCardHandTest {
     @Test
     void 손패에_존재하는_카드의_숫자의_합을_계산할_수_있다() {
         // given
-        final PlayerBlackjackCardHand playerBlackjackCardHand = PlayerBlackjackCardHand.createWithInitialCards(DEFAULT_PLAYER, List::of);
+        final PlayerBlackjackCardHand playerBlackjackCardHand = new PlayerBlackjackCardHand(List::of, DEFAULT_PLAYER);
         playerBlackjackCardHand.addCard(DIAMOND_1);
         playerBlackjackCardHand.addCard(HEART_7);
         playerBlackjackCardHand.addCard(HEART_10);
@@ -145,7 +142,7 @@ public class PlayerBlackjackCardHandTest {
     @MethodSource("provideCardsAndSumWithBust")
     void A를_11로_계산하여_버스트_되는_경우_A는_1로_계산된다(List<Card> cards, int expected) {
         // given
-        final PlayerBlackjackCardHand playerBlackjackCardHand = PlayerBlackjackCardHand.createWithInitialCards(DEFAULT_PLAYER, List::of);
+        final PlayerBlackjackCardHand playerBlackjackCardHand = new PlayerBlackjackCardHand(List::of, DEFAULT_PLAYER);
         for (Card card : cards) {
             playerBlackjackCardHand.addCard(card);
         }
@@ -172,7 +169,7 @@ public class PlayerBlackjackCardHandTest {
     @MethodSource("provideCardsAndSumWithoutBust")
     void A를_11로_계산하여_버스트_되지_않는_경우_A는_11로_계산된다(List<Card> cards, int expected) {
         // given
-        final PlayerBlackjackCardHand playerBlackjackCardHand = PlayerBlackjackCardHand.createWithInitialCards(DEFAULT_PLAYER, List::of);
+        final PlayerBlackjackCardHand playerBlackjackCardHand = new PlayerBlackjackCardHand(List::of, DEFAULT_PLAYER);
         for (Card card : cards) {
             playerBlackjackCardHand.addCard(card);
         }
@@ -199,7 +196,7 @@ public class PlayerBlackjackCardHandTest {
     @MethodSource("provideCardsWithAceAndSum")
     void A가_여러_개_주어진_경우_버스트가_되지_않는_선에서_최대_합을_구한다(List<Card> cards, int expected) {
         // given
-        final PlayerBlackjackCardHand playerBlackjackCardHand = PlayerBlackjackCardHand.createWithInitialCards(DEFAULT_PLAYER, List::of);
+        final PlayerBlackjackCardHand playerBlackjackCardHand = new PlayerBlackjackCardHand(List::of, DEFAULT_PLAYER);
         for (Card card : cards) {
             playerBlackjackCardHand.addCard(card);
         }
@@ -225,11 +222,11 @@ public class PlayerBlackjackCardHandTest {
     @Test
     void 내_손패가_버스트인지_알_수_있다() {
         // given
-        final PlayerBlackjackCardHand player = PlayerBlackjackCardHand.createWithInitialCards(DEFAULT_PLAYER, () -> List.of(
+        final PlayerBlackjackCardHand player = new PlayerBlackjackCardHand(() -> List.of(
                 HEART_10,
                 DIAMOND_10,
                 HEART_2
-        ));
+        ), DEFAULT_PLAYER);
 
         // when
         final boolean result = player.isBust();
@@ -241,10 +238,10 @@ public class PlayerBlackjackCardHandTest {
     @Test
     void 내_손패가_21인지_알_수_있다() {
         // given
-        final PlayerBlackjackCardHand player = PlayerBlackjackCardHand.createWithInitialCards(DEFAULT_PLAYER, () -> List.of(
+        final PlayerBlackjackCardHand player = new PlayerBlackjackCardHand(() -> List.of(
                 HEART_10,
                 DIAMOND_1
-        ));
+        ), DEFAULT_PLAYER);
 
         // when
         final boolean result = player.isAddedUpToMax();
@@ -256,10 +253,10 @@ public class PlayerBlackjackCardHandTest {
     @Test
     void 플레이어는_처음에_두_장_공개해야_한다() {
         // given
-        PlayerBlackjackCardHand playerBlackjackCardHand = PlayerBlackjackCardHand.createWithInitialCards(DEFAULT_PLAYER, () -> List.of(
+        PlayerBlackjackCardHand playerBlackjackCardHand = new PlayerBlackjackCardHand(() -> List.of(
                 HEART_3,
                 HEART_5
-        ));
+        ), DEFAULT_PLAYER);
 
         // expected
         Assertions.assertThat(playerBlackjackCardHand.getInitialCards()).containsExactly(HEART_3, HEART_5);

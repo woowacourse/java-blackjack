@@ -6,7 +6,7 @@ import blackjack.util.GlobalValidator;
 
 import java.util.List;
 
-public final class BlackjackCardHand {
+public abstract class AbstractBlackjackCardHand {
     
     private static final int BUST_THRESHOLD = 21;
     private static final int BLACK_JACK_SUM = 21;
@@ -14,16 +14,22 @@ public final class BlackjackCardHand {
     
     private final CardHand cardHand;
     
-    private BlackjackCardHand(final CardHand cardHand) {
-        GlobalValidator.validateNotNull(cardHand);
-        this.cardHand = cardHand;
-    }
-    
-    public static BlackjackCardHand createWithInitialCards(final BlackjackCardHandInitializer initializer) {
+    protected AbstractBlackjackCardHand(final BlackjackCardHandInitializer initializer) {
         GlobalValidator.validateNotNull(initializer);
         final CardHand cardHand = new CardHand();
         cardHand.addCards(initializer.handoutInitialCards());
-        return new BlackjackCardHand(cardHand);
+        this.cardHand = cardHand;
+    }
+    
+    abstract List<Card> getInitialCards();
+    
+    /**
+     * 카드를 한장 추가하는 기능입니다.
+     * 만약 카드를 한장 추가하는 기능을 외부로 노출시켜야 하는 경우에는 public 으로 재정의하여 사용하세요.
+     * @param card 추가할 카드
+     */
+    protected void addCard(Card card) {
+        cardHand.addCard(card);
     }
     
     public int getBlackjackSum() {
@@ -34,14 +40,6 @@ public final class BlackjackCardHand {
             return minSum;
         }
         return findClosestToBlackjack(sums);
-    }
-    
-    public boolean isBust() {
-        return getBlackjackSum() > BUST_THRESHOLD;
-    }
-    
-    public boolean isBlackjack() {
-        return getBlackjackSum() == BLACK_JACK_SUM && cardHand.getCardCount() == BLACK_JACK_CARD_COUNT;
     }
     
     private List<Integer> calculatePossibleSums() {
@@ -78,15 +76,19 @@ public final class BlackjackCardHand {
         return cardHand.getCards();
     }
     
-    public void addCard(Card card) {
-        cardHand.addCard(card);
-    }
-    
     public int getCardCount() {
         return cardHand.getCardCount();
     }
     
+    public boolean isBust() {
+        return getBlackjackSum() > BUST_THRESHOLD;
+    }
+    
     public boolean isAddedUpToMax() {
         return getBlackjackSum() == BLACK_JACK_SUM;
+    }
+    
+    public boolean isBlackjack() {
+        return getBlackjackSum() == BLACK_JACK_SUM && cardHand.getCardCount() == BLACK_JACK_CARD_COUNT;
     }
 }
