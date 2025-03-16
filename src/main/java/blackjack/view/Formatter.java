@@ -17,17 +17,17 @@ public final class Formatter {
     private Formatter() {
     }
 
-    public static String parseCardResult(Player player) {
-        String message = parseHand(player) + " - 결과: ";
+    public static String formatCardResult(Player player) {
+        String message = formatHand(player) + " - 결과: ";
 
-        return message + parseCardResultValue(player);
+        return message + formatCardResultValue(player);
     }
 
-    public static String parseHand(Player player) {
-        return player.getName() + "카드: " + parseStartingCardStatus(player);
+    public static String formatHand(Player player) {
+        return player.getName() + "카드: " + formatStartingCardStatus(player);
     }
 
-    private static String parseCardResultValue(Participant participant) {
+    private static String formatCardResultValue(Participant participant) {
         int value = participant.getBestCardValue();
 
         if (value == Constants.BUSTED_VALUE) {
@@ -37,34 +37,34 @@ public final class Formatter {
         return java.lang.String.valueOf(value);
     }
 
-    private static String parseStartingCardStatus(Participant participant) {
+    private static String formatStartingCardStatus(Participant participant) {
         return participant.getAllCards()
                 .stream()
-                .map(Formatter::parseCardName)
+                .map(Formatter::formatCardName)
                 .collect(Collectors.joining(", "));
     }
 
-    private static String parseCardName(Card card) {
+    private static String formatCardName(Card card) {
         CardRank cardRank = card.getCardRank();
         CardSuit cardSuit = card.getCardSuit();
 
         return CardRankTranslator.getDescription(cardRank) + CardSuitTranslator.getDescription(cardSuit);
     }
 
-    public static String parseCardResult(Dealer dealer) {
+    public static String formatCardResult(Dealer dealer) {
 
-        return parseHand(dealer) + " - 결과: " + parseCardResultValue(dealer);
+        return formatHand(dealer) + " - 결과: " + formatCardResultValue(dealer);
     }
 
-    private static String parseHand(Dealer dealer) {
-        return "딜러카드: " + parseStartingCardStatus(dealer);
+    private static String formatHand(Dealer dealer) {
+        return "딜러카드: " + formatStartingCardStatus(dealer);
     }
 
-    public static String parseUpCard(Dealer dealer) {
-        return "딜러카드: " + parseCardName(dealer.revealFirstCard());
+    public static String formatUpCard(Dealer dealer) {
+        return "딜러카드: " + formatCardName(dealer.revealFirstCard());
     }
 
-    public static String parsePlayerRevenue(Map<Player, Integer> revenueMap) {
+    public static String formatPlayerRevenue(Map<Player, Integer> revenueMap) {
         return revenueMap.entrySet()
                 .stream()
                 .map(entry -> {

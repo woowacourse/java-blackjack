@@ -17,6 +17,14 @@ public class Card {
         return cardRank.getValues();
     }
 
+    public CardSuit getCardSuit() {
+        return cardSuit;
+    }
+
+    public CardRank getCardRank() {
+        return cardRank;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(cardSuit, cardRank);
@@ -29,13 +37,5 @@ public class Card {
         }
         Card card = (Card) o;
         return cardSuit == card.cardSuit && cardRank == card.cardRank;
-    }
-
-    public CardSuit getCardSuit() {
-        return cardSuit;
-    }
-
-    public CardRank getCardRank() {
-        return cardRank;
     }
 }

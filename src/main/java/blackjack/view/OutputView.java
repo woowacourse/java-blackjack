@@ -23,9 +23,9 @@ public final class OutputView {
                 .collect(Collectors.joining(DELIMITER));
 
         System.out.println("딜러와 " + names + "에게 2장을 나누었습니다.");
-        System.out.println(Formatter.parseUpCard(dealer));
+        System.out.println(Formatter.formatUpCard(dealer));
         for (Player player : players.getPlayers()) {
-            System.out.println(Formatter.parseHand(player));
+            System.out.println(Formatter.formatHand(player));
         }
     }
 
@@ -34,7 +34,7 @@ public final class OutputView {
     }
 
     public static void printHand(Player player) {
-        System.out.println(Formatter.parseHand(player));
+        System.out.println(Formatter.formatHand(player));
     }
 
     public static void printBustedPlayer(Player player) {
@@ -42,16 +42,16 @@ public final class OutputView {
     }
 
     public static void printCardResult(Players players, Dealer dealer) {
-        System.out.println(LINE_SEPARATOR + Formatter.parseCardResult(dealer));
+        System.out.println(LINE_SEPARATOR + Formatter.formatCardResult(dealer));
         for (Player player : players.getPlayers()) {
-            System.out.println(Formatter.parseCardResult(player));
+            System.out.println(Formatter.formatCardResult(player));
         }
     }
 
     public static void printRevenue(int playersTotalRevenue, Map<Player, Integer> revenueMap) {
         System.out.println(LINE_SEPARATOR + "## 최종 수익");
         System.out.printf("딜러: %s%n", -playersTotalRevenue);
-        System.out.println(Formatter.parsePlayerRevenue(revenueMap));
+        System.out.println(Formatter.formatPlayerRevenue(revenueMap));
     }
 
     public static void printError(Exception e) {
