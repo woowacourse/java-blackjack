@@ -17,6 +17,10 @@ public final class Hand {
         this.hand = new ArrayList<>(hand);
     }
 
+    public static Hand from(final Card card) {
+        return new Hand(List.of(card));
+    }
+
     public int calculateResult() {
         int maxScore = calculateMaxScore(hand);
         if (isNotBurst(maxScore)) {

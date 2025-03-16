@@ -35,7 +35,7 @@ public final class BlackjackGame {
 
     private Participants makeParticipants() {
         List<String> names = readNames();
-        List<Integer> bettingAmounts = askBettingAmount(names);
+        List<Integer> bettingAmounts = readBettingAmount(names);
         return Participants.of(Players.from(names, bettingAmounts));
     }
 
@@ -43,7 +43,7 @@ public final class BlackjackGame {
         return StringParser.parseByComma(inputView.readNames());
     }
 
-    private List<Integer> askBettingAmount(final List<String> names) {
+    private List<Integer> readBettingAmount(final List<String> names) {
         return names.stream()
                 .map(inputView::askBettingAmount)
                 .map(StringParser::parseInt)
@@ -76,8 +76,7 @@ public final class BlackjackGame {
 
     private void spreadExtraCardsToDealer(final Participants participants, final Deck deck) {
         while (participants.canDealerHit()) {
-            final Card card = deck.spreadOneCard();
-            participants.receiveCardToDealer(new Hand(List.of(card)));
+            participants.receiveCardToDealer(Hand.from(deck.spreadOneCard()));
             resultView.printDealerExtraCard();
         }
     }

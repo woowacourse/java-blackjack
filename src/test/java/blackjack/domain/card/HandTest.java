@@ -5,13 +5,28 @@ import static blackjack.fixture.TestFixture.provideBiggerAndSmallerAceCards;
 import static blackjack.fixture.TestFixture.provideSmallerAceCards;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class HandTest {
+
+    @Test
+    @DisplayName("하나의 카드로 hand를 생성한다")
+    void createFromOneCard() {
+        // Given
+        final Card card = new Card(Shape.CLOB, CardScore.FIVE);
+
+        // When
+        Hand hand = Hand.from(card);
+
+        // Then
+        assertThat(hand.getHand()).isEqualTo(List.of(card));
+    }
 
     @DisplayName("21 이하에서 카드 최대 합을 구한다")
     @ParameterizedTest
