@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.common.ErrorMessage;
+import blackjack.utils.HandFixture;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -48,5 +49,24 @@ class PlayersTest {
         // when & then
         assertThatThrownBy(() -> Players.from(playersToBeSaved)).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.NEED_PLAYER_MEMBERS.getMessage());
+    }
+
+    @DisplayName("플레이어 총수익 테스트")
+    @Test
+    void test4() {
+        // given
+        Dealer dealer = new Dealer(HandFixture.busted());
+
+        Player player1 = new Player("꾹이", new PlayerHand(HandFixture.normal(), Wallet.bet(1000)));
+        Player player2 = new Player("히로", new PlayerHand(HandFixture.normal(), Wallet.bet(1000)));
+
+        Players players = Players.from(List.of(player1, player2));
+        players.adjustBalance(dealer);
+
+        // when
+        int result = players.getTotalRevenue();
+
+        // then
+        assertThat(result).isEqualTo(2000);
     }
 }
