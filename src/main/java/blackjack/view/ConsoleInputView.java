@@ -22,6 +22,12 @@ public class ConsoleInputView implements InputView {
         return UserAction.from(response);
     }
 
+    @Override
+    public int readParticipantsBetAmount(String playerName) {
+        System.out.printf("%s의 배팅 금액은?\n", playerName);
+        return Integer.parseInt(scanner.nextLine());
+    }
+
     private List<String> splitNames(String names) {
         return List.of(names.replaceAll(" ", "").split(","));
     }

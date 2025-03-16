@@ -20,4 +20,5 @@ public interface OutputView {
 
     void printPlayerCards(BlackjackTable gameTable, String playerName);
 
+    void printGameResult(BlackjackTable gameTable);
 }

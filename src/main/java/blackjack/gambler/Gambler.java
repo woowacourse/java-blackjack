@@ -11,10 +11,16 @@ public abstract class Gambler {
     public static final int INITIAL_CARD_COUNT = 2;
 
     protected Cards cards;
+    private double betAmount;
+
 
     public void initializeHand(Cards cards) {
         validateInitialCardsSize(cards);
         this.cards = cards;
+    }
+
+    public void updateBetAmount(double betAmount) {
+        this.betAmount = betAmount;
     }
 
     public abstract List<Card> openInitialCards();
@@ -47,5 +53,9 @@ public abstract class Gambler {
 
     public Cards getCards() {
         return cards;
+    }
+
+    public double getBetAmount() {
+        return betAmount;
     }
 }

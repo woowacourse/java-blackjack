@@ -8,4 +8,6 @@ public interface InputView {
     List<String> readParticipantsNames();
 
     UserAction readOneMoreCardResponse(String name);
+
+    int readParticipantsBetAmount(String playerName);
 }

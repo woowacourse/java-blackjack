@@ -19,7 +19,7 @@ public class Players {
 
     public List<String> getPlayerNames() {
         return new ArrayList<>(players.stream()
-                .map(Player::getUsername)
+                .map(Player::getPlayerName)
                 .toList());
     }
 
@@ -30,7 +30,7 @@ public class Players {
 
     public Player findPlayer(String playerName) {
         return players.stream()
-                .filter(player -> player.getUsername().equals(playerName))
+                .filter(player -> player.getPlayerName().equals(playerName))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 사용자를 찾을 수 없습니다."));
     }

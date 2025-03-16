@@ -20,6 +20,12 @@ public class BlackjackGame {
         List<String> playerNames = inputView.readParticipantsNames();
         BlackjackTable gameTable = new BlackjackTable(playerNames);
         gameTable.initializeGame();
+
+        for (String playerName : gameTable.getPlayerNames()) {
+            int betAmount = inputView.readParticipantsBetAmount(playerName);
+            gameTable.updateBetAmount(playerName, betAmount);
+        }
+
         outputView.printInitialGameSettings(gameTable);
 
         for (String playerName : gameTable.getPlayerNames()) {
@@ -31,14 +37,15 @@ public class BlackjackGame {
             }
         }
 
-        gameTable.determineDealerAdditionalCard();
-
         if (gameTable.isDealerDrawCard()) {
             outputView.printDealerOneMoreCardMessage();
         }
+        gameTable.determineDealerAdditionalCard();
 
         outputView.printGameSummary(gameTable);
-        outputView.printGameResult(players.deriveResults(dealer.sumCardScores()));
+
+        gameTable.calculateTotalPayout();
+        outputView.printGameResult(gameTable);
     }
 
 }

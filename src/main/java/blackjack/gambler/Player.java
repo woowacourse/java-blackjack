@@ -1,8 +1,6 @@
 package blackjack.gambler;
 
 import blackjack.card.Card;
-import blackjack.card.Cards;
-import blackjack.constant.MatchResult;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,8 +17,7 @@ public class Player extends Gambler {
         return cards.openPlayerInitialCards();
     }
 
-
-    public String getUsername() {
+    public String getPlayerName() {
         return playerName.getValue();
     }
 

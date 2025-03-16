@@ -32,7 +32,7 @@ public class BlackjackTable {
     private Players registerPlayers(List<String> names) {
         return new Players(names.stream()
                 .map(PlayerName::new)
-                .map(nickname -> new Player(nickname))
+                .map(Player::new)
                 .toList());
     }
 
@@ -71,14 +71,23 @@ public class BlackjackTable {
         return players.findPlayer(playerName);
     }
 
+
+    public boolean isDealerDrawCard() {
+        return dealer.isSumUnderThreshold();
+    }
+
     public void determineDealerAdditionalCard() {
-        if (dealer.isSumUnderThreshold()) {
+        if (isDealerDrawCard()) {
             Card card = deck.drawOneCard();
             dealer.addOneCard(card);
         }
     }
 
-    public boolean isDealerDrawCard() {
+    public void updateBetAmount(String playerName, int betAmount) {
+        findPlayer(playerName).updateBetAmount(betAmount);
+    }
 
+    public void calculateTotalPayout() {
+        dealer.updateBetAmounts(players);
     }
 }

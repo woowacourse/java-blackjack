@@ -15,6 +15,41 @@ public class Dealer extends Gambler {
         return cards.openDealerInitialCards();
     }
 
+    public Players updateBetAmounts(Players players) {
+        List<Player> players1 = players.getPlayers();
+
+        double dealerAmount = 0;
+
+        for (Player player : players1) {
+            MatchResult matchResult = compareTo(player);
+
+            if (matchResult == MatchResult.BLACKJACK_WIN) {
+                double betAmount = player.getBetAmount();
+                double blackjackAmount = betAmount * 1.5;
+                player.updateBetAmount(blackjackAmount);
+                dealerAmount -= blackjackAmount;
+                continue;
+            }
+            if (matchResult == MatchResult.WIN) {
+                double betAmount = player.getBetAmount();
+                dealerAmount -= betAmount;
+            }
+            if (matchResult == MatchResult.PUSH) {
+                player.updateBetAmount(0);
+                continue;
+            }
+            if (matchResult == MatchResult.LOSE) {
+                double betAmount = player.getBetAmount();
+                double playerAmount = betAmount * (-1);
+                player.updateBetAmount(playerAmount);
+                dealerAmount += playerAmount;
+                continue;
+            }
+        }
+        super.updateBetAmount(dealerAmount);
+        return new Players(players1);
+    }
+
     public MatchResult compareTo(Player player) {
         int dealerScore = sumCardScores();
         int playerScore = player.sumCardScores();
@@ -27,31 +62,31 @@ public class Dealer extends Gambler {
         if (dealerScore > MAX_SCORE || playerScore > MAX_SCORE) {
             return getMatchResultWhenOverBustStandard(playerScore);
         }
-        return getMatchResult(dealerScore, dealerScore);
+        return getMatchResult(dealerScore, playerScore);
     }
 
     private MatchResult getMatchResultWhenBlackjack(Cards playerCards) {
         if (playerCards.isBlackjack() && cards.isBlackjack()) {
-            return MatchResult.DRAW;
+            return MatchResult.PUSH;
         }
         if (playerCards.isBlackjack()) {
+            return MatchResult.BLACKJACK_WIN;
+        }
+        return MatchResult.LOSE;
+    }
+
+    private MatchResult getMatchResultWhenOverBustStandard(int playerScore) {
+        if (playerScore > MAX_SCORE) {
             return MatchResult.LOSE;
         }
         return MatchResult.WIN;
     }
 
-    private MatchResult getMatchResultWhenOverBustStandard(int sum) {
-        if (sum > MAX_SCORE) {
-            return MatchResult.LOSE;
+    private MatchResult getMatchResult(int dealerScore, int playerScore) {
+        if (playerScore == dealerScore) {
+            return MatchResult.PUSH;
         }
-        return MatchResult.WIN;
-    }
-
-    private MatchResult getMatchResult(int dealerScore, int sum) {
-        if (sum == dealerScore) {
-            return MatchResult.DRAW;
-        }
-        if (sum > dealerScore) {
+        if (playerScore > dealerScore) {
             return MatchResult.WIN;
         }
         return MatchResult.LOSE;

@@ -2,10 +2,10 @@ package blackjack.view;
 
 import blackjack.BlackjackTable;
 import blackjack.card.Card;
+import blackjack.constant.MatchResult;
 import blackjack.gambler.Dealer;
 import blackjack.gambler.Player;
 import blackjack.gambler.Players;
-import blackjack.constant.MatchResult;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +35,20 @@ public class ConsoleOutputView implements OutputView {
     @Override
     public void printPlayerCards(BlackjackTable gameTable, String playerName) {
         Player player = gameTable.findPlayer(playerName);
-        System.out.println(player.getUsername() + "카드: " + processCardsInfo(player.openCards()));
+        System.out.println(player.getPlayerName() + "카드: " + processCardsInfo(player.openCards()));
+    }
+
+    @Override
+    public void printGameResult(BlackjackTable gameTable) {
+        Dealer dealer = gameTable.getDealer();
+        List<Player> players = gameTable.getPlayers().getPlayers();
+
+        System.out.println();
+        System.out.println("## 최종 수익");
+        System.out.println("딜러: " + dealer.getBetAmount());
+        for (Player player : players) {
+            System.out.println(player.getPlayerName() + ": " + player.getBetAmount());
+        }
     }
 
     @Override
@@ -44,7 +57,7 @@ public class ConsoleOutputView implements OutputView {
         Dealer dealer = gameTable.getDealer();
         System.out.println("딜러카드: " + processCardsInfo(dealer.openCards()) + " - 결과: " + dealer.sumCardScores());
         for (Player player : players.getPlayers()) {
-            System.out.println(player.getUsername() + "카드: " + processCardsInfo(player.openCards()) + " - 결과: "
+            System.out.println(player.getPlayerName() + "카드: " + processCardsInfo(player.openCards()) + " - 결과: "
                     + player.sumCardScores());
         }
     }
@@ -65,21 +78,21 @@ public class ConsoleOutputView implements OutputView {
             matchResultCounts.put(matchResult, matchResultCounts.get(matchResult) + 1);
         }
         System.out.println("딜러: " + formatDealerWin(matchResultCounts.get(MatchResult.LOSE))
-                + formatDealerDraw(matchResultCounts.get(MatchResult.DRAW))
+                + formatDealerDraw(matchResultCounts.get(MatchResult.PUSH))
                 + formatDealerLose(matchResultCounts.get(MatchResult.WIN)));
     }
 
     private Map<MatchResult, Integer> getMatchResultCounts() {
         Map<MatchResult, Integer> matchResultCounts = new EnumMap<>(MatchResult.class);
         matchResultCounts.put(MatchResult.WIN, 0);
-        matchResultCounts.put(MatchResult.DRAW, 0);
+        matchResultCounts.put(MatchResult.PUSH, 0);
         matchResultCounts.put(MatchResult.LOSE, 0);
         return matchResultCounts;
     }
 
     private void printPlayerResults(Map<Player, MatchResult> playerResults) {
         for (Entry<Player, MatchResult> entry : playerResults.entrySet()) {
-            System.out.println(entry.getKey().getUsername() + ": " + entry.getValue().getMessage());
+            System.out.println(entry.getKey().getPlayerName() + ": " + entry.getValue().getMessage());
         }
     }
 
