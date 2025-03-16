@@ -28,5 +28,4 @@ class MoneyTest {
         // then
         Assertions.assertThat(money).isEqualTo(Money.of(1000));
     }
-
 }
