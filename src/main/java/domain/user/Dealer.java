@@ -25,8 +25,4 @@ public class Dealer extends User {
     public String getName() {
         return DEALER_NAME;
     }
-
-    public List<Card> openAllCard() {
-        return this.cardHand.getAllCard();
-    }
 }

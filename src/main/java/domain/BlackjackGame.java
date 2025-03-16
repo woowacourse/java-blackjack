@@ -40,13 +40,8 @@ public class BlackjackGame {
         return participants.getDealer();
     }
 
-    public List<Card> handOutCard(User user) {
-        Card card = cardDeck.drawCard();
-        return participants.drawCard(user, card);
-    }
-
-    private GameResult compareScore(User player, User dealer) {
-        int dealerScore = dealer.calculateScore();
+    private GameResult compareScore(User player) {
+        int dealerScore = participants.getDealer().calculateScore();
         int playerScore = player.calculateScore();
 
         if (player.isBust()) {
@@ -58,10 +53,11 @@ public class BlackjackGame {
         if (dealerScore > playerScore) {
             return GameResult.LOSE;
         }
-        return compareSameScore(player, dealer);
+        return compareSameScore(player);
     }
 
-    private GameResult compareSameScore(User player, User dealer) {
+    private GameResult compareSameScore(User player) {
+        User dealer = participants.getDealer();
         if (dealer.isBlackjack() && !player.isBlackjack()) {
             return GameResult.LOSE;
         }
@@ -70,11 +66,11 @@ public class BlackjackGame {
 
     public Map<User, GameResult> calculatePlayerScore() {
         Map<User, GameResult> gameResult = new LinkedHashMap<>();
-        if (dealer.isBust()) {
-            users.forEach((user) -> putGameResultBust(user, gameResult));
+        if (participants.getDealer().isBust()) {
+            participants.getPlayers().forEach((user) -> putGameResultBust(user, gameResult));
             return gameResult;
         }
-        users.forEach((user) -> gameResult.put(user, compareScore(user)));
+        participants.getPlayers().forEach((user) -> gameResult.put(user, compareScore(user)));
         return gameResult;
     }
 
@@ -116,5 +112,13 @@ public class BlackjackGame {
         if (yesOrNo == YesOrNo.YES && user.isDrawable()) {
             user.drawCard(cardDeck.drawCard());
         }
+    }
+
+    public boolean isDrawable(User user) {
+        return participants.isDrawable(user);
+    }
+
+    public int calculateScore(User user) {
+        return participants.calculateScore(user);
     }
 }

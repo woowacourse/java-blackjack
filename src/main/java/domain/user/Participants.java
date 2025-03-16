@@ -66,4 +66,12 @@ public class Participants {
         }
         return firstPlayersCard;
     }
+
+    public boolean isDrawable(User user) {
+        return user.isDrawable();
+    }
+
+    public int calculateScore(User user) {
+        return user.calculateScore();
+    }
 }

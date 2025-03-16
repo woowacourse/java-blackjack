@@ -40,4 +40,8 @@ public abstract class User {
     public boolean isBust() {
         return this.cardHand.checkOverScore();
     }
+
+    public List<Card> openAllCard() {
+        return this.cardHand.getAllCard();
+    }
 }

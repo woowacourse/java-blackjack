@@ -25,11 +25,8 @@ public class BlackjackConsole {
     }
 
     public void run() {
-        List<String> playerNames = inputView.inputUsers();
         Dealer dealer = new Dealer();
-        List<Player> players = playerNames.stream()
-                .map(Player::new)
-                .toList();
+        List<Player> players = getPlayers();
 
         BlackjackGame blackjackGame = BlackjackGame.of(players, dealer, new CardDeck());
 
@@ -40,42 +37,52 @@ public class BlackjackConsole {
 
         controlTurn(players, blackjackGame, dealer);
 
-        // 카드를 공개한다
-        List<Card> dealerCards = dealer.openAllCard();
-        int score = dealer.calculateScore();
-        outputView.displayOpenCardsResult(dealer.getName(), dealerCards, score);
+        openAllCards(players, dealer, blackjackGame);
 
-        playerNames.stream()
-                .map(blackjackGame::findUserByUsername)
-                .toList()
-                .forEach(player -> outputView.displayOpenCardsResult(
-                        player.getName(),
-                        player.openInitialCard(),
-                        player.calculateScore()));
+        calculateBettingReward(blackjackGame, bettingTable, dealer);
+        inputView.close();
+    }
 
-        // 게임 결과를 계산한다
+    private void calculateBettingReward(BlackjackGame blackjackGame, BettingTable bettingTable, Dealer dealer) {
         Map<User, GameResult> gameResult = blackjackGame.calculatePlayerScore();
-        Map<GameResult, Integer> gameResultIntegerMap = blackjackGame.calculateDealerScore();
-        outputView.displayDealerGameResult(gameResultIntegerMap.get(GameResult.WIN),
-                gameResultIntegerMap.get(GameResult.LOSE), gameResultIntegerMap.get(GameResult.DRAW));
+        calculateBettingReward(bettingTable, gameResult, dealer);
+    }
 
-        outputView.displayGameResult(gameResult);
+    private List<Player> getPlayers() {
+        List<String> playerNames = inputView.inputUsers();
+        return playerNames.stream()
+                .map(Player::new)
+                .toList();
+    }
 
-        // 배팅 금액을 계산한다
+    private void openAllCards(List<Player> players, Dealer dealer, BlackjackGame blackjackGame) {
+        openAllCardFor(dealer, blackjackGame);
+
+        for (Player player : players) {
+            openAllCardFor(player, blackjackGame);
+        }
+    }
+
+    private void openAllCardFor(User user, BlackjackGame blackjackGame) {
+        List<Card> cards = user.openAllCard();
+        int score = blackjackGame.calculateScore(user);
+        outputView.displayOpenCardsResult(user.getName(), cards, score);
+    }
+
+    private void calculateBettingReward(BettingTable bettingTable, Map<User, GameResult> gameResult, Dealer dealer) {
         Map<User, Long> rewards = bettingTable.calculateRewards(gameResult, dealer);
         outputView.displayRewards(rewards);
-        inputView.close();
     }
 
     private void controlTurn(List<Player> players, BlackjackGame blackjackGame, Dealer dealer) {
         for (Player player : players) {
-            while (player.isDrawable()) {
+            while (blackjackGame.isDrawable(player)) {
                 YesOrNo yesOrNo = inputView.inputYesOrNo(player.getName());
                 blackjackGame.controlTurn(player, yesOrNo);
                 displayOpenCard(player);
             }
         }
-        while (dealer.isDrawable()) {
+        while (blackjackGame.isDrawable(dealer)) {
             blackjackGame.controlTurn(dealer, YesOrNo.YES);
             outputView.displayDealerAddCard();
         }
