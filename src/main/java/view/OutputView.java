@@ -62,6 +62,7 @@ public final class OutputView {
      * 카드 뽑기 최종 결과 출력
      */
     public static void printDealerFinalScore(Dealer dealer) {
+        System.out.println();
         printParticipantAndHands(dealer.getHandCards(), DEALER_PRINT_MESSAGE);
         printFinalScore(dealer);
     }

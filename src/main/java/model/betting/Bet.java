@@ -36,9 +36,6 @@ public class Bet {
     }
 
     public int calculateOwnerRevenue() {
-        if (isEqualOwnerAndBetter()) {
-            return calculateBetterRevenue();
-        }
         return -calculateBetterRevenue();
     }
 
