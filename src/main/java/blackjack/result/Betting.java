@@ -13,13 +13,13 @@ public class Betting {
         return new Betting(Money.from(amount));
     }
 
-    public Money applyProfit(GameResult result) {
-        return money.applyProfitRate(result.getProfitPercent());
-    }
-
     private static void validateNegative(int amount) {
         if (amount < 0) {
             throw new IllegalArgumentException("배팅 금액은 음수가 될 수 없습니다.");
         }
+    }
+
+    public Money applyProfit(GameResult result) {
+        return money.applyProfitRate(result.getProfitPercent());
     }
 }
