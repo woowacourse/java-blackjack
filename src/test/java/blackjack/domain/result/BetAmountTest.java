@@ -10,7 +10,7 @@ class BetAmountTest {
         BetAmount betAmount = new BetAmount(1_000);
 
         // when
-        int amount = betAmount.getAmount();
+        int amount = betAmount.amount();
 
         // then
         assertEquals(1_000, amount);
