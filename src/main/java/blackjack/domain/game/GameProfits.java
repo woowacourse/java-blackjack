@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class GameProfits {
 
-    Map<Gambler, Profit> gameProfits;
+    private final Map<Gambler, Profit> gameProfits;
 
     public GameProfits(Dealer dealer, List<Gambler> gamblers) {
         gameProfits = new HashMap<>();
