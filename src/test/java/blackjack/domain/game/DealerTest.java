@@ -116,12 +116,6 @@ class DealerTest {
     }
 
     @Test
-    void 딜러는_챌린저가_아니다() {
-        Dealer dealer = new Dealer(new Hand());
-        assertThat(dealer.isChallenger()).isFalse();
-    }
-
-    @Test
     void 딜러는_카드를_더_뽑을_수_없다() {
         Dealer dealer = new Dealer(new Hand());
         assertThat(dealer.canDecideToTakeMoreCard()).isFalse();

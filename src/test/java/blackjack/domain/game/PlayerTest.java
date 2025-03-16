@@ -107,12 +107,6 @@ class PlayerTest {
     }
 
     @Test
-    void 플레이어는_챌린저이다() {
-        Player player = new Player("히로", new Hand(), new BetAmount(1_000));
-        assertThat(player.isChallenger()).isTrue();
-    }
-
-    @Test
     void 플레이어는_추가로_카드를_뽑을_지_결정할_수_있다() {
         Player player = new Player("히로", new Hand(), new BetAmount(1_000));
         assertThat(player.canDecideToTakeMoreCard()).isTrue();

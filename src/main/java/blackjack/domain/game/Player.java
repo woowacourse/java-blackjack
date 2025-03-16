@@ -55,11 +55,6 @@ public class Player implements Participant {
     }
 
     @Override
-    public boolean isChallenger() {
-        return true;
-    }
-
-    @Override
     public String getName() {
         return name;
     }
