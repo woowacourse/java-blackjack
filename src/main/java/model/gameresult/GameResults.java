@@ -3,6 +3,7 @@ package model.gameresult;
 import java.util.Map;
 import java.util.stream.Collectors;
 import model.bettingamount.BettingAmount;
+import model.card.Cards;
 import model.participant.Dealer;
 import model.participant.Player;
 import model.participant.Players;
@@ -15,10 +16,11 @@ public class GameResults {
     }
 
     public static GameResults createFromParticipants(final Players players, final Dealer dealer) {
+        Cards dealerCards = dealer.getCards();
         return new GameResults(players.getPlayers().stream()
                 .collect(Collectors.toMap(
                         Player::getName,
-                        player -> GameResult.createFromCards(dealer.getCards(), player.getCards())
+                        player -> GameResult.createFromCards(dealerCards, player.getCards())
                 )));
     }
 
