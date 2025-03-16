@@ -5,22 +5,23 @@ import blackjack.participant.Player;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class GameStatistics {
 
     private final Map<Player, GameResult> playerToResult;
 
-    private GameStatistics() {
-        this.playerToResult = new LinkedHashMap<>();
+    private GameStatistics(Map<Player, GameResult> playerToResult) {
+        this.playerToResult = playerToResult;
     }
 
     public static GameStatistics from(GameParticipants participants) {
-        GameStatistics gameStatistics = new GameStatistics();
+        Map<Player, GameResult> results = new LinkedHashMap<>();
+        for (Player player : participants.getPlayers()) {
+            results.put(player, player.judgeResult(participants.getDealer()));
+        }
 
-        participants.getPlayers().forEach(player ->
-                gameStatistics.markResult(player, player.judgeResult(participants.getDealer())));
-
-        return gameStatistics;
+        return new GameStatistics(results);
     }
 
     public Money getProfit(Player player) {
@@ -32,9 +33,5 @@ public class GameStatistics {
                 playerToResult.keySet().stream()
                         .map(this::getProfit)
                         .toList());
-    }
-
-    private void markResult(Player player, GameResult result) {
-        playerToResult.put(player, result);
     }
 }
