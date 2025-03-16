@@ -17,7 +17,7 @@ class BetSystemTest {
     void playerBet() {
         //given
         Player player = new Player("도기");
-        int betAmount = 100;
+        long betAmount = 100;
 
         BetSystem betSystem = new BetSystem();
 
@@ -31,7 +31,7 @@ class BetSystemTest {
     void validateBetAmount() {
         //given
         Player player = new Player("도기");
-        int betAmount = -1;
+        long betAmount = -1;
 
         BetSystem betSystem = new BetSystem();
 
@@ -55,8 +55,8 @@ class BetSystemTest {
         Dealer dealer = new Dealer();
 
         BetSystem betSystem = new BetSystem();
-        betSystem.betting(pobi, 10000);
-        betSystem.betting(jason, 20000);
+        betSystem.betting(pobi, 10000L);
+        betSystem.betting(jason, 20000L);
 
         List<Card> cards = cardFixture();
 
@@ -81,6 +81,7 @@ class BetSystemTest {
                                 jason, -20000L
                         )
                 );
+
     }
 
     @DisplayName("딜러가 21을 초과하면 그 시점까지 남아 있던 플레이어들은 가지고 있는 패에 상관없이 승리해 베팅 금액을 받는다.")
@@ -98,8 +99,8 @@ class BetSystemTest {
         );
 
         BetSystem betSystem = new BetSystem();
-        betSystem.betting(dogi, 1000);
-        betSystem.betting(pobi, 1000);
+        betSystem.betting(dogi, 1000L);
+        betSystem.betting(pobi, 1000L);
 
         List<Card> cards = new ArrayList<>(
                 List.of(
@@ -127,6 +128,7 @@ class BetSystemTest {
                         pobi, 1000L
                 )
         );
+
     }
 
     @DisplayName("카드를 추가로 뽑아 21을 초과할 경우 배팅 금액을 모두 잃게 된다.")
@@ -155,7 +157,7 @@ class BetSystemTest {
         dogi.hit(deck);
 
         BetSystem betSystem = new BetSystem();
-        betSystem.betting(dogi, 1000);
+        betSystem.betting(dogi, 1000L);
 
         //when
         Map<Gamer, Long> actual = betSystem.calculateProfit(dealer, players);
@@ -182,7 +184,7 @@ class BetSystemTest {
         );
 
         BetSystem betSystem = new BetSystem();
-        betSystem.betting(player, 1000);
+        betSystem.betting(player, 1000L);
 
         List<Card> cards = new ArrayList<>(
                 List.of(
@@ -223,7 +225,7 @@ class BetSystemTest {
         Dealer dealer = new Dealer();
 
         BetSystem betSystem = new BetSystem();
-        betSystem.betting(player, 1000);
+        betSystem.betting(player, 1000L);
 
         List<Card> cards = new ArrayList<>(
                 List.of(
@@ -246,8 +248,8 @@ class BetSystemTest {
         assertThat(actual).containsExactlyInAnyOrderEntriesOf(
                 Map.of(
                         dealer, 0L,
-                        player, 0L)
-        );
+                        player, 0L
+                ));
     }
 
     @DisplayName("딜러가 블랙잭인 경우 플레이어는 베팅 금액을 모두 잃는다.")
@@ -264,7 +266,7 @@ class BetSystemTest {
         Dealer dealer = new Dealer();
 
         BetSystem betSystem = new BetSystem();
-        betSystem.betting(player, 1000);
+        betSystem.betting(player, 1000L);
 
         List<Card> cards = new ArrayList<>(
                 List.of(

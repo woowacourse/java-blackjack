@@ -6,20 +6,20 @@ import java.util.Map;
 
 public class BetSystem {
 
-    private static final double BLACK_JACK_PROFIT = 1.5;
-    private final Map<Gamer, Long> beforeBetRecord;
-    private final Map<Gamer, Long> afterBetRecord;
+    private static final long SET_PROFIT = 0L;
+
+    private final Map<Gamer, BetAmount> bettingRecord;
+    private final Map<Gamer, Long> profitRecord;
 
     public BetSystem() {
-        this.beforeBetRecord = new LinkedHashMap<>();
-        this.afterBetRecord = new LinkedHashMap<>();
-        this.afterBetRecord.put(new Dealer(), 0L);
+        this.bettingRecord = new LinkedHashMap<>();
+        this.profitRecord = new LinkedHashMap<>();
+        this.profitRecord.put(new Dealer(), SET_PROFIT);
     }
 
     public void betting(final Player player, final long betAmount) {
-        validateBetAmount(betAmount);
-        beforeBetRecord.put(player, betAmount);
-        afterBetRecord.put(player, 0L);
+        bettingRecord.put(player, BetAmount.from(betAmount));
+        profitRecord.put(player, SET_PROFIT);
     }
 
     public Map<Gamer, Long> calculateProfit(final Dealer dealer, final List<Player> players) {
@@ -30,51 +30,42 @@ public class BetSystem {
             calculatePlayerBlackjackWin(dealer, player, dealerMatchResult);
         }
 
-        return afterBetRecord;
+        return profitRecord;
     }
 
     private void calculatePlayerBlackjackWin(final Dealer dealer, final Player player,
                                              final MatchResult dealerMatchResult) {
         if (dealerMatchResult.equals(MatchResult.BLACKJACK_LOSE)) {
-            long betAmount = beforeBetRecord.get(player);
-            long blackjackBetAmount = Math.round(betAmount * BLACK_JACK_PROFIT);
-            betAmount += blackjackBetAmount;
+            BetAmount betAmount = bettingRecord.get(player);
+            Long dealerProfit = profitRecord.get(dealer);
 
-            long dealerAmount = afterBetRecord.get(dealer);
-            dealerAmount -= blackjackBetAmount;
+            Long blackjackProfit = betAmount.calculateBlackjackProfit();
 
-            afterBetRecord.put(player, betAmount);
-            afterBetRecord.put(dealer, dealerAmount);
+            profitRecord.put(player, betAmount.plus(blackjackProfit));
+            profitRecord.put(dealer, dealerProfit - blackjackProfit);
         }
     }
 
     private void calculateDealerWin(final Dealer dealer, final Player player, final MatchResult dealerMatchResult) {
         if (dealerMatchResult.equals(MatchResult.WIN)) {
-            long betAmount = beforeBetRecord.get(player);
+            BetAmount betAmount = bettingRecord.get(player);
+            Long dealerProfit = profitRecord.get(dealer);
+            Long playerProfit = profitRecord.get(player);
 
-            long dealerBetAmount = afterBetRecord.get(dealer);
-            dealerBetAmount = dealerBetAmount + betAmount;
-
-            afterBetRecord.put(player, -betAmount);
-            afterBetRecord.put(dealer, dealerBetAmount);
+            profitRecord.put(player, playerProfit - (betAmount.getValue()));
+            profitRecord.put(dealer, dealerProfit + (betAmount.getValue()));
         }
     }
 
     private void calculatePlayerWin(final Dealer dealer, final Player player, final MatchResult dealerMatchResult) {
         if (dealerMatchResult.equals(MatchResult.LOSE)) {
-            long betAmount = beforeBetRecord.get(player);
+            BetAmount betAmount = bettingRecord.get(player);
+            Long playerProfit = profitRecord.get(player);
+            Long dealerProfit = profitRecord.get(dealer);
 
-            long dealerBetAmount = afterBetRecord.get(dealer);
-            dealerBetAmount = dealerBetAmount - betAmount;
-
-            afterBetRecord.put(player, betAmount);
-            afterBetRecord.put(dealer, dealerBetAmount);
+            profitRecord.put(player, betAmount.plus(playerProfit));
+            profitRecord.put(dealer, dealerProfit - betAmount.getValue());
         }
     }
 
-    private void validateBetAmount(final double betAmount) {
-        if (betAmount < 0) {
-            throw new IllegalArgumentException("[ERROR] 베팅 금액은 0원 이상이어야 합니다.");
-        }
-    }
 }
