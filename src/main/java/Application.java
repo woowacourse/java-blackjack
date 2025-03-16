@@ -33,6 +33,10 @@ public class Application {
 
         for (Player player : players.getPlayers()) {
             while (!player.isFinished()) {
+                if (!InputView.readDrawOneMore(player.getNickname())) {
+                    player.stand();
+                    break;
+                }
                 player.hit(deck.draw());
                 OutputView.printPlayerCards(player);
             }
