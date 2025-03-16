@@ -1,6 +1,7 @@
 package blackjack;
 
 import blackjack.controller.BlackjackController;
+import blackjack.controller.GameManagerFactory;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -11,7 +12,8 @@ public class Application {
 
         BlackjackController controller = new BlackjackController(
                 new InputView(),
-                outputView
+                outputView,
+                new GameManagerFactory()
         );
 
         try {

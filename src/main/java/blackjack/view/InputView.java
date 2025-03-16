@@ -12,12 +12,12 @@ public class InputView {
     private static final String YES = "y";
     private static final String NO = "n";
 
-    public String readPlayerNames() {
+    public String readGamblerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         return CONSOLE.nextLine();
     }
 
-    public int readBatAmount(final String name) {
+    public int readBetAmount(final String name) {
         System.out.printf(NEW_LINE + "%s의 배팅 금액은?" + NEW_LINE, name);
         String inputBatAmount = CONSOLE.nextLine();
         validateIsNumeric(inputBatAmount);
