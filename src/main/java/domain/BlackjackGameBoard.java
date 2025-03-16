@@ -25,7 +25,9 @@ public class BlackjackGameBoard {
     }
 
     public void distributeInitialCards(Player player) {
-        player.drawCards(deck, INITIAL_DRAW_COUNT);
+        for (int i = 0; i < INITIAL_DRAW_COUNT; i++) {
+            player.hit(deck);
+        }
     }
 
     public void openInitialCards(Dealer dealer) {

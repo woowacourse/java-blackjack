@@ -60,6 +60,29 @@ public class Cards {
         cards.add(card);
     }
 
+    public void openedCards(int count) {
+        while (count > 0) {
+            Card willBeOpened = findNotOpenedCard();
+            willBeOpened.open();
+            count--;
+        }
+    }
+
+    public Cards openedCards() {
+        return new Cards(
+                cards.stream()
+                        .filter(Card::isOpened)
+                        .toList()
+        );
+    }
+
+    public Card findNotOpenedCard() {
+        return cards.stream()
+                .filter(card -> !card.isOpened())
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("오픈할 카드가 없습니다."));
+    }
+
     public int size() {
         return cards.size();
     }

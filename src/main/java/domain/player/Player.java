@@ -29,44 +29,27 @@ public abstract class Player {
     }
 
     public boolean isBlackjack() {
-        return state.cards().isBlackjack();
+        return cards().isBlackjack();
     }
 
     public boolean isBust() {
-        return state.cards().isBust();
+        return cards().isBust();
     }
 
     public int computeOptimalSum() {
-        return state.cards().computeOptimalSum();
-    }
-
-    public void drawCards(Deck deck, int count) {
-        for (int i = 0; i < count; i++) {
-            hit(deck);
-        }
+        return cards().computeOptimalSum();
     }
 
     public void openCards(int count) {
-        while (count > 0) {
-            Card willBeOpened = findNotOpenedCard();
-            willBeOpened.open();
-            count--;
-        }
-    }
-
-    private Card findNotOpenedCard() {
-        return cards().getCards().stream()
-                .filter(card -> !card.isOpened())
-                .findAny()
-                .orElseThrow(() -> new IllegalStateException("오픈할 카드가 없습니다."));
+        cards().openedCards(count);
     }
 
     public Cards openedCards() {
-        return new Cards(
-                cards().getCards().stream()
-                        .filter(Card::isOpened)
-                        .toList()
-        );
+        return cards().openedCards();
+    }
+
+    private Card findNotOpenedCard() {
+        return cards().findNotOpenedCard();
     }
 
     public Cards cards() {
