@@ -79,7 +79,7 @@ public class BlackJackGame {
                 .stream()
                 .reduce(Money::plus)
                 .map(money -> money.times(-1))
-                .orElse(Money.of(0));
+                .orElse(Money.ZERO);
     }
 
     public int calculateDealerDrawCount() {
