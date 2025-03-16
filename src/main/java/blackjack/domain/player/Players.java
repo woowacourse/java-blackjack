@@ -1,6 +1,5 @@
 package blackjack.domain.player;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.CardPack;
 import blackjack.domain.game.GameProfits;
 
@@ -38,10 +37,9 @@ public class Players {
     }
 
     public void dealInitCardsToPlayers(CardPack cardPack) {
-        List<Card> dealCards = cardPack.getDealCards(PLAYERS_INIT_CARD_COUNT);
-        dealer.pushDealCards(dealCards);
+        dealer.pushDealCards(cardPack.getDealCards(PLAYERS_INIT_CARD_COUNT));
         gamblers.forEach(gambler ->
-                gambler.pushDealCards(dealCards));
+                gambler.pushDealCards(cardPack.getDealCards(PLAYERS_INIT_CARD_COUNT)));
     }
 
     public GameProfits getGameResult() {
