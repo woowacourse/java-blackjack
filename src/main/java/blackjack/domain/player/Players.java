@@ -5,6 +5,7 @@ import blackjack.domain.card.Cards;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class Players {
 
@@ -15,6 +16,12 @@ public class Players {
         validateHasDuplication(gamblers);
         this.dealer = dealer;
         this.gamblers = gamblers;
+    }
+
+    public void distributeInitialCards(Supplier<Cards> cardsSupplier) {
+        for (Gambler gambler : gamblers) {
+            gambler.addCards(cardsSupplier.get());
+        }
     }
 
     public void addCardForDealer(final Cards cards) {
