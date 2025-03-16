@@ -113,3 +113,13 @@ jason카드: 7클로버, K스페이드 - 결과: 17
 pobi: 10000 
 jason: -20000
 ```
+
+# 상태 변화도
+
+## 유저의 상태 변화도
+
+![User DFA.png](imgs%2FUser%20DFA.png)
+
+## 딜러의 상태 변화도
+
+![Dealer DFA.png](imgs%2FDealer%20DFA.png)
