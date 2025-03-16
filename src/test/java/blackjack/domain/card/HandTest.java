@@ -24,7 +24,7 @@ class HandTest {
         final Card card = new Card(Shape.CLOB, CardScore.FIVE);
 
         // When
-        Hand hand = Hand.from(card);
+        Hand hand = new Hand(card);
 
         // Then
         assertThat(hand.getHand()).isEqualTo(List.of(card));

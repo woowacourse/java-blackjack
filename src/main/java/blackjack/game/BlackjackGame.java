@@ -4,8 +4,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
 import blackjack.domain.participant.Participants;
-import blackjack.domain.participant.gamer.Player;
 import blackjack.domain.participant.Players;
+import blackjack.domain.participant.gamer.Player;
 import blackjack.domain.result.DealerWinningResult;
 import blackjack.util.StringParser;
 import blackjack.view.InputView;
@@ -80,7 +80,7 @@ public final class BlackjackGame {
 
     private void spreadExtraCardsToDealer(final Participants participants, final Deck deck) {
         while (participants.canDealerHit()) {
-            participants.receiveCardToDealer(Hand.from(deck.spreadOneCard()));
+            participants.receiveCardToDealer(new Hand(deck.spreadOneCard()));
             resultView.printDealerExtraCard();
         }
     }

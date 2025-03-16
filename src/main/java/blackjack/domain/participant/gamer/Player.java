@@ -18,8 +18,8 @@ public final class Player extends Gamer {
         this.bettingAmount = bettingAmount;
     }
 
-    public static Player from(final String nickname, final int bettingAmount) {
-        return new Player(new Hand(new ArrayList<>()), nickname, bettingAmount);
+    public Player(final String nickname, final int bettingAmount) {
+        this(new Hand(new ArrayList<>()), nickname, bettingAmount);
     }
 
     private void validateBettingAmount(final int bettingAmount) {

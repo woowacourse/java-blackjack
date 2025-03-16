@@ -17,8 +17,8 @@ public final class Hand {
         this.hand = new ArrayList<>(hand);
     }
 
-    public static Hand from(final Card card) {
-        return new Hand(List.of(card));
+    public Hand(final Card card) {
+        this(List.of(card));
     }
 
     public int calculateResult() {

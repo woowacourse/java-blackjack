@@ -20,7 +20,7 @@ public final class Participants {
     }
 
     public static Participants of(final Players players) {
-        return new Participants(Dealer.create(), players);
+        return new Participants(new Dealer(), players);
     }
 
     public int getInitialCardSize() {

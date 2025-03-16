@@ -26,8 +26,8 @@ public final class Dealer extends Gamer {
         super(hand);
     }
 
-    public static Dealer create() {
-        return new Dealer(new Hand(new ArrayList<>()));
+    public Dealer() {
+        this(new Hand(new ArrayList<>()));
     }
 
     @Override
