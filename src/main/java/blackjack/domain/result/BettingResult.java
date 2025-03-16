@@ -44,6 +44,15 @@ public class BettingResult {
                 playerProfits.add(playerProfit);
                 return;
             }
+
+            if (playerResult.getGameResultType() == GameResultType.LOSE) {
+                PlayerProfit playerProfit = new PlayerProfit(player, betAmount * -1);
+                DealerProfit dealerProfit = new DealerProfit(betAmount);
+
+                dealerProfits.add(player, dealerProfit);
+                playerProfits.add(playerProfit);
+                return;
+            }
         }
     }
 

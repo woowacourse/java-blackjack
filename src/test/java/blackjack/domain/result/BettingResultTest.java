@@ -83,10 +83,10 @@ class BettingResultTest {
         Dealer dealer = new Dealer(new Hand());
 
         PlayerResults playerResults = new PlayerResults();
-        playerResults.add(new PlayerResult(player, GameResultType.WIN, new Score(player)));// 블랙잭 조건 충족
+        playerResults.add(new PlayerResult(player, GameResultType.WIN, new Score(player)));
 
         DealerResults dealerResults = new DealerResults();
-        dealerResults.add(player, new DealerResult(GameResultType.TIE, new Score(dealer)));
+        dealerResults.add(player, new DealerResult(GameResultType.LOSE, new Score(dealer)));
 
         PlayerProfits playerProfits = bettingResult.getPlayerProfits();
         DealerProfits dealerProfits = bettingResult.getDealerProfits();
@@ -101,6 +101,36 @@ class BettingResultTest {
         assertAll(
                 () -> assertThat(playerProfit.getProfit()).isEqualTo(1_000),
                 () -> assertThat(dealerProfit.getProfit()).isEqualTo(-1_000)
+        );
+    }
+
+    @Test
+    void 플레이어가_진_경우_배팅_금액만큼_잃고_딜러는_얻는다() {
+        // given
+        Hand playerHand = new Hand();
+        Player player = new Player("히로", playerHand, new BetAmount(1_000));
+
+        Dealer dealer = new Dealer(new Hand());
+
+        PlayerResults playerResults = new PlayerResults();
+        playerResults.add(new PlayerResult(player, GameResultType.LOSE, new Score(player)));
+
+        DealerResults dealerResults = new DealerResults();
+        dealerResults.add(player, new DealerResult(GameResultType.WIN, new Score(dealer)));
+
+        PlayerProfits playerProfits = bettingResult.getPlayerProfits();
+        DealerProfits dealerProfits = bettingResult.getDealerProfits();
+
+        // when
+        bettingResult.calculateAllResults(playerResults, dealerResults);
+
+        // then
+        PlayerProfit playerProfit = playerProfits.findByPlayer(player);
+        DealerProfit dealerProfit = dealerProfits.findByPlayer(player);
+
+        assertAll(
+                () -> assertThat(playerProfit.getProfit()).isEqualTo(-1_000),
+                () -> assertThat(dealerProfit.getProfit()).isEqualTo(1_000)
         );
     }
 }
