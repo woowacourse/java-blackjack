@@ -1,142 +1,135 @@
 package domain.gamer;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.CardRank;
 import domain.card.CardSymbol;
+import domain.card.Hand;
+import domain.rule.BlackjackMatchResult;
 import fixture.BettingFixture;
-import fixture.CardsInitializerFixture;
+import fixture.CardDeckFixture;
 import fixture.NicknameFixture;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class PlayerTest {
 
+
+    public static Stream<Arguments> provideResultAndExpectedForBlackjack() {
+        return Stream.of(
+                Arguments.of(BlackjackMatchResult.WIN, 1500),
+                Arguments.of(BlackjackMatchResult.DRAW, 0)
+        );
+    }
+
+    public static Stream<Arguments> provideResultAndExpectedForStay() {
+        return Stream.of(
+                Arguments.of(BlackjackMatchResult.WIN, 1000),
+                Arguments.of(BlackjackMatchResult.DRAW, 0),
+                Arguments.of(BlackjackMatchResult.LOSE, -1000)
+        );
+    }
+
+    public static Stream<Arguments> provideResultAndExpectedForBust() {
+        return Stream.of(
+                Arguments.of(BlackjackMatchResult.DRAW, 0),
+                Arguments.of(BlackjackMatchResult.LOSE, -1000)
+        );
+    }
 
     @DisplayName("플레이어는 카드를 뽑을 수 있다.")
     @Test
     void hit() {
         //given
-        List<Card> cards = new ArrayList<>();
-        cards.add(new Card(CardSymbol.COLVER, CardRank.EIGHT));
-        CardDeck deck = new CardDeck(new CardsInitializerFixture(cards));
+        CardDeck cardDeck = CardDeckFixture.createCardDeck(
+                Card.of(CardSymbol.SPADE, CardRank.EIGHT),
+                Card.of(CardSymbol.SPADE, CardRank.SEVEN),
+                Card.of(CardSymbol.SPADE, CardRank.TWO)
+        );
+        Hand hand = new Hand(cardDeck);
 
-        Player player = new Player(NicknameFixture.createNickname("ad"), BettingFixture.createBetting(1000));
-
-        //when
-        player.hit(deck);
-        //then
-        assertThat(player.getHand().getCards()).hasSize(1);
-    }
-
-    @DisplayName("플레이어의 총 점수를 구할 수 있다")
-    @Test
-    void calculatePlayerScore() {
-        //given
-        Player player = new Player(NicknameFixture.createNickname("ad"), BettingFixture.createBetting(1000));
-        Card card1 = new Card(CardSymbol.HEART, CardRank.FIVE);
-        Card card2 = new Card(CardSymbol.HEART, CardRank.FOUR);
-        Card card3 = new Card(CardSymbol.HEART, CardRank.JACK);
-
-        List<Card> cards = new ArrayList<>();
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
-
-        CardDeck deck = new CardDeck(new CardsInitializerFixture(cards));
-
-        player.hit(deck);
-        player.hit(deck);
-        player.hit(deck);
+        Player player = new Player(hand, NicknameFixture.createNickname("ad"), BettingFixture.createBetting(1000));
 
         //when
-        int score = player.getScore();
+        int initialSize = player.getHand().getCards().size();
+        player.hit(cardDeck);
+        int actual = player.getHand().getCards().size() - initialSize;
+
         //then
-        assertThat(score).isEqualTo(19);
+        assertThat(actual).isEqualTo(1);
     }
 
-    @DisplayName("플레이어는 버스트되면 카드를 더 뽑을 수 없다.")
-    @Test
-    void burstIsNotHit() {
-        //given
-        Player player = new Player(NicknameFixture.createNickname("ad"), BettingFixture.createBetting(1000));
-        Card card1 = new Card(CardSymbol.HEART, CardRank.TWO);
-        Card card2 = new Card(CardSymbol.HEART, CardRank.KING);
-        Card card3 = new Card(CardSymbol.HEART, CardRank.JACK);
-        Card card4 = new Card(CardSymbol.HEART, CardRank.TWO);
+    @DisplayName("플레이어는 블랙잭으로 승리하면 베팅 금액의 1.5배의 수익, 무승부면 0배의 수익을 얻는다")
+    @ParameterizedTest
+    @MethodSource("provideResultAndExpectedForBlackjack")
+    void getProfitOfBlackjack(BlackjackMatchResult result, double expected) {
+        // given
+        CardDeck cardDeck = CardDeckFixture.createCardDeck(
+                Card.of(CardSymbol.SPADE, CardRank.ACE),
+                Card.of(CardSymbol.SPADE, CardRank.JACK)
+        );
 
-        List<Card> cards = new ArrayList<>();
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
-        cards.add(card4);
+        Hand hand = new Hand(cardDeck);
 
-        CardDeck deck = new CardDeck(new CardsInitializerFixture(cards));
+        Player player = new Player(hand, NicknameFixture.createNickname("ad"), BettingFixture.createBetting(1000));
 
-        player.prepareGame(deck);
-        player.hit(deck);
+        //when
+        double actual = player.getProfit(result);
 
-        //when //then
-        assertThatThrownBy(() -> player.hit(deck))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessageStartingWith("[ERROR]");
+        // then
+        assertThat(actual).isEqualTo(expected);
     }
 
-    @DisplayName("플레이어는 버스트 되지 않으면 카드를 더 뽑을 수 있다.")
-    @Test
-    void notBurstHit() {
-        //given
-        Player player = new Player(NicknameFixture.createNickname("ad"), BettingFixture.createBetting(1000));
-        Card card1 = new Card(CardSymbol.HEART, CardRank.FIVE);
-        Card card2 = new Card(CardSymbol.HEART, CardRank.FIVE);
-        Card card3 = new Card(CardSymbol.HEART, CardRank.FIVE);
-        Card card4 = new Card(CardSymbol.HEART, CardRank.FIVE);
+    @DisplayName("플레이어는 Stay로 승리하면 베팅 금액의 1배의 수익, 패배하면 1배의 손해, 무승부면 0배의 수익을 얻는다.")
+    @ParameterizedTest
+    @MethodSource("provideResultAndExpectedForStay")
+    void getProfitOfStay(BlackjackMatchResult result, double expected) {
+        // given
+        CardDeck cardDeck = CardDeckFixture.createCardDeck(
+                Card.of(CardSymbol.SPADE, CardRank.KING),
+                Card.of(CardSymbol.SPADE, CardRank.JACK)
+        );
 
-        List<Card> cards = new ArrayList<>();
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
-        cards.add(card4);
+        Hand hand = new Hand(cardDeck);
 
-        CardDeck deck = new CardDeck(new CardsInitializerFixture(cards));
+        Player player = new Player(hand, NicknameFixture.createNickname("ad"), BettingFixture.createBetting(1000));
+        player.stay();
 
-        player.hit(deck);
-        player.hit(deck);
-        player.hit(deck);
+        //when
+        double actual = player.getProfit(result);
 
-        //when //then
-        assertThatCode(() -> player.hit(deck))
-                .doesNotThrowAnyException();
+        // then
+        assertThat(actual).isEqualTo(expected);
     }
 
-    @DisplayName("게임이 시작되면 플레이어는 2장의 카드를 받는다.")
-    @Test
-    void startGameGiveDefaultCards() {
-        //given
-        Player player = new Player(NicknameFixture.createNickname("ad"), BettingFixture.createBetting(1000));
+    @DisplayName("플레이어는 Bust로 패배하면 1배의 손해, 무승부면 0배의 수익을 얻는다.")
+    @ParameterizedTest
+    @MethodSource("provideResultAndExpectedForBust")
+    void getProfitOfBust(BlackjackMatchResult result, double expected) {
+        // given
+        CardDeck cardDeck = CardDeckFixture.createCardDeck(
+                Card.of(CardSymbol.SPADE, CardRank.EIGHT),
+                Card.of(CardSymbol.SPADE, CardRank.KING),
+                Card.of(CardSymbol.SPADE, CardRank.JACK)
+        );
 
-        Card card1 = new Card(CardSymbol.HEART, CardRank.FIVE);
-        Card card2 = new Card(CardSymbol.HEART, CardRank.FIVE);
-        Card card3 = new Card(CardSymbol.HEART, CardRank.FIVE);
-        Card card4 = new Card(CardSymbol.HEART, CardRank.FIVE);
+        Hand hand = new Hand(cardDeck);
 
-        List<Card> cards = new ArrayList<>();
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
-        cards.add(card4);
+        Player player = new Player(hand, NicknameFixture.createNickname("ad"), BettingFixture.createBetting(1000));
+        player.hit(cardDeck);
 
-        CardDeck deck = new CardDeck(new CardsInitializerFixture(cards));
+        //when
+        double actual = player.getProfit(result);
 
-        //when //then
-        assertThatCode(() -> player.prepareGame(deck))
-                .doesNotThrowAnyException();
+        // then
+        assertThat(actual).isEqualTo(expected);
     }
+
 
 }

@@ -20,11 +20,14 @@ class BlackjackMatchResultTest {
         Card card2 = new Card(CardSymbol.COLVER, CardRank.THREE);
         Card card3 = new Card(CardSymbol.COLVER, CardRank.TWO);
 
-        Hand dealerHand = HandFixture.createHand(card1, card1, card2);
-        Hand playerHand = HandFixture.createHand(card1, card1, card3);
+        Hand dealerHand = HandFixture.createHand(card1, card1);
+        Hand playerHand = HandFixture.createHand(card1, card1);
+
+        dealerHand.add(card2);
+        playerHand.add(card3);
 
         //when
-        BlackjackMatchResult actual = dealerHand.determineMatchResultAgainst(playerHand);
+        BlackjackMatchResult actual = dealerHand.determineMatchResultFor(playerHand);
 
         //then
         assertThat(actual).isEqualTo(BlackjackMatchResult.DRAW);
@@ -37,11 +40,11 @@ class BlackjackMatchResultTest {
         Card card1 = new Card(CardSymbol.COLVER, CardRank.KING);
         Card card2 = new Card(CardSymbol.COLVER, CardRank.THREE);
 
-        Hand dealerHand = HandFixture.createHand(card1, card1);
-        Hand playerHand = HandFixture.createHand(card1, card1);
+        Hand dealerHand = HandFixture.createHand(card1, card2);
+        Hand playerHand = HandFixture.createHand(card1, card2);
 
         //when
-        BlackjackMatchResult actual = dealerHand.determineMatchResultAgainst(playerHand);
+        BlackjackMatchResult actual = dealerHand.determineMatchResultFor(playerHand);
 
         //then
         assertThat(actual).isEqualTo(BlackjackMatchResult.DRAW);
@@ -56,12 +59,14 @@ class BlackjackMatchResultTest {
         Card card3 = new Card(CardSymbol.COLVER, CardRank.TWO);
 
         Hand dealerHand = HandFixture.createHand(card1, card2);
-        Hand playerHand = HandFixture.createHand(card1, card1, card3);
+        Hand playerHand = HandFixture.createHand(card1, card1);
+
+        playerHand.add(card3);
 
         //when //then
-        BlackjackMatchResult actual = dealerHand.determineMatchResultAgainst(playerHand);
+        BlackjackMatchResult actual = dealerHand.determineMatchResultFor(playerHand);
 
-        assertThat(actual).isEqualTo(BlackjackMatchResult.WIN);
+        assertThat(actual).isEqualTo(BlackjackMatchResult.LOSE);
     }
 
     @DisplayName("플레이어와 딜러 중 둘다 버스트가 아니고, 점수가 서로 다를경우 점수가 21에 가까운쪽이 승리한다.")
@@ -76,10 +81,10 @@ class BlackjackMatchResultTest {
         Hand playerHand = HandFixture.createHand(card1, card2);
 
         //when
-        BlackjackMatchResult actual = dealerHand.determineMatchResultAgainst(playerHand);
+        BlackjackMatchResult actual = dealerHand.determineMatchResultFor(playerHand);
 
         //then
-        assertThat(actual).isEqualTo(BlackjackMatchResult.LOSE);
+        assertThat(actual).isEqualTo(BlackjackMatchResult.WIN);
     }
 
 }
