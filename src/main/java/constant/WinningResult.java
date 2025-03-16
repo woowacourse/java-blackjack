@@ -1,25 +1,12 @@
 package constant;
 
-import bet.BetAmount;
-
 public enum WinningResult {
-    BLACKJACK(1.5),
-    WIN(1),
-    DRAW(0),
-    LOSE(-1),
-    ;
+    BLACKJACK,
+    WIN,
+    DRAW,
+    LOSE;
 
     private static final int BUST_STANDARD = 21;
-
-    private final double profitRate;
-
-    WinningResult(double profitRate) {
-        this.profitRate = profitRate;
-    }
-
-    public double calculateProfit(BetAmount amount) {
-        return amount.getValue() * profitRate;
-    }
 
     public static WinningResult getWinningResult(int playerScore, int dealerScore) {
         if (playerScore > BUST_STANDARD || dealerScore > BUST_STANDARD) {
