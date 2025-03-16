@@ -7,7 +7,7 @@ public class GameScore {
     private final int cardsCount;
 
     private static final GameScore BLACKJACK_SCORE = new GameScore(21, 2);
-    private static final GameScore DEALER_HIT_SCORE = new GameScore(16, 0);
+    private static final int DEALER_HIT_SCORE = 16;
 
     public GameScore(int value, int cardsCount) {
         this.value = value;
@@ -39,7 +39,7 @@ public class GameScore {
     }
 
     public boolean isDealerHit() {
-        return this.isLessThan(DEALER_HIT_SCORE);
+        return this.value <= DEALER_HIT_SCORE;
     }
 
     public int getValue() {
