@@ -1,4 +1,4 @@
-package view;
+package console;
 
 import java.util.List;
 import java.util.Set;

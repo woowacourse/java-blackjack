@@ -17,8 +17,8 @@ public final class Deck {
     }
 //
 //    public CardHand getInitialDeal() {
-//        Card firstCard = draw();
-//        Card secondCard = draw();
+//        Card firstCard = receiveCard();
+//        Card secondCard = receiveCard();
 //        return new CardHand(Set.of(firstCard, secondCard));
 //    }
 }

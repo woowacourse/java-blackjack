@@ -1,6 +1,5 @@
 package console;
 
-import controller.GameSetupController;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -9,10 +8,10 @@ import model.card.Deck;
 import model.participant.Bet;
 import model.participant.Name;
 import model.participant.Participants;
-import view.PlayerNames;
+import view.GameSetupView;
 
 public final class GameSetupConsole extends Console {
-    private final GameSetupController gameSetupController = new GameSetupController();
+    private final GameSetupView gameSetupView = new GameSetupView();
 
     public Participants registerParticipants(final Deck deck) {
         Map<Name, Bet> registerInput = new LinkedHashMap<>();
@@ -25,12 +24,12 @@ public final class GameSetupConsole extends Console {
     }
 
     public void displaySetupResult(final Participants participants) {
-        String setupResult = gameSetupController.getSetupResult(participants);
+        String setupResult = gameSetupView.getSetupResult(participants);
         display(setupResult);
     }
 
     private PlayerNames readPlayerNames() {
-        display(gameSetupController.getInputNameGuide());
+        display(gameSetupView.getInputNameGuide());
         List<Name> playerNames = Arrays.stream(readLine().split(","))
                 .map(String::trim)
                 .filter(name -> !name.isBlank() && !name.isEmpty())
@@ -40,7 +39,7 @@ public final class GameSetupConsole extends Console {
     }
 
     private Bet readBet(final Name playerName) {
-        display(gameSetupController.getBettingGuide(playerName));
+        display(gameSetupView.getBettingGuide(playerName));
         String input = readLine();
         try {
             return new Bet(Integer.parseInt(input));

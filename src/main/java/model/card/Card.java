@@ -11,13 +11,13 @@ public final class Card {
         this.suit = suit;
     }
 
-//    public int score() {
-//        return rank.getValue();
-//    }
-//
-//    public boolean isAce() {
-//        return rank == Rank.ACE;
-//    }
+    public int score() {
+        return rank.getValue();
+    }
+
+    public boolean isAce() {
+        return rank == Rank.ACE;
+    }
 
     public Rank getRank() {
         return rank;

@@ -2,6 +2,7 @@ package model.participant;
 
 import java.util.List;
 import java.util.Map;
+import model.card.CardHand;
 import model.card.Deck;
 
 public final class Players {
@@ -9,7 +10,8 @@ public final class Players {
 
     public Players(Map<Name, Bet> registerInput, Deck deck) {
         this.players = registerInput.entrySet().stream()
-                .map(registerEntry -> new Player(registerEntry.getKey(), registerEntry.getValue(), deck))
+                .map(registerEntry -> new Player(registerEntry.getKey(), registerEntry.getValue(),
+                        CardHand.drawInitialHand(deck)))
                 .toList();
     }
 
