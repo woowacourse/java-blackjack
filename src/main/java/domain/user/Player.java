@@ -28,10 +28,6 @@ public class Player extends User {
         return this.name;
     }
 
-    public boolean hasName(String name) {
-        return this.name.equals(name);
-    }
-
     private void validate(String name) {
         if (name.equals("dealer") || name.equals("딜러")) {
             throw new IllegalArgumentException("dealer 혹은 딜러는 이름으로 사용할 수 없습니다.");

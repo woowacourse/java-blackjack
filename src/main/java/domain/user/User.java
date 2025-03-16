@@ -18,11 +18,11 @@ public abstract class User {
     public abstract String getName();
 
     public void drawCard(Card card) {
-        cardHand.addTrumpCard(card);
+        cardHand.add(card);
     }
 
     public int getSize() {
-        return cardHand.cardsSize();
+        return cardHand.size();
     }
 
     public int calculateScore() {
@@ -34,7 +34,7 @@ public abstract class User {
     }
 
     public void addTrumpCard(Card card) {
-        this.cardHand.addTrumpCard(card);
+        this.cardHand.add(card);
     }
 
     public boolean isBust() {

@@ -21,7 +21,7 @@ public class GameManagerTest {
     @MethodSource("userTestCase")
     void test(List<String> names) {
         List<Player> users = names.stream().map(Player::new).toList();
-        assertThatCode(() -> new GameManger(users, new Dealer(), new CardDeck())).doesNotThrowAnyException();
+        assertThatCode(() -> new BlackjackGame(users, new Dealer(), new CardDeck())).doesNotThrowAnyException();
     }
 
     private static Stream<Arguments> userTestCase() {
@@ -36,7 +36,7 @@ public class GameManagerTest {
     @MethodSource("userExceptionTestCase")
     void test2(List<String> names) {
         List<Player> users = names.stream().map(Player::new).toList();
-        assertThatThrownBy(() -> new GameManger(users, new Dealer(), new CardDeck()))
+        assertThatThrownBy(() -> new BlackjackGame(users, new Dealer(), new CardDeck()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("유저는 1명 이상 7명 이하로 등록해야 합니다.");
     }
@@ -53,7 +53,7 @@ public class GameManagerTest {
     void test3() {
         List<String> names = List.of("수양", "레몬", "수양", "레몬", "부부", "롸롸", "뫄뫄");
         List<Player> users = names.stream().map(Player::new).toList();
-        assertThatThrownBy(() -> new GameManger(users, new Dealer(), new CardDeck()))
+        assertThatThrownBy(() -> new BlackjackGame(users, new Dealer(), new CardDeck()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("유저는 중복될 수 없습니다.");
     }
@@ -64,7 +64,7 @@ public class GameManagerTest {
         // given
         List<String> names = List.of("수양", "레몬");
         List<Player> users = names.stream().map(Player::new).toList();
-        GameManger gameManger = new GameManger(users, new Dealer(), new CardDeck());
+        BlackjackGame gameManger = new BlackjackGame(users, new Dealer(), new CardDeck());
 
         // when
         gameManger.firstHandOutCard();
@@ -81,7 +81,7 @@ public class GameManagerTest {
         //given
         List<String> names = List.of("수양");
         List<Player> users = names.stream().map(Player::new).toList();
-        GameManger gameManger = new GameManger(users, new Dealer(), new CardDeck());
+        BlackjackGame gameManger = new BlackjackGame(users, new Dealer(), new CardDeck());
         User player = gameManger.findUserByUsername("수양");
         User dealer = gameManger.getDealer();
 
@@ -105,7 +105,7 @@ public class GameManagerTest {
         //given
         List<String> names = List.of("수양");
         List<Player> users = names.stream().map(Player::new).toList();
-        GameManger gameManger = new GameManger(users, new Dealer(), new CardDeck());
+        BlackjackGame gameManger = new BlackjackGame(users, new Dealer(), new CardDeck());
         User player = gameManger.findUserByUsername("수양");
         User dealer = gameManger.getDealer();
 
@@ -161,7 +161,7 @@ public class GameManagerTest {
         // given
         List<String> names = List.of("유저");
         List<Player> users = names.stream().map(Player::new).toList();
-        GameManger gameManger = new GameManger(users, new Dealer(), new CardDeck());
+        BlackjackGame gameManger = new BlackjackGame(users, new Dealer(), new CardDeck());
         User user = gameManger.findUserByUsername("유저");
         user.addTrumpCard(new Card(CardShape.CLOVER, CardRank.J));
         user.addTrumpCard(new Card(CardShape.CLOVER, CardRank.J));

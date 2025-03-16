@@ -1,6 +1,7 @@
 package domain;
 
 import domain.user.Dealer;
+import domain.user.Participants;
 import domain.user.Player;
 import domain.user.User;
 import java.util.ArrayList;
@@ -9,59 +10,41 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GameManger {
-    private static final int USER_MIN_COUNT = 1;
-    private static final int USER_MAX_COUNT = 7;
+public class BlackjackGame {
     private static final int INIT_CARD_NUMBER = 2;
 
-    private final List<Player> users;
-    private final Dealer dealer;
+    private final Participants participants;
     private final CardDeck cardDeck;
 
-    public GameManger(List<Player> users, Dealer dealer, CardDeck cardDeck) {
-        validate(users);
-        this.users = new ArrayList<>(users);
-        this.dealer = dealer;
+    private BlackjackGame(Participants participants, CardDeck cardDeck) {
+        this.participants = participants;
         this.cardDeck = cardDeck;
     }
 
-    private void validate(List<Player> users) {
-        long distinctUserCount = users.stream()
-                .map(Player::getName)
-                .distinct()
-                .count();
-
-        if (distinctUserCount != users.size()) {
-            throw new IllegalArgumentException("유저는 중복될 수 없습니다.");
-        }
-        if (users.isEmpty() || users.size() > USER_MAX_COUNT) {
-            throw new IllegalArgumentException("유저는 " + USER_MIN_COUNT + "명 이상 " + USER_MAX_COUNT + "명 이하로 등록해야 합니다.");
-        }
+    public static BlackjackGame of(List<Player> players, Dealer dealer, CardDeck cardDeck) {
+        List<User> users = new ArrayList<>();
+        users.add(dealer);
+        users.addAll(players);
+        Participants participants = new Participants(users);
+        return new BlackjackGame(participants, cardDeck);
     }
 
     public void firstHandOutCard() {
         for (int count = 0; count < INIT_CARD_NUMBER; count++) {
-            users.forEach(user -> user.drawCard(cardDeck.drawCard()));
-            dealer.drawCard(cardDeck.drawCard());
+            participants.drawFirstCard(cardDeck);
         }
     }
 
-    public Player findUserByUsername(String name) {
-        return users.stream()
-                .filter(player -> player.hasName(name))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
-    }
-
     public User getDealer() {
-        return this.dealer;
+        return participants.getDealer();
     }
 
-    public Card handOutCard() {
-        return cardDeck.drawCard();
+    public List<Card> handOutCard(User user) {
+        Card card = cardDeck.drawCard();
+        return participants.drawCard(user, card);
     }
 
-    private GameResult compareScore(User player) {
+    private GameResult compareScore(User player, User dealer) {
         int dealerScore = dealer.calculateScore();
         int playerScore = player.calculateScore();
 
@@ -74,10 +57,10 @@ public class GameManger {
         if (dealerScore > playerScore) {
             return GameResult.LOSE;
         }
-        return compareSameScore(player);
+        return compareSameScore(player, dealer);
     }
 
-    private GameResult compareSameScore(User player) {
+    private GameResult compareSameScore(User player, User dealer) {
         if (dealer.isBlackjack() && !player.isBlackjack()) {
             return GameResult.LOSE;
         }
@@ -117,5 +100,14 @@ public class GameManger {
         return (int) gameResult.entrySet().stream()
                 .filter(entry -> entry.getValue() == status)
                 .count();
+    }
+
+    public Map<String, List<Card>> openFirstPlayersCard() {
+        return participants.getPlayersAllCard();
+    }
+
+    public List<Card> openFirstDealerCard() {
+        User dealer = getDealer();
+        return dealer.openInitialCard();
     }
 }

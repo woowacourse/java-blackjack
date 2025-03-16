@@ -1,7 +1,7 @@
 package domain.user;
 
 import domain.CardDeck;
-import domain.GameManger;
+import domain.BlackjackGame;
 import domain.Card;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -19,7 +19,7 @@ class UserTest {
             // given
             List<String> names = List.of("수양");
             List<Player> users = names.stream().map(Player::new).toList();
-            GameManger gameManger = new GameManger(users, new Dealer(), new CardDeck());
+            BlackjackGame gameManger = new BlackjackGame(users, new Dealer(), new CardDeck());
             User user = gameManger.findUserByUsername("수양");
             user.drawCard(gameManger.handOutCard());
             user.drawCard(gameManger.handOutCard());
@@ -37,7 +37,7 @@ class UserTest {
             // given
             List<String> names = List.of("수양");
             List<Player> users = names.stream().map(Player::new).toList();
-            GameManger gameManger = new GameManger(users, new Dealer(), new CardDeck());
+            BlackjackGame gameManger = new BlackjackGame(users, new Dealer(), new CardDeck());
             User user = gameManger.getDealer();
             user.drawCard(gameManger.handOutCard());
             user.drawCard(gameManger.handOutCard());
@@ -56,7 +56,7 @@ class UserTest {
         // given
         List<String> names = List.of("수양");
         List<Player> users = names.stream().map(Player::new).toList();
-        GameManger gameManger = new GameManger(users, new Dealer(), new CardDeck());
+        BlackjackGame gameManger = new BlackjackGame(users, new Dealer(), new CardDeck());
         User user = gameManger.findUserByUsername("수양");
         user.drawCard(gameManger.handOutCard());
         user.drawCard(gameManger.handOutCard());

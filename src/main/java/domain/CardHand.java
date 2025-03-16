@@ -15,11 +15,11 @@ public class CardHand {
         this.cards = new ArrayList<>();
     }
 
-    public void addTrumpCard(Card card) {
+    public void add(Card card) {
         cards.add(card);
     }
 
-    public int cardsSize() {
+    public int size() {
         return cards.size();
     }
 

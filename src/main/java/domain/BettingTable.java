@@ -11,7 +11,7 @@ public class BettingTable {
     private final Map<User, Long> bet = new HashMap<>();
     private Long dealerBet = 0L;
 
-    public void bettingMoney(User user, final long money) {
+    public void betMoney(User user, final long money) {
         bet.put(user, money);
     }
 

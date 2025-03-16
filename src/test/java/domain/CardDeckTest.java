@@ -51,9 +51,9 @@ public class CardDeckTest {
         Card trumpCard3 = new Card(CardShape.CLOVER, CardRank.FIVE);
         CardHand cardDeck = new CardHand();
 
-        cardDeck.addTrumpCard(trumpCard1);
-        cardDeck.addTrumpCard(trumpCard2);
-        cardDeck.addTrumpCard(trumpCard3);
+        cardDeck.add(trumpCard1);
+        cardDeck.add(trumpCard2);
+        cardDeck.add(trumpCard3);
 
         // when
         boolean isOver = cardDeck.checkOverScore();
@@ -69,7 +69,7 @@ public class CardDeckTest {
         //given
         CardHand cardDeck = new CardHand();
         for (Card card : cards) {
-            cardDeck.addTrumpCard(card);
+            cardDeck.add(card);
         }
 
         // when & then
@@ -100,7 +100,7 @@ public class CardDeckTest {
         // given
         CardHand cardDeck = new CardHand();
         for (Card card : cards) {
-            cardDeck.addTrumpCard(card);
+            cardDeck.add(card);
         }
 
         // when
@@ -141,8 +141,8 @@ public class CardDeckTest {
         Card trumpCard2 = new Card(CardShape.CLOVER, CardRank.J);
         CardHand cardDeck = new CardHand();
 
-        cardDeck.addTrumpCard(trumpCard1);
-        cardDeck.addTrumpCard(trumpCard2);
+        cardDeck.add(trumpCard1);
+        cardDeck.add(trumpCard2);
 
         // when
         boolean isBlackjack = cardDeck.isBlackjack();
