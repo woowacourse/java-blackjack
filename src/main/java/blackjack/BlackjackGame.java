@@ -3,7 +3,6 @@ package blackjack;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
-import blackjack.domain.card.generator.ShuffleDeckGenerator;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -25,7 +24,7 @@ public final class BlackjackGame {
     }
 
     public void run() {
-        final Deck deck = new Deck(new ShuffleDeckGenerator());
+        final Deck deck = Deck.shuffled();
         Participants participants = makeParticipants();
 
         spreadInitialCards(participants, deck);

@@ -6,10 +6,21 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.List;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DeckTest {
+
+    @Test
+    @DisplayName("셔플된 덱을 생성한다")
+    void createShuffledDeck() {
+        // Given
+
+        // When
+        Assertions.assertThatCode(Deck::shuffled)
+                .doesNotThrowAnyException();
+    }
 
     @DisplayName("카드를 순서대로 뽑는다.")
     @Test

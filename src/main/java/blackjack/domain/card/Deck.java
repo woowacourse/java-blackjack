@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import blackjack.domain.card.generator.DeckGenerator;
+import blackjack.domain.card.generator.ShuffleDeckGenerator;
 import java.util.Deque;
 import java.util.stream.IntStream;
 
@@ -12,6 +13,10 @@ public final class Deck {
 
     public Deck(final DeckGenerator deckGenerator) {
         this.cards = deckGenerator.makeDeck();
+    }
+
+    public static Deck shuffled() {
+        return new Deck(new ShuffleDeckGenerator());
     }
 
     public Card spreadOneCard() {
