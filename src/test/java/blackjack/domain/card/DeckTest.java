@@ -31,7 +31,7 @@ class DeckTest {
                 new Card(Shape.DIAMOND, CardScore.SIX))));
 
         // when
-        Hand hand = deck.spreadInitialCards(1);
+        Hand hand = deck.spreadInitialCards(2);
 
         // then
         assertAll(

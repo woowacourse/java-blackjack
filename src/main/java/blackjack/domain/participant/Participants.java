@@ -23,8 +23,8 @@ public final class Participants {
         return new Participants(dealer, players);
     }
 
-    public int getSize() {
-        return DEALER_SIZE + players.getSize();
+    public int getInitialCardSize() {
+        return (DEALER_SIZE + players.getSize()) * SPREAD_CARD_SIZE;
     }
 
     public void receiveInitialCards(final Hand hand) {

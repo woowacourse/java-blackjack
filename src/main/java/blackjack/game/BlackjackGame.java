@@ -51,7 +51,7 @@ public final class BlackjackGame {
     }
 
     private void spreadInitialCards(final Participants participants, final Deck deck) {
-        final Hand hand = deck.spreadInitialCards(participants.getSize());
+        final Hand hand = deck.spreadInitialCards(participants.getInitialCardSize());
         participants.receiveInitialCards(hand);
         resultView.printSpreadCard(participants.getPlayerNames(),
                 Map.entry(participants.getDealerName(), participants.showInitialDealerCards()),

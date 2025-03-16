@@ -7,8 +7,6 @@ import java.util.stream.IntStream;
 
 public final class Deck {
 
-    private static final int INITIAL_SPREAD_SIZE = 2;
-
     private final Deque<Card> cards;
 
     public Deck(final DeckGenerator deckGenerator) {
@@ -23,8 +21,8 @@ public final class Deck {
         return pickCard();
     }
 
-    public Hand spreadInitialCards(final int participantsSize) {
-        return new Hand(IntStream.range(0, INITIAL_SPREAD_SIZE * participantsSize)
+    public Hand spreadInitialCards(final int cardSize) {
+        return new Hand(IntStream.range(0, cardSize)
                 .mapToObj(o -> pickCard())
                 .toList());
     }
