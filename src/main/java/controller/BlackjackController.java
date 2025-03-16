@@ -43,10 +43,11 @@ public class BlackjackController {
     }
 
     public List<String> findAllPlayerNames() {
-        return null;
+        return blackjackParticipants.findAllPlayerNames();
     }
 
     public boolean drawDealer() {
+
         return true;
     }
 

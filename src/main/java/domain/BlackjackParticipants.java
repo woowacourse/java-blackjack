@@ -39,4 +39,8 @@ public class BlackjackParticipants {
     public List<Player> getPlayers() {
         return players.getPlayers();
     }
+
+    public List<String> findAllPlayerNames() {
+        return players.getAllPlayersName();
+    }
 }
