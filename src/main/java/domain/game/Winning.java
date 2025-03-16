@@ -8,8 +8,6 @@ public enum Winning {
     DRAW("무"),
     LOSE("패");
 
-    public static final int BLACK_JACK = 21;
-
     private final String name;
 
     Winning(String name) {

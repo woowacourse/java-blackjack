@@ -1,12 +1,12 @@
 package domain.card;
 
-import domain.game.Winning;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class CardHand {
 
+    private static final int BLACK_JACK = 21;
     private static final int BLACK_JACK_CARD_COUNT = 2;
     private static final int BUST_SCORE_THRESHOLD = 21;
 
@@ -18,7 +18,7 @@ public class CardHand {
 
     public boolean isBlackJack() {
         return cards.size() == BLACK_JACK_CARD_COUNT
-            && calculateScore() == Winning.BLACK_JACK;
+            && calculateScore() == BLACK_JACK;
     }
 
     public boolean isBust() {
@@ -41,8 +41,8 @@ public class CardHand {
             .anyMatch(card -> card.getRank() == Rank.ACE);
     }
 
-    private int calculateOptimalScore(int sum){
-        if (sum + Rank.ACE_LOW_HIGH_GAP <= Winning.BLACK_JACK) {
+    private int calculateOptimalScore(int sum) {
+        if (sum + Rank.ACE_LOW_HIGH_GAP <= BLACK_JACK) {
             return sum + Rank.ACE_LOW_HIGH_GAP;
         }
         return sum;
