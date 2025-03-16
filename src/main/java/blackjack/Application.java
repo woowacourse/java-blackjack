@@ -30,10 +30,7 @@ public class Application {
         List<Name> playerNames = getPlayerNames();
         Map<Name, Integer> bettingRecords = new HashMap<>();
 
-        for (Name playerName : playerNames) {
-            int money = getBettingAmountByName(playerName);
-            bettingRecords.put(playerName, money);
-        }
+        getBettingRecords(playerNames, bettingRecords);
 
         Round round = new Round(cardDeck, playerNames);
 
@@ -66,6 +63,13 @@ public class Application {
         }
     }
 
+    private static void getBettingRecords(List<Name> playerNames, Map<Name, Integer> bettingRecords) {
+        for (Name playerName : playerNames) {
+            int money = getBettingAmountByName(playerName);
+            bettingRecords.put(playerName, money);
+        }
+    }
+
     private static int getBettingAmountByName(Name playerName) {
         try {
             return inputBettingAmount(playerName);
@@ -88,13 +92,6 @@ public class Application {
         }
     }
 
-    private static void processDealerTurn(final Round round) {
-        if (round.isGamblerCanReceiveCard(Name.getDealerName(), Round.DEALER_RECEIVE_CRITERIA)) {
-            round.distributeCards(Name.getDealerName(), 1);
-            printDealerReceiveCard();
-        }
-    }
-
     private static void processPlayerTurn(final Round round, final Name playerName) {
         while (round.isGamblerCanReceiveCard(playerName, ProfitCalculator.BLACK_JACK) && isHit(playerName)) {
             round.distributeCards(playerName, 1);
@@ -114,6 +111,13 @@ public class Application {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return isHit(playerName);
+        }
+    }
+
+    private static void processDealerTurn(final Round round) {
+        if (round.isGamblerCanReceiveCard(Name.getDealerName(), Round.DEALER_RECEIVE_CRITERIA)) {
+            round.distributeCards(Name.getDealerName(), 1);
+            printDealerReceiveCard();
         }
     }
 
