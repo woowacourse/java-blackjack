@@ -10,14 +10,14 @@ import java.util.List;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-public class BlackJackGame {
+public class BlackjackGame {
 
     public static final String HIT_COMMAND = "y";
 
     private final InputView inputView;
     private final OutputView outputView;
 
-    public BlackJackGame(GameConfig gameConfig) {
+    public BlackjackGame(GameConfig gameConfig) {
         this.inputView = gameConfig.getInputView();
         this.outputView = gameConfig.getOutputView();
     }
