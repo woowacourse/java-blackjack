@@ -1,6 +1,10 @@
-package blackjack.domain.result;
+package blackjack.domain.profit;
 
 import blackjack.domain.game.Player;
+import blackjack.domain.result.DealerResults;
+import blackjack.domain.result.GameResultType;
+import blackjack.domain.result.PlayerResult;
+import blackjack.domain.result.PlayerResults;
 
 public class BettingResult {
     private final DealerProfits dealerProfits;

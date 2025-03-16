@@ -1,4 +1,4 @@
-package blackjack.domain.result;
+package blackjack.domain.profit;
 
 import blackjack.domain.game.Player;
 import java.util.ArrayList;

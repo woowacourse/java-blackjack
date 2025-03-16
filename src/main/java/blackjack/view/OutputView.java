@@ -3,10 +3,10 @@ package blackjack.view;
 import blackjack.domain.game.Dealer;
 import blackjack.domain.game.Participant;
 import blackjack.domain.game.Players;
-import blackjack.domain.result.DealerProfits;
+import blackjack.domain.profit.DealerProfits;
 import blackjack.domain.result.DealerResults;
-import blackjack.domain.result.PlayerProfit;
-import blackjack.domain.result.PlayerProfits;
+import blackjack.domain.profit.PlayerProfit;
+import blackjack.domain.profit.PlayerProfits;
 import blackjack.domain.result.PlayerResults;
 
 public final class OutputView {
