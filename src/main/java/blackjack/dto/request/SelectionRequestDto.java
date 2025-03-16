@@ -1,7 +1,7 @@
 package blackjack.dto.request;
 
 public record SelectionRequestDto(
-    boolean selection
+        boolean selection
 ) {
 
     private static final String POSITIVE = "Y";

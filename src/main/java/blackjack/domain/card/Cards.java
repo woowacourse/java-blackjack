@@ -22,10 +22,10 @@ public class Cards {
 
     public int sum() {
         int sum = cards.stream()
-            .mapToInt(card -> card.number().getNumber())
-            .sum();
+                .mapToInt(card -> card.number().getNumber())
+                .sum();
         if (hasAceCard()
-            && sum + ACE_NUMBER_DIFFERENCE <= MAX_SUM_OF_CARDS) {
+                && sum + ACE_NUMBER_DIFFERENCE <= MAX_SUM_OF_CARDS) {
             return sum + ACE_NUMBER_DIFFERENCE;
         }
         return sum;
@@ -33,7 +33,7 @@ public class Cards {
 
     private boolean hasAceCard() {
         return cards.stream()
-            .anyMatch(Card::isAce);
+                .anyMatch(Card::isAce);
     }
 
     public boolean isBlackjack() {
