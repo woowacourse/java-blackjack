@@ -115,6 +115,6 @@ class GameParticipantsTest {
         assertThat(gameStatistics.getProfit(p3).getAmount()).isEqualTo(0);
         assertThat(gameStatistics.getProfit(p4).getAmount()).isEqualTo(10000);
         assertThat(gameStatistics.getProfit(p5).getAmount()).isEqualTo(-10000);
-        assertThat(gameStatistics.getDealerProfit().getAmount()).isEqualTo(-10000 - 10000 + 0 + 10000 - 10000);
+        assertThat(gameStatistics.getDealerProfit().getAmount()).isEqualTo((-10000 - 10000 + 0 + 10000 - 10000) * -1); // 모든 플레이어 최종 수익의 역
     }
 }

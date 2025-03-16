@@ -5,10 +5,10 @@ import blackjack.card.CardFixture;
 import blackjack.card.CardRank;
 import blackjack.card.CardSuit;
 import blackjack.participant.Dealer;
+import blackjack.participant.GameParticipant;
 import blackjack.participant.GameParticipantFixture;
 import blackjack.participant.GameParticipants;
 import blackjack.participant.Player;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,73 +19,162 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class GameStatisticsTest {
 
-    Player player1; // 20점 (승)
-    Player player2; // 18점 (무)
-    Player player3; // 16점 (패)
-    Player player4; // 카드3 합21 (승)
-    Player player5; // 카드2 합21 (승)
-    Dealer dealer; // 18점
-    GameParticipants participants;
-    GameStatistics statistics;
+    private static final int DEFAULT_BETTING_AMOUNT = 10000;
 
-    @BeforeEach
-    void setUp() {
-        int amount = 10000;
+    private GameParticipants createGameParticipants(List<Player> players, Dealer dealer) {
+        return GameParticipants.of(players, dealer);
+    }
 
-        player1 = GameParticipantFixture.createPlayer("강산", Betting.from(amount));
-        player2 = GameParticipantFixture.createPlayer("재중", Betting.from(amount));
-        player3 = GameParticipantFixture.createPlayer("아현", Betting.from(amount));
-        player4 = GameParticipantFixture.createPlayer("카드3합21", Betting.from(amount));
-        player5 = GameParticipantFixture.createPlayer("카드2합21", Betting.from(amount));
-        dealer = GameParticipantFixture.createDealer();
-
-        participants = GameParticipants.of(List.of(player1, player2, player3, player4, player5), dealer);
-        player1.drawCard(CardFixture.createCard(10));
-        player1.drawCard(CardFixture.createCard(10));
-
-        player2.drawCard(CardFixture.createCard(9));
-        player2.drawCard(CardFixture.createCard(9));
-
-        player3.drawCard(CardFixture.createCard(8));
-        player3.drawCard(CardFixture.createCard(8));
-
-        player4.drawCard(CardFixture.createCard(7));
-        player4.drawCard(CardFixture.createCard(7));
-        player4.drawCard(CardFixture.createCard(7));
-
-        player5.drawCard(CardFixture.createCard(10));
-        player5.drawCard(Card.of(CardSuit.SPADE, CardRank.ACE));
-
-        dealer.drawCard(CardFixture.createCard(9));
-        dealer.drawCard(CardFixture.createCard(9));
-
-        statistics = GameStatistics.from(participants);
+    private void drawCards(GameParticipant participant, int... cardValues) {
+        for (int value : cardValues) {
+            participant.drawCard(CardFixture.createCard(value));
+        }
     }
 
     @Test
-    @DisplayName("모든 참여자의 최종 상금(원금이 제외되지 않은)을 가져올 수 있다.")
-    void canGetPlayerPrize() {
+    @DisplayName("플레이어별 최종 수익을 계산할 수 있다.")
+    void shouldCalculatePlayerProfitCorrectly() {
         // given
-        int expectedAmount1 = 10000; // 승리
-        int expectedAmount2 = 0; // 무승부
-        int expectedAmount3 = -10000; // 패배
-        int expectedAmount4 = 10000; // 3장 21
-        int expectedAmount5 = 5000; // 2장 21 (블랙잭)
+        Player player1 = GameParticipantFixture.createPlayer("강산", Betting.from(DEFAULT_BETTING_AMOUNT));
+        Player player2 = GameParticipantFixture.createPlayer("재중", Betting.from(DEFAULT_BETTING_AMOUNT));
+        Player player3 = GameParticipantFixture.createPlayer("아현", Betting.from(DEFAULT_BETTING_AMOUNT));
+        Player player4 = GameParticipantFixture.createPlayer("카드3합21", Betting.from(DEFAULT_BETTING_AMOUNT));
+        Player player5 = GameParticipantFixture.createPlayer("카드2합21", Betting.from(DEFAULT_BETTING_AMOUNT));
 
-        int expectedDealerAmount =
-                expectedAmount1 + expectedAmount2 + expectedAmount3 + expectedAmount4 + expectedAmount5;
+        Dealer dealer = GameParticipantFixture.createDealer();
+        drawCards(dealer, 9, 9); // 딜러: 18점
+
+        drawCards(player1, 10, 10);  // 20점
+
+        drawCards(player2, 9, 9);    // 18점
+
+        drawCards(player3, 8, 8);    // 16점
+
+        drawCards(player4, 7, 7, 7); // 21점 (3장)
+
+        drawCards(player5, 10);
+        player5.drawCard(Card.of(CardSuit.SPADE, CardRank.ACE)); // 블랙잭 (2장 21점)
+
+
+        GameStatistics statistics = GameStatistics.from(createGameParticipants(List.of(player1, player2, player3, player4, player5), dealer));
+
+        int[] expectedPlayerProfits = {10000, 0, -10000, 10000, 5000};
 
         // when
         // then
-        assertAll(() ->
-        {
-            assertThat(statistics.getProfit(player1)).isEqualTo(Money.from(expectedAmount1));
-            assertThat(statistics.getProfit(player2)).isEqualTo(Money.from(expectedAmount2));
-            assertThat(statistics.getProfit(player3)).isEqualTo(Money.from(expectedAmount3));
-            assertThat(statistics.getProfit(player4)).isEqualTo(Money.from(expectedAmount4));
-            assertThat(statistics.getProfit(player5)).isEqualTo(Money.from(expectedAmount5));
-
-            assertThat(statistics.getDealerProfit()).isEqualTo(Money.from(expectedDealerAmount));
+        assertAll(() -> {
+            List<Player> players = List.of(player1, player2, player3, player4, player5);
+            for (int i = 0; i < players.size(); i++) {
+                assertThat(statistics.getProfit(players.get(i))).isEqualTo(Money.from(expectedPlayerProfits[i]));
+            }
         });
+    }
+
+    @Test
+    @DisplayName("다양한 베팅 금액을 설정하여 최종 수익을 계산할 수 있다.")
+    void shouldCalculateProfitsForVariousBettingAmounts() {
+        // given
+        Player player1 = GameParticipantFixture.createPlayer("강산", Betting.from(5000));
+        Player player2 = GameParticipantFixture.createPlayer("재중", Betting.from(20000));
+        Player player3 = GameParticipantFixture.createPlayer("아현", Betting.from(1000));
+        Player player4 = GameParticipantFixture.createPlayer("카드3합21", Betting.from(25000));
+        Player player5 = GameParticipantFixture.createPlayer("카드2합21", Betting.from(7500));
+
+        Dealer dealer = GameParticipantFixture.createDealer();
+        drawCards(dealer, 9, 9);
+
+        drawCards(player1, 10, 10);
+
+        drawCards(player2, 9, 9);
+
+        drawCards(player3, 8, 8);
+
+        drawCards(player4, 7, 7, 7);
+
+        drawCards(player5, 10);
+        player5.drawCard(Card.of(CardSuit.SPADE, CardRank.ACE));
+
+
+        GameStatistics statistics = GameStatistics.from(createGameParticipants(List.of(player1, player2, player3, player4, player5), dealer));
+
+        int[] expectedProfits = {5000, 0, -1000, 25000, 3750};
+
+        // when 
+        // then
+        assertAll(() -> {
+            List<Player> players = List.of(player1, player2, player3, player4, player5);
+            for (int i = 0; i < players.size(); i++) {
+                assertThat(statistics.getProfit(players.get(i))).isEqualTo(Money.from(expectedProfits[i]));
+            }
+        });
+    }
+
+    @Test
+    @DisplayName("소숫점 절삭 검증: 1원의 25%는 0원이 되어야 한다.")
+    void shouldTruncateDecimalCorrectly() {
+        // given
+        Money money = Money.from(1);
+
+        // when
+        Money result = money.applyProfitRate(25); // 1 * 25 / 100 = 0.25 → 0원
+
+        // then
+        assertThat(result).isEqualTo(Money.from(0));
+    }
+
+    @Test
+    @DisplayName("모든 플레이어와 딜러의 최종 수익 합이 0이 되는 케이스 검증")
+    void shouldEnsureTotalProfitSumIsZero() {
+        // given
+        Player player1 = GameParticipantFixture.createPlayer("강산", Betting.from(10000));
+        Player player2 = GameParticipantFixture.createPlayer("재중", Betting.from(5000));
+        Dealer dealer = GameParticipantFixture.createDealer();
+
+        drawCards(player1, 10, 10);  // 20점
+        drawCards(player2, 9, 9);    // 18점
+        drawCards(dealer, 9, 9); // 딜러: 18점
+
+        GameStatistics statistics = GameStatistics.from(createGameParticipants(List.of(player1, player2), dealer));
+
+        Money totalPlayerProfit = Money.sumOf(List.of(
+                statistics.getProfit(player1),
+                statistics.getProfit(player2)
+        ));
+
+        Money dealerProfit = statistics.getDealerProfit();
+
+        // when
+        Money totalProfit = totalPlayerProfit.plus(dealerProfit);
+
+        // then
+        assertThat(totalProfit.getAmount()).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("모든 플레이어와 딜러의 최종 수익 합이 0이 되지 않는 케이스 검증 (절삭 고려)")
+    void shouldEnsureTotalProfitSumIsCloseToZero() {
+        // given
+        Player player1 = GameParticipantFixture.createPlayer("강산", Betting.from(10000));
+        Player player2 = GameParticipantFixture.createPlayer("재중", Betting.from(3333));
+        Dealer dealer = GameParticipantFixture.createDealer();
+
+        drawCards(player1, 10, 10);  // 20점
+        drawCards(player2, 9, 9);    // 18점
+        drawCards(dealer, 9, 9); // 딜러: 18점
+
+        GameStatistics statistics = GameStatistics.from(createGameParticipants(List.of(player1, player2), dealer));
+
+        Money totalPlayerProfit = Money.sumOf(List.of(
+                statistics.getProfit(player1),
+                statistics.getProfit(player2)
+        ));
+
+        Money dealerProfit = statistics.getDealerProfit();
+
+        // when
+        Money totalProfit = totalPlayerProfit.plus(dealerProfit);
+
+        // then
+        assertThat(Math.abs(totalProfit.getAmount())).isLessThanOrEqualTo(1); // ✅ 절삭을 고려한 오차 허용
     }
 }

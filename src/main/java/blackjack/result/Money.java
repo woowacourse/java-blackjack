@@ -29,6 +29,10 @@ public class Money {
         return Money.from(amount * profitPercent / percent);
     }
 
+    public Money negate() {
+        return new Money(-this.amount);
+    }
+
     public int getAmount() {
         return amount;
     }

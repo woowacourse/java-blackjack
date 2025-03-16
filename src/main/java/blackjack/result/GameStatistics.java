@@ -5,7 +5,6 @@ import blackjack.participant.Player;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class GameStatistics {
 
@@ -29,9 +28,11 @@ public class GameStatistics {
     }
 
     public Money getDealerProfit() {
-        return Money.sumOf(
+        Money sumOfPlayerProfit = Money.sumOf(
                 playerToResult.keySet().stream()
                         .map(this::getProfit)
                         .toList());
+
+        return sumOfPlayerProfit.negate();
     }
 }
