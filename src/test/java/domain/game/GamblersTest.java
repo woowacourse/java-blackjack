@@ -73,7 +73,7 @@ public class GamblersTest {
     void 딜러와_플레이어들에게_초기카드를_나눠준다() {
         Gamblers gamblers = TestFixtures.gamblers(dealer, List.of(player1, player2));
 
-        gamblers.distributeSetUpCards(new CardPack(Card.allCards()));
+        gamblers.distributeSetUpCards(CardPack.of(Card.allCards()));
 
         assertAll(
             () -> assertThat(dealer.getCards()).hasSize(2),
@@ -89,7 +89,7 @@ public class GamblersTest {
         List<Card> cards = List.of(
             Card.SPADE_A, Card.SPADE_2, Card.SPADE_3, Card.SPADE_4,
             Card.SPADE_5, Card.SPADE_6, Card.SPADE_7, Card.SPADE_8);
-        gamblers.distributeSetUpCards(new CardPack(cards));
+        gamblers.distributeSetUpCards(CardPack.of(cards));
 
         assertAll(
             () -> assertThat(dealer.getCards()).containsSequence(Card.SPADE_A, Card.SPADE_2),
@@ -108,7 +108,7 @@ public class GamblersTest {
         // 모든 참가자가 20점인 상황에서
 
         List<Card> cards = List.of(Card.SPADE_A, Card.SPADE_2, Card.SPADE_3);
-        gamblers.distributeExtraCardsToPlayers(new CardPack(cards),
+        gamblers.distributeExtraCardsToPlayers(CardPack.of(cards),
             GamblerAnswersForTest.onlyOnceOKPerGambler());
 
         assertAll(
@@ -126,7 +126,7 @@ public class GamblersTest {
 
         List<Card> cardsToDistribute = List.of(Card.SPADE_2, Card.SPADE_3, Card.SPADE_4,
             Card.SPADE_5);
-        gamblers.distributeExtraCardsToDealer(new CardPack(cardsToDistribute),
+        gamblers.distributeExtraCardsToDealer(CardPack.of(cardsToDistribute),
             GamblerAnswersForTest.alwaysOK());
 
         assertThat(dealer.getCards())
@@ -140,7 +140,7 @@ public class GamblersTest {
         dealer.takeCards(Card.SPADE_J, Card.SPADE_7); // 16이하가 아니라서 못받음.
         player1.takeCards(Card.CLOVER_10, Card.HEART_10, Card.CLOVER_2); // 21을 넘어 버스트됨.
 
-        CardPack cardPack = new CardPack(List.of(Card.SPADE_A, Card.SPADE_2));
+        CardPack cardPack = CardPack.of(List.of(Card.SPADE_A, Card.SPADE_2));
 
         //when
         gamblers.distributeExtraCardsToPlayers(cardPack, GamblerAnswersForTest.neverCalled());
@@ -158,7 +158,7 @@ public class GamblersTest {
         Gamblers gamblers = TestFixtures.gamblers(dealer, List.of(player1));
         player1.takeCards(Card.CLOVER_2, Card.CLOVER_3);
 
-        CardPack cardPack = new CardPack(List.of(Card.DIAMOND_J, Card.SPADE_J));
+        CardPack cardPack = CardPack.of(List.of(Card.DIAMOND_J, Card.SPADE_J));
         gamblers.distributeExtraCardsToPlayers(cardPack, GamblerAnswersForTest.neverOK());
 
         assertThat(player1.getCards()).containsOnly(Card.CLOVER_2, Card.CLOVER_3);
