@@ -9,10 +9,22 @@ import java.util.Objects;
 public class Player extends Participant {
 
     private final String name;
+    private final RoundHistory roundHistory;
 
-    public Player(String name, Hand hand) {
+    public Player(String name, Hand hand, RoundHistory roundHistory) {
         super(hand);
         this.name = name;
+        this.roundHistory = roundHistory;
+    }
+
+    public Player(String name, RoundHistory roundHistory) {
+        super(null);
+        this.name = name;
+        this.roundHistory = roundHistory;
+    }
+
+    public Player(String name, BettingMoney bettingMoney) {
+        this(name, new RoundHistory(Hand.createEmpty(), new BettingResult(bettingMoney)));
     }
 
     public String getName() {
