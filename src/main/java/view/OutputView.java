@@ -92,10 +92,10 @@ public class OutputView {
         System.out.println(NEXT_LINE + "딜러의 점수가 16점을 초과하므로 카드를 뽑지 않았습니다." + NEXT_LINE);
     }
 
-    public void printProfitResult(final Map<Gamer, Integer> gamerIntegerMap) {
+    public void printProfitResult(final Map<Gamer, Long> gamerIntegerMap) {
         StringJoiner sj = new StringJoiner(NEXT_LINE);
 
-        for (Entry<Gamer, Integer> gamerIntegerEntry : gamerIntegerMap.entrySet()) {
+        for (Entry<Gamer, Long> gamerIntegerEntry : gamerIntegerMap.entrySet()) {
             String profitFormat = String.format("%s: %d", gamerIntegerEntry.getKey().getName(),
                     gamerIntegerEntry.getValue());
             sj.add(profitFormat);

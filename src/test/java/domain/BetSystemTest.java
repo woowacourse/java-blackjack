@@ -70,15 +70,15 @@ class BetSystemTest {
         dealer.hit(deck);
 
         //when
-        Map<Gamer, Integer> actual = betSystem.calculateProfit(dealer, players);
+        Map<Gamer, Long> actual = betSystem.calculateProfit(dealer, players);
 
         //then
         assertThat(actual)
                 .containsExactlyInAnyOrderEntriesOf(
                         Map.of(
-                                dealer, 10000,
-                                pobi, 10000,
-                                jason, -20000
+                                dealer, 10000L,
+                                pobi, 10000L,
+                                jason, -20000L
                         )
                 );
     }
@@ -117,14 +117,14 @@ class BetSystemTest {
         dealer.hit(deck);
 
         //when
-        Map<Gamer, Integer> actual = betSystem.calculateProfit(dealer, players);
+        Map<Gamer, Long> actual = betSystem.calculateProfit(dealer, players);
 
         //then
         assertThat(actual).containsExactlyInAnyOrderEntriesOf(
                 Map.of(
-                        dealer, -2000,
-                        dogi, 1000,
-                        pobi, 1000
+                        dealer, -2000L,
+                        dogi, 1000L,
+                        pobi, 1000L
                 )
         );
     }
@@ -158,13 +158,13 @@ class BetSystemTest {
         betSystem.betting(dogi, 1000);
 
         //when
-        Map<Gamer, Integer> actual = betSystem.calculateProfit(dealer, players);
+        Map<Gamer, Long> actual = betSystem.calculateProfit(dealer, players);
 
         //then
         assertThat(actual).containsExactlyInAnyOrderEntriesOf(
                 Map.of(
-                        dealer, 1000,
-                        dogi, -1000
+                        dealer, 1000L,
+                        dogi, -1000L
                 )
         );
     }
@@ -198,13 +198,13 @@ class BetSystemTest {
         Dealer dealer = new Dealer();
 
         //when
-        Map<Gamer, Integer> actual = betSystem.calculateProfit(dealer, players);
+        Map<Gamer, Long> actual = betSystem.calculateProfit(dealer, players);
 
         //then
         assertThat(actual).containsExactlyInAnyOrderEntriesOf(
                 Map.of(
-                        dealer, -1500,
-                        player, 2500
+                        dealer, -1500L,
+                        player, 2500L
                 )
         );
     }
@@ -240,13 +240,13 @@ class BetSystemTest {
         dealer.prepareGame(deck);
 
         //when
-        Map<Gamer, Integer> actual = betSystem.calculateProfit(dealer, players);
+        Map<Gamer, Long> actual = betSystem.calculateProfit(dealer, players);
 
         //then
         assertThat(actual).containsExactlyInAnyOrderEntriesOf(
                 Map.of(
-                        dealer, 0,
-                        player, 0)
+                        dealer, 0L,
+                        player, 0L)
         );
     }
 
@@ -281,14 +281,14 @@ class BetSystemTest {
         player.prepareGame(deck);
 
         //when
-        Map<Gamer, Integer> actual = betSystem.calculateProfit(dealer, players);
+        Map<Gamer, Long> actual = betSystem.calculateProfit(dealer, players);
 
         //then
         assertThat(actual)
                 .containsExactlyInAnyOrderEntriesOf(
                         Map.of(
-                                dealer, 1000,
-                                player, -1000
+                                dealer, 1000L,
+                                player, -1000L
                         )
                 );
     }

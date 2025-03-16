@@ -48,13 +48,13 @@ public class BlackJackController {
     }
 
     private void profitResult(final BetSystem betSystem, final Dealer dealer, final List<Player> players) {
-        Map<Gamer, Integer> gamerIntegerMap = betSystem.calculateProfit(dealer, players);
+        Map<Gamer, Long> gamerIntegerMap = betSystem.calculateProfit(dealer, players);
         outputView.printProfitResult(gamerIntegerMap);
     }
 
     private boolean isPrepareBlackjack(final Dealer dealer, final List<Player> players, final BetSystem betSystem) {
         if (isPrepareCardsBlackjack(dealer, players)) {
-            Map<Gamer, Integer> gamerIntegerMap = betSystem.calculateProfit(dealer, players);
+            Map<Gamer, Long> gamerIntegerMap = betSystem.calculateProfit(dealer, players);
             outputView.printCardResult(dealer, players);
             outputView.printProfitResult(gamerIntegerMap);
             return true;
