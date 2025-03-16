@@ -1,14 +1,14 @@
 package domain.rule;
 
 public enum BlackjackMatchResult {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    WIN(1),
+    DRAW(0),
+    LOSE(-1);
 
-    private final String state;
+    private final double ratio;
 
-    BlackjackMatchResult(String state) {
-        this.state = state;
+    BlackjackMatchResult(double ratio) {
+        this.ratio = ratio;
     }
 
     public static BlackjackMatchResult judge(int referenceHandScore, int comparedHandScore) {
@@ -17,25 +17,13 @@ public enum BlackjackMatchResult {
         }
 
         if (referenceHandScore > comparedHandScore) {
-            return WIN;
-        }
-
-        return LOSE;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public BlackjackMatchResult reverse() {
-        if (this == WIN) {
             return LOSE;
         }
 
-        if (this == LOSE) {
-            return WIN;
-        }
+        return WIN;
+    }
 
-        return DRAW;
+    public double getRatio() {
+        return ratio;
     }
 }
