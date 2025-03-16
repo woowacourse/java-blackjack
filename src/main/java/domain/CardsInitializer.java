@@ -6,10 +6,10 @@ import java.util.List;
 
 public class CardsInitializer {
 
-    private final CardShuffler cardShuffler;
+    private final ShuffleStrategy cardShuffler;
 
-    public CardsInitializer(final CardShuffler cardShuffler) {
-        this.cardShuffler = cardShuffler;
+    public CardsInitializer(final ShuffleStrategy shuffleStrategy) {
+        this.cardShuffler = shuffleStrategy;
     }
 
     public List<Card> initialize() {
