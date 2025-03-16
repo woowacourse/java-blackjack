@@ -18,22 +18,21 @@ public class CardHandTest {
         @Test
         @DisplayName("카드를 여러장 배부 받을 수 있다.")
         void distributeTwoCards() {
-            List<Card> initialCards = new ArrayList<>(List.of(
+            List<Card> cards = new ArrayList<>(List.of(
                 new Card(Suit.HEART, Denomination.ACE),
                 new Card(Suit.SPADE, Denomination.KING)
             ));
-            CardDeck cardDeck = new CardDeck(initialCards);
-
             CardHand cardHand = new CardHand(21);
-            cardHand.addCards(cardDeck, 2);
-            List<Card> cards = cardHand.openCards();
+            cardHand.addCards(cards);
+
+            List<Card> result = cardHand.openCards();
 
             assertAll(() -> {
-                assertThat(cards).hasSize(2);
-                assertThat(cards.getFirst().suit()).isEqualTo(Suit.HEART);
-                assertThat(cards.getFirst().denomination()).isEqualTo(Denomination.ACE);
-                assertThat(cards.getLast().suit()).isEqualTo(Suit.SPADE);
-                assertThat(cards.getLast().denomination()).isEqualTo(Denomination.KING);
+                assertThat(result).hasSize(2);
+                assertThat(result.getFirst().suit()).isEqualTo(Suit.HEART);
+                assertThat(result.getFirst().denomination()).isEqualTo(Denomination.ACE);
+                assertThat(result.getLast().suit()).isEqualTo(Suit.SPADE);
+                assertThat(result.getLast().denomination()).isEqualTo(Denomination.KING);
             });
         }
     }
@@ -45,14 +44,12 @@ public class CardHandTest {
         @Test
         @DisplayName("처음 두 장의 카드가 21인 경우 블랙잭이다.")
         void checkBlackjack() {
-            List<Card> initialCards = new ArrayList<>(List.of(
+            List<Card> cards = new ArrayList<>(List.of(
                 new Card(Suit.HEART, Denomination.ACE),
                 new Card(Suit.SPADE, Denomination.KING)
             ));
-            CardDeck cardDeck = new CardDeck(initialCards);
-
             CardHand cardHand = new CardHand(21);
-            cardHand.addCards(cardDeck, 2);
+            cardHand.addCards(cards);
 
             assertThat(cardHand.isBlackjack()).isTrue();
         }
@@ -60,15 +57,13 @@ public class CardHandTest {
         @Test
         @DisplayName("카드의 합이 21을 넘는 경우 버스트이다.")
         void checkBust() {
-            List<Card> initialCards = new ArrayList<>(List.of(
+            List<Card> cards = new ArrayList<>(List.of(
                 new Card(Suit.HEART, Denomination.SIX),
                 new Card(Suit.SPADE, Denomination.KING),
                 new Card(Suit.SPADE, Denomination.SEVEN)
             ));
-            CardDeck cardDeck = new CardDeck(initialCards);
-
             CardHand cardHand = new CardHand(21);
-            cardHand.addCards(cardDeck, 3);
+            cardHand.addCards(cards);
 
             assertThat(cardHand.isBust()).isTrue();
         }
@@ -81,14 +76,13 @@ public class CardHandTest {
         @Test
         @DisplayName("에이스가 없을 시 단순 합을 계산한다.")
         void cardSumWithoutACE() {
-            List<Card> initialCards = new ArrayList<>(List.of(
+            List<Card> cards = new ArrayList<>(List.of(
                 new Card(Suit.HEART, Denomination.TWO),
                 new Card(Suit.SPADE, Denomination.KING)
             ));
-            CardDeck cardDeck = new CardDeck(initialCards);
-
             CardHand cardHand = new CardHand(21);
-            cardHand.addCards(cardDeck, 2);
+            cardHand.addCards(cards);
+
             int cardSum = cardHand.calculateDenominations();
 
             assertThat(cardSum).isEqualTo(12);
@@ -97,34 +91,32 @@ public class CardHandTest {
         @Test
         @DisplayName("에이스를 11로 계산한다.")
         void cardSumWithACE_ELEVEN() {
-            List<Card> initialCards = new ArrayList<>(List.of(
+            List<Card> cards = new ArrayList<>(List.of(
                 new Card(Suit.HEART, Denomination.ACE),
                 new Card(Suit.SPADE, Denomination.KING)
             ));
-            CardDeck cardDeck = new CardDeck(initialCards);
-
             CardHand cardHand = new CardHand(21);
-            cardHand.addCards(cardDeck, 2);
-            int cardSumWithAceValue11 = cardHand.calculateDenominations();
+            cardHand.addCards(cards);
 
-            assertThat(cardSumWithAceValue11).isEqualTo(21);
+            int cardSum = cardHand.calculateDenominations();
+
+            assertThat(cardSum).isEqualTo(21);
         }
 
         @Test
         @DisplayName("에이스를 1로 계산한다.")
         void cardSumWithACE_ONE() {
-            List<Card> initialCards = new ArrayList<>(List.of(
+            List<Card> cards = new ArrayList<>(List.of(
                 new Card(Suit.HEART, Denomination.TWO),
                 new Card(Suit.SPADE, Denomination.TEN),
                 new Card(Suit.CLUB, Denomination.ACE)
             ));
-            CardDeck cardDeck = new CardDeck(initialCards);
-
             CardHand cardHand = new CardHand(21);
-            cardHand.addCards(cardDeck, 3);
-            int cardSumWithAceValue1 = cardHand.calculateDenominations();
+            cardHand.addCards(cards);
 
-            assertThat(cardSumWithAceValue1).isEqualTo(13);
+            int cardSum = cardHand.calculateDenominations();
+
+            assertThat(cardSum).isEqualTo(13);
         }
     }
 
@@ -135,30 +127,26 @@ public class CardHandTest {
         @Test
         @DisplayName("모든 카드를 공개 가능하다.")
         void openAllCards() {
-            List<Card> initialCards = new ArrayList<>(List.of(
+            List<Card> cards = new ArrayList<>(List.of(
                 new Card(Suit.HEART, Denomination.ACE),
                 new Card(Suit.SPADE, Denomination.KING)
             ));
-            CardDeck cardDeck = new CardDeck(initialCards);
-
             CardHand cardHand = new CardHand(21);
-            cardHand.addCards(cardDeck, 2);
+            cardHand.addCards(cards);
 
             assertThat(cardHand.openCards()).hasSize(2);
         }
 
         @Test
-        @DisplayName("처음 배부 카드는원하는 개수만큼 공개 가능하다.")
+        @DisplayName("처음 배부 카드는 원하는 개수만큼 공개 가능하다.")
         void openCardsWithCount() {
-            List<Card> initialCards = new ArrayList<>(List.of(
+            List<Card> cards = new ArrayList<>(List.of(
                 new Card(Suit.HEART, Denomination.SIX),
                 new Card(Suit.SPADE, Denomination.KING),
                 new Card(Suit.SPADE, Denomination.SEVEN)
             ));
-            CardDeck cardDeck = new CardDeck(initialCards);
-
             CardHand cardHand = new CardHand(21);
-            cardHand.addCards(cardDeck, 3);
+            cardHand.addCards(cards);
 
             assertThat(cardHand.openInitialCards(2)).hasSize(2);
         }
@@ -171,16 +159,28 @@ public class CardHandTest {
         @Test
         @DisplayName("기준치를 넘지 않으면 카드를 추가할 수 있다.")
         void checkPossibleToAdd() {
-            List<Card> initialCards = new ArrayList<>(List.of(
+            List<Card> cards = new ArrayList<>(List.of(
                 new Card(Suit.HEART, Denomination.TWO),
                 new Card(Suit.SPADE, Denomination.KING)
             ));
-            CardDeck cardDeck = new CardDeck(initialCards);
-
             CardHand cardHand = new CardHand(21);
-            cardHand.addCards(cardDeck, 2);
+            cardHand.addCards(cards);
 
             assertThat(cardHand.isPossibleToAdd()).isTrue();
+        }
+
+        @Test
+        @DisplayName("기준치를 넘지으면 카드를 추가할 수 없다.")
+        void checkImPossibleToAdd() {
+            List<Card> cards = new ArrayList<>(List.of(
+                new Card(Suit.HEART, Denomination.TEN),
+                new Card(Suit.SPADE, Denomination.KING),
+                new Card(Suit.SPADE, Denomination.THREE)
+            ));
+            CardHand cardHand = new CardHand(21);
+            cardHand.addCards(cards);
+
+            assertThat(cardHand.isPossibleToAdd()).isFalse();
         }
     }
 }
