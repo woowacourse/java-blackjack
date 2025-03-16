@@ -150,4 +150,45 @@ class GameResultTest {
 
         assertThat(GameResult.getGameResult(dealer, gambler)).isEqualTo(GameResult.WIN);
     }
+
+    @Test
+    @DisplayName("둘다 BLACKJACK 이라면 DRAW 이다")
+    void both_bust_test4() {
+        Gambler gambler = new Gambler(new PlayerName("두리"), new BetAmount(0), new Cards());
+        Players players = new Players(new Dealer(new Cards()), List.of(gambler));
+        GameManager gameManager = new GameManager(CardPack.createShuffled(), players);
+        Dealer dealer = gameManager.getPlayers().getDealer();
+
+        dealer.pushDealCards(List.of(
+                new Card(CardNumber.QUEEN, CardShape.CLOVER),
+                new Card(CardNumber.ACE, CardShape.CLOVER)
+        ));
+        gambler.pushDealCards(List.of(
+                new Card(CardNumber.QUEEN, CardShape.CLOVER),
+                new Card(CardNumber.ACE, CardShape.CLOVER)
+        ));
+
+        assertThat(GameResult.getGameResult(dealer, gambler)).isEqualTo(GameResult.DRAW);
+    }
+
+    @Test
+    @DisplayName("겜블러가 BLACKJACK이고 딜러 3장의 합이 21이면 겜블러가 BLACKJACK이다")
+    void both_bust_test5() {
+        Gambler gambler = new Gambler(new PlayerName("두리"), new BetAmount(0), new Cards());
+        Players players = new Players(new Dealer(new Cards()), List.of(gambler));
+        GameManager gameManager = new GameManager(CardPack.createShuffled(), players);
+        Dealer dealer = gameManager.getPlayers().getDealer();
+
+        dealer.pushDealCards(List.of(
+                new Card(CardNumber.QUEEN, CardShape.CLOVER),
+                new Card(CardNumber.QUEEN, CardShape.HEART),
+                new Card(CardNumber.ACE, CardShape.CLOVER)
+        ));
+        gambler.pushDealCards(List.of(
+                new Card(CardNumber.QUEEN, CardShape.CLOVER),
+                new Card(CardNumber.ACE, CardShape.CLOVER)
+        ));
+        System.out.println(dealer.getGameScore().isBlackJack());
+        assertThat(GameResult.getGameResult(dealer, gambler)).isEqualTo(GameResult.BLACKJACK);
+    }
 }
