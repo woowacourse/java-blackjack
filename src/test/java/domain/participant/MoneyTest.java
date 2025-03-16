@@ -21,5 +21,13 @@ class MoneyTest {
                 .hasMessage("[ERROR] 배팅 금액은 만원 단위입니다.");
     }
 
+    @Test
+    @DisplayName("돈 음수 검증 테스트")
+    void validateZeroDivisibleByTenThousandTest() {
+        assertThatThrownBy(() -> new Money(0))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 배팅 금액은 만원 단위입니다.");
+    }
+
 
 }
