@@ -87,16 +87,6 @@ public class OutputView {
         System.out.println(LINE + "딜러는 17이상이라 더이상 카드를 받을 수 없습니다." + LINE);
     }
 
-    /*public void outputFinalResult(final Map<Participant, ParticipantResult> participantResults, final Map<ParticipantResult, Integer> participantResultCounts) {
-        System.out.println("## 최종 승패");
-        CustomStringBuilder customStringBuilder = new CustomStringBuilder();
-        customStringBuilder.appendLine(String.format("딜러: %d승 %d패", participantResultCounts.get(LOSE), participantResultCounts.get(WIN)));
-        for (Map.Entry<Participant, ParticipantResult> resultEntry : participantResults.entrySet()) {
-            customStringBuilder.appendLine(String.format("%s: %s", resultEntry.getKey().getName(), resultEntry.getValue().getDescription()));
-        }
-        customStringBuilder.print();
-    }*/
-
     public void outputFinalWinningMoney(final Participants participants, final int dealerMoney, final Map<Participant, Integer> winningMoney) {
         System.out.println("## 최종 수익");
         CustomStringBuilder customStringBuilder = new CustomStringBuilder();
