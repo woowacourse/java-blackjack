@@ -17,6 +17,10 @@ public class Players {
         this(Collections.emptyList());
     }
 
+    public void addAll(List<Player> players) {
+        this.players.addAll(players);
+    }
+
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }

@@ -13,4 +13,8 @@ public class BettingResult {
     public BettingResult(BettingMoney bettingMoney) {
         this(bettingMoney, GameResultStatus.IN_PROGRESS);
     }
+
+    public BettingResult() {
+        this(null, null);
+    }
 }

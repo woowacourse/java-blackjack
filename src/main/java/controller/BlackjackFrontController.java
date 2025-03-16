@@ -20,7 +20,7 @@ public class BlackjackFrontController {
 
     public void startBetting() {
         List<BettingRequest> bettingRequests = consoleView.requestBetting();
-        blackjackController.createGame(bettingRequests);
+        blackjackController.registerBettingPlayers(bettingRequests);
     }
 
     public void initialDeal() {

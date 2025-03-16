@@ -27,6 +27,10 @@ public class Player extends Participant {
         this(name, new RoundHistory(Hand.createEmpty(), new BettingResult(bettingMoney)));
     }
 
+    public Player(String name, Hand hand) {
+        this(name, hand, new RoundHistory(Hand.createEmpty(), new BettingResult()));
+    }
+
     public String getName() {
         return name;
     }
