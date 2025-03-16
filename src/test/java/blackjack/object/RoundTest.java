@@ -68,10 +68,10 @@ class RoundTest {
         assertThat(round.getScore(playerName)).isEqualTo(20);
     }
 
-    @DisplayName("딜러와 플레이어의 카드 및 점수 정보를 가진 승패 판별기를 만든다")
+    @DisplayName("딜러와 플레이어의 카드 및 점수 정보를 가진 수익 게산기를 만든다.")
     @CsvSource(value = {"딜러:10000", "라젤:-10000"}, delimiterString = ":")
     @ParameterizedTest
-    void getWinningDiscriminator(Name type, int expected) {
+    void getProfitCalculator(Name type, int expected) {
         // given
         Card card1 = new Card(CardShape.CLOVER, CardType.TEN);
         Card card2 = new Card(CardShape.CLOVER, CardType.EIGHT);
@@ -88,7 +88,7 @@ class RoundTest {
         round.distributeInitialCards();
 
         // when
-        ProfitCalculator result = round.getWinningDiscriminator(bettingRecords);
+        ProfitCalculator result = round.getProfitCalculator(bettingRecords);
         Map<Name, Integer> dealerWinning = result.calculateGamblerProfit();
 
         // then

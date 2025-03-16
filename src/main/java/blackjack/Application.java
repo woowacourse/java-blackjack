@@ -128,7 +128,7 @@ public class Application {
             int score = round.getScore(playerName);
             printGamblerResult(playerName, cards, score);
         }
-        ProfitCalculator discriminator = round.getWinningDiscriminator(bettingRecords);
+        ProfitCalculator discriminator = round.getProfitCalculator(bettingRecords);
         printWinning(discriminator);
     }
 }

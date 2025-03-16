@@ -10,7 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class WinningTypeDiscriminatorTest {
+class ProfitCalculatorTest {
     @DisplayName("딜러의 합계가 21이 넘지 않는 경우 겜블러의 수익을 구한다.")
     @CsvSource(value = {"라젤:5000", "레오:15000", "비타:-5000",  "새로이:-10000", "꾹이:0", "딜러:-5000"}, delimiterString = ":")
     @ParameterizedTest
