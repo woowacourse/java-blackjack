@@ -7,6 +7,8 @@ import java.util.Objects;
 public class Hand {
 
     private static final int HAND_LIMIT = 21;
+    private static final int ACE_OPTION = 10;
+    private static final int BLACKJACK_CARD_SIZE = 2;
     private final List<TrumpCard> cards;
 
     public Hand(List<TrumpCard> cards) {
@@ -64,15 +66,15 @@ public class Hand {
     }
 
     private int calculateAceBonusScore(int totalScore, int aceCount) {
-        if (aceCount > 0 && totalScore + 10 <= HAND_LIMIT) {
-            return 10;
+        if (aceCount > 0 && totalScore + ACE_OPTION <= HAND_LIMIT) {
+            return ACE_OPTION;
         }
 
         return 0;
     }
 
     public boolean isBlackJack() {
-        return cards.size() == 2 && calculateTotalScore() == HAND_LIMIT;
+        return cards.size() == BLACKJACK_CARD_SIZE && calculateTotalScore() == HAND_LIMIT;
     }
 
     public boolean isBust() {
