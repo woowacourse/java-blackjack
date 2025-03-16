@@ -46,10 +46,6 @@ class GameManagerTest {
     @DisplayName("플레이어의 카드가 버스트면 TRUE를 반환한다")
     void ifThePlayerS_CardIsBurstItReturns_True() {
         Gambler gambler = new Gambler(new PlayerName("비타"), new BetAmount(0), new Cards());
-        List<Gambler> names = List.of(gambler);
-        Players players = new Players(new Dealer(new Cards()), names);
-        GameManager gameManager = new GameManager(CardPack.createShuffled(), players);
-        gameManager.dealInitCards();
         gambler.pushDealCards(List.of(
                 new Card(CardNumber.QUEEN, CardShape.CLOVER),
                 new Card(CardNumber.KING, CardShape.CLOVER),
