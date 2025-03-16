@@ -14,26 +14,26 @@ public class Player extends Gamer {
         this.bettingMachine = new BettingMachine();
     }
 
-    public void bet(final String bettingAmount) {
+    public void betMoney(final String bettingAmount) {
         bettingMachine.bet(bettingAmount);
     }
 
-    public void win() {
+    public void winGame() {
         bettingMachine.earnDouble();
     }
 
-    public void draw() {
+    public void drawGame() {
         bettingMachine.earnSingle();
     }
 
-    public void lose() {
+    public void loseGame() {
     }
 
-    public void blackjack() {
+    public void blackjackGame() {
         bettingMachine.earnOneAndHalf();
     }
 
-    public void push() {
+    public void pushGame() {
         bettingMachine.earnSingle();
     }
 

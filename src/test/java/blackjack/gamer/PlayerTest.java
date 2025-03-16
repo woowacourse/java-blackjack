@@ -61,8 +61,8 @@ class PlayerTest {
         // given
 
         // when
-        player.bet("10000");
-        player.win();
+        player.betMoney("10000");
+        player.winGame();
 
         // then
         assertThat(player.getProfit()).isEqualTo(10_000);
@@ -74,8 +74,8 @@ class PlayerTest {
         // given
 
         // when
-        player.bet("10000");
-        player.lose();
+        player.betMoney("10000");
+        player.loseGame();
 
         // then
         assertThat(player.getProfit()).isEqualTo(-10_000);
@@ -87,8 +87,8 @@ class PlayerTest {
         // given
 
         // when
-        player.bet("10000");
-        player.draw();
+        player.betMoney("10000");
+        player.drawGame();
 
         // then
         assertThat(player.getProfit()).isEqualTo(0);
@@ -100,8 +100,8 @@ class PlayerTest {
         // given
 
         // when
-        player.bet("10000");
-        player.blackjack();
+        player.betMoney("10000");
+        player.blackjackGame();
 
         // then
         assertThat(player.getProfit()).isEqualTo(5_000);
@@ -113,8 +113,8 @@ class PlayerTest {
         // given
 
         // when
-        player.bet("10000");
-        player.push();
+        player.betMoney("10000");
+        player.pushGame();
 
         // then
         assertThat(player.getProfit()).isEqualTo(0);

@@ -14,7 +14,7 @@ public class Blackjack {
     private static final int BLACKJACK_CARD_COUNT = 2;
 
     public void betMoney(final Player player, final String amount) {
-        player.bet(amount);
+        player.betMoney(amount);
     }
 
     public void spreadInitCardsToDealer(final Dealer dealer) {
@@ -119,11 +119,11 @@ public class Blackjack {
     private static void calculatePlayersEarnedMoney(final Map<Player, WinningStatus> winningResult,
                                                     final Players players) {
         Map<WinningStatus, Consumer<Player>> actionMap = Map.of(
-                WinningStatus.WIN, Player::win,
-                WinningStatus.DRAW, Player::draw,
-                WinningStatus.LOSE, Player::lose,
-                WinningStatus.BLACKJACK, Player::blackjack,
-                WinningStatus.PUSH, Player::push
+                WinningStatus.WIN, Player::winGame,
+                WinningStatus.DRAW, Player::drawGame,
+                WinningStatus.LOSE, Player::loseGame,
+                WinningStatus.BLACKJACK, Player::blackjackGame,
+                WinningStatus.PUSH, Player::pushGame
         );
 
         for (Player player : players.getPlayers()) {

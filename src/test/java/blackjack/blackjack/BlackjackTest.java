@@ -145,10 +145,10 @@ class BlackjackTest {
         final Player player3 = players.getPlayers().get(2);
         final Player player4 = players.getPlayers().get(3);
 
-        player1.bet("10000");
-        player2.bet("10000");
-        player3.bet("10000");
-        player4.bet("10000");
+        player1.betMoney("10000");
+        player2.betMoney("10000");
+        player3.betMoney("10000");
+        player4.betMoney("10000");
 
         dealer.receiveCards(provideSum18Cards());
         player1.receiveCards(provideBlackjackCards());
