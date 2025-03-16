@@ -1,4 +1,4 @@
-package gameResult;
+package result;
 
 import participant.Dealer;
 import participant.Player;

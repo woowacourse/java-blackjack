@@ -3,7 +3,7 @@ package view;
 import card.Card;
 import card.Suit;
 import card.Rank;
-import gameResult.MatchResultType;
+import result.MatchResultType;
 import participant.Dealer;
 import participant.Player;
 import participant.Players;
