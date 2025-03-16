@@ -1,19 +1,20 @@
-package domain.gamer;
+package blackjack.gamer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.card.Card;
-import domain.card.CardDeck;
-import domain.card.CardRank;
-import domain.card.CardSymbol;
-import domain.card.Hand;
-import domain.rule.BlackjackMatchResult;
-import domain.state.started.finished.Stay;
-import domain.state.started.running.Hit;
+import blackjack.card.Card;
+import blackjack.card.CardDeck;
+import blackjack.card.CardRank;
+import blackjack.card.CardSymbol;
+import blackjack.card.Hand;
+import blackjack.result.ProfitResult;
+import blackjack.state.started.finished.Stay;
+import blackjack.state.started.running.Hit;
 import fixture.BettingFixture;
 import fixture.CardDeckFixture;
 import fixture.HandFixture;
 import fixture.NicknameFixture;
+import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -42,17 +43,17 @@ class DealerTest {
                 Arguments.of(new Player(HandFixture.createHand(Card.of(CardSymbol.SPADE, CardRank.EIGHT),
                                 Card.of(CardSymbol.SPADE, CardRank.EIGHT)),
                                 NicknameFixture.createNickname("ad"), BettingFixture.createBetting(1000)),
-                        BlackjackMatchResult.LOSE
+                        -1000
                 ),
                 Arguments.of(new Player(HandFixture.createHand(Card.of(CardSymbol.SPADE, CardRank.EIGHT),
                                 Card.of(CardSymbol.SPADE, CardRank.JACK)),
                                 NicknameFixture.createNickname("ad"), BettingFixture.createBetting(1000)),
-                        BlackjackMatchResult.WIN
+                        1000
                 ),
                 Arguments.of(new Player(HandFixture.createHand(Card.of(CardSymbol.SPADE, CardRank.EIGHT),
                                 Card.of(CardSymbol.SPADE, CardRank.NINE)),
                                 NicknameFixture.createNickname("ad"), BettingFixture.createBetting(1000)),
-                        BlackjackMatchResult.DRAW
+                        0
                 )
         );
     }
@@ -73,10 +74,10 @@ class DealerTest {
         assertThat(actual).isInstanceOf(expected);
     }
 
-    @DisplayName("딜러는 플레이어의 승패 결과를 도출한다.")
+    @DisplayName("딜러는 플레이어의 수익 결과를 도출한다.")
     @ParameterizedTest
     @MethodSource("providePlayersAndExpected")
-    void determineMatchResult(Player player, BlackjackMatchResult expected) {
+    void determineMatchResult(Player player, int expected) {
         // given
         CardDeck cardDeck = CardDeckFixture.createCardDeck(
                 Card.of(CardSymbol.SPADE, CardRank.SEVEN),
@@ -85,9 +86,11 @@ class DealerTest {
         Hand hand = new Hand(cardDeck);
 
         Dealer dealer = new Dealer(hand);
+        player.stay();
 
         // when
-        BlackjackMatchResult actual = dealer.determineMatchResultFor(player);
+        ProfitResult profitResult = dealer.calculateProfits(List.of(player));
+        int actual = profitResult.getPlayerProfits().get(player);
 
         // then
         assertThat(actual).isEqualTo(expected);
