@@ -3,6 +3,7 @@ package blackjack;
 import bet.BetManager;
 import card.DeckGenerator;
 import player.Player;
+import result.PlayerResult;
 import view.InputView;
 import view.OutputView;
 
@@ -25,6 +26,7 @@ public class ConsoleBlackjackGame {
         openInitialCards(blackjack);
         addMoreCards(blackjack);
 
+        PlayerResult playerResult = new PlayerResult(blackjack.getDealer(), blackjack.getParticipants());
         outputView.printPlayersCardsAndSum(blackjack.getDealer(),
                 blackjack.getParticipants(), blackjack.getNameAndSumOfAllPlayers());
     }
@@ -69,7 +71,7 @@ public class ConsoleBlackjackGame {
         addMoreCards(blackjack, participant);
     }
 
-    private void printMatchResults(Blackjack blackjack) {
-        outputView.printMatchResult(blackjack.computeDealerMatchResult(), blackjack.computeParticipantsMatchResult());
+    private void printMatchResults(PlayerResult playerResult) {
+        outputView.printMatchResult(playerResult.computeDealerMatchResult(), playerResult.getMatchResults());
     }
 }

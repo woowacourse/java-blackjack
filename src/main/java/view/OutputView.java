@@ -1,7 +1,7 @@
 package view;
 
 import card.Card;
-import blackjack.MatchResult;
+import result.MatchResult;
 import player.Player;
 import java.util.List;
 import java.util.Map;
@@ -47,10 +47,10 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.%n");
     }
 
-    public void printMatchResult(Map<MatchResult, Integer> dealerResult, Map<String, MatchResult> participantsResult) {
+    public void printMatchResult(Map<MatchResult, Integer> dealerResult, Map<Player, MatchResult> participantsResult) {
         System.out.printf("딜러: %s%n", convertToDealerMatchResultFormat(dealerResult));
 
-        participantsResult.forEach((key, value) -> System.out.printf("%s: %s%n", key, value.getTitle()));
+        participantsResult.forEach((key, value) -> System.out.printf("%s: %s%n", key.getName(), value.getTitle()));
     }
 
     private String convertToDealerMatchResultFormat(Map<MatchResult, Integer> dealerResult) {

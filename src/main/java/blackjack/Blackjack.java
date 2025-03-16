@@ -2,16 +2,14 @@ package blackjack;
 
 import card.Card;
 import card.Deck;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import player.Dealer;
 import player.Participant;
 import player.Player;
 import player.Players;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Blackjack {
     private final Players players;
@@ -65,29 +63,6 @@ public class Blackjack {
     }
 
     public List<Player> getParticipants() {
-        return players.getParticipants()
-                .stream()
-                .toList();
-    }
-
-    public Map<MatchResult, Integer> computeDealerMatchResult() {
-        Map<String, MatchResult> participantNameAndMatchResult = computeParticipantsMatchResult();
-        Map<MatchResult, Integer> matchResultCount = new EnumMap<>(MatchResult.class);
-
-        participantNameAndMatchResult.forEach((key, value) -> matchResultCount.put(MatchResult.inverse(value),
-                matchResultCount.getOrDefault(MatchResult.inverse(value), 0) + 1));
-
-        return matchResultCount;
-    }
-
-    public Map<String, MatchResult> computeParticipantsMatchResult() {
-        Map<String, MatchResult> participantNameAndMatchResult = new LinkedHashMap<>();
-        Player dealer = getDealer();
-
-        for (Player participant : getParticipants()) {
-            MatchResult matchResult = MatchResult.calculateParticipantMatchResult(dealer, participant);
-            participantNameAndMatchResult.put(participant.getName(), matchResult);
-        }
-        return participantNameAndMatchResult;
+        return players.getParticipants();
     }
 }

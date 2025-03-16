@@ -1,5 +1,6 @@
-package blackjack;
+package result;
 
+import blackjack.Blackjack;
 import card.Card;
 import card.CardRank;
 import card.CardSuit;

@@ -1,4 +1,4 @@
-package blackjack;
+package result;
 
 import player.Player;
 
