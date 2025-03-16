@@ -136,8 +136,7 @@ public class BlackJackTest {
 
         //when
         blackJack.hitCardsToParticipant();
-        Map<Player, Integer> playerMatchResultMap = blackJack.calculatePlayerResult();
-        int profit = blackJack.calculateDealerResult(playerMatchResultMap);
+        int profit = blackJack.calculateDealerResult();
 
         // then
         assertThat(profit).isEqualTo(-2000);

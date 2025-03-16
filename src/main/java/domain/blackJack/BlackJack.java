@@ -41,7 +41,9 @@ public class BlackJack {
         return players.calculateProfit(dealer);
     }
 
-    public int calculateDealerResult(Map<Player, Integer> profitOfPlayer) {
+    public int calculateDealerResult() {
+        Map<Player, Integer> profitOfPlayer = players.calculateProfit(dealer);
+
         int sum = 0;
         for (Integer value : profitOfPlayer.values()) {
             sum += value;
