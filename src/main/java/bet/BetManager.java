@@ -3,6 +3,7 @@ package bet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import player.Player;
+import result.MatchResult;
 
 public class BetManager {
     private final Map<Player, Bet> wager;
@@ -15,8 +16,8 @@ public class BetManager {
         wager.put(player, new Bet(amount));
     }
 
-    public void calculateBettingResult(boolean isBlackjack, boolean isWinner, boolean isDraw) {
-        wager.forEach((key, value) -> value.calculateBettingResult(isBlackjack, isWinner, isDraw));
+    public void calculateBettingResult(Map<Player, MatchResult> matchResults) {
+        wager.forEach((key, value) -> value.calculateBettingResult(matchResults.get(key)));
     }
 
     public Bet getBet(Player player) {
@@ -31,11 +32,6 @@ public class BetManager {
         return - wager.values().stream()
                 .mapToInt(Bet::getAmount)
                 .sum();
-    }
-
-    public int getBetAmount(Player player) {
-        Bet bet = getBet(player);
-        return bet.getAmount();
     }
 
     public Map<Player, Bet> getWager() {

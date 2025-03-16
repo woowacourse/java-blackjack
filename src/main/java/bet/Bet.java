@@ -1,5 +1,7 @@
 package bet;
 
+import result.MatchResult;
+
 public class Bet {
     private int amount;
 
@@ -8,21 +10,19 @@ public class Bet {
         this.amount = amount;
     }
 
-    public void calculateBettingResult(boolean isBlackjack, boolean isWinner, boolean isDraw) {
-        if (isBlackjack) {
-            amount = amount + (int) (amount * 1.5);
+    public void calculateBettingResult(MatchResult matchResult) {
+        if (matchResult == MatchResult.WIN_WITH_BLACKJACK) {
+            amount = (int) (amount * 1.5);
             return;
         }
-        if (isWinner) {
-            amount = amount + amount;
+        if (matchResult == MatchResult.LOSE) {
+            amount = -amount;
             return;
         }
-        if (isDraw) {
-            return;
+        if (matchResult == MatchResult.DRAW) {
+            amount = amount - amount;
         }
-        amount = amount - amount;
     }
-    // TODO: amount를 final로 만들고 새로운 Bet을 만들 것인가, 아니면 amount만 바꿔줄 것인가
 
     public int getAmount() {
         return amount;
