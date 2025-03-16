@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Dealer implements Participant {
 
+    private static final int CARD_DRAW_THRESHOLD = 16;
+
     private final Hand hand;
 
     public Dealer(Hand hand) {
@@ -39,7 +41,7 @@ public class Dealer implements Participant {
     @Override
     public boolean ableToTakeMoreCards() {
         return hand.calculatePossibleSums().stream()
-                .allMatch(sum -> sum <= 16);
+                .allMatch(sum -> sum <= CARD_DRAW_THRESHOLD);
     }
 
     @Override
