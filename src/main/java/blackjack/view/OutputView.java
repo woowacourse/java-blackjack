@@ -18,23 +18,17 @@ public class OutputView {
         System.out.printf("%s의 배팅 금액은?(1만원에서 1,000만원까지 배팅 가능합니다.)%n", name.getText());
     }
 
-    public void printInitDistributionMessage(final List<PlayerName> playerNames) {
+    public void printInitDistributionResult(final Dealer dealer, final Players players) {
         System.out.println();
-        List<String> names = playerNames.stream()
+        List<String> names = players.getPlayerNames().stream()
             .map(PlayerName::getText)
             .toList();
+
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", String.join(", ", names));
-    }
-
-    public void printDealerInitialCardResult(final Dealer dealer) {
-        String cardResult = parseCardToString(dealer.openInitialCards());
-        System.out.printf("딜러카드: %s%n", cardResult);
-    }
-
-    public void printPlayersInitialCardResult(final Players players) {
+        System.out.printf("딜러카드: %s%n", parseCardToString(dealer.openInitialCards()));
         for (Player player : players.getJoinedPlayers()) {
-            String cardResult = parseCardToString(player.openInitialCards());
-            System.out.printf("%s카드: %s%n", player.getName().getText(), cardResult);
+            System.out.printf("%s카드: %s%n", player.getName().getText(),
+                parseCardToString(player.openInitialCards()));
         }
     }
 
@@ -51,31 +45,25 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받습니다.");
     }
 
-    public void printDealerFinalCardResult(final Dealer dealer) {
+    public void printFinalCardResult(final Dealer dealer, final Players players) {
         System.out.println();
-        String cardResult = parseCardToString(dealer.getCardHand().openCards());
-        System.out.printf("딜러카드: %s - 결과: %d%n", cardResult,
-            dealer.getCardHand().calculateDenominations());
-    }
 
-    public void printPlayersFinalCardResult(final Players players) {
+        System.out.printf("딜러카드: %s - 결과: %d%n",
+            parseCardToString(dealer.getCardHand().openCards()),
+            dealer.getCardHand().calculateDenominations());
+
         for (Player player : players.getJoinedPlayers()) {
-            String cardResult = parseCardToString(player.getCardHand().openCards());
-            System.out.printf("%s카드: %s - 결과 %d%n", player.getName().getText(), cardResult,
+            System.out.printf("%s카드: %s - 결과 %d%n", player.getName().getText(),
+                parseCardToString(player.getCardHand().openCards()),
                 player.getCardHand().calculateDenominations());
         }
     }
 
-    public void printProfitResultTitle() {
+    public void printProfitResult(final int dealerProfit, final Players players) {
         System.out.println();
         System.out.println("## 최종 수익");
-    }
 
-    public void printDealerProfitResult(final int dealerProfitResult) {
-        System.out.printf("딜러: %,d%n", dealerProfitResult);
-    }
-
-    public void printPlayerProfitResult(final Players players) {
+        System.out.printf("딜러: %,d%n", dealerProfit);
         players.getJoinedPlayers().forEach(player ->
             System.out.printf("%s: %,d%n",
                 player.getName().getText(), player.getBetAmount().getProfit()));

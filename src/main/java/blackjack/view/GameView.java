@@ -40,10 +40,7 @@ public class GameView {
 
     private void distributeInitialCards(final BlackjackGame game) {
         game.initCardsToUsers();
-
-        outputView.printInitDistributionMessage(game.getPlayerNames());
-        outputView.printDealerInitialCardResult(game.getDealer());
-        outputView.printPlayersInitialCardResult(game.getPlayers());
+        outputView.printInitDistributionResult(game.getDealer(), game.getPlayers());
     }
 
     private void distributeAdditionalCards(final BlackjackGame game) {
@@ -74,14 +71,10 @@ public class GameView {
     }
 
     private void showFinalCardsAndProfits(final BlackjackGame game) {
-        outputView.printDealerFinalCardResult(game.getDealer());
-        outputView.printPlayersFinalCardResult(game.getPlayers());
+        outputView.printFinalCardResult(game.getDealer(), game.getPlayers());
 
         int playersProfit = game.calculateProfitForPlayers();
         int dealerProfit = -playersProfit;
-
-        outputView.printProfitResultTitle();
-        outputView.printDealerProfitResult(dealerProfit);
-        outputView.printPlayerProfitResult(game.getPlayers());
+        outputView.printProfitResult(dealerProfit, game.getPlayers());
     }
 }
