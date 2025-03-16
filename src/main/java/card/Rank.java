@@ -4,26 +4,26 @@ import value.Count;
 import value.Score;
 
 public enum Rank {
-	ACE(Score.from(11)),
-	TWO(Score.from(2)),
-	THREE(Score.from(3)),
-	FOUR(Score.from(4)),
-	FIVE(Score.from(5)),
-	SIX(Score.from(6)),
-	SEVEN(Score.from(7)),
-	EIGHT(Score.from(8)),
-	NINE(Score.from(9)),
-	TEN(Score.from(10)),
-	JACK(Score.from(10)),
-	QUEEN(Score.from(10)),
-	KING(Score.from(10));
+	ACE(11),
+	TWO(2),
+	THREE(3),
+	FOUR(4),
+	FIVE(5),
+	SIX(6),
+	SEVEN(7),
+	EIGHT(8),
+	NINE(9),
+	TEN(10),
+	JACK(10),
+	QUEEN(10),
+	KING(10);
 
 	private static final Score ACE_MIN = Score.from(1);
 
 	private final Score score;
 
-	Rank(final Score score) {
-		this.score = score;
+	Rank(final int score) {
+		this.score = Score.from(score);
 	}
 
 	public static Score ifOverThanBustScoreAceIsMIN(Score score, Count aceCount, final Score bustScore) {
