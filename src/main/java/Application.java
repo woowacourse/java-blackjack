@@ -1,10 +1,10 @@
-import controller.BlackjackApplication;
+import controller.BlackjackController;
 
 public class Application {
 
     public static void main(String[] args) {
         BlackjackConfig blackjackConfig = new BlackjackConfig();
         BlackjackApplication blackjackApplication = blackjackConfig.blackjackApplication();
-        blackjackApplication.execute();
+        blackjackApplication.run();
     }
 }
