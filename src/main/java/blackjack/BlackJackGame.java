@@ -1,4 +1,4 @@
-package controller;
+package blackjack;
 
 import blackjack.card.Deck;
 import blackjack.gambler.Dealer;
