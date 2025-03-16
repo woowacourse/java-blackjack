@@ -17,11 +17,14 @@ public class WagerMoney {
 	}
 
 	public Map<Player, Money> calculateWagerResult() {
-		final WagerResultCalculator wagerResultCalculator = new WagerResultCalculator();
 		final Map<Player, Money> wagerResult = new LinkedHashMap<>();
 		for (final Player player : money.keySet()) {
 			final Money playerWager = money.get(player);
-			final Money playerWagerResult = wagerResultCalculator.calculate(player, playerWager);
+			final Money playerWagerResult = WagerResultState.calculateWagerResultMoney(
+				player.calculateDuelResult(),
+				player.isBlackjack(),
+				playerWager
+			);
 			wagerResult.put(player, playerWagerResult.minus(playerWager));
 		}
 		return wagerResult;

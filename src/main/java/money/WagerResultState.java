@@ -2,7 +2,9 @@ package money;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import java.util.function.BiPredicate;
+import java.util.stream.Collectors;
 
 import duel.DuelResult;
 
@@ -26,12 +28,17 @@ public enum WagerResultState {
 		final boolean isBlackjack,
 		final Money wagerMoney
 	) {
-		final WagerResultState result = Arrays.stream(values())
-			.sorted(Comparator.comparingDouble(WagerResultState::getWagerMultiplier).reversed())
+		final WagerResultState result = sortByWagerMultiplier().stream()
 			.filter(wagerResultState -> wagerResultState.determineState.test(duelResult, isBlackjack))
 			.findFirst()
 			.orElseThrow(IllegalStateException::new);
 		return wagerMoney.multiply(result.wagerMultiplier);
+	}
+
+	private static List<WagerResultState> sortByWagerMultiplier() {
+		return Arrays.stream(values())
+			.sorted(Comparator.comparingDouble(WagerResultState::getWagerMultiplier).reversed())
+			.collect(Collectors.toList());
 	}
 
 	private double getWagerMultiplier() {
