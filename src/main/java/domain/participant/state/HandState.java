@@ -6,7 +6,6 @@ import domain.participant.Score;
 import java.util.List;
 
 public abstract class HandState {
-    private static final Score MAX_SCORE = Score.from(21);
     private static final int BLACKJACK_CARD_COUNT = 2;
     protected final ParticipantHand hand;
 
@@ -14,7 +13,7 @@ public abstract class HandState {
         this.hand = hand;
     }
 
-    public static HandState start(TrumpCard... initCards){
+    public static HandState start(TrumpCard... initCards) {
         HandState start = new Start(initCards);
 
         if (start.isBlackjack()) {
@@ -39,18 +38,18 @@ public abstract class HandState {
 
     protected boolean isBlackjack() {
         Score totalScore = hand.calculateCardSum();
-        return totalScore.isEqualTo(MAX_SCORE) && hand.size() == BLACKJACK_CARD_COUNT;
+        return hand.isMaxScore(totalScore) && hand.size() == BLACKJACK_CARD_COUNT;
     }
 
-    public Score calculateCardSum(){
+    public Score calculateCardSum() {
         return hand.calculateCardSum();
     }
 
-    public Score calculateCardSum(Score aceCalculateStandard){
+    public Score calculateCardSum(Score aceCalculateStandard) {
         return hand.calculateCardSum(aceCalculateStandard);
     }
 
-    public List<TrumpCard> getCards(){
+    public List<TrumpCard> getCards() {
         return hand.getCards();
     }
 }

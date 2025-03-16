@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ParticipantHand {
-    private static final Score BUST_STANDARD_SCORE = Score.from(21);
+    private static final Score MAX_SCORE = Score.from(21);
     private static final Score ACE_DIFF_SCORE = Score.from(10);
     private static final String BUST_HAND_FORMAT = "비정상적인 카드 추가입니다. 플레이어는 %d점 이상 받을 수 없습니다";
 
@@ -20,17 +20,20 @@ public class ParticipantHand {
     public void addCard(TrumpCard card) {
         Score totalScore = calculateCardSum();
         if (isBust(totalScore)) {
-            throw new IllegalStateException(String.format(BUST_HAND_FORMAT, BUST_STANDARD_SCORE.toInt()));
+            throw new IllegalStateException(String.format(BUST_HAND_FORMAT, MAX_SCORE.toInt()));
         }
         handCards.add(card);
     }
 
     public boolean isBust(Score score) {
-        return score.isGreaterThan(BUST_STANDARD_SCORE);
+        return score.isGreaterThan(MAX_SCORE);
     }
 
+    public boolean isMaxScore(Score score){
+        return score.isEqualTo(MAX_SCORE);
+    }
     public Score calculateCardSum() {
-        return calculateCardSum(BUST_STANDARD_SCORE);
+        return calculateCardSum(MAX_SCORE);
     }
 
     public Score calculateCardSum(Score aceCalculateStandard) {
