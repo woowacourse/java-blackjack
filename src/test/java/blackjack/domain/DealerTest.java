@@ -59,7 +59,7 @@ class DealerTest {
         List<Card> expect = List.of(card1, card2, newCard);
 
         // when
-        dealer.hit(newCard);
+        dealer.takeCard(newCard);
 
         // then
         assertThat(dealer.getAllCards()).isEqualTo(expect);
@@ -87,9 +87,9 @@ class DealerTest {
         // given
         Hand hand = new Hand();
         Dealer dealer = new Dealer(hand);
-        hand.hit(new Card(CardSuit.SPADE, CardRank.KING));
-        hand.hit(new Card(CardSuit.SPADE, CardRank.QUEEN));
-        hand.hit(new Card(CardSuit.SPADE, CardRank.JACK));
+        hand.takeCard(new Card(CardSuit.SPADE, CardRank.KING));
+        hand.takeCard(new Card(CardSuit.SPADE, CardRank.QUEEN));
+        hand.takeCard(new Card(CardSuit.SPADE, CardRank.JACK));
 
         // when
         boolean actual = dealer.isBusted();
@@ -103,9 +103,9 @@ class DealerTest {
     void test7() {
         Hand hand = new Hand();
         Dealer dealer = new Dealer(hand);
-        hand.hit(new Card(CardSuit.SPADE, CardRank.KING));
-        hand.hit(new Card(CardSuit.SPADE, CardRank.QUEEN));
-        hand.hit(new Card(CardSuit.SPADE, CardRank.ACE));
+        hand.takeCard(new Card(CardSuit.SPADE, CardRank.KING));
+        hand.takeCard(new Card(CardSuit.SPADE, CardRank.QUEEN));
+        hand.takeCard(new Card(CardSuit.SPADE, CardRank.ACE));
 
         // when
         boolean actual = dealer.isBusted();

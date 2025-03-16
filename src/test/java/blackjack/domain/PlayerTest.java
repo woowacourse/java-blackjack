@@ -92,7 +92,7 @@ class PlayerTest {
         List<Card> expect = List.of(card1, card2, newCard);
 
         // when
-        player.hit(newCard);
+        player.takeCard(newCard);
 
         // then
         assertThat(player.getAllCards()).isEqualTo(expect);

@@ -17,10 +17,6 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(List<Player> players) {
-        return new Players(players);
-    }
-
     private void validate(List<Player> players) {
         if (players.isEmpty()) {
             throw new IllegalArgumentException(ErrorMessage.NEED_PLAYER_MEMBERS.getMessage());
@@ -29,6 +25,10 @@ public class Players {
         if (players.size() > PLAYERS_VALID_SIZE) {
             throw new IllegalArgumentException(ErrorMessage.EXCEED_PLAYER_MEMBERS.getMessage());
         }
+    }
+
+    public static Players from(List<Player> players) {
+        return new Players(players);
     }
 
     public void adjustBalance(Dealer dealer) {

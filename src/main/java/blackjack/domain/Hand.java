@@ -40,7 +40,7 @@ public class Hand {
         return Collections.unmodifiableList(cards);
     }
 
-    public void hit(Card newCard) {
+    public void takeCard(Card newCard) {
         cards.add(newCard);
     }
 

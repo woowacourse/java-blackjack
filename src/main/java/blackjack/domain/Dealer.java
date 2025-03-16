@@ -14,8 +14,8 @@ public class Dealer implements Participant {
     }
 
     @Override
-    public void hit(Card newCard) {
-        hand.hit(newCard);
+    public void takeCard(Card newCard) {
+        hand.takeCard(newCard);
     }
 
     @Override

@@ -13,8 +13,8 @@ public class PlayerHand {
         this.wallet = wallet;
     }
 
-    public void hit(Card newCard) {
-        hand.hit(newCard);
+    public void takeCard(Card newCard) {
+        hand.takeCard(newCard);
     }
 
     public boolean canHit() {

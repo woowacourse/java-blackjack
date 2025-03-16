@@ -20,7 +20,7 @@ public final class HandFixture {
     public static Hand busted() {
         Card card = new Card(CardSuit.SPADE, CardRank.KING);
         Hand hand = Hand.of(card, card);
-        hand.hit(card);
+        hand.takeCard(card);
 
         return hand;
     }
@@ -48,7 +48,7 @@ public final class HandFixture {
         Card card3 = new Card(CardSuit.SPADE, CardRank.SIX);
 
         Hand hand = Hand.of(card1, card2);
-        hand.hit(card3);
+        hand.takeCard(card3);
 
         return hand;
     }

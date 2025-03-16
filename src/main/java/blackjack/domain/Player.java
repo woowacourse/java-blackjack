@@ -21,8 +21,8 @@ public class Player implements Participant {
     }
 
     @Override
-    public void hit(Card newCard) {
-        playerHand.hit(newCard);
+    public void takeCard(Card newCard) {
+        playerHand.takeCard(newCard);
     }
 
     @Override

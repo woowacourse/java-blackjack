@@ -25,35 +25,33 @@ public class BlackjackController {
         Players players = PlayersFactory.generate(names, bettingMoneyList);
         Dealer dealer = DealerFactory.generate();
 
-        giveCards(deck, players, dealer);
+        takeCards(deck, players, dealer);
 
         players.adjustBalance(dealer);
         printResult(players, dealer);
     }
 
-    private void giveCards(Deck deck, Players players, Dealer dealer) {
+    private void takeCards(Deck deck, Players players, Dealer dealer) {
         initialDeal(deck, players, dealer);
 
         hitCard(deck, players);
         hitCard(deck, dealer);
     }
 
-    private void printResult(Players players, Dealer dealer) {
-        int playersTotalRevenue = players.getTotalRevenue();
-        Map<Player, Integer> revenueMap = players.getRevenueMap();
-
-        OutputView.printCardResult(players, dealer);
-        OutputView.printRevenue(playersTotalRevenue, revenueMap);
-    }
-
     private void initialDeal(Deck deck, Players players, Dealer dealer) {
         for (Player player : players.getPlayers()) {
-            startingHand(Deck::startingHand, deck, player);
+            takeCards(Deck::startingHand, deck, player);
         }
 
-        startingHand(Deck::startingHand, deck, dealer);
+        takeCards(Deck::startingHand, deck, dealer);
 
         OutputView.printHand(dealer, players);
+    }
+
+    private void takeCards(Function<Deck, List<Card>> function, Deck deck, Participant participant) {
+        List<Card> cards = function.apply(deck);
+
+        cards.forEach(participant::takeCard);
     }
 
     private void hitCard(Deck deck, Players players) {
@@ -62,26 +60,13 @@ public class BlackjackController {
         }
     }
 
-    private void hitCard(Deck deck, Dealer dealer) {
-        while (dealer.canHit()) {
-            OutputView.printMoreCard();
-            startingHand(Deck::hit, deck, dealer);
-        }
-    }
-
-    private void startingHand(Function<Deck, List<Card>> function, Deck deck, Participant participant) {
-        List<Card> cards = function.apply(deck);
-
-        cards.forEach(participant::hit);
-    }
-
     private void hitCard(Deck deck, Player player) {
         if (player.isBlackjack()) {
             return;
         }
 
         while (canDraw(player)) {
-            startingHand(Deck::hit, deck, player);
+            takeCards(Deck::hit, deck, player);
             OutputView.printHand(player);
         }
     }
@@ -97,5 +82,20 @@ public class BlackjackController {
         }
 
         return !busted;
+    }
+
+    private void hitCard(Deck deck, Dealer dealer) {
+        while (dealer.canHit()) {
+            OutputView.printMoreCard();
+            takeCards(Deck::hit, deck, dealer);
+        }
+    }
+
+    private void printResult(Players players, Dealer dealer) {
+        int playersTotalRevenue = players.getTotalRevenue();
+        Map<Player, Integer> revenueMap = players.getRevenueMap();
+
+        OutputView.printCardResult(players, dealer);
+        OutputView.printRevenue(playersTotalRevenue, revenueMap);
     }
 }

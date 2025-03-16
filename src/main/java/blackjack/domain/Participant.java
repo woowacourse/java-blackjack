@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface Participant {
 
-    void hit(Card newCard);
+    void takeCard(Card newCard);
 
     boolean canHit();
 
