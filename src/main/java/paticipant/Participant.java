@@ -47,13 +47,7 @@ public class Participant {
 	}
 
 	public DuelResult calculateDuelResult() {
-		if (duelHistory.isWin()) {
-			return DuelResult.WIN;
-		}
-		if (duelHistory.isDraw()) {
-			return DuelResult.DRAW;
-		}
-		return DuelResult.LOSE;
+		return duelHistory.calculateDuelResult();
 	}
 
 	public CardHand getCardHand() {
