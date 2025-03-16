@@ -1,5 +1,7 @@
 package domain.gamer;
 
+import domain.AnswerCommand;
+import domain.Betting;
 import domain.GameResult;
 import domain.card.Card;
 import domain.card.CardGroup;
@@ -8,16 +10,16 @@ import java.util.List;
 public abstract class Gamer {
 
     private final CardGroup cardGroup;
-    private final int battingAmount;
+    private final Betting betting;
 
     protected Gamer(CardGroup cardGroup) {
         this.cardGroup = cardGroup;
-        this.battingAmount = 0;
+        this.betting = new Betting(0);
     }
 
-    protected Gamer(CardGroup cardGroup, int battingAmount) {
+    protected Gamer(CardGroup cardGroup, final Betting betting) {
         this.cardGroup = cardGroup;
-        this.battingAmount = battingAmount;
+        this.betting = betting;
     }
 
     public void giveCard(final Card card) {
@@ -47,11 +49,10 @@ public abstract class Gamer {
         return cardGroup;
     }
 
-    public int getBattingAmount() {
-        return battingAmount;
-    }
-
-    public int calculateBattingAmountOfReturn(final int amount) {
-        return battingAmount + amount;
+    public boolean canReceiveCard(final AnswerCommand answerCommand) {
+        if (!answerCommand.isYes()) {
+            return false;
+        }
+        return !(isBust() && cardGroup.isBlackjack());
     }
 }

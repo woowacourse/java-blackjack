@@ -24,7 +24,6 @@ public class PlayerGroup {
         return new PlayerGroup(players);
     }
 
-
     public Map<String, GameResult> calculatePlayersGameResult(final Dealer dealer) {
         Map<String, GameResult> resultMap = new HashMap<>();
         for (Player player : players) {
@@ -43,11 +42,6 @@ public class PlayerGroup {
 
     public void giveCardByName(final String playerName, final Card card) {
         findByPlayerByName(playerName).giveCard(card);
-    }
-
-    public int getBattingOfReturnByName(final String playerName) {
-        final Player player = findByPlayerByName(playerName);
-        return player.getBattingAmount();
     }
 
     private Player findByPlayerByName(final String playerName) {

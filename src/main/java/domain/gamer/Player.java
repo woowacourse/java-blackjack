@@ -1,5 +1,6 @@
 package domain.gamer;
 
+import domain.Betting;
 import domain.card.CardGroup;
 import java.util.Objects;
 
@@ -11,8 +12,8 @@ public class Player extends Gamer {
         this.name = name;
     }
 
-    public Player(final String name, final CardGroup cardGroup, final int battingAmount) {
-        super(cardGroup, battingAmount);
+    public Player(final String name, final CardGroup cardGroup, final Betting betting) {
+        super(cardGroup, betting);
         this.name = name;
     }
 

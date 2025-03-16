@@ -1,5 +1,6 @@
 package domain.gamer;
 
+import domain.Betting;
 import domain.GameResult;
 import domain.card.CardGroup;
 import java.util.Collections;
@@ -12,8 +13,8 @@ public class Dealer extends Gamer {
         super(cardGroup);
     }
 
-    public Dealer(final CardGroup cardGroup, final int battingAmount) {
-        super(cardGroup, battingAmount);
+    public Dealer(final CardGroup cardGroup, final Betting batting) {
+        super(cardGroup, batting);
     }
 
     public boolean isLessThen(int score) {
