@@ -5,6 +5,7 @@ import domain.card.TrumpCard;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Role;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -28,25 +29,35 @@ public final class BlackjackGame {
   }
 
 
-  public Participant hitByParticipant(
-      final Participant participant) {
+  public Participant hitByParticipant(final Participant participant) {
     final var card = deck.draw();
     return participants.hit(participant, card);
-  }
-
-  public RoundHistory writeRoundHistory() {
-    final Map<Role, RoundResult> history = getPlayers().stream()
-        .collect(Collectors.toMap(
-            Participant::getRole,
-            player -> RoundResult.round(player, getDealer())
-        ));
-    return new RoundHistory(history);
   }
 
   public TrumpCard openDealerFirstCard() {
     final var dealer = getDealer();
     final var cards = dealer.getCards();
     return cards.getFirst();
+  }
+
+  public List<Role> calculateAllocatedEachRoles() {
+    final var roundHistory = writeRoundHistory();
+    return roundHistory.allocate();
+  }
+
+  public Bet getAllocatedTotalDifference(final List<Role> allocated) {
+    final var pastBetTotal = getDealer().getBet();
+    return pastBetTotal.seekAllocationTotalDifference(allocated);
+  }
+
+
+  private RoundHistory writeRoundHistory() {
+    final Map<Role, RoundResult> history = getPlayers().stream()
+        .collect(Collectors.toMap(
+            Participant::getRole,
+            player -> RoundResult.round(player, getDealer())
+        ));
+    return new RoundHistory(history);
   }
 
   public Participant getDealer() {
@@ -57,7 +68,18 @@ public final class BlackjackGame {
     return participants.getPlayers();
   }
 
-  public List<Participant> getParticipant() {
+  private List<Participant> getParticipant() {
     return participants.getAllParticipants();
+  }
+
+  public List<ParticipantHandResult> getParticipantsHandResult() {
+    final List<ParticipantHandResult> handResults = new ArrayList<>();
+    for (final var participant : getParticipant()) {
+      final var name = participant.getName();
+      final var score = participant.calculateScore();
+      final var cards = participant.getCards();
+      handResults.add(new ParticipantHandResult(name, score.value(), cards));
+    }
+    return handResults;
   }
 }

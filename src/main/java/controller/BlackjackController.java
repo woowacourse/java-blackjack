@@ -60,10 +60,7 @@ public final class BlackjackController {
   }
 
 
-  private void processPlayerHits(
-      Participant player,
-      final BlackjackGame blackjack
-  ) {
+  private void processPlayerHits(Participant player, final BlackjackGame blackjack) {
     while (player.isHit() && inputView.readPlayerAnswer(player.getName())) {
       player = blackjack.hitByParticipant(player);
       final List<TrumpCard> hand = player.getCards();
@@ -81,25 +78,18 @@ public final class BlackjackController {
   }
 
   private void openHandResult(final BlackjackGame blackjack) {
-    final var participants = blackjack.getParticipant();
-    for (final var participant : participants) {
-      outputParticipantHandResult(participant);
+    final var handResults = blackjack.getParticipantsHandResult();
+    for (final var handResult : handResults) {
+      final var convertedCards = converter.participantCardToText(handResult.cards());
+      outputView.printParticipantRoundResult(handResult.name(), convertedCards, handResult.score());
     }
-  }
-
-  private void outputParticipantHandResult(final Participant participant) {
-    final var convertedCards = converter.participantCardToText(participant.getCards());
-    final var score = participant.calculateScore();
-    outputView.printParticipantRoundResult(participant.getName(), convertedCards, score.value());
   }
 
   private void round(final BlackjackGame blackjack) {
     outputView.printRoundResultIntroduce();
-    final var roundHistory = blackjack.writeRoundHistory();
-    final var allocated = roundHistory.allocate();
-    final var dealer = blackjack.getDealer();
-    final var allocatedDealer = dealer.getBet().seekAllocationTotalDifference(allocated);
-    outputView.printRoundResultOnDealer(allocatedDealer);
+    final var allocated = blackjack.calculateAllocatedEachRoles();
+    final var allocatedTotalDifference = blackjack.getAllocatedTotalDifference(allocated);
+    outputView.printRoundResultOnDealer(allocatedTotalDifference);
     allocated.forEach(outputView::printRoundResultOnPlayers);
   }
 }
