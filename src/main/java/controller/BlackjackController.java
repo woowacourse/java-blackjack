@@ -56,7 +56,7 @@ public class BlackjackController {
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new BlackjackDeckGenerateStrategy());
         BlackjackGame blackjackGame = BlackjackGame.nonBettingBlackjackGame(deck, names);
-        BetManager betManager = new BetManager(names, bets);
+        BetManager betManager = new BetManager(blackjackGame);
         outputView.printInitiateDraw(names);
         openFirstDealerCard(blackjackGame);
         openPlayerCards(blackjackGame);
@@ -118,7 +118,7 @@ public class BlackjackController {
 
     private void bettingBlackjackGameResult(BlackjackGame blackjackGame, BetManager betManager) {
         openParticipantsCards(blackjackGame);
-        Map<String, Double> blackjackBettingResult = betManager.blackjackBettingResult(blackjackGame);
+        Map<String, Double> blackjackBettingResult = betManager.blackjackBettingResult();
         outputView.printBettingBlackjackGameResult(blackjackBettingResult);
     }
 

@@ -11,11 +11,20 @@ public abstract class BlackjackParticipant {
     private static final String DEALER_NAME = "딜러";
 
     private final String name;
+    private final BlackjackBet blackjackBet;
     private BlackjackHands hands;
+
+    protected BlackjackParticipant(String name, BlackjackBet blackjackBet, List<TrumpCard> cards) {
+        this.name = name;
+        this.blackjackBet = blackjackBet;
+        this.hands = new BlackjackHands(cards);
+        validateNickname();
+    }
 
     protected BlackjackParticipant(String name, List<TrumpCard> cards) {
         this.name = name;
         this.hands = new BlackjackHands(cards);
+        this.blackjackBet = new BlackjackBet(0);
         validateNickname();
     }
 
@@ -56,6 +65,10 @@ public abstract class BlackjackParticipant {
 
     public List<TrumpCard> cards() {
         return hands.cards();
+    }
+
+    public BlackjackBet bet() {
+        return blackjackBet;
     }
 }
 

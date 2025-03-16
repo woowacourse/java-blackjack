@@ -93,4 +93,9 @@ public class BlackjackParticipantsManager {
     public BlackjackHands dealerHands() {
         return dealer.hands();
     }
+
+    public BlackjackBet playerBet(String name) {
+        BlackjackParticipant player = findPlayer(name);
+        return player.bet();
+    }
 }

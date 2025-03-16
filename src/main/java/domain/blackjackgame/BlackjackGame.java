@@ -1,5 +1,6 @@
 package domain.blackjackgame;
 
+import domain.participant.BlackjackBet;
 import domain.participant.BlackjackHands;
 import domain.participant.BlackjackParticipant;
 import domain.participant.BlackjackParticipantsManager;
@@ -25,6 +26,16 @@ public class BlackjackGame {
     }
 
     public BlackjackGame(List<String> names, BlackjackDeck deck) {
+        validatePlayerSize(names.size());
+        this.deck = deck;
+        List<BlackjackParticipant> players = names.stream()
+                .map(name -> new Player(name, drawFirstCards(deck)))
+                .collect(Collectors.toList());
+        BlackjackParticipant dealer = new Dealer(drawFirstCards(deck));
+        this.blackjackParticipantsManager = new BlackjackParticipantsManager(players, dealer);
+    }
+
+    public BlackjackGame(List<String> names, BlackjackDeck deck, List<Integer> bets) {
         validatePlayerSize(names.size());
         this.deck = deck;
         List<BlackjackParticipant> players = names.stream()
@@ -101,6 +112,10 @@ public class BlackjackGame {
 
     public BlackjackHands playerHands(String name) {
         return blackjackParticipantsManager.playerHands(name);
+    }
+
+    public BlackjackBet playerBet(String name) {
+        return blackjackParticipantsManager.playerBet(name);
     }
 }
 
