@@ -1,6 +1,7 @@
 package blackjack;
 
 import blackjack.card.Deck;
+import blackjack.config.GameConfig;
 import blackjack.gambler.Dealer;
 import blackjack.gambler.Nickname;
 import blackjack.gambler.Player;
@@ -16,9 +17,9 @@ public class BlackJackGame {
     private final InputView inputView;
     private final OutputView outputView;
 
-    public BlackJackGame(InputView inputView, OutputView outputView) {
-        this.inputView = inputView;
-        this.outputView = outputView;
+    public BlackJackGame(GameConfig gameConfig) {
+        this.inputView = gameConfig.getInputView();
+        this.outputView = gameConfig.getOutputView();
     }
 
     public void run() {
