@@ -3,8 +3,10 @@ package blackjack.domain.player;
 import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardPack;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.Cards;
+import blackjack.domain.card.RandomBlackjackShuffle;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -31,6 +33,28 @@ class PlayersTest {
                 () -> assertThat(players.getGamblers().size()).isEqualTo(2),
                 () -> assertThat(players.getDealer()).isNotNull()
         );
+    }
+
+    @Test
+    @DisplayName("모든 플레이어의 카드를 초기화한다")
+    void 모든_플레이어의_카드를_초기화한다() {
+        CardPack cardPack = new CardPack(new RandomBlackjackShuffle());
+
+        List<Gambler> gamblers = List.of(
+                new Gambler("비타", 0),
+                new Gambler("비타", 0)
+        );
+
+        Players players = new Players(new Dealer(), gamblers);
+        players.distributeInitialCards(cardPack.getDealByCount(2));
+
+        for (Gambler gambler : gamblers) {
+            assertThat(gambler.getHand().getCards().getCards())
+                    .hasSize(2);
+        }
+
+        assertThat(gamblers.getFirst().getHand().getCards().getCards())
+                .isNotEqualTo(gamblers.getLast().getHand().getCards());
     }
 
     @Test
