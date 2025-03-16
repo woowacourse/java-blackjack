@@ -12,16 +12,18 @@ import java.util.Map;
 
 public class GameManagerFactory {
 
-    public GameManager createGameManager(Map<String, Integer> nameAndBetAmounts) {
-
-        List<Gambler> gamblers = nameAndBetAmounts.entrySet().stream()
-                .map(entry -> new Gambler(entry.getKey(), entry.getValue()))
-                .toList();
-
+    public GameManager createGameManager(Map<String, Integer> gamblerBets) {
+        List<Gambler> gamblers = crateGamblers(gamblerBets);
         Dealer dealer = new Dealer();
         Players players = new Players(dealer, gamblers);
 
         CardPack cardPack = new CardPack(new RandomBlackjackShuffle());
         return new GameManager(cardPack, players);
+    }
+
+    private static List<Gambler> crateGamblers(final Map<String, Integer> gamblerBets) {
+        return gamblerBets.entrySet().stream()
+                .map(entry -> new Gambler(entry.getKey(), entry.getValue()))
+                .toList();
     }
 }

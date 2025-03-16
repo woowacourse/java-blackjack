@@ -2,7 +2,6 @@ package blackjack.controller;
 
 import blackjack.domain.GameManager;
 import blackjack.domain.player.Gambler;
-import blackjack.domain.player.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -26,14 +25,11 @@ public class BlackjackController {
 
     public void start() {
         List<String> gamblerNames = readAndParseNames();
-        Map<String, Integer> betAmounts = readBetAmounts(gamblerNames);
-        GameManager gameManager = gameManagerFactory.createGameManager(betAmounts);
-
+        Map<String, Integer> gamblerBets = readBetAmounts(gamblerNames);
+        GameManager gameManager = gameManagerFactory.createGameManager(gamblerBets);
         outputView.printInitCardsToPlayers(gameManager.getPlayers());
 
-        Players players = gameManager.getPlayers();
-
-        dealMoreCards(gameManager, players);
+        dealMoreCards(gameManager);
         dealMoreDealerCards(gameManager);
         displayGameResults(gameManager);
     }
@@ -51,8 +47,9 @@ public class BlackjackController {
                 ));
     }
 
-    private void dealMoreCards(final GameManager gameManager, final Players players) {
-        List<Gambler> gamblers = players.getGamblers();
+    private void dealMoreCards(final GameManager gameManager) {
+        List<Gambler> gamblers = gameManager.getPlayers().getGamblers();
+
         for (Gambler gambler : gamblers) {
             while (!gameManager.isPlayerBust(gambler) && inputView.readOneMoreDealCard(gambler)) {
                 gameManager.addCardForGambler(gambler);
