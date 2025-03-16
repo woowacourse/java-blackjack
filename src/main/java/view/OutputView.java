@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import model.betting.Bet;
 import model.deck.Card;
-import model.deck.Gameable;
+import model.participant.role.Gameable;
 import model.participant.Dealer;
 import model.participant.Players;
 import model.result.GameResult;

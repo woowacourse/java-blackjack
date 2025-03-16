@@ -48,7 +48,10 @@ public class BlackjackController {
     }
 
     private void dealInitially(final Players players, final Dealer dealer, final Deck deck) {
-        dealer.dealInitialCards(deck, players);
+        players.getPlayers().forEach(player ->
+                dealer.splitInitialDeck(deck, player)
+        );
+        dealer.splitInitialDeck(deck, dealer);
         OutputView.printInitialDeal(players, dealer);
     }
 
@@ -93,16 +96,19 @@ public class BlackjackController {
 
     private void calculateRevenue(ParticipantWinningResult participantWinningResult, Players players, Dealer dealer) {
         for (Player player : players.getPlayers()) {
-            GameResult gameResult = participantWinningResult.findResultByPlayer(player);
-            dealer.updateBetOwnerWhenPlayerLose(player, gameResult);
-            dealer.updateBetAmountWhenPlayerBlackJack(player, gameResult);
+            if (participantWinningResult.isLose(player)) {
+                dealer.updateBetOwnerFrom(player);
+            }
+            if (participantWinningResult.isBlackJackWin(player)) {
+                dealer.updateBetAmountOf(player);
+            }
         }
     }
 
     private void printRevenue(Players players, Dealer dealer) {
         OutputView.printDealerRevenue(dealer);
         for (Player player : players.getPlayers()) {
-            Bet bet = dealer.findBetByPlayer(player);
+            Bet bet = dealer.findBetByBetter(player);
             OutputView.printPlayersRevenue(player, bet);
         }
     }

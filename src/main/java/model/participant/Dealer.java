@@ -3,14 +3,15 @@ package model.participant;
 import java.util.List;
 import java.util.stream.IntStream;
 import model.betting.Bet;
-import model.betting.BetOwnable;
+import model.participant.role.BetOwnable;
 import model.betting.Bets;
 import model.deck.Card;
 import model.deck.Deck;
-import model.deck.Gameable;
-import model.result.GameResult;
+import model.participant.role.Bettable;
+import model.participant.role.GameProcessable;
+import model.participant.role.Gameable;
 
-public final class Dealer implements BetOwnable, Gameable {
+public final class Dealer implements BetOwnable, Gameable, GameProcessable {
     private static final int DEALER_HIT_THRESHOLD = 16;
     private static final int INITIAL_DEAL_CARD_COUNT = 2;
 
@@ -40,16 +41,6 @@ public final class Dealer implements BetOwnable, Gameable {
         return participantHand.checkBlackJack();
     }
 
-    public void dealInitialCards(final Deck deck, final Players players) {
-        //TODO : INITIAL_DEAL_COUNT 가 여기 있어야 할까?
-        players.getPlayers().forEach(player ->
-                player.dealInitialCards(deck)
-        );
-        IntStream.range(0, INITIAL_DEAL_CARD_COUNT).forEach(
-                i -> receiveCard(deck.pick())
-        );
-    }
-
     @Override
     public int calculateFinalScore() {
         return participantHand.calculateFinalScore();
@@ -75,25 +66,31 @@ public final class Dealer implements BetOwnable, Gameable {
         return bets.calculateDealerRevenue();
     }
 
+    @Override
+    public void splitInitialDeck(Deck deck, Gameable gamer) {
+        IntStream.range(0, INITIAL_DEAL_CARD_COUNT).forEach(
+                i -> gamer.receiveCard(deck.pick())
+        );
+    }
+
     //TODO 꼭 dealer에게 있어야 할까?
+    @Override
     public void receiveBet(Bet bet) {
         this.bets.add(bet);
     }
 
-    public void updateBetOwnerWhenPlayerLose(Player player, GameResult gameResult) {
-        if (gameResult == GameResult.LOSE) {
-            bets.updateOwner(player, this);
-        }
+    @Override
+    public void updateBetOwnerFrom(BetOwnable beforeOwner) {
+        bets.updateOwner(beforeOwner, this);
     }
 
-    public void updateBetAmountWhenPlayerBlackJack(Player player, GameResult gameResult) {
-        if (gameResult == GameResult.WIN && player.isBlackjack()) { //TODO 상태 -> 객체 분리 시도하기
-            bets.updateBetAmount(player);
-        }
+    @Override
+    public void updateBetAmountOf(Bettable better) { //TODO 매개변수에 player 넣을 수 없음
+        bets.updateBetAmount(better);
     }
 
-    public Bet findBetByPlayer(Player player) {
-        return bets.findByBetter(player);
+    public Bet findBetByBetter(Bettable better) {
+        return bets.findByBetter(better);
     }
 }
 
