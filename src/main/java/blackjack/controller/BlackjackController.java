@@ -9,8 +9,10 @@ import blackjack.domain.game.Participant;
 import blackjack.domain.game.Player;
 import blackjack.domain.game.Players;
 import blackjack.domain.result.BetAmount;
+import blackjack.domain.result.DealerResults;
 import blackjack.domain.result.Judge;
 import blackjack.domain.result.ParticipantResults;
+import blackjack.domain.result.PlayerResults;
 import blackjack.view.Confirmation;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -35,7 +37,7 @@ public class BlackjackController {
 
         players.getPlayers().forEach(participant -> giveMoreCard(participant, blackjackGame));
 
-        Judge judge = new Judge(new ParticipantResults());
+        Judge judge = new Judge(new DealerResults(), new PlayerResults());
         ParticipantResults participantResults = calculateResultOfParticipants(players, dealer, judge);
 
         OutputView.printCardResult(participantResults);
@@ -86,7 +88,7 @@ public class BlackjackController {
 
     private ParticipantResults calculateResultOfParticipants(Players players, Dealer dealer, Judge judge) {
         judge.calculateAllResults(dealer, players, gameRuleEvaluator);
-        return judge.getParticipantResults();
+        return null;
     }
 
     private Players savePlayers(List<String> names) {

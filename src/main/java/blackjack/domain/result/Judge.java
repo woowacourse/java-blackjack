@@ -6,15 +6,32 @@ import blackjack.domain.game.Player;
 import blackjack.domain.game.Players;
 
 public class Judge {
-    private final ParticipantResults participantResults;
 
-    public Judge(ParticipantResults participantResults) {
-        this.participantResults = participantResults;
+    private final DealerResults dealerResults;
+    private final PlayerResults playerResults;
+
+    public Judge(DealerResults dealerResults, PlayerResults playerResults) {
+        this.dealerResults = dealerResults;
+        this.playerResults = playerResults;
     }
 
     public void calculateAllResults(Dealer dealer, Players players, GameRuleEvaluator gameRuleEvaluator) {
         for (Player player : players.getPlayers()) {
             calculateResult(dealer, player, gameRuleEvaluator);
+        }
+    }
+
+    public void calculateResult(Dealer dealer, Player player) {
+        Score dealerScore = new Score(dealer);
+        Score playerScore = new Score(player);
+
+        if (dealerScore.isBlackJack()) {
+            if (playerScore.isBlackJack()) {
+                PlayerResult playerResult = new PlayerResult(player, GameResultType.TIE, playerScore);
+                DealerResult dealerResult = new DealerResult(GameResultType.TIE, dealerScore);
+                dealerResults.add(player, dealerResult);
+                playerResults.add(playerResult);
+            }
         }
     }
 
@@ -57,11 +74,19 @@ public class Judge {
         ParticipantResult defenderResult = new ParticipantResult(dealer, resultTypeOfDefender,
                 defenderValue);
 
-        participantResults.add(challengerResult);
-        participantResults.add(defenderResult);
+//        participantResults.add(challengerResult);
+//        participantResults.add(defenderResult);
     }
 
-    public ParticipantResults getParticipantResults() {
-        return participantResults;
+//    public ParticipantResults getParticipantResults() {
+
+    /// /        return participantResults;
+//    }
+    public DealerResults getDealerResults() {
+        return dealerResults;
+    }
+
+    public PlayerResults getPlayerResults() {
+        return playerResults;
     }
 }
