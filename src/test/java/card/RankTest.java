@@ -1,9 +1,14 @@
 package card;
 
+import static org.assertj.core.api.Assertions.*;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import value.Count;
+import value.Score;
 
 public class RankTest {
 
@@ -19,10 +24,11 @@ public class RankTest {
 			final int bustScore = 21;
 
 			// when
-			// final var actual = Rank.ifOverThanBustScoreAceIsMIN(score, aceCount, bustScore);
+			final var actual = Rank.ifOverThanBustScoreAceIsMIN(Score.from(score), Count.from(aceCount),
+				Score.from(bustScore));
 
 			// then
-			// assertThat(actual).isEqualTo(expected);
+			assertThat(actual.value()).isEqualTo(expected);
 		}
 
 	}
