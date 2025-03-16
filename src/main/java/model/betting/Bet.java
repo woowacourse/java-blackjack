@@ -1,8 +1,8 @@
 package model.betting;
 
 import java.util.Objects;
-import model.participant.Dealer;
-import model.participant.Player;
+import model.participant.role.BetOwnable;
+import model.participant.role.Bettable;
 
 public class Bet {
     private final int money;
@@ -24,8 +24,8 @@ public class Bet {
         return new Bet(increaseAmount, better);
     }
 
-    public Bet changeOwnerTo(Dealer dealer) {
-        return new Bet(money, better, dealer);
+    public Bet changeOwnerTo(BetOwnable owner) {
+        return new Bet(money, better, owner);
     }
 
     public int calculateBetterRevenue() {
@@ -39,8 +39,8 @@ public class Bet {
         return -calculateBetterRevenue();
     }
 
-    public boolean betterEquals(Player player) {
-        return better.equals(player);
+    public boolean betterEquals(Bettable better) {
+        return this.better.equals(better);
     }
 
     private boolean isEqualOwnerAndBetter() {

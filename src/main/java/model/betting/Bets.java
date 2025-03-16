@@ -2,8 +2,8 @@ package model.betting;
 
 import java.util.ArrayList;
 import java.util.List;
-import model.participant.Dealer;
-import model.participant.Player;
+import model.participant.role.BetOwnable;
+import model.participant.role.Bettable;
 
 public class Bets {
     private final List<Bet> bets;
@@ -16,14 +16,14 @@ public class Bets {
         this.bets.add(bet);
     }
 
-    public void updateOwner(Player player, Dealer dealer) { //TODO : 매개변수 추상화
-        Bet updatingBet = findByOwner(player);
+    public void updateOwner(BetOwnable owner, BetOwnable newOwner) { //TODO : 매개변수 추상화
+        Bet updatingBet = findByOwner(owner);
         this.bets.remove(updatingBet);
-        this.bets.add(updatingBet.changeOwnerTo(dealer));
+        this.bets.add(updatingBet.changeOwnerTo(newOwner));
     }
 
-    public void updateBetAmount(Player player) {
-        Bet bet = findByBetter(player);
+    public void updateBetAmount(Bettable better) {
+        Bet bet = findByBetter(better);
         this.bets.remove(bet);
         this.bets.add(bet.increase(1.5));
     }
@@ -34,9 +34,9 @@ public class Bets {
                 .sum();
     }
 
-    public Bet findByBetter(Player player) {
+    public Bet findByBetter(Bettable better) {
         return bets.stream()
-                .filter(bet -> bet.betterEquals(player))
+                .filter(bet -> bet.betterEquals(better))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("해당하는 플레이어를 찾을 수 없습니다."));
     }
