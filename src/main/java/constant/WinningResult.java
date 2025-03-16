@@ -44,8 +44,4 @@ public enum WinningResult {
         }
         return WinningResult.LOSE;
     }
-
-    public double getProfitRate() {
-        return profitRate;
-    }
 }
