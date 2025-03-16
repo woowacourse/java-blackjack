@@ -11,6 +11,6 @@ public final class Application {
         Participants participants = gameSetupConsole.registerParticipants(deck);
         gameSetupConsole.displaySetupResult(participants);
         GamePlayConsole gamePlayConsole = new GamePlayConsole();
-        gamePlayConsole.dealAllPlayerCards(participants.getPlayers(), deck);
+        gamePlayConsole.drawAllPlayerCards(participants.getPlayers(), deck);
     }
 }
