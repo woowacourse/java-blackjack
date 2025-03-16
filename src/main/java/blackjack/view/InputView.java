@@ -22,7 +22,7 @@ public final class InputView {
 
     public static int askBetAmount(String name) {
         System.out.println(name + "의 배팅 금액은?");
-        return parseBetAmount(scanner.next());
+        return parseBetAmount(scanner.nextLine());
     }
 
     public static Confirmation askToGetMoreCard(Participant participant) {

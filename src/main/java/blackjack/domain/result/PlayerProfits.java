@@ -2,6 +2,7 @@ package blackjack.domain.result;
 
 import blackjack.domain.game.Player;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PlayerProfits {
@@ -20,5 +21,9 @@ public class PlayerProfits {
                 .filter(profit -> profit.isResultOf(player))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("플레이어에 해당하는 결과가 존재하지 않습니다."));
+    }
+
+    public List<PlayerProfit> getPlayerProfits() {
+        return Collections.unmodifiableList(playerProfits);
     }
 }

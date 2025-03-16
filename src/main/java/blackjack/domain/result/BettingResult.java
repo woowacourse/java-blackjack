@@ -13,7 +13,6 @@ public class BettingResult {
 
     public void calculateAllResults(PlayerResults playerResults, DealerResults dealerResults) {
         for (PlayerResult playerResult : playerResults.getPlayerResults()) {
-            DealerResult dealerResult = dealerResults.findResultByPlayer(playerResult.getPlayer());
             Player player = playerResult.getPlayer();
             int betAmount = player.getBetAmount();
 

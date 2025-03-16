@@ -18,4 +18,8 @@ public class PlayerProfit {
     public int getProfit() {
         return profit;
     }
+
+    public String getPlayerName() {
+        return player.getName();
+    }
 }

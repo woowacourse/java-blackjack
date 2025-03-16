@@ -25,4 +25,10 @@ public class DealerProfits {
                 .map(Map.Entry::getValue)
                 .orElseThrow(() -> new IllegalArgumentException("플레이어에 해당하는 결과가 존재하지 않습니다."));
     }
+
+    public int calculateTotalProfit() {
+        return playerProfits.values().stream()
+                .map(DealerProfit::getProfit)
+                .reduce(0, Integer::sum);
+    }
 }

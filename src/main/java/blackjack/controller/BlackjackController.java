@@ -8,8 +8,11 @@ import blackjack.domain.game.Participant;
 import blackjack.domain.game.Player;
 import blackjack.domain.game.Players;
 import blackjack.domain.result.BetAmount;
+import blackjack.domain.result.BettingResult;
+import blackjack.domain.result.DealerProfits;
 import blackjack.domain.result.DealerResults;
 import blackjack.domain.result.Judge;
+import blackjack.domain.result.PlayerProfits;
 import blackjack.domain.result.PlayerResults;
 import blackjack.view.Confirmation;
 import blackjack.view.InputView;
@@ -29,11 +32,21 @@ public class BlackjackController {
 
         players.getPlayers().forEach(participant -> giveMoreCard(participant, blackjackGame));
 
+        OutputView.printCardResult();
+
         Judge judge = new Judge(new DealerResults(), new PlayerResults());
         judge.calculateAllResults(dealer, players);
 
         DealerResults dealerResults = judge.getDealerResults();
         PlayerResults playerResults = judge.getPlayerResults();
+
+        BettingResult bettingResult = new BettingResult(new DealerProfits(), new PlayerProfits());
+        bettingResult.calculateAllResults(playerResults, dealerResults);
+
+        DealerProfits dealerProfits = bettingResult.getDealerProfits();
+        PlayerProfits playerProfits = bettingResult.getPlayerProfits();
+
+        OutputView.printProfit(dealerProfits, playerProfits);
     }
 
     private void giveMoreCard(Participant participant, BlackjackGame blackjackGame) {
@@ -54,7 +67,6 @@ public class BlackjackController {
         blackjackGame.giveMoreCard(participant);
         OutputView.printCardResult(participant);
 
-        // TODO: 수정
 //        if (gameRuleEvaluator.isBusted(participant)) {
 //            OutputView.printBustedParticipantWithName(participant);
 //            return;
