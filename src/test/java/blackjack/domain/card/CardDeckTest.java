@@ -19,11 +19,9 @@ class CardDeckTest {
 
     @Test
     @DisplayName("원하는 횟수만큼의 카드를 제공한다.")
-    void canDrawCardForHit() {
+    void canDrawCard() {
         CardDeck cardDeck = new CardDeck(makeCards());
         List<Card> drawnCards = cardDeck.drawCard(2);
-
-        System.out.println("drawnCards.getFirst().getValue() = " + drawnCards.getFirst().getShape());
 
         assertThat(drawnCards).hasSize(2);
         assertThat(drawnCards.getFirst()).isEqualTo(new Card(CardShape.HEART, CardValue.JACK));
