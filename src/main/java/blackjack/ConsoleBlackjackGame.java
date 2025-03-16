@@ -1,5 +1,6 @@
 package blackjack;
 
+import bet.BetManager;
 import card.DeckGenerator;
 import player.Player;
 import view.InputView;
@@ -17,14 +18,21 @@ public class ConsoleBlackjackGame {
 
     public void run() {
         Blackjack blackjack = new Blackjack(inputView.inputParticipantName(), DeckGenerator.generateDeck());
+        BetManager betManager = new BetManager();
 
+        addInitialBet(blackjack, betManager);
         blackjack.distributeInitialCards();
         openInitialCards(blackjack);
         addMoreCards(blackjack);
 
         outputView.printPlayersCardsAndSum(blackjack.getDealer(),
                 blackjack.getParticipants(), blackjack.getNameAndSumOfAllPlayers());
-        outputView.printMatchResult(blackjack.computeDealerMatchResult(), blackjack.computeParticipantsMatchResult());
+    }
+
+    private void addInitialBet(Blackjack blackjack, BetManager betManager) {
+        for (Player participant : blackjack.getParticipants()) {
+            betManager.addBet(participant, inputView.inputBetAmount(participant.getName()));
+        }
     }
 
     private void openInitialCards(Blackjack blackjack) {
@@ -59,5 +67,9 @@ public class ConsoleBlackjackGame {
 
     private void addMoreCardsIfNotBust(Blackjack blackjack, Player participant) {
         addMoreCards(blackjack, participant);
+    }
+
+    private void printMatchResults(Blackjack blackjack) {
+        outputView.printMatchResult(blackjack.computeDealerMatchResult(), blackjack.computeParticipantsMatchResult());
     }
 }
