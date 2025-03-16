@@ -24,6 +24,10 @@ public class Bet {
     }
     // TODO: amount를 final로 만들고 새로운 Bet을 만들 것인가, 아니면 amount만 바꿔줄 것인가
 
+    public int getAmount() {
+        return amount;
+    }
+
     private void validateBetAmount(int amount) {
         if (amount > 100_000_000 || amount <= 0) {
             throw new IllegalArgumentException("베팅 금액에 문제가 있음");
