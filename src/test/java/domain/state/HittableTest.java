@@ -18,7 +18,7 @@ class HittableTest {
     void Hittable상태는_히트를_더_할_수_있는_상태다() {
         // given
         Cards cards = new Cards(
-                List.of(ACE_HEART, NINE_HEART)
+                List.of(ACE_HEART(), NINE_HEART())
         );
         State hittable = new Hittable(cards, Hittable.DEFAULT_USER_HIT_THRESHOLD);
 
@@ -30,12 +30,12 @@ class HittableTest {
     void 히트를_해서_블랙잭_상태가_된다() {
         // given
         Cards cards = new Cards(
-                List.of(ACE_HEART)
+                List.of(ACE_HEART())
         );
         State hittable = new Hittable(cards, Hittable.DEFAULT_USER_HIT_THRESHOLD);
 
         // when
-        State newState = hittable.hit(TEN_HEART);
+        State newState = hittable.hit(TEN_HEART());
 
         // then
         Assertions.assertThat(newState).isInstanceOf(Blackjack.class);
@@ -45,12 +45,12 @@ class HittableTest {
     void 히트를_해서_버스트_상태가_된다() {
         // given
         Cards cards = new Cards(
-                List.of(KING_HEART, QUEEN_HEART)
+                List.of(KING_HEART(), QUEEN_HEART())
         );
         State hittable = new Hittable(cards, Hittable.DEFAULT_USER_HIT_THRESHOLD);
 
         // when
-        State newState = hittable.hit(TWO_HEART);
+        State newState = hittable.hit(TWO_HEART());
 
         // then
         Assertions.assertThat(newState).isInstanceOf(Bust.class);
@@ -60,12 +60,12 @@ class HittableTest {
     void 히트를_해서_합이_21이_되면_스테이_상태가_된다() {
         // given
         Cards cards = new Cards(
-                List.of(ACE_HEART, NINE_HEART)
+                List.of(ACE_HEART(), NINE_HEART())
         );
         State hittable = new Hittable(cards, Hittable.DEFAULT_USER_HIT_THRESHOLD);
 
         // when
-        State newState = hittable.hit(ACE_HEART);
+        State newState = hittable.hit(ACE_HEART());
 
         // then
         Assertions.assertThat(newState).isInstanceOf(Stay.class);
@@ -75,7 +75,7 @@ class HittableTest {
     void 스테이를_해서_스테이_상태가_된다() {
         // given
         Cards cards = new Cards(
-                List.of(ACE_HEART, NINE_HEART)
+                List.of(ACE_HEART(), NINE_HEART())
         );
         State hittable = new Hittable(cards, Hittable.DEFAULT_USER_HIT_THRESHOLD);
 

@@ -15,7 +15,7 @@ class StayTest {
     void 스테이_상태는_종료_상태다() {
         // given
         Cards cards = new Cards(
-                List.of(ACE_HEART, KING_HEART)
+                List.of(ACE_HEART(), KING_HEART())
         );
         Stay stay = new Stay(cards);
 
@@ -27,13 +27,13 @@ class StayTest {
     void 스테이_상태에서는_hit를_하지_못한다() {
         // given
         Cards cards = new Cards(
-                List.of(ACE_HEART, KING_HEART)
+                List.of(ACE_HEART(), KING_HEART())
         );
         Stay stay = new Stay(cards);
 
         // when & then
         Assertions.assertThatThrownBy(() -> {
-            stay.hit(THREE_HEART);
+            stay.hit(THREE_HEART());
         }).isInstanceOf(IllegalStateException.class);
     }
 
@@ -41,7 +41,7 @@ class StayTest {
     void 스테이_상태에서는_stay를_하지_못한다() {
         // given
         Cards cards = new Cards(
-                List.of(THREE_HEART, KING_HEART)
+                List.of(THREE_HEART(), KING_HEART())
         );
         Stay stay = new Stay(cards);
 

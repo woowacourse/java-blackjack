@@ -8,8 +8,6 @@ import java.util.Objects;
 
 public abstract class Player {
 
-    private static final int INITIAL_DRAW_COUNT = 2;
-
     protected final String name;
     protected State state;
 
@@ -26,21 +24,27 @@ public abstract class Player {
         this.state = state.stay();
     }
 
-    public boolean isFinished() {
-        return state.isFinished();
+    public boolean isRunning() {
+        return !state.isFinished();
+    }
+
+    public boolean isBlackjack() {
+        return state.cards().isBlackjack();
+    }
+
+    public boolean isBust() {
+        return state.cards().isBust();
     }
 
     public int computeOptimalSum() {
         return state.cards().computeOptimalSum();
     }
 
-    public void drawInitialCards(Deck deck) {
-        for (int count = 0; count < INITIAL_DRAW_COUNT; count++) {
+    public void drawCards(Deck deck, int count) {
+        for (int i = 0; i < count; i++) {
             hit(deck);
         }
     }
-
-    public abstract void openInitialCards();
 
     public void openCards(int count) {
         while (count > 0) {
@@ -53,7 +57,7 @@ public abstract class Player {
     private Card findNotOpenedCard() {
         return cards().getCards().stream()
                 .filter(card -> !card.isOpened())
-                .findFirst()
+                .findAny()
                 .orElseThrow(() -> new IllegalStateException("오픈할 카드가 없습니다."));
     }
 
@@ -71,6 +75,10 @@ public abstract class Player {
 
     public String getName() {
         return name;
+    }
+
+    public State getState() {
+        return state;
     }
 
     @Override

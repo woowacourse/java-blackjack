@@ -17,7 +17,7 @@ class BustTest {
     void 버스트_상태는_종료_상태다() {
         // given
         Cards cards = new Cards(
-                List.of(ACE_HEART, KING_HEART)
+                List.of(ACE_HEART(), KING_HEART())
         );
         Bust bust = new Bust(cards);
 
@@ -29,13 +29,13 @@ class BustTest {
     void 버스트_상태에서는_hit를_하지_못한다() {
         // given
         Cards cards = new Cards(
-                List.of(ACE_HEART, KING_HEART)
+                List.of(ACE_HEART(), KING_HEART())
         );
         Bust bust = new Bust(cards);
 
         // when & then
         Assertions.assertThatThrownBy(() -> {
-            bust.hit(THREE_HEART);
+            bust.hit(THREE_HEART());
         }).isInstanceOf(IllegalStateException.class);
     }
 
@@ -43,7 +43,7 @@ class BustTest {
     void 버스트_상태에서는_stay를_하지_못한다() {
         // given
         Cards cards = new Cards(
-                List.of(ACE_HEART, KING_HEART)
+                List.of(ACE_HEART(), KING_HEART())
         );
         Bust bust = new Bust(cards);
 

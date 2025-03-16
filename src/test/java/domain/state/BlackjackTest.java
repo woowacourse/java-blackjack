@@ -15,7 +15,7 @@ class BlackjackTest {
     void 블랙잭_상태는_종료_상태다() {
         // given
         Cards cards = new Cards(
-                List.of(ACE_HEART, KING_HEART)
+                List.of(ACE_HEART(), KING_HEART())
         );
         Blackjack blackjack = new Blackjack(cards);
 
@@ -27,13 +27,13 @@ class BlackjackTest {
     void 블랙잭_상태에서는_hit를_하지_못한다() {
         // given
         Cards cards = new Cards(
-                List.of(ACE_HEART, KING_HEART)
+                List.of(ACE_HEART(), KING_HEART())
         );
         Blackjack blackjack = new Blackjack(cards);
 
         // when & then
         Assertions.assertThatThrownBy(() -> {
-            blackjack.hit(THREE_HEART);
+            blackjack.hit(THREE_HEART());
         }).isInstanceOf(IllegalStateException.class);
     }
 
@@ -41,7 +41,7 @@ class BlackjackTest {
     void 블랙잭_상태에서는_stay를_하지_못한다() {
         // given
         Cards cards = new Cards(
-                List.of(ACE_HEART, KING_HEART)
+                List.of(ACE_HEART(), KING_HEART())
         );
         Blackjack blackjack = new Blackjack(cards);
 

@@ -13,11 +13,11 @@ class CardsTest {
     @Test
     void 카드를_한장_추가한다() {
         // given
-        Cards cards = new Cards(List.of(FIVE_HEART, FOUR_HEART));
+        Cards cards = new Cards(List.of(FIVE_HEART(), FOUR_HEART()));
 
         // when
         final int beforeSize = cards.size();
-        cards.addCard(ACE_HEART);
+        cards.addCard(ACE_HEART());
 
         // then
         final int afterSize = cards.size();
@@ -27,7 +27,7 @@ class CardsTest {
     @Test
     void 가진_카드로_최적의_합을_계산한다() {
         // given
-        Cards cards = new Cards(List.of(FIVE_HEART, FOUR_HEART, ACE_HEART));
+        Cards cards = new Cards(List.of(FIVE_HEART(), FOUR_HEART(), ACE_HEART()));
 
         // when
         final int sum = cards.computeOptimalSum();

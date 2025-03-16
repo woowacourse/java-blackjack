@@ -12,8 +12,8 @@ class DeckTest {
     @Test
     void 덱의_맨_뒤부터_카드를_뽑는다() {
         // given
-        Card card1 = ACE_HEART;
-        Card card2 = TWO_HEART;
+        Card card1 = ACE_HEART();
+        Card card2 = TWO_HEART();
         Deck deck = new Deck(List.of(card1, card2));
 
         // when

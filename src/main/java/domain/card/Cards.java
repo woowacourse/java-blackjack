@@ -60,12 +60,6 @@ public class Cards {
         cards.add(card);
     }
 
-    public Cards openedCards() {
-        return new Cards(cards.stream()
-                .filter(Card::isOpened)
-                .toList());
-    }
-
     public int size() {
         return cards.size();
     }

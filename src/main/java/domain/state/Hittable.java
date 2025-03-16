@@ -8,12 +8,12 @@ public class Hittable extends Running {
     public static final int DEFAULT_USER_HIT_THRESHOLD = 21;
     public static final int DEFAULT_DEALER_HIT_THRESHOLD = 16;
 
-    private final int hitThreshold;
+    private final int hittableThreshold;
 
 
-    public Hittable(Cards cards, int hitThreshold) {
+    public Hittable(Cards cards, int hittableThreshold) {
         super(cards);
-        this.hitThreshold = hitThreshold;
+        this.hittableThreshold = hittableThreshold;
     }
 
     public static Hittable initialUserState() {
@@ -32,10 +32,10 @@ public class Hittable extends Running {
             return new Blackjack(cards);
         } else if (cards.isBust()) {
             return new Bust(cards);
-        } else if (cards.isBustThreshold() || cards.computeOptimalSum() > this.hitThreshold) {
+        } else if (cards.isBustThreshold() || cards.computeOptimalSum() > this.hittableThreshold) {
             return new Stay(cards);
         }
-        return new Hittable(cards, this.hitThreshold);
+        return new Hittable(cards, this.hittableThreshold);
     }
 
     @Override
