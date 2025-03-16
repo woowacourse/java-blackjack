@@ -26,6 +26,6 @@ public class GameProfits {
 
     public Profit getDealerProfit() {
         return gameProfits.values().stream()
-                .reduce(new Profit(0), Profit::addProfit).negate();
+                .reduce(Profit.from(0), Profit::addProfit).negate();
     }
 }
