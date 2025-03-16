@@ -27,6 +27,7 @@ public class BlackjackController {
     }
 
     public void start() {
+        deck.shuffle();
         List<String> names = inputView.readPlayerNames();
         Players players = initializePlayers(names);
         Dealer dealer = new Dealer(deck);
