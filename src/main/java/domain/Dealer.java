@@ -5,22 +5,18 @@ import java.util.List;
 public class Dealer {
 
     private final Hand hand;
+    private final Money money;
+    private final Deck deck;
 
-    public Dealer(Hand hand) {
-        validate(hand);
-        this.hand = hand;
+    Dealer(Deck deck, Money money) {
+        this.hand = Hand.of(deck.draw(), deck.draw());
+        this.money = money;
+        this.deck = deck;
     }
 
-    private void validate(Hand hand) {
-        validateNotNull(hand);
+    public static Dealer initiallizeDealer(Deck deck){
+        return new Dealer(deck,Money.makeMoneyInt(0));
     }
-
-    private void validateNotNull(Hand hand) {
-        if (hand == null) {
-            throw new IllegalArgumentException("딜러는 손패를 가져야합니다.");
-        }
-    }
-
     public TrumpCard retrieveFirstCard() {
         if (hand.getCards().size() != 2) {
             throw new IllegalStateException("딜러는 2장의 카드를 가지고 있어야 합니다.");
@@ -37,10 +33,6 @@ public class Dealer {
         hand.addCard(drawnCard);
     }
 
-    public Hand getHand() {
-        return hand;
-    }
-
     public int getTotalScore() {
         return hand.calculateTotalScore();
     }
@@ -55,5 +47,24 @@ public class Dealer {
 
     public boolean isHitable() {
         return hand.calculateTotalScore() < 17;
+    }
+
+    public void processBetting(int earnMoney) {
+        money.earnMoney(earnMoney);
+    }
+
+    public int getTotalMoney() {
+        return money.getEarnMoney();
+    }
+
+    public int processDealerHit() {
+        int hitCount = 0;
+
+        while (isHitable()) {
+            addCard(deck.draw());
+            hitCount++;
+        }
+
+        return hitCount;
     }
 }
