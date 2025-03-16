@@ -1,6 +1,7 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.*;
+import static util.ExceptionConstants.ERROR_HEADER;
 
 import fixture.CardFixture;
 import java.util.ArrayList;
@@ -22,6 +23,20 @@ class DeckTest {
 
         // then
         assertThat(card).isEqualTo(cards.get(0));
+    }
+
+    @DisplayName("카드가 1장 미만일 시 예외가 발생한다")
+    @Test
+    void test5() {
+        // given
+        List<Card> emptyCards = CardFixture.createEmptyCards();
+        Deck deck = new Deck(new ArrayList<>(emptyCards));
+
+        //when & then
+        assertThatThrownBy(
+                deck::drawCard
+        ).isInstanceOf(IllegalStateException.class)
+                .hasMessage(ERROR_HEADER + "카드가 충분하지 않습니다.");
     }
 
     @DisplayName("덱에 카드를 원하는 개수만큼 뽑을 수 있다")

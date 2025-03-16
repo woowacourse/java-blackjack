@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Participant {
 
@@ -18,6 +19,10 @@ public abstract class Participant {
 
     public String getName() {
         return name;
+    }
+
+    public boolean isEqualName(String name) {
+        return Objects.equals(this.name, name);
     }
 
     public void addDefaultCards(List<Card> cards) {

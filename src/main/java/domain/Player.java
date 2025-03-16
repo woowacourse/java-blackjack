@@ -56,6 +56,10 @@ public class Player extends Participant {
         return compareCardsSum(hand, dealerHand);
     }
 
+    public Profit calculateProfit(Hand hand) {
+        return null;
+    }
+
     private GameResultStatus compareCardsSum(Hand playerHand, Hand dealerHand) {
         if (playerHand.isLargerThan(dealerHand)) {
             return WIN;

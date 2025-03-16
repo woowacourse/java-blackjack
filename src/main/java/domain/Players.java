@@ -27,13 +27,13 @@ public class Players {
         return Collections.unmodifiableList(players);
     }
 
-    public GameResults calculateGameResult(Dealer dealer) {
-        Map<Player, GameResultStatus> gameResult = players.stream()
+    public ProfitResults calculateProfitResults(Dealer dealer) {
+        Map<Player, Profit> profitResults = players.stream()
                 .collect(Collectors.toMap(
                         player -> player,
-                        player -> player.calculateResultStatus(dealer.getHand())
+                        player -> player.calculateProfit(dealer.getHand())
                 ));
-        return new GameResults(gameResult);
+        return new ProfitResults(profitResults);
     }
 
     public List<String> getAllPlayersName() {
@@ -44,7 +44,7 @@ public class Players {
 
     public Player findPlayerByName(String playerName) {
         return players.stream()
-                .filter(player -> player.getName().equals(playerName))
+                .filter(player -> player.isEqualName(playerName))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_HEADER + "해당 이름을 가진 플레이어가 없습니다."));
     }

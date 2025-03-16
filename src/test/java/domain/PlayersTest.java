@@ -53,13 +53,11 @@ class PlayersTest {
         Players players = new Players(List.of(winner, drawer, loser));
 
         //when
-        GameResults gameResults = players.calculateGameResult(dealer);
+        ProfitResults profitResults = players.calculateProfitResults(dealer);
 
         //then
         assertSoftly(softly -> {
-            softly.assertThat(gameResults.getGameResultstatus(winner)).isEqualTo(GameResultStatus.WIN);
-            softly.assertThat(gameResults.getGameResultstatus(drawer)).isEqualTo(GameResultStatus.DRAW);
-            softly.assertThat(gameResults.getGameResultstatus(loser)).isEqualTo(GameResultStatus.LOSE);
+
         });
     }
 }

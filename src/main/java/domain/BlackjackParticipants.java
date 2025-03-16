@@ -43,4 +43,8 @@ public class BlackjackParticipants {
     public List<String> findAllPlayerNames() {
         return players.getAllPlayersName();
     }
+
+    public ProfitResults calculateProfitResults() {
+        return players.calculateProfitResults(dealer);
+    }
 }

@@ -1,7 +1,5 @@
 package view;
 
-import static domain.GameResultStatus.*;
-
 import controller.dto.CardsResultResponse;
 import controller.dto.InitialDealResponse;
 import controller.dto.InitialDealResponse.DealerDealResult;
@@ -9,8 +7,6 @@ import controller.dto.InitialDealResponse.PlayerDealResult;
 import controller.dto.PlayerHitResponse;
 import controller.dto.ProfitResultResponse;
 import domain.Dealer;
-import domain.GameResults;
-import domain.GameResultStatus;
 import domain.Hand;
 import domain.Player;
 import domain.Players;
@@ -93,20 +89,6 @@ public class OutputView {
             int handValue = response.handValue();
             System.out.printf("%s카드: %s - 결과: %d\n", name, parsedCards, handValue);
         });
-    }
-
-    public void printGameResults(GameResults gameResults) {
-        int winCount = gameResults.calculateStatusCount(WIN);
-        int loseCount = gameResults.calculateStatusCount(LOSE);
-        int drawCount = gameResults.calculateStatusCount(DRAW);
-        System.out.println("\n## 최종 승패");
-        System.out.printf("딜러: %d승 %d무 %d패\n", loseCount, drawCount, winCount);
-        gameResults.getAllPlayers()
-                .forEach(player -> {
-                    GameResultStatus gameResultstatus = gameResults.getGameResultstatus(player);
-                    String resultMessage = outputFormatter.formatGameResult(gameResultstatus);
-                    System.out.printf("%s: %s\n", player.getName(), resultMessage);
-                });
     }
 
     public void printProfitResults(List<ProfitResultResponse> profitResultResponses) {

@@ -14,6 +14,8 @@ import domain.Dealer;
 import domain.Hand;
 import domain.Participant;
 import domain.Player;
+import domain.ProfitResults;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackController {
@@ -21,7 +23,7 @@ public class BlackjackController {
     private final BlackjackParticipants blackjackParticipants;
     private final CardGiver cardGiver;
 
-    public BlackjackController(BlackjackParticipants blackjackParticipants, CardGiver cardGiver) {
+    public BlackjackController(BlackjackParticipants blackjackParticipants, CardGiver cardGiver {
         this.blackjackParticipants = blackjackParticipants;
         this.cardGiver = cardGiver;
     }
@@ -33,7 +35,7 @@ public class BlackjackController {
 
     public InitialDealResponse initialDeal() {
         List<Participant> participants = blackjackParticipants.getParticipants();
-        cardGiver.giveDefaultTo(participants);
+        cardGiver.dealingTo(participants);
         return toInitialDealResponse(blackjackParticipants.getDealer(), blackjackParticipants.getPlayers());
     }
 
@@ -59,7 +61,9 @@ public class BlackjackController {
     }
 
     public List<ProfitResultResponse> calculateAllProfitResult() {
-        return null;
+        ProfitResults profitResults = blackjackParticipants.calculateProfitResults();
+        Dealer dealer = blackjackParticipants.getDealer();
+        return toProfitResultResponses(profitResults, dealer);
     }
 
     private List<Player> toPlayers(List<BettingRequest> bettingRequests) {
@@ -87,5 +91,16 @@ public class BlackjackController {
                     return new CardsResultResponse(participant.getName(), hand.getCards(), hand.calculateSum());
                 })
                 .toList();
+    }
+
+    private List<ProfitResultResponse> toProfitResultResponses(ProfitResults profitResults, Dealer dealer) {
+        List<ProfitResultResponse> profitResultResponses = new ArrayList<>();
+        profitResultResponses.add(new ProfitResultResponse(dealer.getName(), profitResults.calculateDealerProfit()));
+
+        profitResults.getAllPlayers().stream()
+                .map(player -> new ProfitResultResponse(player.getName(), profitResults.getProfitValue(player)))
+                .forEach(profitResultResponses::add);
+
+        return profitResultResponses;
     }
 }
