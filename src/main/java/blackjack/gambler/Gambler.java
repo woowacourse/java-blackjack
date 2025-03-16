@@ -55,7 +55,7 @@ public abstract class Gambler {
         return cards;
     }
 
-    public double getBetAmount() {
-        return betAmount;
+    public int getBetAmount() {
+        return (int) betAmount;
     }
 }
