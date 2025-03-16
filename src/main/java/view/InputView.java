@@ -10,12 +10,11 @@ import model.participant.Player;
 import model.PlayerChoice;
 import model.participant.Players;
 import model.turn.PlayerTurn;
-import model.turn.PlayersTurn;
 
 public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public static PlayersTurn startBettingTurn(Players players) {
+    public static List<PlayerTurn> startBettingTurn(Players players) {
         List<PlayerTurn> turns = new ArrayList<>();
         for (Player player : players.getPlayers()) {
             System.out.println(player.getName() + "의 배팅 금액은?");
@@ -23,15 +22,14 @@ public class InputView {
             Betting betting = new Betting(bettingPrice);
             turns.add(new PlayerTurn(player, betting));
         }
-        return new PlayersTurn(turns);
+        return turns;
     }
 
-    public static Players readPlayerNames() {
+    public static List<String> readPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요. (쉼표 기준으로 분리)");
         String[] names = SCANNER.nextLine().split(",", -1);
         validateDelimiter(names);
-        List<String> players =  Arrays.stream(names).toList();
-        return Players.from(players);
+        return Arrays.stream(names).toList();
     }
 
     public static PlayerChoice readFirstChoice(Player player) {
