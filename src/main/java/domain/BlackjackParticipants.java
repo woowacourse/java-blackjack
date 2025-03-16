@@ -27,8 +27,8 @@ public class BlackjackParticipants {
 
     public List<Participant> getParticipants() {
         List<Participant> participants = new ArrayList<>();
-        participants.addAll(players.getPlayers());
         participants.add(dealer);
+        participants.addAll(players.getPlayers());
         return participants;
     }
 

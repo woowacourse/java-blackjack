@@ -1,13 +1,13 @@
 package domain;
 
+import static util.BlackjackConstants.DEALER_NAME;
+
 public class Dealer extends Participant {
 
     private static final int VALID_DRAW_LIMIT = 16;
 
-    private String name;
-
     private Dealer(Hand hand) {
-        super(hand);
+        super(DEALER_NAME, hand);
     }
 
     public static Dealer createEmpty() {
@@ -16,10 +16,6 @@ public class Dealer extends Participant {
 
     public Card getDealCard() {
         return hand.getFirst();
-    }
-
-    public String getName() {
-        return name;
     }
 
     @Override

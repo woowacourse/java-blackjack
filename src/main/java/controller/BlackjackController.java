@@ -8,10 +8,11 @@ import controller.dto.InitialDealResponse.PlayerDealResult;
 import controller.dto.PlayerHitResponse;
 import controller.dto.ProfitResultResponse;
 import domain.BettingMoney;
+import domain.BlackjackParticipants;
 import domain.CardGiver;
 import domain.Dealer;
+import domain.Hand;
 import domain.Participant;
-import domain.BlackjackParticipants;
 import domain.Player;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class BlackjackController {
     public InitialDealResponse initialDeal() {
         List<Participant> participants = blackjackParticipants.getParticipants();
         cardGiver.giveDefaultTo(participants);
-        return toInitialDealResponse();
+        return toInitialDealResponse(blackjackParticipants.getDealer(), blackjackParticipants.getPlayers());
     }
 
     public PlayerHitResponse hitPlayer(String playerName, boolean isRequestHit) {
@@ -53,7 +54,8 @@ public class BlackjackController {
     }
 
     public List<CardsResultResponse> extractAllCardsResult() {
-        return null;
+        List<Participant> participants = blackjackParticipants.getParticipants();
+        return toCardsResultResponses(participants);
     }
 
     public List<ProfitResultResponse> calculateAllProfitResult() {
@@ -66,17 +68,24 @@ public class BlackjackController {
                 .toList();
     }
 
-    private InitialDealResponse toInitialDealResponse() {
-        Dealer dealer = blackjackParticipants.getDealer();
+    private InitialDealResponse toInitialDealResponse(Dealer dealer, List<Player> players) {
         DealerDealResult dealerDealResult = new DealerDealResult(dealer.getName(), dealer.getDealCard());
-        List<Player> players = blackjackParticipants.getPlayers();
         List<PlayerDealResult> playerDealResults = players.stream()
                 .map(player -> new PlayerDealResult(player.getName(), player.getDealCards()))
                 .toList();
         return new InitialDealResponse(dealerDealResult, playerDealResults);
     }
 
-    private static PlayerHitResponse toPlayerHitResponse(Player player) {
+    private PlayerHitResponse toPlayerHitResponse(Player player) {
         return new PlayerHitResponse(player.getName(), player.getHand().getCards());
+    }
+
+    private List<CardsResultResponse> toCardsResultResponses(List<Participant> participants) {
+        return participants.stream()
+                .map(participant -> {
+                    Hand hand = participant.getHand();
+                    return new CardsResultResponse(participant.getName(), hand.getCards(), hand.calculateSum());
+                })
+                .toList();
     }
 }

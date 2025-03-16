@@ -9,18 +9,15 @@ import java.util.Objects;
 
 public class Player extends Participant {
 
-    private final String name;
     private final RoundHistory roundHistory;
 
     public Player(String name, Hand hand, RoundHistory roundHistory) {
-        super(hand);
-        this.name = name;
+        super(name, hand);
         this.roundHistory = roundHistory;
     }
 
     public Player(String name, RoundHistory roundHistory) {
-        super(null);
-        this.name = name;
+        super(name, Hand.createEmpty());
         this.roundHistory = roundHistory;
     }
 
@@ -32,16 +29,16 @@ public class Player extends Participant {
         this(name, hand, new RoundHistory(Hand.createEmpty(), new BettingResult()));
     }
 
-    public String getName() {
-        return name;
-    }
-
     public List<Card> getDealCards() {
         return hand.getCards();
     }
 
     public boolean hasBustCards() {
         return hand.isBust();
+    }
+
+    public boolean isPossibleHit() {
+        return !hand.isBust();
     }
 
     @Override

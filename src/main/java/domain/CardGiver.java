@@ -20,18 +20,18 @@ public class CardGiver {
         }
     }
 
+    public void giveDefaultTo(List<Participant> participants) {
+        participants.forEach(participant -> participant.addDefaultCards(deck.drawCards(DEFAULT_CARD_GIVE_COUNT)));
+    }
+
     public void hit(Player player, boolean isRequestHit) throws IllegalStateException {
         if (!isRequestHit) {
             return;
         }
-        if (player.isPossibleDraw()) {
+        if (player.isPossibleHit()) {
             throw new IllegalStateException(ERROR_HEADER + "카드의 합이 21을 초과하였습니다. 더이상 카드를 받을 수 없습니다.");
         }
         player.addCard(deck.drawCard());
-    }
-
-    public void giveDefaultTo(List<Participant> participants) {
-        participants.forEach(participant -> participant.addDefaultCards(deck.drawCards(DEFAULT_CARD_GIVE_COUNT)));
     }
 
     public void draw(Dealer dealer) {
