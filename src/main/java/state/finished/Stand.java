@@ -10,6 +10,6 @@ public class Stand extends Finished {
 
     @Override
     public double earningRate() {
-        return 2;
+        return 1;
     }
 }

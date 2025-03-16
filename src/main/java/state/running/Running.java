@@ -15,7 +15,7 @@ public abstract class Running extends Started {
     }
 
     @Override
-    public double profit(double earningRate) {
-        return 0;
+    public double profit(final int bettingMoney) {
+        throw new IllegalStateException("[ERROR] 게임 중에는 수익률 계산을 할 수 없습니다.");
     }
 }

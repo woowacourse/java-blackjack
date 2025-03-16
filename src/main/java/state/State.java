@@ -9,5 +9,5 @@ public interface State {
     State stand();
     boolean isFinished();
     Cards cards();
-    double profit(final double earningRate);
+    double profit(final int bettingMoney);
 }
