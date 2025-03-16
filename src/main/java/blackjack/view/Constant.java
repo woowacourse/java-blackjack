@@ -6,7 +6,6 @@ import java.util.Map;
 
 public class Constant {
 
-    public static final String LINE = System.lineSeparator();
     public static final Map<Shape, String> SHAPE_KOREAN = Map.of(
             Shape.SPADE, "스페이드",
             Shape.DIAMOND, "다이아몬드",

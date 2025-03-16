@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import static blackjack.view.Constant.DENOMINATION_KOREAN;
-import static blackjack.view.Constant.LINE;
 import static blackjack.view.Constant.SHAPE_KOREAN;
 
 import blackjack.card.Card;
@@ -11,6 +10,7 @@ import java.util.stream.Collectors;
 
 public class ResultView {
 
+    public static final String LINE = System.lineSeparator();
     private static final String CARDS_FORMAT = "%s: %s";
     private static final String CARDS_SUM_FORMAT = "%s - 결과: %d";
     private static final String DEALER_HIT_FORMAT = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
