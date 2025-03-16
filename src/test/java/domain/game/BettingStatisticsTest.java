@@ -1,10 +1,7 @@
-package domain;
+package domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.game.BettingResultAmount;
-import domain.game.BettingStatistics;
-import domain.game.GameResult;
 import domain.participants.BettingAmount;
 import domain.participants.Player;
 import domain.participants.PlayerName;

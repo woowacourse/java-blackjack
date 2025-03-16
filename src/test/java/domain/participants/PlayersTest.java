@@ -1,4 +1,4 @@
-package domain;
+package domain.participants;
 
 import static domain.card.Card.CLOVER_JACK;
 import static domain.card.Card.CLOVER_KING;
@@ -24,11 +24,6 @@ import domain.game.BettingResultAmount;
 import domain.game.BettingStatistics;
 import domain.game.GameResult;
 import domain.game.GameStatistics;
-import domain.participants.BettingAmount;
-import domain.participants.Dealer;
-import domain.participants.Gamer;
-import domain.participants.PlayerName;
-import domain.participants.Players;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

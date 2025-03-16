@@ -1,11 +1,10 @@
-package domain;
+package domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import domain.card.Card;
-import domain.game.Game;
 import domain.participants.BettingAmount;
 import domain.participants.PlayerName;
 import java.util.List;

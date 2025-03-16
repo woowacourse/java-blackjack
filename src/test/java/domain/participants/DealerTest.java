@@ -1,10 +1,9 @@
-package domain;
+package domain.participants;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
 import domain.card.Deck;
-import domain.participants.Dealer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;

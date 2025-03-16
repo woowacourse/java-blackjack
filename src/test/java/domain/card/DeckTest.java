@@ -1,9 +1,7 @@
-package domain;
+package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.card.Card;
-import domain.card.Deck;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

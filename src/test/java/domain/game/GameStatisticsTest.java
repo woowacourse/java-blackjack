@@ -1,9 +1,7 @@
-package domain;
+package domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.game.GameResult;
-import domain.game.GameStatistics;
 import domain.participants.PlayerName;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
