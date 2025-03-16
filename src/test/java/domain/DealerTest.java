@@ -1,6 +1,7 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import domain.card.Card;
 import domain.card.Rank;
@@ -15,15 +16,18 @@ public class DealerTest {
     @DisplayName("카드를 받아 수중에 카드를 추가한다")
     void should_add_Card_card() {
         // given
-        Card card = new Card(Shape.HEART, Rank.ACE);
+        Card cardOfHeartAce = new Card(Shape.HEART, Rank.ACE);
         Participant dealer = new Dealer();
 
         // when
-        dealer.addCard(card);
+        dealer.addCard(cardOfHeartAce);
 
         // then
         List<Card> cards = dealer.getCards();
-        assertThat(cards).hasSize(1);
+        assertAll(
+                () -> assertThat(cards).hasSize(1),
+                () -> assertThat(cards).contains(cardOfHeartAce)
+        );
     }
 
     @Test
@@ -31,8 +35,10 @@ public class DealerTest {
     void should_return_public_able_cards() {
         //given
         Participant dealer = new Dealer();
-        dealer.addCard(new Card(Shape.HEART, Rank.ACE));
-        dealer.addCard(new Card(Shape.HEART, Rank.TWO));
+        Card cardOfHeartAce = new Card(Shape.HEART, Rank.ACE);
+        Card cardOfHeartTwo = new Card(Shape.HEART, Rank.TWO);
+        dealer.addCard(cardOfHeartAce);
+        dealer.addCard(cardOfHeartTwo);
 
         //when
         List<Card> shownCard = dealer.getShownCard();
@@ -45,12 +51,11 @@ public class DealerTest {
     @DisplayName("현재 카드의 합이 카드를 뽑을 수 있는 조건인 16 이하일 경우, true를 반환한다")
     void should_return_true_when_can_pick() {
         //given
-        List<Card> cards = List.of(new Card(Shape.HEART, Rank.EIGHT),
-                new Card(Shape.CLUB, Rank.EIGHT));
         Participant dealer = new Dealer();
-        for (Card card : cards) {
-            dealer.addCard(card);
-        }
+        Card cardOfHeartEight = new Card(Shape.HEART, Rank.EIGHT);
+        Card cardOfClubEight = new Card(Shape.CLUB, Rank.EIGHT);
+        dealer.addCard(cardOfHeartEight);
+        dealer.addCard(cardOfClubEight);
 
         //when
         boolean canPick = dealer.canPick();
@@ -63,17 +68,16 @@ public class DealerTest {
     @DisplayName("현재 카드의 합이 카드를 뽑을 수 있는 조건인 17 이상일 경우, false를 반환한다")
     void should_return_false_when_cannot_pick() {
         //given
-        List<Card> cards = List.of(new Card(Shape.HEART, Rank.EIGHT),
-                new Card(Shape.CLUB, Rank.NINE));
         Participant dealer = new Dealer();
-        for (Card card : cards) {
-            dealer.addCard(card);
-        }
+        Card cardOfHeartEight = new Card(Shape.HEART, Rank.EIGHT);
+        Card cardOfClubNine = new Card(Shape.CLUB, Rank.NINE);
+        dealer.addCard(cardOfHeartEight);
+        dealer.addCard(cardOfClubNine);
 
         //when
         boolean canPick = dealer.canPick();
 
         //then
-        assertThat(canPick).isFalse();
+        assertThat(canPick).isEqualTo(false);
     }
 }
