@@ -1,6 +1,6 @@
 package blackjack.domain.card;
 
-import java.util.List;
+import java.util.Set;
 
 public enum CardScore {
 
@@ -18,7 +18,7 @@ public enum CardScore {
     Q(10),
     J(10);
 
-    private static final List<CardScore> SPECIAL_CARD_SCORE = List.of(CardScore.A, CardScore.K,
+    private static final Set<CardScore> SPECIAL_CARD_SCORE = Set.of(CardScore.A, CardScore.K,
             CardScore.Q, CardScore.J);
     private static final int ACE_MAX_NUMBER = 11;
 
@@ -29,9 +29,7 @@ public enum CardScore {
     }
 
     public String getName() {
-        final boolean isSpecialCardScore = SPECIAL_CARD_SCORE.stream()
-                .anyMatch(cardScore -> cardScore == this);
-        if (isSpecialCardScore) {
+        if (SPECIAL_CARD_SCORE.contains(this)) {
             return this.name();
         }
         return String.valueOf(score);
