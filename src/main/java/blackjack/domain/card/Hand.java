@@ -35,12 +35,12 @@ public final class Hand {
                 .sum();
     }
 
-    public void addAll(final Hand givenHand) {
-        hand.addAll(givenHand.getHand());
-    }
-
     public void add(final Card card) {
         hand.add(card);
+    }
+
+    public void addAll(final Hand givenHand) {
+        hand.addAll(givenHand.getHand());
     }
 
     public boolean isBlackjack() {
@@ -84,10 +84,6 @@ public final class Hand {
         return Objects.hashCode(hand);
     }
 
-    public List<Card> getHand() {
-        return Collections.unmodifiableList(hand);
-    }
-
     public Hand getPartialCards(int startInclusive, int endExclusive) {
         validateIndex(startInclusive, endExclusive);
         return new Hand(hand.subList(startInclusive, endExclusive));
@@ -102,11 +98,15 @@ public final class Hand {
         }
     }
 
+    public int getSize() {
+        return hand.size();
+    }
+
     public Card getFirstCard() {
         return hand.getFirst();
     }
 
-    public int getSize() {
-        return hand.size();
+    public List<Card> getHand() {
+        return Collections.unmodifiableList(hand);
     }
 }

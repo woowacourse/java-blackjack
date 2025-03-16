@@ -17,14 +17,14 @@ public final class Deck {
         return new Deck(new ShuffleDeckGenerator());
     }
 
-    public Card spreadOneCard() {
-        return pickCard();
-    }
-
     public Hand spreadInitialCards(final int cardSize) {
         return new Hand(IntStream.range(0, cardSize)
                 .mapToObj(o -> pickCard())
                 .toList());
+    }
+
+    public Card spreadOneCard() {
+        return pickCard();
     }
 
     private Card pickCard() {

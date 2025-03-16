@@ -13,19 +13,19 @@ public final class Player extends Gamer {
 
     public Player(final Hand hand, final String nickname, final int bettingAmount) {
         super(hand);
-        validate(bettingAmount);
+        validateBettingAmount(bettingAmount);
         this.nickname = nickname;
         this.bettingAmount = bettingAmount;
     }
 
-    private void validate(final int bettingAmount) {
+    public static Player from(final String nickname, final int bettingAmount) {
+        return new Player(new Hand(new ArrayList<>()), nickname, bettingAmount);
+    }
+
+    private void validateBettingAmount(final int bettingAmount) {
         if (bettingAmount <= 0) {
             throw new IllegalArgumentException("[ERROR] 베팅 금액을 양수로 입력해주세요.");
         }
-    }
-
-    public static Player from(final String nickname, final int bettingAmount) {
-        return new Player(new Hand(new ArrayList<>()), nickname, bettingAmount);
     }
 
     @Override

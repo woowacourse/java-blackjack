@@ -97,8 +97,4 @@ public final class Players {
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
-
-    public Player getPlayer(final int index) {
-        return players.get(index);
-    }
 }

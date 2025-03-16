@@ -20,8 +20,7 @@ public final class Participants {
     }
 
     public static Participants of(final Players players) {
-        Dealer dealer = Dealer.createEmpty();
-        return new Participants(dealer, players);
+        return new Participants(Dealer.create(), players);
     }
 
     public int getInitialCardSize() {
@@ -33,16 +32,8 @@ public final class Participants {
         players.receiveCardsByCount(hand.getPartialCards(SPREAD_CARD_SIZE, hand.getSize()), SPREAD_CARD_SIZE);
     }
 
-    public Players findHitAvailablePlayers() {
+    public Players findCanHitPlayers() {
         return players.findHitAvailablePlayers();
-    }
-
-    public List<String> getPlayerNames() {
-        return players.getNames();
-    }
-
-    public String getDealerName() {
-        return dealer.getNickname();
     }
 
     public Hand showInitialDealerCards() {
@@ -71,6 +62,14 @@ public final class Participants {
 
     public DealerWinningResult makeWinningResult() {
         return dealer.makeDealerWinningResult(players.showAllCards());
+    }
+
+    public String getDealerName() {
+        return dealer.getNickname();
+    }
+
+    public List<String> getPlayerNames() {
+        return players.getNames();
     }
 
     public Dealer getDealer() {

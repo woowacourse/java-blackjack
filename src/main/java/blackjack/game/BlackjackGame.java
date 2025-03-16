@@ -64,7 +64,7 @@ public final class BlackjackGame {
     }
 
     private void spreadExtraCardsToPlayer(final Participants participants, final Deck deck) {
-        Players availablePlayers = participants.findHitAvailablePlayers();
+        Players availablePlayers = participants.findCanHitPlayers();
         for (Player player : availablePlayers.getPlayers()) {
             askPlayerMoreCard(deck, player);
         }
