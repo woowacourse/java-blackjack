@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 public class Participants {
@@ -19,17 +20,15 @@ public class Participants {
     private final List<Player> players;
     private final Dealer dealer;
 
-    public Participants(List<String> names, List<Integer> betAmounts, Deck deck) {
-        List<ParticipantName> participantNames = toParticipantNames(names);
-        List<Bet> bets = toBets(betAmounts);
-        players = createPlayers(participantNames, bets, deck);
+    public Participants(List<ParticipantName> participantNames, Map<ParticipantName, Bet> playerBets, Deck deck) {
         this.dealer = new Dealer(drawInitCard(deck));
-        validateBetCount(participantNames, bets);
         validatePlayerNames(participantNames);
+        validateBetCount(participantNames, playerBets);
+        players = createPlayers(participantNames, playerBets, deck);
     }
 
-    private static void validateBetCount(List<ParticipantName> names, List<Bet> bets) {
-        if (names.size() != bets.size()) {
+    private static void validateBetCount(List<ParticipantName> names, Map<ParticipantName, Bet> participantBets) {
+        if (names.size() != participantBets.size()) {
             throw new IllegalStateException(PLAYER_BET_MISMATCH);
         }
     }
@@ -42,25 +41,14 @@ public class Participants {
         return initCards;
     }
 
-    private List<Player> createPlayers(List<ParticipantName> names, List<Bet> playerBets, Deck deck) {
+    private List<Player> createPlayers(List<ParticipantName> names, Map<ParticipantName, Bet> playerBets, Deck deck) {
         List<Player> players = new ArrayList<>();
         IntStream.range(0, names.size())
                 .forEach(index -> {
-                    players.add(new Player(names.get(index), playerBets.get(index), drawInitCard(deck)));
+                    ParticipantName name = names.get(index);
+                    players.add(new Player(name, playerBets.get(name.name()), drawInitCard(deck)));
                 });
         return players;
-    }
-
-    private List<Bet> toBets(List<Integer> betAmounts) {
-        return betAmounts.stream()
-                .map(Bet::new)
-                .toList();
-    }
-
-    private List<ParticipantName> toParticipantNames(List<String> names) {
-        return names.stream()
-                .map(ParticipantName::new)
-                .toList();
     }
 
     private void validatePlayerNames(List<ParticipantName> names) {
