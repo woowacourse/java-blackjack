@@ -16,19 +16,17 @@ public enum UserBattleResult {
     UserBattleResult(double earningRate) {
         this.earningRate = earningRate;
     }
-
-    // TODO: 라인 수 줄이기
+    
     public static UserBattleResult compare(User user, Dealer dealer) {
         if (user.isBust()) {
             return UserBattleResult.LOSE;
-        }
-        if (dealer.isBust()) {
+        } else if (dealer.isBust()) {
             return UserBattleResult.NORMAL_WIN;
         }
+
         if (user.isBlackjack() && dealer.isBlackjack()) {
             return UserBattleResult.DRAW;
-        }
-        if (user.isBlackjack()) {
+        } else if (user.isBlackjack()) {
             return UserBattleResult.BLACKJACK_WIN;
         }
         return compareBySum(user.computeOptimalSum(), dealer.computeOptimalSum());
