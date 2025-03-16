@@ -24,7 +24,7 @@ public class InputView {
     }
 
     public String readYesOrNo(Player player) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", player.getName());
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", player.getNickname());
         return readLine();
     }
 
@@ -39,7 +39,8 @@ public class InputView {
 
     private int getNextInt() {
         try {
-            return scanner.nextInt();
+            String value = readLine();
+            return Integer.parseInt(value);
         } catch (Exception e) {
             throw new IllegalArgumentException("[ERROR] 금액을 알맞게 입력해주세요.");
         }
