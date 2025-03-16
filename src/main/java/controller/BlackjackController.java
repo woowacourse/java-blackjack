@@ -2,6 +2,11 @@ package controller;
 
 import static view.AnswerType.*;
 
+import controller.dto.BettingRequest;
+import controller.dto.CardsResultResponse;
+import controller.dto.InitialDealResponse;
+import controller.dto.PlayerHitResponse;
+import controller.dto.ProfitResultResponse;
 import domain.Participant;
 import domain.Players;
 import domain.CardGiver;
@@ -13,12 +18,12 @@ import java.util.List;
 import view.AnswerType;
 import view.ConsoleView;
 
-public class BlackjackApplication {
+public class BlackjackController {
 
     private final ConsoleView consoleView;
     private final CardGiver cardGiver;
 
-    public BlackjackApplication(ConsoleView consoleView, CardGiver cardGiver) {
+    public BlackjackController(ConsoleView consoleView, CardGiver cardGiver) {
         this.consoleView = consoleView;
         this.cardGiver = cardGiver;
     }
@@ -34,6 +39,34 @@ public class BlackjackApplication {
         decideAdditionalCardForDealer(dealer);
 
         calculateResult(dealer, players);
+    }
+
+    public void createGame(List<BettingRequest> bettingRequests) {
+
+    }
+
+    public InitialDealResponse initialDeal() {
+        return null;
+    }
+
+    public PlayerHitResponse hitPlayer(String playerName, boolean isRequestHit) {
+        return null;
+    }
+
+    public List<String> findAllPlayerNames() {
+        return null;
+    }
+
+    public boolean drawDealer() {
+        return true;
+    }
+
+    public List<CardsResultResponse> extractAllCardsResult() {
+        return null;
+    }
+
+    public List<ProfitResultResponse> calculateAllProfitResult() {
+        return null;
     }
 
     private Players initializePlayers() {
@@ -54,7 +87,7 @@ public class BlackjackApplication {
 
     private void decideAdditionalCardForDealer(Dealer dealer) {
         cardGiver.giveOneTo(dealer);
-        consoleView.printDealerDraw(dealer.isPossibleDraw());
+        consoleView.printDealerDrawResult(dealer.isPossibleDraw());
     }
 
     private void calculateResult(Dealer dealer, Players players) {
