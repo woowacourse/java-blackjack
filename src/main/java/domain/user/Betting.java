@@ -6,12 +6,12 @@ public class Betting {
 
     private final long bettingMoney;
 
-    public Betting(Long bettingMoney) {
+    public Betting(final Long bettingMoney) {
         validateBetting(bettingMoney);
         this.bettingMoney = bettingMoney;
     }
 
-    private void validateBetting(Long bettingMoney) {
+    private void validateBetting(final Long bettingMoney) {
         if (bettingMoney == 0) {
             throw new IllegalArgumentException("배팅금액을 입력해 주세요.");
         }
@@ -24,7 +24,7 @@ public class Betting {
         return bettingMoney;
     }
 
-    public long calculateBetting(GameResult gameResult) {
+    public long calculateBetting(final GameResult gameResult) {
         if (gameResult == GameResult.BLACKJACK) {
             return (long) (bettingMoney * 1.5);
         }

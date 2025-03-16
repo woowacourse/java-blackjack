@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Parser {
 
-    public static List<String> parserStringToList(String names) {
+    public static List<String> parserStringToList(final String names) {
         return Arrays.stream(names.split(","))
                 .toList()
                 .stream()

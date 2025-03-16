@@ -10,7 +10,7 @@ public class Player extends User {
     private final String name;
     private final Betting betting;
 
-    public Player(String name, Betting betting) {
+    public Player(final String name, final Betting betting) {
         this.name = name;
         this.betting = betting;
         validate(name);
@@ -41,7 +41,7 @@ public class Player extends User {
         return false;
     }
 
-    private void validate(String name) {
+    private void validate(final String name) {
         if (name.equals("dealer") || name.equals("딜러")) {
             throw new IllegalArgumentException("dealer 혹은 딜러는 이름으로 사용할 수 없습니다.");
         }
@@ -51,7 +51,7 @@ public class Player extends User {
         return betting;
     }
 
-    public Long cacluateBettingResult(GameResult gameResult) {
+    public Long calculateBettingResult(final GameResult gameResult) {
         return betting.calculateBetting(gameResult);
     }
 }

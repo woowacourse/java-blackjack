@@ -25,7 +25,7 @@ public abstract class User {
         cardDeck.addTrumpCard(trumpCard);
     }
 
-    public boolean hasName(String name) {
+    public boolean hasName(final String name) {
         return getName().equals(name);
     }
 

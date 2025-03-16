@@ -68,7 +68,7 @@ public class GameManager {
     }
 
     private Long calculateProfit(Player player, Dealer dealer) {
-        return player.cacluateBettingResult(compare(player, dealer));
+        return player.calculateBettingResult(compare(player, dealer));
     }
 
     public GameResult compare(final Player player, final Dealer dealer) {
@@ -96,13 +96,13 @@ public class GameManager {
 
     private void putGameResultBurst(final Player player, final Map<User, Long> gameResult) {
         if (player.isBurst()) {
-            gameResult.put(player, player.cacluateBettingResult(GameResult.LOSE));
+            gameResult.put(player, player.calculateBettingResult(GameResult.LOSE));
             return;
         }
-        gameResult.put(player, player.cacluateBettingResult(GameResult.WIN));
+        gameResult.put(player, player.calculateBettingResult(GameResult.WIN));
     }
 
-    public long calculateDealerProfit(Map<User, Long> gameResult) {
+    public long calculateDealerProfit(final Map<User, Long> gameResult) {
         long amount = gameResult.entrySet().stream()
                 .mapToLong(Entry::getValue)
                 .sum();
@@ -113,7 +113,7 @@ public class GameManager {
         return dealer;
     }
 
-    public Player findPlayerByUsername(String playerName) {
+    public Player findPlayerByUsername(final String playerName) {
         return players.stream()
                 .filter(player -> player.getName().equals(playerName))
                 .findFirst()

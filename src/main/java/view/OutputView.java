@@ -15,18 +15,18 @@ public class OutputView {
         displayCards(name, printCards);
     }
 
-    private void displayCards(String name, List<String> printCards) {
+    private void displayCards(final String name, final List<String> printCards) {
         System.out.print(name + "카드: " + String.join(", ", printCards) + "\n");
     }
 
 
-    public void displayOpenCardsResult(String name, List<String> printCards, int score) {
+    public void displayOpenCardsResult(final String name, final List<String> printCards, final int score) {
         String str = printCards.stream()
                 .collect(Collectors.joining(", "));
         System.out.println(name + "카드: " + str + " - 결과: " + score);
     }
 
-    public void displayProfitResult(long dealerProfit, Map<User, Long> gameResult) {
+    public void displayProfitResult(final long dealerProfit, final Map<User, Long> gameResult) {
         System.out.println("\n## 최종 수익");
         System.out.printf("딜러: %d\n", dealerProfit);
         for (User user : gameResult.keySet()) {

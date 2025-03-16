@@ -4,7 +4,7 @@ public class TrumpCard {
     private final CardShape cardShape;
     private final CardNumber cardNumber;
 
-    public TrumpCard(CardShape cardShape, CardNumber cardNumber) {
+    public TrumpCard(final CardShape cardShape, CardNumber cardNumber) {
         this.cardShape = cardShape;
         this.cardNumber = cardNumber;
     }
