@@ -2,7 +2,8 @@ package blackjack.view.display;
 
 import blackjack.domain.card.CardShape;
 
-import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.Map;
 
 public enum CardShapeDisplay {
     HEART(CardShape.HEART, "하트"),
@@ -10,6 +11,14 @@ public enum CardShapeDisplay {
     SPADE(CardShape.SPADE, "스페이드"),
     CLOVER(CardShape.CLOVER, "클로버"),
     ;
+    
+    private static final Map<CardShape, String> CARD_SHAPES = new EnumMap<>(CardShape.class);
+    
+    static {
+        for (CardShapeDisplay cardShape : CardShapeDisplay.values()) {
+            CARD_SHAPES.put(cardShape.cardShape, cardShape.cardShapeDisplay);
+        }
+    }
     
     private final CardShape cardShape;
     private final String cardShapeDisplay;
@@ -20,10 +29,6 @@ public enum CardShapeDisplay {
     }
     
     public static String parseCardShape(CardShape cardShape) {
-        return Arrays.stream(CardShapeDisplay.values())
-                .filter(displayCard -> displayCard.cardShape.equals(cardShape))
-                .findAny()
-                .map(displayCard -> displayCard.cardShapeDisplay)
-                .orElseThrow();
+        return CARD_SHAPES.get(cardShape);
     }
 }

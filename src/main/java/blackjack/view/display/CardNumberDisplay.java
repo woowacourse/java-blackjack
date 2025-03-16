@@ -2,7 +2,8 @@ package blackjack.view.display;
 
 import blackjack.domain.card.CardNumber;
 
-import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.Map;
 
 public enum CardNumberDisplay {
     ACE(CardNumber.ACE, "A"),
@@ -20,6 +21,14 @@ public enum CardNumberDisplay {
     KING(CardNumber.KING, "K"),
     ;
     
+    private static final Map<CardNumber, String> CARD_NUMBERS = new EnumMap<>(CardNumber.class);
+    
+    static {
+        for (CardNumberDisplay cardNumber : CardNumberDisplay.values()) {
+            CARD_NUMBERS.put(cardNumber.cardNumber, cardNumber.cardNumberDisplay);
+        }
+    }
+    
     private final CardNumber cardNumber;
     private final String cardNumberDisplay;
     
@@ -29,10 +38,6 @@ public enum CardNumberDisplay {
     }
     
     public static String parseCardNumber(CardNumber card) {
-        return Arrays.stream(CardNumberDisplay.values())
-                .filter(displayCard -> displayCard.cardNumber.equals(card))
-                .findAny()
-                .map(displayCard -> displayCard.cardNumberDisplay)
-                .orElseThrow();
+        return CARD_NUMBERS.get(card);
     }
 }
