@@ -18,7 +18,8 @@ public class Players {
         this.gamblers = gamblers;
     }
 
-    public void distributeInitialCards(Supplier<Cards> cardsSupplier) {
+    public void distributeInitialCards(final Supplier<Cards> cardsSupplier) {
+        dealer.addCards(cardsSupplier.get());
         for (Gambler gambler : gamblers) {
             gambler.addCards(cardsSupplier.get());
         }
