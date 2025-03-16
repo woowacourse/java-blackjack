@@ -33,9 +33,6 @@ public enum RoundResult {
     }
 
     private static RoundResult getBustResult(Gamer gamer, Gamer otherGamer) {
-        if (gamer.isBust() && otherGamer.isBust()) {
-            return TIE;
-        }
         if (gamer.isBust()) {
             return BUST;
         }
