@@ -20,7 +20,7 @@ public class Application {
 
         try {
             controller.start();
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             outputView.printErrorMessage(e.getMessage());
         }
     }
