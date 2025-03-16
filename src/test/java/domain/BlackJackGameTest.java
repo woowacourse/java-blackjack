@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Shape;
-import java.util.ArrayList;
+import domain.fixture.ParticipantsFixture;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -233,15 +233,6 @@ class BlackJackGameTest {
 
         // then
         assertThat(hasReceivedCard).isEqualTo(false);
-    }
-}
-
-class ParticipantsFixture {
-    public static Participants createParticipants(List<String> playerNames) {
-        List<Participant> participants = new ArrayList<>();
-        participants.add(new Dealer());
-        playerNames.forEach(name -> participants.add(new Player(name)));
-        return new Participants(participants);
     }
 }
 
