@@ -4,6 +4,8 @@ import java.util.List;
 
 public class Players {
 
+    private static final int AVAILABLE_PARTICIPANT_MIN_COUNT = 1;
+    private static final int AVAILABLE_PARTICIPANT_MAX_COUNT = 30;
     private final List<Player> values;
 
     private Players(List<Player> values) {
@@ -26,7 +28,7 @@ public class Players {
     }
 
     private static void validateNumber(List<Player> values) {
-        if (values.size() < 1 || values.size() > 30) {
+        if (values.size() < AVAILABLE_PARTICIPANT_MIN_COUNT || values.size() > AVAILABLE_PARTICIPANT_MAX_COUNT) {
             throw new IllegalArgumentException("게임 참가자는 1~30명까지 가능합니다.");
         }
     }
