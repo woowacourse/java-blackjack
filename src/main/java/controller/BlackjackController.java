@@ -47,8 +47,9 @@ public class BlackjackController {
     }
 
     public boolean drawDealer() {
-
-        return true;
+        Dealer dealer = blackjackParticipants.getDealer();
+        cardGiver.draw(dealer);
+        return dealer.isPossibleDraw();
     }
 
     public List<CardsResultResponse> extractAllCardsResult() {

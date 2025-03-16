@@ -33,4 +33,10 @@ public class CardGiver {
     public void giveDefaultTo(List<Participant> participants) {
         participants.forEach(participant -> participant.addDefaultCards(deck.drawCards(DEFAULT_CARD_GIVE_COUNT)));
     }
+
+    public void draw(Dealer dealer) {
+        if (dealer.isPossibleDraw()) {
+            dealer.addCard(deck.drawCard());
+        }
+    }
 }
