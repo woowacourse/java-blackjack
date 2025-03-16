@@ -21,10 +21,12 @@ public class InputView {
 
     private static List<String> inputUserNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
-        String names = scanner.nextLine();
-        return Arrays.stream(names.split(",", -1))
+        String input = scanner.nextLine();
+        List<String> names = Arrays.stream(input.split(",", -1))
                 .map(String::strip)
                 .toList();
+        validateUniqueNames(names);
+        return names;
     }
 
     private static int inputBet(String name) {
@@ -45,6 +47,14 @@ public class InputView {
             Integer.parseInt(input);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("정수를 입력해주세요.");
+        }
+    }
+
+    private static void validateUniqueNames(List<String> names) {
+        if (names.stream()
+                .distinct()
+                .count() != names.size()) {
+            throw new IllegalArgumentException("유저 이름은 중복될 수 없습니다.");
         }
     }
 }
