@@ -15,8 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PlayerWinningResultsTest {
-    private static String name = "pobi";
+class PlayerWinningResultTest {
     private Dealer dealer;
     private Player player;
     private Players players;
@@ -26,6 +25,40 @@ class PlayerWinningResultsTest {
         players = Players.from(List.of("moda"));
         dealer = new Dealer();
         player = players.getPlayers().getFirst();
+    }
+
+    @Test
+    @DisplayName("딜러와 플레이어를 받아 플레이어 기준 승패 결과를 저장한다")
+    void 플레이어_기준_승패결과를_저장() {
+        //given
+        player.receiveCard(new Card(CardRank.ACE, CardSuit.DIAMOND));
+        dealer.receiveCard(new Card(CardRank.NINE, CardSuit.DIAMOND));
+        PlayerWinningResult playerWinningResult = new PlayerWinningResult(player, GameResult.LOSE);
+
+        //when, then
+        assertThat(playerWinningResult.isLose()).isTrue();
+    }
+
+    @Test
+    @DisplayName("플레이어가 졌는지 확인한다")
+    void 플레이어가_졌는지_확인한다() {
+        //given
+        PlayerWinningResult playerWinningResult = new PlayerWinningResult(player, GameResult.LOSE);
+
+        //when, then
+        assertThat(playerWinningResult.isLose()).isTrue();
+    }
+
+    @Test
+    @DisplayName("플레이어가 블랙잭 승인지 확인한다")
+    void 플레이어가_블랙잭승인지_확인한다() {
+        //given
+        player.receiveCard(new Card(CardRank.ACE, CardSuit.DIAMOND));
+        player.receiveCard(new Card(CardRank.JACK, CardSuit.DIAMOND));
+        PlayerWinningResult playerWinningResult = new PlayerWinningResult(player, GameResult.WIN);
+
+        //when, then
+        assertThat(playerWinningResult.isBlackjackWin()).isTrue();
     }
 
     @Test
@@ -86,7 +119,7 @@ class PlayerWinningResultsTest {
     }
 
     @Test
-    @DisplayName("플레이어가 승리할 경우 승리를 반환한다")
+    @DisplayName("플레이어가 점수 승리할 경우 승리를 반환한다")
     void 플레이어가_승리할_경우_테스트() {
         //given
         dealer.receiveCard(new Card(CardRank.TWO, CardSuit.DIAMOND));
@@ -103,9 +136,8 @@ class PlayerWinningResultsTest {
         assertEquals(gameResult.get(player), expect);
     }
 
-
     @Test
-    @DisplayName("플레이어가 패배할 경우 패배를 반환한다.")
+    @DisplayName("플레이어가 점수 패배할 경우 패배를 반환한다.")
     void 플레이어가_패배할_경우_테스트() {
         //given
         dealer.receiveCard(new Card(CardRank.TWO, CardSuit.DIAMOND));
@@ -123,7 +155,7 @@ class PlayerWinningResultsTest {
     }
 
     @Test
-    @DisplayName("플레이어가 무승부일 경우 무승부를 반환한다.")
+    @DisplayName("플레이어가 점수 무승부일 경우 무승부를 반환한다.")
     void 플레이어가_무승부일_경우_테스트() {
         //given
         dealer.receiveCard(new Card(CardRank.TWO, CardSuit.DIAMOND));
@@ -140,35 +172,6 @@ class PlayerWinningResultsTest {
         assertEquals(gameResult.get(player), expect);
     }
 
-    @Test
-    @DisplayName("딜러의 최종 승패를 결정한다.")
-    void 딜러의_최종_승패를_결정한다() {
-        //given
-        GameResult playerResult1 = GameResult.WIN;
-        GameResult playerResult2 = GameResult.DRAW;
-        List<PlayerWinningResult> playerGameResult = List.of(
-                new PlayerWinningResult(new Player("a"), playerResult1),
-                new PlayerWinningResult(new Player("b"), playerResult2)
-        );
-        WinningResults winningResults = new WinningResults(playerGameResult);
-
-        //when
-        Map<GameResult, Integer> dealerResults = winningResults.decideDealerWinning();
-        int expect = 1;
-        int winExpect = 0;
-        int loseCount = dealerResults.getOrDefault(GameResult.LOSE, 0);
-        int drawCount = dealerResults.getOrDefault(GameResult.DRAW, 0);
-        int winCount = dealerResults.getOrDefault(GameResult.WIN, 0);
-
-        //then
-        assertEquals(loseCount, expect);
-        assertEquals(drawCount, expect);
-        assertEquals(winCount, winExpect);
-    }
-
-    /**
-     * 블랙잭 규칙 포함
-     */
     @Test
     @DisplayName("플레이어가 블랙잭 승리할 경우 승리를 반환한다")
     void 플레이어가_블랙잭_승리할_경우_테스트() {
@@ -188,7 +191,7 @@ class PlayerWinningResultsTest {
     }
 
     @Test
-    @DisplayName("플레이어가 블랙잭 승리할 경우 승리를 반환한다")
+    @DisplayName("플레이어가 블랙잭 패배할 경우 승리를 반환한다")
     void 플레이어가_블랙잭_패배할_경우_테스트() {
         //given
         dealer.receiveCard(new Card(CardRank.ACE, CardSuit.DIAMOND));
@@ -206,8 +209,8 @@ class PlayerWinningResultsTest {
     }
 
     @Test
-    @DisplayName("플레이어과 딜러가 동시에 블랙잭일때 승리한 플레이어의 경우 승리를 반환한다")
-    void 동시에_블랙잭일때_플레이어가_블랙잭_승리할_경우_테스트() {
+    @DisplayName("플레이어과 딜러가 동시에 블랙잭일 경우 무승부를 반환한다")
+    void 동시에_블랙잭일때_무승부_테스트() {
         //given
         dealer.receiveCard(new Card(CardRank.ACE, CardSuit.DIAMOND));
         dealer.receiveCard(new Card(CardRank.JACK, CardSuit.DIAMOND));
@@ -221,19 +224,5 @@ class PlayerWinningResultsTest {
 
         //then
         assertEquals(gameResult.get(player), expect);
-    }
-
-    @Test
-    @DisplayName("특정 플레이어의 승패 결과를 반환한다")
-    void 특정_플레이어의_승패_결과를_반환한다() {
-        //given
-        GameResult playerResult = GameResult.LOSE;
-        List<PlayerWinningResult> playerGameResult = List.of(
-                new PlayerWinningResult(player, playerResult)
-        );
-        WinningResults winningResults = new WinningResults(playerGameResult);
-
-        //when, then
-        assertThat(winningResults.isLose(player)).isTrue();
     }
 }

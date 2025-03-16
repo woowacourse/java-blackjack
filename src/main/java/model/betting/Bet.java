@@ -35,7 +35,10 @@ public class Bet {
         return -money;
     }
 
-    public int calculateDealerRevenue() {
+    public int calculateOwnerRevenue() {
+        if (isEqualOwnerAndBetter()) {
+            return calculateBetterRevenue();
+        }
         return -calculateBetterRevenue();
     }
 
@@ -47,7 +50,7 @@ public class Bet {
         return better.equals(owner);
     }
 
-    public Object getOwner() {
+    public BetOwnable getOwner() {
         return owner;
     }
 
@@ -60,11 +63,12 @@ public class Bet {
             return false;
         }
         Bet bet = (Bet) o;
-        return money == bet.money && Objects.equals(owner, bet.owner);
+        return money == bet.money && Objects.equals(better, bet.better) && Objects.equals(owner,
+                bet.owner);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(money, owner);
+        return Objects.hash(money, better, owner);
     }
 }

@@ -30,4 +30,18 @@ class PlayerTest {
         //then
         assertThat(player.getHandCards()).contains(card);
     }
+
+    @DisplayName("플레이어가 에이스 카드를 최초로 뽑으면 SoftHand를 갖는다.")
+    @Test
+    void 소프트밸류_카드한장을_최초로_뽑을때_소프트핸드를_갖는다() {
+        //given
+        Card card = new Card(CardRank.ACE, CardSuit.HEART);
+
+        //when
+        player.receiveCard(card);
+        int softCardValue = CardRank.ACE.getMaxValue();
+
+        //then
+        assertThat(player.calculateFinalScore()).isEqualTo(softCardValue);
+    }
 }

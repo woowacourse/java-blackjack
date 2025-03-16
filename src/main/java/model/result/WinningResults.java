@@ -25,9 +25,8 @@ public final class WinningResults {
     }
 
     public Map<GameResult, Integer> decideDealerWinning() {
-        //TODO 객체화
         Map<GameResult, Integer> dealerResult = new HashMap<>();
-        for (PlayerWinningResult result : this.results){
+        for (PlayerWinningResult result : this.results) {
             GameResult playerGameResult = result.getGameResult();
             updateDealerResult(playerGameResult, dealerResult);
         }

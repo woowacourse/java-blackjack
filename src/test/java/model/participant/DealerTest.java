@@ -54,6 +54,20 @@ class DealerTest {
         assertThat(dealer.openInitialDeal()).containsExactly(firstCard);
     }
 
+    @DisplayName("딜러가 에이스 카드를 최초로 뽑으면 SoftHand를 갖는다.")
+    @Test
+    void 소프트밸류_카드한장을_최초로_뽑을때_소프트핸드를_갖는다() {
+        //given
+        Card card = new Card(CardRank.ACE, CardSuit.HEART);
+
+        //when
+        dealer.receiveCard(card);
+        int softCardValue = CardRank.ACE.getMaxValue();
+
+        //then
+        assertThat(dealer.calculateFinalScore()).isEqualTo(softCardValue);
+    }
+
     @DisplayName("플레이어가 제시한 배팅 금액을 딜러가 보관한다.")
     @Test
     void 플레이어_제시_배팅금액을_저장() {

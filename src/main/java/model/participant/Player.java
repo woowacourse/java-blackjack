@@ -10,8 +10,7 @@ import model.participant.role.Gameable;
 
 public final class Player implements Bettable, Gameable {
     private final String name;
-    private ParticipantHand participantHand; //TODO : not final
-    //TODO : player가 bet을 가져야할까?
+    private ParticipantHand participantHand;
 
     public Player(final String name) {
         this.name = name;

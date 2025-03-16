@@ -54,5 +54,66 @@ class BetTest {
         assertThat(newBet.getOwner()).isEqualTo(dealer);
     }
 
+    @Test
+    @DisplayName("베팅을 제시한 사람이 맞는지 확인한다.")
+    void 베팅을_제시한_사람이_맞는_확인() {
+        //given
+        Player player = new Player("moda");
+        Dealer dealer = new Dealer();
+        Bet bet = new Bet(10000, player, dealer);
+
+        //when
+        boolean same = bet.betterEquals(player);
+
+        //then
+        assertThat(same).isTrue();
+    }
+
+    @Test
+    @DisplayName("베팅의 소유자가 다를 때 베팅을 제시한 사람 기준 수익금을 계산한다.")
+    void 소유자가_다를때_베팅을_제시한_사람_기준_수익금_계산() {
+        //given
+        Player player = new Player("moda");
+        Dealer dealer = new Dealer();
+        Bet bet = new Bet(10000, player, dealer);
+
+        //when
+        int betterRevenue = bet.calculateBetterRevenue();
+
+        //then
+        assertThat(betterRevenue).isEqualTo(-10000);
+    }
+
+    @Test
+    @DisplayName("베팅의 소유자가 다를 때 베팅을 소유한 사람 기준 수익금을 계산한다.")
+    void 소유자가_다를때_베팅을_소유한_사람_기준_수익금_계산() {
+        //given
+        Player player = new Player("moda");
+        Dealer dealer = new Dealer();
+        Bet bet = new Bet(10000, player, dealer);
+
+        //when
+        int ownerRevenue = bet.calculateOwnerRevenue();
+
+        //then
+        assertThat(ownerRevenue).isEqualTo(10000);
+    }
+
+    @Test
+    @DisplayName("베팅의 소유자와 베팅을 제시한 사람이 같을 때 수익금을 계산한다.")
+    void 소유자가_같을때_수익금_계산() {
+        //given
+        Player player = new Player("moda");
+        Bet bet = new Bet(10000, player, player);
+
+        //when
+        int ownerRevenue = bet.calculateOwnerRevenue();
+        int betterRevenue = bet.calculateBetterRevenue();
+
+        //then
+        assertThat(ownerRevenue).isEqualTo(10000);
+        assertThat(betterRevenue).isEqualTo(10000);
+    }
+
 
 }

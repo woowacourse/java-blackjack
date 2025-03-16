@@ -79,6 +79,7 @@ public class BlackjackController {
             OutputView.printDealerHitResult();
         }
     }
+
     private static void printFinalScore(Players players, Dealer dealer) {
         OutputView.printDealerFinalScore(dealer);
         OutputView.printPlayersFinalScore(players);

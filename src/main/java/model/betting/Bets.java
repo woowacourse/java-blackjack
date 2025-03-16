@@ -30,7 +30,7 @@ public class Bets {
 
     public int calculateDealerRevenue() {
         return bets.stream()
-                .mapToInt(Bet::calculateDealerRevenue)
+                .mapToInt(Bet::calculateOwnerRevenue)
                 .sum();
     }
 

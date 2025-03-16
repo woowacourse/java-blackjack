@@ -28,10 +28,10 @@ public class PlayerWinningResult {
         int dealerScore = dealer.calculateFinalScore();
         int playerScore = player.calculateFinalScore();
 
-        if (dealerScore > playerScore){
+        if (dealerScore > playerScore) {
             return GameResult.LOSE;
         }
-        if (dealerScore < playerScore){
+        if (dealerScore < playerScore) {
             return GameResult.WIN;
         }
         return GameResult.DRAW;
