@@ -37,11 +37,12 @@ public class Cards {
     }
 
     public int calculateScore() {
-        int aceScoreOne = CardNumber.ACE.getValues().get(0);
-        int aceScoreEleven = CardNumber.ACE.getValues().get(1);
-
         int score = totalWithoutAce();
+
         if (aceCount() >= 1) {
+            int aceScoreOne = CardNumber.ACE.getValues().get(0);
+            int aceScoreEleven = CardNumber.ACE.getValues().get(1);
+
             int scoreOneAce = (score + aceScoreOne) + (aceScoreOne * (aceCount() - 1));
             int scoreElevenAce = (score + aceScoreEleven) + (aceScoreOne * (aceCount() - 1));
 
