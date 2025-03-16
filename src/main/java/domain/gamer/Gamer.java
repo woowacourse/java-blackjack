@@ -9,7 +9,7 @@ import java.util.List;
 public abstract class Gamer {
 
     private final CardGroup cardGroup;
-    private final Betting betting;
+    private Betting betting;
 
     protected Gamer(CardGroup cardGroup) {
         this.cardGroup = cardGroup;
@@ -57,4 +57,8 @@ public abstract class Gamer {
     }
 
     public abstract boolean canReceiveCard();
+
+    public void betAmount(final Betting betting) {
+        this.betting = betting;
+    }
 }

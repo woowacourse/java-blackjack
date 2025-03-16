@@ -43,15 +43,17 @@ public class GameManagerTest {
         final List<Card> cards3 = List.of(new Card(CardType.CLOVER, CardScore.TWO),
                 new Card(CardType.HEART, CardScore.TWO));
         final List<Player> players = List.of(
-                new Player("윌슨", new CardGroup(cards1), new Betting(10_000)),
-                new Player("가이온", new CardGroup(cards2), new Betting(10_000)),
-                new Player("수달", new CardGroup(cards3), new Betting(20_000)));
+                new Player("윌슨", new CardGroup(cards1)),
+                new Player("가이온", new CardGroup(cards2)),
+                new Player("수달", new CardGroup(cards3)));
+        final Map<String, Integer> bettingAmount = Map.of("윌슨", 10_000, "가이온", 10_000, "수달", 20_000);
         final PlayerGroup playerGroup = new PlayerGroup(players);
         final Dealer dealer = new Dealer(new CardGroup(cards2));
         final Deck deck = Deck.of(new RandomCardGenerator());
 
         //when
         final GameManager gameManager = new GameManager(dealer, playerGroup, deck);
+        gameManager.betAmountPlayers(bettingAmount);
         final Map<String, Double> result = gameManager.calculatePlayerBettingAmountOfReturn();
 
         //then

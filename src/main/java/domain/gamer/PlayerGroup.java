@@ -1,5 +1,6 @@
 package domain.gamer;
 
+import domain.Betting;
 import domain.GameResult;
 import domain.card.Card;
 import domain.card.CardGroup;
@@ -26,6 +27,7 @@ public class PlayerGroup {
         return new PlayerGroup(players);
     }
 
+
     public Map<String, GameResult> calculatePlayersGameResult(final Dealer dealer) {
         Map<String, GameResult> resultMap = new HashMap<>();
         for (Player player : players) {
@@ -49,6 +51,11 @@ public class PlayerGroup {
     public double calculateBettingOfReturn(final Entry<String, GameResult> playerGameResult, final Dealer dealer) {
         final Player player = findByPlayerByName(playerGameResult.getKey());
         return player.calculateBettingScore(playerGameResult.getValue(),isBlackjackOnlyPlayer(player, dealer));
+    }
+
+    public void betAmountByPlayerName(final Entry<String, Integer> playerAmount) {
+        final Player player = findByPlayerByName(playerAmount.getKey());
+        player.betAmount(new Betting(playerAmount.getValue()));
     }
 
     private boolean isBlackjackOnlyPlayer(final Player player, final Dealer dealer) {
