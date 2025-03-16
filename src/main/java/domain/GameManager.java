@@ -4,13 +4,11 @@ import domain.user.Betting;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
-import domain.user.Users;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class GameManager {
@@ -18,23 +16,24 @@ public class GameManager {
     public final static int MAX_RANGE_HAND_OUT_CARD = 2;
     public final static int MIN_RANGE_HAND_OUT_CARD = 0;
 
-    private final Users users;
+    private final List<Player> players;
+    private final Dealer dealer;
     private final TrumpCardManager trumpCardManager;
 
-    public GameManager(Users users, TrumpCardManager trumpCardManager) {
-        this.users = users;
+    public GameManager(List<Player> players, Dealer dealer, TrumpCardManager trumpCardManager) {
+        this.players = players;
+        this.dealer = dealer;
         this.trumpCardManager = trumpCardManager;
     }
 
     public static GameManager initailizeGameManager(List<String> names, List<Long> playersBettingMoney,
                                                     TrumpCardManager trumpCardManager) {
         validateNames(names);
-        List<User> users = IntStream.range(0, names.size())
+        List<Player> players = IntStream.range(0, names.size())
                 .mapToObj(i -> new Player(names.get(i), new Betting(playersBettingMoney.get(i))))
-                .collect(Collectors.toList());
+                .toList();
         Dealer dealer = new Dealer();
-        users.add(dealer);
-        return new GameManager(new Users(users), trumpCardManager);
+        return new GameManager(players, dealer, trumpCardManager);
     }
 
     private static void validateNames(List<String> names) {
@@ -49,7 +48,8 @@ public class GameManager {
 
     public void firstHandOutCard() {
         for (int count = MIN_RANGE_HAND_OUT_CARD; count < MAX_RANGE_HAND_OUT_CARD; count++) {
-            users.userCardDraw(trumpCardManager);
+            dealer.receiveCard(trumpCardManager.drawCard());
+            players.forEach(player -> player.receiveCard(trumpCardManager.drawCard()));
         }
     }
 
@@ -59,8 +59,6 @@ public class GameManager {
 
     public Map<User, Long> createGameResult() {
         Map<User, Long> gameResult = new LinkedHashMap<>();
-        Dealer dealer = users.findDealer();
-        List<Player> players = users.findPlayers();
         if (dealer.isBurst()) {
             players.forEach((user) -> putGameResultBurst(user, gameResult));
             return gameResult;
@@ -104,22 +102,21 @@ public class GameManager {
         gameResult.put(player, player.cacluateBettingResult(GameResult.WIN));
     }
 
-    public String findDealerName() {
-        return users.findDealerName();
-    }
-
-    public Player findPlayerByUsername(final String name) {
-        return users.findByPlayerName(name);
-    }
-
-    public Dealer getDealer() {
-        return users.findDealer();
-    }
-
     public long calculateDealerProfit(Map<User, Long> gameResult) {
         long amount = gameResult.entrySet().stream()
                 .mapToLong(Entry::getValue)
                 .sum();
         return -amount;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public Player findPlayerByUsername(String playerName) {
+        return players.stream()
+                .filter(player -> player.getName().equals(playerName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("등록되지 않는 닉네임 입니다."));
     }
 }

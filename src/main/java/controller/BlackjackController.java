@@ -47,8 +47,8 @@ public class BlackjackController {
 
     private void distributionFirstCard(GameManager gameManager, List<String> playerNames) {
         gameManager.firstHandOutCard();
-
-        displayOpenCard(gameManager.findDealerName(), gameManager.getDealer());
+        Dealer dealer = gameManager.getDealer();
+        displayOpenCard(dealer.getName(), dealer);
         playerNames.forEach(playerName -> displayOpenCard(playerName, gameManager.findPlayerByUsername(playerName)));
     }
 
