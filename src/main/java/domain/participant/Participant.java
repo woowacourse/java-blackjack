@@ -8,6 +8,8 @@ import java.util.Objects;
 
 public abstract class Participant {
 
+    private static final int INITIAL_CARDS_SIZE = 2;
+
     protected ParticipantName participantName;
     protected Cards cards;
 
@@ -16,11 +18,11 @@ public abstract class Participant {
         this.cards = cards;
     }
 
-    public abstract boolean isDealer();
-
     public void drawCard(List<Card> providedCards) {
         cards = cards.addCards(providedCards);
     }
+
+    public abstract boolean shouldHit();
 
     public boolean isBust() {
         return cards.isBlackjackScoreExceeded();
@@ -30,22 +32,16 @@ public abstract class Participant {
         return cards.calculateTotalRank();
     }
 
-    public boolean shouldHit() {
-        return false;
-    }
-
-    public abstract List<Card> getInitialCards();
-
-    public int calculateDifferenceFromBlackjackScore() {
-        return cards.calculateDifferenceFromBlackjackScore();
+    public boolean isBlackjack() {
+        return getCards().size() == INITIAL_CARDS_SIZE && cards.equalToBlackjackScore();
     }
 
     public String getParticipantName() {
-        return participantName.getName();
+        return participantName.name();
     }
 
     public List<Card> getCards() {
-        return cards.getCards();
+        return cards.cards();
     }
 
     @Override

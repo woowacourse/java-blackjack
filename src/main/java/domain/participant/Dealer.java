@@ -1,9 +1,6 @@
 package domain.participant;
 
-import domain.card.Card;
 import domain.card.Cards;
-
-import java.util.List;
 
 public class Dealer extends Participant {
 
@@ -14,17 +11,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public boolean isDealer() {
-        return true;
-    }
-
-    @Override
     public boolean shouldHit() {
         return !cards.isDealerDrawLimitExceeded();
-    }
-
-    @Override
-    public List<Card> getInitialCards() {
-        return List.of(cards.getInitialCard());
     }
 }

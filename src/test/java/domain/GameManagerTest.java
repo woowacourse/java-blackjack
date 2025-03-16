@@ -6,8 +6,8 @@ import domain.card.Cards;
 import domain.card.Rank;
 import domain.card.Suit;
 import domain.participant.Dealer;
-import domain.participant.Participant;
 import domain.participant.ParticipantName;
+import domain.participant.ParticipantNames;
 import domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -31,8 +31,8 @@ public class GameManagerTest {
         private final Deque<Card> cardQueue = new ArrayDeque<>(List.of(
                 new Card(Suit.CLOVER, Rank.EIGHT),
                 new Card(Suit.HEART, Rank.JACK),
-                new Card(Suit.DIAMOND, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.ACE),
+                new Card(Suit.DIAMOND, Rank.FIVE),
+                new Card(Suit.SPADE, Rank.QUEEN),
                 new Card(Suit.SPADE, Rank.KING),
                 new Card(Suit.CLOVER, Rank.ACE)
         ));
@@ -48,58 +48,89 @@ public class GameManagerTest {
     }
 
     @Test
-    void 참가자중_딜러를_반환한다() {
-        GameManager gameManager = new GameManager(List.of("drago", "duei"), new GameManagerTest.TestCardProvider());
-        Cards cardsOfDealer = new Cards(
-                List.of(new Card(Suit.SPADE, Rank.KING), new Card(Suit.CLOVER, Rank.ACE)));
+    void 플레이어의_카드를_뽑는다() {
+        ParticipantNames participantNames = new ParticipantNames(List.of(new ParticipantName("drago")));
+        GameManager gameManager = new GameManager(participantNames,
+                Map.of(new ParticipantName("drago"), new BettingAmount(10000)), new GameManagerTest.TestCardProvider());
 
-        Participant result = gameManager.findDealer();
-
-        Participant expected = new Dealer(cardsOfDealer);
-        assertThat(result).isEqualTo(expected);
-    }
-
-    @Test
-    void 딜러가_카드를_뽑으면_가지고있는_카드리스트에_추가된다() {
-        GameManager gameManager = new GameManager(List.of("drago"), new GameManagerTest.TestCardProvider());
-
-        Participant dealer = gameManager.findDealer();
-        gameManager.drawCard(dealer);
-
-        List<Card> expected = List.of(new Card(Suit.DIAMOND, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.ACE),
-                new Card(Suit.SPADE, Rank.KING));
-
-        assertThat(gameManager.findDealer().getCards()).isEqualTo(expected);
-    }
-
-    @Test
-    void 플레이어가_카드를_뽑으면_가지고있는_카드리스트에_추가된다() {
-        GameManager gameManager = new GameManager(List.of("drago"), new GameManagerTest.TestCardProvider());
-
-        Participant player = gameManager.findPlayers().getFirst();
-        gameManager.drawCard(player);
+        List<Player> players = gameManager.getPlayers();
+        Player player = players.getFirst();
+        gameManager.drawCardForPlayer(player);
 
         List<Card> expected = List.of(new Card(Suit.CLOVER, Rank.EIGHT),
                 new Card(Suit.HEART, Rank.JACK),
                 new Card(Suit.SPADE, Rank.KING));
 
-        assertThat(gameManager.findPlayers().getFirst().getCards()).isEqualTo(expected);
+        assertThat(player.getCards()).isEqualTo(expected);
     }
 
     @Test
-    void 최종_게임_결과를_반환한다() {
-        GameManager gameManager = new GameManager(List.of("drago", "duei"), new GameManagerTest.TestCardProvider());
+    void 딜러가_카드를_뽑아야하는_상황이면_true를_반환한다() {
+        ParticipantNames participantNames = new ParticipantNames(List.of(new ParticipantName("drago")));
+        GameManager gameManager = new GameManager(participantNames,
+                Map.of(new ParticipantName("drago"), new BettingAmount(10000)), new GameManagerTest.TestCardProvider());
+
+        assertThat(gameManager.shouldDealerHit()).isTrue();
+    }
+
+    @Test
+    void 딜러가_카드를_뽑지않아도_되는_상황이면_false를_반환한다() {
+        ParticipantNames participantNames = new ParticipantNames(
+                List.of(new ParticipantName("drago"), new ParticipantName("duei")));
+        GameManager gameManager = new GameManager(participantNames,
+                Map.of(new ParticipantName("drago"), new BettingAmount(10000),
+                        new ParticipantName("duie"), new BettingAmount(10000)),
+                new GameManagerTest.TestCardProvider());
+
+        assertThat(gameManager.shouldDealerHit()).isFalse();
+    }
+
+    @Test
+    void 딜러의_카드를_뽑는다() {
+        ParticipantNames participantNames = new ParticipantNames(List.of(new ParticipantName("drago")));
+        GameManager gameManager = new GameManager(participantNames,
+                Map.of(new ParticipantName("drago"), new BettingAmount(10000)), new GameManagerTest.TestCardProvider());
+
+        Dealer dealer = gameManager.getDealer();
+        gameManager.drawCardForDealer();
+
+        List<Card> expected = List.of(new Card(Suit.DIAMOND, Rank.FIVE),
+                new Card(Suit.SPADE, Rank.QUEEN),
+                new Card(Suit.SPADE, Rank.KING));
+
+        assertThat(dealer.getCards()).isEqualTo(expected);
+    }
+
+    @Test
+    void 최종_플레이어들의_수익을_반환한다() {
+        ParticipantNames participantNames = new ParticipantNames(List.of(new ParticipantName("drago"), new ParticipantName("duei")));
+        GameManager gameManager = new GameManager(participantNames,
+                Map.of(new ParticipantName("drago"), new BettingAmount(10000),
+                        new ParticipantName("duei"), new BettingAmount(20000)),
+                new GameManagerTest.TestCardProvider());
         Cards cardsOfDrago = new Cards(
                 List.of(new Card(Suit.CLOVER, Rank.EIGHT), new Card(Suit.HEART, Rank.JACK)));
         Cards cardsOfDuei = new Cards(
-                List.of(new Card(Suit.DIAMOND, Rank.EIGHT), new Card(Suit.SPADE, Rank.ACE)));
-        Map<Participant, ResultStatus> result = gameManager.findGameResult();
+                List.of(new Card(Suit.DIAMOND, Rank.FIVE), new Card(Suit.SPADE, Rank.QUEEN)));
 
-        Map<Participant, ResultStatus> expected = Map.of(
-                new Player(new ParticipantName("drago"), cardsOfDrago), ResultStatus.LOSE,
-                new Player(new ParticipantName("duei"), cardsOfDuei), ResultStatus.LOSE
+        Map<Player, Integer> expected = Map.of(
+                new Player(new ParticipantName("drago"), new BettingAmount(10000), cardsOfDrago), -10000,
+                new Player(new ParticipantName("duei"), new BettingAmount(20000), cardsOfDuei), -20000
         );
-        assertThat(result).isEqualTo(expected);
+
+        assertThat(gameManager.findPlayersProfits()).isEqualTo(expected);
+    }
+
+    @Test
+    void 최종_딜러의_수익을_반환한다() {
+        ParticipantNames participantNames = new ParticipantNames(List.of(new ParticipantName("drago"), new ParticipantName("duei")));
+        GameManager gameManager = new GameManager(participantNames,
+                Map.of(new ParticipantName("drago"), new BettingAmount(10000),
+                        new ParticipantName("duei"), new BettingAmount(20000)),
+                new GameManagerTest.TestCardProvider());
+
+        int expected = 30000;
+
+        assertThat(gameManager.findDealerProfit()).isEqualTo(expected);
     }
 }

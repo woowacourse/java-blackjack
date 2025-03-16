@@ -1,4 +1,4 @@
-import contoller.BlackjackController;
+import controller.BlackjackController;
 
 public class Application {
 

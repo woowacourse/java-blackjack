@@ -1,7 +1,5 @@
 package view;
 
-import domain.participant.Participant;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -21,8 +19,14 @@ public class InputView {
                 .toList();
     }
 
-    public static boolean askForOneMoreCard(Participant player) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", player.getParticipantName());
+    public static int readBettingAmount(String name) {
+        System.out.printf("%n%s의 베팅 금액은?%n", name);
+        String input = scanner.nextLine();
+        return InputValidator.validateNumberFormat(input);
+    }
+
+    public static boolean askForOneMoreCard(String name) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
         String input = scanner.nextLine();
         return Answer.selectAnswer(input);
     }

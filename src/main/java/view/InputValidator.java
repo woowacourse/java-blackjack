@@ -13,4 +13,12 @@ public class InputValidator {
             throw new IllegalArgumentException("[ERROR] (,)로 구분된 한글자 이상의 영어 이름을 입력해주세요.");
         }
     }
+
+    public static int validateNumberFormat(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("[ERROR] 베팅 금액은 숫자로 입력해주세요.", e);
+        }
+    }
 }

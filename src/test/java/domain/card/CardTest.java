@@ -13,13 +13,16 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 public class CardTest {
 
     @Test
-    void 카드가_에이스이면_true를_아니면_false를_반환한다() {
+    void 카드가_에이스이면_true를_반환한다() {
         Card aceCard = new Card(Suit.DIAMOND, Rank.ACE);
+
+        assertThat(aceCard.isAce()).isTrue();
+    }
+
+    @Test
+    void 카드가_에이스가_아니면_false를_반환한다() {
         Card notAceCard = new Card(Suit.DIAMOND, Rank.TWO);
 
-        assertAll(
-                () -> assertThat(aceCard.isAce()).isTrue(),
-                () -> assertThat(notAceCard.isAce()).isFalse()
-        );
+        assertThat(notAceCard.isAce()).isFalse();
     }
 }

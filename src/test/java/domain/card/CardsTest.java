@@ -19,8 +19,7 @@ public class CardsTest {
         Card card1 = new Card(Suit.DIAMOND, Rank.NINE);
         Card card2 = new Card(Suit.CLOVER, Rank.TWO);
         Card card3 = new Card(Suit.DIAMOND, Rank.ACE);
-        List<Card> cardList = List.of(card1, card2, card3);
-        Cards cards = new Cards(cardList);
+        Cards cards = new Cards(List.of(card1, card2, card3));
 
         assertThat(cards.calculateTotalRank()).isEqualTo(12);
     }
@@ -30,8 +29,7 @@ public class CardsTest {
         Card card1 = new Card(Suit.DIAMOND, Rank.EIGHT);
         Card card2 = new Card(Suit.CLOVER, Rank.TWO);
         Card card3 = new Card(Suit.DIAMOND, Rank.ACE);
-        List<Card> cardList = List.of(card1, card2, card3);
-        Cards cards = new Cards(cardList);
+        Cards cards = new Cards(List.of(card1, card2, card3));
 
         assertThat(cards.calculateTotalRank()).isEqualTo(21);
     }
@@ -40,8 +38,7 @@ public class CardsTest {
     void 카드리스트에_에이스가_두장이면_한장의_에이스를_1로_간주하여_합을_구한다() {
         Card card1 = new Card(Suit.HEART, Rank.ACE);
         Card card2 = new Card(Suit.CLOVER, Rank.ACE);
-        List<Card> cardList = List.of(card1, card2);
-        Cards cards = new Cards(cardList);
+        Cards cards = new Cards(List.of(card1, card2));
 
         assertThat(cards.calculateTotalRank()).isEqualTo(12);
     }
@@ -51,8 +48,7 @@ public class CardsTest {
         Card card1 = new Card(Suit.HEART, Rank.ACE);
         Card card2 = new Card(Suit.CLOVER, Rank.ACE);
         Card card3 = new Card(Suit.DIAMOND, Rank.ACE);
-        List<Card> cardList = List.of(card1, card2, card3);
-        Cards cards = new Cards(cardList);
+        Cards cards = new Cards(List.of(card1, card2, card3));
 
         assertThat(cards.calculateTotalRank()).isEqualTo(13);
     }
@@ -62,8 +58,7 @@ public class CardsTest {
         Card card1 = new Card(Suit.DIAMOND, Rank.TWO);
         Card card2 = new Card(Suit.CLOVER, Rank.TWO);
         Card card3 = new Card(Suit.DIAMOND, Rank.THREE);
-        List<Card> cardList = List.of(card1, card2, card3);
-        Cards cards = new Cards(cardList);
+        Cards cards = new Cards(List.of(card1, card2, card3));
 
         assertThat(cards.calculateTotalRank()).isEqualTo(7);
     }
@@ -73,11 +68,11 @@ public class CardsTest {
         Card card1 = new Card(Suit.DIAMOND, Rank.TWO);
         Card card2 = new Card(Suit.CLOVER, Rank.TWO);
         Card card3 = new Card(Suit.DIAMOND, Rank.THREE);
-        List<Card> cardList = List.of(card1, card2, card3);
-        Cards cards = new Cards(cardList);
+        List<Card> cards = List.of(card1, card2, card3);
+        Cards oldCards = new Cards(cards);
 
         Card providedCard = new Card(Suit.CLOVER, Rank.EIGHT);
-        Cards newCards = cards.addCards(List.of(providedCard));
+        Cards newCards = oldCards.addCards(List.of(providedCard));
 
         List<Card> newCardList = List.of(card1, card2, card3, providedCard);
         Cards expected = new Cards(newCardList);
@@ -85,38 +80,72 @@ public class CardsTest {
     }
 
     @Test
-    void 카드리스트의_합계가_21초과이면_true_아니면_false를_반환한다() {
+    void 카드리스트의_합계가_21초과이면_true를_반환한다() {
         Card card1 = new Card(Suit.DIAMOND, Rank.JACK);
         Card card2 = new Card(Suit.CLOVER, Rank.QUEEN);
         Card card3 = new Card(Suit.DIAMOND, Rank.ACE);
         Card card4 = new Card(Suit.DIAMOND, Rank.ACE);
-        List<Card> cardList = List.of(card1, card2, card3);
-        Cards notExceedCards = new Cards(cardList);
+        Cards exceedCards = new Cards(List.of(card1, card2, card3, card4));
 
-        List<Card> otherCardList = List.of(card1, card2, card3, card4);
-        Cards exceedCards = new Cards(otherCardList);
-
-        assertAll(
-                () -> assertThat(notExceedCards.isBlackjackScoreExceeded()).isFalse(),
-                () -> assertThat(exceedCards.isBlackjackScoreExceeded()).isTrue()
-        );
+        assertThat(exceedCards.isBlackjackScoreExceeded()).isTrue();
     }
 
     @Test
-    void 카드리스트의_합계가_16초과이면_true_아니면_false를_반환한다() {
+    void 카드리스트의_합계가_21이하이면_false를_반환한다() {
+        Card card1 = new Card(Suit.DIAMOND, Rank.JACK);
+        Card card2 = new Card(Suit.CLOVER, Rank.QUEEN);
+        Card card3 = new Card(Suit.DIAMOND, Rank.ACE);
+        Cards notExceedCards = new Cards(List.of(card1, card2, card3));
+
+        assertThat(notExceedCards.isBlackjackScoreExceeded()).isFalse();
+    }
+
+    @Test
+    void 카드리스트의_합계가_16초과이면_true를_반환한다() {
         Card card1 = new Card(Suit.DIAMOND, Rank.QUEEN);
         Card card2 = new Card(Suit.CLOVER, Rank.FIVE);
         Card card3 = new Card(Suit.DIAMOND, Rank.ACE);
         Card card4 = new Card(Suit.DIAMOND, Rank.ACE);
-        List<Card> cardList = List.of(card1, card2, card3);
-        Cards notExceedCards = new Cards(cardList);
+        Cards exceedCards = new Cards(List.of(card1, card2, card3, card4));
 
-        List<Card> otherCardList = List.of(card1, card2, card3, card4);
-        Cards exceedCards = new Cards(otherCardList);
+        assertThat(exceedCards.isDealerDrawLimitExceeded()).isTrue();
+    }
 
-        assertAll(
-            () -> assertThat(notExceedCards.isDealerDrawLimitExceeded()).isFalse(),
-            () -> assertThat(exceedCards.isDealerDrawLimitExceeded()).isTrue()
-        );
+    @Test
+    void 카드리스트의_합계가_16이하이면_false를_반환한다() {
+        Card card1 = new Card(Suit.DIAMOND, Rank.QUEEN);
+        Card card2 = new Card(Suit.CLOVER, Rank.FIVE);
+        Card card3 = new Card(Suit.DIAMOND, Rank.ACE);
+        Cards notExceedCards = new Cards(List.of(card1, card2, card3));
+
+        assertThat(notExceedCards.isDealerDrawLimitExceeded()).isFalse();
+    }
+
+    @Test
+    void 카드리스트의_합계가_21이면_true를_반환한다() {
+        Card card1 = new Card(Suit.DIAMOND, Rank.QUEEN);
+        Card card2 = new Card(Suit.CLOVER, Rank.ACE);
+        Cards equalToBlackjackScoreCards = new Cards(List.of(card1, card2));
+
+        assertThat(equalToBlackjackScoreCards.equalToBlackjackScore()).isTrue();
+    }
+
+    @Test
+    void 카드리스트의_합계가_21초과이면_false를_반환한다() {
+        Card card1 = new Card(Suit.DIAMOND, Rank.QUEEN);
+        Card card2 = new Card(Suit.CLOVER, Rank.ACE);
+        Card card3 = new Card(Suit.SPADE, Rank.ACE);
+        Cards exceedCards = new Cards(List.of(card1, card2, card3));
+
+        assertThat(exceedCards.equalToBlackjackScore()).isFalse();
+    }
+
+    @Test
+    void 카드리스트의_합계가_21미만이면_false를_반환한다() {
+        Card card1 = new Card(Suit.DIAMOND, Rank.QUEEN);
+        Card card2 = new Card(Suit.HEART, Rank.JACK);
+        Cards underCards = new Cards(List.of(card1, card2));
+
+        assertThat(underCards.equalToBlackjackScore()).isFalse();
     }
 }

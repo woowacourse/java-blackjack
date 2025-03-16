@@ -3,8 +3,10 @@ package view;
 import java.util.Arrays;
 
 public enum Answer {
+
     YES("y", true),
-    NO("n", false);
+    NO("n", false),
+    ;
 
     private final String input;
     private final boolean accepted;

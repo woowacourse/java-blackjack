@@ -1,23 +1,23 @@
 package domain.participant;
 
-import domain.card.Card;
+import domain.BettingAmount;
 import domain.card.Cards;
-
-import java.util.List;
 
 public class Player extends Participant {
 
-    public Player(ParticipantName participantName, Cards cards) {
+    private final BettingAmount bettingAmount;
+
+    public Player(ParticipantName participantName, BettingAmount bettingAmount, Cards cards) {
         super(participantName, cards);
+        this.bettingAmount = bettingAmount;
+    }
+
+    public int getBettingAmount() {
+        return bettingAmount.amount();
     }
 
     @Override
-    public boolean isDealer() {
-        return false;
-    }
-
-    @Override
-    public List<Card> getInitialCards() {
-        return cards.getCards();
+    public boolean shouldHit() {
+        return !cards.isBlackjackScoreExceeded() && !cards.equalToBlackjackScore();
     }
 }
