@@ -1,10 +1,11 @@
 package view;
 
-import domain.Accountant;
-import domain.Player;
-import domain.Players;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+import model.Player;
+import model.Players;
 
 public class InputView {
     private static final String PLAYER_NAMES_INPUT_REGEX = "^([가-힣a-zA-Z]+)(,\s*[가-힣a-zA-Z]+)*$";
@@ -16,14 +17,16 @@ public class InputView {
 
     private static final Scanner sc = new Scanner(System.in);
 
-    public static void accountBettingPrice(Players players, Accountant accountant) {
+    public static Map<Player, Integer> inputBettingPrice(Players players) {
+        Map<Player, Integer> bettingPrices = new HashMap<>();
         for (Player player: players.getPlayers()) {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(player.getName())
                     .append("의 배팅 금액은?");
             System.out.println(stringBuilder);
-            accountant.accountBettingPrice(player, Integer.parseInt(sc.nextLine()));
+            bettingPrices.put(player, sc.nextInt());
         }
+        return bettingPrices;
     }
 
     public static String getPlayerNamesInput() {

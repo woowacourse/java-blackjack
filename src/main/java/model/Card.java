@@ -1,6 +1,7 @@
-package domain;
+package model;
 
-import static domain.Denomination.ACE;
+import static model.Denomination.ACE;
+import static model.Denomination.ORIGINAL_ACE_VALUE;
 
 public class Card {
     private final Denomination denomination;
@@ -21,6 +22,10 @@ public class Card {
 
     public boolean isAce() {
         return denomination == ACE;
+    }
+
+    public boolean isOriginalAce() {
+        return isAce() && value == ORIGINAL_ACE_VALUE;
     }
 
     public void setValueToZero() {

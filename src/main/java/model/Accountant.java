@@ -1,6 +1,9 @@
-package domain;
+package model;
+
+import static model.WinLossResult.computeWinLoss;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Accountant {
@@ -12,6 +15,18 @@ public class Accountant {
 
     public void accountBettingPrice(Player player, int price) {
         bettingPrices.put(player, price);
+    }
+
+    public Map<Player, Integer> calculateProfit(Players players, Dealer dealer) {
+        Map<Player, Integer> profitPerParticipant = new LinkedHashMap<>();
+        int dealersProfit = 0;
+        for (Player player : players.getPlayers()) {
+            int playersProfit = getProfit(player, computeWinLoss(player, dealer));
+            profitPerParticipant.put(player, playersProfit);
+            dealersProfit -= playersProfit;
+        }
+        profitPerParticipant.put(dealer, dealersProfit);
+        return profitPerParticipant;
     }
 
     public int getBettingPrice(Player player) {

@@ -1,9 +1,8 @@
-package domain;
+package model;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class Hand {
 
@@ -22,19 +21,15 @@ public class Hand {
     }
 
     public boolean containsOriginalAce() {
-        return cards.stream().anyMatch(originalAcePredicate());
+        return cards.stream().anyMatch(Card::isOriginalAce);
     }
 
     public void setOriginalAceValueToOne() {
         Ace originalAce = (Ace) cards.stream()
-                .filter(originalAcePredicate())
+                .filter(Card::isOriginalAce)
                 .findFirst()
                 .orElseThrow();
         originalAce.setValueToOne();
-    }
-
-    private Predicate<Card> originalAcePredicate() {
-        return card -> card.isAce() && card.getValue() == ORIGINAL_ACE_VALUE;
     }
 
     public void setAllCardValueToZero() {

@@ -1,4 +1,4 @@
-package domain;
+package model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,10 +25,10 @@ public class Deck {
         deck.add(new Card(denomination, suit));
     }
 
-    public void distributeCards(Dealer dealer, Players players) {
+    public void distributeCards(Participants participants) {
         shuffle();
-        drawTwoCardFromDeck(dealer);
-        for (Player player : players.getPlayers()) {
+        drawTwoCardFromDeck(participants.getDealer());
+        for (Player player : participants.getPlayers().getPlayers()) {
             drawTwoCardFromDeck(player);
         }
     }

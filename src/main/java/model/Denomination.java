@@ -1,4 +1,4 @@
-package domain;
+package model;
 
 public enum Denomination {
     ACE("A"),
@@ -15,7 +15,7 @@ public enum Denomination {
     QUEEN("Q"),
     KING("K");
 
-    private static final int ORIGINAL_ACE_VALUE = 11;
+    public static final int ORIGINAL_ACE_VALUE = 11;
     private static final int FACE_CARD_VALUE = 10;
     private final String value;
 

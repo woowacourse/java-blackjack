@@ -1,26 +1,26 @@
 package view;
 
-import static domain.Dealer.THRESHOLD;
+import static model.Dealer.THRESHOLD;
 
-import controller.dto.WinLossCountDto;
-import domain.Card;
-import domain.Dealer;
-import domain.Hand;
-import domain.Player;
-import domain.Players;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import model.Card;
+import model.Dealer;
+import model.Hand;
+import model.Participants;
+import model.Player;
+import model.Players;
 
 public class OutputView {
-    public static void printDistributeResult(Players playersObject, Dealer dealer) {
-        List<Player> players = playersObject.getPlayers();
+    public static void printDistributeResult(Participants participants) {
+        List<Player> players = participants.getPlayers().getPlayers();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("딜러와 ")
                 .append(players.stream().map(Player::getName).collect(Collectors.joining(",")))
                 .append("에게 2장을 나누었습니다.\n");
 
-        printEveryoneCardsNames(players, dealer, stringBuilder);
+        printEveryoneCardsNames(participants, stringBuilder);
 
         System.out.println(stringBuilder);
     }
@@ -47,20 +47,6 @@ public class OutputView {
         }
     }
 
-    public static void printWinLossResult(Players players, Dealer dealer, WinLossCountDto winLossCountResult) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("## 최종 승패\n");
-        stringBuilder.append(String.format("%s: %d승 %d패 %d무\n", dealer.getName(),
-                winLossCountResult.winCount(),
-                winLossCountResult.lossCount(),
-                winLossCountResult.drawCount()));
-        for (Player player : players.getPlayers()) {
-            stringBuilder.append(String.format("%s: %s\n", player.getName(),
-                    player.getWinLoss(dealer.getHandTotal()).getWinLossMessage()));
-        }
-        System.out.println(stringBuilder);
-    }
-
     public static void printBust() {
         System.out.println("YOU DIE!!!!!!!!!!!!!!!!");
     }
@@ -84,11 +70,12 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
     }
 
-    private static void printEveryoneCardsNames(List<Player> players, Dealer dealer, StringBuilder stringBuilder) {
+    private static void printEveryoneCardsNames(Participants participants, StringBuilder stringBuilder) {
+        Dealer dealer = participants.getDealer();
         stringBuilder.append(String.format("%s카드: ", dealer.getName()));
         stringBuilder.append(getFormattedOpenedCard(dealer.openOneCard()))
                 .append(", (???)\n");
-        for (Player player : players) {
+        for (Player player : participants.getPlayers().getPlayers()) {
             openHand(player, stringBuilder);
             stringBuilder.append("\n");
         }
