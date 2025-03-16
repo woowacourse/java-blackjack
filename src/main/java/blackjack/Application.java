@@ -1,5 +1,6 @@
 package blackjack;
 
+import blackjack.game.BlackjackGame;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
 import java.util.Scanner;
