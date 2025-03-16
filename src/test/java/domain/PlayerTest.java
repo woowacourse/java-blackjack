@@ -1,6 +1,7 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import domain.card.Card;
 import domain.card.Rank;
@@ -26,7 +27,11 @@ public class PlayerTest {
         player.addCard(cardOfHeartAce);
 
         // when
-        assertThat(player.getCards()).hasSize(1);
+        List<Card> cards = player.getCards();
+        assertAll(
+                () -> assertThat(cards).hasSize(1),
+                () -> assertThat(cards).contains(cardOfHeartAce)
+        );
     }
 
     @Test
