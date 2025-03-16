@@ -30,7 +30,7 @@ public final class Players {
     public void receiveCardsByCount(final Hand hand, final int count) {
         for (int i = 0; i < players.size(); i++) {
             final Player player = players.get(i);
-            player.receiveCards(hand.getPartialCards(i * count, (i + 1) * count));
+            player.receiveCards(hand.subHand(i * count, (i + 1) * count));
         }
     }
 
@@ -59,13 +59,13 @@ public final class Players {
                         LinkedHashMap::new));
     }
 
-    private void validate(List<? extends Gamer> players) {
+    private void validate(List<Player> players) {
         if (isDuplicate(players)) {
             throw new IllegalArgumentException("[ERROR] 중복된 이름을 입력했습니다.");
         }
     }
 
-    private boolean isDuplicate(List<? extends Gamer> players) {
+    private boolean isDuplicate(final List<Player> players) {
         return players.size() != players.stream()
                 .distinct()
                 .count();

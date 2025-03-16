@@ -28,8 +28,8 @@ public final class Participants {
     }
 
     public void receiveInitialCards(final Hand hand) {
-        dealer.receiveCards(hand.getPartialCards(0, SPREAD_CARD_SIZE));
-        players.receiveCardsByCount(hand.getPartialCards(SPREAD_CARD_SIZE, hand.getSize()), SPREAD_CARD_SIZE);
+        dealer.receiveCards(hand.subHand(0, SPREAD_CARD_SIZE));
+        players.receiveCardsByCount(hand.subHand(SPREAD_CARD_SIZE, hand.getSize()), SPREAD_CARD_SIZE);
     }
 
     public Players findCanHitPlayers() {
