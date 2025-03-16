@@ -48,4 +48,12 @@ public class BlackjackGameBoard {
             dealer.hit(deck);
         }
     }
+
+    public Cards playerCards(Player player) {
+        return player.cards();
+    }
+
+    public int playerCardsSum(Player player) {
+        return player.computeOptimalSum();
+    }
 }

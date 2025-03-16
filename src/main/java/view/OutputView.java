@@ -23,10 +23,18 @@ public class OutputView {
 
     public static void printPlayerCards(Player player, Cards cards) {
         System.out.printf("%s카드: %s%n",
-                player.getName(),
-                String.join(", ", cards.getCards().stream()
-                        .map(OutputView::convertToCardFormat)
-                        .toList()));
+                player.getName(), convertToCardsFormat(cards));
+    }
+
+    public static void printPlayerCardsAndSum(String name, Cards cards, int sum) {
+        System.out.printf("%s카드: %s - 결과: %d%n",
+                name, convertToCardsFormat(cards), sum);
+    }
+
+    private static String convertToCardsFormat(Cards cards) {
+        return String.join(", ", cards.getCards().stream()
+                .map(OutputView::convertToCardFormat)
+                .toList());
     }
 
     private static String convertToCardFormat(Card card) {

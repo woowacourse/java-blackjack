@@ -21,7 +21,8 @@ public class BlackjackGameManager {
 
         initialCardsDistribution(blackjackGameBoard);
         hitOrStayPhase(blackjackGameBoard);
-        printGameResult(blackjackGameBoard);
+        printPlayerCardsAndSum(blackjackGameBoard);
+        // TODO: 수익 출력
     }
 
     private void initialCardsDistribution(BlackjackGameBoard blackjackGameBoard) {
@@ -44,8 +45,12 @@ public class BlackjackGameManager {
         blackjackGameBoard.hitUntilUnder16(dealer);
     }
 
-    private void printGameResult(BlackjackGameBoard blackjackGameBoard) {
-        // TODO: 카드와 카드합 결과 출력
-        // TODO: 수익 출력
+    private void printPlayerCardsAndSum(BlackjackGameBoard blackjackGameBoard) {
+        OutputView.printPlayerCardsAndSum(dealer.getName(),
+                blackjackGameBoard.playerCards(dealer), blackjackGameBoard.playerCardsSum(dealer));
+        for (User user : users.getUsers()) {
+            OutputView.printPlayerCardsAndSum(user.getName(),
+                    blackjackGameBoard.playerCards(user), blackjackGameBoard.playerCardsSum(user));
+        }
     }
 }
