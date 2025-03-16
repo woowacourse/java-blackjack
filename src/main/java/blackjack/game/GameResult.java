@@ -1,32 +1,22 @@
 package blackjack.game;
 
 import java.util.Arrays;
+import java.util.function.BiPredicate;
 
 public enum GameResult {
-    WIN {
-        @Override
-        public boolean matches(final int dealerSum, final int playerSum) {
-            return playerSum > dealerSum;
-        }
-    },
-    DRAW {
-        @Override
-        public boolean matches(final int dealerSum, final int playerSum) {
-            return playerSum == dealerSum;
-        }
-    },
-    LOSE {
-        @Override
-        public boolean matches(final int dealerSum, final int playerSum) {
-            return playerSum < dealerSum;
-        }
-    };
+    WIN((dealerSum, playerSum) -> playerSum > dealerSum),
+    DRAW((dealerSum, playerSum) -> playerSum == dealerSum),
+    LOSE((dealerSum, playerSum) -> playerSum < dealerSum);
 
-    public abstract boolean matches(final int dealerSum, final int playerSum);
+    private final BiPredicate<Integer, Integer> compareSum;
+
+    GameResult(BiPredicate<Integer, Integer> compareSum) {
+        this.compareSum = compareSum;
+    }
 
     public static GameResult fromDenominationsSum(final int dealerSum, final int playerSum) {
         return Arrays.stream(values())
-            .filter(result -> result.matches(dealerSum, playerSum))
+            .filter(result -> result.compareSum.test(dealerSum, playerSum))
             .findFirst()
             .orElseThrow();
     }
