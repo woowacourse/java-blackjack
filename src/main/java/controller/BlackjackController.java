@@ -3,9 +3,6 @@ package controller;
 import java.util.List;
 import java.util.Map;
 import model.betting.Bet;
-import model.deck.Card;
-import model.deck.CardRank;
-import model.deck.CardSuit;
 import model.participant.Dealer;
 import model.deck.Deck;
 import model.participant.Players;
@@ -97,12 +94,8 @@ public class BlackjackController {
     private void calculateRevenue(ParticipantWinningResult participantWinningResult, Players players, Dealer dealer) {
         for (Player player : players.getPlayers()) {
             GameResult gameResult = participantWinningResult.findResultByPlayer(player);
-            if (gameResult == GameResult.WIN && player.isBlackjack()) { //TODO : 책임 밀어넣기 (이쪽이 젤 문제임)
-                dealer.updateBetAmountWhenBlackJack(player);
-            }
-            if (gameResult == GameResult.LOSE) {
-                dealer.updateBetOwnerToDealerFrom(player);
-            }
+            dealer.updateBetOwnerWhenPlayerLose(player, gameResult);
+            dealer.updateBetAmountWhenPlayerBlackJack(player, gameResult);
         }
     }
 

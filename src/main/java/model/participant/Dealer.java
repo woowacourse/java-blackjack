@@ -8,6 +8,7 @@ import model.betting.Bets;
 import model.deck.Card;
 import model.deck.Deck;
 import model.deck.Gameable;
+import model.result.GameResult;
 
 public final class Dealer implements BetOwnable, Gameable {
     private static final int DEALER_HIT_THRESHOLD = 16;
@@ -66,25 +67,30 @@ public final class Dealer implements BetOwnable, Gameable {
         return participantHand.getCards();
     }
 
-    public void receiveBet(Bet bet) {
-        this.bets.add(bet);
-    }
-
     @Override
     public int calculateRevenue() {
         return bets.calculateDealerRevenue();
     }
 
-    public void updateBetOwnerToDealerFrom(Player player) {
-        bets.updateOwner(player, this);
+    //TODO 꼭 dealer에게 있어야 할까?
+    public void receiveBet(Bet bet) {
+        this.bets.add(bet);
+    }
+
+    public void updateBetOwnerWhenPlayerLose(Player player, GameResult gameResult) {
+        if (gameResult == GameResult.LOSE) {
+            bets.updateOwner(player, this);
+        }
+    }
+
+    public void updateBetAmountWhenPlayerBlackJack(Player player, GameResult gameResult) {
+        if (gameResult == GameResult.WIN && player.isBlackjack()) { //TODO 상태 -> 객체 분리 시도하기
+            bets.updateBetAmount(player);
+        }
     }
 
     public Bet findBetByPlayer(Player player) {
         return bets.findByBetter(player);
-    }
-
-    public void updateBetAmountWhenBlackJack(Player player) {
-        bets.updateBetAmount(player);
     }
 }
 

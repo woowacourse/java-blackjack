@@ -3,11 +3,11 @@ package model.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.List;
 import model.betting.Bet;
 import model.deck.Card;
 import model.deck.CardRank;
 import model.deck.CardSuit;
+import model.result.GameResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -95,7 +95,8 @@ class DealerTest {
         dealer.receiveBet(new Bet(20000, jason));
 
         //when
-        dealer.updateBetOwnerToDealerFrom(jason);
+        dealer.updateBetOwnerWhenPlayerLose(jason, GameResult.LOSE);
+        dealer.updateBetOwnerWhenPlayerLose(pobi, GameResult.WIN);
 
         //then
         assertThat(dealer.findBetByPlayer(pobi).getOwner()).isEqualTo(pobi);
@@ -112,7 +113,8 @@ class DealerTest {
         dealer.receiveBet(new Bet(20000, jason));
 
         //when
-        dealer.updateBetOwnerToDealerFrom(jason);
+        dealer.updateBetOwnerWhenPlayerLose(jason, GameResult.LOSE);
+        dealer.updateBetOwnerWhenPlayerLose(pobi, GameResult.WIN);
 
         //then
         assertThat(dealer.calculateRevenue()).isEqualTo(10000);
@@ -128,7 +130,8 @@ class DealerTest {
         dealer.receiveBet(new Bet(20000, jason));
 
         //when
-        dealer.updateBetOwnerToDealerFrom(pobi);
+        dealer.updateBetOwnerWhenPlayerLose(pobi, GameResult.LOSE);
+        dealer.updateBetOwnerWhenPlayerLose(jason, GameResult.WIN);
 
         //then
         assertThat(dealer.calculateRevenue()).isEqualTo(-10000);
