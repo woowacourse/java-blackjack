@@ -15,7 +15,7 @@ class MoneyTest {
 
     @Test
     @DisplayName("돈 단위 테스트")
-    void isDivisibleByTenThousandTest() {
+    void validateDivisibleByTenThousandTest() {
         assertThatThrownBy(() -> new Money(10001))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 배팅 금액은 만원 단위입니다.");
