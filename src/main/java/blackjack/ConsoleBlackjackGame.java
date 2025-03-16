@@ -56,7 +56,7 @@ public class ConsoleBlackjackGame {
             yesOrNo = YesOrNo.from(inputView.inputWantOneMoreCard(participant.getName()));
             addOneCardIfYes(blackjack, participant, yesOrNo);
             outputView.printPlayerCards(participant.getName(), participant.getCards());
-        } while (yesOrNo.equals(YesOrNo.YES) && !blackjack.isBust(participant));
+        } while (yesOrNo.equals(YesOrNo.YES) && !participant.isBust());
     }
 
     private void addOneCardIfYes(Blackjack blackjack, Player participant, YesOrNo yesOrNo) {
