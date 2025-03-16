@@ -18,7 +18,7 @@ public class Participant extends Player {
         return name.getName();
     }
 
-    public int getBettedMoney() {
+    public long getBettedMoney() {
         return bettedMoney.getMoney();
     }
 

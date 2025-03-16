@@ -83,7 +83,7 @@ public class OutputView {
         System.out.println(LINE + "딜러는 17이상이라 더이상 카드를 받을 수 없습니다." + LINE);
     }
 
-    public void outputFinalWinningMoney(final Participants participants, final int dealerMoney, final Map<Participant, Integer> winningMoney) {
+    public void outputFinalWinningMoney(final Participants participants, final long dealerMoney, final Map<Participant, Long> winningMoney) {
         System.out.println("## 최종 수익");
         CustomStringBuilder customStringBuilder = new CustomStringBuilder();
         customStringBuilder.appendLine(String.format("딜러: %d", dealerMoney));

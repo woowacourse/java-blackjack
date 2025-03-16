@@ -4,7 +4,7 @@ public class BettedMoney {
 
     public static final int MINIMUM_AVAILABLE_MONEY = 0;
     public static final int MAXIMUM_AVAILABLE_MONEY = 1_000_000_000;
-    private final int money;
+    private final long money;
 
     public BettedMoney(final int money) {
         validate(money);
@@ -20,7 +20,7 @@ public class BettedMoney {
         }
     }
 
-    public int getMoney() {
+    public long getMoney() {
         return money;
     }
 }

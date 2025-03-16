@@ -78,8 +78,8 @@ public class BlackJackController {
 
     private void outputFinalResult(final Dealer dealer, final Participants participants) {
         outputView.outputFinalCardStatus(dealer, participants);
-        Map<Participant, Integer> winningMoney = BlackJackRule.calculateWinningMoney(dealer, participants);
-        int dealerMoney = BlackJackRule.calculateDealerWinningMoney(winningMoney);
+        Map<Participant, Long> winningMoney = BlackJackRule.calculateWinningMoney(dealer, participants);
+        long dealerMoney = BlackJackRule.calculateDealerWinningMoney(winningMoney);
         outputView.outputFinalWinningMoney(participants, dealerMoney, winningMoney);
     }
 }

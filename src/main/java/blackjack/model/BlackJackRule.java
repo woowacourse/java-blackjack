@@ -42,12 +42,12 @@ public class BlackJackRule {
         return dealer.isCardDrawable();
     }
 
-    public static Map<Participant, Integer> calculateWinningMoney(final Dealer dealer, final Participants participants) {
+    public static Map<Participant, Long> calculateWinningMoney(final Dealer dealer, final Participants participants) {
         Map<Participant, ParticipantResult> participantResults = ParticipantResult.calculateParticipantResults(dealer, participants);
         return MoneyDistributor.calculateWinningMoneys(dealer, participantResults);
     }
 
-    public static int calculateDealerWinningMoney(final Map<Participant, Integer> winningMoney) {
+    public static long calculateDealerWinningMoney(final Map<Participant, Long> winningMoney) {
         return MoneyDistributor.calculateDealerMoney(winningMoney);
     }
 

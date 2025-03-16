@@ -34,10 +34,10 @@ public class MoneyDistributorTest {
         Map<Participant, ParticipantResult> winningResult = ParticipantResult.calculateParticipantResults(dealer, participants);
 
         // When
-        Map<Participant, Integer> winningMoneys = MoneyDistributor.calculateWinningMoneys(dealer, winningResult);
+        Map<Participant, Long> winningMoneys = MoneyDistributor.calculateWinningMoneys(dealer, winningResult);
 
         // Then
-        assertThat(winningMoneys).isEqualTo(Map.of(participant, 15_000, participant2, 10_000, participant3, 0, participant4, -10_000));
+        assertThat(winningMoneys).isEqualTo(Map.of(participant, 15_000L, participant2, 10_000L, participant3, 0L, participant4, -10_000L));
     }
 
     @Test
@@ -56,9 +56,9 @@ public class MoneyDistributorTest {
         participant4.putCard(new Card(CardShape.SPADE, CardType.NORMAL_2));
         Participants participants = new Participants(List.of(participant, participant2, participant3, participant4));
         Map<Participant, ParticipantResult> winningResult = ParticipantResult.calculateParticipantResults(dealer, participants);
-        Map<Participant, Integer> winningMoneys = MoneyDistributor.calculateWinningMoneys(dealer, winningResult);
+        Map<Participant, Long> winningMoneys = MoneyDistributor.calculateWinningMoneys(dealer, winningResult);
 
         // When & Then
-        assertThat(MoneyDistributor.calculateDealerMoney(winningMoneys)).isEqualTo(-15_000);
+        assertThat(MoneyDistributor.calculateDealerMoney(winningMoneys)).isEqualTo(-15_000L);
     }
 }
