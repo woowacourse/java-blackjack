@@ -49,7 +49,7 @@ public class BetCenter {
         return strategies.stream()
                 .filter(strategy -> strategy.matches(player, dealer))
                 .findFirst()
-                .orElseThrow()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 플레이어와 딜러의 점수에 부합하는 승패 규칙이 없습니다."))
                 .getProfitCalculator()
                 .calculate(betAmount);
     }
