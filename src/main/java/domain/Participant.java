@@ -18,7 +18,7 @@ public abstract class Participant {
         hand.addAll(cards);
     }
 
-    public void addDrawCard(Card receivedCard) {
+    public void addCard(Card receivedCard) {
         if (isPossibleDraw()) {
             hand.add(receivedCard);
         }

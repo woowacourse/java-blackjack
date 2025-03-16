@@ -109,14 +109,14 @@ public class OutputView {
                 });
     }
 
-    public void printBustMessage() {
-        System.out.println("카드의 합이 21을 초과하였습니다. 더이상 카드를 받을 수 없습니다.");
-    }
-
     public void printProfitResults(List<ProfitResultResponse> profitResultResponses) {
         System.out.println("\n## 최종 수익");
         profitResultResponses.forEach(response -> {
             System.out.printf("%s: %d\n", response.name(), response.profit());
         });
+    }
+
+    public void printMessage(String message) {
+        System.out.println(message);
     }
 }

@@ -37,7 +37,9 @@ public class BlackjackController {
     }
 
     public PlayerHitResponse hitPlayer(String playerName, boolean isRequestHit) {
-        return null;
+        Player player = blackjackParticipants.findPlayerByName(playerName);
+        cardGiver.hit(player, isRequestHit);
+        return toPlayerHitResponse(player);
     }
 
     public List<String> findAllPlayerNames() {
@@ -70,5 +72,9 @@ public class BlackjackController {
                 .map(player -> new PlayerDealResult(player.getName(), player.getDealCards()))
                 .toList();
         return new InitialDealResponse(dealerDealResult, playerDealResults);
+    }
+
+    private static PlayerHitResponse toPlayerHitResponse(Player player) {
+        return new PlayerHitResponse(player.getName(), player.getHand().getCards());
     }
 }

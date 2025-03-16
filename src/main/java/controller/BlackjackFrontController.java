@@ -33,7 +33,7 @@ public class BlackjackFrontController {
             PlayerHitResponse playerHitResponse = blackjackController.hitPlayer(playerName, isRequestHit);
             consoleView.printPlayerHitResult(playerHitResponse);
         } catch (IllegalStateException e) {
-            consoleView.printBustMessage();
+            consoleView.printMessage(e.getMessage());
             throw new IllegalStateException();
         }
     }

@@ -76,8 +76,8 @@ public class ConsoleView {
         outputView.printCurrentCard(player);
     }
 
-    public void printBustMessage() {
-        outputView.printBustMessage();
+    public void printMessage(String message) {
+        outputView.printMessage(message);
     }
 
     public void printPlayerHitResult(PlayerHitResponse playerHitResponse) {
