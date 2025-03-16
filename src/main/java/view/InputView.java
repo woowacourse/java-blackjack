@@ -18,7 +18,7 @@ public class InputView {
         List<PlayerTurn> turns = new ArrayList<>();
         for (Player player : players.getPlayers()) {
             System.out.println(player.getName() + "의 배팅 금액은?");
-            int bettingPrice = validateInteger(SCANNER.nextLine());
+            int bettingPrice = inputPlayerBetting();
             Betting betting = new Betting(bettingPrice);
             turns.add(new PlayerTurn(player, betting));
         }
@@ -33,24 +33,50 @@ public class InputView {
     }
 
     public static PlayerChoice readFirstChoice(Player player) {
-        return handleFirstTurnChoice(player);
+        try {
+            return handleFirstTurnChoice(player);
+        } catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
+            return readFirstChoice(player);
+        }
     }
 
     public static PlayerChoice readHitOrStand(Player player) {
         OutputView.printChoiceResult(player);
-        return handleSubsequentTurnChoice(player);
+        try{
+            return handleSubsequentTurnChoice(player);
+        } catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
+            return readHitOrStand(player);
+        }
     }
 
     public static int inputAdditionalBet() {
         System.out.println("추가 베팅 금액을 입력해주세요");
-        String additionalBet = SCANNER.nextLine();
-        return validateInteger(additionalBet);
+        return inputPlayerBetting();
     }
 
     public static int readInsuranceBet(int maxInsuranceAmount) {
         System.out.println("최대 보험금액은 " + maxInsuranceAmount + "입니다. 얼마를 보험금으로 설정하시겠습니까?");
-        String insuranceBet = SCANNER.nextLine();
-        return validateInteger(insuranceBet);
+        return inputPlayerInsuranceBet();
+    }
+
+    private static int inputPlayerBetting() {
+        try {
+            return validateInteger(SCANNER.nextLine());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return inputPlayerBetting();
+        }
+    }
+
+    private static int inputPlayerInsuranceBet() {
+        try {
+            return validateInteger(SCANNER.nextLine());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return inputPlayerInsuranceBet();
+        }
     }
 
     private static int validateInteger(String inputPrice) {

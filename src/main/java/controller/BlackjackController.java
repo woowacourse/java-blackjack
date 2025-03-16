@@ -17,11 +17,11 @@ import view.OutputView;
 public class BlackjackController {
 
     public void run() {
-        List<String> playerNames = InputView.readPlayerNames();
+        List<String> playerNames = inputPlayersName();
         Players players = Players.from(playerNames);
         Dealer dealer = new Dealer();
         Deck deck = Deck.of();
-        List<PlayerTurn> startBetting = InputView.startBettingTurn(players);
+        List<PlayerTurn> startBetting = inputPlayersBetting(players);
         PlayerTurnManager playerTurnManager = new PlayerTurnManager(startBetting);
         DealerTurn dealerTurn = new DealerTurn(dealer);
 
@@ -39,6 +39,24 @@ public class BlackjackController {
 
         OutputView.printFinalScore(dealer, players);
         printFinalGameResult(finalProfitByPlayer, finalProfitByDealer);
+    }
+
+    private List<String> inputPlayersName() {
+        try {
+            return InputView.readPlayerNames();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return inputPlayersName();
+        }
+    }
+
+    private List<PlayerTurn> inputPlayersBetting(Players players) {
+        try {
+            return InputView.startBettingTurn(players);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return inputPlayersBetting(players);
+        }
     }
 
     private void printFinalGameResult(Map<Player, Integer> playersProfit, int dealerProfit) {
