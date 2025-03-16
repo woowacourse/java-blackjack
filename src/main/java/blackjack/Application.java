@@ -9,11 +9,13 @@ public class Application {
 
     public static void main(String[] args) {
         OutputView outputView = new OutputView();
+        InputView inputView = new InputView();
+        GameManagerFactory gameManagerFactory = new GameManagerFactory();
 
         BlackjackController controller = new BlackjackController(
-                new InputView(),
+                inputView,
                 outputView,
-                new GameManagerFactory()
+                gameManagerFactory
         );
 
         try {
