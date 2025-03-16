@@ -1,5 +1,6 @@
 package model.result;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
@@ -215,7 +216,7 @@ class ParticipantWinningResultTest {
         //when
         ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
         Map<Player, GameResult> gameResult = participantWinningResult.getResult();
-        GameResult expect = GameResult.WIN;
+        GameResult expect = GameResult.DRAW;
 
         //then
         assertEquals(gameResult.get(player), expect);
@@ -225,16 +226,13 @@ class ParticipantWinningResultTest {
     @DisplayName("특정 플레이어의 승패 결과를 반환한다")
     void 특정_플레이어의_승패_결과를_반환한다() {
         //given
-        GameResult playerResult = GameResult.WIN;
+        GameResult playerResult = GameResult.LOSE;
         Map<Player, GameResult> playerGameResult = Map.of(
                 player, playerResult
         );
         ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(playerGameResult);
 
-        //when
-        GameResult gameResult = participantWinningResult.findResultByPlayer(player);
-
-        //then
-        Assertions.assertThat(gameResult).isEqualTo(playerResult);
+        //when, then
+        assertThat(participantWinningResult.isLose(player)).isTrue();
     }
 }

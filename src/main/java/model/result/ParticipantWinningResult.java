@@ -52,7 +52,7 @@ public final class ParticipantWinningResult {
             return GameResult.WIN;
         }
         if (player.isBlackjack() && dealer.isBlackjack()) { //TODO 여기있어도 되는 거 맞나?
-            return GameResult.WIN;
+            return GameResult.DRAW; //TODO 맞나?
         }
         return GameResult.DRAW;
     }
@@ -61,7 +61,15 @@ public final class ParticipantWinningResult {
         dealerResult.merge(gameResult.findReverse(), 1, Integer::sum);
     }
 
-    public GameResult findResultByPlayer(Player player) {
+    public boolean isLose(Player player) {
+        return findResultByPlayer(player) == GameResult.LOSE;
+    }
+
+    public boolean isBlackJackWin(Player player) {
+        return findResultByPlayer(player) == GameResult.WIN && player.isBlackjack();
+    }
+
+    private GameResult findResultByPlayer(Player player) {
         return result.get(player);
     }
 
