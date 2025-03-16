@@ -28,9 +28,7 @@ public class Application {
     public static void main(String[] args) {
         CardDeck cardDeck = createCardDeck();
         List<Name> playerNames = getPlayerNames();
-        Map<Name, Integer> bettingRecords = new HashMap<>();
-
-        getBettingRecords(playerNames, bettingRecords);
+        Map<Name, Integer> bettingRecords = getBettingRecords(playerNames);
 
         Round round = new Round(cardDeck, playerNames);
 
@@ -63,11 +61,13 @@ public class Application {
         }
     }
 
-    private static void getBettingRecords(List<Name> playerNames, Map<Name, Integer> bettingRecords) {
+    private static Map<Name, Integer> getBettingRecords(List<Name> playerNames) {
+        Map<Name, Integer> bettingRecords = new HashMap<>();
         for (Name playerName : playerNames) {
             int money = getBettingAmountByName(playerName);
             bettingRecords.put(playerName, money);
         }
+        return bettingRecords;
     }
 
     private static int getBettingAmountByName(Name playerName) {
