@@ -27,6 +27,9 @@ public class Hand {
     }
 
     public void add(Card card) {
+        if (isBust() || isTwentyOne()) {
+            throw new IllegalArgumentException("카드를 더 받을 수 없습니다.");
+        }
         this.cards.add(card);
     }
 

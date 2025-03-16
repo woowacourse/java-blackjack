@@ -1,6 +1,7 @@
 package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -252,5 +253,38 @@ public class HandTest {
                         false
                 )
         );
+    }
+
+    @DisplayName("블랙잭일 때, 카드를 추가하면 예외를 발생시킨다.")
+    @Test
+    void 카드_추가_예외() {
+        // given
+        List<Card> cards = List.of(
+                new Card(CardNumber.A, CardShape.CLOVER),
+                new Card(CardNumber.TEN, CardShape.CLOVER)
+        );
+        Hand hand = Hand.of(cards);
+
+        // when & then
+        assertThatThrownBy(() -> hand.add(new Card(CardNumber.TWO, CardShape.CLOVER)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("카드를 더 받을 수 없습니다.");
+    }
+
+    @DisplayName("버스트일 때, 카드를 추가하면 예외를 발생시킨다.")
+    @Test
+    void 카드_추가_예외2() {
+        // given
+        List<Card> cards = List.of(
+                new Card(CardNumber.TWO, CardShape.CLOVER),
+                new Card(CardNumber.TEN, CardShape.CLOVER),
+                new Card(CardNumber.TEN, CardShape.CLOVER)
+        );
+        Hand hand = Hand.of(cards);
+
+        // when & then
+        assertThatThrownBy(() -> hand.add(new Card(CardNumber.TWO, CardShape.CLOVER)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("카드를 더 받을 수 없습니다.");
     }
 }
