@@ -1,5 +1,7 @@
 package domain.participant;
 
+import domain.card.Deck;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,18 +12,20 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<String> playerNames) {
-        validateMaxPlayer(playerNames);
+    public Players (List<Player> players) {
+        validateMaxPlayer(players);
+        this.players = new ArrayList<>(players);
+    }
 
-        players = new ArrayList<>();
-        for (String playerName : playerNames) {
-            players.add(new Player(playerName.trim()));
+    private void validateMaxPlayer(final List<Player> players) {
+        if (players.size() > MAX_PLAYER_SIZE) {
+            throw new IllegalArgumentException(MAX_PLAYER_EXCEPTION);
         }
     }
 
-    private void validateMaxPlayer(final List<String> playerNames) {
-        if (playerNames.size() > MAX_PLAYER_SIZE) {
-            throw new IllegalArgumentException(MAX_PLAYER_EXCEPTION);
+    public void receiveInitialCards(final Deck deck) {
+        for (Player player : players) {
+            player.receiveCard(deck.draw(), deck.draw());
         }
     }
 

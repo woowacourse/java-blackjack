@@ -1,14 +1,16 @@
 package domain.card;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
 public class Hand {
     private static final int ORIGINAL_ACE_VALUE = 11;
-    private static final int BUST_THRESHOLD = 21;
-    public static final int INITIAL_SIZE = 2;
+    private static final int BLACKJACK_MAX_SCORE = 21;
+    private static final int INITIAL_SIZE = 2;
+    private static final int AFTER_APPLY_BUST_PENALTY_SCORE = 0;
 
     private final List<Card> cards;
 
@@ -16,8 +18,8 @@ public class Hand {
         cards = new ArrayList<>();
     }
 
-    public void addCard(final Card card) {
-        cards.add(card);
+    public void addCard(final Card... cardsInput) {
+        cards.addAll(Arrays.asList(cardsInput));
     }
 
     public boolean containsOriginalAce() {
@@ -33,7 +35,15 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return getTotal() > BUST_THRESHOLD;
+        return getTotal() > BLACKJACK_MAX_SCORE || getTotal() == AFTER_APPLY_BUST_PENALTY_SCORE;
+    }
+
+    public boolean isBlackJack() {
+        return getSize() == INITIAL_SIZE && isMaxScore();
+    }
+
+    public boolean isMaxScore() {
+        return getTotal() == BLACKJACK_MAX_SCORE;
     }
 
     public void setAllCardValueToZero() {
@@ -45,6 +55,7 @@ public class Hand {
     private Predicate<Card> originalAcePredicate() {
         return card -> card.isAce() && card.getValue() == ORIGINAL_ACE_VALUE;
     }
+
 
     public int getTotal() {
         return cards.stream().mapToInt(Card::getValue).sum();

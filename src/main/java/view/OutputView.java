@@ -1,5 +1,6 @@
 package view;
 
+import domain.bet.Profit;
 import domain.card.Card;
 import domain.card.Denomination;
 import domain.card.Hand;
@@ -7,14 +8,10 @@ import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
-import domain.result.WinLossResult;
 
-import java.util.EnumMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
-
-import static domain.participant.Dealer.THRESHOLD;
 
 public class OutputView {
     private static final Map<Denomination, String> DENOMINATION_NAME_MAP = Map.ofEntries(
@@ -32,6 +29,7 @@ public class OutputView {
             Map.entry(Denomination.QUEEN, "Q"),
             Map.entry(Denomination.KING, "K")
     );
+    private static final int THRESHOLD = 16;
 
     public static void printDistributeResult(Players players, Dealer dealer) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -76,20 +74,24 @@ public class OutputView {
         return stringBuilder.toString();
     }
 
-    public static void printAllResult(final Map<String, WinLossResult> playerResults, final String dealerName) {
+    public static void printAllResult(final Map<String, Profit> playerResults, final String dealerName) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("## 최종 승패\n");
+        stringBuilder.append("## 최종 수익\n");
 
-        Map<WinLossResult, Integer> dealerWinLossResult = calculateDealerResult(playerResults);
-        stringBuilder.append(String.format("%s: %d승 %d패 %d무\n", dealerName,
-                dealerWinLossResult.get(WinLossResult.LOSS),
-                dealerWinLossResult.get(WinLossResult.WIN),
-                dealerWinLossResult.get(WinLossResult.DRAW)));
-        for (Entry<String, WinLossResult> playerResult : playerResults.entrySet()) {
-            stringBuilder.append(String.format("%s: %s\n", playerResult.getKey(),
-                    playerResult.getValue().getWinLossMessage()));
+        double totalProfit = 0.0;
+        for (Profit profit : playerResults.values()) {
+            totalProfit += profit.getProfit();
+        }
+        stringBuilder.append(String.format("%s: %d\n", dealerName, (int) -totalProfit));
+        for (Entry<String, Profit> playerResult : playerResults.entrySet()) {
+            stringBuilder.append(String.format("%s: %d\n", playerResult.getKey(),
+                    playerResult.getValue().getProfit()));
         }
         System.out.println(stringBuilder);
+    }
+
+    public static void printExceptionMessage(final IllegalArgumentException e) {
+        System.out.println(e.getMessage());
     }
 
     private static void printEveryoneCardsNames(Players players, Dealer dealer, StringBuilder stringBuilder) {
@@ -124,19 +126,6 @@ public class OutputView {
         }
         stringBuilder.append(String.format(" - 결과: %s", scoreMessage))
                 .append("\n");
-    }
-
-    private static Map<WinLossResult, Integer> calculateDealerResult(Map<String, WinLossResult> playerResults) {
-        Map<WinLossResult, Integer> winLossCountResult = new EnumMap<>(WinLossResult.class);
-
-        for (WinLossResult value : WinLossResult.values()) {
-            winLossCountResult.put(value, 0);
-        }
-
-        for (WinLossResult result : playerResults.values()) {
-            winLossCountResult.put(result, winLossCountResult.getOrDefault(result, 0) + 1);
-        }
-        return winLossCountResult;
     }
 
     private static String mapDenominationToString(final Denomination denomination) {

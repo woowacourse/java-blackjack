@@ -1,8 +1,6 @@
 package domain.participant;
 
-import domain.card.Card;
-import domain.card.Denomination;
-import domain.card.Suit;
+import domain.CardsFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -21,8 +19,8 @@ class ParticipantTest {
             Player player = new Player("moru");
 
             // when
-            player.addCard(new Card(Denomination.TWO, Suit.CLUB));
-            player.addCard(new Card(Denomination.EIGHT, Suit.CLUB));
+            CardsFactory cardsFactory = new CardsFactory();
+            player.receiveCard(cardsFactory.createScore19Cards1());
 
             // then
             assertThat(player.resolveBust()).isTrue();
@@ -35,9 +33,8 @@ class ParticipantTest {
             Player player = new Player("moru");
 
             // when
-            player.addCard(new Card(Denomination.TWO, Suit.CLUB));
-            player.addCard(new Card(Denomination.TEN, Suit.DIAMOND));
-            player.addCard(new Card(Denomination.TEN, Suit.CLUB));
+            CardsFactory cardsFactory = new CardsFactory();
+            player.receiveCard(cardsFactory.createBustCardsWithNoAce());
 
             // then
             assertThat(player.resolveBust()).isFalse();
@@ -50,9 +47,8 @@ class ParticipantTest {
             Player player = new Player("moru");
 
             // when
-            player.addCard(new Card(Denomination.TEN, Suit.CLUB));
-            player.addCard(new Card(Denomination.TWO, Suit.CLUB));
-            player.addCard(new Card(Denomination.ACE, Suit.CLUB));
+            CardsFactory cardsFactory = new CardsFactory();
+            player.receiveCard(cardsFactory.createCanResolveBustCardsWithOneAce());
 
             // then
             assertThat(player.resolveBust()).isTrue();
@@ -65,9 +61,8 @@ class ParticipantTest {
             Player player = new Player("moru");
 
             // when
-            player.addCard(new Card(Denomination.TEN, Suit.CLUB));
-            player.addCard(new Card(Denomination.ACE, Suit.DIAMOND));
-            player.addCard(new Card(Denomination.ACE, Suit.CLUB));
+            CardsFactory cardsFactory = new CardsFactory();
+            player.receiveCard(cardsFactory.createCanResolveBustCardsWithTwoAce());
 
             // then
             assertThat(player.resolveBust()).isTrue();
@@ -80,10 +75,8 @@ class ParticipantTest {
             Player player = new Player("moru");
 
             // when
-            player.addCard(new Card(Denomination.TEN, Suit.CLUB));
-            player.addCard(new Card(Denomination.TEN, Suit.DIAMOND));
-            player.addCard(new Card(Denomination.ACE, Suit.DIAMOND));
-            player.addCard(new Card(Denomination.ACE, Suit.CLUB));
+            CardsFactory cardsFactory = new CardsFactory();
+            player.receiveCard(cardsFactory.createCantResolveBustCardsWithTwoAce());
 
             // then
             assertThat(player.resolveBust()).isFalse();

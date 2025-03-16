@@ -7,7 +7,7 @@ import java.util.Deque;
 
 public class Deck {
 
-    public static final int DECK_SIZE = 52;
+    private static final int DECK_SIZE = 52;
 
     private final Deque<Card> deck;
 

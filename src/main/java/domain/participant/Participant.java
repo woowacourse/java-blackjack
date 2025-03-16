@@ -13,13 +13,13 @@ public abstract class Participant {
         this.hand = new Hand();
     }
 
-    public void addCard(Card card) {
-        hand.addCard(card);
+    public void receiveCard(Card... cardsInput) {
+        hand.addCard(cardsInput);
     }
 
-    public int getHandTotal() {
-        return hand.getTotal();
-    }
+    public boolean isBlackJack() { return hand.isBlackJack(); }
+
+    public boolean isMaxScore() { return hand.isMaxScore(); }
 
     public boolean resolveBust() {
         if (isHandBust() && containsOriginalAce()) {
@@ -29,11 +29,19 @@ public abstract class Participant {
         return !isHandBust();
     }
 
-    public void setHandTotalToZero() {
+    public abstract boolean isPlayer();
+
+    public abstract boolean shouldDrawMore();
+
+    public int getHandTotal() {
+        return hand.getTotal();
+    }
+
+    public void applyBustPenalty() {
         hand.setAllCardValueToZero();
     }
 
-    protected boolean isHandBust() {
+    public boolean isHandBust() {
         return hand.isBust();
     }
 
