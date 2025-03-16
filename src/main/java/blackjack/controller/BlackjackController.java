@@ -3,7 +3,6 @@ package blackjack.controller;
 import blackjack.domain.card.Deck;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.Dealer;
-import blackjack.domain.game.GameRuleEvaluator;
 import blackjack.domain.game.Hand;
 import blackjack.domain.game.Participant;
 import blackjack.domain.game.Player;
@@ -11,7 +10,6 @@ import blackjack.domain.game.Players;
 import blackjack.domain.result.BetAmount;
 import blackjack.domain.result.DealerResults;
 import blackjack.domain.result.Judge;
-import blackjack.domain.result.ParticipantResults;
 import blackjack.domain.result.PlayerResults;
 import blackjack.view.Confirmation;
 import blackjack.view.InputView;
@@ -20,12 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackController {
-
-    private final GameRuleEvaluator gameRuleEvaluator;
-
-    public BlackjackController(GameRuleEvaluator gameRuleEvaluator) {
-        this.gameRuleEvaluator = gameRuleEvaluator;
-    }
 
     public void run() {
         List<String> names = InputView.readNames();
@@ -38,10 +30,10 @@ public class BlackjackController {
         players.getPlayers().forEach(participant -> giveMoreCard(participant, blackjackGame));
 
         Judge judge = new Judge(new DealerResults(), new PlayerResults());
-        ParticipantResults participantResults = calculateResultOfParticipants(players, dealer, judge);
+        judge.calculateAllResults(dealer, players);
 
-        OutputView.printCardResult(participantResults);
-        OutputView.printGameResult(participantResults);
+        DealerResults dealerResults = judge.getDealerResults();
+        PlayerResults playerResults = judge.getPlayerResults();
     }
 
     private void giveMoreCard(Participant participant, BlackjackGame blackjackGame) {
@@ -62,10 +54,11 @@ public class BlackjackController {
         blackjackGame.giveMoreCard(participant);
         OutputView.printCardResult(participant);
 
-        if (gameRuleEvaluator.isBusted(participant)) {
-            OutputView.printBustedParticipantWithName(participant);
-            return;
-        }
+        // TODO: 수정
+//        if (gameRuleEvaluator.isBusted(participant)) {
+//            OutputView.printBustedParticipantWithName(participant);
+//            return;
+//        }
 
         if (participant.ableToTakeMoreCards()) {
             giveMoreCard(participant, blackjackGame);
@@ -84,11 +77,6 @@ public class BlackjackController {
         blackjackGame.giveStartingCards();
 
         OutputView.printStartingCardsStatuses(blackjackGame.getParticipants());
-    }
-
-    private ParticipantResults calculateResultOfParticipants(Players players, Dealer dealer, Judge judge) {
-        judge.calculateAllResults(dealer, players, gameRuleEvaluator);
-        return null;
     }
 
     private Players savePlayers(List<String> names) {

@@ -63,4 +63,8 @@ public class Player implements Participant {
     public String getName() {
         return name;
     }
+
+    public BetAmount getBetAmount() {
+        return betAmount;
+    }
 }
