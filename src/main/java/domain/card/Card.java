@@ -1,7 +1,22 @@
 package domain.card;
 
-import static domain.card.Rank.*;
-import static domain.card.Shape.*;
+import static domain.card.Rank.ACE;
+import static domain.card.Rank.EIGHT;
+import static domain.card.Rank.FIVE;
+import static domain.card.Rank.FOUR;
+import static domain.card.Rank.JACK;
+import static domain.card.Rank.KING;
+import static domain.card.Rank.NINE;
+import static domain.card.Rank.QUEEN;
+import static domain.card.Rank.SEVEN;
+import static domain.card.Rank.SIX;
+import static domain.card.Rank.TEN;
+import static domain.card.Rank.THREE;
+import static domain.card.Rank.TWO;
+import static domain.card.Shape.CLOVER;
+import static domain.card.Shape.DIAMOND;
+import static domain.card.Shape.HEART;
+import static domain.card.Shape.SPADE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +35,7 @@ public enum Card {
     SPADE_10(SPADE, TEN),    DIAMOND_10(DIAMOND, TEN),   HEART_10(HEART, TEN),   CLOVER_10(CLOVER, TEN),
     SPADE_J(SPADE, JACK),    DIAMOND_J(DIAMOND, JACK),   HEART_J(HEART, JACK),   CLOVER_J(CLOVER, JACK),
     SPADE_Q(SPADE, QUEEN),   DIAMOND_Q(DIAMOND, QUEEN),  HEART_Q(HEART, QUEEN),  CLOVER_Q(CLOVER, QUEEN),
-    SPADE_K(SPADE, KING),    DIAMOND_K(DIAMOND, KING),   HEART_K(HEART, KING),   CLOVER_K(CLOVER, KING),
+    SPADE_K(SPADE, KING), DIAMOND_K(DIAMOND, KING), HEART_K(HEART, KING), CLOVER_K(CLOVER, KING)
     ;
 
     private final Shape shape;
