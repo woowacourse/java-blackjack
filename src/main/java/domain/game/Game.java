@@ -17,9 +17,13 @@ public class Game {
     private final Dealer dealer;
     private final Players players;
 
+    private Game(Dealer dealer, Players players) {
+        this.dealer = dealer;
+        this.players = players;
+    }
+
     public Game(Map<PlayerName, BettingAmount> playerInfo) {
-        this.dealer = new Dealer(new Deck(Card.initializeCards()));
-        this.players = new Players(playerInfo);
+        this(new Dealer(new Deck(Card.initializeCards())), new Players(playerInfo));
     }
 
     public void giveCardToPlayer(PlayerName playerName, int count) {

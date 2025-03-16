@@ -8,19 +8,19 @@ public class BettingResultAmount {
 
     private final int money;
 
-    public BettingResultAmount(BettingAmount bettingAmount, GameResult gameResult) {
-        this.money = calculateBettingResult(bettingAmount, gameResult);
-    }
-
     public BettingResultAmount(int money) {
         this.money = money;
+    }
+
+    public BettingResultAmount(BettingAmount bettingAmount, GameResult gameResult) {
+        this(calculateBettingResult(bettingAmount, gameResult));
     }
 
     public int getMoney() {
         return money;
     }
 
-    private int calculateBettingResult(BettingAmount bettingAmount, GameResult gameResult) {
+    private static int calculateBettingResult(BettingAmount bettingAmount, GameResult gameResult) {
         if (gameResult == GameResult.WIN) {
             return bettingAmount.getMoney();
         }

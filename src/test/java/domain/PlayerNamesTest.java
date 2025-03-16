@@ -15,7 +15,7 @@ public class PlayerNamesTest {
         // given
         List<String> names = List.of("a", "a", "b");
         // when & then
-        assertThatThrownBy(() -> new PlayerNames(names))
+        assertThatThrownBy(() -> PlayerNames.fromUsernames(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중복된 이름이 있습니다.");
     }

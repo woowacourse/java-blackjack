@@ -13,10 +13,14 @@ import java.util.stream.Collectors;
 public class Players {
     private final List<Player> players;
 
+    private Players(List<Player> players) {
+        this.players = players;
+    }
+
     public Players(Map<PlayerName, BettingAmount> playerInfo) {
-        this.players = playerInfo.entrySet().stream()
+        this(playerInfo.entrySet().stream()
                 .map(entry -> new Player(entry.getKey(), entry.getValue())
-                ).toList();
+                ).toList());
     }
 
     public void giveCard(PlayerName playerName, List<Card> cards) {
@@ -70,7 +74,7 @@ public class Players {
                         (existing, replacement) -> existing,
                         LinkedHashMap::new
                 ));
-        return new BettingStatistics(gameResults);
+        return BettingStatistics.fromBettingResult(gameResults);
     }
 
     private Player selectPlayer(PlayerName playerName) {

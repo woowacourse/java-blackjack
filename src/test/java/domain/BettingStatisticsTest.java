@@ -20,7 +20,7 @@ public class BettingStatisticsTest {
         // given
         Map<Player, GameResult> result = initialized();
         // when
-        BettingStatistics bettingStatistics = new BettingStatistics(result);
+        BettingStatistics bettingStatistics = BettingStatistics.fromBettingResult(result);
         Map<PlayerName, BettingResultAmount> bettingResult = bettingStatistics.getBettingResult();
         // then
         BettingResultAmount bettingResultAmount1 = bettingResult.get(new PlayerName("a"));
@@ -33,20 +33,20 @@ public class BettingStatisticsTest {
 
     @Test
     @DisplayName("게임 결과에 따라 딜러의 전체 수익을 계산한다.")
-    void calculateDealerResult(){
+    void calculateDealerResult() {
         // given
         Map<Player, GameResult> result = initialized();
         // when
-        BettingStatistics bettingStatistics = new BettingStatistics(result);
+        BettingStatistics bettingStatistics = BettingStatistics.fromBettingResult(result);
         // then
         BettingResultAmount dealerResult = bettingStatistics.calculateDealerBettingResult();
         assertThat(dealerResult).isEqualTo(new BettingResultAmount(20000));
     }
 
     private Map<Player, GameResult> initialized() {
-        Player player1 = new Player(new PlayerName("a"),new BettingAmount(10000));
-        Player player2 = new Player(new PlayerName("b"),new BettingAmount(20000));
-        Player player3 = new Player(new PlayerName("c"),new BettingAmount(30000));
+        Player player1 = new Player(new PlayerName("a"), new BettingAmount(10000));
+        Player player2 = new Player(new PlayerName("b"), new BettingAmount(20000));
+        Player player3 = new Player(new PlayerName("c"), new BettingAmount(30000));
         return Map.of(player1, GameResult.WIN, player2, GameResult.DRAW, player3, GameResult.LOSE);
     }
 }

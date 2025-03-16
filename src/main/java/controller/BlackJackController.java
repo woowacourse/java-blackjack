@@ -26,7 +26,7 @@ public class BlackJackController {
 
     public void run() {
         List<String> usernames = inputView.insertUsernames();
-        PlayerNames playerNames = new PlayerNames(usernames);
+        PlayerNames playerNames = PlayerNames.fromUsernames(usernames);
         List<PlayerName> playerUsernames = playerNames.getPlayerNames();
         Map<PlayerName, BettingAmount> bettingAmountsInfo = getBettingAmountsInfo(playerUsernames);
         Game game = initializeGame(bettingAmountsInfo);

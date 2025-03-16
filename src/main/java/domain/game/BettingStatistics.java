@@ -8,12 +8,17 @@ import java.util.stream.Collectors;
 public class BettingStatistics {
     private final Map<PlayerName, BettingResultAmount> bettingResult;
 
-    public BettingStatistics(Map<Player, GameResult> bettingResult) {
-        this.bettingResult = bettingResult.entrySet().stream()
+    private BettingStatistics(Map<PlayerName, BettingResultAmount> bettingResult) {
+        this.bettingResult = bettingResult;
+    }
+
+    public static BettingStatistics fromBettingResult(Map<Player, GameResult> bettingResult) {
+        Map<PlayerName, BettingResultAmount> bettingResults = bettingResult.entrySet().stream()
                 .collect(Collectors.toMap(
                         entry -> entry.getKey().getPlayerName(),
                         entry -> new BettingResultAmount(entry.getKey().getBettingAmount(), entry.getValue())
                 ));
+        return new BettingStatistics(bettingResults);
     }
 
     public BettingResultAmount calculateDealerBettingResult() {
