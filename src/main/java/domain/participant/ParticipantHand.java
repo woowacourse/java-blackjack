@@ -29,9 +29,10 @@ public class ParticipantHand {
         return score.isGreaterThan(MAX_SCORE);
     }
 
-    public boolean isMaxScore(Score score){
+    public boolean isMaxScore(Score score) {
         return score.isEqualTo(MAX_SCORE);
     }
+
     public Score calculateCardSum() {
         return calculateCardSum(MAX_SCORE);
     }
@@ -69,7 +70,7 @@ public class ParticipantHand {
         return Collections.unmodifiableList(handCards);
     }
 
-    public int size(){
+    public int size() {
         return handCards.size();
     }
 

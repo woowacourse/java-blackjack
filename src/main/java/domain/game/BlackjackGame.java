@@ -2,6 +2,7 @@ package domain.game;
 
 import domain.card.Deck;
 import domain.card.TrumpCard;
+import domain.participant.Bet;
 import domain.participant.ParticipantName;
 import domain.participant.Participants;
 import java.util.HashMap;
@@ -17,10 +18,10 @@ public class BlackjackGame {
     private final Participants participants;
     private final Deck deck;
 
-    public BlackjackGame(List<String> names, List<Integer> betAmounts, Deck deck) {
-        validatePlayerSize(names.size());
+    public BlackjackGame(List<ParticipantName> participantNames, Map<ParticipantName, Bet> playerBets, Deck deck) {
+        validatePlayerSize(participantNames.size());
         this.deck = deck;
-        this.participants = new Participants(names, betAmounts, deck);
+        this.participants = new Participants(participantNames, playerBets, deck);
     }
 
     private void validatePlayerSize(int playerSize) {
@@ -73,8 +74,8 @@ public class BlackjackGame {
 
     public Map<String, Integer> getPlayersProfit() {
         Map<String, Integer> playersProfit = new HashMap<>();
-        for (ParticipantName playerName : participants.getPlayerNames()) {
-            playersProfit.put(playerName.name(), participants.getPlayerProfit(playerName));
+        for (ParticipantName participantName : participants.getPlayerNames()) {
+            playersProfit.put(participantName.name(), participants.getPlayerProfit(participantName));
         }
         return playersProfit;
     }

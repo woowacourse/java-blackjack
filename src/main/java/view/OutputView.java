@@ -13,7 +13,7 @@ public class OutputView {
     private final static String OPEN_CARD_FORMAT = "%s카드: %s\n";
     private final static String TRUMP_CARD_FORMAT = "%s%s";
     private final static String OPEN_CARD_WITH_SUM_FORMAT = "%s카드: %s - 결과: %d\n";
-    private final static String PLAYER_BET_INPUT_FORMAT = "%s 배팅 금액은?\n";
+    private final static String PLAYER_BET_INPUT_FORMAT = "%s의 배팅 금액은?\n";
     private final static String INPUT_NAMES = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private final static String SPLITTER = ", ";
     private final static String INITIATE_DRAW = "딜러와 %s에게 2장을 나누었습니다.\n";
@@ -30,12 +30,14 @@ public class OutputView {
         System.out.println(INPUT_NAMES);
     }
 
-    public void inputBetAmounts(String name) {
-        System.out.printf(PLAYER_BET_INPUT_FORMAT, name);
+    public void inputBetAmounts(ParticipantName name) {
+        System.out.printf(PLAYER_BET_INPUT_FORMAT, name.name());
     }
 
-    public void printInitiateDraw(List<String> names) {
-        String nicknames = String.join(SPLITTER, names);
+    public void printInitiateDraw(List<ParticipantName> participantNames) {
+        String nicknames = participantNames.stream()
+                .map(ParticipantName::name)
+                .collect(Collectors.joining(SPLITTER));
         System.out.printf(INITIATE_DRAW, nicknames);
     }
 

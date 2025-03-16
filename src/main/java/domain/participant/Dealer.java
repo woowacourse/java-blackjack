@@ -23,7 +23,7 @@ public class Dealer {
         return totalScore.isLessThanEqual(DEALER_STOP_HIT_STANDARD_SCORE);
     }
 
-    public List<TrumpCard> cards(){
+    public List<TrumpCard> cards() {
         return participant.trumpCards();
     }
 

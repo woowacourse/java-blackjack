@@ -40,13 +40,13 @@ public class Stay extends HandState {
         return calculateProfitFromOtherScore(other);
     }
 
-    private double calculateProfitFromOtherScore(HandState other){
+    private double calculateProfitFromOtherScore(HandState other) {
         Score score = calculateCardSum();
         Score otherScore = other.calculateCardSum();
-        if(score.isGreaterThan(otherScore)){
+        if (score.isGreaterThan(otherScore)) {
             return WIN_PROFIT_RATE;
         }
-        if(score.isLessThan(otherScore)){
+        if (score.isLessThan(otherScore)) {
             return LOSE_PROFIT_RATE;
         }
         return DRAW_PROFIT_RATE;

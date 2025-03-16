@@ -21,7 +21,7 @@ public class Player {
         return participant.name();
     }
 
-    public Score calculateCardSum(){
+    public Score calculateCardSum() {
         return participant.calculateCardSum();
     }
 

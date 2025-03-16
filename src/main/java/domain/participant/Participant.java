@@ -22,7 +22,7 @@ public class Participant {
         return hand.calculateCardSum();
     }
 
-    public Score calculateCardSum(Score aceCalcStandard){
+    public Score calculateCardSum(Score aceCalcStandard) {
         return hand.calculateCardSum(aceCalcStandard);
     }
 
