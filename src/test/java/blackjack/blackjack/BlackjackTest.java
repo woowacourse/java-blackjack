@@ -12,18 +12,27 @@ import blackjack.gamer.Dealer;
 import blackjack.gamer.Player;
 import blackjack.gamer.Players;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class BlackjackTest {
 
+    private Blackjack blackjack;
+    private Dealer dealer;
+    private Players players;
+
+    @BeforeEach
+    void setUp() {
+        blackjack = new Blackjack();
+        dealer = Dealer.getDealer(new CardRandomMachine());
+    }
+
     @DisplayName("딜러와 플레이어에게 모두 2장씩 나눠준다.")
     @Test
     void deal() {
         // given
-        final Dealer dealer = Dealer.getDealer(new CardRandomMachine());
-        final Players players = Players.from("엠제이, 밍트");
-        final Blackjack blackjack = new Blackjack();
+        players = Players.from("엠제이, 밍트");
 
         // when
         dealer.initCardMachine();
@@ -46,7 +55,6 @@ class BlackjackTest {
     @Test
     void betPlayer() {
         // given
-        final Blackjack blackjack = new Blackjack();
         final Player player = new Player("엠제이");
 
         // when
@@ -60,9 +68,7 @@ class BlackjackTest {
     @Test
     void isPush() {
         // given
-        final Blackjack blackjack = new Blackjack();
-        final Dealer dealer = Dealer.getDealer(new CardRandomMachine());
-        final Players players = Players.from("엠제이, 밍트");
+        players = Players.from("엠제이, 밍트");
 
         dealer.receiveCards(provideBlackjackCards());
         final Player player1 = players.getPlayers().getFirst();
@@ -76,9 +82,7 @@ class BlackjackTest {
     @Test
     void calculateWinningResult() {
         // given
-        final Blackjack blackjack = new Blackjack();
-        final Dealer dealer = Dealer.getDealer(new CardRandomMachine());
-        final Players players = Players.from("엠제이, 밍트, 리원, 포스티");
+        players = Players.from("엠제이, 밍트, 리원, 포스티");
 
         final Player player1 = players.getPlayers().get(0);
         final Player player2 = players.getPlayers().get(1);
@@ -106,9 +110,7 @@ class BlackjackTest {
     @Test
     void calculateWinningResultWhenPush() {
         // given
-        final Blackjack blackjack = new Blackjack();
-        final Dealer dealer = Dealer.getDealer(new CardRandomMachine());
-        final Players players = Players.from("엠제이, 밍트, 리원, 포스티");
+        players = Players.from("엠제이, 밍트, 리원, 포스티");
 
         final Player player1 = players.getPlayers().get(0);
         final Player player2 = players.getPlayers().get(1);
@@ -136,9 +138,7 @@ class BlackjackTest {
     @Test
     void calculateEarnedMoney() {
         // given
-        final Blackjack blackjack = new Blackjack();
-        final Dealer dealer = Dealer.getDealer(new CardRandomMachine());
-        final Players players = Players.from("엠제이, 밍트, 리원, 포스티");
+        players = Players.from("엠제이, 밍트, 리원, 포스티");
 
         final Player player1 = players.getPlayers().get(0);
         final Player player2 = players.getPlayers().get(1);
