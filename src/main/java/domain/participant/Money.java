@@ -9,7 +9,7 @@ public class Money {
     }
 
     private void validateDivisibleByTenThousand(final int money) {
-        if (money % 10000 != 0) {
+        if (money % 10000 != 0 || money <= 0) {
             throw new IllegalArgumentException("[ERROR] 배팅 금액은 만원 단위입니다.");
         }
     }
