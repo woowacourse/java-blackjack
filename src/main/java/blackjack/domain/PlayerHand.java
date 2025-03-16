@@ -13,12 +13,12 @@ public class PlayerHand {
         this.wallet = wallet;
     }
 
-    public void takeCard(Card newCard) {
-        hand.takeCard(newCard);
+    public void hit(Card newCard) {
+        hand.hit(newCard);
     }
 
-    public boolean canTakeCard() {
-        return hand.canTakeCardWithin(Constants.BUSTED_STANDARD_VALUE);
+    public boolean canHit() {
+        return hand.canHitWithin(Constants.BUSTED_STANDARD_VALUE);
     }
 
     public boolean isBusted() {

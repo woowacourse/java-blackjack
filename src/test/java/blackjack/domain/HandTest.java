@@ -32,7 +32,7 @@ class HandTest {
         Card newCard = new Card(CardSuit.SPADE, CardRank.KING);
 
         // when
-        hand.takeCard(newCard);
+        hand.hit(newCard);
 
         // then
         assertThat(hand.getAllCards()).containsExactly(card1, card2, newCard);

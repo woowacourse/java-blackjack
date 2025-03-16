@@ -79,7 +79,7 @@ class PlayerHandTest {
         List<Card> expect = List.of(card1, card2, newCard);
 
         // when
-        playerHand.takeCard(newCard);
+        playerHand.hit(newCard);
 
         // then
         assertThat(playerHand.getAllCards()).isEqualTo(expect);
@@ -94,7 +94,7 @@ class PlayerHandTest {
         PlayerHand playerHand = new PlayerHand(hand, wallet);
 
         // when & then
-        assertThat(playerHand.canTakeCard()).isEqualTo(expect);
+        assertThat(playerHand.canHit()).isEqualTo(expect);
     }
 
     @DisplayName("블랙잭이고 승리하면 1.5배의 수익을 더 받는다")

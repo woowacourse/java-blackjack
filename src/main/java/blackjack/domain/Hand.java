@@ -40,7 +40,7 @@ public class Hand {
         return Collections.unmodifiableList(cards);
     }
 
-    public void takeCard(Card newCard) {
+    public void hit(Card newCard) {
         cards.add(newCard);
     }
 
@@ -66,7 +66,7 @@ public class Hand {
                 .allMatch(sum -> sum > Constants.BUSTED_STANDARD_VALUE);
     }
 
-    public boolean canTakeCardWithin(int takeBoundary) {
+    public boolean canHitWithin(int takeBoundary) {
         List<Integer> possibleSums = getPossibleSums();
 
         return possibleSums.stream()

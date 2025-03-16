@@ -21,13 +21,13 @@ public class Player implements Participant {
     }
 
     @Override
-    public void takeCard(Card newCard) {
-        playerHand.takeCard(newCard);
+    public void hit(Card newCard) {
+        playerHand.hit(newCard);
     }
 
     @Override
     public boolean canHit() {
-        return playerHand.canTakeCard();
+        return playerHand.canHit();
     }
 
     @Override

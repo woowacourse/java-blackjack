@@ -72,7 +72,7 @@ public class BlackjackController {
     private void startingHand(Function<Deck, List<Card>> function, Deck deck, Participant participant) {
         List<Card> cards = function.apply(deck);
 
-        cards.forEach(participant::takeCard);
+        cards.forEach(participant::hit);
     }
 
     private void hitCard(Deck deck, Player player) {
@@ -80,17 +80,17 @@ public class BlackjackController {
             return;
         }
 
-        while (canReceiveMoreCard(player)) {
+        while (canDraw(player)) {
             startingHand(Deck::takeOneCard, deck, player);
             OutputView.printHand(player);
         }
     }
 
-    private boolean canReceiveMoreCard(Player player) {
-        return isNotBustedFor(player) && player.canHit() && InputView.askToGetMoreCard(player) != Confirmation.N;
+    private boolean canDraw(Player player) {
+        return isNotBusted(player) && player.canHit() && InputView.askToGetMoreCard(player) != Confirmation.N;
     }
 
-    private boolean isNotBustedFor(Player player) {
+    private boolean isNotBusted(Player player) {
         boolean busted = player.isBusted();
         if (busted) {
             OutputView.printBustedPlayer(player);

@@ -14,13 +14,13 @@ public class Dealer implements Participant {
     }
 
     @Override
-    public void takeCard(Card newCard) {
-        hand.takeCard(newCard);
+    public void hit(Card newCard) {
+        hand.hit(newCard);
     }
 
     @Override
     public boolean canHit() {
-        return hand.canTakeCardWithin(DEALER_HIT_BOUNDARY);
+        return hand.canHitWithin(DEALER_HIT_BOUNDARY);
     }
 
     @Override
