@@ -17,7 +17,7 @@ public class ConsoleOutputView implements OutputView {
         String joinedPlayers = String.join(", ", players.getPlayerNames());
         System.out.println("\n딜러와 " + joinedPlayers + "에게 2장을 나누었습니다.");
 
-        System.out.println("딜러카드: " + processCardInfo(dealer.openInitialCard()));
+        System.out.println("딜러카드: " + processCardsInfo(dealer.openInitialCards()));
         for (Player player : players.getPlayers()) {
             printPlayerCards(player);
         }
