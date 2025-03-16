@@ -4,32 +4,89 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 class MoneyTest {
 
     @Test
-    @DisplayName("퍼센트 단위로 입력받은 이익률을 통해서 원금을 제외한 수익을 구할 수 있다")
-    void canApplyProfitRate() {
+    @DisplayName("100% 수익률을 적용하면 원금과 동일한 값이 나온다")
+    void applyFullProfit() {
         // given
-        int amount = 10000;
-        Money money = Money.fromBettingAmount(amount);
+        Money money = Money.from(10000);
 
         // when
-        Money m1 = money.applyProfitRate(100);
-        Money m2 = money.applyProfitRate(50);
-        Money m3 = money.applyProfitRate(0);
-        Money m4 = money.applyProfitRate(-100);
+        Money result = money.applyProfitRate(100);
 
         // then
-        assertAll(() -> {
-            assertThat(m1).isEqualTo(Money.from(10000));
-            assertThat(m2).isEqualTo(Money.from(5000));
-            assertThat(m3).isEqualTo(Money.from(0));
-            assertThat(m4).isEqualTo(Money.from(-10000));
-        });
+        assertThat(result).isEqualTo(Money.from(10000));
+    }
+
+    @Test
+    @DisplayName("50% 수익률을 적용하면 원금의 절반 값이 나온다")
+    void applyHalfProfit() {
+        // given
+        Money money = Money.from(10000);
+
+        // when
+        Money result = money.applyProfitRate(50);
+
+        // then
+        assertThat(result).isEqualTo(Money.from(5000));
+    }
+
+    @Test
+    @DisplayName("0% 수익률을 적용하면 수익이 0이 된다")
+    void applyZeroProfit() {
+        // given
+        Money money = Money.from(10000);
+
+        // when
+        Money result = money.applyProfitRate(0);
+
+        // then
+        assertThat(result).isEqualTo(Money.from(0));
+    }
+
+    @Test
+    @DisplayName("-100% 수익률을 적용하면 원금의 음수 값이 나온다")
+    void applyNegativeProfit() {
+        // given
+        Money money = Money.from(10000);
+
+        // when
+        Money result = money.applyProfitRate(-100);
+
+        // then
+        assertThat(result).isEqualTo(Money.from(-10000));
+    }
+
+    @Test
+    @DisplayName("소숫점 절삭: 1원의 25% 수익률을 적용하면 0원이 된다")
+    void applyProfitWithRoundingDown() {
+        // given
+        Money money = Money.from(1);
+
+        // when
+        Money result = money.applyProfitRate(25);
+
+        // then
+        assertThat(result).isEqualTo(Money.from(0));
+    }
+
+    @Test
+    @DisplayName("0원에 대해 수익률을 적용해도 0원이 유지된다")
+    void applyProfitToZeroMoney() {
+        // given
+        Money money = Money.from(0);
+
+        // when
+        Money result1 = money.applyProfitRate(100);
+        Money result2 = money.applyProfitRate(0);
+        Money result3 = money.applyProfitRate(-50);
+
+        // then
+        assertThat(result1).isEqualTo(Money.from(0));
+        assertThat(result2).isEqualTo(Money.from(0));
+        assertThat(result3).isEqualTo(Money.from(0));
     }
 
     @Test
@@ -37,35 +94,11 @@ class MoneyTest {
     void shouldEqualsWhenValuesAreSame() {
         // given
         int amount = 10000;
-        Money money1 = Money.fromBettingAmount(amount);
-        Money money2 = Money.fromBettingAmount(amount);
+        Money money1 = Money.from(amount);
+        Money money2 = Money.from(amount);
 
         // when
         // then
         assertThat(money1).isEqualTo(money2);
-    }
-
-    @Test
-    @DisplayName("배팅 금액은 음수가 될 수 없다")
-    void cannotNegativeValueWhenBet() {
-        // given
-        int amount = -10000;
-
-        // when
-        // then
-        assertThatThrownBy(() -> Money.fromBettingAmount(amount))
-                .hasMessageContaining("금액은 음수가 될 수 없습니다.");
-    }
-
-    @Test
-    @DisplayName("수익률을 적용한 금액은 음수가 될 수 있다")
-    void canNegativeValueWhenApplyProfitLate() {
-        // given
-        int amount = -10000;
-
-        // when
-        // then
-        assertThatCode(() -> Money.fromProfitOrLoss(amount))
-                .doesNotThrowAnyException();
     }
 }
