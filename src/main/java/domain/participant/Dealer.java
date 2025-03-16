@@ -1,5 +1,7 @@
-package domain;
+package domain.participant;
 
+import domain.card.Deck;
+import domain.match.MatchResult;
 import java.util.Objects;
 
 public class Dealer extends Gamer {

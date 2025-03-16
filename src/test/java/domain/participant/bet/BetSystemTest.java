@@ -1,9 +1,16 @@
-package domain;
+package domain.participant.bet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.card.Card;
+import domain.card.Deck;
+import domain.card.Rank;
+import domain.card.Symbol;
+import domain.participant.Dealer;
+import domain.participant.Gamer;
+import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

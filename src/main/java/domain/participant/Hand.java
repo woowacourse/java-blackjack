@@ -1,5 +1,8 @@
-package domain;
+package domain.participant;
 
+import domain.card.Card;
+import domain.card.Rank;
+import domain.match.MatchResult;
 import java.util.ArrayList;
 import java.util.List;
 

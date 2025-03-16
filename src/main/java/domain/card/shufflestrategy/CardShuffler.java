@@ -1,5 +1,6 @@
-package domain;
+package domain.card.shufflestrategy;
 
+import domain.card.Card;
 import java.util.Collections;
 import java.util.List;
 

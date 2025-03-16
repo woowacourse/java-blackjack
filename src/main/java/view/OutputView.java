@@ -1,10 +1,10 @@
 package view;
 
-import domain.Card;
-import domain.Dealer;
-import domain.Gamer;
-import domain.MatchResult;
-import domain.Player;
+import domain.card.Card;
+import domain.match.MatchResult;
+import domain.participant.Dealer;
+import domain.participant.Gamer;
+import domain.participant.Player;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -96,7 +96,8 @@ public class OutputView {
         StringJoiner sj = new StringJoiner(NEXT_LINE);
 
         for (Entry<Gamer, Long> gamerIntegerEntry : gamerIntegerMap.entrySet()) {
-            String profitFormat = String.format("%s: %d", gamerIntegerEntry.getKey().getName(),
+            String profitFormat = String.format("%s: %d",
+                    gamerIntegerEntry.getKey().getName(),
                     gamerIntegerEntry.getValue());
             sj.add(profitFormat);
         }

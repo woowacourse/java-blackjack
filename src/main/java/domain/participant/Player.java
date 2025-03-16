@@ -1,4 +1,6 @@
-package domain;
+package domain.participant;
+
+import domain.card.Deck;
 
 public class Player extends Gamer {
 

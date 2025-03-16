@@ -1,13 +1,13 @@
 package controller;
 
-import domain.BetSystem;
-import domain.Card;
-import domain.CardShuffler;
-import domain.CardsInitializer;
-import domain.Dealer;
-import domain.Deck;
-import domain.Gamer;
-import domain.Player;
+import domain.card.Card;
+import domain.card.CardsInitializer;
+import domain.card.Deck;
+import domain.card.shufflestrategy.CardShuffler;
+import domain.participant.Dealer;
+import domain.participant.Gamer;
+import domain.participant.Player;
+import domain.participant.bet.BetSystem;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

@@ -1,5 +1,9 @@
-package domain;
+package domain.participant.bet;
 
+import domain.match.MatchResult;
+import domain.participant.Dealer;
+import domain.participant.Gamer;
+import domain.participant.Player;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;

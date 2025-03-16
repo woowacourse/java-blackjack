@@ -1,4 +1,4 @@
-package domain;
+package domain.match;
 
 public enum MatchResult {
 
