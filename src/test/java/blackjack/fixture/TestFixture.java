@@ -6,8 +6,8 @@ import blackjack.domain.card.Hand;
 import blackjack.domain.card.Shape;
 import blackjack.domain.card.generator.DeckGenerator;
 import blackjack.domain.card.generator.ShuffleDeckGenerator;
-import blackjack.domain.participant.gamer.Player;
 import blackjack.domain.participant.Players;
+import blackjack.domain.participant.gamer.Player;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
@@ -30,26 +30,6 @@ public class TestFixture {
 
     public static Player providePlayer(final String nickname, final int bettingAmount) {
         return new Player(provideEmptyCards(), nickname, bettingAmount);
-    }
-
-    public static List<Player> provideTwoPlayersWithCards(final Hand hand1, final Hand hand2) {
-        return List.of(new Player(hand1, "엠제이", 10_000), new Player(hand2, "밍트", 20_000));
-    }
-
-    public static List<Player> provideThreePlayersWithCards(final Hand hand1, final Hand hand2,
-                                                            final Hand hand3) {
-        return List.of(new Player(hand1, "엠제이", 10_000), new Player(hand2, "밍트", 20_000),
-                new Player(hand3, "포비", 30_000));
-    }
-
-    public static Hand provideOver21Cards() {
-        return new Hand(List.of(new Card(Shape.SPADE, CardScore.K),
-                new Card(Shape.SPADE, CardScore.Q), new Card(Shape.SPADE, CardScore.J)));
-    }
-
-    public static Hand provideUnder21Cards() {
-        return new Hand(List.of(new Card(Shape.SPADE, CardScore.TWO),
-                new Card(Shape.SPADE, CardScore.THREE)));
     }
 
     public static Hand provideUnder16Cards() {
