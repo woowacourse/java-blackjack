@@ -30,7 +30,7 @@ public class BlackjackGame {
 
         for (String playerName : gameTable.getPlayerNames()) {
             UserAction userAction = inputView.readOneMoreCardResponse(playerName);
-            while (userAction.equals(UserAction.STAND)) {
+            while (userAction.equals(UserAction.HIT)) {
                 gameTable.addCardTo(playerName);
                 outputView.printPlayerCards(gameTable, playerName);
                 userAction = inputView.readOneMoreCardResponse(playerName);
