@@ -3,6 +3,7 @@ package participant;
 import card.Card;
 import java.util.List;
 import state.State;
+import state.finished.Bust;
 
 public abstract class Participant {
 
@@ -23,12 +24,12 @@ public abstract class Participant {
         }
     }
 
-    public boolean isBust() {
-        return state.isFinished();
-    }
-
     public int score() {
         return state.cards().calculateScore();
+    }
+
+    public boolean isBust() {
+        return state instanceof Bust;
     }
 
     public abstract boolean canReceiveCard();

@@ -2,6 +2,7 @@ package participant;
 
 import card.Card;
 import java.util.List;
+import state.finished.Blackjack;
 import state.started.Started;
 
 public class Dealer extends Participant {
@@ -22,10 +23,14 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canReceiveCard() {
-        return score() <= DEALER_MAX_NUMBER_FOR_BUST || !state.isFinished();
+        return score() <= DEALER_MAX_NUMBER_FOR_BUST && !state.isFinished();
     }
 
     public List<Card> cards() {
         return state.cards().getCards();
+    }
+
+    public boolean isBlackjack() {
+        return state instanceof Blackjack;
     }
 }

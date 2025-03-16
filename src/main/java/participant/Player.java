@@ -20,6 +20,22 @@ public class Player extends Participant {
         state = Started.start(card1, card2);
     }
 
+    public int calculateProfit(GameResult result) {
+        if (state instanceof Bust) {
+            return -bettingMoney.getMoney();
+        }
+
+        if (result == GameResult.WIN) {
+            return -(int) state.profit(bettingMoney.getMoney());
+        }
+
+        if (result == GameResult.LOSE) {
+            return (int) state.profit(bettingMoney.getMoney());
+        }
+
+        return 0;
+    }
+
     @Override
     public boolean canReceiveCard() {
         return !state.isFinished();
@@ -31,5 +47,17 @@ public class Player extends Participant {
 
     public List<Card> cards() {
         return this.state.cards().getCards();
+    }
+
+    public void stand() {
+        this.state = state.stand();
+    }
+
+    public boolean isBlackjack() {
+        return state instanceof Blackjack;
+    }
+
+    public boolean isFinished() {
+        return state.isFinished();
     }
 }

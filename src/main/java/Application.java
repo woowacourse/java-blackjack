@@ -20,8 +20,6 @@ public class Application {
 
         Deck deck = new Deck(new ShuffledDeckCreator());
 
-        BlackjackGame blackJackGame = new BlackjackGame(deck);
-        blackJackGame.run();
         List<Nickname> nicknames = InputView.readNicknames().stream()
                 .map(Nickname::new)
                 .toList();
@@ -47,6 +45,20 @@ public class Application {
         }
 
         OutputView.printAllCardAndScore(players, dealer);
+
+        int dealerProfit = 0;
+        Map<Player, Integer> playersResult = new HashMap<>();
+
+        for (Player player : players.getPlayers()) {
+            GameResult gameJudge = GameResult.judge(dealer, player);
+
+            dealerProfit -= player.calculateProfit(gameJudge);
+            playersResult.put(player, player.calculateProfit(gameJudge));
+        }
+
+        OutputView.printResult(dealerProfit, playersResult);
+    }
+
     private static Players bettingPlayers(List<Nickname> nicknames) {
         List<Player> players = new ArrayList<>();
         for (Nickname nickname : nicknames) {

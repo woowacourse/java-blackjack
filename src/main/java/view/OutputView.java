@@ -82,19 +82,12 @@ public class OutputView {
                 .toList());
     }
 
-    public static void printResult(Map<GameResult, Integer> dealerResults, Map<Player, GameResult> playerResults) {
-        println("## 최종 승패");
-        print("딜러:");
-        for (GameResult gameResult : GameResult.values()) {
-            if (dealerResults.get(gameResult) != 0) {
-                System.out.printf(" %d%s", dealerResults.get(gameResult), gameResultToString(gameResult));
-            }
-        }
-        printNewLine();
+    public static void printResult(int dealerProfit, Map<Player, Integer> playersResult) {
+        println("## 최종 수익");
+        System.out.printf("딜러: %d%n", dealerProfit);
 
-        for (Player player : playerResults.keySet()) {
-            System.out.printf(ALL_CARDS, player.getNickname(), gameResultToString(playerResults.get(player)));
-            printNewLine();
+        for (Player player : playersResult.keySet()) {
+            System.out.printf("%s: %d%n", player.getNickname(), playersResult.get(player));
         }
     }
 
@@ -139,10 +132,6 @@ public class OutputView {
             return SPADE;
         }
         return HEART;
-    }
-
-    private static void print(String message) {
-        System.out.print(message);
     }
 
     private static void println(String message) {
