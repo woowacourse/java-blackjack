@@ -6,11 +6,12 @@ public class HitOrStandInputView implements InputView {
 
     public static final String LINE = System.lineSeparator();
     private static final String INPUT_WANT_HIT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
-    private static final Scanner scanner = new Scanner(System.in);
 
+    private final Scanner scanner;
     private final String value;
 
-    public HitOrStandInputView(final String value) {
+    public HitOrStandInputView(final Scanner scanner, final String value) {
+        this.scanner = scanner;
         this.value = value;
     }
 

@@ -15,8 +15,12 @@ import blackjack.view.InputView;
 import blackjack.view.NameInputView;
 import blackjack.view.ResultView;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Application {
+
+    private static final Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
         final Blackjack blackjack = new Blackjack();
         Dealer dealer = makeDealer();
@@ -46,7 +50,7 @@ public class Application {
     }
 
     private static Players makePlayers() {
-        final InputView inputView = new NameInputView();
+        final InputView inputView = new NameInputView(scanner);
         final String joinedNames = inputView.read();
         try {
             return Players.from(joinedNames);
@@ -63,7 +67,7 @@ public class Application {
     }
 
     private static void betPlayer(final Blackjack blackjack, final Player player) {
-        final InputView inputView = new BettingMoneyInputView(player.getNickName());
+        final InputView inputView = new BettingMoneyInputView(scanner, player.getNickName());
         try {
             final String amount = inputView.read();
             blackjack.betMoney(player, amount);
@@ -116,7 +120,7 @@ public class Application {
     }
 
     private static boolean readIfHit(final Player player) {
-        final InputView inputView = new HitOrStandInputView(player.getNickName());
+        final InputView inputView = new HitOrStandInputView(scanner, player.getNickName());
         try {
             final String answer = inputView.read();
             final UserAnswer userAnswer = UserAnswer.of(answer);
