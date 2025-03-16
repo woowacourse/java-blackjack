@@ -88,8 +88,18 @@ public final class Hand {
         return Collections.unmodifiableList(hand);
     }
 
-    public Hand getPartialCards(int start, int end) {
-        return new Hand(hand.subList(start, end));
+    public Hand getPartialCards(int startInclusive, int endExclusive) {
+        validateIndex(startInclusive, endExclusive);
+        return new Hand(hand.subList(startInclusive, endExclusive));
+    }
+
+    private void validateIndex(final int start, final int end) {
+        if (start < 0 || end < 0 || start >= hand.size() || end > hand.size()) {
+            throw new IllegalArgumentException("[ERROR] 인덱스는 0 이상 hand 크기 이하여야 합니다");
+        }
+        if (start > end) {
+            throw new IllegalArgumentException("[ERROR] 끝 인덱스는 시작 인덱스보다 커야합니다");
+        }
     }
 
     public Card getFirstCard() {
