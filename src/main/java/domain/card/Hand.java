@@ -8,28 +8,58 @@ public class Hand {
 
     public static final int SOFT_ACE_POINT = 11;
     private static final int HIGHEST_SCORE = 21;
+    private static final int DEFAULT_SIZE = 2;
+
     private final List<Card> cards = new ArrayList<>();
+    private final boolean isBlackjack;
+
+    public Hand(CardDeck cardDeck) {
+        initCards(cardDeck);
+        isBlackjack = calculateTotalPoint() == HIGHEST_SCORE;
+    }
+
+    private void initCards(CardDeck cardDeck) {
+        for (int i = 0; i < DEFAULT_SIZE; i++) {
+            add(cardDeck.drawCard());
+        }
+    }
 
     public void add(Card card) {
         cards.add(card);
     }
 
-    public BlackjackMatchResult determineMatchResultAgainst(Hand other) {
-        if (this.isBurst() || other.isBurst()) {
+    public BlackjackMatchResult determineMatchResultFor(Hand other) {
+        if (this.isBlackjack || other.isBlackjack) {
+            return checkBlackjackResult(other);
+        }
+
+        if (this.isBust() || other.isBust()) {
             return checkBurstResult(other);
         }
 
         return compareScores(other);
     }
 
-    private BlackjackMatchResult checkBurstResult(Hand other) {
-        if (this.isBurst() && other.isBurst()) {
+    private BlackjackMatchResult checkBlackjackResult(Hand other) {
+        if (this.isBlackjack && other.isBlackjack) {
             return BlackjackMatchResult.DRAW;
         }
-        if (this.isBurst()) {
+        if (this.isBlackjack) {
             return BlackjackMatchResult.LOSE;
         }
+
         return BlackjackMatchResult.WIN;
+
+    }
+
+    private BlackjackMatchResult checkBurstResult(Hand other) {
+        if (this.isBust() && other.isBust()) {
+            return BlackjackMatchResult.DRAW;
+        }
+        if (this.isBust()) {
+            return BlackjackMatchResult.WIN;
+        }
+        return BlackjackMatchResult.LOSE;
     }
 
     private BlackjackMatchResult compareScores(Hand other) {
@@ -76,12 +106,12 @@ public class Hand {
         return SOFT_ACE_POINT;
     }
 
-    public boolean isBurst() {
+    public boolean isBust() {
         return calculateTotalPoint() > HIGHEST_SCORE;
     }
 
     public boolean isBlackjack() {
-        return calculateTotalPoint() == HIGHEST_SCORE && cards.size() == 2;
+        return isBlackjack;
     }
 
     public List<Card> getCards() {
