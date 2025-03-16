@@ -4,10 +4,9 @@ import blackjack.card.Card;
 import blackjack.card.Cards;
 import blackjack.card.Deck;
 import blackjack.gambler.Dealer;
-import blackjack.gambler.PlayerName;
 import blackjack.gambler.Player;
+import blackjack.gambler.PlayerName;
 import blackjack.gambler.Players;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackTable {
@@ -33,7 +32,7 @@ public class BlackjackTable {
     private Players registerPlayers(List<String> names) {
         return new Players(names.stream()
                 .map(PlayerName::new)
-                .map(nickname -> new Player(nickname, deck.drawInitialCards()))
+                .map(nickname -> new Player(nickname))
                 .toList());
     }
 

@@ -26,7 +26,7 @@ public class Deck {
     }
 
     public Cards drawInitialCards() {
-        return new Cards(new ArrayList<>(List.of(cards.drawOneCard(), cards.drawOneCard())));
+        return new Cards(new ArrayList<>(cards.drawTwoCards()));
     }
 
     public List<Cards> drawInitialCards(int count) {

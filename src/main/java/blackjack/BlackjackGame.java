@@ -2,7 +2,6 @@ package blackjack;
 
 import blackjack.config.GameConfig;
 import blackjack.constant.UserAction;
-import blackjack.gambler.Player;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -33,6 +32,7 @@ public class BlackjackGame {
         }
 
         gameTable.determineDealerAdditionalCard();
+
         if (gameTable.isDealerDrawCard()) {
             outputView.printDealerOneMoreCardMessage();
         }

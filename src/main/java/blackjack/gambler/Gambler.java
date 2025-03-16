@@ -12,8 +12,6 @@ public abstract class Gambler {
 
     protected Cards cards;
 
-    protected Gambler() {}
-
     public void initializeHand(Cards cards) {
         validateInitialCardsSize(cards);
         this.cards = cards;
@@ -45,5 +43,9 @@ public abstract class Gambler {
         if (cards.getSize() != INITIAL_CARD_COUNT) {
             throw new IllegalArgumentException("[ERROR] 초기 카드는 " + INITIAL_CARD_COUNT + "장을 받아야 합니다.");
         }
+    }
+
+    public Cards getCards() {
+        return cards;
     }
 }

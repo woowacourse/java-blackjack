@@ -27,6 +27,10 @@ public class Cards {
         return sum;
     }
 
+    public boolean isBlackjack() {
+        return sumCardScores() == MAX_SCORE && cards.size() == 2;
+    }
+
     public List<Card> openDealerInitialCards() {
         return List.of(cards.getFirst());
     }

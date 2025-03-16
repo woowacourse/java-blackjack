@@ -8,21 +8,10 @@ import java.util.Objects;
 
 public class Player extends Gambler {
 
-    public static final int MAX_SCORE = 21;
-
     private final PlayerName playerName;
 
-    public Player(PlayerName playerName, Cards cards) {
-        super(cards);
+    public Player(PlayerName playerName) {
         this.playerName = playerName;
-    }
-
-    public MatchResult compareTo(int dealerScore) {
-        int sum = sumCardScores();
-        if (sum > MAX_SCORE || dealerScore > MAX_SCORE) {
-            return getMatchResultWhenOverBustStandard(sum);
-        }
-        return getMatchResult(dealerScore, sum);
     }
 
     @Override
@@ -30,22 +19,6 @@ public class Player extends Gambler {
         return cards.openPlayerInitialCards();
     }
 
-    private MatchResult getMatchResultWhenOverBustStandard(int sum) {
-        if (sum > MAX_SCORE) {
-            return MatchResult.LOSE;
-        }
-        return MatchResult.WIN;
-    }
-
-    private MatchResult getMatchResult(int dealerScore, int sum) {
-        if (sum == dealerScore) {
-            return MatchResult.DRAW;
-        }
-        if (sum > dealerScore) {
-            return MatchResult.WIN;
-        }
-        return MatchResult.LOSE;
-    }
 
     public String getUsername() {
         return playerName.getValue();
