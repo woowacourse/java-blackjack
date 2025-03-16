@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public class Users {
+    
     private static final int MAX_SIZE = 5;
 
     private final List<User> users;

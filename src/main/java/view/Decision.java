@@ -4,10 +4,11 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public enum Decision {
+
     HIT("y"),
     STAY("n"),
     ;
-    
+
     private final String input;
 
     Decision(String input) {
