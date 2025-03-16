@@ -1,6 +1,7 @@
 package controller;
 
 import domain.card.CardDeck;
+import domain.card.Hand;
 import domain.card.StandardCardsInitializer;
 import domain.gamer.Betting;
 import domain.gamer.Dealer;
@@ -8,10 +9,7 @@ import domain.gamer.Nickname;
 import domain.gamer.Player;
 import domain.rule.BlackjackMatchResult;
 import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
@@ -29,10 +27,9 @@ public class BlackJackController {
 
     public void run() {
         CardDeck deck = new CardDeck(new StandardCardsInitializer());
-        List<Player> players = setPlayers();
-        Dealer dealer = new Dealer();
 
-        prepareGame(dealer, players, deck);
+        Dealer dealer = new Dealer(new Hand(deck));
+        List<Player> players = setPlayers(deck);
 
         outputView.printInitialCards(dealer, players);
 
@@ -41,10 +38,10 @@ public class BlackJackController {
         processDealerTurn(dealer, deck);
 
         outputView.printCardResult(dealer, players);
-        showWinLoseResult(players, dealer);
+        showProfitResult(players, dealer);
     }
 
-    private List<Player> setPlayers() {
+    private List<Player> setPlayers(CardDeck deck) {
         List<Player> players = new ArrayList<>();
 
         List<Nickname> nicknames = inputView.readNames().stream()
@@ -53,58 +50,55 @@ public class BlackJackController {
 
         for (Nickname nickname : nicknames) {
             Betting betting = new Betting(inputView.readBettingAmount(nickname));
-            players.add(new Player(nickname, betting));
+            players.add(new Player(new Hand(deck), nickname, betting));
         }
 
         return players;
     }
 
-    private void prepareGame(Dealer dealer, List<Player> players, CardDeck deck) {
-        dealer.prepareGame(deck);
-        players.forEach(player -> player.prepareGame(deck));
-    }
-
     private void processPlayersTurn(List<Player> players, CardDeck deck) {
         for (Player player : players) {
+            processPlayerAction(player, deck);
+        }
+    }
+
+    private void processPlayerAction(Player player, CardDeck deck) {
+        while (!player.isFinished()) {
             selectChoice(player, deck);
         }
     }
 
     private void selectChoice(Player player, CardDeck deck) {
-        while (canHit(player)) {
+        if (wantHit(player)) {
             player.hit(deck);
             outputView.printCards(player);
+            return;
         }
-        if (!player.isBurst()) {
-            outputView.printCards(player);
-        }
+        player.stay();
     }
 
-    private boolean canHit(Player player) {
-        return player.canHit() && YES_SIGN.equals(getYesOrNo(player));
-    }
-
-    private String getYesOrNo(Player player) {
-        return inputView.readYesOrNo(player);
+    private boolean wantHit(Player player) {
+        return YES_SIGN.equals(inputView.readYesOrNo(player));
     }
 
     private void processDealerTurn(Dealer dealer, CardDeck deck) {
-        if (dealer.canHit()) {
+        if (!dealer.isFinished()) {
             dealer.hit(deck);
             outputView.printDealerHitSuccess();
         }
     }
 
-    private void showWinLoseResult(List<Player> players, Dealer dealer) {
-        Map<BlackjackMatchResult, Integer> dealerResult = new EnumMap<>(BlackjackMatchResult.class);
-        Map<Player, BlackjackMatchResult> playerResult = new HashMap<>();
+    private void showProfitResult(List<Player> players, Dealer dealer) {
+        int dealerProfit = 0;
+        List<Integer> playerProfit = new ArrayList<>();
 
         for (Player player : players) {
-            BlackjackMatchResult result = dealer.determineMatchResultAgainst(player);
-            dealerResult.put(result, dealerResult.getOrDefault(result, 0) + 1);
-            playerResult.put(player, result.reverse());
+            BlackjackMatchResult playerResult = dealer.determineMatchResultFor(player);
+            dealerProfit -= (int) player.getProfit(playerResult);
+            playerProfit.add((int) player.getProfit(playerResult));
         }
-        outputView.printWinLoseResult(dealerResult, playerResult);
+
+        outputView.printProfitResult(dealer, dealerProfit, players, playerProfit);
     }
 
 }
