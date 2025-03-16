@@ -42,7 +42,7 @@ public class Deck {
         }
     }
 
-    public List<Card> takeOneCard() {
+    public List<Card> hit() {
         return takeCards(ADDITIONAL_CARD_SIZE);
     }
 

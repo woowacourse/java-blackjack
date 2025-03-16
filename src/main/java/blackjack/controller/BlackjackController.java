@@ -65,7 +65,7 @@ public class BlackjackController {
     private void hitCard(Deck deck, Dealer dealer) {
         while (dealer.canHit()) {
             OutputView.printMoreCard();
-            startingHand(Deck::takeOneCard, deck, dealer);
+            startingHand(Deck::hit, deck, dealer);
         }
     }
 
@@ -81,7 +81,7 @@ public class BlackjackController {
         }
 
         while (canDraw(player)) {
-            startingHand(Deck::takeOneCard, deck, player);
+            startingHand(Deck::hit, deck, player);
             OutputView.printHand(player);
         }
     }

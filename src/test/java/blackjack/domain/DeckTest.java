@@ -59,7 +59,7 @@ class DeckTest {
             int expect = 1;
 
             // when
-            List<Card> takeCards = deck.takeOneCard();
+            List<Card> takeCards = deck.hit();
 
             // then
             assertThat(takeCards).hasSize(expect);
