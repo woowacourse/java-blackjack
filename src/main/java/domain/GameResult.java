@@ -9,10 +9,10 @@ public enum GameResult {
     LOSE(-1),
     DRAW(0);
 
-    private final double winningRate;
+    private final double returnRate;
 
-    GameResult(double winningRate) {
-        this.winningRate = winningRate;
+    GameResult(double returnRate) {
+        this.returnRate = returnRate;
     }
 
     public GameResult getReverse() {
@@ -23,7 +23,7 @@ public enum GameResult {
         };
     }
 
-    public Money applyWinningRate(Money money) {
-        return money.times(winningRate);
+    public Money applyReturnRate(Money money) {
+        return money.times(returnRate);
     }
 }

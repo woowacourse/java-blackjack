@@ -14,7 +14,7 @@ class GameResultTest {
         // given
         Money money = Money.of(100000);
         // when
-        Money expected = GameResult.BLACKJACK.applyWinningRate(money);
+        Money expected = GameResult.BLACKJACK.applyReturnRate(money);
         // then
         assertThat(expected).isEqualTo(Money.of(150000));
     }
@@ -24,7 +24,7 @@ class GameResultTest {
         // given
         Money money = Money.of(100000);
         // when
-        Money expected = GameResult.WIN.applyWinningRate(money);
+        Money expected = GameResult.WIN.applyReturnRate(money);
         // then
         assertThat(expected).isEqualTo(Money.of(100000));
     }
@@ -34,7 +34,7 @@ class GameResultTest {
         // given
         Money money = Money.of(100000);
         // when
-        Money expected = GameResult.DRAW.applyWinningRate(money);
+        Money expected = GameResult.DRAW.applyReturnRate(money);
         // then
         assertThat(expected).isEqualTo(Money.of(0));
     }
@@ -45,7 +45,7 @@ class GameResultTest {
         // given
         Money money = Money.of(100000);
         // when
-        Money expected = GameResult.LOSE.applyWinningRate(money);
+        Money expected = GameResult.LOSE.applyReturnRate(money);
         // then
         assertThat(expected).isEqualTo(Money.of(-100000));
     }
