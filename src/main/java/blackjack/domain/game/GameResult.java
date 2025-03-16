@@ -23,7 +23,7 @@ public enum GameResult {
         if (dealerScore.isBust()) {
             return GameResult.WIN;
         }
-        return checkIsBlackjack(gamblerScore, dealerScore);
+        return checkIsBlackjack(dealerScore, gamblerScore);
     }
 
     private static GameResult checkIsBlackjack(GameScore dealerScore, GameScore gamblerScore) {
@@ -33,7 +33,7 @@ public enum GameResult {
         if (gamblerScore.isBlackJack()) {
             return GameResult.BLACKJACK;
         }
-        return compareScores(gamblerScore, dealerScore);
+        return compareScores(dealerScore, gamblerScore);
     }
 
     private static GameResult compareScores(GameScore dealerScore, GameScore gamblerScore) {
