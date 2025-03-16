@@ -1,7 +1,5 @@
 package domain;
 
-import static util.ExceptionConstants.*;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,18 +31,9 @@ public enum CardNumberType {
 
     public static int determineAceNumber(int restSum) {
         if (restSum <= ACE_HIGH_CONVERSION_THRESHOLD) {
-            return CardNumberType.getAceHighNumber();
+            return ACE.cardNumbers.getLast();
         }
-        return CardNumberType.getAceLowNumber();
-    }
-
-    public static int getAceHighNumber() {
-        return ACE.cardNumbers.getLast();
-    }
-
-    public static CardNumberType findByRandomIndex(int randomIndex) {
-        validateIndex(randomIndex);
-        return CardNumberType.values()[randomIndex];
+        return ACE.cardNumbers.getFirst();
     }
 
     public int getDefaultNumber() {
@@ -53,15 +42,5 @@ public enum CardNumberType {
 
     public boolean isEqualTo(CardNumberType targetCardNumberType) {
         return this == targetCardNumberType;
-    }
-
-    private static void validateIndex(int index) {
-        if (index >= CardNumberType.values().length) {
-            throw new IllegalArgumentException(ERROR_HEADER + INVALID_INDEX);
-        }
-    }
-
-    private static int getAceLowNumber() {
-        return ACE.cardNumbers.getFirst();
     }
 }

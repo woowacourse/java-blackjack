@@ -25,11 +25,19 @@ public class BlackjackParticipants {
         return players.findPlayerByName(playerName);
     }
 
+    public List<String> findAllPlayerNames() {
+        return players.getAllPlayersName();
+    }
+
     public List<Participant> getParticipants() {
         List<Participant> participants = new ArrayList<>();
         participants.add(dealer);
         participants.addAll(players.getPlayers());
         return participants;
+    }
+
+    public ProfitResults calculateProfitResults() {
+        return players.calculateProfitResults(dealer.getHand());
     }
 
     public Dealer getDealer() {
@@ -38,13 +46,5 @@ public class BlackjackParticipants {
 
     public List<Player> getPlayers() {
         return players.getPlayers();
-    }
-
-    public List<String> findAllPlayerNames() {
-        return players.getAllPlayersName();
-    }
-
-    public ProfitResults calculateProfitResults() {
-        return players.calculateProfitResults(dealer.getHand());
     }
 }

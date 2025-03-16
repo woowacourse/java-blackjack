@@ -49,10 +49,6 @@ public class Hand {
         cards.addAll(receiveCards);
     }
 
-    public boolean isLargerThan(Hand dealerHand) {
-        return this.calculateSum() > dealerHand.calculateSum();
-    }
-
     public int calculateSum() {
         int cardsSumWithoutAce = calculateSumWithoutAce();
         return calculateSumWithAces(cardsSumWithoutAce);
@@ -86,6 +82,10 @@ public class Hand {
             return LOSE;
         }
         return DRAW;
+    }
+
+    private boolean isLargerThan(Hand dealerHand) {
+        return this.calculateSum() > dealerHand.calculateSum();
     }
 
     private int calculateSumWithoutAce() {

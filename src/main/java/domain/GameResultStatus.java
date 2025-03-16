@@ -1,5 +1,7 @@
 package domain;
 
+import java.math.BigDecimal;
+
 public enum GameResultStatus {
     BLACKJACK(1.5),
     WIN(1),
@@ -12,7 +14,7 @@ public enum GameResultStatus {
         this.payout = payout;
     }
 
-    public double getPayout() {
-        return payout;
+    public BigDecimal calculateProfit(int bettingMoney) {
+        return BigDecimal.valueOf(payout * bettingMoney);
     }
 }
