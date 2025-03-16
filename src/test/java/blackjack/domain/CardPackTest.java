@@ -14,7 +14,7 @@ class CardPackTest {
     @Test
     @DisplayName("카드팩의 맨 뒤에서 카드를 한장 뽑는다")
     void shuffle_and_deal_test() {
-        CardPack cardPack = new CardPack();
+        CardPack cardPack = CardPack.createShuffled();
         List<Card> cards = cardPack.getDealCards(1);
         assertThat(cards).hasSize(1);
     }
