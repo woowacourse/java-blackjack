@@ -51,9 +51,9 @@ public class TestFixture {
                 new Card(Shape.SPADE, CardScore.FOUR)));
     }
 
-    public static Hand provideOver16Cards() {
+    public static Hand provideBlackjack() {
         return new Hand(List.of(new Card(Shape.SPADE, CardScore.TEN),
-                new Card(Shape.HEART, CardScore.TEN)));
+                new Card(Shape.HEART, CardScore.A)));
     }
 
     public static Hand provideSmallerAceCards() {

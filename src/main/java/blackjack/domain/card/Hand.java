@@ -9,6 +9,7 @@ public final class Hand {
 
     public static final int BURST_THRESHOLD = 21;
     private static final int ACE_SUBTRACT = 10;
+    private static final int BLACKJACK_SIZE = 2;
 
     private final List<Card> hand;
 
@@ -36,6 +37,10 @@ public final class Hand {
 
     public void add(final Card card) {
         hand.add(card);
+    }
+
+    public boolean isBlackjack() {
+        return hand.size() == BLACKJACK_SIZE && calculateResult() == BURST_THRESHOLD;
     }
 
     private int calculateMaxScore(final List<Card> cards) {

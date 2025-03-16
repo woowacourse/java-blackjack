@@ -2,9 +2,9 @@ package blackjack.domain.participant;
 
 import static blackjack.fixture.TestFixture.provideBiggerAceCards;
 import static blackjack.fixture.TestFixture.provideBiggerAndSmallerAceCards;
+import static blackjack.fixture.TestFixture.provideBlackjack;
 import static blackjack.fixture.TestFixture.provideCards;
 import static blackjack.fixture.TestFixture.provideEmptyCards;
-import static blackjack.fixture.TestFixture.provideOver16Cards;
 import static blackjack.fixture.TestFixture.provideSmallerAceCards;
 import static blackjack.fixture.TestFixture.provideUnder16Cards;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -111,11 +111,11 @@ class DealerTest {
 
     @ParameterizedTest
     @MethodSource
-    void 우승_결과를_계산한다(final Hand hand, final ResultStatus expected) {
+    void 우승_결과를_계산한다(final Hand dealerHand, final Hand playerHand, final ResultStatus expected) {
         // Given
         String name = "밍트";
-        final Map<String, Integer> playerScores = Map.of(name, 16);
-        Dealer dealer1 = new Dealer(hand);
+        final Map<String, Hand> playerScores = Map.of(name, playerHand);
+        Dealer dealer1 = new Dealer(dealerHand);
 
         // When
         DealerWinningResult dealerWinningResult = dealer1.makeDealerWinningResult(playerScores);
@@ -125,12 +125,18 @@ class DealerTest {
     }
 
     private static Stream<Arguments> 우승_결과를_계산한다() {
-        Hand provide16Cards = new Hand(List.of(new Card(Shape.CLOB, CardScore.A), new Card(Shape.CLOB, CardScore.SIX)));
         return Stream.of(
-                Arguments.of(provideEmptyCards(), ResultStatus.LOSE),
-                Arguments.of(provideUnder16Cards(), ResultStatus.LOSE),
-                Arguments.of(provide16Cards, ResultStatus.WIN),
-                Arguments.of(provideOver16Cards(), ResultStatus.WIN)
+                Arguments.of(provideBlackjack(), provideBlackjack(), ResultStatus.PUSH),
+                Arguments.of(provideBlackjack(), provideUnder16Cards(), ResultStatus.WIN),
+                Arguments.of(provideUnder16Cards(), provideBlackjack(), ResultStatus.LOSE),
+
+                Arguments.of(provideUnder16Cards(), provideEmptyCards(), ResultStatus.WIN),
+                Arguments.of(provideEmptyCards(), provideUnder16Cards(), ResultStatus.LOSE),
+                Arguments.of(provide16Cards(), provide16Cards(), ResultStatus.PUSH)
         );
+    }
+
+    private static Hand provide16Cards() {
+        return new Hand(List.of(new Card(Shape.CLOB, CardScore.A), new Card(Shape.CLOB, CardScore.SIX)));
     }
 }

@@ -39,22 +39,30 @@ public final class Dealer extends Gamer {
         return score <= DEALER_THRESHOLD;
     }
 
-    public DealerWinningResult makeDealerWinningResult(final Map<String, Integer> playerScores) {
-        int dealerScore = calculateScore();
+    public DealerWinningResult makeDealerWinningResult(final Map<String, Hand> playerScores) {
         Map<String, ResultStatus> result = playerScores.entrySet().stream()
                 .collect(Collectors.toMap(Entry::getKey,
-                        entry -> calculateResultStatus(dealerScore, entry.getValue())));
+                        entry -> calculateResultStatus(entry.getValue())));
         return new DealerWinningResult(result);
     }
 
-    private ResultStatus calculateResultStatus(final int dealerScore, final int playerScore) {
+    private ResultStatus calculateResultStatus(final Hand playerHand) {
+        if (hand.isBlackjack() && !playerHand.isBlackjack()) {
+            return WIN;
+        }
+        if (!hand.isBlackjack() && playerHand.isBlackjack()) {
+            return LOSE;
+        }
+        return compareToScore(hand, playerHand);
+    }
+
+    private ResultStatus compareToScore(final Hand dealerHand, final Hand playerHand) {
+        int dealerScore = dealerHand.calculateResult();
+        int playerScore = playerHand.calculateResult();
         if (dealerScore <= BURST_THRESHOLD) {
             return calculateResultStatusUnderBlackjackNumber(dealerScore, playerScore);
         }
-        if (playerScore > BURST_THRESHOLD) {
-            return WIN;
-        }
-        return LOSE;
+        return checkIfPlayerBurst(playerScore);
     }
 
     private ResultStatus calculateResultStatusUnderBlackjackNumber(final int dealerScore, final int playerScore) {
@@ -70,6 +78,13 @@ public final class Dealer extends Gamer {
         }
         if (dealerScore == playerScore) {
             return PUSH;
+        }
+        return LOSE;
+    }
+
+    private ResultStatus checkIfPlayerBurst(final int playerScore) {
+        if (playerScore > BURST_THRESHOLD) {
+            return WIN;
         }
         return LOSE;
     }

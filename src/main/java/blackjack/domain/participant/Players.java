@@ -44,9 +44,9 @@ public final class Players {
                 .toList());
     }
 
-    public Map<String, Integer> calculateScores() {
+    public Map<String, Hand> calculateScores() {
         return players.stream()
-                .collect(Collectors.toMap(Gamer::getNickname, Gamer::calculateScore));
+                .collect(Collectors.toMap(Gamer::getNickname, Gamer::showAllCards));
     }
 
     private void validate(List<? extends Gamer> players) {
