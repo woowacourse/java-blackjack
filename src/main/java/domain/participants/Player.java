@@ -40,7 +40,7 @@ public class Player extends Gamer {
         return decideGameResultWithoutBust(dealer);
     }
 
-    public boolean isSameName(PlayerName playerName) {
+    public boolean hasSameName(PlayerName playerName) {
         return this.playerName.equals(playerName);
     }
 

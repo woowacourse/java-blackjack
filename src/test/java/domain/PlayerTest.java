@@ -144,12 +144,12 @@ class PlayerTest {
     @ParameterizedTest
     @DisplayName("같은 이름인지 정확히 확인한다.")
     @CsvSource({"a,true", "b,false"})
-    void isSameNameTest(String username, boolean expected) {
+    void hasSameNameTest(String username, boolean expected) {
         // given
         Player player = new Player(new PlayerName("a"), new BettingAmount(10000));
         PlayerName playerName = new PlayerName(username);
         // when
-        boolean isSameName = player.isSameName(playerName);
+        boolean isSameName = player.hasSameName(playerName);
         // then
         assertThat(isSameName).isEqualTo(expected);
     }

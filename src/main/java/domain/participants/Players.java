@@ -78,7 +78,7 @@ public class Players {
     }
 
     private Player selectPlayer(PlayerName playerName) {
-        return players.stream().filter(player -> player.isSameName(playerName))
+        return players.stream().filter(player -> player.hasSameName(playerName))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("해당 플레이어는 존재하지 않습니다."));
     }
