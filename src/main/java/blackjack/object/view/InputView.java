@@ -9,11 +9,15 @@ import java.util.Set;
 
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
+
     private static final String SPLIT_DELIMITER = ",";
     private static final String OPTION_YES = "y";
     private static final String OPTION_NO = "n";
+    private static final String BETTING_AMOUNT_FORMAT = "^\\d+$";
     private static final int MAX_PLAYER_COUNT = 6;
     private static final int MIN_PLAYER_COUNT = 1;
+    private static final int MAX_BETTING_AMOUNT = 100000;
+    private static final int MIN_BETTING_AMOUNT = 1000;
 
     public static List<Name> inputPlayerName() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
@@ -61,7 +65,7 @@ public class InputView {
     }
 
     public static int inputBettingAmount(final Name name) {
-        System.out.printf("%s의 베팅 금액은?", name);
+        System.out.printf("%s의 베팅 금액은?\n", name);
 
         String answer = scanner.nextLine();
         validateBettingAmountFormat(answer);
@@ -73,17 +77,17 @@ public class InputView {
     }
 
     private static void validateBettingAmountRange(int bettingAmount) {
-        if (bettingAmount < 1000) {
+        if (bettingAmount < MIN_BETTING_AMOUNT) {
             throw new IllegalArgumentException(ErrorMessage.BETTING_IS_POSSIBLE_FROM.getMessage());
         }
 
-        if(bettingAmount > 100000) {
+        if(bettingAmount > MAX_BETTING_AMOUNT) {
             throw new IllegalArgumentException(ErrorMessage.BETTING_IS_POSSIBLE_TO.getMessage());
         }
     }
 
     private static void validateBettingAmountFormat(String answer) {
-        if (!answer.matches("^\\d+$")) {
+        if (!answer.matches(BETTING_AMOUNT_FORMAT)) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_BETTING_AMOUNT_FORMAT.getMessage());
         }
     }
