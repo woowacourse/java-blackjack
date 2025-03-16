@@ -17,7 +17,7 @@ public class BlackJackRule {
         return new DeckInitializer().generateDeck();
     }
 
-    public static void initializeBlackJack(final Deck deck, final Dealer dealer, final Participants participants) {
+    public static void givePlayersTwoCardsWhenStart(final Deck deck, final Dealer dealer, final Participants participants) {
         participants.getParticipants()
                 .forEach(participant -> giveTwoCards(participant, deck));
         giveTwoCards(dealer, deck);
@@ -42,7 +42,7 @@ public class BlackJackRule {
         return dealer.isCardDrawable();
     }
 
-    public static Map<Participant, Long> calculateWinningMoney(final Dealer dealer, final Participants participants) {
+    public static Map<Participant, Long> calculateWinningMoneys(final Dealer dealer, final Participants participants) {
         Map<Participant, ParticipantResult> participantResults = ParticipantResult.calculateParticipantResults(dealer, participants);
         return MoneyDistributor.calculateWinningMoneys(dealer, participantResults);
     }

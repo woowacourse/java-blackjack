@@ -26,7 +26,7 @@ public class BlackJackController {
         Dealer dealer = new Dealer();
         Deck deck = BlackJackRule.generateDeck();
 
-        initializeBlackJack(deck, dealer, participants);
+        givePlayersTwoCardsWhenStart(deck, dealer, participants);
         progressParticipantTurn(participants, deck);
         progressDealerTurn(dealer, deck);
         outputFinalResult(dealer, participants);
@@ -39,8 +39,8 @@ public class BlackJackController {
                 .toList());
     }
 
-    private void initializeBlackJack(final Deck deck, final Dealer dealer, final Participants participants) {
-        BlackJackRule.initializeBlackJack(deck, dealer, participants);
+    private void givePlayersTwoCardsWhenStart(final Deck deck, final Dealer dealer, final Participants participants) {
+        BlackJackRule.givePlayersTwoCardsWhenStart(deck, dealer, participants);
         outputView.outputFirstCardDistributionResult(participants, dealer);
     }
 
@@ -78,8 +78,8 @@ public class BlackJackController {
 
     private void outputFinalResult(final Dealer dealer, final Participants participants) {
         outputView.outputFinalCardStatus(dealer, participants);
-        Map<Participant, Long> winningMoney = BlackJackRule.calculateWinningMoney(dealer, participants);
-        long dealerMoney = BlackJackRule.calculateDealerWinningMoney(winningMoney);
-        outputView.outputFinalWinningMoney(participants, dealerMoney, winningMoney);
+        Map<Participant, Long> winningMoneys = BlackJackRule.calculateWinningMoneys(dealer, participants);
+        long dealerMoney = BlackJackRule.calculateDealerWinningMoney(winningMoneys);
+        outputView.outputFinalWinningMoney(participants, dealerMoney, winningMoneys);
     }
 }
