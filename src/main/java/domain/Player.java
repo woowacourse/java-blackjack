@@ -9,24 +9,24 @@ import java.util.Objects;
 
 public class Player extends Participant {
 
-    private final RoundHistory roundHistory;
+    private final BettingHistory bettingHistory;
 
-    public Player(String name, Hand hand, RoundHistory roundHistory) {
+    public Player(String name, Hand hand, BettingHistory bettingHistory) {
         super(name, hand);
-        this.roundHistory = roundHistory;
+        this.bettingHistory = bettingHistory;
     }
 
-    public Player(String name, RoundHistory roundHistory) {
+    public Player(String name, BettingHistory bettingHistory) {
         super(name, Hand.createEmpty());
-        this.roundHistory = roundHistory;
+        this.bettingHistory = bettingHistory;
     }
 
     public Player(String name, BettingMoney bettingMoney) {
-        this(name, new RoundHistory(Hand.createEmpty(), new BettingResult(bettingMoney)));
+        this(name, new BettingHistory(bettingMoney));
     }
 
     public Player(String name, Hand hand) {
-        this(name, hand, new RoundHistory(Hand.createEmpty(), new BettingResult()));
+        this(name, Hand.createEmpty(), null);
     }
 
     public List<Card> getDealCards() {

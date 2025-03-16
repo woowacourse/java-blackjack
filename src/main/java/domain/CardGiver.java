@@ -20,7 +20,7 @@ public class CardGiver {
         }
     }
 
-    public void giveDefaultTo(List<Participant> participants) {
+    public void dealingTo(List<Participant> participants) {
         participants.forEach(participant -> participant.addDefaultCards(deck.drawCards(DEFAULT_CARD_GIVE_COUNT)));
     }
 

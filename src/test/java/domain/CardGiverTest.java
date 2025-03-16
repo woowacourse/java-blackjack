@@ -21,7 +21,7 @@ public class CardGiverTest {
         Player player = new Player("이름", Hand.createEmpty());
         Dealer dealer = Dealer.createEmpty();
         //when
-        cardGiver.giveDefaultTo(new ArrayList<>(List.of(player, dealer)));
+        cardGiver.dealingTo(new ArrayList<>(List.of(player, dealer)));
 
         //then
         SoftAssertions.assertSoftly(softly -> {
@@ -40,37 +40,7 @@ public class CardGiverTest {
 
         //when & then
         assertThatThrownBy(
-                () -> cardGiver.giveDefaultTo(new ArrayList<>(List.of(dealer)))
-        ).isInstanceOf(IllegalStateException.class)
-                .hasMessage(ERROR_HEADER + "카드가 충분하지 않습니다.");
-    }
-
-    @DisplayName("카드를 랜덤으로 1장 생성하여 배분한다")
-    @Test
-    void test4() {
-        //given
-        List<Card> fixedCards = CardFixture.createFixedCards();
-        CardGiver cardGiver = new CardGiver(new Deck(new ArrayList<>(fixedCards)));
-        Dealer dealer = Dealer.createEmpty();
-
-        //when
-        cardGiver.giveOneTo(dealer);
-
-        //then
-        assertThat(dealer.getHand()).isEqualTo(new Hand(List.of(fixedCards.get(0))));
-    }
-
-    @DisplayName("배분할 카드가 1장 미만일 시 예외가 발생한다")
-    @Test
-    void test5() {
-        // given
-        List<Card> emptyCards = CardFixture.createEmptyCards();
-        CardGiver cardGiver = new CardGiver(new Deck(new ArrayList<>(emptyCards)));
-        Dealer dealer = Dealer.createEmpty();
-
-        //when & then
-        assertThatThrownBy(
-                () -> cardGiver.giveOneTo(dealer)
+                () -> cardGiver.dealingTo(new ArrayList<>(List.of(dealer)))
         ).isInstanceOf(IllegalStateException.class)
                 .hasMessage(ERROR_HEADER + "카드가 충분하지 않습니다.");
     }
