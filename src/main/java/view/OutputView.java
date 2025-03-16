@@ -2,6 +2,12 @@ package view;
 
 import static domain.GameResultStatus.*;
 
+import controller.dto.CardsResultResponse;
+import controller.dto.InitialDealResponse;
+import controller.dto.InitialDealResponse.DealerInitialDealResult;
+import controller.dto.InitialDealResponse.PlayerInitialDealResult;
+import controller.dto.PlayerHitResponse;
+import controller.dto.ProfitResultResponse;
 import domain.Dealer;
 import domain.GameResults;
 import domain.GameResultStatus;
@@ -32,6 +38,27 @@ public class OutputView {
         );
     }
 
+    public void printInitialDealResult(InitialDealResponse initialDealResponses) {
+        DealerInitialDealResult dealerInitialDealResult = initialDealResponses.dealerInitialDealResult();
+        List<PlayerInitialDealResult> playerInitialDealResult = initialDealResponses.playerInitialDealResults();
+
+        List<String> playerNames = playerInitialDealResult.stream()
+                .map(PlayerInitialDealResult::name)
+                .toList();
+        String parsedPlayerNames = outputFormatter.formatPlayerNames(playerNames);
+        System.out.printf("\n%s와 %s에게 2장을 나누었습니다.\n", dealerInitialDealResult.name(), parsedPlayerNames);
+        System.out.printf("딜러카드: %s\n", outputFormatter.formatCard(dealerInitialDealResult.card()));
+        playerInitialDealResult.forEach(
+                result -> System.out.printf("%s카드: %s\n", result.name(), outputFormatter.formatCards(result.cards()))
+        );
+    }
+
+    public void printPlayerHitResult(PlayerHitResponse playerHitResponse) {
+        String playerName = playerHitResponse.playerName();
+        String playerCards = outputFormatter.formatCards(playerHitResponse.cards());
+        System.out.printf("%s카드: %s\n", playerName, playerCards);
+    }
+
     public void printCurrentCard(Player player) {
         System.out.printf("%s카드: %s\n", player.getName(), outputFormatter.formatCards(player.getHand()));
     }
@@ -58,6 +85,16 @@ public class OutputView {
         });
     }
 
+    public void printCardsResults(List<CardsResultResponse> cardsResultResponses) {
+        System.out.print(System.lineSeparator());
+        cardsResultResponses.forEach(response -> {
+            String name = response.name();
+            String parsedCards = outputFormatter.formatCards(response.cards());
+            int handValue = response.handValue();
+            System.out.printf("%s카드: %s - 결과: %d\n", name, parsedCards, handValue);
+        });
+    }
+
     public void printGameResults(GameResults gameResults) {
         int winCount = gameResults.calculateStatusCount(WIN);
         int loseCount = gameResults.calculateStatusCount(LOSE);
@@ -74,5 +111,12 @@ public class OutputView {
 
     public void printBustMessage() {
         System.out.println("카드의 합이 21을 초과하였습니다. 더이상 카드를 받을 수 없습니다.");
+    }
+
+    public void printProfitResults(List<ProfitResultResponse> profitResultResponses) {
+        System.out.println("\n## 최종 수익");
+        profitResultResponses.forEach(response -> {
+            System.out.printf("%s: %d\n", response.name(), response.profit());
+        });
     }
 }

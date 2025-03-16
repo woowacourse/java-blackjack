@@ -1,5 +1,10 @@
 package view;
 
+import controller.dto.BettingRequest;
+import controller.dto.CardsResultResponse;
+import controller.dto.InitialDealResponse;
+import controller.dto.PlayerHitResponse;
+import controller.dto.ProfitResultResponse;
 import domain.Dealer;
 import domain.GameResults;
 import domain.Player;
@@ -20,12 +25,26 @@ public class ConsoleView {
         return inputView.requestPlayerNames();
     }
 
+    public List<BettingRequest> requestBetting() {
+        List<String> playerNames = inputView.requestPlayerNames();
+        return playerNames.stream()
+                .map(playerName -> {
+                    int bettingMoney = inputView.requestBettingMoney(playerName);
+                    return new BettingRequest(playerName, bettingMoney);
+                })
+                .toList();
+    }
+
     public void printInitialCards(Dealer dealer, Players players) {
         outputView.printInitialCards(dealer, players);
     }
 
-    public void printDealerDraw(boolean possibleDraw) {
-        if (possibleDraw) {
+    public void printInitialDealResult(InitialDealResponse initialDealResponses) {
+        outputView.printInitialDealResult(initialDealResponses);
+    }
+
+    public void printDealerDrawResult(boolean isDealerDrawing) {
+        if (isDealerDrawing) {
             outputView.printDealerDraw();
             return;
         }
@@ -40,8 +59,17 @@ public class ConsoleView {
         outputView.printGameResults(gameResults);
     }
 
+    public void printCardsResults(List<CardsResultResponse> cardsResultResponses) {
+        outputView.printCardsResults(cardsResultResponses);
+    }
+
     public AnswerType requestAdditionalCard(Player player) {
         return inputView.requestAdditionalCard(player);
+    }
+
+    public boolean requestHitDecision(String playerName) {
+        AnswerType answerType = inputView.requestAdditionalCard(playerName);
+        return answerType == AnswerType.YES;
     }
 
     public void printCurrentCard(Player player) {
@@ -50,5 +78,13 @@ public class ConsoleView {
 
     public void printBustMessage() {
         outputView.printBustMessage();
+    }
+
+    public void printPlayerHitResult(PlayerHitResponse playerHitResponse) {
+        outputView.printPlayerHitResult(playerHitResponse);
+    }
+
+    public void printProfitResults(List<ProfitResultResponse> profitResultResponses) {
+        outputView.printProfitResults(profitResultResponses);
     }
 }

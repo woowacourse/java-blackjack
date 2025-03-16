@@ -62,6 +62,13 @@ public class OutputFormatter {
         return String.join(CARD_SEPARATOR, formattedCards);
     }
 
+    public String formatCards(List<Card> cards) {
+        List<String> formattedCards = cards.stream()
+                .map(this::formatCard)
+                .toList();
+        return String.join(CARD_SEPARATOR, formattedCards);
+    }
+
     public String formatCard(Card card) {
         return CARD_NUMBER_TYPE_FORMATTER.get(card.cardNumberType()) + CARD_TYPE_FORMATTER.get(card.cardType());
     }

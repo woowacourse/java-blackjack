@@ -29,5 +29,17 @@ public class InputView {
         System.out.printf("\n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", player.getName());
         String rawAnswer = readLine();
         return inputParser.parseAnswerType(rawAnswer);
+
+    }
+
+    public AnswerType requestAdditionalCard(String playerName) {
+        System.out.printf("\n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", playerName);
+        String rawAnswer = readLine();
+        return inputParser.parseAnswerType(rawAnswer);
+    }
+
+    public int requestBettingMoney(String playerName) {
+        System.out.printf("%s의 배팅 금액은?", playerName);
+        return inputParser.parseToInt(readLine());
     }
 }
