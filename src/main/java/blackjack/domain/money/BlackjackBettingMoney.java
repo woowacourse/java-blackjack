@@ -11,11 +11,11 @@ public class BlackjackBettingMoney {
     private static final double DRAWING_PROFIT_RATE = 0;
     private static final double LOSING_PROFIT_RATE = -1.0;
     
-    private final BettingMoney bettingMoney;
+    private final Money bettingMoney;
     
     public BlackjackBettingMoney(int money) {
         validateMoney(money);
-        this.bettingMoney = new BettingMoney(money);
+        this.bettingMoney = new Money(money);
     }
 
     private void validateMoney(int money) {
