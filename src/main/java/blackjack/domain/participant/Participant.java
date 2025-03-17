@@ -19,7 +19,7 @@ public abstract class Participant {
     public abstract String getName();
 
     public void finishTurn() {
-        if(state.isHit()) {
+        if(!state.isFinished()) {
             state = state.stand();
         }
     }

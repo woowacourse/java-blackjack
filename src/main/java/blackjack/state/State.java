@@ -18,8 +18,7 @@ public interface State {
 
     boolean isBust();
 
-    boolean isHit();
-
+    boolean isFinished();
     Score getScore();
 
     List<Card> getCards();

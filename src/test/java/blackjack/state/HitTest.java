@@ -73,11 +73,11 @@ class HitTest {
     }
 
     @Test
-    void isHit_returnsTrue() {
+    void isFinished_false() {
         // given
         Hit hitState = new Hit(new CardHand());
 
         // when & then
-        assertThat(hitState.isHit()).isTrue();
+        assertThat(hitState.isFinished()).isFalse();
     }
 }

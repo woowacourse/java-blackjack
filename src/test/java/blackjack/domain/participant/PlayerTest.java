@@ -37,16 +37,14 @@ class PlayerTest {
         assertThat(canHit).isTrue();
     }
 
-    @DisplayName("카드가 21이 초과한다면 카드를 더 뽑을 수 없다.")
+    @DisplayName("카드가 21 이상이면 카드를 더 뽑을 수 없다.")
     @Test
     void testPlayerCanDrawCard_false() {
         // given
         CardHand cardHand = new CardHand();
-        cardHand.add(new Card(CardSuit.CLUB, CardRank.NINE));
-        cardHand.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
-        cardHand.add(new Card(CardSuit.CLUB, CardRank.EIGHT));
-
-        Player player = TestUtil.createStartPlayerOf("player", cardHand);
+        cardHand.add(new Card(CardSuit.CLUB, CardRank.JACK));
+        cardHand.add(new Card(CardSuit.CLUB, CardRank.ACE));
+        Player player = TestUtil.createStandPlayerOf(cardHand);
 
         // when
         boolean canHit = player.canHit();

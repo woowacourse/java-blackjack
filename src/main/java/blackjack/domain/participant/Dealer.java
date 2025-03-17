@@ -17,7 +17,7 @@ public class Dealer extends Participant {
     }
 
     public void playTurn(CardDeck deck) {
-        while (state.isHit()) {
+        while (!state.isFinished()) {
             state = state.draw(deck.drawCard());
         }
         finishTurn();

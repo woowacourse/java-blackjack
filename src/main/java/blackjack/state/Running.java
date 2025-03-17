@@ -6,32 +6,21 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
 import java.util.List;
 
-public class Start implements State {
-    private final CardHand cardHand;
+public abstract class Running implements State {
+    final CardHand cardHand;
 
-    public Start(CardHand cardHand) {
+    Running(CardHand cardHand) {
         this.cardHand = cardHand;
     }
 
     @Override
-    public State draw(Card card) {
-        throw new UnsupportedOperationException("게임 시작 전에는 카드를 뽑을 수 없습니다.");
-    }
-
-    @Override
     public State drawInitialCards(Card card1, Card card2) {
-        CardHand cardHand = new CardHand();
-        cardHand.add(card1);
-        cardHand.add(card2);
-        if (cardHand.isBlackjack()) {
-            return new Blackjack(cardHand);
-        }
-        return new Hit(cardHand);
+        throw new UnsupportedOperationException("게임 시작시에만 카드를 초기화할 수 있습니다.");
     }
 
     @Override
     public State stand() {
-        throw new UnsupportedOperationException("게임 시작 전에는 stand할 수 없습니다.");
+        return new Stand(cardHand);
     }
 
     @Override
@@ -63,5 +52,4 @@ public class Start implements State {
     public List<Card> getCards() {
         return cardHand.getCards();
     }
-
 }

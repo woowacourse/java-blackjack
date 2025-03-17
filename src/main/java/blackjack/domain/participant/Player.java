@@ -23,7 +23,7 @@ public class Player extends Participant {
 
     @Override
     public boolean canHit() {
-        return state.isHit();
+        return !state.isFinished();
     }
 
     @Override
