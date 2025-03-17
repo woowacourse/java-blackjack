@@ -48,12 +48,8 @@ public class OutputView {
         writer.write(message);
     }
     
-    public void is21Warning() {
-        writer.write("카드 총합이 21이기 때문에 더 받을 수 없습니다.");
-    }
-    
-    public void bustWarning() {
-        writer.write("버스트이기 때문에 더 받을 수 없습니다.");
+    public void outputCardAddingLimitMessage() {
+        writer.write("카드 총합이 21 이상이기 때문에 더 받을 수 없습니다.");
     }
     
     public void outputCardsAndSum(List<Card> cards, int sum) {

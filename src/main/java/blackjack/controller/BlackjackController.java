@@ -76,16 +76,13 @@ public class BlackjackController implements Controller {
         }
     }
     
-    private void processPlayerAddingCards(final PlayerBlackjackCardHand playerBlackjackCardHand, final BlackjackDeck deck) {
+    private void processPlayerAddingCards(final PlayerBlackjackCardHand playerBlackjackCardHand,
+                                           final BlackjackDeck deck) {
         outputView.outputAddingMessage(playerBlackjackCardHand.getPlayerName());
         boolean addingCardDecision;
         do {
-            if (playerBlackjackCardHand.isAddedTo21()) {
-                outputView.is21Warning();
-                break;
-            }
-            if (playerBlackjackCardHand.isBust()) {
-                outputView.bustWarning();
+            if (playerBlackjackCardHand.isFinished()) {
+                outputView.outputCardAddingLimitMessage();
                 break;
             }
             addingCardDecision = inputView.getAddingCardDecision(playerBlackjackCardHand.getPlayerName());

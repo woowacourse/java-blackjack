@@ -66,4 +66,8 @@ public final class PlayerBlackjackCardHand implements BlackjackWinDeterminable {
     public boolean isBust() {
         return getBlackjackSum() > BUST_THRESHOLD;
     }
+    
+    public boolean isFinished() {
+        return getBlackjackSum() >= BLACKJACK_SUM;
+    }
 }
