@@ -13,6 +13,7 @@ import blackjack.model.card.CardDeck;
 import blackjack.model.card.Cards;
 import blackjack.model.card.initializer.CardDeckInitializer;
 import blackjack.model.player.Player;
+import blackjack.model.player.Players;
 
 public class BlackJackGame {
 
@@ -46,11 +47,9 @@ public class BlackJackGame {
         player.receiveCards(cardDeck.draw(amount));
     }
 
-    public Map<Player, Map<GameResult, Integer>> calculateResult(final List<Player> players) {
-        Player dealer = players.getFirst();
-        List<Player> users = players.stream()
-                .skip(1L)
-                .toList();
+    public Map<Player, Map<GameResult, Integer>> calculateResult(final Players players) {
+        Player dealer = players.getDealer();
+        List<Player> users = players.getUsers();
         return blackJackRule.calculateResult(dealer, users);
     }
 

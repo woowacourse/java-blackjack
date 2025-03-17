@@ -12,6 +12,10 @@ public class Players {
         this.users = users;
     }
 
+    public Player getDealer() {
+        return dealer;
+    }
+
     public List<Player> getUsers() {
         return users;
     }

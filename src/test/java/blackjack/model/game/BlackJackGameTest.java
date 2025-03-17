@@ -19,6 +19,7 @@ import blackjack.model.card.Cards;
 import blackjack.model.card.initializer.DefaultCardDeckInitializer;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
+import blackjack.model.player.Players;
 import blackjack.model.player.User;
 
 class BlackJackGameTest {
@@ -87,7 +88,9 @@ class BlackJackGameTest {
         user.receiveCards(userCards);
         BlackJackGame blackJackGame = new BlackJackGame(Cards::empty);
 
-        assertThat(blackJackGame.calculateResult(of(dealer, user))).containsExactlyInAnyOrderEntriesOf(expected);
+        assertThat(
+                blackJackGame.calculateResult(new Players(dealer, List.of(user))))
+                .containsExactlyInAnyOrderEntriesOf(expected);
     }
 
     private static Stream<Arguments> 플레이어들의_승패_결과를_계산한다_테스트_케이스() {
@@ -126,8 +129,9 @@ class BlackJackGameTest {
         blackJackGame.bet(pobi, 10_000);
         pobi.receiveCards(playerCards);
 
-        assertThat(blackJackGame.calculatePlayerWinnings(blackJackGame.calculateResult(of(dealer, pobi))))
-                .containsExactlyInAnyOrderEntriesOf(expected);
+        assertThat(
+                blackJackGame.calculatePlayerWinnings(blackJackGame.calculateResult(new Players(dealer, List.of(pobi))))
+        ).containsExactlyInAnyOrderEntriesOf(expected);
     }
 
     private static Stream<Arguments> 플레이어의_수익을_계산한다_테스트_케이스() {
