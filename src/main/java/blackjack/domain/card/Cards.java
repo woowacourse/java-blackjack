@@ -25,8 +25,8 @@ public class Cards {
                 .sum();
     }
 
-    public int countAceCard() {
-        return (int) cards.stream()
+    public long countAceCard() {
+        return cards.stream()
                 .filter(Card::isAce)
                 .count();
     }

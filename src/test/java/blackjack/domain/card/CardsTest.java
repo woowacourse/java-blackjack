@@ -66,7 +66,7 @@ class CardsTest {
         Card card2 = new Card(CardNumber.ACE, CardShape.CLOVER);
 
         Cards cards = new Cards(List.of(card1, card2));
-        int result = cards.countAceCard();
+        long result = cards.countAceCard();
 
         assertThat(result).isEqualTo(1);
     }

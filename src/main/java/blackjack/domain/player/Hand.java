@@ -20,7 +20,7 @@ public class Hand {
 
     public int calculateScore() {
         int totalScore = cards.sumCardScore();
-        int aceCardCount = cards.countAceCard();
+        long aceCardCount = cards.countAceCard();
 
         while (aceCardCount > 0 && totalScore + 10 <= BLACKJACK_SCORE) {
             totalScore += 10;
