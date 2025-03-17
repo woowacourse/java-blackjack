@@ -75,6 +75,7 @@ public class BlackjackController {
             if (yesOrNo.equalsIgnoreCase("N")) {
                 return;
             }
+
             gameManager.drawMoreCard(player);
             displayOpenCard(playerName, player);
         }

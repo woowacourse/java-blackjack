@@ -13,7 +13,11 @@ public class InputView {
 
     public String inputYesOrNo(String playerName) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", playerName);
-        return scanner.next();
+        String answer = scanner.next();
+        if (answer.equalsIgnoreCase("y") || answer.equalsIgnoreCase("n")) {
+            return answer;
+        }
+        throw new IllegalArgumentException("y또는 n를 제외한 입력은 받지 않습니다");
     }
 
     public long inputBettingMoney(final String name) {
