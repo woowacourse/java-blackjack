@@ -13,16 +13,6 @@ public class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public List<Player> getPlayers() {
-        return new ArrayList<>(players);
-    }
-
-    public List<String> getPlayerNames() {
-        return new ArrayList<>(players.stream()
-                .map(Player::getPlayerName)
-                .toList());
-    }
-
     public void initializeHands(List<Cards> cards) {
         IntStream.range(0, cards.size())
                 .forEach(i -> players.get(i).initializeHand(cards.get(i)));
@@ -34,4 +24,15 @@ public class Players {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 사용자를 찾을 수 없습니다."));
     }
+
+    public List<String> getPlayerNames() {
+        return new ArrayList<>(players.stream()
+                .map(Player::getPlayerName)
+                .toList());
+    }
+
+    public List<Player> getPlayers() {
+        return new ArrayList<>(players);
+    }
+
 }
