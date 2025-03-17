@@ -15,7 +15,7 @@ public class Hand {
     }
 
     public void addCards(final Cards newCards) {
-        this.cards.addCard(newCards);
+        this.cards.addCards(newCards);
     }
 
     public int calculateScore() {

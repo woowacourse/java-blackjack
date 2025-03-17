@@ -33,14 +33,14 @@ class CardsTest {
 
     @Test
     @DisplayName("카드를 추가한다")
-    void addCard() {
+    void addCards() {
         Card card = new Card(CardNumber.EIGHT, CardShape.CLOVER);
         List<Card> cards = List.of(card);
 
         Cards addCards = new Cards(cards);
 
         Cards newCards = new Cards();
-        newCards.addCard(addCards);
+        newCards.addCards(addCards);
 
         List<Card> result = newCards.getCards();
 

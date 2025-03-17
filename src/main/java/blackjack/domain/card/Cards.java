@@ -16,7 +16,7 @@ public class Cards {
         this.cards = cards;
     }
 
-    public void addCard(final Cards cards) {
+    public void addCards(final Cards cards) {
         this.cards.addAll(cards.getCards());
     }
 
