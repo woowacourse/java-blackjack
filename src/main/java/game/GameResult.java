@@ -17,10 +17,10 @@ public enum GameResult {
         if (dealer.isBlackJack()) {
             return LOSE;
         }
-        return bust(dealer, player);
+        return ifNotBlackjack(dealer, player);
     }
 
-    private static GameResult bust(Dealer dealer, Player player) {
+    private static GameResult ifNotBlackjack(Dealer dealer, Player player) {
         if (player.isBust()) {
             return LOSE;
         }
