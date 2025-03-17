@@ -19,13 +19,13 @@ public class BettingMoney {
 
     private void validateMoneyOverZero(int money) {
         if (money <= MINIMUM_MONEY) {
-            throw new IllegalArgumentException(String.format("[ERROR] 배팅 금액은 %d원을 초과해야 합니다.", MINIMUM_MONEY));
+            throw new IllegalArgumentException(String.format("[ERROR] 배팅 금액은 %,d원을 초과해야 합니다.", MINIMUM_MONEY));
         }
     }
 
     private void validateMoneyUnderMaximumMoney(int money) {
         if (money > MAXIMUM_MONEY) {
-            throw new IllegalArgumentException(String.format("[ERROR] 배팅 금액은 %d원을 초과할 수 없습니다.", MAXIMUM_MONEY));
+            throw new IllegalArgumentException(String.format("[ERROR] 배팅 금액은 %,d원을 초과할 수 없습니다.", MAXIMUM_MONEY));
         }
     }
 
