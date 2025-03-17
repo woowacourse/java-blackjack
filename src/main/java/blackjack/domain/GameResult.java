@@ -28,7 +28,7 @@ public record GameResult(Map<Player, Result> playerResults, Result dealerResults
             Map<WinningResult, Integer> playerResultIntegerMap = Map.of(playerWinningResult, 1);
 
             double playerBettingResult = getMultiplyRatio(playerScore, dealerScore);
-            double playerProfit = player.makeProfit(playerBettingResult);
+            int playerProfit = (int) player.makeProfit(playerBettingResult);
 
             Result playerResult = new Result(playerResultIntegerMap, playerProfit);
 
@@ -51,7 +51,7 @@ public record GameResult(Map<Player, Result> playerResults, Result dealerResults
             double playerBettingResult = getMultiplyRatio(playerScore, dealerScore);
             dealer.updateBettingMoney(player.makeProfit(playerBettingResult) * -1);
         }));
-        return new Result(dealerResultIntegerMap, dealer.getBettingMoney());
+        return new Result(dealerResultIntegerMap, (int) dealer.getBettingMoney());
     }
 
     public static double getMultiplyRatio(BlackjackScore playerScore, BlackjackScore dealerScore) {

@@ -54,22 +54,12 @@ public class DealerTest {
         //then
         assertAll(
                 () -> assertEquals(dealer.getCards(),
-                        new Cards(
-                                SPADE_ONE,
-                                HEART_ONE
-                        )
-                ),
+                        new Cards(SPADE_ONE, HEART_ONE)),
                 () -> assertEquals(players.getPlayers().get(0).getCards(),
-                        new Cards(
-                                DIAMOND_ONE,
-                                CLUB_ONE
-                        )
+                        new Cards(DIAMOND_ONE, CLUB_ONE)
                 ),
                 () -> assertEquals(players.getPlayers().get(1).getCards(),
-                        new Cards(
-                                CLUB_FIVE,
-                                CLUB_FOUR
-                        )
+                        new Cards(CLUB_FIVE, CLUB_FOUR)
                 )
         );
     }
@@ -144,13 +134,8 @@ public class DealerTest {
     @Test
     void 카드_합이_21이_넘는_플레이어에게_카드를_나누어_줄_수_없다() {
         //given
-        Player pobiPlayer = new Player("pobi", new Cards(
-                DIAMOND_ONE,
-                DIAMOND_TEN,
-                DIAMOND_THREE,
-                DIAMOND_FOUR,
-                DIAMOND_FIVE
-        ), 10000);
+        Cards pobiCards = new Cards(DIAMOND_ONE, DIAMOND_TEN, DIAMOND_THREE, DIAMOND_FOUR, DIAMOND_FIVE);
+        Player pobiPlayer = new Player("pobi", pobiCards, 10000);
 
         Players players = new Players(
                 List.of(

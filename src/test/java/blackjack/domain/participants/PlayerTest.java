@@ -18,15 +18,9 @@ class PlayerTest {
     @Test
     void 카드_합이_21이_넘는_경우_카드를_더_받지_못한다() {
         //given
-        Player player = new Player("pobi", new Cards(
-                DIAMOND_ACE,
-                DIAMOND_ACE,
-                DIAMOND_EIGHT,
-                DIAMOND_EIGHT,
-                DIAMOND_ACE,
-                DIAMOND_ACE,
-                DIAMOND_TWO
-        ), 10000);
+        Cards pobiCards = new Cards(DIAMOND_ACE, DIAMOND_ACE, DIAMOND_EIGHT, DIAMOND_EIGHT, DIAMOND_ACE,
+                DIAMOND_ACE, DIAMOND_TWO);
+        Player player = new Player("pobi", pobiCards, 10000);
 
         Card card = new Card(Suit.HEART, Rank.TWO);
 
@@ -39,12 +33,8 @@ class PlayerTest {
     @Test
     void 플레이어는_추가로_카드를_받을_수_있다() {
         //given
-        Player player = new Player(
-                "pobi",
-                new Cards(
-                        DIAMOND_ACE,
-                        DIAMOND_TWO
-                ), 10000);
+        Cards pobiCards = new Cards(DIAMOND_ACE, DIAMOND_TWO);
+        Player player = new Player("pobi", pobiCards, 10000);
 
         Card card = new Card(Suit.HEART, Rank.THREE);
 
@@ -52,12 +42,6 @@ class PlayerTest {
         player.additionalTake(card);
 
         //then
-        assertThat(player.getCards()).isEqualTo(
-                new Cards(
-                        DIAMOND_ACE,
-                        DIAMOND_TWO,
-                        HEART_THREE
-                )
-        );
+        assertThat(player.getCards()).isEqualTo(new Cards(DIAMOND_ACE, DIAMOND_TWO, HEART_THREE));
     }
 }

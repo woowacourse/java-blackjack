@@ -28,18 +28,11 @@ public class GameResultTest {
     @Test
     void 플레이어의_승패를_저장할_수_있다() {
         //given
-        Player pobi = new Player("pobi",
-                new Cards(
-                        DIAMOND_THREE,
-                        DIAMOND_TEN
-                ), 10000);
-        Player surf = new Player("surf",
-                new Cards(
-                        DIAMOND_THREE,
-                        DIAMOND_TEN,
-                        DIAMOND_FIVE,
-                        DIAMOND_THREE
-                ), 10000);
+        Cards pobiCards = new Cards(DIAMOND_THREE, DIAMOND_TEN);
+        Player pobi = new Player("pobi", pobiCards, 10000);
+        Cards surfCards = new Cards(DIAMOND_THREE, DIAMOND_TEN, DIAMOND_FIVE, DIAMOND_THREE);
+        Player surf = new Player("surf", surfCards, 20000);
+
         Players players = new Players(List.of(pobi, surf));
         Stack<Card> cards = new Stack<>();
         cards.addAll(List.of(
@@ -64,6 +57,6 @@ public class GameResultTest {
 
         assertThat(surfResult.resultIntegerMap()).containsEntry(WinningResult.WIN,
                 1);
-        assertThat(surfResult.bettingResult()).isEqualTo(10000);
+        assertThat(surfResult.bettingResult()).isEqualTo(20000);
     }
 }
