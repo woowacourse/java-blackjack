@@ -18,11 +18,9 @@ public class BlackJackGame {
     private static final int SINGLE_DRAW_AMOUNT = 1;
 
     private final CardDeck cardDeck;
-    private final BlackJackRule blackJackRule;
 
     public BlackJackGame(final CardDeckInitializer cardDeckInitializer) {
         this.cardDeck = CardDeck.initializeFrom(cardDeckInitializer);
-        this.blackJackRule = new BlackJackRule();
     }
 
     public void drawInitialCards(final Players players) {
@@ -34,7 +32,7 @@ public class BlackJackGame {
     }
 
     public boolean canDrawMoreCard(final Player player) {
-        return blackJackRule.canDrawMoreCard(player);
+        return player.canDrawMoreCard();
     }
 
     public void drawOneCard(final Player player) {

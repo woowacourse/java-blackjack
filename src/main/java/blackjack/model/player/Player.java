@@ -18,6 +18,8 @@ public abstract class Player {
 
     public abstract Cards openCards();
 
+    public abstract boolean canDrawMoreCard();
+
     public void receiveCards(final Cards cards) {
         this.cards.merge(cards);
     }

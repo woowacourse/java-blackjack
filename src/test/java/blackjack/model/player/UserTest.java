@@ -43,6 +43,21 @@ class UserTest {
         assertThat(user.calculatePoint()).isEqualTo(21);
     }
 
+    @MethodSource("유저가_카드를_뽑을_수_있는지_알려준다_테스트_케이스")
+    @ParameterizedTest
+    void 유저가_카드를_뽑을_수_있는지_알려준다(Cards cards, boolean expected) {
+        user.receiveCards(cards);
+
+        assertThat(user.canDrawMoreCard()).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> 유저가_카드를_뽑을_수_있는지_알려준다_테스트_케이스() {
+        return Stream.of(
+                Arguments.of(new Cards(createCard(CardNumber.TEN), createCard(CardNumber.JACK)), true),
+                Arguments.of(new Cards(createCard(CardNumber.TEN), createCard(CardNumber.ACE)), false)
+        );
+    }
+
     @Test
     void 자신이_딜러인지_확인해준다() {
         assertThat(user.isDealer()).isFalse();

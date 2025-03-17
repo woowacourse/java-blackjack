@@ -55,6 +55,21 @@ class DealerTest {
         assertThat(dealer.openCards()).isEqualTo(new Cards(createCard(CardNumber.TEN)));
     }
 
+    @MethodSource("딜러가_카드를_뽑을_수_있는지_알려준다_테스트_케이스")
+    @ParameterizedTest
+    void 딜러가_카드를_뽑을_수_있는지_알려준다(Cards cards, boolean expected) {
+        dealer.receiveCards(cards);
+
+        assertThat(dealer.canDrawMoreCard()).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> 딜러가_카드를_뽑을_수_있는지_알려준다_테스트_케이스() {
+        return Stream.of(
+                Arguments.of(new Cards(createCard(CardNumber.TEN), createCard(CardNumber.SIX)), true),
+                Arguments.of(new Cards(createCard(CardNumber.TEN), createCard(CardNumber.SEVEN)), false)
+        );
+    }
+
     @MethodSource("딜러가_블랙잭인지_확인한다_테스트_케이스")
     @ParameterizedTest
     void 딜러가_블랙잭인지_확인한다(Cards cards, boolean expected) {

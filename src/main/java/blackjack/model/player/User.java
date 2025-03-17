@@ -6,6 +6,7 @@ import blackjack.model.card.Cards;
 
 public class User extends Player {
 
+    private static final int USER_DRAW_THRESHOLD = 21;
     private final BettingMoney bettingMoney;
 
     public User(final String name, final int bettingAmount) {
@@ -25,6 +26,11 @@ public class User extends Player {
     @Override
     public Cards openCards() {
         return new Cards(cards.getValues());
+    }
+
+    @Override
+    public boolean canDrawMoreCard() {
+        return calculatePoint() < USER_DRAW_THRESHOLD;
     }
 
 }
