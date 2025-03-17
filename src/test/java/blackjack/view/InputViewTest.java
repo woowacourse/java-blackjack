@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.test_util.ReaderStub;
 import blackjack.test_util.WriterStub;
+import blackjack.util.RetryHandler;
 import blackjack.view.writer.SystemWriter;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,7 @@ class InputViewTest {
     void 사용자에게_이름들을_입력받을_수_있다() {
         // given
         final WriterStub writerStub = new WriterStub();
-        final InputView inputView = new InputView(writerStub, new ReaderStub("pobi,jason"));
+        final InputView inputView = new InputView(writerStub, new ReaderStub("pobi,jason"), new RetryHandler(new OutputView(writerStub)));
 
         // when
         final List<String> playerNames = inputView.getPlayerNames();
@@ -33,7 +34,7 @@ class InputViewTest {
     void 사용자에게_카드를_더_받을_지_입력받을_수_있다() {
         // given
         final WriterStub writerStub = new WriterStub();
-        final InputView inputView = new InputView(writerStub, new ReaderStub("y"));
+        final InputView inputView = new InputView(writerStub, new ReaderStub("y"), new RetryHandler(new OutputView(writerStub)));
 
         // when
         final boolean decision = inputView.getAddingCardDecision("pobi");
@@ -49,7 +50,7 @@ class InputViewTest {
     void 사용자에게_카드를_더_받지_않을지_입력받을_수_있다() {
         // given
         final WriterStub writerStub = new WriterStub();
-        final InputView inputView = new InputView(writerStub, new ReaderStub("n"));
+        final InputView inputView = new InputView(writerStub, new ReaderStub("n"), new RetryHandler(new OutputView(writerStub)));
 
         // when
         final boolean decision = inputView.getAddingCardDecision("pobi");
@@ -64,7 +65,8 @@ class InputViewTest {
     @Test
     void 사용자에게_카드를_더_받을_지_입력받을_때_y나_n이_아니면_예외를_발생시킨다() {
         // given
-        final InputView inputView = new InputView(new SystemWriter(), new ReaderStub("Y"));
+        final SystemWriter writer = new SystemWriter();
+        final InputView inputView = new InputView(writer, new ReaderStub("Y"), new RetryHandler(new OutputView(writer)));
 
         // when
         assertThatThrownBy(() -> inputView.getAddingCardDecision("pobi"))
