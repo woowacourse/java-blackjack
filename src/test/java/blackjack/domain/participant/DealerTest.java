@@ -96,7 +96,7 @@ class DealerTest {
     @DisplayName("카드 합을 구한다")
     @ParameterizedTest
     @MethodSource
-    void makeDealerWinningResult(final Hand hand, final int expected) {
+    void calculateProfit(final Hand hand, final int expected) {
         // given
         dealer.receiveCards(hand);
 
@@ -104,7 +104,7 @@ class DealerTest {
         assertThat(dealer.calculateScore()).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> makeDealerWinningResult() {
+    private static Stream<Arguments> calculateProfit() {
         return Stream.of(
                 Arguments.of(provideSmallerAceCards(), 18),
                 Arguments.of(provideBiggerAceCards(), 21),
@@ -121,7 +121,7 @@ class DealerTest {
         final Map<Player, Hand> playerScores = Map.of(player, playerHand);
 
         // When
-        final ProfitResult profitResult = dealer.makeDealerWinningResult(playerScores);
+        final ProfitResult profitResult = dealer.calculateProfit(playerScores);
 
         // Then
         assertThat(profitResult.getResult()).isEqualTo(Map.of(dealer, dealerProfit, player, playerProfit));

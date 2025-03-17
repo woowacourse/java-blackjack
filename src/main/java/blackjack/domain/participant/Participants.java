@@ -59,7 +59,7 @@ public final class Participants {
     }
 
     public ProfitResult makeDealerWinningResult() {
-        return dealer.makeDealerWinningResult(players.showAllCards());
+        return dealer.calculateProfit(players.showAllCards());
     }
 
     public String getDealerName() {

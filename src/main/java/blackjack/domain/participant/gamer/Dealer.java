@@ -7,6 +7,7 @@ import static blackjack.domain.result.ResultStatus.PUSH;
 import static blackjack.domain.result.ResultStatus.WIN;
 
 import blackjack.domain.card.Hand;
+import blackjack.domain.participant.GameRule;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.ProfitResult;
 import blackjack.domain.result.ResultStatus;
@@ -18,7 +19,7 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public final class Dealer extends Gamer {
+public final class Dealer extends Gamer implements GameRule {
 
     private static final String NICKNAME = "딜러";
     private static final int DEALER_THRESHOLD = 16;
@@ -43,46 +44,46 @@ public final class Dealer extends Gamer {
         return score <= DEALER_THRESHOLD;
     }
 
-    public ProfitResult makeDealerWinningResult(final Map<Player, Hand> playerScores) {
-        final Map<Player, ResultStatus> result = playerScores.entrySet().stream()
-                .collect(Collectors.toMap(Entry::getKey,
-                        entry -> calculateResultStatus(entry.getValue()),
-                        (e1, e2) -> e1, LinkedHashMap::new));
-        return new ProfitResult(this, result);
-    }
-
     public void dealInitialCards(final Players players, final Hand hand) {
         receiveCards(hand.subHand(0, SPREAD_CARD_SIZE));
         players.receiveCardsByCount(hand.subHand(SPREAD_CARD_SIZE, hand.getSize()), SPREAD_CARD_SIZE);
     }
 
-    private ResultStatus calculateResultStatus(final Hand playerHand) {
+    public ProfitResult calculateProfit(final Map<Player, Hand> playerScores) {
+        final Map<Player, ResultStatus> result = playerScores.entrySet().stream()
+                .collect(Collectors.toMap(Entry::getKey,
+                        entry -> determinePlayerResult(entry.getValue()),
+                        (e1, e2) -> e1, LinkedHashMap::new));
+        return new ProfitResult(this, result);
+    }
+
+    private ResultStatus determinePlayerResult(final Hand playerHand) {
         if (hand.isBlackjack() && !playerHand.isBlackjack()) {
             return WIN;
         }
         if (!hand.isBlackjack() && playerHand.isBlackjack()) {
             return BLACKJACK;
         }
-        return compareToScore(hand, playerHand);
+        return determineRegularGameResult(hand, playerHand);
     }
 
-    private ResultStatus compareToScore(final Hand dealerHand, final Hand playerHand) {
+    private ResultStatus determineRegularGameResult(final Hand dealerHand, final Hand playerHand) {
         int dealerScore = dealerHand.calculateResult();
         int playerScore = playerHand.calculateResult();
         if (dealerScore <= BURST_THRESHOLD) {
-            return calculateResultStatusUnderBlackjackNumber(dealerScore, playerScore);
+            return determineResultWhenDealerNotBusted(dealerScore, playerScore);
         }
-        return checkIfPlayerBurst(playerScore);
+        return determineResultWhenDealerBusted(playerScore);
     }
 
-    private ResultStatus calculateResultStatusUnderBlackjackNumber(final int dealerScore, final int playerScore) {
+    private ResultStatus determineResultWhenDealerNotBusted(final int dealerScore, final int playerScore) {
         if (playerScore <= BURST_THRESHOLD) {
-            return calculateResultStatusBothUnderBlackjackNumber(dealerScore, playerScore);
+            return determineResultWhenPlayerNotBusted(dealerScore, playerScore);
         }
         return WIN;
     }
 
-    private ResultStatus calculateResultStatusBothUnderBlackjackNumber(final int dealerScore, final int playerScore) {
+    private ResultStatus determineResultWhenPlayerNotBusted(final int dealerScore, final int playerScore) {
         if (dealerScore > playerScore) {
             return WIN;
         }
@@ -92,7 +93,7 @@ public final class Dealer extends Gamer {
         return LOSE;
     }
 
-    private ResultStatus checkIfPlayerBurst(final int playerScore) {
+    private ResultStatus determineResultWhenDealerBusted(final int playerScore) {
         if (playerScore > BURST_THRESHOLD) {
             return WIN;
         }
