@@ -50,34 +50,25 @@ public class BlackjackConsole {
         calculateBettingReward(blackjackGame, bettingTable, dealer);
     }
 
-    private void calculateBettingReward(BlackjackGame blackjackGame, BettingTable bettingTable, Dealer dealer) {
-        Score score = new Score(blackjackGame.getParticipants());
-        Map<User, GameResult> gameResult = score.calculatePlayerScore();
+    private BettingTable setUpBets(List<Player> users, Dealer dealer) {
+        BettingTable bettingTable = new BettingTable();
 
-        Map<User, Long> rewards = bettingTable.calculateRewards(gameResult, dealer);
-
-        outputView.displayRewards(rewards);
-    }
-
-    private List<Player> getPlayers() {
-        List<String> playerNames = inputView.inputUsers();
-        return playerNames.stream()
-                .map(Player::new)
-                .toList();
-    }
-
-    private void openAllCards(List<Player> players, Dealer dealer, BlackjackGame blackjackGame) {
-        openAllCardFor(dealer, blackjackGame);
-
-        for (Player player : players) {
-            openAllCardFor(player, blackjackGame);
+        for (Player user : users) {
+            Long bettingMoney = inputView.inputBettingMoney(user.getName());
+            bettingTable.betMoney(user, bettingMoney);
         }
+        bettingTable.betMoney(dealer, 0L);
+        return bettingTable;
     }
 
-    private void openAllCardFor(User user, BlackjackGame blackjackGame) {
-        List<Card> cards = user.openAllCard();
-        int score = blackjackGame.calculateScore(user);
-        outputView.displayOpenCardsResult(user.getName(), cards, score);
+    private void openFirstCards(BlackjackGame blackjackGame) {
+        List<Card> dealerCards = blackjackGame.openFirstDealerCard();
+        outputView.displayOpenCards(Dealer.DEALER_NAME, dealerCards);
+
+        Map<String, List<Card>> playersCard = blackjackGame.openFirstPlayersCard();
+        for (Entry<String, List<Card>> openCardSet : playersCard.entrySet()) {
+            outputView.displayOpenCards(openCardSet.getKey(), openCardSet.getValue());
+        }
     }
 
     private void controlTurn(List<Player> players, BlackjackGame blackjackGame, Dealer dealer) {
@@ -103,25 +94,34 @@ public class BlackjackConsole {
         }
     }
 
-    private void openFirstCards(BlackjackGame blackjackGame) {
-        List<Card> dealerCards = blackjackGame.openFirstDealerCard();
-        outputView.displayOpenCards(Dealer.DEALER_NAME, dealerCards);
+    private void calculateBettingReward(BlackjackGame blackjackGame, BettingTable bettingTable, Dealer dealer) {
+        Score score = new Score(blackjackGame.getParticipants());
+        Map<User, GameResult> gameResult = score.calculatePlayerScore();
 
-        Map<String, List<Card>> playersCard = blackjackGame.openFirstPlayersCard();
-        for (Entry<String, List<Card>> openCardSet : playersCard.entrySet()) {
-            outputView.displayOpenCards(openCardSet.getKey(), openCardSet.getValue());
+        Map<User, Long> rewards = bettingTable.calculateRewards(gameResult, dealer);
+
+        outputView.displayRewards(rewards);
+    }
+
+    private List<Player> getPlayers() {
+        List<String> playerNames = inputView.inputUsers();
+        return playerNames.stream()
+                .map(Player::new)
+                .toList();
+    }
+
+    private void openAllCards(List<Player> players, Dealer dealer, BlackjackGame blackjackGame) {
+        openAllCardIn(dealer, blackjackGame);
+
+        for (Player player : players) {
+            openAllCardIn(player, blackjackGame);
         }
     }
 
-    private BettingTable setUpBets(List<Player> users, Dealer dealer) {
-        BettingTable bettingTable = new BettingTable();
-
-        for (Player user : users) {
-            Long bettingMoney = inputView.inputBettingMoney(user.getName());
-            bettingTable.betMoney(user, bettingMoney);
-        }
-        bettingTable.betMoney(dealer, 0L);
-        return bettingTable;
+    private void openAllCardIn(User user, BlackjackGame blackjackGame) {
+        List<Card> cards = user.openAllCard();
+        int score = blackjackGame.calculateScore(user);
+        outputView.displayOpenCardsResult(user.getName(), cards, score);
     }
 
     private void displayOpenCard(User user) {
