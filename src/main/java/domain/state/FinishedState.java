@@ -3,9 +3,9 @@ package domain.state;
 import domain.deck.Card;
 import domain.gamer.Hand;
 
-public abstract class Finished extends Started {
+public abstract class FinishedState extends StartedState {
 
-    public Finished(final Hand hand) {
+    public FinishedState(final Hand hand) {
         super(hand);
     }
 

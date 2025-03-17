@@ -2,9 +2,9 @@ package domain.state;
 
 import domain.gamer.Hand;
 
-public abstract class Running extends Started {
+public abstract class RunningState extends StartedState {
 
-    public Running(final Hand hand) {
+    public RunningState(final Hand hand) {
         super(hand);
     }
 

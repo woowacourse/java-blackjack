@@ -2,27 +2,27 @@ package domain.state.type;
 
 import domain.deck.Card;
 import domain.gamer.Hand;
-import domain.state.Running;
+import domain.state.RunningState;
 import domain.state.State;
 
-public class Hittable extends Running {
+public class HittableState extends RunningState {
 
     private static final int PLAYER_HITTABLE_THRESHOLD = 21;
     private static final int DEALER_HITTABLE_THRESHOLD = 16;
 
     private final int hittableThreshold;
 
-    public Hittable(final Hand hand, final int hittableThreshold) {
+    public HittableState(final Hand hand, final int hittableThreshold) {
         super(hand);
         this.hittableThreshold = hittableThreshold;
     }
 
-    public static Hittable initialPlayer() {
-        return new Hittable(new Hand(), PLAYER_HITTABLE_THRESHOLD);
+    public static HittableState createInitialPlayer() {
+        return new HittableState(new Hand(), PLAYER_HITTABLE_THRESHOLD);
     }
 
-    public static Hittable initialDealer() {
-        return new Hittable(new Hand(), DEALER_HITTABLE_THRESHOLD);
+    public static HittableState createInitialDealer() {
+        return new HittableState(new Hand(), DEALER_HITTABLE_THRESHOLD);
     }
 
     @Override
@@ -31,19 +31,19 @@ public class Hittable extends Running {
         hand.add(card);
 
         if (hand.isBlackjack()) {
-            return new Blackjack(hand);
+            return new BlackjackState(hand);
         }
         if (hand.isBust()) {
-            return new Bust(hand);
+            return new BustState(hand);
         }
         if (hand.isBustThreshold() || hand.calculateSumOfRank() > hittableThreshold) {
-            return new Stay(hand);
+            return new StayState(hand);
         }
-        return new Hittable(hand, hittableThreshold);
+        return new HittableState(hand, hittableThreshold);
     }
 
     @Override
     public State stay() {
-        return new Stay(getHand());
+        return new StayState(getHand());
     }
 }

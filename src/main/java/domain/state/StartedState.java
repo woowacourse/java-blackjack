@@ -2,11 +2,11 @@ package domain.state;
 
 import domain.gamer.Hand;
 
-public abstract class Started implements State {
+public abstract class StartedState implements State {
 
     private final Hand hand;
 
-    public Started(final Hand hand) {
+    public StartedState(final Hand hand) {
         this.hand = hand;
     }
 
