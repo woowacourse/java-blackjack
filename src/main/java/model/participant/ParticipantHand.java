@@ -2,6 +2,7 @@ package model.participant;
 
 import java.util.ArrayList;
 import java.util.List;
+import model.card.AceCard;
 import model.card.Card;
 import model.card.CardRank;
 
@@ -78,7 +79,7 @@ public class ParticipantHand {
     }
 
     private int convertOneAceToMaxValueFrom(int score) {
-        return score - CardRank.ACE.getDefaultValue() + CardRank.ACE.getMaxValue();
+        return score - CardRank.ACE.getDefaultValue() + AceCard.getAceMaxValue();
     }
 
     public List<Card> getCards() {

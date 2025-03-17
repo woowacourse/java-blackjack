@@ -1,7 +1,7 @@
 package model.card;
 
 public enum CardRank {
-    ACE("A", 1, 11),
+    ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
@@ -17,17 +17,10 @@ public enum CardRank {
 
     private final String name;
     private final int defaultValue;
-    private int maxValue;
 
     CardRank(String cardName, int defaultValue) {
         this.name = cardName;
         this.defaultValue = defaultValue;
-    }
-
-    CardRank(String name, int defaultValue, int maxValue) {
-        this.name = name;
-        this.defaultValue = defaultValue;
-        this.maxValue = maxValue;
     }
 
     public String getName() {
@@ -37,12 +30,4 @@ public enum CardRank {
     public int getDefaultValue() {
         return defaultValue;
     }
-
-    public int getMaxValue() {
-        if (maxValue == 0) {
-            throw new IllegalStateException("최대 값을 선택할 수 없는 카드입니다.");
-        }
-        return maxValue;
-    }
-
 }
