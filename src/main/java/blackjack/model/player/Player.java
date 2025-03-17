@@ -4,9 +4,10 @@ import java.util.Objects;
 
 public class Player extends Participant {
     private final String name;
-    private int bettingMoney;
+    private final BettingMoney bettingMoney;
 
-    public Player(String name) {
+    public Player(String name, int bettingMoney) {
+        this.bettingMoney = new BettingMoney(bettingMoney);
         validate(name);
         this.name = name;
     }
@@ -20,11 +21,8 @@ public class Player extends Participant {
         }
     }
 
-    public void setBetting(int bettingMoney) {
-        this.bettingMoney = bettingMoney;
-    }
 
-    public int getBettingMoney() {
+    public BettingMoney getBettingMoney() {
         return bettingMoney;
     }
 
