@@ -22,15 +22,6 @@ public class Betting {
     }
 
     public long calculateBetting(final GameResult gameResult) {
-        if (gameResult == GameResult.BLACKJACK) {
-            return (long) (bettingMoney * 1.5);
-        }
-        if (gameResult == GameResult.LOSE) {
-            return -bettingMoney;
-        }
-        if (gameResult == GameResult.WIN) {
-            return bettingMoney;
-        }
-        return 0;
+        return (long) (bettingMoney * gameResult.getDividends());
     }
 }

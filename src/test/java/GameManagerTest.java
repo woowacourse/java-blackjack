@@ -290,7 +290,7 @@ public class GameManagerTest {
 
         //when
         List<Profit> profitResult = gameManager.createProfitResult();
-        long dealerProfit = gameManager.calculateDealerProfit(profitResult);
+        long dealerProfit = gameManager.calculateDealerProfitFromPlayers(profitResult);
 
         //then
         Assertions.assertThat(dealerProfit).isEqualTo(-450020000);
@@ -321,7 +321,7 @@ public class GameManagerTest {
 
         //when
         List<Profit> profitResult = gameManager.createProfitResult();
-        long dealerProfit = gameManager.calculateDealerProfit(profitResult);
+        long dealerProfit = gameManager.calculateDealerProfitFromPlayers(profitResult);
 
         //then
         Assertions.assertThat(dealerProfit).isEqualTo(-449980000);
