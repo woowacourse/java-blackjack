@@ -25,7 +25,7 @@ public class Application {
         Dealer dealer = makeDealer(new CardRandomMachine());
         Players players = makePlayers();
 
-        betPlayers(blackjack, players);
+        betPlayers(players);
 
         spreadInitCards(blackjack, dealer, players);
 
@@ -57,20 +57,20 @@ public class Application {
         return makePlayers();
     }
 
-    private static void betPlayers(final Blackjack blackjack, final Players players) {
+    private static void betPlayers(final Players players) {
         for (Player player : players.getPlayers()) {
-            betPlayer(blackjack, player);
+            betPlayer(player);
         }
     }
 
-    private static void betPlayer(final Blackjack blackjack, final Player player) {
+    private static void betPlayer(final Player player) {
         final InputView inputView = new BettingMoneyInputView(scanner, player.getNickName());
         try {
             final String amount = inputView.read();
-            blackjack.betMoney(player, amount);
+            player.betMoney(amount);
         } catch (IllegalArgumentException e) {
             inputView.printErrorMessage(e);
-            betPlayer(blackjack, player);
+            betPlayer(player);
         }
     }
 

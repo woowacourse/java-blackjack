@@ -10,10 +10,6 @@ public class Blackjack {
     public static final int BLACKJACK_SCORE = 21;
     public static final int BLACKJACK_CARD_COUNT = 2;
 
-    public void betMoney(final Player player, final String amount) {
-        player.betMoney(amount);
-    }
-
     public void spreadInitCardsToDealer(final Dealer dealer) {
         spreadOneCardToDealer(dealer);
         spreadOneCardToDealer(dealer);

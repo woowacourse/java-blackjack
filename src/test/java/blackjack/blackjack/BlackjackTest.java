@@ -51,19 +51,6 @@ class BlackjackTest {
         );
     }
 
-    @DisplayName("플레이어가 베팅을 한다.")
-    @Test
-    void betPlayer() {
-        // given
-        final Player player = new Player("엠제이");
-
-        // when
-        blackjack.betMoney(player, "10000");
-
-        // then
-        assertThat(player.getProfit()).isEqualTo(-10000);
-    }
-
     @DisplayName("푸시인지 판단한다.")
     @Test
     void isPush() {
