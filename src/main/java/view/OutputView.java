@@ -104,6 +104,26 @@ public class OutputView {
 
     }
 
+    public static void printProfitResult(
+            Long dealerProfitResult,
+            Map<Player, Long> playerProfitResult
+    ) {
+        System.out.println();
+        System.out.println("## 최종 수익");
+        System.out.println(formProfitResult(DEALER_NICKNAME, dealerProfitResult));
+
+        for (Map.Entry<Player, Long> entry : playerProfitResult.entrySet()) {
+            String nickname = entry.getKey().getNickname();
+            Long profit = entry.getValue();
+            System.out.println(formProfitResult(nickname, profit));
+        }
+
+    }
+
+    public static String formProfitResult(String nickname, long profit) {
+        return String.format(BASIC_FORM, nickname, profit);
+    }
+
     public static String getDealerResultFormat(Map<MatchResultType, Long> matchResult) {
         StringBuilder result = new StringBuilder();
         for (MatchResultType matchResultType : matchResult.keySet()) {
