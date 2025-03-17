@@ -1,4 +1,6 @@
 package blackjack.domain.card;
 
-public record Result(WinningResult winningResult, int bettingResult) {
+import java.util.Map;
+
+public record Result(Map<WinningResult, Integer> resultIntegerMap, int bettingResult) {
 }

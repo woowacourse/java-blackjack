@@ -79,13 +79,14 @@ public class OutputView {
 
     public static void printGameResult(GameResult gameResult, List<Player> players) {
         System.out.println("## 최종 승패");
-        Map<WinningResult, Integer> dealerGameResults = gameResult.dealerResults();
+        Result dealerGameResults = gameResult.dealerResults();
         Map<Player, Result> playerGameResults = gameResult.playerResults();
-        printIfPresentWinningResult(dealerGameResults);
-        dealerGameResults.getOrDefault(WinningResult.LOSE, 0);
+        printIfPresentWinningResult(dealerGameResults.resultIntegerMap());
+        dealerGameResults.resultIntegerMap().getOrDefault(WinningResult.LOSE, 0);
         for (Player player : players) {
             System.out.printf("%s: %s\n", player.getName(),
-                    toKoreanWinningResult(playerGameResults.get(player).winningResult()));
+                    toKoreanWinningResult(
+                            playerGameResults.get(player).resultIntegerMap().entrySet().iterator().next().getKey()));
         }
         System.out.println();
     }

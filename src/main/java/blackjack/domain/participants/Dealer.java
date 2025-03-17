@@ -9,7 +9,6 @@ public class Dealer {
     private final Players players;
     private final Deck deck;
     private final Cards cards;
-
     private int bettingMoney;
 
     public Dealer(Players players, Deck deck) {
