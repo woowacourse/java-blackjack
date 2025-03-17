@@ -32,10 +32,19 @@ class InputValidatorTest {
 
     @ParameterizedTest
     @DisplayName("배팅 입력이 정수가 아니면 예외를 반환합니다.")
-    @ValueSource(strings = {"n", "y", "", " ", "ㅋㅋ"})
+    @ValueSource(strings = {"n", "y", " ", "ㅋㅋ"})
     void validateInputMoneyTest(String value) {
         Assertions.assertThatThrownBy(() -> InputValidator.validateInputMoney(value))
                 .isInstanceOf(NumberFormatException.class)
-                .hasMessage("정수가 아닙니다.");
+                .hasMessage("숫자가 아닙니다.");
+    }
+
+    @ParameterizedTest
+    @DisplayName("배팅 입력이 정수범위를 초과하면 예외를 반환합니다.")
+    @ValueSource(strings = {"-2147483649", "2147483649"})
+    void validateIntegerRangeTest(String value) {
+        Assertions.assertThatThrownBy(() -> InputValidator.validateIntegerRange(value))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("허용된 숫자 범위가 아닙니다.");
     }
 }

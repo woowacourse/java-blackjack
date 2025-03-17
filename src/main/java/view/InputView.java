@@ -4,6 +4,7 @@ import static domain.Players.MAX_PLAYER_QUANTITY;
 import static view.InputValidator.validateDuplicate;
 import static view.InputValidator.validateInputFormat;
 import static view.InputValidator.validateInputMoney;
+import static view.InputValidator.validateIntegerRange;
 
 import domain.BettingMoney;
 import domain.PlayerName;
@@ -37,10 +38,10 @@ public class InputView {
     }
 
     public BettingMoney insertBettingMoney(PlayerName playerName) {
-        System.out.printf("%s의 배팅 금액은?\n", playerName.username());
+        System.out.printf("%s의 배팅 금액은? (배팅 금액의 상한은 일백만원 입니다.)\n", playerName.username());
         String rawBettingMoney = readLine();
+        validateIntegerRange(rawBettingMoney);
         validateInputMoney(rawBettingMoney);
-
         return new BettingMoney(Integer.parseInt(rawBettingMoney));
     }
 }
