@@ -11,9 +11,9 @@ public final class DeckGenerator {
         return new Deck(deck);
     }
 
-//    public static Deck generateTestDeck(final List<Card> cards) {
-//        return new Deck(cards);
-//    }
+    public static Deck generateStandardDeck() {
+        return new Deck(generateStandardCards());
+    }
 
     private static List<Card> generateStandardCards() {
         List<Card> deck = new ArrayList<>();

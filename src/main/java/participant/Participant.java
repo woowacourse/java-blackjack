@@ -25,10 +25,6 @@ public abstract class Participant {
         this.state = state.receiveCard(newCard);
     }
 
-    public void stay() {
-        this.state = state.stay();
-    }
-
     public CardHand getCardHand() {
         return state.cardHand();
     }

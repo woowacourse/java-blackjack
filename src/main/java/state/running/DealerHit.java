@@ -36,6 +36,6 @@ public final class DealerHit extends Running {
 
     @Override
     public State stay() {
-        return new Stay(cardHand);
+        throw new IllegalStateException();
     }
 }

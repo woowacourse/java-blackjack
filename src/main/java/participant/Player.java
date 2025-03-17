@@ -23,12 +23,16 @@ public final class Player extends Participant {
         return cardHand.getCards();
     }
 
-    @Override
-    public Name getName() {
-        return name;
+    public void stay() {
+        this.state = state.stay();
     }
 
     public Profit calculateProfit(final GameResult result) {
         return Profit.of(bet, result);
+    }
+
+    @Override
+    public Name getName() {
+        return name;
     }
 }
