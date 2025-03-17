@@ -1,7 +1,6 @@
 package participant;
 
 import card.Card;
-import card.CardHand;
 import card.GameScore;
 import java.util.List;
 import state.State;
@@ -25,12 +24,8 @@ public abstract class Participant {
         this.state = state.receiveCard(newCard);
     }
 
-    public CardHand getCardHand() {
-        return state.cardHand();
-    }
-
     public List<Card> getCards() {
-        return getCardHand().getCards();
+        return state.cardHand().getCards();
     }
 
     public GameScore getScore() {

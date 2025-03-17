@@ -19,16 +19,16 @@ public final class Dealer extends Participant {
         return List.of(cardHand.getFirstCard());
     }
 
-    @Override
-    public Name getName() {
-        return new Name("딜러");
-    }
-
     public GameResult judgeResult(final Player player) {
         if (this.state instanceof Running || player.state instanceof Running) {
             throw new IllegalStateException();
         }
         Finished playerState = (Finished) player.state;
         return playerState.calculatePlayerResult((Finished) this.state);
+    }
+
+    @Override
+    public Name getName() {
+        return new Name("딜러");
     }
 }
