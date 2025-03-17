@@ -1,9 +1,10 @@
 package bet;
 
-import constant.Suit;
 import constant.Rank;
+import constant.Suit;
 import game.Card;
 import game.Cards;
+import game.Deck;
 import org.junit.jupiter.api.Test;
 import participant.Dealer;
 import participant.Nickname;
@@ -40,7 +41,7 @@ class BetCenterTest {
     @Test
     void 딜러만_블랙잭인_경우_모든_플레이어는_베팅금액을_잃는다() {
         // given
-        Dealer dealer = new Dealer(() -> {
+        Deck deck = new Deck(() -> {
             List<Card> cards = new ArrayList<>();
 
             // 플레이어 2
@@ -56,9 +57,10 @@ class BetCenterTest {
             cards.add(new Card(Rank.ACE, Suit.SPADE));
             return new Cards(cards);
         });
+        Dealer dealer = new Dealer(deck);
 
-        Player player1 = new Player(new Nickname("제프"), dealer.drawInitialCards());
-        Player player2 = new Player(new Nickname("빙봉"), dealer.drawInitialCards());
+        Player player1 = new Player(new Nickname("제프"), deck);
+        Player player2 = new Player(new Nickname("빙봉"), deck);
         player1.addOneCard(new Card(Rank.FIVE, Suit.DIAMOND));
 
         BetCenter betCenter = new BetCenter(Map.of(
@@ -77,7 +79,7 @@ class BetCenterTest {
     @Test
     void 플레이어만_블랙잭인_경우_베팅금액의_절반을_수익으로_얻는다() {
         // given
-        Dealer dealer = new Dealer(() -> {
+        Deck deck = new Deck(() -> {
             List<Card> cards = new ArrayList<>();
             cards.add(new Card(Rank.ACE, Suit.HEART));
             cards.add(new Card(Rank.KING, Suit.DIAMOND));
@@ -86,13 +88,17 @@ class BetCenterTest {
 
             return new Cards(cards);
         });
-        Player player = new Player(new Nickname("제프"), dealer.drawInitialCards());
+        Dealer dealer = new Dealer(deck);
+        Player player = new Player(new Nickname("제프"), deck);
 
         BetCenter betCenter = new BetCenter(Map.of(
                 player, new BetAmount(10000)
         ));
+
+        // when
         Map<Player, Integer> bettingResults = betCenter.deriveBettingResults(dealer);
 
+        // then
         assertThat(bettingResults.get(player)).isEqualTo(15000);
     }
 
@@ -100,7 +106,7 @@ class BetCenterTest {
     @Test
     void 딜러와_플레이어가_블랙잭인_경우_수익은_0원이다() {
         // given
-        Dealer dealer = new Dealer(() -> {
+        Deck deck = new Deck(() -> {
             List<Card> cards = new ArrayList<>();
 
             // 플레이어
@@ -112,7 +118,8 @@ class BetCenterTest {
             cards.add(new Card(Rank.KING, Suit.SPADE));
             return new Cards(cards);
         });
-        Player player = new Player(new Nickname("제프"), dealer.drawInitialCards());
+        Dealer dealer = new Dealer(deck);
+        Player player = new Player(new Nickname("제프"), deck);
 
         BetCenter betCenter = new BetCenter(Map.of(player, new BetAmount(10000)));
 
@@ -126,7 +133,7 @@ class BetCenterTest {
     @Test
     void 플레이어가_승리하면서_점수가_21점인_경우_베팅금액만큼의_수익을_얻는다() {
         // given
-        Dealer dealer = new Dealer(() -> {
+        Deck deck = new Deck(() -> {
             List<Card> cards = new ArrayList<>();
 
             // 플레이어
@@ -139,8 +146,9 @@ class BetCenterTest {
             cards.add(new Card(Rank.KING, Suit.SPADE));
             return new Cards(cards);
         });
-        Player player = new Player(new Nickname("제프"), dealer.drawInitialCards());
-        player.addOneCard(dealer.drawCard());
+        Dealer dealer = new Dealer(deck);
+        Player player = new Player(new Nickname("제프"), deck);
+        player.addOneCard(deck.drawOneCard());
         BetCenter betCenter = new BetCenter(Map.of(player, new BetAmount(10000)));
 
         // when
@@ -153,7 +161,7 @@ class BetCenterTest {
     @Test
     void 플레이어의_점수가_21을_초과하는_경우_베팅금액을_잃는다() {
         // given
-        Dealer dealer = new Dealer(() -> {
+        Deck deck = new Deck(() -> {
             List<Card> cards = new ArrayList<>();
 
             // 플레이어
@@ -166,8 +174,9 @@ class BetCenterTest {
             cards.add(new Card(Rank.KING, Suit.SPADE));
             return new Cards(cards);
         });
-        Player player = new Player(new Nickname("제프"), dealer.drawInitialCards());
-        player.addOneCard(dealer.drawCard());
+        Dealer dealer = new Dealer(deck);
+        Player player = new Player(new Nickname("제프"), deck);
+        player.addOneCard(deck.drawOneCard());
 
         BetCenter betCenter = new BetCenter(Map.of(
                 player, new BetAmount(15000)
@@ -183,7 +192,7 @@ class BetCenterTest {
     @Test
     void 딜러의_점수가_21을_초과하는_경우_해당_시점의_플레이어는_모두_베팅금액만큼의_수익을_얻는다() {
         // given
-        Dealer dealer = new Dealer(() -> {
+        Deck deck = new Deck(() -> {
             List<Card> cards = new ArrayList<>();
 
             // 딜러 추가 카드
@@ -206,10 +215,11 @@ class BetCenterTest {
             cards.add(new Card(Rank.KING, Suit.SPADE));
             return new Cards(cards);
         });
-        Player player1 = new Player(new Nickname("제프"), dealer.drawInitialCards());
-        Player player2 = new Player(new Nickname("짱수"), dealer.drawInitialCards());
-        Player player3 = new Player(new Nickname("빙봉"), dealer.drawInitialCards());
-        dealer.addOneCard(dealer.drawCard());
+        Dealer dealer = new Dealer(deck);
+        Player player1 = new Player(new Nickname("제프"), deck);
+        Player player2 = new Player(new Nickname("짱수"), deck);
+        Player player3 = new Player(new Nickname("빙봉"), deck);
+        dealer.addOneCard(deck.drawOneCard());
 
         BetCenter betCenter = new BetCenter(Map.of(
                 player1, new BetAmount(15000),
@@ -229,7 +239,7 @@ class BetCenterTest {
     @Test
     void 딜러의_수익을_계산한다() {
         // given
-        Dealer dealer = new Dealer(() -> {
+        Deck deck = new Deck(() -> {
             List<Card> cards = new ArrayList<>();
 
             // 플레이어 3 초기 덱
@@ -249,9 +259,10 @@ class BetCenterTest {
             cards.add(new Card(Rank.KING, Suit.SPADE));
             return new Cards(cards);
         });
-        Player player1 = new Player(new Nickname("제프"), dealer.drawInitialCards());
-        Player player2 = new Player(new Nickname("짱수"), dealer.drawInitialCards());
-        Player player3 = new Player(new Nickname("빙봉"), dealer.drawInitialCards());
+        Dealer dealer = new Dealer(deck);
+        Player player1 = new Player(new Nickname("제프"), deck);
+        Player player2 = new Player(new Nickname("짱수"), deck);
+        Player player3 = new Player(new Nickname("빙봉"), deck);
 
         BetCenter betCenter = new BetCenter(Map.of(
                 player1, new BetAmount(15000),

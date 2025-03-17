@@ -4,6 +4,7 @@ import constant.Suit;
 import constant.Rank;
 import game.Card;
 import game.Cards;
+import game.Deck;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -20,10 +21,11 @@ class DealerTest {
     void 초기_카드_두장을_받아_딜러를_생성한다() {
         // given
         List<Card> initialCards = makeCards(Rank.FIVE, Rank.FOUR);
+        Cards cards = new Cards(initialCards);
 
         // when & then
         assertDoesNotThrow(
-                () -> new Dealer(() -> new Cards(initialCards))
+                () -> new Dealer(new Deck(() -> cards))
         );
     }
 
@@ -37,7 +39,7 @@ class DealerTest {
     void 카드를_한장_받았을_때_21이_넘는지_확인한다(Rank number1, Rank number2, Rank number3, boolean expected) {
         // given
         List<Card> initialCards = makeCards(number1, number2);
-        Dealer dealer = new Dealer(() -> new Cards(initialCards));
+        Dealer dealer = new Dealer(new Deck(() -> new Cards(initialCards)));
         Card card = new Card(number3, Suit.SPADE);
 
         // when
@@ -56,7 +58,7 @@ class DealerTest {
     void 카드들의_합을_구한다(Rank number1, Rank number2, Rank number3, int expected) {
         // given
         List<Card> initialCards = makeCards(number1, number2);
-        Dealer dealer = new Dealer(() -> new Cards(initialCards));
+        Dealer dealer = new Dealer(new Deck(() -> new Cards(initialCards)));
         dealer.addOneCard(new Card(number3, Suit.HEART));
 
         // when
@@ -76,7 +78,7 @@ class DealerTest {
     void 딜러의_카드_총합이_16이하인지_확인한다(Rank number1, Rank number2, boolean expected) {
         // given
         List<Card> initialCards = makeCards(number1, number2);
-        Dealer dealer = new Dealer(() -> new Cards(initialCards));
+        Dealer dealer = new Dealer(new Deck(() -> new Cards(initialCards)));
 
         // when
         boolean shouldDealerHit = dealer.shouldDealerHit();
@@ -89,7 +91,7 @@ class DealerTest {
     void 초기_딜러의_카드중_작은_숫자_한장을_오픈한다() {
         // given
         List<Card> initialCards = makeCards(Rank.ACE, Rank.KING);
-        Dealer dealer = new Dealer(() -> new Cards(initialCards));
+        Dealer dealer = new Dealer(new Deck(() -> new Cards(initialCards)));
 
         // when
         Card card = dealer.openOneCard();

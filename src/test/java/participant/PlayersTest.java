@@ -1,10 +1,11 @@
 package participant;
 
-import constant.Suit;
 import constant.Rank;
+import constant.Suit;
 import constant.WinningResult;
 import game.Card;
 import game.Cards;
+import game.Deck;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ class PlayersTest {
     @Test
     void 플레이어의_승패_결과를_도출한다() {
         // given
-        Dealer dealer = new Dealer(() -> {
+        Deck deck = new Deck(() -> {
             List<Card> cards = new ArrayList<>();
 
             // 플레이어 3 초기 덱
@@ -39,8 +40,8 @@ class PlayersTest {
 
             return new Cards(cards);
         });
-
-        Players players = Players.registerPlayers(List.of("pobi", "justin", "neo"), dealer);
+        Dealer dealer = new Dealer(deck);
+        Players players = Players.registerPlayers(List.of("pobi", "justin", "neo"), deck);
         List<Player> playerList = players.getPlayers();
 
         // when

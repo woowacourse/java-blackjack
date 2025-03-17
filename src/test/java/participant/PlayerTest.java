@@ -1,10 +1,11 @@
 package participant;
 
-import constant.Suit;
 import constant.Rank;
+import constant.Suit;
 import constant.WinningResult;
 import game.Card;
 import game.Cards;
+import game.Deck;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -13,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class PlayerTest {
@@ -25,19 +25,7 @@ class PlayerTest {
         Cards cards = new Cards(initialCards);
 
         // when & then
-        assertDoesNotThrow(() -> new Player(new Nickname("pobi"), cards));
-    }
-
-    @Test
-    void 초기_카드_세장을_받으면_예외를_발생시킨다() {
-        // given
-        List<Card> initialCards = makeCards(Rank.ACE, Rank.EIGHT);
-        initialCards.add(new Card(Rank.EIGHT, Suit.HEART));
-        Cards cards = new Cards(initialCards);
-
-        // when & then
-        assertThatThrownBy(() -> new Player(new Nickname("pobi"), cards)).isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 초기 카드는 2장을 받아야 합니다.");
+        assertDoesNotThrow(() -> new Player(new Nickname("pobi"), new Deck(() -> cards)));
     }
 
     @ParameterizedTest
@@ -52,7 +40,7 @@ class PlayerTest {
         List<Card> initialCards = makeCards(number1, number2);
         Card card = new Card(number3, Suit.SPADE);
         Cards cards = new Cards(initialCards);
-        Player player = new Player(new Nickname("pobi"),cards);
+        Player player = new Player(new Nickname("pobi"), new Deck(() -> cards));
 
         // when
         boolean isOverBustStandard = player.addOneCard(card);
@@ -71,7 +59,7 @@ class PlayerTest {
         // given
         List<Card> initialCards = makeCards(number1, number2);
         Cards cards = new Cards(initialCards);
-        Player player = new Player(new Nickname("pobi"), cards);
+        Player player = new Player(new Nickname("pobi"), new Deck(() -> cards));
         player.addOneCard(new Card(number3, Suit.HEART));
 
         // when
@@ -97,7 +85,7 @@ class PlayerTest {
         // given
         List<Card> initialCards = makeCards(number1, number2);
         Cards cards = new Cards(initialCards);
-        Player player = new Player(new Nickname("pobi"), cards);
+        Player player = new Player(new Nickname("pobi"), new Deck(() -> cards));
         player.addOneCard(new Card(number3, Suit.HEART));
 
         // when

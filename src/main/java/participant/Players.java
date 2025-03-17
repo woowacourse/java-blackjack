@@ -1,6 +1,7 @@
 package participant;
 
 import constant.WinningResult;
+import game.Deck;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -14,10 +15,14 @@ public class Players {
         this.players = players;
     }
 
-    public static Players registerPlayers(List<String> names, Dealer dealer) {
+    public static Players registerPlayers(List<String> names, Deck deck) {
+        for (String name : names) {
+            validateNonDealerName(name);
+        }
+
         return new Players(names.stream()
                 .map(Nickname::new)
-                .map(nickname -> new Player(nickname, dealer.drawInitialCards()))
+                .map(nickname -> new Player(nickname, deck))
                 .toList());
     }
 
@@ -26,7 +31,7 @@ public class Players {
         for (Player player : players) {
             WinningResult winningResult = player.compareTo(dealerScore);
             results.put(player, winningResult);
-            
+
         }
         return results;
     }
@@ -39,5 +44,11 @@ public class Players {
         return players.stream()
                 .map(Player::getNickname)
                 .toList();
+    }
+
+    private static void validateNonDealerName(String nickname) {
+        if (nickname.equals("딜러")) {
+            throw new IllegalArgumentException("[ERROR] 딜러라는 닉네임은 사용할 수 없습니다.");
+        }
     }
 }
