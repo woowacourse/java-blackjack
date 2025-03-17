@@ -106,28 +106,9 @@ public class BlackjackGame {
         Dealer dealer = gameParticipant.getDealer();
         List<Player> players = gameParticipant.getPlayers();
         for (Player player : players) {
-            int bettingMoney = bettings.findBettingOfPlayer(player.getName());
-            GameStatus gameStatus = determineGameStatus(dealer, player);
-            int betting = (int) (bettingMoney * gameStatus.getProfiteRate());
-            bettings.registerBetting(player.getName(), betting);
+            bettings.updateBetting(dealer, player);
         }
         displayGameResults(gameParticipant, bettings);
-    }
-
-    private GameStatus determineGameStatus(Dealer dealer, Player player) {
-        if (dealer.isBust()) {
-            return GameStatus.WIN;
-        }
-        if (dealer.isBlackjack() && player.isBlackjack()) {
-            return GameStatus.TIE;
-        }
-        if (player.isBlackjack()) {
-            return GameStatus.BLACKJACK;
-        }
-        if (player.isBust()) {
-            return GameStatus.LOSE;
-        }
-        return player.determineGameStatusByScore(dealer);
     }
 
     private void displayDistributedGameInitialCards(GameParticipant gameParticipant) {
