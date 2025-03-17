@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Card extends TrumpCard {
 
-    private static final Map<Rank, List<Integer>> RANK_TO_SCORES = Map.ofEntries(
+    private static final Map<Rank, List<Integer>> SCORES_BY_RANK = Map.ofEntries(
             Map.entry(Rank.ACE, List.of(1, 11)),
             Map.entry(Rank.TWO, List.of(2)),
             Map.entry(Rank.THREE, List.of(3)),
@@ -37,6 +37,6 @@ public class Card extends TrumpCard {
     }
 
     public List<Integer> scores() {
-        return RANK_TO_SCORES.get(rank);
+        return SCORES_BY_RANK.get(rank);
     }
 }
