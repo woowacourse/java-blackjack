@@ -1,9 +1,9 @@
 package view;
 
-import participant.Bet;
 import participant.Name;
 import participant.Participant;
 import participant.Participants;
+import result.Profit;
 
 public final class GameResultView extends BlackjackView {
     public String getFinalScores(final Participants participants) {
@@ -25,7 +25,7 @@ public final class GameResultView extends BlackjackView {
         return String.format("%n## 최종 수익%n");
     }
 
-    public String getFinalProfit(final Name name, final Bet bet) {
-        return String.format("%s: %s%n", name, bet);
+    public String getFinalProfit(final Name name, final Profit profit) {
+        return String.format("%s: %s%n", name, profit);
     }
 }

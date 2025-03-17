@@ -1,27 +1,26 @@
-package state;
+package state.finished;
 
 import card.Card;
 import card.CardHand;
+import result.GameResult;
+import state.Started;
+import state.State;
 
 public abstract class Finished extends Started {
     public Finished(final CardHand cardHand) {
         super(cardHand);
     }
 
-    public abstract double earningRate();
-
-//    public Bet profit(final Bet bettingAmount) {
-//        return bettingAmount.multiply(earningRate());
-//    }
+    public abstract GameResult calculatePlayerResult(final Finished dealerState);
 
     @Override
     public State receiveCard(final Card card) {
-        throw new IllegalArgumentException();
+        throw new IllegalStateException();
     }
 
     @Override
     public State stay() {
-        throw new IllegalArgumentException();
+        throw new IllegalStateException();
     }
 
     @Override

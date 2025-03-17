@@ -3,7 +3,9 @@ package participant;
 import card.Card;
 import card.CardHand;
 import java.util.List;
-import state.PlayerHit;
+import result.GameResult;
+import result.Profit;
+import state.running.PlayerHit;
 
 public final class Player extends Participant {
     private final Name name;
@@ -21,13 +23,12 @@ public final class Player extends Participant {
         return cardHand.getCards();
     }
 
-//    @Override
-//    public Bet getProfit() {
-//        return state.profit(bet);
-//    }
-
     @Override
     public Name getName() {
         return name;
+    }
+
+    public Profit calculateProfit(final GameResult result) {
+        return Profit.of(bet, result);
     }
 }

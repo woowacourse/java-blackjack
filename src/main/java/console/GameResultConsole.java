@@ -1,7 +1,10 @@
 package console;
 
-import participant.Participant;
+import participant.Dealer;
 import participant.Participants;
+import participant.Player;
+import participant.Players;
+import result.FinalProfit;
 import view.GameResultView;
 
 public final class GameResultConsole extends Console {
@@ -13,9 +16,12 @@ public final class GameResultConsole extends Console {
 
     public void getFinalProfits(final Participants participants) {
         display(gameResultView.getFinalProfitHeader());
-        for (Participant participant : participants.getParticipants()) {
-            String finalProfitView = gameResultView.getFinalProfit(participant.getName(), participant.getProfit());
-            display(finalProfitView);
+        Players players = participants.getPlayers();
+        Dealer dealer = participants.getDealer();
+        FinalProfit finalProfit = new FinalProfit(dealer, players.getPlayers());
+        display(gameResultView.getFinalProfit(dealer.getName(), finalProfit.calculateDealerProfit()));
+        for (Player player : players.getPlayers()) {
+            display(gameResultView.getFinalProfit(player.getName(), finalProfit.getProfit(player)));
         }
     }
 }

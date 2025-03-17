@@ -38,6 +38,6 @@ public abstract class Participant {
     }
 
     public GameScore getScore() {
-        return getCardHand().calculateScore();
+        return state.calculateScore();
     }
 }

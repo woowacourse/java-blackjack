@@ -1,10 +1,14 @@
-package state;
+package state.running;
 
 import card.Card;
 import card.CardHand;
+import state.State;
+import state.finished.BlackJack;
+import state.finished.Bust;
+import state.finished.Stay;
 
-public final class PlayerHit extends Running {
-    private PlayerHit(final CardHand cardHand) {
+public final class DealerHit extends Running {
+    private DealerHit(final CardHand cardHand) {
         super(cardHand);
     }
 
@@ -12,7 +16,10 @@ public final class PlayerHit extends Running {
         if (cardHand.isBlackJack()) {
             return new BlackJack(cardHand);
         }
-        return new PlayerHit(cardHand);
+        if (cardHand.isDealerStay()) {
+            return new Stay(cardHand);
+        }
+        return new DealerHit(cardHand);
     }
 
     @Override
@@ -20,6 +27,9 @@ public final class PlayerHit extends Running {
         cardHand.add(card);
         if (cardHand().isBust()) {
             return new Bust(cardHand);
+        }
+        if (cardHand.isDealerStay()) {
+            return new Stay(cardHand);
         }
         return this;
     }

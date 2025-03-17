@@ -2,6 +2,7 @@ package state;
 
 import card.Card;
 import card.CardHand;
+import card.GameScore;
 
 public interface State {
     State receiveCard(final Card card);
@@ -12,5 +13,5 @@ public interface State {
 
     CardHand cardHand();
 
-//    Bet profit(final Bet bettingAmount);
+    GameScore calculateScore();
 }

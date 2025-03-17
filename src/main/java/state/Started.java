@@ -1,6 +1,7 @@
 package state;
 
 import card.CardHand;
+import card.GameScore;
 
 public abstract class Started implements State {
     protected final CardHand cardHand;
@@ -11,5 +12,10 @@ public abstract class Started implements State {
 
     public CardHand cardHand() {
         return this.cardHand;
+    }
+
+    @Override
+    public GameScore calculateScore() {
+        return cardHand.calculateScore();
     }
 }

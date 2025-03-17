@@ -1,13 +1,10 @@
 package participant;
 
-public final class Bet {
+public record Bet(int amount) {
     private static final int AMOUNT_UNIT = 10000;
 
-    private final int amount;
-
-    public Bet(final int amount) {
-//        validate(amount); // TODO Profit을 따로 만들까?
-        this.amount = amount;
+    public Bet {
+        validate(amount);
     }
 
     private void validate(final int amount) {
@@ -16,30 +13,12 @@ public final class Bet {
         }
     }
 
-    public Bet multiply(double rate) {
-        return new Bet((int) (amount * rate));
+    public int toInt() {
+        return amount;
     }
 
     @Override
     public String toString() {
         return String.valueOf(amount);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        Bet bet = (Bet) o;
-        return amount == bet.amount;
-    }
-
-    @Override
-    public int hashCode() {
-        return amount;
     }
 }

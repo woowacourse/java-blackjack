@@ -3,7 +3,10 @@ package participant;
 import card.Card;
 import card.CardHand;
 import java.util.List;
-import state.DealerHit;
+import result.GameResult;
+import state.finished.Finished;
+import state.running.DealerHit;
+import state.running.Running;
 
 public final class Dealer extends Participant {
     public Dealer(final CardHand initialHand) {
@@ -16,13 +19,16 @@ public final class Dealer extends Participant {
         return List.of(cardHand.getFirstCard());
     }
 
-//    @Override
-//    public Bet getProfit() {
-//        return new Bet(10000); // TODO 임시
-//    }
-
     @Override
     public Name getName() {
         return new Name("딜러");
+    }
+
+    public GameResult judgeResult(final Player player) {
+        if (this.state instanceof Running || player.state instanceof Running) {
+            throw new IllegalStateException();
+        }
+        Finished playerState = (Finished) player.state;
+        return playerState.calculatePlayerResult((Finished) this.state);
     }
 }
