@@ -32,7 +32,7 @@ class DealerTest {
     }
 
     @Test
-    void 딜러의_카드를_오픈한다() {
+    void 딜러의_초기_카드를_오픈한다() {
         // given
         Cards cards = createCards(
                 createCard(TrumpRank.ACE, TrumpSuit.DIAMOND),
@@ -42,7 +42,7 @@ class DealerTest {
         dealer.initializeHand(cards);
 
         // when
-        List<Card> openedCards = dealer.openCards();
+        List<Card> openedCards = dealer.openInitialCards();
 
         // then
         assertThat(openedCards).hasSize(1);
