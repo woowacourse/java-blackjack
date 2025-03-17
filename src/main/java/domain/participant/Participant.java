@@ -17,24 +17,33 @@ public abstract class Participant {
         this.cards = new ArrayList<>();
     }
 
+    public abstract List<Card> getShownCard();
+
+    public abstract boolean canPick();
+
     public void addCard(Card card) {
         cards.add(card);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public abstract List<Card> getShownCard();
-
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
     }
 
     public int getTotalValue() {
         final int constTotalValue = calculateConstValue(cards);
         final int aceCount = getAceCount();
         return calculateTotalValue(constTotalValue, aceCount);
+    }
+
+    private int calculateConstValue(List<Card> cards) {
+        return cards.stream()
+                .filter(card -> !card.isAce())
+                .mapToInt(Card::getValue)
+                .sum();
+    }
+
+    private int getAceCount() {
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
     }
 
     private int calculateTotalValue(int baseValue, int aceCount) {
@@ -54,20 +63,13 @@ public abstract class Participant {
         return baseValue + totalAceAsElevenValue + totalAceAsOneValue;
     }
 
-    private int getAceCount() {
-        return (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
+    public String getName() {
+        return name;
     }
 
-    private int calculateConstValue(List<Card> cards) {
-        return cards.stream()
-                .filter(card -> !card.isAce())
-                .mapToInt(Card::getValue)
-                .sum();
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
-
-    public abstract boolean canPick();
 
     @Override
     public boolean equals(Object o) {
