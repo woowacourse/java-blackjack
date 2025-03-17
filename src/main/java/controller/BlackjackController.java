@@ -1,6 +1,8 @@
 package controller;
 
 import domain.card.Card;
+import domain.game.EarningResult;
+import domain.game.PlayerBets;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import dto.FinalResultDTO;
@@ -30,6 +32,15 @@ public class BlackjackController {
     public void play() {
         Dealer dealer = new Dealer();
         List<Player> players = inputView.getPlayers();
+
+        PlayerBets playerBets = new PlayerBets(players.stream()
+                .collect(Collectors.toMap(
+                        player -> player,
+                        player -> inputView.getBetMoney(player.getName()),
+                        (player1, player2) -> player1,
+                        LinkedHashMap::new
+                )));
+
         GameManager gameManager = new GameManager(dealer, players);
         gameManager.distributeSetUpCards();
         SetUpCardsDTO setUpCardsDTO = createSetUpCardsDTO(dealer, players);
@@ -38,8 +49,12 @@ public class BlackjackController {
         distributeExtraCardToPlayers(gameManager, players);
         distributeExtraCardToDealer(gameManager, dealer);
 
+        EarningResult earningResult = gameManager.evaluateEarning(playerBets);
+
         List<FinalResultDTO> finalResultDTOS = createFinalResultDTOs(dealer, players);
         outputView.printFinalCardDeck(finalResultDTOS);
+
+        outputView.printFinalEarning(earningResult);
     }
 
     private void distributeExtraCardToPlayers(GameManager gameManager, List<Player> players) {
@@ -54,7 +69,7 @@ public class BlackjackController {
     }
 
     private void distributeExtraCardToDealer(GameManager gameManager, Dealer dealer) {
-        if(dealer.canTakeMoreCard()){
+        if (dealer.canTakeMoreCard()) {
             gameManager.distributeExtraCardToParticipant(dealer);
             outputView.printDealerTake();
         }
