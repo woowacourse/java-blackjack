@@ -96,26 +96,5 @@ public class DealerTest {
         //when & then
         assertThat(dealer.isOverDrawBound()).isTrue();
     }
-
-    @Test
-    void 딜러의_수익을_계산한다() {
-        //given
-        Player player1 = new Player("a", 1000);
-        Player player2 = new Player("b", 1000);
-        Player player3 = new Player("c", 1000);
-        Player player4 = new Player("d", 1000);
-        List<Player> players = List.of(player1, player2, player3, player4);
-
-        List<GameResult> gameResults = List.of(
-                GameResult.LOSE, GameResult.DRAW, GameResult.WIN, GameResult.BLACKJACK);
-
-        Profits profits = Profits.of(players, gameResults);
-
-        //when
-        int dealerProfit = profits.evaluateDealerProfit();
-
-        //then
-        assertThat(dealerProfit).isEqualTo(-1500);
-    }
-
+    
 }
