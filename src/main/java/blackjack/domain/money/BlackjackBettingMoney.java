@@ -2,7 +2,7 @@ package blackjack.domain.money;
 
 import blackjack.domain.WinningStatus;
 
-public class BlackjackBettingMoney {
+public final class BlackjackBettingMoney {
     
     private static final int BETTING_MINIMUM_MONEY = 10_000;
     private static final int BETTING_MAXIMUM_MONEY = 1_000_000;

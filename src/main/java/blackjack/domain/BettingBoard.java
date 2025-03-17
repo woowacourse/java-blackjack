@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BettingBoard {
+public final class BettingBoard {
     
     private final Map<Player, BlackjackBettingMoney> bettingBoard;
     

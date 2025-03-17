@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-public class Players {
+public final class Players {
     
     private static final int PLAYER_MIN_SIZE = 1;
     private static final int PLAYER_MAX_SIZE = 6;
