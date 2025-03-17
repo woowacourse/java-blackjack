@@ -2,6 +2,7 @@ package controller;
 
 import java.util.List;
 import java.util.Map;
+import model.betting.PlayersBetting;
 import model.card.Deck;
 import model.betting.BettingResult;
 import model.participant.Dealer;
@@ -31,7 +32,8 @@ public class BlackjackController {
         turnController.runParticipantsTurn();
 
         ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
-        BettingResult bettingResult = new BettingResult(playersTurn.getPlayersBet(), participantWinningResult);
+        PlayersBetting playersBetting = new PlayersBetting(playersTurn.getPlayersBet());
+        BettingResult bettingResult = new BettingResult(playersBetting, participantWinningResult);
         Map<Player, Integer> finalProfitByPlayer = bettingResult.calculatePlayerBettingResult(players, dealer);
         int finalProfitByDealer = bettingResult.calculateDealerFinalResult(finalProfitByPlayer);
 

@@ -9,11 +9,11 @@ import model.winning.ParticipantWinningResult;
 import model.winning.WinningResult;
 
 public class BettingResult {
-    private final Map<Player, Betting> betting;
+    private final PlayersBetting playersBetting;
     private final ParticipantWinningResult participantWinningResult;
 
-    public BettingResult(Map<Player, Betting> betting, ParticipantWinningResult participantWinningResult) {
-        this.betting = betting;
+    public BettingResult(PlayersBetting playersBetting, ParticipantWinningResult participantWinningResult) {
+        this.playersBetting = playersBetting;
         this.participantWinningResult = participantWinningResult;
     }
 
@@ -35,7 +35,7 @@ public class BettingResult {
     }
 
     private int calculateFinalBettingResult(Player player, Dealer dealer) {
-        Betting playerBetting = betting.get(player);
+        Betting playerBetting = playersBetting.findPlayerBet(player);
         if (playerBetting.checkSurrender()) {
             return playerBetting.calculateSurrender();
         }
@@ -46,7 +46,7 @@ public class BettingResult {
     }
 
     private int computeResultByWinningStatus(Player player, WinningResult winningResult) {
-        Betting bet = betting.get(player);
+        Betting bet = playersBetting.findPlayerBet(player);
         if (winningResult == WinningResult.LOSE) {
             return bet.calculateLose();
         }
@@ -60,7 +60,7 @@ public class BettingResult {
     }
 
     private int computeInsuranceResult(Player player, Dealer dealer) {
-        Betting bet = betting.get(player);
+        Betting bet = playersBetting.findPlayerBet(player);
         return bet.calculateInsurance(dealer);
     }
 }

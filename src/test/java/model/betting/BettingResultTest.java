@@ -35,7 +35,8 @@ class BettingResultTest {
         Players players = new Players(List.of(player));
         ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
         Map<Player, Betting> map = new HashMap<>(Map.of(player, new Betting(10000)));
-        BettingResult bettingResult = new BettingResult(map, participantWinningResult);
+        PlayersBetting playersBetting = new PlayersBetting(map);
+        BettingResult bettingResult = new BettingResult(playersBetting, participantWinningResult);
         Map<Player, Integer> finalResult =  bettingResult.calculatePlayerBettingResult(players, dealer);
         int expect = 10000;
         int result = finalResult.get(player);
@@ -50,7 +51,8 @@ class BettingResultTest {
         Players players = new Players(List.of(player));
         ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
         Map<Player, Betting> map = new HashMap<>(Map.of(player, new Betting(10000)));
-        BettingResult bettingResult = new BettingResult(map, participantWinningResult);
+        PlayersBetting playersBetting = new PlayersBetting(map);
+        BettingResult bettingResult = new BettingResult(playersBetting, participantWinningResult);
         Map<Player, Integer> finalResult =  bettingResult.calculatePlayerBettingResult(players, dealer);
         int expect = -10000;
         int result = finalResult.get(player);
@@ -65,7 +67,8 @@ class BettingResultTest {
         Players players = new Players(List.of(player));
         ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
         Map<Player, Betting> map = new HashMap<>(Map.of(player, new Betting(10000)));
-        BettingResult bettingResult = new BettingResult(map, participantWinningResult);
+        PlayersBetting playersBetting = new PlayersBetting(map);
+        BettingResult bettingResult = new BettingResult(playersBetting, participantWinningResult);
         Map<Player, Integer> finalResult =  bettingResult.calculatePlayerBettingResult(players, dealer);
         int expect = 0;
         int result = finalResult.get(player);
@@ -81,7 +84,8 @@ class BettingResultTest {
         Players players = new Players(List.of(player));
         ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
         Map<Player, Betting> map = new HashMap<>(Map.of(player, new Betting(10000)));
-        BettingResult bettingResult = new BettingResult(map, participantWinningResult);
+        PlayersBetting playersBetting = new PlayersBetting(map);
+        BettingResult bettingResult = new BettingResult(playersBetting, participantWinningResult);
         Map<Player, Integer> finalResult =  bettingResult.calculatePlayerBettingResult(players, dealer);
         int expect = 15000;
         int result = finalResult.get(player);
@@ -103,7 +107,8 @@ class BettingResultTest {
         ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
         Map<Player, Betting> map = new HashMap<>(Map.of(player, betting));
 
-        BettingResult bettingResult = new BettingResult(map, participantWinningResult);
+        PlayersBetting playersBetting = new PlayersBetting(map);
+        BettingResult bettingResult = new BettingResult(playersBetting, participantWinningResult);
 
         int expect = 6000;
         Map<Player, Integer> result = bettingResult.calculatePlayerBettingResult(players, dealer);
@@ -124,7 +129,8 @@ class BettingResultTest {
         ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
         Map<Player, Betting> map = new HashMap<>(Map.of(player, betting));
 
-        BettingResult bettingResult = new BettingResult(map, participantWinningResult);
+        PlayersBetting playersBetting = new PlayersBetting(map);
+        BettingResult bettingResult = new BettingResult(playersBetting, participantWinningResult);
 
         int expect = -6000;
         Map<Player, Integer> result = bettingResult.calculatePlayerBettingResult(players, dealer);
@@ -145,7 +151,8 @@ class BettingResultTest {
         ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
         Map<Player, Betting> map = new HashMap<>(Map.of(player, betting));
 
-        BettingResult bettingResult = new BettingResult(map, participantWinningResult);
+        PlayersBetting playersBetting = new PlayersBetting(map);
+        BettingResult bettingResult = new BettingResult(playersBetting, participantWinningResult);
 
         int expect = 0;
         Map<Player, Integer> result = bettingResult.calculatePlayerBettingResult(players, dealer);
@@ -167,7 +174,8 @@ class BettingResultTest {
         ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
         Map<Player, Betting> map = new HashMap<>(Map.of(player, betting));
 
-        BettingResult bettingResult = new BettingResult(map, participantWinningResult);
+        PlayersBetting playersBetting = new PlayersBetting(map);
+        BettingResult bettingResult = new BettingResult(playersBetting, participantWinningResult);
 
         int expect = -5000;
         Map<Player, Integer> result = bettingResult.calculatePlayerBettingResult(players, dealer);
@@ -189,7 +197,8 @@ class BettingResultTest {
         ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
         Map<Player, Betting> map = new HashMap<>(Map.of(player, betting));
 
-        BettingResult bettingResult = new BettingResult(map, participantWinningResult);
+        PlayersBetting playersBetting = new PlayersBetting(map);
+        BettingResult bettingResult = new BettingResult(playersBetting, participantWinningResult);
 
         int expect = 5000;
         Map<Player, Integer> playerResult = bettingResult.calculatePlayerBettingResult(players, dealer);
