@@ -12,7 +12,7 @@ public class BettingResult {
     public BettingResult(Map<Player, PlayerResult> winLoseResult) {
         Map<Player, Integer> bettingResult = new HashMap<>();
         winLoseResult.forEach((participant, result) -> {
-            int betAmount = participant.getBettingMoney();
+            int betAmount = participant.getBettingMoney().getAmount();
             int payout = calculatePayout(result, betAmount);
             bettingResult.put(participant, payout);
         });
@@ -39,7 +39,7 @@ public class BettingResult {
     }
 
     public int getDealerResult() {
-        return bettingResult.values().stream()
+        return -bettingResult.values().stream()
                 .mapToInt(Integer::intValue)
                 .sum();
     }
