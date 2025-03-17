@@ -12,7 +12,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("딜러 테스트")
-public class DealerTest {
+class DealerTest {
 
     private static final Card ACE = new Card(CardNumber.ACE, CardShape.CLOVER);
 
