@@ -7,7 +7,6 @@ import java.util.List;
 
 public class Players {
 
-    private static final int PARTICIPANTS_MIN_SIZE = 1;
     private static final int PARTICIPANTS_MAX_SIZE = 25;
 
     private final List<Player> joinedPlayers;

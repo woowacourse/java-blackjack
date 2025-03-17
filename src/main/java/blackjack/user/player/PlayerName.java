@@ -33,7 +33,9 @@ public class PlayerName {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof PlayerName that)) return false;
+        if (!(o instanceof PlayerName that)) {
+            return false;
+        }
         return Objects.equals(name, that.name);
     }
 

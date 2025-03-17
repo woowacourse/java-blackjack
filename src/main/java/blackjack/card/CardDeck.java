@@ -21,7 +21,7 @@ public class CardDeck {
     }
 
     public Card pickRandomCard() {
-        if(cards.isEmpty()) {
+        if (cards.isEmpty()) {
             throw new IllegalArgumentException("카드덱의 카드를 모두 소진하여 더이상 카드를 뽑을 수 없습니다.");
         }
         return cards.poll();

@@ -49,8 +49,4 @@ public class BlackjackGame {
     public Players getPlayers() {
         return players;
     }
-
-    public List<PlayerName> getPlayerNames() {
-        return Collections.unmodifiableList(players.getPlayerNames());
-    }
 }
