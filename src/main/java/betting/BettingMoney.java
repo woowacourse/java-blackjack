@@ -1,4 +1,4 @@
-package participant;
+package betting;
 
 public class BettingMoney {
 

@@ -1,16 +1,15 @@
-import card.Card;
 import deck.Deck;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import participant.BettingMoney;
+import betting.BettingMoney;
 import participant.Dealer;
 import participant.GameResult;
 import participant.Nickname;
 import participant.Player;
 import participant.Players;
-import participant.Profit;
+import betting.Profit;
 import view.InputView;
 
 public class BlackjackGame {

@@ -1,5 +1,6 @@
 package participant;
 
+import betting.BettingMoney;
 import card.Card;
 import java.util.List;
 import state.finished.Blackjack;

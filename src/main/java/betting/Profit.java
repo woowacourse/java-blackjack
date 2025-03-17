@@ -1,6 +1,7 @@
-package participant;
+package betting;
 
 import java.util.Map;
+import participant.Player;
 
 public class Profit {
 

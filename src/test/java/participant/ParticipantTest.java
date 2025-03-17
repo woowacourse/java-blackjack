@@ -1,5 +1,6 @@
 package participant;
 
+import betting.BettingMoney;
 import card.Card;
 import card.CardNumber;
 import card.CardType;

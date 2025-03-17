@@ -1,13 +1,11 @@
 import deck.Deck;
 import deck.ShuffledDeckCreator;
-import java.util.ArrayList;
 import java.util.List;
-import participant.BettingMoney;
 import participant.Dealer;
 import participant.Nickname;
 import participant.Player;
 import participant.Players;
-import participant.Profit;
+import betting.Profit;
 import view.InputView;
 import view.OutputView;
 

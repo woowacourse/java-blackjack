@@ -4,12 +4,11 @@ import card.Card;
 import card.CardNumber;
 import card.CardType;
 import java.util.List;
-import java.util.Map;
 import participant.Dealer;
 import participant.GameResult;
 import participant.Player;
 import participant.Players;
-import participant.Profit;
+import betting.Profit;
 
 public class OutputView {
 
