@@ -34,7 +34,7 @@ public class ConsoleBlackjackGame {
 
     private void addInitialBet(Blackjack blackjack, BetManager betManager) {
         for (Player participant : blackjack.getParticipants()) {
-            betManager.addBet(participant, inputView.inputBetAmount(participant.getName()));
+            betManager.addInitialBet(participant, inputView.inputBetAmount(participant.getName()));
         }
     }
 
@@ -73,7 +73,7 @@ public class ConsoleBlackjackGame {
     }
 
     private void calculateBettingResult(PlayerResult playerResult, BetManager betManager) {
-        betManager.calculateBettingResult(playerResult.getMatchResults());
-        outputView.printBettingResult(betManager.calculateDealerBettingResult(), betManager.getWager());
+        betManager.calculateParticipantBetResults(playerResult.getMatchResults());
+        outputView.printBettingResult(betManager.calculateDealerBetResultAmount(), betManager.getBetResults());
     }
 }

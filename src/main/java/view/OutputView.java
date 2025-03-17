@@ -1,6 +1,6 @@
 package view;
 
-import bet.Bet;
+import bet.BetResult;
 import card.Card;
 import player.Player;
 import java.util.List;
@@ -47,10 +47,10 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.%n");
     }
 
-    public void printBettingResult(int dealerTotalAmount, Map<Player, Bet> wager) {
+    public void printBettingResult(int dealerTotalAmount, Map<Player, BetResult> betResults) {
         System.out.println("## 최종 수익");
         System.out.printf("딜러: %d%n", dealerTotalAmount);
-        wager.forEach((key, value) -> System.out.printf("%s: %d%n", key.getName(), value.getAmount()));
+        betResults.forEach((key, value) -> System.out.printf("%s: %d%n", key.getName(), value.getAmount()));
 
     }
 }
