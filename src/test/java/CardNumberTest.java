@@ -3,6 +3,7 @@ import domain.CardShape;
 import domain.GameManager;
 import domain.TrumpCard;
 import domain.TrumpCardManager;
+import domain.user.Betting;
 import domain.user.User;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -16,7 +17,7 @@ public class CardNumberTest {
     void test() {
 
         // given
-        GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), List.of(1L),
+        GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), List.of(new Betting(11000L)),
                 new TrumpCardManager());
         User user = gameManager.findPlayerByUsername("레몬");
         gameManager.drawMoreCard(user);

@@ -3,6 +3,7 @@ package controller;
 import domain.GameManager;
 import domain.TrumpCard;
 import domain.TrumpCardManager;
+import domain.user.Betting;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
@@ -26,7 +27,7 @@ public class BlackjackController {
 
     public void run() {
         List<String> playerNames = Parser.parserStringToList(inputView.inputUsers());
-        List<Long> playersBettingMoney = inputBettingMoney(playerNames);
+        List<Betting> playersBettingMoney = inputBettingMoney(playerNames);
 
         GameManager gameManager = GameManager.initailizeGameManager(playerNames, playersBettingMoney, trumpCardManager);
 
@@ -40,8 +41,10 @@ public class BlackjackController {
         calculateGameResult(gameManager);
     }
 
-    private List<Long> inputBettingMoney(final List<String> playerNames) {
-        return playerNames.stream().map(inputView::inputBettingMoney)
+    private List<Betting> inputBettingMoney(final List<String> playerNames) {
+        return playerNames.stream()
+                .map(inputView::inputBettingMoney)
+                .map(Betting::new)
                 .toList();
     }
 

@@ -43,7 +43,7 @@ class UserTest {
         void test() {
             // given
             FakeTrumpCardManager trumpCardManager = new FakeTrumpCardManager(cardDeck);
-            GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), playersBettingMoney,
+            GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), List.of(new Betting(10000)),
                     trumpCardManager);
             Player user = gameManager.findPlayerByUsername("레몬");
 
@@ -62,10 +62,10 @@ class UserTest {
         @DisplayName("딜러는 자신이 가진 하나의 카드만 공개해야 한다")
         @Test
         void test2() {
-            
+
             // given
             FakeTrumpCardManager trumpCardManager = new FakeTrumpCardManager(cardDeck);
-            GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), playersBettingMoney,
+            GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), List.of(new Betting(10000)),
                     trumpCardManager);
             gameManager.firstHandOutCard();
             User dealer = gameManager.getDealer();
@@ -82,7 +82,7 @@ class UserTest {
     void test3() {
         //given
         FakeTrumpCardManager trumpCardManager = new FakeTrumpCardManager(cardDeck);
-        GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), playersBettingMoney,
+        GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), List.of(new Betting(10000)),
                 trumpCardManager);
         Player player = gameManager.findPlayerByUsername("레몬");
 

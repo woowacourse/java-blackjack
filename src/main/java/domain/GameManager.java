@@ -26,11 +26,11 @@ public class GameManager {
         this.trumpCardManager = trumpCardManager;
     }
 
-    public static GameManager initailizeGameManager(List<String> names, List<Long> playersBettingMoney,
+    public static GameManager initailizeGameManager(List<String> names, List<Betting> playersBettingMoney,
                                                     TrumpCardManager trumpCardManager) {
         validateNames(names);
         List<Player> players = IntStream.range(0, names.size())
-                .mapToObj(i -> new Player(names.get(i), new Betting(playersBettingMoney.get(i))))
+                .mapToObj(i -> new Player(names.get(i), playersBettingMoney.get(i)))
                 .toList();
         Dealer dealer = new Dealer();
         return new GameManager(players, dealer, trumpCardManager);

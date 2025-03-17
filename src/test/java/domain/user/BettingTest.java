@@ -46,7 +46,7 @@ public class BettingTest {
         // when & then
         SoftAssertions.assertSoftly(softAssertions -> {
             softAssertions.assertThatIllegalArgumentException().isThrownBy(() -> new Betting(zeroAmount))
-                    .withMessage("배팅금액을 입력해 주세요.");
+                    .withMessage("배팅금액을 1원 이상 입력해 주세요.");
         });
     }
 }

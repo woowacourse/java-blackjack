@@ -7,6 +7,7 @@ import domain.GameManager;
 import domain.GameResult;
 import domain.TrumpCard;
 import domain.TrumpCardManager;
+import domain.user.Betting;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
@@ -30,7 +31,9 @@ public class GameManagerTest {
 
         //when && then
         assertThatCode(
-                () -> GameManager.initailizeGameManager(names, List.of(1L, 1L, 1L, 1L, 1L, 1L, 1L),
+                () -> GameManager.initailizeGameManager(names,
+                        List.of(new Betting(1), new Betting(1), new Betting(1), new Betting(1), new Betting(1),
+                                new Betting(1), new Betting(1)),
                         new TrumpCardManager())).doesNotThrowAnyException();
     }
 
@@ -46,7 +49,9 @@ public class GameManagerTest {
     @ParameterizedTest
     @MethodSource("userExceptionTestCase")
     void test2(List<String> names) {
-        assertThatThrownBy(() -> GameManager.initailizeGameManager(names, List.of(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L),
+        assertThatThrownBy(() -> GameManager.initailizeGameManager(names,
+                List.of(new Betting(10000), new Betting(10000), new Betting(10000), new Betting(10000),
+                        new Betting(10000), new Betting(10000), new Betting(10000)),
                 new TrumpCardManager()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("유저는 1명 이상 7명 이하로 등록해야 합니다.");
@@ -63,7 +68,9 @@ public class GameManagerTest {
     @DisplayName("유저는 중복될 수 없다.")
     void test3() {
         List<String> names = List.of("수양", "레몬", "수양", "레몬", "부부", "롸롸", "뫄뫄");
-        assertThatThrownBy(() -> GameManager.initailizeGameManager(names, List.of(1L, 1L, 1L, 1L, 1L, 1L, 1L),
+        assertThatThrownBy(() -> GameManager.initailizeGameManager(names,
+                List.of(new Betting(10000), new Betting(10000), new Betting(10000), new Betting(10000),
+                        new Betting(10000), new Betting(10000), new Betting(10000)),
                 new TrumpCardManager()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("유저는 중복될 수 없습니다.");
@@ -74,7 +81,8 @@ public class GameManagerTest {
     void test4() {
 
         // given
-        GameManager gameManager = GameManager.initailizeGameManager(List.of("수양", "레몬"), List.of(1L, 1L),
+        GameManager gameManager = GameManager.initailizeGameManager(List.of("수양", "레몬"),
+                List.of(new Betting(10000), new Betting(10000)),
                 new TrumpCardManager());
 
         // when
@@ -100,7 +108,7 @@ public class GameManagerTest {
     void test7() {
 
         //given
-        GameManager gameManager = GameManager.initailizeGameManager(List.of("수양"), List.of(1L),
+        GameManager gameManager = GameManager.initailizeGameManager(List.of("수양"), List.of(new Betting(10000)),
                 new TrumpCardManager());
         Player player = gameManager.findPlayerByUsername("수양");
         Dealer dealer = gameManager.getDealer();
@@ -124,7 +132,7 @@ public class GameManagerTest {
     void test8(List<TrumpCard> playerCards, List<TrumpCard> dealerCards, GameResult expectStatus) {
 
         //given
-        GameManager gameManager = GameManager.initailizeGameManager(List.of("수양"), List.of(1L),
+        GameManager gameManager = GameManager.initailizeGameManager(List.of("수양"), List.of(new Betting(10000)),
                 new TrumpCardManager());
         Player player = gameManager.findPlayerByUsername("수양");
         Dealer dealer = gameManager.getDealer();
@@ -179,7 +187,7 @@ public class GameManagerTest {
     @Test
     void test9() {
         // given
-        GameManager gameManager = GameManager.initailizeGameManager(List.of("유저"), List.of(1L),
+        GameManager gameManager = GameManager.initailizeGameManager(List.of("유저"), List.of(new Betting(10000)),
                 new TrumpCardManager());
 
         Player player = gameManager.findPlayerByUsername("유저");
@@ -204,14 +212,14 @@ public class GameManagerTest {
     void test10() {
         //given
         GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬", "띵화"),
-                List.of(300000000L, 500000000L), new TrumpCardManager());
+                List.of(new Betting(300000000), new Betting(500000000)), new TrumpCardManager());
         Player user1 = gameManager.findPlayerByUsername("레몬");
         Player user2 = gameManager.findPlayerByUsername("띵화");
 
         //then
         SoftAssertions.assertSoftly(softAssertions -> {
-            softAssertions.assertThat(user1.getBetting().getBettingMoney()).isEqualTo(300000000L);
-            softAssertions.assertThat(user2.getBetting().getBettingMoney()).isEqualTo(500000000L);
+            softAssertions.assertThat(user1.getBetting().getBettingMoney()).isEqualTo(300000000);
+            softAssertions.assertThat(user2.getBetting().getBettingMoney()).isEqualTo(500000000);
         });
     }
 
@@ -220,7 +228,7 @@ public class GameManagerTest {
     void test11() {
         //given
         GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"),
-                List.of(300000000L), new TrumpCardManager());
+                List.of(new Betting(300000000)), new TrumpCardManager());
         Player player = gameManager.findPlayerByUsername("레몬");
         Dealer dealer = gameManager.getDealer();
 
@@ -235,7 +243,7 @@ public class GameManagerTest {
         Map<User, Long> gameResult = gameManager.createGameResult();
 
         //then
-        Assertions.assertThat(gameResult.get(player)).isEqualTo(300000000L);
+        Assertions.assertThat(gameResult.get(player)).isEqualTo(300000000);
     }
 
     @DisplayName("플레이어는 블랙잭으로 승리시 배팅금액의 1.5배를 얻는다.")
@@ -243,7 +251,7 @@ public class GameManagerTest {
     void test12() {
         //given
         GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"),
-                List.of(300000000L), new TrumpCardManager());
+                List.of(new Betting(300000000)), new TrumpCardManager());
         Player player = gameManager.findPlayerByUsername("레몬");
         Dealer dealer = gameManager.getDealer();
 
@@ -260,7 +268,7 @@ public class GameManagerTest {
 
         //then
         Assertions.assertThat(compare).isEqualTo(GameResult.BLACKJACK);
-        Assertions.assertThat(gameResult.get(player)).isEqualTo(450000000L);
+        Assertions.assertThat(gameResult.get(player)).isEqualTo(450000000);
     }
 
     @DisplayName("딜러는 최종 수익을 낸다.")
@@ -269,7 +277,7 @@ public class GameManagerTest {
 
         //given
         GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬", "륜도"),
-                List.of(300000000L, 20000L), new TrumpCardManager());
+                List.of(new Betting(300000000), new Betting(20000)), new TrumpCardManager());
         Player player1 = gameManager.findPlayerByUsername("레몬");
         Player player2 = gameManager.findPlayerByUsername("륜도");
         Dealer dealer = gameManager.getDealer();
@@ -288,7 +296,7 @@ public class GameManagerTest {
         long dealerProfit = gameManager.calculateDealerProfit(gameResult);
 
         //then
-        Assertions.assertThat(dealerProfit).isEqualTo(-449980000L);
+        Assertions.assertThat(dealerProfit).isEqualTo(-449980000);
     }
 
 }
