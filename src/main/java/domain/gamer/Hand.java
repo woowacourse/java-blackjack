@@ -30,7 +30,7 @@ public class Hand {
         return getSumOfRank() > CARD_MAX_SUM;
     }
 
-    public boolean isImPossibleDrawCard() {
+    public boolean isImpossibleDrawCard() {
         return getSumOfRank() == CARD_MAX_SUM;
     }
 

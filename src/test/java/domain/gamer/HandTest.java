@@ -65,7 +65,7 @@ class HandTest {
         hand.add(card10);
 
         // then
-        assertThat(hand.isImPossibleDrawCard()).isTrue();
+        assertThat(hand.isImpossibleDrawCard()).isTrue();
     }
 
     @DisplayName("카드의 합이 21 이하면 카드를 뽑을 수 있다.")
@@ -78,7 +78,7 @@ class HandTest {
         hand.add(card1);
 
         // then
-        assertThat(hand.isImPossibleDrawCard()).isFalse();
+        assertThat(hand.isImpossibleDrawCard()).isFalse();
     }
 
     @DisplayName("카드의 합이 21 이하면 버스트가 아니다.")
@@ -106,7 +106,7 @@ class HandTest {
         hand.add(card10);
         hand.add(card10);
         hand.add(card10);
-        
+
         assertThat(hand.isBust()).isTrue();
     }
 

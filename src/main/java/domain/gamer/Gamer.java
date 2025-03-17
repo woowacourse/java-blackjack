@@ -19,8 +19,8 @@ public abstract class Gamer {
         return hand.isBust();
     }
 
-    public boolean isImPossibleDrawCard() {
-        return hand.isImPossibleDrawCard();
+    public boolean isImpossibleDrawCard() {
+        return hand.isImpossibleDrawCard();
     }
 
     public boolean isBlackJack() {

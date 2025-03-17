@@ -199,7 +199,7 @@ class PlayerTest {
         player.hit(new Card(Rank.TEN, Shape.SPADE));
 
         // when & then
-        assertThat(player.isImPossibleDrawCard()).isFalse();
+        assertThat(player.isImpossibleDrawCard()).isFalse();
     }
 
     @DisplayName("손에 있는 카드의 최소 합이 21이 넘어가면 카드를 뽑지 않는다.")
@@ -212,7 +212,7 @@ class PlayerTest {
         player.hit(new Card(Rank.ACE, Shape.SPADE));
 
         // when & then
-        assertThat(player.isImPossibleDrawCard()).isTrue();
+        assertThat(player.isImpossibleDrawCard()).isTrue();
     }
 
     @DisplayName("플레이어가 블랙잭이 아니면서 승리 시 배팅금액 만큼 수익을 얻는다.")

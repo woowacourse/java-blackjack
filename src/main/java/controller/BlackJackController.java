@@ -87,7 +87,7 @@ public class BlackJackController {
     }
 
     private boolean isMoreCard(final Deck deck, final Player player) {
-        if (player.isImPossibleDrawCard()) {
+        if (player.isImpossibleDrawCard()) {
             return false;
         }
 
@@ -110,7 +110,7 @@ public class BlackJackController {
     }
 
     private boolean isContinueDrawing(final String input, final Player player) {
-        if (player.isBust() || player.isImPossibleDrawCard()) {
+        if (player.isBust() || player.isImpossibleDrawCard()) {
             return false;
         }
 
@@ -126,7 +126,7 @@ public class BlackJackController {
 
             drawCardForPlayer(deck, player);
 
-            if (player.isBust() || player.isImPossibleDrawCard()) {
+            if (player.isBust() || player.isImpossibleDrawCard()) {
                 break;
             }
         }
