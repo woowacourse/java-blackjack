@@ -112,7 +112,7 @@ class BettingTableTest {
 
     @Test
     @DisplayName("게임 종료 시 최종 수익을 출력한다.")
-    void computeResultTest() {
+    void computeResultTest1() {
         // given
         int player1Money = 10000;
         int player2Money = 5000;
@@ -137,5 +137,28 @@ class BettingTableTest {
         assertThat(profit.get(player1)).isEqualTo(player1Money);
         assertThat(profit.get(player2)).isEqualTo(-player2Money);
         assertThat(profit.get(dealer)).isEqualTo(-player1Money + player2Money);
+    }
+
+
+    @Test
+    @DisplayName("무승부일 경우 배팅 금액을 그대로 돌려받는다.")
+    void computeResultTest2() {
+        // given
+        int initialMoney = 10000;
+        Player player = new Player("pobi");
+        bettingTable.betting(player, initialMoney);
+        GameManager gameManager = GameManagerFixture.GameManagerWith(
+            DeckFixture.deckOf(
+                CardNumber.JACK, CardNumber.ACE, // dealer
+                CardNumber.JACK, CardNumber.ACE)); // player 1
+        gameManager.drawStartingCards(player);
+        gameManager.drawStartingCards(dealer);
+
+        // when
+        bettingTable.computeResult();
+
+        // then
+        Map<Gamer, Double> profit = bettingTable.getAllProfit();
+        assertThat(profit.get(player)).isEqualTo(0);
     }
 }

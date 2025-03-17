@@ -51,6 +51,7 @@ public class BettingTable {
 
     public void computeResult() {
         putBettingAmountsWith(player -> RoundResult.judgeResult(player, dealer) == RoundResult.WIN, BettingAmount::win);
+        putBettingAmountsWith(player -> RoundResult.judgeResult(player, dealer) == RoundResult.TIE, BettingAmount::tie);
     }
 
     private void putBettingAmountsWith(Predicate<Player> condition, UnaryOperator<BettingAmount> action) {

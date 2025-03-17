@@ -24,4 +24,8 @@ public record BettingAmount(
     public double getProfit() {
         return end - initial;
     }
+
+    public BettingAmount tie() {
+        return new BettingAmount(initial, initial);
+    }
 }
