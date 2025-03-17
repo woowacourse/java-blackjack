@@ -1,7 +1,7 @@
 package blackjack.gametable.card;
 
-import blackjack.constant.TrumpSuit;
 import blackjack.constant.TrumpRank;
+import blackjack.constant.TrumpSuit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -26,7 +26,7 @@ public class Deck {
     }
 
     public Cards drawInitialCards() {
-        return new Cards(new ArrayList<>(cards.drawTwoCards()));
+        return new Cards(cards.drawInitialCards());
     }
 
     public List<Cards> drawInitialCards(int count) {
@@ -37,8 +37,8 @@ public class Deck {
         return new ArrayList<>(cards);
     }
 
-    public Card drawOneCard() {
-        return cards.drawOneCard();
+    public Card drawCard() {
+        return cards.drawCard();
     }
 
     public int getSize() {
