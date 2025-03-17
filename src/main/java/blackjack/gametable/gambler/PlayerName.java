@@ -4,16 +4,16 @@ public class PlayerName {
 
     public static final int NAME_LENGTH_LIMIT = 10;
 
-    private final String nickname;
+    private final String playerName;
 
-    public PlayerName(String nickname) {
-        validateNickNameLength(nickname);
-        validateNonBlank(nickname);
-        this.nickname = nickname;
+    public PlayerName(String playerName) {
+        validateNickNameLength(playerName);
+        validateNonBlank(playerName);
+        this.playerName = playerName;
     }
 
     public String getValue() {
-        return nickname;
+        return playerName;
     }
 
     private void validateNickNameLength(String nickname) {
