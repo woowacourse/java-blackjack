@@ -8,20 +8,17 @@ import view.OutputView;
 
 public class BlackjackGameManager {
 
-    private final BlackjackGameBoard blackjackGameBoard;
-    
-    public BlackjackGameManager(BlackjackGameBoard blackjackGameBoard) {
-        this.blackjackGameBoard = blackjackGameBoard;
+    public BlackjackGameManager() {
     }
 
-    public void startGame(Dealer dealer, Users users) {
-        initialCardsDistribution(dealer, users);
-        hitOrStayPhase(dealer, users);
-        printPlayerCardsAndSum(dealer, users);
-        printPlayerProfit(dealer, users);
+    public void startGame(BlackjackGameBoard blackjackGameBoard, Dealer dealer, Users users) {
+        initialCardsDistribution(blackjackGameBoard, dealer, users);
+        hitOrStayPhase(blackjackGameBoard, dealer, users);
+        printPlayerCardsAndSum(blackjackGameBoard, dealer, users);
+        printPlayerProfit(blackjackGameBoard, dealer, users);
     }
 
-    private void initialCardsDistribution(Dealer dealer, Users users) {
+    private void initialCardsDistribution(BlackjackGameBoard blackjackGameBoard, Dealer dealer, Users users) {
         blackjackGameBoard.distributeInitialCards(dealer);
         for (User user : users.getUsers()) {
             blackjackGameBoard.distributeInitialCards(user);
@@ -34,14 +31,14 @@ public class BlackjackGameManager {
         OutputView.printInitialCards(dealer, users);
     }
 
-    private void hitOrStayPhase(Dealer dealer, Users users) {
+    private void hitOrStayPhase(BlackjackGameBoard blackjackGameBoard, Dealer dealer, Users users) {
         for (User user : users.getUsers()) {
             blackjackGameBoard.hitUntilStay(user, InputView::inputWantHit, OutputView::printPlayerCards);
         }
         blackjackGameBoard.hitUntilNotHittable(dealer, OutputView::printDealerHitMessage);
     }
 
-    private void printPlayerCardsAndSum(Dealer dealer, Users users) {
+    private void printPlayerCardsAndSum(BlackjackGameBoard blackjackGameBoard, Dealer dealer, Users users) {
         OutputView.printPlayerCardsAndSum(dealer.getName(),
                 blackjackGameBoard.playerCards(dealer), blackjackGameBoard.playerCardsSum(dealer));
         for (User user : users.getUsers()) {
@@ -50,7 +47,7 @@ public class BlackjackGameManager {
         }
     }
 
-    private void printPlayerProfit(Dealer dealer, Users users) {
+    private void printPlayerProfit(BlackjackGameBoard blackjackGameBoard, Dealer dealer, Users users) {
         OutputView.printPlayerProfit(dealer.getName(),
                 blackjackGameBoard.computeDealerProfit(dealer, users, DefaultProfitStrategy.getInstance()));
 
