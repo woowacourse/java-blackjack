@@ -59,10 +59,5 @@ public class Players {
                 .map(Player::getBettingMoney)
                 .toList();
     }
-
-    public List<Hand> getHands() {
-        return players.stream()
-                .map(Player::getHand)
-                .toList();
-    }
+    
 }
