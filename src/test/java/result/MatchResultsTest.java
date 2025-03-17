@@ -7,25 +7,22 @@ import card.CardSuit;
 import card.Deck;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
-import player.Dealer;
 import player.Participant;
-import player.Player;
-import player.Players;
+import player.Participants;
 
-class PlayerResultTest {
+class MatchResultsTest {
 
     @Test
     void 참여자들의_승패_결과를_반환한다() {
         // given
-        Player siso = new Participant("시소");
-        Player hailer = new Participant("헤일러");
-        Player bugi = new Participant("부기");
-        Player sana = new Participant("사나");
+        Participant siso = new Participant("시소");
+        Participant hailer = new Participant("헤일러");
+        Participant bugi = new Participant("부기");
+        Participant sana = new Participant("사나");
 
-        Players players = new Players(List.of(new Dealer(), siso, hailer, bugi, sana));
+        Participants participants = new Participants(List.of(siso, hailer, bugi, sana));
 
         Deck deck = new Deck(new ArrayList<>(List.of(
                 new Card(CardSuit.SPADE, CardRank.FIVE),
@@ -39,18 +36,18 @@ class PlayerResultTest {
                 new Card(CardSuit.SPADE, CardRank.FIVE),
                 new Card(CardSuit.SPADE, CardRank.FIVE)
         )));
-        Blackjack blackjack = new Blackjack(players, deck);
+        Blackjack blackjack = new Blackjack(participants, deck);
         blackjack.distributeInitialCards();
 
         // when
-        PlayerResult playerResult = new PlayerResult(blackjack.getDealer(), blackjack.getParticipants());
+        MatchResults matchResults = new MatchResults(blackjack.getDealer(), blackjack.getParticipants());
 
         // then
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(playerResult.getMatchResults().get(siso)).isEqualTo(MatchResult.WIN);
-            softly.assertThat(playerResult.getMatchResults().get(hailer)).isEqualTo(MatchResult.LOSE);
-            softly.assertThat(playerResult.getMatchResults().get(bugi)).isEqualTo(MatchResult.LOSE);
-            softly.assertThat(playerResult.getMatchResults().get(sana)).isEqualTo(MatchResult.DRAW);
+            softly.assertThat(matchResults.getMatchResults().get(siso)).isEqualTo(MatchResult.WIN);
+            softly.assertThat(matchResults.getMatchResults().get(hailer)).isEqualTo(MatchResult.LOSE);
+            softly.assertThat(matchResults.getMatchResults().get(bugi)).isEqualTo(MatchResult.LOSE);
+            softly.assertThat(matchResults.getMatchResults().get(sana)).isEqualTo(MatchResult.DRAW);
         });
     }
 }

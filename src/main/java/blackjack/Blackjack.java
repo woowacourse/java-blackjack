@@ -2,67 +2,67 @@ package blackjack;
 
 import card.Card;
 import card.Deck;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import player.Dealer;
 import player.Participant;
-import player.Player;
-import player.Players;
+import player.Participants;
 
 public class Blackjack {
-    private final Players players;
-    private final Deck deck;
+    private final Participants participants;
+    private final Dealer dealer;
 
-    public Blackjack(Players players, Deck deck) {
-        this.players = players;
-        this.deck = deck;
+    public Blackjack(Participants participants, Deck deck) {
+        this.participants = participants;
+        this.dealer = new Dealer(deck);
     }
 
     public Blackjack(List<String> names, Deck deck) {
-        this.players = createPlayers(new Dealer(), createParticipants(names));
-        this.deck = deck;
+        this.participants = new Participants(createParticipants(names));
+        this.dealer = new Dealer(deck);
     }
 
     public void distributeInitialCards() {
-        players.distributeInitialCards(deck);
+        dealer.receiveInitialCards();
+        participants.distributeInitialCards(getDeck());
     }
 
-    public Map<String, List<Card>> openInitialCards() {
-        return players.openInitialCards();
+    public Map<String, List<Card>> openParticipantsInitialCards() {
+        return participants.openInitialCards();
     }
 
-    public void addCard(Player player) {
-        player.drawOneCard(deck);
+    public List<Card> openDealerInitialCards() {
+        return dealer.openInitialCards();
+    }
+
+    public void addCardToParticipant(Participant participant) {
+        participant.drawOneCard(getDeck());
     }
 
     public boolean addCardToDealerIfLowScore() {
-        return getDealer().drawOneCardIfLowScore(deck);
+        return dealer.drawOneCardIfLowScore();
     }
 
     public Map<String, Integer> getNameAndSumOfAllPlayers() {
-        return players.mapToNameAndSum();
+        return participants.mapToNameAndSum();
     }
 
-    public Dealer getDealer() {
-        return players.getDealer();
+    public List<Participant> getParticipants() {
+        return participants.getParticipants();
     }
 
-    public List<Player> getParticipants() {
-        return players.getParticipants();
-    }
-
-    private Players createPlayers(Player dealer, List<Player> participants) {
-        List<Player> players = new ArrayList<>();
-        players.add(dealer);
-        players.addAll(participants);
-        return new Players(players);
-    }
-
-    private List<Player> createParticipants(List<String> names) {
+    private List<Participant> createParticipants(List<String> names) {
         return names.stream()
                 .map(Participant::new)
                 .collect(Collectors.toList());
+    }
+
+    private Deck getDeck() {
+        return dealer.getDeck();
+    }
+
+    public Dealer getDealer() {
+        return dealer;
     }
 }

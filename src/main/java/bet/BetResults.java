@@ -2,17 +2,17 @@ package bet;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import player.Player;
+import player.Participant;
 
 public class BetResults {
-    private final Map<Player, BetResult> betResults;
+    private final Map<Participant, BetResult> betResults;
 
     public BetResults() {
         this.betResults = new LinkedHashMap<>();
     }
 
-    public void addBetResult(Player player, BetResult betResult) {
-        betResults.put(player, betResult);
+    public void addBetResult(Participant participant, BetResult betResult) {
+        betResults.put(participant, betResult);
     }
 
     public int calculateDealerBettingResult() {
@@ -21,7 +21,7 @@ public class BetResults {
                 .sum();
     }
 
-    public Map<Player, BetResult> getBetResults() {
+    public Map<Participant, BetResult> getBetResults() {
         return betResults;
     }
 }

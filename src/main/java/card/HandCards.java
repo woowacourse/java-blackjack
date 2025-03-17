@@ -3,12 +3,12 @@ package card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cards {
+public class HandCards {
     private static final int BLACKJACK_SCORE = 21;
 
     private final List<Card> cards;
 
-    public Cards() {
+    public HandCards() {
         this.cards = new ArrayList<>();
     }
 
@@ -29,6 +29,17 @@ public class Cards {
                         .orElseThrow(() -> new IllegalStateException("논리적으로 도달할 수 없는 예외입니다.")));
     }
 
+    private void computeCandidates(int cardIndex, int sum, List<Card> cards, List<Integer> candidates) {
+        if (cardIndex == cards.size()) {
+            candidates.add(sum);
+            return;
+        }
+
+        for (int score : cards.get(cardIndex).getScores()) {
+            computeCandidates(cardIndex + 1, sum + score, cards, candidates);
+        }
+    }
+
     public boolean isBust() {
         return computeOptimalSum() > BLACKJACK_SCORE;
     }
@@ -41,22 +52,11 @@ public class Cards {
         return cards.size();
     }
 
-    public List<Card> getCards() {
-        return cards;
-    }
-
     public List<Card> getCards(int count) {
         return cards.subList(0, count);
     }
 
-    private void computeCandidates(int cardIndex, int sum, List<Card> cards, List<Integer> candidates) {
-        if (cardIndex == cards.size()) {
-            candidates.add(sum);
-            return;
-        }
-
-        for (int score : cards.get(cardIndex).getScores()) {
-            computeCandidates(cardIndex + 1, sum + score, cards, candidates);
-        }
+    public List<Card> getCards() {
+        return cards;
     }
 }

@@ -1,7 +1,7 @@
 package bet;
 
 import java.util.Map;
-import player.Player;
+import player.Participant;
 import result.MatchResult;
 
 public class BetManager {
@@ -13,19 +13,19 @@ public class BetManager {
         betResults = new BetResults();
     }
 
-    public void addInitialBet(Player player, int amount) {
-        bets.addBet(player, amount);
+    public void addInitialBet(Participant participant, int amount) {
+        bets.addBet(participant, amount);
     }
 
-    public void calculateParticipantBetResults(Map<Player, MatchResult> matchResults) {
-        matchResults.forEach((player, matchResult) -> betResults.addBetResult(player, new BetResult(matchResult, bets.getAmount(player))));
+    public void calculateParticipantBetResults(Map<Participant, MatchResult> matchResults) {
+        matchResults.forEach((participant, matchResult) -> betResults.addBetResult(participant, new BetResult(matchResult, bets.getAmount(participant))));
     }
 
     public int calculateDealerBetResultAmount() {
         return betResults.calculateDealerBettingResult();
     }
 
-    public Map<Player, BetResult> getBetResults() {
+    public Map<Participant, BetResult> getBetResults() {
         return betResults.getBetResults();
     }
 }

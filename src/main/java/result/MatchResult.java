@@ -1,6 +1,7 @@
 package result;
 
-import player.Player;
+import player.Dealer;
+import player.Participant;
 
 public enum MatchResult {
     WIN,
@@ -9,7 +10,7 @@ public enum MatchResult {
     DRAW,
     ;
 
-    public static MatchResult calculateParticipantMatchResult(Player dealer, Player participant) {
+    public static MatchResult calculateParticipantMatchResult(Dealer dealer, Participant participant) {
         if (participant.isBlackjack() && dealer.isBlackjack()) {
             return DRAW;
         }
