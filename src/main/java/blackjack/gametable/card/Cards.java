@@ -14,8 +14,15 @@ public class Cards {
         this.cards = new ArrayList<>(cards);
     }
 
-    public void addOneCard(Card card) {
+    public void addCard(Card card) {
         cards.add(card);
+    }
+
+    public Card drawCard() {
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 남은 카드가 없습니다.");
+        }
+        return cards.removeLast();
     }
 
     public int sumCardScores() {
@@ -27,36 +34,28 @@ public class Cards {
         return sum;
     }
 
-    public boolean isBlackjack() {
-        return sumCardScores() == MAX_SCORE && cards.size() == 2;
+    public List<Card> drawInitialCards() {
+        return new ArrayList<>(List.of(drawCard(), drawCard()));
     }
 
     public List<Card> openDealerInitialCards() {
-        return List.of(cards.getFirst());
+        return new ArrayList<>(List.of(cards.getFirst()));
     }
 
     public List<Card> openPlayerInitialCards() {
         return new ArrayList<>(cards);
     }
 
-    public Card drawOneCard() {
-        return cards.removeLast();
-    }
-
-    public List<Card> drawTwoCards() {
-        return new ArrayList<>(List.of(drawOneCard(), drawOneCard()));
+    public boolean isBlackjack() {
+        return sumCardScores() == MAX_SCORE && cards.size() == 2;
     }
 
     private int calculateScore() {
-        return cards.stream()
-                .mapToInt(Card::getRankScore)
-                .sum();
+        return cards.stream().mapToInt(Card::getRankScore).sum();
     }
 
     private int countAces() {
-        return (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
+        return (int) cards.stream().filter(Card::isAce).count();
     }
 
     private int processAce(int sum) {
@@ -73,4 +72,5 @@ public class Cards {
     public List<Card> getCards() {
         return new ArrayList<>(cards);
     }
+
 }
