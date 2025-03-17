@@ -7,15 +7,15 @@ public record BlackjackScore(int value, int cardSize) {
     private static final BlackjackScore DEALER_BLACKJACK_SCORE_THRESHOLD = new BlackjackScore(17, Integer.MAX_VALUE);
 
     public BlackjackScore withAce() {
-        BlackjackScore maxBlackjackScore = this.add(ADDITIONAL_BLACKJACK_SCORE);
+        BlackjackScore maxBlackjackScore = this.addBlackjackCard();
         if (maxBlackjackScore.isGreaterThan(BLACKJACK_BLACKJACK_SCORE)) {
             return this;
         }
         return maxBlackjackScore;
     }
 
-    private BlackjackScore add(BlackjackScore otherBlackjackScore) {
-        return new BlackjackScore(this.value + otherBlackjackScore.value, this.cardSize);
+    private BlackjackScore addBlackjackCard() {
+        return new BlackjackScore(this.value + BlackjackScore.ADDITIONAL_BLACKJACK_SCORE.value, this.cardSize);
     }
 
     public WinningResult decide(BlackjackScore subBlackjackScore) {
