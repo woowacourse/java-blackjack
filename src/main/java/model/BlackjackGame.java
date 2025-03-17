@@ -8,8 +8,8 @@ import view.Intent;
 import view.OutputView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -97,7 +97,7 @@ public class BlackjackGame {
     }
 
     public void printBatingResult() {
-        HashMap<Player, Integer> playersBatingResult = players.getMatchResult(dealer);
+        Map<Player, Integer> playersBatingResult = players.getMatchResult(dealer);
         OutputView.printBatingResult(playersBatingResult);
     }
 }

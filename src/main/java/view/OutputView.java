@@ -8,7 +8,6 @@ import model.participant.Participant;
 import model.participant.Player;
 import model.participant.Players;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -102,7 +101,7 @@ public class OutputView {
         return String.format("%s카드", nickname);
     }
 
-    public static void printBatingResult(HashMap<Player, Integer> playersBatingResult) {
+    public static void printBatingResult(Map<Player, Integer> playersBatingResult) {
         System.out.println();
         System.out.println("## 최종 수익");
 

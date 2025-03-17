@@ -2,6 +2,7 @@ package model.participant;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Players {
 
@@ -25,8 +26,8 @@ public class Players {
         }
     }
 
-    public HashMap<Player, Integer> getMatchResult(Dealer dealer) {
-        HashMap<Player, Integer> batingResults = new HashMap<>();
+    public Map<Player, Integer> getMatchResult(Dealer dealer) {
+        Map<Player, Integer> batingResults = new HashMap<>();
         for (Player player : getPlayers()) {
             int earnings = player.calculateEarnings(dealer);
             batingResults.put(player, earnings);
