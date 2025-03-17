@@ -1,7 +1,7 @@
 package game;
 
 import card.Deck;
-import card.Hand;
+import hand.Hand;
 import client.AnswerType;
 import java.util.function.Consumer;
 import java.util.function.Function;

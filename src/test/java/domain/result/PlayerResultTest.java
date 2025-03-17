@@ -7,7 +7,7 @@ import static result.GameStatus.*;
 import card.Card;
 import card.CardNumberType;
 import card.CardShapeType;
-import card.Hand;
+import hand.Hand;
 import java.util.List;
 import participant.value.Money;
 import participant.Player;
@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import result.PlayerResult;
 
 class PlayerResultTest {
-    Hand blackJack = new Hand(List.of(
+    Hand blackJack = Hand.create(List.of(
             new Card(CardNumberType.JACK, CardShapeType.CLOVER),
             new Card(CardNumberType.ACE, CardShapeType.CLOVER)));
     Player blackjackPlayer = new Player("blackJack", blackJack, Money.bet(10000));

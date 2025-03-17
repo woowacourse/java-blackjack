@@ -2,6 +2,7 @@ package card;
 
 import static util.ExceptionConstants.*;
 
+import hand.Hand;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -27,7 +28,7 @@ public class Deck {
         for (int i = 0; i < INITIAL_HAND_COUNT; i++) {
             cards.add(drawCard());
         }
-        return new Hand(cards);
+        return Hand.create(cards);
     }
 
     public Card drawCard() {

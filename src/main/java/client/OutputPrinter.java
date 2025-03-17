@@ -1,6 +1,6 @@
 package client;
 
-import card.Hand;
+import hand.Hand;
 import participant.Player;
 import participant.Players;
 import participant.value.Score;

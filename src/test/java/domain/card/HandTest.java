@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import card.Card;
 import card.CardNumberType;
 import card.CardShapeType;
-import card.Hand;
+import hand.Hand;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -24,6 +24,6 @@ public class HandTest {
         Hand addedHand = hand.add(testCard);
 
         //then
-        assertThat(addedHand).isEqualTo(new Hand(List.of(new Card(CardNumberType.SIX, CardShapeType.CLOVER))));
+        assertThat(addedHand).isEqualTo(Hand.create(List.of(new Card(CardNumberType.SIX, CardShapeType.CLOVER))));
     }
 }

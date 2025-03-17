@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import card.Card;
 import card.CardNumberType;
 import card.CardShapeType;
-import card.Hand;
+import hand.Hand;
 import participant.value.Score;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -87,7 +87,7 @@ public class ScoreTest {
                 new Card(CardNumberType.ACE, CardShapeType.HEART),
                 new Card(CardNumberType.ACE, CardShapeType.DIAMOND)
         );
-        Hand hand = new Hand(testCards);
+        Hand hand = Hand.create(testCards);
 
         //when
         Score score = Score.from(testCards);

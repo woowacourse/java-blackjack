@@ -1,7 +1,7 @@
 package participant;
 
 import card.Card;
-import card.Hand;
+import hand.Hand;
 import java.util.Objects;
 import participant.value.Money;
 

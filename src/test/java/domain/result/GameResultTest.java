@@ -9,40 +9,39 @@ import static card.CardShapeType.CLOVER;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import card.Card;
-import card.Hand;
+import hand.Hand;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import participant.Dealer;
 import participant.value.Money;
 import participant.Player;
-import result.GameResult;
 import result.GameStatus;
 
 public class GameResultTest {
     Money zero = Money.ZERO;
 
-    Dealer bustDealer = new Dealer(new Hand(
+    Dealer bustDealer = new Dealer(Hand.create(
             List.of(new Card(JACK, CLOVER), new Card(KING, CLOVER), new Card(TWO, CLOVER))));
-    Player bustPlayer = new Player("mimi", new Hand(
+    Player bustPlayer = new Player("mimi", Hand.create(
             List.of(new Card(JACK, CLOVER), new Card(KING, CLOVER), new Card(THREE, CLOVER))),
             zero);
 
-    Dealer twentyHandDealer = new Dealer(new Hand(
+    Dealer twentyHandDealer = new Dealer(Hand.create(
             List.of(new Card(JACK, CLOVER), new Card(KING, CLOVER))));
-    Player twentyHandPlayer = new Player("mimi", new Hand(
+    Player twentyHandPlayer = new Player("mimi", Hand.create(
             List.of(new Card(JACK, CLOVER), new Card(KING, CLOVER))),
             zero);
 
-    Dealer twentyOneHandDealer = new Dealer(new Hand(
+    Dealer twentyOneHandDealer = new Dealer(Hand.create(
             List.of(new Card(JACK, CLOVER), new Card(KING, CLOVER), new Card(ACE, CLOVER))));
-    Player twentyOneHandPlayer = new Player("mimi", new Hand(
+    Player twentyOneHandPlayer = new Player("mimi", Hand.create(
             List.of(new Card(JACK, CLOVER), new Card(KING, CLOVER), new Card(ACE, CLOVER)))
             ,zero);
 
-    Dealer blackJackDealer = new Dealer(new Hand(
+    Dealer blackJackDealer = new Dealer(Hand.create(
             List.of(new Card(KING, CLOVER), new Card(ACE, CLOVER))));
-    Player blackJackPlayer = new Player("mimi", new Hand(
+    Player blackJackPlayer = new Player("mimi", Hand.create(
             List.of(new Card(KING, CLOVER), new Card(ACE, CLOVER))),
             zero);
 
@@ -50,10 +49,9 @@ public class GameResultTest {
     @Test
     void test1() {
         //given
-        GameResult gameResult = new GameResult();
 
         //when
-        GameStatus gameStatus = gameResult.calculate(bustPlayer, bustDealer);
+        GameStatus gameStatus = bustPlayer.calculateResultAgainst(bustDealer);
 
         //then
         assertThat(gameStatus).isEqualTo(GameStatus.LOSE);
@@ -63,10 +61,9 @@ public class GameResultTest {
     @Test
     void test2() {
         //given
-        GameResult gameResult = new GameResult();
 
         //when
-        GameStatus gameStatus = gameResult.calculate(twentyHandPlayer, bustDealer);
+        GameStatus gameStatus = twentyHandPlayer.calculateResultAgainst(bustDealer);
 
         //then
         assertThat(gameStatus).isEqualTo(GameStatus.WIN);
@@ -76,10 +73,9 @@ public class GameResultTest {
     @Test
     void test40() {
         //given
-        GameResult gameResult = new GameResult();
 
         //when
-        GameStatus gameStatus = gameResult.calculate(blackJackPlayer, blackJackDealer);
+        GameStatus gameStatus = blackJackPlayer.calculateResultAgainst(blackJackDealer);
 
         //then
         assertThat(gameStatus).isEqualTo(GameStatus.DRAW);
@@ -89,10 +85,9 @@ public class GameResultTest {
     @Test
     void test41() {
         //given
-        GameResult gameResult = new GameResult();
 
         //when
-        GameStatus gameStatus = gameResult.calculate(blackJackPlayer, twentyOneHandDealer);
+        GameStatus gameStatus = blackJackPlayer.calculateResultAgainst(twentyOneHandDealer);
 
         //then
         assertThat(gameStatus).isEqualTo(GameStatus.BLACKJACK_WIN);
@@ -102,10 +97,9 @@ public class GameResultTest {
     @Test
     void test42() {
         //given
-        GameResult gameResult = new GameResult();
 
         //when
-        GameStatus gameStatus = gameResult.calculate(twentyOneHandPlayer, blackJackDealer);
+        GameStatus gameStatus = twentyOneHandPlayer.calculateResultAgainst(blackJackDealer);
 
         //then
         assertThat(gameStatus).isEqualTo(GameStatus.LOSE);
@@ -115,10 +109,9 @@ public class GameResultTest {
     @Test
     void test4() {
         //given
-        GameResult gameResult = new GameResult();
 
         //when
-        GameStatus gameStatus = gameResult.calculate(twentyOneHandPlayer, twentyHandDealer);
+        GameStatus gameStatus = twentyOneHandPlayer.calculateResultAgainst(twentyHandDealer);
 
         //then
         assertThat(gameStatus).isEqualTo(GameStatus.WIN);
@@ -128,10 +121,9 @@ public class GameResultTest {
     @Test
     void test5() {
         //given
-        GameResult gameResult = new GameResult();
 
         //when
-        GameStatus gameStatus = gameResult.calculate(twentyHandPlayer, twentyOneHandDealer);
+        GameStatus gameStatus = twentyHandPlayer.calculateResultAgainst(twentyOneHandDealer);
 
         //then
         assertThat(gameStatus).isEqualTo(GameStatus.LOSE);
@@ -141,10 +133,9 @@ public class GameResultTest {
     @Test
     void test6() {
         //given
-        GameResult gameResult = new GameResult();
 
         //when
-        GameStatus gameStatus = gameResult.calculate(twentyHandPlayer, twentyHandDealer);
+        GameStatus gameStatus = twentyHandPlayer.calculateResultAgainst(twentyHandDealer);
 
         //then
         assertThat(gameStatus).isEqualTo(GameStatus.DRAW);

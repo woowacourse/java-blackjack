@@ -1,10 +1,11 @@
 package participant.value;
 
 import static card.CardNumberType.ACE;
+import static result.GameStatus.*;
 
 import card.Card;
-import card.Hand;
 import java.util.List;
+import result.GameStatus;
 
 public record Score(int score) {
     private static final int BLACKJACK_VALUE = 21;
@@ -32,6 +33,16 @@ public record Score(int score) {
         return sum;
     }
 
+    public GameStatus compare(Score other) {
+        if(isGreaterThan(other)) {
+            return WIN;
+        }
+        if(isEqualTo(other)) {
+            return DRAW;
+        }
+        return LOSE;
+    }
+
     public boolean isBust() {
         return score > BLACKJACK_VALUE;
     }
@@ -40,11 +51,11 @@ public record Score(int score) {
         return score == BLACKJACK_VALUE;
     }
 
-    public boolean isGreaterThen(Score other) {
+    public boolean isGreaterThan(Score other) {
         return score > other.score;
     }
 
-    public boolean isLessOrEqualThen(int targetValue) {
+    public boolean isLessOrEqualThan(int targetValue) {
         return score <= targetValue;
     }
 

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.function.Function;
 import participant.value.Money;
 import result.AllPlayerResult;
-import result.GameResult;
 import result.GameStatus;
 import result.PlayerResult;
 
@@ -76,7 +75,7 @@ public class Players {
     public AllPlayerResult calculateAllPlayerResult(Dealer dealer) {
         List<PlayerResult> allPlayerResultInfo = new ArrayList<>();
         for (Player player : players) {
-            GameStatus gameStatus = GameResult.calculate(player, dealer);
+            GameStatus gameStatus = player.calculateResultAgainst(dealer);
             PlayerResult playerResult = new PlayerResult(player, gameStatus);
             allPlayerResultInfo.add(playerResult);
         }

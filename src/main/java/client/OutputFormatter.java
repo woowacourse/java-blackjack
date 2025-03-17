@@ -6,7 +6,7 @@ import static card.CardShapeType.*;
 import card.Card;
 import card.CardNumberType;
 import card.CardShapeType;
-import card.Hand;
+import hand.Hand;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

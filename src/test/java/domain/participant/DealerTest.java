@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import card.Card;
 import card.CardNumberType;
 import card.CardShapeType;
-import card.Hand;
+import hand.Hand;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ public class DealerTest {
         //given
         List<Card> testCards = List.of(new Card(CardNumberType.SIX, CardShapeType.CLOVER),
                 new Card(CardNumberType.JACK, CardShapeType.DIAMOND));
-        Hand hand = new Hand(testCards);
+        Hand hand = Hand.create(testCards);
         Dealer dealer = Dealer.createWithNoHand();
         Dealer dealerWithHands = (Dealer) dealer.initializeHandWith(hand);
         //when
@@ -35,7 +35,7 @@ public class DealerTest {
         List<Card> testCards = List.of(new Card(CardNumberType.SIX, CardShapeType.CLOVER),
                 new Card(CardNumberType.ACE, CardShapeType.DIAMOND),
                 new Card(CardNumberType.JACK, CardShapeType.DIAMOND));
-        Hand hand = new Hand(testCards);
+        Hand hand = Hand.create(testCards);
         Dealer dealer = Dealer.createWithNoHand();
         Dealer dealerWithHands = (Dealer) dealer.initializeHandWith(hand);
 
@@ -54,7 +54,7 @@ public class DealerTest {
                 new Card(CardNumberType.QUEEN, CardShapeType.HEART),
                 new Card(CardNumberType.SIX, CardShapeType.DIAMOND)
         );
-        Hand hand = new Hand(testCards);
+        Hand hand = Hand.create(testCards);
         Dealer dealer = Dealer.createWithNoHand();
         Dealer dealerWithHands = (Dealer) dealer.initializeHandWith(hand);
 
@@ -73,7 +73,7 @@ public class DealerTest {
                 new Card(CardNumberType.QUEEN, CardShapeType.HEART),
                 new Card(CardNumberType.ACE, CardShapeType.DIAMOND)
         );
-        Hand hand = new Hand(testCards);
+        Hand hand = Hand.create(testCards);
         Dealer dealer = Dealer.createWithNoHand();
         Dealer dealerWithHands = (Dealer) dealer.initializeHandWith(hand);
 
@@ -92,7 +92,7 @@ public class DealerTest {
                 new Card(CardNumberType.ACE, CardShapeType.HEART),
                 new Card(CardNumberType.ACE, CardShapeType.DIAMOND)
         );
-        Hand hand = new Hand(testCards);
+        Hand hand = Hand.create(testCards);
         Dealer dealer = Dealer.createWithNoHand();
         Dealer dealerWithHands = (Dealer) dealer.initializeHandWith(hand);
 

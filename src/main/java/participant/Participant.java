@@ -1,8 +1,9 @@
 package participant;
 
 import card.Card;
-import card.Hand;
+import hand.Hand;
 import participant.value.Score;
+import result.GameStatus;
 
 public abstract class Participant {
     protected final Hand hand;
@@ -26,14 +27,14 @@ public abstract class Participant {
     }
 
     public boolean isBust() {
-        return getScore().isBust();
+        return hand.isBust();
     }
 
     public boolean isNotBust() {
-        return !getScore().isBust();
+        return !hand.isBust();
     }
 
-    public boolean isBlackJack() {
-        return getScore().isBlackJackValue() && hand.isInitialStatus();
+    public GameStatus calculateResultAgainst(Dealer dealer) {
+        return hand.calculateResultAgainst(dealer.hand);
     }
 }

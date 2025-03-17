@@ -1,7 +1,7 @@
 package participant;
 
 import card.Card;
-import card.Hand;
+import hand.Hand;
 
 public class Dealer extends Participant {
     private static final int VALID_DRAW_LIMIT = 16;
@@ -15,7 +15,7 @@ public class Dealer extends Participant {
     }
 
     public boolean shouldDrawCard() {
-        return getScore().isLessOrEqualThen(VALID_DRAW_LIMIT);
+        return getScore().isLessOrEqualThan(VALID_DRAW_LIMIT);
     }
 
     @Override
