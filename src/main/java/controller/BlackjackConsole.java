@@ -82,22 +82,24 @@ public class BlackjackConsole {
 
     private void controlTurn(List<Player> players, BlackjackGame blackjackGame, Dealer dealer) {
         for (Player player : players) {
-            while (player.isDrawable()) {
-                try {
-                    YesOrNo yesOrNo = inputView.inputYesOrNo(player.getName());
-                    blackjackGame.controlTurn(player, yesOrNo);
-                    displayOpenCard(player);
-                    if (yesOrNo == YesOrNo.NO) {
-                        break;
-                    }
-                } catch (IllegalArgumentException exception) {
-                    outputView.displayError(exception.getMessage());
-                }
-            }
+            controlPlayerTurn(blackjackGame, player);
         }
         while (dealer.isDrawable()) {
             blackjackGame.controlTurn(dealer, YesOrNo.YES);
             outputView.displayDealerAddCard();
+        }
+    }
+
+    private void controlPlayerTurn(BlackjackGame blackjackGame, Player player) {
+        YesOrNo yesOrNo = YesOrNo.YES;
+        while (player.isDrawable() && yesOrNo == YesOrNo.YES) {
+            try {
+                yesOrNo = inputView.inputYesOrNo(player.getName());
+                blackjackGame.controlTurn(player, yesOrNo);
+                displayOpenCard(player);
+            } catch (IllegalArgumentException exception) {
+                outputView.displayError(exception.getMessage());
+            }
         }
     }
 
