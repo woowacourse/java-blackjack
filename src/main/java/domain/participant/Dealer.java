@@ -42,17 +42,29 @@ public class Dealer extends Participant {
     }
 
     public GameResult judgeResult(Player player) {
-        if (player.isBlackJack() && !this.isBlackJack()) {
+        if (isPlayerBlackJackWin(player)) {
             return GameResult.BLACKJACK;
         }
-        if ((this.isBurst() && !player.isBurst()) || (!player.isBurst()
-                && player.calculateScore() > this.calculateScore())) {
+        if (isPlayerWin(player)) {
             return GameResult.WIN;
         }
-        if (player.isBurst() || (player.calculateScore() < this.calculateScore()) && !this.isBurst()) {
+        if (isPlayerLose(player)) {
             return GameResult.LOSE;
         }
         return GameResult.DRAW;
+    }
+
+    private boolean isPlayerBlackJackWin(Player player) {
+        return player.isBlackJack() && !this.isBlackJack();
+    }
+
+    private boolean isPlayerWin(Player player) {
+        return (this.isBurst() && !player.isBurst()) ||
+                (!player.isBurst() && player.calculateScore() > this.calculateScore());
+    }
+
+    private boolean isPlayerLose(Player player) {
+        return player.isBurst() || (player.calculateScore() < this.calculateScore()) && !this.isBurst();
     }
 
     public Map<Player, Money> getPlayersRevenue(Players players) {
