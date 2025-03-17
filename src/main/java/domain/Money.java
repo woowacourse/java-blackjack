@@ -2,6 +2,7 @@ package domain;
 
 public class Money {
 
+    private static final int MONEY_MINIMUM = 0;
     private final int seedMoney;
     private int earnMoney;
 
@@ -15,7 +16,7 @@ public class Money {
     }
 
     private void validateMinimumSeedMoney(int money) {
-        if (money < 0) {
+        if (money < MONEY_MINIMUM) {
             throw new IllegalArgumentException("0보다 큰 금액만 베팅 가능합니다");
         }
     }

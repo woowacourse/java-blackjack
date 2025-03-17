@@ -7,6 +7,7 @@ import java.util.Objects;
 
 public class Deck {
 
+    private static final int INITIAL_DECK_COUNT = 52;
     private final List<TrumpCard> cards;
 
     public Deck(List<TrumpCard> cards) {
@@ -27,7 +28,8 @@ public class Deck {
     }
 
     private void validateSize(List<TrumpCard> cards) {
-        if (cards.size() != 52) {
+        if (cards.size() != INITIAL_DECK_COUNT) {
+
             throw new IllegalArgumentException("덱의 크기는 52여야 합니다.");
         }
     }

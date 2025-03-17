@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Dealer {
 
+    private static final int INITIAL_DEALER_MONEY = 0;
     private final Hand hand;
     private final Money money;
     private final Deck deck;
@@ -15,7 +16,7 @@ public class Dealer {
     }
 
     public static Dealer initiallizeDealer(Deck deck){
-        return new Dealer(deck,Money.makeMoneyInt(0));
+        return new Dealer(deck,Money.makeMoneyInt(INITIAL_DEALER_MONEY));
     }
     public TrumpCard retrieveFirstCard() {
         if (hand.getCards().size() != 2) {
