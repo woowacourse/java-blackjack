@@ -18,7 +18,8 @@ public class Players {
         for (Entry<Name, Money> entry : playerBets.entrySet()) {
             Name name = entry.getKey();
             Money money = entry.getValue();
-            players.add(new Player(new Hand(List.of()), name, money));
+            PlayerInfo playerInfo = new PlayerInfo(name, money);
+            players.add(new Player(new Hand(List.of()), playerInfo));
         }
         return new Players(players);
     }
