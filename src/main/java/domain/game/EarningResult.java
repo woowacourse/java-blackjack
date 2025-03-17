@@ -16,4 +16,8 @@ public class EarningResult {
                 .mapToDouble(Double::doubleValue)
                 .sum();
     }
+
+    public Map<Player, Double> getEarningResult() {
+        return earningResult;
+    }
 }

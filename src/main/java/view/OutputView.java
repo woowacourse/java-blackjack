@@ -1,6 +1,7 @@
 package view;
 
 import domain.card.Card;
+import domain.game.EarningResult;
 import dto.FinalResultDTO;
 import dto.SetUpCardsDTO;
 
@@ -40,6 +41,17 @@ public class OutputView {
             dto -> System.out.printf("%s카드: %s - 결과: %d\n",
             dto.name(), cardNames(dto.cards()), dto.score())
         );
+    }
+
+    public void printFinalEarning(EarningResult earningResult) {
+        System.out.println();
+        System.out.println("## 최종 수익");
+        System.out.println("딜러: " + earningResult.calcualteDealerEarning());
+        earningResult.getEarningResult()
+                .forEach(
+                        (player, amout) -> System.out.printf("%s: %f\n",
+                                player.getName(), amout)
+                );
     }
 
     private String cardNames(List<Card> cards) {
