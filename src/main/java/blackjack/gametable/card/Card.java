@@ -1,7 +1,7 @@
 package blackjack.gametable.card;
 
-import blackjack.constant.TrumpSuit;
 import blackjack.constant.TrumpRank;
+import blackjack.constant.TrumpSuit;
 
 public class Card {
 
