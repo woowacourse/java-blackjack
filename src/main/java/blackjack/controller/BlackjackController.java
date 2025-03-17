@@ -10,7 +10,7 @@ import blackjack.domain.game.Players;
 import blackjack.domain.profit.BettingResult;
 import blackjack.domain.profit.DealerProfits;
 import blackjack.domain.profit.PlayerProfits;
-import blackjack.domain.result.BetAmount;
+import blackjack.domain.game.BetAmount;
 import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.Judge;
 import blackjack.domain.result.PlayerResults;

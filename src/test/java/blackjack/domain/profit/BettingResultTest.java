@@ -6,7 +6,7 @@ import blackjack.domain.card.CardSuit;
 import blackjack.domain.game.Dealer;
 import blackjack.domain.game.Hand;
 import blackjack.domain.game.Player;
-import blackjack.domain.result.BetAmount;
+import blackjack.domain.game.BetAmount;
 import blackjack.domain.result.GameResult;
 import blackjack.domain.result.GameResultType;
 import blackjack.domain.result.PlayerResult;

@@ -2,7 +2,7 @@ package blackjack.domain.profit;
 
 import blackjack.domain.game.Hand;
 import blackjack.domain.game.Player;
-import blackjack.domain.result.BetAmount;
+import blackjack.domain.game.BetAmount;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 

@@ -1,7 +1,6 @@
 package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.result.BetAmount;
 import java.util.List;
 
 public class Player implements Participant {
