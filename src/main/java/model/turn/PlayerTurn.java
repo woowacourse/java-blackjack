@@ -14,7 +14,7 @@ public class PlayerTurn extends Turn {
     }
 
     public void betInsurance(int insuranceBet) {
-        betting.takeInsurance(insuranceBet);
+        betting.updateInsuranceBet(insuranceBet);
     }
 
     public void putBetting(Map<Player, Betting> playerBetting) {
@@ -34,7 +34,7 @@ public class PlayerTurn extends Turn {
     }
 
     public void processSurrender() {
-        betting.surrender();
+        betting.updateSurrender();
     }
 
     public int getMaxInsuranceAmount() {

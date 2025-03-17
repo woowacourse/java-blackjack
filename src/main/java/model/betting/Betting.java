@@ -25,7 +25,7 @@ public class Betting {
         return bet / INSURANCE_BET_DIVISOR;
     }
 
-    public void takeInsurance(int insuranceBet) {
+    public void updateInsuranceBet(int insuranceBet) {
         validateInsuranceBet(insuranceBet);
         this.bet -= insuranceBet;
         this.insuranceBet = insuranceBet;
@@ -46,7 +46,7 @@ public class Betting {
         return 0;
     }
 
-    public void surrender() {
+    public void updateSurrender() {
         isSurrender = true;
     }
 

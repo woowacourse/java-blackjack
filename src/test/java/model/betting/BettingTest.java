@@ -14,7 +14,7 @@ class BettingTest {
     @DisplayName("보험을 걸고 딜러가 블랙잭일 경우 테스트")
     void 보험을_걸고_딜러가_블랙잭일_경우_테스트(){
         Betting betting = new Betting(10000);
-        betting.takeInsurance(4000);
+        betting.updateInsuranceBet(4000);
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(CardRank.ACE, CardSuit.CLOVER));
         dealer.receiveCard(new Card(CardRank.KING, CardSuit.CLOVER));
@@ -27,7 +27,7 @@ class BettingTest {
     @DisplayName("보험을 걸고 딜러가 블랙잭이 아닌 경우 테스트")
     void 보험을_걸고_딜러가_블랙잭이_아닐_경우_테스트(){
         Betting betting = new Betting(10000);
-        betting.takeInsurance(5000);
+        betting.updateInsuranceBet(5000);
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(CardRank.ACE, CardSuit.CLOVER));
         dealer.receiveCard(new Card(CardRank.NINE, CardSuit.CLOVER));

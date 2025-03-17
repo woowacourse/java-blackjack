@@ -97,7 +97,7 @@ class BettingResultTest {
     @DisplayName("보험을 걸고 딜러가 블랙잭이 아니며 게임은 이겼을 경우 테스트")
     void 보험을_걸고_딜러가_블랙잭이_아닐_경우_테스트(){
         Betting betting = new Betting(10000);
-        betting.takeInsurance(4000);
+        betting.updateInsuranceBet(4000);
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(CardRank.TWO, CardSuit.CLOVER));
         dealer.receiveCard(new Card(CardRank.KING, CardSuit.CLOVER));
@@ -119,7 +119,7 @@ class BettingResultTest {
     @DisplayName("보험을 걸고 딜러가 블랙잭이 아니며 게임도 진 경우 테스트")
     void 보험을_걸고_딜러가_블랙잭이_아니며_게임도_진_경우_테스트(){
         Betting betting = new Betting(10000);
-        betting.takeInsurance(4000);
+        betting.updateInsuranceBet(4000);
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(CardRank.QUEEN, CardSuit.CLOVER));
         dealer.receiveCard(new Card(CardRank.KING, CardSuit.CLOVER));
@@ -141,7 +141,7 @@ class BettingResultTest {
     @DisplayName("보험을 걸고 딜러가 블랙잭이 아니며 게임은 무승부인 경우 테스트")
     void 보험을_걸고_딜러가_블랙잭이_아니며_게임은_무승부_경우_테스트(){
         Betting betting = new Betting(10000);
-        betting.takeInsurance(4000);
+        betting.updateInsuranceBet(4000);
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(CardRank.QUEEN, CardSuit.CLOVER));
         dealer.receiveCard(new Card(CardRank.KING, CardSuit.CLOVER));
@@ -163,7 +163,7 @@ class BettingResultTest {
     @DisplayName("플레이어가 서렌을 하고 딜러가 버스트되었을 경우")
     void 플레이어가_서렌을_하고_딜러가_버스트되었을_경우(){
         Betting betting = new Betting(10000);
-        betting.surrender();
+        betting.updateSurrender();
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(CardRank.QUEEN, CardSuit.CLOVER));
         dealer.receiveCard(new Card(CardRank.QUEEN, CardSuit.CLOVER));
@@ -186,7 +186,7 @@ class BettingResultTest {
     @DisplayName("플레이어가 서렌을 하고 딜러가 버스트되었을 경우 딜러의 수익계산 테스트")
     void 플레이어가_서렌을_하고_딜러가_버스트되었을_경우_딜러의_수익계산_테스트(){
         Betting betting = new Betting(10000);
-        betting.surrender();
+        betting.updateSurrender();
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(CardRank.QUEEN, CardSuit.CLOVER));
         dealer.receiveCard(new Card(CardRank.QUEEN, CardSuit.CLOVER));
