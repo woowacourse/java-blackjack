@@ -1,39 +1,35 @@
 package view;
 
-import domain.FinalResult;
 import domain.deck.Card;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
-import domain.gamer.Nickname;
+import domain.gamer.Hand;
 import domain.gamer.Player;
-import java.util.ArrayList;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 public final class OutputView {
 
-    private static final ResourceBundle FINAL_RESULT_BUNDLE = ResourceBundle.getBundle("finalResult");
     private static final ResourceBundle SHAPE_BUNDLE = ResourceBundle.getBundle("shape");
     private static final ResourceBundle RANK_BUNDLE = ResourceBundle.getBundle("rank");
 
     private OutputView() {
     }
 
-    public static void printCardsInHandAtFirst(final Map<Nickname, List<Card>> cards) {
-        final List<Nickname> nicknamesList = new ArrayList<>(cards.keySet());
-        final Nickname dealerName = nicknamesList.getFirst();
-        final String playersNames = nicknamesList.stream()
+    public static void printCardsInHandAtFirst(final List<Player> players, final Dealer dealer) {
+        final String playersNames = players.stream()
                 .skip(1)
-                .map(Nickname::getDisplayName)
+                .map(Player::getDisplayName)
                 .collect(Collectors.joining(", "));
 
-        printInitialSettingMessage(dealerName.getDisplayName(), playersNames);
-        cards.forEach((nickname, cardGroup) -> {
-            final String displayName = nickname.getDisplayName();
-            printCardsInHand(displayName, cardGroup);
-        });
+        printInitialSettingMessage(dealer.getDisplayName(), playersNames);
+        printCardsInHand(dealer, dealer.getInitialCards());
+        players.forEach(player -> printCardsInHand(player, player.getInitialCards()));
     }
 
     public static void printInitialSettingMessage(final String dealerName, final String playersNames) {
@@ -41,24 +37,30 @@ public final class OutputView {
         print(message);
     }
 
-    public static void printCardsInHand(final String name, final List<Card> cards) {
+    public static void printCardsInHand(final Gamer gamer, final List<Card> cards) {
         final List<String> cardGroup = cards.stream()
                 .map(card -> RANK_BUNDLE.getString(card.getRank().name()) + SHAPE_BUNDLE.getString(
                         card.getShape().name()))
                 .toList();
-        final String message = String.format("%s카드: %s", name, String.join(", ", cardGroup));
+        final String message = String.format("%s카드: %s", gamer.getDisplayName(), String.join(", ", cardGroup));
         print(message);
     }
 
-    public static void printDealerHit(final String dealerName) {
-        print(String.format("%s는 %d이하라 한 장의 카드를 더 받았습니다.", dealerName, 16));
+    public static void printCardsInHand(final Gamer gamer, final Hand hand) {
+        final List<Card> cards = hand.getCards();
+        final List<String> cardGroup = cards.stream()
+                .map(card -> RANK_BUNDLE.getString(card.getRank().name()) + SHAPE_BUNDLE.getString(
+                        card.getShape().name()))
+                .toList();
+        final String message = String.format("%s카드: %s", gamer.getDisplayName(), String.join(", ", cardGroup));
+        print(message);
     }
 
-    public static void printBustMessage(final String name) {
-        print(String.format("%s는 버스트입니다.", name));
+    public static void printDealerHit() {
+        print(String.format("딜러는 16이하라 한 장의 카드를 더 받았습니다.%n"));
     }
 
-    public static void printCardsInHandWithResults(final Dealer dealer, final List<Player> players) {
+    public static void printCardsInHandWithResult(final Dealer dealer, final List<Player> players) {
         print(getMessage(dealer));
         for (final Player player : players) {
             print(getMessage(player));
@@ -66,7 +68,7 @@ public final class OutputView {
     }
 
     private static String getMessage(final Gamer gamer) {
-        final List<Card> cards = gamer.getCards();
+        final List<Card> cards = gamer.getHand().getCards();
         final List<String> cardGroup = cards.stream()
                 .map(card -> RANK_BUNDLE.getString(card.getRank().name()) + SHAPE_BUNDLE.getString(
                         card.getShape().name()))
@@ -80,26 +82,16 @@ public final class OutputView {
         );
     }
 
-    public static void printFinalResults(final String dealerName,
-                                         final Map<FinalResult, Integer> resultCounts,
-                                         final Map<Player, FinalResult> playerResults
-    ) {
+    public static void printProfitResult(final Map<String, Double> result, final double dealerProfit) {
+        final NumberFormat formatter = NumberFormat.getInstance(Locale.KOREA);
 
-        print("## 최종 승패");
-        final Integer win = resultCounts.getOrDefault(FinalResult.WIN, 0);
-        final Integer lose = resultCounts.getOrDefault(FinalResult.LOSE, 0);
-        final Integer draw = resultCounts.getOrDefault(FinalResult.DRAW, 0);
-        final String dealerMessage = String.format("%s: %d승 %d패 %d무", dealerName, lose, win, draw);
-        print(dealerMessage);
-
-        playerResults.forEach((player, finalResult) -> {
-            final String playerMessage = String.format(
-                    "%s: %s",
-                    player.getDisplayName(),
-                    FINAL_RESULT_BUNDLE.getString(finalResult.name())
-            );
-            print(playerMessage);
-        });
+        print(String.format("%n## 최종 수익"));
+        print(String.format("딜러: %s원", formatter.format((int) -dealerProfit)));
+        for (final Entry<String, Double> playerEntry : result.entrySet()) {
+            final String playerNickname = playerEntry.getKey();
+            final Double profit = playerEntry.getValue();
+            print(String.format("%s: %s원", playerNickname, formatter.format(profit)));
+        }
     }
 
     private static void print(final String message) {
