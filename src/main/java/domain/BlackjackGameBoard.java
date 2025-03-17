@@ -49,7 +49,7 @@ public class BlackjackGameBoard {
         }
     }
 
-    public void hitUntilUnder16(Dealer dealer, Runnable onHit) {
+    public void hitUntilNotHittable(Dealer dealer, Runnable onHit) {
         while (dealer.isRunning()) {
             dealer.hit(deck.drawCard(), true);
             onHit.run();

@@ -40,7 +40,7 @@ public class BlackjackGameManager {
         for (User user : users.getUsers()) {
             blackjackGameBoard.hitUntilStay(user, InputView::inputWantHit, OutputView::printPlayerCards);
         }
-        blackjackGameBoard.hitUntilUnder16(dealer, OutputView::printDealerHitMessage);
+        blackjackGameBoard.hitUntilNotHittable(dealer, OutputView::printDealerHitMessage);
     }
 
     private void printPlayerCardsAndSum(BlackjackGameBoard blackjackGameBoard) {

@@ -59,7 +59,7 @@ class UserBattleResultTest {
         gameBoard.distributeInitialCards(user);
         Runnable onHit = () -> {
         };
-        gameBoard.hitUntilUnder16(dealer, onHit);
+        gameBoard.hitUntilNotHittable(dealer, onHit);
 
         // when
         UserBattleResult result = UserBattleResult.determineUserBattleResult(user.getState(), dealer.getState());
@@ -131,7 +131,7 @@ class UserBattleResultTest {
         Runnable dealerOnHit = () -> {
         };
         gameBoard.hitUntilStay(user, alwaysYes, userOnnHit);
-        gameBoard.hitUntilUnder16(dealer, dealerOnHit);
+        gameBoard.hitUntilNotHittable(dealer, dealerOnHit);
 
         // when
         UserBattleResult result = UserBattleResult.determineUserBattleResult(user.getState(), dealer.getState());

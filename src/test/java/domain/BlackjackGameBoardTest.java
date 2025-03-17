@@ -137,7 +137,7 @@ class BlackjackGameBoardTest {
         };
 
         // when
-        gameBoard.hitUntilUnder16(dealer, onHit);
+        gameBoard.hitUntilNotHittable(dealer, onHit);
 
         // then
         Assertions.assertThat(dealer.computeOptimalSum()).isGreaterThan(16);
