@@ -1,6 +1,6 @@
 package view;
 
-import domain.game.Player;
+import game.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -9,8 +9,8 @@ public class InputView {
 
     private final Scanner scanner;
 
-    public InputView(Scanner scanner) {
-        this.scanner = scanner;
+    public InputView() {
+        this.scanner = new Scanner(System.in);
     }
 
     public List<String> readPlayerNames() {
@@ -31,5 +31,13 @@ public class InputView {
             return false;
         }
         throw new IllegalArgumentException("[ERROR] y 또는 n만 입력 가능합니다.");
+    }
+
+    public List<Integer> readBettingMoney(List<String> playerNames) {
+        return playerNames.stream()
+                .map(playerName -> {
+                    System.out.printf("%s의 배팅 금액은?%n", playerName);
+                    return Integer.parseInt(scanner.nextLine());
+                }).toList();
     }
 }

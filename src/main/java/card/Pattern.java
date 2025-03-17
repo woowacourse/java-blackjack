@@ -1,4 +1,4 @@
-package domain.card;
+package card;
 
 public enum Pattern {
 

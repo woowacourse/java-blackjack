@@ -1,15 +1,14 @@
-package domain.game;
+package game;
 
-import static domain.card.CardNumber.VALUE_TO_SOFT_ACE;
-
-import domain.card.Card;
-import domain.card.CardNumber;
+import card.Card;
+import card.CardNumber;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
 
-    public static final int BUST_BOUND = 21;
+    public static final int BLACK_JACK_BOUND = 21;
+    private static final int VALUE_TO_SOFT_ACE = 10;
 
     private final List<Card> cards;
 
@@ -21,11 +20,15 @@ public class Hand {
         this.cards.addAll(cards);
     }
 
-    public boolean isOverBustBound() {
-        return calculateTotalWithAce() > BUST_BOUND;
+    public boolean isBust() {
+        return calculate() > BLACK_JACK_BOUND;
     }
 
-    public int calculateTotalWithAce() {
+    public boolean isBlackJack() {
+        return cards.size() == 2 && calculate() == BLACK_JACK_BOUND;
+    }
+
+    public int calculate() {
         int totalCardNumber = calculateTotalCardNumber();
         if (hasAce()) {
             return calculateWithAce(totalCardNumber);
@@ -35,18 +38,18 @@ public class Hand {
 
     private int calculateTotalCardNumber() {
         return cards.stream()
-                .mapToInt(card -> card.getCardNumber().getNumber())
+                .mapToInt(card -> card.cardNumber().getNumber())
                 .sum();
     }
 
     private boolean hasAce() {
         return cards.stream()
-                .anyMatch(card -> card.getCardNumber() == CardNumber.ACE);
+                .anyMatch(card -> card.cardNumber() == CardNumber.ACE);
     }
 
     private int calculateWithAce(int totalCardNumber) {
         int totalWithAce = totalCardNumber + VALUE_TO_SOFT_ACE;
-        if (totalWithAce <= BUST_BOUND) {
+        if (totalWithAce <= BLACK_JACK_BOUND) {
             return totalWithAce;
         }
         return totalCardNumber;

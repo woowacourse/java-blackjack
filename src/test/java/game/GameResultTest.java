@@ -1,226 +1,184 @@
-package domain.game;
+package game;
 
-import domain.card.Card;
-import domain.card.CardNumber;
-import domain.card.Pattern;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import card.Card;
+import card.CardNumber;
+import card.Pattern;
 import java.util.List;
+import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class GameResultTest {
 
     @Test
     void 플레이어와_딜러_사이의_승패를_판정한다() {
-        //given
         Dealer dealer = new Dealer();
-        dealer.drawCard(List.of(
+        dealer.draw(List.of(
                 new Card(Pattern.SPADE, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.TEN)));
-
         Player player = new Player("pobi");
-        player.drawCard(List.of(
+        player.draw(List.of(
                 new Card(Pattern.HEART, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.NINE)));
 
-        //when
-        GameResult gameResult = GameResult.of(dealer, player);
+        GameResult gameResult = GameResult.determine(dealer, player);
 
-        //then
         Assertions.assertThat(gameResult).isEqualTo(GameResult.LOSE);
     }
 
     @Test
     void 플레이어와_딜러_사이의_승패를_판정한다_둘다_버스트() {
-        //given
         Dealer dealer = new Dealer();
-        dealer.drawCard(List.of(
+        dealer.draw(List.of(
                 new Card(Pattern.SPADE, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.TEN),
                 new Card(Pattern.HEART, CardNumber.TEN)));
-
         Player player = new Player("pobi");
-        player.drawCard(List.of(
+        player.draw(List.of(
                 new Card(Pattern.SPADE, CardNumber.NINE),
                 new Card(Pattern.HEART, CardNumber.NINE),
                 new Card(Pattern.CLOVER, CardNumber.NINE)));
 
-        //when
-        GameResult gameResult = GameResult.of(dealer, player);
+        GameResult gameResult = GameResult.determine(dealer, player);
 
-        //then
         Assertions.assertThat(gameResult).isEqualTo(GameResult.LOSE);
     }
 
     @Test
     void 플레이어와_딜러_사이의_승패를_판정한다_딜러만_버스트() {
-        //given
         Dealer dealer = new Dealer();
-        dealer.drawCard(List.of(
+        dealer.draw(List.of(
                 new Card(Pattern.SPADE, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.TEN),
                 new Card(Pattern.HEART, CardNumber.TEN)));
-
         Player player = new Player("pobi");
-        player.drawCard(List.of(
+        player.draw(List.of(
                 new Card(Pattern.SPADE, CardNumber.NINE),
                 new Card(Pattern.HEART, CardNumber.NINE)));
 
-        //when
-        GameResult gameResult = GameResult.of(dealer, player);
+        GameResult gameResult = GameResult.determine(dealer, player);
 
-        //then
         Assertions.assertThat(gameResult).isEqualTo(GameResult.WIN);
     }
 
     @Test
     void 플레이어와_딜러_사이의_승패를_판정한다_딜러의_총합이_21에_가깝다() {
-        //given
         Dealer dealer = new Dealer();
-        dealer.drawCard(List.of(
+        dealer.draw(List.of(
                 new Card(Pattern.SPADE, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.TEN)));
-
         Player player = new Player("pobi");
-        player.drawCard(List.of(
+        player.draw(List.of(
                 new Card(Pattern.DIAMOND, CardNumber.TEN),
                 new Card(Pattern.HEART, CardNumber.NINE)));
 
-        //when
-        GameResult gameResult = GameResult.of(dealer, player);
+        GameResult gameResult = GameResult.determine(dealer, player);
 
-        //then
         Assertions.assertThat(gameResult).isEqualTo(GameResult.LOSE);
     }
 
     @Test
     void 플레이어와_딜러_사이의_승패를_판정한다_플레이어의_총합이_21에_가깝다() {
-        //given
         Dealer dealer = new Dealer();
-        dealer.drawCard(List.of(
+        dealer.draw(List.of(
                 new Card(Pattern.SPADE, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.NINE)));
-
         Player player = new Player("pobi");
-        player.drawCard(List.of(
+        player.draw(List.of(
                 new Card(Pattern.DIAMOND, CardNumber.TEN),
                 new Card(Pattern.HEART, CardNumber.TEN)));
 
-        //when
-        GameResult gameResult = GameResult.of(dealer, player);
+        GameResult gameResult = GameResult.determine(dealer, player);
 
-        //then
         Assertions.assertThat(gameResult).isEqualTo(GameResult.WIN);
     }
 
     @Test
     void 플레이어와_딜러_사이의_승패를_판정한다_딜러와_플레이어의_총합이_같다() {
-        //given
         Dealer dealer = new Dealer();
-        dealer.drawCard(List.of(
+        dealer.draw(List.of(
                 new Card(Pattern.SPADE, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.TEN)));
-
         Player player = new Player("pobi");
-        player.drawCard(List.of(
+        player.draw(List.of(
                 new Card(Pattern.DIAMOND, CardNumber.TEN),
                 new Card(Pattern.HEART, CardNumber.TEN)));
 
-        //when
-        GameResult gameResult = GameResult.of(dealer, player);
+        GameResult gameResult = GameResult.determine(dealer, player);
 
-        //then
         Assertions.assertThat(gameResult).isEqualTo(GameResult.DRAW);
     }
 
     @Test
     void 플레이어와_딜러_사이의_승패를_판정한다_둘다_블랙잭() {
-        //given
         Dealer dealer = new Dealer();
-        dealer.drawCard(List.of(
+        dealer.draw(List.of(
                 new Card(Pattern.SPADE, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.ACE)));
-
         Player player = new Player("pobi");
-        player.drawCard(List.of(
+        player.draw(List.of(
                 new Card(Pattern.DIAMOND, CardNumber.TEN),
                 new Card(Pattern.HEART, CardNumber.ACE)));
 
-        //when
-        GameResult gameResult = GameResult.of(dealer, player);
+        GameResult gameResult = GameResult.determine(dealer, player);
 
-        //then
         Assertions.assertThat(gameResult).isEqualTo(GameResult.DRAW);
     }
 
     @Test
     void 플레이어와_딜러_사이의_승패를_판정한다_딜러만_블랙잭() {
-        //given
         Dealer dealer = new Dealer();
-        dealer.drawCard(List.of(
+        dealer.draw(List.of(
                 new Card(Pattern.SPADE, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.ACE)));
-
         Player player = new Player("pobi");
-        player.drawCard(List.of(
+        player.draw(List.of(
                 new Card(Pattern.DIAMOND, CardNumber.TEN),
                 new Card(Pattern.HEART, CardNumber.TEN)));
 
-        //when
-        GameResult gameResult = GameResult.of(dealer, player);
+        GameResult gameResult = GameResult.determine(dealer, player);
 
-        //then
         Assertions.assertThat(gameResult).isEqualTo(GameResult.LOSE);
     }
 
     @Test
     void 플레이어와_딜러_사이의_승패를_판정한다_플레이어만_블랙잭() {
-        //given
         Dealer dealer = new Dealer();
-        dealer.drawCard(List.of(
+        dealer.draw(List.of(
                 new Card(Pattern.SPADE, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.TEN)));
-
         Player player = new Player("pobi");
-        player.drawCard(List.of(
+        player.draw(List.of(
                 new Card(Pattern.DIAMOND, CardNumber.TEN),
                 new Card(Pattern.HEART, CardNumber.ACE)));
 
-        //when
-        GameResult gameResult = GameResult.of(dealer, player);
+        GameResult gameResult = GameResult.determine(dealer, player);
 
-        //then
-        Assertions.assertThat(gameResult).isEqualTo(GameResult.WIN);
+        Assertions.assertThat(gameResult).isEqualTo(GameResult.BLACKJACK);
     }
 
-    @Test
-    void 딜러의_승리_횟수를_계산한다() {
-        //when
-        int winCount = GameResult.WIN.countReversedGameResult(
-                List.of(GameResult.WIN, GameResult.WIN, GameResult.LOSE, GameResult.DRAW));
+    @ParameterizedTest
+    @MethodSource(value = "provideBetAndProfit")
+    void 승패_결과에_따른_수익을_반환한다(GameResult result, int expected) {
+        Betting betting = new Betting(1000);
 
-        //then
-        Assertions.assertThat(winCount).isEqualTo(1);
+        int profit = result.evaluate(betting.getBetting());
 
+        assertThat(profit).isEqualTo(expected);
     }
 
-    @Test
-    void 딜러의_패배_횟수를_계산한다() {
-        //when
-        int winCount = GameResult.LOSE.countReversedGameResult(
-                List.of(GameResult.WIN, GameResult.WIN, GameResult.LOSE, GameResult.DRAW));
-
-        //then
-        Assertions.assertThat(winCount).isEqualTo(2);
-
+    private static Stream<Arguments> provideBetAndProfit() {
+        return Stream.of(
+                Arguments.of(GameResult.WIN, 1000),
+                Arguments.of(GameResult.DRAW, 0),
+                Arguments.of(GameResult.LOSE, -1000),
+                Arguments.of(GameResult.BLACKJACK, 1500)
+        );
     }
 
-    @Test
-    void 딜러의_무승부_횟수를_계산한다() {
-        //when
-        int winCount = GameResult.DRAW.countReversedGameResult(
-                List.of(GameResult.WIN, GameResult.WIN, GameResult.LOSE, GameResult.DRAW));
-
-        //then
-        Assertions.assertThat(winCount).isEqualTo(1);
-    }
 }

@@ -1,4 +1,4 @@
-package domain.card;
+package card;
 
 import java.util.List;
 
@@ -17,8 +17,6 @@ public enum CardNumber {
     JACK(10),
     QUEEN(10),
     KING(10);
-
-    public static final int VALUE_TO_SOFT_ACE = 10;
 
     private final int number;
 

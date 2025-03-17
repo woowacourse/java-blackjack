@@ -1,6 +1,6 @@
-package domain.game;
+package game;
 
-import domain.card.Card;
+import card.Card;
 import java.util.List;
 
 public class Dealer {
@@ -13,7 +13,7 @@ public class Dealer {
         this.hand = new Hand();
     }
 
-    public void drawCard(List<Card> cards) {
+    public void draw(List<Card> cards) {
         hand.drawCard(cards);
     }
 
@@ -21,23 +21,24 @@ public class Dealer {
         return hand;
     }
 
-    public int calculateTotalCardNumber() {
-        return hand.calculateTotalWithAce();
+    public int calculateTotalPoints() {
+        return hand.calculate();
     }
 
-    public boolean isOverBustBound() {
-        return hand.isOverBustBound();
+    public boolean isBust() {
+        return hand.isBust();
     }
 
     public boolean isOverDrawBound() {
-        return calculateTotalCardNumber() > DEALER_DRAW_BOUND;
-    }
-
-    public int getCardsCount() {
-        return hand.getCardsCount();
+        return calculateTotalPoints() > DEALER_DRAW_BOUND;
     }
 
     public Card getSingleCard() {
         return hand.getCards().getFirst();
     }
+
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
+    }
+
 }
