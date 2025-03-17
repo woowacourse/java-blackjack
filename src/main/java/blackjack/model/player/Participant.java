@@ -1,7 +1,9 @@
 package blackjack.model.player;
 
+import blackjack.model.card.Card;
 import blackjack.model.game.BetAmount;
 import blackjack.model.game.ParticipantResult;
+import java.util.List;
 import java.util.Objects;
 
 public class Participant extends Player {
@@ -79,5 +81,10 @@ public class Participant extends Player {
             return ParticipantResult.WIN;
         }
         return ParticipantResult.DRAW;
+    }
+
+    @Override
+    public List<Card> getInitialCards() {
+        return getReceivedCards().stream().toList();
     }
 }

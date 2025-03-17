@@ -2,6 +2,7 @@ package blackjack.model.player;
 
 import blackjack.model.card.Card;
 import blackjack.model.game.ReceivedCards;
+import java.util.List;
 
 public abstract class Player {
     private final ReceivedCards receivedCards = new ReceivedCards();
@@ -27,4 +28,6 @@ public abstract class Player {
         long aceCardCount = receivedCards.getAceCardCount();
         return specialCardCount == 1 && aceCardCount == 1;
     }
+
+    public abstract List<Card> getInitialCards();
 }

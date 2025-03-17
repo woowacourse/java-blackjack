@@ -57,4 +57,22 @@ class DealerTest {
         softly.assertThat(participant2Amount).isEqualTo(15000);
         softly.assertAll();
     }
+
+    @Test
+    void 딜러는_게임을_시작하면_카드_한장만_공개한다() {
+        // given
+        Dealer dealer = new Dealer();
+        dealer.putCard(new Card(CardShape.HEART, CardType.NORMAL_10));
+        dealer.putCard(new Card(CardShape.HEART, CardType.NORMAL_10));
+        dealer.putCard(new Card(CardShape.HEART, CardType.ACE));
+
+        // when
+        List<Card> cards = dealer.getInitialCards();
+
+        // then
+        assertThat(cards.size()).isEqualTo(1);
+        assertThat(cards.get(0).getShape()).isEqualTo(CardShape.HEART);
+        assertThat(cards.get(0).getCardType()).isEqualTo(CardType.NORMAL_10);
+
+    }
 }

@@ -7,6 +7,7 @@ import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
 import blackjack.model.player.Participants;
 import blackjack.model.player.Player;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -20,11 +21,11 @@ public class OutputView {
         ));
         customStringBuilder.appendLine(outputPlayerCardStatus(
                 "딜러",
-                generateCardName(dealer.getInitialCard())
+                generateCardNames(dealer.getInitialCards())
         ));
         participants.stream().forEach(participant -> customStringBuilder.appendLine(outputPlayerCardStatus(
                 participant.getName(),
-                generateCardNames(participant.getReceivedCards())
+                generateCardNames(participant.getInitialCards())
         )));
         customStringBuilder.print();
     }
@@ -72,6 +73,12 @@ public class OutputView {
 
     private String generateCardNames(ReceivedCards receivedCards) {
         return receivedCards.stream()
+                .map(this::generateCardName)
+                .collect(Collectors.joining(", "));
+    }
+
+    private String generateCardNames(List<Card> cards) {
+        return cards.stream()
                 .map(this::generateCardName)
                 .collect(Collectors.joining(", "));
     }

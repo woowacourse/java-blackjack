@@ -7,6 +7,8 @@ import blackjack.model.card.Card;
 import blackjack.model.card.CardShape;
 import blackjack.model.card.CardType;
 import blackjack.model.game.ParticipantResult;
+import java.util.List;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
 class ParticipantTest {
@@ -161,5 +163,25 @@ class ParticipantTest {
 
         // then
         assertThat(result).isEqualTo(ParticipantResult.LOSE);
+    }
+
+    @Test
+    void 플레이어는_게임이_시작하면_카드를_모두_공개한다() {
+        // given
+        Participant participant = new Participant("프리");
+        participant.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_10));
+        participant.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_10));
+        participant.putCard(new Card(CardShape.CLOVER, CardType.ACE));
+
+        // when
+        List<Card> cards = participant.getInitialCards();
+
+        // then
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(cards.size()).isEqualTo(3);
+        softly.assertThat(cards.get(0).getCardType()).isEqualTo(CardType.NORMAL_10);
+        softly.assertThat(cards.get(1).getCardType()).isEqualTo(CardType.NORMAL_10);
+        softly.assertThat(cards.get(2).getCardType()).isEqualTo(CardType.ACE);
+        softly.assertAll();
     }
 }

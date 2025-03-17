@@ -1,6 +1,7 @@
 package blackjack.model.player;
 
 import blackjack.model.card.Card;
+import java.util.List;
 
 public class Dealer extends Player {
 
@@ -10,13 +11,14 @@ public class Dealer extends Player {
         return calculatePoint() <= RECEIVABLE_POINT;
     }
 
-    public Card getInitialCard() {
-        return getReceivedCards().getFirstCard();
-    }
-
     public double calculateProfitAmount(Participants participants) {
         return participants.stream()
                 .mapToDouble(participant -> participant.calculateProfitAmount(participant.duelWith(this)))
                 .reduce(0, (total, profitAmount) -> total - profitAmount);
+    }
+
+    @Override
+    public List<Card> getInitialCards() {
+        return List.of(getReceivedCards().getFirstCard());
     }
 }
