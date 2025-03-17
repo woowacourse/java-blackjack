@@ -19,6 +19,35 @@ public class ProfitStatus {
     }
 
     public Map<Player, Long> calculateBetResult(Map<Player, MatchResultType> playerMatchResult) {
-        return new HashMap<>();
+        HashMap<Player, Long> betResult = new HashMap<>();
+
+        for (Map.Entry<Player, MatchResultType> entry : playerMatchResult.entrySet()) {
+            Player player = entry.getKey();
+            MatchResultType result = entry.getValue();
+            if (player.isBlackJack() && result == MatchResultType.DRAW) {
+                betResult.put(player, 0L);
+                continue;
+            }
+            if (player.isBlackJack() && result == MatchResultType.WIN) {
+                betResult.put(player, (long) (values.get(player).getValue() * 1.5));
+                continue;
+            }
+            if (player.isBust()) {
+                betResult.put(player, values.get(player).getValue() * -1L);
+                continue;
+            }
+            if (result == MatchResultType.WIN) {
+                betResult.put(player, values.get(player).getValue());
+                continue;
+            }
+            if (result == MatchResultType.LOSE) {
+                betResult.put(player, values.get(player).getValue() * -1L);
+                continue;
+            }
+            if (result == MatchResultType.DRAW) {
+                betResult.put(player, 0L);
+            }
+        }
+        return betResult;
     }
 }

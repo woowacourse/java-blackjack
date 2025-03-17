@@ -59,13 +59,13 @@ public class ProfitStatusTest {
     @DisplayName("플레이어 배팅 결과가 제대로 계산되는 지")
     @ParameterizedTest
     @MethodSource("makeBetResultTestData")
-    void calculateBetResult(List<Card> playerCard, List<Card> dealerCard, Money expectedProfit) {
+    void calculateBetResult(List<Card> playerCard, List<Card> dealerCard, long expectedProfit) {
         //given
         Map<Player, Money> profits = new HashMap<>();
 
         Players players = Players.from(List.of("hippo"));
         for (Player player : players.getPlayers()) {
-            profits.put(player, new Money(1000));
+            profits.put(player, new Money(1000L));
             TestCardDistributor.divideCardToPlayer(playerCard, player);
         }
         Dealer dealer = new Dealer();
@@ -90,11 +90,11 @@ public class ProfitStatusTest {
                 ),
                 Arguments.arguments(
                         List.of(new Card(Suit.DIAMONDS,NormalRank.JACK), new Card(Suit.DIAMONDS, AceRank.SOFT_ACE)), // 플레이어 블랙잭
-                        List.of(new Card(Suit.DIAMONDS,NormalRank.JACK), new Card(Suit.DIAMONDS,AceRank.SOFT_ACE)), // 딜러 일반
+                        List.of(new Card(Suit.DIAMONDS,NormalRank.JACK), new Card(Suit.DIAMONDS,NormalRank.FIVE)), // 딜러 일반
                         1500L
                 ),
                 Arguments.arguments(
-                        List.of(new Card(Suit.DIAMONDS,NormalRank.JACK), new Card(Suit.DIAMONDS,AceRank.SOFT_ACE)), // 플레이어 일반
+                        List.of(new Card(Suit.DIAMONDS,NormalRank.JACK), new Card(Suit.DIAMONDS,NormalRank.FIVE)), // 플레이어 일반
                         List.of(new Card(Suit.DIAMONDS,NormalRank.JACK), new Card(Suit.DIAMONDS, AceRank.SOFT_ACE)), // 딜러 블랙잭
                         -1000L
                 ),
