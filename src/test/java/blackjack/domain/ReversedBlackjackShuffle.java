@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class ReversedSortShuffle implements BlackjackShuffle {
+public class ReversedBlackjackShuffle implements BlackjackShuffle {
 
     @Override
     public void shuffle(List<Card> cards) {

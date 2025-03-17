@@ -6,7 +6,7 @@ import blackjack.domain.card.Card;
 import java.util.Comparator;
 import java.util.List;
 
-public class SortShuffle implements BlackjackShuffle {
+public class SortedBlackjackShuffle implements BlackjackShuffle {
 
     @Override
     public void shuffle(List<Card> cards) {

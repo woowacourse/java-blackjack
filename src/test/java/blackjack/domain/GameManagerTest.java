@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.CardPack;
+import blackjack.domain.player.Dealer;
 import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Players;
 import org.junit.jupiter.api.DisplayName;
@@ -11,69 +12,80 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+@DisplayName("게임 매니저 테스트")
 class GameManagerTest {
 
-    private static final CardPack SORT_CARD_PACK = new CardPack(new SortShuffle());
-    private static final CardPack REVERSE_SORT_CARD_PACK = new CardPack(new ReversedSortShuffle());
+    private static final CardPack SORT_CARD_PACK = new CardPack(new SortedBlackjackShuffle());
+    private static final CardPack REVERSE_SORT_CARD_PACK = new CardPack(new ReversedBlackjackShuffle());
+
+    private final Gambler gambler = new Gambler("비타", 0);
+    private final Players players = new Players(new Dealer(), List.of(gambler));
 
     @Test
-    @DisplayName("참가자를 추가한다")
-    void addParticipants() {
-        Players players = new Players(List.of(new Gambler("비타")), SORT_CARD_PACK);
-        GameManager gameManager = new GameManager(SORT_CARD_PACK, players);
+    @DisplayName("플레이어와 카드팩으로 게임 매니저를 생성한다")
+    void createGameManagerWithPlayersAndCardPack() {
+        GameManager sortGameManager = new GameManager(SORT_CARD_PACK, players);
 
-        assertThat(gameManager.getPlayers().getGamblers().size())
-                .isEqualTo(1);
+        assertAll(
+                () -> assertThat(sortGameManager.getPlayers().getGamblers().size()).isEqualTo(1),
+                () -> assertThat(sortGameManager.getPlayers().getDealer()).isNotNull()
+        );
+    }
+
+    @Test
+    @DisplayName("플레이어와 딜러는 기본 두 장씩 카드를 발급한다")
+    void issueTwoCardsToPlayerAndDealerInitially() {
+        GameManager sortGameManager = new GameManager(SORT_CARD_PACK, players);
+
+        assertAll(
+                () -> assertThat(sortGameManager.getPlayers().getGamblers().getFirst().getHand().getCards().getCards().size()).isEqualTo(2),
+                () -> assertThat(sortGameManager.getPlayers().getDealer().getHand().getCards().getCards().size()).isEqualTo(2)
+        );
     }
 
     @DisplayName("참가자에게 카드를 한장 추가 발급한다")
     @Test
-    void deal_card_to_gambler_test() {
-        Gambler gambler = new Gambler("비타");
-        Players players = new Players(List.of(gambler), SORT_CARD_PACK);
-        GameManager gameManager = new GameManager(SORT_CARD_PACK, players);
+    void dealOneCardToParticipant() {
+        GameManager sortGameManager = new GameManager(SORT_CARD_PACK, players);
+        sortGameManager.addCardForGambler(gambler);
 
-        gameManager.dealAddCard(gambler);
+        int result = sortGameManager.getPlayers().getGamblers().getFirst().getHand().getCards().getCards().size();
 
-        assertThat(gambler.getCards().size()).isEqualTo(3);
+        assertThat(result).isEqualTo(3);
     }
 
     @Test
-    @DisplayName("플레이어의 카드가 버스트면 TRUE를 반환한다")
-    void ifThePlayerS_CardIsBurstItReturns_True() {
-        Gambler gambler = new Gambler("비타");
+    @DisplayName("플레이어가 버스트면 TRUE를 반환한다")
+    void returnTrueIfPlayerIsBust() {
+        GameManager sortGameManager = new GameManager(SORT_CARD_PACK, players);
+        sortGameManager.addCardForGambler(gambler);
 
-        Players players = new Players(List.of(gambler), SORT_CARD_PACK);
-        GameManager gameManager = new GameManager(SORT_CARD_PACK, players);
-
-        gameManager.dealAddCard(gambler);
-        boolean result = gameManager.isPlayerBust(gambler);
+        boolean result = sortGameManager.isPlayerBust(gambler);
 
         assertThat(result).isTrue();
     }
 
     @Test
-    @DisplayName("딜러의 카드가 히트면 카드를 한장 추가한다")
-    void ifTheDealerS_CardIsHitAddACard() {
-        Players players = new Players(List.of(new Gambler("비타")), REVERSE_SORT_CARD_PACK);
-        GameManager gameManager = new GameManager(REVERSE_SORT_CARD_PACK, players);
+    @DisplayName("플레이어가 버스트가 아니면 FALSE를 반환한다")
+    void returnFalseIfPlayerIsNotBust() {
+        GameManager reverseSortGameManager = new GameManager(REVERSE_SORT_CARD_PACK, players);
+        reverseSortGameManager.addCardForGambler(gambler);
 
-        boolean result = gameManager.isDealerHitThenDealAddCard();
+        boolean result = reverseSortGameManager.isPlayerBust(gambler);
 
-        assertAll(
-                () -> assertThat(result).isTrue(),
-                () -> assertThat(gameManager.getPlayers().getDealer().getCards().size()).isEqualTo(3)
-        );
+        assertThat(result).isFalse();
     }
 
     @Test
-    @DisplayName("딜러의 카드가 히트가 아니면 false 를 반환한다")
-    void if_the_dealer_card_is_not_hit_get_false() {
-        Players players = new Players(List.of(new Gambler("비타")), SORT_CARD_PACK);
-        GameManager gameManager = new GameManager(SORT_CARD_PACK, players);
+    @DisplayName("딜러가 히트면 카드를 한장 추가하고 TRUE를 반환한다")
+    void addCardIfDealerHitsAndReturnTrue() {
+        GameManager reverseSortGameManager = new GameManager(REVERSE_SORT_CARD_PACK, players);
 
-        boolean result = gameManager.isDealerHitThenDealAddCard();
+        boolean result = reverseSortGameManager.isDealerHitThenAddCard();
 
-        assertThat(result).isFalse();
+        assertAll(
+                () -> assertThat(result).isTrue(),
+                () -> assertThat(reverseSortGameManager.getPlayers().getDealer().getHand().getCards().getCards().size()).isEqualTo(3)
+        );
     }
 }

@@ -1,8 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardPack;
-import blackjack.domain.player.Dealer;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardShape;
+import blackjack.domain.card.Cards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,18 +11,22 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DealerTest {
+@DisplayName("딜러 테스트")
+class DealerTest {
+
+    private static final Card ACE = new Card(CardNumber.ACE, CardShape.CLOVER);
 
     @Test
     @DisplayName("딜러는 한장의 카드만 공개한다")
     void dealerRevealsOnlyOneCard() {
-        CardPack cardPack = new CardPack(new SortShuffle());
         Dealer dealer = new Dealer();
 
-        dealer.pushDealCard(cardPack, 2);
-        List<Card> cards = dealer.getOpenedCards();
+        Cards cards = new Cards(List.of(ACE));
+        dealer.addCards(cards);
 
-        assertThat(cards.size()).isEqualTo(1);
+        List<Card> result = dealer.getOpenedCards();
+
+        assertThat(result.size()).isEqualTo(1);
     }
 
     @Test
@@ -30,7 +35,6 @@ public class DealerTest {
         Dealer dealer = new Dealer();
         List<Card> result = dealer.getOpenedCards();
 
-        assertThat(result)
-                .isEmpty();
+        assertThat(result).isEmpty();
     }
 }

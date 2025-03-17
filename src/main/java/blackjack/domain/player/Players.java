@@ -1,56 +1,62 @@
 package blackjack.domain.player;
 
-import blackjack.domain.GameResults;
-import blackjack.domain.card.CardPack;
+import blackjack.domain.GameResult;
+import blackjack.domain.card.Cards;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class Players {
 
-    private static final int HIT_THRESHOLD = 16;
+    private final Dealer dealer;
+    private final List<Gambler> gamblers;
 
-    private final Player dealer;
-    private final List<Player> gamblers;
-
-    public Players(final List<Player> gamblers, final CardPack cardPack) {
-        dealer = new Dealer();
-
+    public Players(final Dealer dealer, final List<Gambler> gamblers) {
         validateHasDuplication(gamblers);
+        this.dealer = dealer;
         this.gamblers = gamblers;
-        initPlayers(cardPack);
     }
 
-    public void dealAddCardForDealer(final CardPack cardPack) {
-        dealer.pushDealCard(cardPack, 1);
+    public void distributeInitialCards(final Supplier<Cards> cardsSupplier) {
+        dealer.addCards(cardsSupplier.get());
+        for (Gambler gambler : gamblers) {
+            gambler.addCards(cardsSupplier.get());
+        }
+    }
+
+    public void addCardForDealer(final Cards cards) {
+        dealer.addCards(cards);
+    }
+
+    public void addCardForGambler(final Gambler gambler, final Cards cards) {
+        gambler.addCards(cards);
     }
 
     public boolean isDealerHit() {
-        return dealer.calculateCardNumbers() <= HIT_THRESHOLD;
+        return dealer.isHit();
     }
 
-    public GameResults getGameResult() {
-        return new GameResults(dealer, gamblers);
+    public GameResult createGameResult() {
+        GameResult gameResult = new GameResult();
+        for (Gambler gambler : gamblers) {
+            gameResult.processResult(dealer, gambler);
+        }
+        return gameResult;
     }
 
-    private void validateHasDuplication(final List<Player> players) {
-        int size = new HashSet<>(players).size();
-        if (players.size() != size) {
+    private void validateHasDuplication(final List<Gambler> gamblers) {
+        int size = new HashSet<>(gamblers).size();
+        if (gamblers.size() != size) {
             throw new IllegalArgumentException("이름은 중복 될 수 없습니다.");
         }
     }
 
-    private void initPlayers(final CardPack cardPack) {
-        dealer.pushDealCard(cardPack, 2);
-        gamblers.forEach(gambler ->
-                gambler.pushDealCard(cardPack, 2));
-    }
-
-    public Player getDealer() {
+    public Dealer getDealer() {
         return dealer;
     }
 
-    public List<Player> getGamblers() {
+    public List<Gambler> getGamblers() {
         return gamblers;
     }
 }
