@@ -14,6 +14,13 @@ public class InputView {
         return Parser.splitByDelimiter(rawNames, DELIMITER_COMMA);
     }
 
+    public int insertBettingAmount(String username) {
+        System.out.printf("%s의 배팅 금액은?\n", username);
+        String rawMoney = readLine();
+        InputValidator.validateNumberType(rawMoney);
+        return Integer.parseInt(rawMoney);
+    }
+
     public Response getUserResponse(String username) {
         System.out.printf("\n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", username);
         return Response.findAnswer(readLine());
@@ -25,10 +32,17 @@ public class InputView {
 
     private static class InputValidator {
         private static final String PATTERN = "^[가-힣a-zA-Z, ]+$";
+        private static final String NUMBER_PATTERN = "\\d+";
 
         public static void validateUsernames(String names) {
             if (!names.matches(PATTERN)) {
                 throw new IllegalArgumentException("한글, 숫자, 공백, 쉼표만 입력가능합니다.");
+            }
+        }
+
+        public static void validateNumberType(String money) {
+            if (!money.matches(NUMBER_PATTERN)) {
+                throw new IllegalArgumentException("숫자를 입력해주세요");
             }
         }
     }

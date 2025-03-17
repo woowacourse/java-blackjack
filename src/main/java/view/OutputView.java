@@ -1,15 +1,17 @@
 package view;
 
-import static domain.Dealer.BUST_THRESHOLD;
-import static domain.GameResult.DRAW;
-import static domain.GameResult.LOSE;
-import static domain.GameResult.WIN;
+import static domain.game.GameResult.DRAW;
+import static domain.game.GameResult.LOSE;
+import static domain.game.GameResult.WIN;
+import static domain.participants.Dealer.BUST_THRESHOLD;
 
-import domain.Card;
-import domain.GameResult;
-import domain.GameStatistics;
-import domain.Gamer;
-import domain.PlayerName;
+import domain.card.Card;
+import domain.game.BettingResultAmount;
+import domain.game.BettingStatistics;
+import domain.game.GameResult;
+import domain.game.GameStatistics;
+import domain.participants.Gamer;
+import domain.participants.PlayerName;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -76,6 +78,14 @@ public class OutputView {
         results.forEach((key, value) -> {
             System.out.printf("%s: %s\n", key.username(), GAME_RESULT.get(value));
         });
+        System.out.println();
+    }
+
+    public void printBettingStatistics(BettingStatistics bettingStatistics) {
+        System.out.println("## 최종 수익");
+        System.out.printf("딜러: %d\n", bettingStatistics.calculateDealerBettingResult().getMoney());
+        Map<PlayerName, BettingResultAmount> bettingResult = bettingStatistics.getBettingResult();
+        bettingResult.forEach((key, value) -> System.out.printf("%s: %d\n", key.username(), value.getMoney()));
     }
 
     private void printGamerScore(Gamer gamer) {

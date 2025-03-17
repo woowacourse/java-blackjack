@@ -1,9 +1,10 @@
-package domain;
+package domain.game;
 
-import static domain.GameResult.DRAW;
-import static domain.GameResult.LOSE;
-import static domain.GameResult.WIN;
+import static domain.game.GameResult.DRAW;
+import static domain.game.GameResult.LOSE;
+import static domain.game.GameResult.WIN;
 
+import domain.participants.PlayerName;
 import java.util.Collections;
 import java.util.Map;
 

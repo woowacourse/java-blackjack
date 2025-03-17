@@ -1,11 +1,13 @@
-package domain;
+package domain.participants;
 
+import domain.card.Card;
+import domain.card.CardRank;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
-public abstract class Gamer implements Cloneable {
+public abstract class Gamer {
     private static final int BLACKJACK_MAX_SCORE = 21;
 
     private final List<Card> cards;
@@ -13,6 +15,12 @@ public abstract class Gamer implements Cloneable {
     protected Gamer() {
         this.cards = new ArrayList<>();
     }
+
+    protected Gamer(Gamer gamer){
+        this.cards = new ArrayList<>(gamer.cards);
+    }
+
+    public abstract Gamer newInstance();
 
     public int calculateScore() {
         boolean containAce = cards.stream()
@@ -30,30 +38,19 @@ public abstract class Gamer implements Cloneable {
         cards.addAll(addedCards);
     }
 
-    public boolean isDrawable(int standard) {
-        int score = calculateScore();
-        return score <= standard;
-    }
-
-    public boolean isBust(){
+    public boolean isBust() {
         int score = calculateScore();
         return score > BLACKJACK_MAX_SCORE;
-    }
-
-    @Override
-    public Gamer clone() {
-        try {
-            Gamer clone = (Gamer) super.clone();
-            return clone;
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
     }
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
 
+    protected boolean isDrawable(int standard) {
+        int score = calculateScore();
+        return score <= standard;
+    }
 
     private int calculateAceValue(boolean containAce, int lowAceTotal) {
         if (!containAce || lowAceTotal > BLACKJACK_MAX_SCORE) {

@@ -1,5 +1,7 @@
-package domain;
+package domain.participants;
 
+import domain.card.Card;
+import domain.card.Deck;
 import java.util.List;
 
 public class Dealer extends Gamer {
@@ -10,6 +12,16 @@ public class Dealer extends Gamer {
     public Dealer(Deck deck) {
         super();
         this.deck = deck;
+    }
+
+    private Dealer(Dealer dealer){
+        super(dealer);
+        this.deck = dealer.deck;
+    }
+
+    @Override
+    public Gamer newInstance() {
+        return new Dealer(this);
     }
 
     public boolean isDrawable() {

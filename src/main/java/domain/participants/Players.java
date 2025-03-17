@@ -1,20 +1,26 @@
-package domain;
+package domain.participants;
 
-import java.util.HashSet;
+import domain.card.Card;
+import domain.game.BettingStatistics;
+import domain.game.GameResult;
+import domain.game.GameStatistics;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Players {
     private final List<Player> players;
 
-    public Players(List<PlayerName> playerNames) {
-        validateDuplicate(playerNames);
-        this.players = playerNames.stream()
-                .map(Player::new)
-                .toList();
+    private Players(List<Player> players) {
+        this.players = players;
+    }
+
+    public Players(Map<PlayerName, BettingAmount> playerInfo) {
+        this(playerInfo.entrySet().stream()
+                .map(entry -> new Player(entry.getKey(), entry.getValue())
+                ).toList());
     }
 
     public void giveCard(PlayerName playerName, List<Card> cards) {
@@ -43,7 +49,7 @@ public class Players {
         return players.stream()
                 .collect(Collectors.toMap(
                         Player::getPlayerName,
-                        Gamer::clone,
+                        Gamer::newInstance,
                         (existing, replacement) -> existing,
                         LinkedHashMap::new
                 ));
@@ -57,20 +63,24 @@ public class Players {
                         (existing, replacement) -> existing,
                         LinkedHashMap::new
                 ));
-
         return new GameStatistics(gameResults);
     }
 
+    public BettingStatistics calculateBettingStatistics(Dealer dealer) {
+        Map<Player, GameResult> gameResults = players.stream()
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        player -> player.decideGameResult(dealer),
+                        (existing, replacement) -> existing,
+                        LinkedHashMap::new
+                ));
+        return BettingStatistics.fromBettingResult(gameResults);
+    }
+
     private Player selectPlayer(PlayerName playerName) {
-        return players.stream().filter(player -> player.getPlayerName().equals(playerName))
+        return players.stream().filter(player -> player.hasSameName(playerName))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("해당 플레이어는 존재하지 않습니다."));
     }
 
-    private void validateDuplicate(List<PlayerName> playerNames){
-        Set<PlayerName> playerNameSet = new HashSet<>(playerNames);
-        if(playerNameSet.size() != playerNames.size()){
-            throw new IllegalArgumentException("중복된 이름이 있습니다.");
-        }
-    }
 }

@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -14,7 +14,6 @@ class DeckTest {
     void validateEmptyDeckTest() {
         //given
         Deck deck = new Deck(new ArrayList<>());
-
         //when & then
         assertThatThrownBy(deck::draw)
                 .isInstanceOf(IllegalStateException.class)
@@ -28,6 +27,5 @@ class DeckTest {
         assertThatThrownBy(() -> new Deck(List.of(Card.CLOVER_ACE, Card.CLOVER_ACE)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중복된 카드로 덱을 생성할 수 없습니다.");
-
     }
 }

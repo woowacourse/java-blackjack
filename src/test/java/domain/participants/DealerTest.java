@@ -1,7 +1,9 @@
-package domain;
+package domain.participants;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
+import domain.card.Deck;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -21,7 +23,6 @@ class DealerTest {
         //given
         Dealer dealer = new Dealer(new Deck(new ArrayList<>()));
         dealer.addCard(cards);
-
         //when & then
         assertThat(dealer.isDrawable()).isEqualTo(expected);
     }

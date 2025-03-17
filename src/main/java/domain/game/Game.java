@@ -1,5 +1,12 @@
-package domain;
+package domain.game;
 
+import domain.card.Card;
+import domain.card.Deck;
+import domain.participants.BettingAmount;
+import domain.participants.Dealer;
+import domain.participants.Gamer;
+import domain.participants.PlayerName;
+import domain.participants.Players;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -10,9 +17,13 @@ public class Game {
     private final Dealer dealer;
     private final Players players;
 
-    public Game(List<PlayerName> playerNames) {
-        this.dealer = new Dealer(new Deck(Card.initializeCards()));
-        this.players = new Players(playerNames);
+    private Game(Dealer dealer, Players players) {
+        this.dealer = dealer;
+        this.players = players;
+    }
+
+    public Game(Map<PlayerName, BettingAmount> playerInfo) {
+        this(new Dealer(new Deck(Card.initializeCards())), new Players(playerInfo));
     }
 
     public void giveCardToPlayer(PlayerName playerName, int count) {
@@ -50,11 +61,15 @@ public class Game {
     }
 
     public Gamer getDealer() {
-        return dealer.clone();
+        return dealer.newInstance();
     }
 
     public GameStatistics getGameStatistics() {
         return players.calculateGameStatistics(dealer);
+    }
+
+    public BettingStatistics getBettingStatistics() {
+        return players.calculateBettingStatistics(dealer);
     }
 
     private List<Card> drawCards(int count) {

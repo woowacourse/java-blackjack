@@ -1,22 +1,22 @@
-package domain;
+package domain.card;
 
-import static domain.CardRank.ACE;
-import static domain.CardRank.EIGHT;
-import static domain.CardRank.FIVE;
-import static domain.CardRank.FOUR;
-import static domain.CardRank.JACK;
-import static domain.CardRank.KING;
-import static domain.CardRank.NINE;
-import static domain.CardRank.QUEEN;
-import static domain.CardRank.SEVEN;
-import static domain.CardRank.SIX;
-import static domain.CardRank.TEN;
-import static domain.CardRank.THREE;
-import static domain.CardRank.TWO;
-import static domain.CardShape.CLOVER;
-import static domain.CardShape.DIA;
-import static domain.CardShape.HEART;
-import static domain.CardShape.SPADE;
+import static domain.card.CardRank.ACE;
+import static domain.card.CardRank.EIGHT;
+import static domain.card.CardRank.FIVE;
+import static domain.card.CardRank.FOUR;
+import static domain.card.CardRank.JACK;
+import static domain.card.CardRank.KING;
+import static domain.card.CardRank.NINE;
+import static domain.card.CardRank.QUEEN;
+import static domain.card.CardRank.SEVEN;
+import static domain.card.CardRank.SIX;
+import static domain.card.CardRank.TEN;
+import static domain.card.CardRank.THREE;
+import static domain.card.CardRank.TWO;
+import static domain.card.CardShape.CLOVER;
+import static domain.card.CardShape.DIA;
+import static domain.card.CardShape.HEART;
+import static domain.card.CardShape.SPADE;
 
 import java.util.Arrays;
 import java.util.List;
@@ -98,7 +98,7 @@ public enum Card {
         return cardRank.getName() + cardShape.getName();
     }
 
-    public boolean isAce(){
+    public boolean isAce() {
         return cardRank == ACE;
     }
 }

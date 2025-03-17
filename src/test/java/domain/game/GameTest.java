@@ -1,10 +1,14 @@
-package domain;
+package domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import domain.card.Card;
+import domain.participants.BettingAmount;
+import domain.participants.PlayerName;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,8 +19,12 @@ class GameTest {
 
     @BeforeEach
     void beforeEach() {
-        List<PlayerName> usernames = List.of(new PlayerName("a"), new PlayerName("b"), new PlayerName("c"));
-        game = new Game(usernames);
+        Map<PlayerName, BettingAmount> players = Map.of(
+                new PlayerName("a"),new BettingAmount(10000),
+                new PlayerName("b"),new BettingAmount(10000),
+                new PlayerName("c"),new BettingAmount(10000)
+        );
+        game = new Game(players);
     }
 
     @Test
@@ -44,12 +52,12 @@ class GameTest {
     @Test
     @DisplayName("초기 참가자에게 카드가 2장씩 분배됐는지 확인합니다.")
     void distributeStartingHandsTest() {
+        // when
         game.distributeStartingHands();
-
-        assertAll(() -> assertEquals(2, game.getDealer().getCards().size()),
-                () -> assertEquals(2, game.getPlayerCards(new PlayerName("a")).size()),
-                () -> assertEquals(2, game.getPlayerCards(new PlayerName("b")).size()),
-                () -> assertEquals(2, game.getPlayerCards(new PlayerName("c")).size())
-        );
+        // then
+        assertThat(game.getDealer().getCards()).hasSize(2);
+        assertThat(game.getPlayerCards(new PlayerName("a")).size()).isEqualTo(2);
+        assertThat(game.getPlayerCards(new PlayerName("b")).size()).isEqualTo(2);
+        assertThat(game.getPlayerCards(new PlayerName("c")).size()).isEqualTo(2);
     }
 }
