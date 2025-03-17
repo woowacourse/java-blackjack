@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +10,7 @@ import blackjack.model.game.BlackJackGame;
 import blackjack.model.game.GameResult;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
+import blackjack.model.player.Players;
 import blackjack.model.player.User;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -28,33 +28,30 @@ public class BlackJackController {
     public void run() {
         BlackJackGame blackJackGame = new BlackJackGame(new DefaultCardDeckInitializer());
 
-        List<Player> players = makePlayers();
-        for (Player player : players) {
-            betEachPlayer(player, blackJackGame);
-        }
+        Players players = makePlayers();
+        players.getUsers().forEach(user -> betEachPlayer(user, blackJackGame));
 
-        blackJackGame.dealInitialCards(players);
-        List<Cards> openCards = players.stream()
+        blackJackGame.dealInitialCards(players.getUsers());
+        List<Cards> openCards = players.getUsers().stream()
                 .map(blackJackGame::openInitialCards)
                 .toList();
-        outputView.printDealInitialCardsResult(players, openCards);
+        outputView.printDealInitialCardsResult(players.getUsers(), openCards);
 
-        usersDrawMoreCards(players, blackJackGame);
+        usersDrawMoreCards(players.getUsers(), blackJackGame);
 
-        dealerDrawMoreCards(blackJackGame, players.getFirst());
-        outputView.printOptimalPoints(blackJackGame.calculateOptimalPoints(players));
-        Map<Player, Map<GameResult, Integer>> gameResults = blackJackGame.calculateResult(players);
+        dealerDrawMoreCards(blackJackGame, players.getUsers().getFirst());
+        outputView.printOptimalPoints(blackJackGame.calculateOptimalPoints(players.getUsers()));
+        Map<Player, Map<GameResult, Integer>> gameResults = blackJackGame.calculateResult(players.getUsers());
         Map<Player, BigDecimal> playerWinnings = blackJackGame.calculatePlayerWinnings(gameResults);
         outputView.printFinalWinnings(playerWinnings);
     }
 
-    private List<Player> makePlayers() {
-        List<Player> players = new ArrayList<>();
-        players.add(new Dealer());
-        for (String username : inputView.readUserNames()) {
-            players.add(new User(username));
-        }
-        return players;
+    private Players makePlayers() {
+        List<Player> users = inputView.readUserNames()
+                .stream()
+                .map(userName -> (Player) new User(userName))
+                .toList();
+        return new Players(new Dealer(), users);
     }
 
     private void betEachPlayer(final Player player, final BlackJackGame blackJackGame) {
