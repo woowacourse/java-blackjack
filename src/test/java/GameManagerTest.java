@@ -4,12 +4,12 @@ import domain.CardNumber;
 import domain.CardShape;
 import domain.GameManager;
 import domain.GameResult;
+import domain.Profit;
 import domain.TrumpCard;
 import domain.TrumpCardManager;
 import domain.user.Betting;
 import domain.user.Dealer;
 import domain.user.Player;
-import domain.user.User;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -231,10 +231,10 @@ public class GameManagerTest {
         dealer.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.K));
 
         //when
-        Map<User, Long> gameResult = gameManager.createGameResult();
+        List<Profit> profitResult = gameManager.createProfitResult();
 
         //then
-        Assertions.assertThat(gameResult.get(player)).isEqualTo(300000000);
+        Assertions.assertThat(profitResult.getFirst().profit()).isEqualTo(300000000);
     }
 
     @DisplayName("플레이어는 블랙잭으로 승리시 배팅금액의 1.5배를 얻는다.")
@@ -257,12 +257,12 @@ public class GameManagerTest {
         dealer.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.K));
 
         //when
-        Map<User, Long> gameResult = gameManager.createGameResult();
+        List<Profit> profitResult = gameManager.createProfitResult();
         GameResult compare = gameManager.compare(player, dealer);
 
         //then
         Assertions.assertThat(compare).isEqualTo(GameResult.BLACKJACK);
-        Assertions.assertThat(gameResult.get(player)).isEqualTo(450000000);
+        Assertions.assertThat(profitResult.getFirst().profit()).isEqualTo(450000000);
     }
 
     @DisplayName("딜러가 버스트 일때 최종 수익")
@@ -289,8 +289,8 @@ public class GameManagerTest {
         dealer.getCardDeck().addTrumpCard(new TrumpCard(CardShape.DIA, CardNumber.K));
 
         //when
-        Map<User, Long> gameResult = gameManager.createGameResult();
-        long dealerProfit = gameManager.calculateDealerProfit(gameResult);
+        List<Profit> profitResult = gameManager.createProfitResult();
+        long dealerProfit = gameManager.calculateDealerProfit(profitResult);
 
         //then
         Assertions.assertThat(dealerProfit).isEqualTo(-450020000);
@@ -320,8 +320,8 @@ public class GameManagerTest {
         dealer.getCardDeck().addTrumpCard(new TrumpCard(CardShape.CLOVER, CardNumber.K));
 
         //when
-        Map<User, Long> gameResult = gameManager.createGameResult();
-        long dealerProfit = gameManager.calculateDealerProfit(gameResult);
+        List<Profit> profitResult = gameManager.createProfitResult();
+        long dealerProfit = gameManager.calculateDealerProfit(profitResult);
 
         //then
         Assertions.assertThat(dealerProfit).isEqualTo(-449980000);

@@ -1,8 +1,7 @@
 package view;
 
-import domain.user.User;
+import domain.Profit;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -26,11 +25,11 @@ public class OutputView {
         System.out.println(name + "카드: " + str + " - 결과: " + score);
     }
 
-    public void displayProfitResult(long dealerProfit, final Map<User, Long> gameResult) {
+    public void displayProfitResult(long dealerProfit, final List<Profit> playerProfit) {
         System.out.println("\n## 최종 수익");
         System.out.printf("딜러: %d\n", dealerProfit);
-        for (User user : gameResult.keySet()) {
-            System.out.printf("%s: %d\n", user.getName(), gameResult.get(user));
+        for (Profit profit : playerProfit) {
+            System.out.printf("%s: %d\n", profit.player().getName(), profit.profit());
         }
     }
 }

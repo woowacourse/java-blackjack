@@ -4,10 +4,9 @@ import domain.user.Betting;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class GameManager {
     public final static int MAX_RANGE_HAND_OUT_CARD = 2;
@@ -40,18 +39,18 @@ public class GameManager {
         }
     }
 
-    public void drawMoreCard(final User user) {
-        user.receiveCard(trumpCardManager.drawCard());
+    public List<Profit> createProfitResult() {
+        List<Profit> profitResult = new ArrayList<>();
+        if (dealer.isBurst()) {
+            players.forEach((user) -> putGameResultBurst(user, profitResult));
+            return profitResult;
+        }
+        players.forEach((player) -> profitResult.add(new Profit(player, calculateProfit(player, dealer))));
+        return profitResult;
     }
 
-    public Map<User, Long> createGameResult() {
-        Map<User, Long> gameResult = new LinkedHashMap<>();
-        if (dealer.isBurst()) {
-            players.forEach((user) -> putGameResultBurst(user, gameResult));
-            return gameResult;
-        }
-        players.forEach((player) -> gameResult.put(player, calculateProfit(player, dealer)));
-        return gameResult;
+    public void drawMoreCard(final User user) {
+        user.receiveCard(trumpCardManager.drawCard());
     }
 
     private Long calculateProfit(Player player, Dealer dealer) {
@@ -81,23 +80,22 @@ public class GameManager {
         return GameResult.DRAW;
     }
 
-    private void putGameResultBurst(final Player player, final Map<User, Long> gameResult) {
+    private void putGameResultBurst(final Player player, final List<Profit> profitResult) {
         if (player.isBurst()) {
-            gameResult.put(player, player.calculateBettingResult(GameResult.LOSE));
+            profitResult.add(new Profit(player, player.calculateBettingResult(GameResult.LOSE)));
             return;
         }
         if (player.getCardDeck().isBlackjack()) {
-            gameResult.put(player, player.calculateBettingResult(GameResult.BLACKJACK));
+            profitResult.add(new Profit(player, player.calculateBettingResult(GameResult.BLACKJACK)));
             return;
         }
-        gameResult.put(player, player.calculateBettingResult(GameResult.WIN));
+        profitResult.add(new Profit(player, player.calculateBettingResult(GameResult.WIN)));
     }
 
-    public long calculateDealerProfit(final Map<User, Long> gameResult) {
-        long amount = gameResult.entrySet().stream()
-                .mapToLong(Entry::getValue)
+    public long calculateDealerProfit(final List<Profit> playerProfit) {
+        return -playerProfit.stream()
+                .mapToLong(Profit::profit)
                 .sum();
-        return -amount;
     }
 
     public Dealer getDealer() {
