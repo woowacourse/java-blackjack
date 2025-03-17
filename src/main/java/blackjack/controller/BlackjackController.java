@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.domain.BettingBoard;
 import blackjack.domain.WinningStatus;
+import blackjack.domain.money.BlackjackBettingMoney;
 import blackjack.domain.money.Money;
 import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
@@ -44,10 +45,11 @@ public class BlackjackController implements Controller {
     }
     
     private void processBetting(List<String> playerNames, Players players, BettingBoard bettingBoard) {
+        Map<String, BlackjackBettingMoney> bettings = new HashMap<>();
         for (String playerName : playerNames) {
-            Player player = players.findPlayerByName(playerName);
-            bettingBoard.bet(player, inputView.getBettingMoney(player));
+            bettings.put(playerName, new BlackjackBettingMoney(inputView.getBettingMoney(playerName)));
         }
+        players.bet(bettings, bettingBoard);
     }
     
     private List<PlayerBlackjackCardHand> createPlayerBlackjackCardHands(Players players, BlackjackDeck deck) {

@@ -16,8 +16,8 @@ public class BettingBoard {
         this.bettingBoard = new HashMap<>();
     }
     
-    public void bet(Player player, int bettingMoney) {
-        this.bettingBoard.put(player, new BlackjackBettingMoney(bettingMoney));
+    public void bet(Player player, BlackjackBettingMoney bettingMoney) {
+        this.bettingBoard.put(player, bettingMoney);
     }
     
     public Money getProfit(Player player, WinningStatus winningStatus) {

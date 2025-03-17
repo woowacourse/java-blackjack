@@ -31,8 +31,8 @@ public class InputView {
                 .toList();
     }
     
-    public int getBettingMoney(Player player) {
-        writer.write(System.lineSeparator() + player.getName() + "의 배팅 금액은?");
+    public int getBettingMoney(String player) {
+        writer.write(System.lineSeparator() + player + "의 배팅 금액은?");
         return parseToInt(reader.readLine());
     }
     

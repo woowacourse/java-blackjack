@@ -1,15 +1,20 @@
 package blackjack.domain.player;
 
 import static blackjack.test_util.TestConstants.*;
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.BettingBoard;
+import blackjack.domain.WinningStatus;
 import blackjack.domain.card_hand.PlayerBlackjackCardHand;
-import blackjack.test_util.TestConstants;
 
-import java.util.ArrayList;
+import blackjack.domain.money.BlackjackBettingMoney;
+
+import blackjack.domain.money.Money;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
@@ -57,24 +62,20 @@ public class PlayersTest {
     }
     
     @Test
-    void 플레이어_이름으로_플레이어를_찾을_수_있다() {
+    void 플레이어들은_배팅을_할_수_있다() {
         // given
-        final List<String> playerNames = List.of("돔푸", "메이");
-        Players players = Players.createPlayers(playerNames);
+        Players players = Players.createPlayers(List.of("메이"));
+        BettingBoard bettingBoard = new BettingBoard();
+        Map<String, BlackjackBettingMoney> bettings = new HashMap<>();
+        bettings.put("메이", new BlackjackBettingMoney(10000));
+        
+        // when
+        players.bet(bettings, bettingBoard);
         
         // expected
-        assertThat(players.findPlayerByName("메이")).isEqualTo(new Player("메이"));
-    }
-    
-    @Test
-    void 존재하지_않는_플레이어를_찾으려는_경우_예외를_발생시킨다() {
-        // given
-        final List<String> playerNames = List.of("돔푸", "메이");
-        Players players = Players.createPlayers(playerNames);
+        assertThat(bettingBoard.getProfit(new Player("메이"), WinningStatus.WIN))
+                .isEqualTo(new Money(10000));
         
-        // expected
-        assertThatThrownBy(() -> players.findPlayerByName("멍구"))
-                .isInstanceOf(IllegalArgumentException.class);
     }
     
     @Test

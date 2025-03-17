@@ -1,11 +1,14 @@
 package blackjack.domain.player;
 
+import blackjack.domain.BettingBoard;
 import blackjack.domain.card_hand.PlayerBlackjackCardHand;
 import blackjack.domain.deck.BlackjackCardHandInitializer;
-import blackjack.domain.deck.CardDrawer;
+
+import blackjack.domain.money.BlackjackBettingMoney;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 public class Players {
     
@@ -24,7 +27,14 @@ public class Players {
                 .toList());
     }
     
-    public Player findPlayerByName(String name) {
+    public void bet(Map<String, BlackjackBettingMoney> bettings, BettingBoard bettingBoard) {
+        for (String playerName : bettings.keySet()) {
+            Player player = findPlayerByName(playerName);
+            bettingBoard.bet(player, bettings.get(playerName));
+        }
+    }
+    
+    private Player findPlayerByName(String name) {
         return players.stream()
                 .filter(player -> player.isSameName(name))
                 .findFirst()

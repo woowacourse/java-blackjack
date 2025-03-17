@@ -4,6 +4,7 @@ import static blackjack.test_util.TestConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+import blackjack.domain.money.BlackjackBettingMoney;
 import blackjack.domain.money.Money;
 import blackjack.domain.player.Player;
 
@@ -25,7 +26,7 @@ public class BettingBoardTest {
         BettingBoard bettingBoard = new BettingBoard();
         
         // expected
-        assertDoesNotThrow(() -> bettingBoard.bet(DEFAULT_PLAYER, 10000));
+        assertDoesNotThrow(() -> bettingBoard.bet(DEFAULT_PLAYER, new BlackjackBettingMoney(10000)));
     }
     
     @ParameterizedTest
@@ -33,7 +34,7 @@ public class BettingBoardTest {
     void 블랙잭_결과로_달라지는_플레이어의_수익을_확인할_수_있다(WinningStatus winningStatus, Money profit) {
         // given
         BettingBoard bettingBoard = new BettingBoard();
-        bettingBoard.bet(DEFAULT_PLAYER, 10000);
+        bettingBoard.bet(DEFAULT_PLAYER, new BlackjackBettingMoney(10000));
         
         // expected
         assertThat(bettingBoard.getProfit(DEFAULT_PLAYER, winningStatus))
@@ -59,8 +60,8 @@ public class BettingBoardTest {
         Player firstPlayer = new Player("돔푸");
         Player secondPlayer = new Player("메이");
         BettingBoard bettingBoard = new BettingBoard();
-        bettingBoard.bet(firstPlayer, 10000);
-        bettingBoard.bet(secondPlayer, 20000);
+        bettingBoard.bet(firstPlayer, new BlackjackBettingMoney(10000));
+        bettingBoard.bet(secondPlayer, new BlackjackBettingMoney(20000));
         
         // when
         Map<Player, WinningStatus> playerWinningStatus = new HashMap<>();
