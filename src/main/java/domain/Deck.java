@@ -3,6 +3,7 @@ package domain;
 import static util.ExceptionConstants.ERROR_HEADER;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -31,5 +32,16 @@ public class Deck {
         return IntStream.range(0, count)
                 .mapToObj(i -> cards.removeFirst())
                 .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public static Deck createShuffledBlackJackCards() {
+        List<Card> cards = new ArrayList<>();
+        for (CardNumberType cardNumberType : CardNumberType.values()) {
+            for (CardType cardType : CardType.values()) {
+                cards.add(new Card(cardNumberType, cardType));
+            }
+        }
+        Collections.shuffle(cards);
+        return new Deck(cards);
     }
 }
