@@ -1,4 +1,4 @@
-import blackjack.BlackJackGame;
+import controller.BlackJackController;
 import view.InputView;
 import view.OutputView;
 
@@ -9,8 +9,8 @@ public class Application {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
 
-        BlackJackGame blackJackGame = new BlackJackGame(inputView, outputView);
+        BlackJackController blackJackController = new BlackJackController(inputView, outputView);
 
-        blackJackGame.start();
+        blackJackController.start();
     }
 }

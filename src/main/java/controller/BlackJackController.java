@@ -1,4 +1,4 @@
-package blackjack;
+package controller;
 
 import blackjack.card.CardDeck;
 import blackjack.card.Hand;
@@ -12,14 +12,14 @@ import java.util.List;
 import view.InputView;
 import view.OutputView;
 
-public class BlackJackGame {
+public class BlackJackController {
 
     private static final String YES_SIGN = "y";
 
     private final InputView inputView;
     private final OutputView outputView;
 
-    public BlackJackGame(InputView inputView, OutputView outputView) {
+    public BlackJackController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
