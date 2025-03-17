@@ -24,10 +24,6 @@ public class Money {
         earnMoney = (int) Math.round(seedMoney * rate);
     }
 
-    public int getSeedMoney() {
-        return seedMoney;
-    }
-
     public int getEarnMoney() {
         return earnMoney;
     }

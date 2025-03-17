@@ -14,11 +14,13 @@ class PlayerTest {
     private Player player;
     private Deck deck;
     private Money money;
+    private int seedMoney;
 
     @BeforeEach
     void setUp() {
         deck = Deck.create();
-        money = Money.makeMoneyInt(1000);
+        seedMoney=1000;
+        money = Money.makeMoneyInt(seedMoney);
         player = Player.of("John", deck, money);
     }
 
@@ -70,8 +72,7 @@ class PlayerTest {
     @DisplayName("플레이어가 베팅을 처리할 수 있는지 확인")
     void testProcessBetting() {
         double rate = 1.5;
-        int initialMoney = player.getSeedMoney();
         player.processBetting(rate);
-        assertEquals((int) Math.round(initialMoney * rate), player.getEarnMoney(), "베팅 후 플레이어의 금액이 올바르게 계산되어야 합니다.");
+        assertEquals((int) Math.round(seedMoney * rate), player.getEarnMoney(), "베팅 후 플레이어의 금액이 올바르게 계산되어야 합니다.");
     }
 }

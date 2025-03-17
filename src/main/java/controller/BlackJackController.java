@@ -63,7 +63,6 @@ public class BlackJackController {
 
     private List<Player> createPlayers(Deck deck) {
         List<String> playerNames = inputView.readPlayerNames();
-        List<Player> players = new ArrayList<>();
         Map<String, Integer> money = inputView.readPlayerBetting(playerNames);
         return money.entrySet()
                 .stream()

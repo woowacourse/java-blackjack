@@ -63,9 +63,6 @@ public class Player {
         money.processBetting(rate);
     }
 
-    public int getSeedMoney(){
-        return money.getSeedMoney();
-    }
     public int getEarnMoney() {
         return money.getEarnMoney();
     }

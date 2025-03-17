@@ -8,13 +8,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class MoneyTest {
 
     @Test
-    @DisplayName("Money 객체 생성 시 초기 금액이 유효한 경우 생성 성공")
-    void testValidSeedMoney() {
-        Money money = new Money(1000);
-        assertEquals(1000, money.getSeedMoney());
-    }
-
-    @Test
     @DisplayName("Money 객체 생성 시 초기 금액이 0보다 작으면 예외 발생")
     void testInvalidSeedMoney() {
         IllegalArgumentException exception = assertThrows(
