@@ -18,7 +18,7 @@ class GamblerTest {
 
     @Test
     @DisplayName("게임 참가자는 모든 카드를 공개한다")
-    void test() {
+    void revealsAllCards() {
         Gambler gambler = new Gambler("두리", 0);
 
         Cards cards = new Cards(List.of(ACE, ACE));
