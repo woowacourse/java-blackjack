@@ -15,7 +15,7 @@ public class BettingTable {
     private final Dealer dealer;
     private final Map<Player, BettingAmount> bettingAmounts = new LinkedHashMap<>();
 
-    public BettingTable(Dealer dealer) {
+    private BettingTable(Dealer dealer) {
         this.dealer = dealer;
     }
 

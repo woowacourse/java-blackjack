@@ -20,7 +20,7 @@ class BettingTableTest {
 
     private Player player = new Player("pobi");
     private Dealer dealer = new Dealer();
-    private BettingTable bettingTable = new BettingTable(dealer);
+    private BettingTable bettingTable = BettingTable.start(dealer);
 
     @Test
     @DisplayName("플레이어는 게임을 시작할 때 배팅 금액을 정한다.")
