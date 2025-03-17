@@ -35,13 +35,13 @@ public class GameTable {
         return players.openHand();
     }
 
-    public void playPlayersRound(Function<Player, AnswerType> requestAdditionalCard) {
+    public void playPlayersRound(Function<Player, AnswerType> requestAction) {
         players = players.updatePlayers(player -> {
-            AnswerType answerType = requestAdditionalCard.apply(player);
+            AnswerType answerType = requestAction.apply(player);
 
             while (answerType.isPositive() && player.isNotBust()) {
                 player = (Player) player.updateHandWith(deck.drawCard());
-                answerType = requestAdditionalCard.apply(player);
+                answerType = requestAction.apply(player);
             }
             return player;
         });
