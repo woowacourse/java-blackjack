@@ -4,8 +4,6 @@ import blackjack.card.CardDeck;
 import blackjack.user.dealer.Dealer;
 import blackjack.user.player.Players;
 import blackjack.user.player.PlayerName;
-import java.util.Collections;
-import java.util.List;
 
 public class BlackjackGame {
 
