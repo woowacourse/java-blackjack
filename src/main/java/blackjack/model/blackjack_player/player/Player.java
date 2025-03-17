@@ -7,8 +7,6 @@ import blackjack.model.card.BlackJackCards;
 
 public final class Player {
 
-    private static final int DRAWABLE_POINT = 21;
-
     private final String name;
     private final Betting betting;
     private final Hand hand;
@@ -26,7 +24,7 @@ public final class Player {
     }
 
     public boolean canReceiveMoreCard() {
-        return getOptimalPoint() < DRAWABLE_POINT;
+        return !isBust();
     }
 
     public void applyResult(final Result result) {

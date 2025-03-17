@@ -26,6 +26,15 @@ class PlayerTest {
                         new BlackJackCards(
                                 List.of(
                                         createCard(CardNumber.TEN),
+                                        createCard(CardNumber.ACE)
+                                )
+                        ),
+                        true
+                ),
+                Arguments.of(
+                        new BlackJackCards(
+                                List.of(
+                                        createCard(CardNumber.TEN),
                                         createCard(CardNumber.FIVE)
                                 )
                         ),
@@ -35,7 +44,8 @@ class PlayerTest {
                         new BlackJackCards(
                                 List.of(
                                         createCard(CardNumber.TEN),
-                                        createCard(CardNumber.ACE)
+                                        createCard(CardNumber.JACK),
+                                        createCard(CardNumber.TWO)
                                 )
                         ),
                         false
@@ -48,7 +58,7 @@ class PlayerTest {
                                         createCard(CardNumber.SIX)
                                 )
                         ),
-                        false
+                        true
                 ),
                 Arguments.of(
                         new BlackJackCards(
@@ -120,7 +130,7 @@ class PlayerTest {
     void 카드를_더_받을_수_없는_경우_예외를_던진다() {
         Player player = new Player("pobi", 1000);
         player.receiveCards(new BlackJackCards(
-                List.of(createCard(CardNumber.TEN), createCard(CardNumber.SEVEN), createCard(CardNumber.FOUR))
+                List.of(createCard(CardNumber.TEN), createCard(CardNumber.SEVEN), createCard(CardNumber.FIVE))
         ));
 
         assertThatIllegalStateException()
