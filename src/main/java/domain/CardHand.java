@@ -37,7 +37,7 @@ public class CardHand {
         return new ArrayList<>(cards);
     }
 
-    public boolean hasAce() {
+    private boolean hasAce() {
         return cards.stream()
                 .anyMatch((card) -> card.getCardNumberValue() == CardRank.ACE.getPoint());
     }

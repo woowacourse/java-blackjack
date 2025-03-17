@@ -32,7 +32,7 @@ public class Participants {
         }
     }
 
-    public void drawFirstCard(CardDeck cardDeck) {
+    public void drawCardAllParticipant(CardDeck cardDeck) {
         for (User participant : participants) {
             participant.drawCard(cardDeck.drawCard());
         }

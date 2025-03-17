@@ -43,7 +43,7 @@ public class BlackjackGameTest {
         // when & then
         Assertions.assertThatThrownBy(() -> BlackjackGame.of(users, new Dealer(), new CardDeck()))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("유저는 1명 이상 7명 이하로 등록해야 합니다.");
+                .hasMessage("유저는 2명 이상 8명 이하로 등록해야 합니다.");
     }
 
     private static Stream<Arguments> userExceptionTestCase() {
