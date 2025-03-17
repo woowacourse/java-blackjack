@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public class Nickname {
 
+    private static final String NICKNAME_PATTERN = "^[a-z]{2,10}$";
+
     private final String value;
 
     public Nickname(final String value) {
@@ -12,7 +14,7 @@ public class Nickname {
     }
 
     private void validate(String value) {
-        if (!value.matches("^[a-z]{2,10}$")) {
+        if (!value.matches(NICKNAME_PATTERN)) {
             throw new IllegalArgumentException("닉네임은 2~10자만 입력 가능합니다,");
         }
     }

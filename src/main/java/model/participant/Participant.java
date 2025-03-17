@@ -40,7 +40,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        return getHands().size() == 2 && getScore() == 21;
+        return getHands().size() == 2 && getScore() == BLACK_JACK_SCORE;
     }
 
     abstract public String getNickname();
