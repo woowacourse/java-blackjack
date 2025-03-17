@@ -9,7 +9,7 @@ import view.GameResultView;
 public final class GameResultConsole extends Console {
     private final GameResultView gameResultView = new GameResultView();
 
-    public void getFinalScores(final Dealer dealer, final List<Player> players) {
+    public void displayFinalScores(final Dealer dealer, final List<Player> players) {
         display(gameResultView.getEmptyLine());
         display(gameResultView.getFinalScore(dealer.getName(), dealer.getCards(), dealer.getScore()));
         for (Player player : players) {
@@ -17,7 +17,7 @@ public final class GameResultConsole extends Console {
         }
     }
 
-    public void getFinalProfits(final Dealer dealer, final List<Player> players) {
+    public void displayFinalProfits(final Dealer dealer, final List<Player> players) {
         display(gameResultView.getFinalProfitHeader());
         FinalProfit finalProfit = new FinalProfit(dealer, players);
         display(gameResultView.getFinalProfit(dealer.getName(), finalProfit.calculateDealerProfit()));

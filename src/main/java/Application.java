@@ -24,7 +24,7 @@ public final class Application {
         gameSetupConsole.displaySetupResult(dealer, players);
         gamePlayConsole.drawAllPlayerCards(players, deck);
         gamePlayConsole.drawDealerCards(dealer, deck);
-        gameResultConsole.getFinalScores(dealer, players);
-        gameResultConsole.getFinalProfits(dealer, players);
+        gameResultConsole.displayFinalScores(dealer, players);
+        gameResultConsole.displayFinalProfits(dealer, players);
     }
 }
