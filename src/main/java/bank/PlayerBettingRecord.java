@@ -1,5 +1,6 @@
 package bank;
 
+import ScoreResult.BattleResult;
 import ScoreResult.ScoreBoard;
 import java.util.LinkedHashMap;
 import participant.Participant;
@@ -17,8 +18,8 @@ public class PlayerBettingRecord {
         Map<Participant, Money> profitStatement = new LinkedHashMap<>();
         for (Map.Entry<Participant, Money> entry : gamblingStatement.entrySet()) {
             Participant participant = entry.getKey();
-            Calculator selectedCalculator = scoreBoard.selectCalculator(participant);
-            Money money = selectedCalculator.calculate(entry.getValue());
+            BattleResult battleResult = scoreBoard.requestBattleResult(participant);
+            Money money = battleResult.calculateProfit(entry.getValue());
             profitStatement.put(participant, money);
         }
         return new PlayerBettingRecord(profitStatement);

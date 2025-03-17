@@ -1,10 +1,5 @@
 package ScoreResult;
 
-import bank.BlackjackWinCalculator;
-import bank.Calculator;
-import bank.DrawCalculator;
-import bank.LoseCalculator;
-import bank.WinCalculator;
 import participant.Participant;
 import participant.Participants;
 import java.util.HashMap;
@@ -34,21 +29,20 @@ public class ScoreBoard {
         }
     }
 
-    public Calculator selectCalculator(Participant participant) {
+    public BattleResult requestBattleResult(Participant participant) {
         int winCounts = scoreBoard.get(participant).requestWinCounts();
+        int drawCounts = scoreBoard.get(participant).requestDrawCounts();
         if (participant.isBlackJack() && winCounts != 0) {
-            return new BlackjackWinCalculator();
+            return BattleResult.BLACK_JACK;
         }
         if (winCounts != 0) {
-            return new WinCalculator();
+            return BattleResult.WIN;
         }
-
-        int drawCounts = scoreBoard.get(participant).requestDrawCounts();
         if (drawCounts != 0) {
-            return new DrawCalculator();
+            return BattleResult.DRAW;
         }
 
-        return new LoseCalculator();
+        return BattleResult.LOSE;
     }
 
     private Participant findDealer() {
