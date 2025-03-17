@@ -27,6 +27,8 @@ public class GameManagerTest {
     @ParameterizedTest
     @MethodSource("userTestCase")
     void test(List<String> names) {
+
+        //when && then
         assertThatCode(
                 () -> GameManager.initailizeGameManager(names, List.of(1L, 1L, 1L, 1L, 1L, 1L, 1L),
                         new TrumpCardManager())).doesNotThrowAnyException();
@@ -34,6 +36,7 @@ public class GameManagerTest {
 
     private static Stream<Arguments> userTestCase() {
         return Stream.of(
+                //given
                 Arguments.arguments(List.of("수양", "레몬", "키키", "나나", "모모", "부부", "롸롸")),
                 Arguments.arguments(List.of("수양"))
         );
@@ -69,6 +72,7 @@ public class GameManagerTest {
     @DisplayName("게임 시작 시 모든 유저와 딜러는 카드를 두 장씩 배부받는다.")
     @Test
     void test4() {
+
         // given
         GameManager gameManager = GameManager.initailizeGameManager(List.of("수양", "레몬"), List.of(1L, 1L),
                 new TrumpCardManager());
@@ -83,6 +87,7 @@ public class GameManagerTest {
         List<TrumpCard> allPlayer2Card = player2.getCardDeck().getAllCard();
         List<TrumpCard> allDealerCard = dealer.getCardDeck().getAllCard();
 
+        //then
         SoftAssertions.assertSoftly(softAssertions -> {
             softAssertions.assertThat(allPlayer1Card).hasSize(2);
             softAssertions.assertThat(allPlayer2Card).hasSize(2);
@@ -93,6 +98,7 @@ public class GameManagerTest {
     @DisplayName("딜러와 유저의 카드의 총합을 가져온다.")
     @Test
     void test7() {
+
         //given
         GameManager gameManager = GameManager.initailizeGameManager(List.of("수양"), List.of(1L),
                 new TrumpCardManager());
@@ -116,6 +122,7 @@ public class GameManagerTest {
     @ParameterizedTest
     @MethodSource("addCardDeck")
     void test8(List<TrumpCard> playerCards, List<TrumpCard> dealerCards, GameResult expectStatus) {
+
         //given
         GameManager gameManager = GameManager.initailizeGameManager(List.of("수양"), List.of(1L),
                 new TrumpCardManager());
@@ -195,7 +202,7 @@ public class GameManagerTest {
     @DisplayName("입력된 금액에 따라 배팅을 한다.")
     @Test
     void test10() {
-        ///given
+        //given
         GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬", "띵화"),
                 List.of(300000000L, 500000000L), new TrumpCardManager());
         Player user1 = gameManager.findPlayerByUsername("레몬");
@@ -211,7 +218,7 @@ public class GameManagerTest {
     @DisplayName("플레이어는 게임에서 승리시 배팅금액만큼 얻는다.")
     @Test
     void test11() {
-        ///given
+        //given
         GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"),
                 List.of(300000000L), new TrumpCardManager());
         Player player = gameManager.findPlayerByUsername("레몬");
@@ -226,6 +233,7 @@ public class GameManagerTest {
 
         //when
         Map<User, Long> gameResult = gameManager.createGameResult();
+
         //then
         Assertions.assertThat(gameResult.get(player)).isEqualTo(300000000L);
     }
@@ -233,7 +241,7 @@ public class GameManagerTest {
     @DisplayName("플레이어는 블랙잭으로 승리시 배팅금액의 1.5배를 얻는다.")
     @Test
     void test12() {
-        ///given
+        //given
         GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"),
                 List.of(300000000L), new TrumpCardManager());
         Player player = gameManager.findPlayerByUsername("레몬");
@@ -258,7 +266,8 @@ public class GameManagerTest {
     @DisplayName("딜러는 최종 수익을 낸다.")
     @Test
     void test13() {
-        ///given
+
+        //given
         GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬", "륜도"),
                 List.of(300000000L, 20000L), new TrumpCardManager());
         Player player1 = gameManager.findPlayerByUsername("레몬");
@@ -277,6 +286,7 @@ public class GameManagerTest {
         //when
         Map<User, Long> gameResult = gameManager.createGameResult();
         long dealerProfit = gameManager.calculateDealerProfit(gameResult);
+
         //then
         Assertions.assertThat(dealerProfit).isEqualTo(-449980000L);
     }

@@ -62,6 +62,7 @@ class UserTest {
         @DisplayName("딜러는 자신이 가진 하나의 카드만 공개해야 한다")
         @Test
         void test2() {
+            
             // given
             FakeTrumpCardManager trumpCardManager = new FakeTrumpCardManager(cardDeck);
             GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), playersBettingMoney,

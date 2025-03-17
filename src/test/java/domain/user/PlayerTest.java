@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 public class PlayerTest {
 
     private final List<Long> playersBettingMoney = List.of(300000L);
-    
+
     private final List<TrumpCard> cardDeck = List.of(
             new TrumpCard(CardShape.CLOVER, CardNumber.J),
             new TrumpCard(CardShape.CLOVER, CardNumber.SEVEN),
@@ -27,6 +27,7 @@ public class PlayerTest {
     @DisplayName("플레이어가 21이 넘을때까지 카드를 뽑는다")
     @Test
     void test1() {
+
         //given
         FakeTrumpCardManager trumpCardManager = new FakeTrumpCardManager(cardDeck);
         GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), playersBettingMoney,
@@ -37,6 +38,7 @@ public class PlayerTest {
         while (!player.isImpossibleDraw()) {
             gameManager.drawMoreCard(player);
         }
+
         //then
         Assertions.assertThat(player.getCardDeck().calculateScore()).isGreaterThanOrEqualTo(21);
     }
@@ -44,6 +46,7 @@ public class PlayerTest {
     @DisplayName("플레이어는 dealer 혹은 딜러이름을 사용할 수 없다.")
     @Test
     void test2() {
+
         //given
         TrumpCardManager trumpCardManager = new TrumpCardManager();
         List<String> dealer1 = List.of("dealer");

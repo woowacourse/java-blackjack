@@ -14,6 +14,7 @@ public class CardNumberTest {
     @DisplayName("뽑은 카드의 숫자는 1이상 13 이하이다.")
     @Test
     void test() {
+
         // given
         GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), List.of(1L),
                 new TrumpCardManager());
@@ -40,8 +41,8 @@ public class CardNumberTest {
         String displayName1 = CardNumber.numberToText(trumpCard1.getCardNumber());
         String displayName2 = CardNumber.numberToText(trumpCard2.getCardNumber());
         String displayName3 = CardNumber.numberToText(trumpCard3.getCardNumber());
-        //then
 
+        //then
         SoftAssertions.assertSoftly(softAssertions -> {
             softAssertions.assertThat(displayName1).isEqualTo("J");
             softAssertions.assertThat(displayName2).isEqualTo("5");

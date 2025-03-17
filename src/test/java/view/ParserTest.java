@@ -10,6 +10,7 @@ public class ParserTest {
     @DisplayName("쉼표로 구분된 이름을 입력하면 리스트로 바뀐다.")
     @Test
     void parserStringToListTest() {
+        
         //given
         String names = "레몬, 머랭, 모코, 도기, 대니";
 

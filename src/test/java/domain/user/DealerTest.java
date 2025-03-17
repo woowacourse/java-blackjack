@@ -30,15 +30,18 @@ public class DealerTest {
     @DisplayName("딜러의 모든 카드를 연다")
     @Test
     void test() {
+
         //given
         FakeTrumpCardManager fakeTrumpCardManager = new FakeTrumpCardManager(cardDeck);
         GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), List.of(300000L),
                 new TrumpCardManager());
         Dealer dealer = (Dealer) gameManager.getDealer();
+
         //when
         for (int i = 0; i < 5; i++) {
             gameManager.drawMoreCard(dealer);
         }
+
         //then
         Assertions.assertThat(dealer.openAllCard()).hasSize(5);
     }
@@ -46,6 +49,7 @@ public class DealerTest {
     @DisplayName("딜러가 16이 넘을때까지 카드를 뽑는다")
     @Test
     void test1() {
+
         //given
         FakeTrumpCardManager fakeTrumpCardManager = new FakeTrumpCardManager(cardDeck);
         GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), List.of(300000L),

@@ -11,10 +11,13 @@ public class BettingTest {
     @Test
     void
     test1() {
+
         //given
         long amount = 30000000;
+
         //when
         Betting betting = new Betting(amount);
+
         //then
         Assertions.assertThat(betting.getBettingMoney()).isEqualTo(30000000);
     }
@@ -22,6 +25,7 @@ public class BettingTest {
     @DisplayName("배팅금액이 음수일시 예외가 발생한다.")
     @Test
     void test2() {
+
         //given
         long minusAmount = -100000;
 
@@ -35,6 +39,7 @@ public class BettingTest {
     @DisplayName("배팅금액이 음수 혹은 0일시 예외가 발생한다.")
     @Test
     void test3() {
+
         //given
         long zeroAmount = 0;
 
