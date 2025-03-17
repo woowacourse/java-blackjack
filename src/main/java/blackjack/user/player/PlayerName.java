@@ -1,4 +1,6 @@
-package blackjack.domain.user;
+package blackjack.user.player;
+
+import java.util.Objects;
 
 public class PlayerName {
 
@@ -12,20 +14,33 @@ public class PlayerName {
     }
 
     private void validateNameSize(final String name) {
-        if (name.isEmpty()) {
+        if (name.isBlank()) {
             throw new IllegalArgumentException("이름은 한 글자 이상 입력해야 합니다.");
         }
     }
 
     private void validateCharacter(final String name) {
-        boolean isNotAllLetter = name.chars().anyMatch(ch -> !Character.isLetter(ch));
+        boolean isNotAllLetter = name.chars().anyMatch(c -> !Character.isLetter(c));
 
         if (isNotAllLetter) {
             throw new IllegalArgumentException("이름은 영어/한글만 입력 가능합니다.");
         }
     }
 
-    public String getName() {
+    public String getText() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof PlayerName that)) {
+            return false;
+        }
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name);
     }
 }

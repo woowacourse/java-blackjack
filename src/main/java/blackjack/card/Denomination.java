@@ -1,5 +1,6 @@
-package blackjack.domain;
+package blackjack.card;
 
+import java.util.Collections;
 import java.util.List;
 
 public enum Denomination {
@@ -41,6 +42,6 @@ public enum Denomination {
     }
 
     public List<Integer> getValues() {
-        return values;
+        return Collections.unmodifiableList(values);
     }
 }

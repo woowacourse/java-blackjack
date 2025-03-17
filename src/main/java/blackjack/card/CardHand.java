@@ -1,35 +1,27 @@
-package blackjack.domain.user;
+package blackjack.card;
 
-import blackjack.domain.Card;
-import blackjack.domain.CardDeck;
-import blackjack.domain.Denomination;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.IntStream;
 
-public abstract class Participant {
+public class CardHand {
 
     private static final int BLACKJACK_VALUE = 21;
     private static final int BLACKJACK_CARDS_SIZE = 2;
 
-    protected final List<Card> cards;
+    private final List<Card> cards;
+    private final int additionThreshold;
 
-    public Participant() {
+    public CardHand(final int additionThreshold) {
         this.cards = new ArrayList<>();
+        this.additionThreshold = additionThreshold;
     }
 
-    public void addCards(final CardDeck cardDeck, final int count) {
+    public void addCards(final List<Card> cards) {
         if (isImpossibleToAdd()) {
             throw new IllegalArgumentException("더 이상 카드를 추가할 수 없습니다.");
         }
-
-        IntStream.range(0, count)
-            .forEach(i -> {
-                Card card = cardDeck.pickRandomCard();
-                cards.add(card);
-            });
+        this.cards.addAll(cards);
     }
 
     public boolean isBlackjack() {
@@ -53,19 +45,25 @@ public abstract class Participant {
         return sum;
     }
 
-    public List<Card> openCards() {
-        return Collections.unmodifiableList(cards);
-    }
-
-    public abstract List<Card> openInitialCards();
-
-    public abstract boolean isPossibleToAdd();
-
-    public abstract boolean isImpossibleToAdd();
-
     private boolean hasACE() {
         return cards.stream()
             .map(Card::denomination)
             .anyMatch(denomination -> denomination == Denomination.ACE);
+    }
+
+    public List<Card> openCards() {
+        return Collections.unmodifiableList(cards);
+    }
+
+    public List<Card> openInitialCards(final int count) {
+        return cards.subList(0, Math.min(count, cards.size()));
+    }
+
+    public boolean isPossibleToAdd() {
+        return calculateDenominations() < additionThreshold;
+    }
+
+    private boolean isImpossibleToAdd() {
+        return !isPossibleToAdd();
     }
 }

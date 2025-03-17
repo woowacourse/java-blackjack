@@ -1,75 +1,71 @@
 package blackjack.view;
 
-import blackjack.domain.Card;
-import blackjack.domain.GameResult;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import blackjack.card.CardDeck;
+import blackjack.game.BlackjackGame;
+import blackjack.user.player.Player;
+import blackjack.user.player.BetAmount;
+import blackjack.user.player.Players;
 
 public class GameView {
 
-    private static final String ERROR_PREFIX = "[ERROR] ";
+    private final InputView inputView;
+    private final OutputView outputView;
 
-    public void printErrorMessage(final IllegalArgumentException e) {
-        System.out.println(ERROR_PREFIX + e.getMessage());
+    public GameView(final InputView inputView, final OutputView outputView) {
+        this.inputView = inputView;
+        this.outputView = outputView;
     }
 
-    public void printStartGame(final List<String> playerNames) {
-        System.out.println();
-        System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", String.join(", ", playerNames));
-    }
+    public BlackjackGame enterParticipants() {
+        outputView.printEnterPlayers();
+        Players players = inputView.readPlayers();
 
-    public void printPlayerCardResult(final String name, final List<Card> cards) {
-        String cardResult = parseCardToString(cards);
-        System.out.printf("%s카드: %s%n", name, cardResult);
-    }
-
-    public void printDealerCardResult(final List<Card> cards) {
-        Card firstCard = cards.getFirst();
-        String cardResult = firstCard.denomination().getText() + firstCard.suit().getText();
-        System.out.printf("딜러카드: %s%n", cardResult);
-    }
-
-    public void printAddExtraCardToDealer() {
-        System.out.println();
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받습니다.");
-    }
-
-    public void printDealerFinalCardResult(final int sum, final List<Card> cards) {
-        String cardResult = parseCardToString(cards);
-        System.out.println();
-        System.out.printf("딜러카드: %s - 결과: %d%n", cardResult, sum);
-    }
-
-    public void printPlayerFinalCardResult(final String name, final int sum,
-        final List<Card> cards) {
-        String cardResult = parseCardToString(cards);
-        System.out.printf("%s카드: %s - 결과 %d%n", name, cardResult, sum);
-    }
-
-    public void printResultTitle() {
-        System.out.println();
-        System.out.println("## 최종 승패");
-    }
-
-    public void printDealerResult(final Map<GameResult, Integer> dealerGameResult) {
-        StringBuilder sb = new StringBuilder();
-        for (GameResult gameResult : GameResult.values()) {
-            sb.append(dealerGameResult.getOrDefault(gameResult, 0));
-            sb.append(gameResult.getText());
+        for (Player player : players.getJoinedPlayers()) {
+            outputView.printBettingAmountQuestion(player.getName());
+            BetAmount amountWithPrincipal = inputView.readPlayerPrincipal();
+            player.updateAmount(amountWithPrincipal);
         }
 
-        System.out.printf("딜러: %s%n", sb);
+        return BlackjackGame.createGameWith(CardDeck.shuffleCardDeck(), players);
     }
 
-    public void printPlayerResult(final String name, final GameResult gameResult) {
-        System.out.printf("%s: %s%n", name, gameResult.getText());
+    public void distributeInitialCards(final BlackjackGame game) {
+        game.initCardsToUsers();
+        outputView.printInitDistributionResult(game.getDealer(), game.getPlayers());
     }
 
-    private String parseCardToString(final List<Card> cards) {
-        return cards
-            .stream()
-            .map(card -> card.denomination().getText() + card.suit().getText())
-            .collect(Collectors.joining(", "));
+    public void distributeAdditionalCards(final BlackjackGame game) {
+        for (Player player : game.getPlayers().getJoinedPlayers()) {
+            outputView.printAddExtraCardToPlayer(player.getName());
+            handleExtraCardError(() -> distributeAdditionalCardsToPlayer(player, game));
+        }
+
+        while (game.getDealer().getCardHand().isPossibleToAdd()) {
+            handleExtraCardError(game::addExtraCardToDealer);
+            outputView.printAddExtraCardToDealer();
+        }
+    }
+
+    private void distributeAdditionalCardsToPlayer(final Player player, final BlackjackGame game) {
+        while (inputView.readGetOneMore()) {
+            game.addExtraCardToPlayer(player.getName());
+            outputView.printPlayerCardResult(player);
+        }
+    }
+
+    private void handleExtraCardError(final Runnable action) {
+        try {
+            action.run();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void showFinalCardsAndProfits(final BlackjackGame game) {
+        outputView.printFinalCardResult(game.getDealer(), game.getPlayers());
+
+        int playersProfit = game.calculateProfitForPlayers();
+        int dealerProfit = -playersProfit;
+        outputView.printProfitResult(dealerProfit, game.getPlayers());
     }
 }

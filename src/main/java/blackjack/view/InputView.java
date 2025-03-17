@@ -1,40 +1,53 @@
 package blackjack.view;
 
-import blackjack.domain.user.PlayerName;
+import blackjack.user.player.Player;
+import blackjack.user.player.PlayerName;
+import blackjack.user.player.BetAmount;
+import blackjack.user.player.Players;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
 
-    private final GameView gameView = new GameView();
+    private static final String ERROR_MESSAGE_SUFFIX = " 다시 입력해주세요.";
+
     private final Scanner scanner = new Scanner(System.in);
 
-    public List<PlayerName> readNames() {
+    public Players readPlayers() {
         try {
-            System.out.println("게임에 참여할 사람의 이름을 영어/한글로 입력하세요. 최대 25명 참가 가능합니다.(쉼표 기준으로 분리)");
             String input = scanner.nextLine();
-
             validateBlank(input);
-            return parseStringToList(input).stream()
-                .map(PlayerName::new)
+
+            List<Player> players = parseStringToList(input).stream()
+                .map(name -> Player.createPlayer(new PlayerName(name), BetAmount.initAmount()))
                 .toList();
+            return new Players(players);
         } catch (IllegalArgumentException e) {
-            gameView.printErrorMessage(e);
-            return readNames();
+            printErrorMessage(e.getMessage() + ERROR_MESSAGE_SUFFIX);
+            return readPlayers();
         }
     }
 
-    public boolean readGetOneMore(final String name) {
+    public BetAmount readPlayerPrincipal() {
         try {
-            System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
-            String input = scanner.nextLine();
+            int principal = parseStringToInteger(scanner.nextLine());
+            return BetAmount.initAmountWithPrincipal(principal);
+        } catch (IllegalArgumentException e) {
+            printErrorMessage(e.getMessage() + ERROR_MESSAGE_SUFFIX);
+            return readPlayerPrincipal();
+        }
+    }
 
+    public boolean readGetOneMore() {
+        try {
+            String input = scanner.nextLine();
             validateBlank(input);
+
             return YorN.fromText(input).toBoolean();
         } catch (IllegalArgumentException e) {
-            gameView.printErrorMessage(e);
-            return readGetOneMore(name);
+            printErrorMessage(e.getMessage() + ERROR_MESSAGE_SUFFIX);
+            return readGetOneMore();
         }
     }
 
@@ -42,10 +55,22 @@ public class InputView {
         return Arrays.asList(input.split(","));
     }
 
+    private int parseStringToInteger(final String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("숫자만 입력 가능합니다.");
+        }
+    }
+
     private void validateBlank(final String input) {
         if (input.isBlank()) {
             throw new IllegalArgumentException("입력값이 없습니다.");
         }
+    }
+
+    private void printErrorMessage(final String message) {
+        System.out.println(message);
     }
 
     enum YorN {
