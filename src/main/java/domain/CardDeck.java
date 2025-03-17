@@ -15,7 +15,7 @@ public class CardDeck {
         this.cards = new ArrayList<>();
     }
 
-    public void addTrumpCard(TrumpCard card) {
+    public void addTrumpCard(final TrumpCard card) {
         cards.add(card);
     }
 
@@ -38,7 +38,7 @@ public class CardDeck {
                 .anyMatch(TrumpCard::isAce);
     }
 
-    public boolean isImpossibleDraw(int maxScore) {
+    public boolean isImpossibleDraw(final int maxScore) {
         int sum = calculateScore();
         return sum >= maxScore;
     }

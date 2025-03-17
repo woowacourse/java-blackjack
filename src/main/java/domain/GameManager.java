@@ -1,96 +1,112 @@
 package domain;
 
+import domain.user.Betting;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
-import domain.user.Users;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class GameManager {
-    public final static int MAX_PLAYER = 7;
     public final static int MAX_RANGE_HAND_OUT_CARD = 2;
     public final static int MIN_RANGE_HAND_OUT_CARD = 0;
-    private final Users users;
-    private final User dealer;
+
+    private final List<Player> players;
+    private final Dealer dealer;
     private final TrumpCardManager trumpCardManager;
 
-    public GameManager(List<String> names, TrumpCardManager trumpCardManager) {
-        validate(names);
-        this.users = new Users(names.stream()
-                .map(Player::new)
-                .collect(Collectors.toList()));
-        this.dealer = new Dealer("딜러");
+    public GameManager(List<Player> players, Dealer dealer, TrumpCardManager trumpCardManager) {
+        this.players = players;
+        this.dealer = dealer;
         this.trumpCardManager = trumpCardManager;
     }
 
-    private void validate(List<String> names) {
-        HashSet<String> distinctNames = new HashSet<>(names);
-        if (names.isEmpty() || names.size() > MAX_PLAYER) {
-            throw new IllegalArgumentException("유저는 1명 이상 7명 이하로 등록해야 합니다.");
-        }
-        if (distinctNames.size() != names.size()) {
-            throw new IllegalArgumentException("유저는 중복될 수 없습니다.");
+    public static GameManager initailizeGameManager(Map<String, Betting> playerBetting,
+                                                    TrumpCardManager trumpCardManager) {
+
+        List<Player> players = playerBetting.entrySet().stream()
+                .map(entry -> new Player(entry.getKey(), entry.getValue()))
+                .toList();
+        Dealer dealer = new Dealer();
+        return new GameManager(players, dealer, trumpCardManager);
+    }
+
+    public void drawStartingCards() {
+        for (int count = MIN_RANGE_HAND_OUT_CARD; count < MAX_RANGE_HAND_OUT_CARD; count++) {
+            dealer.receiveCard(trumpCardManager.drawCard());
+            players.forEach(player -> player.receiveCard(trumpCardManager.drawCard()));
         }
     }
 
-    public void firstHandOutCard() {
-        for (int count = MIN_RANGE_HAND_OUT_CARD; count < MAX_RANGE_HAND_OUT_CARD; count++) {
-            users.userCardDraw(trumpCardManager);
-            dealer.receiveCard(trumpCardManager.drawCard());
+    public List<Profit> createProfitResult() {
+        List<Profit> profitResult = new ArrayList<>();
+        if (dealer.isBurst()) {
+            players.forEach((user) -> putGameResultBurst(user, profitResult));
+            return profitResult;
         }
+        players.forEach((player) -> profitResult.add(new Profit(player, calculateProfit(player, dealer))));
+        return profitResult;
     }
 
     public void drawMoreCard(final User user) {
         user.receiveCard(trumpCardManager.drawCard());
     }
 
-    public User findUserByUsername(String name) {
-        return users.findByUserName(name);
+    private Long calculateProfit(Player player, Dealer dealer) {
+        return player.calculateBettingResult(compare(player, dealer));
     }
 
-    public User getDealer() {
-        return this.dealer;
-    }
-
-    public GameResult compare(User player) {
+    public GameResult compare(final Player player, final Dealer dealer) {
         if (player.isBurst()) {
             return GameResult.LOSE;
         }
-        if (dealer.getCardDeck().calculateScore() < player.getCardDeck().calculateScore()) {
+        if (dealer.userScore() < player.userScore() && player.getCardDeck().isBlackjack()) {
+            return GameResult.BLACKJACK;
+        }
+        if (dealer.userScore() < player.userScore()) {
             return GameResult.WIN;
         }
-        if (dealer.getCardDeck().calculateScore() > player.getCardDeck().calculateScore()) {
+        if (dealer.userScore() > player.userScore()) {
             return GameResult.LOSE;
         }
-        return compareSameScore(player);
+        return compareSameScore(player, dealer);
     }
 
-    private GameResult compareSameScore(User player) {
+    private GameResult compareSameScore(final Player player, final Dealer dealer) {
         if (dealer.getCardDeck().isBlackjack() && !player.getCardDeck().isBlackjack()) {
             return GameResult.LOSE;
         }
         return GameResult.DRAW;
     }
 
-    public Map<User, GameResult> createGameResult() {
-        Map<User, GameResult> gameResult = new LinkedHashMap<>();
-        if (dealer.isBurst()) {
-            users.getUsers().forEach((user) -> putGameResultBurst(user, gameResult));
-            return gameResult;
-        }
-        users.getUsers().forEach((user) -> gameResult.put(user, compare(user)));
-        return gameResult;
-    }
-
-    private void putGameResultBurst(User user, Map<User, GameResult> gameResult) {
-        if (user.isBurst()) {
-            gameResult.put(user, GameResult.LOSE);
+    private void putGameResultBurst(final Player player, final List<Profit> profitResult) {
+        if (player.isBurst()) {
+            profitResult.add(new Profit(player, player.calculateBettingResult(GameResult.LOSE)));
             return;
         }
-        gameResult.put(user, GameResult.WIN);
+        if (player.getCardDeck().isBlackjack()) {
+            profitResult.add(new Profit(player, player.calculateBettingResult(GameResult.BLACKJACK)));
+            return;
+        }
+        profitResult.add(new Profit(player, player.calculateBettingResult(GameResult.WIN)));
+    }
+
+    public long calculateDealerProfitFromPlayers(final List<Profit> playerProfit) {
+        return -playerProfit.stream()
+                .mapToLong(Profit::profit)
+                .sum();
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public Player findPlayerByUsername(final String playerName) {
+        return players.stream()
+                .filter(player -> player.getName().equals(playerName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("등록되지 않는 닉네임 입니다."));
     }
 }
+

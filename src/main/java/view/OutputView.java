@@ -1,9 +1,7 @@
 package view;
 
-import domain.GameResult;
-import domain.user.User;
+import domain.Profit;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -16,39 +14,22 @@ public class OutputView {
         displayCards(name, printCards);
     }
 
-    private void displayCards(String name, List<String> printCards) {
+    private void displayCards(final String name, final List<String> printCards) {
         System.out.print(name + "카드: " + String.join(", ", printCards) + "\n");
     }
 
 
-    public void displayDealerGameResult(int winCount, int loseCount, int mooCount) {
-        System.out.println("\n## 최종 승패");
-        System.out.printf("딜러: %d승 %d패 %d 무승부\n", winCount, loseCount, mooCount);
-    }
-
-    public void displayGameResult(Map<User, GameResult> gameResult) {
-        gameResult.forEach((key, value) -> displayUserGameResult(
-                key.getName(),
-                convertGameResult(value)));
-    }
-
-    private String convertGameResult(GameResult value) {
-        if (value == GameResult.WIN) {
-            return "승";
-        }
-        if (value == GameResult.LOSE) {
-            return "패";
-        }
-        return "무승부";
-    }
-
-    private void displayUserGameResult(String name, String gameResult) {
-        System.out.println(name + ": " + gameResult);
-    }
-
-    public void displayOpenCardsResult(String name, List<String> printCards, int score) {
+    public void displayOpenCardsResult(final String name, final List<String> printCards, final int score) {
         String str = printCards.stream()
                 .collect(Collectors.joining(", "));
         System.out.println(name + "카드: " + str + " - 결과: " + score);
+    }
+
+    public void displayProfitResult(long dealerProfit, final List<Profit> playerProfit) {
+        System.out.println("\n## 최종 수익");
+        System.out.printf("딜러: %d\n", dealerProfit);
+        for (Profit profit : playerProfit) {
+            System.out.printf("%s: %d\n", profit.player().getName(), profit.profit());
+        }
     }
 }

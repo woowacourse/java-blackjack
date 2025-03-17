@@ -11,6 +11,7 @@ public class CardConverterTest {
     @DisplayName("카드 모양과 숫자를 조합한다.")
     @Test
     void createTrumpCardTest() {
+        
         //given
         CardShape cardShape = CardShape.DIA;
         CardNumber cardNumber = CardNumber.ACE;

@@ -3,8 +3,11 @@ import domain.CardShape;
 import domain.GameManager;
 import domain.TrumpCard;
 import domain.TrumpCardManager;
+import domain.user.Betting;
 import domain.user.User;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
@@ -14,9 +17,13 @@ public class CardNumberTest {
     @DisplayName("뽑은 카드의 숫자는 1이상 13 이하이다.")
     @Test
     void test() {
+
         // given
-        GameManager gameManager = new GameManager(List.of("레몬"), new TrumpCardManager());
-        User user = gameManager.findUserByUsername("레몬");
+        Map<String, Betting> playerBetting = new HashMap<>();
+        playerBetting.put("레몬", new Betting(11000));
+
+        GameManager gameManager = GameManager.initailizeGameManager(playerBetting, new TrumpCardManager());
+        User user = gameManager.findPlayerByUsername("레몬");
         gameManager.drawMoreCard(user);
 
         // when
@@ -39,8 +46,8 @@ public class CardNumberTest {
         String displayName1 = CardNumber.numberToText(trumpCard1.getCardNumber());
         String displayName2 = CardNumber.numberToText(trumpCard2.getCardNumber());
         String displayName3 = CardNumber.numberToText(trumpCard3.getCardNumber());
-        //then
 
+        //then
         SoftAssertions.assertSoftly(softAssertions -> {
             softAssertions.assertThat(displayName1).isEqualTo("J");
             softAssertions.assertThat(displayName2).isEqualTo("5");

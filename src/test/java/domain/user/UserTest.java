@@ -5,10 +5,13 @@ import domain.CardShape;
 import domain.GameManager;
 import domain.TrumpCard;
 import domain.TrumpCardManager;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -22,13 +25,13 @@ class UserTest {
             new TrumpCard(CardShape.CLOVER, CardNumber.THREE)
     );
 
-    private final List<TrumpCard> cardDeck1 = List.of(
-            new TrumpCard(CardShape.CLOVER, CardNumber.TWO),
-            new TrumpCard(CardShape.CLOVER, CardNumber.THREE),
-            new TrumpCard(CardShape.CLOVER, CardNumber.FOUR),
-            new TrumpCard(CardShape.CLOVER, CardNumber.FIVE),
-            new TrumpCard(CardShape.CLOVER, CardNumber.SIX)
-    );
+    private final FakeTrumpCardManager trumpCardManager = new FakeTrumpCardManager(cardDeck);
+    private final Map<String, Betting> playerBetting = new HashMap<>();
+
+    @BeforeEach
+    void setUp() {
+        playerBetting.put("레몬", new Betting(10000));
+    }
 
 
     @Nested
@@ -40,11 +43,11 @@ class UserTest {
         @Test
         void test() {
             // given
-            FakeTrumpCardManager trumpCardManager = new FakeTrumpCardManager(cardDeck);
-            GameManager gameManager = new GameManager(List.of("레몬"), trumpCardManager);
-            User user = gameManager.findUserByUsername("레몬");
 
-            gameManager.firstHandOutCard();
+            GameManager gameManager = GameManager.initailizeGameManager(playerBetting, trumpCardManager);
+            Player user = gameManager.findPlayerByUsername("레몬");
+
+            gameManager.drawStartingCards();
             gameManager.drawMoreCard(user);
             gameManager.drawMoreCard(user);
             gameManager.drawMoreCard(user);
@@ -59,10 +62,10 @@ class UserTest {
         @DisplayName("딜러는 자신이 가진 하나의 카드만 공개해야 한다")
         @Test
         void test2() {
+
             // given
-            FakeTrumpCardManager trumpCardManager = new FakeTrumpCardManager(cardDeck);
-            GameManager gameManager = new GameManager(List.of("레몬"), trumpCardManager);
-            gameManager.firstHandOutCard();
+            GameManager gameManager = GameManager.initailizeGameManager(playerBetting, trumpCardManager);
+            gameManager.drawStartingCards();
             User dealer = gameManager.getDealer();
 
             // when
@@ -76,18 +79,17 @@ class UserTest {
     @Test
     void test3() {
         //given
-        FakeTrumpCardManager trumpCardManager = new FakeTrumpCardManager(cardDeck);
-        GameManager gameManager = new GameManager(List.of("레몬"), trumpCardManager);
-        Player user = (Player) gameManager.findUserByUsername("레몬");
+        GameManager gameManager = GameManager.initailizeGameManager(playerBetting, trumpCardManager);
+        Player player = gameManager.findPlayerByUsername("레몬");
 
         //when
-        gameManager.drawMoreCard(user);
-        gameManager.drawMoreCard(user);
-        gameManager.drawMoreCard(user);
-        gameManager.drawMoreCard(user);
+        gameManager.drawMoreCard(player);
+        gameManager.drawMoreCard(player);
+        gameManager.drawMoreCard(player);
+        gameManager.drawMoreCard(player);
 
         //then
-        Assertions.assertThat(user.isBurst()).isTrue();
+        Assertions.assertThat(player.isBurst()).isTrue();
     }
 
     private static class FakeTrumpCardManager extends TrumpCardManager {
@@ -97,7 +99,7 @@ class UserTest {
         public FakeTrumpCardManager(List<TrumpCard> trumpCards) {
             this.fakeTrumpCards = new LinkedList<>(trumpCards);
         }
-        
+
         @Override
         public TrumpCard drawCard() {
             return fakeTrumpCards.poll();

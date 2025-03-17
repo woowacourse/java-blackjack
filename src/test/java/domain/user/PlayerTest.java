@@ -5,8 +5,10 @@ import domain.CardShape;
 import domain.GameManager;
 import domain.TrumpCard;
 import domain.TrumpCardManager;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
@@ -14,6 +16,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
+
+    private final List<Betting> playersBettingMoney = List.of(new Betting(300000));
 
     private final List<TrumpCard> cardDeck = List.of(
             new TrumpCard(CardShape.CLOVER, CardNumber.J),
@@ -25,37 +29,45 @@ public class PlayerTest {
     @DisplayName("플레이어가 21이 넘을때까지 카드를 뽑는다")
     @Test
     void test1() {
+
         //given
         FakeTrumpCardManager trumpCardManager = new FakeTrumpCardManager(cardDeck);
-        GameManager gameManager = new GameManager(List.of("레몬"), trumpCardManager);
-        Player player = (Player) gameManager.findUserByUsername("레몬");
+        Map<String, Betting> playerBetting = new HashMap<>();
+        playerBetting.put("레몬", new Betting(10000));
+
+        GameManager gameManager = GameManager.initailizeGameManager(playerBetting, trumpCardManager);
+        Player player = gameManager.findPlayerByUsername("레몬");
 
         //when
         while (!player.isImpossibleDraw()) {
             gameManager.drawMoreCard(player);
         }
+
         //then
         Assertions.assertThat(player.getCardDeck().calculateScore()).isGreaterThanOrEqualTo(21);
     }
-    
+
     @DisplayName("플레이어는 dealer 혹은 딜러이름을 사용할 수 없다.")
     @Test
     void test2() {
+
         //given
         TrumpCardManager trumpCardManager = new TrumpCardManager();
-        List<String> dealer1 = List.of("dealer");
-        List<String> dealer2 = List.of("딜러");
+        Map<String, Betting> playerBetting = new HashMap<>();
+        playerBetting.put("dealer", new Betting(10000));
+        playerBetting.put("딜러", new Betting(10000));
 
         //when & then
         SoftAssertions.assertSoftly((softAssertions) -> {
             softAssertions.assertThatIllegalArgumentException()
-                    .isThrownBy(() -> new GameManager(dealer1, trumpCardManager))
+                    .isThrownBy(() -> GameManager.initailizeGameManager(playerBetting, trumpCardManager))
                     .withMessage("dealer 혹은 딜러는 이름으로 사용할 수 없습니다.");
             softAssertions.assertThatIllegalArgumentException()
-                    .isThrownBy(() -> new GameManager(dealer2, trumpCardManager))
+                    .isThrownBy(() -> GameManager.initailizeGameManager(playerBetting, trumpCardManager))
                     .withMessage("dealer 혹은 딜러는 이름으로 사용할 수 없습니다.");
         });
     }
+
 
     private static class FakeTrumpCardManager extends TrumpCardManager {
 
