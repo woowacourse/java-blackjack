@@ -15,12 +15,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
+import blackjack.domain.card.Result;
 import blackjack.domain.card.WinningResult;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
 import java.util.List;
-import java.util.Map;
 import java.util.Stack;
 import org.junit.jupiter.api.Test;
 
@@ -52,16 +52,18 @@ public class GameResultTest {
         ));
         Dealer dealer = new Dealer(players, new Deck(cards), new Cards(DIAMOND_ACE, DIAMOND_NINE));
 
-        Map<Player, WinningResult> playerGameResults =
-                Map.of(pobi, WinningResult.LOSE,
-                        surf, WinningResult.WIN);
-        Map<WinningResult, Integer> dealerGameResult = Map.of(WinningResult.LOSE, 1, WinningResult.WIN, 1);
-
         //when
         GameResult gameResult = GameResult.create(dealer, players);
+        Result pobiResult = gameResult.playerResults().get(pobi);
+        Result surfResult = gameResult.playerResults().get(surf);
 
         //then
-        assertThat(gameResult.playerResults()).isEqualTo(playerGameResults);
-        assertThat(gameResult.dealerResults()).isEqualTo(dealerGameResult);
+        assertThat(pobiResult.resultIntegerMap()).containsEntry(WinningResult.LOSE,
+                1);
+        assertThat(pobiResult.bettingResult()).isEqualTo(-10000);
+
+        assertThat(surfResult.resultIntegerMap()).containsEntry(WinningResult.WIN,
+                1);
+        assertThat(surfResult.bettingResult()).isEqualTo(10000);
     }
 }

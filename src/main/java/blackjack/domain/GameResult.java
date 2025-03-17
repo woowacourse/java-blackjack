@@ -9,14 +9,12 @@ import blackjack.domain.participants.Players;
 import java.util.HashMap;
 import java.util.Map;
 
-public record GameResult(Map<Player, Result> playerResults, Result dealerResults,
-                         int dealerBettingResult) {
+public record GameResult(Map<Player, Result> playerResults, Result dealerResults) {
 
     public static GameResult create(Dealer dealer, Players players) {
         Map<Player, Result> playerResults = createPlayerGameResult(dealer, players);
         Result dealerResults = createDealerGameResults(dealer, players);
-        int dealerBettingMoney = dealer.getBettingMoney();
-        return new GameResult(playerResults, dealerResults, dealerBettingMoney);
+        return new GameResult(playerResults, dealerResults);
     }
 
     private static Map<Player, Result> createPlayerGameResult(Dealer dealer, Players players) {

@@ -7,8 +7,6 @@ import static blackjack.fixture.CardFixture.DIAMOND_ACE;
 import static blackjack.fixture.CardFixture.DIAMOND_EIGHT;
 import static blackjack.fixture.CardFixture.DIAMOND_FIVE;
 import static blackjack.fixture.CardFixture.DIAMOND_FOUR;
-import static blackjack.fixture.CardFixture.DIAMOND_KING;
-import static blackjack.fixture.CardFixture.DIAMOND_NINE;
 import static blackjack.fixture.CardFixture.DIAMOND_ONE;
 import static blackjack.fixture.CardFixture.DIAMOND_TEN;
 import static blackjack.fixture.CardFixture.DIAMOND_THREE;
@@ -20,14 +18,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import blackjack.domain.card.BettingResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import java.util.List;
-import java.util.Map;
 import java.util.Stack;
 import org.junit.jupiter.api.Test;
 
@@ -211,54 +207,5 @@ public class DealerTest {
 
         //when & then
         assertThatCode(() -> dealer.sendCardToPlayer(pobiPlayer)).doesNotThrowAnyException();
-    }
-
-    @Test
-    void 플레이어가_베팅한_금액과_승패에_따라_돈을_지급할_수_있다() {
-        //given
-        Player pobiPlayer = new Player("pobi", new Cards(
-                DIAMOND_ONE,
-                DIAMOND_TEN,
-
-                DIAMOND_FIVE
-        ), 10000);
-        Player surfPlayer = new Player("surf", new Cards(
-                DIAMOND_ONE,
-                DIAMOND_FOUR
-        ), 20000);
-
-        Players players = new Players(
-                List.of(
-                        pobiPlayer,
-                        surfPlayer
-                )
-        );
-        Stack<Card> cards = new Stack<>();
-        cards.addAll(
-                List.of(
-                        DIAMOND_KING,
-                        DIAMOND_NINE,
-                        DIAMOND_THREE,
-                        DIAMOND_KING,
-                        DIAMOND_THREE,
-                        DIAMOND_THREE,
-                        DIAMOND_FOUR,
-                        DIAMOND_FOUR,
-                        DIAMOND_ONE
-                )
-        );
-        Deck deck = new Deck(cards);
-        Dealer dealer = new Dealer(players, deck);
-        dealer.prepareBlackjack();
-        dealer.pickAdditionalCard();
-
-        Map<Player, Integer> playerProfit =
-                Map.of(pobiPlayer, -10000, surfPlayer, 20000);
-
-        //when
-        BettingResult bettingResult = dealer.calculateBettingResult();
-
-        //then
-        assertThat(bettingResult.getPlayerBettingResults()).isEqualTo(playerProfit);
     }
 }
