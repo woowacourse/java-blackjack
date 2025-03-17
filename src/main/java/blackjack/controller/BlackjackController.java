@@ -76,7 +76,7 @@ public final class BlackjackController {
 
     private void askHitForDealer(Dealer dealer) {
         while (!dealer.isFinished()) {
-            dealer.dealCard(dealer);
+            dealer.drawCardFromDeck();
             gamePlayView.printDealerHit(true);
         }
         gamePlayView.printDealerHit(false);

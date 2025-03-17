@@ -7,7 +7,7 @@ import blackjack.model.state.running.InitialDeal;
 import java.util.List;
 import java.util.Objects;
 
-public final class Player implements CardReceivable {
+public final class Player {
 
     private final Name name;
     private State state;
@@ -17,7 +17,6 @@ public final class Player implements CardReceivable {
         state = new InitialDeal();
     }
 
-    @Override
     public void receiveCard(Card card) {
         state = state.receiveCard(card);
     }

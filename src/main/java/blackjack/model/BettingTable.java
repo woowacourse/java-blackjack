@@ -51,8 +51,8 @@ public class BettingTable {
             dealer.dealCard(player);
             dealer.dealCard(player);
         }
-        dealer.dealCard(dealer);
-        dealer.dealCard(dealer);
+        dealer.drawCardFromDeck();
+        dealer.drawCardFromDeck();
     }
 
     public Map<Player, Integer> calculatePayouts(Dealer dealer) {

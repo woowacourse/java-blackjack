@@ -9,7 +9,7 @@ import blackjack.model.state.finished.FinishedState;
 import blackjack.model.state.running.DealerDrawing;
 import java.util.List;
 
-public final class Dealer implements CardReceivable {
+public final class Dealer {
 
     public static final int DEALER_HIT_THRESHOLD = 16;
 
@@ -25,15 +25,18 @@ public final class Dealer implements CardReceivable {
         return new Dealer(Deck.createStandardDeck(new RandomCardShuffler()));
     }
 
-    public void dealCard(CardReceivable cardReceivable) {
-        cardReceivable.receiveCard(drawFromDeck());
+    public void dealCard(Player player) {
+        player.receiveCard(drawFromDeck());
+    }
+
+    public void drawCardFromDeck() {
+        receiveCard(drawFromDeck());
     }
 
     private Card drawFromDeck() {
         return deck.draw();
     }
 
-    @Override
     public void receiveCard(Card card) {
         state = state.receiveCard(card);
     }

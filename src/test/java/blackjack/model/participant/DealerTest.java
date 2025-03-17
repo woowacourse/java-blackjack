@@ -43,15 +43,15 @@ class DealerTest {
                 .hasSize(1);
     }
 
-    @DisplayName("딜러 자신에게 카드를 한장 준다.")
+    @DisplayName("딜러 자신이 카드를 뽑을 수 있다.")
     @Test
-    void receiveHandTest() {
+    void drawCardFromDeckTest() {
         // given
         List<Card> cards = List.of(SPADE_ACE_CARD);
         Dealer dealer = new Dealer(Deck.createDeckByCards(cards, NO_SHUFFLER));
 
         // when
-        dealer.dealCard(dealer);
+        dealer.drawCardFromDeck();
 
         // then
         assertThat(dealer.getHandCards())
@@ -68,11 +68,11 @@ class DealerTest {
         Dealer dealer = new Dealer(Deck.createDeckByCards(cards, NO_SHUFFLER));
 
         // when
-        dealer.dealCard(dealer);
-        dealer.dealCard(dealer);
+        dealer.drawCardFromDeck();
+        dealer.drawCardFromDeck();
 
         // then
-        assertThatCode(() -> dealer.dealCard(dealer))
+        assertThatCode(dealer::drawCardFromDeck)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("블랙잭이라 카드를 더 받을 수 없습니다.");
     }
@@ -89,8 +89,8 @@ class DealerTest {
         Card card2 = createCard(Suit.SPADES, cardValue2);
         List<Card> cards = List.of(card1, card2);
         Dealer dealer = new Dealer(Deck.createDeckByCards(cards, NO_SHUFFLER));
-        dealer.dealCard(dealer);
-        dealer.dealCard(dealer);
+        dealer.drawCardFromDeck();
+        dealer.drawCardFromDeck();
 
         // when
         boolean isFinished = dealer.isFinished();
@@ -113,9 +113,9 @@ class DealerTest {
         Card card3 = createCard(Suit.SPADES, cardValue3);
         List<Card> cards = List.of(card1, card2, card3);
         Dealer dealer = new Dealer(Deck.createDeckByCards(cards, NO_SHUFFLER));
-        dealer.dealCard(dealer);
-        dealer.dealCard(dealer);
-        dealer.dealCard(dealer);
+        dealer.drawCardFromDeck();
+        dealer.drawCardFromDeck();
+        dealer.drawCardFromDeck();
 
         // when
         boolean isFinished = dealer.isFinished();
@@ -131,8 +131,8 @@ class DealerTest {
         // give
         List<Card> cards = List.of(SPADE_ACE_CARD, SPADE_TEN_CARD);
         Dealer dealer = new Dealer(Deck.createDeckByCards(cards, NO_SHUFFLER));
-        dealer.dealCard(dealer);
-        dealer.dealCard(dealer);
+        dealer.drawCardFromDeck();
+        dealer.drawCardFromDeck();
 
         // when
         Card visibleCard = dealer.getVisibleCard();
@@ -326,8 +326,8 @@ class DealerTest {
         // given
         List<Card> cards = List.of(SPADE_ACE_CARD, SPADE_TEN_CARD);
         Dealer dealer = new Dealer(Deck.createDeckByCards(cards, NO_SHUFFLER));
-        dealer.dealCard(dealer);
-        dealer.dealCard(dealer);
+        dealer.drawCardFromDeck();
+        dealer.drawCardFromDeck();
 
         // when
         int total = dealer.getTotal();
