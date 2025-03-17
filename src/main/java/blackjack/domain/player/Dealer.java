@@ -14,9 +14,10 @@ public class Dealer extends Player {
 
     @Override
     public List<Card> getOpenedCards() {
-        if (this.getHand().getCards().getCards().isEmpty()) {
+        Card card = this.getHand().getCards().getTopCard();
+        if (card == null) {
             return List.of();
         }
-        return getHand().getCards().getCards().subList(0, 1);
+        return List.of(card);
     }
 }

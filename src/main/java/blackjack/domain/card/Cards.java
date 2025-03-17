@@ -36,6 +36,10 @@ public class Cards {
         return cards.size() == BLACKJACK_CARD_SIZE;
     }
 
+    public Card getTopCard() {
+        return cards.getFirst();
+    }
+
     @Override
     public String toString() {
         return "Cards{" +
