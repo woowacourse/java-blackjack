@@ -20,13 +20,9 @@ public abstract class User {
     public abstract String getName();
 
     public abstract boolean isDealer();
-  
+
     public void receiveCard(final TrumpCard trumpCard) {
         cardDeck.addTrumpCard(trumpCard);
-    }
-
-    public boolean hasName(final String name) {
-        return getName().equals(name);
     }
 
     public int userScore() {
