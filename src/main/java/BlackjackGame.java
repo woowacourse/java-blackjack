@@ -80,16 +80,16 @@ public class BlackjackGame {
     private void distributePlayerExtraCards(GameParticipant gameParticipant, CardDeck cardDeck, Player player) {
         while (player.ableToAddCard() && inputView.readAddPlayerCard(player.getName())) {
             gameParticipant.addExtraCard(player, cardDeck);
+            ParticipantCardsDto participantCardsDto = createParticipantCardsDto(player);
+            outputView.printParticipantCards(participantCardsDto);
         }
-        ParticipantCardsDto participantCardsDto = createParticipantCardsDto(player);
-        outputView.printParticipantCards(participantCardsDto);
     }
 
     private void distributeDealerExtraCard(GameParticipant gameParticipant, CardDeck cardDeck) {
         Dealer dealer = gameParticipant.getDealer();
         boolean dealerExtraCard = dealer.ableToAddCard();
         if (dealerExtraCard) {
-            gameParticipant.addExtraCard(dealer, cardDeck);
+            gameParticipant.addExtraCard(dealer, cardDeck);;
         }
         ParticipantCardsDto dealerCardsDto = createParticipantCardsDto(dealer);
         outputView.printDealerExtraCard(dealerCardsDto, dealerExtraCard);
