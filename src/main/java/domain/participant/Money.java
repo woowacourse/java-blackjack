@@ -18,11 +18,11 @@ public class Money {
     }
 
     public void increase(int increaseAmount) {
-        amount += increaseAmount;
+        this.amount += increaseAmount;
     }
 
     public void decrease(int decreaseAmount) {
-        amount -= decreaseAmount;
+        this.amount -= decreaseAmount;
     }
 
     public int getAmount() {
