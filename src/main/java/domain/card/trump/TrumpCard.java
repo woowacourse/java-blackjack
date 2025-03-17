@@ -1,4 +1,4 @@
-package domain.card;
+package domain.card.trump;
 
 public abstract class TrumpCard {
 

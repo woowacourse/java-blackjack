@@ -1,5 +1,6 @@
 package domain.card;
 
+import domain.card.trump.Rank;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;

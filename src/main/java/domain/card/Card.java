@@ -1,5 +1,8 @@
 package domain.card;
 
+import domain.card.trump.Rank;
+import domain.card.trump.Suit;
+import domain.card.trump.TrumpCard;
 import java.util.List;
 
 public class Card extends TrumpCard {

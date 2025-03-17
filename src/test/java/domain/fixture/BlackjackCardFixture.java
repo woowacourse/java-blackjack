@@ -1,8 +1,8 @@
 package domain.fixture;
 
 import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Suit;
+import domain.card.trump.Rank;
+import domain.card.trump.Suit;
 
 public class BlackjackCardFixture {
 

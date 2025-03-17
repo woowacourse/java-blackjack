@@ -1,5 +1,6 @@
 package domain.card;
 
+import domain.card.trump.Rank;
 import java.util.Arrays;
 import java.util.List;
 
