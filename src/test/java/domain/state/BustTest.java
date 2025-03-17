@@ -57,7 +57,7 @@ class BustTest {
     }
 
     @Test
-    void 카드목록을_받아_버스트_상태이면_true를_반환한다() {
+    void 카드_목록을_받아_버스트_상태이면_true를_반환한다() {
         // given
         Cards cards = new Cards(List.of(TEN_HEART(), TEN_HEART(), TWO_HEART()));
 
@@ -67,7 +67,7 @@ class BustTest {
     }
 
     @Test
-    void 카드목록을_받아_버스트_상태가_아니면_false를_반환한다() {
+    void 카드_목록을_받아_버스트_상태가_아니면_false를_반환한다() {
         // given
         Cards cards = new Cards(List.of(FIVE_HEART(), FIVE_HEART(), ACE_HEART()));
 

@@ -54,7 +54,7 @@ class BlackjackTest {
     }
 
     @Test
-    void 카드목록을_받아_블랙잭_상태이면_true를_반환한다() {
+    void 카드_목록을_받아_블랙잭_상태이면_true를_반환한다() {
         // given
         Cards cards = new Cards(List.of(TEN_HEART(), ACE_HEART()));
 
@@ -64,7 +64,7 @@ class BlackjackTest {
     }
 
     @Test
-    void 카드목록을_받아_블랙잭_상태가_아니면_false를_반환한다() {
+    void 카드_목록을_받아_블랙잭_상태가_아니면_false를_반환한다() {
         // given
         Cards cards = new Cards(List.of(FIVE_HEART(), FIVE_HEART(), ACE_HEART()));
 
