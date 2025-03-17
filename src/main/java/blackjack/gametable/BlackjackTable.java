@@ -29,38 +29,6 @@ public class BlackjackTable {
         players.initializeHands(playerInitialCards);
     }
 
-    private Players registerPlayers(List<String> names) {
-        return new Players(names.stream()
-                .map(PlayerName::new)
-                .map(Player::new)
-                .toList());
-    }
-
-    private void validatePlayerCount(List<String> playerNames) {
-        if (playerNames.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 플레이어는 최소 한 명 이상 필요합니다.");
-        }
-        if (playerNames.size() > 6) {
-            throw new IllegalArgumentException("[ERROR] 플레이어는 최대 여섯 명 까지 지정할 수 있습니다.");
-        }
-    }
-
-    public int getPlayersCount() {
-        return players.getPlayers().size();
-    }
-
-    public List<String> getPlayerNames() {
-        return players.getPlayerNames();
-    }
-
-    public Players getPlayers() {
-        return players;
-    }
-
-    public Dealer getDealer() {
-        return dealer;
-    }
-
     public void addCardTo(String playerName) {
         Player player = findPlayer(playerName);
         Card card = deck.drawCard();
@@ -70,7 +38,6 @@ public class BlackjackTable {
     public Player findPlayer(String playerName) {
         return players.findPlayer(playerName);
     }
-
 
     public boolean isDealerDrawCard() {
         return dealer.shouldDrawCard();
@@ -90,4 +57,37 @@ public class BlackjackTable {
     public void calculateTotalPayout() {
         dealer.updateBetAmounts(players);
     }
+
+    public int getPlayersCount() {
+        return players.getPlayers().size();
+    }
+
+    public List<String> getPlayerNames() {
+        return players.getPlayerNames();
+    }
+
+    public Players getPlayers() {
+        return players;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    private Players registerPlayers(List<String> names) {
+        return new Players(names.stream()
+                .map(PlayerName::new)
+                .map(Player::new)
+                .toList());
+    }
+
+    private void validatePlayerCount(List<String> playerNames) {
+        if (playerNames.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 플레이어는 최소 한 명 이상 필요합니다.");
+        }
+        if (playerNames.size() > 6) {
+            throw new IllegalArgumentException("[ERROR] 플레이어는 최대 여섯 명 까지 지정할 수 있습니다.");
+        }
+    }
+
 }
