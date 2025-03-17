@@ -21,6 +21,7 @@ public class InputView {
     }
 
     public BetMoney getBetMoney(String name) {
+        System.out.println();
         System.out.printf("%s의 배팅 금액은?\n", name);
         String input = scanner.nextLine();
         return new BetMoney(Integer.parseInt(input));
