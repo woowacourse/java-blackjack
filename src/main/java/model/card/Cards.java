@@ -55,7 +55,7 @@ public class Cards {
                 .orElseThrow(() -> new IllegalStateException("1로 취급할 A가 없습니다."));
 
         cards.remove(aceElevenCard);
-        cards.add(new Card(CardNumber.ACE_ONE, aceElevenCard.getShape()));
+        cards.add(new Card(CardNumber.ACE_ONE, aceElevenCard.shape()));
     }
 
     public int getCardsSize() {
@@ -68,5 +68,9 @@ public class Cards {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public boolean isBlackjack() {
+        return getCardsSize() == 2 && calculateResult() == BUST_THRESHOLD;
     }
 }

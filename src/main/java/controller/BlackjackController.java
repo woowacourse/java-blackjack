@@ -1,13 +1,12 @@
 package controller;
 
 import dto.CardDto;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import model.Judge;
 import model.UserInput;
+import model.bettingamount.BettingAmount;
 import model.card.Cards;
 import model.deck.Deck;
-import model.gameresult.GameResult;
 import model.gameresult.GameResults;
 import model.participant.Dealer;
 import model.participant.Player;
@@ -17,34 +16,45 @@ import view.OutputView;
 
 public class BlackjackController {
     private final Deck deck;
-    private final Judge judge;
     private final InputView inputView;
     private final OutputView outputView;
 
-    public BlackjackController(final Deck deck, final Judge judge, final InputView inputView,
+    public BlackjackController(final Deck deck, final InputView inputView,
                                final OutputView outputView) {
         this.deck = deck;
-        this.judge = judge;
         this.inputView = inputView;
         this.outputView = outputView;
     }
 
     public void start() {
         deck.shuffle();
-        Players players = initializePlayers();
+        List<String> names = inputView.readPlayerNames();
+        Players players = initializePlayers(names);
         Dealer dealer = new Dealer(deck);
+        startGame(players, dealer);
+        endGame(players, dealer);
+    }
 
+    private Players initializePlayers(final List<String> names) {
+        List<Player> players = new ArrayList<>();
+        for (String name : names) {
+            BettingAmount bettingAmount = new BettingAmount(inputView.readBettingAmount(name));
+            Player player = new Player(name, deck, bettingAmount);
+            players.add(player);
+        }
+        return new Players(players);
+    }
+
+    private void startGame(final Players players, final Dealer dealer) {
+        outputView.printNewLine();
         printInitialGameState(players, dealer);
         playPlayerTurns(players);
         printDealerDrawCount(dealer);
-        printFinalGameState(dealer, players);
-        printGameResult(players, dealer);
     }
 
-    private Players initializePlayers() {
-        List<String> names = inputView.readPlayerNames();
-        outputView.printNewLine();
-        return Players.createByNames(names, deck);
+    private void endGame(final Players players, final Dealer dealer) {
+        printFinalGameState(dealer, players);
+        printProfit(players, dealer);
     }
 
     private void printInitialGameState(final Players players, final Dealer dealer) {
@@ -62,10 +72,7 @@ public class BlackjackController {
     }
 
     private void handlePlayerTurn(final Player player) {
-        while (playerCanDraw(player)) {
-            if (!wantsAdditionalCard(player)) {
-                return;
-            }
+        while (playerCanDraw(player) && wantsAdditionalCard(player)) {
             player.receiveCard(deck.getCard());
             outputView.printCardsWithName(player.getName(), getCardDtos(player.getCards()));
         }
@@ -80,48 +87,34 @@ public class BlackjackController {
     }
 
     private void printDealerDrawCount(final Dealer dealer) {
-        for (int count = 0; count < dealer.getAdditionalDrawCount(); count++) {
-            outputView.printDealerDrawn();
-        }
+        outputView.printDealerDrawn(dealer.getAdditionalDrawCount());
     }
 
     private void printFinalGameState(final Dealer dealer, final Players players) {
         outputView.printCardsWithNameAndResult("딜러", getCardDtos(dealer.getCards()), dealer.calculateScore());
-        players.getPlayers().forEach(player ->
-                outputView.printCardsWithNameAndResult(
-                        player.getName(),
-                        getCardDtos(player.getCards()),
-                        player.calculateScore())
-        );
+        for (Player player : players.getPlayers()) {
+            outputView.printCardsWithNameAndResult(
+                    player.getName(),
+                    getCardDtos(player.getCards()),
+                    player.calculateScore());
+        }
         outputView.printNewLine();
     }
 
-    private void printGameResult(final Players players, final Dealer dealer) {
-        GameResults gameResults = calculateGameResults(players, dealer);
-
-        outputView.printGameResultHeader();
-        outputView.printDealerGameResult(
-                gameResults.calculateDealerResultCount(GameResult.WIN),
-                gameResults.calculateDealerResultCount(GameResult.DRAW),
-                gameResults.calculateDealerResultCount(GameResult.LOSE)
-        );
-
-        players.getPlayers().forEach(player ->
-                outputView.printPlayerGameResult(
-                        player.getName(),
-                        gameResults.getGameResultByName(player.getName()).getMessage())
-        );
-    }
-
-    private GameResults calculateGameResults(final Players players, final Dealer dealer) {
-        return new GameResults(players.getPlayers().stream()
-                .collect(Collectors.toMap(
-                        Player::getName,
-                        player -> judge.determineGameResult(dealer.getCards(), player.getCards())
-                )));
-    }
-
     private List<CardDto> getCardDtos(final Cards cards) {
-        return cards.getCards().stream().map(CardDto::from).toList();
+        return cards.getCards()
+                .stream()
+                .map(CardDto::from)
+                .toList();
+    }
+
+    private void printProfit(final Players players, final Dealer dealer) {
+        outputView.printGameResultHeader();
+        GameResults gameResults = GameResults.createFromParticipants(players, dealer);
+        int dealerProfit = gameResults.calculateDealerProfit(players);
+        outputView.printProfitWithName("딜러", dealerProfit);
+        for (Player player : players.getPlayers()) {
+            outputView.printProfitWithName(player.getName(), gameResults.calculatePlayerProfit(player));
+        }
     }
 }

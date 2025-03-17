@@ -18,8 +18,8 @@ public class OutputView {
         System.out.printf("%s카드: %s" + LINE, name, joinByDelimiter(cardOutputs));
     }
 
-    public void printDealerDrawn() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    public void printDealerDrawn(int drawCount) {
+        System.out.printf("딜러는 16이하라 %d장의 카드를 더 받았습니다." + LINE, drawCount);
     }
 
     public void printDealerFirstCard(final CardDto firstCard) {
@@ -46,14 +46,10 @@ public class OutputView {
     }
 
     public void printGameResultHeader() {
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
     }
 
-    public void printDealerGameResult(final int winCount, final int drawCount, final int loseCount) {
-        System.out.printf("딜러: %d승 %d무 %d패" + LINE, winCount, drawCount, loseCount);
-    }
-
-    public void printPlayerGameResult(final String name, final String result) {
-        System.out.printf("%s: %s" + LINE, name, result);
+    public void printProfitWithName(final String name, final int profit) {
+        System.out.printf("%s: %d" + LINE, name, profit);
     }
 }

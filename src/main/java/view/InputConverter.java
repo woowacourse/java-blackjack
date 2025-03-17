@@ -15,4 +15,12 @@ public class InputConverter {
             throw new IllegalArgumentException();
         }
     }
+
+    public static int parseToInt(final String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("잘못된 입력입니다.");
+        }
+    }
 }
