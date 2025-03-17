@@ -44,4 +44,3 @@ public class NicknameGenerator {
         return nickname.toString();
     }
 }
-
