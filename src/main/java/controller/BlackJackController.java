@@ -8,7 +8,7 @@ import domain.gamer.Dealer;
 import domain.gamer.Nickname;
 import domain.gamer.Nicknames;
 import domain.gamer.Player;
-import domain.state.type.Hittable;
+import domain.state.type.HittableState;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -50,13 +50,13 @@ public class BlackJackController {
                 .stream()
                 .map(nickname -> {
                     final String betAmount = InputView.readBetAmount(nickname);
-                    return new Player(nickname, Hittable.initialPlayer(), BetAmount.of(betAmount));
+                    return new Player(nickname, HittableState.initializePlayerState(), BetAmount.of(betAmount));
                 })
                 .toList();
     }
 
     private Dealer generateDealer() {
-        return new Dealer(new Nickname(DEALER_NAME), Hittable.initialDealer());
+        return new Dealer(new Nickname(DEALER_NAME), HittableState.initializeDealerState());
     }
 
     private static void dealInitialCards(final BlackJackGame blackJackGame, final List<Player> players,

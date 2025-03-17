@@ -17,11 +17,11 @@ public class HittableState extends RunningState {
         this.hittableThreshold = hittableThreshold;
     }
 
-    public static HittableState createInitialPlayer() {
+    public static HittableState initializePlayerState() {
         return new HittableState(new Hand(), PLAYER_HITTABLE_THRESHOLD);
     }
 
-    public static HittableState createInitialDealer() {
+    public static HittableState initializeDealerState() {
         return new HittableState(new Hand(), DEALER_HITTABLE_THRESHOLD);
     }
 
