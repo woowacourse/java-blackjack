@@ -1,4 +1,12 @@
-package model;
+package model.participants;
+
+import static view.OutputView.printBust;
+import static view.OutputView.printHandCardsNames;
+
+import model.card.Card;
+import model.card.Hand;
+import model.casino.Deck;
+import model.casino.HitOrHoldPolicy;
 
 public class Player {
 
@@ -20,6 +28,26 @@ public class Player {
             resolveBust();
         }
         return !isHandBust();
+    }
+
+    public void bustCheckOfHitOrHold(Deck deck, HitOrHoldPolicy hitOrHoldPolicy) {
+        boolean isAlive = resolveBust();
+        while (isAlive) {
+            if (hitOrHoldPolicy.hold()) {
+                return;
+            }
+            isAlive = bustWithDrawOneMoreCard(deck);
+        }
+        setHandTotalToZero();
+        printBust();
+    }
+
+    private boolean bustWithDrawOneMoreCard(Deck deck) {
+        addCard(deck.draw());
+        if (isNotDealer()) {
+            printHandCardsNames(this);
+        }
+        return resolveBust();
     }
 
     public boolean isNotDealer() {

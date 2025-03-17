@@ -1,4 +1,8 @@
-package model;
+package model.participants;
+
+import model.card.Card;
+import model.casino.Deck;
+import model.casino.HitOrHoldPolicy;
 
 public class Dealer extends Player {
 
@@ -11,6 +15,15 @@ public class Dealer extends Player {
 
     public boolean isOverThreshold() {
         return getHandTotal() > THRESHOLD;
+    }
+
+    public void dealersTurn(Deck deck) {
+        bustCheckOfHitOrHold(deck, new HitOrHoldPolicy() {
+            @Override
+            public boolean hold() {
+                return isOverThreshold();
+            }
+        });
     }
 
     public Card openOneCard() {
