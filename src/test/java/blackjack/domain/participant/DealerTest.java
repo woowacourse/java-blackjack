@@ -17,8 +17,7 @@ import blackjack.domain.card.Hand;
 import blackjack.domain.card.Shape;
 import blackjack.domain.participant.gamer.Dealer;
 import blackjack.domain.participant.gamer.Player;
-import blackjack.domain.result.DealerWinningResult;
-import blackjack.domain.result.ResultStatus;
+import blackjack.domain.result.ProfitResult;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -115,27 +114,27 @@ class DealerTest {
 
     @ParameterizedTest
     @MethodSource
-    void 우승_결과를_계산한다(final Hand dealerHand, final Hand playerHand, final ResultStatus expected) {
+    void 우승_결과를_계산한다(final Hand dealerHand, final Hand playerHand, final int dealerProfit, final int playerProfit) {
         // Given
         dealer = new Dealer(dealerHand);
-        Player player = providePlayer("밍트", 10_000);
+        final Player player = providePlayer("밍트", 10_000);
         final Map<Player, Hand> playerScores = Map.of(player, playerHand);
 
         // When
-        DealerWinningResult dealerWinningResult = dealer.makeDealerWinningResult(playerScores);
+        final ProfitResult profitResult = dealer.makeDealerWinningResult(playerScores);
 
         // Then
-        assertThat(dealerWinningResult).isEqualTo(new DealerWinningResult(Map.of(player, expected)));
+        assertThat(profitResult.getResult()).isEqualTo(Map.of(dealer, dealerProfit, player, playerProfit));
     }
 
     private static Stream<Arguments> 우승_결과를_계산한다() {
         return Stream.of(
-                Arguments.of(provideBlackjack(), provideBlackjack(), ResultStatus.PUSH),
-                Arguments.of(provideBlackjack(), provideUnder16Cards(), ResultStatus.WIN),
-                Arguments.of(provideUnder16Cards(), provideBlackjack(), ResultStatus.BLACKJACK),
-                Arguments.of(provideUnder16Cards(), provideEmptyCards(), ResultStatus.WIN),
-                Arguments.of(provideEmptyCards(), provideUnder16Cards(), ResultStatus.LOSE),
-                Arguments.of(provide16Cards(), provide16Cards(), ResultStatus.PUSH)
+                Arguments.of(provideBlackjack(), provideBlackjack(), 0, 0),
+                Arguments.of(provideBlackjack(), provideUnder16Cards(), 10_000, -10_000),
+                Arguments.of(provideUnder16Cards(), provideBlackjack(), -15_000, 15_000),
+                Arguments.of(provideUnder16Cards(), provideEmptyCards(), 10_000, -10_000),
+                Arguments.of(provideEmptyCards(), provideUnder16Cards(), -10_000, 10_000),
+                Arguments.of(provide16Cards(), provide16Cards(), 0, 0)
         );
     }
 }

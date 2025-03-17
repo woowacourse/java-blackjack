@@ -17,17 +17,13 @@ public final class Deck {
         return new Deck(new ShuffleDeckGenerator());
     }
 
-    public Hand spreadInitialCards(final int cardSize) {
-        return new Hand(IntStream.range(0, cardSize)
-                .mapToObj(o -> pickCard())
+    public Hand drawInitialCards(final int size) {
+        return new Hand(IntStream.range(0, size)
+                .mapToObj(o -> drawCard())
                 .toList());
     }
 
-    public Card spreadOneCard() {
-        return pickCard();
-    }
-
-    private Card pickCard() {
+    public Card drawCard() {
         Card card = cards.pollFirst();
         if (card == null) {
             throw new IllegalStateException("[ERROR] 카드가 더이상 없습니다.");

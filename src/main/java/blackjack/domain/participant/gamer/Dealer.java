@@ -7,7 +7,8 @@ import static blackjack.domain.result.ResultStatus.PUSH;
 import static blackjack.domain.result.ResultStatus.WIN;
 
 import blackjack.domain.card.Hand;
-import blackjack.domain.result.DealerWinningResult;
+import blackjack.domain.participant.Players;
+import blackjack.domain.result.ProfitResult;
 import blackjack.domain.result.ResultStatus;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -21,6 +22,7 @@ public final class Dealer extends Gamer {
 
     private static final String NICKNAME = "딜러";
     private static final int DEALER_THRESHOLD = 16;
+    private static final int SPREAD_CARD_SIZE = 2;
 
     public Dealer(final Hand hand) {
         super(hand);
@@ -41,12 +43,17 @@ public final class Dealer extends Gamer {
         return score <= DEALER_THRESHOLD;
     }
 
-    public DealerWinningResult makeDealerWinningResult(final Map<Player, Hand> playerScores) {
-        Map<Player, ResultStatus> result = playerScores.entrySet().stream()
+    public ProfitResult makeDealerWinningResult(final Map<Player, Hand> playerScores) {
+        final Map<Player, ResultStatus> result = playerScores.entrySet().stream()
                 .collect(Collectors.toMap(Entry::getKey,
                         entry -> calculateResultStatus(entry.getValue()),
                         (e1, e2) -> e1, LinkedHashMap::new));
-        return new DealerWinningResult(result);
+        return new ProfitResult(this, result);
+    }
+
+    public void dealInitialCards(final Players players, final Hand hand) {
+        receiveCards(hand.subHand(0, SPREAD_CARD_SIZE));
+        players.receiveCardsByCount(hand.subHand(SPREAD_CARD_SIZE, hand.getSize()), SPREAD_CARD_SIZE);
     }
 
     private ResultStatus calculateResultStatus(final Hand playerHand) {
@@ -108,5 +115,9 @@ public final class Dealer extends Gamer {
     @Override
     public String getNickname() {
         return NICKNAME;
+    }
+
+    public int getSpreadCardSize() {
+        return SPREAD_CARD_SIZE;
     }
 }

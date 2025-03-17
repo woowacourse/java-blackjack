@@ -6,7 +6,7 @@ import blackjack.domain.card.Hand;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Players;
 import blackjack.domain.participant.gamer.Player;
-import blackjack.domain.result.DealerWinningResult;
+import blackjack.domain.result.ProfitResult;
 import blackjack.util.StringParser;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
@@ -27,7 +27,7 @@ public final class BlackjackGame {
         final Deck deck = Deck.shuffled();
         Participants participants = makeParticipants();
 
-        spreadInitialCards(participants, deck);
+        dealInitialCards(participants, deck);
         spreadExtraCards(participants, deck);
         showParticipantScore(participants);
         showProfit(participants);
@@ -50,9 +50,9 @@ public final class BlackjackGame {
                 .toList();
     }
 
-    private void spreadInitialCards(final Participants participants, final Deck deck) {
-        final Hand hand = deck.spreadInitialCards(participants.getInitialCardSize());
-        participants.receiveInitialCards(hand);
+    private void dealInitialCards(final Participants participants, final Deck deck) {
+        final Hand hand = deck.drawInitialCards(participants.getInitialCardSize());
+        participants.dealInitialCards(hand);
         resultView.printSpreadCard(participants.getPlayerNames(),
                 Map.entry(participants.getDealerName(), participants.showInitialDealerCards()),
                 participants.showInitialPlayersCards());
@@ -72,7 +72,7 @@ public final class BlackjackGame {
 
     private void askPlayerMoreCard(final Deck deck, final Player player) {
         while (player.canHit() && inputView.askHit(player)) {
-            final Card card = deck.spreadOneCard();
+            final Card card = deck.drawCard();
             player.receiveCard(card);
             resultView.printParticipantTotalCards(player.getNickname(), player.showAllCards());
         }
@@ -80,7 +80,7 @@ public final class BlackjackGame {
 
     private void spreadExtraCardsToDealer(final Participants participants, final Deck deck) {
         while (participants.canDealerHit()) {
-            participants.receiveCardToDealer(new Hand(deck.spreadOneCard()));
+            participants.receiveCardToDealer(new Hand(deck.drawCard()));
             resultView.printDealerExtraCard();
         }
     }
@@ -91,7 +91,7 @@ public final class BlackjackGame {
     }
 
     private void showProfit(final Participants participants) {
-        DealerWinningResult result = participants.makeWinningResult();
-        resultView.showProfit(result.calculateProfit(participants.getDealer()));
+        ProfitResult result = participants.makeDealerWinningResult();
+        resultView.showProfit(result.getResult());
     }
 }

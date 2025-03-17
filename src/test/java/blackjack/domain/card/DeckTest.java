@@ -24,14 +24,14 @@ class DeckTest {
 
     @DisplayName("카드를 순서대로 뽑는다.")
     @Test
-    void spreadInitialCards() {
+    void drawInitialCards() {
         // given
         final Deck deck = new Deck(() -> new ArrayDeque<>(Arrays.asList(
                 new Card(Shape.CLOB, CardScore.A),
                 new Card(Shape.DIAMOND, CardScore.SIX))));
 
         // when
-        final Hand hand = deck.spreadInitialCards(2);
+        final Hand hand = deck.drawInitialCards(2);
 
         // then
         assertAll(

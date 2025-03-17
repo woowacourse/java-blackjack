@@ -2,14 +2,13 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Hand;
 import blackjack.domain.participant.gamer.Dealer;
-import blackjack.domain.result.DealerWinningResult;
+import blackjack.domain.result.ProfitResult;
 import java.util.List;
 import java.util.Map;
 
 public final class Participants {
 
     private static final int DEALER_SIZE = 1;
-    private static final int SPREAD_CARD_SIZE = 2;
 
     private final Dealer dealer;
     private final Players players;
@@ -24,12 +23,11 @@ public final class Participants {
     }
 
     public int getInitialCardSize() {
-        return (DEALER_SIZE + players.getSize()) * SPREAD_CARD_SIZE;
+        return (DEALER_SIZE + players.getSize()) * dealer.getSpreadCardSize();
     }
 
-    public void receiveInitialCards(final Hand hand) {
-        dealer.receiveCards(hand.subHand(0, SPREAD_CARD_SIZE));
-        players.receiveCardsByCount(hand.subHand(SPREAD_CARD_SIZE, hand.getSize()), SPREAD_CARD_SIZE);
+    public void dealInitialCards(final Hand hand) {
+        dealer.dealInitialCards(players, hand);
     }
 
     public Players findCanHitPlayers() {
@@ -60,7 +58,7 @@ public final class Participants {
         return players.showTotalCards();
     }
 
-    public DealerWinningResult makeWinningResult() {
+    public ProfitResult makeDealerWinningResult() {
         return dealer.makeDealerWinningResult(players.showAllCards());
     }
 
