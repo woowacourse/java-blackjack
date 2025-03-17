@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class Hand {
 
-    public static final int BUSTED_STANDARD_VALUE = 22;
+    private static final int BUSTED_STANDARD_VALUE = 22;
 
     private final List<Card> cards;
 
