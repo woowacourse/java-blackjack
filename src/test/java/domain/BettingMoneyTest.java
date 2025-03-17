@@ -24,4 +24,13 @@ class BettingMoneyTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("배팅 금액의 단위는 10000원 입니다.");
     }
+
+    @ParameterizedTest
+    @DisplayName("배팅 금액이 일백만원 초과 시, 예외를 반환합니다.")
+    @ValueSource(ints = {1_100_000, 1_200_000, 10_000_000})
+    void validateMaxBettingMoneyTest(int value) {
+        Assertions.assertThatThrownBy(() -> new BettingMoney(value))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("배팅 금액은 일백만원을 초과할 수 없습니다.");
+    }
 }
