@@ -131,4 +131,38 @@ public class PlayerTest {
         //then
         assertThat(canPick).isEqualTo(false);
     }
+
+    @Test
+    @DisplayName("블랙잭인 경우를 반환한다.")
+    void should_return_true_when_is_black_jack() {
+        // given
+        Card cardOfHeartAce = new Card(Shape.HEART, Rank.ACE);
+        Card cardOfHeartKing = new Card(Shape.HEART, Rank.KING);
+        Participant player = new Player("a");
+        player.addCard(cardOfHeartAce);
+        player.addCard(cardOfHeartKing);
+
+        // when
+        boolean isBlackJack = player.isBlackJack();
+
+        // then
+        assertThat(isBlackJack).isEqualTo(true);
+    }
+
+    @Test
+    @DisplayName("블랙잭인 경우를 반환한다.")
+    void should_return_false_when_is_not_black_jack() {
+        // given
+        Card cardOfHeartKing = new Card(Shape.HEART, Rank.KING);
+        Card cardOfHeartQueen = new Card(Shape.HEART, Rank.QUEEN);
+        Participant player = new Player("a");
+        player.addCard(cardOfHeartKing);
+        player.addCard(cardOfHeartQueen);
+
+        // when
+        boolean isBlackJack = player.isBlackJack();
+
+        // then
+        assertThat(isBlackJack).isEqualTo(false);
+    }
 }

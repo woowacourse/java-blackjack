@@ -9,6 +9,10 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 public abstract class Participant {
+    public static final int BURST_UPPER_BOUND = 21;
+    public static final int BLACK_JACK_SIZE = 2;
+    public static final int BLACK_JACK_VALUE = 21;
+
     private final String name;
     private final List<Card> cards;
 
@@ -25,6 +29,8 @@ public abstract class Participant {
         cards.add(card);
     }
 
+    public boolean isBlackJack() {
+        return (cards.size() == BLACK_JACK_SIZE) && (getTotalValue() == BLACK_JACK_VALUE);
     }
 
     public int getTotalValue() {

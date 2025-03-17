@@ -1,5 +1,7 @@
 package domain;
 
+import domain.participant.Participant;
+
 public enum GameResult {
     WIN, DRAW, LOSE;
 
@@ -31,7 +33,7 @@ public enum GameResult {
     }
 
     public static boolean isBurstBy(int value) {
-        return value > BlackJackRule.BURST_UPPER_BOUND;
+        return value > Participant.BURST_UPPER_BOUND;
     }
 
     public GameResult reverse() {
