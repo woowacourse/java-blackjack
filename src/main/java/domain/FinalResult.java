@@ -25,8 +25,8 @@ public enum FinalResult {
             new Rule((player, dealer) -> player.isBust() && dealer.isBust(), LOSE),
             new Rule((player, dealer) -> player.isBust(), LOSE),
             new Rule((player, dealer) -> dealer.isBust(), WIN),
-            new Rule((player, dealer) -> player.getSumOfRank() > dealer.getSumOfRank(), WIN),
-            new Rule((player, dealer) -> player.getSumOfRank() < dealer.getSumOfRank(), LOSE),
-            new Rule((player, dealer) -> player.getSumOfRank() == dealer.getSumOfRank(), DRAW)
+            new Rule((player, dealer) -> player.getScoreSum() > dealer.getScoreSum(), WIN),
+            new Rule((player, dealer) -> player.getScoreSum() < dealer.getScoreSum(), LOSE),
+            new Rule((player, dealer) -> player.getScoreSum() == dealer.getScoreSum(), DRAW)
     );
 }

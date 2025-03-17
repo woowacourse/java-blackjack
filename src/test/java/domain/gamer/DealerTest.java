@@ -26,7 +26,7 @@ class DealerTest {
 
         // then
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(dealer.getSumOfRank()).isEqualTo(16);
+            softly.assertThat(dealer.getScoreSum()).isEqualTo(16);
             softly.assertThat(expected).isTrue();
         });
     }
@@ -45,7 +45,7 @@ class DealerTest {
 
         // then
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(dealer.getSumOfRank()).isEqualTo(17);
+            softly.assertThat(dealer.getScoreSum()).isEqualTo(17);
             softly.assertThat(expected).isFalse();
         });
     }
@@ -63,7 +63,7 @@ class DealerTest {
 
         // then
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(dealer.getSumOfRank()).isEqualTo(13);
+            softly.assertThat(dealer.getScoreSum()).isEqualTo(13);
             softly.assertThat(expected).isTrue();
         });
     }
@@ -82,7 +82,7 @@ class DealerTest {
 
         // then
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(dealer.getSumOfRank()).isEqualTo(21);
+            softly.assertThat(dealer.getScoreSum()).isEqualTo(21);
             softly.assertThat(expected).isFalse();
         });
     }

@@ -52,7 +52,7 @@ public final class OutputView {
         final List<String> cardGroup = cards.stream()
                 .map(card -> card.getDisplayName() + card.getShape().getTitle())
                 .toList();
-        final int result = gamer.getSumOfRank();
+        final int result = gamer.getScoreSum();
         return String.format(
                 "%s카드: %s - 결과: %d",
                 gamer.getDisplayName(),

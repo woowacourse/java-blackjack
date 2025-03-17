@@ -37,7 +37,7 @@ class PlayerTest {
         // given
 
         // when & then
-        assertThat(player.getSumOfRank()).isZero();
+        assertThat(player.getScoreSum()).isZero();
     }
 
     @DisplayName("플레이어는 카드를 한 장 받는다.")
@@ -49,11 +49,11 @@ class PlayerTest {
         final Card card = new Card(Rank.SIX, Shape.CLOVER);
 
         // when
-        final int previousResult = player.getSumOfRank();
+        final int previousResult = player.getScoreSum();
         player.hit(card);
 
         // then
-        assertThat(player.getSumOfRank()).isEqualTo(previousResult + card.getScore());
+        assertThat(player.getScoreSum()).isEqualTo(previousResult + card.getScore());
     }
 
     @DisplayName("플레이어가 버스트면 true를 반환한다.")
@@ -134,7 +134,7 @@ class PlayerTest {
         player.hit(card3);
 
         // when
-        final int sumOfRank = player.getSumOfRank();
+        final int sumOfRank = player.getScoreSum();
 
         // then
         assertThat(sumOfRank).isEqualTo(expected);
@@ -155,7 +155,7 @@ class PlayerTest {
         player.hit(card4);
 
         // when
-        final int sumOfRank = player.getSumOfRank();
+        final int sumOfRank = player.getScoreSum();
 
         // then
         assertThat(sumOfRank).isEqualTo(31);

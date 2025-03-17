@@ -51,7 +51,7 @@ class HandTest {
         hand.add(card2);
 
         // then
-        assertThat(hand.getSumOfRank()).isEqualTo(13);
+        assertThat(hand.getScoreSum()).isEqualTo(13);
     }
 
     @DisplayName("카드의 합이 21이면 카드를 뽑지 못한다.")

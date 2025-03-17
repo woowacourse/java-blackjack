@@ -35,8 +35,8 @@ public abstract class Gamer {
         hand.add(card);
     }
 
-    public int getSumOfRank() {
-        return hand.getSumOfRank();
+    public int getScoreSum() {
+        return hand.getScoreSum();
     }
 
     public String getDisplayName() {

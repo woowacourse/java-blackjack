@@ -22,20 +22,20 @@ public class Hand {
         cards.add(card);
     }
 
-    public int getSumOfRank() {
+    public int getScoreSum() {
         return calculateStrategy.calculateSum(cards);
     }
 
     public boolean isBust() {
-        return getSumOfRank() > CARD_MAX_SUM;
+        return getScoreSum() > CARD_MAX_SUM;
     }
 
     public boolean isImpossibleDrawCard() {
-        return getSumOfRank() == CARD_MAX_SUM;
+        return getScoreSum() == CARD_MAX_SUM;
     }
 
     public boolean isBlackJack() {
-        return getSumOfRank() == CARD_MAX_SUM && getCards().size() == BLACKJACK_CARD_SIZE;
+        return getScoreSum() == CARD_MAX_SUM && getCards().size() == BLACKJACK_CARD_SIZE;
     }
 
     public List<Card> getCards() {

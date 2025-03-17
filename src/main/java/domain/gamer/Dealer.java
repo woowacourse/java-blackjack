@@ -14,7 +14,7 @@ public class Dealer extends Gamer {
     }
 
     public boolean canHit() {
-        return getSumOfRank() <= THRESHOLD;
+        return getScoreSum() <= THRESHOLD;
     }
 
     public Card getFirstCard() {
