@@ -67,14 +67,14 @@ public class Hand {
 
     private MatchResult checkBlackjackResult(final Hand other) {
         if (!this.isBlackjack() && other.isBlackjack()) {
-            return MatchResult.BLACKJACK_LOSE;
+            return MatchResult.DEALER_BLACKJACK_LOSE;
         }
 
         if (this.isBlackjack() && other.isBlackjack()) {
             return MatchResult.DRAW;
         }
 
-        return MatchResult.WIN;
+        return MatchResult.DEALER_WIN;
     }
 
     public boolean isBust() {
@@ -86,9 +86,9 @@ public class Hand {
             return MatchResult.DRAW;
         }
         if (this.isBust()) {
-            return MatchResult.LOSE;
+            return MatchResult.DEALER_LOSE;
         }
-        return MatchResult.WIN;
+        return MatchResult.DEALER_WIN;
     }
 
     private MatchResult checkScoreResult(final Hand other) {

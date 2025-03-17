@@ -21,7 +21,7 @@ class MatchResultTest {
         assertThat(actual).isEqualTo(MatchResult.DRAW);
     }
 
-    @DisplayName("딜러와 플레이어중 점수가 딜러의 점수가 더 높다면 WIN을 반환한다.")
+    @DisplayName("딜러와 플레이어중 점수가 딜러의 점수가 더 높다면 DEALER_WIN을 반환한다.")
     @Test
     void win() {
         //given
@@ -32,10 +32,10 @@ class MatchResultTest {
         MatchResult actual = MatchResult.judge(dealerScore, playerScore);
 
         //then
-        assertThat(actual).isEqualTo(MatchResult.WIN);
+        assertThat(actual).isEqualTo(MatchResult.DEALER_WIN);
     }
 
-    @DisplayName("딜러와 플레이어중 점수가 플레이어의 점수가 더 높다면 LOSE를 반환한다.")
+    @DisplayName("딜러와 플레이어중 점수가 플레이어의 점수가 더 높다면 DEALER_LOSE를 반환한다.")
     @Test
     void lose() {
         //given
@@ -46,7 +46,7 @@ class MatchResultTest {
         MatchResult actual = MatchResult.judge(dealerScore, playerScore);
 
         //then
-        assertThat(actual).isEqualTo(MatchResult.LOSE);
+        assertThat(actual).isEqualTo(MatchResult.DEALER_LOSE);
     }
 
     @DisplayName("딜러가 승리하면 플레이어는 패배다.")
@@ -61,7 +61,7 @@ class MatchResultTest {
         MatchResult actual = result.reverse();
 
         //then
-        assertThat(actual).isEqualTo(MatchResult.LOSE);
+        assertThat(actual).isEqualTo(MatchResult.DEALER_LOSE);
     }
 
     @DisplayName("딜러가 패배하면 플레이어는 승리다.")
@@ -76,7 +76,7 @@ class MatchResultTest {
         MatchResult actual = result.reverse();
 
         //then
-        assertThat(actual).isEqualTo(MatchResult.WIN);
+        assertThat(actual).isEqualTo(MatchResult.DEALER_WIN);
     }
 
 }

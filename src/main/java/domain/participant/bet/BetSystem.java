@@ -39,7 +39,7 @@ public class BetSystem {
 
     private void calculatePlayerBlackjackWin(final Dealer dealer, final Player player,
                                              final MatchResult dealerMatchResult) {
-        if (dealerMatchResult.equals(MatchResult.BLACKJACK_LOSE)) {
+        if (isPlayerBlackjack(dealerMatchResult)) {
             BetAmount betAmount = bettingRecord.get(player);
             Long dealerProfit = profitRecord.get(dealer);
 
@@ -50,8 +50,16 @@ public class BetSystem {
         }
     }
 
+    private boolean isPlayerBlackjack(final MatchResult dealerMatchResult) {
+        return getDealerMatchResult(dealerMatchResult).equals(MatchResult.DEALER_BLACKJACK_LOSE);
+    }
+
+    private MatchResult getDealerMatchResult(final MatchResult dealerMatchResult) {
+        return dealerMatchResult;
+    }
+
     private void calculateDealerWin(final Dealer dealer, final Player player, final MatchResult dealerMatchResult) {
-        if (dealerMatchResult.equals(MatchResult.WIN)) {
+        if (isDealerWin(dealerMatchResult)) {
             BetAmount betAmount = bettingRecord.get(player);
             Long dealerProfit = profitRecord.get(dealer);
             Long playerProfit = profitRecord.get(player);
@@ -61,8 +69,12 @@ public class BetSystem {
         }
     }
 
+    private boolean isDealerWin(final MatchResult dealerMatchResult) {
+        return dealerMatchResult.equals(MatchResult.DEALER_WIN);
+    }
+
     private void calculatePlayerWin(final Dealer dealer, final Player player, final MatchResult dealerMatchResult) {
-        if (dealerMatchResult.equals(MatchResult.LOSE)) {
+        if (isDealerLose(dealerMatchResult)) {
             BetAmount betAmount = bettingRecord.get(player);
             Long playerProfit = profitRecord.get(player);
             Long dealerProfit = profitRecord.get(dealer);
@@ -70,6 +82,10 @@ public class BetSystem {
             profitRecord.put(player, betAmount.plus(playerProfit));
             profitRecord.put(dealer, dealerProfit - betAmount.getValue());
         }
+    }
+
+    private boolean isDealerLose(final MatchResult dealerMatchResult) {
+        return dealerMatchResult.equals(MatchResult.DEALER_LOSE);
     }
 
 }

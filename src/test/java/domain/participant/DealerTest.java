@@ -166,7 +166,7 @@ class DealerTest {
         //when //then
         MatchResult actual = dealer.getMatchResult(player);
 
-        assertThat(actual).isEqualTo(MatchResult.WIN);
+        assertThat(actual).isEqualTo(MatchResult.DEALER_WIN);
     }
 
     @DisplayName("플레이어와 딜러 중 둘다 버스트가 아니고, 점수가 서로 다를경우 점수가 21에 가까운쪽이 승리한다.")
@@ -204,6 +204,6 @@ class DealerTest {
         MatchResult actual = MatchResult.judge(dealer.getScore(), player.getScore());
 
         //then
-        assertThat(actual).isEqualTo(MatchResult.LOSE);
+        assertThat(actual).isEqualTo(MatchResult.DEALER_LOSE);
     }
 }
