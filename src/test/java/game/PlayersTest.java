@@ -20,6 +20,13 @@ public class PlayersTest {
     }
 
     @Test
+    void 플레이어를_배팅금액과_함께_생성한다() {
+        assertThatCode(() -> Players.of(
+                List.of("pobi", "font"), List.of(1000, 2000)
+        )).doesNotThrowAnyException();
+    }
+
+    @Test
     void 인원_수가_5명_초과이면_예외를_던진다() {
         //given
         List<Player> players = List.of(
