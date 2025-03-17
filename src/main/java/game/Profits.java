@@ -11,9 +11,9 @@ public class Profits {
         this.profits = profits;
     }
 
-    public static Profits of(Players players, GameResults gameResults) {
-        List<Integer> profits = IntStream.range(0, players.getPlayers().size())
-                .mapToObj(i -> players.getPlayers().get(i).evaluate(gameResults.getGameResults().get(i)))
+    public static Profits of(List<Player> players, List<GameResult> gameResults) {
+        List<Integer> profits = IntStream.range(0, players.size())
+                .mapToObj(i -> players.get(i).evaluate(gameResults.get(i)))
                 .toList();
         return new Profits(profits);
     }

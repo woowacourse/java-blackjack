@@ -4,10 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import card.Card;
 import card.CardDeck;
-import card.CardNumber;
-import card.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -92,147 +89,18 @@ public class PlayersTest {
     }
 
     @Test
-    void 모든_플레이어들과_딜러_사이의_승패를_판정한다() {
-        //given
-        Dealer dealer = new Dealer();
-        dealer.draw(List.of(
-                new Card(Pattern.SPADE, CardNumber.TEN),
-                new Card(Pattern.CLOVER, CardNumber.TEN)));
-
-        Player player = new Player("a");
-        Players players = new Players(List.of(player));
-        player.draw(List.of(
-                new Card(Pattern.HEART, CardNumber.TEN),
-                new Card(Pattern.CLOVER, CardNumber.NINE)));
-
-        //when
-        GameResults gameResults = GameResults.of(dealer, players);
-
-        //then
-        Assertions.assertThat(gameResults.getGameResults()).containsExactlyElementsOf(List.of(GameResult.LOSE));
-    }
-
-    @Test
-    void 모든_플레이어들과_딜러_사이의_승패를_판정한다_둘다_버스트() {
-        //given
-        Dealer dealer = new Dealer();
-        dealer.draw(List.of(
-                new Card(Pattern.SPADE, CardNumber.TEN),
-                new Card(Pattern.CLOVER, CardNumber.TEN),
-                new Card(Pattern.DIAMOND, CardNumber.TWO)));
-
-        Player player = new Player("a");
-        Players players = new Players(List.of(player));
-        player.draw(List.of(
-                new Card(Pattern.CLOVER, CardNumber.KING),
-                new Card(Pattern.SPADE, CardNumber.JACK),
-                new Card(Pattern.HEART, CardNumber.TWO)));
-
-        //when
-        GameResults gameResults = GameResults.of(dealer, players);
-
-        //then
-        Assertions.assertThat(gameResults.getGameResults()).containsExactlyElementsOf(List.of(GameResult.LOSE));
-    }
-
-    @Test
-    void 모든_플레이어들과_딜러_사이의_승패를_판정한다_딜러만_버스트() {
-        //given
-        Dealer dealer = new Dealer();
-        dealer.draw(List.of(
-                new Card(Pattern.SPADE, CardNumber.TEN),
-                new Card(Pattern.CLOVER, CardNumber.TEN),
-                new Card(Pattern.DIAMOND, CardNumber.TWO)));
-
-        Player player = new Player("a");
-        Players players = new Players(List.of(player));
-        player.draw(List.of(
-                new Card(Pattern.HEART, CardNumber.TEN),
-                new Card(Pattern.DIAMOND, CardNumber.TEN)));
-
-        //when
-        GameResults gameResults = GameResults.of(dealer, players);
-
-        //then
-        Assertions.assertThat(gameResults.getGameResults()).containsExactlyElementsOf(List.of(GameResult.WIN));
-    }
-
-    @Test
-    void 모든_플레이어들과_딜러_사이의_승패를_판정한다_둘다_블랙잭() {
-        //given
-        Dealer dealer = new Dealer();
-        dealer.draw(List.of(
-                new Card(Pattern.SPADE, CardNumber.TEN),
-                new Card(Pattern.DIAMOND, CardNumber.ACE)));
-
-        Player player = new Player("a");
-        Players players = new Players(List.of(player));
-        player.draw(List.of(
-                new Card(Pattern.HEART, CardNumber.TEN),
-                new Card(Pattern.CLOVER, CardNumber.ACE)));
-
-        //when
-        GameResults gameResults = GameResults.of(dealer, players);
-
-        //then
-        Assertions.assertThat(gameResults.getGameResults()).containsExactlyElementsOf(List.of(GameResult.DRAW));
-    }
-
-    @Test
-    void 모든_플레이어들과_딜러_사이의_승패를_판정한다_딜러만_블랙잭() {
-        //given
-        Dealer dealer = new Dealer();
-        dealer.draw(List.of(
-                new Card(Pattern.SPADE, CardNumber.TEN),
-                new Card(Pattern.CLOVER, CardNumber.ACE)));
-
-        Player player = new Player("a");
-        Players players = new Players(List.of(player));
-        player.draw(List.of(
-                new Card(Pattern.HEART, CardNumber.TEN),
-                new Card(Pattern.DIAMOND, CardNumber.TEN)));
-
-        //when
-        GameResults gameResults = GameResults.of(dealer, players);
-
-        //then
-        Assertions.assertThat(gameResults.getGameResults()).containsExactlyElementsOf(List.of(GameResult.LOSE));
-    }
-
-    @Test
-    void 모든_플레이어들과_딜러_사이의_승패를_판정한다_플레이어만_블랙잭() {
-        //given
-        Dealer dealer = new Dealer();
-        dealer.draw(List.of(
-                new Card(Pattern.SPADE, CardNumber.TEN),
-                new Card(Pattern.CLOVER, CardNumber.TEN)));
-
-        Player player = new Player("a");
-        Players players = new Players(List.of(player));
-        player.draw(List.of(
-                new Card(Pattern.HEART, CardNumber.TEN),
-                new Card(Pattern.DIAMOND, CardNumber.ACE)));
-
-        //when
-        GameResults gameResults = GameResults.of(dealer, players);
-
-        //then
-        Assertions.assertThat(gameResults.getGameResults()).containsExactlyElementsOf(List.of(GameResult.BLACKJACK));
-    }
-
-    @Test
     void 모든_플레이어의_수익을_계산한다() {
         //given
-        Players players = new Players(List.of(
+        List<Player> players = List.of(
                 new Player("a", 1000),
                 new Player("b", 1000),
                 new Player("c", 1000),
-                new Player("d", 1000)));
+                new Player("d", 1000));
         List<GameResult> gameResults = List.of(
                 GameResult.BLACKJACK, GameResult.WIN, GameResult.DRAW, GameResult.LOSE);
 
         //when
-        Profits profits = Profits.of(players, new GameResults(gameResults));
+        Profits profits = Profits.of(players, gameResults);
 
         //then
         assertThat(profits.getProfits()).containsExactlyElementsOf(List.of(1500, 1000, 0, -1000));

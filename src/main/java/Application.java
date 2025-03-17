@@ -43,8 +43,8 @@ public class Application {
         }
         outputView.printHitProcess(dealer, players);
 
-        GameResults gameResults = GameResults.of(dealer, players);
-        Profits profits = Profits.of(players, gameResults);
+        GameResults gameResults = GameResults.of(dealer, players.getPlayers());
+        Profits profits = Profits.of(players.getPlayers(), gameResults.getGameResults());
 
         int dealerProfit = profits.evaluateDealerProfit();
 

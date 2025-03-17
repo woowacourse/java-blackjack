@@ -11,9 +11,9 @@ public class GameResults {
         this.gameResults = gameResults;
     }
 
-    public static GameResults of(Dealer dealer, Players players) {
+    public static GameResults of(Dealer dealer, List<Player> players) {
         List<GameResult> gameResults = new ArrayList<>();
-        for (Player player : players.getPlayers()) {
+        for (Player player : players) {
             gameResults.add(GameResult.of(dealer, player));
         }
         return new GameResults(gameResults);
