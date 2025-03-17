@@ -43,7 +43,7 @@ public class Player {
         bettingMoney = playerBettingMoney;
     }
 
-    public int makeProfit(int multiplyRatio) {
+    public double makeProfit(double multiplyRatio) {
         return bettingMoney * multiplyRatio;
     }
 }

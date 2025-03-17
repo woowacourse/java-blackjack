@@ -93,8 +93,10 @@ public class OutputView {
 
     private static void printIfPresentWinningResult(Map<WinningResult, Integer> dealerGameResults) {
         System.out.print("딜러:");
-        if (dealerGameResults.containsKey(WinningResult.WIN)) {
-            System.out.printf(" %d승", dealerGameResults.get(WinningResult.WIN));
+        if (dealerGameResults.containsKey(WinningResult.WIN) || dealerGameResults.containsKey(
+                WinningResult.BLACKJACK_WIN)) {
+            System.out.printf(" %d승",
+                    dealerGameResults.get(WinningResult.WIN) + dealerGameResults.get(WinningResult.BLACKJACK_WIN));
         }
         if (dealerGameResults.containsKey(WinningResult.DRAW)) {
             System.out.printf(" %d무", dealerGameResults.get(WinningResult.DRAW));
@@ -123,7 +125,7 @@ public class OutputView {
     }
 
     private static String toKoreanWinningResult(WinningResult winningResult) {
-        if (winningResult.equals(WinningResult.WIN)) {
+        if (winningResult.equals(WinningResult.WIN) || winningResult.equals(WinningResult.BLACKJACK_WIN)) {
             return "승";
         }
         if (winningResult.equals(WinningResult.LOSE)) {

@@ -19,6 +19,9 @@ public record BlackjackScore(int value, int cardSize) {
     }
 
     public WinningResult decide(BlackjackScore subBlackjackScore) {
+        if (isBlackjackWinning(subBlackjackScore)) {
+            return WinningResult.BLACKJACK_WIN;
+        }
         if (isWinning(subBlackjackScore)) {
             return WinningResult.WIN;
         }
@@ -28,11 +31,15 @@ public record BlackjackScore(int value, int cardSize) {
         return WinningResult.DRAW;
     }
 
-    public boolean isWinning(BlackjackScore subBlackjackScore) {
-        if (!this.isBust() && subBlackjackScore.isBust()) {
+    public boolean isBlackjackWinning(BlackjackScore subBlackjackScore) {
+        if (this.isBlackjack() && !subBlackjackScore.isBlackjack()) {
             return true;
         }
-        if (this.isBlackjack() && !subBlackjackScore.isBlackjack()) {
+        return false;
+    }
+
+    public boolean isWinning(BlackjackScore subBlackjackScore) {
+        if (!this.isBust() && subBlackjackScore.isBust()) {
             return true;
         }
         if (!this.isBust()) {

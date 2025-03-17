@@ -9,7 +9,7 @@ public class Dealer {
     private final Players players;
     private final Deck deck;
     private final Cards cards;
-    private int bettingMoney;
+    private double bettingMoney;
 
     public Dealer(Players players, Deck deck) {
         this(players, deck, new Cards());
@@ -66,11 +66,11 @@ public class Dealer {
         return cards.getSize();
     }
 
-    public int getBettingMoney() {
+    public double getBettingMoney() {
         return bettingMoney;
     }
 
-    public void updateBettingMoney(int money) {
+    public void updateBettingMoney(double money) {
         bettingMoney += money;
     }
 }

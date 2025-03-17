@@ -16,7 +16,7 @@ public class BettingResultTest {
             BlackjackScore dealerScore = new BlackjackScore(20, 3);
 
             //when
-            int multiplyRatio = getMultiplyRatio(playerScore, dealerScore);
+            double multiplyRatio = getMultiplyRatio(playerScore, dealerScore);
 
             //then
             assertThat(multiplyRatio).isEqualTo(-1);
@@ -29,7 +29,7 @@ public class BettingResultTest {
             BlackjackScore dealerScore = new BlackjackScore(25, 3);
 
             //when
-            int multiplyRatio = getMultiplyRatio(playerScore, dealerScore);
+            double multiplyRatio = getMultiplyRatio(playerScore, dealerScore);
 
             //then
             assertThat(multiplyRatio).isEqualTo(1);
@@ -42,7 +42,7 @@ public class BettingResultTest {
             BlackjackScore dealerScore = new BlackjackScore(18, 3);
 
             //when
-            int multiplyRatio = getMultiplyRatio(playerScore, dealerScore);
+            double multiplyRatio = getMultiplyRatio(playerScore, dealerScore);
 
             //then
             assertThat(multiplyRatio).isEqualTo(1);
@@ -55,7 +55,7 @@ public class BettingResultTest {
             BlackjackScore dealerScore = new BlackjackScore(18, 3);
 
             //when
-            int multiplyRatio = getMultiplyRatio(playerScore, dealerScore);
+            double multiplyRatio = getMultiplyRatio(playerScore, dealerScore);
 
             //then
             assertThat(multiplyRatio).isEqualTo(-1);
@@ -68,7 +68,7 @@ public class BettingResultTest {
             BlackjackScore dealerScore = new BlackjackScore(21, 3);
 
             //when
-            int multiplyRatio = getMultiplyRatio(playerScore, dealerScore);
+            double multiplyRatio = getMultiplyRatio(playerScore, dealerScore);
 
             //then
             assertThat(multiplyRatio).isEqualTo(-1);
@@ -81,7 +81,7 @@ public class BettingResultTest {
             BlackjackScore dealerScore = new BlackjackScore(24, 3);
 
             //when
-            int multiplyRatio = getMultiplyRatio(playerScore, dealerScore);
+            double multiplyRatio = getMultiplyRatio(playerScore, dealerScore);
 
             //then
             assertThat(multiplyRatio).isEqualTo(1);
@@ -94,7 +94,7 @@ public class BettingResultTest {
             BlackjackScore dealerScore = new BlackjackScore(20, 3);
 
             //when
-            int multiplyRatio = getMultiplyRatio(playerScore, dealerScore);
+            double multiplyRatio = getMultiplyRatio(playerScore, dealerScore);
 
             //then
             assertThat(multiplyRatio).isEqualTo(1);
@@ -107,7 +107,7 @@ public class BettingResultTest {
             BlackjackScore dealerScore = new BlackjackScore(21, 3);
 
             //when
-            int multiplyRatio = getMultiplyRatio(playerScore, dealerScore);
+            double multiplyRatio = getMultiplyRatio(playerScore, dealerScore);
 
             //then
             assertThat(multiplyRatio).isEqualTo(0);
@@ -123,10 +123,10 @@ public class BettingResultTest {
             BlackjackScore dealerScore = new BlackjackScore(21, 3);
 
             //when
-            int multiplyRatio = getMultiplyRatio(playerScore, dealerScore);
+            double multiplyRatio = getMultiplyRatio(playerScore, dealerScore);
 
             //then
-            assertThat(multiplyRatio).isEqualTo(1);
+            assertThat(multiplyRatio).isEqualTo(1.5);
         }
     }
 }

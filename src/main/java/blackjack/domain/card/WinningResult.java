@@ -1,5 +1,5 @@
 package blackjack.domain.card;
 
 public enum WinningResult {
-    DRAW, WIN, LOSE;
+    DRAW, BLACKJACK_WIN, WIN, LOSE;
 }

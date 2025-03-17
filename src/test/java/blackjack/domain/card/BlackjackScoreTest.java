@@ -105,7 +105,7 @@ public class BlackjackScoreTest {
         WinningResult result = mainScore.decide(subScore);
 
         //then
-        assertThat(result).isEqualTo(WinningResult.WIN);
+        assertThat(result).isEqualTo(WinningResult.BLACKJACK_WIN);
     }
 
     @Test
