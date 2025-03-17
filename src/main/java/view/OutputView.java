@@ -46,10 +46,10 @@ public class OutputView {
     public void printFinalEarning(EarningResult earningResult) {
         System.out.println();
         System.out.println("## 최종 수익");
-        System.out.println("딜러: " + earningResult.calcualteDealerEarning());
+        System.out.printf("딜러: %.0f\n", earningResult.calcualteDealerEarning());
         earningResult.getEarningResult()
                 .forEach(
-                        (player, amout) -> System.out.printf("%s: %f\n",
+                        (player, amout) -> System.out.printf("%s: %.0f\n",
                                 player.getName(), amout)
                 );
     }
