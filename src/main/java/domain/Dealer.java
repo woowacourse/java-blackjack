@@ -5,6 +5,7 @@ import java.util.List;
 public class Dealer {
 
     private static final int INITIAL_DEALER_MONEY = 0;
+    private static final int DEALER_MINIMUM_HAND_COUNT = 17;
     private final Hand hand;
     private final Money money;
     private final Deck deck;
@@ -43,7 +44,7 @@ public class Dealer {
     }
 
     public boolean isHitable() {
-        return hand.calculateTotalScore() < 17;
+        return hand.calculateTotalScore() < DEALER_MINIMUM_HAND_COUNT;
     }
 
     public void processBetting(int earnMoney) {
