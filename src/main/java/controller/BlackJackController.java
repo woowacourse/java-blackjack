@@ -29,15 +29,26 @@ public class BlackJackController {
         final List<String> playerNames = LoopTemplate.tryCatchLoop(inputView::readPlayers);
         final PlayerGroup playerGroup = LoopTemplate.tryCatchLoop(() -> PlayerGroup.of(playerNames));
         collectPlayerBets(playerNames, playerGroup);
-        final Dealer dealer = new Dealer(new CardGroup(new ArrayList<>()));
+
+        final Dealer dealer = new Dealer(CardGroup.empty());
         final Deck deck = Deck.of(new RandomCardGenerator());
         final GameManager gameManager = new GameManager(dealer, playerGroup, deck);
         gameManager.initializeGame(playerNames);
+
+        processPlayerTurns(dealer, playerGroup, playerNames, gameManager);
+        responseGameResult(dealer, playerGroup, gameManager);
+    }
+
+    private void responseGameResult(final Dealer dealer, final PlayerGroup playerGroup, final GameManager gameManager) {
+        outputView.printGamerCardsAndScore(dealer, playerGroup.getPlayers());
+        responseBettingOfReturn(gameManager);
+    }
+
+    private void processPlayerTurns(final Dealer dealer, final PlayerGroup playerGroup, final List<String> playerNames,
+                           final GameManager gameManager) {
         outputView.printDealerAndPlayersCards(dealer, playerGroup.getPlayers());
         requestHit(playerNames, gameManager);
         printDealerReceiveCardCount(gameManager);
-        outputView.printGamerCardsAndScore(dealer, playerGroup.getPlayers());
-        responseBettingOfReturn(gameManager);
     }
 
     private void collectPlayerBets (final List<String> playerNames, final PlayerGroup playerGroup) {

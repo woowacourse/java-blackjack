@@ -15,6 +15,10 @@ public class CardGroup {
         this.cards = new ArrayList<>(cards);
     }
 
+    public static CardGroup empty() {
+        return new CardGroup(Collections.emptyList());
+    }
+
     public void addCard(final Card card) {
         cards.add(card);
     }
