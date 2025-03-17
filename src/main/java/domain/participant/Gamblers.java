@@ -1,13 +1,12 @@
-package domain.game;
+package domain.participant;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toMap;
 
 import domain.card.CardPack;
-import domain.participant.Dealer;
-import domain.participant.Gambler;
-import domain.participant.Player;
+import domain.game.GamblerAnswer;
+import domain.game.GamblingMoney;
+import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -46,20 +45,31 @@ public class Gamblers {
         }
     }
 
-    public Map<Winning, Long> evaluateDealerWinnings() {
-        return evaluatePlayerWinnings().values()
-            .stream()
-            .collect(groupingBy(Winning::reverse, counting()));
-    }
-
-    public Map<Player, Winning> evaluatePlayerWinnings() {
-        int dealerScore = dealer.calculateScore();
+    public Map<Player, GamblingMoney> evaluatePlayerProfits() {
         return players.stream()
-            .collect(toMap(Function.identity(),
-                player -> Winning.determineForPlayer(player.calculateScore(), dealerScore)));
+            .collect(toMap(
+                Function.identity(),
+                player -> player.calculateProfit(dealer),
+                (exist, replace) -> exist,
+                LinkedHashMap::new
+            ));
     }
 
-    private void validatePlayers(List<Player> players) {
+    public GamblingMoney evaluateDealerProfit() {
+        Map<Player, GamblingMoney> playerProfits = evaluatePlayerProfits();
+        GamblingMoney sum = GamblingMoney.sum(playerProfits.values());
+        return sum.negative();
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    private void validatePlayers(Collection<Player> players) {
         if (players.isEmpty()) {
             throw new IllegalArgumentException("플레이어가 최소 1명은 있어야 합니다.");
         }

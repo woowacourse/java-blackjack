@@ -1,5 +1,6 @@
 package view;
 
+import domain.game.GamblingMoney;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -19,6 +20,14 @@ public class InputView {
         return Arrays.stream(input.split(","))
             .map(String::trim)
             .toList();
+    }
+
+    public GamblingMoney getBettingMoney(String name) {
+        System.out.printf("%s의 배팅 금액은?%n", name);
+
+        String input = scanner.nextLine();
+        int amount = Integer.parseInt(input);
+        return GamblingMoney.bet(amount);
     }
 
     public boolean getYesOrNo(String name) {

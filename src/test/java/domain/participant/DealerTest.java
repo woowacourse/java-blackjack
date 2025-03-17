@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
 import domain.card.CardHand;
+import domain.game.GamblingMoney;
 import domain.game.Winning;
 import java.util.List;
 import java.util.stream.Stream;
@@ -13,7 +14,6 @@ import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
@@ -24,7 +24,7 @@ class DealerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player("이름", new CardHand());
+        player = new Player("이름", new CardHand(), GamblingMoney.bet(10000));
         dealer = new Dealer(new CardHand());
     }
 
@@ -57,7 +57,26 @@ class DealerTest {
         //when
         int score = dealer.calculateScore();
 
+        //then
         assertThat(score).isEqualTo(5);
+    }
+
+    @Test
+    void 딜러가_블랙잭인지_알_수_있다() {
+        //given
+        dealer.takeCards(Card.SPADE_A, Card.HEART_10);
+
+        //when
+        boolean blackJack = dealer.isBlackJack();
+
+        //then
+        assertThat(blackJack).isTrue();
+    }
+
+    @Test
+    void 점수가_21점을_넘으면_버스트이다() {
+        dealer.takeCards(Card.SPADE_10, Card.HEART_10, Card.SPADE_2);
+        assertThat(dealer.isBust()).isTrue();
     }
 
     @Test

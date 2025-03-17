@@ -12,12 +12,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 @DisplayNameGeneration(ReplaceUnderscores.class)
 public class CardTest {
 
-    @Test
-    void 문양과_랭크로_카드를_얻을수있다() {
-        Card card = Card.of(Shape.SPADE, Rank.JACK);
-        assertThat(card).isEqualTo(Card.SPADE_J);
-    }
-
     @ParameterizedTest
     @CsvSource({
         "SPADE_A,1", "SPADE_2,2", "SPADE_3,3", "DIAMOND_4,4", "DIAMOND_5,5",

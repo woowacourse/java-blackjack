@@ -1,14 +1,10 @@
 package view;
 
 import domain.card.Card;
-import domain.game.Winning;
-import domain.participant.Dealer;
-import domain.participant.Gambler;
-import domain.participant.Player;
+import domain.game.GamblingMoney;
 import java.io.PrintStream;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -19,16 +15,15 @@ public class OutputView {
         this.printStream = printStream;
     }
 
-    public void printSetUpCardDeck(Dealer dealer, List<Player> players) {
-        Card dealerOpenCard = dealer.getOpenCard();
+    public void printSetUpCardDeck(Card dealerOpenCard, List<GamblerDto> players) {
         String playerNames = players.stream()
-            .map(Player::getName)
+            .map(GamblerDto::name)
             .collect(Collectors.joining(","));
 
         printStream.printf("딜러와 %s에게 2장을 나누었습니다.%n", playerNames);
         printStream.println("딜러카드: " + dealerOpenCard);
-        players.forEach(player -> printStream.printf("%s카드: %s%n", player.getName(),
-            formatCards(player.getCards())));
+        players.forEach(player -> printStream.printf("%s카드: %s%n",
+            player.name(), formatCards(player.cards())));
     }
 
     public void printTakenMoreCards(String name, List<Card> cards) {
@@ -39,30 +34,17 @@ public class OutputView {
         printStream.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printFinalCardDeck(List<Gambler> gamblers) {
+    public void printFinalCardDeck(List<GamblerDto> gamblers) {
         gamblers.forEach(gambler ->
             printStream.printf("%s카드: %s - 결과: %d\n",
-                gambler.getName(), formatCards(gambler.getCards()), gambler.calculateScore())
+                gambler.name(), formatCards(gambler.cards()), gambler.score())
         );
     }
 
-    public void printGameResult(Map<Winning, Long> dealerWinnings,
-        Map<Player, Winning> playerWinnings) {
-        printStream.println("## 최종 승패");
-        printDealerWinnings(dealerWinnings);
-
-        playerWinnings.forEach((player, winning) ->
-            printStream.printf("%s: %s%n", player.getName(), winning.getName()));
-    }
-
-    private void printDealerWinnings(Map<Winning, Long> dealerWinnings) {
-        printStream.print("딜러: ");
-        dealerWinnings.entrySet()
-            .stream()
-            .sorted(Entry.comparingByKey())
-            .forEach(
-                entry -> printStream.printf("%d%s ", entry.getValue(), entry.getKey().getName()));
-        printStream.println();
+    public void printGamblerProfits(Map<GamblerDto, GamblingMoney> gamblerProfits) {
+        printStream.println("## 최종 수익");
+        gamblerProfits.forEach((gambler, profit) ->
+            printStream.printf("%s: %d%n", gambler.name(), profit.getAmount()));
     }
 
     private String formatCards(List<Card> cards) {

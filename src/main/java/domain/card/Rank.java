@@ -13,7 +13,7 @@ public enum Rank {
     TEN(10, "10"),
     JACK(10, "J"),
     QUEEN(10, "Q"),
-    KING(10, "K"),
+    KING(10, "K")
     ;
 
     private static final int ACE_HIGH_NUMBER = 11;

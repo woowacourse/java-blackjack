@@ -1,12 +1,12 @@
 package domain.game;
 
+import domain.participant.Dealer;
+import domain.participant.Player;
+
 public enum Winning {
     WIN("승"),
     DRAW("무"),
-    LOSE("패"),
-    ;
-
-    public static final int BLACK_JACK = 21;
+    LOSE("패");
 
     private final String name;
 
@@ -28,18 +28,30 @@ public enum Winning {
         return DRAW;
     }
 
-    public static Winning determineForPlayer(int playerScore, int dealerScore) {
-        if (playerScore > BLACK_JACK) {
-            return LOSE;
+    public static Winning determineForPlayer(Player player, Dealer dealer) {
+        if (dealer.isBlackJack()) {
+            return determinePushOrLose(player);
         }
-        if (dealerScore > BLACK_JACK) {
+        if (player.isBlackJack()) {
             return WIN;
         }
-
-        return determinePlayerWinning(playerScore, dealerScore);
+        if (player.isBust()) {
+            return LOSE;
+        }
+        if (dealer.isBust()) {
+            return WIN;
+        }
+        return determineForPlayerByScore(player.calculateScore(), dealer.calculateScore());
     }
 
-    private static Winning determinePlayerWinning(int playerScore, int dealerScore) {
+    private static Winning determinePushOrLose(Player player) {
+        if (player.isBlackJack()) {
+            return DRAW;
+        }
+        return LOSE;
+    }
+
+    private static Winning determineForPlayerByScore(int playerScore, int dealerScore) {
         if (playerScore > dealerScore) {
             return WIN;
         }

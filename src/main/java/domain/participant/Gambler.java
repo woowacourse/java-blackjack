@@ -16,19 +16,27 @@ public abstract class Gambler {
 
     public abstract boolean canTakeMoreCard();
 
-    public void takeCards(Card... cards) {
+    public final void takeCards(Card... cards) {
         cardHand.takeCards(cards);
     }
 
-    public int calculateScore() {
+    public final boolean isBlackJack() {
+        return cardHand.isBlackJack();
+    }
+
+    public final boolean isBust() {
+        return cardHand.isBust();
+    }
+
+    public final int calculateScore() {
         return cardHand.calculateScore();
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public List<Card> getCards() {
+    public final List<Card> getCards() {
         return cardHand.getCards();
     }
 }
