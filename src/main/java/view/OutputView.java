@@ -1,15 +1,12 @@
 package view;
 
-import static domain.blackJack.MatchResult.DRAW;
-import static domain.blackJack.MatchResult.LOSE;
-import static domain.blackJack.MatchResult.WIN;
 import static domain.card.Number.ACE;
 import static domain.card.Number.JACK;
 import static domain.card.Number.KING;
 import static domain.card.Number.QUEEN;
 
-import domain.blackJack.MatchResult;
 import domain.card.Card;
+import domain.card.Hand;
 import domain.card.Number;
 import domain.card.Shape;
 import domain.participant.Dealer;
@@ -17,7 +14,6 @@ import domain.participant.Player;
 import domain.participant.Players;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,17 +27,16 @@ public class OutputView {
     private final String DEALER_CARDS = "딜러카드: ";
     private final String HIT_DEALER_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다.\n";
     private final String SCORE = " - 결과: %d";
-    private final String RESULT_INTRO = "## 최종 승패";
-    private final String DEALER_RESULT = "딜러: ";
-    private final String PLAYER_RESULT = "%s: %s";
-    private final int INIT_COUNT = 0;
-    private final int ONE_MORE_COUNT = 1;
+    private final String RESULT_INTRO = "## 최종 수익";
+    private final String DEALER_RESULT = "딜러: %d";
+    private final String PLAYER_RESULT = "%s: %d";
 
     private final String NEW_LINE = System.lineSeparator();
 
     public void printParticipant(final Players players, final Dealer dealer) {
         printHitNotice(players);
-        printDealerDeckWithHidden(dealer);
+
+        System.out.println(DEALER_CARDS + printParticipantDeck(dealer.getFirstOpenHand()));
 
         for (Player player : players.getPlayers()) {
             printPlayerDeck(player);
@@ -49,17 +44,17 @@ public class OutputView {
         System.out.print(NEW_LINE);
     }
 
-    public void printPlayerDeck(final Player player) {
-        System.out.println(resultMaker(player));
-    }
-
-    public String printDealerDeck(final Dealer dealer) {
-        System.out.printf(DEALER_CARDS);
+    public String printParticipantDeck(final Hand hand) {
         List<String> cardSymbols = new ArrayList<>();
-        for (Card card : dealer.getHand().getCards()) {
+        for (Card card : hand.getCards()) {
             cardSymbols.add(toSymbol(card));
         }
         return String.join(COMMA_DELIMITER, cardSymbols);
+    }
+
+    public void printPlayerDeck(final Player player) {
+        System.out.printf(PLAYER_CARDS, player.getName());
+        System.out.println(printParticipantDeck(player.getHand()));
     }
 
     public void printDrawDealer(final Dealer dealer) {
@@ -70,38 +65,15 @@ public class OutputView {
     }
 
     public void printScore(final Players players, final Dealer dealer) {
-        System.out.print(NEW_LINE);
-        System.out.print(printDealerDeck(dealer));
+        System.out.printf(NEW_LINE + DEALER_CARDS);
+        System.out.print(printParticipantDeck(dealer.getHand()));
         System.out.printf(SCORE + NEW_LINE, dealer.sum());
 
         for (Player player : players.getPlayers()) {
-            System.out.print(resultMaker(player));
+            System.out.printf(PLAYER_CARDS, player.getName());
+            System.out.print(printParticipantDeck(player.getHand()));
             System.out.printf(SCORE + NEW_LINE, player.sum());
         }
-    }
-
-    public void printResult(final Map<Player, MatchResult> playerMatchResult) {
-        System.out.print(NEW_LINE);
-        System.out.println(RESULT_INTRO);
-        System.out.print(DEALER_RESULT);
-
-        Map<MatchResult, Integer> dealerMatchResult = calculateDealerResult(playerMatchResult);
-        for (MatchResult matchResult : dealerMatchResult.keySet()) {
-            if (dealerMatchResult.get(matchResult) == INIT_COUNT) {
-                continue;
-            }
-            System.out.printf(dealerMatchResult.get(matchResult) + matchResult.getValue() + " ");
-        }
-
-        System.out.print(NEW_LINE);
-        playerMatchResult.forEach((player, matchResult) -> {
-            System.out.printf(PLAYER_RESULT, player.getName(), matchResult.getValue());
-            System.out.print(NEW_LINE);
-        });
-    }
-
-    private void printDealerDeckWithHidden(final Dealer dealer) {
-        System.out.println(DEALER_CARDS + toSymbol(dealer.getHandExceptHidden()));
     }
 
     private void printHitNotice(final Players players) {
@@ -114,45 +86,17 @@ public class OutputView {
         System.out.printf(HIT_CARDS, String.join(COMMA_DELIMITER, playersName));
     }
 
-    private String resultMaker(final Player player) {
-        System.out.printf(PLAYER_CARDS, player.getName());
-        List<String> cardSymbols = new ArrayList<>();
-        for (Card card : player.getHand().getCards()) {
-            cardSymbols.add(toSymbol(card));
-        }
-        return String.join(COMMA_DELIMITER, cardSymbols);
-    }
-
     private static String toSymbol(final Card card) {
         Number number = card.getNumber();
         Shape shape = card.getShape();
         return NUMBER_SYMBOL_MAP.getOrDefault(number, String.valueOf(number.getScore())) + shape.getShape();
     }
 
-    private Map<MatchResult, Integer> calculateDealerResult(final Map<Player, MatchResult> playerMatchResult) {
-        Map<MatchResult, Integer> dealerMatchResult = initDealerMatchResult();
-
-        for (MatchResult matchResult : playerMatchResult.values()) {
-            dealerMatchResult.merge(matchResult, ONE_MORE_COUNT, Integer::sum);
-        }
-
-        swap(dealerMatchResult);
-        return dealerMatchResult;
+    public void printProfit(Map<Player, Integer> playerProfit, int dealerProfit) {
+        System.out.println(NEW_LINE + RESULT_INTRO);
+        System.out.printf(DEALER_RESULT + NEW_LINE, dealerProfit);
+        playerProfit.forEach(((player, money) ->
+                System.out.printf(PLAYER_RESULT + NEW_LINE, player.getName(), money)
+        ));
     }
-
-    private void swap(final Map<MatchResult, Integer> dealerMatchResult) {
-        int winningCount = dealerMatchResult.get(WIN);
-        int losingCount = dealerMatchResult.get(LOSE);
-        dealerMatchResult.put(WIN, losingCount);
-        dealerMatchResult.put(LOSE, winningCount);
-    }
-
-    private Map<MatchResult, Integer> initDealerMatchResult() {
-        Map<MatchResult, Integer> dealerMatchResult = new LinkedHashMap<>();
-        dealerMatchResult.put(WIN, INIT_COUNT);
-        dealerMatchResult.put(DRAW, INIT_COUNT);
-        dealerMatchResult.put(LOSE, INIT_COUNT);
-        return dealerMatchResult;
-    }
-
 }

@@ -49,37 +49,44 @@ public class HandTest {
     }
 
     private static Stream<Arguments> provideCardDeckForSumWithAce() {
-        return Stream.of(Arguments.of(
-                new ArrayList<>(List.of(new Card(DIAMOND, ACE))), 11,
-                new ArrayList<>(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE))), 12,
-                new ArrayList<>(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE), new Card(HEART, ACE))), 13,
-                new ArrayList<>(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE), new Card(HEART, ACE),
-                        new Card(CLOVER, ACE))), 14,
-                new ArrayList<>(List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, ACE))), 21,
-                new ArrayList<>(List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, ACE), new Card(HEART, ACE))), 12,
-                new ArrayList<>(List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, QUEEN), new Card(HEART, ACE))), 21,
-                new ArrayList<>(List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, FIVE), new Card(DIAMOND, ACE),
-                        new Card(SPADE, ACE), new Card(HEART, ACE), new Card(CLOVER, ACE))), 19,
-                new ArrayList<>(List.of(new Card(SPADE, JACK), new Card(DIAMOND, JACK))), 20
-        ));
+        return Stream.of(
+                Arguments.of(new ArrayList<>(List.of(new Card(DIAMOND, ACE))), 11),
+                Arguments.of(new ArrayList<>(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE))), 12),
+                Arguments.of(
+                        new ArrayList<>(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE), new Card(HEART, ACE))),
+                        13),
+                Arguments.of(new ArrayList<>(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE), new Card(HEART, ACE),
+                        new Card(CLOVER, ACE))), 14),
+                Arguments.of(new ArrayList<>(List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, ACE))), 21),
+                Arguments.of(
+                        new ArrayList<>(List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, ACE), new Card(HEART, ACE))),
+                        12),
+                Arguments.of(new ArrayList<>(
+                        List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, QUEEN), new Card(HEART, ACE))), 21),
+                Arguments.of(
+                        new ArrayList<>(List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, FIVE), new Card(DIAMOND, ACE),
+                                new Card(SPADE, ACE), new Card(HEART, ACE), new Card(CLOVER, ACE))), 19),
+                Arguments.of(new ArrayList<>(List.of(new Card(SPADE, JACK), new Card(DIAMOND, JACK))), 20)
+        );
     }
 
     @Test
     @DisplayName("히든 카드를 제외한 카드 반환 테스트")
-    void getCardExceptHiddenTest() {
+    void firstOpenCardsTest() {
         // given
         Hand hand = new Hand();
         hand.addCard(new Card(DIAMOND, TWO));
         hand.addCard(new Card(SPADE, ACE));
 
         // when
-        Card card = hand.getCardExceptHidden();
+        Hand handExceptHidden = hand.getFirstCard();
 
         // then
         assertSoftly(softly -> {
-            softly.assertThat(card.getShape()).isEqualTo(DIAMOND);
-            softly.assertThat(card.getNumber()).isEqualTo(TWO);
+            softly.assertThat(handExceptHidden.getCards().size()).isEqualTo(1);
+            softly.assertThat(handExceptHidden.getCards().getFirst().getShape()).isEqualTo(DIAMOND);
+            softly.assertThat(handExceptHidden.getCards().getFirst().getNumber()).isEqualTo(TWO);
         });
-
     }
+
 }

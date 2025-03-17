@@ -5,8 +5,6 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.Map;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class BlackJack {
     private final int INITIAL_HIT_COUNT = 2;
@@ -29,7 +27,7 @@ public class BlackJack {
         }
     }
 
-    public void drawPlayers(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck) {
+    public void drawPlayers(final PlayerAnswer answer, final ShowDeck playerDeck) {
         players.draw(answer, playerDeck, standard);
     }
 
@@ -37,7 +35,17 @@ public class BlackJack {
         dealer.draw(standard);
     }
 
-    public Map<Player, MatchResult> calculatePlayerResult() {
-        return players.calculateWinner(dealer.sum());
+    public Map<Player, Integer> calculatePlayerResult() {
+        return players.calculateProfit(dealer);
+    }
+
+    public int calculateDealerResult() {
+        Map<Player, Integer> profitOfPlayer = players.calculateProfit(dealer);
+
+        int sum = 0;
+        for (Integer value : profitOfPlayer.values()) {
+            sum += value;
+        }
+        return -sum;
     }
 }

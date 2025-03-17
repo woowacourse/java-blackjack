@@ -21,4 +21,19 @@ public abstract class Participant {
     public Hand getHand() {
         return hand;
     }
+
+    public abstract Hand getFirstOpenHand();
+
+    public boolean isBust() {
+        return hand.isBust();
+    }
+
+    public boolean isBlackjack() {
+        return hand.isBlackJackNumber() && isBlackJackCount();
+    }
+
+    public boolean isBlackJackCount() {
+        return hand.isBlackJackCount();
+    }
+
 }

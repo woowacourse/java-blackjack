@@ -14,7 +14,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Stream;
@@ -31,9 +30,8 @@ public class PlayersTest {
     @DisplayName("카드 분배 테스트")
     void hitCardTest() {
         // given
-        Players players = Players.from(new ArrayList<>(
-                List.of("pobi", "lisa")
-        ));
+        Players players = Players.from(
+                List.of(new Player("pobi", Money.from(1000)), new Player("lisa", Money.from(1000))));
 
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
         CardDeck cardDeck = cardDeckFactory.create();
@@ -53,7 +51,7 @@ public class PlayersTest {
     @DisplayName("플레이어 인원 검증 테스트")
     @MethodSource("provideListForPlayers")
     void validatePlayerNumbers(List<String> names) {
-        assertThatThrownBy(() -> Players.from(names))
+        assertThatThrownBy(() -> Players.validatePlayerNumbers(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 플레이어 인원은 1~6명 입니다.");
     }
@@ -68,7 +66,7 @@ public class PlayersTest {
     @Test
     @DisplayName("중복된 이름 테스트")
     void validateIsDuplicateTest() {
-        assertThatThrownBy(() -> Players.from(List.of("pobi", "pobi")))
+        assertThatThrownBy(() -> Players.validateIsDuplicate(List.of("pobi", "pobi")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 중복된 이름의 플레이어가 게임에 참여할 수 없습니다.");
     }
@@ -88,7 +86,8 @@ public class PlayersTest {
         OutputView testOutputView = new OutputView();
 
         CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, QUEEN), new Card(SPADE, JACK)));
-        Players players = Players.from(List.of("pobi", "lisa"));
+        Players players = Players.from(
+                List.of(new Player("pobi", Money.from(1000)), new Player("lisa", Money.from(1000))));
 
         // when
         players.draw(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck, cardDeck);

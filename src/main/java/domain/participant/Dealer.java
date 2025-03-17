@@ -1,17 +1,13 @@
 package domain.participant;
 
-import domain.card.Card;
 import domain.card.CardDeck;
+import domain.card.Hand;
 
 public class Dealer extends Participant {
     private static final int DEALER_DRAW_THRESHOLD = 16;
 
     public Dealer() {
         super();
-    }
-
-    public Card getHandExceptHidden() {
-        return hand.getCardExceptHidden();
     }
 
     public void draw(final CardDeck standard) {
@@ -22,6 +18,11 @@ public class Dealer extends Participant {
 
     public boolean isUnderThreshold() {
         return sum() <= DEALER_DRAW_THRESHOLD;
+    }
+
+    @Override
+    public Hand getFirstOpenHand() {
+        return hand.getFirstCard();
     }
 
 }

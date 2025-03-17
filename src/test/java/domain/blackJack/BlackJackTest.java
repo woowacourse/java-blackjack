@@ -1,6 +1,5 @@
 package domain.blackJack;
 
-import static domain.blackJack.MatchResult.WIN;
 import static domain.card.Number.ACE;
 import static domain.card.Number.FIVE;
 import static domain.card.Number.JACK;
@@ -18,6 +17,7 @@ import config.CardDeckFactory;
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
+import domain.participant.Money;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.io.ByteArrayInputStream;
@@ -39,7 +39,8 @@ public class BlackJackTest {
     void hitCardsToParticipantTest() {
         //given
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        Players players = Players.from(List.of("pobi", "lisa"));
+        Players players = Players.from(
+                List.of(new Player("pobi", Money.from(1000)), new Player("lisa", Money.from(1000))));
         Dealer dealer = new Dealer();
 
         //when
@@ -68,7 +69,8 @@ public class BlackJackTest {
         OutputView testOutputView = new OutputView();
 
         CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        Players players = Players.from(List.of("pobi", "lisa"));
+        Players players = Players.from(
+                List.of(new Player("pobi", Money.from(1000)), new Player("lisa", Money.from(1000))));
 
         BlackJack blackJack = new BlackJack(players, new Dealer(), cardDeckFactory.create());
 
@@ -84,9 +86,11 @@ public class BlackJackTest {
     void drawDealerTest() {
         //given
         CardDeck cardDeck = new CardDeck(
-                List.of(new Card(SPADE, TWO), new Card(DIAMOND, THREE), new Card(DIAMOND, FIVE), new Card(SPADE, JACK)));
+                List.of(new Card(SPADE, TWO), new Card(DIAMOND, THREE), new Card(DIAMOND, FIVE),
+                        new Card(SPADE, JACK)));
 
-        Players players = Players.from(List.of("pobi", "lisa"));
+        Players players = Players.from(
+                List.of(new Player("pobi", Money.from(1000)), new Player("lisa", Money.from(1000))));
         Dealer dealer = new Dealer();
 
         //when
@@ -101,7 +105,8 @@ public class BlackJackTest {
     @DisplayName("결과 선출 테스트")
     void calculatePlayerResultTest() {
         //given
-        Players players = Players.from(List.of("pobi", "lisa"));
+        Players players = Players.from(
+                List.of(new Player("pobi", Money.from(1000)), new Player("lisa", Money.from(1000))));
         CardDeck cardDeck = new CardDeck(
                 List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, FIVE), new Card(DIAMOND, ACE), new Card(SPADE, JACK),
                         new Card(HEART, ACE), new Card(CLOVER, ACE)));
@@ -110,10 +115,30 @@ public class BlackJackTest {
 
         //when
         blackJack.hitCardsToParticipant();
-        Map<Player, MatchResult> playerMatchResultMap = blackJack.calculatePlayerResult();
+        Map<Player, Integer> playerMatchResultMap = blackJack.calculatePlayerResult();
 
         //then
         SoftAssertions softAssertions = new SoftAssertions();
-        playerMatchResultMap.forEach((key, value) -> softAssertions.assertThat(value).isEqualTo(WIN));
+        playerMatchResultMap.forEach((key, value) -> softAssertions.assertThat(value).isEqualTo(1000));
+    }
+
+    @Test
+    void calculateDealerResultTest() {
+        //given
+        Players players = Players.from(
+                List.of(new Player("pobi", Money.from(1000)), new Player("lisa", Money.from(1000))));
+        CardDeck cardDeck = new CardDeck(
+                List.of(new Card(SPADE, QUEEN), new Card(DIAMOND, FIVE),
+                        new Card(DIAMOND, ACE), new Card(SPADE, JACK),
+                        new Card(HEART, ACE), new Card(CLOVER, ACE)));
+
+        BlackJack blackJack = new BlackJack(players, new Dealer(), cardDeck);
+
+        //when
+        blackJack.hitCardsToParticipant();
+        int profit = blackJack.calculateDealerResult();
+
+        // then
+        assertThat(profit).isEqualTo(-2000);
     }
 }

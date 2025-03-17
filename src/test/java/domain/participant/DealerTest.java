@@ -13,6 +13,7 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import config.CardDeckFactory;
 import domain.card.Card;
 import domain.card.CardDeck;
+import domain.card.Hand;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -78,28 +79,33 @@ public class DealerTest {
     }
 
     private static Stream<Arguments> provideCardDeckForDrawTest() {
-        return Stream.of(Arguments.of(
-                new CardDeck(List.of(new Card(DIAMOND, JACK), new Card(SPADE, THREE), new Card(DIAMOND, QUEEN))), 3,
-                new CardDeck(List.of(new Card(CLOVER, JACK), new Card(SPADE, JACK), new Card(DIAMOND, JACK))), 2
-        ));
+        return Stream.of(
+                Arguments.of(new CardDeck(
+                        List.of(new Card(DIAMOND, JACK), new Card(SPADE, THREE), new Card(DIAMOND, QUEEN))), 3),
+                Arguments.of(
+                        new CardDeck(List.of(new Card(CLOVER, JACK), new Card(SPADE, JACK), new Card(DIAMOND, JACK))),
+                        2)
+        );
     }
 
     @Test
     @DisplayName("히든 카드를 제외한 카드 반환 테스트")
-    void getCardExceptHiddenTest(){
+    void getCardExceptHiddenTest() {
         // given
         CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE)));
         Dealer dealer = new Dealer();
         dealer.hitCard(cardDeck);
+        dealer.hitCard(cardDeck);
 
         // when
-        Card card = dealer.getHandExceptHidden();
+        Hand hand = dealer.getFirstOpenHand();
 
+        System.out.println("hand.getCards().size() = " + hand.getCards().size());
         // then
         assertSoftly(softly -> {
-            softly.assertThat(card.getShape()).isEqualTo(DIAMOND);
-            softly.assertThat(card.getNumber()).isEqualTo(ACE);
+            softly.assertThat(hand.getCards().size()).isEqualTo(1);
+            softly.assertThat(hand.getCards().getFirst().getShape()).isEqualTo(DIAMOND);
+            softly.assertThat(hand.getCards().getFirst().getNumber()).isEqualTo(ACE);
         });
-
     }
 }

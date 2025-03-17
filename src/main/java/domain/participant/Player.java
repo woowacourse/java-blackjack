@@ -1,39 +1,65 @@
 package domain.participant;
 
+import static domain.blackJack.MatchResult.BLACKJACK;
+import static domain.blackJack.MatchResult.DRAW;
+import static domain.blackJack.MatchResult.LOSE;
+import static domain.blackJack.MatchResult.WIN;
+
 import domain.blackJack.MatchResult;
-import domain.blackJack.Result;
+import domain.blackJack.PlayerAnswer;
+import domain.blackJack.ShowDeck;
 import domain.card.CardDeck;
-import java.util.function.Consumer;
-import java.util.function.Function;
+import domain.card.Hand;
 
 public class Player extends Participant {
     private final String name;
-    private final Result result;
+    private final Money money;
 
-    public Player(final String name, final Result result) {
+    public Player(final String name, final Money money) {
         super();
         this.name = name;
-        this.result = result;
+        this.money = money;
     }
 
-    public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck,
+    public void draw(final PlayerAnswer answer, final ShowDeck playerDeck,
                      final CardDeck standard) {
-        while (!isBust() && answer.apply(this)) {
+        while (!hand.isBust() && answer.apply(this)) {
             hand.addCard(standard.hitCard());
-            playerDeck.accept(this);
+            playerDeck.show(this);
         }
     }
 
-    public MatchResult calculateWinner(final int dealerSum) {
-        return result.calculateResultOfPlayer(dealerSum, this.sum());
+    public int calculateProfit(Dealer dealer) {
+        return money.calculateProfit(calculateResult(dealer));
     }
 
-    private boolean isBust() {
-        return result.isBust(sum());
+    public MatchResult calculateResult(Dealer dealer) {
+        int playerSum = sum();
+        int dealerSum = dealer.sum();
+
+        if (isBlackjack()) {
+            if (dealer.isBlackjack()) {
+                return DRAW;
+            }
+            return BLACKJACK;
+        }
+
+        if ((!dealer.isBust() && dealerSum > playerSum) || isBust()) {
+            return LOSE;
+        }
+
+        if (dealerSum < playerSum || dealer.isBust()) {
+            return WIN;
+        }
+        return DRAW;
+    }
+
+    @Override
+    public Hand getFirstOpenHand() {
+        return hand;
     }
 
     public String getName() {
         return name;
     }
-
 }
