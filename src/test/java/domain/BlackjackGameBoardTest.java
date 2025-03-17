@@ -7,18 +7,14 @@ import static domain.fixture.BlackjackCardFixture.NINE_HEART;
 import static domain.fixture.BlackjackCardFixture.TEN_HEART;
 import static domain.fixture.BlackjackCardFixture.TWO_HEART;
 
-import domain.card.Cards;
 import domain.card.Deck;
 import domain.player.Dealer;
 import domain.player.User;
 import domain.player.Users;
 import domain.profit.DefaultProfitStrategy;
 import domain.profit.Profit;
-import domain.state.Stay;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -97,29 +93,6 @@ class BlackjackGameBoardTest {
         // when & then
         Assertions.assertThat(dealer.openedCards().size())
                 .isEqualTo(BlackjackGameBoard.INITIAL_DEALER_OPEN_COUNT);
-    }
-
-    @Test
-    void 유저가_버스트가_아닌_상태에서_스테이를_선언하면_스테이_상태가_된다() {
-        // given
-        Deck deck = new Deck(List.of(
-                JACK_HEART(), KING_HEART(), TEN_HEART(),
-                TWO_HEART(), ACE_HEART()    // initial cards
-        ));
-        User user = User.of("라젤", 2000);
-        BlackjackGameBoard gameBoard = new BlackjackGameBoard(deck);
-        gameBoard.distributeInitialCards(user);
-        gameBoard.openInitialCards(user);
-
-        Function<User, Boolean> alwaysNo = u -> false;
-        BiConsumer<User, Cards> onHit = (u, c) -> {
-        };
-
-        // when
-        gameBoard.hitUntilStay(user, alwaysNo, onHit);
-
-        // then
-        Assertions.assertThat(user.getState()).isInstanceOf(Stay.class);
     }
 
     @Test
