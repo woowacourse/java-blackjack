@@ -1,15 +1,14 @@
 package controller;
 
-import domain.Command;
-import domain.FinalResult;
-import domain.deck.Card;
+import domain.BackJackGame;
 import domain.deck.Deck;
 import domain.deck.RandomShuffleStrategy;
+import domain.gamer.BetAmount;
 import domain.gamer.Dealer;
-import domain.gamer.Gamers;
 import domain.gamer.Nickname;
+import domain.gamer.Nicknames;
 import domain.gamer.Player;
-import domain.gamer.Players;
+import domain.state.type.Hittable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -21,97 +20,55 @@ public class BlackJackController {
     private static final String DEALER_NAME = "딜러";
 
     public void run() {
-        final Players players = generatePlayers(readNicknames());
+        final Nicknames nicknames = readNicknames();
+        final List<Player> players = generatePlayers(nicknames);
         final Dealer dealer = generateDealer();
-        final Gamers gamers = Gamers.of(players, dealer);
         final Deck deck = Deck.createShuffledDeck(new RandomShuffleStrategy());
+        final BackJackGame backJackGame = new BackJackGame(deck);
 
-        gamers.dealInitialCards(deck);
-        printInitialSetting(gamers);
+        dealInitialCards(backJackGame, players, dealer);
+        OutputView.printCardsInHandAtFirst(players, dealer);
 
-        processPlayerHit(players, deck);
-        processDealerHit(dealer, deck);
-        processFinalResult(dealer, players);
+        processHit(players, backJackGame, dealer);
+        OutputView.printCardsInHandWithResult(dealer, players);
+
+        final Map<String, Double> playersProfit = backJackGame.calculatePlayersProfit(dealer, players);
+        final double dealerProfit = backJackGame.calculateDealerProfit(playersProfit);
+        OutputView.printProfitResult(playersProfit, dealerProfit);
     }
 
-    private List<Nickname> readNicknames() {
+    private Nicknames readNicknames() {
         final String inputNicknames = InputView.readPlayerName();
-        return Arrays.stream(inputNicknames.split(","))
+        final List<Nickname> nicknames = Arrays.stream(inputNicknames.split(","))
                 .map(Nickname::new)
                 .toList();
+        return new Nicknames(nicknames);
     }
 
-    private Players generatePlayers(final List<Nickname> nicknames) {
-        final List<Player> players = nicknames.stream()
-                .map(Player::new)
+    private List<Player> generatePlayers(final Nicknames nicknames) {
+        return nicknames.getNicknames()
+                .stream()
+                .map(nickname -> {
+                    final String betAmount = InputView.readBetAmount(nickname);
+                    return new Player(nickname, Hittable.initialPlayer(), BetAmount.of(betAmount));
+                })
                 .toList();
-
-        return new Players(players);
     }
 
     private Dealer generateDealer() {
-        return new Dealer(new Nickname(DEALER_NAME));
+        return new Dealer(new Nickname(DEALER_NAME), Hittable.initialDealer());
     }
 
-    private void printInitialSetting(final Gamers gamers) {
-        OutputView.printCardsInHandAtFirst(gamers.getCardsAtStartWithNickname());
+    private static void dealInitialCards(final BackJackGame backJackGame, final List<Player> players,
+                                         final Dealer dealer) {
+        players.forEach(backJackGame::dealInitialCards);
+        backJackGame.dealInitialCards(dealer);
     }
 
-    private void processPlayerHit(final Players players, final Deck deck) {
-        for (final Player player : players.getPlayers()) {
-            if (isNotMoreCard(deck, player)) {
-                continue;
-            }
-            processAdditionalHit(deck, player);
-        }
-    }
-
-    private void processDealerHit(final Dealer dealer, final Deck deck) {
-        while (dealer.canHit()) {
-            final Card card = deck.drawCard();
-            dealer.hit(card);
-
-            OutputView.printDealerHit(dealer.getDisplayName());
-        }
-    }
-
-    private static boolean isNotMoreCard(final Deck deck, final Player player) {
-        if (Command.isYes(readAdditionalHit(player))) {
-            final Card card = deck.drawCard();
-            player.hit(card);
-        }
-        OutputView.printCardsInHand(player.getDisplayName(), player.getCards());
-
-        if (player.isBust()) {
-            OutputView.printBustMessage(player.getDisplayName());
-            return true;
-        }
-
-        return Command.isNo(readAdditionalHit(player));
-    }
-
-    private static void processAdditionalHit(final Deck deck, final Player player) {
-        while (Command.isYes(readAdditionalHit(player))) {
-            final Card card = deck.drawCard();
-            player.hit(card);
-            OutputView.printCardsInHand(player.getDisplayName(), player.getCards());
-
-            if (player.isBust()) {
-                OutputView.printBustMessage(player.getDisplayName());
-                break;
-            }
-        }
-    }
-
-    private static String readAdditionalHit(final Player player) {
-        return InputView.readQuestOneMoreCard(player.getDisplayName());
-    }
-
-    private void processFinalResult(final Dealer dealer, final Players players) {
-        OutputView.printCardsInHandWithResults(dealer, players.getPlayers());
-
-        final Map<Player, FinalResult> playerResults = FinalResult.makePlayerResult(players.getPlayers(), dealer);
-        final Map<FinalResult, Integer> resultCounts = FinalResult.makeDealerResult(playerResults);
-        OutputView.printFinalResults(dealer.getDisplayName(), resultCounts, playerResults);
+    private static void processHit(final List<Player> players, final BackJackGame backJackGame, final Dealer dealer) {
+        players.forEach(player -> {
+            backJackGame.hit(player, InputView::readQuestOneMoreCard, OutputView::printCardsInHand);
+        });
+        backJackGame.hitUntilUnder16(dealer, OutputView::printDealerHit);
     }
 }
