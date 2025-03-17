@@ -3,7 +3,6 @@ package blackjack.view;
 import blackjack.test_util.ReaderStub;
 import blackjack.test_util.WriterStub;
 import blackjack.util.RetryHandler;
-import blackjack.view.writer.SystemWriter;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -63,14 +62,15 @@ class InputViewTest {
     }
 
     @Test
-    void 사용자에게_카드를_더_받을_지_입력받을_때_y나_n이_아니면_예외를_발생시킨다() {
+    void 사용자에게_카드를_더_받을_지_입력받을_때_y나_n이_아니면_재시도한다() {
         // given
-        final SystemWriter writer = new SystemWriter();
-        final InputView inputView = new InputView(writer, new ReaderStub("Y"), new RetryHandler(new OutputView(writer)));
+        final WriterStub writerStub = new WriterStub();
+        final InputView inputView = new InputView(writerStub, new ReaderStub("Y"), new RetryHandler(new OutputView(writerStub)));
 
         // when
         assertThatThrownBy(() -> inputView.getAddingCardDecision("pobi"))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("y나 n을 입력하세요.");
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("최대 재시도 횟수를 초과했습니다.");
+        assertThat(writerStub.getOutputs()).contains("[ERROR] y나 n을 입력하세요.");
     }
 }
