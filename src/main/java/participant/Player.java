@@ -51,15 +51,31 @@ public class Player implements Playable {
         return participant.getCards();
     }
 
-    public void updateMoney(double rate) {
-        wallet.updateMoney(rate);
+    public void updateMoney(int money, boolean isProfitable) {
+        if (isProfitable) {
+            earnMoney(money);
+            return;
+        }
+        loseMoney(money);
+    }
+
+    private void earnMoney(int money) {
+        wallet.addMoney(money);
+    }
+
+    private void loseMoney(int money) {
+        wallet.subtractMoney(money);
     }
 
     public Profit calculateProfit() {
         return wallet.getProfit();
     }
 
-    public double getEarnedMoney() {
+    public int getBettingMoney() {
+        return wallet.getBettingMoney();
+    }
+
+    public int getEarnedMoney() {
         return wallet.getEarnedMoney();
     }
 }

@@ -52,11 +52,11 @@ class PlayerTest {
         GameResult gameResult = GameResult.WIN;
 
         // when
-        player.updateMoney(gameResult.getRate());
+        player.updateMoney(gameResult.calculateEarnings(bettingMoney), gameResult.isProfitable());
 
         // then
         Assertions.assertThat(player.getEarnedMoney())
-                .isEqualTo((int) (bettingMoney + bettingMoney * gameResult.getRate()));
+                .isEqualTo((int) (bettingMoney + bettingMoney * gameResult.getProfitRate()));
     }
 
     @Test
@@ -66,13 +66,13 @@ class PlayerTest {
         int bettingMoney = 10000;
         Player player = new Player("미소", bettingMoney);
         GameResult gameResult = GameResult.WIN;
-        player.updateMoney(gameResult.getRate());
+        player.updateMoney(gameResult.calculateEarnings(bettingMoney), gameResult.isProfitable());
 
         // when
         Profit profit = player.calculateProfit();
 
         // then
         Assertions.assertThat(profit.getAmount())
-                .isEqualTo((int) (bettingMoney * gameResult.getRate()));
+                .isEqualTo((int) (bettingMoney * gameResult.getProfitRate()));
     }
 }
