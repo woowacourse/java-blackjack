@@ -14,12 +14,12 @@ public class Start extends HandState {
 
     @Override
     public HandState addCard(TrumpCard card) {
-        throw new IllegalStateException("카드를 추가할 수 없습니다.");
+        throw new IllegalStateException("시작 상태에서는 카드를 추가할 수 없습니다.");
     }
 
     @Override
     public HandState stay() {
-        throw new IllegalStateException("STAY할 수 없습니다.");
+        throw new IllegalStateException("시작 상태에서는 STAY 할 수 없습니다.");
     }
 
     @Override

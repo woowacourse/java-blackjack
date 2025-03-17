@@ -13,12 +13,12 @@ public class Blackjack extends HandState {
 
     @Override
     public HandState addCard(TrumpCard card) {
-        throw new IllegalArgumentException("블랙잭 상태에서 카드를 추가할 수 없습니다.");
+        throw new IllegalStateException("블랙잭 상태에서 카드를 추가할 수 없습니다.");
     }
 
     @Override
     public HandState stay() {
-        throw new IllegalArgumentException("블랙잭 상태입니다.");
+        throw new IllegalStateException("이미 블랙잭 상태입니다.");
     }
 
     @Override

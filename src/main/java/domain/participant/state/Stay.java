@@ -15,7 +15,7 @@ public class Stay extends HandState {
 
     @Override
     public HandState addCard(TrumpCard card) {
-        throw new IllegalArgumentException("Stay 상태에서는 카드를 추가할 수 없습니다.");
+        throw new IllegalStateException("Stay 상태에서는 카드를 추가할 수 없습니다.");
     }
 
     @Override

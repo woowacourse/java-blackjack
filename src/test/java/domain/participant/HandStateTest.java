@@ -79,7 +79,7 @@ class HandStateTest {
 
         // then
         assertThatThrownBy(() -> state.addCard(drawCard))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(IllegalStateException.class)
                 .hasMessage("Stay 상태에서는 카드를 추가할 수 없습니다.");
     }
 
