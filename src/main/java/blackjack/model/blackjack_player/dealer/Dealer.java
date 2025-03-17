@@ -1,7 +1,7 @@
 package blackjack.model.blackjack_player.dealer;
 
 import blackjack.model.blackjack_player.Hand;
-import blackjack.model.blackjack_player.dealer.judgement.JudgementStrategy;
+import blackjack.model.blackjack_player.dealer.result.Result;
 import blackjack.model.blackjack_player.player.Player;
 import blackjack.model.card.BlackJackCards;
 import blackjack.model.card.CardDeck;
@@ -9,23 +9,22 @@ import blackjack.model.card.initializer.CardDeckInitializer;
 
 public final class Dealer {
 
+    private static final float BLACKJACK_REWARD_RATE = 1.5f;
     private static final int INITIAL_DRAW_AMOUNT = 2;
     private static final int PLAYER_SINGLE_DRAW_AMOUNT = 1;
     private static final int DEALER_SINGLE_DRAW_AMOUNT = 1;
     private static final int DEALER_DRAWABLE_POINT = 17;
 
-    private final JudgementStrategy judgementStrategy;
     private final Hand hand;
     private final CardDeck cardDeck;
 
-    public Dealer(final JudgementStrategy judgementStrategy, final Hand hand, final CardDeck cardDeck) {
-        this.judgementStrategy = judgementStrategy;
+    public Dealer(final Hand hand, final CardDeck cardDeck) {
         this.hand = hand;
         this.cardDeck = cardDeck;
     }
 
-    public Dealer(final JudgementStrategy judgementStrategy, final CardDeckInitializer cardDeckInitializer) {
-        this(judgementStrategy, Hand.empty(), CardDeck.initializeFrom(cardDeckInitializer));
+    public Dealer(final CardDeckInitializer cardDeckInitializer) {
+        this(Hand.empty(), CardDeck.initializeFrom(cardDeckInitializer));
     }
 
     public void dealStartingHand() {
@@ -49,14 +48,23 @@ public final class Dealer {
     }
 
     public void fight(final Player player) {
-        if (judgementStrategy.isDraw(this, player)) {
+        Result result = Result.calculate(this, player);
+        if (result == Result.DRAW) {
             return;
         }
-        if (judgementStrategy.isDealerWin(this, player)) {
+        if (result == Result.DEALER_WIN) {
             player.loseMoney();
             return;
         }
-        player.earnMoney(judgementStrategy.calculatePlayerReward(player));
+        player.earnMoney(calculatePlayerReward(player));
+    }
+
+    public int calculatePlayerReward(final Player player) {
+        int bettingMoney = player.getBettingMoney();
+        if (player.isBlackjack()) {
+            return Math.round(bettingMoney * BLACKJACK_REWARD_RATE);
+        }
+        return bettingMoney;
     }
 
     private BlackJackCards drawCard(final int amount) {

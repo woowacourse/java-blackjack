@@ -1,4 +1,4 @@
-package blackjack.model.blackjack_player.dealer.judgement;
+package blackjack.model.blackjack_player.dealer.result;
 
 import static blackjack.model.card.CardCreator.createCard;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,9 +16,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class DefaultJudgementStrategyTest {
-
-    private final DefaultJudgementStrategy judgement = new DefaultJudgementStrategy();
+class ResultTest {
 
     private static Stream<Arguments> 비겼는지_확인한다_테스트_케이스() {
         return Stream.of(
@@ -177,7 +175,7 @@ class DefaultJudgementStrategyTest {
     }
 
     private static Dealer makeDealer(final BlackJackCards blackJackCards) {
-        Dealer dealer = new Dealer(new DefaultJudgementStrategy(), new DefaultCardDeckInitializer());
+        Dealer dealer = new Dealer(new DefaultCardDeckInitializer());
         dealer.getAllCards().addAll(blackJackCards);
         return dealer;
     }
@@ -188,47 +186,12 @@ class DefaultJudgementStrategyTest {
         return player;
     }
 
-    private static Stream<Arguments> 플레이어의_보상을_계산한다_테스트_케이스() {
-        return Stream.of(
-                Arguments.of(
-                        new BlackJackCards(
-                                List.of(
-                                        createCard(CardNumber.TEN),
-                                        createCard(CardNumber.ACE)
-                                )
-                        ),
-                        10,
-                        15
-                ),
-                Arguments.of(
-                        new BlackJackCards(
-                                List.of(
-                                        createCard(CardNumber.JACK),
-                                        createCard(CardNumber.ACE)
-                                )
-                        ),
-                        10,
-                        15
-                ),
-                Arguments.of(
-                        new BlackJackCards(
-                                List.of(
-                                        createCard(CardNumber.TEN),
-                                        createCard(CardNumber.FIVE)
-                                )
-                        ),
-                        10,
-                        10
-                )
-        );
-    }
-
     @ParameterizedTest
     @MethodSource("비겼는지_확인한다_테스트_케이스")
     void 비겼는지_확인한다(final BlackJackCards blackJackCards, final Player player, final boolean expected) {
         Dealer dealer = makeDealer(blackJackCards);
 
-        assertThat(judgement.isDraw(dealer, player)).isEqualTo(expected);
+        assertThat(Result.calculate(dealer, player) == Result.DRAW).isEqualTo(expected);
     }
 
     @ParameterizedTest
@@ -236,15 +199,6 @@ class DefaultJudgementStrategyTest {
     void 딜러가_이겼는지_확인한다(final BlackJackCards blackJackCards, final Player player, final boolean expected) {
         Dealer dealer = makeDealer(blackJackCards);
 
-        assertThat(judgement.isDealerWin(dealer, player)).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @MethodSource("플레이어의_보상을_계산한다_테스트_케이스")
-    void 플레이어의_보상을_계산한다(final BlackJackCards blackJackCards, final int bettingMoney, final int expected) {
-        Player player = new Player("player", bettingMoney);
-        player.receiveCards(blackJackCards);
-
-        assertThat(judgement.calculatePlayerReward(player)).isEqualTo(expected);
+        assertThat(Result.calculate(dealer, player) == Result.DEALER_WIN).isEqualTo(expected);
     }
 }

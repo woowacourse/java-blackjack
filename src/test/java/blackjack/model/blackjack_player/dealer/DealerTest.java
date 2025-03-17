@@ -4,7 +4,6 @@ import static blackjack.model.card.CardCreator.createCard;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.blackjack_player.Hand;
-import blackjack.model.blackjack_player.dealer.judgement.DefaultJudgementStrategy;
 import blackjack.model.blackjack_player.player.Player;
 import blackjack.model.card.BlackJackCards;
 import blackjack.model.card.CardDeck;
@@ -156,7 +155,7 @@ class DealerTest {
     }
 
     private static Dealer makeDealer(final BlackJackCards blackJackCards) {
-        Dealer dealer = new Dealer(new DefaultJudgementStrategy(), new DefaultCardDeckInitializer());
+        Dealer dealer = new Dealer(new DefaultCardDeckInitializer());
         dealer.getAllCards().addAll(blackJackCards);
         return dealer;
     }
@@ -167,9 +166,44 @@ class DealerTest {
         return player;
     }
 
+    private static Stream<Arguments> 플레이어의_보상을_계산한다_테스트_케이스() {
+        return Stream.of(
+                Arguments.of(
+                        new BlackJackCards(
+                                List.of(
+                                        createCard(CardNumber.TEN),
+                                        createCard(CardNumber.ACE)
+                                )
+                        ),
+                        10,
+                        15
+                ),
+                Arguments.of(
+                        new BlackJackCards(
+                                List.of(
+                                        createCard(CardNumber.JACK),
+                                        createCard(CardNumber.ACE)
+                                )
+                        ),
+                        10,
+                        15
+                ),
+                Arguments.of(
+                        new BlackJackCards(
+                                List.of(
+                                        createCard(CardNumber.TEN),
+                                        createCard(CardNumber.FIVE)
+                                )
+                        ),
+                        10,
+                        10
+                )
+        );
+    }
+
     @BeforeEach
     void setUp() {
-        dealer = new Dealer(new DefaultJudgementStrategy(), new DefaultCardDeckInitializer());
+        dealer = new Dealer(new DefaultCardDeckInitializer());
     }
 
     @Test
@@ -185,14 +219,14 @@ class DealerTest {
                 List.of(createCard(CardNumber.TWO), createCard(CardNumber.THREE), createCard(CardNumber.FOUR),
                         createCard(CardNumber.FIVE))
         ));
-        Dealer dealer = new Dealer(new DefaultJudgementStrategy(), Hand.empty(), cardDeck);
+        Dealer dealer = new Dealer(Hand.empty(), cardDeck);
 
         assertThat(dealer.drawPlayerStartingCards().getValues()).hasSize(2);
     }
 
     @Test
     void 블랙잭_플레이어의_카드를_더_뽑는다() {
-        Dealer dealer = new Dealer(new DefaultJudgementStrategy(), new DefaultCardDeckInitializer());
+        Dealer dealer = new Dealer(new DefaultCardDeckInitializer());
 
         assertThat(dealer.drawPlayerCards().getValues()).hasSize(1);
     }
@@ -241,5 +275,14 @@ class DealerTest {
                     softly.assertThat(player.getProfit()).isEqualTo(expectedPlayerMoney);
                 }
         );
+    }
+
+    @ParameterizedTest
+    @MethodSource("플레이어의_보상을_계산한다_테스트_케이스")
+    void 플레이어의_보상을_계산한다(final BlackJackCards blackJackCards, final int bettingMoney, final int expected) {
+        Player player = new Player("player", bettingMoney);
+        player.receiveCards(blackJackCards);
+
+        assertThat(dealer.calculatePlayerReward(player)).isEqualTo(expected);
     }
 }

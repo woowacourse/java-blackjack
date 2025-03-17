@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.model.blackjack_player.dealer.Dealer;
-import blackjack.model.blackjack_player.dealer.judgement.JudgementStrategy;
 import blackjack.model.blackjack_player.player.Player;
 import blackjack.model.card.initializer.CardDeckInitializer;
 import blackjack.view.InputView;
@@ -13,23 +12,20 @@ public final class BlackJackController {
     private final InputView inputView;
     private final OutputView outputView;
 
-    private final JudgementStrategy judgementStrategy;
     private final CardDeckInitializer cardDeckInitializer;
 
     public BlackJackController(
             final InputView inputView,
             final OutputView outputView,
-            final JudgementStrategy judgementStrategy,
             final CardDeckInitializer cardDeckInitializer
     ) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.judgementStrategy = judgementStrategy;
         this.cardDeckInitializer = cardDeckInitializer;
     }
 
     public void run() {
-        Dealer dealer = new Dealer(judgementStrategy, cardDeckInitializer);
+        Dealer dealer = new Dealer(cardDeckInitializer);
         List<Player> players = makePlayers();
 
         dealInitialCards(dealer, players);
