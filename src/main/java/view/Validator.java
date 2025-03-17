@@ -6,7 +6,7 @@ import java.util.List;
 public class Validator {
 
     public final static int MAX_PLAYER = 7;
-    
+
     public static void validateNames(List<String> names) {
         HashSet<String> distinctNames = new HashSet<>(names);
         if (names.isEmpty() || names.size() > MAX_PLAYER) {

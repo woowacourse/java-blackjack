@@ -1,5 +1,6 @@
 package view;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class InputView {
@@ -17,7 +18,13 @@ public class InputView {
 
     public long inputBettingMoney(final String name) {
         System.out.printf("%s의 배팅 금액은?\n", name);
-        return scanner.nextLong();
+        long money = 0;
+        try {
+            money = scanner.nextLong();
+        } catch (InputMismatchException inputMismatchException) {
+            throw new IllegalArgumentException("숫자가 아닌 값은 입력할 수 없습니다.");
+        }
+        return money;
     }
 
     public void close() {
