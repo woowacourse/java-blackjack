@@ -44,7 +44,9 @@ public class InputView {
     }
 
     private List<String> validateAndParsePlayerNames(String response) {
-        List<String> playerNames = Arrays.asList(response.split(PLAYER_NAMES_DELIMITER, -1));
+        List<String> playerNames = Arrays.stream(response.split(PLAYER_NAMES_DELIMITER, -1))
+                .map(String::trim)
+                .toList();
         validatePlayerNamesBlank(playerNames);
         validatePlayerNamesSize(playerNames);
         return playerNames;
