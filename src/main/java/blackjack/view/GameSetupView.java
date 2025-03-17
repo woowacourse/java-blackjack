@@ -34,7 +34,15 @@ public class GameSetupView {
 
     public int readBetAmount(String playerName) {
         System.out.printf("%n%s의 배팅 금액은?%n", playerName);
-        return parseInt(scanner.nextLine().trim());
+        return parsePositiveInt(scanner.nextLine().trim());
+    }
+
+    private int parsePositiveInt(String input) {
+        int number = parseInt(input);
+        if (number <= 0) {
+            throw new IllegalArgumentException("0보다 큰 숫자만 입력할 수 있습니다. 입력: %s".formatted(input));
+        }
+        return number;
     }
 
     private int parseInt(String input) {
