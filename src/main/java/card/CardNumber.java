@@ -27,7 +27,4 @@ public enum CardNumber {
         return number;
     }
 
-    public String getName() {
-        return name;
-    }
 }

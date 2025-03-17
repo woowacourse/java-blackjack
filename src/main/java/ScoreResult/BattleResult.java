@@ -1,15 +1,9 @@
 package ScoreResult;
 
 public enum BattleResult {
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무");
-
-    private final String name;
-
-    BattleResult(final String name) {
-        this.name = name;
-    }
+    WIN,
+    LOSE,
+    DRAW;
 
     public BattleResult reverse() {
         if (this == WIN) return LOSE;
@@ -17,7 +11,4 @@ public enum BattleResult {
         return DRAW;
     }
 
-    public String getName() {
-        return name;
-    }
 }

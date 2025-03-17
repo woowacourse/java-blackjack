@@ -17,10 +17,6 @@ public class Card {
         return cardNumber.getNumber();
     }
 
-    public String getName() {
-        return cardNumber.getName();
-    }
-
     public String getCardSymbol() {
         return cardSymbol.getName();
     }
