@@ -36,13 +36,13 @@ public class Dealer extends Gambler {
         Cards playerCards = player.getCards();
 
         if (cards.isBlackjack() || playerCards.isBlackjack()) {
-            return getMatchResultWhenBlackjack(playerCards);
+            return calculateMatchResultWhenBlackjack(playerCards);
         }
 
         if (dealerScore > MAX_SCORE || playerScore > MAX_SCORE) {
-            return getMatchResultWhenOverBustStandard(playerScore);
+            return calculateMatchResultWhenOverBustStandard(playerScore);
         }
-        return getMatchResult(dealerScore, playerScore);
+        return calculateMatchResult(dealerScore, playerScore);
     }
 
     private double handleMatchResult(MatchResult matchResult, Player player) {
@@ -63,7 +63,7 @@ public class Dealer extends Gambler {
         return 0;
     }
 
-    private MatchResult getMatchResultWhenBlackjack(Cards playerCards) {
+    private MatchResult calculateMatchResultWhenBlackjack(Cards playerCards) {
         if (playerCards.isBlackjack() && cards.isBlackjack()) {
             return MatchResult.PUSH;
         }
@@ -73,14 +73,14 @@ public class Dealer extends Gambler {
         return MatchResult.LOSE;
     }
 
-    private MatchResult getMatchResultWhenOverBustStandard(int playerScore) {
+    private MatchResult calculateMatchResultWhenOverBustStandard(int playerScore) {
         if (playerScore > MAX_SCORE) {
             return MatchResult.LOSE;
         }
         return MatchResult.WIN;
     }
 
-    private MatchResult getMatchResult(int dealerScore, int playerScore) {
+    private MatchResult calculateMatchResult(int dealerScore, int playerScore) {
         if (playerScore == dealerScore) {
             return MatchResult.PUSH;
         }
