@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.player;
 
 import java.math.BigDecimal;
 import java.util.Objects;

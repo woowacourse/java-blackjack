@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-import blackjack.model.BettingMoney;
+import blackjack.model.player.BettingMoney;
 import blackjack.model.player.Player;
 import blackjack.model.player.User;
 

@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import blackjack.model.BettingMoney;
+import blackjack.model.player.BettingMoney;
 import blackjack.model.player.Player;
 
 public class PlayersBetting {
