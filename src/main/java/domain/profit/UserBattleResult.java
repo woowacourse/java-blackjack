@@ -31,20 +31,23 @@ public enum UserBattleResult {
 
     private static UserBattleResult determineByBlackjack(State user, State dealer) {
         if (user.type() == StateType.BLACKJACK && dealer.type() == StateType.BLACKJACK) {
-            return UserBattleResult.DRAW;
+            return DRAW;
         }
         if (user.type() == StateType.BLACKJACK) {
-            return UserBattleResult.BLACKJACK_WIN;
+            return BLACKJACK_WIN;
+        }
+        if (dealer.type() == StateType.BLACKJACK) {
+            return LOSE;
         }
         throw new IllegalStateException("블랙잭 상태 여부로 승부를 결정할 수 없습니다.");
     }
 
     private static UserBattleResult determineByBust(State user, State dealer) {
         if (user.type() == StateType.BUST) {
-            return UserBattleResult.LOSE;
+            return LOSE;
         }
         if (dealer.type() == StateType.BUST) {
-            return UserBattleResult.NORMAL_WIN;
+            return NORMAL_WIN;
         }
         throw new IllegalStateException("버스트 상태 여부로 승부를 결정할 수 없습니다.");
     }
