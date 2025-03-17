@@ -34,7 +34,7 @@ public class Player extends Participant {
             case PUSH:
                 return 0;
             default:
-                throw new IllegalStateException("Unexpected result: " + result);
+                throw new IllegalStateException("존재할 수 없는 결과 입니다.");
         }
     }
 
