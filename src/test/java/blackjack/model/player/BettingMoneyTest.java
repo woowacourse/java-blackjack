@@ -1,10 +1,14 @@
 package blackjack.model.player;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import java.math.BigDecimal;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -27,6 +31,13 @@ class BettingMoneyTest {
             assertDoesNotThrow(() -> new BettingMoney(amount));
         }
 
+    }
+
+    @Test
+    void 베팅_머니를_곱한다() {
+        BettingMoney bettingMoney = new BettingMoney(1_000);
+
+        assertThat(bettingMoney.multiply(1.5)).isEqualTo(BigDecimal.valueOf(1_500));
     }
 
 }
