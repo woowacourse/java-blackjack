@@ -32,17 +32,12 @@ public class OutputView {
         System.out.println(result);
     }
 
-    public void printInitialParticipantHands(List<Participant> participants) {
-        for (Participant participant : participants) {
-            String playerNameAndShownCards = formatInitialParticipantHands(participant);
-            System.out.println(playerNameAndShownCards);
-        }
-        System.out.println();
+    public void printInitialParticipantHand(String playerName, List<Card> cards) {
+        String playerNameAndShownCards = formatInitialParticipantHand(playerName, cards);
+        System.out.println(playerNameAndShownCards);
     }
 
-    private String formatInitialParticipantHands(Participant participant) {
-        String playerName = participant.getName();
-        List<Card> cards = participant.getShownCard();
+    private String formatInitialParticipantHand(String playerName, List<Card> cards) {
         String cardMessage = cards.stream()
                 .map(this::formatCard)
                 .collect(Collectors.joining(", "));

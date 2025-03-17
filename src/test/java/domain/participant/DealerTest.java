@@ -41,7 +41,7 @@ public class DealerTest {
         dealer.addCard(cardOfHeartTwo);
 
         //when
-        List<Card> shownCard = dealer.getShownCard();
+        List<Card> shownCard = dealer.getFirstShownCard();
 
         //then
         assertThat(shownCard).hasSize(1);

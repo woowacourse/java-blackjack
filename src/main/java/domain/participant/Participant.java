@@ -21,7 +21,7 @@ public abstract class Participant {
         this.cards = new ArrayList<>();
     }
 
-    public abstract List<Card> getShownCard();
+    public abstract List<Card> getFirstShownCard();
 
     public abstract boolean canPick();
 

@@ -49,7 +49,7 @@ public class BlackJackGame {
 
     public List<Card> getPlayerShownCards(String playerName) {
         return participants.findByName(playerName)
-                .getShownCard();
+                .getFirstShownCard();
     }
 
     public boolean hasPlayerReceivedCard(String playerName) {
@@ -84,5 +84,9 @@ public class BlackJackGame {
 
     public Participant findByName(String playerName) {
         return participants.findByName(playerName);
+    }
+
+    public List<Card> getDealerShownCard() {
+        return participants.getDealer().getFirstShownCard();
     }
 }

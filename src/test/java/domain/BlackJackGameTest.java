@@ -28,27 +28,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 class BlackJackGameTest {
 
     @Test
-    @DisplayName("모든 플레이어에게 카드를 2장씩 나눠준다.")
-    void should_give_starting_cards_to_participants() {
-        // given
-        List<String> playerNames = List.of("a", "b");
-        Participants participants = ParticipantsFixture.createParticipants(playerNames);
-        CardDeck cardDeck = CardDeckFixture.createCardDeck();
-        BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
-
-        // when
-        blackJackGame.giveStartingCardsToParticipants();
-
-        // then
-        assertAll(
-                blackJackGame.getParticipants()
-                        .stream()
-                        .map(player -> (Executable) () -> assertThat(player.getCards()).hasSize(2))
-                        .toArray(Executable[]::new)
-        );
-    }
-
-    @Test
     @DisplayName("딜러를 포함한 모든 참가자들 List를 반환한다")
     void should_return_player_participants_except_dealer() {
         // given
@@ -136,25 +115,63 @@ class BlackJackGameTest {
         assertThat(player.getCards()).hasSize(1);
     }
 
-    @Test
-    @DisplayName("플레이어 이름으로 해당 플레이어의 보여지는 카드 List를 반환한다")
-    void should_return_player_shown_cards_by_name() {
-        // given
-        String playerName = "a";
-        List<String> playerNames = List.of(playerName);
-        Participants participants = ParticipantsFixture.createParticipants(playerNames);
-        Card cardOfHeartAce = new Card(Shape.HEART, Rank.ACE);
-        Card cardOfHeartQueen = new Card(Shape.HEART, Rank.QUEEN);
-        CardDeck cardDeck = new CardDeck(List.of(cardOfHeartAce, cardOfHeartQueen));
-        BlackJackGame blackJackGame = new BlackJackGame(participants, CardDeckFixture.createCardDeck());
-        blackJackGame.giveCardToPlayer(playerName);
-        blackJackGame.giveCardToPlayer(playerName);
+    @Nested
+    @DisplayName("시작 카드 분배 케이스")
+    class StartingCardCase {
+        @Test
+        @DisplayName("모든 참가자들에게 카드를 2장씩 나눠준다.")
+        void should_give_starting_cards_to_participants() {
+            // given
+            List<String> playerNames = List.of("a", "b");
+            Participants participants = ParticipantsFixture.createParticipants(playerNames);
+            CardDeck cardDeck = CardDeckFixture.createCardDeck();
+            BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
 
-        // when
-        List<Card> playerShownCards = blackJackGame.getPlayerShownCards(playerName);
+            // when
+            blackJackGame.giveStartingCardsToParticipants();
 
-        // then
-        assertThat(playerShownCards).hasSize(2);
+            // then
+            assertAll(
+                    blackJackGame.getParticipants()
+                            .stream()
+                            .map(player -> (Executable) () -> assertThat(player.getCards()).hasSize(2))
+                            .toArray(Executable[]::new)
+            );
+        }
+
+        @Test
+        @DisplayName("블랙잭 시작 후 카드 2장을 받고, 딜러의 보여줄 손패를 반환한다")
+        void should_return_dealer_first_shown_cards() {
+            // given
+            String playerName = "a";
+            Participants participants = ParticipantsFixture.createParticipants(List.of(playerName));
+            CardDeck cardDeck = CardDeckFixture.createCardDeck();
+            BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
+            blackJackGame.giveStartingCardsToParticipants();
+
+            // when
+            List<Card> dealerShownCards = blackJackGame.getDealerShownCard();
+
+            // then
+            assertThat(dealerShownCards).hasSize(1);
+        }
+
+        @Test
+        @DisplayName("블랙잭 시작 후 카드 2장을 받고, 플레이어의 보여줄 손패를 반환한다")
+        void should_return_player_first_shown_cards() {
+            // given
+            String playerName = "a";
+            Participants participants = ParticipantsFixture.createParticipants(List.of(playerName));
+            CardDeck cardDeck = CardDeckFixture.createCardDeck();
+            BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
+            blackJackGame.giveStartingCardsToParticipants();
+
+            // when
+            List<Card> playerShownCards = blackJackGame.getPlayerShownCards(playerName);
+
+            // then
+            assertThat(playerShownCards).hasSize(2);
+        }
     }
 
     private static Stream<Arguments> dealerCardsArguments() {

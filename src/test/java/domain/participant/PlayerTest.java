@@ -45,7 +45,7 @@ public class PlayerTest {
         player.addCard(cardOfHeartKing);
 
         //when
-        List<Card> shownCard = player.getShownCard();
+        List<Card> shownCard = player.getFirstShownCard();
 
         //then
         assertThat(shownCard).hasSize(2);

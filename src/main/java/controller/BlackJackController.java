@@ -62,7 +62,10 @@ public class BlackJackController {
     private void giveStartingCardsToParticipants(BlackJackGame blackJackGame) {
         blackJackGame.giveStartingCardsToParticipants();
         outputView.printInitialParticipantHandsMessage(blackJackGame.getPlayerNames());
-        outputView.printInitialParticipantHands(blackJackGame.getParticipants());
+        outputView.printInitialParticipantHand(blackJackGame.getDealer().getName(), blackJackGame.getDealerShownCard());
+        for (String playerName : blackJackGame.getPlayerNames()) {
+            outputView.printInitialParticipantHand(playerName, blackJackGame.getPlayerShownCards(playerName));
+        }
     }
 
     private void processCardReceiving(BlackJackGame blackJackGame) {

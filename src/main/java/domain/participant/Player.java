@@ -11,7 +11,7 @@ public class Player extends Participant {
     }
 
     @Override
-    public List<Card> getShownCard() {
+    public List<Card> getFirstShownCard() {
         return getCards();
     }
 
