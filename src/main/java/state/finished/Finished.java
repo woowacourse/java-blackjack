@@ -13,12 +13,12 @@ public abstract class Finished extends Started {
 
     @Override
     public State draw(Card card) {
-        throw new IllegalStateException();
+        throw new IllegalStateException("[ERROR] 끝난 상태에서는 카드를 뽑을 수 없습니다.");
     }
 
     @Override
     public State stand() {
-        throw new IllegalStateException();
+        throw new IllegalStateException("[ERROR] 끝난 상태입니다.");
     }
 
     @Override
