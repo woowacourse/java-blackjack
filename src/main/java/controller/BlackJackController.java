@@ -1,9 +1,13 @@
 package controller;
 
 import domain.BettingMoney;
+import domain.Dealer;
+import domain.DealerProfit;
 import domain.Game;
+import domain.Player;
 import domain.PlayerName;
 import domain.PlayerNames;
+import domain.PlayerProfit;
 import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
@@ -22,15 +26,10 @@ public class BlackJackController {
         List<PlayerName> rawPlayerNames = inputView.insertUsernames();
         PlayerNames playerNames = new PlayerNames(rawPlayerNames);
         Game game = initializeGame(playerNames.getPlayerNames());
+
         showInitialState(game);
-
-        for (PlayerName playerName : playerNames.getPlayerNames()) {
-            askPlayer(game, playerName);
-        }
-        askDealer(game);
-
-        outputView.printFinalState(game.getPlayers(), game.getDealer());
-        outputView.printFinalResult(game.getPlayers(), game.calculateDealerProfit(), game.getDealer());
+        processGameTurn(game, playerNames);
+        showFinalState(game);
     }
 
     private Game initializeGame(List<PlayerName> playerNames) {
@@ -45,6 +44,26 @@ public class BlackJackController {
 
     private void showInitialState(Game game) {
         outputView.printInitialState(game.getPlayers(), game.getDealerOneCard());
+    }
+
+    private void showFinalState(Game game) {
+        List<Player> finalPlayers = game.getPlayers();
+        Dealer finalDealer = game.getDealer();
+
+        List<PlayerProfit> playerProfits = finalPlayers.stream()
+                .map(player -> new PlayerProfit(player, finalDealer))
+                .toList();
+        DealerProfit dealerProfit = new DealerProfit(game);
+
+        outputView.printFinalState(finalPlayers, finalDealer);
+        outputView.printFinalResult(playerProfits, dealerProfit);
+    }
+
+    private void processGameTurn(Game game, PlayerNames playerNames) {
+        for (PlayerName playerName : playerNames.getPlayerNames()) {
+            askPlayer(game, playerName);
+        }
+        askDealer(game);
     }
 
     private void askPlayer(Game game, PlayerName playerName) {

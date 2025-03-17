@@ -4,10 +4,11 @@ import static domain.Dealer.DEALER_DRAWABLE_THRESHOLD;
 
 import domain.Card;
 import domain.Cards;
-import domain.Dealer;
+import domain.DealerProfit;
 import domain.Gamer;
 import domain.Player;
 import domain.PlayerName;
+import domain.PlayerProfit;
 import java.util.List;
 
 public class OutputView {
@@ -56,10 +57,10 @@ public class OutputView {
         System.out.printf(" - 결과: %d\n", gamer.getScore());
     }
 
-    public void printFinalResult(List<Player> players, int dealerBenefit, Dealer dealer) {
+    public void printFinalResult(List<PlayerProfit> playerProfits, DealerProfit dealerProfit) {
         System.out.println("## 최종 수익\n");
-        System.out.printf("딜러: %d\n", dealerBenefit);
-        players.forEach(player -> System.out.printf("%s: %d\n", player.getPlayerName().username(),
-                player.calculateProfit(dealer)));
+        System.out.printf("딜러: %d\n", dealerProfit.getDealerProfit());
+        playerProfits.forEach(playerProfit -> System.out.printf("%s: %d\n", playerProfit.getPlayerName().username(),
+                playerProfit.getPlayerProfit()));
     }
 }
