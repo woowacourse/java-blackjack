@@ -33,7 +33,7 @@ class ParticipantsTest {
                 .hasMessageContaining("[ERROR] 참여자 이름은 중복될 수 없습니다.");
     }
 
-    @ParameterizedTest
+    /*@ParameterizedTest
     @CsvSource({"pobi,0,0,1,THREE", "jason,0,1,0,FIVE", "neo,1,0,0,SEVEN"})
     @DisplayName("플레이어 게임 결과 계산 기능 테스트")
     void playerGameResultTest(String name, int win, int tie, int lose, String rankName) {
@@ -80,5 +80,5 @@ class ParticipantsTest {
                 () -> assertEquals(1, actualGameResult.getStatusCount(GameStatus.TIE)),
                 () -> assertEquals(1, actualGameResult.getStatusCount(GameStatus.LOSE))
         );
-    }
+    }*/
 }

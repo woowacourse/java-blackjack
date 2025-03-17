@@ -4,65 +4,67 @@ import Blackjack.domain.card.Card;
 import Blackjack.domain.card.Cards;
 import Blackjack.domain.participant.Dealer;
 import Blackjack.domain.participant.Participant;
-import Blackjack.domain.participant.Player;
-import Blackjack.exception.ErrorException;
+import Blackjack.domain.participant.Players;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Function;
 
 public class Participants {
 
     public static final String DEALER_NAME = "딜러";
 
-    private final Map<String, Participant> participants;
+    private final Dealer dealer;
+    private final Players players;
+
+    public Participants(final Dealer dealer, final Players players) {
+        this.dealer = dealer;
+        this.players = players;
+    }
 
     public Participants(final List<String> names) {
-        participants = new HashMap<>();
-        participants.put(DEALER_NAME, new Dealer(DEALER_NAME));
-
-        validateDistinct(names);
-        for (String name : names) {
-            participants.put(name, new Player(name));
-        }
+        this(new Dealer(DEALER_NAME), Players.of(names));
     }
 
     public int size() {
-        return participants.size();
+        return players.size() + 1;
     }
 
     public void addInitialCards(final List<Card> cards) {
         final List<Card> modifiableCards = new ArrayList<>(cards);
-        while (modifiableCards.size() > participants.size()) {
-            addCardToAll(modifiableCards.subList(0, participants.size()));
-            modifiableCards.subList(0, participants.size()).clear();
+        while (modifiableCards.size() > size()) {
+            addCardToAll(modifiableCards.subList(0, size()));
+            modifiableCards.subList(0, size()).clear();
         }
         addCardToAll(modifiableCards);
     }
 
     private void addCardToAll(final List<Card> cards) {
-        final List<Card> modifiableCards = new ArrayList<>(cards);
-        for (Participant participant : participants.values()) {
-            participant.addCard(modifiableCards.removeFirst());
-        }
+        dealer.addCard(cards.getFirst());
+        List<Card> playerCards = cards.stream().skip(1).toList();
+        players.addCardToAll(playerCards);
     }
 
     public void addCardTo(final String name, final Card card) {
-        participants.get(name).addCard(card);
+        players.addCardTo(name, card);
     }
 
     public boolean isAbleToAddCard(final String name) {
-        final Participant participant = participants.get(name);
-        return participant.ableToAddCard();
+        return players.canHit(name);
     }
 
-    public Map<String, GameResult> determineGameResult() {
+    public boolean canHitDealer() {
+        return dealer.ableToAddCard();
+    }
+
+    public void hitDealer(final Card card) {
+        dealer.addCard(card);
+    }
+
+    /*public Map<String, GameResult> determineGameResult() {
         final Map<String, GameResult> gameResults = new HashMap<>();
-        final Dealer dealer = findDealer();
         gameResults.put(dealer.getName(), new GameResult());
         for (String playerName : getPlayerNames()) {
             gameResults.put(playerName, new GameResult());
@@ -79,11 +81,7 @@ public class Participants {
     ) {
         final GameStatus gameStatus = participants.get(name).determineGameStatus(participants.get(otherName));
         playerResults.get(name).addStatusCount(gameStatus);
-    }
-
-    public Dealer findDealer() {
-        return (Dealer) participants.get(DEALER_NAME);
-    }
+    }*/
 
     public Map<String, Cards> getInitialCardsOfAll() {
         return getCardsBy(Participant::getInitialCards);
@@ -95,25 +93,17 @@ public class Participants {
 
     private Map<String, Cards> getCardsBy(Function<Participant, List<Card>> function) {
         final Map<String, Cards> cardsOfAll = new HashMap<>();
-        participants.forEach((key, value) -> cardsOfAll.put(key, new Cards(function.apply(value))));
+        cardsOfAll.put(dealer.getName(), new Cards(function.apply(dealer)));
+        List<String> names = players.getNames();
+        names.forEach(name -> cardsOfAll.put(name, players.getCardsOf(name)));
         return Collections.unmodifiableMap(cardsOfAll);
     }
 
     public Cards getCardsOf(final String name) {
-        List<Card> cards = participants.get(name).getCards();
-        return new Cards(cards);
+        return players.getCardsOf(name);
     }
 
     public List<String> getPlayerNames() {
-        return participants.keySet().stream()
-                .filter(name -> !name.equals(DEALER_NAME))
-                .toList();
-    }
-
-    private void validateDistinct(final List<String> names) {
-        Set<String> distinctNames = new HashSet<>(names);
-        if (distinctNames.size() != names.size()) {
-            throw new ErrorException("참여자 이름은 중복될 수 없습니다.");
-        }
+        return players.getNames();
     }
 }

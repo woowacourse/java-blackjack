@@ -1,7 +1,6 @@
 package Blackjack.domain.game;
 
 import Blackjack.domain.card.Card;
-import Blackjack.domain.participant.Dealer;
 import java.util.List;
 
 public class Game {
@@ -28,9 +27,8 @@ public class Game {
     }
 
     public boolean isAddedExtraCardToDealer() {
-        final Dealer dealer = participants.findDealer();
-        if (dealer.ableToAddCard()) {
-            dealer.addCard(cardDeck.pickCard());
+        if (participants.canHitDealer()) {
+            participants.hitDealer(cardDeck.pickCard());
             return true;
         }
         return false;

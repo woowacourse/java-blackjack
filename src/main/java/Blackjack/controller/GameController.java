@@ -1,21 +1,21 @@
 package Blackjack.controller;
 
+import Blackjack.domain.card.Cards;
 import Blackjack.domain.game.CardDeck;
 import Blackjack.domain.game.CardDeckGenerator;
-import Blackjack.domain.card.Cards;
 import Blackjack.domain.game.Game;
 import Blackjack.domain.game.GameResult;
 import Blackjack.domain.game.Participants;
 import Blackjack.dto.GameResultDto;
 import Blackjack.dto.ParticipantCardsDto;
 import Blackjack.exception.ExceptionHandler;
+import Blackjack.view.InputView;
+import Blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
-import Blackjack.view.InputView;
-import Blackjack.view.OutputView;
 
 public class GameController {
 
@@ -29,7 +29,7 @@ public class GameController {
         distributePlayersExtraCard(game, participants);
         distributeDealerExtraCard(game);
         displayFinalParticipantsCards(participants);
-        displayGameResult(participants);
+//        displayGameResult(participants);
     }
 
     private Participants registerPlayers() {
@@ -75,12 +75,12 @@ public class GameController {
         printer.accept(participantCardsDtos);
     }
 
-    private void displayGameResult(Participants participants) {
+    /*private void displayGameResult(Participants participants) {
         Map<String, GameResult> gameResults = participants.determineGameResult();
         List<GameResultDto> gameResultDtos = new ArrayList<>();
         gameResults.forEach((key, value) -> gameResultDtos.add(createGameResultDto(key, value)));
         OutputView.printGameResult(gameResultDtos);
-    }
+    }*/
 
     private ParticipantCardsDto createParticipantCardsDto(String name, Cards cards) {
         return new ParticipantCardsDto(name, cards.getCards(), cards.calculateScore());

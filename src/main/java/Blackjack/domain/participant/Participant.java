@@ -22,7 +22,7 @@ public abstract class Participant {
 
     public abstract boolean ableToAddCard();
 
-    protected abstract <T extends Participant> Optional<GameStatus> determineGameStatusWhenBust(T other);
+    protected abstract Optional<GameStatus> determineGameStatusWhenBust(Participant other);
 
     public void addCard(Card card) {
         cards.addCard(card);

@@ -22,7 +22,7 @@ public class Player extends Participant {
     }
 
     @Override
-    protected <T extends Participant> Optional<GameStatus> determineGameStatusWhenBust(final T other) {
+    protected Optional<GameStatus> determineGameStatusWhenBust(final Participant other) {
         if (isBust()) {
             return Optional.of(GameStatus.LOSE);
         }
