@@ -1,7 +1,7 @@
-package domain;
+package game;
 
-import domain.user.Participants;
-import domain.user.User;
+import user.Participants;
+import user.User;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

@@ -1,6 +1,7 @@
-package domain;
+package betting;
 
-import domain.user.User;
+import game.GameResult;
+import user.User;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;

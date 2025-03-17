@@ -1,8 +1,8 @@
 package domain;
 
-import domain.user.Dealer;
-import domain.user.Player;
-import domain.user.User;
+import user.Dealer;
+import user.Player;
+import user.User;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;

@@ -1,5 +1,7 @@
-package domain;
+package user;
 
+import card.Card;
+import card.CardRank;
 import java.util.ArrayList;
 import java.util.List;
 

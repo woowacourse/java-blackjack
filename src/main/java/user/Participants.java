@@ -1,7 +1,7 @@
-package domain.user;
+package user;
 
-import domain.Card;
-import domain.CardDeck;
+import card.Card;
+import card.CardDeck;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

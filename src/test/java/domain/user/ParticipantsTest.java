@@ -1,10 +1,14 @@
 package domain.user;
 
-import domain.CardDeck;
+import card.CardDeck;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import user.Dealer;
+import user.Participants;
+import user.Player;
+import user.User;
 
 class ParticipantsTest {
     @DisplayName("모든 참여자가 한 장의 카드를 배부받는다.")

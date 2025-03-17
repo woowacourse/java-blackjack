@@ -1,7 +1,6 @@
-package domain.user;
+package user;
 
-import domain.CardHand;
-import domain.Card;
+import card.Card;
 import java.util.List;
 
 public class Player extends User {

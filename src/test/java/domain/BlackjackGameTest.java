@@ -1,7 +1,7 @@
 package domain;
 
-import domain.user.Dealer;
-import domain.user.Player;
+import user.Dealer;
+import user.Player;
 import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;

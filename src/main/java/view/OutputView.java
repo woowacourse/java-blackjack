@@ -1,8 +1,8 @@
 package view;
 
-import domain.GameResult;
-import domain.Card;
-import domain.user.User;
+import game.GameResult;
+import card.Card;
+import user.User;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;

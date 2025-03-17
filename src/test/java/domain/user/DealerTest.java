@@ -1,11 +1,12 @@
 package domain.user;
 
-import domain.Card;
-import domain.CardDeck;
+import card.Card;
+import card.CardDeck;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import user.Dealer;
 
 class DealerTest {
     @DisplayName("딜러는 자신이 가진 하나의 카드만 공개해야 한다")

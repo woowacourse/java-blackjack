@@ -1,14 +1,12 @@
-package controller;
-
-import domain.BettingTable;
-import domain.CardDeck;
-import domain.BlackjackGame;
-import domain.GameResult;
-import domain.Card;
-import domain.Score;
-import domain.user.Dealer;
-import domain.user.Player;
-import domain.user.User;
+import betting.BettingTable;
+import card.Card;
+import card.CardDeck;
+import game.BlackjackGame;
+import game.GameResult;
+import game.Score;
+import user.Dealer;
+import user.Player;
+import user.User;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
