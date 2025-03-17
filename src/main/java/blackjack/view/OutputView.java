@@ -2,11 +2,9 @@ package blackjack.view;
 
 import static blackjack.model.constants.RuleConstants.DEALER_HIT_THRESHOLD;
 
-import blackjack.model.betting.MatchResult;
 import blackjack.model.betting.Profit;
 import blackjack.model.card.Card;
 import blackjack.model.participant.Player;
-import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;

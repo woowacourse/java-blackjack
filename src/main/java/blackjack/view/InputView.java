@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.model.betting.BetAmount;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;

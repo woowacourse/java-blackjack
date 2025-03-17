@@ -12,7 +12,7 @@ public class Profit {
 
     public static Profit of(BetAmount betAmount, MatchResult matchResult) {
         int stake = betAmount.getStake();
-        return new Profit((int)(stake * matchResult.getProfitRate()));
+        return new Profit((int) (stake * matchResult.getProfitRate()));
     }
 
     @Override
