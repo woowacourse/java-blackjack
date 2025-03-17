@@ -1,8 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Hand;
-import blackjack.domain.participant.participant.Participant;
-import blackjack.domain.participant.participant.Player;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;

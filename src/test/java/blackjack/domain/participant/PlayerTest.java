@@ -12,7 +12,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardScore;
 import blackjack.domain.card.Hand;
 import blackjack.domain.card.Shape;
-import blackjack.domain.participant.participant.Player;
 import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;

@@ -2,7 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.card.Hand;
 import blackjack.domain.card.Shape;
-import blackjack.domain.participant.participant.Participant;
+import blackjack.domain.participant.Participant;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;

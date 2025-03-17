@@ -1,4 +1,4 @@
-package blackjack.domain.participant.participant;
+package blackjack.domain.participant;
 
 import static blackjack.domain.card.Hand.BURST_THRESHOLD;
 import static blackjack.domain.result.ResultStatus.BLACKJACK;
@@ -7,8 +7,6 @@ import static blackjack.domain.result.ResultStatus.PUSH;
 import static blackjack.domain.result.ResultStatus.WIN;
 
 import blackjack.domain.card.Hand;
-import blackjack.domain.participant.GameRule;
-import blackjack.domain.participant.Players;
 import blackjack.domain.result.ProfitResult;
 import blackjack.domain.result.ResultStatus;
 import java.util.ArrayList;

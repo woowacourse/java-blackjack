@@ -5,7 +5,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Players;
-import blackjack.domain.participant.participant.Player;
+import blackjack.domain.participant.Player;
 import blackjack.domain.result.ProfitResult;
 import blackjack.util.StringParser;
 import blackjack.view.InputView;

@@ -15,8 +15,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardScore;
 import blackjack.domain.card.Hand;
 import blackjack.domain.card.Shape;
-import blackjack.domain.participant.participant.Dealer;
-import blackjack.domain.participant.participant.Player;
 import blackjack.domain.result.ProfitResult;
 import java.util.List;
 import java.util.Map;

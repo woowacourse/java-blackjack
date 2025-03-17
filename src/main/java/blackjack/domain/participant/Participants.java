@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Hand;
-import blackjack.domain.participant.participant.Dealer;
 import blackjack.domain.result.ProfitResult;
 import java.util.List;
 import java.util.Map;
