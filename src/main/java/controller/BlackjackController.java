@@ -32,29 +32,46 @@ public class BlackjackController {
     public void play() {
         Dealer dealer = new Dealer();
         List<Player> players = inputView.getPlayers();
+        PlayerBets playerBets = placeBets(players);
 
-        PlayerBets playerBets = new PlayerBets(players.stream()
+        GameManager gameManager = new GameManager(dealer, players);
+        dealSetUpCards(gameManager, dealer, players);
+
+        playTurns(gameManager, players, dealer);
+
+        displayFinalResult(dealer, players);
+        evaluateAndDisplayEarnings(gameManager, playerBets);
+    }
+
+    private PlayerBets placeBets(List<Player> players) {
+        return new PlayerBets(players.stream()
                 .collect(Collectors.toMap(
                         player -> player,
                         player -> inputView.getBetMoney(player.getName()),
                         (player1, player2) -> player1,
                         LinkedHashMap::new
                 )));
+    }
 
-        GameManager gameManager = new GameManager(dealer, players);
+    private void playTurns(GameManager gameManager, List<Player> players, Dealer dealer) {
+        distributeExtraCardToPlayers(gameManager, players);
+        distributeExtraCardToDealer(gameManager, dealer);
+    }
+
+    private void displayFinalResult(Dealer dealer, List<Player> players) {
+        List<FinalResultDTO> finalResultDTOS = createFinalResultDTOs(dealer, players);
+        outputView.printFinalCardDeck(finalResultDTOS);
+    }
+
+    private void evaluateAndDisplayEarnings(GameManager gameManager, PlayerBets playerBets) {
+        EarningResult earningResult = gameManager.evaluateEarning(playerBets);
+        outputView.printFinalEarning(earningResult);
+    }
+
+    private void dealSetUpCards(GameManager gameManager, Dealer dealer, List<Player> players) {
         gameManager.distributeSetUpCards();
         SetUpCardsDTO setUpCardsDTO = createSetUpCardsDTO(dealer, players);
         outputView.printSetUpCardDeck(setUpCardsDTO);
-
-        distributeExtraCardToPlayers(gameManager, players);
-        distributeExtraCardToDealer(gameManager, dealer);
-
-        EarningResult earningResult = gameManager.evaluateEarning(playerBets);
-
-        List<FinalResultDTO> finalResultDTOS = createFinalResultDTOs(dealer, players);
-        outputView.printFinalCardDeck(finalResultDTOS);
-
-        outputView.printFinalEarning(earningResult);
     }
 
     private void distributeExtraCardToPlayers(GameManager gameManager, List<Player> players) {
