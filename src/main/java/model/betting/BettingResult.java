@@ -35,33 +35,14 @@ public class BettingResult {
     }
 
     private int calculateFinalBettingResult(Player player, Dealer dealer) {
-        Betting playerBetting = playersBetting.findPlayerBet(player);
-        if (playerBetting.checkSurrender()) {
-            return playerBetting.calculateSurrender();
+        boolean playerSurrenderCheck = playersBetting.checkPlayerSurrender(player);
+        if (playerSurrenderCheck) {
+            return playersBetting.computeSurrenderResult(player);
         }
         WinningResult winningResult = participantWinningResult.getPlayerGameResult(player);
-        int playerBetResult = computeResultByWinningStatus(player, winningResult);
-        int insuranceBetResult = computeInsuranceResult(player, dealer);
+        int playerBetResult = playersBetting.computeResultByWinningStatus(player, winningResult);
+        int insuranceBetResult = playersBetting.computeInsuranceResult(player, dealer);
         return playerBetResult + insuranceBetResult;
-    }
-
-    private int computeResultByWinningStatus(Player player, WinningResult winningResult) {
-        Betting bet = playersBetting.findPlayerBet(player);
-        if (winningResult == WinningResult.LOSE) {
-            return bet.calculateLose();
-        }
-        if (winningResult == WinningResult.DRAW) {
-            return bet.calculateDraw();
-        }
-        if (winningResult == WinningResult.WIN && player.checkBlackjack()) {
-            return bet.calculateBlackJack();
-        }
-        return bet.calculateWin();
-    }
-
-    private int computeInsuranceResult(Player player, Dealer dealer) {
-        Betting bet = playersBetting.findPlayerBet(player);
-        return bet.calculateInsurance(dealer);
     }
 }
 
