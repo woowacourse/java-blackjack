@@ -3,17 +3,22 @@ package participant;
 import card.Card;
 import card.CardNumber;
 import card.CardType;
-import card.Cards;
 import deck.Deck;
 import deck.DeckCreateStrategy;
 import java.util.List;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import state.finished.Bust;
-import state.running.Hit;
 
 class PlayerTest {
+
+    private Player player;
+
+    @BeforeEach
+    void beforeEach() {
+        player = new Player(new Nickname("율무"), new BettingMoney(10000));
+    }
 
     @Test
     @DisplayName("플레이어는 bust면 카드를 받을 수 없다.")
@@ -29,13 +34,13 @@ class PlayerTest {
                 );
             }
         });
-
-        Player player = new Player("율무", new Bust(new Cards()));
+        player.prepareGame(deck.draw(), deck.draw());
+        player.hit(deck.draw());
 
         // when
         // then
-        Assertions.assertThatThrownBy(() -> player.hit(deck.draw()))
-                .isInstanceOf(IllegalStateException.class);
+        Assertions.assertThat(player.isFinished())
+                .isTrue();
     }
 
     @Test
@@ -47,18 +52,18 @@ class PlayerTest {
             public List<Card> createAllCards() {
                 return List.of(
                         new Card(CardType.SPADE, CardNumber.TEN),
-                        new Card(CardType.CLOVER, CardNumber.TEN)
+                        new Card(CardType.CLOVER, CardNumber.TEN),
+                        new Card(CardType.DIAMOND, CardNumber.ACE)
                 );
             }
         });
-
-        Player player = new Player("율무", new Hit(new Cards()));
+        player.prepareGame(deck.draw(), deck.draw());
 
         // when
-        boolean result = player.canReceiveCard();
+        boolean result = player.isFinished();
 
         // then
         Assertions.assertThat(result)
-                .isTrue();
+                .isFalse();
     }
 }

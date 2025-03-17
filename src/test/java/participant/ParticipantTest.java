@@ -3,17 +3,22 @@ package participant;
 import card.Card;
 import card.CardNumber;
 import card.CardType;
-import card.Cards;
 import deck.Deck;
 import deck.DeckCreateStrategy;
 import java.util.List;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import state.finished.Bust;
-import state.running.Hit;
 
 class ParticipantTest {
+
+    private Player player;
+
+    @BeforeEach
+    void beforeEach() {
+        player = new Player(new Nickname("율무"), new BettingMoney(10000));
+    }
 
     @Test
     @DisplayName("21이 넘는 패를 가지면 Bust이다.")
@@ -29,16 +34,15 @@ class ParticipantTest {
                 );
             }
         });
-
-        Player player = new Player("율무", new Hit(new Cards()));
-        player.hit(deck.draw());
-        player.hit(deck.draw());
+        player.prepareGame(deck.draw(), deck.draw());
         player.hit(deck.draw());
 
         // when
+        boolean result = player.isBust();
+
         // then
-        Assertions.assertThat(player.canReceiveCard())
-                .isFalse();
+        Assertions.assertThat(result)
+                .isTrue();
     }
 
     @Test
@@ -56,9 +60,7 @@ class ParticipantTest {
             }
         });
 
-        Player player = new Player("율무", new Hit(new Cards()));
-        player.hit(deck.draw());
-        player.hit(deck.draw());
+        player.prepareGame(deck.draw(), deck.draw());
         player.hit(deck.draw());
 
         // when
@@ -84,9 +86,7 @@ class ParticipantTest {
             }
         });
 
-        Player player = new Player("율무", new Hit(new Cards()));
-        player.hit(deck.draw());
-        player.hit(deck.draw());
+        player.prepareGame(deck.draw(), deck.draw());
         player.hit(deck.draw());
 
         // when
