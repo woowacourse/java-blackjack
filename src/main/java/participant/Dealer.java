@@ -9,7 +9,7 @@ import state.running.DealerHit;
 import state.running.Running;
 
 public final class Dealer extends Participant {
-    private static final String DEALER_NAME = "딜러";
+    private static final Name DEALER_NAME = new Name("딜러");
 
     public Dealer(final CardHand initialHand) {
         super(DealerHit.initialState(initialHand));
@@ -31,6 +31,6 @@ public final class Dealer extends Participant {
 
     @Override
     public Name getName() {
-        return new Name(DEALER_NAME);
+        return DEALER_NAME;
     }
 }
