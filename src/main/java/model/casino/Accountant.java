@@ -45,7 +45,7 @@ public class Accountant {
             return 0;
         }
         if (winLossResult == WinLossResult.LOSS) {
-            return bettingPrice * -1;
+            return -bettingPrice;
         }
         throw new IllegalArgumentException("Invalid win loss result: " + winLossResult);
     }
