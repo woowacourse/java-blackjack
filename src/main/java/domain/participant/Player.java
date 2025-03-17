@@ -34,7 +34,7 @@ public class Player extends CardOwner {
 
     private GameResult determineResultByScore(Dealer dealer) {
         if (isBlackjack() && !dealer.isBlackjack()) {
-            return GameResult.WIN;
+            return GameResult.BLACKJACK_WIN;
         }
         if (!isBlackjack() && dealer.isBlackjack()) {
             return GameResult.LOSE;

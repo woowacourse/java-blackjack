@@ -90,4 +90,17 @@ class BetTest {
         // then
         assertThat(profit).isEqualTo(0);
     }
+
+    @Test
+    void 블랙잭_승에_대한_손실_수익_반환() {
+        // given
+        GameResult blackjackWin = GameResult.BLACKJACK_WIN;
+        Bet bet = Bet.of(10000);
+
+        // when
+        int profit = bet.calculateProfit(blackjackWin);
+
+        // then
+        assertThat(profit).isEqualTo(15000);
+    }
 }

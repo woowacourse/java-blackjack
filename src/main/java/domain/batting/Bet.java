@@ -31,6 +31,9 @@ public class Bet {
     }
 
     public int calculateProfit(GameResult result) {
+        if (result == GameResult.BLACKJACK_WIN) {
+            return (int) (money * (1.5));
+        }
         if (result == GameResult.LOSE) {
             return money * (-1);
         }
