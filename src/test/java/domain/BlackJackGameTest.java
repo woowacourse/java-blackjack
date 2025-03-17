@@ -132,9 +132,8 @@ class BlackJackGameTest {
         blackJackGame.giveCardToPlayer(playerName);
 
         // then
-        assertThat(blackJackGame.getParticipants()
-                .get(1)
-                .getCards()).hasSize(1);
+        Participant player = blackJackGame.findByName(playerName);
+        assertThat(player.getCards()).hasSize(1);
     }
 
     @Test
@@ -202,9 +201,8 @@ class BlackJackGameTest {
         blackJackGame.giveCardToDealer();
 
         // then
-        assertThat(blackJackGame.getParticipants()
-                .get(0)
-                .getCards()).hasSize(1);
+        Participant dealer = blackJackGame.getDealer();
+        assertThat(dealer.getCards()).hasSize(1);
     }
 
     @Test

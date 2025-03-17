@@ -77,4 +77,12 @@ public class BlackJackGame {
         }
         return new Revenues(totalRevenues);
     }
+
+    public Participant getDealer() {
+        return participants.getDealer();
+    }
+
+    public Participant findByName(String playerName) {
+        return participants.findByName(playerName);
+    }
 }
