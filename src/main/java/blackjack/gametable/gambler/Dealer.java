@@ -15,7 +15,7 @@ public class Dealer extends Gambler {
         return cards.openDealerInitialCards();
     }
 
-    public Players updateBetAmounts(Players players) {
+    public void updateBetAmounts(Players players) {
         List<Player> players1 = players.getPlayers();
 
         double dealerAmount = 0;
@@ -47,7 +47,6 @@ public class Dealer extends Gambler {
             }
         }
         super.updateBetAmount(dealerAmount);
-        return new Players(players1);
     }
 
     public MatchResult compareTo(Player player) {
@@ -63,6 +62,10 @@ public class Dealer extends Gambler {
             return getMatchResultWhenOverBustStandard(playerScore);
         }
         return getMatchResult(dealerScore, playerScore);
+    }
+
+    public boolean shouldDrawCard() {
+        return sumCardScores() <= DEALER_HIT_THRESHOLD;
     }
 
     private MatchResult getMatchResultWhenBlackjack(Cards playerCards) {
@@ -92,7 +95,4 @@ public class Dealer extends Gambler {
         return MatchResult.LOSE;
     }
 
-    public boolean isSumUnderThreshold() {
-        return sumCardScores() <= DEALER_HIT_THRESHOLD;
-    }
 }

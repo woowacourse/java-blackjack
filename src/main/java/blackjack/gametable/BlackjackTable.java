@@ -63,8 +63,8 @@ public class BlackjackTable {
 
     public void addCardTo(String playerName) {
         Player player = findPlayer(playerName);
-        Card card = deck.drawOneCard();
-        player.addOneCard(card);
+        Card card = deck.drawCard();
+        player.addCard(card);
     }
 
     public Player findPlayer(String playerName) {
@@ -73,13 +73,13 @@ public class BlackjackTable {
 
 
     public boolean isDealerDrawCard() {
-        return dealer.isSumUnderThreshold();
+        return dealer.shouldDrawCard();
     }
 
     public void determineDealerAdditionalCard() {
         if (isDealerDrawCard()) {
-            Card card = deck.drawOneCard();
-            dealer.addOneCard(card);
+            Card card = deck.drawCard();
+            dealer.addCard(card);
         }
     }
 

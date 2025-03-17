@@ -12,24 +12,23 @@ public abstract class Gambler {
     protected Cards cards;
     private double betAmount;
 
+    public abstract List<Card> openInitialCards();
 
     public void initializeHand(Cards cards) {
         validateInitialCardsSize(cards);
         this.cards = cards;
     }
 
-    public void updateBetAmount(double betAmount) {
-        this.betAmount = betAmount;
-    }
-
-    public abstract List<Card> openInitialCards();
-
     public List<Card> openCards() {
         return new ArrayList<>(cards.getCards());
     }
 
-    public void addOneCard(Card card) {
-        cards.addOneCard(card);
+    public void updateBetAmount(double betAmount) {
+        this.betAmount = betAmount;
+    }
+
+    public void addCard(Card card) {
+        cards.addCard(card);
     }
 
     public int sumCardScores() {
@@ -49,4 +48,5 @@ public abstract class Gambler {
     public int getBetAmount() {
         return (int) betAmount;
     }
+
 }
