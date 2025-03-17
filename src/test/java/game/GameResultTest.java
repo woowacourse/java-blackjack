@@ -22,7 +22,7 @@ public class GameResultTest {
                 new Card(Pattern.HEART, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.NINE)));
 
-        GameResult gameResult = GameResult.of(dealer, player);
+        GameResult gameResult = GameResult.determine(dealer, player);
 
         Assertions.assertThat(gameResult).isEqualTo(GameResult.LOSE);
     }
@@ -40,7 +40,7 @@ public class GameResultTest {
                 new Card(Pattern.HEART, CardNumber.NINE),
                 new Card(Pattern.CLOVER, CardNumber.NINE)));
 
-        GameResult gameResult = GameResult.of(dealer, player);
+        GameResult gameResult = GameResult.determine(dealer, player);
 
         Assertions.assertThat(gameResult).isEqualTo(GameResult.LOSE);
     }
@@ -57,7 +57,7 @@ public class GameResultTest {
                 new Card(Pattern.SPADE, CardNumber.NINE),
                 new Card(Pattern.HEART, CardNumber.NINE)));
 
-        GameResult gameResult = GameResult.of(dealer, player);
+        GameResult gameResult = GameResult.determine(dealer, player);
 
         Assertions.assertThat(gameResult).isEqualTo(GameResult.WIN);
     }
@@ -73,7 +73,7 @@ public class GameResultTest {
                 new Card(Pattern.DIAMOND, CardNumber.TEN),
                 new Card(Pattern.HEART, CardNumber.NINE)));
 
-        GameResult gameResult = GameResult.of(dealer, player);
+        GameResult gameResult = GameResult.determine(dealer, player);
 
         Assertions.assertThat(gameResult).isEqualTo(GameResult.LOSE);
     }
@@ -89,7 +89,7 @@ public class GameResultTest {
                 new Card(Pattern.DIAMOND, CardNumber.TEN),
                 new Card(Pattern.HEART, CardNumber.TEN)));
 
-        GameResult gameResult = GameResult.of(dealer, player);
+        GameResult gameResult = GameResult.determine(dealer, player);
 
         Assertions.assertThat(gameResult).isEqualTo(GameResult.WIN);
     }
@@ -105,7 +105,7 @@ public class GameResultTest {
                 new Card(Pattern.DIAMOND, CardNumber.TEN),
                 new Card(Pattern.HEART, CardNumber.TEN)));
 
-        GameResult gameResult = GameResult.of(dealer, player);
+        GameResult gameResult = GameResult.determine(dealer, player);
 
         Assertions.assertThat(gameResult).isEqualTo(GameResult.DRAW);
     }
@@ -121,7 +121,7 @@ public class GameResultTest {
                 new Card(Pattern.DIAMOND, CardNumber.TEN),
                 new Card(Pattern.HEART, CardNumber.ACE)));
 
-        GameResult gameResult = GameResult.of(dealer, player);
+        GameResult gameResult = GameResult.determine(dealer, player);
 
         Assertions.assertThat(gameResult).isEqualTo(GameResult.DRAW);
     }
@@ -137,7 +137,7 @@ public class GameResultTest {
                 new Card(Pattern.DIAMOND, CardNumber.TEN),
                 new Card(Pattern.HEART, CardNumber.TEN)));
 
-        GameResult gameResult = GameResult.of(dealer, player);
+        GameResult gameResult = GameResult.determine(dealer, player);
 
         Assertions.assertThat(gameResult).isEqualTo(GameResult.LOSE);
     }
@@ -153,7 +153,7 @@ public class GameResultTest {
                 new Card(Pattern.DIAMOND, CardNumber.TEN),
                 new Card(Pattern.HEART, CardNumber.ACE)));
 
-        GameResult gameResult = GameResult.of(dealer, player);
+        GameResult gameResult = GameResult.determine(dealer, player);
 
         Assertions.assertThat(gameResult).isEqualTo(GameResult.BLACKJACK);
     }

@@ -20,7 +20,7 @@ public class Players {
         this.players = players;
     }
 
-    public static Players of(List<String> playerNames, List<Integer> playerBetting) {
+    public static Players joinWithBets(List<String> playerNames, List<Integer> playerBetting) {
         List<Player> players = IntStream.range(0, playerNames.size())
                 .mapToObj(i -> new Player(playerNames.get(i), playerBetting.get(i)))
                 .toList();
@@ -57,6 +57,12 @@ public class Players {
     public List<Integer> getBettingMoneys() {
         return players.stream()
                 .map(Player::getBettingMoney)
+                .toList();
+    }
+
+    public List<Hand> getHands() {
+        return players.stream()
+                .map(Player::getHand)
                 .toList();
     }
 }

@@ -1,7 +1,6 @@
 import static card.CardDeck.DRAW_COUNT_WHEN_HIT;
 import static card.CardDeck.DRAW_COUNT_WHEN_START;
 
-import card.Card;
 import card.CardDeck;
 import card.RandomCardShuffler;
 import game.Dealer;
@@ -20,16 +19,15 @@ public class Application {
         OutputView outputView = new OutputView();
 
         CardDeck cardDeck = CardDeck.prepareDeck(new RandomCardShuffler());
+        Dealer dealer = new Dealer();
 
         List<String> playerNames = inputView.readPlayerNames();
         List<Integer> playerBetting = inputView.readBettingMoney(playerNames);
-        Players players = Players.of(playerNames, playerBetting);
-        Dealer dealer = new Dealer();
+        Players players = Players.joinWithBets(playerNames, playerBetting);
 
-        players.draw(cardDeck);
         dealer.draw(cardDeck.drawCard(DRAW_COUNT_WHEN_START));
-        Card dealerCard = dealer.getSingleCard();
-        outputView.printInitialGame(dealerCard, players.getPlayers());
+        players.draw(cardDeck);
+        outputView.printInitialGame(dealer.getSingleCard(), players.getPlayers());
 
         for (Player player : players.getPlayers()) {
             while (!player.isBust() && inputView.readDrawMoreCard(player)) {
@@ -43,8 +41,8 @@ public class Application {
         }
         outputView.printHitProcess(dealer, players);
 
-        GameResults gameResults = GameResults.of(dealer, players.getPlayers());
-        Profits profits = Profits.of(players.getBettingMoneys(), gameResults.getGameResults());
+        GameResults gameResults = GameResults.determine(dealer, players.getPlayers());
+        Profits profits = Profits.evaluateProfits(players.getBettingMoneys(), gameResults.getGameResults());
 
         int dealerProfit = profits.evaluateDealerProfit();
 

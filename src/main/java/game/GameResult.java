@@ -15,7 +15,7 @@ public enum GameResult {
         this.evaluateStrategy = evaluateStrategy;
     }
 
-    public static GameResult of(Dealer dealer, Player player) {
+    public static GameResult determine(Dealer dealer, Player player) {
         if (player.isBlackJack() && dealer.isBlackJack()) {
             return DRAW;
         }
@@ -53,5 +53,5 @@ public enum GameResult {
     public int evaluate(int betting) {
         return evaluateStrategy.apply(betting);
     }
-    
+
 }

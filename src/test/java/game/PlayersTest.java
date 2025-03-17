@@ -22,7 +22,7 @@ public class PlayersTest {
 
     @Test
     void 플레이어들을_배팅금액과_함께_생성한다() {
-        assertThatCode(() -> Players.of(
+        assertThatCode(() -> Players.joinWithBets(
                 List.of("pobi", "font"), List.of(1000, 2000)
         )).doesNotThrowAnyException();
     }
@@ -87,10 +87,10 @@ public class PlayersTest {
     void 플레이어들의_베팅_금액을_반환한다() {
         List<String> playerNames = List.of("a", "b");
         List<Integer> bettingMoneys = List.of(1000, 2000);
-        Players players = Players.of(playerNames, bettingMoneys);
+        Players players = Players.joinWithBets(playerNames, bettingMoneys);
 
         List<Integer> actual = players.getBettingMoneys();
-        
+
         assertThat(actual).containsExactlyElementsOf(bettingMoneys);
     }
 

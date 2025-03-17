@@ -13,7 +13,7 @@ public class ProfitsTest {
         List<GameResult> gameResults = List.of(
                 GameResult.BLACKJACK, GameResult.WIN, GameResult.DRAW, GameResult.LOSE);
 
-        Profits profits = Profits.of(bettingMoneys, gameResults);
+        Profits profits = Profits.evaluateProfits(bettingMoneys, gameResults);
 
         assertThat(profits.getProfits()).containsExactlyElementsOf(List.of(1500, 1000, 0, -1000));
     }
@@ -23,10 +23,10 @@ public class ProfitsTest {
         List<Integer> bettingMoneys = List.of(1000, 1000, 1000, 1000);
         List<GameResult> gameResults = List.of(
                 GameResult.BLACKJACK, GameResult.WIN, GameResult.DRAW, GameResult.LOSE);
-        Profits profits = Profits.of(bettingMoneys, gameResults);
+        Profits profits = Profits.evaluateProfits(bettingMoneys, gameResults);
 
         int dealerProfit = profits.evaluateDealerProfit();
-        
+
         assertThat(dealerProfit).isEqualTo(-1500);
     }
 

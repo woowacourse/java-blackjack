@@ -11,10 +11,10 @@ public class GameResults {
         this.gameResults = gameResults;
     }
 
-    public static GameResults of(Dealer dealer, List<Player> players) {
+    public static GameResults determine(Dealer dealer, List<Player> players) {
         List<GameResult> gameResults = new ArrayList<>();
         players.forEach(player -> gameResults.add(
-                GameResult.of(dealer, player)
+                GameResult.determine(dealer, player)
         ));
         return new GameResults(gameResults);
     }

@@ -20,7 +20,7 @@ public class GameResultsTest {
                 new Card(Pattern.HEART, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.NINE)));
 
-        GameResults gameResults = GameResults.of(dealer, List.of(player));
+        GameResults gameResults = GameResults.determine(dealer, List.of(player));
 
         Assertions.assertThat(gameResults.getGameResults()).containsExactlyElementsOf(List.of(GameResult.LOSE));
     }
@@ -39,7 +39,7 @@ public class GameResultsTest {
                 new Card(Pattern.SPADE, CardNumber.JACK),
                 new Card(Pattern.HEART, CardNumber.TWO)));
 
-        GameResults gameResults = GameResults.of(dealer, List.of(player));
+        GameResults gameResults = GameResults.determine(dealer, List.of(player));
 
         Assertions.assertThat(gameResults.getGameResults()).containsExactlyElementsOf(List.of(GameResult.LOSE));
     }
@@ -57,7 +57,7 @@ public class GameResultsTest {
                 new Card(Pattern.HEART, CardNumber.TEN),
                 new Card(Pattern.DIAMOND, CardNumber.TEN)));
 
-        GameResults gameResults = GameResults.of(dealer, List.of(player));
+        GameResults gameResults = GameResults.determine(dealer, List.of(player));
 
         Assertions.assertThat(gameResults.getGameResults()).containsExactlyElementsOf(List.of(GameResult.WIN));
     }
@@ -74,7 +74,7 @@ public class GameResultsTest {
                 new Card(Pattern.HEART, CardNumber.TEN),
                 new Card(Pattern.CLOVER, CardNumber.ACE)));
 
-        GameResults gameResults = GameResults.of(dealer, List.of(player));
+        GameResults gameResults = GameResults.determine(dealer, List.of(player));
 
         Assertions.assertThat(gameResults.getGameResults()).containsExactlyElementsOf(List.of(GameResult.DRAW));
     }
@@ -91,7 +91,7 @@ public class GameResultsTest {
                 new Card(Pattern.HEART, CardNumber.TEN),
                 new Card(Pattern.DIAMOND, CardNumber.TEN)));
 
-        GameResults gameResults = GameResults.of(dealer, List.of(player));
+        GameResults gameResults = GameResults.determine(dealer, List.of(player));
 
         Assertions.assertThat(gameResults.getGameResults()).containsExactlyElementsOf(List.of(GameResult.LOSE));
     }
@@ -108,7 +108,7 @@ public class GameResultsTest {
                 new Card(Pattern.HEART, CardNumber.TEN),
                 new Card(Pattern.DIAMOND, CardNumber.ACE)));
 
-        GameResults gameResults = GameResults.of(dealer, List.of(player));
+        GameResults gameResults = GameResults.determine(dealer, List.of(player));
 
         Assertions.assertThat(gameResults.getGameResults()).containsExactlyElementsOf(List.of(GameResult.BLACKJACK));
     }
