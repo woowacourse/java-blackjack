@@ -4,9 +4,13 @@ import static blackjack.model.card.CardCreator.createCard;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.Cards;
@@ -41,6 +45,43 @@ class UserTest {
     @Test
     void 자신이_딜러인지_확인해준다() {
         assertThat(user.isDealer()).isFalse();
+    }
+
+    @MethodSource("유저가_블랙잭인지_확인한다_테스트_케이스")
+    @ParameterizedTest
+    void 유저가_블랙잭인지_확인한다(Cards cards, boolean expected) {
+        user.receiveCards(cards);
+
+        assertThat(user.isBlackjack()).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> 유저가_블랙잭인지_확인한다_테스트_케이스() {
+        return Stream.of(
+                Arguments.of(new Cards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.ACE))), true),
+                Arguments.of(new Cards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.JACK))), false),
+                Arguments.of(new Cards(List.of(
+                        createCard(CardNumber.TEN), createCard(CardNumber.JACK), createCard(CardNumber.ACE))), false
+                )
+        );
+    }
+
+    @MethodSource("유저가_버스트인지_확인한다_테스트_케이스")
+    @ParameterizedTest
+    void 유저가_버스트인지_확인한다(Cards cards, boolean expected) {
+        user.receiveCards(cards);
+
+        assertThat(user.isBust()).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> 유저가_버스트인지_확인한다_테스트_케이스() {
+        return Stream.of(
+                Arguments.of(
+                        new Cards(createCard(CardNumber.TEN), createCard(CardNumber.TEN), createCard(CardNumber.TWO)),
+                        true),
+                Arguments.of(
+                        new Cards(createCard(CardNumber.TEN), createCard(CardNumber.TEN), createCard(CardNumber.ACE)),
+                        false)
+        );
     }
 
 }
