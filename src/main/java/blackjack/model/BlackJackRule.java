@@ -32,7 +32,7 @@ public class BlackJackRule {
         player.putCard(deck.drawCard());
     }
 
-    public static void giveCardToCurrentTurnParticipant(final Participant participant, final boolean isParticipantWantCard, final Deck deck) {
+    public static void giveCardToParticipantIfWant(final Participant participant, final boolean isParticipantWantCard, final Deck deck) {
         if (isParticipantWantCard) {
             giveCard(participant, deck);
         }
@@ -51,7 +51,7 @@ public class BlackJackRule {
         return MoneyDistributor.calculateDealerMoney(winningMoney);
     }
 
-    public static boolean isPlayerBust(final Participant participant) {
-        return participant.isBust();
+    public static boolean isPlayerBust(final Player player) {
+        return player.isBust();
     }
 }

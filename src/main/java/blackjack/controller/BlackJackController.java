@@ -54,7 +54,7 @@ public class BlackJackController {
         boolean isParticipantWantCard;
         do {
             isParticipantWantCard = Parser.parseCommand(inputView.inputCallOrStay(participant.getName()));
-            BlackJackRule.giveCardToCurrentTurnParticipant(participant, isParticipantWantCard, deck);
+            BlackJackRule.giveCardToParticipantIfWant(participant, isParticipantWantCard, deck);
             outputView.outputPlayerCardStatus(participant);
         } while(isParticipantWantCard && isParticipantNotBust(participant));
     }
