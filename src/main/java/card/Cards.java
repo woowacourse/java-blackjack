@@ -7,6 +7,8 @@ import java.util.List;
 
 public class Cards {
 
+    private static final int BLACK_JACK_CARD_SIZE = 2;
+
     private final List<Card> cards = new ArrayList<>();
 
     public void add(Card card) {
@@ -21,7 +23,7 @@ public class Cards {
     }
 
     public boolean isBlackJack() {
-        return cards.size() == 2 && hasSoftAce() && calculateScore().isSatisfiedBlackJackScore();
+        return cards.size() == BLACK_JACK_CARD_SIZE && hasSoftAce() && calculateScore().isSatisfiedBlackJackScore();
     }
 
     public boolean isBust() {
