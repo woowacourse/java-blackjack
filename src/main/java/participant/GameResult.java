@@ -8,8 +8,8 @@ public enum GameResult {
     ;
 
     public static GameResult judge(Dealer dealer, Player player) {
-        if ((dealer.isBust() && !player.isBust()) || player.score() > dealer.score()
-            || player.isBlackjack()) {
+        if ((dealer.isBust() && !player.isBust()) || (!player.isBust() && player.score() > dealer.score())
+            || (player.isBlackjack() && !dealer.isBlackjack())) {
             return LOSE;
         }
 
