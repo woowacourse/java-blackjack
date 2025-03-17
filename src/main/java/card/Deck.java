@@ -15,10 +15,4 @@ public final class Deck {
         }
         return deck.removeLast();
     }
-//
-//    public CardHand getInitialDeal() {
-//        Card firstCard = receiveCard();
-//        Card secondCard = receiveCard();
-//        return new CardHand(Set.of(firstCard, secondCard));
-//    }
 }

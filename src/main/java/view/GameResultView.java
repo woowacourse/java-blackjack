@@ -1,24 +1,14 @@
 package view;
 
+import card.Card;
+import card.GameScore;
+import java.util.List;
 import participant.Name;
-import participant.Participant;
-import participant.Participants;
 import result.Profit;
 
 public final class GameResultView extends BlackjackView {
-    public String getFinalScores(final Participants participants) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(getEmptyLine());
-        for (Participant participant : participants.getParticipants()) {
-            stringBuilder.append(getParticipantCards(participant.getName(), participant.getCards()));
-            stringBuilder.append(getFinalScore(participant));
-            stringBuilder.append(getEmptyLine());
-        }
-        return stringBuilder.toString();
-    }
-
-    private String getFinalScore(final Participant participant) {
-        return String.format(" - 결과: %s", participant.getScore());
+    public String getFinalScore(final Name name, final List<Card> cards, final GameScore score) {
+        return String.format("%s - 결과: %s%n", getParticipantCards(name, cards), score);
     }
 
     public String getFinalProfitHeader() {

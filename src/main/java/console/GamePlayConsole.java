@@ -1,16 +1,16 @@
 package console;
 
 import card.Deck;
+import java.util.List;
 import participant.Dealer;
 import participant.Player;
-import participant.Players;
 import view.GamePlayView;
 
 public final class GamePlayConsole extends Console {
     private final GamePlayView gamePlayView = new GamePlayView();
 
-    public void drawAllPlayerCards(final Players players, final Deck deck) {
-        for (Player player : players.getPlayers()) {
+    public void drawAllPlayerCards(final List<Player> players, final Deck deck) {
+        for (Player player : players) {
             display(gamePlayView.getEmptyLine());
             drawPlayerCards(player, deck);
         }

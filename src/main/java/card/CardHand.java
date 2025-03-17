@@ -6,7 +6,7 @@ import java.util.List;
 public final class CardHand {
     private final List<Card> cards;
 
-    private CardHand(final Card card1, final Card card2) {
+    public CardHand(final Card card1, final Card card2) {
         this.cards = new ArrayList<>(List.of(card1, card2));
     }
 

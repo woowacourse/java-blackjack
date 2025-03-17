@@ -1,9 +1,9 @@
 package view;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import participant.Name;
 import participant.Participant;
-import participant.Participants;
 
 public final class GameSetupView extends BlackjackView {
     public String getInputNameGuide() {
@@ -14,21 +14,15 @@ public final class GameSetupView extends BlackjackView {
         return String.format("%n%s의 배팅 금액은?%n", playerName);
     }
 
-    public String getSetupResult(final Participants participants) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(String.format("%n%s에게 2장을 나누었습니다.%n", getParticipantNames(participants)));
-        for (Participant participant : participants.getParticipants()) {
-            stringBuilder.append(getParticipantCards(participant.getName(), participant.openInitialCard()));
-            stringBuilder.append(getEmptyLine());
-        }
-        return stringBuilder.toString();
+    public String getSetupHeader(final Name dealerName, final List<Name> playerNames) {
+        String names = playerNames.stream()
+                .map(Name::toString)
+                .collect(Collectors.joining(", "));
+        return String.format("%n%s, %s에게 2장을 나누었습니다.%n", dealerName, names);
     }
 
-    private String getParticipantNames(final Participants participants) {
-        List<String> allPlayerNames = participants.getParticipants().stream()
-                .map(Participant::getName)
-                .map(Name::toString)
-                .toList();
-        return String.join(", ", allPlayerNames);
+    public String getSetupResult(final Participant participant) {
+        String participantCards = getParticipantCards(participant.getName(), participant.openInitialCard());
+        return String.format("%s%n", participantCards);
     }
 }

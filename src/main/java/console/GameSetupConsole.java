@@ -1,31 +1,36 @@
 package console;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import card.CardHand;
 import card.Deck;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import participant.Bet;
+import participant.Dealer;
 import participant.Name;
-import participant.Participants;
+import participant.Player;
 import view.GameSetupView;
 
 public final class GameSetupConsole extends Console {
     private final GameSetupView gameSetupView = new GameSetupView();
 
-    public Participants registerParticipants(final Deck deck) {
-        Map<Name, Bet> registerInput = new LinkedHashMap<>();
+    public List<Player> registerPlayers(final Deck deck) {
+        List<Player> players = new ArrayList<>();
         PlayerNames playerNames = readPlayerNames();
         for (Name playerName : playerNames.playerNames()) {
             Bet bet = readBet(playerName);
-            registerInput.put(playerName, bet);
+            players.add(new Player(playerName, bet, CardHand.drawInitialHand(deck)));
         }
-        return Participants.initialize(registerInput, deck);
+        return players;
     }
 
-    public void displaySetupResult(final Participants participants) {
-        String setupResult = gameSetupView.getSetupResult(participants);
-        display(setupResult);
+    public void displaySetupResult(final Dealer dealer, final List<Player> players) {
+        List<Name> playerNames = players.stream().map(Player::getName).toList();
+        display(gameSetupView.getSetupHeader(dealer.getName(), playerNames));
+        display(gameSetupView.getSetupResult(dealer));
+        for (Player player : players) {
+            display(gameSetupView.getSetupResult(player));
+        }
     }
 
     private PlayerNames readPlayerNames() {

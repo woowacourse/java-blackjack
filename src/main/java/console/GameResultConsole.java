@@ -1,26 +1,27 @@
 package console;
 
+import java.util.List;
 import participant.Dealer;
-import participant.Participants;
 import participant.Player;
-import participant.Players;
 import result.FinalProfit;
 import view.GameResultView;
 
 public final class GameResultConsole extends Console {
     private final GameResultView gameResultView = new GameResultView();
 
-    public void getFinalScores(final Participants participants) {
-        display(gameResultView.getFinalScores(participants)); // TODO 로직들 View -> Console로 다 이동시키기
+    public void getFinalScores(final Dealer dealer, final List<Player> players) {
+        display(gameResultView.getEmptyLine());
+        display(gameResultView.getFinalScore(dealer.getName(), dealer.getCards(), dealer.getScore()));
+        for (Player player : players) {
+            display(gameResultView.getFinalScore(player.getName(), player.getCards(), player.getScore()));
+        }
     }
 
-    public void getFinalProfits(final Participants participants) {
+    public void getFinalProfits(final Dealer dealer, final List<Player> players) {
         display(gameResultView.getFinalProfitHeader());
-        Players players = participants.getPlayers();
-        Dealer dealer = participants.getDealer();
-        FinalProfit finalProfit = new FinalProfit(dealer, players.getPlayers());
+        FinalProfit finalProfit = new FinalProfit(dealer, players);
         display(gameResultView.getFinalProfit(dealer.getName(), finalProfit.calculateDealerProfit()));
-        for (Player player : players.getPlayers()) {
+        for (Player player : players) {
             display(gameResultView.getFinalProfit(player.getName(), finalProfit.getProfit(player)));
         }
     }
