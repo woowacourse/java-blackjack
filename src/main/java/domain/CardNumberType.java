@@ -18,7 +18,6 @@ public enum CardNumberType {
     QUEEN(10),
     KING(10);
 
-    private static final String INVALID_INDEX = "해당하는 카드 숫자의 인덱스가 존재하지 않습니다.";
     private static final int ACE_HIGH_CONVERSION_THRESHOLD = 10;
 
     private final List<Integer> cardNumbers;

@@ -19,7 +19,6 @@ class PlayerTest {
                 )
         );
 
-        Player player = new Player("이름", playerHand);
 
         Hand dealerHand = new Hand(
                 List.of(
@@ -30,7 +29,7 @@ class PlayerTest {
         );
 
         //when
-        GameResultStatus gameResultStatus = player.calculateResultStatus(dealerHand);
+        GameResultStatus gameResultStatus = playerHand.calculateGameResultStatus(dealerHand);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.WIN);
@@ -49,8 +48,6 @@ class PlayerTest {
                 )
         );
 
-        Player player = new Player("이름", playerHand);
-
         Hand dealerHand = new Hand(
                 List.of(
                         new Card(CardNumberType.JACK, CardType.CLOVER),
@@ -59,7 +56,7 @@ class PlayerTest {
         );
 
         //when
-        GameResultStatus gameResultStatus = player.calculateResultStatus(dealerHand);
+        GameResultStatus gameResultStatus = playerHand.calculateGameResultStatus(dealerHand);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.LOSE);
@@ -76,8 +73,6 @@ class PlayerTest {
                 )
         );
 
-        Player player = new Player("이름", playerHand);
-
         Hand dealerHand = new Hand(
                 List.of(
                         new Card(CardNumberType.JACK, CardType.CLOVER),
@@ -86,7 +81,7 @@ class PlayerTest {
         );
 
         //when
-        GameResultStatus gameResultStatus = player.calculateResultStatus(dealerHand);
+        GameResultStatus gameResultStatus = playerHand.calculateGameResultStatus(dealerHand);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.WIN);
@@ -103,8 +98,6 @@ class PlayerTest {
                 )
         );
 
-        Player player = new Player("이름", playerHand);
-
         Hand dealerHand = new Hand(
                 List.of(
                         new Card(CardNumberType.JACK, CardType.CLOVER),
@@ -113,7 +106,7 @@ class PlayerTest {
         );
 
         //when
-        GameResultStatus gameResultStatus = player.calculateResultStatus(dealerHand);
+        GameResultStatus gameResultStatus = playerHand.calculateGameResultStatus(dealerHand);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.LOSE);
@@ -130,8 +123,6 @@ class PlayerTest {
                 )
         );
 
-        Player player = new Player("이름", playerHand);
-
         Hand dealerHand = new Hand(
                 List.of(
                         new Card(CardNumberType.JACK, CardType.CLOVER),
@@ -140,7 +131,7 @@ class PlayerTest {
         );
 
         //when
-        GameResultStatus gameResultStatus = player.calculateResultStatus(dealerHand);
+        GameResultStatus gameResultStatus = playerHand.calculateGameResultStatus(dealerHand);
 
         //then
         assertThat(gameResultStatus).isEqualTo(GameResultStatus.DRAW);

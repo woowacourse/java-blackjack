@@ -1,16 +1,27 @@
 package view.support;
 
-import static domain.CardNumberType.*;
-import static domain.CardType.*;
-import static domain.GameResultStatus.DRAW;
-import static domain.GameResultStatus.LOSE;
-import static domain.GameResultStatus.WIN;
+import static domain.CardNumberType.ACE;
+import static domain.CardNumberType.EIGHT;
+import static domain.CardNumberType.FIVE;
+import static domain.CardNumberType.FOUR;
+import static domain.CardNumberType.JACK;
+import static domain.CardNumberType.KING;
+import static domain.CardNumberType.NINE;
+import static domain.CardNumberType.QUEEN;
+import static domain.CardNumberType.SEVEN;
+import static domain.CardNumberType.SIX;
+import static domain.CardNumberType.TEN;
+import static domain.CardNumberType.THREE;
+import static domain.CardNumberType.TWO;
+import static domain.CardType.CLOVER;
+import static domain.CardType.DIAMOND;
+import static domain.CardType.HEART;
+import static domain.CardType.SPACE;
 
 import domain.Card;
 import domain.CardNumberType;
 import domain.CardType;
 import domain.Hand;
-import domain.GameResultStatus;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,12 +56,6 @@ public class OutputFormatter {
         CARD_NUMBER_TYPE_FORMATTER.put(KING, "K");
     }
 
-    private static final Map<GameResultStatus, String> GAME_RESULT_FORMATTER = Map.of(
-            WIN, "승",
-            DRAW, "무",
-            LOSE, "패"
-    );
-
     public String formatPlayerNames(List<String> names) {
         return String.join(NAME_SEPARATOR, names).trim();
     }
@@ -71,9 +76,5 @@ public class OutputFormatter {
 
     public String formatCard(Card card) {
         return CARD_NUMBER_TYPE_FORMATTER.get(card.cardNumberType()) + CARD_TYPE_FORMATTER.get(card.cardType());
-    }
-
-    public String formatGameResult(GameResultStatus gameResultStatus) {
-        return GAME_RESULT_FORMATTER.get(gameResultStatus);
     }
 }
