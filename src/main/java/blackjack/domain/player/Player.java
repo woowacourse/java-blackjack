@@ -19,7 +19,7 @@ public abstract class Player {
         this.hand = new Hand(batMoney);
     }
 
-    abstract public List<Card> getOpenedCards();
+    public abstract List<Card> getOpenedCards();
 
     public void addCards(final Cards cards) {
         hand.addCards(cards);
