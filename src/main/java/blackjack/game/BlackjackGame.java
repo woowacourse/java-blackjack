@@ -39,7 +39,8 @@ public class BlackjackGame {
     }
 
     public int calculateProfitForPlayers() {
-        return players.calculatePlayersProfit(dealer);
+        players.calculatePlayersProfit(dealer);
+        return players.calculateTotalProfit();
     }
 
     public Dealer getDealer() {

@@ -59,15 +59,18 @@ public class Players {
             .orElseThrow(() -> new IllegalArgumentException("플레이어를 찾을 수 없습니다."));
     }
 
-    public int calculatePlayersProfit(final Dealer dealer) {
-        int totalProfit = 0;
+    public void calculatePlayersProfit(final Dealer dealer) {
         for (Player player : joinedPlayers) {
             int profit = dealer.calculateProfitForPlayer(player);
-
-            totalProfit += profit;
             player.updateAmount(new BetAmount(player.getBetAmount().getPrincipal(), profit));
         }
-        return totalProfit;
+    }
+
+    public int calculateTotalProfit() {
+        return joinedPlayers.stream()
+            .map(Player::getBetAmount)
+            .map(BetAmount::getProfit)
+            .reduce(0, Integer::sum);
     }
 
     public List<PlayerName> getPlayerNames() {

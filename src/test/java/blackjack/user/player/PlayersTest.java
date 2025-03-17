@@ -181,8 +181,15 @@ public class PlayersTest {
 
             dealer.addCards(2);
             players.addPickedCards(dealer, 2);
+            players.calculatePlayersProfit(dealer);
 
-            assertThat(players.calculatePlayersProfit(dealer)).isEqualTo(5000);
+            List<Player> result = players.getJoinedPlayers();
+
+            assertAll(() -> {
+                assertThat(result.get(0).getBetAmount().getProfit()).isEqualTo(-10000);
+                assertThat(result.get(1).getBetAmount().getProfit()).isEqualTo(15000);
+                assertThat(result.get(2).getBetAmount().getProfit()).isEqualTo(0);
+            });
         }
     }
 }
