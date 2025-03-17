@@ -1,7 +1,7 @@
 package view;
 
-import domain.CardRank;
-import domain.CardShape;
+import card.CardRank;
+import card.CardShape;
 
 public class CardConverter {
     private CardConverter() {

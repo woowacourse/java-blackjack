@@ -1,7 +1,7 @@
-package domain.user;
+package user;
 
-import domain.CardHand;
-import domain.TrumpCard;
+import card.Card;
+import card.CardHand;
 import java.util.List;
 
 public class Player extends User {
@@ -14,22 +14,18 @@ public class Player extends User {
     }
 
     @Override
-    public boolean isImpossibleDraw() {
-        return cardHand.isAtLeastScore(CardHand.MAX_SCORE);
+    public boolean isDrawable() {
+        return !cardHand.isAtLeastScore(CardHand.MAX_SCORE);
     }
 
     @Override
-    public List<TrumpCard> openInitialCard() {
+    public List<Card> openInitialCard() {
         return this.cardHand.getAllCard();
     }
 
     @Override
     public String getName() {
         return this.name;
-    }
-
-    public boolean hasName(String name) {
-        return this.name.equals(name);
     }
 
     private void validate(String name) {

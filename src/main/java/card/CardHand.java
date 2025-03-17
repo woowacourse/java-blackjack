@@ -1,4 +1,4 @@
-package domain;
+package card;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,42 +9,42 @@ public class CardHand {
     private static final int ACE_MAX = 11;
     private static final int ACE_MIN = 1;
 
-    private final List<TrumpCard> cards;
+    private final List<Card> cards;
 
     public CardHand() {
         this.cards = new ArrayList<>();
     }
 
-    public void addTrumpCard(TrumpCard card) {
+    public void add(Card card) {
         cards.add(card);
     }
 
-    public int cardsSize() {
+    public int size() {
         return cards.size();
     }
 
-    public List<TrumpCard> getFirstCard() {
+    public List<Card> getFirstCard() {
         if (cards.isEmpty()) {
-            throw new IllegalArgumentException("카드 덱을 모두 사용했습니다.");
+            throw new IllegalArgumentException("갖고 있는 카드가 없습니다.");
         }
         return List.of(cards.getFirst());
     }
 
-    public List<TrumpCard> getAllCard() {
+    public List<Card> getAllCard() {
         if (cards.isEmpty()) {
-            throw new IllegalArgumentException("카드 덱을 모두 사용했습니다.");
+            throw new IllegalArgumentException("갖고 있는 카드가 없습니다.");
         }
         return new ArrayList<>(cards);
     }
 
-    public boolean hasAce() {
+    private boolean hasAce() {
         return cards.stream()
                 .anyMatch((card) -> card.getCardNumberValue() == CardRank.ACE.getPoint());
     }
 
     public boolean isAtLeastScore(int maxScore) {
-        int sum = calculateScore();
-        return sum >= maxScore;
+        int score = calculateScore();
+        return score >= maxScore;
     }
 
     public boolean checkOverScore() {
@@ -54,7 +54,7 @@ public class CardHand {
 
     public int calculateScore() {
         int sum = cards.stream()
-                .mapToInt(TrumpCard::getCardNumberValue)
+                .mapToInt(Card::getCardNumberValue)
                 .sum();
         if (hasAce() && sum <= ACE_MAX) {
             sum += (ACE_MAX - ACE_MIN);
