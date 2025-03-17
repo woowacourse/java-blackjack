@@ -26,7 +26,6 @@ public class BlackJackController {
             final Dealer dealer = createDealer();
             final Deck deck = generateDeck();
             setGame(players, dealer, deck);
-            printGameSetting(dealer, players);
             playGame(dealer, players, deck);
             finishGame(players, dealer);
         } catch (final IllegalArgumentException e) {
@@ -71,13 +70,10 @@ public class BlackJackController {
         players.receiveInitialCards(deck);
         final List<Card> initialCards = deck.getInitialGameCards();
         dealer.receiveInitialCards(initialCards);
-    }
-
-    private void printGameSetting(final Dealer dealer, final Players players) {
-        final List<String> playerNicknames = players.getPlayersDisplayNicknames();
-        OutputView.printInitialSettingMessage(dealer.getDisplayName(), playerNicknames);
+        OutputView.printInitialSettingMessage(dealer.getDisplayName(), players.getPlayersDisplayNicknames());
         OutputView.printCardsInHand(dealer.getDisplayName(), List.of(dealer.getFirstCard()));
-        players.getPlayers().forEach(player -> OutputView.printCardsInHand(player.getDisplayName(), player.getCards()));
+        players.getPlayers().forEach(player ->
+                OutputView.printCardsInHand(player.getDisplayName(), player.getCards()));
     }
 
     private void playGame(final Dealer dealer, final Players players, final Deck deck) {
