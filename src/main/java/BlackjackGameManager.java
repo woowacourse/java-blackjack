@@ -35,12 +35,14 @@ public class BlackjackGameManager {
         for (User user : users.getUsers()) {
             blackjackGameBoard.hitUntilStay(user, InputView::inputWantHit, OutputView::printPlayerCards);
         }
+
         blackjackGameBoard.hitUntilNotHittable(dealer, OutputView::printDealerHitMessage);
     }
 
     private void printPlayerCardsAndSum(BlackjackGameBoard blackjackGameBoard, Dealer dealer, Users users) {
         OutputView.printPlayerCardsAndSum(dealer.getName(),
                 blackjackGameBoard.playerCards(dealer), blackjackGameBoard.playerCardsSum(dealer));
+
         for (User user : users.getUsers()) {
             OutputView.printPlayerCardsAndSum(user.getName(),
                     blackjackGameBoard.playerCards(user), blackjackGameBoard.playerCardsSum(user));
