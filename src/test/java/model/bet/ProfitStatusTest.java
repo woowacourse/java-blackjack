@@ -4,7 +4,6 @@ import bet.Money;
 import bet.ProfitStatus;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -21,17 +20,19 @@ public class ProfitStatusTest {
     @ParameterizedTest
     @MethodSource("makeProfitStatusTestData")
     void plusProfitMoneyTest(Player expectedPlayer, Money expectedMoney) {
+        //given
         Map<Player, Money> profits = new HashMap<>();
         Players players = Players.from(List.of("hippo", "pobi", "james"));
         for (Player player : players.getPlayers()) {
             profits.put(player, new Money(1000));
         }
 
+        //when
         ProfitStatus profitStatus = new ProfitStatus(profits);
         Map<Player, Money> values = profitStatus.getValues();
 
+        //then
         Assertions.assertThat(values).containsEntry(expectedPlayer, expectedMoney);
-
     }
 
     private static Stream<Arguments> makeProfitStatusTestData() {

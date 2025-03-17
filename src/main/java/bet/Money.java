@@ -1,5 +1,7 @@
 package bet;
 
+import java.util.Objects;
+
 public class Money {
 
     private final int value;
@@ -26,4 +28,15 @@ public class Money {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Money money = (Money) o;
+        return value == money.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(value);
+    }
 }
