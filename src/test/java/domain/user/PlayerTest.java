@@ -65,7 +65,6 @@ public class PlayerTest {
         });
     }
 
-
     private static class FakeTrumpCardManager extends TrumpCardManager {
 
         private final Queue<TrumpCard> fakeTrumpCards;

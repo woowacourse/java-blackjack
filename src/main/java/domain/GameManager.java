@@ -120,3 +120,4 @@ public class GameManager {
                 .orElseThrow(() -> new IllegalArgumentException("등록되지 않는 닉네임 입니다."));
     }
 }
+

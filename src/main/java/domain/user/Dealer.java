@@ -12,7 +12,6 @@ public class Dealer extends User {
     public boolean isImpossibleDraw() {
         return cardDeck.isImpossibleDraw(DEALER_MAX_SCORE);
     }
-
     @Override
     public List<TrumpCard> openCard() {
         return this.cardDeck.getFirstCard();

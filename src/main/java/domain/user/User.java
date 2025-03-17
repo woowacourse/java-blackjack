@@ -20,7 +20,7 @@ public abstract class User {
     public abstract String getName();
 
     public abstract boolean isDealer();
-
+  
     public void receiveCard(final TrumpCard trumpCard) {
         cardDeck.addTrumpCard(trumpCard);
     }
@@ -31,6 +31,7 @@ public abstract class User {
 
     public int userScore() {
         return this.cardDeck.calculateScore();
+
     }
 
     public CardDeck getCardDeck() {
