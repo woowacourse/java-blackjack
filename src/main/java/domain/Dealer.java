@@ -1,10 +1,9 @@
 package domain;
 
-import static util.BlackjackConstants.DEALER_NAME;
-
 public class Dealer extends Participant {
 
     private static final int VALID_DRAW_LIMIT = 16;
+    public static final String DEALER_NAME = "딜러";
 
     public Dealer(Hand hand) {
         super(DEALER_NAME, hand);
