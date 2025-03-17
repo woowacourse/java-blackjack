@@ -16,7 +16,9 @@ public class Players {
     public static Players from(final Map<Name, Money> playerBets) {
         List<Player> players = new ArrayList<>();
         for (Entry<Name, Money> entry : playerBets.entrySet()) {
-            players.add(new Player(new Hand(List.of()), entry.getKey(), entry.getValue()));
+            Name name = entry.getKey();
+            Money money = entry.getValue();
+            players.add(new Player(new Hand(List.of()), name, money));
         }
         return new Players(players);
     }
