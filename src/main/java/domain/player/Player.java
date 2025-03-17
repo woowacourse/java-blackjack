@@ -1,7 +1,7 @@
 package domain.player;
 
+import domain.card.Card;
 import domain.card.Cards;
-import domain.card.Deck;
 import domain.state.State;
 import java.util.Objects;
 
@@ -15,8 +15,11 @@ public abstract class Player {
         this.state = state;
     }
 
-    public void hit(Deck deck) {
-        this.state = state.hit(deck.drawCard());
+    public void hit(Card card, boolean open) {
+        if (open) {
+            card.open();
+        }
+        this.state = state.hit(card);
     }
 
     public void stay() {

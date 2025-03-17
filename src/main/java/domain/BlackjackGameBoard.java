@@ -26,7 +26,7 @@ public class BlackjackGameBoard {
 
     public void distributeInitialCards(Player player) {
         for (int i = 0; i < INITIAL_DRAW_COUNT; i++) {
-            player.hit(deck);
+            player.hit(deck.drawCard(), false);
         }
     }
 
@@ -41,7 +41,7 @@ public class BlackjackGameBoard {
     public void hitUntilStay(User user,
                              Function<User, Boolean> wantHit, BiConsumer<User, Cards> onHit) {
         while (user.isRunning() && wantHit.apply(user)) {
-            user.hit(deck);
+            user.hit(deck.drawCard(), true);
             onHit.accept(user, user.cards());
         }
         if (user.isRunning()) {
@@ -51,7 +51,7 @@ public class BlackjackGameBoard {
 
     public void hitUntilUnder16(Dealer dealer, Runnable onHit) {
         while (dealer.isRunning()) {
-            dealer.hit(deck);
+            dealer.hit(deck.drawCard(), true);
             onHit.run();
         }
     }

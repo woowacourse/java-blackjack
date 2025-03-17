@@ -1,3 +1,5 @@
+import domain.BlackjackGameBoard;
+import domain.card.DeckGenerator;
 import domain.player.Dealer;
 import domain.player.Users;
 import view.InputView;
@@ -9,6 +11,6 @@ public class BlackjackApplication {
                 Dealer.createDefaultDealer(),
                 Users.from(InputView.inputUsers())
         );
-        blackjackGameManager.startGame();
+        blackjackGameManager.startGame(new BlackjackGameBoard(DeckGenerator.generateDeck()));
     }
 }

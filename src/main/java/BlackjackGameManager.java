@@ -1,5 +1,4 @@
 import domain.BlackjackGameBoard;
-import domain.card.DeckGenerator;
 import domain.player.Dealer;
 import domain.player.User;
 import domain.player.Users;
@@ -17,9 +16,7 @@ public class BlackjackGameManager {
         this.users = users;
     }
 
-    public void startGame() {
-        BlackjackGameBoard blackjackGameBoard = new BlackjackGameBoard(DeckGenerator.generateDeck());
-
+    public void startGame(BlackjackGameBoard blackjackGameBoard) {
         initialCardsDistribution(blackjackGameBoard);
         hitOrStayPhase(blackjackGameBoard);
         printPlayerCardsAndSum(blackjackGameBoard);
