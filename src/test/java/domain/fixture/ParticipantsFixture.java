@@ -1,9 +1,9 @@
 package domain.fixture;
 
-import domain.Dealer;
-import domain.Participant;
-import domain.Participants;
-import domain.Player;
+import domain.participant.Dealer;
+import domain.participant.Participant;
+import domain.participant.Participants;
+import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
 

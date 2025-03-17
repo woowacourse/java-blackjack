@@ -9,12 +9,12 @@ import static domain.card.Shape.HEART;
 import static domain.card.Shape.SPADE;
 
 import domain.GameResult;
-import domain.Participant;
 import domain.ParticipantsResult;
 import domain.PlayerResult;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Shape;
+import domain.participant.Participant;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

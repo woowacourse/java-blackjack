@@ -1,5 +1,7 @@
 package domain;
 
+import domain.participant.Participant;
+import domain.participant.Participants;
 import java.util.ArrayList;
 import java.util.List;
 

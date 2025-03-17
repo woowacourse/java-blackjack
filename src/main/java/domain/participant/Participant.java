@@ -1,5 +1,6 @@
-package domain;
+package domain.participant;
 
+import domain.GameResult;
 import domain.card.Card;
 import java.util.ArrayList;
 import java.util.Collections;

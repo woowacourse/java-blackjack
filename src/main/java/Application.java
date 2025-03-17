@@ -1,5 +1,5 @@
 import controller.BlackJackController;
-import domain.CardBundle;
+import domain.card.CardBundle;
 import java.util.Scanner;
 import view.InputView;
 import view.OutputView;

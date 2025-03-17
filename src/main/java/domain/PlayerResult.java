@@ -1,5 +1,6 @@
 package domain;
 
+import domain.participant.Participant;
 import java.util.Objects;
 
 public class PlayerResult {

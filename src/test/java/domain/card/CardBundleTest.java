@@ -1,9 +1,8 @@
-package domain;
+package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import domain.card.Card;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
