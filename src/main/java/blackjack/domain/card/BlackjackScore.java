@@ -18,30 +18,6 @@ public record BlackjackScore(int value, int cardSize) {
         return new BlackjackScore(this.value + otherBlackjackScore.value, this.cardSize);
     }
 
-    public boolean isBlackjack() {
-        return equals(BLACKJACK_BLACKJACK_SCORE) && this.cardSize == BLACKJACK_CARD_NUMBER;
-    }
-
-    public boolean isBust() {
-        return this.isGreaterThan(BLACKJACK_BLACKJACK_SCORE);
-    }
-
-    public boolean isGreaterThan(BlackjackScore otherBlackjackScore) {
-        return this.value > otherBlackjackScore.value;
-    }
-
-    public boolean canTake() {
-        return this.isLessThan(BLACKJACK_BLACKJACK_SCORE);
-    }
-
-    public boolean doesNeedDealerPickAdditionalCard() {
-        return this.isLessThan(DEALER_BLACKJACK_SCORE_THRESHOLD);
-    }
-
-    public boolean isLessThan(BlackjackScore otherBlackjackScore) {
-        return this.value < otherBlackjackScore.value;
-    }
-
     public WinningResult decide(BlackjackScore subBlackjackScore) {
         if (isWinning(subBlackjackScore)) {
             return WinningResult.WIN;
@@ -93,8 +69,31 @@ public record BlackjackScore(int value, int cardSize) {
         return this.value == subBlackjackScore.value;
     }
 
-    @Override
-    public String toString() {
+    public boolean isBlackjack() {
+        return equals(BLACKJACK_BLACKJACK_SCORE) && this.cardSize == BLACKJACK_CARD_NUMBER;
+    }
+
+    public boolean isBust() {
+        return this.isGreaterThan(BLACKJACK_BLACKJACK_SCORE);
+    }
+
+    public boolean isGreaterThan(BlackjackScore otherBlackjackScore) {
+        return this.value > otherBlackjackScore.value;
+    }
+
+    public boolean isLessThan(BlackjackScore otherBlackjackScore) {
+        return this.value < otherBlackjackScore.value;
+    }
+
+    public boolean doesNeedDealerPickAdditionalCard() {
+        return this.isLessThan(DEALER_BLACKJACK_SCORE_THRESHOLD);
+    }
+
+    public boolean canTake() {
+        return this.isLessThan(BLACKJACK_BLACKJACK_SCORE);
+    }
+
+    public String getValue() {
         return String.valueOf(value);
     }
 }
