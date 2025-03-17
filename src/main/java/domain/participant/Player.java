@@ -14,13 +14,11 @@ public class Player extends Participant {
     private static final int LOSS_PAYOUT_RATIO = -1;
     private static final int PUSH_PROFIT = 0;
 
-    private final Name name;
-    private final Money money;
+    private final PlayerInfo playerInfo;
 
-    public Player(final Hand hand, final Name name, final Money money) {
+    public Player(final Hand hand, final PlayerInfo playerInfo) {
         super(hand);
-        this.name = name;
-        this.money = money;
+        this.playerInfo = playerInfo;
     }
 
     public void hitCards(final Deck deck) {
@@ -54,16 +52,14 @@ public class Player extends Participant {
     }
 
     public String getName() {
-        return name.getName();
+        return playerInfo.getName();
     }
 
     public Hand getCards() {
         return super.getCards();
     }
 
-    public int getMoney() {
-        return money.getMoney();
-    }
+    public int getMoney() { return playerInfo.getMoney();}
 
     @Override
     public void addCard(Card card) {
