@@ -1,11 +1,10 @@
-package domain.game;
+package domain.participant;
 
 import static java.util.stream.Collectors.toMap;
 
 import domain.card.CardPack;
-import domain.participant.Dealer;
-import domain.participant.Gambler;
-import domain.participant.Player;
+import domain.game.GamblerAnswer;
+import domain.game.GamblingMoney;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;

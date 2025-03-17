@@ -1,4 +1,4 @@
-package domain.game;
+package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -8,8 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import domain.card.Card;
 import domain.card.CardHand;
 import domain.card.CardPack;
-import domain.participant.Dealer;
-import domain.participant.Player;
+import domain.game.GamblingMoney;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;

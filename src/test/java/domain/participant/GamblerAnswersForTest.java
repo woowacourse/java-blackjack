@@ -1,6 +1,6 @@
-package domain.game;
+package domain.participant;
 
-import domain.participant.Gambler;
+import domain.game.GamblerAnswer;
 
 public class GamblerAnswersForTest {
 
