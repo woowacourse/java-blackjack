@@ -1,10 +1,11 @@
 package domain.game;
 
+import domain.card.Card;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
-import domain.participant.Participant;
 import domain.participant.Player;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,10 +33,6 @@ public class GameManager {
         players.forEach(player -> player.setUpCardDeck(cardDeck.poll(), cardDeck.poll()));
     }
 
-    public void distributeExtraCardToParticipant(Participant participant) {
-        participant.takeMoreCard(cardDeck.poll());
-    }
-
     public EarningResult evaluateEarning(PlayerBets playerBets) {
         ScoreInfo dealerScoreInfo = new ScoreInfo(dealer.calculateScore(), dealer.getCardCount());
 
@@ -47,5 +44,50 @@ public class GameManager {
                         , (player1, player2) -> player1, LinkedHashMap::new));
 
         return new EarningResult(earningResult);
+    }
+
+    public boolean canDealerTakeMoreCard() {
+        return dealer.canTakeMoreCard();
+    }
+
+    public boolean canPlayerTakeMoreCard(String name) {
+        Player player = findPlayerByName(name);
+        if(player != null) {
+            return player.canTakeMoreCard();
+        }
+        return false;
+    }
+
+    public void distributeExtraCardToDealer() {
+        dealer.takeMoreCard(cardDeck.poll());
+    }
+
+    public void distributeExtraCardToPlayer(String name) {
+        Player player = findPlayerByName(name);
+        if(player != null) {
+            player.takeMoreCard(cardDeck.poll());
+        }
+    }
+
+    public List<Card> getPlayerCards(String name) {
+        Player player = findPlayerByName(name);
+        if(player != null) {
+            return player.getCards();
+        }
+        return new ArrayList<>();
+    }
+
+
+    private Player findPlayerByName(String name) {
+        return players.stream()
+                .filter(player -> player.getName().equals(name))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public List<String> getPlayerNames() {
+        return players.stream()
+                .map(Player::getName)
+                .toList();
     }
 }

@@ -33,14 +33,19 @@ public class BlackjackController {
         Dealer dealer = new Dealer();
         List<Player> players = inputView.getPlayers();
         PlayerBets playerBets = placeBets(players);
-
         GameManager gameManager = new GameManager(dealer, players);
-        dealSetUpCards(gameManager, dealer, players);
 
-        playTurns(gameManager, players, dealer);
+        dealSetUpCards(gameManager);
+        displaySetUpCards(dealer, players);
 
+        playTurns(gameManager);
         displayFinalResult(dealer, players);
         evaluateAndDisplayEarnings(gameManager, playerBets);
+    }
+
+    private void displaySetUpCards(Dealer dealer, List<Player> players) {
+        SetUpCardsDTO setUpCardsDTO = createSetUpCardsDTO(dealer, players);
+        outputView.printSetUpCardDeck(setUpCardsDTO);
     }
 
     private PlayerBets placeBets(List<Player> players) {
@@ -53,9 +58,27 @@ public class BlackjackController {
                 )));
     }
 
-    private void playTurns(GameManager gameManager, List<Player> players, Dealer dealer) {
-        distributeExtraCardToPlayers(gameManager, players);
-        distributeExtraCardToDealer(gameManager, dealer);
+    private void playTurns(GameManager gameManager) {
+        distributeExtraCardToPlayers(gameManager);
+        distributeExtraCardToDealer(gameManager);
+    }
+
+    private void distributeExtraCardToPlayers(GameManager gameManager) {
+        gameManager.getPlayerNames().forEach(name -> distributeExtraCardToPlayer(gameManager, name));
+    }
+
+    private void distributeExtraCardToPlayer(GameManager gameManager, String name) {
+        while (gameManager.canPlayerTakeMoreCard(name) && inputView.getYesOrNo(name)) {
+            gameManager.distributeExtraCardToPlayer(name);
+            outputView.printTakenMoreCards(name, gameManager.getPlayerCards(name));
+        }
+    }
+
+    private void distributeExtraCardToDealer(GameManager gameManager) {
+        if (gameManager.canDealerTakeMoreCard()) {
+            gameManager.distributeExtraCardToDealer();
+            outputView.printDealerTake();
+        }
     }
 
     private void displayFinalResult(Dealer dealer, List<Player> players) {
@@ -68,28 +91,8 @@ public class BlackjackController {
         outputView.printFinalEarning(earningResult);
     }
 
-    private void dealSetUpCards(GameManager gameManager, Dealer dealer, List<Player> players) {
+    private void dealSetUpCards(GameManager gameManager) {
         gameManager.distributeSetUpCards();
-        SetUpCardsDTO setUpCardsDTO = createSetUpCardsDTO(dealer, players);
-        outputView.printSetUpCardDeck(setUpCardsDTO);
-    }
-
-    private void distributeExtraCardToPlayers(GameManager gameManager, List<Player> players) {
-        players.forEach(player -> distributeExtraCardToPlayer(gameManager, player));
-    }
-
-    private void distributeExtraCardToPlayer(GameManager gameManager, Player player) {
-        while (player.canTakeMoreCard() && inputView.getYesOrNo(player.getName())) {
-            gameManager.distributeExtraCardToParticipant(player);
-            outputView.printTakenMoreCards(player.getName(), player.getCards());
-        }
-    }
-
-    private void distributeExtraCardToDealer(GameManager gameManager, Dealer dealer) {
-        if (dealer.canTakeMoreCard()) {
-            gameManager.distributeExtraCardToParticipant(dealer);
-            outputView.printDealerTake();
-        }
     }
 
     public SetUpCardsDTO createSetUpCardsDTO(Dealer dealer, List<Player> players) {
