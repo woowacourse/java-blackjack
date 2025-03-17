@@ -1,6 +1,7 @@
 package domain.gamer;
 
 import domain.deck.Card;
+import domain.deck.Rank;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -10,7 +11,10 @@ import java.util.function.Supplier;
 
 public class Hand {
 
-    public static final int BUST_NUMBER = 21;
+    private static final int BUST_NUMBER = 21;
+    private static final int BLACKJACK_NUMBER = 21;
+    private static final int BLACKJACK_CARD_COUNT = 2;
+
     private final List<Card> cards;
 
     public Hand() {
@@ -62,8 +66,8 @@ public class Hand {
         }
         final Card card = cards.get(index);
         if (card.isAce()) {
-            calculateAllSums(cards, index + 1, currentSum + 1, resultSet);
-            calculateAllSums(cards, index + 1, currentSum + 11, resultSet);
+            calculateAllSums(cards, index + 1, currentSum + Rank.ACE.getScore(), resultSet);
+            calculateAllSums(cards, index + 1, currentSum + Rank.ACE.getAdditionalAceScore(), resultSet);
             return;
         }
         calculateAllSums(cards, index + 1, currentSum + card.getScore(), resultSet);
@@ -74,7 +78,7 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return cards.size() == 2 && calculateSumOfRank() == 21;
+        return cards.size() == BLACKJACK_CARD_COUNT && calculateSumOfRank() == BLACKJACK_NUMBER;
     }
 
     public boolean isBustThreshold() {
