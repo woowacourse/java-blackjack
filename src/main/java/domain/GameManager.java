@@ -92,7 +92,7 @@ public class GameManager {
         profitResult.add(new Profit(player, player.calculateBettingResult(GameResult.WIN)));
     }
 
-    public long calculateDealerProfit(final List<Profit> playerProfit) {
+    public long calculateDealerProfitFromPlayers(final List<Profit> playerProfit) {
         return -playerProfit.stream()
                 .mapToLong(Profit::profit)
                 .sum();

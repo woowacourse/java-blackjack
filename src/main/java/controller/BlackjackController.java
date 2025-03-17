@@ -102,7 +102,7 @@ public class BlackjackController {
 
     private void calculateGameResult(final GameManager gameManager) {
         List<Profit> profitResult = gameManager.createProfitResult();
-        long dealerProfit = gameManager.calculateDealerProfit(profitResult);
+        long dealerProfit = gameManager.calculateDealerProfitFromPlayers(profitResult);
         outputView.displayProfitResult(dealerProfit, profitResult);
     }
 
