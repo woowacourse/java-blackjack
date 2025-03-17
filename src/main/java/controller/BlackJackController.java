@@ -65,14 +65,16 @@ public class BlackJackController {
         List<String> playerNames = inputView.readPlayerNames();
         List<Player> players = new ArrayList<>();
         Map<String, Integer> money = inputView.readPlayerBetting(playerNames);
-        money.forEach(
-                (playerName, playerMoney) -> players.add(Player.of(playerName, deck, Money.makeMoneyInt(playerMoney))));
-
-        return players;
+        return money.entrySet()
+                .stream()
+                .map(entry -> Player.of(entry.getKey(), deck, Money.makeMoneyInt(entry.getValue())))
+                .collect(Collectors.toList());
     }
 
     private void executePlayersHit(List<Player> players) {
-        players.forEach(this::executePlayerHit);
+        for (Player player : players) {
+            executePlayerHit(player);
+        }
     }
 
     private void executePlayerHit(Player player) {
