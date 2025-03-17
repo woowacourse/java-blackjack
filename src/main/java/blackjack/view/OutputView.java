@@ -8,9 +8,7 @@ import blackjack.domain.card_hand.PlayerBettingBlackjackCardHand;
 import blackjack.view.writer.Writer;
 
 import java.util.List;
-import java.util.Map;
 import java.util.StringJoiner;
-import java.util.stream.Collectors;
 
 public final class OutputView {
     
@@ -127,7 +125,7 @@ public final class OutputView {
     ) {
         StringJoiner sj = new StringJoiner(LINE_SEPARATOR);
         sj.add(LINE_SEPARATOR + "## 최종 수익");
-        sj.add("딜러: %d".formatted((int) getTotalProfitOfDealer(dealerHand, playerHands)));
+        sj.add("딜러: %d".formatted((int) dealerHand.calculateTotalIncome(playerHands)));
         for (PlayerBettingBlackjackCardHand playerHand : playerHands) {
             sj.add("%s: %d".formatted(
                     playerHand.getPlayerName(),
@@ -135,16 +133,6 @@ public final class OutputView {
             ));
         }
         writer.write(sj.toString());
-    }
-    
-    private static double getTotalProfitOfDealer(final DealerBlackjackCardHand dealerHand, final List<PlayerBettingBlackjackCardHand> playerHands) {
-        final Map<String, Double> profits = playerHands.stream()
-                .collect(Collectors.toMap(
-                        PlayerBettingBlackjackCardHand::getPlayerName,
-                        hand -> hand.calculateIncome(dealerHand)
-                ));
-        
-        return -profits.values().stream().mapToDouble(Double::doubleValue).sum();
     }
     
     public void outputExceptionMessage(final Exception exception) {

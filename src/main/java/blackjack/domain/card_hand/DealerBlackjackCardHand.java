@@ -26,4 +26,12 @@ public final class DealerBlackjackCardHand extends AbstractBlackjackCardHand {
         }
         return getCardCount() - beforeCount;
     }
+    
+    public double calculateTotalIncome(final List<PlayerBettingBlackjackCardHand> cardHands) {
+        double totalIncomeOfPlayer = 0;
+        for (PlayerBettingBlackjackCardHand cardHand : cardHands) {
+            totalIncomeOfPlayer += cardHand.calculateIncome(this);
+        }
+        return -totalIncomeOfPlayer;
+    }
 }
