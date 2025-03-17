@@ -67,6 +67,14 @@ public class Participants {
         dealer.addCard(card);
     }
 
+    public int calculateDealerProfit() {
+        return -(players.calculateProfits(dealer).values().stream().reduce(0, Integer::sum));
+    }
+
+    public Map<String, Integer> calculatePlayerProfits() {
+        return players.calculateProfits(dealer);
+    }
+
     /*public Map<String, GameResult> determineGameResult() {
         final Map<String, GameResult> gameResults = new HashMap<>();
         gameResults.put(dealer.getName(), new GameResult());

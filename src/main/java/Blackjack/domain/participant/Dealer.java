@@ -1,9 +1,7 @@
 package Blackjack.domain.participant;
 
 import Blackjack.domain.card.Card;
-import Blackjack.domain.game.GameStatus;
 import java.util.List;
-import java.util.Optional;
 
 public class Dealer extends Participant {
 
@@ -23,16 +21,5 @@ public class Dealer extends Participant {
     public boolean ableToAddCard() {
         final int cardsScore = cards.calculateScore();
         return cardsScore <= ADD_CARD_UPPER_BOUND;
-    }
-
-    @Override
-    protected Optional<GameStatus> determineGameStatusWhenBust(final Participant other) {
-        if (other.isBust()) {
-            return Optional.of(GameStatus.WIN);
-        }
-        if (isBust()) {
-            return Optional.of(GameStatus.LOSE);
-        }
-        return Optional.empty();
     }
 }

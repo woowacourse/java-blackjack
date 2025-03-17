@@ -1,15 +1,24 @@
 package Blackjack.domain.game;
 
+import Blackjack.domain.Bet;
+
 public enum GameStatus {
 
-    WIN("승"),
-    TIE("무"),
-    LOSE("패");
+    BLACKJACK("블랙잭", 1.5),
+    WIN("승", 1),
+    TIE("무", 0),
+    LOSE("패", -1);
 
     private final String name;
+    private final double multiplier;
 
-    GameStatus(String name) {
+    GameStatus(final String name, final double multiplier) {
         this.name = name;
+        this.multiplier = multiplier;
+    }
+
+    public double calculateBetResult(final Bet bet) {
+        return multiplier * bet.amount();
     }
 
     public String getName() {

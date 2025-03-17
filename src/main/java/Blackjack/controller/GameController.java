@@ -32,7 +32,15 @@ public class GameController {
         distributePlayersExtraCard(game, participants);
         distributeDealerExtraCard(game);
         displayFinalParticipantsCards(participants);
+        displayProfitResult(participants);
+
 //        displayGameResult(participants);
+    }
+
+    private void displayProfitResult(final Participants participants) {
+        int dealerProfit = participants.calculateDealerProfit();
+        Map<String, Integer> playerProfits = participants.calculatePlayerProfits();
+        OutputView.printProfitResult(dealerProfit, playerProfits);
     }
 
     private Players registerPlayers() {

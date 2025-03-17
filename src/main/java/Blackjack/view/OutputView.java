@@ -7,6 +7,7 @@ import Blackjack.domain.game.GameStatus;
 import Blackjack.dto.GameResultDto;
 import Blackjack.dto.ParticipantCardsDto;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,7 @@ public class OutputView {
     private static final String DEALER_CARD_ADDED_FORMAT = "%s는 16이하라 한 장의 카드를 더 받았습니다.";
     private static final String DEALER_CARD_NOT_ADDED_FORMAT = "%s는 16초과라 카드를 더 받지 않았습니다.";
     private static final String GAME_RESULT_HEADER = "## 최종 승패";
+    private static final String PROFIT_RESULT_HEADER = "## 최종 수익";
 
     public static void printErrorMessage(final String message) {
         System.out.println(message);
@@ -94,6 +96,14 @@ public class OutputView {
 
     private static String formatCardsScore(final int cardsScore) {
         return String.format(CARDS_SCORE_FORMAT, cardsScore);
+    }
+
+    public static void printProfitResult(final int dealerProfit, Map<String, Integer> playerProfits) {
+        System.out.println(System.lineSeparator() + PROFIT_RESULT_HEADER);
+        System.out.println("딜러: " + dealerProfit);
+        playerProfits.entrySet().stream()
+                .map(entry -> entry.getKey() + ": " + entry.getValue())
+                .forEach(System.out::println);
     }
 
     public static void printGameResult(final List<GameResultDto> gameResultDtos) {

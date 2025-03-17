@@ -4,7 +4,6 @@ import Blackjack.domain.Bet;
 import Blackjack.domain.card.Card;
 import Blackjack.domain.game.GameStatus;
 import java.util.List;
-import java.util.Optional;
 
 public class Player extends Participant {
     private Bet bet;
@@ -28,14 +27,25 @@ public class Player extends Participant {
         return !isBust();
     }
 
-    @Override
-    protected Optional<GameStatus> determineGameStatusWhenBust(final Participant other) {
+    protected GameStatus determineGameStatus(final Dealer dealer) {
+        if (isBlackjack() && !dealer.isBlackjack()) {
+            return GameStatus.BLACKJACK;
+        }
         if (isBust()) {
-            return Optional.of(GameStatus.LOSE);
+            return GameStatus.LOSE;
         }
-        if (other.isBust()) {
-            return Optional.of(GameStatus.WIN);
+        if (dealer.isBust() || cards.calculateScore() > dealer.cards.calculateScore()) {
+            return GameStatus.WIN;
         }
-        return Optional.empty();
+        if (cards.calculateScore() < dealer.cards.calculateScore()) {
+            return GameStatus.LOSE;
+        }
+        return GameStatus.TIE;
+    }
+
+    public int calculateProfit(final Dealer dealer) {
+        GameStatus gameStatus = determineGameStatus(dealer);
+        double profit = gameStatus.calculateBetResult(bet);
+        return (int) Math.ceil(profit);
     }
 }

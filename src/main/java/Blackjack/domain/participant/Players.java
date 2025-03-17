@@ -55,6 +55,14 @@ public class Players {
         }
     }
 
+    public Map<String, Integer> calculateProfits(final Dealer dealer) {
+        Map<String, Integer> profits = new HashMap<>();
+        for (Player player : players.values()) {
+            profits.put(player.name, player.calculateProfit(dealer));
+        }
+        return profits;
+    }
+
     public List<String> getNames() {
         return new ArrayList<>(players.keySet()).stream().toList();
     }

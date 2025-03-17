@@ -31,7 +31,6 @@ public class ParticipantTest {
         Dealer dealer = createParticipant(dealerRanks, Dealer::new);
         // then & when
         Assertions.assertEquals(GameStatus.valueOf(playerStatus), player.determineGameStatus(dealer));
-        assertEquals(GameStatus.valueOf(dealerStatus), dealer.determineGameStatus(player));
     }
 
     @ParameterizedTest
@@ -46,7 +45,6 @@ public class ParticipantTest {
         Dealer dealer = createParticipant(DealerRanks, Dealer::new);
         // then & when
         assertEquals(GameStatus.valueOf(playerStatus), player.determineGameStatus(dealer));
-        assertEquals(GameStatus.valueOf(dealerStatus), dealer.determineGameStatus(player));
     }
 
     @ParameterizedTest

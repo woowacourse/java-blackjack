@@ -23,6 +23,14 @@ public class Cards {
         this.cards.add(card);
     }
 
+    public boolean isBlackjack() {
+        return cards.size() == 2 && calculateScore() == BLACKJACK_SCORE;
+    }
+
+    public boolean isBust(final int score) {
+        return score > BLACKJACK_SCORE;
+    }
+
     public int calculateScore() {
         int score = cards.stream()
                 .map(card -> card.rank().getValue())
@@ -40,10 +48,6 @@ public class Cards {
                 .count();
     }
 
-
-    public boolean isBust(final int score) {
-        return score > BLACKJACK_SCORE;
-    }
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);

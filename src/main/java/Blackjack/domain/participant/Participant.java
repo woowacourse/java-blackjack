@@ -2,10 +2,8 @@ package Blackjack.domain.participant;
 
 import Blackjack.domain.card.Card;
 import Blackjack.domain.card.Cards;
-import Blackjack.domain.game.GameStatus;
 import Blackjack.exception.ErrorException;
 import java.util.List;
-import java.util.Optional;
 
 public abstract class Participant {
 
@@ -22,25 +20,12 @@ public abstract class Participant {
 
     public abstract boolean ableToAddCard();
 
-    protected abstract Optional<GameStatus> determineGameStatusWhenBust(Participant other);
-
     public void addCard(Card card) {
         cards.addCard(card);
     }
 
-    public GameStatus determineGameStatus(final Participant other) {
-        Optional<GameStatus> gameStatus = determineGameStatusWhenBust(other);
-        return gameStatus.orElseGet(() -> determineGameStatusByScore(other));
-    }
-
-    private GameStatus determineGameStatusByScore(final Participant other) {
-        if (cards.calculateScore() > other.cards.calculateScore()) {
-            return GameStatus.WIN;
-        }
-        if (cards.calculateScore() < other.cards.calculateScore()) {
-            return GameStatus.LOSE;
-        }
-        return GameStatus.TIE;
+    public boolean isBlackjack() {
+        return cards.isBlackjack();
     }
 
     public boolean isBust() {
