@@ -41,6 +41,14 @@ public class Dealer {
 		participant.writeDuelResult(duelResult);
 	}
 
+	public Card getFirstCard() {
+		return participant.getFirstCard();
+	}
+
+	public List<Card> getCards() {
+		return participant.getCards();
+	}
+
 	public Participant getParticipant() {
 		return participant;
 	}

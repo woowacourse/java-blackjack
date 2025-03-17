@@ -12,14 +12,14 @@ public class BlackjackApp {
 		final WagerMoney wagerMoney = new WagerMoney(inputView.readPlayersMoney(blackjack));
 
 		blackjack.initPickCard();
-		outputView.printHandOut(blackjack.getPlayers().getPlayers(), blackjack.getDealer());
+		outputView.printHandOut(blackjack);
 
 		blackjack.pickCardPlayersIfNotBust(inputView::readPlayerAnswer, outputView::printPlayerPickCard);
 		blackjack.pickCardDealerIfNotMax();
 
-		outputView.printDealerPickCard(blackjack.getDealer());
-		outputView.printDealerHandResult(blackjack.getDealer());
-		outputView.printPlayerHandResult(blackjack.getPlayers().getPlayers());
+		outputView.printDealerPickCard(blackjack);
+		outputView.printDealerHandResult(blackjack);
+		outputView.printPlayerHandResult(blackjack);
 
 		blackjack.duel();
 

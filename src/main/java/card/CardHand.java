@@ -43,6 +43,10 @@ public class CardHand {
 		return Count.from(cards.size());
 	}
 
+	public Card getFirstCard() {
+		return this.cards.getFirst();
+	}
+
 	public List<Card> getCards() {
 		return Collections.unmodifiableList(cards);
 	}

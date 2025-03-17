@@ -6,84 +6,62 @@ import java.util.stream.Collectors;
 
 import card.Card;
 import game.Blackjack;
-import game.GameScore;
 import money.Money;
 import money.WagerMoney;
-import paticipant.Dealer;
 import paticipant.Player;
 
 public class OutputView {
 	private static final String PLAYER_NAME_DELIMITER = ", ";
 
-	public void printHandOut(final List<Player> players, final Dealer dealer) {
-		printHandOutIntroduce(players);
-		printDealerHandOutResult(dealer);
-		printPlayersCard(players);
+	public void printHandOut(final Blackjack blackjack) {
+		printHandOutIntroduce(blackjack);
+		printDealerHandOutResult(blackjack);
+		printPlayersCard(blackjack);
 	}
 
-	private void printHandOutIntroduce(final List<Player> players) {
-		final String playerNames = players
+	private void printHandOutIntroduce(final Blackjack blackjack) {
+		final String playerNames = blackjack.getPlayerList()
 			.stream()
 			.map(Player::getName)
 			.collect(Collectors.joining(PLAYER_NAME_DELIMITER));
 		System.out.printf("딜러와 %s에게 2장을 나누었습니다." + System.lineSeparator(), playerNames);
 	}
 
-	private void printDealerHandOutResult(final Dealer dealer) {
-		System.out.printf("딜러카드: %s" + System.lineSeparator(), convertCardToString(getDealerFirstCard(dealer)));
+	private void printDealerHandOutResult(final Blackjack blackjack) {
+		System.out.printf("딜러카드: %s" + System.lineSeparator(), convertCardToString(blackjack.getDealerFirstCard()));
 	}
 
-	private Card getDealerFirstCard(final Dealer dealer) {
-		return dealer.getParticipant().getCardHand().getCards().getFirst();
-	}
-
-	private void printPlayersCard(final List<Player> players) {
-		for (final Player player : players) {
+	private void printPlayersCard(final Blackjack blackjack) {
+		for (final Player player : blackjack.getPlayerList()) {
 			printPlayerPickCard(player);
 		}
 	}
 
 	public void printPlayerPickCard(final Player player) {
 		System.out.printf("%s카드: %s" + System.lineSeparator(), player.getName(),
-			convertCardsToString(getPlayerCards(player)));
+			convertCardsToString(player.getCards()));
 	}
 
-	private List<Card> getPlayerCards(final Player player) {
-		return player.getParticipant().getCardHand().getCards();
-	}
-
-	public void printDealerPickCard(final Dealer dealer) {
-		final int pickCardCount = getDealerCards(dealer).size() - Blackjack.INIT_PICK_CARD_COUNT;
+	public void printDealerPickCard(final Blackjack blackjack) {
+		final int pickCardCount = blackjack.getDealerCards().size() - Blackjack.INIT_PICK_CARD_COUNT;
 		for (int i = 0; i < pickCardCount; i++) {
 			System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다.");
 		}
 	}
 
-	public void printDealerHandResult(final Dealer dealer) {
+	public void printDealerHandResult(final Blackjack blackjack) {
 		System.out.printf("딜러카드: %s - 결과: %d" + System.lineSeparator(),
-			convertCardsToString(getDealerCards(dealer)),
-			getDealerScore(dealer).value()
+			convertCardsToString(blackjack.getDealerCards()),
+			blackjack.getDealerScore().value()
 		);
 	}
 
-	private List<Card> getDealerCards(final Dealer dealer) {
-		return dealer.getParticipant().getCardHand().getCards();
-	}
-
-	private GameScore getDealerScore(final Dealer dealer) {
-		return dealer.getParticipant().calculateAllScore();
-	}
-
-	public void printPlayerHandResult(final List<Player> players) {
-		for (final Player player : players) {
+	public void printPlayerHandResult(final Blackjack blackjack) {
+		for (final Player player : blackjack.getPlayerList()) {
 			System.out.printf("%s카드: %s - 결과: %d" + System.lineSeparator(), player.getName(),
-				convertCardsToString(getPlayerCards(player)),
-				getPlayerScore(player).value());
+				convertCardsToString(player.getCards()),
+				player.calculateAllScore().value());
 		}
-	}
-
-	private GameScore getPlayerScore(final Player player) {
-		return player.getParticipant().calculateAllScore();
 	}
 
 	public void printWagerResult(final WagerMoney wagerMoney) {

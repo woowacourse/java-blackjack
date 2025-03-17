@@ -51,6 +51,14 @@ public class Participant {
 		return duelHistory.calculateDuelResult();
 	}
 
+	public Card getFirstCard() {
+		return hand.getFirstCard();
+	}
+
+	public List<Card> getCards() {
+		return hand.getCards();
+	}
+
 	public CardHand getCardHand() {
 		return hand;
 	}

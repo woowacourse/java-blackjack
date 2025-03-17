@@ -52,6 +52,10 @@ public class Player {
 		return name;
 	}
 
+	public List<Card> getCards() {
+		return participant.getCards();
+	}
+
 	public Participant getParticipant() {
 		return participant;
 	}

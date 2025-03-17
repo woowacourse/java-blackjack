@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import card.Card;
 import card.Deck;
 import duel.DuelResult;
 import paticipant.Dealer;
@@ -99,6 +100,22 @@ public class Blackjack {
 
 	public Players getPlayers() {
 		return players;
+	}
+
+	public List<Player> getPlayerList() {
+		return players.getPlayers();
+	}
+
+	public Card getDealerFirstCard() {
+		return dealer.getFirstCard();
+	}
+
+	public List<Card> getDealerCards() {
+		return dealer.getCards();
+	}
+
+	public GameScore getDealerScore() {
+		return dealer.calculateAllScore();
 	}
 
 	public Dealer getDealer() {
