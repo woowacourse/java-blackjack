@@ -1,8 +1,8 @@
 package blackjack.gametable.gambler;
 
+import blackjack.constant.MatchResult;
 import blackjack.gametable.card.Card;
 import blackjack.gametable.card.Cards;
-import blackjack.constant.MatchResult;
 import java.util.List;
 
 public class Dealer extends Gambler {
@@ -16,40 +16,21 @@ public class Dealer extends Gambler {
     }
 
     public void updateBetAmounts(Players players) {
-        List<Player> players1 = players.getPlayers();
-
         double dealerAmount = 0;
 
-        for (Player player : players1) {
+        for (Player player : players.getPlayers()) {
             MatchResult matchResult = compareTo(player);
-
-            if (matchResult == MatchResult.BLACKJACK_WIN) {
-                double betAmount = player.getBetAmount();
-                double blackjackAmount = betAmount * 1.5;
-                player.updateBetAmount(blackjackAmount);
-                dealerAmount -= blackjackAmount;
-                continue;
-            }
-            if (matchResult == MatchResult.WIN) {
-                double betAmount = player.getBetAmount();
-                dealerAmount -= betAmount;
-            }
-            if (matchResult == MatchResult.PUSH) {
-                player.updateBetAmount(0);
-                continue;
-            }
-            if (matchResult == MatchResult.LOSE) {
-                double betAmount = player.getBetAmount();
-                double playerAmount = betAmount * (-1);
-                player.updateBetAmount(playerAmount);
-                dealerAmount += playerAmount;
-                continue;
-            }
+            dealerAmount += handleMatchResult(matchResult, player);
         }
+
         super.updateBetAmount(dealerAmount);
     }
 
-    public MatchResult compareTo(Player player) {
+    public boolean shouldDrawCard() {
+        return sumCardScores() <= DEALER_HIT_THRESHOLD;
+    }
+
+    private MatchResult compareTo(Player player) {
         int dealerScore = sumCardScores();
         int playerScore = player.sumCardScores();
         Cards playerCards = player.getCards();
@@ -64,8 +45,22 @@ public class Dealer extends Gambler {
         return getMatchResult(dealerScore, playerScore);
     }
 
-    public boolean shouldDrawCard() {
-        return sumCardScores() <= DEALER_HIT_THRESHOLD;
+    private double handleMatchResult(MatchResult matchResult, Player player) {
+        double betAmount = player.getBetAmount();
+
+        if (matchResult == MatchResult.BLACKJACK_WIN) {
+            double blackjackAmount = betAmount * 1.5;
+            player.updateBetAmount(blackjackAmount);
+            return -blackjackAmount;
+        }
+        if (matchResult == MatchResult.WIN) {
+            return -betAmount;
+        }
+        if (matchResult == MatchResult.LOSE) {
+            player.updateBetAmount(-betAmount);
+            return betAmount;
+        }
+        return 0;
     }
 
     private MatchResult getMatchResultWhenBlackjack(Cards playerCards) {
