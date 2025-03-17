@@ -5,6 +5,8 @@ import domain.profit.Profit;
 
 public class BetAmount {
 
+    private static final long MAX_BET_AMOUNT = 5_000_000_000L;
+    private static final int MIN_BET_AMOUNT = 10_000;
     private final long betAmount;
 
     private BetAmount(final long betAmount) {
@@ -21,7 +23,7 @@ public class BetAmount {
     }
 
     private void validateBetAmount(final long betAmount) {
-        if (betAmount > 5_000_000_000L || betAmount < 10_000) {
+        if (betAmount > MAX_BET_AMOUNT || betAmount < MIN_BET_AMOUNT) {
             throw new IllegalArgumentException("배팅금액은 1만원 ~ 50억까지만 가능합니다.");
         }
     }
@@ -29,9 +31,5 @@ public class BetAmount {
     public Double calculateProfit(final Outcome outcome) {
         final Profit profit = Profit.findByOutcome(outcome);
         return profit.calculate(betAmount);
-    }
-
-    public long getBetAmount() {
-        return betAmount;
     }
 }
