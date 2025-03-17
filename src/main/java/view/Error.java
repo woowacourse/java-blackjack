@@ -1,9 +1,15 @@
 package view;
 
-public class Error {
-    private static final String ERROR_MESSAGE = "[ERROR] %s";
+public enum Error {
+    ERROR_BASE_MESSAGE("[ERROR] %s");
+
+    private final String errorMessage;
+
+    Error(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
 
     public static String formatMessage(String message) {
-        return String.format(ERROR_MESSAGE, message);
+        return String.format(ERROR_BASE_MESSAGE.errorMessage, message);
     }
 }
