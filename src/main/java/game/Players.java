@@ -22,9 +22,10 @@ public class Players {
     }
 
     public static Players of(List<String> playerNames, List<Integer> playerBetting) {
-        return new Players(IntStream.range(0, playerNames.size())
+        List<Player> players = IntStream.range(0, playerNames.size())
                 .mapToObj(i -> new Player(playerNames.get(i), playerBetting.get(i)))
-                .toList());
+                .toList();
+        return new Players(players);
     }
 
     private void validatePlayerCount(List<Player> players) {
