@@ -1,6 +1,7 @@
 package domain.participant;
 
 import java.util.List;
+import view.Error;
 
 public class Names {
     private static final int MAXIMUM_PLAYER_NUMBER = 6;
@@ -18,13 +19,13 @@ public class Names {
 
     private void validatePlayerNumbers(final List<String> names) {
         if (names.isEmpty() || names.size() > MAXIMUM_PLAYER_NUMBER) {
-            throw new IllegalArgumentException("[ERROR] 플레이어 인원은 1~6명 입니다.");
+            throw new IllegalArgumentException(Error.formatMessage("플레이어 인원은 1~6명 입니다."));
         }
     }
 
     private void validateIsDuplicate(final List<String> names) {
         if (names.stream().distinct().count() != names.size()) {
-            throw new IllegalArgumentException("[ERROR] 중복된 이름의 플레이어가 게임에 참여할 수 없습니다.");
+            throw new IllegalArgumentException(Error.formatMessage("중복된 이름의 플레이어가 게임에 참여할 수 없습니다."));
         }
     }
 

@@ -1,5 +1,7 @@
 package domain.participant;
 
+import view.Error;
+
 public class Money {
     private final int money;
 
@@ -10,7 +12,7 @@ public class Money {
 
     private void validateDivisibilityRule(final int money) {
         if (money % 10000 != 0 || money <= 0) {
-            throw new IllegalArgumentException("[ERROR] 배팅 금액은 만원 단위입니다.");
+            throw new IllegalArgumentException(Error.formatMessage("배팅 금액은 만원 단위입니다."));
         }
     }
 
