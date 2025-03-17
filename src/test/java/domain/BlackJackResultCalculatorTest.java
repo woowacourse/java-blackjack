@@ -10,9 +10,10 @@ import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
-import java.util.HashMap;
+import domain.result.DealerResults;
+import domain.result.PlayerResults;
+import domain.result.PlayerWinningStatus;
 import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -43,32 +44,24 @@ public class BlackJackResultCalculatorTest {
 
         // when
         ParticipantsResult participantsResult = BlackJackResultCalculator.calculate(participants);
-
+        DealerResults dealerResults = participantsResult.dealerResults();
+        PlayerResults playerResults = participantsResult.playerResults();
         // then
         assertAll(
+                () -> assertThat(dealerResults.getStatusCount(BlackJackWinningStatus.WIN)).isEqualTo(1),
+                () -> assertThat(dealerResults.getStatusCount(BlackJackWinningStatus.LOSE)).isEqualTo(1),
+                () -> assertThat(dealerResults.getStatusCount(BlackJackWinningStatus.DRAW)).isEqualTo(1),
                 () -> {
-                    Map<BlackJackWinningStatus, Integer> dealerExpected = new HashMap<>();
-                    dealerExpected.put(BlackJackWinningStatus.WIN, 1);
-                    dealerExpected.put(BlackJackWinningStatus.DRAW, 1);
-                    dealerExpected.put(BlackJackWinningStatus.LOSE, 1);
-                    assertThat(participantsResult.dealerResult()
-                            .getDealerResult()).isEqualTo(
-                            dealerExpected);
+                    PlayerWinningStatus playerWinningStatus = playerResults.findByPlayerName(player1.getName());
+                    assertThat(playerWinningStatus.status()).isEqualTo(BlackJackWinningStatus.WIN);
                 },
                 () -> {
-                    List<PlayerResult> playerResults = participantsResult.playerResults();
-                    assertThat(playerResults.get(0)).isEqualTo(
-                            new PlayerResult(player1, BlackJackWinningStatus.WIN));
+                    PlayerWinningStatus playerWinningStatus = playerResults.findByPlayerName(player2.getName());
+                    assertThat(playerWinningStatus.status()).isEqualTo(BlackJackWinningStatus.LOSE);
                 },
                 () -> {
-                    List<PlayerResult> playerResults = participantsResult.playerResults();
-                    assertThat(playerResults.get(1)).isEqualTo(
-                            new PlayerResult(player2, BlackJackWinningStatus.LOSE));
-                },
-                () -> {
-                    List<PlayerResult> playerResults = participantsResult.playerResults();
-                    assertThat(playerResults.get(2)).isEqualTo(
-                            new PlayerResult(player3, BlackJackWinningStatus.DRAW));
+                    PlayerWinningStatus playerWinningStatus = playerResults.findByPlayerName(player3.getName());
+                    assertThat(playerWinningStatus.status()).isEqualTo(BlackJackWinningStatus.DRAW);
                 }
         );
     }
@@ -94,15 +87,13 @@ public class BlackJackResultCalculatorTest {
         // then
         assertAll(
                 () -> {
-                    DealerResult dealerResult = participantsResult.dealerResult();
-                    int dealerWinCount = dealerResult.getDealerResult()
-                            .get(BlackJackWinningStatus.WIN);
-                    assertThat(dealerWinCount).isEqualTo(1);
+                    DealerResults dealerResults = participantsResult.dealerResults();
+                    assertThat(dealerResults.getStatusCount(BlackJackWinningStatus.WIN)).isEqualTo(1);
                 },
                 () -> {
-                    List<PlayerResult> playerResults = participantsResult.playerResults();
-                    PlayerResult playerResult = playerResults.get(0);
-                    BlackJackWinningStatus playerBlackJackWinningStatus = playerResult.getGameResult();
+                    PlayerResults playerResults = participantsResult.playerResults();
+                    PlayerWinningStatus playerWinningStatus = playerResults.findByPlayerName(player1.getName());
+                    BlackJackWinningStatus playerBlackJackWinningStatus = playerWinningStatus.status();
                     assertThat(playerBlackJackWinningStatus).isEqualTo(BlackJackWinningStatus.LOSE);
                 }
         );
@@ -129,15 +120,13 @@ public class BlackJackResultCalculatorTest {
         // then
         assertAll(
                 () -> {
-                    DealerResult dealerResult = participantsResult.dealerResult();
-                    int dealerWinCount = dealerResult.getDealerResult()
-                            .get(BlackJackWinningStatus.DRAW);
-                    assertThat(dealerWinCount).isEqualTo(1);
+                    DealerResults dealerResults = participantsResult.dealerResults();
+                    assertThat(dealerResults.getStatusCount(BlackJackWinningStatus.DRAW)).isEqualTo(1);
                 },
                 () -> {
-                    List<PlayerResult> playerResults = participantsResult.playerResults();
-                    PlayerResult playerResult = playerResults.get(0);
-                    BlackJackWinningStatus playerBlackJackWinningStatus = playerResult.getGameResult();
+                    PlayerResults playerResults = participantsResult.playerResults();
+                    PlayerWinningStatus playerWinningStatus = playerResults.findByPlayerName(player1.getName());
+                    BlackJackWinningStatus playerBlackJackWinningStatus = playerWinningStatus.status();
                     assertThat(playerBlackJackWinningStatus).isEqualTo(BlackJackWinningStatus.DRAW);
                 }
         );
@@ -164,15 +153,13 @@ public class BlackJackResultCalculatorTest {
         // then
         assertAll(
                 () -> {
-                    DealerResult dealerResult = participantsResult.dealerResult();
-                    int dealerWinCount = dealerResult.getDealerResult()
-                            .get(BlackJackWinningStatus.LOSE);
-                    assertThat(dealerWinCount).isEqualTo(1);
+                    DealerResults dealerResults = participantsResult.dealerResults();
+                    assertThat(dealerResults.getStatusCount(BlackJackWinningStatus.LOSE)).isEqualTo(1);
                 },
                 () -> {
-                    List<PlayerResult> playerResults = participantsResult.playerResults();
-                    PlayerResult playerResult = playerResults.get(0);
-                    BlackJackWinningStatus playerBlackJackWinningStatus = playerResult.getGameResult();
+                    PlayerResults playerResults = participantsResult.playerResults();
+                    PlayerWinningStatus playerWinningStatus = playerResults.findByPlayerName(player1.getName());
+                    BlackJackWinningStatus playerBlackJackWinningStatus = playerWinningStatus.status();
                     assertThat(playerBlackJackWinningStatus).isEqualTo(BlackJackWinningStatus.WIN);
                 }
         );

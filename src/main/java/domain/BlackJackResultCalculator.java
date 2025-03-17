@@ -2,6 +2,10 @@ package domain;
 
 import domain.participant.Participant;
 import domain.participant.Participants;
+import domain.result.DealerResults;
+import domain.result.DealerWinningStatus;
+import domain.result.PlayerResults;
+import domain.result.PlayerWinningStatus;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,17 +16,17 @@ public class BlackJackResultCalculator {
 
     public static ParticipantsResult calculate(Participants participants) {
         Participant dealer = participants.getDealer();
-        DealerResult dealerResult = new DealerResult();
-        List<PlayerResult> playerResults = new ArrayList<>();
+        List<DealerWinningStatus> dealerResults = new ArrayList<>();
+        List<PlayerWinningStatus> playerResults = new ArrayList<>();
         for (Participant player : participants.getPlayerParticipants()) {
-            BlackJackWinningStatus currentDealerResult = BlackJackWinningStatus.calculateDealerResult(
+            BlackJackWinningStatus dealerBlackJackWinningStatus = BlackJackWinningStatus.calculateDealerResult(
                     dealer.isBlackJack(),
                     dealer.getTotalValue(),
                     player.isBlackJack(),
                     player.getTotalValue());
-            dealerResult.add(currentDealerResult);
-            playerResults.add(new PlayerResult(player, currentDealerResult.reverse()));
+            dealerResults.add(new DealerWinningStatus(player.getName(), dealerBlackJackWinningStatus));
+            playerResults.add(new PlayerWinningStatus(player.getName(), dealerBlackJackWinningStatus.reverse()));
         }
-        return new ParticipantsResult(dealerResult, playerResults);
+        return new ParticipantsResult(new DealerResults(dealerResults), new PlayerResults(playerResults));
     }
 }
