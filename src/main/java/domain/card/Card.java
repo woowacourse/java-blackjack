@@ -1,35 +1,28 @@
 package domain.card;
 
+import domain.card.trump.Rank;
+import domain.card.trump.Suit;
+import domain.card.trump.TrumpCard;
 import java.util.List;
 
-public class Card {
-    private final Suit suit;
-    private final Rank rank;
+public class Card extends TrumpCard {
+
     private boolean isOpened;
 
-    public Card(Suit suit, Rank rank) {
-        this.suit = suit;
-        this.rank = rank;
-        this.isOpened = false;
-    }
-
-    public void openCard() {
-        this.isOpened = true;
-    }
-
-    public List<Integer> getScores() {
-        return rank.getScores();
-    }
-
-    public Rank getRank() {
-        return rank;
-    }
-
-    public Suit getSuit() {
-        return suit;
+    public Card(Rank rank, Suit suit) {
+        super(rank, suit);
+        isOpened = false;
     }
 
     public boolean isOpened() {
         return isOpened;
+    }
+
+    public void open() {
+        isOpened = true;
+    }
+
+    public List<Integer> scores() {
+        return BlackjackRank.getScoresByRank(rank);
     }
 }

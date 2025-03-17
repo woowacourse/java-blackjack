@@ -1,8 +1,17 @@
-import controller.BlackjackController;
+import domain.BlackjackGameBoard;
+import domain.card.DeckGenerator;
+import domain.player.Dealer;
+import domain.player.Users;
+import view.InputView;
 
 public class BlackjackApplication {
+
     public static void main(String[] args) {
-        BlackjackController blackjackController = new BlackjackController();
-        blackjackController.run();
+        BlackjackGameManager blackjackGameManager = new BlackjackGameManager();
+        blackjackGameManager.startGame(
+                new BlackjackGameBoard(DeckGenerator.generateDeck()),
+                Dealer.createDefaultDealer(),
+                Users.from(InputView.inputUsers())
+        );
     }
 }

@@ -1,24 +1,17 @@
 package domain.player;
 
-import domain.card.Deck;
+import domain.state.Hittable;
+import domain.state.State;
 
 public class Dealer extends Player {
-    private static final int ADD_CARD_THRESHOLD = 16;
 
-    public Dealer() {
-        super("딜러");
+    public static final String DEALER_NAME = "딜러";
+
+    private Dealer(String name, State state) {
+        super(name, state);
     }
 
-    @Override
-    public void openInitialCards() {
-        openCards(1);
-    }
-
-    public boolean drawOneCardIfLowScore(Deck deck) {
-        if (computeOptimalSum() <= ADD_CARD_THRESHOLD) {
-            drawOneCard(deck);
-            return true;
-        }
-        return false;
+    public static Dealer createDefaultDealer() {
+        return new Dealer(DEALER_NAME, Hittable.initialDealerState());
     }
 }
