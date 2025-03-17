@@ -6,6 +6,7 @@ import card.CardShape;
 import game.Playable;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import participant.Dealer;
 import participant.Player;
 import participant.Players;
@@ -14,14 +15,18 @@ import participant.Profit;
 public class OutputView {
 
     private static final String NICKNAME_SEPARATOR = ", ";
-    private static final String CLOVER = "클로버";
-    private static final String SPADE = "스페이드";
-    private static final String DIAMOND = "다이아몬드";
-    private static final String HEART = "하트";
-    private static final String ACE = "A";
-    private static final String JACK = "J";
-    private static final String QUEEN = "Q";
-    private static final String KING = "K";
+    private static final Map<CardShape, String> CARD_SHAPES = Map.of(
+            CardShape.CLOVER, "클로버",
+            CardShape.DIAMOND, "다이아몬드",
+            CardShape.SPADE, "스페이드",
+            CardShape.HEART, "하트"
+    );
+    private static final Map<CardNumber, String> CARD_NUMBERS = Map.of(
+            CardNumber.ACE, "A",
+            CardNumber.JACK, "J",
+            CardNumber.QUEEN, "Q",
+            CardNumber.KING, "K"
+    );
 
     public void printDistributionCards(Dealer dealer, Players players) {
         printNewLine();
@@ -92,32 +97,19 @@ public class OutputView {
     }
 
     private String cardNumberToString(Card card) {
-        if (card.isSameCardNumber(CardNumber.ACE)) {
-            return ACE;
-        }
-        if (card.isSameCardNumber(CardNumber.QUEEN)) {
-            return QUEEN;
-        }
-        if (card.isSameCardNumber(CardNumber.JACK)) {
-            return JACK;
-        }
-        if (card.isSameCardNumber(CardNumber.KING)) {
-            return KING;
-        }
-        return String.valueOf(card.getCardNumberValue());
+        return CARD_NUMBERS.entrySet().stream()
+                .filter(entry -> card.isSameCardNumber(entry.getKey()))
+                .map(Entry::getValue)
+                .findFirst()
+                .orElse(String.valueOf(card.getCardNumberValue()));
     }
 
     private String cardShapeToString(Card card) {
-        if (card.isSameCardShape(CardShape.CLOVER)) {
-            return CLOVER;
-        }
-        if (card.isSameCardShape(CardShape.DIAMOND)) {
-            return DIAMOND;
-        }
-        if (card.isSameCardShape(CardShape.SPADE)) {
-            return SPADE;
-        }
-        return HEART;
+        return CARD_SHAPES.entrySet().stream()
+                .filter(entry -> card.isSameCardShape(entry.getKey()))
+                .map(Entry::getValue)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효하지 않은 카드 모양입니다."));
     }
 
     private void print(String message) {
