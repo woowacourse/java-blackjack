@@ -1,13 +1,15 @@
 package model;
 
-import static model.Denomination.ACE;
-import static model.Denomination.JACK;
-import static model.Denomination.THREE;
-import static model.Denomination.TWO;
-import static model.Suit.CLUB;
+import static model.card.Denomination.ACE;
+import static model.card.Denomination.JACK;
+import static model.card.Denomination.THREE;
+import static model.card.Denomination.TWO;
+import static model.card.Suit.CLUB;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import model.card.Ace;
+import model.card.Card;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

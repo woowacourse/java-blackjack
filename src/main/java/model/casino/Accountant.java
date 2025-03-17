@@ -1,10 +1,13 @@
-package model;
+package model.casino;
 
-import static model.WinLossResult.computeWinLoss;
+import static model.casino.WinLossResult.computeWinLoss;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import model.participants.Dealer;
+import model.participants.Player;
+import model.participants.PlayerGroup;
 
 public class Accountant {
     Map<Player, Integer> bettingPrices;
@@ -17,10 +20,10 @@ public class Accountant {
         bettingPrices.put(player, price);
     }
 
-    public Map<Player, Integer> calculateProfit(Players players, Dealer dealer) {
+    public Map<Player, Integer> calculateProfit(PlayerGroup playerGroup, Dealer dealer) {
         Map<Player, Integer> profitPerParticipant = new LinkedHashMap<>();
         int dealerProfit = 0;
-        for (Player player : players.getPlayers()) {
+        for (Player player : playerGroup.getPlayers()) {
             int playerProfit = getProfit(player, computeWinLoss(player, dealer));
             profitPerParticipant.put(player, playerProfit);
             dealerProfit -= playerProfit;

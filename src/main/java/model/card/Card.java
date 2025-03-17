@@ -1,7 +1,7 @@
-package model;
+package model.card;
 
-import static model.Denomination.ACE;
-import static model.Denomination.ORIGINAL_ACE_VALUE;
+import static model.card.Denomination.ACE;
+import static model.card.Denomination.ORIGINAL_ACE_VALUE;
 
 public class Card {
     private final Denomination denomination;

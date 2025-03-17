@@ -3,6 +3,11 @@ package model;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import controller.BlackJack;
+import model.card.Card;
+import model.card.Denomination;
+import model.card.Suit;
+import model.casino.Deck;
+import model.participants.Dealer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,12 +26,11 @@ public class DealerTest {
     @Test
     @DisplayName("딜러의 핸드 총합이 16 이하면 카드를 추가로 받는다.")
     void test2() {
-        BlackJack blackJack = new BlackJack();
         Dealer dealer = new Dealer();
 
         dealer.addCard(new Card(Denomination.TWO, Suit.CLUB));
         dealer.addCard(new Card(Denomination.TEN, Suit.DIAMOND));
-        blackJack.dealersTurn(dealer, new Deck());
+        dealer.dealersTurn(new Deck());
 
         assertThat(dealer.getCardCount()).isGreaterThan(2);
     }
@@ -40,7 +44,7 @@ public class DealerTest {
         dealer.addCard(new Card(Denomination.TEN, Suit.CLUB));
         dealer.addCard(new Card(Denomination.SEVEN, Suit.DIAMOND));
 
-        blackJack.dealersTurn(dealer, new Deck());
+        dealer.dealersTurn(new Deck());
 
         assertThat(dealer.getCardCount()).isEqualTo(2);
     }

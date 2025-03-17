@@ -1,4 +1,4 @@
-package model;
+package model.card;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,7 +6,6 @@ import java.util.List;
 
 public class Hand {
 
-    private static final int ORIGINAL_ACE_VALUE = 11;
     private static final int BUST_THRESHOLD = 21;
     public static final int INITIAL_SIZE = 2;
 

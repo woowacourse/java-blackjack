@@ -1,20 +1,20 @@
 package view;
 
-import static model.Dealer.THRESHOLD;
+import static model.participants.Dealer.THRESHOLD;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import model.Card;
-import model.Dealer;
-import model.Hand;
-import model.Participants;
-import model.Player;
-import model.Players;
+import model.card.Card;
+import model.card.Hand;
+import model.participants.Dealer;
+import model.participants.Participants;
+import model.participants.Player;
+import model.participants.PlayerGroup;
 
 public class OutputView {
     public static void printDistributeResult(Participants participants) {
-        List<Player> players = participants.getPlayers().getPlayers();
+        List<Player> players = participants.getPlayerGroup().getPlayers();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("딜러와 ")
                 .append(players.stream().map(Player::getName).collect(Collectors.joining(",")))
@@ -31,10 +31,10 @@ public class OutputView {
         System.out.println(stringBuilder.append("\n"));
     }
 
-    public static void printEveryOneCardsNamesWithTotal(Players players, Dealer dealer) {
+    public static void printEveryOneCardsNamesWithTotal(PlayerGroup playerGroup, Dealer dealer) {
         StringBuilder stringBuilder = new StringBuilder();
         openCardsWithTotal(dealer, stringBuilder);
-        for (Player player : players.getPlayers()) {
+        for (Player player : playerGroup.getPlayers()) {
             openCardsWithTotal(player, stringBuilder);
         }
         System.out.println(stringBuilder);
@@ -75,7 +75,7 @@ public class OutputView {
         stringBuilder.append(String.format("%s카드: ", dealer.getName()));
         stringBuilder.append(getFormattedOpenedCard(dealer.openOneCard()))
                 .append(", (???)\n");
-        for (Player player : participants.getPlayers().getPlayers()) {
+        for (Player player : participants.getPlayerGroup().getPlayers()) {
             openHand(player, stringBuilder);
             stringBuilder.append("\n");
         }

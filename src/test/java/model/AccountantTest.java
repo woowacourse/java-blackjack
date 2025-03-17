@@ -1,11 +1,13 @@
 package model;
 
-import static model.WinLossResult.DRAW;
-import static model.WinLossResult.LOSS;
-import static model.WinLossResult.WIN;
-import static model.WinLossResult.WIN_WITH_BLACK_JACK;
+import static model.casino.WinLossResult.DRAW;
+import static model.casino.WinLossResult.LOSS;
+import static model.casino.WinLossResult.WIN;
+import static model.casino.WinLossResult.WIN_WITH_BLACK_JACK;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import model.casino.Accountant;
+import model.participants.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package model;
+package model.casino;
 
 @FunctionalInterface
 public interface HitOrHoldPolicy {

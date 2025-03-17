@@ -3,6 +3,13 @@ package model;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import model.card.Ace;
+import model.card.Card;
+import model.card.Denomination;
+import model.card.Suit;
+import model.casino.WinLossResult;
+import model.participants.Dealer;
+import model.participants.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

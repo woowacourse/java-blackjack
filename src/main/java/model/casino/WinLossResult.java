@@ -1,4 +1,7 @@
-package model;
+package model.casino;
+
+import model.participants.Dealer;
+import model.participants.Player;
 
 public enum WinLossResult {
 
@@ -43,7 +46,4 @@ public enum WinLossResult {
         throw new IllegalArgumentException("Invalid winLossOption: " + winLossOption);
     }
 
-    public String getWinLossMessage() {
-        return winLossMessage;
-    }
 }
