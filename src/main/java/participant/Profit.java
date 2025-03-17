@@ -16,7 +16,7 @@ public class Profit {
         return new Profit(earnedMoney.minus(bettingMoney.getAmount()).getAmount());
     }
 
-    public Profit negate() {
+    public Profit reverse() {
         return new Profit(this.amount * -1);
     }
 

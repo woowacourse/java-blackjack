@@ -29,7 +29,7 @@ class ProfitTest {
         Profit profit = Profit.of(10000);
 
         // when
-        Profit negatedProfit = profit.negate();
+        Profit negatedProfit = profit.reverse();
 
         // then
         assertThat(negatedProfit.getAmount())

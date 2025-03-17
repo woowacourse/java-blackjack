@@ -50,6 +50,6 @@ public class BlackjackGame {
     }
 
     private Profit calculateDealerGameResults(Players players) {
-        return players.sumProfits().negate();
+        return players.sumProfits().reverse();
     }
 }
