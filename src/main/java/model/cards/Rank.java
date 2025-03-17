@@ -16,7 +16,7 @@ public enum Rank {
     JACK(List.of(10), "J"),
     QUEEN(List.of(10), "Q"),
     KING(List.of(10), "K"),
-    ACE(List.of(1, 11), "A");
+    ACE(List.of(11, 1), "A");
 
     private static final String WARNING_INVALID_RANK = "[ERROR] 존재하지 않는 카드 랭크입니다.";
 

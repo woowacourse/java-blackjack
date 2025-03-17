@@ -8,6 +8,9 @@ import java.util.Set;
 import model.participants.ParticipantType;
 
 public class Hand {
+    private static final int BASE_VALUE = 0;
+    private static final int BUST_THRESHOLD = 21;
+
     private final List<Card> cards;
     private int score;
 
@@ -28,9 +31,9 @@ public class Hand {
     }
 
     private void calculateDealerScore() {
-        int score = 0;
+        int score = BASE_VALUE;
         for (Card card : cards) {
-            score += card.getRankValue().getLast();
+            score += card.getRankValue().getFirst();
         }
         this.score = score;
     }
@@ -38,13 +41,13 @@ public class Hand {
     private void calculatePlayerScore() {
         Set<Integer> possibleScores = calculatePossibleScores();
         this.score = possibleScores.stream()
-                .filter(value -> value <= 21)
+                .filter(value -> value <= BUST_THRESHOLD)
                 .max(Integer::compareTo)
                 .orElse(Collections.min(possibleScores));
     }
 
     private Set<Integer> calculatePossibleScores() {
-        List<Integer> scores = new ArrayList<>(List.of(0));
+        List<Integer> scores = new ArrayList<>(List.of(BASE_VALUE));
         for (Card card : cards) {
             scores = scores.stream()
                     .flatMap(score -> card.getRankValue().stream().map(value -> score + value))
