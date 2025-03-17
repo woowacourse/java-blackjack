@@ -32,17 +32,16 @@ public class BettingTable {
         Long bettingMoney = bet.getOrDefault(user, 0L);
         long reward = 0L;
 
+        if (gameResult == GameResult.WIN) {
+            reward = bettingMoney;
+        }
         if (user.isBlackjack() && gameResult == GameResult.WIN) {
             reward = (long) (bettingMoney * BLACKJACK_REWARD_RATE);
         }
-        if (gameResult == GameResult.WIN) {
-            reward = bettingMoney;
-            dealerBet -= reward;
-        }
         if (gameResult == GameResult.LOSE) {
             reward = -bettingMoney;
-            dealerBet += bettingMoney;
         }
+        dealerBet -= reward;
         return reward;
     }
 }
