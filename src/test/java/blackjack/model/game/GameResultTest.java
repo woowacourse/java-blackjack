@@ -6,6 +6,7 @@ import static blackjack.model.card.CardNumber.EIGHT;
 import static blackjack.model.card.CardNumber.NINE;
 import static blackjack.model.card.CardNumber.TEN;
 import static blackjack.model.card.CardNumber.THREE;
+import static blackjack.model.game.GameResult.BLACKJACK_WIN;
 import static blackjack.model.game.GameResult.DRAW;
 import static blackjack.model.game.GameResult.LOSE;
 import static blackjack.model.game.GameResult.WIN;
@@ -19,7 +20,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import blackjack.model.card.Cards;
-import blackjack.model.player.Player;
+import blackjack.model.player.Dealer;
 import blackjack.model.player.User;
 
 class GameResultTest {
@@ -27,12 +28,13 @@ class GameResultTest {
     @MethodSource("플레이어와_상대방을_알려주면_결과를_계산한다_테스트_케이스")
     @ParameterizedTest
     void 플레이어와_상대방을_알려주면_결과를_계산한다(Cards playerCards, Cards otherPlayerCards, GameResult expected) {
-        Player player = new User("pobi", 1_000);
-        Player challenger = new User("jason", 1_000);
-        player.receiveCards(playerCards);
-        challenger.receiveCards(otherPlayerCards);
+        User user = new User("pobi", 1_000);
+        Dealer dealer = new Dealer();
 
-        assertThat(calculateResult(player, challenger))
+        user.receiveCards(playerCards);
+        dealer.receiveCards(otherPlayerCards);
+
+        assertThat(calculateResult(user, dealer))
                 .isEqualByComparingTo(expected);
     }
 
@@ -41,7 +43,7 @@ class GameResultTest {
                 Arguments.of(
                         new Cards(createCard(TEN), createCard(ACE)),
                         new Cards(createCard(TEN), createCard(NINE)),
-                        WIN
+                        BLACKJACK_WIN
                 ),
                 Arguments.of(
                         new Cards(createCard(TEN), createCard(NINE)),

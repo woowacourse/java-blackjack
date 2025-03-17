@@ -32,11 +32,11 @@ public class Players {
         return users;
     }
 
-    public Map<Player, BigDecimal> calculateWinnings(final Map<Player, Map<GameResult, Integer>> gameResults) {
+    public Map<Player, BigDecimal> calculateWinnings(final Map<User, GameResult> gameResults) {
         Map<Player, BigDecimal> winnings = createPlayersWinnings();
         BigDecimal dealerWinnings = winnings.get(dealer);
-        for (User user : users) {
-            BigDecimal playerWinnings = calculateWinnings(user, gameResults.get(user), user.getBettingMoney());
+        for (User user : gameResults.keySet()) {
+            BigDecimal playerWinnings = calculateWinnings(user, gameResults.get(user));
             winnings.put(user, playerWinnings);
             dealerWinnings = dealerWinnings.subtract(playerWinnings);
         }
@@ -50,27 +50,17 @@ public class Players {
         return winnings;
     }
 
-    private BigDecimal calculateWinnings(final Player player, final Map<GameResult, Integer> results,
-                                         final BettingMoney bettingMoney) {
-        GameResult gameResult = results.keySet()
-                .iterator()
-                .next();
-        return computePlayerWinning(player, gameResult, bettingMoney);
-    }
-
-    private BigDecimal computePlayerWinning(
-            final Player player, final GameResult result, final BettingMoney bettingMoney
-    ) {
-        if (result == GameResult.WIN && player.isBlackjack()) {
-            return bettingMoney.getAmount().multiply(BigDecimal.valueOf(1.5));
+    private BigDecimal calculateWinnings(final User user, final GameResult result) {
+        if (result == GameResult.BLACKJACK_WIN) {
+            return user.calculateProfit(1.5);
         }
         if (result == GameResult.WIN) {
-            return bettingMoney.getAmount();
+            return user.calculateProfit(1.0);
         }
         if (result == GameResult.LOSE) {
-            return bettingMoney.getAmount().negate();
+            return user.calculateProfit(-1.0);
         }
-        return BigDecimal.ZERO;
+        return user.calculateProfit(0.0);
     }
 
 }

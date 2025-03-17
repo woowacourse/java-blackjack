@@ -1,6 +1,7 @@
 package blackjack.model.player;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 public class BettingMoney {
@@ -21,6 +22,11 @@ public class BettingMoney {
                     MIN_BETTING_AMOUNT, MAX_BETTING_AMOUNT
             ));
         }
+    }
+
+    public BigDecimal multiply(final double value) {
+        return amount.multiply(BigDecimal.valueOf(value))
+                .setScale(0, RoundingMode.FLOOR);
     }
 
     public BigDecimal getAmount() {

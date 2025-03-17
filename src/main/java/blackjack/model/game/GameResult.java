@@ -1,52 +1,50 @@
 package blackjack.model.game;
 
-import blackjack.model.player.Player;
+import blackjack.model.player.Dealer;
+import blackjack.model.player.User;
 
 public enum GameResult {
 
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    BLACKJACK_WIN,
+    WIN,
+    DRAW,
+    LOSE;
 
-    private final String text;
+    GameResult() {}
 
-    GameResult(final String text) {
-        this.text = text;
-    }
-
-    public static GameResult calculateResult(final Player player, final Player otherPlayer) {
-        if (isDraw(player, otherPlayer)) {
+    public static GameResult calculateResult(final User user, final Dealer dealer) {
+        if (isUserBlackJackWin(user, dealer)) {
+            return BLACKJACK_WIN;
+        }
+        if (isDraw(user, dealer)) {
             return DRAW;
         }
-        if (isPlayerWin(player, otherPlayer)) {
+        if (isUserWin(user, dealer)) {
             return WIN;
         }
         return LOSE;
     }
 
-    private static boolean isPlayerWin(final Player player, final Player otherPlayer) {
-        int playerPoint = player.calculatePoint();
-        int otherPlayerPoint = otherPlayer.calculatePoint();
-        if (player.isBlackjack() && !player.isBlackjack()) {
-            return true;
-        }
-        if (!player.isBust() && otherPlayer.isBust()) {
-            return true;
-        }
-        return !player.isBust() && !otherPlayer.isBust() && playerPoint > otherPlayerPoint;
+    private static boolean isUserBlackJackWin(final User user, final Dealer dealer) {
+        return user.isBlackjack() && !dealer.isBlackjack();
     }
 
-    private static boolean isDraw(final Player player, final Player otherPlayer) {
-        if (player.isBlackjack() && otherPlayer.isBlackjack()) {
+    private static boolean isUserWin(final User user, final Dealer dealer) {
+        int playerPoint = user.calculatePoint();
+        int otherPlayerPoint = dealer.calculatePoint();
+        if (!user.isBust() && dealer.isBust()) {
             return true;
         }
-        int playerPoint = player.calculatePoint();
-        int otherPlayerPoint = otherPlayer.calculatePoint();
-        return !player.isBust() && !otherPlayer.isBust() && (playerPoint == otherPlayerPoint);
+        return !user.isBust() && !dealer.isBust() && playerPoint > otherPlayerPoint;
     }
 
-    public String getText() {
-        return text;
+    private static boolean isDraw(final User user, final Dealer dealer) {
+        if (user.isBlackjack() && dealer.isBlackjack()) {
+            return true;
+        }
+        int userPoint = user.calculatePoint();
+        int dealerPoint = dealer.calculatePoint();
+        return !user.isBust() && !dealer.isBust() && (userPoint == dealerPoint);
     }
 
 }

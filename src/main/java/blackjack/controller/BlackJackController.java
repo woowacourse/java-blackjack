@@ -26,18 +26,17 @@ public class BlackJackController {
 
     public void run() {
         BlackJackGame blackJackGame = new BlackJackGame(new DefaultCardDeckInitializer());
-
         Players players = makePlayers();
 
         blackJackGame.drawInitialCards(players);
         outputView.printDealInitialCardsResult(players);
 
         usersDrawMoreCards(players.getUsers(), blackJackGame);
-
         dealerDrawMoreCards(blackJackGame, players.getDealer());
         outputView.printOptimalPoints(players);
-        Map<Player, Map<GameResult, Integer>> gameResults = blackJackGame.calculateResult(players);
-        Map<Player, BigDecimal> playerWinnings = players.calculateWinnings(gameResults);
+
+        Map<User, GameResult> userGameResults = blackJackGame.calculateResult(players);
+        Map<Player, BigDecimal> playerWinnings = players.calculateWinnings(userGameResults);
         outputView.printFinalWinnings(playerWinnings);
     }
 
@@ -57,7 +56,7 @@ public class BlackJackController {
             return;
         }
         while (blackJackGame.canDrawMoreCard(player) && inputView.readUserDrawMoreCard(player)) {
-            blackJackGame.drawCard(player, 1);
+            blackJackGame.drawOneCard(player);
             outputView.printPlayerCards(player);
         }
     }
@@ -65,7 +64,7 @@ public class BlackJackController {
     private void dealerDrawMoreCards(final BlackJackGame blackJackGame, final Player dealer) {
         boolean isDealerDrawn = blackJackGame.canDrawMoreCard(dealer);
         if (isDealerDrawn) {
-            blackJackGame.drawCard(dealer, 1);
+            blackJackGame.drawOneCard(dealer);
         }
         outputView.printDealerDrawnMoreCards(isDealerDrawn);
     }

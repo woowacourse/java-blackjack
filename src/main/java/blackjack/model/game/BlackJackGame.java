@@ -1,10 +1,11 @@
 package blackjack.model.game;
 
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import blackjack.model.card.CardDeck;
-import blackjack.model.card.Cards;
 import blackjack.model.card.initializer.CardDeckInitializer;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
@@ -14,6 +15,7 @@ import blackjack.model.player.User;
 public class BlackJackGame {
 
     private static final int INITIAL_DRAW_AMOUNT = 2;
+    private static final int SINGLE_DRAW_AMOUNT = 1;
 
     private final CardDeck cardDeck;
     private final BlackJackRule blackJackRule;
@@ -25,28 +27,30 @@ public class BlackJackGame {
 
     public void drawInitialCards(final Players players) {
         Dealer dealer = players.getDealer();
-        drawCard(dealer, INITIAL_DRAW_AMOUNT);
+        dealer.receiveCards(cardDeck.draw(INITIAL_DRAW_AMOUNT));
 
         players.getUsers()
-                .forEach(player -> drawCard(player, INITIAL_DRAW_AMOUNT));
-    }
-
-    public Cards openInitialCards(final Player player) {
-        return blackJackRule.openInitialCards(player);
+                .forEach(player -> player.receiveCards(cardDeck.draw(INITIAL_DRAW_AMOUNT)));
     }
 
     public boolean canDrawMoreCard(final Player player) {
         return blackJackRule.canDrawMoreCard(player);
     }
 
-    public void drawCard(final Player player, final int amount) {
-        player.receiveCards(cardDeck.draw(amount));
+    public void drawOneCard(final Player player) {
+        player.receiveCards(cardDeck.draw(SINGLE_DRAW_AMOUNT));
     }
 
-    public Map<Player, Map<GameResult, Integer>> calculateResult(final Players players) {
+    public Map<User, GameResult> calculateResult(final Players players) {
         Dealer dealer = players.getDealer();
-        List<User> users = players.getUsers();
-        return blackJackRule.calculateResult(dealer, users);
+        return players.getUsers()
+                .stream()
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        user -> GameResult.calculateResult(user, dealer),
+                        (oldValue, newValue) -> newValue,
+                        LinkedHashMap::new
+                ));
     }
 
 }
