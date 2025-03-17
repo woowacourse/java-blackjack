@@ -60,6 +60,7 @@ public class Dealer extends Gambler {
             player.updateBetAmount(-betAmount);
             return betAmount;
         }
+        player.updateBetAmount(0);
         return 0;
     }
 

@@ -78,13 +78,14 @@ class DealerTest {
             "NINE, EIGHT, ACE, KING, THREE, FOUR, 5000",
             "NINE, EIGHT, ACE, THREE, THREE, FOUR, 30000",
             "NINE, EIGHT, ACE, KING, ACE, QUEEN, -45000",
+            "JACK, QUEEN, FIVE, KING, QUEEN, TEN, 10000"
     })
     void 플레이어들의_카드를_받아_배팅금액을_계산한다(
             TrumpRank dealerRank1, TrumpRank dealerRank2,
             TrumpRank player1Rank1, TrumpRank player1Rank2,
             TrumpRank player2Rank1, TrumpRank player2Rank2,
-            int expectedBetAmount)
-    {
+            int expectedBetAmount) {
+
         // given
         Cards dealerCards = createCards(
                 createCard(dealerRank1, TrumpSuit.DIAMOND),
