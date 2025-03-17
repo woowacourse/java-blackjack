@@ -31,10 +31,12 @@ public class BettingTable {
         return bettingAmounts.get(player).end();
     }
 
-    public void endGameIfBlackjack(Player player) {
+    public boolean endGameIfBlackjack(Player player) {
         if (player.isBlackjack()) {
             bettingAmounts.put(player, bettingAmounts.get(player).blackjack());
+            return true;
         }
+        return false;
     }
 
     public void endGameIfBlackjack(Dealer dealer) {

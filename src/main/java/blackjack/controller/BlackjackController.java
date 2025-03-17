@@ -22,6 +22,7 @@ public class BlackjackController {
     // TODO: CARD 관련 상수들 분리
     public static final int STARTING_CARDS_SIZE = 2;
 
+    private boolean finishGame = false;
     private Gamers gamers;
     private BettingTable bettingTable;
     private final Deck deck = Deck.generateFrom(new RandomCardStrategy());
@@ -29,8 +30,11 @@ public class BlackjackController {
     public void run() {
         setPlayers();
         betPlayers();
-        drawPlayerCards();
-        drawDealerCards();
+        drawStartingCards();
+        if (!finishGame) {
+            drawPlayerCards();
+            drawDealerCards();
+        }
         printResult();
         printProfit();
     }
@@ -52,22 +56,23 @@ public class BlackjackController {
         for (var player : gamers.getPlayers()) {
             bettingTable.betting(player, InputView.betting(player.getName()).bettingAmount());
         }
-        OutputView.printStartingCards(drawStartingCards());
     }
 
-    public StartingCardsResponseDto drawStartingCards() {
+    private void drawStartingCards() {
         drawStartingCards(gamers.getDealer());
         boolean dealerBlackjack = gamers.getDealer().isBlackjack();
         for (var player : gamers.getPlayers()) {
             drawStartingCards(player);
-            if (player.isBlackjack() && !dealerBlackjack) {
-                bettingTable.endGameIfBlackjack(player);
+            if (player.isBlackjack() && !dealerBlackjack &&
+                bettingTable.endGameIfBlackjack(player)) {
+                finishGame = true;
             }
         }
         if (dealerBlackjack) {
             bettingTable.endGameIfBlackjack(gamers.getDealer());
+            finishGame = true;
         }
-        return StartingCardsResponseDto.of(gamers.getDealer(), gamers.getPlayers());
+        OutputView.printStartingCards(StartingCardsResponseDto.of(gamers.getDealer(), gamers.getPlayers()));
     }
 
     private void drawPlayerCards() {
