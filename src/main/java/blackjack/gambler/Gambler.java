@@ -7,7 +7,6 @@ import java.util.List;
 
 public abstract class Gambler {
 
-    public static final int MAX_SCORE = 21;
     public static final int INITIAL_CARD_COUNT = 2;
 
     protected Cards cards;
@@ -35,14 +34,6 @@ public abstract class Gambler {
 
     public int sumCardScores() {
         return cards.sumCardScores();
-    }
-
-    public boolean isBust() {
-        return sumCardScores() > MAX_SCORE;
-    }
-
-    public boolean doesNotBust() {
-        return !isBust();
     }
 
     private void validateInitialCardsSize(Cards cards) {

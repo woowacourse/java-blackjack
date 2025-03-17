@@ -2,14 +2,10 @@ package blackjack.view;
 
 import blackjack.BlackjackTable;
 import blackjack.card.Card;
-import blackjack.constant.MatchResult;
 import blackjack.gambler.Dealer;
 import blackjack.gambler.Player;
 import blackjack.gambler.Players;
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public class ConsoleOutputView implements OutputView {
 
@@ -60,61 +56,6 @@ public class ConsoleOutputView implements OutputView {
             System.out.println(player.getPlayerName() + "카드: " + processCardsInfo(player.openCards()) + " - 결과: "
                     + player.sumCardScores());
         }
-    }
-
-    @Override
-    public void printGameResult(Map<Player, MatchResult> playerResults) {
-        System.out.println();
-        System.out.println("## 최종 승패");
-        printDealerResult(playerResults);
-        printPlayerResults(playerResults);
-
-    }
-
-
-    private void printDealerResult(Map<Player, MatchResult> playerMatchResultMap) {
-        Map<MatchResult, Integer> matchResultCounts = getMatchResultCounts();
-        for (MatchResult matchResult : playerMatchResultMap.values()) {
-            matchResultCounts.put(matchResult, matchResultCounts.get(matchResult) + 1);
-        }
-        System.out.println("딜러: " + formatDealerWin(matchResultCounts.get(MatchResult.LOSE))
-                + formatDealerDraw(matchResultCounts.get(MatchResult.PUSH))
-                + formatDealerLose(matchResultCounts.get(MatchResult.WIN)));
-    }
-
-    private Map<MatchResult, Integer> getMatchResultCounts() {
-        Map<MatchResult, Integer> matchResultCounts = new EnumMap<>(MatchResult.class);
-        matchResultCounts.put(MatchResult.WIN, 0);
-        matchResultCounts.put(MatchResult.PUSH, 0);
-        matchResultCounts.put(MatchResult.LOSE, 0);
-        return matchResultCounts;
-    }
-
-    private void printPlayerResults(Map<Player, MatchResult> playerResults) {
-        for (Entry<Player, MatchResult> entry : playerResults.entrySet()) {
-            System.out.println(entry.getKey().getPlayerName() + ": " + entry.getValue().getMessage());
-        }
-    }
-
-    private String formatDealerWin(int dealerWinCount) {
-        if (dealerWinCount > 0) {
-            return dealerWinCount + "승 ";
-        }
-        return "";
-    }
-
-    private String formatDealerDraw(int dealerDrawCount) {
-        if (dealerDrawCount > 0) {
-            return dealerDrawCount + "무 ";
-        }
-        return "";
-    }
-
-    private String formatDealerLose(int dealerLoseCount) {
-        if (dealerLoseCount > 0) {
-            return dealerLoseCount + "패 ";
-        }
-        return "";
     }
 
     private String processCardsInfo(List<Card> cards) {

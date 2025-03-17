@@ -13,9 +13,6 @@ public interface OutputView {
 
     void printDealerOneMoreCardMessage();
 
-
-    void printGameResult(Map<Player, MatchResult> playerResults);
-
     void printGameSummary(BlackjackTable gameTable);
 
     void printPlayerCards(BlackjackTable gameTable, String playerName);
