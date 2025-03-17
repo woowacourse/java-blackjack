@@ -64,7 +64,7 @@ public class GameManagerTest {
         GameManager gameManager = GameManager.initailizeGameManager(playerBetting, new TrumpCardManager());
 
         // when
-        gameManager.firstHandOutCard();
+        gameManager.drawStartingCards();
         Player player1 = gameManager.findPlayerByUsername("수양");
         Player player2 = gameManager.findPlayerByUsername("레몬");
         Dealer dealer = gameManager.getDealer();

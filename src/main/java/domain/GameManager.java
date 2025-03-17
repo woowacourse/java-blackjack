@@ -32,7 +32,7 @@ public class GameManager {
         return new GameManager(players, dealer, trumpCardManager);
     }
 
-    public void firstHandOutCard() {
+    public void drawStartingCards() {
         for (int count = MIN_RANGE_HAND_OUT_CARD; count < MAX_RANGE_HAND_OUT_CARD; count++) {
             dealer.receiveCard(trumpCardManager.drawCard());
             players.forEach(player -> player.receiveCard(trumpCardManager.drawCard()));

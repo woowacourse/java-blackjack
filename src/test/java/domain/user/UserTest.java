@@ -24,7 +24,7 @@ class UserTest {
             new TrumpCard(CardShape.CLOVER, CardNumber.FOUR),
             new TrumpCard(CardShape.CLOVER, CardNumber.THREE)
     );
-    
+
     private final FakeTrumpCardManager trumpCardManager = new FakeTrumpCardManager(cardDeck);
     private final Map<String, Betting> playerBetting = new HashMap<>();
 
@@ -47,7 +47,7 @@ class UserTest {
             GameManager gameManager = GameManager.initailizeGameManager(playerBetting, trumpCardManager);
             Player user = gameManager.findPlayerByUsername("레몬");
 
-            gameManager.firstHandOutCard();
+            gameManager.drawStartingCards();
             gameManager.drawMoreCard(user);
             gameManager.drawMoreCard(user);
             gameManager.drawMoreCard(user);
@@ -65,7 +65,7 @@ class UserTest {
 
             // given
             GameManager gameManager = GameManager.initailizeGameManager(playerBetting, trumpCardManager);
-            gameManager.firstHandOutCard();
+            gameManager.drawStartingCards();
             User dealer = gameManager.getDealer();
 
             // when
