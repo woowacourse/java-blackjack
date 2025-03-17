@@ -9,30 +9,24 @@ public class ProfitsTest {
 
     @Test
     void 베팅금에_따른_수익을_계산한다() {
-        //given
         List<Integer> bettingMoneys = List.of(1000, 1000, 1000, 1000);
         List<GameResult> gameResults = List.of(
                 GameResult.BLACKJACK, GameResult.WIN, GameResult.DRAW, GameResult.LOSE);
 
-        //when
         Profits profits = Profits.of(bettingMoneys, gameResults);
 
-        //then
         assertThat(profits.getProfits()).containsExactlyElementsOf(List.of(1500, 1000, 0, -1000));
     }
 
     @Test
     void 딜러의_수익을_계산한다() {
-        //given
         List<Integer> bettingMoneys = List.of(1000, 1000, 1000, 1000);
         List<GameResult> gameResults = List.of(
                 GameResult.BLACKJACK, GameResult.WIN, GameResult.DRAW, GameResult.LOSE);
         Profits profits = Profits.of(bettingMoneys, gameResults);
 
-        //when
         int dealerProfit = profits.evaluateDealerProfit();
-
-        //then
+        
         assertThat(dealerProfit).isEqualTo(-1500);
     }
 

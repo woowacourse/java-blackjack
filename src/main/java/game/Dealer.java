@@ -37,9 +37,8 @@ public class Dealer {
         return hand.getCards().getFirst();
     }
 
-
     public boolean isBlackJack() {
         return hand.isBlackJack();
     }
-    
+
 }
