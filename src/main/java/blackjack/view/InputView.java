@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.gamer.Player;
+import blackjack.participant.Player;
 
 import java.util.List;
 import java.util.Scanner;
@@ -19,6 +19,15 @@ public class InputView {
         return Stream.of(nicknames.split(","))
                 .map(String::trim)
                 .toList();
+    }
+
+    public int readBetting(String nickname) {
+        System.out.printf("%s의 배팅 금액은? %n", nickname);
+
+        String betting = scanner.nextLine();
+        System.out.println();
+
+        return Integer.parseInt(betting.trim());
     }
 
     public boolean readShouldHit(Player player) {

@@ -1,14 +1,12 @@
 package blackjack.view;
 
 
-import blackjack.domain.card.Card;
-import blackjack.domain.gamer.GameParticipant;
-import blackjack.domain.gamer.GameParticipants;
-import blackjack.domain.result.GameResult;
-import blackjack.domain.result.GameStatistics;
+import blackjack.card.Card;
+import blackjack.participant.GameParticipant;
+import blackjack.participant.GameParticipants;
+import blackjack.result.GameStatistics;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -60,24 +58,16 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printGameResults(GameParticipants participants, GameStatistics gameStatistics) {
+    public void printProfit(GameParticipants participants, GameStatistics gameStatistics) {
         System.out.println();
-        System.out.println("## 최종 승패");
-        Map<GameParticipant, List<GameResult>> participantToResults = gameStatistics.getParticipantToResults();
-        Map<GameResult, Integer> dealerResultToCount =
-                GameResult.count(participantToResults.get(participants.getDealer()));
-
-        System.out.printf("딜러: %s%s %s%s %s%s %n",
-                dealerResultToCount.get(GameResult.WIN), GameResult.WIN.getDescription(),
-                dealerResultToCount.get(GameResult.LOSE), GameResult.LOSE.getDescription(),
-                dealerResultToCount.get(GameResult.DRAW), GameResult.DRAW.getDescription()
-        );
+        System.out.println("## 최종 수익");
+        System.out.printf("딜러: %s %n", gameStatistics.getDealerProfit().getAmount());
 
         participants.getPlayers()
                 .forEach(player ->
                         System.out.printf("%s: %s %n",
                                 player.getNickname().getValue(),
-                                participantToResults.get(player).getFirst().getDescription()));
+                                gameStatistics.getProfit(player).getAmount()));
         System.out.println();
     }
 }

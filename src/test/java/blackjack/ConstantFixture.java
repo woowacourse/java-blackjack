@@ -1,7 +1,7 @@
 package blackjack;
 
-import blackjack.domain.card.CardMachine;
-import blackjack.domain.gamer.Dealer;
+import blackjack.card.CardMachine;
+import blackjack.participant.Dealer;
 
 import java.lang.reflect.Field;
 
