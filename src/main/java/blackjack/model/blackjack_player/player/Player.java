@@ -11,7 +11,7 @@ public final class Player {
     private final Betting betting;
     private final Hand hand;
 
-    public Player(final String name, final Betting betting, final Hand hand) {
+    Player(final String name, final Betting betting, final Hand hand) {
         this.name = name;
         this.betting = betting;
         this.hand = hand;
