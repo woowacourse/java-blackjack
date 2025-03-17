@@ -2,14 +2,9 @@ package view;
 
 import domain.card.Card;
 import domain.game.GamblingMoney;
-import domain.game.Winning;
-import domain.participant.Dealer;
-import domain.participant.Gambler;
-import domain.participant.Player;
 import java.io.PrintStream;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -46,10 +41,10 @@ public class OutputView {
         );
     }
 
-    public void printGamblerProfits(Map<GamblerDto, Integer> gamblerProfits) {
+    public void printGamblerProfits(Map<GamblerDto, GamblingMoney> gamblerProfits) {
         printStream.println("## 최종 수익");
         gamblerProfits.forEach((gambler, profit) ->
-            printStream.printf("%s: %d%n", gambler.name(), profit));
+            printStream.printf("%s: %d%n", gambler.name(), profit.getAmount()));
     }
 
     private String formatCards(List<Card> cards) {

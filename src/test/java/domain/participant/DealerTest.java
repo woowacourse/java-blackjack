@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
 import domain.card.CardHand;
+import domain.game.GamblingMoney;
 import domain.game.Winning;
 import java.util.List;
 import java.util.stream.Stream;
@@ -13,7 +14,6 @@ import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
@@ -24,7 +24,7 @@ class DealerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player("이름", new CardHand());
+        player = new Player("이름", new CardHand(), GamblingMoney.bet(10000));
         dealer = new Dealer(new CardHand());
     }
 

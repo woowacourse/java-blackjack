@@ -2,18 +2,15 @@ package controller;
 
 import domain.card.CardHand;
 import domain.card.CardPack;
-import domain.game.GamblingMoney;
 import domain.game.Gamblers;
-import domain.game.Winning;
+import domain.game.GamblingMoney;
 import domain.participant.Dealer;
 import domain.participant.Gambler;
 import domain.participant.Player;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import view.GamblerDto;
 import view.InputView;
@@ -31,35 +28,35 @@ public class BlackjackController {
 
     public void play(CardPack cardPack) {
         Dealer dealer = new Dealer(new CardHand());
-        Map<Player, GamblingMoney> players = createPlayers();
+        List<Player> players = createPlayers();
         Gamblers gamblers = new Gamblers(dealer, players);
 
         gamblers.distributeSetUpCards(cardPack);
-        List<GamblerDto> gamblerDtos = toKeyList(players).stream().map(GamblerDto::from).toList();
+        List<GamblerDto> gamblerDtos = players.stream().map(GamblerDto::from).toList();
         outputView.printSetUpCardDeck(dealer.getOpenCard(), gamblerDtos);
 
         gamblers.distributeExtraCardsToPlayers(cardPack, new ViewPlayerAnswer(inputView, outputView));
         gamblers.distributeExtraCardsToDealer(cardPack, new ViewDealerAnswer(outputView));
-        outputView.printFinalCardDeck(chainGamblers(dealer, toKeyList(players)));
+        outputView.printFinalCardDeck(chainGamblers(dealer, players));
 
-        Map<GamblerDto, Integer> gamblerDtoProfits = gamblers.evaluateProfits().entrySet()
+        GamblingMoney dealerProfit = gamblers.evaluateDealerProfit();
+        Map<GamblerDto, GamblingMoney> gamblerDtoProfits = gamblers.evaluatePlayerProfits()
+            .entrySet()
             .stream()
             .collect(Collectors.toMap(e -> GamblerDto.from(e.getKey()), Entry::getValue));
+        gamblerDtoProfits.put(GamblerDto.from(dealer), dealerProfit);
         outputView.printGamblerProfits(gamblerDtoProfits);
     }
 
-    private Map<Player, GamblingMoney> createPlayers() {
-        List<Player> players = inputView.getPlayerNames()
-            .stream()
-            .map(name -> new Player(name, new CardHand()))
-            .toList();
+    private List<Player> createPlayers() {
+        List<String> playerNames = inputView.getPlayerNames();
 
-        return players.stream().collect(Collectors.toMap(
-                Function.identity(),
-                p -> inputView.getBettingMoney(p.getName()),
-                (exist, replace) -> exist,
-                LinkedHashMap::new)
-            );
+        return playerNames.stream()
+            .map(playerName -> {
+                GamblingMoney bettingMoney = inputView.getBettingMoney(playerName);
+                return new Player(playerName, new CardHand(), bettingMoney);
+            })
+            .toList();
     }
 
     private List<GamblerDto> chainGamblers(Dealer dealer, List<Player> players) {
@@ -68,9 +65,5 @@ public class BlackjackController {
         return gamblers.stream()
             .map(GamblerDto::from)
             .toList();
-    }
-
-    private <T> List<T> toKeyList(Map<T, ?> map) {
-        return new ArrayList<>(map.keySet());
     }
 }

@@ -8,7 +8,7 @@ public class GamblingMoney {
 
     private final int amount;
 
-    private GamblingMoney(int amount) {
+    public GamblingMoney(int amount) {
         this.amount = amount;
     }
 

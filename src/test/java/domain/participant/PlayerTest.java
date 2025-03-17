@@ -6,11 +6,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.card.Card;
 import domain.card.CardHand;
+import domain.game.GamblingMoney;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -18,14 +21,16 @@ import org.junit.jupiter.params.provider.ValueSource;
 @DisplayNameGeneration(ReplaceUnderscores.class)
 public class PlayerTest {
 
+    final GamblingMoney betMoney = GamblingMoney.bet(10000);
+
     @ParameterizedTest
     @ValueSource(strings = {"a", "abcdeabcde"})
-    void 한자리에서_열자리사이의_닉네임으로_된_플레이어를_만들수_있다(String name) {
+    void 한자리에서_열자리사이의_닉네임과_배팅금으로_된_플레이어를_만들수_있다(String name) {
         //given
         //when
         //then
         assertThatCode(
-            () -> new Player(name, new CardHand())
+            () -> new Player(name, new CardHand(), betMoney)
         ).doesNotThrowAnyException();
     }
 
@@ -34,7 +39,7 @@ public class PlayerTest {
         //given
         //when
         //then
-        assertThatThrownBy(() -> new Player("asdfghjjklz", new CardHand()))
+        assertThatThrownBy(() -> new Player("asdfghjjklz", new CardHand(), betMoney))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -46,7 +51,7 @@ public class PlayerTest {
         //given
         //when
         //then
-        assertThatThrownBy(() -> new Player(name, new CardHand()))
+        assertThatThrownBy(() -> new Player(name, new CardHand(), betMoney))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -54,7 +59,7 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player("player", new CardHand());
+        player = new Player("player", new CardHand(), betMoney);
     }
 
     @Test
@@ -117,5 +122,38 @@ public class PlayerTest {
 
         //then
         assertThat(canTakeMore).isFalse();
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+        "SPADE_10,SPADE_10,10000",
+        "SPADE_10,DIAMOND_9,0",
+        "SPADE_10,SPADE_8,-10000"
+    })
+    void 딜러와_비교하여_플레이어의_수익금을_계산한다(Card playerCard1, Card playerCard2, int expectedProfit) {
+        final var player = new Player("player", new CardHand(), GamblingMoney.bet(10000));
+        final var dealer = new Dealer(new CardHand());
+
+        dealer.takeCards(Card.CLOVER_10, Card.CLOVER_9);
+        player.takeCards(playerCard1, playerCard2);
+
+        final var profit = player.calculateProfit(dealer);
+
+        assertThat(profit).isEqualTo(new GamblingMoney(expectedProfit));
+    }
+
+    @DisplayName("플레이어만 블랙잭이면 수익금은 1.5배이다")
+    @Test
+    void onceHalfProfitWhenOnlyPlayerBlackjack() {
+        //given
+        player.takeCards(Card.SPADE_J, Card.SPADE_A);
+        final var dealer = new Dealer(new CardHand());
+        dealer.takeCards(Card.HEART_10, Card.SPADE_10);
+
+        //when
+        final var profit = player.calculateProfit(dealer);
+
+        //then
+        assertThat(profit).isEqualTo(new GamblingMoney(+15000));
     }
 }

@@ -1,7 +1,5 @@
 package domain.game;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toMap;
 
 import domain.card.CardPack;
@@ -10,8 +8,8 @@ import domain.participant.Gambler;
 import domain.participant.Player;
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.function.Function;
 
 public class Gamblers {
@@ -19,21 +17,21 @@ public class Gamblers {
     private static final int MAX_PLAYERS_COUNT = 8;
 
     private final Dealer dealer;
-    private final Map<Player, GamblingMoney> playerBettings;
+    private final List<Player> players;
 
-    public Gamblers(Dealer dealer, Map<Player, GamblingMoney> playerBettings) {
-        validatePlayers(playerBettings.keySet());
+    public Gamblers(Dealer dealer, List<Player> players) {
+        validatePlayers(players);
         this.dealer = dealer;
-        this.playerBettings = playerBettings;
+        this.players = players;
     }
 
     public void distributeSetUpCards(CardPack cardPack) {
         dealer.takeCards(cardPack.poll(), cardPack.poll());
-        playerBettings.keySet().forEach(player -> player.takeCards(cardPack.poll(), cardPack.poll()));
+        players.forEach(player -> player.takeCards(cardPack.poll(), cardPack.poll()));
     }
 
     public void distributeExtraCardsToPlayers(CardPack cardPack, GamblerAnswer playerAnswer) {
-        playerBettings.keySet().forEach(player -> distributeExtraCards(player, playerAnswer, cardPack));
+        players.forEach(player -> distributeExtraCards(player, playerAnswer, cardPack));
     }
 
     public void distributeExtraCardsToDealer(CardPack cardPack, GamblerAnswer dealerAnswer) {
@@ -48,47 +46,20 @@ public class Gamblers {
         }
     }
 
-    public Map<Winning, Long> evaluateDealerWinnings() {
-        return evaluatePlayerWinnings().values()
-            .stream()
-            .collect(groupingBy(Winning::reverse, counting()));
-    }
-
-    public Map<Player, Winning> evaluatePlayerWinnings() {
-        return playerBettings.keySet().stream()
+    public Map<Player, GamblingMoney> evaluatePlayerProfits() {
+        return players.stream()
             .collect(toMap(
                 Function.identity(),
-                dealer::judgeWinningForPlayer
+                player -> player.calculateProfit(dealer),
+                (exist, replace) -> exist,
+                LinkedHashMap::new
             ));
     }
 
-    public Map<Gambler, Integer> evaluateProfits() {
-        LinkedHashMap<Gambler, Integer> moneys = new LinkedHashMap<>();
-        var playerWinnings = evaluatePlayerWinnings();
-        var dealerProfit = 0;
-
-        for (Entry<Player, Winning> entry : playerWinnings.entrySet()) {
-            Player player = entry.getKey();
-            Winning winning = entry.getValue();
-
-            GamblingMoney playerProfit = computePlayerProfits(player, winning);
-            int profitAmount = playerProfit.getAmount();
-
-            moneys.put(player, profitAmount);
-            dealerProfit = dealerProfit - profitAmount;
-        }
-
-        moneys.putFirst(dealer, dealerProfit);
-        return moneys;
-    }
-
-    private GamblingMoney computePlayerProfits(Player player, Winning winning) {
-        GamblingMoney gamblingMoney = playerBettings.get(player);
-
-        if (player.isBlackJack() && !dealer.isBlackJack()) {
-            return gamblingMoney.onceHalf();
-        }
-        return gamblingMoney.calculateProfit(winning);
+    public GamblingMoney evaluateDealerProfit() {
+        Map<Player, GamblingMoney> playerProfits = evaluatePlayerProfits();
+        GamblingMoney sum = GamblingMoney.sum(playerProfits.values());
+        return sum.negative();
     }
 
     private void validatePlayers(Collection<Player> players) {

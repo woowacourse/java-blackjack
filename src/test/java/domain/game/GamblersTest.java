@@ -5,12 +5,10 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import domain.TestFixtures;
 import domain.card.Card;
 import domain.card.CardHand;
 import domain.card.CardPack;
 import domain.participant.Dealer;
-import domain.participant.Gambler;
 import domain.participant.Player;
 import java.util.List;
 import java.util.Map;
@@ -19,8 +17,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
 public class GamblersTest {
@@ -33,36 +29,36 @@ public class GamblersTest {
     @BeforeEach
     void setUp() {
         dealer = new Dealer(new CardHand());
-        player1 = TestFixtures.playerOfDefaultHand();
-        player2 = TestFixtures.playerOfDefaultHand();
-        player3 = TestFixtures.playerOfDefaultHand();
+        player1 = new Player("이름1", new CardHand(), GamblingMoney.bet(10000));
+        player2 = new Player("이름2", new CardHand(), GamblingMoney.bet(10000));
+        player3 = new Player("이름3", new CardHand(), GamblingMoney.bet(10000));
     }
 
     @Test
-    void 딜러와_플레이어_배팅_맵으로_Gamblers를_생성한다() {
-        assertThatCode(() -> new Gamblers(dealer, Map.of(player1, GamblingMoney.bet(10000))))
+    void 딜러와_플레이어들로_Gamblers를_생성한다() {
+        assertThatCode(() -> new Gamblers(dealer, List.of(player1, player2, player3)))
             .doesNotThrowAnyException();
     }
 
     @Test
     void 플레이어가_없으면_예외가_발생한다() {
-        assertThatThrownBy(() -> new Gamblers(dealer, Map.of()))
+        assertThatThrownBy(() -> new Gamblers(dealer, List.of()))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void 플레이어가_8명보다_많으면_예외가_발생한다() {
-        GamblingMoney money = GamblingMoney.bet(10000);
-        Map<Player, GamblingMoney> players = Map.of(
-            TestFixtures.playerOfDefaultHand(), money,
-            TestFixtures.playerOfDefaultHand(), money,
-            TestFixtures.playerOfDefaultHand(), money,
-            TestFixtures.playerOfDefaultHand(), money,
-            TestFixtures.playerOfDefaultHand(), money,
-            TestFixtures.playerOfDefaultHand(), money,
-            TestFixtures.playerOfDefaultHand(), money,
-            TestFixtures.playerOfDefaultHand(), money,
-            TestFixtures.playerOfDefaultHand(), money
+        final var money = GamblingMoney.bet(10000);
+        List<Player> players = List.of(
+            new Player("이름1", new CardHand(), money),
+            new Player("이름2", new CardHand(), money),
+            new Player("이름3", new CardHand(), money),
+            new Player("이름4", new CardHand(), money),
+            new Player("이름5", new CardHand(), money),
+            new Player("이름6", new CardHand(), money),
+            new Player("이름7", new CardHand(), money),
+            new Player("이름8", new CardHand(), money),
+            new Player("이름9", new CardHand(), money)
         );
 
         assertThatThrownBy(() -> new Gamblers(dealer, players))
@@ -71,7 +67,7 @@ public class GamblersTest {
 
     @Test
     void 딜러와_플레이어들에게_초기카드를_나눠준다() {
-        Gamblers gamblers = TestFixtures.gamblers(dealer, List.of(player1, player2));
+        Gamblers gamblers = new Gamblers(dealer, List.of(player1, player2));
 
         gamblers.distributeSetUpCards(CardPack.of(Card.allCards()));
 
@@ -84,7 +80,7 @@ public class GamblersTest {
 
     @Test
     void 초기카드는_딜러먼저_2장_이후_플레이어들에게_순서대로_2장씩_나누어준다() {
-        Gamblers gamblers = TestFixtures.gamblers(dealer, List.of(player1, player2, player3));
+        Gamblers gamblers = new Gamblers(dealer, List.of(player1, player2, player3));
 
         List<Card> cards = List.of(
             Card.SPADE_A, Card.SPADE_2, Card.SPADE_3, Card.SPADE_4,
@@ -101,7 +97,7 @@ public class GamblersTest {
 
     @Test
     void 플레이어들에게_순서대로_추가카드를_나누어준다() {
-        Gamblers gamblers = TestFixtures.gamblers(dealer, List.of(player1, player2, player3));
+        Gamblers gamblers = new Gamblers(dealer, List.of(player1, player2, player3));
         player1.takeCards(Card.DIAMOND_10, Card.DIAMOND_10);
         player2.takeCards(Card.DIAMOND_10, Card.DIAMOND_10);
         player3.takeCards(Card.DIAMOND_10, Card.DIAMOND_10);
@@ -120,7 +116,7 @@ public class GamblersTest {
 
     @Test
     void 딜러는_16점을_초과할_때까지_계속해서_카드를_받는다() {
-        Gamblers gamblers = TestFixtures.gamblers(dealer, List.of(player1, player2, player3));
+        Gamblers gamblers = new Gamblers(dealer, List.of(player1, player2, player3));
         dealer.takeCards(Card.CLOVER_2, Card.DIAMOND_2);
         // 딜러의 초기 카드의 점수가 2 + 2 = 4점인 상황에서
 
@@ -136,7 +132,7 @@ public class GamblersTest {
 
     @Test
     void Gambler가_카드를_더_받을_수_없으면_추가카드_배분_시_아무일도_일어나지_않는다() {
-        Gamblers gamblers = TestFixtures.gamblers(dealer, List.of(player1));
+        Gamblers gamblers = new Gamblers(dealer, List.of(player1));
         dealer.takeCards(Card.SPADE_J, Card.SPADE_7); // 16이하가 아니라서 못받음.
         player1.takeCards(Card.CLOVER_10, Card.HEART_10, Card.CLOVER_2); // 21을 넘어 버스트됨.
 
@@ -148,14 +144,14 @@ public class GamblersTest {
         //then
         assertAll(
             () -> assertThat(dealer.getCards()).containsOnly(Card.SPADE_J, Card.SPADE_7),
-            () -> assertThat(player1.getCards()).containsOnly(Card.CLOVER_10, Card.HEART_10,
-                Card.CLOVER_2)
+            () -> assertThat(player1.getCards()).containsOnly(
+                Card.CLOVER_10, Card.HEART_10, Card.CLOVER_2)
         );
     }
 
     @Test
     void 플레이어가_카드를_더_받을수_있지만_승낙하지_않으면_카드를_더_받지_않는다() {
-        Gamblers gamblers = TestFixtures.gamblers(dealer, List.of(player1));
+        Gamblers gamblers = new Gamblers(dealer, List.of(player1));
         player1.takeCards(Card.CLOVER_2, Card.CLOVER_3);
 
         CardPack cardPack = CardPack.of(List.of(Card.DIAMOND_J, Card.SPADE_J));
@@ -164,135 +160,85 @@ public class GamblersTest {
         assertThat(player1.getCards()).containsOnly(Card.CLOVER_2, Card.CLOVER_3);
     }
 
-    @ParameterizedTest
-    @CsvSource({
-        "SPADE_A,SPADE_10,WIN",
-        "SPADE_10,DIAMOND_10,DRAW",
-        "SPADE_10,SPADE_9,LOSE"
-    })
-    void 딜러와_비교하여_플레이어의_승무패를_가린다(Card playerCard1, Card playerCard2, Winning expectedWinning) {
-        Gamblers gamblers = TestFixtures.gamblers(dealer, List.of(player1));
-        dealer.takeCards(Card.CLOVER_J, Card.CLOVER_K);
-        player1.takeCards(playerCard1, playerCard2);
-
-        Map<Player, Winning> playerWinnings = gamblers.evaluatePlayerWinnings();
-
-        assertThat(playerWinnings.get(player1)).isEqualTo(expectedWinning);
-    }
-
     @Test
-    void 딜러의_승무패_횟수를_계산한다() {
+    void 플레이어들의_최종_수익을_계산할_수_있다() {
         //given
-        Player winnerPlayer1 = TestFixtures.playerOfDefaultHand();
-        Player drawPlayer1 = TestFixtures.playerOfDefaultHand();
-        Player drawPlayer2 = TestFixtures.playerOfDefaultHand();
-        Player losePlayer1 = TestFixtures.playerOfDefaultHand();
-        Player losePlayer2 = TestFixtures.playerOfDefaultHand();
-        Player losePlayer3 = TestFixtures.playerOfDefaultHand();
+        final var money = GamblingMoney.bet(10000);
+        Player winner1 = new Player("winner", new CardHand(), money);
+        Player drawer1 = new Player("drawer1", new CardHand(), money);
+        Player drawer2 = new Player("drawer2", new CardHand(), money);
+        Player loser1 = new Player("loser1", new CardHand(), money);
+        Player loser2 = new Player("loser2", new CardHand(), money);
+        Player loser3 = new Player("loser3", new CardHand(), money);
 
-        Gamblers gamblers = TestFixtures.gamblers(dealer,
-            List.of(winnerPlayer1, drawPlayer1, drawPlayer2,
-                losePlayer1, losePlayer2, losePlayer3), 10000);
+        Gamblers gamblers = new Gamblers(dealer,
+            List.of(winner1, drawer1, drawer2, loser1, loser2, loser3));
 
         dealer.takeCards(Card.SPADE_10, Card.DIAMOND_10);
-
-        winnerPlayer1.takeCards(Card.SPADE_A, Card.HEART_10); // 21
-        drawPlayer1.takeCards(Card.CLOVER_10, Card.SPADE_J); // 20
-        drawPlayer2.takeCards(Card.DIAMOND_J, Card.HEART_J); // 20
-        losePlayer1.takeCards(Card.SPADE_K, Card.SPADE_9); // 19
-        losePlayer2.takeCards(Card.DIAMOND_K, Card.DIAMOND_9); // 19
-        losePlayer3.takeCards(Card.HEART_K, Card.HEART_9); // 19
+        winner1.takeCards(Card.SPADE_10, Card.HEART_9, Card.HEART_2); // 21
+        drawer1.takeCards(Card.CLOVER_10, Card.SPADE_J); // 20
+        drawer2.takeCards(Card.DIAMOND_J, Card.HEART_J); // 20
+        loser1.takeCards(Card.SPADE_K, Card.SPADE_9); // 19
+        loser2.takeCards(Card.DIAMOND_K, Card.DIAMOND_9); // 19
+        loser3.takeCards(Card.HEART_K, Card.HEART_9); // 19
 
         //when
-        Map<Winning, Long> dealerWinnings = gamblers.evaluateDealerWinnings();
-
-        var dealerWinCount = dealerWinnings.get(Winning.WIN);
-        var dealerDrawCount = dealerWinnings.get(Winning.DRAW);
-        var dealerLoseCount = dealerWinnings.get(Winning.LOSE);
+        Map<Player, GamblingMoney> playerProfits = gamblers.evaluatePlayerProfits();
 
         //then
         assertAll(
-            () -> assertThat(dealerWinCount).isEqualTo(3),
-            () -> assertThat(dealerDrawCount).isEqualTo(2),
-            () -> assertThat(dealerLoseCount).isEqualTo(1)
+            () -> assertThat(playerProfits.get(winner1)).isEqualTo(new GamblingMoney(10000)),
+            () -> assertThat(playerProfits.get(drawer1)).isEqualTo(new GamblingMoney(0)),
+            () -> assertThat(playerProfits.get(drawer2)).isEqualTo(new GamblingMoney(0)),
+            () -> assertThat(playerProfits.get(loser1)).isEqualTo(new GamblingMoney(-10000)),
+            () -> assertThat(playerProfits.get(loser2)).isEqualTo(new GamblingMoney(-10000)),
+            () -> assertThat(playerProfits.get(loser3)).isEqualTo(new GamblingMoney(-10000))
         );
     }
 
     @Test
-    void 최종_수익을_계산할_수_있다() {
+    void 딜러의_최종_수익을_계산할_수_있다() {
         //given
-        Player winnerPlayer1 = TestFixtures.playerOfDefaultHand();
-        Player drawPlayer1 = TestFixtures.playerOfDefaultHand();
-        Player drawPlayer2 = TestFixtures.playerOfDefaultHand();
-        Player losePlayer1 = TestFixtures.playerOfDefaultHand();
-        Player losePlayer2 = TestFixtures.playerOfDefaultHand();
-        Player losePlayer3 = TestFixtures.playerOfDefaultHand();
+        final var money = GamblingMoney.bet(10000);
+        Player winner1 = new Player("winner", new CardHand(), money);
+        Player drawer1 = new Player("drawer1", new CardHand(), money);
+        Player drawer2 = new Player("drawer2", new CardHand(), money);
+        Player loser1 = new Player("loser1", new CardHand(), money);
+        Player loser2 = new Player("loser2", new CardHand(), money);
+        Player loser3 = new Player("loser3", new CardHand(), money);
 
-        Gamblers gamblers = TestFixtures.gamblers(dealer,
-            List.of(winnerPlayer1, drawPlayer1, drawPlayer2,
-                losePlayer1, losePlayer2, losePlayer3),
-            10000); //6명 플레이어 모두 1만원씩 배팅했을 때
+        Gamblers gamblers = new Gamblers(dealer,
+            List.of(winner1, drawer1, drawer2, loser1, loser2, loser3));
 
         dealer.takeCards(Card.SPADE_10, Card.DIAMOND_10);
-
-        winnerPlayer1.takeCards(Card.SPADE_10, Card.HEART_9, Card.HEART_2); // 21
-        drawPlayer1.takeCards(Card.CLOVER_10, Card.SPADE_J); // 20
-        drawPlayer2.takeCards(Card.DIAMOND_J, Card.HEART_J); // 20
-        losePlayer1.takeCards(Card.SPADE_K, Card.SPADE_9); // 19
-        losePlayer2.takeCards(Card.DIAMOND_K, Card.DIAMOND_9); // 19
-        losePlayer3.takeCards(Card.HEART_K, Card.HEART_9); // 19
+        winner1.takeCards(Card.SPADE_10, Card.HEART_9, Card.HEART_2); // 21
+        drawer1.takeCards(Card.CLOVER_10, Card.SPADE_J); // 20
+        drawer2.takeCards(Card.DIAMOND_J, Card.HEART_J); // 20
+        loser1.takeCards(Card.SPADE_K, Card.SPADE_9); // 19
+        loser2.takeCards(Card.DIAMOND_K, Card.DIAMOND_9); // 19
+        loser3.takeCards(Card.HEART_K, Card.HEART_9); // 19
 
         //when
-        Map<Gambler, Integer> moneys = gamblers.evaluateProfits();
+        GamblingMoney dealerProfit = gamblers.evaluateDealerProfit();
 
         //then
-        assertAll(
-            () -> assertThat(moneys.get(dealer)).isEqualTo(20000),
-
-            () -> assertThat(moneys.get(winnerPlayer1)).isEqualTo(10000),
-
-            () -> assertThat(moneys.get(drawPlayer1)).isEqualTo(0),
-            () -> assertThat(moneys.get(drawPlayer2)).isEqualTo(0),
-
-            () -> assertThat(moneys.get(losePlayer1)).isEqualTo(-10000),
-            () -> assertThat(moneys.get(losePlayer2)).isEqualTo(-10000),
-            () -> assertThat(moneys.get(losePlayer3)).isEqualTo(-10000)
-        );
+        assertThat(dealerProfit).isEqualTo(new GamblingMoney(20000));
     }
 
-    @DisplayName("플레이어가 블랙잭이고 딜러가 블랙잭이 아니면 플레이어의 수익은 1.5배이다.")
+    @DisplayName("오직 플레이어만 블랙잭인 경우 딜러는 플레이어 배팅금의 1.5배를 손해본다.")
     @Test
-    void evaluateProfitsWhenPlayerIsBlackJack() {
+    void dealerProfitWhenOnlyPlayerBlackjack() {
         //given
-        Gamblers gamblers = TestFixtures.gamblers(dealer, List.of(player1), 10000);
-        dealer.takeCards(Card.SPADE_10, Card.HEART_10);
-        player1.takeCards(Card.SPADE_A, Card.SPADE_J);
+        Player player = new Player("winner", new CardHand(), GamblingMoney.bet(10000));
+        Gamblers gamblers = new Gamblers(dealer, List.of(player));
+
+        dealer.takeCards(Card.SPADE_10, Card.DIAMOND_10);
+        player.takeCards(Card.SPADE_10, Card.HEART_A);
 
         //when
-        Map<Gambler, Integer> moneys = gamblers.evaluateProfits();
+        GamblingMoney dealerProfit = gamblers.evaluateDealerProfit();
 
         //then
-        assertAll(
-            () -> assertThat(moneys.get(dealer)).isEqualTo(-15000),
-            () -> assertThat(moneys.get(player1)).isEqualTo(+15000)
-        );
-    }
-
-    @DisplayName("플레이어와 딜러 모두 블랙잭이면 수익은 0원이다.")
-    @Test
-    void evaluateProfitsWhenPlayerAndDealerAreBlackJack() {
-        //given
-        Gamblers gamblers = TestFixtures.gamblers(dealer, List.of(player1), 10000);
-        dealer.takeCards(Card.SPADE_10, Card.SPADE_A);
-        player1.takeCards(Card.HEART_10, Card.HEART_A);
-
-        //when
-        Map<Gambler, Integer> moneys = gamblers.evaluateProfits();
-
-        //then
-        assertAll(
-            () -> assertThat(moneys.get(dealer)).isEqualTo(0),
-            () -> assertThat(moneys.get(player1)).isEqualTo(0)
-        );
+        assertThat(dealerProfit).isEqualTo(new GamblingMoney(-15000));
     }
 }
