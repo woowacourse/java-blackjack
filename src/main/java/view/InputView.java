@@ -12,6 +12,7 @@ public class InputView {
     private static final String PLAYER_BATTING_MONEY = "%s의 배팅 금액은?";
     private static final String ASK_HIT_OR_STAND = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String INVALID_INPUT_COMMA_REGEX = "^(,)+$|,{2,}";
+    private static final String INTEGER_PATTERN = "-?[0-9]+";
 
     private final Scanner scanner;
 
@@ -38,7 +39,11 @@ public class InputView {
     public int askPlayerBattingMoney(Name name) {
         System.out.printf(PLAYER_BATTING_MONEY, name.getName());
         printNewLine();
-        return Integer.parseInt(scanner.nextLine());
+        String money = scanner.nextLine();
+        if (!money.matches(INTEGER_PATTERN)) {
+            throw new IllegalArgumentException("[ERROR] 배팅 금액은 숫자로만 입력 가능합니다.");
+        }
+        return Integer.parseInt(money);
     }
 
     private void printNewLine() {
