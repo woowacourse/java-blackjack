@@ -1,5 +1,9 @@
-package domain;
+package game;
 
+import card.CardDeck;
+import card.Card;
+import card.CardRank;
+import card.CardShape;
 import user.Dealer;
 import user.Player;
 import user.User;

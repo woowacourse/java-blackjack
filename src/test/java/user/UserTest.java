@@ -1,4 +1,4 @@
-package domain.user;
+package user;
 
 import card.CardDeck;
 import org.assertj.core.api.Assertions;

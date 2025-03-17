@@ -1,4 +1,4 @@
-package domain.user;
+package user;
 
 import card.Card;
 import card.CardDeck;

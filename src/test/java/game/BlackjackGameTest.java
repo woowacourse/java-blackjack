@@ -1,5 +1,6 @@
-package domain;
+package game;
 
+import card.CardDeck;
 import user.Dealer;
 import user.Player;
 import java.util.List;

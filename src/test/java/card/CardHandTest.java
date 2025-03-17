@@ -1,4 +1,4 @@
-package domain;
+package card;
 
 import java.util.List;
 import java.util.stream.Stream;

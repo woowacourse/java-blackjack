@@ -1,5 +1,10 @@
-package domain;
+package betting;
 
+import card.CardRank;
+import card.Card;
+import card.CardShape;
+import game.GameResult;
+import game.Score;
 import user.Dealer;
 import user.Participants;
 import user.Player;

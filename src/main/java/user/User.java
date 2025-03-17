@@ -1,6 +1,7 @@
 package user;
 
 import card.Card;
+import card.CardHand;
 import java.util.List;
 
 public abstract class User {
