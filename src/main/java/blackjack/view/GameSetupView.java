@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -30,8 +29,7 @@ public class GameSetupView {
     }
 
     private List<String> splitWithComma(String input) {
-        return Arrays.stream(COMMA_WITH_OPTIONAL_SPACES_PATTERN.split(input, -1))
-                .toList();
+        return List.of(COMMA_WITH_OPTIONAL_SPACES_PATTERN.split(input, -1));
     }
 
     public int readBetAmount(String playerName) {
