@@ -1,6 +1,6 @@
 package bet;
 
-import result.MatchResult;
+import match.MatchResult;
 
 public class BetResult {
     private final int amount;

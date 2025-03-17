@@ -6,7 +6,7 @@ import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 import player.Participant;
-import result.MatchResult;
+import match.MatchResult;
 
 class BetManagerTest {
 

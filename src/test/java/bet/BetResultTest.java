@@ -2,7 +2,7 @@ package bet;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import result.MatchResult;
+import match.MatchResult;
 
 class BetResultTest {
 

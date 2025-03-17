@@ -1,4 +1,4 @@
-package result;
+package match;
 
 import blackjack.Blackjack;
 import card.Card;

@@ -3,7 +3,7 @@ package blackjack;
 import bet.BetManager;
 import card.DeckGenerator;
 import player.Participant;
-import result.MatchResults;
+import match.MatchResults;
 import view.InputView;
 import view.OutputView;
 

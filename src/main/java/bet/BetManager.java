@@ -2,7 +2,7 @@ package bet;
 
 import java.util.Map;
 import player.Participant;
-import result.MatchResult;
+import match.MatchResult;
 
 public class BetManager {
     private final Bets bets;
