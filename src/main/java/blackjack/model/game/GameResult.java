@@ -31,17 +31,17 @@ public class GameResult {
             return WIN;
         }
         int dealerPoint = dealer.calculatePoint();
-        int participantPoint = player.calculatePoint();
-        if (participantPoint == 21 && dealerPoint == 21) {
+        int playerPoint = player.calculatePoint();
+        if (playerPoint == 21 && dealerPoint == 21) {
             return DRAW;
         }
-        if (participantPoint == 21) {
+        if (playerPoint == 21 && player.getReceivedCards().size() == 2) {
             return BLACKJACK;
         }
-        if (dealerPoint > participantPoint) {
+        if (dealerPoint > playerPoint) {
             return LOSE;
         }
-        if (dealerPoint < participantPoint) {
+        if (dealerPoint < playerPoint) {
             return WIN;
         }
         return DRAW;
