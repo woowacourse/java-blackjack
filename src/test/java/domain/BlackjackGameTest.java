@@ -1,13 +1,8 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.*;
-
 import domain.user.Dealer;
-import domain.user.Participants;
 import domain.user.Player;
-import domain.user.User;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -21,8 +16,11 @@ public class BlackjackGameTest {
     @ParameterizedTest
     @MethodSource("userTestCase")
     void test(List<String> names) {
+        // given
         List<Player> players = names.stream().map(Player::new).toList();
-        assertThatCode(() -> BlackjackGame.of(
+
+        // when & then
+        Assertions.assertThatCode(() -> BlackjackGame.of(
                 players,
                 new Dealer(),
                 new CardDeck())).doesNotThrowAnyException();
@@ -39,9 +37,11 @@ public class BlackjackGameTest {
     @ParameterizedTest
     @MethodSource("userExceptionTestCase")
     void test2(List<String> names) {
+        // given
         List<Player> users = names.stream().map(Player::new).toList();
 
-        assertThatThrownBy(() -> BlackjackGame.of(users, new Dealer(), new CardDeck()))
+        // when & then
+        Assertions.assertThatThrownBy(() -> BlackjackGame.of(users, new Dealer(), new CardDeck()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("유저는 1명 이상 7명 이하로 등록해야 합니다.");
     }
@@ -56,9 +56,12 @@ public class BlackjackGameTest {
     @Test
     @DisplayName("유저는 중복될 수 없다.")
     void test3() {
+        // given
         List<String> names = List.of("수양", "레몬", "수양", "레몬", "부부", "롸롸", "뫄뫄");
         List<Player> users = names.stream().map(Player::new).toList();
-        assertThatThrownBy(() -> BlackjackGame.of(users, new Dealer(), new CardDeck()))
+
+        // when & then
+        Assertions.assertThatThrownBy(() -> BlackjackGame.of(users, new Dealer(), new CardDeck()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("유저는 중복될 수 없습니다.");
     }
@@ -74,9 +77,9 @@ public class BlackjackGameTest {
         // when
         blackjackGame.firstHandOutCard();
 
-        assertThat(blackjackGame.getDealer().getSize()).isEqualTo(2);
+        Assertions.assertThat(blackjackGame.getDealer().getSize()).isEqualTo(2);
         blackjackGame.getParticipants()
                 .getPlayers()
-                .forEach(player -> assertThat(player.getSize()).isEqualTo(2));
+                .forEach(player -> Assertions.assertThat(player.getSize()).isEqualTo(2));
     }
 }
