@@ -9,6 +9,9 @@ import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.state.Hit;
+import blackjack.state.Stand;
+import blackjack.state.Start;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +26,7 @@ class BlackjackGameTest {
         Player player = TestUtil.createPlayerFromName("player");
 
         List<Player> players = List.of(player);
-        Dealer dealer = new Dealer(new CardHand());
+        Dealer dealer = new Dealer(new Start(new CardHand()));
         BlackjackGame game = new BlackjackGame(players, dealer, CardDeck.createShuffledDeck());
 
         // when
@@ -41,7 +44,7 @@ class BlackjackGameTest {
         Player player = TestUtil.createPlayerFromName("player");
 
         List<Player> players = List.of(player);
-        Dealer dealer = new Dealer(new CardHand());
+        Dealer dealer = new Dealer(new Hit(new CardHand()));
         BlackjackGame game = new BlackjackGame(players, dealer, CardDeck.createShuffledDeck());
 
         // when
@@ -61,15 +64,15 @@ class BlackjackGameTest {
         playerHand.add(new Card(CardSuit.CLUB, CardRank.JACK)); // 20
 
         int player1Bet = 10000;
-        Player player1 = TestUtil.createPlayerOf(playerHand, player1Bet);
+        Player player1 = TestUtil.createStandPlayerOf(playerHand, player1Bet);
 
         int player2Bet = 5000;
-        Player player2 = TestUtil.createPlayerOf(playerHand, player2Bet);
+        Player player2 = TestUtil.createStandPlayerOf(playerHand, player2Bet);
 
         CardHand dealerHand = new CardHand();
         dealerHand.add(new Card(CardSuit.CLUB, CardRank.KING));
         dealerHand.add(new Card(CardSuit.CLUB, CardRank.ACE)); // 21
-        Dealer dealer = new Dealer(dealerHand);
+        Dealer dealer = new Dealer(new Stand(dealerHand));
 
         List<Player> players = List.of(player1, player2);
 
@@ -91,15 +94,15 @@ class BlackjackGameTest {
         playerHand.add(new Card(CardSuit.CLUB, CardRank.JACK)); // 20
 
         int player1Bet = 10000;
-        Player player1 = TestUtil.createPlayerOf(playerHand, player1Bet);
+        Player player1 = TestUtil.createStandPlayerOf(playerHand, player1Bet);
 
         int player2Bet = 5000;
-        Player player2 = TestUtil.createPlayerOf(playerHand, player2Bet);
+        Player player2 = TestUtil.createStandPlayerOf(playerHand, player2Bet);
 
         CardHand dealerHand = new CardHand();
         dealerHand.add(new Card(CardSuit.CLUB, CardRank.KING));
         dealerHand.add(new Card(CardSuit.CLUB, CardRank.ACE)); // 21
-        Dealer dealer = new Dealer(dealerHand);
+        Dealer dealer = new Dealer(new Stand(dealerHand));
 
         List<Player> players = List.of(player1, player2);
 

@@ -2,43 +2,49 @@ package blackjack.domain.participant;
 
 import blackjack.domain.Score;
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardHand;
+import blackjack.state.State;
 import java.util.List;
 
 public abstract class Participant {
 
-    protected final CardHand cardHand;
+    protected State state;
 
-    public Participant(CardHand cardHand) {
-        this.cardHand = cardHand;
+    public Participant(State state) {
+        this.state = state;
     }
 
-    abstract boolean canHit();
+    public abstract boolean canHit();
     public abstract List<Card> showStartCards();
 
     public abstract String getName();
 
-    public boolean isBust() {
-        return cardHand.isBust();
+    public void finishTurn() {
+        if(state.isHit()) {
+            state = state.stand();
+        }
     }
 
-    public boolean isBlackjack() {
-        return cardHand.isBlackjack();
+    public void startGame(Card card1, Card card2) {
+        this.state = state.drawInitialCards(card1, card2);
     }
 
-    public void receiveCard(Card card) {
-        cardHand.add(card);
+    public void hit(Card card) {
+        this.state = state.draw(card);
     }
 
     public Score getScore() {
-        return cardHand.getScore();
+        return state.getScore();
     }
 
     public List<Card> getCardDeck() {
-        return cardHand.getCards();
+        return state.getCards();
     }
 
     public int getCardSize() {
-        return cardHand.deckSize();
+        return state.getCards().size();
+    }
+
+    public State getState() {
+        return state;
     }
 }

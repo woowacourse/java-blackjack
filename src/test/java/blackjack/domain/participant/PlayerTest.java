@@ -4,6 +4,7 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.BettingMoney;
+import blackjack.domain.BlackjackGame;
 import blackjack.domain.GameResult;
 import blackjack.domain.TestUtil;
 import blackjack.domain.card.Card;
@@ -11,6 +12,10 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
+import blackjack.state.Blackjack;
+import blackjack.state.Stand;
+import blackjack.state.Start;
+import blackjack.state.State;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,11 +25,10 @@ class PlayerTest {
     @Test
     void testPlayerCanDrawCard() {
         // given
-        CardHand cardHand = new CardHand();
-        cardHand.add(new Card(CardSuit.CLUB, CardRank.NINE));
-        cardHand.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
-
-        Player player = TestUtil.createPlayerFromName("player");
+        Player player = TestUtil.createStartPlayerOf("player", new CardHand());
+        Card card1 = new Card(CardSuit.CLUB, CardRank.NINE);
+        Card card2 = new Card(CardSuit.CLUB, CardRank.SEVEN);
+        player.startGame(card1, card2);
 
         // when
         boolean canHit = player.canHit();
@@ -42,7 +46,7 @@ class PlayerTest {
         cardHand.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
         cardHand.add(new Card(CardSuit.CLUB, CardRank.EIGHT));
 
-        Player player = TestUtil.createPlayerOf("player", cardHand);
+        Player player = TestUtil.createStartPlayerOf("player", cardHand);
 
         // when
         boolean canHit = player.canHit();
@@ -59,7 +63,7 @@ class PlayerTest {
         cardHand.add(new Card(CardSuit.CLUB, CardRank.NINE));
         cardHand.add(new Card(CardSuit.CLUB, CardRank.SEVEN));
 
-        Player player = TestUtil.createPlayerOf("player", cardHand);
+        Player player = TestUtil.createStartPlayerOf("player", cardHand);
 
         // when
         List<Card> startCards = player.showStartCards();
@@ -72,12 +76,15 @@ class PlayerTest {
     @Test
     void test_profitWhenWin() {
         // given
-        ParticipantName playerName = new ParticipantName("player");
-        BettingMoney bettingMoney = new BettingMoney(10000);
-        Player player = new Player(playerName, new CardHand(), bettingMoney);
+        int bet = 10000;
+        CardHand playerHand = new CardHand();
+        playerHand.add(new Card(CardSuit.SPADE, CardRank.KING));
+        Player player = TestUtil.createStandPlayerOf(playerHand, bet);
+
+        Stand dealerState = new Stand(new CardHand());
 
         // when
-        int profit = player.calculateProfit(GameResult.WIN);
+        int profit = player.calculateProfit(dealerState);
 
         // then
         assertThat(profit).isEqualTo(10000);
@@ -87,14 +94,16 @@ class PlayerTest {
     @Test
     void test_profitWhenBlackjackWin() {
         // given
-        ParticipantName playerName = new ParticipantName("player");
-        BettingMoney bettingMoney = new BettingMoney(10000);
-        Player player = new Player(playerName, new CardHand(), bettingMoney);
+        int bet = 10000;
+        Player player = TestUtil.createBlackjackPlayerWithBet(bet);
+
+        Stand dealerState = new Stand(new CardHand());
 
         // when
-        int profit = player.calculateProfit(GameResult.BLACKJACK_WIN);
+        int profit = player.calculateProfit(dealerState);
 
         // then
+        assertThat(player.getState()).isInstanceOf(Blackjack.class);
         assertThat(profit).isEqualTo(15000);
     }
 
@@ -102,12 +111,13 @@ class PlayerTest {
     @Test
     void test_profitWhenLose() {
         // given
-        ParticipantName playerName = new ParticipantName("player");
-        BettingMoney bettingMoney = new BettingMoney(10000);
-        Player player = new Player(playerName, new CardHand(), bettingMoney);
+        int bet = 10000;
+        Player player = TestUtil.createStandPlayerOf(new CardHand(), bet);
+
+        Blackjack dealerState = new Blackjack(new CardHand());
 
         // when
-        int profit = player.calculateProfit(GameResult.LOSE);
+        int profit = player.calculateProfit(dealerState);
 
         // then
         assertThat(profit).isEqualTo(-10000);
@@ -117,12 +127,13 @@ class PlayerTest {
     @Test
     void test_profitWhenDraw() {
         // given
-        ParticipantName playerName = new ParticipantName("player");
-        BettingMoney bettingMoney = new BettingMoney(10000);
-        Player player = new Player(playerName, new CardHand(), bettingMoney);
+        int bet = 10000;
+        Player player = TestUtil.createStandPlayerOf(new CardHand(), bet);
+
+        Stand dealerState = new Stand(new CardHand());
 
         // when
-        int profit = player.calculateProfit(GameResult.DRAW);
+        int profit = player.calculateProfit(dealerState);
 
         // then
         assertThat(profit).isEqualTo(0);
