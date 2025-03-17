@@ -1,9 +1,13 @@
 package participant;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import card.Card;
 import card.CardNumber;
 import card.CardShape;
-import org.assertj.core.api.Assertions;
+import game.GameResult;
+import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +25,7 @@ class DealerTest {
         boolean result = dealer.canReceiveCard();
 
         // then
-        Assertions.assertThat(result)
+        assertThat(result)
                 .isFalse();
     }
 
@@ -36,7 +40,27 @@ class DealerTest {
         boolean result = dealer.canReceiveCard();
 
         // then
-        Assertions.assertThat(result)
+        assertThat(result)
                 .isTrue();
+    }
+
+    @Test
+    @DisplayName("Dealer를 기준으로 승패를 반환한다.")
+    void test3() {
+        // given
+        Dealer dealer = new Dealer();
+        Player miso = new Player("미소", 10000);
+        Players players = new Players(List.of(miso));
+        dealer.receiveCard(new Card(CardShape.SPADE, CardNumber.ACE));
+        dealer.receiveCard(new Card(CardShape.HEART, CardNumber.ACE));
+        miso.receiveCard(new Card(CardShape.SPADE, CardNumber.KING));
+        miso.receiveCard(new Card(CardShape.HEART, CardNumber.ACE));
+
+        // when
+        Map<Player, GameResult> gameResults = dealer.decideGameResults(players);
+
+        // then
+        assertThat(gameResults.get(miso))
+                .isEqualTo(GameResult.BLACKJACK);
     }
 }
