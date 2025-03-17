@@ -16,6 +16,10 @@ public class Player extends Participant {
         this(name, Hand.createEmpty(), bettingMoney);
     }
 
+    public Player(String name, Hand hand) {
+        this(name, hand, new BettingMoney(0));
+    }
+
     public Player(String name) {
         this(name, Hand.createEmpty(), new BettingMoney(0));
     }
