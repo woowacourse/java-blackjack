@@ -195,4 +195,19 @@ class GameResultTest {
         assertThat(result)
                 .isEqualTo(GameResult.LOSE);
     }
+
+    @Test
+    @DisplayName("얻은 돈을 계산하여 반환한다.")
+    void test10() {
+        // given
+        int bettingMoney = 10000;
+        GameResult gameResult = GameResult.WIN;
+
+        // when
+        int earnings = gameResult.calculateEarnings(bettingMoney);
+
+        // then
+        assertThat(earnings)
+                .isEqualTo((int) (bettingMoney * gameResult.getProfitRate()));
+    }
 }
