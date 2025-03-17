@@ -31,7 +31,14 @@ class BetMoneyTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {1, 100_000_000})
+    @ValueSource(ints = {1, 10, 100, 1100, 11500})
+    void 배팅금액이_1000원_단위가_아닐_경우_예외발생(int amout) {
+        assertThatThrownBy(() -> new BetMoney(amout))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1_000, 100_000_000})
     void 배팅금액이_1억이하의_자연수인경우_정상적으로_생성(int amount) {
         assertThatCode(() -> new BetMoney(amount))
                 .doesNotThrowAnyException();
