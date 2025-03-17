@@ -3,18 +3,18 @@ package domain;
 import java.math.BigDecimal;
 
 public enum GameResultStatus {
-    BLACKJACK(1.5),
-    WIN(1),
-    DRAW(0),
-    LOSE(-1);
+    BLACKJACK(BigDecimal.valueOf(1.5)),
+    WIN(BigDecimal.valueOf(1)),
+    DRAW(BigDecimal.valueOf(0)),
+    LOSE(BigDecimal.valueOf(-1));
 
-    private double payout;
+    private final BigDecimal payout;
 
-    GameResultStatus(double payout) {
+    GameResultStatus(BigDecimal payout) {
         this.payout = payout;
     }
 
     public BigDecimal calculateProfit(int bettingMoney) {
-        return BigDecimal.valueOf(payout * bettingMoney);
+        return payout.multiply(BigDecimal.valueOf(bettingMoney));
     }
 }
