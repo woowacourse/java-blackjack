@@ -6,11 +6,7 @@ import card.Card;
 import card.CardNumber;
 import card.Pattern;
 import java.util.List;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 public class DealerTest {
 
@@ -57,29 +53,27 @@ public class DealerTest {
         assertThat(actual).isEqualTo(20);
     }
 
-    @ParameterizedTest
-    @MethodSource(value = "provideDealer")
-    void 딜러가_버스트인지_확인한다(Dealer dealer, boolean expected) {
-        assertThat(dealer.isBust()).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> provideDealer() {
-        Dealer bustDealer = new Dealer();
-        bustDealer.draw(List.of(
+    @Test
+    void 딜러가_버스트인지_확인한다_버스트() {
+        Dealer dealer = new Dealer();
+        dealer.draw(List.of(
                 new Card(Pattern.CLOVER, CardNumber.TEN),
                 new Card(Pattern.SPADE, CardNumber.TEN),
                 new Card(Pattern.SPADE, CardNumber.TWO)
         ));
-        Dealer notBustDealer = new Dealer();
-        notBustDealer.draw(List.of(
+
+        assertThat(dealer.isBust()).isTrue();
+    }
+
+    @Test
+    void 딜러가_버스트인지_확인한다_버스트아님() {
+        Dealer dealer = new Dealer();
+        dealer.draw(List.of(
                 new Card(Pattern.CLOVER, CardNumber.TEN),
                 new Card(Pattern.SPADE, CardNumber.ACE)
         ));
 
-        return Stream.of(
-                Arguments.of(bustDealer, true),
-                Arguments.of(notBustDealer, false)
-        );
+        assertThat(dealer.isBust()).isFalse();
     }
 
     @Test
