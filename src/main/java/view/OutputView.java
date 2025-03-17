@@ -66,17 +66,17 @@ public class OutputView {
     public void printResult(Map<Playable, Profit> participantGameResults) {
         println("## 최종 수익");
 
-        for (Playable participant : participantGameResults.keySet()) {
-            if (participant instanceof Dealer) {
-                println(String.format("딜러: %d", participantGameResults.get(participant).getAmount()));
+        for (Entry<Playable, Profit> entry : participantGameResults.entrySet()) {
+            if (entry.getKey() instanceof Dealer) {
+                println(String.format("딜러: %d", participantGameResults.get(entry.getKey()).getAmount()));
                 break;
             }
         }
 
-        for (Playable participant : participantGameResults.keySet()) {
-            if (participant instanceof Player) {
-                println(String.format("%s: %d", participant.getNickname(),
-                        participantGameResults.get(participant).getAmount()));
+        for (Entry<Playable, Profit> entry : participantGameResults.entrySet()) {
+            if (entry.getKey() instanceof Player) {
+                println(String.format("%s: %d", entry.getKey().getNickname(),
+                        participantGameResults.get(entry.getKey()).getAmount()));
             }
         }
     }
