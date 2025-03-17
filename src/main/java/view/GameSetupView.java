@@ -1,9 +1,9 @@
 package view;
 
 import java.util.List;
-import model.participant.Name;
-import model.participant.Participant;
-import model.participant.Participants;
+import participant.Name;
+import participant.Participant;
+import participant.Participants;
 
 public final class GameSetupView extends BlackjackView {
     public String getInputNameGuide() {

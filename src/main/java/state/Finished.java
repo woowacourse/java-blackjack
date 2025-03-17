@@ -1,7 +1,7 @@
-package model.state;
+package state;
 
-import model.card.Card;
-import model.card.CardHand;
+import card.Card;
+import card.CardHand;
 
 public abstract class Finished extends Started {
     public Finished(final CardHand cardHand) {
@@ -10,9 +10,9 @@ public abstract class Finished extends Started {
 
     public abstract double earningRate();
 
-    public int profit(final int bettingAmount) {
-        return (int) (bettingAmount * earningRate());
-    }
+//    public Bet profit(final Bet bettingAmount) {
+//        return bettingAmount.multiply(earningRate());
+//    }
 
     @Override
     public State receiveCard(final Card card) {

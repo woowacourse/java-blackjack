@@ -4,10 +4,10 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import model.card.Deck;
-import model.participant.Bet;
-import model.participant.Name;
-import model.participant.Participants;
+import card.Deck;
+import participant.Bet;
+import participant.Name;
+import participant.Participants;
 import view.GameSetupView;
 
 public final class GameSetupConsole extends Console {

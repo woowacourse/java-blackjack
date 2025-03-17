@@ -1,4 +1,4 @@
-package model.card;
+package card;
 
 public record GameScore(int value) {
     public static final GameScore BLACKJACK_SCORE = new GameScore(21);

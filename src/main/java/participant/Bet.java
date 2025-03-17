@@ -1,4 +1,4 @@
-package model.participant;
+package participant;
 
 public final class Bet {
     private static final int AMOUNT_UNIT = 10000;
@@ -6,7 +6,7 @@ public final class Bet {
     private final int amount;
 
     public Bet(final int amount) {
-        validate(amount);
+//        validate(amount); // TODO Profit을 따로 만들까?
         this.amount = amount;
     }
 
@@ -14,6 +14,15 @@ public final class Bet {
         if (amount <= 0 || amount % AMOUNT_UNIT != 0) {
             throw new IllegalArgumentException("[ERROR] 배팅은 10,000원 단위로만 가능합니다.");
         }
+    }
+
+    public Bet multiply(double rate) {
+        return new Bet((int) (amount * rate));
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(amount);
     }
 
     @Override

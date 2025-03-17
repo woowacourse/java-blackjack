@@ -1,10 +1,10 @@
 package view;
 
 import java.util.List;
-import model.card.Card;
-import model.card.Rank;
-import model.card.Suit;
-import model.participant.Name;
+import card.Card;
+import card.Rank;
+import card.Suit;
+import participant.Name;
 
 public abstract class BlackjackView {
     public String getParticipantCards(final Name name, final List<Card> cards) {

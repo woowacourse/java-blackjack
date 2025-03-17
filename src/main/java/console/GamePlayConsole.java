@@ -1,9 +1,9 @@
 package console;
 
-import model.card.Deck;
-import model.participant.Dealer;
-import model.participant.Player;
-import model.participant.Players;
+import card.Deck;
+import participant.Dealer;
+import participant.Player;
+import participant.Players;
 import view.GamePlayView;
 
 public final class GamePlayConsole extends Console {

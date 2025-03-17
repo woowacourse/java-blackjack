@@ -1,7 +1,7 @@
-package model.state;
+package state;
 
-import model.card.Card;
-import model.card.CardHand;
+import card.Card;
+import card.CardHand;
 
 public interface State {
     State receiveCard(final Card card);
@@ -12,5 +12,5 @@ public interface State {
 
     CardHand cardHand();
 
-    int profit(final int bettingAmount);
+//    Bet profit(final Bet bettingAmount);
 }

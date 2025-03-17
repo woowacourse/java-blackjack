@@ -1,6 +1,6 @@
-package model.state;
+package state;
 
-import model.card.CardHand;
+import card.CardHand;
 
 public final class BlackJack extends Finished {
     public BlackJack(final CardHand cardHand) {

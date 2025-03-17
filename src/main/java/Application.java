@@ -1,9 +1,9 @@
 import console.GamePlayConsole;
 import console.GameResultConsole;
 import console.GameSetupConsole;
-import model.card.Deck;
-import model.card.DeckGenerator;
-import model.participant.Participants;
+import card.Deck;
+import card.DeckGenerator;
+import participant.Participants;
 
 public final class Application {
     public static void main(String[] args) {
@@ -16,5 +16,6 @@ public final class Application {
         gamePlayConsole.drawDealerCards(participants.getDealer(), deck);
         GameResultConsole gameResultConsole = new GameResultConsole();
         gameResultConsole.getFinalScores(participants);
+        gameResultConsole.getFinalProfits(participants);
     }
 }

@@ -1,10 +1,10 @@
-package model.participant;
+package participant;
 
+import card.Deck;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import model.card.CardHand;
-import model.card.Deck;
+import card.CardHand;
 
 public final class Participants {
     private final Dealer dealer;

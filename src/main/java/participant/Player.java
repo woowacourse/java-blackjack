@@ -1,9 +1,9 @@
-package model.participant;
+package participant;
 
+import card.Card;
+import card.CardHand;
 import java.util.List;
-import model.card.Card;
-import model.card.CardHand;
-import model.state.PlayerHit;
+import state.PlayerHit;
 
 public final class Player extends Participant {
     private final Name name;
@@ -20,6 +20,11 @@ public final class Player extends Participant {
         CardHand cardHand = state.cardHand();
         return cardHand.getCards();
     }
+
+//    @Override
+//    public Bet getProfit() {
+//        return state.profit(bet);
+//    }
 
     @Override
     public Name getName() {

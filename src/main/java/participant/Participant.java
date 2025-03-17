@@ -1,10 +1,10 @@
-package model.participant;
+package participant;
 
+import card.Card;
+import card.CardHand;
+import card.GameScore;
 import java.util.List;
-import model.card.Card;
-import model.card.CardHand;
-import model.card.GameScore;
-import model.state.State;
+import state.State;
 
 public abstract class Participant {
     protected State state;

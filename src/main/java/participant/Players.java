@@ -1,9 +1,9 @@
-package model.participant;
+package participant;
 
+import card.Deck;
 import java.util.List;
 import java.util.Map;
-import model.card.CardHand;
-import model.card.Deck;
+import card.CardHand;
 
 public final class Players {
     private final List<Player> players;

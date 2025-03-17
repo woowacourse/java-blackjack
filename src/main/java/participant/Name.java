@@ -1,4 +1,4 @@
-package model.participant;
+package participant;
 
 public record Name(String name) {
     @Override

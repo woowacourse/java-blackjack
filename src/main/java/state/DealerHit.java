@@ -1,7 +1,7 @@
-package model.state;
+package state;
 
-import model.card.Card;
-import model.card.CardHand;
+import card.Card;
+import card.CardHand;
 
 public final class DealerHit extends Running {
     private DealerHit(final CardHand cardHand) {

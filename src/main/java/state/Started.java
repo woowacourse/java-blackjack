@@ -1,6 +1,6 @@
-package model.state;
+package state;
 
-import model.card.CardHand;
+import card.CardHand;
 
 public abstract class Started implements State {
     protected final CardHand cardHand;

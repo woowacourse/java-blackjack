@@ -1,6 +1,6 @@
-package model.state;
+package state;
 
-import model.card.CardHand;
+import card.CardHand;
 
 public final class Stay extends Finished {
     public Stay(final CardHand cardHand) {

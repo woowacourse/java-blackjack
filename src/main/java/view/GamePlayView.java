@@ -1,6 +1,6 @@
 package view;
 
-import model.participant.Player;
+import participant.Player;
 
 public final class GamePlayView extends BlackjackView {
     public String getPlayerDealGuide(final Player player) {

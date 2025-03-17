@@ -1,6 +1,6 @@
-package model.state;
+package state;
 
-import model.card.CardHand;
+import card.CardHand;
 
 public abstract class Running extends Started {
     public Running(final CardHand cardHand) {
@@ -12,8 +12,8 @@ public abstract class Running extends Started {
         return false;
     }
 
-    @Override
-    public int profit(final int battingAmount) {
-        throw new IllegalArgumentException();
-    }
+//    @Override
+//    public Bet profit(final Bet battingAmount) {
+//        throw new IllegalArgumentException();
+//    }
 }
