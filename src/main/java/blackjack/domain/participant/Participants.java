@@ -30,7 +30,7 @@ public final class Participants {
         dealer.dealInitialCards(players, hand);
     }
 
-    public Players findCanHitPlayers() {
+    public Players findHitEligiblePlayers() {
         return players.findHitAvailablePlayers();
     }
 

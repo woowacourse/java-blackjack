@@ -28,7 +28,7 @@ public final class BlackjackGame {
         Participants participants = makeParticipants();
 
         dealInitialCards(participants, deck);
-        spreadExtraCards(participants, deck);
+        dealAdditionalCards(participants, deck);
         showParticipantScore(participants);
         showProfit(participants);
     }
@@ -53,40 +53,40 @@ public final class BlackjackGame {
     private void dealInitialCards(final Participants participants, final Deck deck) {
         final Hand hand = deck.drawInitialCards(participants.getInitialCardSize());
         participants.dealInitialCards(hand);
-        resultView.printSpreadCard(participants.getPlayerNames(),
+        resultView.showSpreadCard(participants.getPlayerNames(),
                 Map.entry(participants.getDealerName(), participants.showInitialDealerCards()),
                 participants.showInitialPlayersCards());
     }
 
-    private void spreadExtraCards(final Participants participants, final Deck deck) {
-        spreadExtraCardsToPlayer(participants, deck);
-        spreadExtraCardsToDealer(participants, deck);
+    private void dealAdditionalCards(final Participants participants, final Deck deck) {
+        dealAdditionalCardsToPlayers(participants, deck);
+        dealAdditionalCardsToDealer(participants, deck);
     }
 
-    private void spreadExtraCardsToPlayer(final Participants participants, final Deck deck) {
-        Players availablePlayers = participants.findCanHitPlayers();
-        for (Player player : availablePlayers.getPlayers()) {
-            askPlayerMoreCard(deck, player);
+    private void dealAdditionalCardsToPlayers(final Participants participants, final Deck deck) {
+        Players hitEligiblePlayers = participants.findHitEligiblePlayers();
+        for (Player player : hitEligiblePlayers.getPlayers()) {
+            dealAdditionalCardToPlayer(deck, player);
         }
     }
 
-    private void askPlayerMoreCard(final Deck deck, final Player player) {
+    private void dealAdditionalCardToPlayer(final Deck deck, final Player player) {
         while (player.canHit() && inputView.askHit(player)) {
             final Card card = deck.drawCard();
             player.receiveCard(card);
-            resultView.printParticipantTotalCards(player.getNickname(), player.showAllCards());
+            resultView.showParticipantTotalCards(player.getNickname(), player.showAllCards());
         }
     }
 
-    private void spreadExtraCardsToDealer(final Participants participants, final Deck deck) {
+    private void dealAdditionalCardsToDealer(final Participants participants, final Deck deck) {
         while (participants.canDealerHit()) {
             participants.receiveCardToDealer(new Hand(deck.drawCard()));
-            resultView.printDealerExtraCard();
+            resultView.showDealerExtraCard();
         }
     }
 
     private void showParticipantScore(final Participants participants) {
-        resultView.makeParticipantsWithScoreMessage(Map.entry(participants.getDealerName(),
+        resultView.showParticipantsScore(Map.entry(participants.getDealerName(),
                 participants.showAllDealerCard()), participants.showAllPlayersCard());
     }
 
