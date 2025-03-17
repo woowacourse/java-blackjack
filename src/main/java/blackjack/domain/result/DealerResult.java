@@ -1,16 +1,10 @@
 package blackjack.domain.result;
 
 public class DealerResult {
-    private final GameResultType gameResultType;
     private final Score score;
 
-    public DealerResult(GameResultType gameResultType, Score score) {
-        this.gameResultType = gameResultType;
+    public DealerResult(Score score) {
         this.score = score;
-    }
-
-    public GameResultType getGameResultType() {
-        return gameResultType;
     }
 
     public int getScoreValue() {

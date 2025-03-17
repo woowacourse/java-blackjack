@@ -1,7 +1,6 @@
 package blackjack.domain.profit;
 
 import blackjack.domain.game.Player;
-import blackjack.domain.result.DealerResults;
 import blackjack.domain.result.GameResultType;
 import blackjack.domain.result.PlayerResult;
 import blackjack.domain.result.PlayerResults;
@@ -15,7 +14,7 @@ public class BettingResult {
         this.playerProfits = playerProfits;
     }
 
-    public void calculateAllResults(PlayerResults playerResults, DealerResults dealerResults) {
+    public void calculateAllResults(PlayerResults playerResults) {
         for (PlayerResult playerResult : playerResults.getPlayerResults()) {
             Player player = playerResult.getPlayer();
             int betAmount = player.getBetAmount();

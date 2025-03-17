@@ -4,9 +4,9 @@ import blackjack.domain.game.Dealer;
 import blackjack.domain.game.Participant;
 import blackjack.domain.game.Players;
 import blackjack.domain.profit.DealerProfits;
-import blackjack.domain.result.DealerResults;
 import blackjack.domain.profit.PlayerProfit;
 import blackjack.domain.profit.PlayerProfits;
+import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.PlayerResults;
 
 public final class OutputView {
@@ -58,8 +58,8 @@ public final class OutputView {
         }
     }
 
-    public static void printCardResults(Dealer dealer, DealerResults dealerResults, PlayerResults playerResults) {
-        System.out.println(Formatter.formatDealerCardResult(dealer, dealerResults));
+    public static void printCardResults(Dealer dealer, DealerResult dealerResult, PlayerResults playerResults) {
+        System.out.println(Formatter.formatDealerCardResult(dealer, dealerResult));
         playerResults.getPlayerResults()
                 .forEach(result -> System.out.println(Formatter.formatPlayerCardResult(result)));
     }

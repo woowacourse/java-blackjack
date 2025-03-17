@@ -15,23 +15,18 @@ import org.junit.jupiter.api.Test;
 
 public class JudgeTest {
 
-    private Judge judge;
-    private DealerResults dealerResults;
     private PlayerResults playerResults;
 
     @BeforeEach
     void setUp() {
-        dealerResults = new DealerResults();
         playerResults = new PlayerResults();
-        judge = new Judge(dealerResults, playerResults);
     }
 
     @Test
     void 둘_다_블랙잭인_경우_무승부를_저장한다() {
         testGameResult(
-                createHandWithCards(CardRank.ACE, CardRank.TEN),  // 딜러 블랙잭
+                createHandWithCards(CardRank.ACE, CardRank.TEN),
                 createHandWithCards(CardRank.ACE, CardRank.TEN),  // 플레이어 블랙잭
-                GameResultType.TIE,
                 GameResultType.TIE
         );
     }
@@ -41,7 +36,6 @@ public class JudgeTest {
         testGameResult(
                 createHandWithCards(CardRank.ACE, CardRank.TEN),  // 딜러 블랙잭
                 createHandWithCards(CardRank.TWO, CardRank.TEN),  // 플레이어 일반
-                GameResultType.WIN,
                 GameResultType.LOSE
         );
     }
@@ -51,7 +45,6 @@ public class JudgeTest {
         testGameResult(
                 createHandWithCards(CardRank.TWO, CardRank.TEN),  // 딜러 일반
                 createHandWithCards(CardRank.ACE, CardRank.TEN),  // 플레이어 블랙잭
-                GameResultType.LOSE,
                 GameResultType.WIN
         );
     }
@@ -61,7 +54,6 @@ public class JudgeTest {
         testGameResult(
                 createHandWithCards(CardRank.TEN, CardRank.TEN, CardRank.TEN),  // 딜러 일반
                 createHandWithCards(CardRank.TEN, CardRank.TEN, CardRank.TEN),  // 플레이어 블랙잭
-                GameResultType.TIE,
                 GameResultType.TIE
         );
     }
@@ -71,7 +63,6 @@ public class JudgeTest {
         testGameResult(
                 createHandWithCards(CardRank.TEN, CardRank.TEN),  // 딜러 일반
                 createHandWithCards(CardRank.TEN, CardRank.TEN, CardRank.TEN),
-                GameResultType.WIN,
                 GameResultType.LOSE
         );
     }
@@ -81,7 +72,6 @@ public class JudgeTest {
         testGameResult(
                 createHandWithCards(CardRank.TEN, CardRank.TEN, CardRank.TEN),  // 딜러 일반
                 createHandWithCards(CardRank.TEN, CardRank.TEN),
-                GameResultType.LOSE,
                 GameResultType.WIN
         );
     }
@@ -91,7 +81,6 @@ public class JudgeTest {
         testGameResult(
                 createHandWithCards(CardRank.TEN, CardRank.FIVE, CardRank.TWO),  // 딜러 일반
                 createHandWithCards(CardRank.TEN, CardRank.FIVE),
-                GameResultType.WIN,
                 GameResultType.LOSE
         );
     }
@@ -101,7 +90,6 @@ public class JudgeTest {
         testGameResult(
                 createHandWithCards(CardRank.TEN, CardRank.FIVE),
                 createHandWithCards(CardRank.TEN, CardRank.FIVE, CardRank.TWO),
-                GameResultType.LOSE,
                 GameResultType.WIN
         );
     }
@@ -111,11 +99,9 @@ public class JudgeTest {
         testGameResult(
                 createHandWithCards(CardRank.TEN, CardRank.FIVE, CardRank.TWO),
                 createHandWithCards(CardRank.TEN, CardRank.FIVE, CardRank.TWO),
-                GameResultType.TIE,
                 GameResultType.TIE
         );
     }
-
 
     private Hand createHandWithCards(CardRank... ranks) {
         Hand hand = new Hand();
@@ -127,21 +113,18 @@ public class JudgeTest {
         return hand;
     }
 
-    private void testGameResult(Hand dealerHand, Hand playerHand, GameResultType expectedDealerResult,
-                                GameResultType expectedPlayerResult) {
-        Dealer dealer = new Dealer(dealerHand);
+    private void testGameResult(Hand dealerHand, Hand playerHand, GameResultType expectedPlayerResult) {
         Player player = new Player("히로", playerHand, new BetAmount(1_000));
+        Dealer dealer = new Dealer(dealerHand);
 
+        Judge judge = new Judge(playerResults, dealer);
         judge.calculateAllResults(dealer, new Players(List.of(player)));
 
-        assertResults(player, expectedDealerResult, expectedPlayerResult);
+        assertResults(player, expectedPlayerResult);
     }
 
-    private void assertResults(Player player, GameResultType expectedDealerResult,
-                               GameResultType expectedPlayerResult) {
+    private void assertResults(Player player, GameResultType expectedPlayerResult) {
         assertAll(
-                () -> assertThat(dealerResults.findResultByPlayer(player).getGameResultType())
-                        .isEqualTo(expectedDealerResult),
                 () -> assertThat(playerResults.findResultByPlayer(player).getGameResultType())
                         .isEqualTo(expectedPlayerResult)
         );

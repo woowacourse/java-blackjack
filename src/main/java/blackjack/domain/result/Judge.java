@@ -5,13 +5,12 @@ import blackjack.domain.game.Player;
 import blackjack.domain.game.Players;
 
 public class Judge {
-
-    private final DealerResults dealerResults;
     private final PlayerResults playerResults;
+    private final DealerResult dealerResult;
 
-    public Judge(DealerResults dealerResults, PlayerResults playerResults) {
-        this.dealerResults = dealerResults;
+    public Judge(PlayerResults playerResults, Dealer dealer) {
         this.playerResults = playerResults;
+        this.dealerResult = new DealerResult(new Score(dealer));
     }
 
     public void calculateAllResults(Dealer dealer, Players players) {
@@ -41,23 +40,17 @@ public class Judge {
         if (dealerScore.isBlackJack()) {
             if (playerScore.isBlackJack()) {
                 PlayerResult playerResult = new PlayerResult(player, GameResultType.TIE, playerScore);
-                DealerResult dealerResult = new DealerResult(GameResultType.TIE, dealerScore);
-                dealerResults.add(player, dealerResult);
                 playerResults.add(playerResult);
                 return;
             }
 
             PlayerResult playerResult = new PlayerResult(player, GameResultType.LOSE, playerScore);
-            DealerResult dealerResult = new DealerResult(GameResultType.WIN, dealerScore);
-            dealerResults.add(player, dealerResult);
             playerResults.add(playerResult);
             return;
         }
 
         if (playerScore.isBlackJack()) {
             PlayerResult playerResult = new PlayerResult(player, GameResultType.WIN, playerScore);
-            DealerResult dealerResult = new DealerResult(GameResultType.LOSE, dealerScore);
-            dealerResults.add(player, dealerResult);
             playerResults.add(playerResult);
         }
     }
@@ -68,24 +61,18 @@ public class Judge {
 
         if (isDealerBusted && isPlayerBusted) {
             PlayerResult playerResult = new PlayerResult(player, GameResultType.TIE, playerScore);
-            DealerResult dealerResult = new DealerResult(GameResultType.TIE, dealerScore);
-            dealerResults.add(player, dealerResult);
             playerResults.add(playerResult);
             return;
         }
 
         if (isDealerBusted) {
             PlayerResult playerResult = new PlayerResult(player, GameResultType.WIN, playerScore);
-            DealerResult dealerResult = new DealerResult(GameResultType.LOSE, dealerScore);
-            dealerResults.add(player, dealerResult);
             playerResults.add(playerResult);
             return;
         }
 
         if (isPlayerBusted) {
             PlayerResult playerResult = new PlayerResult(player, GameResultType.LOSE, playerScore);
-            DealerResult dealerResult = new DealerResult(GameResultType.WIN, dealerScore);
-            dealerResults.add(player, dealerResult);
             playerResults.add(playerResult);
         }
     }
@@ -95,20 +82,16 @@ public class Judge {
         int playerScoreValue = playerScore.getScoreValue();
 
         GameResultType gameResultTypeOfPlayer = GameResultType.find(playerScoreValue, dealerScoreValue);
-        GameResultType gameResultTypeOfDealer = gameResultTypeOfPlayer.getOppositeType();
 
-        DealerResult dealerResult = new DealerResult(gameResultTypeOfDealer, dealerScore);
         PlayerResult playerResult = new PlayerResult(player, gameResultTypeOfPlayer, playerScore);
-
-        dealerResults.add(player, dealerResult);
         playerResults.add(playerResult);
-    }
-
-    public DealerResults getDealerResults() {
-        return dealerResults;
     }
 
     public PlayerResults getPlayerResults() {
         return playerResults;
+    }
+
+    public DealerResult getDealerResult() {
+        return dealerResult;
     }
 }

@@ -11,7 +11,7 @@ import blackjack.domain.profit.BettingResult;
 import blackjack.domain.profit.DealerProfits;
 import blackjack.domain.profit.PlayerProfits;
 import blackjack.domain.result.BetAmount;
-import blackjack.domain.result.DealerResults;
+import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.Judge;
 import blackjack.domain.result.PlayerResults;
 import blackjack.domain.result.Score;
@@ -35,12 +35,12 @@ public class BlackjackController {
         takeCardManually(dealer, blackjackGame);
 
         Judge judge = judgeResults(dealer, players);
-        DealerResults dealerResults = judge.getDealerResults();
         PlayerResults playerResults = judge.getPlayerResults();
+        DealerResult dealerResult = judge.getDealerResult();
 
-        OutputView.printCardResults(dealer, dealerResults, playerResults);
+        OutputView.printCardResults(dealer, dealerResult, playerResults);
 
-        BettingResult bettingResult = calculateBettingResult(playerResults, dealerResults);
+        BettingResult bettingResult = calculateBettingResult(playerResults);
         DealerProfits dealerProfits = bettingResult.getDealerProfits();
         PlayerProfits playerProfits = bettingResult.getPlayerProfits();
 
@@ -100,14 +100,14 @@ public class BlackjackController {
     }
 
     private Judge judgeResults(Dealer dealer, Players players) {
-        Judge judge = new Judge(new DealerResults(), new PlayerResults());
+        Judge judge = new Judge(new PlayerResults(), dealer);
         judge.calculateAllResults(dealer, players);
         return judge;
     }
 
-    private BettingResult calculateBettingResult(PlayerResults playerResults, DealerResults dealerResults) {
+    private BettingResult calculateBettingResult(PlayerResults playerResults) {
         BettingResult bettingResult = new BettingResult(new DealerProfits(), new PlayerProfits());
-        bettingResult.calculateAllResults(playerResults, dealerResults);
+        bettingResult.calculateAllResults(playerResults);
         return bettingResult;
     }
 }

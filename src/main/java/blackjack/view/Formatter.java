@@ -5,7 +5,7 @@ import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
 import blackjack.domain.game.Dealer;
 import blackjack.domain.game.Participant;
-import blackjack.domain.result.DealerResults;
+import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.PlayerResult;
 import blackjack.domain.result.Score;
 import java.util.List;
@@ -30,8 +30,8 @@ public final class Formatter {
         return "딜러카드: " + Formatter.formatCard(cards.getFirst());
     }
 
-    public static String formatDealerCardResult(Dealer dealer, DealerResults dealerResults) {
-        int scoreValue = dealerResults.getScoreValue();
+    public static String formatDealerCardResult(Dealer dealer, DealerResult dealerResult) {
+        int scoreValue = dealerResult.getScoreValue();
         return "딜러 카드: " + formatCardStatus(dealer) + " - 결과: " + scoreValue;
     }
 
