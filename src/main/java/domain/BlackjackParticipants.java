@@ -14,7 +14,7 @@ public class BlackjackParticipants {
     }
 
     public BlackjackParticipants() {
-        this(Dealer.createEmpty(), new Players());
+        this(new Dealer(), new Players());
     }
 
     public void registerPlayers(List<Player> players) {

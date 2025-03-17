@@ -1,9 +1,8 @@
 import controller.BlackjackController;
 import controller.BlackjackFrontController;
-import domain.CardFactory;
+import domain.BlackjackParticipants;
 import domain.CardGiver;
 import domain.Deck;
-import domain.BlackjackParticipants;
 import view.ConsoleView;
 import view.InputView;
 import view.OutputView;
@@ -33,6 +32,6 @@ public class BlackjackConfig {
     }
 
     private CardGiver cardGiver() {
-        return new CardGiver(new Deck(CardFactory.createShuffledCards()));
+        return new CardGiver(Deck.createShuffledBlackJackCards());
     }
 }
