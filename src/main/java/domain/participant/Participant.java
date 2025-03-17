@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.GameResult;
+import domain.BlackJackWinningStatus;
 import domain.card.Card;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,7 +58,7 @@ public abstract class Participant {
                     final int aceAsElevenCount = aceCount - aceAsOneCount;
                     return calculateAceValue(baseValue, aceAsOneCount, aceAsElevenCount);
                 })
-                .filter(candidateResult -> !GameResult.isBurstBy(candidateResult))
+                .filter(candidateResult -> !BlackJackWinningStatus.isBurstBy(candidateResult))
                 .max()
                 .orElse(baseValue + aceCount);
     }

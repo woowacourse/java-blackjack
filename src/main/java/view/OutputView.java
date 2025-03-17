@@ -1,14 +1,14 @@
 package view;
 
-import static domain.GameResult.DRAW;
-import static domain.GameResult.LOSE;
-import static domain.GameResult.WIN;
+import static domain.BlackJackWinningStatus.DRAW;
+import static domain.BlackJackWinningStatus.LOSE;
+import static domain.BlackJackWinningStatus.WIN;
 import static domain.card.Shape.CLUB;
 import static domain.card.Shape.DIAMOND;
 import static domain.card.Shape.HEART;
 import static domain.card.Shape.SPADE;
 
-import domain.GameResult;
+import domain.BlackJackWinningStatus;
 import domain.ParticipantsResult;
 import domain.PlayerResult;
 import domain.card.Card;
@@ -133,7 +133,7 @@ public class OutputView {
         }
     }
 
-    private String formatDealerResultMessage(Map<GameResult, Integer> dealerResult) {
+    private String formatDealerResultMessage(Map<BlackJackWinningStatus, Integer> dealerResult) {
         return String.format("딜러: %s%s%s",
                 formatDealerWinMessage(dealerResult.get(WIN)),
                 formatDealerLoseMessage(dealerResult.get(LOSE)),
@@ -166,14 +166,14 @@ public class OutputView {
                 formatGameResult(playerResult.getGameResult()));
     }
 
-    private String formatGameResult(GameResult gameResult) {
-        if (gameResult == WIN) {
+    private String formatGameResult(BlackJackWinningStatus blackJackWinningStatus) {
+        if (blackJackWinningStatus == WIN) {
             return "승";
         }
-        if (gameResult == DRAW) {
+        if (blackJackWinningStatus == DRAW) {
             return "무";
         }
-        if (gameResult == LOSE) {
+        if (blackJackWinningStatus == LOSE) {
             return "패";
         }
         return "";

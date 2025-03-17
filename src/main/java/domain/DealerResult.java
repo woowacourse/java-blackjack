@@ -5,18 +5,18 @@ import java.util.Map;
 import java.util.Objects;
 
 public class DealerResult {
-    private final Map<GameResult, Integer> dealerResult;
+    private final Map<BlackJackWinningStatus, Integer> dealerResult;
 
     public DealerResult() {
         this.dealerResult = new HashMap<>();
     }
 
-    public void add(GameResult gameResult) {
-        int value = dealerResult.getOrDefault(gameResult, 0) + 1;
-        dealerResult.put(gameResult, value);
+    public void add(BlackJackWinningStatus blackJackWinningStatus) {
+        int value = dealerResult.getOrDefault(blackJackWinningStatus, 0) + 1;
+        dealerResult.put(blackJackWinningStatus, value);
     }
 
-    public Map<GameResult, Integer> getDealerResult() {
+    public Map<BlackJackWinningStatus, Integer> getDealerResult() {
         return dealerResult;
     }
 

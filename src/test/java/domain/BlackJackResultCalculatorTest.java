@@ -47,10 +47,10 @@ public class BlackJackResultCalculatorTest {
         // then
         assertAll(
                 () -> {
-                    Map<GameResult, Integer> dealerExpected = new HashMap<>();
-                    dealerExpected.put(GameResult.WIN, 1);
-                    dealerExpected.put(GameResult.DRAW, 1);
-                    dealerExpected.put(GameResult.LOSE, 1);
+                    Map<BlackJackWinningStatus, Integer> dealerExpected = new HashMap<>();
+                    dealerExpected.put(BlackJackWinningStatus.WIN, 1);
+                    dealerExpected.put(BlackJackWinningStatus.DRAW, 1);
+                    dealerExpected.put(BlackJackWinningStatus.LOSE, 1);
                     assertThat(participantsResult.dealerResult()
                             .getDealerResult()).isEqualTo(
                             dealerExpected);
@@ -58,17 +58,17 @@ public class BlackJackResultCalculatorTest {
                 () -> {
                     List<PlayerResult> playerResults = participantsResult.playerResults();
                     assertThat(playerResults.get(0)).isEqualTo(
-                            new PlayerResult(player1, GameResult.WIN));
+                            new PlayerResult(player1, BlackJackWinningStatus.WIN));
                 },
                 () -> {
                     List<PlayerResult> playerResults = participantsResult.playerResults();
                     assertThat(playerResults.get(1)).isEqualTo(
-                            new PlayerResult(player2, GameResult.LOSE));
+                            new PlayerResult(player2, BlackJackWinningStatus.LOSE));
                 },
                 () -> {
                     List<PlayerResult> playerResults = participantsResult.playerResults();
                     assertThat(playerResults.get(2)).isEqualTo(
-                            new PlayerResult(player3, GameResult.DRAW));
+                            new PlayerResult(player3, BlackJackWinningStatus.DRAW));
                 }
         );
     }
@@ -96,14 +96,14 @@ public class BlackJackResultCalculatorTest {
                 () -> {
                     DealerResult dealerResult = participantsResult.dealerResult();
                     int dealerWinCount = dealerResult.getDealerResult()
-                            .get(GameResult.WIN);
+                            .get(BlackJackWinningStatus.WIN);
                     assertThat(dealerWinCount).isEqualTo(1);
                 },
                 () -> {
                     List<PlayerResult> playerResults = participantsResult.playerResults();
                     PlayerResult playerResult = playerResults.get(0);
-                    GameResult playerGameResult = playerResult.getGameResult();
-                    assertThat(playerGameResult).isEqualTo(GameResult.LOSE);
+                    BlackJackWinningStatus playerBlackJackWinningStatus = playerResult.getGameResult();
+                    assertThat(playerBlackJackWinningStatus).isEqualTo(BlackJackWinningStatus.LOSE);
                 }
         );
     }
@@ -131,14 +131,14 @@ public class BlackJackResultCalculatorTest {
                 () -> {
                     DealerResult dealerResult = participantsResult.dealerResult();
                     int dealerWinCount = dealerResult.getDealerResult()
-                            .get(GameResult.DRAW);
+                            .get(BlackJackWinningStatus.DRAW);
                     assertThat(dealerWinCount).isEqualTo(1);
                 },
                 () -> {
                     List<PlayerResult> playerResults = participantsResult.playerResults();
                     PlayerResult playerResult = playerResults.get(0);
-                    GameResult playerGameResult = playerResult.getGameResult();
-                    assertThat(playerGameResult).isEqualTo(GameResult.DRAW);
+                    BlackJackWinningStatus playerBlackJackWinningStatus = playerResult.getGameResult();
+                    assertThat(playerBlackJackWinningStatus).isEqualTo(BlackJackWinningStatus.DRAW);
                 }
         );
     }
@@ -166,14 +166,14 @@ public class BlackJackResultCalculatorTest {
                 () -> {
                     DealerResult dealerResult = participantsResult.dealerResult();
                     int dealerWinCount = dealerResult.getDealerResult()
-                            .get(GameResult.LOSE);
+                            .get(BlackJackWinningStatus.LOSE);
                     assertThat(dealerWinCount).isEqualTo(1);
                 },
                 () -> {
                     List<PlayerResult> playerResults = participantsResult.playerResults();
                     PlayerResult playerResult = playerResults.get(0);
-                    GameResult playerGameResult = playerResult.getGameResult();
-                    assertThat(playerGameResult).isEqualTo(GameResult.WIN);
+                    BlackJackWinningStatus playerBlackJackWinningStatus = playerResult.getGameResult();
+                    assertThat(playerBlackJackWinningStatus).isEqualTo(BlackJackWinningStatus.WIN);
                 }
         );
     }

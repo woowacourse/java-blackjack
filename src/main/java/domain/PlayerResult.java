@@ -5,19 +5,19 @@ import java.util.Objects;
 
 public class PlayerResult {
     private final Participant player;
-    private final GameResult gameResult;
+    private final BlackJackWinningStatus blackJackWinningStatus;
 
-    public PlayerResult(Participant player, GameResult gameResult) {
+    public PlayerResult(Participant player, BlackJackWinningStatus blackJackWinningStatus) {
         this.player = player;
-        this.gameResult = gameResult;
+        this.blackJackWinningStatus = blackJackWinningStatus;
     }
 
     public String getPlayerName() {
         return player.getName();
     }
 
-    public GameResult getGameResult() {
-        return gameResult;
+    public BlackJackWinningStatus getGameResult() {
+        return blackJackWinningStatus;
     }
 
     @Override
@@ -29,11 +29,11 @@ public class PlayerResult {
             return false;
         }
         PlayerResult that = (PlayerResult) o;
-        return Objects.equals(player, that.player) && gameResult == that.gameResult;
+        return Objects.equals(player, that.player) && blackJackWinningStatus == that.blackJackWinningStatus;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(player, gameResult);
+        return Objects.hash(player, blackJackWinningStatus);
     }
 }
