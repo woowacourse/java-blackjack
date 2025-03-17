@@ -1,11 +1,12 @@
 package domain.participant;
 
-import static domain.GameManager.DEALER_HIT_MIN_THRESHOLD;
-
 import domain.card.Card;
 import domain.card.CardDeck;
 
 public class Dealer extends Participant {
+
+    public static final int DEALER_HIT_MIN_THRESHOLD = 16;
+
     private final CardDeck cardDeck;
 
     public Dealer(CardDeck cardDeck) {
@@ -21,11 +22,8 @@ public class Dealer extends Participant {
         return cardDeck.popCard();
     }
 
-    public boolean passCardToSelf() {
-        if (getScore() > DEALER_HIT_MIN_THRESHOLD) {
-            return false;
-        }
-        receive(drawCard());
-        return true;
+    @Override
+    public boolean canHit() {
+        return getScore() <= DEALER_HIT_MIN_THRESHOLD;
     }
 }

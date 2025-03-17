@@ -5,6 +5,7 @@ import java.util.Objects;
 public class Card {
 
     public static final int BLACKJACK_SCORE = 21;
+    public static final int BLACKJACK_MIN_CARD_COUNT = 2; // 블랙잭일 때 최소한의 카드 개수
 
     private final TrumpNumber number;
     private final TrumpShape shape;

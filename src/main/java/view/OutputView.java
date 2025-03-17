@@ -4,10 +4,7 @@ import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
-import domain.result.BlackjackResult;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
 
@@ -50,36 +47,12 @@ public class OutputView {
     }
 
     public void printResult(Dealer dealer, Players players) {
-        System.out.println("## 최종 승패");
-
-        int dealerWinCount = 0;
-        int dealerLoseCount = 0;
-        int dealerDrawCount = 0;
+        System.out.println("## 최종 수익");
+        System.out.println("딜러: " + dealer.getTotalWinnings());
 
         List<String> playersName = players.getPlayersName();
-        Map<String, BlackjackResult> playerResults = new LinkedHashMap<>();
-
         for (String name : playersName) {
-            Player player = players.findByName(name);
-            BlackjackResult playerResult = player.getBlackjackResult(dealer);
-
-            playerResults.put(name, playerResult);
-
-            if (playerResult == BlackjackResult.LOSE) {
-                dealerWinCount++;
-            }
-            if (playerResult == BlackjackResult.WIN) {
-                dealerLoseCount++;
-            }
-            if (playerResult == BlackjackResult.DRAW) {
-                dealerDrawCount++;
-            }
-        }
-
-        System.out.println("딜러: " + dealerWinCount + "승 " + dealerLoseCount + "패 " + dealerDrawCount + "무");
-
-        for (String name : playerResults.keySet()) {
-            System.out.println(name + ": " + playerResults.get(name).getValue());
+            System.out.println(name + ": " + players.findByName(name).getTotalWinnings());
         }
     }
 

@@ -22,14 +22,14 @@ public class PlayerTest {
         final String name = "pobi";
 
         // when & then
-        assertThatCode(() -> Player.of(name))
+        assertThatCode(() -> Player.of(name, Money.of(1000)))
                 .doesNotThrowAnyException();
     }
 
     @Test
     void 카드를_한_장_씩_받아_들고있는다() {
         // given
-        final Player player = Player.of("pobi");
+        final Player player = Player.of("pobi", Money.of(1000));
         final Card card = Card.of(
                 TrumpNumber.ACE, TrumpShape.CLUB
         );
@@ -42,7 +42,7 @@ public class PlayerTest {
     @Test
     void 플레이어의_점수를_반환한다() {
         // given
-        final Player player = Player.of("pobi");
+        final Player player = Player.of("pobi", Money.of(1000));
         final Card card = Card.of(
                 TrumpNumber.ACE, TrumpShape.CLUB
         );
@@ -70,16 +70,52 @@ public class PlayerTest {
         assertThat(blackjackResult).isEqualTo(result);
     }
 
+    @MethodSource("createPlayerAndCanHitResult")
+    @ParameterizedTest
+    void 플레이어가_히트할_수_있는지_판단한다(Player player, boolean expectedResult) {
+        // when
+        boolean result = player.canHit();
+
+        // then
+        assertThat(result).isEqualTo(expectedResult);
+    }
+
+    @Test
+    void 플레이어가_이겨서_베팅_금액을_얻는다() {
+        // given
+        final Dealer dealer = Dealer.of(CardDeck.of());
+        final Player player = Player.of("winner", Money.of(1000));
+
+        // when
+        player.win(dealer);
+
+        // then
+        assertThat(player.getTotalWinnings()).isEqualTo(1000);
+    }
+
+    @Test
+    void 플레이어가_져서_베팅_금액을_잃는다() {
+        // given
+        final Dealer dealer = Dealer.of(CardDeck.of());
+        final Player player = Player.of("winner", Money.of(1000));
+
+        // when
+        player.lose(dealer);
+
+        // then
+        assertThat(player.getTotalWinnings()).isEqualTo(-1000);
+    }
+
     private static Stream<Arguments> createPlayerAndResult() {
-        final Player loser = Player.of("pobi");
+        final Player loser = Player.of("pobi", Money.of(1000));
         loser.receive(Card.of(TrumpNumber.ACE, TrumpShape.CLUB));
         loser.receive(Card.of(TrumpNumber.FIVE, TrumpShape.CLUB));
 
-        final Player drawer = Player.of("pobi");
+        final Player drawer = Player.of("pobi", Money.of(1000));
         drawer.receive(Card.of(TrumpNumber.ACE, TrumpShape.CLUB));
         drawer.receive(Card.of(TrumpNumber.SIX, TrumpShape.CLUB));
 
-        final Player winner = Player.of("pobi");
+        final Player winner = Player.of("pobi", Money.of(1000));
         winner.receive(Card.of(TrumpNumber.ACE, TrumpShape.CLUB));
         winner.receive(Card.of(TrumpNumber.SEVEN, TrumpShape.CLUB));
 
@@ -87,6 +123,22 @@ public class PlayerTest {
                 Arguments.of(loser, BlackjackResult.LOSE),
                 Arguments.of(drawer, BlackjackResult.DRAW),
                 Arguments.of(winner, BlackjackResult.WIN)
+        );
+    }
+
+    public static Stream<Arguments> createPlayerAndCanHitResult() {
+        final Player canHitPlayer = Player.of("pobi", Money.of(1000));
+        canHitPlayer.receive(Card.of(TrumpNumber.ACE, TrumpShape.CLUB));
+        canHitPlayer.receive(Card.of(TrumpNumber.FIVE, TrumpShape.CLUB));
+
+        final Player canNotHitPlayer = Player.of("pobi", Money.of(1000));
+        canNotHitPlayer.receive(Card.of(TrumpNumber.JACK, TrumpShape.CLUB));
+        canNotHitPlayer.receive(Card.of(TrumpNumber.TEN, TrumpShape.CLUB));
+        canNotHitPlayer.receive(Card.of(TrumpNumber.ACE, TrumpShape.CLUB));
+
+        return Stream.of(
+                Arguments.of(canHitPlayer, true),
+                Arguments.of(canNotHitPlayer, false)
         );
     }
 }

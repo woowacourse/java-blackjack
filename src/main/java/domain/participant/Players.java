@@ -1,5 +1,7 @@
 package domain.participant;
 
+import domain.result.BlackjackResult;
+import java.util.Collections;
 import java.util.List;
 
 public class Players {
@@ -41,5 +43,56 @@ public class Players {
         return players.stream()
                 .map(Player::getName)
                 .toList();
+    }
+
+    public void judgeBlackjack(Dealer dealer) {
+        for (Player player : players) {
+            handleInitialBlackjack(dealer, player);
+        }
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
+    }
+
+    public void calculateResult(Dealer dealer) {
+        for (Player player : players) {
+            handleBetResult(dealer, player);
+        }
+    }
+
+    public void winAll(Dealer dealer) {
+        for (Player player : players) {
+            handleBustDealerAmount(dealer, player);
+        }
+    }
+
+    private void handleInitialBlackjack(Dealer dealer, Player player) {
+        int blackjackAmount = getBlackjackAmount(player);
+        if (player.isBlackjack() && !dealer.isBlackjack()) {
+            player.increaseAmount(blackjackAmount);
+            dealer.decreaseAmount(blackjackAmount);
+        }
+    }
+
+    private int getBlackjackAmount(Player player) {
+        return (int) Math.round(player.getBetAmount() * Money.BLACKJACK_BET_RATIO);
+    }
+
+    private void handleBetResult(Dealer dealer, Player player) {
+        BlackjackResult playerResult = player.getBlackjackResult(dealer);
+
+        if (playerResult == BlackjackResult.LOSE) {
+            player.lose(dealer);
+        }
+        if (playerResult == BlackjackResult.WIN) {
+            player.win(dealer);
+        }
+    }
+
+    private void handleBustDealerAmount(Dealer dealer, Player player) {
+        if (!player.isBust()) {
+            player.win(dealer);
+        }
     }
 }
