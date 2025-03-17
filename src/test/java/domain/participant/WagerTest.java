@@ -8,28 +8,29 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class MoneyTest {
+class WagerTest {
 
     @Test
-    void 현재_금액의_비율을_곱하여_반환한다() {
+    void 배당률을_이용하여_수익_금액을_반환한다() {
         // given
-        Money money = new Money(10_000);
-        double rate = 0.3;
+        Wager wager = new Wager(10_000);
+        double profitRate = 0.3;
 
         // when
-        Money result = money.multiply(rate);
+        int profit = wager.calculateProfit(profitRate);
 
         // then
-        assertThat(result).isEqualTo(new Money(3_000));
+        int expected = -7_000;
+        assertThat(profit).isEqualTo(expected);
     }
 
     @Test
-    void 금액이_음수인_경우_예외가_발생한다() {
+    void 베팅_금액이_음수인_경우_예외가_발생한다() {
         // given
-        int amount = -1_000;
+        int betAmount = -1_000;
 
         // when & then
-        assertThatThrownBy(() -> new Money(amount))
+        assertThatThrownBy(() -> new Wager(betAmount))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("금액은 음수일 수 없습니다.");
     }
