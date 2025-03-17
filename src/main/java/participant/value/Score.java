@@ -11,8 +11,8 @@ public record Score(int score) {
     private static final int ACE_ADDING_VALUE = 10;
     private static final int ACE_VALUE_ADDING_AVAILABLE_SUM = 11;
 
-    public static Score from(Hand hand) {
-        int score = calculateScore(hand.getCards());
+    public static Score from(List<Card> cards) {
+        int score = calculateScore(cards);
         return new Score(score);
     }
 

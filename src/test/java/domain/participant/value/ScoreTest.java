@@ -39,10 +39,9 @@ public class ScoreTest {
         //given
         List<Card> testCards = List.of(new Card(CardNumberType.SIX, CardShapeType.CLOVER),
                 new Card(CardNumberType.JACK, CardShapeType.DIAMOND));
-        Hand hand = new Hand(testCards);
 
         //when
-        Score score = Score.from(hand);
+        Score score = Score.from(testCards);
 
         //then
         assertThat(score).isEqualTo(new Score(16));
@@ -56,10 +55,9 @@ public class ScoreTest {
                 new Card(CardNumberType.SIX, CardShapeType.DIAMOND),
                 new Card(CardNumberType.ACE, CardShapeType.DIAMOND)
         );
-        Hand hand = new Hand(testCards);
 
         //when
-        Score score = Score.from(hand);
+        Score score = Score.from(testCards);
 
         //then
         assertThat(score).isEqualTo(new Score(12));
@@ -73,10 +71,9 @@ public class ScoreTest {
                 new Card(CardNumberType.FIVE, CardShapeType.DIAMOND),
                 new Card(CardNumberType.ACE, CardShapeType.DIAMOND)
         );
-        Hand hand = new Hand(testCards);
 
         //when
-        Score score = Score.from(hand);
+        Score score = Score.from(testCards);
 
         //then
         assertThat(score).isEqualTo(new Score(21));
@@ -93,7 +90,7 @@ public class ScoreTest {
         Hand hand = new Hand(testCards);
 
         //when
-        Score score = Score.from(hand);
+        Score score = Score.from(testCards);
 
         //then
         assertThat(score).isEqualTo(new Score(13));

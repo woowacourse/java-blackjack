@@ -22,7 +22,7 @@ public abstract class Participant {
     }
 
     public Score getScore() {
-        return Score.from(hand);
+        return Score.from(hand.getCards());
     }
 
     public boolean isBust() {
