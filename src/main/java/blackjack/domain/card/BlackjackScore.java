@@ -2,20 +2,21 @@ package blackjack.domain.card;
 
 public record BlackjackScore(int value, int cardSize) {
     private static final int BLACKJACK_CARD_NUMBER = 2;
+    private static final int ADDITIONAL_BLACKJACK_SCORE = 10;
+    private static final int DEALER_BLACKJACK_SCORE_THRESHOLD = 17;
+    private static final int BLACKJACK_SCORE = 21;
     private static final BlackjackScore BLACKJACK_BLACKJACK_SCORE = new BlackjackScore(21, 2);
-    private static final BlackjackScore ADDITIONAL_BLACKJACK_SCORE = new BlackjackScore(10, Integer.MAX_VALUE);
-    private static final BlackjackScore DEALER_BLACKJACK_SCORE_THRESHOLD = new BlackjackScore(17, Integer.MAX_VALUE);
 
     public BlackjackScore withAce() {
         BlackjackScore maxBlackjackScore = this.addBlackjackCard();
-        if (maxBlackjackScore.isGreaterThan(BLACKJACK_BLACKJACK_SCORE)) {
+        if (maxBlackjackScore.isGreaterThan(BLACKJACK_SCORE)) {
             return this;
         }
         return maxBlackjackScore;
     }
 
     private BlackjackScore addBlackjackCard() {
-        return new BlackjackScore(this.value + BlackjackScore.ADDITIONAL_BLACKJACK_SCORE.value, this.cardSize);
+        return new BlackjackScore(this.value + ADDITIONAL_BLACKJACK_SCORE, this.cardSize);
     }
 
     public WinningResult decide(BlackjackScore subBlackjackScore) {
@@ -43,7 +44,7 @@ public record BlackjackScore(int value, int cardSize) {
             return true;
         }
         if (!this.isBust()) {
-            return this.isGreaterThan(subBlackjackScore);
+            return this.isGreaterThan(subBlackjackScore.value);
         }
         return false;
     }
@@ -56,7 +57,7 @@ public record BlackjackScore(int value, int cardSize) {
             return true;
         }
         if (!this.isBust()) {
-            return this.isLessThan(subBlackjackScore);
+            return this.isLessThan(subBlackjackScore.value);
         }
         return false;
     }
@@ -81,15 +82,15 @@ public record BlackjackScore(int value, int cardSize) {
     }
 
     public boolean isBust() {
-        return this.isGreaterThan(BLACKJACK_BLACKJACK_SCORE);
+        return this.isGreaterThan(BLACKJACK_SCORE);
     }
 
-    public boolean isGreaterThan(BlackjackScore otherBlackjackScore) {
-        return this.value > otherBlackjackScore.value;
+    public boolean isGreaterThan(int otherBlackjackScore) {
+        return this.value > otherBlackjackScore;
     }
 
-    public boolean isLessThan(BlackjackScore otherBlackjackScore) {
-        return this.value < otherBlackjackScore.value;
+    public boolean isLessThan(int otherBlackjackScore) {
+        return this.value < otherBlackjackScore;
     }
 
     public boolean doesNeedDealerPickAdditionalCard() {
@@ -97,7 +98,7 @@ public record BlackjackScore(int value, int cardSize) {
     }
 
     public boolean canTake() {
-        return this.isLessThan(BLACKJACK_BLACKJACK_SCORE);
+        return this.isLessThan(BLACKJACK_SCORE);
     }
 
     public String getValue() {
