@@ -1,3 +1,5 @@
+package participant;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.blackjackgame.BlackjackDeck;
@@ -7,6 +9,7 @@ import domain.blackjackgame.TrumpCard;
 import domain.participant.Player;
 import domain.strategy.BlackjackDrawStrategy;
 import domain.strategy.DeckGenerator;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -24,7 +27,7 @@ public class PlayerTest {
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new TestDeckGenerateStrategy(trumpCards));
 
-        Player player = new Player("루키");
+        Player player = new Player("루키", new ArrayList<>());
         player.addDraw(deck.drawCard());
         player.addDraw(deck.drawCard());
         assertThat(player.isDrawable()).isTrue();
@@ -38,7 +41,7 @@ public class PlayerTest {
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new TestDeckGenerateStrategy(trumpCards));
 
-        Player player = new Player("루키");
+        Player player = new Player("루키", new ArrayList<>());
         player.addDraw(deck.drawCard());
         player.addDraw(deck.drawCard());
         player.addDraw(deck.drawCard());
@@ -54,7 +57,7 @@ public class PlayerTest {
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new TestDeckGenerateStrategy(trumpCards));
 
-        Player player = new Player("루키");
+        Player player = new Player("루키", new ArrayList<>());
         player.addDraw(deck.drawCard());
         player.addDraw(deck.drawCard());
         player.addDraw(deck.drawCard());
@@ -70,7 +73,7 @@ public class PlayerTest {
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new TestDeckGenerateStrategy(trumpCards));
 
-        Player player = new Player("루키");
+        Player player = new Player("루키", new ArrayList<>());
         player.addDraw(deck.drawCard());
         player.addDraw(deck.drawCard());
 

@@ -1,11 +1,14 @@
 package domain.participant;
 
+import domain.blackjackgame.TrumpCard;
+import java.util.List;
+
 public class Dealer extends BlackjackParticipant {
 
     private static final int DEALER_STOP_HIT_STANDARD = 17;
 
-    public Dealer() {
-        super(BlackjackParticipant.dealerName());
+    public Dealer(List<TrumpCard> cards) {
+        super(BlackjackParticipant.dealerName(), cards);
     }
 
     @Override

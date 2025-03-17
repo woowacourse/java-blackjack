@@ -1,3 +1,5 @@
+package blackjackgame;
+
 import static org.assertj.core.api.Assertions.assertThatIterable;
 
 import domain.blackjackgame.BlackjackDeck;

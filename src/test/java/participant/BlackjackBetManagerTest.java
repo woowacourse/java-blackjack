@@ -1,44 +1,41 @@
+package participant;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.blackjackgame.BlackjackDeck;
+import domain.blackjackgame.BlackjackGame;
 import domain.blackjackgame.CardValue;
 import domain.blackjackgame.Suit;
 import domain.blackjackgame.TrumpCard;
-import domain.participant.Dealer;
+import domain.participant.BetManager;
 import domain.strategy.BlackjackDrawStrategy;
 import domain.strategy.DeckGenerator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import strategy.TestDeckGenerateStrategy;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-public class DealerTest {
+public class BlackjackBetManagerTest {
 
     @Test
-    void 카드의_합이_16_초과면_뽑을수_없다() {
-        List<TrumpCard> trumpCards = new LinkedList<>(
-                List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT), new TrumpCard(Suit.CLOVER, CardValue.NINE)));
-        BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
-                new TestDeckGenerateStrategy(trumpCards));
-
-        Dealer dealer = new Dealer();
-        dealer.addDraw(deck.drawCard());
-        dealer.addDraw(deck.drawCard());
-        assertThat(dealer.isDrawable()).isFalse();
-    }
-
-    @Test
-    void 카드의_합이_16_이하면_뽑을수_있다() {
+    void 블랙잭_게임을_기반으로_블랙잭_결과를_계산한다() {
         List<TrumpCard> trumpCards = new LinkedList<>(
                 List.of(new TrumpCard(Suit.DIAMOND, CardValue.EIGHT), new TrumpCard(Suit.DIAMOND, CardValue.J),
-                        new TrumpCard(Suit.DIAMOND, CardValue.K)));
+                        new TrumpCard(Suit.SPADE, CardValue.EIGHT), new TrumpCard(Suit.SPADE, CardValue.J)));
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new TestDeckGenerateStrategy(trumpCards));
 
-        Dealer dealer = new Dealer();
-        assertThat(dealer.isDrawable()).isTrue();
+        BlackjackGame blackjackGame = BlackjackGame.bettingBlackjackGame(deck, List.of("투다"), List.of(1000));
+        BetManager betManager = new BetManager(blackjackGame);
+        Map<String, Double> blackjackBettingResult = betManager.blackjackBettingResult();
+        Double earnMoney = blackjackBettingResult.get("투다");
+        assertThat(earnMoney).isEqualTo(0);
     }
 }
+
+
+

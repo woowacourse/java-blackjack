@@ -3,23 +3,25 @@ package controller;
 import domain.blackjackgame.BlackjackDeck;
 import domain.blackjackgame.BlackjackGame;
 import domain.blackjackgame.BlackjackResult;
-import domain.blackjackgame.BlackjackWinner;
-import domain.blackjackgame.DealerWinStatus;
-import domain.blackjackgame.PlayerGameResult;
 import domain.blackjackgame.TrumpCard;
-import domain.participant.Dealer;
-import domain.participant.Player;
+import domain.participant.BetManager;
+import domain.participant.BlackjackBet;
 import domain.strategy.BlackjackDeckGenerateStrategy;
 import domain.strategy.BlackjackDrawStrategy;
 import domain.strategy.DeckGenerator;
 import exception.BlackJackException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Supplier;
 import view.InputView;
 import view.OutputView;
 
 public class BlackjackController {
+
+    private static final String NAMES_CANNOT_BE_DUPLICATE = "이름은 중복될 수 없습니다";
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -31,85 +33,54 @@ public class BlackjackController {
 
     public void startBlackjack() {
         List<String> names = handleInput(this::handleNames);
-        startBlackjack(names);
+        List<Integer> bets = new ArrayList<>();
+        for (String name : names) {
+            bets.add(handleInput(() -> handleBets(name)));
+        }
+        startBlackjack(names, bets);
     }
 
-    private void startBlackjack(List<String> names) {
+    private int handleBets(String name) {
+        outputView.inputBets(name);
+        int bet = inputView.inputBet();
+        validateBet(bet);
+        return bet;
+    }
+
+    private void validateBet(int bet) {
+        new BlackjackBet(bet);
+    }
+
+    private List<String> handleNames() {
+        outputView.inputNames();
+        List<String> names = inputView.inputNames();
+        validateDuplicateNames(names);
+    }
+
+    private void validateDuplicateNames(List<String> names) {
+        Set<String> duplicateNames = new HashSet<>(names);
+        if (names.size() != duplicateNames.size()) {
+            throw new BlackJackException(NAMES_CANNOT_BE_DUPLICATE);
+        }
+    }
+
+    private void startBlackjack(List<String> names, List<Integer> bets) {
         BlackjackDeck deck = new DeckGenerator().generateDeck(new BlackjackDrawStrategy(),
                 new BlackjackDeckGenerateStrategy());
-        BlackjackGame blackjackGame = new BlackjackGame(names, deck, new Dealer());
+        BlackjackGame blackjackGame = BlackjackGame.bettingBlackjackGame(deck, names, bets);
+        BetManager betManager = new BetManager(blackjackGame);
         outputView.printInitiateDraw(names);
         openFirstDealerCard(blackjackGame);
         openPlayerCards(blackjackGame);
         askPlayerDraw(blackjackGame);
         dealerHit(blackjackGame);
-        blackjackGameResult(blackjackGame);
+        bettingBlackjackGameResult(blackjackGame, betManager);
     }
 
-    private void blackjackGameResult(BlackjackGame blackjackGame) {
-        BlackjackResult dealerResult = blackjackGame.currentDealerBlackjackResult();
-        openPlayerResultCards(dealerResult);
-
-        List<BlackjackResult> playerResults = blackjackGame.currentPlayerBlackjackResult();
-        for (BlackjackResult result : playerResults) {
-            openPlayerResultCards(result);
-        }
-
-        blackjackWinnerResult(blackjackGame, dealerResult, playerResults);
-    }
-
-    private void blackjackWinnerResult(BlackjackGame blackjackGame, BlackjackResult dealerResult,
-                                       List<BlackjackResult> playerResults) {
-        BlackjackWinner blackjackWinner = new BlackjackWinner(dealerResult, playerResults);
-        DealerWinStatus dealerWinStatus = blackjackWinner.getDealerWinStatus();
-        Map<String, PlayerGameResult> playerWinStatuses = blackjackWinner.getPlayerWinStatuses();
-
-        outputView.resultHeader();
-        outputView.dealerWinStatus(dealerWinStatus.win(), dealerWinStatus.lose(), blackjackGame.dealerName());
-        for (String name : playerWinStatuses.keySet()) {
-            outputView.playerWinStatus(name, playerWinStatuses.get(name));
-        }
-    }
-
-    private void openPlayerResultCards(BlackjackResult blackjackResult) {
-        String name = blackjackResult.name();
-        List<TrumpCard> cardHands = blackjackResult.cardHands();
-        int sum = blackjackResult.cardSum();
-
-        outputView.openCardsWithSum(name, cardHands, sum);
-    }
-
-    private void dealerHit(BlackjackGame blackjackGame) {
-        while (blackjackGame.dealerDrawable()) {
-            outputView.dealerHit();
-            blackjackGame.dealerHit();
-        }
-    }
-
-    private void askPlayerDraw(BlackjackGame blackjackGame) {
-        List<String> names = blackjackGame.playerNames();
-        for (String name : names) {
-            handleAskDraw(name, blackjackGame);
-        }
-    }
-
-    private void handleAskDraw(String name, BlackjackGame blackjackGame) {
-        while (!blackjackGame.isBust(name) && handleAskDrawToUser(name)) {
-            blackjackGame.drawCard(name);
-            openPlayerCards(name, blackjackGame);
-        }
-    }
-
-    private void openPlayerCards(String name, BlackjackGame blackjackGame) {
-        List<TrumpCard> cardHands = blackjackGame.playerCards(name);
-        openPlayerCard(cardHands, name);
-    }
-
-    private boolean handleAskDrawToUser(String name) {
-        return handleInput(() -> {
-            outputView.askDraw(name);
-            return inputView.askDraw();
-        });
+    private void openFirstDealerCard(BlackjackGame blackjackGame) {
+        String name = blackjackGame.dealerName();
+        TrumpCard trumpCard = blackjackGame.dealerCardFirst();
+        outputView.openCards(name, List.of(trumpCard));
     }
 
     private void openPlayerCards(BlackjackGame blackjackGame) {
@@ -124,23 +95,60 @@ public class BlackjackController {
         outputView.openCards(name, cardHands);
     }
 
-    private void openFirstDealerCard(BlackjackGame blackjackGame) {
-        String name = blackjackGame.dealerName();
-        TrumpCard trumpCard = blackjackGame.dealerCardFirst();
-        outputView.openCards(name, List.of(trumpCard));
-    }
-
-    private List<String> handleNames() {
-        outputView.inputNames();
-        List<String> names = inputView.inputNames();
-        validateNames(names);
-        return names;
-    }
-
-    private void validateNames(List<String> names) {
+    private void askPlayerDraw(BlackjackGame blackjackGame) {
+        List<String> names = blackjackGame.playerNames();
         for (String name : names) {
-            new Player(name);
+            handleAskDraw(name, blackjackGame);
         }
+    }
+
+    private void openPlayerCards(String name, BlackjackGame blackjackGame) {
+        List<TrumpCard> cardHands = blackjackGame.playerCards(name);
+        openPlayerCard(cardHands, name);
+    }
+
+    private void handleAskDraw(String name, BlackjackGame blackjackGame) {
+        while (!blackjackGame.isBust(name) && handleAskDrawToUser(name)) {
+            blackjackGame.drawCard(name);
+            openPlayerCards(name, blackjackGame);
+        }
+    }
+
+    private boolean handleAskDrawToUser(String name) {
+        return handleInput(() -> {
+            outputView.askDraw(name);
+            return inputView.askDraw();
+        });
+    }
+
+    private void dealerHit(BlackjackGame blackjackGame) {
+        while (blackjackGame.dealerDrawable()) {
+            outputView.dealerHit();
+            blackjackGame.dealerHit();
+        }
+    }
+
+    private void bettingBlackjackGameResult(BlackjackGame blackjackGame, BetManager betManager) {
+        openParticipantsCards(blackjackGame);
+        Map<String, Double> blackjackBettingResult = betManager.blackjackBettingResult();
+        outputView.printBettingBlackjackGameResult(blackjackBettingResult);
+    }
+
+    private void openParticipantsCards(BlackjackGame blackjackGame) {
+        BlackjackResult dealerResult = blackjackGame.currentDealerBlackjackResult();
+        openPlayerResultCards(dealerResult);
+
+        List<BlackjackResult> playerResults = blackjackGame.currentPlayerBlackjackResult();
+        for (BlackjackResult result : playerResults) {
+            openPlayerResultCards(result);
+        }
+    }
+
+    private void openPlayerResultCards(BlackjackResult blackjackResult) {
+        String name = blackjackResult.name();
+        List<TrumpCard> cardHands = blackjackResult.cardHands();
+        int sum = blackjackResult.cardSum();
+        outputView.openCardsWithSum(name, cardHands, sum);
     }
 
     private <T> T handleInput(Supplier<T> inputSupplier) {

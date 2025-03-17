@@ -1,5 +1,7 @@
 package domain.blackjackgame;
 
+import domain.participant.BlackjackBet;
+import domain.participant.BlackjackHands;
 import domain.participant.BlackjackParticipant;
 import domain.participant.BlackjackParticipantsManager;
 import domain.participant.Dealer;
@@ -19,35 +21,52 @@ public class BlackjackGame {
     private final BlackjackParticipantsManager blackjackParticipantsManager;
     private final BlackjackDeck deck;
 
-    public BlackjackGame(List<String> names, BlackjackDeck deck, Dealer dealer) {
-        int playerSize = names.size();
-        if (playerSize < MIN_PEOPLE_WITHOUT_DEALER || playerSize > MAX_PEOPLE_WITHOUT_DEALER) {
-            throw new BlackJackException(INVALID_BLACKJACK_PLAYER_SIZE);
-        }
-        List<BlackjackParticipant> players = names.stream()
-                .map(Player::new)
-                .collect(Collectors.toList());
-        this.deck = deck;
-        this.blackjackParticipantsManager = new BlackjackParticipantsManager(players, dealer);
-        initiateGame();
+    public static BlackjackGame nonBettingBlackjackGame(BlackjackDeck deck, List<String> names) {
+        return new BlackjackGame(names, deck);
     }
 
-    private void initiateGame() {
-        List<String> playerNames = blackjackParticipantsManager.getPlayerNames();
-        for (String name : playerNames) {
-            drawCard(name);
-            drawCard(name);
+    public static BlackjackGame bettingBlackjackGame(BlackjackDeck deck, List<String> names, List<Integer> bets) {
+        return new BlackjackGame(names, deck, bets);
+    }
+
+    private BlackjackGame(List<String> names, BlackjackDeck deck) {
+        validatePlayerSize(names.size());
+        this.deck = deck;
+        List<BlackjackParticipant> players = names.stream()
+                .map(name -> new Player(name, drawFirstCards(deck)))
+                .collect(Collectors.toList());
+        BlackjackParticipant dealer = new Dealer(drawFirstCards(deck));
+        this.blackjackParticipantsManager = new BlackjackParticipantsManager(players, dealer);
+    }
+
+    private BlackjackGame(List<String> names, BlackjackDeck deck, List<Integer> bets) {
+        validatePlayerSize(names.size());
+        this.deck = deck;
+        List<BlackjackParticipant> players = new ArrayList<>();
+        for (int playerIdx = 0; playerIdx < names.size(); playerIdx++) {
+            players.add(new Player(names.get(playerIdx), drawFirstCards(deck), bets.get(playerIdx)));
         }
-        drawDealerCard();
-        drawDealerCard();
+
+        BlackjackParticipant dealer = new Dealer(drawFirstCards(deck));
+        this.blackjackParticipantsManager = new BlackjackParticipantsManager(players, dealer);
+    }
+
+    private static List<TrumpCard> drawFirstCards(BlackjackDeck deck) {
+        return List.of(deck.drawCard(), deck.drawCard());
+    }
+
+    private static void validatePlayerSize(int playerCount) {
+        if (playerCount < MIN_PEOPLE_WITHOUT_DEALER || playerCount > MAX_PEOPLE_WITHOUT_DEALER) {
+            throw new BlackJackException(INVALID_BLACKJACK_PLAYER_SIZE);
+        }
     }
 
     public List<BlackjackResult> currentPlayerBlackjackResult() {
         List<BlackjackResult> blackjackResults = new ArrayList<>();
         for (String name : blackjackParticipantsManager.getPlayerNames()) {
-            List<TrumpCard> trumpCards = blackjackParticipantsManager.playerCards(name);
+            List<TrumpCard> holdingCards = blackjackParticipantsManager.playerCards(name);
             int sum = blackjackParticipantsManager.calculateCardSum(name);
-            blackjackResults.add(new BlackjackResult(name, trumpCards, sum));
+            blackjackResults.add(new BlackjackResult(name, holdingCards, sum));
         }
         return Collections.unmodifiableList(blackjackResults);
     }
@@ -60,7 +79,7 @@ public class BlackjackGame {
     }
 
     public List<TrumpCard> playerCards(String name) {
-        return Collections.unmodifiableList(blackjackParticipantsManager.playerCards(name));
+        return blackjackParticipantsManager.playerCards(name);
     }
 
     public TrumpCard dealerCardFirst() {
@@ -79,10 +98,6 @@ public class BlackjackGame {
         blackjackParticipantsManager.addCard(name, deck.drawCard());
     }
 
-    private void drawDealerCard() {
-        blackjackParticipantsManager.addDealerCard(deck.drawCard());
-    }
-
     public boolean isBust(String name) {
         return blackjackParticipantsManager.isBust(name);
     }
@@ -96,4 +111,17 @@ public class BlackjackGame {
     public boolean dealerDrawable() {
         return blackjackParticipantsManager.dealerDrawable();
     }
+
+    public BlackjackHands dealerHands() {
+        return blackjackParticipantsManager.dealerHands();
+    }
+
+    public BlackjackHands playerHands(String name) {
+        return blackjackParticipantsManager.playerHands(name);
+    }
+
+    public BlackjackBet playerBet(String name) {
+        return blackjackParticipantsManager.playerBet(name);
+    }
 }
+
