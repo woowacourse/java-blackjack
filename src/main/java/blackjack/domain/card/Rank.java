@@ -1,6 +1,7 @@
 package blackjack.domain.card;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public enum Rank {
     ONE(1),
@@ -18,17 +19,19 @@ public enum Rank {
     KING(10),
     ACE(Set.of(1, 11));
 
-    private final Set<Integer> scores;
+    private final Set<Score> scores;
 
     Rank(int score) {
-        this.scores = Set.of(score);
+        this.scores = Set.of(new Score(score));
     }
 
     Rank(Set<Integer> scores) {
-        this.scores = scores;
+        this.scores = scores.stream()
+                .map(Score::new)
+                .collect(Collectors.toSet());
     }
 
-    public Set<Integer> getScore() {
+    public Set<Score> getScore() {
         return scores;
     }
 }

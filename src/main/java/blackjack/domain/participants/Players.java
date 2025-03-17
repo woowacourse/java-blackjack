@@ -1,7 +1,14 @@
 package blackjack.domain.participants;
 
+import blackjack.domain.card.Cards;
+import blackjack.domain.card.Deck;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public class Players {
 
@@ -9,6 +16,10 @@ public class Players {
     private static final int PLAYER_MAX_SIZE = 10;
 
     private final List<Player> players;
+
+    public Players(Player... players) {
+        this(new ArrayList<>(List.of(players)));
+    }
 
     public Players(List<Player> players) {
         validatePlayersSize(players);
@@ -24,17 +35,56 @@ public class Players {
         }
     }
 
+    public void prepareBlackjack(Deck deck) {
+        players.forEach(player -> player.prepareBlackjack(deck));
+    }
+
+    public void drawCard(Deck deck, Player player) {
+        if (!players.contains(player)) {
+            throw new IllegalArgumentException("해당 플레이어는 존재하지 않습니다.");
+        }
+        player.drawCard(deck);
+    }
+
     public void sendAll(Consumer<Player> consumer) {
         for (Player player : players) {
             consumer.accept(player);
         }
     }
 
-    public boolean contains(Player player) {
-        return players.contains(player);
+    public double calculateTotalProfit(Cards dealerCards) {
+        return players.stream()
+                .mapToDouble(player -> player.calculateProfit(dealerCards))
+                .sum();
+    }
+
+    public Map<Player, Double> calculateAllProfit(Dealer dealer) {
+        return players.stream()
+                .collect(Collectors.toMap(
+                        player -> player,
+                        player -> player.calculateProfit(dealer.getCards())
+                ));
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return Collections.unmodifiableList(players);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+
+        Players players1 = (Players) object;
+        return Objects.equals(getPlayers(), players1.getPlayers());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getPlayers());
     }
 }

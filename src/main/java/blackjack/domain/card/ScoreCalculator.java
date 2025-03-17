@@ -1,52 +1,50 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.card.BlackjackConstants.BUST_THRESHOLD;
-
 import java.util.List;
 import java.util.Set;
 
 public class ScoreCalculator {
 
-    public int calculateMaxScore(List<Card> cards) {
-        return maxDfs(0, 0, cards);
+    public Score calculateMaxScore(List<Card> cards) {
+        return maxDfs(0, new Score(0), cards);
     }
 
-    private int maxDfs(int depth, int totalScore, List<Card> cards) {
+    private Score maxDfs(int depth, Score totalScore, List<Card> cards) {
         if (depth == cards.size()) {
             return totalScore;
         }
 
         Card card = cards.get(depth);
-        Set<Integer> scores = card.getRank().getScore();
-        int max = Integer.MIN_VALUE;
-        int min = Integer.MAX_VALUE;
-        for (int score : scores) {
-            int sum = maxDfs(depth + 1, totalScore + score, cards);
-            if (sum > BUST_THRESHOLD.getSymbol()) {
-                min = Math.min(min, sum);
+        Set<Score> scores = card.getRank().getScore();
+        Score max = Score.MIN;
+        Score min = Score.MAX;
+        for (Score score : scores) {
+            Score sum = maxDfs(depth + 1, totalScore.plus(score), cards);
+            if (sum.isBust()) {
+                min = Score.min(min, sum);
                 continue;
             }
-            max = Math.max(max, sum);
+            max = Score.max(max, sum);
         }
-        if (max == Integer.MIN_VALUE) {
+        if (max == Score.MIN) {
             return min;
         }
         return max;
     }
 
-    public int calculateMinScore(List<Card> cards) {
-        return minDfs(0, 0, cards);
+    public Score calculateMinScore(List<Card> cards) {
+        return minDfs(0, new Score(0), cards);
     }
 
-    private int minDfs(int depth, int totalScore, List<Card> cards) {
+    private Score minDfs(int depth, Score totalScore, List<Card> cards) {
         if (depth == cards.size()) {
             return totalScore;
         }
         Card card = cards.get(depth);
-        Set<Integer> scores = card.getRank().getScore();
-        int min = Integer.MAX_VALUE;
-        for (int score : scores) {
-            min = Math.min(min, minDfs(depth + 1, totalScore + score, cards));
+        Set<Score> scores = card.getRank().getScore();
+        Score min = Score.MAX;
+        for (Score score : scores) {
+            min = Score.min(min, minDfs(depth + 1, totalScore.plus(score), cards));
         }
         return min;
     }

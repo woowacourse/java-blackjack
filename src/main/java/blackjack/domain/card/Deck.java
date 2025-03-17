@@ -19,6 +19,10 @@ public class Deck {
         }
     }
 
+    public Deck(Card... cards) {
+        this(new ArrayDeque<>(List.of(cards)));
+    }
+
     public Deck(Deque<Card> cards) {
         this.cards = cards;
     }

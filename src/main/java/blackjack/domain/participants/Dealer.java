@@ -1,65 +1,36 @@
 package blackjack.domain.participants;
 
 import blackjack.domain.card.Cards;
-import blackjack.domain.card.CardsShuffler;
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.ScoreCalculator;
-import blackjack.domain.winning.Victory;
-import java.util.ArrayList;
+import blackjack.domain.card.Score;
+import java.util.Objects;
 
 public class Dealer {
 
-    private final Players players;
-    private final Deck deck;
+    private static final Score MIN_SCORE_OF_CARDS = new Score(17);
+
     private final Cards cards;
 
-    public Dealer(Players players, Deck deck, ScoreCalculator scoreCalculator) {
-        this(players, deck, new Cards(new ArrayList<>(), scoreCalculator));
-    }
-
-    public Dealer(Players players, Deck deck, Cards cards) {
-        this.players = players;
-        this.deck = deck;
+    public Dealer(Cards cards) {
         this.cards = cards;
     }
 
-    public void prepareBlackjack(CardsShuffler cardsShuffler) {
-        shuffleDeck(cardsShuffler);
-        pickCards();
-        handOutCard();
-    }
-
-    private void shuffleDeck(CardsShuffler cardsShuffler) {
-        deck.shuffleCards(cardsShuffler);
-    }
-
-    private void pickCards() {
+    public void prepareBlackjack(Deck deck) {
         cards.take(deck.draw(), deck.draw());
     }
 
-    private void handOutCard() {
-        players.sendAll((player) -> player.send(deck.draw(), deck.draw()));
-    }
-
-    public int calculateMaxScore() {
-        return cards.calculateMaxScore();
-    }
-
-    public void pickAdditionalCard() {
-        while (calculateMaxScore() <= 16) {
+    public void drawAdditionalCard(Deck deck) {
+        while (cards.calculateMaxScore().compareTo(MIN_SCORE_OF_CARDS) < 0) {
             cards.take(deck.draw());
         }
     }
 
-    public void sendCardToPlayer(Player player) {
-        if (!players.contains(player)) {
-            throw new IllegalArgumentException("해당 플레이어는 존재하지 않습니다.");
-        }
-        player.send(deck.draw());
+    public Score calculateMaxScore() {
+        return cards.calculateMaxScore();
     }
 
-    public Victory createVictory() {
-        return Victory.create(this, players);
+    public double calculateProfit(Players players) {
+        return -1 * players.calculateTotalProfit(cards);
     }
 
     public Cards getCards() {
@@ -67,6 +38,24 @@ public class Dealer {
     }
 
     public int getCardSize() {
-        return cards.getSize();
+        return cards.size();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+
+        Dealer dealer = (Dealer) object;
+        return Objects.equals(getCards(), dealer.getCards());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getCards());
     }
 }

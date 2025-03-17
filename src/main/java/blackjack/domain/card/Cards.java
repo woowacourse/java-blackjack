@@ -1,13 +1,10 @@
 package blackjack.domain.card;
 
-import static blackjack.domain.card.BlackjackConstants.BUST_THRESHOLD;
-
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Cards {
 
@@ -16,34 +13,28 @@ public class Cards {
     private final List<Card> cards;
     private final ScoreCalculator scoreCalculator;
 
+    public Cards(Card... cards) {
+        this(new ArrayList<>(List.of(cards)), new ScoreCalculator());
+    }
+
+    public Cards(List<Card> cards) {
+        this(cards, new ScoreCalculator());
+    }
+
     public Cards(List<Card> cards, ScoreCalculator scoreCalculator) {
         this.cards = cards;
         this.scoreCalculator = scoreCalculator;
     }
 
-    public int calculateMaxScore() {
+    public Score calculateMaxScore() {
         return scoreCalculator.calculateMaxScore(cards);
-    }
-
-    public int calculateMinScore() {
-        return scoreCalculator.calculateMinScore(cards);
     }
 
     public boolean isBlackjack() {
         if (cards.size() != BLACKJACK_MAX_CARD_SIZE) {
             return false;
         }
-        Set<Rank> ranks = cards.stream()
-                .map(Card::getRank)
-                .collect(Collectors.toSet());
-        if (!ranks.contains(Rank.ACE)) {
-            return false;
-        }
-
-        return ranks.contains(Rank.KING) ||
-                ranks.contains(Rank.QUEEN) ||
-                ranks.contains(Rank.JACK) ||
-                ranks.contains(Rank.TEN);
+        return calculateMaxScore().isBlackjack();
     }
 
     public void take(Card... cards) {
@@ -54,10 +45,10 @@ public class Cards {
     }
 
     public boolean isBust() {
-        return scoreCalculator.calculateMinScore(cards) > BUST_THRESHOLD.getSymbol();
+        return scoreCalculator.calculateMinScore(cards).isBust();
     }
 
-    public int getSize() {
+    public int size() {
         return cards.size();
     }
 
