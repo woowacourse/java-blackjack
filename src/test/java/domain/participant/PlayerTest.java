@@ -15,7 +15,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class PlayerTest {
+class PlayerTest {
 
     @Test
     void 이름으로부터_플레이어를_생성한다() {
