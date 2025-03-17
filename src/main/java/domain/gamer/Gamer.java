@@ -1,47 +1,58 @@
 package domain.gamer;
 
 import domain.deck.Card;
+import domain.state.State;
 import java.util.List;
 import java.util.Objects;
 
 public abstract class Gamer {
 
     private final Nickname nickname;
-    private final Hand hand;
+    protected State state;
 
-    public Gamer(final Nickname nickname) {
+    public Gamer(final Nickname nickname, final State state) {
         this.nickname = nickname;
-        this.hand = new Hand();
+        this.state = state;
     }
 
     public abstract int calculateSumOfRank();
 
-    public boolean isBust() {
-        return hand.isBust();
-    }
-
-    public void receiveInitialCards(final List<Card> cards) {
-        cards.forEach(hand::add);
-    }
-
     public void hit(final Card card) {
-        hand.add(card);
+        this.state = state.hit(card);
+    }
+
+    public abstract List<Card> getInitialCards();
+
+    public boolean isRunning() {
+        return !state.isFinished();
+    }
+
+    public void stay() {
+        this.state = state.stay();
+    }
+
+    public boolean isBlackjack() {
+        return state.getHand().isBlackjack();
+    }
+
+    public int compareTo(final Gamer otherGamer) {
+        return state.compareTo(otherGamer.getState());
+    }
+
+    public Hand getHand() {
+        return state.getHand();
     }
 
     public String getDisplayName() {
         return nickname.getDisplayName();
     }
 
-    public List<Card> getCards() {
-        return hand.getCards();
-    }
-
-    protected Hand getHand() {
-        return hand;
-    }
-
     public Nickname getNickname() {
         return nickname;
+    }
+
+    public State getState() {
+        return state;
     }
 
     @Override

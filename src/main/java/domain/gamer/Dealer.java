@@ -1,28 +1,38 @@
 package domain.gamer;
 
+import domain.deck.Card;
+import domain.state.State;
+import java.util.List;
+
 public class Dealer extends Gamer {
 
-    public static final int THRESHOLD = 16;
-
-    public Dealer(final Nickname nickname) {
-        super(nickname);
+    public Dealer(final Nickname nickname, final State state) {
+        super(nickname, state);
     }
 
-    public boolean canHit() {
+    public State getState() {
+        return state;
+    }
+
+    @Override
+    public List<Card> getInitialCards() {
         final Hand hand = getHand();
-        final int sumOfRank = hand.calculateSumOfRank();
-        if (hand.hasAce()) {
-            return hand.calculateSumOfRankConsideredAce() <= THRESHOLD;
-        }
-        return sumOfRank <= THRESHOLD;
+        final List<Card> cards = hand.getCards();
+        return List.of(cards.getFirst());
     }
 
     @Override
     public int calculateSumOfRank() {
-        final Hand hand = getHand();
-        if (hand.hasAce()) {
-            return hand.calculateSumOfRankConsideredAce();
-        }
-        return hand.calculateSumOfRank();
+        return getHand().calculateSumOfRank();
+    }
+
+    @Override
+    public String getDisplayName() {
+        return super.getDisplayName();
+    }
+
+    @Override
+    public Nickname getNickname() {
+        return super.getNickname();
     }
 }
