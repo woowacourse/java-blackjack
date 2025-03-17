@@ -16,9 +16,9 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class GameManagerTest {
 
-    private final Players players = Players.from(List.of(
-            "pobi",
-            "hippo"
+    private final Players players = new Players(List.of(
+            new Player("pobi"),
+            new Player("hippo")
     ));
     private final Dealer dealer = new Dealer();
     private final CardDeck deck = new CardDeck(new ShuffledDeckGenerator().generateDeck());

@@ -8,17 +8,10 @@ public class Players {
     private static final int AVAILABLE_PARTICIPANT_MAX_COUNT = 30;
     private final List<Player> values;
 
-    private Players(List<Player> values) {
+    public Players(List<Player> values) {
         validateDuplication(values);
         validateNumber(values);
         this.values = values;
-    }
-
-    public static Players from(List<String> inputs) {
-        List<Player> inputPlayers = inputs.stream()
-                .map(Player::new)
-                .toList();
-        return new Players(inputPlayers);
     }
 
     private static void validateDuplication(List<Player> values) {

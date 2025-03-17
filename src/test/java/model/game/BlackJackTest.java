@@ -14,8 +14,8 @@ import java.util.List;
 
 public class BlackJackTest {
 
-    private final Players players = Players.from(
-            List.of("hippo")
+    private final Players players = new Players(
+            List.of( new Player("hippo"))
     );
     private final Dealer dealer = new Dealer();
     private final DeckGenerator deckGenerator = new DeckGenerator() {

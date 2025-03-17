@@ -52,7 +52,7 @@ public class ProfitStatus {
     }
 
     public long calculateDealerBetResult(Map<Player, Long> betResult) {
-        return betResult.values().stream()
+        return -1L * betResult.values().stream()
                 .mapToLong(Long::longValue)
                 .sum();
     }

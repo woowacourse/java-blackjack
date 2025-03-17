@@ -27,7 +27,7 @@ public class ProfitStatusTest {
     void plusProfitMoneyTest(Player expectedPlayer, Money expectedMoney) {
         //given
         Map<Player, Money> profits = new HashMap<>();
-        Players players = Players.from(List.of("hippo", "pobi"));
+        Players players = new Players(List.of(new Player("hippo"), new Player("pobi")));
         for (Player player : players.getPlayers()) {
             profits.put(player, new Money(1000));
         }
@@ -60,7 +60,7 @@ public class ProfitStatusTest {
         //given
         Map<Player, Money> profits = new HashMap<>();
 
-        Players players = Players.from(List.of("hippo"));
+        Players players = new Players(List.of(new Player("hippo")));
         for (Player player : players.getPlayers()) {
             profits.put(player, new Money(1000L));
             TestCardDistributor.divideCardToPlayer(playerCard, player);
@@ -130,10 +130,10 @@ public class ProfitStatusTest {
         Player pobi = new Player("pobi");
         Player james = new Player("james");
 
-        Players players = Players.from(List.of("hippo", "pobi", "james"));
+        Players players = new Players(List.of(hippo, pobi, james));
 
         List<Card> hippoCards = List.of(new Card(Suit.CLUBS, NormalRank.FIVE),new Card(Suit.CLUBS, NormalRank.TEN),new Card(Suit.CLUBS, NormalRank.SIX)); // 21
-        List<Card> pobiCards = List.of(new Card(Suit.CLUBS, NormalRank.JACK),new Card(Suit.CLUBS, NormalRank.KING)); // 21 blackjack
+        List<Card> pobiCards = List.of(new Card(Suit.CLUBS, NormalRank.JACK),new Card(Suit.CLUBS, AceRank.SOFT_ACE)); // 21 blackjack
         List<Card> jamesCards = List.of(new Card(Suit.CLUBS, NormalRank.TEN),new Card(Suit.CLUBS, NormalRank.KING),new Card(Suit.CLUBS, NormalRank.TEN)); // 30
 
         TestCardDistributor.divideCardToPlayer(hippoCards, hippo);
@@ -141,9 +141,9 @@ public class ProfitStatusTest {
         TestCardDistributor.divideCardToPlayer(jamesCards, james);
 
         Map<Player, Money> profits = new HashMap<>();
-        profits.put(new Player("hippo"), new Money(2000L)) ;
-        profits.put(new Player("pobi"), new Money(1000L)) ;
-        profits.put(new Player("james"), new Money(1500L)) ;
+        profits.put(new Player("hippo"), new Money(2000L));
+        profits.put(new Player("pobi"), new Money(1000L));
+        profits.put(new Player("james"), new Money(1500L));
 
         Dealer dealer = new Dealer();
         List<Card> dealerCards = List.of(new Card(Suit.CLUBS, NormalRank.TEN),new Card(Suit.CLUBS, NormalRank.SEVEN)); // 17

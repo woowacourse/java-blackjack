@@ -17,9 +17,7 @@ import java.util.Map;
 public class GameManager {
 
     public void play() {
-        List<String> values = InputView.readPlayerNames();
-
-        Players players = Players.from(values);
+        Players players = new Players(InputView.readPlayerNames());
         CardDeck deck = new CardDeck(new ShuffledDeckGenerator().generateDeck());
         Dealer dealer = new Dealer();
 

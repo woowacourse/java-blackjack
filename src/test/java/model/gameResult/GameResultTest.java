@@ -22,9 +22,9 @@ import java.util.stream.Stream;
 
 public class GameResultTest {
 
-    private final Players players = Players.from(
+    private final Players players = new Players(
             List.of(
-                    "hippo"
+                    new Player("hippo")
             )
     );
     private final Dealer dealer = new Dealer();

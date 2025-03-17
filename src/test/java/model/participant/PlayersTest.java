@@ -29,7 +29,7 @@ public class PlayersTest {
                 new Player("hippo")
         );
         // when
-        Players players = Players.from(List.of("pobi", "hippo"));
+        Players players =  new Players(actual);
         // then
         assertAll(
                 () -> Assertions.assertThat(players.getPlayers().size()).isEqualTo(2),
@@ -64,13 +64,12 @@ public class PlayersTest {
     @DisplayName("중복된 플레이어가 존재하는 지")
     void validateDuplication() {
         //given
-        List<String> actual = List.of(
-                "pobi",
-                "pobi"
+        List<Player> actual = List.of(
+                new Player("pobi")
         );
         //when
         //then
-        Assertions.assertThatThrownBy(() -> Players.from(actual))
+        Assertions.assertThatThrownBy(() -> new Players(actual))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -79,9 +78,12 @@ public class PlayersTest {
     @DisplayName("참여 가능한 플레이어 수가 아닐 때 예외 처리")
     void validateNumber(List<String> values) {
         //given
+        List<Player> players = values.stream()
+                .map(Player::new)
+                .toList();
         //when
         //then
-        Assertions.assertThatThrownBy(() -> Players.from(values))
+        Assertions.assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
