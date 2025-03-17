@@ -1,8 +1,7 @@
 package participant;
 
-import game.GameRule;
-
 public class Dealer extends Participant {
+    private static final int STAY = 16;
     private static final String NAME = "딜러";
 
     public Dealer() {
@@ -11,7 +10,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean ableToDraw() {
-        return getScore() <= GameRule.DEALER_STAY.getValue();
+        return getScore() <= STAY;
     }
 
     @Override

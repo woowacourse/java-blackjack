@@ -1,28 +1,31 @@
 package ScoreResult;
 
-import game.GameRule;
+
+import participant.Participant;
 
 public class BattleResultCalculator {
 
-    public BattleResult calculate(int dealerScore, int playerScore) {
-        if (hasBust(dealerScore, playerScore)) {
-            return determineBustResult(dealerScore, playerScore);
+    public BattleResult calculate(final Participant dealer, final Participant player) {
+        if (hasBust(dealer, player)) {
+            return determineBustResult(dealer, player);
         }
-        return determineNormalResult(dealerScore, playerScore);
+        return determineNormalResult(dealer, player);
     }
 
-    private boolean hasBust(int dealerScore, int playerScore) {
-        return GameRule.checkBust(dealerScore) || GameRule.checkBust(playerScore);
+    private boolean hasBust(final Participant dealer, final Participant player) {
+        return dealer.isBust() || player.isBust();
     }
 
-    private BattleResult determineBustResult(int dealerScore, int playerScore) {
-        if ((GameRule.checkBust(playerScore) && GameRule.checkBust(dealerScore)) || GameRule.checkBust(playerScore)) {
+    private BattleResult determineBustResult(final Participant dealer, final Participant player) {
+        if ((player.isBust() && dealer.isBust()) || player.isBust()) {
             return BattleResult.LOSE;
         }
         return BattleResult.WIN;
     }
 
-    private BattleResult determineNormalResult(int dealerScore, int playerScore) {
+    private BattleResult determineNormalResult(final Participant dealer, final Participant player) {
+        int dealerScore = dealer.getScore();
+        int playerScore = player.getScore();
         if (playerScore > dealerScore) {
             return BattleResult.WIN;
         }
@@ -31,5 +34,6 @@ public class BattleResultCalculator {
         }
         return BattleResult.DRAW;
     }
+
 }
 

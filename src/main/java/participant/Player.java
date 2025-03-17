@@ -1,8 +1,7 @@
 package participant;
 
-import game.GameRule;
-
 public class Player extends Participant {
+    private static final int ABLE_TO_DRAW = 22;
     private final String nickname;
 
     public Player(final String nickname) {
@@ -12,7 +11,7 @@ public class Player extends Participant {
 
     @Override
     public boolean ableToDraw() {
-        return getScore() < GameRule.BLACK_JACK.getValue();
+        return getScore() < ABLE_TO_DRAW;
     }
 
     @Override

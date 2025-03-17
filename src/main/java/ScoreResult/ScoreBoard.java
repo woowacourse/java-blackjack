@@ -60,7 +60,7 @@ public class ScoreBoard {
 
     private void determineOutcome(Participant dealer, Participant player) {
         BattleResultCalculator battleResultCalculator = new BattleResultCalculator();
-        BattleResult playerResult = battleResultCalculator.calculate(dealer.getScore(), player.getScore());
+        BattleResult playerResult = battleResultCalculator.calculate(dealer, player);
         BattleResult dealerResult = playerResult.reverse();
         scoreBoard.get(dealer).addResult(dealerResult);
         scoreBoard.get(player).addResult(playerResult);

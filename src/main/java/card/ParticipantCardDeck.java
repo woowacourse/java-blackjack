@@ -1,12 +1,13 @@
 package card;
 
-import game.GameRule;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public class ParticipantCardDeck {
+    private static final int BLACK_JACK = 21;
+
     private final List<Card> cards;
 
     private ParticipantCardDeck(final List<Card> cards) {
@@ -19,6 +20,10 @@ public class ParticipantCardDeck {
 
     public static ParticipantCardDeck generateEmptySet() {
         return new ParticipantCardDeck(new ArrayList<>());
+    }
+
+    public boolean isBlackJack(final int cardDeckScore) {
+        return cardDeckScore == BLACK_JACK;
     }
 
     public int calculateScore() {
@@ -40,8 +45,8 @@ public class ParticipantCardDeck {
                 .sum();
     }
 
-    private int adjustAceScore(int aceCounts, int totalScore) {
-        int maxAdjustableAces = Math.min(aceCounts, (GameRule.BLACK_JACK.getValue() - totalScore) / 10);
+    private int adjustAceScore(final int aceCounts, final int totalScore) {
+        int maxAdjustableAces = Math.min(aceCounts, (BLACK_JACK - totalScore) / 10);
         return totalScore + (maxAdjustableAces * 10);
     }
 

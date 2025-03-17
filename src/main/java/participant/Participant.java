@@ -3,10 +3,10 @@ package participant;
 import card.Card;
 import card.GameCardDeck;
 import card.ParticipantCardDeck;
-import game.GameRule;
 import java.util.List;
 
 public abstract class Participant {
+    private static final int BUST = 21;
 
     protected final ParticipantCardDeck cardDeck;
 
@@ -18,10 +18,15 @@ public abstract class Participant {
     public abstract boolean isDealer();
     public abstract String getNickname();
 
+    public boolean isBust() {
+        int cardDeckScore = cardDeck.calculateScore();
+        return cardDeckScore > BUST;
+    }
+
     public boolean isBlackJack() {
         int cardSize = cardDeck.requestSize();
         int cardDeckScore = cardDeck.calculateScore();
-        return cardSize == 2 && cardDeckScore == GameRule.BLACK_JACK.getValue();
+        return cardSize == 2 && cardDeck.isBlackJack(cardDeckScore);
     }
 
     public void drawCard(GameCardDeck gameCardDeck, int count) {
