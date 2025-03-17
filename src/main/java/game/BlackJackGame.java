@@ -52,4 +52,8 @@ public class BlackJackGame {
     public Participants getParticipants() {
         return participants;
     }
+
+    public List<Participant> getOnlyPlayers() {
+        return participants.findPlayers();
+    }
 }

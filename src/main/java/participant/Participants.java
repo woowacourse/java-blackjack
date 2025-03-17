@@ -4,6 +4,7 @@ import card.GameCardDeck;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Participants {
     private final List<Participant> participants;
@@ -25,18 +26,13 @@ public class Participants {
                 .orElseThrow();
     }
 
-    public Participants findPlayers() {
-        List<Participant> players = new ArrayList<>();
-        for (Participant participant : participants) {
-            if (participant.isDealer()) {
-                continue;
-            }
-            players.add(participant);
-        }
-        return new Participants(players);
+    public List<Participant> findPlayers() {
+        return participants.stream().filter(participant -> !participant.isDealer())
+                .collect(Collectors.toList());
     }
 
     public List<Participant> getParticipants() {
         return Collections.unmodifiableList(participants);
     }
+
 }

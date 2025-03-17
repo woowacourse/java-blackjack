@@ -49,11 +49,11 @@ class ParticipantsTest {
         Participants participants = new Participants(originParticipants);
 
         //when
-        Participants onlyParticipants = participants.findPlayers();
+        List<Participant> onlyParticipants = participants.findPlayers();
         //then
         org.junit.jupiter.api.Assertions.assertAll(
-                () -> Assertions.assertThat(onlyParticipants.getParticipants().getFirst().getNickname()).isEqualTo("우가"),
-                () -> Assertions.assertThat(onlyParticipants.getParticipants().getLast().getNickname()).isEqualTo("베루스")
+                () -> Assertions.assertThat(onlyParticipants.getFirst().getNickname()).isEqualTo("우가"),
+                () -> Assertions.assertThat(onlyParticipants.getLast().getNickname()).isEqualTo("베루스")
         );
     }
 }

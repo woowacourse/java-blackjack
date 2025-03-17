@@ -36,11 +36,11 @@ public class PlayerBettingRecordTest {
         //given
         List<Participant> originParticipants = List.of(new Player("우가"), new Player("베루스"), new Dealer());
         Participants participants = new Participants(originParticipants);
-        Participants onlyPlayer = participants.findPlayers();
+        List<Participant> onlyPlayer = participants.findPlayers();
 
         Participant dealer = participants.findDealer();
-        Participant player1 = onlyPlayer.getParticipants().getFirst();
-        Participant player2 = onlyPlayer.getParticipants().getLast();
+        Participant player1 = onlyPlayer.getFirst();
+        Participant player2 = onlyPlayer.getLast();
 
 
         Map<Participant, Money> participantMoney = Map.of(
@@ -69,11 +69,11 @@ public class PlayerBettingRecordTest {
         //given
         List<Participant> originParticipants = List.of(new Player("우가"), new Player("베루스"), new Dealer());
         Participants participants = new Participants(originParticipants);
-        Participants onlyPlayer = participants.findPlayers();
+        List<Participant> onlyPlayer = participants.findPlayers();
 
         Participant dealer = participants.findDealer();
-        Participant player1 = onlyPlayer.getParticipants().getFirst();
-        Participant player2 = onlyPlayer.getParticipants().getLast();
+        Participant player1 = onlyPlayer.getFirst();
+        Participant player2 = onlyPlayer.getLast();
 
 
         Map<Participant, Money> participantMoney = Map.of(
@@ -104,11 +104,11 @@ public class PlayerBettingRecordTest {
         //given
         List<Participant> originParticipants = List.of(new Player("우가"), new Player("베루스"), new Dealer());
         Participants participants = new Participants(originParticipants);
-        Participants onlyPlayer = participants.findPlayers();
+        List<Participant> onlyPlayer = participants.findPlayers();
 
-        Participant player1 = onlyPlayer.getParticipants().getFirst();
-        Participant player2 = onlyPlayer.getParticipants().getLast();
         Participant dealer = participants.findDealer();
+        Participant player1 = onlyPlayer.getFirst();
+        Participant player2 = onlyPlayer.getLast();
 
         Map<Participant, Money> participantMoney = Map.of(
                 player1, new Money("10000"),
@@ -137,11 +137,11 @@ public class PlayerBettingRecordTest {
         //given
         List<Participant> originParticipants = List.of(new Player("우가"), new Player("베루스"), new Dealer());
         Participants participants = new Participants(originParticipants);
-        Participants onlyPlayer = participants.findPlayers();
+        List<Participant> onlyPlayer = participants.findPlayers();
 
-        Participant player1 = onlyPlayer.getParticipants().getFirst();
-        Participant player2 = onlyPlayer.getParticipants().getLast();
         Participant dealer = participants.findDealer();
+        Participant player1 = onlyPlayer.getFirst();
+        Participant player2 = onlyPlayer.getLast();
 
         Map<Participant, Money> participantMoney = Map.of(
                 player1, new Money("10000"),
@@ -171,11 +171,11 @@ public class PlayerBettingRecordTest {
         //given
         List<Participant> originParticipants = List.of(new Player("우가"), new Player("베루스"), new Dealer());
         Participants participants = new Participants(originParticipants);
-        Participants onlyPlayer = participants.findPlayers();
+        List<Participant> onlyPlayer = participants.findPlayers();
 
-        Participant player1 = onlyPlayer.getParticipants().getFirst();
-        Participant player2 = onlyPlayer.getParticipants().getLast();
         Participant dealer = participants.findDealer();
+        Participant player1 = onlyPlayer.getFirst();
+        Participant player2 = onlyPlayer.getLast();
 
         Map<Participant, Money> participantMoney = Map.of(
                 player1, new Money("10000"),

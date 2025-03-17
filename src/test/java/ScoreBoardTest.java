@@ -53,10 +53,11 @@ class ScoreBoardTest {
         List<Participant> originParticipants = List.of(new Player("우가"), new Player("베루스"), new Dealer());
         Participants participants = new Participants(originParticipants);
 
-        Participants onlyPlayers = participants.findPlayers();
+        List<Participant> onlyPlayer = participants.findPlayers();
+
         Participant dealer = participants.findDealer();
-        Participant player1 = onlyPlayers.getParticipants().getFirst();
-        Participant player2 = onlyPlayers.getParticipants().getLast();
+        Participant player1 = onlyPlayer.getFirst();
+        Participant player2 = onlyPlayer.getLast();
 
         GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
         player1.drawCard(gameCardDeck, 4);
@@ -118,11 +119,11 @@ class ScoreBoardTest {
         //given
         List<Participant> originParticipants = List.of(new Player("우가"), new Player("베루스"), new Dealer());
         Participants participants = new Participants(originParticipants);
-        Participants onlyPlayer = participants.findPlayers();
+        List<Participant> onlyPlayer = participants.findPlayers();
 
         Participant dealer = participants.findDealer();
-        Participant player1 = onlyPlayer.getParticipants().getFirst();
-        Participant player2 = onlyPlayer.getParticipants().getLast();
+        Participant player1 = onlyPlayer.getFirst();
+        Participant player2 = onlyPlayer.getLast();
 
         GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
         player1.drawCard(gameCardDeck, 1);
@@ -152,10 +153,11 @@ class ScoreBoardTest {
         List<Participant> originParticipants = List.of(new Player("우가"), new Player("베루스"), new Dealer());
         Participants participants = new Participants(originParticipants);
 
-        Participants onlyPlayers = participants.findPlayers();
+        List<Participant> onlyPlayer = participants.findPlayers();
+
         Participant dealer = participants.findDealer();
-        Participant player1 = onlyPlayers.getParticipants().getFirst();
-        Participant player2 = onlyPlayers.getParticipants().getLast();
+        Participant player1 = onlyPlayer.getFirst();
+        Participant player2 = onlyPlayer.getLast();
 
         GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
         player1.drawCard(gameCardDeck, 1);
@@ -190,10 +192,11 @@ class ScoreBoardTest {
         List<Participant> originParticipants = List.of(new Player("우가"), new Player("베루스"), new Dealer());
         Participants participants = new Participants(originParticipants);
 
-        Participants onlyPlayers = participants.findPlayers();
+        List<Participant> onlyPlayer = participants.findPlayers();
+
         Participant dealer = participants.findDealer();
-        Participant player1 = onlyPlayers.getParticipants().getFirst();
-        Participant player2 = onlyPlayers.getParticipants().getLast();
+        Participant player1 = onlyPlayer.getFirst();
+        Participant player2 = onlyPlayer.getLast();
 
         GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
         player1.drawCard(gameCardDeck, 1);
@@ -226,10 +229,11 @@ class ScoreBoardTest {
         List<Participant> originParticipants = List.of(new Player("우가"), new Player("베루스"), new Dealer());
         Participants participants = new Participants(originParticipants);
 
-        Participants onlyPlayers = participants.findPlayers();
+        List<Participant> onlyPlayer = participants.findPlayers();
+
         Participant dealer = participants.findDealer();
-        Participant player1 = onlyPlayers.getParticipants().getFirst();
-        Participant player2 = onlyPlayers.getParticipants().getLast();
+        Participant player1 = onlyPlayer.getFirst();
+        Participant player2 = onlyPlayer.getLast();
 
         GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
         player1.drawCard(gameCardDeck, 12);
@@ -259,10 +263,11 @@ class ScoreBoardTest {
         List<Participant> originParticipants = List.of(new Player("우가"), new Player("베루스"), new Dealer());
         Participants participants = new Participants(originParticipants);
 
-        Participants onlyPlayers = participants.findPlayers();
+        List<Participant> onlyPlayer = participants.findPlayers();
+
         Participant dealer = participants.findDealer();
-        Participant player1 = onlyPlayers.getParticipants().getFirst();
-        Participant player2 = onlyPlayers.getParticipants().getLast();
+        Participant player1 = onlyPlayer.getFirst();
+        Participant player2 = onlyPlayer.getLast();
 
         GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
         dealer.drawCard(gameCardDeck, 12);
@@ -292,10 +297,11 @@ class ScoreBoardTest {
         List<Participant> originParticipants = List.of(new Player("우가"), new Player("베루스"), new Dealer());
         Participants participants = new Participants(originParticipants);
 
-        Participants onlyPlayers = participants.findPlayers();
+        List<Participant> onlyPlayer = participants.findPlayers();
+
         Participant dealer = participants.findDealer();
-        Participant player1 = onlyPlayers.getParticipants().getFirst();
-        Participant player2 = onlyPlayers.getParticipants().getLast();
+        Participant player1 = onlyPlayer.getFirst();
+        Participant player2 = onlyPlayer.getLast();
 
         GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
         player1.drawCard(gameCardDeck, 12);
@@ -322,10 +328,11 @@ class ScoreBoardTest {
         List<Participant> originParticipants = List.of(new Player("우가"), new Player("베루스"), new Dealer());
         Participants participants = new Participants(originParticipants);
 
-        Participants onlyPlayers = participants.findPlayers();
-        Participant player1 = onlyPlayers.getParticipants().getFirst();
-        Participant player2 = onlyPlayers.getParticipants().getLast();
+        List<Participant> onlyPlayer = participants.findPlayers();
+
         Participant dealer = participants.findDealer();
+        Participant player1 = onlyPlayer.getFirst();
+        Participant player2 = onlyPlayer.getLast();
 
         GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
         player1.drawCard(gameCardDeck,1);
@@ -351,10 +358,11 @@ class ScoreBoardTest {
         List<Participant> originParticipants = List.of(new Player("우가"), new Player("베루스"), new Dealer());
         Participants participants = new Participants(originParticipants);
 
-        Participants onlyPlayers = participants.findPlayers();
-        Participant player1 = onlyPlayers.getParticipants().getFirst();
-        Participant player2 = onlyPlayers.getParticipants().getLast();
+        List<Participant> onlyPlayer = participants.findPlayers();
+
         Participant dealer = participants.findDealer();
+        Participant player1 = onlyPlayer.getFirst();
+        Participant player2 = onlyPlayer.getLast();
 
         GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
         player1.drawCard(gameCardDeck,1);

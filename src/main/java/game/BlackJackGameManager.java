@@ -20,14 +20,18 @@ public class BlackJackGameManager {
         final PlayerBettingRecord bettingStatement = new PlayerBettingRecord(inputView.askBettingMoney(blackJackGame));
         blackJackGame.drawTwoCards();
         outputView.writeDrawTwoCards(blackJackGame);
-        for (Participant participant : blackJackGame.getParticipants().findPlayers().getParticipants()) {
-            while (participant.ableToDraw() && inputView.askDrawOneMore(participant)) {
-                blackJackGame.drawOneCards(participant);
-                outputView.writePlayerDrawOneCard(participant);
-            }
+        for (Participant participant : blackJackGame.getOnlyPlayers()) {
+            drawOneCard(participant, blackJackGame);
         }
         outputView.writeDealerDrawOneCard(blackJackGame.drawDealer());
         outputView.writeParticipantsScoreResult(blackJackGame);
         outputView.writeTotalProfit(bettingStatement.calculateProfit(new ScoreBoard(blackJackGame.getParticipants())));
+    }
+
+    private void drawOneCard(Participant participant, BlackJackGame blackJackGame) {
+        while (participant.ableToDraw() && inputView.askDrawOneMore(participant)) {
+            blackJackGame.drawOneCards(participant);
+            outputView.writePlayerDrawOneCard(participant);
+        }
     }
 }
