@@ -61,7 +61,7 @@ public class GameResultTest {
         GameResult gameResult = GameResult.create(dealer, players);
 
         //then
-        assertThat(gameResult.getPlayerGameResults()).isEqualTo(playerGameResults);
-        assertThat(gameResult.getDealerGameResults()).isEqualTo(dealerGameResult);
+        assertThat(gameResult.playerResults()).isEqualTo(playerGameResults);
+        assertThat(gameResult.dealerResults()).isEqualTo(dealerGameResult);
     }
 }

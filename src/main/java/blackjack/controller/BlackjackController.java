@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.GameResult;
-import blackjack.domain.card.BettingResult;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.DeckFactory;
 import blackjack.domain.card.RandomCardsShuffler;
@@ -92,7 +91,6 @@ public class BlackjackController {
     private void printGameResult(Dealer dealer, Players players) {
         GameResult gameResult = dealer.createGameResult();
         OutputView.printGameResult(gameResult, players.getPlayers());
-        BettingResult bettingResult = dealer.calculateBettingResult();
-        OutputView.printBettingResult(bettingResult, players.getPlayers());
+        OutputView.printBettingResult(gameResult, players.getPlayers());
     }
 }

@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import blackjack.domain.card.BlackjackScore;
+import blackjack.domain.card.Result;
 import blackjack.domain.card.WinningResult;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
@@ -8,31 +9,29 @@ import blackjack.domain.participants.Players;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GameResult {
-    private final Map<Player, WinningResult> playerGameResults;
-    private final Map<WinningResult, Integer> dealerGameResults;
-
-    public GameResult(Map<Player, WinningResult> playerGameResults,
-                      Map<WinningResult, Integer> dealerGameResults) {
-        this.playerGameResults = playerGameResults;
-        this.dealerGameResults = dealerGameResults;
-    }
+public record GameResult(Map<Player, Result> playerResults, Map<WinningResult, Integer> dealerResults) {
+    private static int dealerBettingResult;
 
     public static GameResult create(Dealer dealer, Players players) {
-        Map<Player, WinningResult> playerGameResults = createPlayerGameResult(dealer, players);
-        Map<WinningResult, Integer> dealerGameResults = createDealerGameResults(dealer, players);
-        return new GameResult(playerGameResults, dealerGameResults);
+        Map<Player, Result> playerResults = createPlayerGameResult(dealer, players);
+        Map<WinningResult, Integer> dealerResults = createDealerGameResults(dealer, players);
+        return new GameResult(playerResults, dealerResults);
     }
 
-    private static Map<Player, WinningResult> createPlayerGameResult(Dealer dealer, Players players) {
-        Map<Player, WinningResult> playerGameResults = new HashMap<>();
+    private static Map<Player, Result> createPlayerGameResult(Dealer dealer, Players players) {
+        Map<Player, Result> playerResults = new HashMap<>();
+
         players.sendAll((player -> {
             BlackjackScore playerScore = player.getCards().calculateScore();
             BlackjackScore dealerScore = dealer.getCards().calculateScore();
             WinningResult playerWinningResult = playerScore.decide(dealerScore);
-            playerGameResults.put(player, playerWinningResult);
+            int playerBettingResult = getMultiplyRatio(playerScore, dealerScore);
+            int playerProfit = player.makeProfit(playerBettingResult);
+            Result playerResult = new Result(playerWinningResult, playerProfit);
+
+            playerResults.put(player, playerResult);
         }));
-        return playerGameResults;
+        return playerResults;
     }
 
     private static Map<WinningResult, Integer> createDealerGameResults(Dealer dealer, Players players) {
@@ -44,6 +43,9 @@ public class GameResult {
             dealerGameResults.put(
                     dealerWinningResult,
                     dealerGameResults.getOrDefault(dealerWinningResult, 0) + 1);
+            int playerBettingResult = getMultiplyRatio(playerScore, dealerScore);
+            int dealerProfit = player.makeProfit(playerBettingResult) * -1;
+            dealerBettingResult += dealerProfit;
         }));
         return dealerGameResults;
     }
@@ -59,11 +61,7 @@ public class GameResult {
         return 0;
     }
 
-    public Map<Player, WinningResult> getPlayerGameResults() {
-        return playerGameResults;
-    }
-
-    public Map<WinningResult, Integer> getDealerGameResults() {
-        return dealerGameResults;
+    public int getDealerBettingResult() {
+        return dealerBettingResult;
     }
 }

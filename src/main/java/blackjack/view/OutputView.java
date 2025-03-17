@@ -1,10 +1,10 @@
 package blackjack.view;
 
 import blackjack.domain.GameResult;
-import blackjack.domain.card.BettingResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Rank;
+import blackjack.domain.card.Result;
 import blackjack.domain.card.Suit;
 import blackjack.domain.card.WinningResult;
 import blackjack.domain.participants.Dealer;
@@ -79,12 +79,13 @@ public class OutputView {
 
     public static void printGameResult(GameResult gameResult, List<Player> players) {
         System.out.println("## 최종 승패");
-        Map<WinningResult, Integer> dealerGameResults = gameResult.getDealerGameResults();
-        Map<Player, WinningResult> playerGameResults = gameResult.getPlayerGameResults();
+        Map<WinningResult, Integer> dealerGameResults = gameResult.dealerResults();
+        Map<Player, Result> playerGameResults = gameResult.playerResults();
         printIfPresentWinningResult(dealerGameResults);
         dealerGameResults.getOrDefault(WinningResult.LOSE, 0);
         for (Player player : players) {
-            System.out.printf("%s: %s\n", player.getName(), toKoreanWinningResult(playerGameResults.get(player)));
+            System.out.printf("%s: %s\n", player.getName(),
+                    toKoreanWinningResult(playerGameResults.get(player).winningResult()));
         }
         System.out.println();
     }
@@ -103,13 +104,13 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printBettingResult(BettingResult bettingResult, List<Player> players) {
+    public static void printBettingResult(GameResult gameResult, List<Player> players) {
         System.out.println("## 최종 수익");
-        int dealerBettingResult = bettingResult.getDealerBettingResult();
+        int dealerBettingResult = gameResult.getDealerBettingResult();
         System.out.printf("딜러: %d\n", dealerBettingResult);
-        Map<Player, Integer> playerBettingResult = bettingResult.getPlayerBettingResults();
+        Map<Player, Result> playerBettingResult = gameResult.playerResults();
         for (Player player : players) {
-            System.out.printf("%s: %d\n", player.getName(), playerBettingResult.get(player));
+            System.out.printf("%s: %d\n", player.getName(), playerBettingResult.get(player).bettingResult());
         }
     }
 
