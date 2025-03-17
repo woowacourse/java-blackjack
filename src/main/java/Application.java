@@ -20,13 +20,13 @@ public class Application {
                 .map(Nickname::new)
                 .toList();
         Deck deck = new Deck(new ShuffledDeckCreator());
-        Players players = betPlayers(nicknames);
+        Players players = blackjackGame.betPlayers(nicknames);
         Dealer dealer = new Dealer();
 
         for (Player player : players.getPlayers()) {
-            blackjackGame.preparePlayerCards(player, deck.draw(), deck.draw());
+            blackjackGame.preparePlayerCards(player, deck);
         }
-        blackjackGame.prepareDealer(dealer, deck.draw(), deck.draw());
+        blackjackGame.prepareDealer(dealer, deck);
         OutputView.printInitialCards(dealer, players);
 
         for (Player player : players.getPlayers()) {
@@ -48,17 +48,5 @@ public class Application {
         OutputView.printAllCardAndScore(players, dealer);
         Profit profit = blackjackGame.calculateProfitResult(dealer, players);
         OutputView.printResult(profit);
-    }
-
-    private static Players betPlayers(List<Nickname> nicknames) {
-        List<Player> players = new ArrayList<>();
-        for (Nickname nickname : nicknames) {
-            int bettingMoney = InputView.readPlayerBettingMoney(nickname.getNickname());
-            Player player = new Player(nickname, new BettingMoney(bettingMoney));
-
-            players.add(player);
-        }
-
-        return new Players(players);
     }
 }
