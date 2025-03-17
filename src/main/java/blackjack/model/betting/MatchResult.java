@@ -1,22 +1,22 @@
-package blackjack.model;
+package blackjack.model.betting;
 
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
 
 public enum MatchResult {
 
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무"),
+    BLACKJACK(1.5),
+    WIN(1),
+    LOSE(-1),
+    DRAW(0),
     ;
+    private final double profitRate;
 
-    private final String label;
-
-    MatchResult(String label) {
-        this.label = label;
+    MatchResult(double profitRate) {
+        this.profitRate = profitRate;
     }
 
-    public static MatchResult judge(Dealer dealer, Player player) {
+    public static MatchResult calculatePlayerResult(Dealer dealer, Player player) {
         if (player.isBust()) {
             return LOSE;
         }
@@ -27,7 +27,7 @@ public enum MatchResult {
             return DRAW;
         }
         if (player.isBlackjack()) {
-            return WIN;
+            return BLACKJACK;
         }
         if (dealer.isBlackjack()) {
             return LOSE;
@@ -50,7 +50,7 @@ public enum MatchResult {
     }
 
     public static MatchResult reverse(MatchResult matchResult) {
-        if (matchResult == WIN) {
+        if (matchResult == WIN || matchResult == BLACKJACK) {
             return LOSE;
         }
         if (matchResult == LOSE) {
@@ -59,7 +59,7 @@ public enum MatchResult {
         return DRAW;
     }
 
-    public String getLabel() {
-        return label;
+    public double getProfitRate() {
+        return profitRate;
     }
 }

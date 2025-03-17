@@ -2,10 +2,9 @@ package blackjack.view;
 
 import static blackjack.model.constants.RuleConstants.DEALER_HIT_THRESHOLD;
 
-import blackjack.model.MatchResult;
+import blackjack.model.betting.Profit;
 import blackjack.model.card.Card;
 import blackjack.model.participant.Player;
-import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -50,42 +49,6 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printMatchResult(Map<Player, MatchResult> playerMatchResults) {
-        System.out.println("## 최종 승패");
-        printDealerMatchResult(playerMatchResults);
-        printPlayersMatchResult(playerMatchResults);
-    }
-
-    private void printDealerMatchResult(Map<Player, MatchResult> playerMatchResults) {
-        EnumMap<MatchResult, Integer> dealerMatchResult = calculateDealerMatchResult(playerMatchResults);
-        System.out.printf("딜러: %s%n", formatDealerMatchResult(dealerMatchResult));
-    }
-
-    private String formatDealerMatchResult(EnumMap<MatchResult, Integer> dealerMatchResult) {
-        return dealerMatchResult.entrySet()
-                .stream()
-                .filter(entry -> entry.getValue() != 0)
-                .map(entry -> entry.getValue() + entry.getKey().getLabel())
-                .collect(Collectors.joining(" "));
-    }
-
-    private EnumMap<MatchResult, Integer> calculateDealerMatchResult(
-            Map<Player, MatchResult> playerMatchResults) {
-        EnumMap<MatchResult, Integer> dealerMatchResult = new EnumMap<>(MatchResult.class);
-        for (MatchResult matchResult : playerMatchResults.values()) {
-            dealerMatchResult.merge(MatchResult.reverse(matchResult), 1, Integer::sum);
-        }
-        return dealerMatchResult;
-    }
-
-    private void printPlayersMatchResult(Map<Player, MatchResult> playerMatchResults) {
-        for (Entry<Player, MatchResult> playerMatchResultEntry : playerMatchResults.entrySet()) {
-            System.out.printf("%s: %s%n",
-                    playerMatchResultEntry.getKey().getName(),
-                    playerMatchResultEntry.getValue().getLabel());
-        }
-    }
-
     public void printPlayerHandAndTotal(List<Player> players) {
         for (Player player : players) {
             System.out.printf("%s카드: %s - 결과: %d%n", player.getName(), getHand(player), player.calculateHandTotal());
@@ -98,5 +61,13 @@ public class OutputView {
                 .stream()
                 .map(Card::getDisplayLabel)
                 .collect(Collectors.joining(", "));
+    }
+
+    public void printProfit(Profit dealerProfit, Map<Player, Profit> playersProfit) {
+        System.out.println("## 최종 수익");
+        System.out.println("딜러: " + dealerProfit.getProfit());
+        for (Entry<Player, Profit> results : playersProfit.entrySet()) {
+            System.out.printf("%s: %d%n", results.getKey().getName(), results.getValue().getProfit());
+        }
     }
 }

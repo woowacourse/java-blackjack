@@ -1,14 +1,17 @@
 package blackjack.controller;
 
-import blackjack.model.Game;
+import blackjack.model.betting.Profit;
 import blackjack.model.card.Card;
 import blackjack.model.card.Deck;
 import blackjack.model.card.RandomCardShuffler;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
+import blackjack.model.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
 
@@ -21,43 +24,58 @@ public class BlackjackController {
     }
 
     public void run() {
-        List<Player> players = getPlayers();
-        Game game = createGame(players);
-        dealInitialHand(game);
-        askHitForAllPlayer(game);
-        dealerHitOrNot(game);
-        displayResult(game);
+        Players players = getPlayers();
+        Deck deck = Deck.createShuffledDeck(Card.createDeck(), new RandomCardShuffler());
+        Dealer dealer = new Dealer(deck);
+        readPlayersBetAmount(dealer, players);
+        dealInitialHand(dealer, players);
+        askHitForAllPlayer(dealer, players);
+        dealerHitOrNot(dealer);
+        displayResult(dealer, players);
     }
 
-    private Game createGame(List<Player> players) {
-        Dealer dealer = new Dealer(Deck.createShuffledDeck(Card.createDeck(), new RandomCardShuffler()));
-        return new Game(dealer, players);
+    private Players getPlayers() {
+        List<String> playerNames = inputView.readPlayerNames();
+        return Players.from(playerNames);
     }
 
-    private void dealInitialHand(Game game) {
-        game.dealInitialCards();
-        outputView.printInitialCards(game.getDealerVisibleCard(), game.getPlayers());
+    private void readPlayersBetAmount(Dealer dealer, Players players) {
+        for (Player player : players.getPlayers()) {
+            int stake = inputView.readPlayerStake(player.getName());
+            dealer.addBetting(player, stake);
+        }
     }
 
-    private void askHitForAllPlayer(Game game) {
-        game.askHitForAllPlayer(inputView::readHitOrNot, outputView::printPlayerHand);
+    private void dealInitialHand(Dealer dealer, Players players) {
+        players.dealInitialHand(dealer);
+        dealer.receiveHand(dealer.drawCard());
+        dealer.receiveHand(dealer.drawCard());
+        outputView.printInitialCards(dealer.getVisibleCard(), players.getPlayers());
     }
 
-    private void dealerHitOrNot(Game game) {
-        boolean isDealerHit = game.dealerHit();
+    private void askHitForAllPlayer(Dealer dealer, Players players) {
+        for (Player player : players.getPlayers()) {
+            askHitForPlayer(dealer, player);
+        }
+    }
+
+    private void askHitForPlayer(Dealer dealer, Player player) {
+        while (player.canHit() && inputView.readHitOrNot(player.getName())) {
+            player.receiveHand(dealer.drawCard());
+            outputView.printPlayerHand(player);
+        }
+    }
+
+    private void dealerHitOrNot(Dealer dealer) {
+        boolean isDealerHit = dealer.hitDealer();
         outputView.printDealerHit(isDealerHit);
     }
 
-    private List<Player> getPlayers() {
-        List<String> playerNames = inputView.readPlayerNames();
-        return playerNames.stream()
-                .map(Player::new)
-                .toList();
-    }
-
-    private void displayResult(Game game) {
-        outputView.printDealerHandAndTotal(game.getDealerHand(), game.getDealerTotal());
-        outputView.printPlayerHandAndTotal(game.getPlayers());
-        outputView.printMatchResult(game.judgeMatchResults());
+    private void displayResult(Dealer dealer, Players players) {
+        outputView.printDealerHandAndTotal(dealer.getHand(), dealer.calculateHandTotal());
+        outputView.printPlayerHandAndTotal(players.getPlayers());
+        Map<Player, Profit> playersProfit = dealer.calculatePlayersProfit();
+        Profit dealerProfit = dealer.calculateDealerProfit(playersProfit);
+        outputView.printProfit(dealerProfit, playersProfit);
     }
 }

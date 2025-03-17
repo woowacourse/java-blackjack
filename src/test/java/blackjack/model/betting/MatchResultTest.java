@@ -1,12 +1,10 @@
-package blackjack.model;
+package blackjack.model.betting;
 
-import static blackjack.TestFixtures.NO_HIT_STRATEGY;
+import static blackjack.TestFixtures.UNSHUFFLED_DECK;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.CardValue;
-import blackjack.model.card.Deck;
-import blackjack.model.card.FixedCardShuffler;
 import blackjack.model.card.Suit;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
@@ -22,14 +20,14 @@ class MatchResultTest {
     @Test
     void lose_WhenPlayerBust() {
         // given
-        Player player = new Player("pobi");
+        Player player = Player.from("pobi");
         player.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
         player.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
         player.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
-        Dealer dealer = new Dealer(Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler()));
+        Dealer dealer = new Dealer(UNSHUFFLED_DECK);
 
         // when
-        MatchResult matchResult = MatchResult.judge(dealer, player);
+        MatchResult matchResult = MatchResult.calculatePlayerResult(dealer, player);
 
         // then
         assertThat(matchResult)
@@ -40,14 +38,14 @@ class MatchResultTest {
     @Test
     void win_WhenPlayerNoBustAndDealerBust() {
         // given
-        Player player = new Player("pobi");
-        Dealer dealer = new Dealer(Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler()));
+        Player player = Player.from("pobi");
+        Dealer dealer = new Dealer(UNSHUFFLED_DECK);
         dealer.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
         dealer.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
         dealer.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
 
         // when
-        MatchResult matchResult = MatchResult.judge(dealer, player);
+        MatchResult matchResult = MatchResult.calculatePlayerResult(dealer, player);
 
         // then
         assertThat(matchResult)
@@ -58,15 +56,15 @@ class MatchResultTest {
     @Test
     void draw_WhenAllBlackjack() {
         // given
-        Player player = new Player("pobi");
+        Player player = Player.from("pobi");
         player.receiveHand(new Card(Suit.SPADES, CardValue.ACE));
         player.receiveHand(new Card(Suit.SPADES, CardValue.KING));
-        Dealer dealer = new Dealer(Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler()));
+        Dealer dealer = new Dealer(UNSHUFFLED_DECK);
         dealer.receiveHand(new Card(Suit.SPADES, CardValue.ACE));
         dealer.receiveHand(new Card(Suit.SPADES, CardValue.KING));
 
         // when
-        MatchResult matchResult = MatchResult.judge(dealer, player);
+        MatchResult matchResult = MatchResult.calculatePlayerResult(dealer, player);
 
         // then
         assertThat(matchResult)
@@ -77,34 +75,34 @@ class MatchResultTest {
     @Test
     void win_WhenOnlyPlayerBlackjack() {
         // given
-        Player player = new Player("pobi");
+        Player player = Player.from("pobi");
         player.receiveHand(new Card(Suit.SPADES, CardValue.ACE));
         player.receiveHand(new Card(Suit.SPADES, CardValue.KING));
-        Dealer dealer = new Dealer(Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler()));
+        Dealer dealer = new Dealer(UNSHUFFLED_DECK);
         dealer.receiveHand(new Card(Suit.SPADES, CardValue.KING));
         dealer.receiveHand(new Card(Suit.SPADES, CardValue.KING));
 
         // when
-        MatchResult matchResult = MatchResult.judge(dealer, player);
+        MatchResult matchResult = MatchResult.calculatePlayerResult(dealer, player);
 
         // then
         assertThat(matchResult)
-                .isSameAs(MatchResult.WIN);
+                .isSameAs(MatchResult.BLACKJACK);
     }
 
     @DisplayName("플레이어는 블랙잭이 아니고 딜러가 블랙잭이면 진다.")
     @Test
     void lose_WhenOnlyDealerBlackjack() {
         // given
-        Player player = new Player("pobi");
+        Player player = Player.from("pobi");
         player.receiveHand(new Card(Suit.SPADES, CardValue.KING));
         player.receiveHand(new Card(Suit.SPADES, CardValue.KING));
-        Dealer dealer = new Dealer(Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler()));
+        Dealer dealer = new Dealer(UNSHUFFLED_DECK);
         dealer.receiveHand(new Card(Suit.SPADES, CardValue.ACE));
         dealer.receiveHand(new Card(Suit.SPADES, CardValue.KING));
 
         // when
-        MatchResult matchResult = MatchResult.judge(dealer, player);
+        MatchResult matchResult = MatchResult.calculatePlayerResult(dealer, player);
 
         // then
         assertThat(matchResult)
@@ -118,19 +116,19 @@ class MatchResultTest {
             "KING, NINE, KING, NINE, DRAW",
             "KING, KING, KING, EIGHT, WIN"
     })
-    void judgeTest(CardValue playerCard1, CardValue playerCard2,
-                   CardValue dealerCard1, CardValue dealerCard2,
-                   MatchResult expected) {
+    void calculatePlayerResultTest(CardValue playerCard1, CardValue playerCard2,
+                                   CardValue dealerCard1, CardValue dealerCard2,
+                                   MatchResult expected) {
         // given
-        Player player = new Player("pobi");
+        Player player = Player.from("pobi");
         player.receiveHand(new Card(Suit.SPADES, playerCard1));
         player.receiveHand(new Card(Suit.SPADES, playerCard2));
-        Dealer dealer = new Dealer(Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler()));
+        Dealer dealer = new Dealer(UNSHUFFLED_DECK);
         dealer.receiveHand(new Card(Suit.SPADES, dealerCard1));
         dealer.receiveHand(new Card(Suit.SPADES, dealerCard2));
 
         // when
-        MatchResult matchResult = MatchResult.judge(dealer, player);
+        MatchResult matchResult = MatchResult.calculatePlayerResult(dealer, player);
 
         // then
         assertThat(matchResult)

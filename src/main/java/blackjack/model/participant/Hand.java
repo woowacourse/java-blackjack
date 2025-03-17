@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class Participant {
+public class Hand {
 
-    protected final List<Card> hand;
+    private final List<Card> hand;
 
-    protected Participant(List<Card> hand) {
+    public Hand(List<Card> hand) {
         this.hand = new ArrayList<>(hand);
     }
 
@@ -73,6 +73,10 @@ public abstract class Participant {
 
     public boolean isBust() {
         return BLACKJACK_VALUE_TOTAL < calculateHandTotal();
+    }
+
+    public Card getFirstHand() {
+        return hand.getFirst();
     }
 
     public List<Card> getHand() {

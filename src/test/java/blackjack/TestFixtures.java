@@ -1,22 +1,11 @@
 package blackjack;
 
-import blackjack.model.HitDecisionStrategy;
-import blackjack.model.PlayerHandVisualizer;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import blackjack.model.card.Card;
+import blackjack.model.card.Deck;
+import blackjack.model.card.FixedCardShuffler;
+import blackjack.model.participant.Dealer;
 
 public class TestFixtures {
-
-    public static final HitDecisionStrategy NO_HIT_STRATEGY = playerName -> false;
-    public static final PlayerHandVisualizer TEST_EMPTY_VISUALIZER = player -> {
-    };
-
-    private TestFixtures() {
-    }
-
-    public static HitDecisionStrategy createHitDecisionStrategy(List<Boolean> hits) {
-        Queue<Boolean> playerAnswers = new LinkedList<>(hits);
-        return playerName -> playerAnswers.poll();
-    }
+    public static final Deck UNSHUFFLED_DECK = Deck.createShuffledDeck(Card.createDeck(), new FixedCardShuffler());
+    public static final Dealer DEALER = new Dealer(UNSHUFFLED_DECK);
 }
