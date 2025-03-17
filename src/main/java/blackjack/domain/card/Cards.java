@@ -16,7 +16,7 @@ public class Cards {
     }
 
     public void addCard(final Cards cards) {
-        this.cards.addAll(cards.cards);
+        this.cards.addAll(cards.getCards());
     }
 
     public int sumCardScore() {
