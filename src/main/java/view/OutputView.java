@@ -53,16 +53,15 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printCurrentHands(Player player) {
+    public static void printCurrentHands(Participant player) {
         System.out.println(formatHands(player));
     }
 
-    public static void printStandingDealer(Dealer dealer) {
+    public static void printStandingDealer(Participant dealer) {
         String dealerNickname = dealer.getNickname();
         System.out.println();
         System.out.println(String.format("%s는 %d이하라 한장의 카드를 더 받았습니다.", dealerNickname, 16));
     }
-
 
     public static void printAllParticipantScore(Dealer dealer, Players players) {
         printScore(dealer);

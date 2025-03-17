@@ -10,7 +10,7 @@ public class Player extends Participant {
 
     private final Nickname nickname;
     private final Money batingMoney;
-    private final Supplier<Boolean> intentSupplier; // Intent를 동적으로 받는 Supplier 추가
+    private final Supplier<Boolean> intentSupplier;
 
     public Player(Nickname nickname, Money batingMoney, Supplier<Boolean> intentSupplier) {
         this.nickname = nickname;

@@ -1,13 +1,16 @@
 package model;
 
-import view.Intent;
 import model.card.Card;
 import model.card.CardDeck;
 import model.participant.*;
 import view.InputView;
+import view.Intent;
 import view.OutputView;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class BlackjackGame {
@@ -35,13 +38,17 @@ public class BlackjackGame {
         distributeStartingHand();
         OutputView.printDivisionStart(dealer, players);
 
-        for (Player player : players.getPlayers()) {
-            receiveAdditionalCard(player);
-        }
-        receiveAdditionalCard(dealer);
+        distributeAdditionalCard();
 
         OutputView.printAllParticipantScore(dealer, players);
         printBatingResult();
+    }
+
+    private void distributeAdditionalCard() {
+        for (Player player : players.getPlayers()) {
+            receiveAdditionalCard(player, OutputView::printCurrentHands);
+        }
+        receiveAdditionalCard(dealer, OutputView::printStandingDealer);
     }
 
     private static Players createPlayers() {
@@ -69,26 +76,19 @@ public class BlackjackGame {
         participants.add(dealer);
         participants.addAll(players.getPlayers());
         for (Participant participant : participants) {
-            distributeCardByParticipant(participant, INITIAL_DEAL_COUNT);
+            distributeCard(participant, INITIAL_DEAL_COUNT);
         }
     }
 
-    public void distributeCardByParticipant(Participant participant, int amount) {
+    public void distributeCard(Participant participant, int amount) {
         List<Card> pickCards = deck.pickCard(amount);
         participant.addCards(pickCards);
     }
 
-    private void receiveAdditionalCard(Player player) {
-        while (player.satisfiedCondition()) {
-            distributeCardByParticipant(player, 1);
-            OutputView.printCurrentHands(player);
-        }
-    }
-
-    private void receiveAdditionalCard(Dealer dealer) {
-        while (dealer.satisfiedCondition()) {
-            distributeCardByParticipant(dealer, 1);
-            OutputView.printStandingDealer(dealer);
+    private void receiveAdditionalCard(Participant participant, Consumer<Participant> printState) {
+        while (participant.satisfiedCondition()) {
+            distributeCard(participant, 1);
+            printState.accept(participant);
         }
     }
 
