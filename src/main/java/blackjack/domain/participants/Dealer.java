@@ -29,7 +29,7 @@ public class Dealer {
         return cards.calculateMaxScore();
     }
 
-    public int calculateProfit(Players players) {
+    public double calculateProfit(Players players) {
         return -1 * players.calculateTotalProfit(cards);
     }
 

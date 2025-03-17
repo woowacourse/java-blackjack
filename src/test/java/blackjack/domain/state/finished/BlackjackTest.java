@@ -14,6 +14,7 @@ class BlackjackTest {
     @Test
     void 수익은_배팅금액의_1점5배만큼_받는다() {
         //given
+        Cards dealerCards = new Cards(new Card(Suit.DIAMOND, Rank.TEN));
         double bettingMoney = 1000;
         Blackjack blackjack = new Blackjack(new Cards(
                 new Card(Suit.DIAMOND, Rank.TEN),
@@ -21,7 +22,7 @@ class BlackjackTest {
         ));
 
         //when
-        double profit = blackjack.profit(bettingMoney);
+        double profit = blackjack.profit(dealerCards, bettingMoney);
 
         //then
         assertThat(profit).isEqualTo(1500);

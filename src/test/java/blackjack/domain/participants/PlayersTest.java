@@ -60,7 +60,7 @@ class PlayersTest {
         );
 
         //when
-        int profit = players.calculateTotalProfit(dealer.getCards());
+        double profit = players.calculateTotalProfit(dealer.getCards());
 
         //then
         assertThat(profit).isEqualTo(3000);
@@ -75,12 +75,12 @@ class PlayersTest {
         Players players = new Players(pobi, neo);
 
         //when
-        Map<Player, Integer> profit = players.calculateAllProfit(dealer);
+        Map<Player, Double> profit = players.calculateAllProfit(dealer);
 
         //then
         assertThat(profit).isEqualTo(Map.of(
-                pobi, 1000,
-                neo, 2000
+                pobi, 1000.0,
+                neo, 2000.0
         ));
     }
 }

@@ -12,7 +12,7 @@ public class Blackjack extends Finished {
     }
 
     @Override
-    public WinningResult decide(Cards dealerCards) {
+    protected WinningResult decide(Cards dealerCards) {
         if (dealerCards.isBlackjack()) {
             return WinningResult.DRAW;
         }

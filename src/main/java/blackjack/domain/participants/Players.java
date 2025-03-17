@@ -52,13 +52,13 @@ public class Players {
         }
     }
 
-    public int calculateTotalProfit(Cards dealerCards) {
+    public double calculateTotalProfit(Cards dealerCards) {
         return players.stream()
-                .mapToInt(player -> player.calculateProfit(dealerCards))
+                .mapToDouble(player -> player.calculateProfit(dealerCards))
                 .sum();
     }
 
-    public Map<Player, Integer> calculateAllProfit(Dealer dealer) {
+    public Map<Player, Double> calculateAllProfit(Dealer dealer) {
         return players.stream()
                 .collect(Collectors.toMap(
                         player -> player,

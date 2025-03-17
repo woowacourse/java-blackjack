@@ -5,7 +5,6 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
 import blackjack.domain.state.Started;
 import blackjack.domain.state.State;
-import blackjack.domain.winning.WinningResult;
 import java.util.Objects;
 
 public class Player {
@@ -31,15 +30,8 @@ public class Player {
         return state.calculateTotalScore();
     }
 
-    public int calculateProfit(Cards dealerCards) {
-        WinningResult winningResult = state.decide(dealerCards);
-        if (winningResult == WinningResult.WIN) {
-            return (int) state.profit(bettingMoney.amount());
-        }
-        if (winningResult == WinningResult.DRAW) {
-            return 0;
-        }
-        return -bettingMoney.amount();
+    public double calculateProfit(Cards dealerCards) {
+        return state.profit(dealerCards, bettingMoney.amount());
     }
 
     public void stay() {

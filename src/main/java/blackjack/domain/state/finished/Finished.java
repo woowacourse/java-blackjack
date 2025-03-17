@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.state.Started;
 import blackjack.domain.state.State;
+import blackjack.domain.winning.WinningResult;
 
 public abstract class Finished extends Started {
     protected Finished(Cards cards) {
@@ -26,9 +27,18 @@ public abstract class Finished extends Started {
     }
 
     @Override
-    public double profit(double bettingMoney) {
-        return bettingMoney * earningsRate() - bettingMoney;
+    public double profit(Cards dealerCards, double bettingMoney) {
+        WinningResult winningResult = decide(dealerCards);
+        if (winningResult == WinningResult.WIN) {
+            return bettingMoney * earningsRate() - bettingMoney;
+        }
+        if (winningResult == WinningResult.DRAW) {
+            return 0;
+        }
+        return -bettingMoney;
     }
+
+    abstract protected WinningResult decide(Cards dealerCards);
 
     abstract protected double earningsRate();
 }

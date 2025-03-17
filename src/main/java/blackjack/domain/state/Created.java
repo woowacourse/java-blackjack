@@ -3,7 +3,6 @@ package blackjack.domain.state;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Score;
-import blackjack.domain.winning.WinningResult;
 
 public class Created implements State {
     @Override
@@ -17,18 +16,13 @@ public class Created implements State {
     }
 
     @Override
-    public double profit(double bettingMoney) {
+    public double profit(Cards dealerCards, double bettingMoney) {
         throw new IllegalStateException("수익을 계산할 수 없습니다.");
     }
 
     @Override
     public Score calculateTotalScore() {
         throw new IllegalStateException("점수를 계산할 수 없습니다.");
-    }
-
-    @Override
-    public WinningResult decide(Cards dealerCards) {
-        throw new IllegalStateException("승패를 결정할 수 없습니다.");
     }
 
     @Override

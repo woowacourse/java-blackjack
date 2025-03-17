@@ -75,7 +75,7 @@ class PlayerTest {
         ), new BettingMoney(10000));
 
         //when
-        int result = player.calculateProfit(dealer.getCards());
+        double result = player.calculateProfit(dealer.getCards());
 
         //then
         assertThat(result).isEqualTo(10000);
@@ -98,7 +98,7 @@ class PlayerTest {
         ), new BettingMoney(10000));
 
         //when
-        int result = player.calculateProfit(dealer.getCards());
+        double result = player.calculateProfit(dealer.getCards());
 
         //then
         assertThat(result).isEqualTo(-10000);
@@ -121,7 +121,7 @@ class PlayerTest {
         ), new BettingMoney(10000));
 
         //when
-        int result = player.calculateProfit(dealer.getCards());
+        double result = player.calculateProfit(dealer.getCards());
 
         //then
         assertThat(result).isEqualTo(0);
@@ -145,7 +145,7 @@ class PlayerTest {
         ), new BettingMoney(10000));
 
         //when
-        int result = player.calculateProfit(dealer.getCards());
+        double result = player.calculateProfit(dealer.getCards());
 
         //then
         assertThat(result).isEqualTo(-10000);
@@ -168,7 +168,7 @@ class PlayerTest {
         ), new BettingMoney(10000));
 
         //when
-        int result = player.calculateProfit(dealer.getCards());
+        double result = player.calculateProfit(dealer.getCards());
 
         //then
         assertThat(result).isEqualTo(15000);

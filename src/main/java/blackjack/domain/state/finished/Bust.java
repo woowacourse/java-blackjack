@@ -12,7 +12,7 @@ public class Bust extends Finished {
     }
 
     @Override
-    public WinningResult decide(Cards dealerCards) {
+    protected WinningResult decide(Cards dealerCards) {
         return WinningResult.LOSE;
     }
 

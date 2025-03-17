@@ -73,7 +73,7 @@ class DealerTest {
         );
 
         //when
-        int profit = dealer.calculateProfit(players);
+        double profit = dealer.calculateProfit(players);
 
         //then
         assertThat(profit).isEqualTo(10000);

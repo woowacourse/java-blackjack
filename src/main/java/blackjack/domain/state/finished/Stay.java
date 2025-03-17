@@ -10,7 +10,7 @@ public class Stay extends Finished {
     }
 
     @Override
-    public WinningResult decide(Cards dealerCards) {
+    protected WinningResult decide(Cards dealerCards) {
         if (dealerCards.isBust()) {
             return WinningResult.WIN;
         }

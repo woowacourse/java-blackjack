@@ -84,9 +84,9 @@ public class OutputView {
     public static void printProfit(Profit profit, List<Player> players) {
         System.out.println("## 최종 수익");
         System.out.println("딜러: " + profit.dealerProfit());
-        Map<Player, Integer> playerProfit = profit.playerProfit();
+        Map<Player, Double> playerProfit = profit.playerProfit();
         for (Player player : players) {
-            System.out.printf("%s: %d\n", player.getName(), playerProfit.get(player));
+            System.out.printf("%s: %.1f\n", player.getName(), playerProfit.get(player));
         }
     }
 }

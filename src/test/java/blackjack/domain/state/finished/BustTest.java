@@ -14,6 +14,9 @@ class BustTest {
     @Test
     void 수익은_배팅한_금액만큼_잃는다() {
         //given
+        Cards dealerCards = new Cards(
+                new Card(Suit.DIAMOND, Rank.NINE)
+        );
         double bettingMoney = 1000;
         Bust bust = new Bust(new Cards(
                 new Card(Suit.DIAMOND, Rank.THREE),
@@ -22,7 +25,7 @@ class BustTest {
         ));
 
         //when
-        double profit = bust.profit(bettingMoney);
+        double profit = bust.profit(dealerCards, bettingMoney);
 
         //then
         assertThat(profit).isEqualTo(-1000);
