@@ -1,5 +1,6 @@
 package blackjack.mock;
 
+import blackjack.domain.game.PlayerProfit;
 import blackjack.domain.io.GameInputOutput;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
@@ -7,6 +8,8 @@ import blackjack.domain.value.BettingAmount;
 import java.util.List;
 
 public class GameInputOutputMock extends GameInputOutput {
+
+    public static final int BETTING_AMOUNT = 10000;
 
     public GameInputOutputMock() {
         super(null, null, null,
@@ -37,5 +40,9 @@ public class GameInputOutputMock extends GameInputOutput {
 
     @Override
     public void printFinalHands(Dealer dealer, List<Player> players) {
+    }
+
+    @Override
+    public void printPlayerProfits(List<PlayerProfit> playerProfits) {
     }
 }

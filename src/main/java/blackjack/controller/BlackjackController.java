@@ -26,8 +26,7 @@ public class BlackjackController {
         List<Nickname> nicknames = inputView.readNicknames();
         BlackJackGame blackjackGame = makeBlackjackGame();
         blackjackGame.processPreparation(nicknames);
-        blackjackGame.processPlayerTurns();
-        blackjackGame.processDealerTurns();
+        blackjackGame.processPlaying();
         blackjackGame.processOutputResult();
     }
 

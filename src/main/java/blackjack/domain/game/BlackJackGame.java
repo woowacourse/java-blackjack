@@ -8,6 +8,7 @@ import blackjack.domain.user.GameUserStorage;
 import blackjack.domain.user.Player;
 import blackjack.domain.value.BettingAmount;
 import blackjack.domain.value.Nickname;
+import blackjack.exception.ExceptionMessage;
 import java.util.List;
 
 public class BlackJackGame {
@@ -15,6 +16,7 @@ public class BlackJackGame {
     private final GameUserStorage users;
     private final CardDeck cardDeck;
     private final GameInputOutput gameInputOutput;
+    private GameStage gameStage;
 
     public BlackJackGame(
             GameUserStorage gameUserStorage,
@@ -23,35 +25,41 @@ public class BlackJackGame {
     ) {
         this.users = gameUserStorage;
         this.cardDeck = cardDeck;
+        this.gameStage = GameStage.PREPARATION;
         this.gameInputOutput = gameInputOutput;
     }
 
     public void processPreparation(List<Nickname> playerNicknames) {
+        validateGameStage(GameStage.PREPARATION);
         registerPlayer(playerNicknames);
         addBettingAmount();
         distributeInitialCard();
         outputInitialHand();
+        moveToNextStage();
     }
 
-    public void processPlayerTurns() {
-        users.getPlayers()
-                .forEach(this::processPlayerTurn);
-    }
-
-    public void processDealerTurns() {
-        Dealer dealer = users.getDealer();
-        int drawingCount = 0;
-        while (dealer.canDraw()) {
-            drawingCount++;
-            Card card = cardDeck.drawCard(1).getFirst();
-            dealer.addCardUntilLimit(card);
-        }
-        gameInputOutput.printDealerDrawing(drawingCount);
+    public void processPlaying() {
+        validateGameStage(GameStage.PLAYING);
+        processAllPlayerTurn();
+        processAllDealerTurn();
+        moveToNextStage();
     }
 
     public void processOutputResult() {
+        validateGameStage(GameStage.RESULT_OUTPUT);
         outputFinalHand();
         outputProfit();
+        moveToNextStage();
+    }
+
+    private void validateGameStage(GameStage gameStage) {
+        if (this.gameStage != gameStage) {
+            throw new IllegalArgumentException(ExceptionMessage.INVALID_GAME_STAGE.getContent());
+        }
+    }
+
+    private void moveToNextStage() {
+        gameStage = gameStage.next();
     }
 
     private void registerPlayer(List<Nickname> nicknames) {
@@ -84,8 +92,9 @@ public class BlackJackGame {
         player.addInitialCards(initialPlayerCards);
     }
 
-    private void outputInitialHand() {
-        gameInputOutput.printInitialHands(users.getDealer(), users.getPlayers());
+    private void processAllPlayerTurn() {
+        users.getPlayers()
+                .forEach(this::processPlayerTurn);
     }
 
     private void processPlayerTurn(Player player) {
@@ -95,6 +104,21 @@ public class BlackJackGame {
             player.hitUntilLimit(card);
             gameInputOutput.printingHitResult(player);
         }
+    }
+
+    private void processAllDealerTurn() {
+        Dealer dealer = users.getDealer();
+        int drawingCount = 0;
+        while (dealer.canDraw()) {
+            drawingCount++;
+            Card card = cardDeck.drawCard(1).getFirst();
+            dealer.addCardUntilLimit(card);
+        }
+        gameInputOutput.printDealerDrawing(drawingCount);
+    }
+
+    private void outputInitialHand() {
+        gameInputOutput.printInitialHands(users.getDealer(), users.getPlayers());
     }
 
     private void outputFinalHand() {
