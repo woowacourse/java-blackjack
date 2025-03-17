@@ -18,7 +18,7 @@ public class CardGiver {
         participants.forEach(participant -> participant.addDefaultCards(deck.drawCards(DEFAULT_CARD_GIVE_COUNT)));
     }
 
-    public void hit(Player player, boolean isRequestHit) throws IllegalStateException {
+    public void hit(Player player, boolean isRequestHit) {
         if (!isRequestHit) {
             return;
         }
