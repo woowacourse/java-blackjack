@@ -29,10 +29,6 @@ public class BatMoney {
         return this.name.equals(name);
     }
 
-    public String getName() {
-        return name;
-    }
-
     public int getMoney() {
         return money;
     }
