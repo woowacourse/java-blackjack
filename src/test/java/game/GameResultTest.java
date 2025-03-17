@@ -6,8 +6,12 @@ import card.Card;
 import card.CardNumber;
 import card.Pattern;
 import java.util.List;
+import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class GameResultTest {
 
@@ -158,44 +162,23 @@ public class GameResultTest {
         Assertions.assertThat(gameResult).isEqualTo(GameResult.BLACKJACK);
     }
 
-    @Test
-    void 승리하면_배팅_금액을_받는다() {
-        GameResult result = GameResult.WIN;
-        Betting betting = new Betting(10000);
+    @ParameterizedTest
+    @MethodSource(value = "provideBetAndProfit")
+    void 승패_결과에_따른_수익을_반환한다(GameResult result, int expected) {
+        Betting betting = new Betting(1000);
 
         int profit = result.evaluate(betting.getBetting());
 
-        assertThat(profit).isEqualTo(10000);
+        assertThat(profit).isEqualTo(expected);
     }
 
-    @Test
-    void 무승부이면_수익이_없다() {
-        GameResult result = GameResult.DRAW;
-        Betting betting = new Betting(10000);
-
-        int profit = result.evaluate(betting.getBetting());
-
-        assertThat(profit).isEqualTo(0);
-    }
-
-    @Test
-    void 패배하면_배팅_금액을_잃는다() {
-        GameResult result = GameResult.LOSE;
-        Betting betting = new Betting(10000);
-
-        int profit = result.evaluate(betting.getBetting());
-
-        assertThat(profit).isEqualTo(-10000);
-    }
-
-    @Test
-    void 블랙잭이면_1_5배를_받는다() {
-        GameResult result = GameResult.BLACKJACK;
-        Betting betting = new Betting(10000);
-
-        int profit = result.evaluate(betting.getBetting());
-
-        assertThat(profit).isEqualTo(15000);
+    private static Stream<Arguments> provideBetAndProfit() {
+        return Stream.of(
+                Arguments.of(GameResult.WIN, 1000),
+                Arguments.of(GameResult.DRAW, 0),
+                Arguments.of(GameResult.LOSE, -1000),
+                Arguments.of(GameResult.BLACKJACK, 1500)
+        );
     }
 
 }
