@@ -1,6 +1,6 @@
 package controller;
 
-import domain.BackJackGame;
+import domain.BlackJackGame;
 import domain.deck.Deck;
 import domain.deck.RandomShuffleStrategy;
 import domain.gamer.BetAmount;
@@ -24,16 +24,16 @@ public class BlackJackController {
         final List<Player> players = generatePlayers(nicknames);
         final Dealer dealer = generateDealer();
         final Deck deck = Deck.createShuffledDeck(new RandomShuffleStrategy());
-        final BackJackGame backJackGame = new BackJackGame(deck);
+        final BlackJackGame blackJackGame = new BlackJackGame(deck);
 
-        dealInitialCards(backJackGame, players, dealer);
+        dealInitialCards(blackJackGame, players, dealer);
         OutputView.printCardsInHandAtFirst(players, dealer);
 
-        processHit(players, backJackGame, dealer);
+        processHit(players, blackJackGame, dealer);
         OutputView.printCardsInHandWithResult(dealer, players);
 
-        final Map<String, Double> playersProfit = backJackGame.calculatePlayersProfit(dealer, players);
-        final double dealerProfit = backJackGame.calculateDealerProfit(playersProfit);
+        final Map<String, Double> playersProfit = blackJackGame.calculatePlayersProfit(dealer, players);
+        final double dealerProfit = blackJackGame.calculateDealerProfit(playersProfit);
         OutputView.printProfitResult(playersProfit, dealerProfit);
     }
 
@@ -59,16 +59,16 @@ public class BlackJackController {
         return new Dealer(new Nickname(DEALER_NAME), Hittable.initialDealer());
     }
 
-    private static void dealInitialCards(final BackJackGame backJackGame, final List<Player> players,
+    private static void dealInitialCards(final BlackJackGame blackJackGame, final List<Player> players,
                                          final Dealer dealer) {
-        players.forEach(backJackGame::dealInitialCards);
-        backJackGame.dealInitialCards(dealer);
+        players.forEach(blackJackGame::dealInitialCards);
+        blackJackGame.dealInitialCards(dealer);
     }
 
-    private static void processHit(final List<Player> players, final BackJackGame backJackGame, final Dealer dealer) {
+    private static void processHit(final List<Player> players, final BlackJackGame blackJackGame, final Dealer dealer) {
         players.forEach(player -> {
-            backJackGame.hit(player, InputView::readQuestOneMoreCard, OutputView::printCardsInHand);
+            blackJackGame.hit(player, InputView::readQuestOneMoreCard, OutputView::printCardsInHand);
         });
-        backJackGame.hitUntilUnder16(dealer, OutputView::printDealerHit);
+        blackJackGame.hitUntilUnder16(dealer, OutputView::printDealerHit);
     }
 }

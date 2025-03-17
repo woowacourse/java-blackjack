@@ -12,12 +12,12 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-public class BackJackGame {
+public class BlackJackGame {
 
     private static final int INITIAL_CARD_COUNT = 2;
     private final Deck deck;
 
-    public BackJackGame(final Deck deck) {
+    public BlackJackGame(final Deck deck) {
         this.deck = deck;
     }
 
