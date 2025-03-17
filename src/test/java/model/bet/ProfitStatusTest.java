@@ -2,10 +2,7 @@ package model.bet;
 
 import bet.Money;
 import bet.ProfitStatus;
-import card.AceRank;
-import card.Card;
-import card.NormalRank;
-import card.Suit;
+import card.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -59,7 +56,7 @@ public class ProfitStatusTest {
     @DisplayName("플레이어 배팅 결과가 제대로 계산되는 지")
     @ParameterizedTest
     @MethodSource("makeBetResultTestData")
-    void calculateBetResult(List<Card> playerCard, List<Card> dealerCard, long expectedProfit) {
+    void calculatePlayerBetResult(List<Card> playerCard, List<Card> dealerCard, long expectedProfit) {
         //given
         Map<Player, Money> profits = new HashMap<>();
 
@@ -79,7 +76,6 @@ public class ProfitStatusTest {
         //then
         Assertions.assertThat(actualProfit).isEqualTo(expectedProfit);
     }
-
 
     private static Stream<Arguments> makeBetResultTestData() {
         return Stream.of(
@@ -124,5 +120,42 @@ public class ProfitStatusTest {
                         1000L
                 )
         );
+    }
+
+    @DisplayName("딜러 배팅 결과가 제대로 계산되는 지")
+    @Test
+    void calculateDealerBetResult() {
+        //given
+        Player hippo = new Player("hippo");
+        Player pobi = new Player("pobi");
+        Player james = new Player("james");
+
+        Players players = Players.from(List.of("hippo", "pobi", "james"));
+
+        List<Card> hippoCards = List.of(new Card(Suit.CLUBS, NormalRank.FIVE),new Card(Suit.CLUBS, NormalRank.TEN),new Card(Suit.CLUBS, NormalRank.SIX)); // 21
+        List<Card> pobiCards = List.of(new Card(Suit.CLUBS, NormalRank.JACK),new Card(Suit.CLUBS, NormalRank.KING)); // 21 blackjack
+        List<Card> jamesCards = List.of(new Card(Suit.CLUBS, NormalRank.TEN),new Card(Suit.CLUBS, NormalRank.KING),new Card(Suit.CLUBS, NormalRank.TEN)); // 30
+
+        TestCardDistributor.divideCardToPlayer(hippoCards, hippo);
+        TestCardDistributor.divideCardToPlayer(pobiCards, pobi);
+        TestCardDistributor.divideCardToPlayer(jamesCards, james);
+
+        Map<Player, Money> profits = new HashMap<>();
+        profits.put(new Player("hippo"), new Money(2000L)) ;
+        profits.put(new Player("pobi"), new Money(1000L)) ;
+        profits.put(new Player("james"), new Money(1500L)) ;
+
+        Dealer dealer = new Dealer();
+        List<Card> dealerCards = List.of(new Card(Suit.CLUBS, NormalRank.TEN),new Card(Suit.CLUBS, NormalRank.SEVEN)); // 17
+        TestCardDistributor.divideCardToDealer(dealerCards, dealer);
+
+        GameResult gameResult = new GameResult();
+        ProfitStatus profitStatus = new ProfitStatus(profits);
+        Map<Player, Long> betResult = profitStatus.calculateBetResult(gameResult.calculatePlayersMatchResult(players, dealer));
+        long dealerProfit = profitStatus.calculateDealerBetResult(betResult);
+        //when
+
+        //then
+        Assertions.assertThat(dealerProfit).isEqualTo(-2000L);
     }
 }

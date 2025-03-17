@@ -50,4 +50,10 @@ public class ProfitStatus {
         }
         return betResult;
     }
+
+    public long calculateDealerBetResult(Map<Player, Long> betResult) {
+        return betResult.values().stream()
+                .mapToLong(Long::longValue)
+                .sum();
+    }
 }
