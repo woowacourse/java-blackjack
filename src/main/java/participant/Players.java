@@ -27,7 +27,7 @@ public class Players {
 
     public Profit sumProfits() {
         return Profit.of(players.stream()
-                .mapToInt(player -> player.calculateProfit().getAmount())
+                .mapToInt(player -> player.getProfit().getAmount())
                 .sum());
     }
 

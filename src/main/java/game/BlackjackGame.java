@@ -34,22 +34,22 @@ public class BlackjackGame {
 
     public Map<Playable, Profit> calculateParticipantGameResults(Dealer dealer, Players players) {
         Map<Playable, Profit> gameResults = new LinkedHashMap<>();
+        gameResults.putAll(calculateDealerGameResults(dealer, players));
         gameResults.putAll(calculatePlayersGameResults(players));
-        gameResults.put(dealer, calculateDealerGameResults(players));
         return gameResults;
     }
 
-    private Map<Playable, Profit> calculatePlayersGameResults(Players players) {
+    private Map<Dealer, Profit> calculateDealerGameResults(Dealer dealer, Players players) {
+        return new LinkedHashMap<>(Map.of(dealer, players.sumProfits().reverse()));
+    }
+
+    private Map<Player, Profit> calculatePlayersGameResults(Players players) {
         return players.getPlayers().stream()
                 .collect(Collectors.toMap(
                         player -> player,
-                        Player::calculateProfit,
+                        Player::getProfit,
                         (oldValue, newValue) -> oldValue,
                         LinkedHashMap::new
                 ));
-    }
-
-    private Profit calculateDealerGameResults(Players players) {
-        return players.sumProfits().reverse();
     }
 }

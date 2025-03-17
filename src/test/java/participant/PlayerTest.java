@@ -69,7 +69,7 @@ class PlayerTest {
         player.updateMoney(gameResult.calculateEarnings(bettingMoney), gameResult.isProfitable());
 
         // when
-        Profit profit = player.calculateProfit();
+        Profit profit = player.getProfit();
 
         // then
         Assertions.assertThat(profit.getAmount())

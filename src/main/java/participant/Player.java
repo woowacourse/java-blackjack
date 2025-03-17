@@ -67,15 +67,15 @@ public class Player implements Playable {
         wallet.subtractMoney(money);
     }
 
-    public Profit calculateProfit() {
-        return wallet.getProfit();
-    }
-
     public int getBettingMoney() {
         return wallet.getBettingMoney();
     }
 
     public int getEarnedMoney() {
         return wallet.getEarnedMoney();
+    }
+
+    public Profit getProfit() {
+        return wallet.getProfit();
     }
 }
