@@ -4,12 +4,12 @@ import blackjack.domain.game.Player;
 
 public class PlayerResult {
     private final Player player;
-    private final GameResultType gameResultType;
+    private final GameResult gameResult;
     private final Score score;
 
-    public PlayerResult(Player player, GameResultType gameResultType, Score score) {
+    public PlayerResult(Player player, GameResult gameResult, Score score) {
         this.player = player;
-        this.gameResultType = gameResultType;
+        this.gameResult = gameResult;
         this.score = score;
     }
 
@@ -21,8 +21,20 @@ public class PlayerResult {
         return score.isBlackJack();
     }
 
-    public GameResultType getGameResultType() {
-        return gameResultType;
+    public boolean isWinByBlackjack() {
+        return gameResult.isWinByBlackJack();
+    }
+
+    public boolean isWinByNotBlackjack() {
+        return gameResult.isWinByNotBlackJack();
+    }
+
+    public boolean isTie() {
+        return gameResult.isTie();
+    }
+
+    public boolean isLose() {
+        return gameResult.isLose();
     }
 
     public Player getPlayer() {

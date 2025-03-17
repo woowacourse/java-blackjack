@@ -23,8 +23,8 @@ public class Judge {
         Score dealerScore = new Score(dealer);
         Score playerScore = new Score(player);
 
-        GameResultType gameResultType = playerScore.calculateGameResult(dealerScore);
-        playerResults.add(new PlayerResult(player, gameResultType, playerScore));
+        GameResult gameResult = playerScore.calculateGameResult(dealerScore);
+        playerResults.add(new PlayerResult(player, gameResult, playerScore));
     }
 
     public PlayerResults getPlayerResults() {

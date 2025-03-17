@@ -1,7 +1,6 @@
 package blackjack.domain.profit;
 
 import blackjack.domain.game.Player;
-import blackjack.domain.result.GameResultType;
 import blackjack.domain.result.PlayerResult;
 import blackjack.domain.result.PlayerResults;
 
@@ -19,22 +18,22 @@ public class BettingResult {
             Player player = playerResult.getPlayer();
             int betAmount = player.getBetAmount();
 
-            if (playerResult.getGameResultType() == GameResultType.TIE) {
+            if (playerResult.isTie()) {
                 saveProfitWhenPlayerTies(player);
                 continue;
             }
 
-            if (playerResult.getGameResultType() == GameResultType.WIN && playerResult.isBlackjack()) {
+            if (playerResult.isWinByBlackjack()) {
                 saveProfitWhenPlayerIsBlackjack(player, betAmount);
                 continue;
             }
 
-            if (playerResult.getGameResultType() == GameResultType.WIN) {
+            if (playerResult.isWinByNotBlackjack()) {
                 saveProfitWhenPlayerWins(player, betAmount);
                 continue;
             }
 
-            if (playerResult.getGameResultType() == GameResultType.LOSE) {
+            if (playerResult.isLose()) {
                 saveProfitWhenPlayerLoses(player, betAmount);
             }
         }

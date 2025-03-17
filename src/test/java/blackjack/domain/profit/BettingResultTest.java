@@ -7,6 +7,7 @@ import blackjack.domain.game.Dealer;
 import blackjack.domain.game.Hand;
 import blackjack.domain.game.Player;
 import blackjack.domain.result.BetAmount;
+import blackjack.domain.result.GameResult;
 import blackjack.domain.result.GameResultType;
 import blackjack.domain.result.PlayerResult;
 import blackjack.domain.result.PlayerResults;
@@ -31,7 +32,7 @@ class BettingResultTest {
         Player player = new Player("히로", new Hand(), new BetAmount(1_000));
 
         PlayerResults playerResults = new PlayerResults();
-        playerResults.add(new PlayerResult(player, GameResultType.TIE, new Score(player)));
+        playerResults.add(new PlayerResult(player, new GameResult(GameResultType.TIE, false), new Score(player)));
 
         PlayerProfits playerProfits = bettingResult.getPlayerProfits();
 
@@ -52,7 +53,8 @@ class BettingResultTest {
         playerHand.takeCard(new Card(CardSuit.HEART, CardRank.TEN));
 
         PlayerResults playerResults = new PlayerResults();
-        playerResults.add(new PlayerResult(player, GameResultType.WIN, new Score(player)));// 블랙잭 조건 충족
+        playerResults.add(
+                new PlayerResult(player, new GameResult(GameResultType.WIN, true), new Score(player)));// 블랙잭 조건 충족
 
         PlayerProfits playerProfits = bettingResult.getPlayerProfits();
         DealerProfits dealerProfits = bettingResult.getDealerProfits();
@@ -77,7 +79,7 @@ class BettingResultTest {
         Player player = new Player("히로", playerHand, new BetAmount(1_000));
 
         PlayerResults playerResults = new PlayerResults();
-        playerResults.add(new PlayerResult(player, GameResultType.WIN, new Score(player)));
+        playerResults.add(new PlayerResult(player, new GameResult(GameResultType.WIN, false), new Score(player)));
 
         PlayerProfits playerProfits = bettingResult.getPlayerProfits();
         DealerProfits dealerProfits = bettingResult.getDealerProfits();
@@ -104,7 +106,7 @@ class BettingResultTest {
         Dealer dealer = new Dealer(new Hand());
 
         PlayerResults playerResults = new PlayerResults();
-        playerResults.add(new PlayerResult(player, GameResultType.LOSE, new Score(player)));
+        playerResults.add(new PlayerResult(player, new GameResult(GameResultType.LOSE, false), new Score(player)));
 
         PlayerProfits playerProfits = bettingResult.getPlayerProfits();
         DealerProfits dealerProfits = bettingResult.getDealerProfits();

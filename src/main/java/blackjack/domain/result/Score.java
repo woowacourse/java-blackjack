@@ -23,7 +23,7 @@ public class Score {
         return cardCount == BLACKJACK_STANDARD_CARD_COUNT & scoreValue == BLACKJACK_STANDARD_SCORE_VALUE;
     }
 
-    public GameResultType calculateGameResult(Score comparedScore) {
+    public GameResult calculateGameResult(Score comparedScore) {
         if (isBlackJack() || comparedScore.isBlackJack()) {
             return calculateResultOfBlackjack(comparedScore);
         }
@@ -32,36 +32,37 @@ public class Score {
             return calculateResultOfBusted(comparedScore);
         }
 
-        return GameResultType.find(this.scoreValue, comparedScore.getScoreValue());
+        GameResultType gameResultType = GameResultType.find(this.scoreValue, comparedScore.getScoreValue());
+        return new GameResult(gameResultType, false);
     }
 
-    private GameResultType calculateResultOfBlackjack(Score comparedScore) {
+    private GameResult calculateResultOfBlackjack(Score comparedScore) {
         if (isBlackJack() && comparedScore.isBlackJack()) {
-            return GameResultType.TIE;
+            return new GameResult(GameResultType.TIE, true);
         }
 
         if (isBlackJack() && !comparedScore.isBlackJack()) {
-            return GameResultType.WIN;
+            return new GameResult(GameResultType.WIN, true);
         }
 
         if (!isBlackJack() && comparedScore.isBlackJack()) {
-            return GameResultType.LOSE;
+            return new GameResult(GameResultType.LOSE, false);
         }
 
         throw new IllegalArgumentException("정의되지 않은 결과입니다.");
     }
 
-    private GameResultType calculateResultOfBusted(Score comparedScore) {
+    private GameResult calculateResultOfBusted(Score comparedScore) {
         if (isBusted() && comparedScore.isBusted()) {
-            return GameResultType.TIE;
+            return new GameResult(GameResultType.TIE, false);
         }
 
         if (isBusted() && !comparedScore.isBusted()) {
-            return GameResultType.LOSE;
+            return new GameResult(GameResultType.LOSE, false);
         }
 
         if (!isBusted() && comparedScore.isBusted()) {
-            return GameResultType.WIN;
+            return new GameResult(GameResultType.WIN, false);
         }
 
         throw new IllegalArgumentException("정의되지 않은 결과입니다.");
