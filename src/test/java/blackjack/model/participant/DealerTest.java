@@ -173,7 +173,7 @@ class DealerTest {
             dealer.receiveCard(SPADE_TEN_CARD);
 
             // when
-            MatchResult matchResult = dealer.evaluateOutcome(player);
+            MatchResult matchResult = dealer.evaluateFromPlayerPerspective(player);
 
             // then
             assertThat(matchResult)
@@ -194,7 +194,7 @@ class DealerTest {
             dealer.receiveCard(SPADE_TEN_CARD);
 
             // when
-            MatchResult matchResult = dealer.evaluateOutcome(player);
+            MatchResult matchResult = dealer.evaluateFromPlayerPerspective(player);
 
             // then
             assertThat(matchResult)
@@ -213,7 +213,7 @@ class DealerTest {
             dealer.receiveCard(SPADE_TEN_CARD);
 
             // when
-            MatchResult matchResult = dealer.evaluateOutcome(player);
+            MatchResult matchResult = dealer.evaluateFromPlayerPerspective(player);
 
             // then
             assertThat(matchResult)
@@ -232,7 +232,7 @@ class DealerTest {
             dealer.receiveCard(SPADE_TEN_CARD);
 
             // when
-            MatchResult matchResult = dealer.evaluateOutcome(player);
+            MatchResult matchResult = dealer.evaluateFromPlayerPerspective(player);
 
             // then
             assertThat(matchResult)
@@ -252,7 +252,7 @@ class DealerTest {
             dealer.receiveCard(SPADE_TEN_CARD);
 
             // when
-            MatchResult matchResult = dealer.evaluateOutcome(player);
+            MatchResult matchResult = dealer.evaluateFromPlayerPerspective(player);
 
             // then
             assertThat(matchResult)
@@ -279,7 +279,7 @@ class DealerTest {
             dealer.receiveCard(createCard(Suit.SPADES, dealerCardValue2));
 
             // when
-            MatchResult matchResult = dealer.evaluateOutcome(player);
+            MatchResult matchResult = dealer.evaluateFromPlayerPerspective(player);
 
             // then
             assertThat(matchResult)
@@ -299,7 +299,7 @@ class DealerTest {
         dealer.receiveCard(SPADE_TEN_CARD);
 
         // when, then
-        assertThatCode(() -> dealer.evaluateOutcome(player))
+        assertThatCode(() -> dealer.evaluateFromPlayerPerspective(player))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어의 턴이 종료되지 않았습니다.");
     }
@@ -315,7 +315,7 @@ class DealerTest {
         Dealer dealer = new Dealer(Deck.createStandardDeck(NO_SHUFFLER));
 
         // when, then
-        assertThatCode(() -> dealer.evaluateOutcome(player))
+        assertThatCode(() -> dealer.evaluateFromPlayerPerspective(player))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("딜러의 턴이 종료되지 않았습니다.");
     }

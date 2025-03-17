@@ -50,10 +50,10 @@ public final class Dealer implements CardReceivable {
                 .getFirst();
     }
 
-    public MatchResult evaluateOutcome(Player player) {
-        FinishedState dealerState = getFinishedState();
+    public MatchResult evaluateFromPlayerPerspective(Player player) {
         FinishedState playerState = player.getFinishedState();
-        return dealerState.determineMatchResult(playerState);
+        FinishedState dealerState = getFinishedState();
+        return playerState.determineMatchResult(dealerState);
     }
 
     private FinishedState getFinishedState() {

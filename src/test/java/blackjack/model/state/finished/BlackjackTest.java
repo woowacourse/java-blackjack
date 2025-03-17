@@ -6,7 +6,7 @@ import static blackjack.model.card.CardFixtures.SPADE_TWO_CARD;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.model.state.Hand;
+import blackjack.model.MatchResult;
 import blackjack.model.state.State;
 import blackjack.model.state.running.InitialDeal;
 import org.junit.jupiter.api.DisplayName;

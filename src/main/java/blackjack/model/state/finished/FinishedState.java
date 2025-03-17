@@ -36,32 +36,32 @@ public abstract sealed class FinishedState
     }
 
     public MatchResult determineMatchResult(FinishedState other) {
-        if (other.isBust()) {
+        if (this.isBust()) {
             return MatchResult.LOSE;
         }
-        if (this.isBust()) {
+        if (other.isBust()) {
             return MatchResult.WIN;
         }
         if (this.isBlackjack() && other.isBlackjack()) {
             return MatchResult.DRAW;
         }
-        if (other.isBlackjack()) {
+        if (this.isBlackjack()) {
             return MatchResult.BLACKJACK;
         }
-        if (this.isBlackjack()) {
+        if (other.isBlackjack()) {
             return MatchResult.LOSE;
         }
-        return compareTotal(other);
+        return determineMatchResultByTotal(other);
     }
 
-    private MatchResult compareTotal(FinishedState other) {
-        int myTotal = this.hand.getTotal();
+    private MatchResult determineMatchResultByTotal(FinishedState other) {
+        int thisTotal = this.hand.getTotal();
         int otherTotal = other.hand.getTotal();
-        if (myTotal < otherTotal) {
-            return MatchResult.WIN;
-        }
-        if (otherTotal < myTotal) {
+        if (thisTotal < otherTotal) {
             return MatchResult.LOSE;
+        }
+        if (otherTotal < thisTotal) {
+            return MatchResult.WIN;
         }
         return MatchResult.DRAW;
     }

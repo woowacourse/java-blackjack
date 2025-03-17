@@ -58,8 +58,8 @@ public class BettingTable {
     public Map<Player, Integer> calculatePayouts(Dealer dealer) {
         Map<Player, Integer> payouts = new LinkedHashMap<>();
         for (Player player : betting.keySet()) {
-            MatchResult matchResult = dealer.evaluateOutcome(player);
-            int payout = matchResult.applyMultiplier(getBetAmount(player));
+            MatchResult playerMatchResult = dealer.evaluateFromPlayerPerspective(player);
+            int payout = playerMatchResult.applyMultiplier(getBetAmount(player));
             payouts.put(player, payout);
         }
         return payouts;
