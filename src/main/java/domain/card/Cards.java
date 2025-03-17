@@ -12,7 +12,6 @@ public class Cards {
 
     private final List<Card> cards;
 
-
     public Cards(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
     }
@@ -69,19 +68,19 @@ public class Cards {
         }
     }
 
+    public Card findNotOpenedCard() {
+        return cards.stream()
+                .filter(card -> !card.isOpened())
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("오픈할 카드가 없습니다."));
+    }
+
     public Cards openedCards() {
         return new Cards(
                 cards.stream()
                         .filter(Card::isOpened)
                         .toList()
         );
-    }
-
-    public Card findNotOpenedCard() {
-        return cards.stream()
-                .filter(card -> !card.isOpened())
-                .findAny()
-                .orElseThrow(() -> new IllegalStateException("오픈할 카드가 없습니다."));
     }
 
     public int size() {
