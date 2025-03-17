@@ -1,7 +1,8 @@
 package domain.profit;
 
+import domain.state.Blackjack;
+import domain.state.Bust;
 import domain.state.State;
-import domain.state.StateType;
 
 public enum UserBattleResult {
 
@@ -15,41 +16,33 @@ public enum UserBattleResult {
         if (!user.isFinished() || !dealer.isFinished()) {
             throw new IllegalStateException("유저나 딜러가 종료 상태가 아닙니다.");
         }
-        if (blackjackExists(user, dealer)) {
+        if (Blackjack.isBlackjack(user.cards()) || Blackjack.isBlackjack(dealer.cards())) {
             return determineByBlackjack(user, dealer);
         }
-        if (bustExists(user, dealer)) {
+        if (Bust.isBust(user.cards()) || Bust.isBust(dealer.cards())) {
             return determineByBust(user, dealer);
         }
         return compareBySum(user.cards().computeOptimalSum(), dealer.cards().computeOptimalSum());
     }
 
-    private static boolean blackjackExists(State user, State dealer) {
-        return user.type() == StateType.BLACKJACK || dealer.type() == StateType.BLACKJACK;
-    }
-
-    private static boolean bustExists(State user, State dealer) {
-        return user.type() == StateType.BUST || dealer.type() == StateType.BUST;
-    }
-
     private static UserBattleResult determineByBlackjack(State user, State dealer) {
-        if (user.type() == StateType.BLACKJACK && dealer.type() == StateType.BLACKJACK) {
+        if (Blackjack.isBlackjack(user.cards()) && Blackjack.isBlackjack(dealer.cards())) {
             return DRAW;
         }
-        if (user.type() == StateType.BLACKJACK) {
+        if (Blackjack.isBlackjack(user.cards())) {
             return BLACKJACK_WIN;
         }
-        if (dealer.type() == StateType.BLACKJACK) {
+        if (Blackjack.isBlackjack(dealer.cards())) {
             return LOSE;
         }
         throw new IllegalStateException("블랙잭 상태 여부로 승부를 결정할 수 없습니다.");
     }
 
     private static UserBattleResult determineByBust(State user, State dealer) {
-        if (user.type() == StateType.BUST) {
+        if (Bust.isBust(user.cards())) {
             return LOSE;
         }
-        if (dealer.type() == StateType.BUST) {
+        if (Bust.isBust(dealer.cards())) {
             return NORMAL_WIN;
         }
         throw new IllegalStateException("버스트 상태 여부로 승부를 결정할 수 없습니다.");

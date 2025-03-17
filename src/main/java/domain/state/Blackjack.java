@@ -11,8 +11,8 @@ public class Blackjack extends Finished {
         super(cards);
     }
 
-    @Override
-    public StateType type() {
-        return StateType.BLACKJACK;
+    public static boolean isBlackjack(Cards cards) {
+        return cards.size() == Blackjack.BLACKJACK_CARD_SIZE
+                && cards.computeOptimalSum() == Blackjack.BLACKJACK_SUM;
     }
 }

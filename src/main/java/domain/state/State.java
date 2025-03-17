@@ -12,6 +12,4 @@ public interface State {
     boolean isFinished();
 
     Cards cards();
-
-    StateType type();
 }
