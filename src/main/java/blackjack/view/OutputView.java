@@ -40,7 +40,7 @@ public class OutputView {
     }
 
     public void printDealerHitAndDealCard() {
-        System.out.println(NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(NEW_LINE + "딜러는 " + Player.HIT_THRESHOLD + "이하라 한장의 카드를 더 받았습니다.");
     }
 
     public void printResultCardsToPlayers(final Players players) {

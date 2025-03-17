@@ -9,7 +9,7 @@ import java.util.Objects;
 public abstract class Player {
 
     private static final int BUST_THRESHOLD = 21;
-    private static final int HIT_THRESHOLD = 16;
+    public static final int HIT_THRESHOLD = 16;
 
     private final Name name;
     private final Hand hand;
