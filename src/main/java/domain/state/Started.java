@@ -1,5 +1,6 @@
 package domain.state;
 
+import domain.card.Card;
 import domain.card.Cards;
 
 public abstract class Started implements State {
@@ -13,4 +14,10 @@ public abstract class Started implements State {
     public Cards cards() {
         return cards;
     }
+
+    public abstract State hit(Card card);
+
+    public abstract State stay();
+
+    public abstract boolean isFinished();
 }

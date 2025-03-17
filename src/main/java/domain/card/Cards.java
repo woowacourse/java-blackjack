@@ -1,14 +1,10 @@
 package domain.card;
 
-import static domain.BlackjackGameBoard.INITIAL_DRAW_COUNT;
-
+import domain.state.Bust;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
-
-    private static final int BUST_THRESHOLD = 21;
-    private static final int BLACKJACK_SUM = 21;
 
     private final List<Card> cards;
 
@@ -25,10 +21,10 @@ public class Cards {
         computeCandidates(0, 0, cards, candidates);
 
         return candidates.stream()
-                .filter(sum -> sum <= BUST_THRESHOLD)
+                .filter(sum -> sum <= Bust.BUST_THRESHOLD)
                 .max(Integer::compareTo)
                 .orElseGet(() -> candidates.stream()
-                        .filter(sum -> sum > BUST_THRESHOLD)
+                        .filter(sum -> sum > Bust.BUST_THRESHOLD)
                         .min(Integer::compareTo)
                         .orElseThrow(() -> new IllegalStateException("합을 계산할 카드가 없습니다.")));
     }
@@ -42,18 +38,6 @@ public class Cards {
         for (int score : cards.get(cardIndex).scores()) {
             computeCandidates(cardIndex + 1, sum + score, cards, candidates);
         }
-    }
-
-    public boolean isBustThreshold() {
-        return computeOptimalSum() == BUST_THRESHOLD;
-    }
-
-    public boolean isBlackjack() {
-        return cards.size() == INITIAL_DRAW_COUNT && computeOptimalSum() == BLACKJACK_SUM;
-    }
-
-    public boolean isBust() {
-        return computeOptimalSum() > BUST_THRESHOLD;
     }
 
     public void addCard(Card card) {
