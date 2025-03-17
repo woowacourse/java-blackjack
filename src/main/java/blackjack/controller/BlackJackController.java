@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.model.blackjack_player.dealer.Dealer;
+import blackjack.model.blackjack_player.dealer.result.Result;
 import blackjack.model.blackjack_player.player.Player;
 import blackjack.model.card.initializer.CardDeckInitializer;
 import blackjack.view.InputView;
@@ -54,7 +55,7 @@ public final class BlackJackController {
 
     private void fight(final Dealer dealer, final List<Player> players) {
         for (Player player : players) {
-            dealer.fight(player);
+            player.applyResult(Result.calculate(dealer, player));
         }
     }
 

@@ -4,6 +4,8 @@ import static blackjack.model.card.CardCreator.createCard;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
+import blackjack.model.blackjack_player.Hand;
+import blackjack.model.blackjack_player.player.betting.Betting;
 import blackjack.model.card.BlackJackCards;
 import blackjack.model.card.CardNumber;
 import java.util.List;
@@ -12,7 +14,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class PlayerTest {
@@ -78,6 +79,19 @@ class PlayerTest {
         );
     }
 
+    private static Stream<Arguments> 수익을_계산할_수_있다_테스트_케이스() {
+        return Stream.of(
+                Arguments.of(
+                        new Betting(100, 20),
+                        -80
+                ),
+                Arguments.of(
+                        new Betting(200, 400),
+                        200
+                )
+        );
+    }
+
     @BeforeEach
     void setUp() {
         player = new Player("pobi", 1);
@@ -131,34 +145,11 @@ class PlayerTest {
         assertThat(player.getCards()).isEqualTo(expected);
     }
 
-    @Test
-    void 돈을_잃을_수_있다() {
-
-        Player player = new Player("pobi", 1000);
-
-        player.loseMoney();
-
-        assertThat(player.getProfit()).isEqualTo(-1000);
-    }
-
-    @Test
-    void 돈을_얻을_수_있다() {
-
-        Player player = new Player("pobi", 1000);
-
-        player.earnMoney(1000);
-
-        assertThat(player.getProfit()).isEqualTo(1000);
-    }
-
-
     @ParameterizedTest
-    @CsvSource(value = {"1000,500,500", "1000,1500,1500"})
-    void 수익을_계산할_수_있다(int bettingMoney, int earnMoney, int expected) {
+    @MethodSource("수익을_계산할_수_있다_테스트_케이스")
+    void 수익을_계산할_수_있다(final Betting betting, final int expected) {
 
-        Player player = new Player("pobi", bettingMoney);
-
-        player.earnMoney(earnMoney);
+        Player player = new Player("pobi", betting, Hand.empty());
 
         assertThat(player.getProfit()).isEqualTo(expected);
     }

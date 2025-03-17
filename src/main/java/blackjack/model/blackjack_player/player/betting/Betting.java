@@ -1,11 +1,16 @@
 package blackjack.model.blackjack_player.player.betting;
 
+import blackjack.model.blackjack_player.Hand;
+import blackjack.model.blackjack_player.dealer.result.Result;
+
 public final class Betting {
+
+    private static final float BLACKJACK_REWARD_RATE = 1.5f;
 
     private final int bettingMoney;
     private int balance;
 
-    private Betting(final int bettingMoney, final int balance) {
+    public Betting(final int bettingMoney, final int balance) {
         validateNegativeMoney(bettingMoney);
         this.bettingMoney = bettingMoney;
         this.balance = balance;
@@ -15,12 +20,12 @@ public final class Betting {
         return new Betting(bettingMoney, bettingMoney);
     }
 
-    public void earn(final int money) {
+    private void earn(final int money) {
         validateNegativeMoney(money);
         balance += money;
     }
 
-    public void lose() {
+    private void lose() {
         balance = 0;
     }
 
@@ -35,6 +40,23 @@ public final class Betting {
     }
 
     public int getBettingMoney() {
+        return bettingMoney;
+    }
+
+    public void applyResult(final Result result, final Hand hand) {
+        if (result == Result.DEALER_WIN) {
+            lose();
+            return;
+        }
+        if (result == Result.DEALER_LOSE) {
+            earn(calculateReward(hand));
+        }
+    }
+
+    private int calculateReward(final Hand hand) {
+        if (hand.isBlackjack()) {
+            return Math.round(bettingMoney * BLACKJACK_REWARD_RATE);
+        }
         return bettingMoney;
     }
 }

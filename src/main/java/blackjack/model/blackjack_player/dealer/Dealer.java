@@ -1,15 +1,12 @@
 package blackjack.model.blackjack_player.dealer;
 
 import blackjack.model.blackjack_player.Hand;
-import blackjack.model.blackjack_player.dealer.result.Result;
-import blackjack.model.blackjack_player.player.Player;
 import blackjack.model.card.BlackJackCards;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.initializer.CardDeckInitializer;
 
 public final class Dealer {
 
-    private static final float BLACKJACK_REWARD_RATE = 1.5f;
     private static final int INITIAL_DRAW_AMOUNT = 2;
     private static final int PLAYER_SINGLE_DRAW_AMOUNT = 1;
     private static final int DEALER_SINGLE_DRAW_AMOUNT = 1;
@@ -45,26 +42,6 @@ public final class Dealer {
 
     public BlackJackCards drawPlayerCards() {
         return drawCard(PLAYER_SINGLE_DRAW_AMOUNT);
-    }
-
-    public void fight(final Player player) {
-        Result result = Result.calculate(this, player);
-        if (result == Result.DRAW) {
-            return;
-        }
-        if (result == Result.DEALER_WIN) {
-            player.loseMoney();
-            return;
-        }
-        player.earnMoney(calculatePlayerReward(player));
-    }
-
-    public int calculatePlayerReward(final Player player) {
-        int bettingMoney = player.getBettingMoney();
-        if (player.isBlackjack()) {
-            return Math.round(bettingMoney * BLACKJACK_REWARD_RATE);
-        }
-        return bettingMoney;
     }
 
     private BlackJackCards drawCard(final int amount) {

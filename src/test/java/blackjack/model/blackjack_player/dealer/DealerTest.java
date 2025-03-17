@@ -4,14 +4,12 @@ import static blackjack.model.card.CardCreator.createCard;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.blackjack_player.Hand;
-import blackjack.model.blackjack_player.player.Player;
 import blackjack.model.card.BlackJackCards;
 import blackjack.model.card.CardDeck;
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.initializer.DefaultCardDeckInitializer;
 import java.util.List;
 import java.util.stream.Stream;
-import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -50,155 +48,10 @@ class DealerTest {
         );
     }
 
-    private static Stream<Arguments> 플레이어와_싸운다_테스트_케이스() {
-        return Stream.of(
-                Arguments.of(
-                        new BlackJackCards(
-                                List.of(
-                                        createCard(CardNumber.TEN),
-                                        createCard(CardNumber.EIGHT)
-                                )
-                        ),
-                        makeUser(
-                                "user",
-                                new BlackJackCards(
-                                        List.of(
-                                                createCard(CardNumber.TEN),
-                                                createCard(CardNumber.EIGHT)
-                                        )
-                                )
-                        ),
-                        0,
-                        0
-                ),
-                Arguments.of(
-                        new BlackJackCards(
-                                List.of(
-                                        createCard(CardNumber.TEN),
-                                        createCard(CardNumber.EIGHT)
-                                )
-                        ),
-                        makeUser(
-                                "user",
-                                new BlackJackCards(
-                                        List.of(
-                                                createCard(CardNumber.TEN),
-                                                createCard(CardNumber.SIX)
-                                        )
-                                )
-                        ),
-                        1,
-                        -1
-                ),
-                Arguments.of(
-                        new BlackJackCards(
-                                List.of(
-                                        createCard(CardNumber.TEN),
-                                        createCard(CardNumber.ACE)
-                                )
-                        ),
-                        makeUser(
-                                "user",
-                                new BlackJackCards(
-                                        List.of(
-                                                createCard(CardNumber.TEN),
-                                                createCard(CardNumber.EIGHT),
-                                                createCard(CardNumber.THREE)
-                                        )
-                                )
-                        ),
-                        1,
-                        -1
-                ),
-                Arguments.of(
-                        new BlackJackCards(
-                                List.of(
-                                        createCard(CardNumber.TEN),
-                                        createCard(CardNumber.EIGHT),
-                                        createCard(CardNumber.THREE)
-                                )
-                        ),
-                        makeUser(
-                                "user",
-                                new BlackJackCards(
-                                        List.of(
-                                                createCard(CardNumber.NINE),
-                                                createCard(CardNumber.ACE)
-                                        )
-                                )
-                        ),
-                        1,
-                        -1
-                ),
-                Arguments.of(
-                        new BlackJackCards(
-                                List.of(
-                                        createCard(CardNumber.TEN),
-                                        createCard(CardNumber.EIGHT),
-                                        createCard(CardNumber.FIVE)
-                                )
-                        ),
-                        makeUser(
-                                "user",
-                                new BlackJackCards(
-                                        List.of(
-                                                createCard(CardNumber.NINE),
-                                                createCard(CardNumber.SIX),
-                                                createCard(CardNumber.SEVEN)
-                                        )
-                                )
-                        ),
-                        -1,
-                        1
-                )
-        );
-    }
-
     private static Dealer makeDealer(final BlackJackCards blackJackCards) {
         Dealer dealer = new Dealer(new DefaultCardDeckInitializer());
         dealer.getAllCards().addAll(blackJackCards);
         return dealer;
-    }
-
-    private static Player makeUser(final String name, final BlackJackCards blackJackCards) {
-        Player player = new Player(name, 1);
-        player.receiveCards(blackJackCards);
-        return player;
-    }
-
-    private static Stream<Arguments> 플레이어의_보상을_계산한다_테스트_케이스() {
-        return Stream.of(
-                Arguments.of(
-                        new BlackJackCards(
-                                List.of(
-                                        createCard(CardNumber.TEN),
-                                        createCard(CardNumber.ACE)
-                                )
-                        ),
-                        10,
-                        15
-                ),
-                Arguments.of(
-                        new BlackJackCards(
-                                List.of(
-                                        createCard(CardNumber.JACK),
-                                        createCard(CardNumber.ACE)
-                                )
-                        ),
-                        10,
-                        15
-                ),
-                Arguments.of(
-                        new BlackJackCards(
-                                List.of(
-                                        createCard(CardNumber.TEN),
-                                        createCard(CardNumber.FIVE)
-                                )
-                        ),
-                        10,
-                        10
-                )
-        );
     }
 
     @BeforeEach
@@ -254,35 +107,5 @@ class DealerTest {
         dealer.getAllCards().addAll(blackJackCards);
 
         assertThat(dealer.openCards()).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @MethodSource("플레이어와_싸운다_테스트_케이스")
-    void 플레이어와_싸운다(
-            final BlackJackCards blackJackCards,
-            final Player player,
-            final int expectedDealerMoney,
-            final int expectedPlayerMoney
-    ) {
-        dealer.getAllCards().addAll(blackJackCards);
-
-        dealer.fight(player);
-        int dealerProfit = (-1) * player.getProfit();
-
-        SoftAssertions.assertSoftly(
-                softly -> {
-                    softly.assertThat(dealerProfit).isEqualTo(expectedDealerMoney);
-                    softly.assertThat(player.getProfit()).isEqualTo(expectedPlayerMoney);
-                }
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource("플레이어의_보상을_계산한다_테스트_케이스")
-    void 플레이어의_보상을_계산한다(final BlackJackCards blackJackCards, final int bettingMoney, final int expected) {
-        Player player = new Player("player", bettingMoney);
-        player.receiveCards(blackJackCards);
-
-        assertThat(dealer.calculatePlayerReward(player)).isEqualTo(expected);
     }
 }

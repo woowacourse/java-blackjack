@@ -1,6 +1,7 @@
 package blackjack.model.blackjack_player.player;
 
 import blackjack.model.blackjack_player.Hand;
+import blackjack.model.blackjack_player.dealer.result.Result;
 import blackjack.model.blackjack_player.player.betting.Betting;
 import blackjack.model.card.BlackJackCards;
 
@@ -12,6 +13,12 @@ public final class Player {
     private final Betting betting;
     private final Hand hand;
 
+    public Player(final String name, final Betting betting, final Hand hand) {
+        this.name = name;
+        this.betting = betting;
+        this.hand = hand;
+    }
+
     public Player(final String name, final int bettingMoney) {
         this.name = name;
         this.betting = Betting.bet(bettingMoney);
@@ -22,16 +29,8 @@ public final class Player {
         return getOptimalPoint() < DRAWABLE_POINT;
     }
 
-    public int getBettingMoney() {
-        return betting.getBettingMoney();
-    }
-
-    public void earnMoney(final int money) {
-        betting.earn(money);
-    }
-
-    public void loseMoney() {
-        betting.lose();
+    public void applyResult(final Result result) {
+        betting.applyResult(result, hand);
     }
 
     public int getProfit() {
