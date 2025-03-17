@@ -23,26 +23,11 @@ public class PlayerGenerator {
         return playerDatas;
     }
 
-    public static Map<Nickname, Money> generatePlayerData() {
-        return Map.of(
-                cacheNicknames.getFirst(), money
-        );
-    }
-
     public static Player generatePlayer() {
         return generatePlayers(1).getFirst();
     }
 
     public static List<Player> generatePlayers(int count) {
-        List<Nickname> nicknames = new ArrayList<>(getNicknames(count));
-        List<Player> players = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            players.add(new Player(nicknames.get(i), money));
-        }
-        return players;
-    }
-
-    public static List<Player> generateCanModifyPlayers(int count) {
         List<Nickname> nicknames = new ArrayList<>(getNicknames(count));
         List<Player> players = new ArrayList<>();
         for (int i = 0; i < count; i++) {

@@ -7,7 +7,6 @@ import model.participant.Dealer;
 import model.participant.Participant;
 import model.participant.Player;
 import model.participant.Players;
-import model.score.MatchResult;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,11 +14,6 @@ import java.util.Map;
 
 public class OutputView {
     private static final String BASIC_FORM = "%s: %s";
-    private static final Map<String, String> MATCH_FORMAT = Map.of(
-            "WIN", "승",
-            "DRAW", "무",
-            "LOSE", "패"
-    );
 
     private static final Map<String, String> RANK_FORMAT = Map.ofEntries(
             Map.entry("TWO", "2"),
@@ -79,18 +73,6 @@ public class OutputView {
 
     private static void printScore(Participant participant) {
         System.out.printf("%s - 결과: %d%n", formatHands(participant), participant.getScore());
-    }
-
-    public static String getResultFormatByDealer(Map<MatchResult, Integer> matchResult) {
-        StringBuilder result = new StringBuilder();
-        for (MatchResult matchType : matchResult.keySet()) {
-            int matchCount = matchResult.get(matchType);
-            if (matchCount != 0) {
-                result.append(matchCount).append(MATCH_FORMAT.get(matchType.name()));
-                result.append(" ");
-            }
-        }
-        return result.toString();
     }
 
     public static String getCardFormat(Card card) {

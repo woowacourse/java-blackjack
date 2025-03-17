@@ -22,7 +22,6 @@ import java.util.stream.Stream;
 public class PlayersTest {
 
     Map<Nickname, Money> playerData;
-    List<Player> playerList;
     Players players;
 
     @BeforeEach
@@ -31,12 +30,6 @@ public class PlayersTest {
                 nicknameInstances().get(0), new Money(1000),
                 nicknameInstances().get(1), new Money(1000),
                 nicknameInstances().get(2), new Money(1000)
-        );
-
-        playerList = List.of(
-                new Player(nicknameInstances().get(0), new Money(1000)),
-                new Player(nicknameInstances().get(1), new Money(1000)),
-                new Player(nicknameInstances().get(2), new Money(1000))
         );
         players = Players.from(playerData);
     }
