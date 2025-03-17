@@ -50,10 +50,6 @@ class ParticipantsTest {
 
         //when
         Participants onlyParticipants = participants.findPlayers();
-        for (Participant participant : onlyParticipants.getParticipants()) {
-            System.out.println(participant.getNickname());
-        }
-
         //then
         org.junit.jupiter.api.Assertions.assertAll(
                 () -> Assertions.assertThat(onlyParticipants.getParticipants().getFirst().getNickname()).isEqualTo("우가"),

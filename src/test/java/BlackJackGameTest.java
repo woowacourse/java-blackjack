@@ -1,4 +1,5 @@
 import game.BlackJackGame;
+import java.util.ArrayList;
 import participant.Participant;
 import participant.Participants;
 import java.util.List;
@@ -62,6 +63,21 @@ class BlackJackGameTest {
 
         //then
         Assertions.assertThat(blackJackGame.getParticipants().getParticipants().getFirst().getCardDeck().getCards().size()).isEqualTo(2);
+    }
+
+    @Test
+    void 딜러_뽑기() {
+        //given
+        List<String> nicknames = new ArrayList<>();
+
+        BlackJackGame blackJackGame = new BlackJackGame(nicknames);
+
+        //when
+        int count = blackJackGame.drawDealer();
+
+        //then
+        Assertions.assertThat(count).isEqualTo(6);
+
     }
 
 }

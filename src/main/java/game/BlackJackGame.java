@@ -15,7 +15,6 @@ public class BlackJackGame {
     public BlackJackGame(final List<String> participantNames) {
         this.gameCardDeck = GameCardDeck.generateFullPlayingCard();
         this.participants = registerParticipants(participantNames);
-        shuffleGameCards();
     }
 
     private Participants registerParticipants(final List<String> participantNames) {
@@ -36,6 +35,7 @@ public class BlackJackGame {
     }
 
     public void drawTwoCards() {
+        shuffleGameCards();
         participants.drawTwoCards(gameCardDeck);
     }
 
