@@ -34,7 +34,7 @@ class BetAmountTest {
     @Test
     void createBetAmountTest_ExceptionWhenOver1000000() {
         // given
-        int money = 900;
+        int money = 1_000_001;
 
         // when, then
         assertThatCode(() -> new BetAmount(money))
