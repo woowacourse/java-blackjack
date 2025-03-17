@@ -62,6 +62,14 @@ public class Gamblers {
         return sum.negative();
     }
 
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
     private void validatePlayers(Collection<Player> players) {
         if (players.isEmpty()) {
             throw new IllegalArgumentException("플레이어가 최소 1명은 있어야 합니다.");
