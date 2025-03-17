@@ -26,7 +26,8 @@ class DealerTest {
             }
         });
 
-        Dealer dealer = Dealer.prepareGame(deck);
+        Dealer dealer = new Dealer();
+        dealer.prepareGame(deck.draw(), deck.draw());
 
         // when
         boolean result = dealer.canReceiveCard();
@@ -50,7 +51,8 @@ class DealerTest {
             }
         });
 
-        Dealer dealer = Dealer.prepareGame(deck);
+        Dealer dealer = new Dealer();
+        dealer.prepareGame(deck.draw(), deck.draw());
 
         // when
         boolean result = dealer.canReceiveCard();

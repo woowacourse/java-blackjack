@@ -1,8 +1,5 @@
 package card;
 
-import card.Card;
-import card.CardNumber;
-import card.CardType;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
