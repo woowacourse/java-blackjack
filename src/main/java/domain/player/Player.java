@@ -35,11 +35,11 @@ public abstract class Player {
     }
 
     public void openCards(int count) {
-        cards().openedCards(count);
+        cards().openCards(count);
     }
 
     public Cards openedCards() {
-        return cards().openedCards();
+        return cards().getOpenedCards();
     }
 
     public Cards cards() {

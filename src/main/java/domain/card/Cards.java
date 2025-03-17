@@ -44,7 +44,7 @@ public class Cards {
         cards.add(card);
     }
 
-    public void openedCards(int count) {
+    public void openCards(int count) {
         while (count > 0) {
             Card willBeOpened = findNotOpenedCard();
             willBeOpened.open();
@@ -59,7 +59,7 @@ public class Cards {
                 .orElseThrow(() -> new IllegalStateException("오픈할 카드가 없습니다."));
     }
 
-    public Cards openedCards() {
+    public Cards getOpenedCards() {
         return new Cards(
                 cards.stream()
                         .filter(Card::isOpened)
