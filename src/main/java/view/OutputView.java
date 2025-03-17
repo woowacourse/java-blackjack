@@ -13,7 +13,6 @@ import java.util.Map;
 
 public class OutputView {
     private static final String BASIC_FORM = "%s: %s";
-
     private static final String DEALER_NICKNAME = "딜러";
 
     private static final Map<String, String> MATCH_FORMAT = Map.of(
@@ -47,6 +46,7 @@ public class OutputView {
     );
 
     public static void printDivisionStart(Dealer dealer, List<Player> players) {
+
         List<String> playerNicknames = players.stream()
                 .map(Player::getNickname)
                 .toList();

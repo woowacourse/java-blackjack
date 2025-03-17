@@ -49,7 +49,6 @@ public class PlayerTest {
     @DisplayName("게임 진행 점수 조건이 충분한 지 : true")
     void isNotEnoughScoreConditionTrue(List<Card> cards) {
         //given
-
         Player player = new Player("pobi");
         divideCardToPlayer(cards, player);
 
