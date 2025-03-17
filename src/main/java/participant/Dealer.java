@@ -1,8 +1,11 @@
 package participant;
 
 import card.Card;
+import game.GameResult;
 import game.Playable;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Dealer implements Playable {
 
@@ -47,6 +50,15 @@ public class Dealer implements Playable {
     @Override
     public List<Card> getCards() {
         return participant.getCards();
+    }
+
+    public Map<Player, GameResult> decideGameResults(Players players) {
+        return players.getPlayers().stream()
+                .collect(Collectors.toMap(
+                        player -> player,
+                        player -> GameResult.judgePlayerResult(this, player),
+                        (oldValue, newValue) -> newValue
+                ));
     }
 
     public Card getLastCard() {
