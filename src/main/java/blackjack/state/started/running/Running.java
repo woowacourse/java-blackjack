@@ -2,6 +2,7 @@ package blackjack.state.started.running;
 
 import blackjack.card.Hand;
 import blackjack.state.started.Started;
+import java.math.BigDecimal;
 
 public abstract class Running extends Started {
 
@@ -10,7 +11,7 @@ public abstract class Running extends Started {
     }
 
     @Override
-    public double getProfit(int bettingAmount) {
+    public BigDecimal getProfit(BigDecimal bettingAmount) {
         throw new IllegalStateException("[ERROR] 아직 게임이 끝나지 않아 수익을 구할 수 없습니다.");
     }
 

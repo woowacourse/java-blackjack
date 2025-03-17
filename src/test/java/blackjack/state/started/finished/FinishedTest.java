@@ -7,6 +7,7 @@ import blackjack.card.Card;
 import blackjack.card.CardRank;
 import blackjack.card.CardSymbol;
 import fixture.HandFixture;
+import java.math.BigDecimal;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -32,17 +33,17 @@ class FinishedTest {
                 Arguments.of(
                         new Blackjack(HandFixture.createHand(Card.of(CardSymbol.SPADE, CardRank.ACE),
                                 Card.of(CardSymbol.SPADE, CardRank.JACK))),
-                        1500
+                        BigDecimal.valueOf(1500)
                 ),
                 Arguments.of(
                         new Stay(HandFixture.createHand(Card.of(CardSymbol.SPADE, CardRank.KING),
                                 Card.of(CardSymbol.SPADE, CardRank.JACK))),
-                        1000
+                        BigDecimal.valueOf(1000)
                 ),
                 Arguments.of(
                         new Bust(HandFixture.createHand(Card.of(CardSymbol.SPADE, CardRank.ACE),
                                 Card.of(CardSymbol.SPADE, CardRank.JACK))),
-                        1000
+                        BigDecimal.valueOf(1000)
                 ));
     }
 
@@ -85,15 +86,15 @@ class FinishedTest {
     @DisplayName("Finished 상태에서 getProfit은 구현체에 맞는 수익을 반환한다.")
     @ParameterizedTest
     @MethodSource("provideInstancesOfFinishedWithExpected")
-    void getProfit(Finished finishedState, double expected) {
+    void getProfit(Finished finishedState, BigDecimal expected) {
         //given
-        int bettingAmount = 1000;
+        BigDecimal bettingAmount = BigDecimal.valueOf(1000);
 
         // when
-        double actual = finishedState.getProfit(bettingAmount);
+        BigDecimal actual = finishedState.getProfit(bettingAmount);
 
         // then
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual.compareTo(expected)).isZero();
     }
 
 }

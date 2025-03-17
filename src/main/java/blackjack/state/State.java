@@ -2,6 +2,7 @@ package blackjack.state;
 
 import blackjack.card.Card;
 import blackjack.card.Hand;
+import java.math.BigDecimal;
 
 public interface State {
     State hit(Card card);
@@ -10,7 +11,7 @@ public interface State {
 
     boolean isFinished();
 
-    double getProfit(int bettingAmount);
+    BigDecimal getProfit(BigDecimal bettingAmount);
 
     Hand getHand();
 }

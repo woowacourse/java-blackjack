@@ -4,6 +4,7 @@ import blackjack.card.Card;
 import blackjack.card.Hand;
 import blackjack.state.State;
 import blackjack.state.started.Started;
+import java.math.BigDecimal;
 
 public abstract class Finished extends Started {
     public Finished(Hand hand) {
@@ -26,8 +27,8 @@ public abstract class Finished extends Started {
     }
 
     @Override
-    public double getProfit(int bettingAmount) {
-        return getProfitRate() * bettingAmount;
+    public BigDecimal getProfit(BigDecimal bettingAmount) {
+        return bettingAmount.multiply(BigDecimal.valueOf(getProfitRate()));
     }
 
     public abstract double getProfitRate();

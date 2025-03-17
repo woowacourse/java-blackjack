@@ -2,6 +2,7 @@ package blackjack.gamer;
 
 import blackjack.card.Hand;
 import blackjack.result.BlackjackMatchResult;
+import java.math.BigDecimal;
 
 public class Player extends Gamer {
     private final Nickname nickname;
@@ -13,8 +14,8 @@ public class Player extends Gamer {
         this.betting = betting;
     }
 
-    public double getProfit(BlackjackMatchResult result) {
-        return (result.getRatio() * state.getProfit(betting.getAmount()));
+    public BigDecimal getProfit(BlackjackMatchResult result) {
+        return state.getProfit(betting.getAmount()).multiply(BigDecimal.valueOf(result.getRatio()));
     }
 
     @Override

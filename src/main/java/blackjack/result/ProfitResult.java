@@ -1,22 +1,23 @@
 package blackjack.result;
 
 import blackjack.gamer.Player;
+import java.math.BigDecimal;
 import java.util.Map;
 
 public class ProfitResult {
-    private final int dealerProfit;
-    private final Map<Player, Integer> playerProfits;
+    private final BigDecimal dealerProfit;
+    private final Map<Player, BigDecimal> playerProfits;
 
-    public ProfitResult(int dealerProfit, Map<Player, Integer> playerProfits) {
+    public ProfitResult(BigDecimal dealerProfit, Map<Player, BigDecimal> playerProfits) {
         this.dealerProfit = dealerProfit;
         this.playerProfits = playerProfits;
     }
 
-    public int getDealerProfit() {
+    public BigDecimal getDealerProfit() {
         return dealerProfit;
     }
 
-    public Map<Player, Integer> getPlayerProfits() {
+    public Map<Player, BigDecimal> getPlayerProfits() {
         return playerProfits;
     }
 }

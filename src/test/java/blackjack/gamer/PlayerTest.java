@@ -11,6 +11,7 @@ import blackjack.result.BlackjackMatchResult;
 import fixture.BettingFixture;
 import fixture.CardDeckFixture;
 import fixture.NicknameFixture;
+import java.math.BigDecimal;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,23 +24,23 @@ class PlayerTest {
 
     public static Stream<Arguments> provideResultAndExpectedForBlackjack() {
         return Stream.of(
-                Arguments.of(BlackjackMatchResult.WIN, 1500),
-                Arguments.of(BlackjackMatchResult.DRAW, 0)
+                Arguments.of(BlackjackMatchResult.WIN, BigDecimal.valueOf(1500)),
+                Arguments.of(BlackjackMatchResult.DRAW, BigDecimal.valueOf(0))
         );
     }
 
     public static Stream<Arguments> provideResultAndExpectedForStay() {
         return Stream.of(
-                Arguments.of(BlackjackMatchResult.WIN, 1000),
-                Arguments.of(BlackjackMatchResult.DRAW, 0),
-                Arguments.of(BlackjackMatchResult.LOSE, -1000)
+                Arguments.of(BlackjackMatchResult.WIN, BigDecimal.valueOf(1000)),
+                Arguments.of(BlackjackMatchResult.DRAW, BigDecimal.valueOf(0)),
+                Arguments.of(BlackjackMatchResult.LOSE, BigDecimal.valueOf(-1000))
         );
     }
 
     public static Stream<Arguments> provideResultAndExpectedForBust() {
         return Stream.of(
-                Arguments.of(BlackjackMatchResult.DRAW, 0),
-                Arguments.of(BlackjackMatchResult.LOSE, -1000)
+                Arguments.of(BlackjackMatchResult.DRAW, BigDecimal.valueOf(0)),
+                Arguments.of(BlackjackMatchResult.LOSE, BigDecimal.valueOf(-1000))
         );
     }
 
@@ -54,7 +55,8 @@ class PlayerTest {
         );
         Hand hand = new Hand(cardDeck);
 
-        Player player = new Player(hand, NicknameFixture.createNickname("ad"), BettingFixture.createBetting(1000));
+        Player player = new Player(hand, NicknameFixture.createNickname("ad"),
+                BettingFixture.createBetting(1000));
 
         //when
         int initialSize = player.getHand().getCards().size();
@@ -68,7 +70,7 @@ class PlayerTest {
     @DisplayName("플레이어는 블랙잭으로 승리하면 베팅 금액의 1.5배의 수익, 무승부면 0배의 수익을 얻는다")
     @ParameterizedTest
     @MethodSource("provideResultAndExpectedForBlackjack")
-    void getProfitOfBlackjack(BlackjackMatchResult result, double expected) {
+    void getProfitOfBlackjack(BlackjackMatchResult result, BigDecimal expected) {
         // given
         CardDeck cardDeck = CardDeckFixture.createCardDeck(
                 Card.of(CardSymbol.SPADE, CardRank.ACE),
@@ -77,19 +79,20 @@ class PlayerTest {
 
         Hand hand = new Hand(cardDeck);
 
-        Player player = new Player(hand, NicknameFixture.createNickname("ad"), BettingFixture.createBetting(1000));
+        Player player = new Player(hand, NicknameFixture.createNickname("ad"),
+                BettingFixture.createBetting(1000));
 
         //when
-        double actual = player.getProfit(result);
+        BigDecimal actual = player.getProfit(result);
 
         // then
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual.compareTo(expected)).isZero();
     }
 
     @DisplayName("플레이어는 Stay로 승리하면 베팅 금액의 1배의 수익, 패배하면 1배의 손해, 무승부면 0배의 수익을 얻는다.")
     @ParameterizedTest
     @MethodSource("provideResultAndExpectedForStay")
-    void getProfitOfStay(BlackjackMatchResult result, double expected) {
+    void getProfitOfStay(BlackjackMatchResult result, BigDecimal expected) {
         // given
         CardDeck cardDeck = CardDeckFixture.createCardDeck(
                 Card.of(CardSymbol.SPADE, CardRank.KING),
@@ -98,20 +101,21 @@ class PlayerTest {
 
         Hand hand = new Hand(cardDeck);
 
-        Player player = new Player(hand, NicknameFixture.createNickname("ad"), BettingFixture.createBetting(1000));
+        Player player = new Player(hand, NicknameFixture.createNickname("ad"),
+                BettingFixture.createBetting(1000));
         player.stay();
 
         //when
-        double actual = player.getProfit(result);
+        BigDecimal actual = player.getProfit(result);
 
         // then
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual.compareTo(expected)).isZero();
     }
 
     @DisplayName("플레이어는 Bust로 패배하면 1배의 손해, 무승부면 0배의 수익을 얻는다.")
     @ParameterizedTest
     @MethodSource("provideResultAndExpectedForBust")
-    void getProfitOfBust(BlackjackMatchResult result, double expected) {
+    void getProfitOfBust(BlackjackMatchResult result, BigDecimal expected) {
         // given
         CardDeck cardDeck = CardDeckFixture.createCardDeck(
                 Card.of(CardSymbol.SPADE, CardRank.EIGHT),
@@ -121,14 +125,15 @@ class PlayerTest {
 
         Hand hand = new Hand(cardDeck);
 
-        Player player = new Player(hand, NicknameFixture.createNickname("ad"), BettingFixture.createBetting(1000));
+        Player player = new Player(hand, NicknameFixture.createNickname("ad"),
+                BettingFixture.createBetting(1000));
         player.hit(cardDeck);
 
         //when
-        double actual = player.getProfit(result);
+        BigDecimal actual = player.getProfit(result);
 
         // then
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual.compareTo(expected)).isZero();
     }
 
 

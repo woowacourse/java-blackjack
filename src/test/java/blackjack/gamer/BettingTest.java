@@ -2,6 +2,7 @@ package blackjack.gamer;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import java.math.BigDecimal;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +14,7 @@ public class BettingTest {
         int bettingAmount = 999;
 
         // when // then
-        assertThatCode(() -> new Betting(bettingAmount))
+        assertThatCode(() -> new Betting(BigDecimal.valueOf(bettingAmount)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageStartingWith("[ERROR]");
     }

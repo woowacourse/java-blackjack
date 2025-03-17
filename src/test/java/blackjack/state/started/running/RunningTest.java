@@ -8,6 +8,7 @@ import blackjack.card.CardRank;
 import blackjack.card.CardSymbol;
 import blackjack.card.Hand;
 import fixture.HandFixture;
+import java.math.BigDecimal;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +22,7 @@ class RunningTest {
         Hit hitState = new Hit(hand);
 
         // when // then
-        assertThatCode(() -> hitState.getProfit(1000))
+        assertThatCode(() -> hitState.getProfit(BigDecimal.valueOf(1000)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageStartingWith("[ERROR]");
     }

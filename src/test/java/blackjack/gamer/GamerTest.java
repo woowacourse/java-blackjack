@@ -23,7 +23,8 @@ public class GamerTest {
                 Arguments.of(
                         new Player(HandFixture.createHand(Card.of(CardSymbol.SPADE, CardRank.ACE),
                                 Card.of(CardSymbol.SPADE, CardRank.JACK)),
-                                NicknameFixture.createNickname("ad"), BettingFixture.createBetting(1000)),
+                                NicknameFixture.createNickname("ad"),
+                                BettingFixture.createBetting(1000)),
                         new Dealer(HandFixture.createHand(Card.of(CardSymbol.SPADE, CardRank.ACE),
                                 Card.of(CardSymbol.SPADE, CardRank.JACK)))
                 ));

@@ -65,10 +65,10 @@ public class OutputView {
 
     public void printProfitResult(ProfitResult profitResult) {
         System.out.println("\n## 최종 수익");
-        System.out.printf("딜러: %d원\n", profitResult.getDealerProfit());
+        System.out.printf("딜러: %d원\n", profitResult.getDealerProfit().longValue());
 
         profitResult.getPlayerProfits().forEach(
-                (player, profit) -> System.out.printf("%s: %d원\n", player.getNickname(), profit)
+                (player, profit) -> System.out.printf("%s: %d원\n", player.getNickname(), profit.longValue())
         );
     }
 }

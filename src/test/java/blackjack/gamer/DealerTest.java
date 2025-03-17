@@ -14,6 +14,7 @@ import fixture.BettingFixture;
 import fixture.CardDeckFixture;
 import fixture.HandFixture;
 import fixture.NicknameFixture;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -43,17 +44,17 @@ class DealerTest {
                 Arguments.of(new Player(HandFixture.createHand(Card.of(CardSymbol.SPADE, CardRank.EIGHT),
                                 Card.of(CardSymbol.SPADE, CardRank.EIGHT)),
                                 NicknameFixture.createNickname("ad"), BettingFixture.createBetting(1000)),
-                        -1000
+                        BigDecimal.valueOf(-1000)
                 ),
                 Arguments.of(new Player(HandFixture.createHand(Card.of(CardSymbol.SPADE, CardRank.EIGHT),
                                 Card.of(CardSymbol.SPADE, CardRank.JACK)),
                                 NicknameFixture.createNickname("ad"), BettingFixture.createBetting(1000)),
-                        1000
+                        BigDecimal.valueOf(1000)
                 ),
                 Arguments.of(new Player(HandFixture.createHand(Card.of(CardSymbol.SPADE, CardRank.EIGHT),
                                 Card.of(CardSymbol.SPADE, CardRank.NINE)),
                                 NicknameFixture.createNickname("ad"), BettingFixture.createBetting(1000)),
-                        0
+                        BigDecimal.valueOf(0)
                 )
         );
     }
@@ -77,7 +78,7 @@ class DealerTest {
     @DisplayName("딜러는 플레이어의 수익 결과를 도출한다.")
     @ParameterizedTest
     @MethodSource("providePlayersAndExpected")
-    void determineMatchResult(Player player, int expected) {
+    void determineMatchResult(Player player, BigDecimal expected) {
         // given
         CardDeck cardDeck = CardDeckFixture.createCardDeck(
                 Card.of(CardSymbol.SPADE, CardRank.SEVEN),
@@ -90,9 +91,9 @@ class DealerTest {
 
         // when
         ProfitResult profitResult = dealer.calculateProfits(List.of(player));
-        int actual = profitResult.getPlayerProfits().get(player);
+        BigDecimal actual = profitResult.getPlayerProfits().get(player);
 
         // then
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual.compareTo(expected)).isZero();
     }
 }

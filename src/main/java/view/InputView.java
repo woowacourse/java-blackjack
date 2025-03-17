@@ -2,6 +2,7 @@ package view;
 
 import blackjack.gamer.Nickname;
 import blackjack.gamer.Player;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -52,17 +53,18 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public Integer readBettingAmount(Nickname nickname) {
+    public BigDecimal readBettingAmount(Nickname nickname) {
         System.out.printf("\n%s의 배팅 금액은?\n", nickname.getName());
-        return getNextInt();
+        return getBettingAmount();
     }
 
-    private int getNextInt() {
+    private BigDecimal getBettingAmount() {
         try {
-            String value = readLine();
-            return Integer.parseInt(value);
+            return new BigDecimal(scanner.nextLine());
         } catch (Exception e) {
-            throw new IllegalArgumentException("[ERROR] 금액을 알맞게 입력해주세요.");
+            throw new IllegalArgumentException("[ERROR] 베팅 금액을 알맞게 입력해주세요");
         }
+
     }
+
 }

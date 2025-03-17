@@ -5,6 +5,7 @@ import blackjack.card.Hand;
 import blackjack.result.BlackjackMatchResult;
 import blackjack.result.ProfitResult;
 import blackjack.state.started.finished.Stay;
+import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,14 +31,14 @@ public class Dealer extends Gamer {
     }
 
     public ProfitResult calculateProfits(List<Player> players) {
-        int dealerProfit = 0;
-        Map<Player, Integer> playerProfits = new LinkedHashMap<>();
+        BigDecimal dealerProfit = BigDecimal.valueOf(0);
+        Map<Player, BigDecimal> playerProfits = new LinkedHashMap<>();
 
         for (Player player : players) {
             BlackjackMatchResult playerResult = determineMatchResultFor(player);
-            int profit = (int) player.getProfit(playerResult);
+            BigDecimal profit = player.getProfit(playerResult);
 
-            dealerProfit -= profit;
+            dealerProfit = dealerProfit.subtract(profit);
             playerProfits.put(player, profit);
         }
 
