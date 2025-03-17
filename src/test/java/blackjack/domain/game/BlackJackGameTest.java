@@ -16,6 +16,7 @@ import blackjack.domain.value.Nickname;
 import blackjack.exception.ExceptionMessage;
 import blackjack.mock.GameInputOutputMock;
 import java.util.List;
+import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -36,6 +37,28 @@ class BlackJackGameTest {
         assertThat(players)
                 .extracting(Player::getNickname)
                 .containsExactlyInAnyOrder("쿠키", "빙봉");
+    }
+
+    @Test
+    @DisplayName("플레이어의 수가 정해진 수보다 많을 경우 예외를 발생시킨다.")
+    void canValidatePlayerCount() {
+        List<Nickname> tooManyNicknames = IntStream.rangeClosed(0, GameRule.MAX_PLAYER_COUNT.getValue())
+                .mapToObj(order -> new Nickname("플레이어" + order))
+                .toList();
+
+        assertThatThrownBy(() -> blackJackGame.processPreparation(tooManyNicknames))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ExceptionMessage.INVALID_PLAYER_COUNT.getContent());
+    }
+
+    @Test
+    @DisplayName("플레이어가 중복될 경우 예외를 발생시킨다.")
+    void canValidateDuplicatedPlayer() {
+        List<Nickname> duplicatedNicknames = List.of(new Nickname("쿠키"), new Nickname("쿠키"));
+
+        assertThatThrownBy(() -> blackJackGame.processPreparation(duplicatedNicknames))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ExceptionMessage.NOT_ALLOWED_DUPLICATED_PLAYER.getContent());
     }
 
     @Test
