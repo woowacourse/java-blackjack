@@ -1,9 +1,15 @@
 package view;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
+
+import game.Blackjack;
+import money.Money;
+import paticipant.Player;
 
 public class InputView {
 	private static final String NAME_DELIMITER = ",";
@@ -24,5 +30,23 @@ public class InputView {
 		System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + System.lineSeparator(), playerName);
 		final String input = sc.nextLine();
 		return Objects.equals(input, "y");
+	}
+
+	public Map<Player, Money> readPlayersMoney(final Blackjack blackjack) {
+		final Map<Player, Money> playersMoney = new LinkedHashMap<>();
+		for (final Player player : blackjack.getPlayers().getPlayers()) {
+			System.out.printf("%s의 배팅 금액은?" + System.lineSeparator(), player.getName());
+			final int input = readInt();
+			playersMoney.put(player, new Money(input));
+		}
+		return playersMoney;
+	}
+
+	private int readInt() {
+		try {
+			return Integer.parseInt(sc.nextLine());
+		} catch (final NumberFormatException e) {
+			return 0;
+		}
 	}
 }
