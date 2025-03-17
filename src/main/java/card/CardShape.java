@@ -5,5 +5,10 @@ public enum CardShape {
     SPADE,
     DIAMOND,
     HEART,
-    CLOVER
+    CLOVER,
+    ;
+
+    public boolean isSame(CardShape cardShape) {
+        return this.equals(cardShape);
+    }
 }
