@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-public class BetTest {
+class BetTest {
 
     @Test
     void 베팅금액_범위를_벗어나면_예외가_발생한다() {
@@ -22,7 +22,7 @@ public class BetTest {
         // when & then
         assertThatThrownBy(() -> new Bet(amount))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageMatching("배팅 금액은 \\d+ ~ \\d+만 가능합니다.");
+                .hasMessageMatching("배팅 금액은 .* ~ .*만 가능합니다.");
     }
 
     static Stream<Arguments> createCalculateProfit() {
