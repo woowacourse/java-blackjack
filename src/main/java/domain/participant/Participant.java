@@ -6,8 +6,8 @@ import java.util.List;
 
 public class Participant {
 
-    private HandState hand;
     private final ParticipantName name;
+    private HandState hand;
 
     public Participant(ParticipantName name, List<TrumpCard> initCards) {
         this.name = name;

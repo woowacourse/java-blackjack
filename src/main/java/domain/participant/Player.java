@@ -51,7 +51,7 @@ public class Player {
         return participant.isFinished();
     }
 
-    public boolean isNameMatch(ParticipantName participantName){
+    public boolean isNameMatch(ParticipantName participantName) {
         return name().isMatch(participantName);
     }
 }

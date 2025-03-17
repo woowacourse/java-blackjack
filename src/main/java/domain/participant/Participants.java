@@ -32,33 +32,9 @@ public class Participants {
         }
     }
 
-    private List<TrumpCard> drawInitCard(Deck deck) {
-        List<TrumpCard> initCards = new ArrayList<>();
-        for (int i = 0; i < INIT_CARD_COUNT; i++) {
-            initCards.add(deck.drawCard());
-        }
-        return initCards;
-    }
-
-    private List<Player> createPlayers(List<ParticipantName> names, Map<ParticipantName, Bet> playerBets, Deck deck) {
-        List<Player> players = new ArrayList<>();
-        IntStream.range(0, names.size())
-                .forEach(index -> {
-                    ParticipantName name = names.get(index);
-                    players.add(new Player(name, playerBets.get(name), drawInitCard(deck)));
-                });
-        return players;
-    }
-
     private void validatePlayerNames(List<ParticipantName> names) {
         validateDuplicateDealerName(names);
         validateUniqueName(names);
-    }
-
-    private void validateUniqueName(List<ParticipantName> names) {
-        if (names.size() != new HashSet<>(names).size()) {
-            throw new IllegalArgumentException(DUPLICATE_PLAYER_NAME);
-        }
     }
 
     private void validateDuplicateDealerName(List<ParticipantName> names) {
@@ -69,6 +45,27 @@ public class Participants {
             throw new IllegalArgumentException(DUPLICATE_DEALER_NAME);
         }
     }
+
+    private void validateUniqueName(List<ParticipantName> names) {
+        if (names.size() != new HashSet<>(names).size()) {
+            throw new IllegalArgumentException(DUPLICATE_PLAYER_NAME);
+        }
+    }
+
+    private List<TrumpCard> drawStartCards(Deck deck) {
+        List<TrumpCard> startCards = new ArrayList<>();
+        for (int i = 0; i < INIT_CARD_COUNT; i++) {
+            startCards.add(deck.drawCard());
+        }
+        return startCards;
+    }
+
+    private List<Player> createPlayers(List<ParticipantName> names, Map<ParticipantName, Bet> playerBets, Deck deck) {
+        return names.stream()
+                .map(name -> new Player(name, playerBets.get(name), drawStartCards(deck)))
+                .toList();
+    }
+
 
     private Player findPlayer(ParticipantName name) {
         return players.stream()
