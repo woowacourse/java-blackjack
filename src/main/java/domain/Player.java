@@ -5,8 +5,8 @@ public class Player extends Participant {
     private final Name name;
     private final BettingMoney bettingMoney;
 
-    public Player(Name name, BettingMoney bettingMoney, Hand hand) {
-        super(hand);
+    public Player(Name name, BettingMoney bettingMoney, State state) {
+        super(state);
         validate(name, bettingMoney);
         this.name = name;
         this.bettingMoney = bettingMoney;
@@ -28,10 +28,5 @@ public class Player extends Participant {
 
     public BettingMoney getBettingMoney() {
         return bettingMoney;
-    }
-
-    @Override
-    public boolean isHitAllowed(Rule rule) {
-        return rule.isPlayerHitAllowed(super.hand.getCards());
     }
 }

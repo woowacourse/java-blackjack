@@ -7,65 +7,72 @@ import java.util.stream.Collectors;
 
 public class BlackJackGame {
 
-    public static final int INITIAL_CARD_COUNT = 2;
-
     private final Deck deck;
     private final Dealer dealer;
-    private final Rule rule;
+    private final Map<Name, Player> players;
 
-    public BlackJackGame(Deck deck, Dealer dealer, Rule rule) {
-        validate(deck, dealer, rule);
+    public BlackJackGame(Deck deck, Dealer dealer, Map<Name, Player> players) {
+        validate(deck, dealer, players);
         this.deck = deck;
         this.dealer = dealer;
-        this.rule = rule;
+        this.players = players;
     }
 
-    private void validate(Deck deck, Dealer dealer, Rule rule) {
-        validateNotNull(deck, dealer, rule);
+    private void validate(Deck deck, Dealer dealer, Map<Name, Player> players) {
+        validateNotNull(deck, dealer, players);
     }
 
-    private void validateNotNull(Deck deck, Dealer dealer, Rule rule) {
-        if (deck == null || dealer == null || rule == null) {
-            throw new IllegalArgumentException("블랙잭게임은 덱과 딜러와 룰을 가지고 있어야합니다.");
+    private void validateNotNull(Deck deck, Dealer dealer, Map<Name, Player> players) {
+        if (deck == null || dealer == null || players == null) {
+            throw new IllegalArgumentException("블랙잭게임은 덱과 딜러와 룰과 플레이어들을 가지고 있어야합니다.");
         }
     }
 
-    public static BlackJackGame create() {
-        Deck deck = new Deck(Arrays.asList(TrumpCard.values()), new DefaultShuffle());
-        Dealer dealer = new Dealer(new Hand(deck.drawMultiple(INITIAL_CARD_COUNT)));
-        Rule rule = new Rule();
+    public static BlackJackGame create(Map<Name, BettingMoney> playerInfos) {
+        Deck deck = new Deck(
+                Arrays.asList(TrumpCard.values()), new DefaultShuffle());
+        Dealer dealer = new Dealer(
+                Started.of(new Hand(deck.drawMultiple(Started.INITIAL_CARD_COUNT)), Score.SEVENTEEN));
+        Map<Name, Player> players = playerInfos.entrySet().stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> new Player(
+                                entry.getKey(),
+                                entry.getValue(),
+                                Started.of(
+                                        new Hand(deck.drawMultiple(Started.INITIAL_CARD_COUNT)), Score.TWENTY_ONE))));
 
-        return new BlackJackGame(deck, dealer, rule);
+        return new BlackJackGame(deck, dealer, players);
     }
 
-    public List<Player> createPlayers(Map<Name, BettingMoney> playerInfos) {
-        return playerInfos.entrySet().stream()
-                .map(entry -> new Player(
-                        entry.getKey(), entry.getValue(),
-                        new Hand(deck.drawMultiple(INITIAL_CARD_COUNT))))
-                .toList();
+    public List<TrumpCard> retrieveTrumpCards(Name playerName) {
+        validateContain(playerName);
+
+        return players.get(playerName).retrieveCards();
     }
 
     public TrumpCard retrieveDealerFirstCard() {
         return dealer.retrieveFirstCard();
     }
 
-    public boolean isPlayerHitAllowed(Player player) {
-        return player.isHitAllowed(rule);
+    public boolean isPlayerHitAllowed(Name playerName) {
+        validateContain(playerName);
+
+        return players.get(playerName).isHitAllowed();
     }
 
-    public void processPlayerHit(Player player) {
-        if (!isPlayerHitAllowed(player)) {
+    public void processPlayerHit(Name playerName) {
+        if (!isPlayerHitAllowed(playerName)) {
             throw new IllegalStateException("플레이어는 더이상 히트할 수 없습니다.");
         }
 
-        player.receiveCard(deck.draw());
+        players.get(playerName).receiveCard(deck.draw());
     }
 
     public int processDealerHit() {
         int hitCount = 0;
 
-        while (dealer.isHitAllowed(rule)) {
+        while (dealer.isHitAllowed()) {
             dealer.receiveCard(deck.draw());
             hitCount++;
         }
@@ -73,8 +80,10 @@ public class BlackJackGame {
         return hitCount;
     }
 
-    public Score calculatePlayerScore(Player player) {
-        return player.calculateScore(rule);
+    public Score calculatePlayerScore(Name playerName) {
+        validateContain(playerName);
+
+        return players.get(playerName).calculateScore();
     }
 
     public List<TrumpCard> retrieveDealerCards() {
@@ -82,17 +91,25 @@ public class BlackJackGame {
     }
 
     public Score calculateDealerScore() {
-        return dealer.calculateScore(rule);
+        return dealer.calculateScore();
     }
 
-    public Map<String, Integer> calculatePlayersRevenueAmount(List<Player> players) {
-        return players.stream().collect(
-                Collectors.toMap(Player::getName, player -> {
-                    List<TrumpCard> playerCards = player.retrieveCards();
-                    GameResult gameResult = dealer.calculateGameResult(rule, playerCards);
-                    BettingMoney bettingMoney = player.getBettingMoney();
+    public Integer calculatePlayerRevenueAmount(Name playerName) {
+        validateContain(playerName);
 
-                    return bettingMoney.calculateRevenueAmount(gameResult.getMultiple());
-                }));
+        Player player = players.get(playerName);
+        Score playerScore = player.calculateScore();
+        Score dealerScore = dealer.calculateScore();
+        GameResult gameResult = GameResult.of(playerScore, dealerScore);
+
+        BettingMoney bettingMoney = player.getBettingMoney();
+
+        return bettingMoney.calculateRevenueAmount(gameResult.getMultiple());
+    }
+
+    private void validateContain(Name playerName) {
+        if (!players.containsKey(playerName)) {
+            throw new IllegalArgumentException("플레이어가 존재하지 않습니다.");
+        }
     }
 }

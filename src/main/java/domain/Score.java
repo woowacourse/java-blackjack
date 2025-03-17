@@ -6,7 +6,7 @@ import java.util.function.BiPredicate;
 
 public enum Score {
     BLACKJACK("블랙잭", (total, cardCount) -> total == 21 && cardCount == 2, 1),
-    BUST("버스트", (total, cardCount) -> total > 21, 22),
+    BUST("버스트", (total, cardCount) -> total > 21, 23),
 
     TWENTY_ONE("21", (total, cardCount) -> total == 21, 2),
     TWENTY("20", (total, cardCount) -> total == 20, 3),

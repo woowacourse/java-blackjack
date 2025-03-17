@@ -2,10 +2,8 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -19,67 +17,89 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class BlackJackGameTest {
 
-    private Deck blackJackDeck;
+    private Deck deck;
     private Dealer dealer;
-    private Rule rule;
+    private Map<Name, Player> players;
 
     @BeforeEach
     void setUp() {
-        blackJackDeck = new Deck(Arrays.asList(TrumpCard.values()), new NoShuffle());
-        dealer = new Dealer(new Hand(List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.TWO_OF_HEARTS)));
-        rule = new Rule();
+        deck = new Deck(Arrays.asList(TrumpCard.values()), new NoShuffle());
+        dealer = new Dealer(
+                Started.of(new Hand(deck.drawMultiple(Started.INITIAL_CARD_COUNT)), Score.SEVENTEEN));
+        players = Map.of(
+                new Name("머피"), new Player(new Name("머피"), new BettingMoney(1000),
+                        Started.of(new Hand(deck.drawMultiple(Started.INITIAL_CARD_COUNT)), Score.TWENTY_ONE)),
+                new Name("매트"), new Player(new Name("매트"), new BettingMoney(2000),
+                        Started.of(new Hand(deck.drawMultiple(Started.INITIAL_CARD_COUNT)), Score.TWENTY_ONE))
+        );
     }
 
     @Nested
     class ValidCases {
 
         @Test
-        @DisplayName("플레이어가 정상적으로 생성되어야 한다.")
-        void createPlayers() {
+        @DisplayName("특정 플레이어의 카드를 가져온다")
+        void retrieveTrumpCards() {
             // given
-            BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
-            Deck originalDeck = new Deck(Arrays.asList(TrumpCard.values()), new NoShuffle());
-            Map<Name, BettingMoney> playerInfos = new LinkedHashMap<>();
-            playerInfos.put(new Name("머피"), new BettingMoney(1000));
-            playerInfos.put(new Name("매트"), new BettingMoney(1000));
+            Name playerName = new Name("머피");
+            Deck deck = new Deck(List.of(TrumpCard.values()), new NoShuffle());
+            Dealer dealer = new Dealer(
+                    new Hit(new Hand(List.of(TrumpCard.TWO_OF_DIAMONDS, TrumpCard.FOUR_OF_SPADES)), Score.TWENTY_ONE));
+            Player player = new Player(playerName, new BettingMoney(1000),
+                    new Hit(new Hand(List.of(TrumpCard.FIVE_OF_CLUBS, TrumpCard.SIX_OF_HEARTS)), Score.TWENTY_ONE));
+            BlackJackGame blackJackGame = new BlackJackGame(deck, dealer, Map.of(playerName, player));
 
             // when
-            List<Player> players = blackJackGame.createPlayers(playerInfos);
+            List<TrumpCard> playerCards = blackJackGame.retrieveTrumpCards(playerName);
 
             // then
-            assertSoftly(softly -> {
-                softly.assertThat(players.getFirst().getName()).isEqualTo("머피");
-                softly.assertThat(players.getFirst().getBettingMoney()).isEqualTo(new BettingMoney(1000));
-                softly.assertThat(players.getFirst().retrieveCards()).isEqualTo(
-                        originalDeck.drawMultiple(2));
-                softly.assertThat(players.getLast().getName()).isEqualTo("매트");
-                softly.assertThat(players.getLast().getBettingMoney()).isEqualTo(new BettingMoney(1000));
-                softly.assertThat(players.getLast().retrieveCards()).isEqualTo(
-                        originalDeck.drawMultiple(2));
-            });
+            assertThat(playerCards).hasSize(2);
+        }
+
+        @Test
+        @DisplayName("딜러의 첫 번째 카드를 가져온다")
+        void retrieveDealerFirstCard() {
+            // given
+            Deck deck = new Deck(List.of(TrumpCard.values()), new NoShuffle());
+            Dealer dealer = new Dealer(
+                    new Hit(new Hand(List.of(TrumpCard.THREE_OF_HEARTS, TrumpCard.NINE_OF_DIAMONDS)),
+                            Score.TWENTY_ONE));
+            BlackJackGame blackJackGame = new BlackJackGame(deck, dealer, Map.of());
+
+            // when
+            TrumpCard firstCard = blackJackGame.retrieveDealerFirstCard();
+
+            // then
+            assertThat(firstCard).isEqualTo(TrumpCard.THREE_OF_HEARTS);
         }
 
         @ParameterizedTest
-        @DisplayName("플레이어의 히트 판단 여부를 판단한다")
-        @MethodSource("provideDealerHitAllowedCases")
-        void isPlayerHitAllowed(List<TrumpCard> cards) {
+        @DisplayName("플레이어의 히트 가능 여부를 확인한다")
+        @MethodSource("providePlayerHitAllowedCases")
+        void isPlayerHitAllowed(State state, boolean expected) {
             // given
-            BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
-            Player player = new Player(new Name("머피"), new BettingMoney(1000), new Hand(cards));
+            Name playerName = new Name("머피");
+            players = Map.of(playerName, new Player(playerName, new BettingMoney(1000), state));
+            BlackJackGame blackJackGame = new BlackJackGame(deck, dealer, players);
 
             // when
-            boolean result = blackJackGame.isPlayerHitAllowed(player);
+            boolean result = blackJackGame.isPlayerHitAllowed(playerName);
 
             // then
-            assertThat(result).isTrue();
+            assertThat(result).isEqualTo(expected);
         }
 
-        static Stream<Arguments> provideDealerHitAllowedCases() {
+        static Stream<Arguments> providePlayerHitAllowedCases() {
             return Stream.of(
-                    Arguments.of(List.of(TrumpCard.FIVE_OF_CLUBS, TrumpCard.SIX_OF_HEARTS)),
-                    Arguments.of(List.of(TrumpCard.SEVEN_OF_DIAMONDS, TrumpCard.TWO_OF_SPADES)),
-                    Arguments.of(
-                            List.of(TrumpCard.THREE_OF_HEARTS, TrumpCard.THREE_OF_DIAMONDS, TrumpCard.TWO_OF_SPADES))
+                    Arguments.of(new Hit(new Hand(List.of(TrumpCard.FIVE_OF_CLUBS, TrumpCard.SIX_OF_HEARTS)),
+                            Score.TWENTY_ONE), true),
+                    Arguments.of(new Stay(new Hand(List.of(TrumpCard.SEVEN_OF_DIAMONDS, TrumpCard.TWO_OF_SPADES))),
+                            false),
+                    Arguments.of(new BlackJack(new Hand(List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.JACK_OF_CLUBS))),
+                            false),
+                    Arguments.of(new Bust(new Hand(
+                                    List.of(TrumpCard.KING_OF_DIAMONDS, TrumpCard.QUEEN_OF_SPADES, TrumpCard.TWO_OF_HEARTS))),
+                            false)
             );
         }
 
@@ -87,22 +107,25 @@ class BlackJackGameTest {
         @DisplayName("플레이어가 히트하면 카드가 추가된다.")
         void processPlayerHit() {
             // given
-            BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
-            Player player = new Player(new Name("머피"), new BettingMoney(1000),
-                    new Hand(List.of(TrumpCard.TWO_OF_DIAMONDS, TrumpCard.FIVE_OF_SPADES)));
+            Name playerName = new Name("머피");
+            players = Map.of(
+                    playerName, new Player(playerName, new BettingMoney(1000),
+                            Started.of(new Hand(List.of(TrumpCard.TWO_OF_DIAMONDS, TrumpCard.FIVE_OF_SPADES)),
+                                    Score.TWENTY_ONE)));
+            BlackJackGame blackJackGame = new BlackJackGame(deck, dealer, players);
 
             // when
-            blackJackGame.processPlayerHit(player);
+            blackJackGame.processPlayerHit(playerName);
 
             // then
-            assertThat(player.retrieveCards()).hasSize(3);
+            assertThat(blackJackGame.retrieveTrumpCards(playerName)).hasSize(3);
         }
 
         @Test
         @DisplayName("딜러가 히트하면 적절한 횟수만큼 카드가 추가된다.")
         void processDealerHit() {
             // given
-            BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
+            BlackJackGame blackJackGame = new BlackJackGame(deck, dealer, players);
             int initialCards = dealer.retrieveCards().size();
 
             // when
@@ -116,12 +139,15 @@ class BlackJackGameTest {
         @DisplayName("플레이어의 점수를 올바르게 계산한다.")
         void calculatePlayerScore() {
             // given
-            BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
-            List<TrumpCard> cards = List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.KING_OF_HEARTS);
-            Player player = new Player(new Name("머피"), new BettingMoney(1000), new Hand(cards));
+            Name playerName = new Name("머피");
+            players = Map.of(
+                    playerName, new Player(playerName, new BettingMoney(1000),
+                            Started.of(new Hand(List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.JACK_OF_CLUBS)),
+                                    Score.TWENTY_ONE)));
+            BlackJackGame blackJackGame = new BlackJackGame(deck, dealer, players);
 
             // when
-            Score score = blackJackGame.calculatePlayerScore(player);
+            Score score = blackJackGame.calculatePlayerScore(playerName);
 
             // then
             assertThat(score).isEqualTo(Score.BLACKJACK);
@@ -132,9 +158,9 @@ class BlackJackGameTest {
         void retrieveDealerCards() {
             // given
             List<TrumpCard> cards = List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.KING_OF_HEARTS);
-            Dealer dealer = new Dealer(new Hand(cards));
+            Dealer dealer = new Dealer(Started.of(new Hand(cards), Score.TWENTY_ONE));
 
-            BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
+            BlackJackGame blackJackGame = new BlackJackGame(deck, dealer, players);
 
             // when
             List<TrumpCard> dealerCards = blackJackGame.retrieveDealerCards();
@@ -148,9 +174,9 @@ class BlackJackGameTest {
         void calculateDealerScore() {
             // given
             List<TrumpCard> cards = List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.KING_OF_HEARTS);
-            Dealer dealer = new Dealer(new Hand(cards));
+            Dealer dealer = new Dealer(Started.of(new Hand(cards), Score.TWENTY_ONE));
 
-            BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
+            BlackJackGame blackJackGame = new BlackJackGame(deck, dealer, players);
 
             // when
             Score score = blackJackGame.calculateDealerScore();
@@ -163,49 +189,61 @@ class BlackJackGameTest {
         @DisplayName("플레이어들의 수익을 계산한다.")
         void calculatePlayersRevenueAmount() {
             // given
-            Dealer dealer = new Dealer(new Hand(List.of(TrumpCard.SEVEN_OF_DIAMONDS, TrumpCard.KING_OF_HEARTS)));
-            BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
-
-            Player firstPlayer = new Player(new Name("머피"), new BettingMoney(1000),
-                    new Hand(List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.JACK_OF_HEARTS)));
-            Player secondPlayer = new Player(new Name("매트"), new BettingMoney(2000),
-                    new Hand(List.of(TrumpCard.NINE_OF_CLUBS, TrumpCard.SEVEN_OF_DIAMONDS)));
-            List<Player> players = List.of(firstPlayer, secondPlayer);
+            Name playerName = new Name("머피");
+            players = Map.of(
+                    playerName, new Player(playerName, new BettingMoney(1000),
+                            Started.of(new Hand(List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.JACK_OF_CLUBS)),
+                                    Score.TWENTY_ONE)));
+            BlackJackGame blackJackGame = new BlackJackGame(deck, dealer, players);
 
             // when
-            Map<String, Integer> playersRevenueAmount = blackJackGame.calculatePlayersRevenueAmount(players);
+            Integer playerRevenueAmount = blackJackGame.calculatePlayerRevenueAmount(playerName);
 
             // then
-            assertSoftly(softly -> {
-                softly.assertThat(playersRevenueAmount.get(firstPlayer.getName())).isEqualTo(1500);
-                softly.assertThat(playersRevenueAmount.get(secondPlayer.getName())).isEqualTo(-2000);
-            });
+            assertThat(playerRevenueAmount).isEqualTo(1500);
         }
     }
 
     @Nested
     class InvalidCases {
 
-        @ParameterizedTest
-        @DisplayName("플레이어가 히트 할 수 없다면 히트를 할 수 없다.")
-        @MethodSource("provideHitNotAllowedCases")
-        void processPlayerHit(List<TrumpCard> cards) {
+        @Test
+        @DisplayName("존재하지 않는 플레이어를 조회하면 예외가 발생한다")
+        void validateContain() {
             // given
-            BlackJackGame blackJackGame = new BlackJackGame(blackJackDeck, dealer, rule);
-            Player player = new Player(new Name("머피"), new BettingMoney(1000), new Hand(cards));
+            Name nonExistentPlayer = new Name("존재하지 않는 플레이어");
+            Deck deck = new Deck(List.of(TrumpCard.values()), new NoShuffle());
+            Dealer dealer = new Dealer(
+                    new Hit(new Hand(List.of(TrumpCard.SEVEN_OF_CLUBS, TrumpCard.FOUR_OF_SPADES)), Score.TWENTY_ONE));
+            BlackJackGame blackJackGame = new BlackJackGame(deck, dealer, Map.of());
 
             // when & then
-            assertThatThrownBy(() -> blackJackGame.processPlayerHit(player))
+            assertThatThrownBy(() -> blackJackGame.retrieveTrumpCards(nonExistentPlayer))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("플레이어가 존재하지 않습니다.");
+        }
+
+        @ParameterizedTest
+        @DisplayName("플레이어가 히트 할 수 없다면 히트를 시도하면 예외가 발생한다")
+        @MethodSource("provideHitNotAllowedCases")
+        void processPlayerHit(State state) {
+            // given
+            Name playerName = new Name("머피");
+            players = Map.of(playerName, new Player(playerName, new BettingMoney(1000), state));
+            BlackJackGame blackJackGame = new BlackJackGame(deck, dealer, players);
+
+            // when & then
+            assertThatThrownBy(() -> blackJackGame.processPlayerHit(playerName))
                     .isInstanceOf(IllegalStateException.class)
                     .hasMessage("플레이어는 더이상 히트할 수 없습니다.");
         }
 
         static Stream<Arguments> provideHitNotAllowedCases() {
             return Stream.of(
-                    Arguments.of(List.of(TrumpCard.TEN_OF_SPADES, TrumpCard.ACE_OF_HEARTS)),
-                    Arguments.of(
-                            List.of(TrumpCard.KING_OF_DIAMONDS, TrumpCard.QUEEN_OF_SPADES, TrumpCard.TWO_OF_HEARTS)),
-                    Arguments.of(List.of(TrumpCard.JACK_OF_CLUBS, TrumpCard.KING_OF_HEARTS, TrumpCard.FOUR_OF_SPADES))
+                    Arguments.of(new Stay(new Hand(List.of(TrumpCard.TEN_OF_SPADES, TrumpCard.ACE_OF_HEARTS)))),
+                    Arguments.of(new BlackJack(new Hand(List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.QUEEN_OF_SPADES)))),
+                    Arguments.of(new Bust(new Hand(
+                            List.of(TrumpCard.JACK_OF_CLUBS, TrumpCard.KING_OF_HEARTS, TrumpCard.FOUR_OF_SPADES))))
             );
         }
     }

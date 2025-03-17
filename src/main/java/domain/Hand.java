@@ -41,6 +41,10 @@ public class Hand {
         }
     }
 
+    public Score calculateScore() {
+        return Score.from(cards);
+    }
+
     public List<TrumpCard> getCards() {
         return List.copyOf(cards);
     }

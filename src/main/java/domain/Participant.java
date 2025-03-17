@@ -4,34 +4,36 @@ import java.util.List;
 
 public abstract class Participant {
 
-    protected final Hand hand;
+    protected State state;
 
-    protected Participant(Hand hand) {
-        validate(hand);
-        this.hand = hand;
+    protected Participant(State state) {
+        validate(state);
+        this.state = state;
     }
 
-    private void validate(Hand hand) {
-        validateNotNull(hand);
+    private void validate(State state) {
+        validateNotNull(state);
     }
 
-    private void validateNotNull(Hand hand) {
-        if (hand == null) {
-            throw new IllegalArgumentException("참가자는 손패를 가져야합니다.");
+    private void validateNotNull(State state) {
+        if (state == null) {
+            throw new IllegalArgumentException("참가자는 상태를 가져야합니다.");
         }
     }
 
+    public boolean isHitAllowed() {
+        return state.canHit();
+    }
+
     public void receiveCard(TrumpCard card) {
-        hand.addCard(card);
+        state = state.draw(card);
     }
 
     public List<TrumpCard> retrieveCards() {
-        return hand.getCards();
+        return state.retrieveCards();
     }
 
-    public Score calculateScore(Rule rule) {
-        return rule.evaluateScore(hand.getCards());
+    public Score calculateScore() {
+        return state.calculateScore();
     }
-
-    public abstract boolean isHitAllowed(Rule rule);
 }

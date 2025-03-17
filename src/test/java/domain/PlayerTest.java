@@ -1,7 +1,7 @@
 package domain;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -25,8 +25,8 @@ class PlayerTest {
                     TrumpCard.ACE_OF_SPADES,
                     TrumpCard.TWO_OF_SPADES
             );
-            Hand hand = new Hand(cards);
-            Player player = new Player(new Name("머피"), new BettingMoney(1000), hand);
+            State state = Started.of(new Hand(cards), Score.TWENTY_ONE);
+            Player player = new Player(new Name("머피"), new BettingMoney(1000), state);
 
             // when
             List<TrumpCard> retrievedCards = player.retrieveCards();
@@ -39,18 +39,15 @@ class PlayerTest {
         @Test
         void receiveCard() {
             // given
-            List<TrumpCard> cards = List.of(
-                    TrumpCard.ACE_OF_SPADES
-            );
-            Hand hand = new Hand(cards);
-            Player player = new Player(new Name("머피"), new BettingMoney(1000), hand);
+            State state = Started.of(new Hand(List.of(TrumpCard.FIVE_OF_CLUBS, TrumpCard.JACK_OF_CLUBS)),
+                    Score.TWENTY_ONE);
+            Player player = new Player(new Name("머피"), new BettingMoney(1000), state);
 
             // when
             player.receiveCard(TrumpCard.TWO_OF_SPADES);
 
             // then
-            assertThat(player.retrieveCards()).isEqualTo(
-                    List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.TWO_OF_SPADES));
+            assertThat(player.retrieveCards().size()).isEqualTo(3);
         }
 
         @Test
@@ -58,37 +55,36 @@ class PlayerTest {
         void calculatePlayerScore() {
             // given
             List<TrumpCard> cards = List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.KING_OF_HEARTS);
-            Player player = new Player(new Name("머피"), new BettingMoney(1000), new Hand(cards));
-            Rule rule = new Rule();
+            State state = Started.of(new Hand(cards), Score.TWENTY_ONE);
+            Player player = new Player(new Name("머피"), new BettingMoney(1000), state);
 
             // when
-            Score score = player.calculateScore(rule);
+            Score score = player.calculateScore();
 
             // then
             assertThat(score).isEqualTo(Score.BLACKJACK);
         }
 
         @ParameterizedTest
-        @DisplayName("플레이어의 히트 판단 여부를 판단한다")
-        @MethodSource("provideDealerHitAllowedCases")
-        void isHitAllowed(List<TrumpCard> cards) {
+        @DisplayName("플레이어의 히트 가능 여부를 확인한다")
+        @MethodSource("provideHitAllowedCases")
+        void isHitAllowed(List<TrumpCard> cards, Score limitScore, boolean expected) {
             // given
-            Player player = new Player(new Name("머피"), new BettingMoney(1000), new Hand(cards));
-            Rule rule = new Rule();
+            State state = Started.of(new Hand(cards), limitScore);
+            Player player = new Player(new Name("머피"), new BettingMoney(1000), state);
 
             // when
-            boolean result = player.isHitAllowed(rule);
+            boolean result = player.isHitAllowed();
 
             // then
-            assertThat(result).isTrue();
+            assertThat(result).isEqualTo(expected);
         }
 
-        static Stream<Arguments> provideDealerHitAllowedCases() {
+        static Stream<Arguments> provideHitAllowedCases() {
             return Stream.of(
-                    Arguments.of(List.of(TrumpCard.FIVE_OF_CLUBS, TrumpCard.SIX_OF_HEARTS)),
-                    Arguments.of(List.of(TrumpCard.SEVEN_OF_DIAMONDS, TrumpCard.TWO_OF_SPADES)),
-                    Arguments.of(
-                            List.of(TrumpCard.THREE_OF_HEARTS, TrumpCard.THREE_OF_DIAMONDS, TrumpCard.TWO_OF_SPADES))
+                    Arguments.of(List.of(TrumpCard.FIVE_OF_CLUBS, TrumpCard.SIX_OF_HEARTS), Score.TWENTY_ONE, true),
+                    Arguments.of(List.of(TrumpCard.SEVEN_OF_DIAMONDS, TrumpCard.TWO_OF_SPADES), Score.TWENTY_ONE, true),
+                    Arguments.of(List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.KING_OF_HEARTS), Score.TWENTY_ONE, false)
             );
         }
     }
@@ -101,9 +97,11 @@ class PlayerTest {
         void validateNotNullName() {
             // given
             Name nullName = null;
+            State state = Started.of(new Hand(List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.JACK_OF_CLUBS)),
+                    Score.TWENTY_ONE);
 
             // when & then
-            assertThatThrownBy(() -> new Player(nullName, new BettingMoney(1000), new Hand(List.of())))
+            assertThatThrownBy(() -> new Player(nullName, new BettingMoney(1000), state))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("플레이어는 이름과 배팅 금액을 가져야합니다.");
         }
@@ -113,23 +111,25 @@ class PlayerTest {
         void validateNotNullBettingMoney() {
             // given
             BettingMoney nullBettingMoney = null;
+            State state = Started.of(new Hand(List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.JACK_OF_CLUBS)),
+                    Score.TWENTY_ONE);
 
             // when & then
-            assertThatThrownBy(() -> new Player(new Name("머피"), nullBettingMoney, new Hand(List.of())))
+            assertThatThrownBy(() -> new Player(new Name("머피"), nullBettingMoney, state))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("플레이어는 이름과 배팅 금액을 가져야합니다.");
         }
 
         @Test
-        @DisplayName("플레이어는 손패를 가져야 한다.")
-        void validateNotNullHand() {
+        @DisplayName("플레이어는 상태를 가져야 한다.")
+        void validateNotNullState() {
             // given
-            Hand nullHand = null;
+            State nullState = null;
 
             // when & then
-            assertThatThrownBy(() -> new Player(new Name("머피"), new BettingMoney(1000), nullHand))
+            assertThatThrownBy(() -> new Player(new Name("머피"), new BettingMoney(1000), nullState))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("참가자는 손패를 가져야합니다.");
+                    .hasMessage("참가자는 상태를 가져야합니다.");
         }
     }
 }
