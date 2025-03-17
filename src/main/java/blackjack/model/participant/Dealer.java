@@ -3,69 +3,74 @@ package blackjack.model.participant;
 import blackjack.model.MatchResult;
 import blackjack.model.card.Card;
 import blackjack.model.card.Deck;
-import java.util.ArrayList;
+import blackjack.model.card.RandomCardShuffler;
+import blackjack.model.state.State;
+import blackjack.model.state.finished.FinishedState;
+import blackjack.model.state.running.DealerDrawing;
+import java.util.List;
 
-public final class Dealer extends Participant {
+public final class Dealer {
 
-    private static final int INITIAL_HAND_SIZE = 2;
     public static final int DEALER_HIT_THRESHOLD = 16;
 
     private final Deck deck;
+    private State state;
 
     public Dealer(Deck deck) {
-        super(new ArrayList<>());
+        state = new DealerDrawing();
         this.deck = deck;
     }
 
-    public void dealCard(Participant participant) {
-        participant.receiveHand(drawFromDeck());
+    public static Dealer createWithShuffledStandardDeck() {
+        return new Dealer(Deck.createStandardDeck(new RandomCardShuffler()));
+    }
+
+    public void dealCard(Player player) {
+        player.receiveCard(drawFromDeck());
+    }
+
+    public void drawCardFromDeck() {
+        receiveCard(drawFromDeck());
     }
 
     private Card drawFromDeck() {
         return deck.draw();
     }
 
-    public boolean decideHit() {
-        if (hand.size() != INITIAL_HAND_SIZE) {
-            throw new IllegalStateException("딜러가 가진 패가 %d장이 아니어서 히트 여부를 결정할 수 없습니다.".formatted(INITIAL_HAND_SIZE));
-        }
-        return getTotal() <= DEALER_HIT_THRESHOLD;
+    public void receiveCard(Card card) {
+        state = state.receiveCard(card);
+    }
+
+    public boolean isFinished() {
+        return state.isFinished();
     }
 
     public Card getVisibleCard() {
-        if (hand.isEmpty()) {
+        if (getHandCards().isEmpty()) {
             throw new IllegalStateException("딜러가 가진 패가 없습니다.");
         }
-        return hand.getFirst();
+        return getHandCards()
+                .getFirst();
     }
 
-    public MatchResult compareWith(Participant participant) {
-        if (participant.isBust()) {
-            return MatchResult.WIN;
-        }
-        if (this.isBust()) {
-            return MatchResult.LOSE;
-        }
-        if (this.isBlackjack() && participant.isBlackjack()) {
-            return MatchResult.DRAW;
-        }
-        if (participant.isBlackjack()) {
-            return MatchResult.LOSE;
-        }
-        if (this.isBlackjack()) {
-            return MatchResult.WIN;
-        }
-        return determineByCompareTotal(participant.getTotal());
+    public MatchResult evaluateFromPlayerPerspective(Player player) {
+        FinishedState playerState = player.getFinishedState();
+        FinishedState dealerState = getFinishedState();
+        return playerState.determineMatchResult(dealerState);
     }
 
-    private MatchResult determineByCompareTotal(int participantTotal) {
-        int dealerTotal = getTotal();
-        if (participantTotal < dealerTotal) {
-            return MatchResult.WIN;
+    private FinishedState getFinishedState() {
+        if (!(state instanceof FinishedState finishedState)) {
+            throw new IllegalArgumentException("딜러의 턴이 종료되지 않았습니다.");
         }
-        if (dealerTotal < participantTotal) {
-            return MatchResult.LOSE;
-        }
-        return MatchResult.DRAW;
+        return finishedState;
+    }
+
+    public List<Card> getHandCards() {
+        return state.getHandCards();
+    }
+
+    public int getTotal() {
+        return state.getTotal();
     }
 }

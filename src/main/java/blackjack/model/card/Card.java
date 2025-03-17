@@ -12,6 +12,10 @@ public final class Card {
         this.cardValue = cardValue;
     }
 
+    public boolean isAce() {
+        return cardValue == CardValue.ACE;
+    }
+
     public String getDisplayLabel() {
         return cardValue.getLabel() + suit.getLabel();
     }
@@ -36,5 +40,13 @@ public final class Card {
     @Override
     public int hashCode() {
         return Objects.hash(suit, cardValue);
+    }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "suit=" + suit +
+                ", cardValue=" + cardValue +
+                '}';
     }
 }

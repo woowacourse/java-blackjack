@@ -1,19 +1,12 @@
 package blackjack.model.participant;
 
 import static blackjack.model.card.CardFixtures.SPADE_ACE_CARD;
-import static blackjack.model.card.CardFixtures.SPADE_SIX_CARD;
 import static blackjack.model.card.CardFixtures.SPADE_TEN_CARD;
-import static blackjack.model.card.CardFixtures.SPADE_TWO_CARD;
-import static blackjack.model.card.CardFixtures.createCard;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.model.card.CardValue;
-import blackjack.model.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 @DisplayName("플레이어 테스트")
 class PlayerTest {
@@ -22,7 +15,7 @@ class PlayerTest {
     @Test
     void createPlayerTest() {
         // given
-        Name pobiName = new Name("포비");
+        String pobiName = "포비";
 
         // when, then
         assertThatCode(() -> new Player(pobiName))
@@ -33,13 +26,13 @@ class PlayerTest {
     @Test
     void receiveHandTest() {
         // given
-        Player player = new Player(new Name("포비"));
+        Player player = new Player("포비");
 
         // when
-        player.receiveHand(SPADE_ACE_CARD);
+        player.receiveCard(SPADE_ACE_CARD);
 
         // then
-        assertThat(player.getHand())
+        assertThat(player.getHandCards())
                 .contains(SPADE_ACE_CARD);
 
     }
@@ -48,118 +41,76 @@ class PlayerTest {
     @Test
     void shouldThrowException_WhenReceiveCardAfterHandExceeds21() {
         // given
-        Player player = new Player(new Name("포비"));
+        Player player = new Player("포비");
 
         // when
-        player.receiveHand(SPADE_ACE_CARD);
-        player.receiveHand(SPADE_TEN_CARD);
+        player.receiveCard(SPADE_ACE_CARD);
+        player.receiveCard(SPADE_TEN_CARD);
 
         // then
-        assertThatCode(() -> player.receiveHand(SPADE_TEN_CARD))
+        assertThatCode(() -> player.receiveCard(SPADE_TEN_CARD))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("더 이상 카드를 받을 수 없습니다.");
+                .hasMessage("블랙잭이라 카드를 더 받을 수 없습니다.");
     }
 
-    @DisplayName("가진 패의 총합을 계산한다.")
+    @DisplayName("가진 패의 총합이 21 이상인 경우 히트할 수 없다. (끝난다.)")
     @Test
-    void calculateHandTotalTest() {
+    void isFinishedTest() {
         // given
-        Player player = new Player(new Name("포비"));
-
-        // when
-        player.receiveHand(SPADE_TEN_CARD);
-        player.receiveHand(SPADE_SIX_CARD);
+        Player player = new Player("포비");
+        player.receiveCard(SPADE_ACE_CARD);
+        player.receiveCard(SPADE_TEN_CARD);
 
         // then
-        assertThat(player.getTotal())
-                .isEqualTo(16);
+        boolean isFinished = player.isFinished();
+
+        // when
+        assertThat(isFinished)
+                .isTrue();
     }
 
-    @DisplayName("ACE를 가진 채, 총합이 11 이하인 경우 ACE를 11로 간주한다.")
+    @DisplayName("플레이어의 이름을 반환한다.")
     @Test
-    void calculateHandTotalWithAceTest() {
+    void getNameTest() {
         // given
-        Player player = new Player(new Name("포비"));
+        String pobiName = "포비";
+        Player player = new Player(pobiName);
 
         // when
-        player.receiveHand(SPADE_ACE_CARD);
-        player.receiveHand(SPADE_TEN_CARD);
+        String name = player.getName();
 
         // then
-        assertThat(player.getTotal())
-                .isEqualTo(21);
+        assertThat(name)
+                .isEqualTo(pobiName);
     }
 
-    @DisplayName("ACE를 가진 채, 총합이 11 초과인 경우 ACE를 1로 간주한다.")
+    @DisplayName("플레이어의 패를 반환한다.")
     @Test
-    void calculateHandTotalWithAceTestOver11() {
+    void getHandCardsTest() {
         // given
-        Player player = new Player(new Name("포비"));
+        Player player = new Player("포비");
+        player.receiveCard(SPADE_ACE_CARD);
 
         // when
-        player.receiveHand(SPADE_ACE_CARD);
-        player.receiveHand(SPADE_TWO_CARD);
-        player.receiveHand(SPADE_TEN_CARD);
+        int size = player.getHandCards().size();
 
         // then
-        assertThat(player.getTotal())
-                .isEqualTo(13);
+        assertThat(size)
+                .isEqualTo(1);
     }
 
-    @DisplayName("패가 2장만 있고, 합이 21이면 블랙잭이다.")
-    @ParameterizedTest
-    @CsvSource({
-            "TEN, ACE, true",
-            "TEN, TEN, false",
-    })
-    void isBlackjackTest(CardValue value1, CardValue value2, boolean expected) {
-        // given
-        Player player = new Player(new Name("포비"));
-        player.receiveHand(createCard(Suit.SPADES, value1));
-        player.receiveHand(createCard(Suit.SPADES, value2));
-
-        // when
-        boolean isBlackjack = player.isBlackjack();
-
-        // then
-        assertThat(isBlackjack)
-                .isSameAs(expected);
-    }
-
-    @DisplayName("21이 초과하면 버스트이다.")
-    @ParameterizedTest
-    @CsvSource({
-            "TEN, TEN, TEN, true",
-            "TWO, TWO, ACE, false",
-    })
-    void isBustTest(CardValue value1, CardValue value2, CardValue value3, boolean expected) {
-        // given
-        Player player = new Player(new Name("포비"));
-        player.receiveHand(createCard(Suit.SPADES, value1));
-        player.receiveHand(createCard(Suit.SPADES, value2));
-        player.receiveHand(createCard(Suit.SPADES, value3));
-
-        // when
-        boolean isBust = player.isBust();
-
-        // then
-        assertThat(isBust)
-                .isSameAs(expected);
-    }
-
-    @DisplayName("가진 패의 총합이 21 이상인 경우 히트할 수 없다.")
+    @DisplayName("플레이어의 패의 총합을 반환한다.")
     @Test
-    void canHitTest() {
+    void getTotalTest() {
         // given
-        Player player = new Player(new Name("포비"));
-        player.receiveHand(SPADE_ACE_CARD);
-        player.receiveHand(SPADE_TEN_CARD);
-
-        // then
-        boolean canHit = player.canHit();
+        Player player = new Player("포비");
+        player.receiveCard(SPADE_ACE_CARD);
 
         // when
-        assertThat(canHit)
-                .isFalse();
+        int total = player.getTotal();
+
+        // then
+        assertThat(total)
+                .isEqualTo(11);
     }
 }

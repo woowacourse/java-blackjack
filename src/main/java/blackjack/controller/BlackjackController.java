@@ -1,107 +1,108 @@
 package blackjack.controller;
 
+import blackjack.model.BettingTable;
 import blackjack.model.participant.Dealer;
-import blackjack.model.MatchResult;
-import blackjack.model.card.Deck;
-import blackjack.model.participant.Name;
 import blackjack.model.participant.Player;
-import blackjack.model.card.RandomCardShuffler;
-import blackjack.model.participant.GamePlayers;
-import blackjack.view.InputView;
-import blackjack.view.OutputView;
-import java.util.LinkedHashMap;
-import java.util.List;
+import blackjack.view.GamePlayView;
+import blackjack.view.GameResultView;
+import blackjack.view.GameSetupView;
 import java.util.Map;
 
 public final class BlackjackController {
 
-    private final InputView inputView;
-    private final OutputView outputView;
+    private final GameSetupView gameSetupView;
+    private final GamePlayView gamePlayView;
+    private final GameResultView gameResultView;
 
-    public BlackjackController(InputView inputView, OutputView outputView) {
-        this.inputView = inputView;
-        this.outputView = outputView;
+    public BlackjackController(GameSetupView gameSetupView, GamePlayView gamePlayView, GameResultView gameResultView) {
+        this.gameSetupView = gameSetupView;
+        this.gamePlayView = gamePlayView;
+        this.gameResultView = gameResultView;
     }
 
     public void run() {
-        Dealer dealer = createDealer();
-        GamePlayers gamePlayers = getGamePlayers();
-        playBlackjack(dealer, gamePlayers);
-        displayResult(dealer, gamePlayers);
+        gameSetupView.printStartBanner();
+        Dealer dealer = Dealer.createWithShuffledStandardDeck();
+        BettingTable bettingTable = BettingTable.createWithPlayerNames(gameSetupView.readPlayerNames());
+        betForAllPlayers(bettingTable);
+        playBlackjack(dealer, bettingTable);
+        displayResult(dealer, bettingTable);
     }
 
-    private Dealer createDealer() {
-        return new Dealer(Deck.createStandardDeck(new RandomCardShuffler()));
+    private void betForAllPlayers(BettingTable bettingTable) {
+        for (Player player : bettingTable.getParticipatingPlayers()) {
+            int betAmount = gameSetupView.readBetAmount(player.getName());
+            bettingTable.bet(player, betAmount);
+        }
     }
 
-    private GamePlayers getGamePlayers() {
-        outputView.printStartBanner();
-        List<Player> players = createPlayersFromInput();
-        return GamePlayers.createForNewGame(players);
-    }
-
-    private List<Player> createPlayersFromInput() {
-        return inputView.readPlayerNames()
-                .stream()
-                .map(name -> new Player(new Name(name)))
-                .toList();
-    }
-
-    private void playBlackjack(Dealer dealer, GamePlayers gamePlayers) {
-        initializeHand(dealer, gamePlayers);
-        displayInitialHand(dealer, gamePlayers);
-        askHitForAllPlayer(dealer, gamePlayers);
+    private void playBlackjack(Dealer dealer, BettingTable bettingTable) {
+        bettingTable.dealInitialHand(dealer);
+        displayInitialHand(dealer, bettingTable);
+        askHitForAllPlayer(dealer, bettingTable);
         askHitForDealer(dealer);
     }
 
-    private void initializeHand(Dealer dealer, GamePlayers gamePlayers) {
-        for (Player player : gamePlayers) {
-            dealer.dealCard(player);
-            dealer.dealCard(player);
-        }
-        dealer.dealCard(dealer);
-        dealer.dealCard(dealer);
+    private void displayInitialHand(Dealer dealer, BettingTable bettingTable) {
+        gamePlayView.printInitialCards(dealer.getVisibleCard(), bettingTable.getParticipatingPlayers());
     }
 
-    private void displayInitialHand(Dealer dealer, GamePlayers gamePlayers) {
-        outputView.printInitialCards(dealer.getVisibleCard(), gamePlayers.getPlayers());
-    }
-
-    private void askHitForAllPlayer(Dealer dealer, GamePlayers gamePlayers) {
-        for (Player player : gamePlayers) {
+    private void askHitForAllPlayer(Dealer dealer, BettingTable bettingTable) {
+        for (Player player : bettingTable.getParticipatingPlayers()) {
             askHit(dealer, player);
         }
     }
 
     private void askHit(Dealer dealer, Player player) {
-        while (player.canHit() && wantsToHit(player)) {
-            dealer.dealCard(player);
-            outputView.printPlayerHand(player);
+        while (!player.isFinished()) {
+            playerHitOrStand(dealer, player);
         }
+    }
+
+    private void playerHitOrStand(Dealer dealer, Player player) {
+        if (wantsToHit(player)) {
+            dealer.dealCard(player);
+            gamePlayView.printPlayerHand(player);
+            return;
+        }
+        player.stand();
+        gamePlayView.printPlayerHand(player);
     }
 
     private boolean wantsToHit(Player player) {
-        return inputView.readHitOrNot(player.getName()).isHit();
+        return gamePlayView.readHitOrNot(player.getName())
+                .isHit();
     }
 
     private void askHitForDealer(Dealer dealer) {
-        if (dealer.canHit() && dealer.decideHit()) {
-            dealer.dealCard(dealer);
-            outputView.printDealerHit(true);
+        while (!dealer.isFinished()) {
+            dealer.drawCardFromDeck();
+            gamePlayView.printDealerHit(true);
         }
+        gamePlayView.printDealerHit(false);
     }
 
-    private void displayResult(Dealer dealer, GamePlayers gamePlayers) {
-        outputView.printDealerHandAndTotal(dealer.getHand(), dealer.getTotal());
-        outputView.printPlayerHandAndTotal(gamePlayers.getPlayers());
-        outputView.printMatchResult(judgeMatchResults(dealer, gamePlayers));
+    private void displayResult(Dealer dealer, BettingTable bettingTable) {
+        gameResultView.printDealerHandAndTotal(dealer.getHandCards(), dealer.getTotal());
+        gameResultView.printPlayerHandAndTotal(bettingTable.getParticipatingPlayers());
+        displayFinalProfit(dealer, bettingTable);
     }
 
-    private Map<Player, MatchResult> judgeMatchResults(Dealer dealer, GamePlayers gamePlayers) {
-        Map<Player, MatchResult> results = new LinkedHashMap<>();
-        for (Player player : gamePlayers) {
-            results.put(player, dealer.compareWith(player).getReversed());
-        }
-        return results;
+    private void displayFinalProfit(Dealer dealer, BettingTable bettingTable) {
+        Map<Player, Integer> payouts = bettingTable.calculatePayouts(dealer);
+        Map<Player, Integer> betting = bettingTable.getBetting();
+        int dealerProfit = calculateDealerProfit(betting, payouts);
+        gameResultView.printFinalProfitHeader();
+        gameResultView.printDealerFinalProfit(dealerProfit);
+        betting.forEach((player, betAmount) ->
+                gameResultView.printPlayerFinalProfit(player.getName(), betAmount, payouts.get(player))
+        );
+    }
+
+    private int calculateDealerProfit(Map<Player, Integer> betting, Map<Player, Integer> payouts) {
+        return betting.entrySet()
+                .stream()
+                .mapToInt(bet -> bet.getValue() - payouts.get(bet.getKey()))
+                .sum();
     }
 }
