@@ -4,14 +4,11 @@ import blackjack.card.Card;
 import blackjack.gamer.Dealer;
 import blackjack.gamer.Player;
 import blackjack.gamer.Players;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Consumer;
 
 public class Blackjack {
 
     public static final int BLACKJACK_SCORE = 21;
-    private static final int BLACKJACK_CARD_COUNT = 2;
+    public static final int BLACKJACK_CARD_COUNT = 2;
 
     public void betMoney(final Player player, final String amount) {
         player.betMoney(amount);
@@ -47,90 +44,12 @@ public class Blackjack {
                 .anyMatch(player -> player.isBlackjack(BLACKJACK_SCORE, BLACKJACK_CARD_COUNT));
     }
 
-    public Map<Player, WinningStatus> calculateWinningResult(
-            final boolean isPush,
-            final Dealer dealer,
-            final Players players
-    ) {
-        Map<Player, WinningStatus> winningStatus = initWinningStatus(players);
-        if (isPush) {
-            return calculatePushResult(winningStatus, players);
-        }
+    public void calculateState(final Players players, final Dealer dealer) {
         for (Player player : players.getPlayers()) {
-            final WinningStatus playerWinningStatus = calculateWinningStatus(player, dealer);
-            winningStatus.replace(player, playerWinningStatus);
+            player.calculateState(dealer);
         }
-        return winningStatus;
-    }
 
-    public void calculateEarnedMoney(
-            final Map<Player, WinningStatus> winningResult,
-            final Dealer dealer,
-            final Players players
-    ) {
-        calculatePlayersEarnedMoney(winningResult, players);
         calculateDealerEarnedMoney(dealer, players);
-    }
-
-    private Map<Player, WinningStatus> initWinningStatus(Players players) {
-        Map<Player, WinningStatus> winningStatus = new HashMap<>();
-        for (Player player : players.getPlayers()) {
-            winningStatus.put(player, WinningStatus.UNDEFINED);
-        }
-        return winningStatus;
-    }
-
-    private Map<Player, WinningStatus> calculatePushResult(final Map<Player, WinningStatus> winningStatus,
-                                                           final Players players) {
-        for (Player player : players.getPlayers()) {
-            winningStatus.replace(player, WinningStatus.LOSE);
-            markAsBlackjack(winningStatus, player);
-        }
-        return winningStatus;
-    }
-
-    private void markAsBlackjack(final Map<Player, WinningStatus> winningStatus, final Player player) {
-        if (player.isBlackjack(BLACKJACK_SCORE, BLACKJACK_CARD_COUNT)) {
-            winningStatus.replace(player, WinningStatus.PUSH);
-        }
-    }
-
-    private WinningStatus calculateWinningStatus(final Player player, final Dealer dealer) {
-        if (player.isBlackjack(BLACKJACK_SCORE, BLACKJACK_CARD_COUNT)) {
-            return WinningStatus.BLACKJACK;
-        }
-        final int dealerSum = dealer.sumCards();
-        final int playerSum = player.sumCards();
-        if (playerSum > BLACKJACK_SCORE) {
-            return WinningStatus.LOSE;
-        }
-        if (dealerSum > BLACKJACK_SCORE) {
-            return WinningStatus.WIN;
-        }
-        if (playerSum > dealerSum) {
-            return WinningStatus.WIN;
-        }
-        if (playerSum == dealerSum) {
-            return WinningStatus.DRAW;
-        }
-        return WinningStatus.LOSE;
-    }
-
-    private static void calculatePlayersEarnedMoney(final Map<Player, WinningStatus> winningResult,
-                                                    final Players players) {
-        Map<WinningStatus, Consumer<Player>> actionMap = Map.of(
-                WinningStatus.WIN, Player::winGame,
-                WinningStatus.DRAW, Player::drawGame,
-                WinningStatus.LOSE, Player::loseGame,
-                WinningStatus.BLACKJACK, Player::blackjackGame,
-                WinningStatus.PUSH, Player::pushGame
-        );
-
-        for (Player player : players.getPlayers()) {
-            final WinningStatus winningStatus = winningResult.get(player);
-            Consumer<Player> action = actionMap.get(winningStatus);
-            action.accept(player);
-        }
     }
 
     private static void calculateDealerEarnedMoney(final Dealer dealer, final Players players) {
@@ -139,4 +58,92 @@ public class Blackjack {
                 .sum();
         dealer.updateEarnedMoney(-1 * playersTotalProfit);
     }
+
+//    public void calculateEarnedMoney(
+//            final Map<Player, WinningStatus> winningResult,
+//            final Dealer dealer,
+//            final Players players
+//    ) {
+//        calculatePlayersEarnedMoney(winningResult, players);
+//        calculateDealerEarnedMoney(dealer, players);
+
+//    }
+
+//    private static void calculatePlayersEarnedMoney(final Map<Player, WinningStatus> winningResult,
+//                                                    final Players players) {
+//        Map<WinningStatus, Consumer<Player>> actionMap = Map.of(
+//                WinningStatus.WIN, Player::winGame,
+//                WinningStatus.DRAW, Player::drawGame,
+//                WinningStatus.LOSE, Player::loseGame,
+//                WinningStatus.BLACKJACK, Player::blackjackGame,
+//                WinningStatus.PUSH, Player::pushGame
+//        );
+//
+//        for (Player player : players.getPlayers()) {
+//            final WinningStatus winningStatus = winningResult.get(player);
+//            Consumer<Player> action = actionMap.get(winningStatus);
+//            action.accept(player);
+//        }
+//    }
+
+//    public Map<Player, WinningStatus> calculateWinningResult(
+//            final boolean isPush,
+//            final Dealer dealer,
+//            final Players players
+//    ) {
+//        Map<Player, WinningStatus> winningStatus = initWinningStatus(players);
+//        if (isPush) {
+//            return calculatePushResult(winningStatus, players);
+//        }
+//        for (Player player : players.getPlayers()) {
+//            final WinningStatus playerWinningStatus = calculateWinningStatus(player, dealer);
+//            winningStatus.replace(player, playerWinningStatus);
+//        }
+//        return winningStatus;
+
+//    }
+
+//    private Map<Player, WinningStatus> initWinningStatus(Players players) {
+//        Map<Player, WinningStatus> winningStatus = new HashMap<>();
+//        for (Player player : players.getPlayers()) {
+//            winningStatus.put(player, WinningStatus.UNDEFINED);
+//        }
+//        return winningStatus;
+//    }
+//
+//    private Map<Player, WinningStatus> calculatePushResult(final Map<Player, WinningStatus> winningStatus,
+//                                                           final Players players) {
+//        for (Player player : players.getPlayers()) {
+//            winningStatus.replace(player, WinningStatus.LOSE);
+//            markAsBlackjack(winningStatus, player);
+//        }
+//        return winningStatus;
+//    }
+
+//    private void markAsBlackjack(final Map<Player, WinningStatus> winningStatus, final Player player) {
+//        if (player.isBlackjack(BLACKJACK_SCORE, BLACKJACK_CARD_COUNT)) {
+//            winningStatus.replace(player, WinningStatus.PUSH);
+//        }
+//    }
+
+//    private WinningStatus calculateWinningStatus(final Player player, final Dealer dealer) {
+//        if (player.isBlackjack(BLACKJACK_SCORE, BLACKJACK_CARD_COUNT)) {
+//            return WinningStatus.BLACKJACK;
+//        }
+//        final int dealerSum = dealer.sumCards();
+//        final int playerSum = player.sumCards();
+//        if (playerSum > BLACKJACK_SCORE) {
+//            return WinningStatus.LOSE;
+//        }
+//        if (dealerSum > BLACKJACK_SCORE) {
+//            return WinningStatus.WIN;
+//        }
+//        if (playerSum > dealerSum) {
+//            return WinningStatus.WIN;
+//        }
+//        if (playerSum == dealerSum) {
+//            return WinningStatus.DRAW;
+//        }
+//        return WinningStatus.LOSE;
+//    }
 }

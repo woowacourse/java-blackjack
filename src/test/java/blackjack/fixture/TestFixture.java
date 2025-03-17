@@ -73,4 +73,12 @@ public class TestFixture {
                 new Card(Shape.CLOB, Denomination.TEN)
         );
     }
+
+    public static List<Card> provideBustCards() {
+        return List.of(
+                new Card(Shape.DIAMOND, Denomination.SEVEN),
+                new Card(Shape.CLOB, Denomination.TEN),
+                new Card(Shape.CLOB, Denomination.EIGHT)
+        );
+    }
 }

@@ -4,7 +4,6 @@ import static blackjack.blackjack.Blackjack.BLACKJACK_SCORE;
 
 import blackjack.blackjack.Blackjack;
 import blackjack.blackjack.UserAnswer;
-import blackjack.blackjack.WinningStatus;
 import blackjack.cardMachine.CardRandomMachine;
 import blackjack.gamer.Dealer;
 import blackjack.gamer.Player;
@@ -14,7 +13,6 @@ import blackjack.view.HitOrStandInputView;
 import blackjack.view.InputView;
 import blackjack.view.NameInputView;
 import blackjack.view.ResultView;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Application {
@@ -40,7 +38,7 @@ public class Application {
 
         printCardsSum(dealer, players);
 
-        printBettingResult(blackjack, isPush, dealer, players);
+        printBettingResult(blackjack, dealer, players);
     }
 
     private static Dealer makeDealer() {
@@ -142,13 +140,11 @@ public class Application {
 
     private static void printBettingResult(
             final Blackjack blackjack,
-            final boolean isPush,
             final Dealer dealer,
             final Players players
     ) {
         final ResultView resultView = new ResultView();
-        Map<Player, WinningStatus> winningResult = blackjack.calculateWinningResult(isPush, dealer, players);
-        blackjack.calculateEarnedMoney(winningResult, dealer, players);
+        blackjack.calculateState(players, dealer);
         resultView.printProfitHead();
         resultView.printProfit(dealer, dealer.getProfit());
         for (Player player : players.getPlayers()) {

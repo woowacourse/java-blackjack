@@ -1,6 +1,7 @@
 package blackjack.blackjack;
 
 import static blackjack.fixture.TestFixture.provideBlackjackCards;
+import static blackjack.fixture.TestFixture.provideBustCards;
 import static blackjack.fixture.TestFixture.provideSum17Cards;
 import static blackjack.fixture.TestFixture.provideSum18Cards;
 import static blackjack.fixture.TestFixture.provideSum20Cards;
@@ -11,7 +12,8 @@ import blackjack.cardMachine.CardRandomMachine;
 import blackjack.gamer.Dealer;
 import blackjack.gamer.Player;
 import blackjack.gamer.Players;
-import java.util.Map;
+import blackjack.state.LoseState;
+import blackjack.state.PushState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -78,33 +80,6 @@ class BlackjackTest {
         assertThat(blackjack.isPush(dealer, players)).isTrue();
     }
 
-    @DisplayName("승, 패, 무, 블랙잭 상황의 플레이어들의 승패를 계산한다.")
-    @Test
-    void calculateWinningResult() {
-        // given
-        players = Players.from("엠제이, 밍트, 리원, 포스티");
-
-        final Player player1 = players.getPlayers().get(0);
-        final Player player2 = players.getPlayers().get(1);
-        final Player player3 = players.getPlayers().get(2);
-        final Player player4 = players.getPlayers().get(3);
-
-        dealer.receiveCards(provideSum18Cards());
-        player1.receiveCards(provideBlackjackCards());
-        player2.receiveCards(provideSum20Cards());
-        player3.receiveCards(provideSum17Cards());
-        player4.receiveCards(provideSum18Cards());
-
-        // when & then
-        assertThat(blackjack.calculateWinningResult(false, dealer, players)).isEqualTo(
-                Map.of(
-                        player1, WinningStatus.BLACKJACK,
-                        player2, WinningStatus.WIN,
-                        player3, WinningStatus.LOSE,
-                        player4, WinningStatus.DRAW
-                )
-        );
-    }
 
     @DisplayName("푸시 상황의 플레이어들의 승패를 계산한다.")
     @Test
@@ -123,51 +98,55 @@ class BlackjackTest {
         player3.receiveCards(provideSum17Cards());
         player4.receiveCards(provideSum18Cards());
 
-        // when & then
-        assertThat(blackjack.calculateWinningResult(true, dealer, players)).isEqualTo(
-                Map.of(
-                        player1, WinningStatus.PUSH,
-                        player2, WinningStatus.LOSE,
-                        player3, WinningStatus.LOSE,
-                        player4, WinningStatus.LOSE
-                )
+        // when
+        blackjack.calculateState(players, dealer);
+
+        // then
+        assertAll(
+                () -> assertThat(player1).extracting("state").isInstanceOf(PushState.class),
+                () -> assertThat(player2).extracting("state").isInstanceOf(LoseState.class),
+                () -> assertThat(player3).extracting("state").isInstanceOf(LoseState.class),
+                () -> assertThat(player4).extracting("state").isInstanceOf(LoseState.class)
         );
+
     }
 
-    @DisplayName("플레이어의 수익을 계산한다.")
+    @DisplayName("플레이어들의 state로부터 수익을 계산한다.")
     @Test
-    void calculateEarnedMoney() {
+    void calcualteState() {
         // given
-        players = Players.from("엠제이, 밍트, 리원, 포스티");
+        players = Players.from("엠제이, 밍트, 리원, 포스티, 저스틴");
 
         final Player player1 = players.getPlayers().get(0);
         final Player player2 = players.getPlayers().get(1);
         final Player player3 = players.getPlayers().get(2);
         final Player player4 = players.getPlayers().get(3);
+        final Player player5 = players.getPlayers().get(4);
 
         player1.betMoney("10000");
         player2.betMoney("10000");
         player3.betMoney("10000");
         player4.betMoney("10000");
+        player5.betMoney("10000");
 
         dealer.receiveCards(provideSum18Cards());
         player1.receiveCards(provideBlackjackCards());
         player2.receiveCards(provideSum20Cards());
         player3.receiveCards(provideSum17Cards());
         player4.receiveCards(provideSum18Cards());
+        player5.receiveCards(provideBustCards());
 
         // when
-        Map<Player, WinningStatus> winningResult = blackjack.calculateWinningResult(false, dealer, players);
-        blackjack.calculateEarnedMoney(winningResult, dealer, players);
+        blackjack.calculateState(players, dealer);
 
         // then
         assertAll(
-                () -> assertThat(dealer.getProfit()).isEqualTo(-5000),
+                () -> assertThat(dealer.getProfit()).isEqualTo(5000),
                 () -> assertThat(player1.getProfit()).isEqualTo(5000),
                 () -> assertThat(player2.getProfit()).isEqualTo(10000),
                 () -> assertThat(player3.getProfit()).isEqualTo(-10000),
-                () -> assertThat(player4.getProfit()).isEqualTo(0)
+                () -> assertThat(player4.getProfit()).isEqualTo(0),
+                () -> assertThat(player5.getProfit()).isEqualTo(-10000)
         );
-
     }
 }
