@@ -1,13 +1,13 @@
-package blackjack.domain.participant.gamer;
+package blackjack.domain.participant.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 
-public abstract class Gamer {
+public abstract class Participant {
 
     protected final Hand hand;
 
-    public Gamer(final Hand hand) {
+    public Participant(final Hand hand) {
         this.hand = hand;
     }
 

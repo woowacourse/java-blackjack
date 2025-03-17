@@ -1,8 +1,8 @@
 package blackjack.domain.result;
 
-import blackjack.domain.participant.gamer.Dealer;
-import blackjack.domain.participant.gamer.Gamer;
-import blackjack.domain.participant.gamer.Player;
+import blackjack.domain.participant.participant.Dealer;
+import blackjack.domain.participant.participant.Participant;
+import blackjack.domain.participant.participant.Player;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -17,28 +17,28 @@ public final class ProfitResult {
     private static final double AVERAGE_PROFIT_RATE = 1.0;
     private static final double BLACKJACK_PROFIT_RATE = 1.5;
 
-    private final Map<Gamer, Integer> result;
+    private final Map<Participant, Integer> result;
 
     public ProfitResult(final Dealer dealer, final Map<Player, ResultStatus> winningResult) {
         this.result = calculateProfit(dealer, winningResult);
     }
 
-    private Map<Gamer, Integer> calculateProfit(final Dealer dealer, final Map<Player, ResultStatus> winningResult) {
-        final Map<Gamer, Integer> profits = initializeProfits(dealer, winningResult);
+    private Map<Participant, Integer> calculateProfit(final Dealer dealer, final Map<Player, ResultStatus> winningResult) {
+        final Map<Participant, Integer> profits = initializeProfits(dealer, winningResult);
         for (Entry<Player, ResultStatus> entry : winningResult.entrySet()) {
             calculateEachProfit(dealer, entry, profits);
         }
         return profits;
     }
 
-    private Map<Gamer, Integer> initializeProfits(final Dealer dealer, final Map<Player, ResultStatus> winningResult) {
+    private Map<Participant, Integer> initializeProfits(final Dealer dealer, final Map<Player, ResultStatus> winningResult) {
         return Stream.concat(Stream.of(dealer), winningResult.keySet().stream())
                 .collect(Collectors.toMap(Function.identity(), key -> 0, (e1, e2) -> e1,
                         LinkedHashMap::new));
     }
 
     private void calculateEachProfit(final Dealer dealer, final Entry<Player, ResultStatus> entry,
-                                     final Map<Gamer, Integer> profits) {
+                                     final Map<Participant, Integer> profits) {
         final Player player = entry.getKey();
         final int bettingAmount = player.getBettingAmount();
         final int profit = (int) (entry.getValue().getProfitRate() * bettingAmount);
@@ -59,7 +59,7 @@ public final class ProfitResult {
         return Objects.hashCode(result);
     }
 
-    public Map<Gamer, Integer> getResult() {
+    public Map<Participant, Integer> getResult() {
         return Collections.unmodifiableMap(result);
     }
 }

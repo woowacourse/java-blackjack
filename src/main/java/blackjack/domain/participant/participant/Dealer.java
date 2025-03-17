@@ -1,4 +1,4 @@
-package blackjack.domain.participant.gamer;
+package blackjack.domain.participant.participant;
 
 import static blackjack.domain.card.Hand.BURST_THRESHOLD;
 import static blackjack.domain.result.ResultStatus.BLACKJACK;
@@ -19,7 +19,7 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public final class Dealer extends Gamer implements GameRule {
+public final class Dealer extends Participant implements GameRule {
 
     private static final String NICKNAME = "딜러";
     private static final int DEALER_THRESHOLD = 16;

@@ -1,4 +1,4 @@
-package blackjack.domain.participant.gamer;
+package blackjack.domain.participant.participant;
 
 import static blackjack.domain.card.Hand.BURST_THRESHOLD;
 
@@ -6,7 +6,7 @@ import blackjack.domain.card.Hand;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public final class Player extends Gamer {
+public final class Player extends Participant {
 
     private final String nickname;
     private final int bettingAmount;

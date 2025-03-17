@@ -2,7 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.card.Hand;
 import blackjack.domain.card.Shape;
-import blackjack.domain.participant.gamer.Gamer;
+import blackjack.domain.participant.participant.Participant;
 import blackjack.domain.result.ResultStatus;
 import java.util.List;
 import java.util.Map;
@@ -74,7 +74,7 @@ public final class ResultView {
                 .collect(Collectors.joining(COMMA));
     }
 
-    public void showProfit(final Map<Gamer, Integer> profits) {
+    public void showProfit(final Map<Participant, Integer> profits) {
         showln(LINE + TITLE_PROFITS);
         profits.entrySet().stream()
                 .map(entry -> String.format(PROFITS_FORMAT, entry.getKey().getNickname(), entry.getValue()))

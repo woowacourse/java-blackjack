@@ -4,9 +4,9 @@ import static blackjack.fixture.TestFixture.provideEmptyCards;
 import static blackjack.fixture.TestFixture.providePlayer;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.participant.gamer.Dealer;
-import blackjack.domain.participant.gamer.Gamer;
-import blackjack.domain.participant.gamer.Player;
+import blackjack.domain.participant.participant.Dealer;
+import blackjack.domain.participant.participant.Participant;
+import blackjack.domain.participant.participant.Player;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Assertions;
@@ -47,7 +47,7 @@ class ProfitResultTest {
                         norang, ResultStatus.BLACKJACK)));
 
         // When
-        final Map<Gamer, Integer> profits = profitResult.getResult();
+        final Map<Participant, Integer> profits = profitResult.getResult();
 
         // Then
         Assertions.assertAll(

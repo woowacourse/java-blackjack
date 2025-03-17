@@ -1,8 +1,8 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Hand;
-import blackjack.domain.participant.gamer.Gamer;
-import blackjack.domain.participant.gamer.Player;
+import blackjack.domain.participant.participant.Participant;
+import blackjack.domain.participant.participant.Player;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -36,26 +36,26 @@ public final class Players {
 
     public Map<String, Hand> showTotalInitialCards() {
         return players.stream()
-                .collect(Collectors.toMap(Gamer::getNickname,
-                        Gamer::showInitialCards, (e1, e2) -> e1,
+                .collect(Collectors.toMap(Participant::getNickname,
+                        Participant::showInitialCards, (e1, e2) -> e1,
                         LinkedHashMap::new));
     }
 
     public Map<String, Hand> showTotalCards() {
         return players.stream()
-                .collect(Collectors.toMap(Gamer::getNickname, Gamer::showInitialCards, (e1, e2) -> e1,
+                .collect(Collectors.toMap(Participant::getNickname, Participant::showInitialCards, (e1, e2) -> e1,
                         LinkedHashMap::new));
     }
 
     public Players findHitAvailablePlayers() {
         return new Players(players.stream()
-                .filter(Gamer::canHit)
+                .filter(Participant::canHit)
                 .toList());
     }
 
     public Map<Player, Hand> showAllCards() {
         return players.stream()
-                .collect(Collectors.toMap(player -> player, Gamer::showAllCards, (e1, e2) -> e1,
+                .collect(Collectors.toMap(player -> player, Participant::showAllCards, (e1, e2) -> e1,
                         LinkedHashMap::new));
     }
 
@@ -86,7 +86,7 @@ public final class Players {
 
     public List<String> getNames() {
         return players.stream()
-                .map(Gamer::getNickname)
+                .map(Participant::getNickname)
                 .toList();
     }
 
