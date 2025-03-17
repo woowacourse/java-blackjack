@@ -26,4 +26,17 @@ public final class RetryHandler {
         }
         throw new IllegalStateException("최대 재시도 횟수를 초과했습니다.");
     }
+    
+    public void runWithRetry(final Runnable supplier) {
+        int retryCount = 0;
+        while (retryCount <= MAX_RETRY_COUNT) {
+            try {
+                supplier.run();
+            } catch (Exception e) {
+                outputView.outputExceptionMessage(e);
+                retryCount++;
+            }
+        }
+        throw new IllegalStateException("최대 재시도 횟수를 초과했습니다.");
+    }
 }

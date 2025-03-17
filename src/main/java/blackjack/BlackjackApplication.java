@@ -16,10 +16,11 @@ public final class BlackjackApplication {
     private static BlackjackController getController() {
         final SystemWriter writer = new SystemWriter();
         final OutputView outputView = new OutputView(writer);
+        final RetryHandler retryHandler = new RetryHandler(outputView);
         return new BlackjackController(
-                new InputView(writer, new SystemReader()),
+                new InputView(writer, new SystemReader(), retryHandler),
                 outputView,
-                new RetryHandler(outputView)
+                retryHandler
         );
     }
 }
