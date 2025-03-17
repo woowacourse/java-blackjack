@@ -27,7 +27,7 @@ public class BlackJackApplication {
         Players players = initializeGame(inputView);
         Deck deck = new DeckInitializer().generateDeck();
         Dealer dealer = new Dealer();
-        BlackJackGame blackJackGame = new BlackJackGame(players, deck, dealer);
+        BlackJackGame blackJackGame = new BlackJackGame(deck);
 
         blackJackGame.initializeGame(players, dealer);
         outputView.outputFirstCardDistributionResult(players, dealer);

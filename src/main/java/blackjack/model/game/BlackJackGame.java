@@ -9,10 +9,9 @@ public class BlackJackGame {
 
     private final Deck deck;
 
-    public BlackJackGame(Players players, Deck deck, Dealer dealer) {
+    public BlackJackGame(Deck deck) {
         this.deck = deck;
     }
-
 
     public void initializeGame(Players players, Dealer dealer) {
         players.getParticipants().forEach(p -> p.initialCard(deck.drawCard(), deck.drawCard()));
@@ -33,6 +32,5 @@ public class BlackJackGame {
     public void giveDealerCard(Dealer dealer, Deck deck) {
         dealer.putCard(deck.drawCard());
     }
-
 
 }
