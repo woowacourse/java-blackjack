@@ -9,8 +9,7 @@ import view.OutputView;
 public class BlackjackGameManager {
 
     private final BlackjackGameBoard blackjackGameBoard;
-
-
+    
     public BlackjackGameManager(BlackjackGameBoard blackjackGameBoard) {
         this.blackjackGameBoard = blackjackGameBoard;
     }
