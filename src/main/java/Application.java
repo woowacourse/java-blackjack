@@ -1,15 +1,13 @@
 import deck.Deck;
 import deck.ShuffledDeckCreator;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import participant.BettingMoney;
 import participant.Dealer;
-import participant.GameResult;
 import participant.Nickname;
 import participant.Player;
 import participant.Players;
+import participant.Profit;
 import view.InputView;
 import view.OutputView;
 
@@ -48,18 +46,8 @@ public class Application {
         }
 
         OutputView.printAllCardAndScore(players, dealer);
-
-        int dealerProfit = 0;
-        Map<Player, Integer> playersResult = new HashMap<>();
-
-        for (Player player : players.getPlayers()) {
-            GameResult gameJudge = GameResult.judge(dealer, player);
-
-            dealerProfit -= player.calculateProfit(gameJudge);
-            playersResult.put(player, player.calculateProfit(gameJudge));
-        }
-
-        OutputView.printResult(dealerProfit, playersResult);
+        Profit profit = blackjackGame.calculateProfitResult(dealer, players);
+        OutputView.printResult(profit);
     }
 
     private static Players betPlayers(List<Nickname> nicknames) {

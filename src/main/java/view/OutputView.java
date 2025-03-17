@@ -9,6 +9,7 @@ import participant.Dealer;
 import participant.GameResult;
 import participant.Player;
 import participant.Players;
+import participant.Profit;
 
 public class OutputView {
 
@@ -82,12 +83,12 @@ public class OutputView {
                 .toList());
     }
 
-    public static void printResult(int dealerProfit, Map<Player, Integer> playersResult) {
+    public static void printResult(Profit profit) {
         println("## 최종 수익");
-        System.out.printf("딜러: %d%n", dealerProfit);
+        System.out.printf("딜러: %d%n", profit.getDealerProfit());
 
-        for (Player player : playersResult.keySet()) {
-            System.out.printf("%s: %d%n", player.getNickname(), playersResult.get(player));
+        for (Player player : profit.getPlayersProfit().keySet()) {
+            System.out.printf("%s: %d%n", player.getNickname(), profit.getPlayersProfit().get(player));
         }
     }
 
