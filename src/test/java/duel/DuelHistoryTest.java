@@ -93,32 +93,6 @@ public class DuelHistoryTest {
 				s.assertThat(actualLose).isFalse();
 			});
 		}
-
-		@DisplayName("패배가 가장 많다면 true, 아니라면 false를 반환하라")
-		@Test
-		void isLose() {
-			// given
-			final var win = new DuelHistory();
-			final var lose = new DuelHistory();
-			final var draw = new DuelHistory();
-			win.write(DuelResult.WIN);
-			draw.write(DuelResult.WIN);
-			draw.write(DuelResult.DRAW);
-			draw.write(DuelResult.DRAW);
-			lose.write(DuelResult.LOSE);
-
-			// when
-			final boolean actualWin = win.isLose();
-			final boolean actualDraw = draw.isLose();
-			final boolean actualLose = lose.isLose();
-
-			// then
-			assertSoftly(s -> {
-				s.assertThat(actualWin).isFalse();
-				s.assertThat(actualDraw).isFalse();
-				s.assertThat(actualLose).isTrue();
-			});
-		}
 	}
 
 	@Nested

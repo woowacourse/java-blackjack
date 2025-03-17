@@ -44,11 +44,6 @@ public class DuelHistory {
 			&& get(DuelResult.DRAW).isGreaterThan(get(DuelResult.LOSE));
 	}
 
-	public boolean isLose() {
-		return get(DuelResult.LOSE).isGreaterThan(get(DuelResult.WIN))
-			&& get(DuelResult.LOSE).isGreaterThan(get(DuelResult.DRAW));
-	}
-
 	private Count get(final DuelResult duelResult) {
 		return count.get(duelResult);
 	}
