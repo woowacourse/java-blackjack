@@ -23,6 +23,50 @@ public class Score {
         return cardCount == BLACKJACK_STANDARD_CARD_COUNT & scoreValue == BLACKJACK_STANDARD_SCORE_VALUE;
     }
 
+    public GameResultType calculateGameResult(Score comparedScore) {
+        if (isBlackJack() || comparedScore.isBlackJack()) {
+            return calculateResultOfBlackjack(comparedScore);
+        }
+
+        if (isBusted() || comparedScore.isBusted()) {
+            return calculateResultOfBusted(comparedScore);
+        }
+
+        return GameResultType.find(this.scoreValue, comparedScore.getScoreValue());
+    }
+
+    private GameResultType calculateResultOfBlackjack(Score comparedScore) {
+        if (isBlackJack() && comparedScore.isBlackJack()) {
+            return GameResultType.TIE;
+        }
+
+        if (isBlackJack() && !comparedScore.isBlackJack()) {
+            return GameResultType.WIN;
+        }
+
+        if (!isBlackJack() && comparedScore.isBlackJack()) {
+            return GameResultType.LOSE;
+        }
+
+        throw new IllegalArgumentException("정의되지 않은 결과입니다.");
+    }
+
+    private GameResultType calculateResultOfBusted(Score comparedScore) {
+        if (isBusted() && comparedScore.isBusted()) {
+            return GameResultType.TIE;
+        }
+
+        if (isBusted() && !comparedScore.isBusted()) {
+            return GameResultType.LOSE;
+        }
+
+        if (!isBusted() && comparedScore.isBusted()) {
+            return GameResultType.WIN;
+        }
+
+        throw new IllegalArgumentException("정의되지 않은 결과입니다.");
+    }
+
     public int getScoreValue() {
         return scoreValue;
     }

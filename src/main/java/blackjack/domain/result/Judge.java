@@ -23,68 +23,8 @@ public class Judge {
         Score dealerScore = new Score(dealer);
         Score playerScore = new Score(player);
 
-        if (dealerScore.isBlackJack() || playerScore.isBlackJack()) {
-            processOfBlackjack(player, dealerScore, playerScore);
-            return;
-        }
-
-        if (dealerScore.isBusted() || playerScore.isBusted()) {
-            processOfBusted(player, dealerScore, playerScore);
-            return;
-        }
-
-        processResult(player, dealerScore, playerScore);
-    }
-
-    private void processOfBlackjack(Player player, Score dealerScore, Score playerScore) {
-        if (dealerScore.isBlackJack()) {
-            if (playerScore.isBlackJack()) {
-                PlayerResult playerResult = new PlayerResult(player, GameResultType.TIE, playerScore);
-                playerResults.add(playerResult);
-                return;
-            }
-
-            PlayerResult playerResult = new PlayerResult(player, GameResultType.LOSE, playerScore);
-            playerResults.add(playerResult);
-            return;
-        }
-
-        if (playerScore.isBlackJack()) {
-            PlayerResult playerResult = new PlayerResult(player, GameResultType.WIN, playerScore);
-            playerResults.add(playerResult);
-        }
-    }
-
-    private void processOfBusted(Player player, Score dealerScore, Score playerScore) {
-        boolean isDealerBusted = dealerScore.isBusted();
-        boolean isPlayerBusted = playerScore.isBusted();
-
-        if (isDealerBusted && isPlayerBusted) {
-            PlayerResult playerResult = new PlayerResult(player, GameResultType.TIE, playerScore);
-            playerResults.add(playerResult);
-            return;
-        }
-
-        if (isDealerBusted) {
-            PlayerResult playerResult = new PlayerResult(player, GameResultType.WIN, playerScore);
-            playerResults.add(playerResult);
-            return;
-        }
-
-        if (isPlayerBusted) {
-            PlayerResult playerResult = new PlayerResult(player, GameResultType.LOSE, playerScore);
-            playerResults.add(playerResult);
-        }
-    }
-
-    private void processResult(Player player, Score dealerScore, Score playerScore) {
-        int dealerScoreValue = dealerScore.getScoreValue();
-        int playerScoreValue = playerScore.getScoreValue();
-
-        GameResultType gameResultTypeOfPlayer = GameResultType.find(playerScoreValue, dealerScoreValue);
-
-        PlayerResult playerResult = new PlayerResult(player, gameResultTypeOfPlayer, playerScore);
-        playerResults.add(playerResult);
+        GameResultType gameResultType = playerScore.calculateGameResult(dealerScore);
+        playerResults.add(new PlayerResult(player, gameResultType, playerScore));
     }
 
     public PlayerResults getPlayerResults() {
