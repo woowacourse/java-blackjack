@@ -1,7 +1,7 @@
 package game;
 
 import ScoreResult.ScoreBoard;
-import bank.GamblingStatement;
+import bank.PlayerBettingRecord;
 import participant.Participant;
 import view.InputView;
 import view.OutputView;
@@ -17,7 +17,7 @@ public class BlackJackGameManager {
 
     public void start() {
         final BlackJackGame blackJackGame = new BlackJackGame(inputView.askPlayerNames());
-        final GamblingStatement bettingStatement = new GamblingStatement(inputView.askBettingMoney(blackJackGame));
+        final PlayerBettingRecord bettingStatement = new PlayerBettingRecord(inputView.askBettingMoney(blackJackGame));
         blackJackGame.drawTwoCards();
         outputView.writeDrawTwoCards(blackJackGame);
         for (Participant participant : blackJackGame.getParticipants().findPlayers().getParticipants()) {

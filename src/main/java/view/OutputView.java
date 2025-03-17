@@ -1,7 +1,7 @@
 package view;
 
 import game.BlackJackGame;
-import bank.GamblingStatement;
+import bank.PlayerBettingRecord;
 import bank.Money;
 import card.Card;
 import card.ParticipantCardDeck;
@@ -59,10 +59,10 @@ public class OutputView {
         }
     }
 
-    public void writeTotalProfit(GamblingStatement gamblingStatement) {
+    public void writeTotalProfit(PlayerBettingRecord playerBettingRecord) {
         System.out.println();
         System.out.println("## 최종 수익");
-        Map<Participant, Money> participantProfit = gamblingStatement.getGamblingStatement();
+        Map<Participant, Money> participantProfit = playerBettingRecord.getGamblingStatement();
         StringBuilder playerStringBuilder = new StringBuilder();
         BigDecimal dealerProfit = BigDecimal.valueOf(0);
         for (Map.Entry<Participant, Money> entry : participantProfit.entrySet()) {

@@ -6,14 +6,14 @@ import participant.Participant;
 import java.util.Collections;
 import java.util.Map;
 
-public class GamblingStatement {
+public class PlayerBettingRecord {
     private final Map<Participant, Money> gamblingStatement;
 
-    public GamblingStatement(final Map<Participant, Money> gamblingStatement) {
+    public PlayerBettingRecord(final Map<Participant, Money> gamblingStatement) {
         this.gamblingStatement = new LinkedHashMap<>(gamblingStatement);
     }
 
-    public GamblingStatement calculateProfit(final ScoreBoard scoreBoard) {
+    public PlayerBettingRecord calculateProfit(final ScoreBoard scoreBoard) {
         Map<Participant, Money> profitStatement = new LinkedHashMap<>();
         for (Map.Entry<Participant, Money> entry : gamblingStatement.entrySet()) {
             Participant participant = entry.getKey();
@@ -21,7 +21,7 @@ public class GamblingStatement {
             Money money = selectedCalculator.calculate(entry.getValue());
             profitStatement.put(participant, money);
         }
-        return new GamblingStatement(profitStatement);
+        return new PlayerBettingRecord(profitStatement);
     }
 
     public Map<Participant, Money> getGamblingStatement() {

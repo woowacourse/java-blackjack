@@ -1,5 +1,5 @@
 import ScoreResult.ScoreBoard;
-import bank.GamblingStatement;
+import bank.PlayerBettingRecord;
 import bank.Money;
 import card.GameCardDeck;
 import participant.Dealer;
@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-public class GamblingStatementTest {
+public class PlayerBettingRecordTest {
 
     @Test
     void 생성_확인() {
@@ -24,10 +24,10 @@ public class GamblingStatementTest {
         Map<Participant, Money> originGamblingStatement = new HashMap<>();
 
         //when
-        GamblingStatement gamblingStatement = new GamblingStatement(originGamblingStatement);
+        PlayerBettingRecord playerBettingRecord = new PlayerBettingRecord(originGamblingStatement);
 
         //then
-        Assertions.assertThat(gamblingStatement).isInstanceOf(GamblingStatement.class);
+        Assertions.assertThat(playerBettingRecord).isInstanceOf(PlayerBettingRecord.class);
     }
 
     @DisplayName("승리시 수익 배팅금액 받기, 플레이어 1승, 플레이어 1승")
@@ -46,14 +46,14 @@ public class GamblingStatementTest {
         Map<Participant, Money> participantMoney = Map.of(
                 participants.getParticipants().getFirst(), new Money("10000"),
                 participants.getParticipants().get(1), new Money("10000"));
-        GamblingStatement gamblingStatement = new GamblingStatement(participantMoney);
+        PlayerBettingRecord playerBettingRecord = new PlayerBettingRecord(participantMoney);
 
         GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
         participants.drawTwoCards(gameCardDeck);
         participants.drawTwoCards(gameCardDeck);
 
         //when
-        GamblingStatement profitParticipantMoney = gamblingStatement.calculateProfit(new ScoreBoard(participants));
+        PlayerBettingRecord profitParticipantMoney = playerBettingRecord.calculateProfit(new ScoreBoard(participants));
 
         Map<Participant, Money> profitMoney = profitParticipantMoney.getGamblingStatement();
         //then
@@ -79,7 +79,7 @@ public class GamblingStatementTest {
         Map<Participant, Money> participantMoney = Map.of(
                 participants.getParticipants().getFirst(), new Money("10000"),
                 participants.getParticipants().get(1), new Money("10000"));
-        GamblingStatement gamblingStatement = new GamblingStatement(participantMoney);
+        PlayerBettingRecord playerBettingRecord = new PlayerBettingRecord(participantMoney);
 
         GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
         player1.drawCard(gameCardDeck, 1);
@@ -87,7 +87,7 @@ public class GamblingStatementTest {
         dealer.drawCard(gameCardDeck, 1);
 
         //when
-        GamblingStatement profitParticipantMoney = gamblingStatement.calculateProfit(new ScoreBoard(participants));
+        PlayerBettingRecord profitParticipantMoney = playerBettingRecord.calculateProfit(new ScoreBoard(participants));
 
         Map<Participant, Money> profitMoney = profitParticipantMoney.getGamblingStatement();
 
@@ -113,14 +113,14 @@ public class GamblingStatementTest {
         Map<Participant, Money> participantMoney = Map.of(
                 player1, new Money("10000"),
                 player2, new Money("10000"));
-        GamblingStatement gamblingStatement = new GamblingStatement(participantMoney);
+        PlayerBettingRecord playerBettingRecord = new PlayerBettingRecord(participantMoney);
 
         GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
         participants.drawTwoCards(gameCardDeck);
         dealer.drawCard(gameCardDeck, 4);
 
         //when
-        GamblingStatement profitParticipantMoney = gamblingStatement.calculateProfit(new ScoreBoard(participants));
+        PlayerBettingRecord profitParticipantMoney = playerBettingRecord.calculateProfit(new ScoreBoard(participants));
 
         Map<Participant, Money> profitMoney = profitParticipantMoney.getGamblingStatement();
 
@@ -146,7 +146,7 @@ public class GamblingStatementTest {
         Map<Participant, Money> participantMoney = Map.of(
                 player1, new Money("10000"),
                 player2, new Money("10000"));
-        GamblingStatement gamblingStatement = new GamblingStatement(participantMoney);
+        PlayerBettingRecord playerBettingRecord = new PlayerBettingRecord(participantMoney);
 
         GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
         player1.drawCard(gameCardDeck,1);
@@ -155,7 +155,7 @@ public class GamblingStatementTest {
         dealer.drawCard(gameCardDeck, 2);
 
         //when
-        GamblingStatement profitParticipantMoney = gamblingStatement.calculateProfit(new ScoreBoard(participants));
+        PlayerBettingRecord profitParticipantMoney = playerBettingRecord.calculateProfit(new ScoreBoard(participants));
 
         Map<Participant, Money> profitMoney = profitParticipantMoney.getGamblingStatement();
 
@@ -180,7 +180,7 @@ public class GamblingStatementTest {
         Map<Participant, Money> participantMoney = Map.of(
                 player1, new Money("10000"),
                 player2, new Money("10000"));
-        GamblingStatement gamblingStatement = new GamblingStatement(participantMoney);
+        PlayerBettingRecord playerBettingRecord = new PlayerBettingRecord(participantMoney);
 
         GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
         player1.drawCard(gameCardDeck,1);
@@ -190,7 +190,7 @@ public class GamblingStatementTest {
         dealer.drawCard(gameCardDeck, 1);
 
         //when
-        GamblingStatement profitParticipantMoney = gamblingStatement.calculateProfit(new ScoreBoard(participants));
+        PlayerBettingRecord profitParticipantMoney = playerBettingRecord.calculateProfit(new ScoreBoard(participants));
 
         Map<Participant, Money> profitMoney = profitParticipantMoney.getGamblingStatement();
 
