@@ -13,7 +13,7 @@ public class Accountant {
     Map<Player, Integer> bettingPrices;
 
     public Accountant() {
-        bettingPrices = new HashMap<Player, Integer>();
+        bettingPrices = new HashMap<>();
     }
 
     public void accountBettingPrice(Player player, int price) {
