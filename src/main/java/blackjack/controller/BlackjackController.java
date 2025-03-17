@@ -28,15 +28,16 @@ public class BlackjackController {
         Players players = savePlayers(names);
         Dealer dealer = new Dealer(new Hand());
 
-        BlackjackGame blackjackGame = new BlackjackGame(new Deck(), players, new Dealer(new Hand()));
+        BlackjackGame blackjackGame = new BlackjackGame(new Deck(), players, dealer,
+                new Judge(new PlayerResults(), dealer));
         giveStartingCards(blackjackGame);
 
         players.getPlayers().forEach(participant -> giveMoreCard(participant, blackjackGame));
         takeCardManually(dealer, blackjackGame);
 
-        Judge judge = judgeResults(dealer, players);
-        PlayerResults playerResults = judge.getPlayerResults();
-        DealerResult dealerResult = judge.getDealerResult();
+        blackjackGame.judgeResults();
+        PlayerResults playerResults = blackjackGame.getPlayerResults();
+        DealerResult dealerResult = blackjackGame.getDealerResult();
 
         OutputView.printCardResults(dealer, dealerResult, playerResults);
 

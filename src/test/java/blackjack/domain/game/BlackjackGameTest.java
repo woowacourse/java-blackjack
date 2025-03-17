@@ -2,6 +2,8 @@ package blackjack.domain.game;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.BetAmount;
+import blackjack.domain.result.Judge;
+import blackjack.domain.result.PlayerResults;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +17,8 @@ class BlackjackGameTest {
     void init() {
         Deck deck = new Deck();
         Player player = new Player("히로", new Hand(), new BetAmount(1_000));
-        blackjackGame = new BlackjackGame(deck, new Players(List.of(player)), new Dealer(new Hand()));
+        blackjackGame = new BlackjackGame(deck, new Players(List.of(player)), new Dealer(new Hand()),
+                new Judge(new PlayerResults(), new Dealer(new Hand())));
     }
 
     @Test
@@ -34,7 +37,9 @@ class BlackjackGameTest {
         Hand hand = new Hand();
         Player player = new Player("히로", hand, new BetAmount(1_000));
         Players players = new Players(List.of(player));
-        BlackjackGame blackjackGame = new BlackjackGame(new Deck(), players, new Dealer(new Hand()));
+        Dealer dealer = new Dealer(new Hand());
+        BlackjackGame blackjackGame = new BlackjackGame(new Deck(), players, dealer,
+                new Judge(new PlayerResults(), dealer));
 
         // when
         blackjackGame.giveStartingCards();
