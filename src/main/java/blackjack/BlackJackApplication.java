@@ -4,7 +4,6 @@ import blackjack.controller.BlackJackGame;
 import blackjack.model.game.BettingResult;
 import blackjack.model.game.Deck;
 import blackjack.model.game.DeckInitializer;
-import blackjack.model.game.GameResult;
 import blackjack.model.game.HitOrStand;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
@@ -22,6 +21,7 @@ public class BlackJackApplication {
 
         List<String> names = inputView.inputParticipant();
         List<Player> playersList = new ArrayList<>();
+
         for (String name : names) {
             playersList.add(new Player(name, inputView.inputBetting(name)));
         }
@@ -52,11 +52,10 @@ public class BlackJackApplication {
         }
         outputView.outputDealerCardFinish();
 
-        BettingResult bettingResult = new BettingResult(GameResult.calculateGameResult(dealer, players));
+        BettingResult bettingResult = new BettingResult(dealer.calculateGameResult(players));
 
         outputView.outputFinalCardStatus(dealer, players);
         outputView.outputFinalProfit(bettingResult.getBettingResult(), bettingResult.getDealerResult());
-
 
     }
 }
