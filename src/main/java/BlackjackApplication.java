@@ -8,9 +8,11 @@ public class BlackjackApplication {
 
     public static void main(String[] args) {
         BlackjackGameManager blackjackGameManager = new BlackjackGameManager(
+                new BlackjackGameBoard(DeckGenerator.generateDeck())
+        );
+        blackjackGameManager.startGame(
                 Dealer.createDefaultDealer(),
                 Users.from(InputView.inputUsers())
         );
-        blackjackGameManager.startGame(new BlackjackGameBoard(DeckGenerator.generateDeck()));
     }
 }
