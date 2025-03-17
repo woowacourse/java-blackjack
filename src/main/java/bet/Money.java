@@ -23,8 +23,8 @@ public class Money {
     }
 
     private void validateUnit(long value) {
-        if (value % 1000L != 0L) {
-            throw new IllegalArgumentException("배팅 금액은 1000원 단위만 가능합니다.");
+        if (value % 100L != 0L) {
+            throw new IllegalArgumentException("배팅 금액은 100원 단위만 가능합니다.");
         }
     }
 

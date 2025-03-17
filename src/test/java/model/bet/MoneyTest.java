@@ -25,14 +25,14 @@ public class MoneyTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("배팅 금액은 1000원 이상부터 가능합니다.");
     }
-    @DisplayName("배팅 금액이 1000원 단위가 아닌 경우 예외 발생")
+    @DisplayName("배팅 금액이 100원 단위가 아닌 경우 예외 발생")
     @Test
     void checkBetMoneyUnitTest() {
         //given
         //when
         //then
-        Assertions.assertThatThrownBy(() -> new Money(1100))
+        Assertions.assertThatThrownBy(() -> new Money(1105))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("배팅 금액은 1000원 단위만 가능합니다.");
+                .hasMessage("배팅 금액은 100원 단위만 가능합니다.");
     }
 }
