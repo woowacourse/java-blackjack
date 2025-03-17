@@ -15,13 +15,15 @@ public abstract class Gamer {
         this.state = state;
     }
 
-    public abstract int calculateSumOfRank();
+    public abstract List<Card> getInitialCards();
+
+    public int calculateSumOfRank() {
+        return getHand().calculateSumOfRank();
+    }
 
     public void hit(final Card card) {
         this.state = state.hit(card);
     }
-
-    public abstract List<Card> getInitialCards();
 
     public boolean isRunning() {
         return !state.isFinished();
@@ -45,10 +47,6 @@ public abstract class Gamer {
 
     public String getDisplayName() {
         return nickname.getDisplayName();
-    }
-
-    public Nickname getNickname() {
-        return nickname;
     }
 
     public State getState() {
