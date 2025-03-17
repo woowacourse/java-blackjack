@@ -2,21 +2,21 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Game {
-    public static final int INITIAL_HANDS = 2;
+    private static final int INITIAL_HANDS = 2;
+    private static final int DEFAULT_CARDS_PER_TURN = 1;
 
     private final Dealer dealer;
     private final Players players;
 
-    private Game(List<PlayerName> playerNames) {
+    private Game(List<PlayerName> playerNames, List<BettingMoney> bettingMonies) {
         this.dealer = new Dealer(new Deck(Card.initializeCards()));
-        this.players = new Players(playerNames);
+        this.players = new Players(playerNames, bettingMonies);
     }
 
-    public static Game initialize(List<PlayerName> playerNames) {
-        Game game = new Game(playerNames);
+    public static Game initialize(List<PlayerName> playerNames, List<BettingMoney> bettingMonies) {
+        Game game = new Game(playerNames, bettingMonies);
         game.distributeStartingHands(playerNames);
         return game;
     }
@@ -30,16 +30,20 @@ public class Game {
         playerNames.forEach(playerName -> giveCardToPlayer(playerName, INITIAL_HANDS));
     }
 
-    public void giveCardToDealer(int count) {
-        dealer.addCard(drawCards(count));
+    public void giveDefaultCardsToDealer() {
+        giveCardToDealer(DEFAULT_CARDS_PER_TURN);
     }
 
-    public void giveCardToPlayer(PlayerName playerName, int count) {
-        players.giveCard(playerName, drawCards(count));
+    public void giveDefaultCardsToPlayer(PlayerName playerName) {
+        giveCardToPlayer(playerName, DEFAULT_CARDS_PER_TURN);
     }
 
-    public boolean isPlayerDrawable(PlayerName playerName) {
-        return players.isDrawable(playerName);
+    private void giveCardToDealer(int count) {
+        dealer.receiveCards(drawCards(count));
+    }
+
+    private void giveCardToPlayer(PlayerName playerName, int count) {
+        players.giveCardsToPlayer(playerName, drawCards(count));
     }
 
     private Cards drawCards(int count) {
@@ -51,8 +55,8 @@ public class Game {
         return new Cards(cards);
     }
 
-    public Map<PlayerName, Player> getPlayersInfo() {
-        return players.getPlayersInfo();
+    public boolean isPlayerDrawable(PlayerName playerName) {
+        return players.isDrawable(playerName);
     }
 
     public Card getDealerOneCard() {
@@ -63,11 +67,25 @@ public class Game {
         return dealer.isDrawable();
     }
 
-    public Gamer getDealer() {
+    public List<Player> getPlayers() {
+        return players.getPlayers();
+    }
+
+    public Dealer getDealer() {
         return Dealer.copyOf(dealer);
     }
 
-    public GameStatistics getGameStatistics() {
-        return players.calculateGameStatistics(dealer);
+    public List<PlayerProfit> getPlayerProfits() {
+        return players.getPlayers().stream()
+                .map(player -> new PlayerProfit(player.calculateProfit(dealer), player.getPlayerName()))
+                .toList();
+    }
+
+    public DealerProfit getDealerProfit() {
+        int dealerProfit = -players.getPlayers().stream()
+                .map(player -> player.calculateProfit(dealer))
+                .mapToInt(i -> i)
+                .sum();
+        return new DealerProfit(dealerProfit);
     }
 }

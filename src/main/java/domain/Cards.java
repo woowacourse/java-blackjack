@@ -75,8 +75,12 @@ public class Cards {
         }
     }
 
-    public int size() {
-        return cards.size();
+    public boolean isInitialHands() {
+        return cards.size() == 2;
+    }
+
+    public boolean isBlackJack() {
+        return isInitialHands() && calculateScore() == GAMER_BUST_THRESHOLD;
     }
 
     public List<Card> getCards() {

@@ -1,14 +1,16 @@
 package domain;
 
-import static domain.GameResult.DRAW;
+import static domain.GameResult.BLACKJACK;
 import static domain.GameResult.LOSE;
+import static domain.GameResult.TIE;
 import static domain.GameResult.WIN;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.Assertions;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,20 +18,26 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class PlayerTest {
+    Player player;
+
+    @BeforeEach
+    void makePlayer() {
+        player = new Player(new PlayerName("코기"), new BettingMoney(10000));
+    }
+
     @Test
     @DisplayName("특정 카드를 뽑는지 확인합니다.")
     void addCardTest() {
         //given
         Card card = Card.CLOVER_EIGHT;
-        Player player = new Player(new PlayerName("코기"));
 
         Cards newCards = new Cards(List.of(card));
 
         //when
-        player.addCard(newCards);
+        player.receiveCards(newCards);
 
         //then
-        Assertions.assertTrue(player.getCards().hasCommonCard(newCards));
+        Assertions.assertThat(player.getCards().hasCommonCard(newCards)).isTrue();
     }
 
     @ParameterizedTest
@@ -37,9 +45,8 @@ class PlayerTest {
     @DisplayName("플레이어가 카드를 더 받을 수 있는지 확인한다.")
     void canGetMoreCardTest(List<Card> cards, boolean expected) {
         //given
-        Player player = new Player(new PlayerName("코기"));
         for (Card card : cards) {
-            player.addCard(new Cards(List.of(card)));
+            player.receiveCards(new Cards(List.of(card)));
         }
 
         int playStandard = 20;
@@ -64,35 +71,33 @@ class PlayerTest {
     @DisplayName("딜러 숫자가 20일 때, 승무패를 계산하는지 확인합니다.")
     void decideGameResultTest(List<Card> cards, GameResult expected) {
         //given
-        Player player = new Player(new PlayerName("코기"));
         for (Card card : cards) {
-            player.addCard(new Cards(List.of(card)));
+            player.receiveCards(new Cards(List.of(card)));
         }
         Cards emptyCards = new Cards(new ArrayList<>());
         Dealer dealer = new Dealer(new Deck(emptyCards));
-        dealer.addCard(new Cards(List.of(Card.HEART_JACK, Card.SPADE_QUEEN))); // 20
+        dealer.receiveCards(new Cards(List.of(Card.HEART_JACK, Card.SPADE_QUEEN))); // 20
 
         //when & then
-        Assertions.assertEquals(expected, player.decideGameResult(dealer));
+        Assertions.assertThat(player.decideGameResult(dealer)).isEqualTo(expected);
     }
 
     public static Stream<Arguments> decideGameResultTest() {
         return Stream.of(
                 Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_NINE, Card.CLOVER_THREE), LOSE), // 버스트
-                Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_QUEEN), WIN), // 21
+                Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_QUEEN), BLACKJACK), // 21
                 Arguments.of(List.of(Card.HEART_TEN, Card.CLOVER_JACK, Card.CLOVER_ACE), WIN), // 21
-                Arguments.of(List.of(Card.HEART_SEVEN, Card.CLOVER_JACK, Card.CLOVER_THREE), DRAW) // 20
+                Arguments.of(List.of(Card.HEART_SEVEN, Card.CLOVER_JACK, Card.CLOVER_THREE), TIE) // 20
         );
     }
 
     @ParameterizedTest
     @MethodSource
-    @DisplayName("딜러와 플레이어가 둘 다 Bust 상황일때 무승부인지 확인합니다.")
+    @DisplayName("딜러나 플레이어가 버스트인 경우 승패를 확인합니다.")
     void decideGameResultBustTest(List<Card> cards, GameResult expected) {
         //given
-        Player player = new Player(new PlayerName("코기"));
         for (Card card : cards) {
-            player.addCard(new Cards(List.of(card)));
+            player.receiveCards(new Cards(List.of(card)));
         }
 
         Cards emptyCards = new Cards(new ArrayList<>());
@@ -100,18 +105,45 @@ class PlayerTest {
 
         List<Card> givenCards = List.of(Card.HEART_JACK, Card.SPADE_SIX, Card.CLOVER_SEVEN);
         for (Card givenCard : givenCards) {
-            dealer.addCard(new Cards(List.of(givenCard)));
+            dealer.receiveCards(new Cards(List.of(givenCard)));
         }
 
         //when & then
-        Assertions.assertEquals(expected, player.decideGameResult(dealer));
+        Assertions.assertThat(player.decideGameResult(dealer)).isEqualTo(expected);
     }
 
     public static Stream<Arguments> decideGameResultBustTest() {
         return Stream.of(
-                Arguments.of(List.of(Card.HEART_QUEEN, Card.CLOVER_JACK, Card.CLOVER_THREE), DRAW),
-                Arguments.of(List.of(Card.HEART_THREE, Card.CLOVER_JACK, Card.CLOVER_QUEEN), DRAW),
-                Arguments.of(List.of(Card.HEART_TWO, Card.CLOVER_JACK, Card.CLOVER_TEN), DRAW)
+                Arguments.of(List.of(Card.HEART_QUEEN, Card.CLOVER_JACK, Card.CLOVER_THREE), LOSE),
+                Arguments.of(List.of(Card.HEART_TWO, Card.CLOVER_JACK, Card.CLOVER_TEN), LOSE)
+        );
+    }
+
+    @Test
+    @DisplayName("같은 이름을 가졌는지 확인합니다.")
+    void isSameNameTest() {
+        Assertions.assertThat(player.isSameName(new PlayerName("코기"))).isTrue();
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    @DisplayName("플레이어의 수익률을 계산합니다.")
+    void calculateProfitTest(List<Card> cards, int expected) {
+        Cards emptyCards = new Cards(new ArrayList<>());
+        Dealer dealer = new Dealer(new Deck(emptyCards));
+        dealer.receiveCards(new Cards(List.of(Card.HEART_JACK, Card.SPADE_FIVE))); // 15
+
+        player.receiveCards(new Cards(cards));
+
+        assertThat(player.calculateProfit(dealer)).isEqualTo(expected);
+    }
+
+    public static Stream<Arguments> calculateProfitTest() {
+        return Stream.of(
+                Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_JACK), 15000), // 블랙잭
+                Arguments.of(List.of(Card.CLOVER_JACK, Card.CLOVER_QUEEN), 10000), // 일반승리
+                Arguments.of(List.of(Card.HEART_ACE, Card.CLOVER_ACE), -10000), // 패배
+                Arguments.of(List.of(Card.HEART_JACK, Card.CLOVER_FIVE), 0) // 무승부
         );
     }
 }

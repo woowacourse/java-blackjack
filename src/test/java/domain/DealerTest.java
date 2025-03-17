@@ -1,16 +1,16 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.Assertions;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+;
 
 class DealerTest {
 
@@ -22,11 +22,11 @@ class DealerTest {
         Cards emptyCards = new Cards(new ArrayList<>());
         Dealer dealer = new Dealer(new Deck(emptyCards));
         for (Card card : cards) {
-            dealer.addCard(new Cards(List.of(card)));
+            dealer.receiveCards(new Cards(List.of(card)));
         }
 
         //when & then
-        assertThat(dealer.isDrawable()).isEqualTo(expected);
+        Assertions.assertThat(dealer.isDrawable()).isEqualTo(expected);
     }
 
     public static Stream<Arguments> canGetMoreCardTest() {
@@ -45,9 +45,9 @@ class DealerTest {
         //given
         Cards emptyCards = new Cards(new ArrayList<>());
         Dealer dealer = new Dealer(new Deck(emptyCards));
-        dealer.addCard(new Cards(cards));
+        dealer.receiveCards(new Cards(cards));
         //when & then
-        assertThat(cards).contains(dealer.showAnyOneCard());
+        Assertions.assertThat(cards).contains(dealer.showAnyOneCard());
     }
 
     public static Stream<Arguments> showFirstCardTest() {
@@ -65,6 +65,9 @@ class DealerTest {
     void validateShowFirstCardTest() {
         Cards emptyCards = new Cards(new ArrayList<>());
         Dealer dealer = new Dealer(new Deck(emptyCards));
-        Assertions.assertThrows(IllegalStateException.class, dealer::showAnyOneCard);
+        Assertions.assertThatThrownBy(dealer::showAnyOneCard)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("카드가 없습니다.");
+
     }
 }

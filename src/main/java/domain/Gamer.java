@@ -18,7 +18,7 @@ public abstract class Gamer {
         return cards.calculateScore();
     }
 
-    public void addCard(Cards addedCards) {
+    public void receiveCards(Cards addedCards) {
         validateDuplicate(addedCards);
         cards.addCards(addedCards);
     }
@@ -36,5 +36,9 @@ public abstract class Gamer {
 
     public Cards getCards() {
         return new Cards(cards.getCards());
+    }
+
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
     }
 }

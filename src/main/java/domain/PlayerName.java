@@ -8,7 +8,6 @@ public record PlayerName(String username) {
     public PlayerName {
         validateEmptyAndBlankName(username);
         validateUserName(username);
-
     }
 
     private void validateEmptyAndBlankName(String username) {
@@ -16,7 +15,6 @@ public record PlayerName(String username) {
             throw new IllegalArgumentException("이름은 비어있을 수 없습니다.");
         }
     }
-
 
     public static void validateUserName(String names) {
         if (!INPUT_PATTERN.matcher(names).matches()) {

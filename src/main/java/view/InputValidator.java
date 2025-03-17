@@ -1,7 +1,6 @@
 package view;
 
-import static view.InputView.UserResponses;
-
+import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -21,9 +20,21 @@ public class InputValidator {
         }
     }
 
-    public static void validateUserResponse(String userResponse) {
-        if (!UserResponses.containsKey(userResponse)) {
-            throw new IllegalArgumentException("응답은 반드시 y 혹은 n만 가능합니다.");
+    public static void validateInputMoney(String rawBettingMoney) {
+        if (!rawBettingMoney.chars().allMatch(Character::isDigit)) {
+            throw new NumberFormatException("숫자가 아닙니다.");
         }
+    }
+
+    public static void validateIntegerRange(String rawBettingMoney) {
+        BigInteger bigInteger = new BigInteger(rawBettingMoney);
+        if (isOutOfIntRange(bigInteger)) {
+            throw new IllegalArgumentException("허용된 숫자 범위가 아닙니다.");
+        }
+    }
+
+    private static boolean isOutOfIntRange(BigInteger bigInteger) {
+        return bigInteger.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0 ||
+                bigInteger.compareTo(BigInteger.valueOf(Integer.MIN_VALUE)) < 0;
     }
 }

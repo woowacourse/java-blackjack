@@ -1,31 +1,21 @@
 package view;
 
 import static domain.Dealer.DEALER_DRAWABLE_THRESHOLD;
-import static domain.GameResult.DRAW;
-import static domain.GameResult.LOSE;
-import static domain.GameResult.WIN;
 
 import domain.Card;
 import domain.Cards;
-import domain.GameResult;
-import domain.GameStatistics;
+import domain.DealerProfit;
 import domain.Gamer;
 import domain.Player;
 import domain.PlayerName;
-import java.util.ArrayList;
+import domain.PlayerProfit;
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
 
-    private static final Map<GameResult, String> GAME_RESULT = Map.of(
-            WIN, "승",
-            DRAW, "무",
-            LOSE, "패");
-
-    public void printInitialState(Map<PlayerName, Player> playersInfo, Card dealerCard) {
-        List<PlayerName> playerNames = new ArrayList<>(playersInfo.keySet());
-        List<String> usernames = playerNames.stream()
+    public void printInitialState(List<Player> players, Card dealerCard) {
+        List<String> usernames = players.stream()
+                .map(Player::getPlayerName)
                 .map(PlayerName::username)
                 .toList();
         String names = String.join(", ", usernames);
@@ -33,10 +23,9 @@ public class OutputView {
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.\n", names);
         System.out.printf("딜러카드: %s\n", dealerCard.getCardName());
 
-        for (PlayerName playerName : playerNames) {
-            Gamer player = playersInfo.get(playerName);
+        for (Player player : players) {
             Cards cards = player.getCards();
-            printGamerCards(playerName.username(), cards);
+            printGamerCards(player.getPlayerName().username(), cards);
             System.out.println();
         }
     }
@@ -52,14 +41,15 @@ public class OutputView {
         System.out.printf("\n딜러는 %s이하라 카드를 더 받았습니다.\n", DEALER_DRAWABLE_THRESHOLD);
     }
 
-    public void printFinalState(Map<PlayerName, Player> playersInfo, Gamer dealer) {
+    public void printFinalState(List<Player> players, Gamer dealer) {
         System.out.println();
         printGamerCards("딜러", dealer.getCards());
         printGamerScore(dealer);
-        playersInfo.forEach((key, value) -> {
-            printGamerCards(key.username(), value.getCards());
-            printGamerScore(value);
-        });
+        players.forEach(
+                player -> {
+                    printGamerCards(player.getPlayerName().username(), player.getCards());
+                    printGamerScore(player);
+                });
         System.out.println();
     }
 
@@ -67,20 +57,10 @@ public class OutputView {
         System.out.printf(" - 결과: %d\n", gamer.getScore());
     }
 
-    public void printGameStatistics(GameStatistics gameStatistics) {
-        System.out.println("##최종 승패");
-        int dealerDrawCount = gameStatistics.getDealerDrawCount();
-        if (dealerDrawCount == 0) {
-            System.out.printf("\n딜러: %d승 %d패\n", gameStatistics.getDealerWinCount(),
-                    gameStatistics.getDealerLoseCount());
-        }
-        if (dealerDrawCount != 0) {
-            System.out.printf("딜러: %d승 %d무 %d패\n", gameStatistics.getDealerWinCount(), dealerDrawCount,
-                    gameStatistics.getDealerLoseCount());
-        }
-        Map<PlayerName, GameResult> results = gameStatistics.getResults();
-        results.forEach((key, value) -> {
-            System.out.printf("%s: %s\n", key.username(), GAME_RESULT.get(value));
-        });
+    public void printFinalResult(List<PlayerProfit> playerProfits, DealerProfit dealerProfit) {
+        System.out.println("## 최종 수익\n");
+        System.out.printf("딜러: %d\n", dealerProfit.dealerProfit());
+        playerProfits.forEach(playerProfit -> System.out.printf("%s: %d\n", playerProfit.playerName().username(),
+                playerProfit.playerProfit()));
     }
 }
