@@ -27,7 +27,11 @@ public class BettingResult {
     }
 
     public int calculateDealerFinalResult(Map<Player, Integer> playerBetResults) {
-        return playerBetResults.values().stream().mapToInt(i -> -i).sum();
+        int totalPlayerEarnings = playerBetResults.values()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .sum();
+        return totalPlayerEarnings * -1;
     }
 
     private int calculateFinalBettingResult(Player player, Dealer dealer) {
