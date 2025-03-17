@@ -5,6 +5,7 @@ import domain.BlackJackResultCalculator;
 import domain.ParticipantsResult;
 import domain.betting.BatMoney;
 import domain.betting.BatMonies;
+import domain.betting.Revenues;
 import domain.card.CardBundle;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
@@ -34,6 +35,7 @@ public class BlackJackController {
         giveStartingCardsToParticipants(blackJackGame);
         processCardReceiving(blackJackGame);
         calculateBackJackResultProcess(participants);
+        calculateBlackjackRevenue(blackJackGame, batMonies);
     }
 
     private Participants createGameParticipants() {
@@ -100,7 +102,8 @@ public class BlackJackController {
 
     private void calculateBackJackResultProcess(Participants participants) {
         printAllParticipantsInfo(participants);
-        printAllParticipantGameResult(participants);
+        // NOTE: 모든 참가자들의 승패 결과를 출력하지 않도록 명세가 수정되었다.
+        // printAllParticipantGameResult(participants);
     }
 
     private void printAllParticipantsInfo(Participants participants) {
@@ -110,5 +113,10 @@ public class BlackJackController {
     private void printAllParticipantGameResult(Participants participants) {
         ParticipantsResult participantsResult = BlackJackResultCalculator.calculate(participants);
         outputView.printGameResult(participantsResult);
+    }
+
+    private void calculateBlackjackRevenue(BlackJackGame blackJackGame, BatMonies batMonies) {
+        Revenues revenues = blackJackGame.calculateRevenue(batMonies);
+        outputView.printRevenue(revenues);
     }
 }
