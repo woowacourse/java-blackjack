@@ -1,7 +1,6 @@
 package domain;
 
-import static util.ExceptionConstants.ERROR_HEADER;
-
+import exception.CustomException;
 import java.util.List;
 
 public class CardGiver {
@@ -23,7 +22,7 @@ public class CardGiver {
             return;
         }
         if (player.isImpossibleHit()) {
-            throw new IllegalStateException(ERROR_HEADER + "카드의 합이 21을 초과하였습니다. 더이상 카드를 받을 수 없습니다.");
+            throw new CustomException("카드의 합이 21을 초과하였습니다. 더이상 카드를 받을 수 없습니다.");
         }
         player.addCard(deck.drawCard());
     }

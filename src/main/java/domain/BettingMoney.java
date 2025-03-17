@@ -1,7 +1,6 @@
 package domain;
 
-import static util.ExceptionConstants.ERROR_HEADER;
-
+import exception.CustomException;
 import java.math.BigDecimal;
 
 public record BettingMoney(
@@ -22,13 +21,13 @@ public record BettingMoney(
 
     private void validateNegative(int bettingMoney) {
         if (bettingMoney < 0) {
-            throw new IllegalArgumentException(ERROR_HEADER + "베팅 금액은 음수일 수 없습니다.");
+            throw new CustomException("베팅 금액은 음수일 수 없습니다.");
         }
     }
 
     private void validateUnit(int bettingMoney) {
         if (bettingMoney % BETTING_UNIT != 0) {
-            throw new IllegalArgumentException(ERROR_HEADER + "베팅 금액은 1000원 단위여야 합니다.");
+            throw new CustomException("베팅 금액은 1000원 단위여야 합니다.");
         }
     }
 }

@@ -2,8 +2,8 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static util.ExceptionConstants.ERROR_HEADER;
 
+import exception.CustomException;
 import fixture.CardFixture;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,8 +60,8 @@ public class CardGiverTest {
         // when // then
         assertThatThrownBy(() -> {
             cardGiver.hit(player, isRequestHit);
-        }).isInstanceOf(IllegalStateException.class)
-                .hasMessage(ERROR_HEADER + "카드의 합이 21을 초과하였습니다. 더이상 카드를 받을 수 없습니다.");
+        }).isInstanceOf(CustomException.class)
+                .hasMessageContaining("카드의 합이 21을 초과하였습니다. 더이상 카드를 받을 수 없습니다.");
     }
 
     @DisplayName("플레이어가 hit한다면 카드를 추가한다")

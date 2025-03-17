@@ -1,7 +1,6 @@
 package domain;
 
-import static util.ExceptionConstants.ERROR_HEADER;
-
+import exception.CustomException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,14 +19,14 @@ public class Deck {
 
     public Card drawCard() {
         if (cards.isEmpty()) {
-            throw new IllegalStateException(ERROR_HEADER + NO_ENOUGH_CARD);
+            throw new CustomException(NO_ENOUGH_CARD);
         }
         return cards.removeFirst();
     }
 
     public List<Card> drawCards(int count) {
         if (cards.size() < count) {
-            throw new IllegalStateException(ERROR_HEADER + NO_ENOUGH_CARD);
+            throw new CustomException(NO_ENOUGH_CARD);
         }
         return IntStream.range(0, count)
                 .mapToObj(i -> cards.removeFirst())

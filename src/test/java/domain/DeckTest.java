@@ -1,8 +1,8 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.*;
-import static util.ExceptionConstants.ERROR_HEADER;
 
+import exception.CustomException;
 import fixture.CardFixture;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +35,8 @@ class DeckTest {
         //when & then
         assertThatThrownBy(
                 deck::drawCard
-        ).isInstanceOf(IllegalStateException.class)
-                .hasMessage(ERROR_HEADER + "카드가 충분하지 않습니다.");
+        ).isInstanceOf(CustomException.class)
+                .hasMessageContaining("카드가 충분하지 않습니다.");
     }
 
     @DisplayName("배분할 카드의 개수가 요청한 수보다 적다면 예외가 발생한다")
@@ -50,8 +50,8 @@ class DeckTest {
         //when & then
         assertThatThrownBy(
                 () -> deck.drawCards(2)
-        ).isInstanceOf(IllegalStateException.class)
-                .hasMessage(ERROR_HEADER + "카드가 충분하지 않습니다.");
+        ).isInstanceOf(CustomException.class)
+                .hasMessageContaining("카드가 충분하지 않습니다.");
     }
 
     @DisplayName("덱에 카드를 원하는 개수만큼 뽑을 수 있다")

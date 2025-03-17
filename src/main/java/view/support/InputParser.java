@@ -1,7 +1,6 @@
 package view.support;
 
-import static util.ExceptionConstants.*;
-
+import exception.CustomException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -33,13 +32,13 @@ public class InputParser {
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(ERROR_HEADER + INVALID_INTEGER_TYPE);
+            throw new CustomException(INVALID_INTEGER_TYPE);
         }
     }
 
     private void validateAnswerType(AnswerType answerType) {
         if (answerType == null) {
-            throw new IllegalArgumentException(ERROR_HEADER + INVALID_ANSWER_TYPE);
+            throw new CustomException(INVALID_ANSWER_TYPE);
         }
     }
 }

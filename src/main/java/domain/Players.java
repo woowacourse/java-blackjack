@@ -1,7 +1,6 @@
 package domain;
 
-import static util.ExceptionConstants.ERROR_HEADER;
-
+import exception.CustomException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -38,7 +37,7 @@ public class Players {
         return players.stream()
                 .filter(player -> player.isEqualName(playerName))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(ERROR_HEADER + "해당 이름을 가진 플레이어가 없습니다."));
+                .orElseThrow(() -> new CustomException("해당 이름을 가진 플레이어가 없습니다."));
     }
 
     public ProfitResults calculateProfitResults(Hand dealerHand) {

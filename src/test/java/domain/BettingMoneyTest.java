@@ -2,8 +2,8 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static util.ExceptionConstants.ERROR_HEADER;
 
+import exception.CustomException;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,8 +33,8 @@ class BettingMoneyTest {
         // when & then
         assertThatThrownBy(() -> {
             new BettingMoney(bettingMoney);
-        }).isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ERROR_HEADER + "베팅 금액은 음수일 수 없습니다.");
+        }).isInstanceOf(CustomException.class)
+                .hasMessageContaining("베팅 금액은 음수일 수 없습니다.");
     }
 
     @DisplayName("베팅 금액이 1000원 단위가 아니라면 예외를 발생시킨다")
@@ -46,7 +46,7 @@ class BettingMoneyTest {
         // when & then
         assertThatThrownBy(() -> {
             new BettingMoney(bettingMoney);
-        }).isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ERROR_HEADER + "베팅 금액은 1000원 단위여야 합니다.");
+        }).isInstanceOf(CustomException.class)
+                .hasMessageContaining("베팅 금액은 1000원 단위여야 합니다.");
     }
 }
