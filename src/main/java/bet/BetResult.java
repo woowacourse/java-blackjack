@@ -10,16 +10,7 @@ public class BetResult {
     }
 
     public int calculateBettingResult(MatchResult matchResult, int amount) {
-        if (matchResult == MatchResult.WIN_WITH_BLACKJACK) {
-            return (int) (amount * 1.5);
-        }
-        if (matchResult == MatchResult.LOSE) {
-            return -amount;
-        }
-        if (matchResult == MatchResult.DRAW) {
-            return amount - amount;
-        }
-        return amount;
+        return matchResult.calculateBettingResult(amount);
     }
 
     public int getAmount() {

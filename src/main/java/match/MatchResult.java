@@ -1,14 +1,27 @@
-package result;
+package match;
 
 import player.Dealer;
 import player.Participant;
 
+import java.util.function.IntUnaryOperator;
+
 public enum MatchResult {
-    WIN,
-    WIN_WITH_BLACKJACK,
-    LOSE,
-    DRAW,
-    ;
+    WIN("승", amount -> amount),
+    WIN_WITH_BLACKJACK("승", amount -> (int) (amount * 1.5)),
+    LOSE("패", amount -> -amount),
+    DRAW("무", amount -> 0);
+
+    private final String title;
+    private final IntUnaryOperator betResultCalculator;
+
+    MatchResult(String title, IntUnaryOperator bettingResultCalculator) {
+        this.title = title;
+        this.betResultCalculator = bettingResultCalculator;
+    }
+
+    public int calculateBettingResult(int amount) {
+        return betResultCalculator.applyAsInt(amount);
+    }
 
     public static MatchResult calculateParticipantMatchResult(Dealer dealer, Participant participant) {
         if (participant.isBlackjack() && dealer.isBlackjack()) {
@@ -34,5 +47,9 @@ public enum MatchResult {
             return LOSE;
         }
         return DRAW;
+    }
+
+    public String getTitle() {
+        return title;
     }
 }
