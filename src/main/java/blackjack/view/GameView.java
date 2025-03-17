@@ -16,16 +16,7 @@ public class GameView {
         this.outputView = outputView;
     }
 
-    public void displayToConsole() {
-        BlackjackGame game = enterParticipants();
-
-        distributeInitialCards(game);
-        distributeAdditionalCards(game);
-
-        showFinalCardsAndProfits(game);
-    }
-
-    private BlackjackGame enterParticipants() {
+    public BlackjackGame enterParticipants() {
         outputView.printEnterPlayers();
         Players players = inputView.readPlayers();
 
@@ -38,12 +29,12 @@ public class GameView {
         return BlackjackGame.createGameWith(CardDeck.shuffleCardDeck(), players);
     }
 
-    private void distributeInitialCards(final BlackjackGame game) {
+    public void distributeInitialCards(final BlackjackGame game) {
         game.initCardsToUsers();
         outputView.printInitDistributionResult(game.getDealer(), game.getPlayers());
     }
 
-    private void distributeAdditionalCards(final BlackjackGame game) {
+    public void distributeAdditionalCards(final BlackjackGame game) {
         for (Player player : game.getPlayers().getJoinedPlayers()) {
             outputView.printAddExtraCardToPlayer(player.getName());
             handleExtraCardError(() -> distributeAdditionalCardsToPlayer(player, game));
@@ -70,7 +61,7 @@ public class GameView {
         }
     }
 
-    private void showFinalCardsAndProfits(final BlackjackGame game) {
+    public void showFinalCardsAndProfits(final BlackjackGame game) {
         outputView.printFinalCardResult(game.getDealer(), game.getPlayers());
 
         int playersProfit = game.calculateProfitForPlayers();
