@@ -60,10 +60,6 @@ public class Cards {
         }
     }
 
-    public boolean hasSize(final int size) {
-        return values.size() == size;
-    }
-
     public void merge(final Cards otherCards) {
         this.values.addAll(otherCards.values);
     }
@@ -77,7 +73,6 @@ public class Cards {
                             values.removeLast();
                         }
                 );
-
         return cards;
     }
 
