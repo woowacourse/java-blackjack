@@ -7,7 +7,7 @@ public class Dealer extends Participant {
 
     private static final int DEALER_SCORE_THRESHOLD = 16;
 
-    protected Dealer() {
+    public Dealer() {
         super("딜러");
     }
 

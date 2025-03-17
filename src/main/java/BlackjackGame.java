@@ -1,6 +1,5 @@
 import domain.Bettings;
 import domain.CardDeck;
-import domain.GameStatus;
 import domain.card.Card;
 import domain.dto.GameResultDto;
 import domain.dto.ParticipantCardsDto;

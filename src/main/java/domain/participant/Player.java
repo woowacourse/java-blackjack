@@ -8,7 +8,7 @@ public class Player extends Participant {
 
     private static final int PLAYER_SCORE_THRESHOLD = 21;
 
-    protected Player(String name) {
+    public Player(String name) {
         super(name);
     }
 
