@@ -10,7 +10,7 @@ public class Nickname {
 
     private void validateName(String name) {
         if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("[ERROR] 이름이 입력되지 않았습니다.");
+            throw new IllegalArgumentException("[ERROR] 이름은 공백일 수 없습니다.");
         }
     }
 
