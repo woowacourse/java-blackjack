@@ -40,7 +40,7 @@ public class BetTest {
         Bet bet = new Bet(initMoney);
 
         // when
-        int actual = bet.calculateBenefit(profitRate);
+        int actual = bet.calculateProfit(profitRate);
 
         // then
         assertThat(actual).isEqualTo(expected);

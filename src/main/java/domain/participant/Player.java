@@ -36,7 +36,7 @@ public class Player {
     public int getProfitFromOpponents(HandState other) {
         HandState hand = participant.handState();
         double profitRate = hand.calculateProfitRate(other);
-        return betMoney.calculateBenefit(profitRate);
+        return betMoney.calculateProfit(profitRate);
     }
 
     public void stay() {
