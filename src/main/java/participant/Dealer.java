@@ -28,6 +28,10 @@ public class Dealer {
         return cards.isBust();
     }
 
+    public boolean canHit() {
+        return cards.isHit(HIT_CONDITION);
+    }
+
     public void applyAceRule() {
         cards.applyAceRule();
     }
@@ -40,7 +44,4 @@ public class Dealer {
         return cards.getCards();
     }
 
-    public boolean canHit() {
-        return cards.isHit(HIT_CONDITION);
-    }
 }
