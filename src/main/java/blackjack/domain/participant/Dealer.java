@@ -57,7 +57,7 @@ public final class Dealer extends Participant implements GameRule {
 
     private ResultStatus determinePlayerResult(final Hand playerHand) {
         if (hand.isBlackjack() && !playerHand.isBlackjack()) {
-            return WIN;
+            return LOSE;
         }
         if (!hand.isBlackjack() && playerHand.isBlackjack()) {
             return BLACKJACK;
@@ -78,17 +78,17 @@ public final class Dealer extends Participant implements GameRule {
         if (playerScore <= BURST_THRESHOLD) {
             return determineResultWhenPlayerNotBusted(dealerScore, playerScore);
         }
-        return WIN;
+        return LOSE;
     }
 
     private ResultStatus determineResultWhenPlayerNotBusted(final int dealerScore, final int playerScore) {
         if (dealerScore > playerScore) {
-            return WIN;
+            return LOSE;
         }
         if (dealerScore == playerScore) {
             return PUSH;
         }
-        return LOSE;
+        return WIN;
     }
 
     private ResultStatus determineResultWhenDealerBusted(final int playerScore) {

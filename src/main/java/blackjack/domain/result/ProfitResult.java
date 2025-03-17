@@ -41,8 +41,8 @@ public final class ProfitResult {
         final Player player = entry.getKey();
         final int bettingAmount = player.getBettingAmount();
         final int profit = (int) (entry.getValue().getProfitRate() * bettingAmount);
-        profits.merge(dealer, profit, Integer::sum);
-        profits.merge(player, -profit, Integer::sum);
+        profits.merge(dealer, -profit, Integer::sum);
+        profits.merge(player, profit, Integer::sum);
     }
 
     @Override

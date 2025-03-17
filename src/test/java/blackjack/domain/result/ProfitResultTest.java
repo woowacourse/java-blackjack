@@ -51,9 +51,9 @@ class ProfitResultTest {
 
         // Then
         Assertions.assertAll(
-                () -> assertThat(profits.get(dealer)).isEqualTo(-85_000),
-                () -> assertThat(profits.get(mint)).isEqualTo(-10_000),
-                () -> assertThat(profits.get(mj)).isEqualTo(20_000),
+                () -> assertThat(profits.get(dealer)).isEqualTo(-65_000),
+                () -> assertThat(profits.get(mint)).isEqualTo(10_000),
+                () -> assertThat(profits.get(mj)).isEqualTo(-20_000),
                 () -> assertThat(profits.get(pobi)).isEqualTo(0),
                 () -> assertThat(profits.get(norang)).isEqualTo(75_000)
         );

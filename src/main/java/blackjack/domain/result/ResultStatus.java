@@ -4,7 +4,7 @@ public enum ResultStatus {
 
     WIN(1.0),
     LOSE(-1.0),
-    BLACKJACK(-1.5),
+    BLACKJACK(1.5),
     PUSH(0);
 
     private final double profitRate;
