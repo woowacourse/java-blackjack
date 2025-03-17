@@ -1,17 +1,10 @@
-package blackjack.domain;
-
-import java.util.EnumMap;
-import java.util.List;
+package blackjack.domain.card;
 
 import static blackjack.test_util.TestConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
 
 import java.util.stream.Stream;
 

@@ -1,10 +1,15 @@
 package blackjack.domain;
 
+import blackjack.domain.player.Player;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import blackjack.domain.card_hand.DealerBlackjackCardHand;
 import blackjack.domain.card_hand.PlayerBlackjackCardHand;
+
+import java.util.Map;
 
 public final class BlackjackJudge {
     
@@ -24,6 +29,10 @@ public final class BlackjackJudge {
         if (playerBlackjackCardHands == null) {
             throw new IllegalArgumentException("플래이어의 손패는 null이 될 수 없습니다.");
         }
+    }
+    
+    public int getDealerBlackjackWinningCount() {
+        return getCountOf(WinningStatus.BLACKJACK_WIN);
     }
     
     public int getDealerWinningCount() {
@@ -50,5 +59,14 @@ public final class BlackjackJudge {
         }
         
         return WinningStatus.determineWinningStatus(playerBlackjackCardHand, dealerBlackjackCardHand);
+    }
+    
+    public Map<Player, WinningStatus> getWinningStatusOfAllPlayers() {
+        Map<Player, WinningStatus> playersWinningStatus = new HashMap<>();
+        for (PlayerBlackjackCardHand playerBlackjackCardHand : playerBlackjackCardHands) {
+            playersWinningStatus.put(playerBlackjackCardHand.getPlayer(),
+                    getWinningStatusOf(playerBlackjackCardHand));
+        }
+        return playersWinningStatus;
     }
 }

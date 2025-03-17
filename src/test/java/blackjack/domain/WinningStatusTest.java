@@ -14,11 +14,11 @@ class WinningStatusTest {
     void 손패_두_개가_주어졌을_때_두_손패_모두_버스트가_아니라면_21에_근접한_손패가_이긴다() {
         final PlayerBlackjackCardHand winner = new PlayerBlackjackCardHand(DEFAULT_PLAYER, List::of);
         winner.addCard(HEART_10);
-        winner.addCard(HEART_1);
+        winner.addCard(HEART_9);
         
         final PlayerBlackjackCardHand looser = new PlayerBlackjackCardHand(DEFAULT_PLAYER, List::of);
         looser.addCard(HEART_9);
-        looser.addCard(HEART_1);
+        looser.addCard(HEART_8);
         
         assertThat(WinningStatus.determineWinningStatus(winner, looser)).isEqualTo(WinningStatus.WIN);
     }
@@ -63,7 +63,7 @@ class WinningStatusTest {
         looser.addCard(HEART_9);
         looser.addCard(HEART_3);
         
-        assertThat(WinningStatus.determineWinningStatus(winner, looser)).isEqualTo(WinningStatus.WIN);
+        assertThat(WinningStatus.determineWinningStatus(winner, looser)).isEqualTo(WinningStatus.BLACKJACK_WIN);
     }
     
     @Test

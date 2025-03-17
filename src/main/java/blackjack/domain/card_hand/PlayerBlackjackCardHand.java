@@ -34,11 +34,18 @@ public final class PlayerBlackjackCardHand implements BlackjackWinDeterminable {
     }
     
     public void addCard(final Card card) {
+        if (getBlackjackSum() >= BLACKJACK_SUM) {
+            throw new IllegalStateException("카드를 더 받을 수 없습니다.");
+        }
         cardHand.addCard(card);
     }
     
     public String getPlayerName() {
         return player.getName();
+    }
+    
+    public Player getPlayer() {
+        return player;
     }
     
     public List<Card> getCards() {

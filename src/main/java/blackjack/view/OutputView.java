@@ -1,9 +1,13 @@
 package blackjack.view;
 
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
+import blackjack.domain.money.Money;
+import blackjack.domain.player.Player;
+import blackjack.view.display.CardNumberDisplay;
+import blackjack.view.display.CardShapeDisplay;
+import blackjack.view.display.WinningStatusDisplay;
 
 import java.util.List;
+import java.util.Map;
 import java.util.StringJoiner;
 
 import blackjack.domain.card.Card;
@@ -44,12 +48,8 @@ public class OutputView {
         writer.write(message);
     }
     
-    public void is21Warning() {
-        writer.write("카드 총합이 21이기 때문에 더 받을 수 없습니다.");
-    }
-    
-    public void bustWarning() {
-        writer.write("버스트이기 때문에 더 받을 수 없습니다.");
+    public void outputCardAddingLimitMessage() {
+        writer.write("카드 총합이 21 이상이기 때문에 더 받을 수 없습니다.");
     }
     
     public void outputCardsAndSum(List<Card> cards, int sum) {
@@ -87,7 +87,7 @@ public class OutputView {
     }
     
     private String parseCard(Card card) {
-        return parseCardNumber(card.getNumber()) + parseCardShape(card.getShape());
+        return CardNumberDisplay.parseCardNumber(card.getNumber()) + CardShapeDisplay.parseCardShape(card.getShape());
     }
 
     private static String parseFinalSum(int sum) {
@@ -98,10 +98,12 @@ public class OutputView {
         return " - 합계: %d".formatted(sum);
     }
 
+    @Deprecated
     public void outputFinalWinOrLossMessage() {
         writer.write(LINE_SEPARATOR + "<최종 승패>");
     }
     
+    @Deprecated
     public void outputDealerFinalWinOrLoss(
             int dealerWinningCount,
             int dealerDrawingCount,
@@ -110,70 +112,16 @@ public class OutputView {
         writer.write("딜러: %d승 %d무 %d패".formatted(dealerWinningCount, dealerDrawingCount, dealerLosingCount));
     }
     
+    @Deprecated
     public void outputPlayerFinalWinOrLoss(String name, WinningStatus winningStatus) {
-        writer.write("%s: %s".formatted(name, parseWinningStatus(winningStatus)));
+        writer.write("%s: %s".formatted(name, WinningStatusDisplay.parseWinningStatus(winningStatus)));
     }
     
-    private String parseCardShape(CardShape cardShape) {
-        if (cardShape.equals(CardShape.HEART)) {
-            return "하트";
+    public void outputTotalProfit(int dealerProfit, Map<Player, Money> playersProfit) {
+        writer.write(LINE_SEPARATOR + "## 최종 수익");
+        writer.write("딜러: " + dealerProfit);
+        for (Player player : playersProfit.keySet()) {
+            writer.write("%s: %d".formatted(player.getName(), playersProfit.get(player).money()));
         }
-        if (cardShape.equals(CardShape.DIAMOND)) {
-            return "다이아몬드";
-        }
-        if (cardShape.equals(CardShape.SPADE)) {
-            return "스페이드";
-        }
-        return "클로버";
-    }
-    
-    private String parseWinningStatus(WinningStatus winningStatus) {
-        if (winningStatus.equals(WinningStatus.WIN)) {
-            return "승리";
-        }
-        if (winningStatus.equals(WinningStatus.DRAW)) {
-            return "무승부";
-        }
-        return "패배";
-    }
-    
-    private String parseCardNumber(CardNumber cardNumber) {
-        if (cardNumber.equals(CardNumber.ACE)) {
-            return "A";
-        }
-        if (cardNumber.equals(CardNumber.TWO)) {
-            return "2";
-        }
-        if (cardNumber.equals(CardNumber.THREE)) {
-            return "3";
-        }
-        if (cardNumber.equals(CardNumber.FOUR)) {
-            return "4";
-        }
-        if (cardNumber.equals(CardNumber.FIVE)) {
-            return "5";
-        }
-        if (cardNumber.equals(CardNumber.SIX)) {
-            return "6";
-        }
-        if (cardNumber.equals(CardNumber.SEVEN)) {
-            return "7";
-        }
-        if (cardNumber.equals(CardNumber.EIGHT)) {
-            return "8";
-        }
-        if (cardNumber.equals(CardNumber.NINE)) {
-            return "9";
-        }
-        if (cardNumber.equals(CardNumber.TEN)) {
-            return "10";
-        }
-        if (cardNumber.equals(CardNumber.JACK)) {
-            return "J";
-        }
-        if (cardNumber.equals(CardNumber.QUEEN)) {
-            return "Q";
-        }
-        return "K";
     }
 }

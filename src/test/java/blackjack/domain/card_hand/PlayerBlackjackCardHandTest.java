@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card_hand;
 
 import blackjack.domain.player.Player;
 
@@ -15,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
-import blackjack.domain.card_hand.PlayerBlackjackCardHand;
 import blackjack.domain.deck.BlackjackDeck;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.groups.Tuple;

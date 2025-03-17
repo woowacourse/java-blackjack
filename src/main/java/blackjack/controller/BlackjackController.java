@@ -1,7 +1,13 @@
 package blackjack.controller;
 
+import blackjack.domain.BettingBoard;
+import blackjack.domain.WinningStatus;
+import blackjack.domain.money.BlackjackBettingMoney;
+import blackjack.domain.money.Money;
+import blackjack.domain.player.Player;
 import blackjack.domain.player.Players;
 
+import java.util.HashMap;
 import java.util.List;
 
 import blackjack.domain.BlackjackJudge;
@@ -10,6 +16,8 @@ import blackjack.domain.card_hand.DealerBlackjackCardHand;
 import blackjack.domain.card_hand.PlayerBlackjackCardHand;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+
+import java.util.Map;
 
 public class BlackjackController implements Controller {
     
@@ -24,25 +32,37 @@ public class BlackjackController implements Controller {
     @Override
     public void run() {
         final BlackjackDeck deck = new BlackjackDeck();
-        final List<PlayerBlackjackCardHand> playerBlackjackCardHands = createPlayerCardHands(deck);
-        final DealerBlackjackCardHand dealerBlackjackCardHand = new DealerBlackjackCardHand(deck);
-        processInitialCardOpening(dealerBlackjackCardHand, playerBlackjackCardHands);
+        final BettingBoard bettingBoard = new BettingBoard();
+        List<String> playerNames = inputView.getPlayerNames();
+        final Players players = Players.createPlayers(playerNames);
+        processBetting(playerNames, players, bettingBoard);
         
+        final List<PlayerBlackjackCardHand> playerBlackjackCardHands = createPlayerBlackjackCardHands(players, deck);
+        final DealerBlackjackCardHand dealerBlackjackCardHand = new DealerBlackjackCardHand(deck);
+        
+        processBlackjackGame(dealerBlackjackCardHand, playerBlackjackCardHands, deck);
+        processResults(dealerBlackjackCardHand, playerBlackjackCardHands, bettingBoard);
+    }
+    
+    private void processBetting(List<String> playerNames, Players players, BettingBoard bettingBoard) {
+        Map<String, BlackjackBettingMoney> bettings = new HashMap<>();
+        for (String playerName : playerNames) {
+            bettings.put(playerName, new BlackjackBettingMoney(inputView.getBettingMoney(playerName)));
+        }
+        players.bet(bettings, bettingBoard);
+    }
+    
+    private List<PlayerBlackjackCardHand> createPlayerBlackjackCardHands(Players players, BlackjackDeck deck) {
+        return players.drawCardsAndGetCardHands(deck);
+    }
+    
+    private void processBlackjackGame(DealerBlackjackCardHand dealerBlackjackCardHand, List<PlayerBlackjackCardHand> playerBlackjackCardHands, BlackjackDeck deck) {
+        processInitialCardOpening(dealerBlackjackCardHand, playerBlackjackCardHands);
         for (PlayerBlackjackCardHand playerBlackjackCardHand : playerBlackjackCardHands) {
             processPlayerAddingCards(playerBlackjackCardHand, deck);
         }
         processDealerAddingCards(dealerBlackjackCardHand, deck);
-        
         processCardOpening(dealerBlackjackCardHand, playerBlackjackCardHands);
-        processFinalWinOrLoss(dealerBlackjackCardHand, playerBlackjackCardHands);
-    }
-    
-    private List<PlayerBlackjackCardHand> createPlayerCardHands(final BlackjackDeck deck) {
-        final List<String> playerNames = inputView.getPlayerNames();
-        final Players players = Players.createPlayers(playerNames);
-        return players.getPlayers().stream()
-                .map(player -> new PlayerBlackjackCardHand(player, deck))
-                .toList();
     }
     
     private void processInitialCardOpening(final DealerBlackjackCardHand dealerBlackjackCardHand, final List<PlayerBlackjackCardHand> playerBlackjackCardHands) {
@@ -56,22 +76,20 @@ public class BlackjackController implements Controller {
         }
     }
     
-    private void processPlayerAddingCards(final PlayerBlackjackCardHand playerBlackjackCardHand, final BlackjackDeck deck) {
+    private void processPlayerAddingCards(final PlayerBlackjackCardHand playerBlackjackCardHand,
+                                           final BlackjackDeck deck) {
         outputView.outputAddingMessage(playerBlackjackCardHand.getPlayerName());
         boolean addingCardDecision;
         do {
-            if (playerBlackjackCardHand.isAddedTo21()) {
-                outputView.is21Warning();
+            try {
+                addingCardDecision = inputView.getAddingCardDecision(playerBlackjackCardHand.getPlayerName());
+                if (addingCardDecision) {
+                    playerBlackjackCardHand.addCard(deck.draw());
+                    outputView.outputCardsAndSum(playerBlackjackCardHand.getCards(), playerBlackjackCardHand.getBlackjackSum());
+                }
+            } catch (IllegalStateException e) {
+                outputView.outputCardAddingLimitMessage();
                 break;
-            }
-            if (playerBlackjackCardHand.isBust()) {
-                outputView.bustWarning();
-                break;
-            }
-            addingCardDecision = inputView.getAddingCardDecision(playerBlackjackCardHand.getPlayerName());
-            if (addingCardDecision) {
-                playerBlackjackCardHand.addCard(deck.draw());
-                outputView.outputCardsAndSum(playerBlackjackCardHand.getCards(), playerBlackjackCardHand.getBlackjackSum());
             }
         } while (addingCardDecision);
     }
@@ -90,16 +108,21 @@ public class BlackjackController implements Controller {
         }
     }
     
-    private void processFinalWinOrLoss(final DealerBlackjackCardHand dealerBlackjackCardHand, final List<PlayerBlackjackCardHand> playerBlackjackCardHands) {
-        outputView.outputFinalWinOrLossMessage();
+    private void processResults(
+            final DealerBlackjackCardHand dealerBlackjackCardHand,
+            final List<PlayerBlackjackCardHand> playerBlackjackCardHands,
+            final BettingBoard bettingBoard
+    ) {
         final BlackjackJudge blackjackJudge = new BlackjackJudge(dealerBlackjackCardHand, playerBlackjackCardHands);
-        outputView.outputDealerFinalWinOrLoss(
-                blackjackJudge.getDealerWinningCount(),
-                blackjackJudge.getDealerDrawingCount(),
-                blackjackJudge.getDealerLosingCount()
-        );
+
+        Map<Player, WinningStatus> winningStatusOfAllPlayers = blackjackJudge.getWinningStatusOfAllPlayers();
+        int dealerProfit = bettingBoard.getDealerProfit(winningStatusOfAllPlayers);
+        Map<Player, Money> playersProfit = new HashMap<>();
         for (PlayerBlackjackCardHand playerBlackjackCardHand : playerBlackjackCardHands) {
-            outputView.outputPlayerFinalWinOrLoss(playerBlackjackCardHand.getPlayerName(), blackjackJudge.getWinningStatusOf(playerBlackjackCardHand));
+            Player player = playerBlackjackCardHand.getPlayer();
+            playersProfit.put(player, bettingBoard.getProfit(player, blackjackJudge.getWinningStatusOf(playerBlackjackCardHand)));
         }
+        
+        outputView.outputTotalProfit(dealerProfit, playersProfit);
     }
 }

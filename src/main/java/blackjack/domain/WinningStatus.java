@@ -3,31 +3,49 @@ package blackjack.domain;
 import blackjack.domain.card_hand.BlackjackWinDeterminable;
 
 public enum WinningStatus {
-    WIN,
-    DRAW,
-    LOSE,
-    ;
+    WIN(1),
+    DRAW(0),
+    LOSE(-1),
+    BLACKJACK_WIN(1.5);
     
     private static final int BUST_THRESHOLD = 21;
     private static final int BLACKJACK_SUM = 21;
     private static final int BLACKJACK_CARD_SIZE = 2;
-
+    
+    private final double PROFIT_FACTOR;
+    
+    WinningStatus(final double PROFIT_FACTOR) {
+        this.PROFIT_FACTOR = PROFIT_FACTOR;
+    }
+    
     public static WinningStatus determineWinningStatus(
             final BlackjackWinDeterminable myHand,
             final BlackjackWinDeterminable opponentHand
     ) {
+        if (isBlackjack(myHand)) {
+            return determineWinningStatusWhenBlackjack(opponentHand);
+        }
         if (isBustOccurred(myHand, opponentHand)) {
             return determineWinningStatusWhenBustOccurred(myHand, opponentHand);
         }
-        
-        if (isSumEquals(myHand, opponentHand)) {
-            return determineWinningStatusWhenSumEquals(myHand, opponentHand);
+        return determineWinningStatusWhenNormal(myHand, opponentHand);
+    }
+    
+    private static WinningStatus determineWinningStatusWhenNormal(BlackjackWinDeterminable myHand, BlackjackWinDeterminable opponentHand) {
+        if (myHand.getBlackjackSum() > opponentHand.getBlackjackSum()) {
+            return WIN;
         }
-        
-        if (isMyHandGreater(myHand, opponentHand)) {
-            return WinningStatus.WIN;
+        if (myHand.getBlackjackSum() == opponentHand.getBlackjackSum()) {
+            return DRAW;
         }
-        return WinningStatus.LOSE;
+        return LOSE;
+    }
+    
+    private static WinningStatus determineWinningStatusWhenBlackjack(BlackjackWinDeterminable opponentHand) {
+        if (isBlackjack(opponentHand)) {
+            return DRAW;
+        }
+        return BLACKJACK_WIN;
     }
     
     private static boolean isBustOccurred(BlackjackWinDeterminable myHand, BlackjackWinDeterminable opponentHand) {
@@ -44,29 +62,15 @@ public enum WinningStatus {
         return WinningStatus.WIN;
     }
     
-    private static boolean isSumEquals(BlackjackWinDeterminable myHand, BlackjackWinDeterminable opponentHand) {
-        return myHand.getBlackjackSum() == opponentHand.getBlackjackSum();
-    }
-    
-    private static WinningStatus determineWinningStatusWhenSumEquals(BlackjackWinDeterminable myHand, BlackjackWinDeterminable opponentHand) {
-        if (isBlackjack(myHand) && !isBlackjack(opponentHand)) {
-            return WinningStatus.WIN;
-        }
-        if (!isBlackjack(myHand) && isBlackjack(opponentHand)) {
-            return WinningStatus.LOSE;
-        }
-        return WinningStatus.DRAW;
-    }
-    
-    private static boolean isMyHandGreater(BlackjackWinDeterminable myHand, BlackjackWinDeterminable opponentHand) {
-        return myHand.getBlackjackSum() > opponentHand.getBlackjackSum();
-    }
-    
     private static boolean isBust(final BlackjackWinDeterminable cardHand) {
         return cardHand.getBlackjackSum() > BUST_THRESHOLD;
     }
     
     private static boolean isBlackjack(final BlackjackWinDeterminable cardHand) {
         return cardHand.getBlackjackSum() == BLACKJACK_SUM && cardHand.getSize() == BLACKJACK_CARD_SIZE;
+    }
+    
+    public double getProfitFactor() {
+        return PROFIT_FACTOR;
     }
 }

@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card_hand;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -7,7 +7,6 @@ import static blackjack.test_util.TestConstants.*;
 import static org.assertj.core.api.Assertions.*;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card_hand.DealerBlackjackCardHand;
 import blackjack.domain.deck.BlackjackDeck;
 import blackjack.test_util.CardDrawerStub;
 import org.junit.jupiter.api.Test;

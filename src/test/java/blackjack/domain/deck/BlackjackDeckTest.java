@@ -1,50 +1,59 @@
-package blackjack.domain;
+package blackjack.domain.deck;
+
+import java.util.EnumMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.card.CardShape;
-
-import blackjack.domain.card.Cards;
-
-import java.util.EnumMap;
-import java.util.List;
-
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class CardsTest {
-    
+public class BlackjackDeckTest {
     
     @Test
-    void 모든_종류의_카드를_받을_수_있다() {
+    void 덱에서_카드를_한장씩_뽑을_수_있다() {
         // given
-        Cards trumpCards = Cards.createTrumpCards();
+        final BlackjackDeck deck = new BlackjackDeck();
         
         // expected
-        assertThat(trumpCards.getCards().size()).isEqualTo(52);
+        assertThat(deck.draw()).isExactlyInstanceOf(Card.class);
     }
     
     @Test
-    void 트럼프_카드에_중복이_없어야_한다() {
+    void 덱에서_52장_초과의_카드를_뽑으면_예외가_발생한다() {
         // given
-        List<Card> trumpCards = Cards.createTrumpCards().getCards();
-        
+        final BlackjackDeck deck = new BlackjackDeck();
+        for (int i = 0; i < 52; i++) {
+            deck.draw();
+        }
+
+        // expected
+        assertThatThrownBy(() -> deck.draw())
+                .isInstanceOf(IllegalStateException.class);
+    }
+    
+    @Test
+    void 덱에서_뽑은_카드들_중에는_중복된_카드가_없어야_한다() {
+        // given
+        final BlackjackDeck deck = new BlackjackDeck();
         final EnumMap<CardNumber, Integer> numberCount = getNumberMap();
         final EnumMap<CardShape, Integer> shapeCount = getShapeMap();
         
         for (int i = 0; i < 52; i++) {
-            final Card card = trumpCards.get(i);
+            final Card card = deck.draw();
             numberCount.put(card.getNumber(), numberCount.get(card.getNumber()) + 1);
             shapeCount.put(card.getShape(), shapeCount.get(card.getShape()) + 1);
         }
         
         // expected
-        for (CardNumber cardNumber : CardNumber.values()) {
-            org.assertj.core.api.Assertions.assertThat(numberCount.get(cardNumber)).isEqualTo(4);
+        for (CardNumber number : CardNumber.values()) {
+            Assertions.assertThat(numberCount.get(number)).isEqualTo(4);
         }
         for (CardShape shape : CardShape.values()) {
-            org.assertj.core.api.Assertions.assertThat(shapeCount.get(shape)).isEqualTo(13);
+            Assertions.assertThat(shapeCount.get(shape)).isEqualTo(13);
         }
     }
     

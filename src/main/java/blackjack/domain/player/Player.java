@@ -1,5 +1,7 @@
 package blackjack.domain.player;
 
+import java.util.Objects;
+
 public final class Player {
 
     private static final int MIN_NAME_LENGTH = 2;
@@ -23,7 +25,28 @@ public final class Player {
         }
     }
     
+    public boolean isSameName(String name) {
+        return this.name.equals(name);
+    }
+    
     public String getName() {
         return name;
+    }
+    
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Player player = (Player) o;
+        return Objects.equals(name, player.name);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name);
     }
 }

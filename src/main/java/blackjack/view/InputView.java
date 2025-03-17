@@ -1,6 +1,8 @@
 package blackjack.view;
 
 
+import blackjack.domain.player.Player;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,6 +29,19 @@ public class InputView {
         return Arrays.stream(input.split(","))
                 .map(name -> name.replaceAll(" ", ""))
                 .toList();
+    }
+    
+    public int getBettingMoney(String player) {
+        writer.write(System.lineSeparator() + player + "의 배팅 금액은?");
+        return parseToInt(reader.readLine());
+    }
+    
+    private int parseToInt(final String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("배팅 금액은 숫자여야 합니다.");
+        }
     }
     
     public boolean getAddingCardDecision(String name) {
