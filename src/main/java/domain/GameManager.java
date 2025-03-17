@@ -4,15 +4,12 @@ import domain.user.Betting;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.IntStream;
 
 public class GameManager {
-    public final static int MAX_PLAYER = 7;
     public final static int MAX_RANGE_HAND_OUT_CARD = 2;
     public final static int MIN_RANGE_HAND_OUT_CARD = 0;
 
@@ -26,24 +23,14 @@ public class GameManager {
         this.trumpCardManager = trumpCardManager;
     }
 
-    public static GameManager initailizeGameManager(List<String> names, List<Betting> playersBettingMoney,
+    public static GameManager initailizeGameManager(Map<String, Betting> playerBetting,
                                                     TrumpCardManager trumpCardManager) {
-        validateNames(names);
-        List<Player> players = IntStream.range(0, names.size())
-                .mapToObj(i -> new Player(names.get(i), playersBettingMoney.get(i)))
+
+        List<Player> players = playerBetting.entrySet().stream()
+                .map(entry -> new Player(entry.getKey(), entry.getValue()))
                 .toList();
         Dealer dealer = new Dealer();
         return new GameManager(players, dealer, trumpCardManager);
-    }
-
-    private static void validateNames(List<String> names) {
-        HashSet<String> distinctNames = new HashSet<>(names);
-        if (names.isEmpty() || names.size() > MAX_PLAYER) {
-            throw new IllegalArgumentException("유저는 1명 이상 7명 이하로 등록해야 합니다.");
-        }
-        if (distinctNames.size() != names.size()) {
-            throw new IllegalArgumentException("유저는 중복될 수 없습니다.");
-        }
     }
 
     public void firstHandOutCard() {
@@ -97,6 +84,10 @@ public class GameManager {
     private void putGameResultBurst(final Player player, final Map<User, Long> gameResult) {
         if (player.isBurst()) {
             gameResult.put(player, player.calculateBettingResult(GameResult.LOSE));
+            return;
+        }
+        if (player.getCardDeck().isBlackjack()) {
+            gameResult.put(player, player.calculateBettingResult(GameResult.BLACKJACK));
             return;
         }
         gameResult.put(player, player.calculateBettingResult(GameResult.WIN));

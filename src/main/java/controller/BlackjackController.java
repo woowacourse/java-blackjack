@@ -9,10 +9,12 @@ import domain.user.Player;
 import domain.user.User;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import view.CardConverter;
 import view.InputView;
 import view.OutputView;
 import view.Parser;
+import view.Validator;
 
 public class BlackjackController {
     private final OutputView outputView;
@@ -27,9 +29,9 @@ public class BlackjackController {
 
     public void run() {
         List<String> playerNames = Parser.parserStringToList(inputView.inputUsers());
-        List<Betting> playersBettingMoney = inputBettingMoney(playerNames);
+        Map<String, Betting> playerBetting = inputBettingMoney(playerNames);
 
-        GameManager gameManager = GameManager.initailizeGameManager(playerNames, playersBettingMoney, trumpCardManager);
+        GameManager gameManager = GameManager.initailizeGameManager(playerBetting, trumpCardManager);
 
         distributionFirstCard(gameManager, playerNames);
         additionalPlayerCard(playerNames, gameManager);
@@ -39,11 +41,13 @@ public class BlackjackController {
         calculateGameResult(gameManager);
     }
 
-    private List<Betting> inputBettingMoney(final List<String> playerNames) {
+    private Map<String, Betting> inputBettingMoney(final List<String> playerNames) {
+        Validator.validateNames(playerNames);
         return playerNames.stream()
-                .map(inputView::inputBettingMoney)
-                .map(Betting::new)
-                .toList();
+                .collect(Collectors.toMap(
+                        name -> name,
+                        name -> new Betting(inputView.inputBettingMoney(name))
+                ));
     }
 
     private void distributionFirstCard(final GameManager gameManager, final List<String> playerNames) {
