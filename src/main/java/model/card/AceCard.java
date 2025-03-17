@@ -7,6 +7,11 @@ public class AceCard extends Card {
         super(CardRank.ACE, cardSuit);
     }
 
+    @Override
+    public boolean isAce() {
+        return true;
+    }
+
     public static int getAceMaxValue() {
         return MAX_ACE_VALUE;
     }
