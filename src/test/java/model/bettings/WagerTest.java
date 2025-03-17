@@ -2,6 +2,7 @@ package model.bettings;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import model.participants.ParticipantType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,7 @@ public class WagerTest {
     void wager_Dealer() {
         Wager dealerWager = new Wager(1000);
 
-        dealerWager.updateWager(true, 1, 1000);
+        dealerWager.updateWager(ParticipantType.DEALER, 1, 1000);
 
         assertThat(dealerWager.getWager()).isEqualTo(2000);
     }
@@ -22,7 +23,7 @@ public class WagerTest {
     void wager_Player() {
         Wager playerWager = new Wager(1000);
 
-        playerWager.updateWager(false, 1.5, 1000);
+        playerWager.updateWager(ParticipantType.PLAYER, 1.5, 1000);
 
         assertThat(playerWager.getWager()).isEqualTo(2500);
     }

@@ -1,8 +1,5 @@
 package model.rounds;
 
-import static model.participants.ParticipantType.TYPE_DEALER;
-import static model.participants.ParticipantType.TYPE_PLAYER;
-
 import java.util.HashMap;
 import java.util.Map;
 import model.bettings.Result;
@@ -31,7 +28,7 @@ public class Outcome {
     private void evaluateDealerResult(Dealer dealer, Players players) {
         for (Player player : players.members()) {
             Result result = Result.evaluateResult(
-                    ParticipantType.isDealer(TYPE_DEALER), dealer.getHand(), player.getHand());
+                    ParticipantType.isDealer(ParticipantType.DEALER), dealer.getHand(), player.getHand());
             dealerOutcome.put(player, result);
         }
     }
@@ -39,7 +36,7 @@ public class Outcome {
     private void evaluatePlayersResult(Dealer dealer, Players players) {
         for (Player player : players.members()) {
             Result result = Result.evaluateResult(
-                    ParticipantType.isDealer(TYPE_PLAYER), player.getHand(), dealer.getHand());
+                    ParticipantType.isDealer(ParticipantType.PLAYER), player.getHand(), dealer.getHand());
             playersOutcome.put(player, result);
         }
     }

@@ -1,7 +1,5 @@
 package model.participants;
 
-import static model.participants.ParticipantType.TYPE_DEALER;
-
 import model.cards.Card;
 import model.cards.Deck;
 import model.cards.Hand;
@@ -32,7 +30,7 @@ public class Dealer extends Participant {
     }
 
     public void updateWager(double multiplier, double playerWager) {
-        wager.updateWager(ParticipantType.isDealer(TYPE_DEALER), multiplier, playerWager);
+        wager.updateWager(ParticipantType.DEALER, multiplier, playerWager);
     }
 
     @Override
@@ -43,6 +41,6 @@ public class Dealer extends Participant {
 
     @Override
     public void calculateHandScore() {
-        hand.calculateScore(ParticipantType.isDealer(TYPE_DEALER));
+        hand.calculateScore(ParticipantType.DEALER);
     }
 }

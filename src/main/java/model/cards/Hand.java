@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import model.participants.ParticipantType;
 
 public class Hand {
     private final List<Card> cards;
@@ -18,8 +19,8 @@ public class Hand {
         this.cards.addAll(cards);
     }
 
-    public void calculateScore(boolean isDealer) {
-        if (isDealer) {
+    public void calculateScore(ParticipantType type) {
+        if (ParticipantType.isDealer(type)) {
             calculateDealerScore();
             return;
         }

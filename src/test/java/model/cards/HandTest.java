@@ -3,6 +3,7 @@ package model.cards;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import model.participants.ParticipantType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +24,7 @@ public class HandTest {
         Hand hand = new Hand();
         hand.addCards(List.of(new Card("A", "스페이드"), new Card("K", "클로버"), new Card("J", "다이아몬드")));
 
-        hand.calculateScore(true);
+        hand.calculateScore(ParticipantType.DEALER);
         assertThat(hand.getScore()).isEqualTo(31);
     }
 
@@ -37,17 +38,17 @@ public class HandTest {
                 new Card("A", "다이아몬드"))
         );
 
-        hand.calculateScore(true);
+        hand.calculateScore(ParticipantType.DEALER);
         assertThat(hand.getScore()).isEqualTo(33);
     }
 
-    @DisplayName("플레어이의 핸드 점수를 계산할 수 있다")
+    @DisplayName("플레이어의 핸드 점수를 계산할 수 있다")
     @Test
     void testCheckScores_Player() {
         Hand hand = new Hand();
         hand.addCards(List.of(new Card("A", "스페이드"), new Card("K", "클로버"), new Card("J", "다이아몬드")));
 
-        hand.calculateScore(false);
+        hand.calculateScore(ParticipantType.PLAYER);
         assertThat(hand.getScore()).isEqualTo(21);
     }
 
@@ -61,7 +62,7 @@ public class HandTest {
                 new Card("A", "다이아몬드"))
         );
 
-        hand.calculateScore(false);
+        hand.calculateScore(ParticipantType.PLAYER);
         assertThat(hand.getScore()).isEqualTo(13);
     }
 }

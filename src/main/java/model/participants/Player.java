@@ -1,7 +1,5 @@
 package model.participants;
 
-import static model.participants.ParticipantType.TYPE_PLAYER;
-
 import model.bettings.Wager;
 import model.cards.Hand;
 
@@ -17,7 +15,7 @@ public class Player extends Participant {
     }
 
     public void updateWager(double multiplier) {
-        wager.updateWager(ParticipantType.isDealer(TYPE_PLAYER), multiplier);
+        wager.updateWager(ParticipantType.PLAYER, multiplier);
     }
 
     public boolean isBust() {
@@ -37,6 +35,6 @@ public class Player extends Participant {
 
     @Override
     public void calculateHandScore() {
-        hand.calculateScore(ParticipantType.isDealer(TYPE_PLAYER));
+        hand.calculateScore(ParticipantType.PLAYER);
     }
 }

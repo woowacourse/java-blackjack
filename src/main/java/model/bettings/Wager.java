@@ -1,5 +1,7 @@
 package model.bettings;
 
+import model.participants.ParticipantType;
+
 public class Wager {
     private static final int INDEX_PLAYER_WAGER = 0;
     private static final double VALUE_TIE = 0;
@@ -12,8 +14,8 @@ public class Wager {
         this.wager = wager;
     }
 
-    public void updateWager(boolean isDealer, double multiplier, double... playerWager) {
-        if (isDealer) {
+    public void updateWager(ParticipantType type, double multiplier, double... playerWager) {
+        if (ParticipantType.isDealer(type)) {
             updateDealerWager(multiplier, playerWager[INDEX_PLAYER_WAGER]);
             return;
         }
