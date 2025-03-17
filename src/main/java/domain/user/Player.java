@@ -16,6 +16,7 @@ public class Player extends User {
         this.betting = betting;
         validate(name);
     }
+
     @Override
     public boolean isImpossibleDraw() {
         return cardDeck.isImpossibleDraw(CardDeck.MAX_SCORE);
@@ -40,18 +41,18 @@ public class Player extends User {
     public boolean isDealer() {
         return false;
     }
-    
+
     private void validate(final String name) {
         if (name.equals("dealer") || name.equals("딜러")) {
             throw new IllegalArgumentException("dealer 혹은 딜러는 이름으로 사용할 수 없습니다.");
         }
     }
-  
+
     public Betting getBetting() {
         return betting;
     }
 
-    public Long calculateBettingResult(final GameResult gameResult) {
+    public long calculateBettingResult(final GameResult gameResult) {
         return betting.calculateBetting(gameResult);
     }
 }

@@ -5,8 +5,10 @@ import domain.CardShape;
 import domain.GameManager;
 import domain.TrumpCard;
 import domain.TrumpCardManager;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
@@ -30,8 +32,10 @@ public class PlayerTest {
 
         //given
         FakeTrumpCardManager trumpCardManager = new FakeTrumpCardManager(cardDeck);
-        GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), List.of(new Betting(10000)),
-                trumpCardManager);
+        Map<String, Betting> playerBetting = new HashMap<>();
+        playerBetting.put("레몬", new Betting(10000));
+
+        GameManager gameManager = GameManager.initailizeGameManager(playerBetting, trumpCardManager);
         Player player = gameManager.findPlayerByUsername("레몬");
 
         //when
@@ -49,21 +53,21 @@ public class PlayerTest {
 
         //given
         TrumpCardManager trumpCardManager = new TrumpCardManager();
-        List<String> dealer1 = List.of("dealer");
-        List<String> dealer2 = List.of("딜러");
+        Map<String, Betting> playerBetting = new HashMap<>();
+        playerBetting.put("dealer", new Betting(10000));
+        playerBetting.put("딜러", new Betting(10000));
 
         //when & then
         SoftAssertions.assertSoftly((softAssertions) -> {
             softAssertions.assertThatIllegalArgumentException()
-                    .isThrownBy(() -> GameManager.initailizeGameManager(dealer1, List.of(new Betting(10000)),
-                            trumpCardManager))
+                    .isThrownBy(() -> GameManager.initailizeGameManager(playerBetting, trumpCardManager))
                     .withMessage("dealer 혹은 딜러는 이름으로 사용할 수 없습니다.");
             softAssertions.assertThatIllegalArgumentException()
-                    .isThrownBy(() -> GameManager.initailizeGameManager(dealer2, List.of(new Betting(10000)),
-                            trumpCardManager))
+                    .isThrownBy(() -> GameManager.initailizeGameManager(playerBetting, trumpCardManager))
                     .withMessage("dealer 혹은 딜러는 이름으로 사용할 수 없습니다.");
         });
     }
+
 
     private static class FakeTrumpCardManager extends TrumpCardManager {
 

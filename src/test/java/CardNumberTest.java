@@ -5,7 +5,9 @@ import domain.TrumpCard;
 import domain.TrumpCardManager;
 import domain.user.Betting;
 import domain.user.User;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
@@ -17,8 +19,10 @@ public class CardNumberTest {
     void test() {
 
         // given
-        GameManager gameManager = GameManager.initailizeGameManager(List.of("레몬"), List.of(new Betting(11000L)),
-                new TrumpCardManager());
+        Map<String, Betting> playerBetting = new HashMap<>();
+        playerBetting.put("레몬", new Betting(11000));
+
+        GameManager gameManager = GameManager.initailizeGameManager(playerBetting, new TrumpCardManager());
         User user = gameManager.findPlayerByUsername("레몬");
         gameManager.drawMoreCard(user);
 
