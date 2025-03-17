@@ -6,7 +6,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
 import java.util.List;
 
-public class Start implements State {
+public class Start implements HandState {
     private final CardHand cardHand;
 
     public Start(CardHand cardHand) {
@@ -14,12 +14,12 @@ public class Start implements State {
     }
 
     @Override
-    public State draw(Card card) {
+    public HandState draw(Card card) {
         throw new UnsupportedOperationException("게임 시작 전에는 카드를 뽑을 수 없습니다.");
     }
 
     @Override
-    public State drawInitialCards(Card card1, Card card2) {
+    public HandState drawInitialCards(Card card1, Card card2) {
         CardHand cardHand = new CardHand();
         cardHand.add(card1);
         cardHand.add(card2);
@@ -30,12 +30,12 @@ public class Start implements State {
     }
 
     @Override
-    public State stand() {
+    public HandState stand() {
         throw new UnsupportedOperationException("게임 시작 전에는 stand할 수 없습니다.");
     }
 
     @Override
-    public GameResult determineResult(State otherState) {
+    public GameResult determineResult(HandState otherHandState) {
         throw new UnsupportedOperationException("게임 종료 전에는 승패를 계산할 수 없습니다.");
     }
 

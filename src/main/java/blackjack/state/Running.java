@@ -6,7 +6,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
 import java.util.List;
 
-public abstract class Running implements State {
+public abstract class Running implements HandState {
     final CardHand cardHand;
 
     Running(CardHand cardHand) {
@@ -14,17 +14,17 @@ public abstract class Running implements State {
     }
 
     @Override
-    public State drawInitialCards(Card card1, Card card2) {
+    public HandState drawInitialCards(Card card1, Card card2) {
         throw new UnsupportedOperationException("게임 시작시에만 카드를 초기화할 수 있습니다.");
     }
 
     @Override
-    public State stand() {
+    public HandState stand() {
         return new Stand(cardHand);
     }
 
     @Override
-    public GameResult determineResult(State otherState) {
+    public GameResult determineResult(HandState otherHandState) {
         throw new UnsupportedOperationException("게임 종료 전에는 승패를 계산할 수 없습니다.");
     }
 

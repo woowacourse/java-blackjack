@@ -10,8 +10,8 @@ public class Blackjack extends Finished{
     }
 
     @Override
-    public GameResult determineResult(State otherState) {
-        if (otherState.isBlackjack()) {
+    public GameResult determineResult(HandState otherHandState) {
+        if (otherHandState.isBlackjack()) {
             return GameResult.DRAW;
         }
         return GameResult.BLACKJACK_WIN;

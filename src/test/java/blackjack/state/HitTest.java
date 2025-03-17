@@ -33,10 +33,10 @@ class HitTest {
         Card additionalCard = new Card(CardSuit.CLUB, CardRank.FIVE); // 15점 유지
 
         // when
-        State nextState = hitState.draw(additionalCard);
+        HandState nextHandState = hitState.draw(additionalCard);
 
         // then
-        assertThat(nextState).isInstanceOf(Hit.class);
+        assertThat(nextHandState).isInstanceOf(Hit.class);
     }
 
     @Test
@@ -50,10 +50,10 @@ class HitTest {
         Card additionalCard = new Card(CardSuit.CLUB, CardRank.FIVE); // 24점 (Bust)
 
         // when
-        State nextState = hitState.draw(additionalCard);
+        HandState nextHandState = hitState.draw(additionalCard);
 
         // then
-        assertThat(nextState).isInstanceOf(Bust.class);
+        assertThat(nextHandState).isInstanceOf(Bust.class);
     }
 
     @Test
@@ -66,10 +66,10 @@ class HitTest {
         Hit hitState = new Hit(cardHand);
 
         // when
-        State nextState = hitState.stand();
+        HandState nextHandState = hitState.stand();
 
         // then
-        assertThat(nextState).isInstanceOf(Stand.class);
+        assertThat(nextHandState).isInstanceOf(Stand.class);
     }
 
     @Test

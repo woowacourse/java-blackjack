@@ -1,10 +1,8 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.CardHand;
-import blackjack.state.State;
+import blackjack.state.HandState;
 import java.util.List;
 import java.util.Map;
 
@@ -12,13 +10,13 @@ public class Dealer extends Participant {
     private final static String DEALER_NAME = "딜러";
     private final static int DEALER_HIT_THRESHOLD = 16;
 
-    public Dealer(State state) {
-        super(state);
+    public Dealer(HandState handState) {
+        super(handState);
     }
 
     public void playTurn(CardDeck deck) {
-        while (!state.isFinished()) {
-            state = state.draw(deck.drawCard());
+        while (!handState.isFinished()) {
+            handState = handState.draw(deck.drawCard());
         }
         finishTurn();
     }
@@ -31,7 +29,7 @@ public class Dealer extends Participant {
 
     @Override
     public List<Card> showStartCards() {
-        Card firstCard = state.getCards().getFirst();
+        Card firstCard = handState.getCards().getFirst();
         return List.of(firstCard);
     }
 

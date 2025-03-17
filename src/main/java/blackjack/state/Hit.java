@@ -10,7 +10,7 @@ public class Hit extends Running {
     }
 
     @Override
-    public State draw(Card card) {
+    public HandState draw(Card card) {
         cardHand.add(card);
         if (cardHand.isBust()) {
             return new Bust(cardHand);

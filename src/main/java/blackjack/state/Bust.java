@@ -1,10 +1,7 @@
 package blackjack.state;
 
 import blackjack.domain.GameResult;
-import blackjack.domain.Score;
-import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
-import java.util.List;
 
 public class Bust extends Finished{
 
@@ -13,7 +10,7 @@ public class Bust extends Finished{
     }
 
     @Override
-    public GameResult determineResult(State otherState) {
+    public GameResult determineResult(HandState otherHandState) {
         return GameResult.LOSE;
     }
 

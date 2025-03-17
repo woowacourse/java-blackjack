@@ -5,14 +5,14 @@ import blackjack.domain.Score;
 import blackjack.domain.card.Card;
 import java.util.List;
 
-public interface State {
-    State draw(Card card);
+public interface HandState {
+    HandState draw(Card card);
 
-    State drawInitialCards(Card card1, Card card2);
+    HandState drawInitialCards(Card card1, Card card2);
 
-    State stand();
+    HandState stand();
 
-    GameResult determineResult(State otherState);
+    GameResult determineResult(HandState otherHandState);
 
     boolean isBlackjack();
 

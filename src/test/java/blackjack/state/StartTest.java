@@ -51,10 +51,10 @@ class StartTest {
         Card ten = new Card(CardSuit.HEART, CardRank.TEN);
 
         // when
-        State nextState = startState.drawInitialCards(ace, ten);
+        HandState nextHandState = startState.drawInitialCards(ace, ten);
 
         // then
-        assertThat(nextState).isInstanceOf(Blackjack.class);
+        assertThat(nextHandState).isInstanceOf(Blackjack.class);
     }
 
     @Test
@@ -65,10 +65,10 @@ class StartTest {
         Card five = new Card(CardSuit.DIAMOND, CardRank.FIVE);
 
         // when
-        State nextState = startState.drawInitialCards(eight, five);
+        HandState nextHandState = startState.drawInitialCards(eight, five);
 
         // then
-        assertThat(nextState).isInstanceOf(Hit.class);
+        assertThat(nextHandState).isInstanceOf(Hit.class);
     }
 
 }

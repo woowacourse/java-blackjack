@@ -2,9 +2,7 @@ package blackjack.state;
 
 import blackjack.domain.GameResult;
 import blackjack.domain.Score;
-import blackjack.domain.card.Card;
 import blackjack.domain.card.CardHand;
-import java.util.List;
 
 public class Stand extends Finished {
 
@@ -13,14 +11,14 @@ public class Stand extends Finished {
     }
 
     @Override
-    public GameResult determineResult(State otherState) {
+    public GameResult determineResult(HandState otherHandState) {
         Score myScore = getScore();
-        Score otherScore = otherState.getScore();
+        Score otherScore = otherHandState.getScore();
 
-        if (otherState.isBust() || myScore.isHigherThan(otherScore)) {
+        if (otherHandState.isBust() || myScore.isHigherThan(otherScore)) {
             return GameResult.WIN;
         }
-        if (otherState.isBlackjack() || otherScore.isHigherThan(myScore)) {
+        if (otherHandState.isBlackjack() || otherScore.isHigherThan(myScore)) {
             return GameResult.LOSE;
         }
         return GameResult.DRAW;
