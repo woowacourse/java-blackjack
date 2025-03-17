@@ -6,15 +6,9 @@ import java.util.Objects;
 
 public enum GameResult {
 
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무");
-
-    private final String description;
-
-    GameResult(final String description) {
-        this.description = description;
-    }
+    WIN,
+    LOSE,
+    DRAW;
 
     public static List<GameResult> getAllGameResults() {
         return Arrays.stream(GameResult.values()).toList();
@@ -40,19 +34,4 @@ public enum GameResult {
         return DRAW;
     }
 
-    public boolean isWin() {
-        return this == WIN;
-    }
-
-    public boolean isDraw() {
-        return this == DRAW;
-    }
-
-    public boolean isLose() {
-        return this == LOSE;
-    }
-
-    public String getDescription() {
-        return description;
-    }
 }

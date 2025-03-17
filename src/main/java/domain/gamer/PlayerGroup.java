@@ -1,6 +1,6 @@
 package domain.gamer;
 
-import domain.Betting;
+import domain.card.Betting;
 import domain.GameResult;
 import domain.card.Card;
 import domain.card.CardGroup;

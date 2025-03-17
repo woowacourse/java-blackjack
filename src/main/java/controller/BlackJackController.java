@@ -1,7 +1,7 @@
 package controller;
 
 import domain.AnswerCommand;
-import domain.Betting;
+import domain.card.Betting;
 import domain.GameManager;
 import domain.card.CardGroup;
 import domain.card.Deck;

@@ -1,4 +1,6 @@
-package domain;
+package domain.card;
+
+import domain.GameResult;
 
 public class Betting {
     private final int amount;

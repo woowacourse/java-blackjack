@@ -3,6 +3,7 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
+import domain.card.Betting;
 import java.util.function.Function;
 import org.junit.jupiter.api.Test;
 

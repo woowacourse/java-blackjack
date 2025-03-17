@@ -1,6 +1,6 @@
 package domain.gamer;
 
-import domain.Betting;
+import domain.card.Betting;
 import domain.GameResult;
 import domain.card.Card;
 import domain.card.CardGroup;
@@ -14,11 +14,6 @@ public abstract class Gamer {
     protected Gamer(CardGroup cardGroup) {
         this.cardGroup = cardGroup;
         this.betting = new Betting(0);
-    }
-
-    protected Gamer(CardGroup cardGroup, final Betting betting) {
-        this.cardGroup = cardGroup;
-        this.betting = betting;
     }
 
     public void giveCard(final Card card) {
