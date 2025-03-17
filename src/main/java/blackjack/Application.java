@@ -4,6 +4,7 @@ import static blackjack.blackjack.Blackjack.BLACKJACK_SCORE;
 
 import blackjack.blackjack.Blackjack;
 import blackjack.blackjack.UserAnswer;
+import blackjack.cardMachine.CardMachine;
 import blackjack.cardMachine.CardRandomMachine;
 import blackjack.gamer.Dealer;
 import blackjack.gamer.Player;
@@ -21,7 +22,7 @@ public class Application {
 
     public static void main(String[] args) {
         final Blackjack blackjack = new Blackjack();
-        Dealer dealer = makeDealer();
+        Dealer dealer = makeDealer(new CardRandomMachine());
         Players players = makePlayers();
 
         betPlayers(blackjack, players);
@@ -41,10 +42,8 @@ public class Application {
         printBettingResult(blackjack, dealer, players);
     }
 
-    private static Dealer makeDealer() {
-        Dealer dealer = Dealer.getDealer(new CardRandomMachine());
-        dealer.initCardMachine();
-        return dealer;
+    private static Dealer makeDealer(final CardMachine cardMachine) {
+        return new Dealer(cardMachine);
     }
 
     private static Players makePlayers() {

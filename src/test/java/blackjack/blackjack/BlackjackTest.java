@@ -27,7 +27,7 @@ class BlackjackTest {
     @BeforeEach
     void setUp() {
         blackjack = new Blackjack();
-        dealer = Dealer.getDealer(new CardRandomMachine());
+        dealer = new Dealer(new CardRandomMachine());
     }
 
     @DisplayName("딜러와 플레이어에게 모두 2장씩 나눠준다.")
@@ -37,8 +37,6 @@ class BlackjackTest {
         players = Players.from("엠제이, 밍트");
 
         // when
-        dealer.initCardMachine();
-
         final Player player1 = players.getPlayers().get(0);
         final Player player2 = players.getPlayers().get(1);
 

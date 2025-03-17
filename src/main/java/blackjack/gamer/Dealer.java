@@ -17,18 +17,11 @@ public class Dealer extends Gamer {
     private final CardMachine cardMachine;
     private final Money earnMoney;
 
-    private Dealer(final CardMachine cardMachine) {
+    public Dealer(final CardMachine cardMachine) {
         this.cardMachine = cardMachine;
         this.earnMoney = new Money(0);
-    }
 
-    public static Dealer getDealer(final CardMachine cardMachine) {
-        return new Dealer(cardMachine);
-    }
-
-    public void initCardMachine() {
-        final List<Card> deck = organizeDeck();
-        cardMachine.receiveDeck(deck);
+        initCardMachine();
     }
 
     public List<Card> spreadTwoCards() {
@@ -61,6 +54,11 @@ public class Dealer extends Gamer {
     @Override
     public String getNickName() {
         return NICKNAME;
+    }
+
+    private void initCardMachine() {
+        final List<Card> deck = organizeDeck();
+        cardMachine.receiveDeck(deck);
     }
 
     private List<Card> organizeDeck() {
