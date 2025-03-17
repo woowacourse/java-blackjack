@@ -12,6 +12,7 @@ import domain.card.CardBundle;
 import domain.card.CardDeck;
 import domain.card.Rank;
 import domain.card.Shape;
+import domain.fixture.CardFixture;
 import domain.fixture.ParticipantsFixture;
 import domain.participant.Participant;
 import domain.participant.Participants;
@@ -94,7 +95,7 @@ class BlackJackGameTest {
             blackJackGame.giveStartingCardsToParticipants();
 
             // when
-            List<Card> dealerShownCards = blackJackGame.getDealerShownCard();
+            List<Card> dealerShownCards = blackJackGame.getDealerFirstShownCards();
 
             // then
             assertThat(dealerShownCards).hasSize(1);
@@ -111,7 +112,7 @@ class BlackJackGameTest {
             blackJackGame.giveStartingCardsToParticipants();
 
             // when
-            List<Card> playerShownCards = blackJackGame.getPlayerShownCards(playerName);
+            List<Card> playerShownCards = blackJackGame.getPlayerFirstShownCards(playerName);
 
             // then
             assertThat(playerShownCards).hasSize(2);
@@ -424,21 +425,6 @@ class BlackJackGameTest {
     }
 }
 
-class CardFixture {
-    public static Card cardOfHeartAce = new Card(Shape.HEART, Rank.ACE);
-    public static Card cardOfHeartTwo = new Card(Shape.HEART, Rank.TWO);
-    public static Card cardOfHeartThree = new Card(Shape.HEART, Rank.THREE);
-    public static Card cardOfHeartFour = new Card(Shape.HEART, Rank.FOUR);
-    public static Card cardOfHeartFive = new Card(Shape.HEART, Rank.FIVE);
-    public static Card cardOfHeartSix = new Card(Shape.HEART, Rank.SIX);
-    public static Card cardOfHeartSeven = new Card(Shape.HEART, Rank.SEVEN);
-    public static Card cardOfHeartEight = new Card(Shape.HEART, Rank.EIGHT);
-    public static Card cardOfHeartNine = new Card(Shape.HEART, Rank.NINE);
-    public static Card cardOfHeartTen = new Card(Shape.HEART, Rank.TEN);
-    public static Card cardOfHeartJack = new Card(Shape.HEART, Rank.JACK);
-    public static Card cardOfHeartQueen = new Card(Shape.HEART, Rank.QUEEN);
-    public static Card cardOfHeartKing = new Card(Shape.HEART, Rank.KING);
-}
 
 class CardBundleFixture {
     public static CardBundle createCardBundle() {

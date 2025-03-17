@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.card.Card;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,18 +33,11 @@ public class Participants {
         }
     }
 
-    public Participant findByName(String name) {
-        return participants.stream()
-                .filter(participant -> participant.getName().equals(name))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 참가자가 존재하지 않습니다."));
-    }
-
     public List<Participant> getParticipants() {
         return Collections.unmodifiableList(participants);
     }
 
-    public List<Participant> getPlayerParticipants() {
+    public List<Participant> getPlayers() {
         return participants.stream()
                 .filter(participant -> participant.getClass() == Player.class)
                 .toList();
@@ -61,5 +55,20 @@ public class Participants {
                 .filter(participant -> participant.getClass() == Dealer.class)
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("딜러가 존재하지 않습니다."));
+    }
+
+    public Participant findByName(String name) {
+        return participants.stream()
+                .filter(participant -> participant.getName().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 참가자가 존재하지 않습니다."));
+    }
+
+    public List<Card> getPlayerFirstShownCard(String playerName) {
+        return findByName(playerName).getFirstShownCard();
+    }
+
+    public List<Card> getDealerFirstShownCard() {
+        return getDealer().getFirstShownCard();
     }
 }

@@ -3,6 +3,8 @@ package domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.card.Card;
+import domain.fixture.CardFixture;
 import domain.fixture.ParticipantsFixture;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -52,47 +54,88 @@ class ParticipantsTest {
         }
     }
 
-    @Test
-    @DisplayName("모든 참가자 중 딜러를 제외한 플레이어 목록을 가져온다")
-    void should_return_players_except_dealer() {
-        // given
-        List<String> playerNames = List.of("a", "b");
-        Participants participants = ParticipantsFixture.createParticipants(playerNames);
+    @Nested
+    @DisplayName("참가자를 가저오는 케이스")
+    class GetParticipantsCase {
+        @Test
+        @DisplayName("모든 참가자 중 딜러를 제외한 플레이어 목록을 가져온다")
+        void should_return_players_except_dealer() {
+            // given
+            List<String> playerNames = List.of("a", "b");
+            Participants participants = ParticipantsFixture.createParticipants(playerNames);
 
-        // when
-        List<Participant> players = participants.getPlayerParticipants();
+            // when
+            List<Participant> players = participants.getPlayers();
 
-        // then
-        assertThat(players).hasSize(2);
+            // then
+            assertThat(players).hasSize(2);
+        }
+
+        @Test
+        @DisplayName("모든 참가자 중 딜러를 가져올 때 딜러가 없으면 예외가 발생한다")
+        void should_throw_exception_when_dealer_is_not_exist() {
+            // given
+            List<Participant> participantsSource = List.of(
+                    new Player("a"),
+                    new Player("b")
+            );
+            Participants participants = new Participants(participantsSource);
+
+            // when & then
+            assertThatThrownBy(() -> participants.getDealer())
+                    .isInstanceOf(IllegalStateException.class);
+        }
+
+        @Test
+        @DisplayName("모든 참가자 중 딜러를 가져온다")
+        void should_return_dealer() {
+            // given
+            List<String> playerNames = List.of("a", "b");
+            Participants participants = ParticipantsFixture.createParticipants(playerNames);
+
+            // when
+            Participant dealer = participants.getDealer();
+
+            // then
+            assertThat(dealer.getClass()).isEqualTo(Dealer.class);
+        }
     }
 
-    @Test
-    @DisplayName("모든 참가자 중 딜러를 가져온다")
-    void should_return_dealer() {
-        // given
-        List<String> playerNames = List.of("a", "b");
-        Participants participants = ParticipantsFixture.createParticipants(playerNames);
+    @Nested
+    @DisplayName("보여줄 초기 카드 케이스")
+    class FirstShownCardCase {
+        @Test
+        @DisplayName("딜러의 게임 초기 보여줄 손패를 반환한다.")
+        void should_return_dealer_first_shown_cards() {
+            // given
+            Participant dealer = new Dealer();
+            dealer.addCard(CardFixture.cardOfHeartAce);
+            dealer.addCard(CardFixture.cardOfHeartKing);
+            Participants participants = new Participants(List.of(dealer));
 
-        // when
-        Participant dealer = participants.getDealer();
+            // when
+            List<Card> dealerFirstShownCards = participants.getDealerFirstShownCard();
 
-        // then
-        assertThat(dealer.getClass()).isEqualTo(Dealer.class);
-    }
+            // then
+            assertThat(dealerFirstShownCards).hasSize(1);
+        }
 
-    @Test
-    @DisplayName("모든 참가자 중 딜러를 가져올 때 딜러가 없으면 예외가 발생한다")
-    void should_throw_exception_when_dealer_is_not_exist() {
-        // given
-        List<Participant> participantsSource = List.of(
-                new Player("a"),
-                new Player("b")
-        );
-        Participants participants = new Participants(participantsSource);
+        @Test
+        @DisplayName("플레이어의 게임 초기 보여줄 손패를 반환한다.")
+        void should_return_player_first_shown_cards() {
+            // given
+            String playerName = "a";
+            Participant player = new Player(playerName);
+            player.addCard(CardFixture.cardOfHeartAce);
+            player.addCard(CardFixture.cardOfHeartKing);
+            Participants participants = new Participants(List.of(new Dealer(), player));
 
-        // when & then
-        assertThatThrownBy(() -> participants.getDealer())
-                .isInstanceOf(IllegalStateException.class);
+            // when
+            List<Card> playerFirstShownCards = participants.getPlayerFirstShownCard(playerName);
+
+            // then
+            assertThat(playerFirstShownCards).hasSize(2);
+        }
     }
 }
 

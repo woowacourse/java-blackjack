@@ -62,9 +62,10 @@ public class BlackJackController {
     private void giveStartingCardsToParticipants(BlackJackGame blackJackGame) {
         blackJackGame.giveStartingCardsToParticipants();
         outputView.printInitialParticipantHandsMessage(blackJackGame.getPlayerNames());
-        outputView.printInitialParticipantHand(blackJackGame.getDealer().getName(), blackJackGame.getDealerShownCard());
+        outputView.printInitialParticipantHand(blackJackGame.getDealer().getName(),
+                blackJackGame.getDealerFirstShownCards());
         for (String playerName : blackJackGame.getPlayerNames()) {
-            outputView.printInitialParticipantHand(playerName, blackJackGame.getPlayerShownCards(playerName));
+            outputView.printInitialParticipantHand(playerName, blackJackGame.getPlayerFirstShownCards(playerName));
         }
     }
 
@@ -83,10 +84,10 @@ public class BlackJackController {
     private void processPlayerCardReceiving(BlackJackGame blackJackGame, String playerName) {
         while (blackJackGame.canPlayerPick(playerName) && doesPlayerWantToReceiveCard(playerName)) {
             blackJackGame.giveCardToPlayer(playerName);
-            outputView.printParticipantHand(playerName, blackJackGame.getPlayerShownCards(playerName));
+            outputView.printParticipantHand(playerName, blackJackGame.getPlayerFirstShownCards(playerName));
         }
         if (!blackJackGame.hasPlayerReceivedCard(playerName)) {
-            outputView.printParticipantHand(playerName, blackJackGame.getPlayerShownCards(playerName));
+            outputView.printParticipantHand(playerName, blackJackGame.getPlayerFirstShownCards(playerName));
         }
     }
 
