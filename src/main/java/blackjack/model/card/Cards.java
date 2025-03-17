@@ -8,6 +8,10 @@ import java.util.stream.IntStream;
 
 public class Cards {
 
+    private static final int BLACK_JACK_SIZE = 2;
+    private static final int BLACK_JACK_POINT = 21;
+    private static final int BUST_THRESHOLD = 22;
+
     private final List<Card> values;
 
     public Cards(final List<Card> values) {
@@ -28,7 +32,18 @@ public class Cards {
         return new Cards();
     }
 
-    public List<Integer> calculatePossiblePoints() {
+    public int calculateOptimalPoint() {
+        List<Integer> possiblePoints = calculatePossiblePoints();
+        return possiblePoints.stream()
+                .filter(point -> point < BUST_THRESHOLD)
+                .max(Integer::compareTo)
+                .orElseGet(() -> possiblePoints.stream()
+                        .min(Integer::compareTo)
+                        .orElseThrow(IllegalStateException::new)
+                );
+    }
+
+    private List<Integer> calculatePossiblePoints() {
         List<Integer> possiblePoints = new ArrayList<>();
         addPossiblePoint(possiblePoints, 0, 0);
 
@@ -70,6 +85,14 @@ public class Cards {
         if (values.size() < size) {
             throw new IllegalArgumentException("남은 카드가 부족합니다.");
         }
+    }
+
+    public boolean isBlackjack() {
+        return calculateOptimalPoint() == BLACK_JACK_POINT && values.size() == BLACK_JACK_SIZE;
+    }
+
+    public boolean isBust() {
+        return calculateOptimalPoint() >= BUST_THRESHOLD;
     }
 
     public Card getFirst() {

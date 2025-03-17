@@ -1,6 +1,6 @@
 package blackjack.model.player;
 
-import blackjack.model.card.Card;
+import blackjack.model.card.Cards;
 
 public class Dealer extends Player {
 
@@ -15,8 +15,9 @@ public class Dealer extends Player {
         return true;
     }
 
-    public Card getFirstCard() {
-        return this.cards.getFirst();
+    @Override
+    public Cards openCards() {
+        return new Cards(cards.getFirst());
     }
 
 }

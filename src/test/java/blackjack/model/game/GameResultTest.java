@@ -27,12 +27,12 @@ class GameResultTest {
     @MethodSource("플레이어와_상대방을_알려주면_결과를_계산한다_테스트_케이스")
     @ParameterizedTest
     void 플레이어와_상대방을_알려주면_결과를_계산한다(Cards playerCards, Cards otherPlayerCards, GameResult expected) {
-        Player player = new User("pobi");
-        Player challenger = new User("json");
+        Player player = new User("pobi", 1_000);
+        Player challenger = new User("jason", 1_000);
         player.receiveCards(playerCards);
         challenger.receiveCards(otherPlayerCards);
 
-        assertThat(calculateResult(player, challenger, new BlackJackRule()))
+        assertThat(calculateResult(player, challenger))
                 .isEqualByComparingTo(expected);
     }
 

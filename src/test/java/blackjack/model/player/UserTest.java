@@ -17,7 +17,7 @@ class UserTest {
 
     @BeforeEach
     void setUp() {
-        user = new User("pobi");
+        user = new User("pobi", 1_000);
     }
 
     @Test
@@ -30,27 +30,17 @@ class UserTest {
     }
 
     @Test
-    void 자신이_가진_카드의_합을_반환한다() {
+    void 자신이_가진_카드의_최적합을_반환한다() {
         user.receiveCards(new Cards(
-                List.of(createCard(CardNumber.ACE), createCard(CardNumber.SIX), createCard(CardNumber.TWO))
+                List.of(createCard(CardNumber.JACK), createCard(CardNumber.QUEEN), createCard(CardNumber.ACE))
         ));
-        List<Integer> expected = List.of(9, 19);
 
-        assertThat(user.calculatePossiblePoints()).containsExactlyInAnyOrderElementsOf(expected);
+        assertThat(user.calculatePoint()).isEqualTo(21);
     }
 
     @Test
     void 자신이_딜러인지_확인해준다() {
         assertThat(user.isDealer()).isFalse();
-    }
-
-    @Test
-    void 자신의_최저_포인트를_계산한다() {
-        user.receiveCards(new Cards(
-                List.of(createCard(CardNumber.JACK), createCard(CardNumber.QUEEN), createCard(CardNumber.ACE))
-        ));
-
-        assertThat(user.getMinimumPoint()).isEqualTo(21);
     }
 
 }

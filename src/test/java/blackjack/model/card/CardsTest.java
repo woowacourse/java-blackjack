@@ -13,7 +13,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 class CardsTest {
 
     @Test
-    void 카드_숫자의_합을_반환한다() {
+    void 카드_숫자의_최적합을_계산한다() {
         Cards cards = new Cards(
                 List.of(
                         new Card(CardType.CLOVER, CardNumber.TWO),
@@ -21,9 +21,8 @@ class CardsTest {
                         new Card(CardType.CLOVER, CardNumber.ACE)
                 )
         );
-        List<Integer> expected = List.of(13, 23);
 
-        assertThat(cards.calculatePossiblePoints()).containsExactlyInAnyOrderElementsOf(expected);
+        assertThat(cards.calculateOptimalPoint()).isEqualTo(13);
     }
 
     @CsvSource(value = {"2,true", "1,false"})

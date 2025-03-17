@@ -8,41 +8,45 @@ public enum GameResult {
     DRAW("무"),
     LOSE("패");
 
-    private final String name;
+    private final String text;
 
-    GameResult(final String name) {
-        this.name = name;
+    GameResult(final String text) {
+        this.text = text;
     }
 
-    public static GameResult calculateResult(final Player player, final Player otherPlayer,
-                                             final BlackJackRule blackJackRule
-    ) {
-        if (blackJackRule.isDraw(player, otherPlayer)) {
+    public static GameResult calculateResult(final Player player, final Player otherPlayer) {
+        if (isDraw(player, otherPlayer)) {
             return DRAW;
         }
-        if (isPlayerWin(player, otherPlayer, blackJackRule)) {
+        if (isPlayerWin(player, otherPlayer)) {
             return WIN;
         }
         return LOSE;
     }
 
-    private static boolean isPlayerWin(final Player player, final Player otherPlayer,
-                                       final BlackJackRule blackJackRule
-    ) {
-        int playerPoint = blackJackRule.calculateOptimalPoint(player);
-        int otherPlayerPoint = blackJackRule.calculateOptimalPoint(otherPlayer);
-        if (blackJackRule.isBlackjack(player) && !blackJackRule.isBlackjack(otherPlayer)) {
+    private static boolean isPlayerWin(final Player player, final Player otherPlayer) {
+        int playerPoint = player.calculatePoint();
+        int otherPlayerPoint = otherPlayer.calculatePoint();
+        if (player.isBlackjack() && !player.isBlackjack()) {
             return true;
         }
-        if (!blackJackRule.isBust(playerPoint) && blackJackRule.isBust(otherPlayerPoint)) {
+        if (!player.isBust() && otherPlayer.isBust()) {
             return true;
         }
-        return !blackJackRule.isBust(playerPoint) && !blackJackRule.isBust(otherPlayerPoint)
-                && playerPoint > otherPlayerPoint;
+        return !player.isBust() && !otherPlayer.isBust() && playerPoint > otherPlayerPoint;
     }
 
-    public String getName() {
-        return name;
+    private static boolean isDraw(final Player player, final Player otherPlayer) {
+        if (player.isBlackjack() && otherPlayer.isBlackjack()) {
+            return true;
+        }
+        int playerPoint = player.calculatePoint();
+        int otherPlayerPoint = otherPlayer.calculatePoint();
+        return !player.isBust() && !otherPlayer.isBust() && (playerPoint == otherPlayerPoint);
+    }
+
+    public String getText() {
+        return text;
     }
 
 }

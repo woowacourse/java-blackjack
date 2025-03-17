@@ -21,16 +21,6 @@ class DealerTest {
     }
 
     @Test
-    void 자신이_가진_카드의_합을_반환한다() {
-        dealer.receiveCards(new Cards(
-                List.of(createCard(CardNumber.ACE), createCard(CardNumber.SIX), createCard(CardNumber.TWO))
-        ));
-        List<Integer> expected = List.of(9, 19);
-
-        assertThat(dealer.calculatePossiblePoints()).containsExactlyInAnyOrderElementsOf(expected);
-    }
-
-    @Test
     void 카드를_받으면_자신의_카드에_추가한다() {
         dealer.receiveCards(new Cards(
                 List.of(createCard(CardNumber.NINE), createCard(CardNumber.SIX), createCard(CardNumber.TWO))
@@ -45,20 +35,20 @@ class DealerTest {
     }
 
     @Test
-    void 자신의_최저_포인트를_계산한다() {
+    void 자신이_가진_카드의_최적합을_반환한다() {
         dealer.receiveCards(new Cards(
-                List.of(createCard(CardNumber.NINE), createCard(CardNumber.SIX), createCard(CardNumber.ACE))
+                List.of(createCard(CardNumber.JACK), createCard(CardNumber.QUEEN), createCard(CardNumber.ACE))
         ));
 
-        assertThat(dealer.getMinimumPoint()).isEqualTo(16);
+        assertThat(dealer.calculatePoint()).isEqualTo(21);
     }
 
     @Test
-    void 첫_번째_카드를_반환한다() {
+    void 딜러의_카드를_오픈한다() {
         Cards cards = new Cards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.FIVE)));
         dealer.receiveCards(cards);
 
-        assertThat(dealer.getFirstCard()).isEqualTo(createCard(CardNumber.TEN));
+        assertThat(dealer.openCards()).isEqualTo(new Cards(createCard(CardNumber.TEN)));
     }
 
 }

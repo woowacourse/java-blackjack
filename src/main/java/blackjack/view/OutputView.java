@@ -3,32 +3,31 @@ package blackjack.view;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import blackjack.model.card.Cards;
 import blackjack.model.player.Player;
+import blackjack.model.player.Players;
 
 public class OutputView {
 
-    public void printDealInitialCardsResult(final List<Player> players, final List<Cards> openCards) {
-        String userNames = players.stream()
+    public void printDealInitialCardsResult(final Players players) {
+        String userNames = players.getUsers().stream()
                 .skip(1L)
                 .map(Player::getName)
                 .collect(Collectors.joining(", "));
-        String dealerName = players.getFirst().getName();
+        String dealerName = players.getDealer().getName();
         System.out.println();
         System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealerName, userNames);
-        IntStream.range(0, players.size())
-                .forEachOrdered(index -> printPlayerCards(players.get(index), openCards.get(index)));
+        printPlayerCards(players.getDealer());
+        players.getUsers().forEach(this::printPlayerCards);
         System.out.println();
     }
 
-    public void printPlayerCards(final Player player, final Cards cards) {
-        System.out.printf("%s카드: %s%n", player.getName(), formatCards(cards));
+    public void printPlayerCards(final Player player) {
+        System.out.printf("%s카드: %s%n", player.getName(), formatCards(player.openCards()));
     }
 
     private String formatCards(final Cards cards) {
@@ -47,9 +46,12 @@ public class OutputView {
         System.out.println("딜러는 한장의 카드를 더 받지 않았습니다." + System.lineSeparator());
     }
 
-    public void printOptimalPoints(final Map<Player, Integer> optimalPoints) {
-        optimalPoints.forEach((player, value) -> System.out.printf(
-                "%s카드: %s - 결과: %d%n", player.getName(), formatCards(player.getCards()), value
+    public void printOptimalPoints(final Players players) {
+        Player dealer = players.getDealer();
+        System.out.printf("%s카드: %s - 결과: %d%n", dealer.getName(), formatCards(dealer.getCards()), dealer.calculatePoint());
+
+        players.getUsers().forEach((user) -> System.out.printf(
+                "%s카드: %s - 결과: %d%n", user.getName(), formatCards(user.getCards()), user.calculatePoint()
         ));
         System.out.println();
     }
