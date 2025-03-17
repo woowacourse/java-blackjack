@@ -35,7 +35,7 @@ public class BlackJackController {
         dealerDrawMoreCards(blackJackGame, players.getDealer());
         outputView.printOptimalPoints(players);
 
-        Map<User, GameResult> userGameResults = blackJackGame.calculateResult(players);
+        Map<User, GameResult> userGameResults = blackJackGame.calculateUserGameResults(players);
         Map<Player, BigDecimal> playerWinnings = players.calculateWinnings(userGameResults);
         outputView.printFinalWinnings(playerWinnings);
     }
