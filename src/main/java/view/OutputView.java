@@ -17,14 +17,14 @@ public class OutputView {
 
         System.out.printf("%s와 %s에게 2장을 나누었습니다.%n", dealer.getName(), String.join(", ", names));
 
-        printPlayerCards(dealer, dealer.openedCards());
-        users.getUsers().forEach(user -> printPlayerCards(user, user.openedCards()));
+        printPlayerCards(dealer.getName(), dealer.openedCards());
+        users.getUsers().forEach(user -> printPlayerCards(user.getName(), user.openedCards()));
         System.out.println();
     }
 
-    public static void printPlayerCards(Player player, Cards cards) {
+    public static void printPlayerCards(String name, Cards cards) {
         System.out.printf("%s카드: %s%n",
-                player.getName(), convertToCardsFormat(cards));
+                name, convertToCardsFormat(cards));
     }
 
     public static void printDealerHitMessage() {

@@ -139,7 +139,7 @@ class UserBattleResultTest {
         gameBoard.distributeInitialCards(user);
 
         Function<User, Boolean> alwaysNo = u -> false;
-        BiConsumer<User, Cards> userOnnHit = (u, c) -> {
+        BiConsumer<String, Cards> userOnnHit = (u, c) -> {
         };
         Runnable dealerOnHit = () -> {
         };

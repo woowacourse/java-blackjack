@@ -39,10 +39,10 @@ public class BlackjackGameBoard {
     }
 
     public void hitUntilStay(User user,
-                             Function<User, Boolean> wantHit, BiConsumer<User, Cards> onHit) {
+                             Function<User, Boolean> wantHit, BiConsumer<String, Cards> onHitPrintCards) {
         while (user.isRunning() && wantHit.apply(user)) {
             user.hit(deck.drawCard(), true);
-            onHit.accept(user, user.cards());
+            onHitPrintCards.accept(user.getName(), user.cards());
         }
         if (user.isRunning()) {
             user.stay();
