@@ -12,7 +12,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ScoreBoardTest {
 
@@ -171,7 +171,7 @@ class ScoreBoardTest {
         Map<Participant, BattleResults> battleResultsMap = scoreBoard.getScoreBoard();
 
         //then
-        org.junit.jupiter.api.Assertions.assertAll(
+        assertAll(
                 () -> Assertions.assertThat(battleResultsMap.get(player1).getResults().get(BattleResult.LOSE))
                         .isEqualTo(1),
                 () -> Assertions.assertThat(battleResultsMap.get(player2).getResults().get(BattleResult.DRAW))
@@ -207,7 +207,7 @@ class ScoreBoardTest {
         Map<Participant, BattleResults> battleResultsMap = scoreBoard.getScoreBoard();
 
         //then
-        org.junit.jupiter.api.Assertions.assertAll(
+        assertAll(
                 () -> Assertions.assertThat(battleResultsMap.get(player1).getResults().get(BattleResult.WIN))
                         .isEqualTo(1),
                 () -> Assertions.assertThat(battleResultsMap.get(player2).getResults().get(BattleResult.DRAW))
@@ -242,7 +242,7 @@ class ScoreBoardTest {
         Map<Participant, BattleResults> battleResultsMap = scoreBoard.getScoreBoard();
 
         //then
-        org.junit.jupiter.api.Assertions.assertAll(
+        assertAll(
                 () -> Assertions.assertThat(battleResultsMap.get(player1).getResults().get(BattleResult.LOSE))
                         .isEqualTo(1),
                 () -> Assertions.assertThat(battleResultsMap.get(player2).getResults().get(BattleResult.LOSE))
@@ -275,7 +275,7 @@ class ScoreBoardTest {
         Map<Participant, BattleResults> battleResultsMap = scoreBoard.getScoreBoard();
 
         //then
-        org.junit.jupiter.api.Assertions.assertAll(
+        assertAll(
                 () -> Assertions.assertThat(battleResultsMap.get(player1).getResults().get(BattleResult.WIN))
                         .isEqualTo(1),
                 () -> Assertions.assertThat(battleResultsMap.get(player2).getResults().get(BattleResult.WIN))
@@ -308,10 +308,69 @@ class ScoreBoardTest {
         Map<Participant, BattleResults> battleResultsMap = scoreBoard.getScoreBoard();
 
         //then
-        org.junit.jupiter.api.Assertions.assertAll(
+        assertAll(
                 () -> Assertions.assertThat(battleResultsMap.get(player1).getResults().get(BattleResult.LOSE)).isEqualTo(1),
                 () -> Assertions.assertThat(battleResultsMap.get(player2).getResults().get(BattleResult.LOSE)).isEqualTo(1),
                 () -> Assertions.assertThat(battleResultsMap.get(dealer).getResults().get(BattleResult.WIN)).isEqualTo(2)
+        );
+    }
+
+    @DisplayName("플레이어가 블랙잭, 딜러는 블랙잭이 아닌 경우")
+    @Test
+    void 블랙잭_승리_확인() {
+        //given
+        List<Participant> originParticipants = List.of(new Player("우가"), new Player("베루스"), new Dealer());
+        Participants participants = new Participants(originParticipants);
+
+        Participants onlyPlayers = participants.findPlayers();
+        Participant player1 = onlyPlayers.getParticipants().getFirst();
+        Participant player2 = onlyPlayers.getParticipants().getLast();
+        Participant dealer = participants.findDealer();
+
+        GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
+        player1.drawCard(gameCardDeck,1);
+        player2.drawCard(gameCardDeck, 35);
+        player1.drawCard(gameCardDeck, 1);
+        dealer.drawCard(gameCardDeck, 2);
+
+        //when
+        ScoreBoard scoreBoard = new ScoreBoard(participants);
+
+        Map<Participant, BattleResults> battleResultsMap = scoreBoard.getScoreBoard();
+
+        assertAll(
+                () -> Assertions.assertThat(battleResultsMap.get(player1).getResults().get(BattleResult.WIN)).isEqualTo(1),
+                () -> Assertions.assertThat(battleResultsMap.get(dealer).getResults().get(BattleResult.LOSE)).isEqualTo(1)
+        );
+    }
+
+    @DisplayName("플레이어가 블랙잭, 딜러도 블랙잭인 경우 무승부")
+    @Test
+    void 블랙잭_무승부_확인() {
+        //given
+        List<Participant> originParticipants = List.of(new Player("우가"), new Player("베루스"), new Dealer());
+        Participants participants = new Participants(originParticipants);
+
+        Participants onlyPlayers = participants.findPlayers();
+        Participant player1 = onlyPlayers.getParticipants().getFirst();
+        Participant player2 = onlyPlayers.getParticipants().getLast();
+        Participant dealer = participants.findDealer();
+
+        GameCardDeck gameCardDeck = GameCardDeck.generateFullPlayingCard();
+        player1.drawCard(gameCardDeck,1);
+        dealer.drawCard(gameCardDeck, 1);
+        player2.drawCard(gameCardDeck, 34);
+        player1.drawCard(gameCardDeck, 1);
+        dealer.drawCard(gameCardDeck, 1);
+
+        //when
+        ScoreBoard scoreBoard = new ScoreBoard(participants);
+
+        Map<Participant, BattleResults> battleResultsMap = scoreBoard.getScoreBoard();
+
+        assertAll(
+                () -> Assertions.assertThat(battleResultsMap.get(player1).getResults().get(BattleResult.DRAW)).isEqualTo(1),
+                () -> Assertions.assertThat(battleResultsMap.get(dealer).getResults().get(BattleResult.DRAW)).isEqualTo(1)
         );
     }
 }
