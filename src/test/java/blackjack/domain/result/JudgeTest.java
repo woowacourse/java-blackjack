@@ -9,7 +9,6 @@ import blackjack.domain.game.Player;
 import blackjack.domain.game.Players;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -120,13 +119,7 @@ public class JudgeTest {
         Judge judge = new Judge(playerResults, dealer);
         judge.calculateAllResults(dealer, new Players(List.of(player)));
 
-        assertResults(player, expectedPlayerResult);
-    }
-
-    private void assertResults(Player player, GameResultType expectedPlayerResult) {
-        assertAll(
-                () -> assertThat(playerResults.findResultByPlayer(player).getGameResultType())
-                        .isEqualTo(expectedPlayerResult)
-        );
+        assertThat(playerResults.findResultByPlayer(player).getGameResultType())
+                .isEqualTo(expectedPlayerResult);
     }
 }
