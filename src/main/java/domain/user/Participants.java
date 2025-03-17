@@ -38,12 +38,6 @@ public class Participants {
         }
     }
 
-    public void drawCard(User user, Card card) {
-        if (user.isDrawable()) {
-            user.drawCard(card);
-        }
-    }
-
     public User getDealer() {
         return participants.stream()
                 .filter(participant -> participant.getName().equals(Dealer.DEALER_NAME))
@@ -65,10 +59,6 @@ public class Participants {
             firstPlayersCard.put(player.getName(), cards);
         }
         return firstPlayersCard;
-    }
-
-    public boolean isDrawable(User user) {
-        return user.isDrawable();
     }
 
     public int calculateScore(User user) {

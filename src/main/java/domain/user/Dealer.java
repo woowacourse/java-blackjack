@@ -13,7 +13,7 @@ public class Dealer extends User {
 
     @Override
     public boolean isDrawable() {
-        return cardHand.isAtLeastScore(DEALER_MAX_SCORE);
+        return !cardHand.isAtLeastScore(DEALER_MAX_SCORE);
     }
 
     @Override

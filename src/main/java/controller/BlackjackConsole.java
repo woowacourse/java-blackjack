@@ -5,6 +5,7 @@ import domain.CardDeck;
 import domain.BlackjackGame;
 import domain.GameResult;
 import domain.Card;
+import domain.Score;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.User;
@@ -25,11 +26,19 @@ public class BlackjackConsole {
     }
 
     public void run() {
+        try {
+            playBlackjackGame();
+        } catch (IllegalArgumentException exception) {
+            outputView.displayError(exception.getMessage());
+        } finally {
+            inputView.close();
+        }
+    }
+
+    private void playBlackjackGame() {
         Dealer dealer = new Dealer();
         List<Player> players = getPlayers();
-
         BlackjackGame blackjackGame = BlackjackGame.of(players, dealer, new CardDeck());
-
         BettingTable bettingTable = setUpBets(players, dealer);
 
         blackjackGame.firstHandOutCard();
@@ -38,14 +47,16 @@ public class BlackjackConsole {
         controlTurn(players, blackjackGame, dealer);
 
         openAllCards(players, dealer, blackjackGame);
-
         calculateBettingReward(blackjackGame, bettingTable, dealer);
-        inputView.close();
     }
 
     private void calculateBettingReward(BlackjackGame blackjackGame, BettingTable bettingTable, Dealer dealer) {
-        Map<User, GameResult> gameResult = blackjackGame.calculatePlayerScore();
-        calculateBettingReward(bettingTable, gameResult, dealer);
+        Score score = new Score(blackjackGame.getParticipants());
+        Map<User, GameResult> gameResult = score.calculatePlayerScore();
+
+        Map<User, Long> rewards = bettingTable.calculateRewards(gameResult, dealer);
+
+        outputView.displayRewards(rewards);
     }
 
     private List<Player> getPlayers() {
@@ -69,20 +80,22 @@ public class BlackjackConsole {
         outputView.displayOpenCardsResult(user.getName(), cards, score);
     }
 
-    private void calculateBettingReward(BettingTable bettingTable, Map<User, GameResult> gameResult, Dealer dealer) {
-        Map<User, Long> rewards = bettingTable.calculateRewards(gameResult, dealer);
-        outputView.displayRewards(rewards);
-    }
-
     private void controlTurn(List<Player> players, BlackjackGame blackjackGame, Dealer dealer) {
         for (Player player : players) {
-            while (blackjackGame.isDrawable(player)) {
-                YesOrNo yesOrNo = inputView.inputYesOrNo(player.getName());
-                blackjackGame.controlTurn(player, yesOrNo);
-                displayOpenCard(player);
+            while (player.isDrawable()) {
+                try {
+                    YesOrNo yesOrNo = inputView.inputYesOrNo(player.getName());
+                    blackjackGame.controlTurn(player, yesOrNo);
+                    displayOpenCard(player);
+                    if (yesOrNo == YesOrNo.NO) {
+                        break;
+                    }
+                } catch (IllegalArgumentException exception) {
+                    outputView.displayError(exception.getMessage());
+                }
             }
         }
-        while (blackjackGame.isDrawable(dealer)) {
+        while (dealer.isDrawable()) {
             blackjackGame.controlTurn(dealer, YesOrNo.YES);
             outputView.displayDealerAddCard();
         }

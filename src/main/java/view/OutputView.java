@@ -55,9 +55,13 @@ public class OutputView {
     }
 
     public void displayRewards(Map<User, Long> rewards) {
-        System.out.println("## 최종 수익");
+        System.out.println("\n## 최종 수익");
         for (Entry<User, Long> rewardEntry : rewards.entrySet()) {
             System.out.println(rewardEntry.getKey().getName() + ": " + rewardEntry.getValue());
         }
+    }
+
+    public void displayError(String message) {
+        System.out.println("[ERROR] " + message);
     }
 }
