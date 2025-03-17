@@ -69,8 +69,4 @@ public final class Participants {
     public List<String> getPlayerNames() {
         return players.getNames();
     }
-
-    public Dealer getDealer() {
-        return dealer;
-    }
 }
