@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 public class Participants {
     private static final int INIT_CARD_COUNT = 2;
@@ -21,7 +20,7 @@ public class Participants {
     private final Dealer dealer;
 
     public Participants(List<ParticipantName> participantNames, Map<ParticipantName, Bet> playerBets, Deck deck) {
-        this.dealer = new Dealer(drawInitCard(deck));
+        this.dealer = new Dealer(drawStartCards(deck));
         validatePlayerNames(participantNames);
         validateBetCount(participantNames, playerBets);
         players = createPlayers(participantNames, playerBets, deck);
@@ -73,7 +72,7 @@ public class Participants {
 
     private Player findPlayer(ParticipantName name) {
         return players.stream()
-                .filter(player -> player.name().isMatch(name))
+                .filter(player -> player.isNameMatch(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(PLAYER_NOT_EXIST));
     }
@@ -81,9 +80,9 @@ public class Participants {
     public List<GameResult> calculatePlayerResults() {
         List<GameResult> gameResults = new ArrayList<>();
         for (ParticipantName name : getPlayerNames()) {
-            List<TrumpCard> trumpCards = playerCards(name);
-            Score sum = calculateCardSum(name);
-            gameResults.add(new GameResult(name, trumpCards, sum));
+            List<TrumpCard> playerCards = playerCards(name);
+            Score playerScore = calculateCardSum(name);
+            gameResults.add(new GameResult(name, playerCards, playerScore));
         }
         return Collections.unmodifiableList(gameResults);
     }
@@ -95,9 +94,9 @@ public class Participants {
     }
 
     public GameResult dealerResult() {
-        Score sum = dealer.calculateSum();
-        List<TrumpCard> trumpCards = dealer.cards();
-        return new GameResult(dealer.name(), trumpCards, sum);
+        Score dealerScore = dealer.calculateSum();
+        List<TrumpCard> dealerCards = dealer.cards();
+        return new GameResult(dealerName(), dealerCards, dealerScore);
     }
 
     public List<TrumpCard> playerCards(ParticipantName name) {

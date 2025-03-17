@@ -28,8 +28,9 @@ public class BlackjackController {
     public void run() {
         BlackjackGame blackjackGame = startBlackjack();
         playBlackjack(blackjackGame);
-        blackjackGameResult(blackjackGame);
+        printBlackjackResult(blackjackGame);
     }
+
 
     private BlackjackGame startBlackjack() {
         try {
@@ -70,11 +71,15 @@ public class BlackjackController {
 
 
     private void playBlackjack(BlackjackGame blackjackGame) {
-        outputView.printInitiateDraw(blackjackGame.playerNames());
-        openFirstDealerCard(blackjackGame);
-        openPlayerCards(blackjackGame);
-        askPlayerDraw(blackjackGame);
+        printStartCards(blackjackGame);
+        playPlayerTurn(blackjackGame);
         dealerHit(blackjackGame);
+    }
+
+    private void printStartCards(BlackjackGame blackjackGame) {
+        outputView.printStartDraw(blackjackGame);
+        openFirstDealerCard(blackjackGame);
+        openAllPlayerCards(blackjackGame);
     }
 
     private void openFirstDealerCard(BlackjackGame blackjackGame) {
@@ -83,35 +88,39 @@ public class BlackjackController {
         outputView.openCards(name, List.of(trumpCard));
     }
 
-    private void openPlayerCards(BlackjackGame blackjackGame) {
-        List<GameResult> gameResults = blackjackGame.currentPlayerBlackjackResult();
-        for (GameResult gameResult : gameResults) {
-            ParticipantName name = gameResult.name();
-            openPlayerCard(gameResult.trumpCards(), name);
+    private void openAllPlayerCards(BlackjackGame blackjackGame) {
+        for (ParticipantName participantName : blackjackGame.playerNames()) {
+            openPlayerCards(participantName, blackjackGame);
         }
     }
 
-    private void openPlayerCard(List<TrumpCard> trumpCards, ParticipantName name) {
+    private void openPlayerCards(ParticipantName name, BlackjackGame blackjackGame) {
+        List<TrumpCard> trumpCards = blackjackGame.playerCards(name);
         outputView.openCards(name, trumpCards);
     }
 
-    private void askPlayerDraw(BlackjackGame blackjackGame) {
+
+    private void playPlayerTurn(BlackjackGame blackjackGame) {
         List<ParticipantName> names = blackjackGame.playerNames();
         for (ParticipantName name : names) {
-            handleAskDraw(name, blackjackGame);
+            handlePlayerTurn(name, blackjackGame);
         }
     }
 
-    private void handleAskDraw(ParticipantName name, BlackjackGame blackjackGame) {
+    private void handlePlayerTurn(ParticipantName name, BlackjackGame blackjackGame) {
         while (!blackjackGame.isFinished(name)) {
             boolean isDraw = handleAskDraw(name);
-            if (!isDraw) {
-                blackjackGame.stayPlayer(name);
-                return;
-            }
-            blackjackGame.dealCard(name);
+            processDrawOrStay(name, blackjackGame, isDraw);
             openPlayerCards(name, blackjackGame);
         }
+    }
+
+    private void processDrawOrStay(ParticipantName name, BlackjackGame blackjackGame, boolean isDraw) {
+        if (!isDraw) {
+            blackjackGame.stayPlayer(name);
+            return;
+        }
+        blackjackGame.dealCard(name);
     }
 
     private boolean handleAskDraw(ParticipantName name) {
@@ -121,19 +130,14 @@ public class BlackjackController {
         });
     }
 
-    private void openPlayerCards(ParticipantName name, BlackjackGame blackjackGame) {
-        List<TrumpCard> trumpCards = blackjackGame.playerCards(name);
-        openPlayerCard(trumpCards, name);
-    }
-
     private void dealerHit(BlackjackGame blackjackGame) {
-        while (blackjackGame.dealerDrawable()) {
+        while (blackjackGame.isDealerDrawable()) {
             outputView.dealerHit();
             blackjackGame.dealerHit();
         }
     }
 
-    private void blackjackGameResult(BlackjackGame blackjackGame) {
+    private void printBlackjackResult(BlackjackGame blackjackGame) {
         blackjackCardResult(blackjackGame);
         blackjackProfitResult(blackjackGame);
     }

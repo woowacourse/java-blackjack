@@ -16,7 +16,7 @@ public class Dealer {
     }
 
     public boolean isDrawable() {
-        if (participant.handState().isFinished()) {
+        if (participant.isFinished()) {
             return false;
         }
         Score totalScore = participant.calculateCardSum(DEALER_STOP_HIT_STANDARD_SCORE);

@@ -1,6 +1,7 @@
 package view;
 
 import domain.card.TrumpCard;
+import domain.game.BlackjackGame;
 import domain.participant.ParticipantName;
 import domain.participant.Score;
 import java.util.List;
@@ -34,7 +35,8 @@ public class OutputView {
         System.out.printf(PLAYER_BET_INPUT_FORMAT, name.name());
     }
 
-    public void printInitiateDraw(List<ParticipantName> participantNames) {
+    public void printStartDraw(BlackjackGame blackjackGame) {
+        List<ParticipantName> participantNames = blackjackGame.playerNames();
         String nicknames = participantNames.stream()
                 .map(ParticipantName::name)
                 .collect(Collectors.joining(SPLITTER));

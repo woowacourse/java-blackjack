@@ -55,12 +55,12 @@ public class BlackjackGame {
     }
 
     public void dealerHit() {
-        if (dealerDrawable()) {
+        if (isDealerDrawable()) {
             participants.dealDealerCard(deck.drawCard());
         }
     }
 
-    public boolean dealerDrawable() {
+    public boolean isDealerDrawable() {
         return participants.isDealerDrawable();
     }
 
