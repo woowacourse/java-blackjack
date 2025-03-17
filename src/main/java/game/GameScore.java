@@ -29,21 +29,4 @@ public record GameScore(int value) {
 	public boolean isLessThan(final GameScore gameScore) {
 		return this.value < gameScore.value;
 	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-
-		GameScore gameScore = (GameScore)o;
-
-		return value == gameScore.value;
-	}
-
-	@Override
-	public int hashCode() {
-		return value;
-	}
 }

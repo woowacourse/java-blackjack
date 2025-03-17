@@ -25,23 +25,6 @@ public record Count(int value) {
 		return value == 0;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-
-		Count count = (Count)o;
-
-		return value == count.value;
-	}
-
-	@Override
-	public int hashCode() {
-		return value;
-	}
-
 	public boolean isGreaterThan(final Count count) {
 		return value > count.value;
 	}
