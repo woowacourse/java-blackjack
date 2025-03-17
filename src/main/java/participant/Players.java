@@ -3,6 +3,8 @@ package participant;
 import game.GameResult;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class Players {
 
@@ -12,8 +14,15 @@ public class Players {
         this.players = players;
     }
 
-    public void updateMoney(Dealer dealer) {
-        players.forEach(player -> player.updateMoney(GameResult.judgePlayerResult(dealer, player).getRate()));
+    public void updateMoney(Map<Player, GameResult> gameResults) {
+        for (Entry<Player, GameResult> entry : gameResults.entrySet()) {
+            Player player = entry.getKey();
+            GameResult gameResult = entry.getValue();
+
+            int money = gameResult.calculateEarnings(player.getBettingMoney());
+            boolean isProfitable = gameResult.isProfitable();
+            player.updateMoney(money, isProfitable);
+        }
     }
 
     public Profit sumProfits() {
