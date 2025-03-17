@@ -19,13 +19,13 @@ public class Accountant {
 
     public Map<Player, Integer> calculateProfit(Players players, Dealer dealer) {
         Map<Player, Integer> profitPerParticipant = new LinkedHashMap<>();
-        int dealersProfit = 0;
+        int dealerProfit = 0;
         for (Player player : players.getPlayers()) {
-            int playersProfit = getProfit(player, computeWinLoss(player, dealer));
-            profitPerParticipant.put(player, playersProfit);
-            dealersProfit -= playersProfit;
+            int playerProfit = getProfit(player, computeWinLoss(player, dealer));
+            profitPerParticipant.put(player, playerProfit);
+            dealerProfit -= playerProfit;
         }
-        profitPerParticipant.put(dealer, dealersProfit);
+        profitPerParticipant.put(dealer, dealerProfit);
         return profitPerParticipant;
     }
 

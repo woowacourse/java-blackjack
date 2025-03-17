@@ -41,8 +41,8 @@ public class BlackJack {
     }
 
     private void accountBettingPrice(Participants participants, Accountant accountant) {
-        Map<Player, Integer> map = InputView.inputBettingPrice(participants.getPlayers());
-        for (Map.Entry<Player, Integer> entry : map.entrySet()) {
+        Map<Player, Integer> bettingPriceForPlayer = InputView.inputBettingPrice(participants.getPlayers());
+        for (Map.Entry<Player, Integer> entry : bettingPriceForPlayer.entrySet()) {
             accountant.accountBettingPrice(entry.getKey(), entry.getValue());
         }
     }
