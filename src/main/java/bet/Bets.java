@@ -17,7 +17,7 @@ public class Bets {
 
     public Bet getBet(Player player) {
         if (!bets.containsKey(player)) {
-            throw new IllegalStateException("플레이어가 존재하지 않을 경우의 수가 없습니다.");
+            throw new IllegalStateException("논리적으로 플레이어의 베팅이 존재하지 않을 경우의 수가 없습니다.");
         }
 
         return bets.get(player);
