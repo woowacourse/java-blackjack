@@ -1,5 +1,6 @@
 package domain.betting;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
@@ -31,5 +32,19 @@ class BatMoneyTest {
             // when & then
             assertThatThrownBy(() -> new BatMoney(name, 10000));
         }
+    }
+
+    @ParameterizedTest
+    @DisplayName("이름이 같은지 확인한다.")
+    @CsvSource(value = {"a, a, true", "a, b, false"})
+    void should_return_true_when_same_name(String batMoneyName, String compareName, boolean expected) {
+        // given
+        BatMoney batMoney = new BatMoney(batMoneyName, 10000);
+
+        // when
+        boolean isSameName = batMoney.isSameName(compareName);
+
+        // then
+        assertThat(isSameName).isEqualTo(expected);
     }
 }
