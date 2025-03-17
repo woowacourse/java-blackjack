@@ -14,10 +14,10 @@ public class RegularHand extends Hand {
 
     @Override
     public GameStatus calculateResultAgainst(Hand other) {
-        if(other.isBust()) {
+        if (other.isBust()) {
             return WIN;
         }
-        if(other.isBlackjack()) {
+        if (other.isBlackjack()) {
             return LOSE;
         }
         Score score = Score.from(cards);

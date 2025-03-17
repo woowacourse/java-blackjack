@@ -6,7 +6,7 @@ import card.Card;
 import java.util.List;
 import result.GameStatus;
 
-public class BustHand extends Hand{
+public class BustHand extends Hand {
     public BustHand(List<Card> cards) {
         super(cards);
     }

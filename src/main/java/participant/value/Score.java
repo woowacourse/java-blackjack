@@ -34,10 +34,10 @@ public record Score(int score) {
     }
 
     public GameStatus compare(Score other) {
-        if(isGreaterThan(other)) {
+        if (isGreaterThan(other)) {
             return WIN;
         }
-        if(isEqualTo(other)) {
+        if (isEqualTo(other)) {
             return DRAW;
         }
         return LOSE;

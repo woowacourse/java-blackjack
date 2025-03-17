@@ -22,18 +22,18 @@ public abstract class Hand {
     }
 
     public static Hand from(Card card) {
-        List<Card> newCards =  new ArrayList<>();
+        List<Card> newCards = new ArrayList<>();
         newCards.add(card);
         return new RegularHand(newCards);
     }
 
     public static Hand create(List<Card> cards) {
         RegularHand regularHand = new RegularHand(cards);
-        if(regularHand.isBlackjack()) {
+        if (regularHand.isBlackjack()) {
             return new BlackjackHand(cards);
         }
         Score score = Score.from(cards);
-        if(score.isBust()) {
+        if (score.isBust()) {
             return new BustHand(cards);
         }
         return regularHand;

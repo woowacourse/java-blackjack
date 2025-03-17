@@ -13,10 +13,6 @@ public enum GameStatus {
         this.payoutRate = payoutRate;
     }
 
-    public boolean isDecided() {
-        return this != UNDECIDED;
-    }
-
     public double getPayoutRate() {
         return payoutRate;
     }
