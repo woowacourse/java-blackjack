@@ -43,10 +43,10 @@ public final class Dealer implements CardReceivable {
     }
 
     public Card getVisibleCard() {
-        if (state.getHandCards().isEmpty()) {
+        if (getHandCards().isEmpty()) {
             throw new IllegalStateException("딜러가 가진 패가 없습니다.");
         }
-        return state.getHandCards()
+        return getHandCards()
                 .getFirst();
     }
 
