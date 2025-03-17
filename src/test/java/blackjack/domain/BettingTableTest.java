@@ -112,7 +112,7 @@ class BettingTableTest {
     }
 
     @Test
-    @DisplayName("게임 종료 시 최종 수익을 출력한다.")
+    @DisplayName("참가자별로 최종 수익을 계산한다.")
     void computeResultTest1() {
         // given
         int player1Money = 10000;
