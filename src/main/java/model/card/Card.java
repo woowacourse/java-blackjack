@@ -10,7 +10,7 @@ public abstract class Card {
         this.rank = rank;
     }
 
-    public abstract int findAdjustOrDefaultScore();
+    public abstract void adjustOrDefaultScore();
 
     public Rank getRank() {
         return rank;

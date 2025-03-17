@@ -7,7 +7,6 @@ public class SingleScoreCard extends Card {
     }
 
     @Override
-    public int findAdjustOrDefaultScore() {
-        return rank.getDefaultScore();
+    public void adjustOrDefaultScore() {
     }
 }

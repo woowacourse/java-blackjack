@@ -24,7 +24,7 @@ public abstract class Participant {
             return;
         }
         for (Card card : hands) {
-            card.findAdjustOrDefaultScore();
+            card.adjustOrDefaultScore();
             if (ableToDraw() || isBlackjack()) {
                 return;
             }
