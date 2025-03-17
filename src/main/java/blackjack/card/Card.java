@@ -30,9 +30,10 @@ public class Card {
 
     @Override
     public boolean equals(final Object o) {
-        if (!(o instanceof final Card card)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
+        final Card card = (Card) o;
         return shape == card.shape && denomination == card.denomination;
     }
 
