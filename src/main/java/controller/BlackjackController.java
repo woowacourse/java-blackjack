@@ -3,36 +3,40 @@ package controller;
 import java.util.List;
 import java.util.Map;
 import model.betting.PlayersBetting;
-import model.card.Deck;
 import model.betting.BettingResult;
+import model.card.Deck;
 import model.participant.Dealer;
 import model.participant.Player;
 import model.winning.ParticipantWinningResult;
 import model.participant.Players;
 import model.turn.DealerTurn;
 import model.turn.PlayerTurn;
-import model.turn.PlayersTurn;
 import view.InputView;
 import view.OutputView;
 
 public class BlackjackController {
 
     public void run() {
+        Deck deck = Deck.of();
         List<String> playerNames = inputPlayersName();
         Players players = Players.from(playerNames);
         Dealer dealer = new Dealer();
-        List<PlayerTurn> startBetting = inputPlayersBetting(players);
-        PlayersTurn playersTurn = new PlayersTurn(startBetting);
-        DealerTurn dealerTurn = new DealerTurn(dealer);
-        TurnController turnController = new TurnController(playersTurn, dealerTurn);
 
-        turnController.dealInitialCards();
+        List<PlayerTurn> playerTurns = inputPlayersBetting(players);
+        DealerTurn dealerTurn = new DealerTurn(dealer);
+
+        PlayerTurnController playerTurnController = new PlayerTurnController(playerTurns);
+        DealerTurnController dealerTurnController = new DealerTurnController(dealerTurn);
+
+        playerTurnController.dealInitialCards(deck);
+        dealerTurnController.dealInitialCards(deck);
         OutputView.printInitialDealResult(dealer, players);
-        turnController.betInsurance();
-        turnController.runParticipantsTurn();
+        playerTurnController.betInsurance(dealer);
+        playerTurnController.runParticipantsTurn(deck);
+        dealerTurnController.runDealerTurn(deck);
 
         ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
-        PlayersBetting playersBetting = new PlayersBetting(playersTurn.getPlayersBet());
+        PlayersBetting playersBetting = PlayersBetting.from(playerTurns);
         BettingResult bettingResult = new BettingResult(playersBetting, participantWinningResult);
         Map<Player, Integer> finalProfitByPlayer = bettingResult.calculatePlayerBettingResult(players, dealer);
         int finalProfitByDealer = bettingResult.calculateDealerFinalResult(finalProfitByPlayer);

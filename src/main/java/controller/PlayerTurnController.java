@@ -1,44 +1,42 @@
 package controller;
 
+import java.util.List;
 import model.PlayerChoice;
 import model.card.Deck;
 import model.participant.Dealer;
 import model.participant.Player;
-import model.turn.DealerTurn;
 import model.turn.PlayerTurn;
-import model.turn.PlayersTurn;
 import view.InputView;
-import view.OutputView;
 
-public class TurnController {
-    private final PlayersTurn playersTurn;
-    private final DealerTurn dealerTurn;
-    private final Deck deck = Deck.of();
+public class PlayerTurnController {
+    private final List<PlayerTurn> playersTurn;
 
-    public TurnController(PlayersTurn playersTurn, DealerTurn dealerTurn) {
+    public PlayerTurnController(List<PlayerTurn> playersTurn) {
         this.playersTurn = playersTurn;
-        this.dealerTurn = dealerTurn;
     }
 
-    public void dealInitialCards() {
-        playersTurn.dealInitialCardsToAllPlayers(deck);
-        dealerTurn.dealInitialCards(deck);
+    public void dealInitialCards(Deck deck) {
+        dealInitialCardsToAllPlayers(deck);
     }
 
-    public void betInsurance() {
-        Dealer dealer = dealerTurn.getDealer();
+    public void betInsurance(Dealer dealer) {
         if (dealer.isFirstCardAce()) {
             runPlayersBetInsurance();
         }
     }
 
-    public void runParticipantsTurn() {
-        runPlayersTurn();
-        runDealerTurn();
+    public void runParticipantsTurn(Deck deck) {
+        runPlayersTurn(deck);
+    }
+
+    private void dealInitialCardsToAllPlayers(Deck deck){
+        for (PlayerTurn playerTurn : playersTurn){
+            playerTurn.dealInitialCards(deck);
+        }
     }
 
     private void runPlayersBetInsurance() {
-        for (PlayerTurn playerTurn : playersTurn.getPlayersGameRound()) {
+        for (PlayerTurn playerTurn : playersTurn) {
             processInsuranceBet(playerTurn);
         }
     }
@@ -54,18 +52,18 @@ public class TurnController {
         }
     }
 
-    private void runPlayersTurn() {
-        for (PlayerTurn playerTurn : playersTurn.getPlayersGameRound()) {
-            selectAtOnePlayerChoice(playerTurn);
+    private void runPlayersTurn(Deck deck) {
+        for (PlayerTurn playerTurn : playersTurn) {
+            selectAtOnePlayerChoice(playerTurn, deck);
         }
     }
 
-    private void selectAtOnePlayerChoice(PlayerTurn playerTurn) {
+    private void selectAtOnePlayerChoice(PlayerTurn playerTurn, Deck deck) {
         Player player = playerTurn.getPlayer();
         PlayerChoice playerChoice = InputView.readFirstChoice(player);
         if (playerChoice.equals(PlayerChoice.HIT)) {
             playerTurn.processHit(deck);
-            selectHitOrStand(player, playerTurn);
+            selectHitOrStand(player, playerTurn, deck);
         }
         if (playerChoice.equals(PlayerChoice.DOUBLE_DOWN)) {
             int additionalBet = InputView.inputAdditionalBet();
@@ -76,22 +74,14 @@ public class TurnController {
         }
     }
 
-    private void selectHitOrStand(Player player, PlayerTurn playerTurn) {
+    private void selectHitOrStand(Player player, PlayerTurn playerTurn, Deck deck) {
         if (player.getParticipantHand().checkBust()) {
             return;
         }
         PlayerChoice playerChoice = InputView.readHitOrStand(player);
         if (playerChoice == PlayerChoice.HIT) {
             playerTurn.processHit(deck);
-            selectHitOrStand(player, playerTurn);
-        }
-    }
-
-    private void runDealerTurn() {
-        Dealer dealer = dealerTurn.getDealer();
-        while (dealer.checkScoreUnderSixteen()) {
-            OutputView.printDealerDealResult();
-            dealer.receiveCard(deck.pick());
+            selectHitOrStand(player, playerTurn, deck);
         }
     }
 }
