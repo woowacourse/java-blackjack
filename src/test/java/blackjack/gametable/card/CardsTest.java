@@ -1,9 +1,7 @@
-package domain;
+package blackjack.gametable.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.card.Card;
-import blackjack.card.Cards;
 import blackjack.constant.TrumpSuit;
 import blackjack.constant.TrumpRank;
 import java.util.ArrayList;

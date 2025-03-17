@@ -1,14 +1,13 @@
-package domain;
+package blackjack.gametable.gambler;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import blackjack.card.Card;
-import blackjack.card.Cards;
+import blackjack.gametable.card.Card;
+import blackjack.gametable.card.Cards;
 import blackjack.constant.TrumpSuit;
 import blackjack.constant.TrumpRank;
-import blackjack.gambler.Dealer;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;

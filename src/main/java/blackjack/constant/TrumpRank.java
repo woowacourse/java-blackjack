@@ -1,6 +1,7 @@
 package blackjack.constant;
 
 public enum TrumpRank {
+
     ACE(11, "A"),
     TWO(2, "2"),
     THREE(3, "3"),

@@ -2,6 +2,7 @@ package blackjack;
 
 import blackjack.config.GameConfig;
 import blackjack.constant.UserAction;
+import blackjack.gametable.BlackjackTable;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;

@@ -1,15 +1,12 @@
-package domain;
+package blackjack.gametable.gambler;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.card.Card;
-import blackjack.card.Cards;
+import blackjack.gametable.card.Card;
+import blackjack.gametable.card.Cards;
 import blackjack.constant.TrumpSuit;
 import blackjack.constant.TrumpRank;
 import blackjack.constant.MatchResult;
-import blackjack.gambler.PlayerName;
-import blackjack.gambler.Player;
-import blackjack.gambler.Players;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;

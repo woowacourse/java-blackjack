@@ -1,16 +1,14 @@
-package domain;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import blackjack.card.Card;
-import blackjack.card.Cards;
-import blackjack.constant.TrumpSuit;
-import blackjack.constant.TrumpRank;
 import blackjack.constant.MatchResult;
-import blackjack.gambler.PlayerName;
-import blackjack.gambler.Player;
+import blackjack.constant.TrumpRank;
+import blackjack.constant.TrumpSuit;
+import blackjack.gametable.card.Card;
+import blackjack.gametable.card.Cards;
+import blackjack.gametable.gambler.Player;
+import blackjack.gametable.gambler.PlayerName;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -53,7 +51,7 @@ class PlayerTest {
         List<Card> initialCards = makeCards(rank1, rank2);
         Card card = new Card(rank3, TrumpSuit.SPADE);
         Cards cards = new Cards(initialCards);
-        Player player = new Player(new PlayerName("pobi"),cards);
+        Player player = new Player(new PlayerName("pobi"), cards);
         player.addOneCard(card);
 
         // when

@@ -1,4 +1,4 @@
-package blackjack.gambler;
+package blackjack.gametable.gambler;
 
 public class PlayerName {
 

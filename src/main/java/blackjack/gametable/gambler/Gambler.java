@@ -1,7 +1,7 @@
-package blackjack.gambler;
+package blackjack.gametable.gambler;
 
-import blackjack.card.Card;
-import blackjack.card.Cards;
+import blackjack.gametable.card.Card;
+import blackjack.gametable.card.Cards;
 import java.util.ArrayList;
 import java.util.List;
 

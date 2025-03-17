@@ -1,10 +1,10 @@
 package blackjack.view;
 
-import blackjack.BlackjackTable;
-import blackjack.card.Card;
-import blackjack.gambler.Dealer;
-import blackjack.gambler.Player;
-import blackjack.gambler.Players;
+import blackjack.gametable.BlackjackTable;
+import blackjack.gametable.card.Card;
+import blackjack.gametable.gambler.Dealer;
+import blackjack.gametable.gambler.Player;
+import blackjack.gametable.gambler.Players;
 import java.util.List;
 
 public class ConsoleOutputView implements OutputView {

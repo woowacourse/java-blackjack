@@ -1,12 +1,12 @@
-package blackjack;
+package blackjack.gametable;
 
-import blackjack.card.Card;
-import blackjack.card.Cards;
-import blackjack.card.Deck;
-import blackjack.gambler.Dealer;
-import blackjack.gambler.Player;
-import blackjack.gambler.PlayerName;
-import blackjack.gambler.Players;
+import blackjack.gametable.card.Card;
+import blackjack.gametable.card.Cards;
+import blackjack.gametable.card.Deck;
+import blackjack.gametable.gambler.Dealer;
+import blackjack.gametable.gambler.Player;
+import blackjack.gametable.gambler.PlayerName;
+import blackjack.gametable.gambler.Players;
 import java.util.List;
 
 public class BlackjackTable {

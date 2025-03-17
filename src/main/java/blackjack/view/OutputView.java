@@ -1,11 +1,6 @@
 package blackjack.view;
 
-import blackjack.BlackjackTable;
-import blackjack.constant.MatchResult;
-import blackjack.gambler.Dealer;
-import blackjack.gambler.Player;
-import blackjack.gambler.Players;
-import java.util.Map;
+import blackjack.gametable.BlackjackTable;
 
 public interface OutputView {
 
