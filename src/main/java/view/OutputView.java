@@ -92,29 +92,29 @@ public class OutputView {
     }
 
     private String cardNumberToString(Card card) {
-        if (card.getCardNumber() == CardNumber.ACE) {
+        if (card.isSameCardNumber(CardNumber.ACE)) {
             return ACE;
         }
-        if (card.getCardNumber() == CardNumber.QUEEN) {
+        if (card.isSameCardNumber(CardNumber.QUEEN)) {
             return QUEEN;
         }
-        if (card.getCardNumber() == CardNumber.JACK) {
+        if (card.isSameCardNumber(CardNumber.JACK)) {
             return JACK;
         }
-        if (card.getCardNumber() == CardNumber.KING) {
+        if (card.isSameCardNumber(CardNumber.KING)) {
             return KING;
         }
-        return String.valueOf(card.getCardNumber().getValue());
+        return String.valueOf(card.getCardNumberValue());
     }
 
     private String cardShapeToString(Card card) {
-        if (card.getCardShape() == CardShape.CLOVER) {
+        if (card.isSameCardShape(CardShape.CLOVER)) {
             return CLOVER;
         }
-        if (card.getCardShape() == CardShape.DIAMOND) {
+        if (card.isSameCardShape(CardShape.DIAMOND)) {
             return DIAMOND;
         }
-        if (card.getCardShape() == CardShape.SPADE) {
+        if (card.isSameCardShape(CardShape.SPADE)) {
             return SPADE;
         }
         return HEART;

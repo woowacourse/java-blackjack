@@ -33,14 +33,14 @@ public class Cards {
 
     private int totalWithoutAce() {
         return cards.stream()
-                .filter(card -> !card.isAce())
-                .mapToInt(card -> card.getCardNumber().getValue())
+                .filter(card -> !card.isSameCardNumber(CardNumber.ACE))
+                .mapToInt(Card::getCardNumberValue)
                 .sum();
     }
 
     private int aceCount() {
         return (int) cards.stream()
-                .filter(Card::isAce)
+                .filter(card -> card.isSameCardNumber(CardNumber.ACE))
                 .count();
     }
 

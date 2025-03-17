@@ -10,15 +10,15 @@ public class Card {
         this.cardNumber = cardNumber;
     }
 
-    public boolean isAce() {
-        return cardNumber.equals(CardNumber.ACE);
+    public boolean isSameCardShape(CardShape cardShape) {
+        return this.cardShape.isSame(cardShape);
     }
 
-    public CardNumber getCardNumber() {
-        return cardNumber;
+    public boolean isSameCardNumber(CardNumber cardNumber) {
+        return this.cardNumber.isSame(cardNumber);
     }
 
-    public CardShape getCardShape() {
-        return cardShape;
+    public int getCardNumberValue() {
+        return cardNumber.getValue();
     }
 }
