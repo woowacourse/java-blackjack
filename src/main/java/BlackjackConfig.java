@@ -8,16 +8,16 @@ public class BlackjackConfig {
 
     public BlackjackGame blackjackGame() {
         return new BlackjackGame(
-                inputView(),
-                outputView()
+                inputProcessor(),
+                outputProcessor()
         );
     }
 
-    private InputProcessor inputView() {
+    private InputProcessor inputProcessor() {
         return new InputProcessor(new InputParser());
     }
 
-    private OutputPrinter outputView() {
+    private OutputPrinter outputProcessor() {
         return new OutputPrinter(new OutputFormatter());
     }
 }
