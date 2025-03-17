@@ -29,10 +29,6 @@ public class BettingMoney {
                 .setScale(0, RoundingMode.FLOOR);
     }
 
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

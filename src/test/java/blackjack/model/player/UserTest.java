@@ -3,6 +3,7 @@ package blackjack.model.player;
 import static blackjack.model.card.CardCreator.createCard;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -82,6 +83,11 @@ class UserTest {
                         new Cards(createCard(CardNumber.TEN), createCard(CardNumber.TEN), createCard(CardNumber.ACE)),
                         false)
         );
+    }
+
+    @Test
+    void 유저의_수익을_계산한다() {
+        assertThat(user.calculateProfit(1.5)).isEqualTo(BigDecimal.valueOf(1_500));
     }
 
 }
