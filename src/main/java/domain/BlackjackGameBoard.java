@@ -67,7 +67,7 @@ public class BlackjackGameBoard {
 
     public Profit computeUserProfit(User user, Dealer dealer, ProfitStrategy profitStrategy) {
         return profitStrategy.calculateProfit(user.getBet(),
-                UserBattleResult.compare(user.getState(), dealer.getState()));
+                UserBattleResult.determineUserBattleResult(user.getState(), dealer.getState()));
     }
 
     public Profit computeDealerProfit(Dealer dealer, Users users, ProfitStrategy profitStrategy) {

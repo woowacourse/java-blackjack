@@ -11,7 +11,7 @@ public enum UserBattleResult {
     DRAW,
     ;
 
-    public static UserBattleResult compare(State user, State dealer) {
+    public static UserBattleResult determineUserBattleResult(State user, State dealer) {
         if (blackjackExists(user, dealer)) {
             return determineByBlackjack(user, dealer);
         }
