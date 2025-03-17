@@ -1,8 +1,5 @@
 package domain.card;
 
-import java.util.Arrays;
-import java.util.List;
-
 public enum CardValue {
 
     Q("Q", 10),
@@ -25,11 +22,6 @@ public enum CardValue {
     CardValue(String rank, int value) {
         this.rank = rank;
         this.value = value;
-    }
-
-    public static List<CardValue> cardValues() {
-        return Arrays.stream(CardValue.values())
-                .toList();
     }
 
     public String getRank() {

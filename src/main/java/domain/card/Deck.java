@@ -1,15 +1,22 @@
 package domain.card;
 
 import domain.card.strategy.DrawStrategy;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Deque;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Deck {
+
+    private static final List<TrumpCard> CACHE_CARDS = new ArrayList<>();
+
+    static {
+        for (Suit suit : Suit.values()) {
+            CACHE_CARDS.addAll(createCardsBySuit(suit));
+        }
+    }
 
     private final DrawStrategy drawStrategy;
     private final Deque<TrumpCard> deck;
@@ -19,23 +26,20 @@ public class Deck {
         this.drawStrategy = drawStrategy;
     }
 
-    public TrumpCard drawCard() {
-        return drawStrategy.draw(deck);
+    private static List<TrumpCard> createCardsBySuit(Suit suit) {
+        return Arrays.stream(CardValue.values())
+                .map(cardValue -> new TrumpCard(suit, cardValue))
+                .toList();
     }
 
     private LinkedList<TrumpCard> generateDeck() {
-        Set<TrumpCard> trumpCards = new HashSet<>();
-        for (Suit suit : Suit.values()) {
-            trumpCards.addAll(trumpCards(suit));
-        }
-        LinkedList<TrumpCard> generatedDeck = new LinkedList<>(trumpCards);
+        LinkedList<TrumpCard> generatedDeck = new LinkedList<>(CACHE_CARDS);
         Collections.shuffle(generatedDeck);
         return generatedDeck;
     }
 
-    private static Set<TrumpCard> trumpCards(Suit suit) {
-        List<CardValue> cardValues = CardValue.cardValues();
-        return cardValues.stream().map(cardValue -> new TrumpCard(suit, cardValue))
-                .collect(Collectors.toSet());
+    public TrumpCard drawCard() {
+        return drawStrategy.draw(deck);
     }
+
 }
