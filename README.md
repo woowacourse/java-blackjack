@@ -78,6 +78,11 @@
 ### GameStatus
 - [x] 게임 최종 승패(승, 무, 패, 블랙잭)
 
+### Bettings
+- [x] 게임 베팅 금액 관리
+  - [x] 플레이어 베팅 금액 등록
+  - [x] 플레이어 베팅 금액 검색
+  - [x] 딜러 베팅 금액 계산
 
 ### ParticipantCardsDto
 - [x] 참여자의 이름, 참여자가 보유한 `Cards`, `Cards`의 총 합
