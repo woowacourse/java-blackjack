@@ -1,7 +1,6 @@
 package domain.card;
 
 import domain.card.strategy.DrawStrategy;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.HashSet;
@@ -25,9 +24,8 @@ public class Deck {
     }
 
     private LinkedList<TrumpCard> generateDeck() {
-        List<Suit> suits = Arrays.stream(Suit.values()).toList();
         Set<TrumpCard> trumpCards = new HashSet<>();
-        for (Suit suit : suits) {
+        for (Suit suit : Suit.values()) {
             trumpCards.addAll(trumpCards(suit));
         }
         LinkedList<TrumpCard> generatedDeck = new LinkedList<>(trumpCards);
