@@ -171,6 +171,6 @@ class PlayerTest {
         int result = player.calculateProfit(dealer.getState());
 
         //then
-        assertThat(result).isEqualTo(5000);
+        assertThat(result).isEqualTo(15000);
     }
 }

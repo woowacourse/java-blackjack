@@ -24,7 +24,7 @@ class BlackjackTest {
         double profit = blackjack.profit(bettingMoney);
 
         //then
-        assertThat(profit).isEqualTo(500);
+        assertThat(profit).isEqualTo(1500);
     }
 
     @Test
