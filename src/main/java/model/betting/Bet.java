@@ -4,27 +4,27 @@ import java.util.Objects;
 import model.participant.role.BetOwnable;
 import model.participant.role.Bettable;
 
-public class Bet {
+public final class Bet {
     private final int money;
     private final Bettable better;
     private final BetOwnable owner;
 
-    public Bet(int money, Bettable better) {
+    public Bet(final int money, final Bettable better) {
         this(money, better, better);
     }
 
-    public Bet(int money, Bettable better, BetOwnable owner) {
+    public Bet(final int money, final Bettable better, final BetOwnable owner) {
         this.money = money;
         this.better = better;
         this.owner = owner;
     }
 
-    public Bet increase(double rate) {
+    public Bet increase(final double rate) {
         int increaseAmount = (int) (money * rate);
         return new Bet(increaseAmount, better);
     }
 
-    public Bet changeOwnerTo(BetOwnable owner) {
+    public Bet changeOwnerTo(final BetOwnable owner) {
         return new Bet(money, better, owner);
     }
 
@@ -39,7 +39,7 @@ public class Bet {
         return -calculateBetterRevenue();
     }
 
-    public boolean betterEquals(Bettable better) {
+    public boolean betterEquals(final Bettable better) {
         return this.better.equals(better);
     }
 

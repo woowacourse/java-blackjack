@@ -40,7 +40,7 @@ public class BlackjackController {
         }
     }
 
-    private void receiveBets(Players players, Dealer dealer) {
+    private void receiveBets(final Players players, final Dealer dealer) {
         for (Player player : players.getPlayers()) {
             int betAmount = InputView.readBetAmount(player.getName());
             dealer.receiveBet(player.makeBet(betAmount));
@@ -80,7 +80,7 @@ public class BlackjackController {
         }
     }
 
-    private static void printFinalScore(Players players, Dealer dealer) {
+    private static void printFinalScore(final Players players, final Dealer dealer) {
         OutputView.printDealerFinalScore(dealer);
         OutputView.printPlayersFinalScore(players);
     }
@@ -95,7 +95,7 @@ public class BlackjackController {
         return winningResults;
     }
 
-    private void adjustRevenue(WinningResults winningResults, Players players, Dealer dealer) {
+    private void adjustRevenue(final WinningResults winningResults, final Players players, final Dealer dealer) {
         for (Player player : players.getPlayers()) {
             if (winningResults.isLose(player)) {
                 dealer.updateBetOwnerFrom(player);
@@ -106,7 +106,7 @@ public class BlackjackController {
         }
     }
 
-    private void printRevenue(Players players, Dealer dealer) {
+    private void printRevenue(final Players players, final Dealer dealer) {
         OutputView.printDealerRevenue(dealer);
         for (Player player : players.getPlayers()) {
             Bet bet = dealer.findBetByBetter(player);

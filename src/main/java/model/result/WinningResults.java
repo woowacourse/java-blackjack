@@ -37,15 +37,15 @@ public final class WinningResults {
         dealerResult.merge(gameResult.findReverse(), 1, Integer::sum);
     }
 
-    public boolean isLose(Player player) {
+    public boolean isLose(final Player player) {
         return findResultByPlayer(player).isLose();
     }
 
-    public boolean isBlackjackWin(Player player) {
+    public boolean isBlackjackWin(final Player player) {
         return findResultByPlayer(player).isBlackjackWin();
     }
 
-    private PlayerWinningResult findResultByPlayer(Player player) {
+    private PlayerWinningResult findResultByPlayer(final Player player) {
         return results.stream()
                 .filter(result -> result.getPlayer().equals(player))
                 .findFirst()

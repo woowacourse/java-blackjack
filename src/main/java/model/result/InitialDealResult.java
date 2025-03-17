@@ -7,11 +7,11 @@ import model.participant.Dealer;
 import model.participant.Player;
 import model.participant.Players;
 
-public class InitialDealResult {
+public final class InitialDealResult {
     private final List<Player> winnerPlayers;
     private final List<Player> loserPlayers;
 
-    public static InitialDealResult from(Dealer dealer, Players players) {
+    public static InitialDealResult from(final Dealer dealer, final Players players) {
         if (dealer.isBlackjack()) {
             return createResultIfDealerBlackjack(players);
         }
@@ -21,7 +21,7 @@ public class InitialDealResult {
         return new InitialDealResult(blackjackPlayers);
     }
 
-    private static InitialDealResult createResultIfDealerBlackjack(Players players) {
+    private static InitialDealResult createResultIfDealerBlackjack(final Players players) {
         List<Player> winnerPlayers = new ArrayList<>();
         List<Player> loserPlayers = new ArrayList<>();
         for (Player player : players.getPlayers()) {
@@ -34,16 +34,16 @@ public class InitialDealResult {
         return new InitialDealResult(winnerPlayers, loserPlayers);
     }
 
-    public InitialDealResult(List<Player> winnerPlayers) {
+    public InitialDealResult(final List<Player> winnerPlayers) {
         this(winnerPlayers, List.of());
     }
 
-    public InitialDealResult(List<Player> winnerPlayers, List<Player> loserPlayers) {
+    public InitialDealResult(final List<Player> winnerPlayers, final List<Player> loserPlayers) {
         this.winnerPlayers = winnerPlayers;
         this.loserPlayers = loserPlayers;
     }
 
-    public boolean isAllPlayersLose(Players players) {
+    public boolean isAllPlayersLose(final Players players) {
         return loserPlayers.containsAll(players.getPlayers());
     }
 

@@ -3,7 +3,7 @@ package model.result;
 import model.participant.Dealer;
 import model.participant.Player;
 
-public class PlayerWinningResult {
+public final class PlayerWinningResult {
     private final Player player;
     private final GameResult gameResult;
 
@@ -19,7 +19,7 @@ public class PlayerWinningResult {
         );
     }
 
-    public PlayerWinningResult(Player player, GameResult gameResult) {
+    public PlayerWinningResult(final Player player, final GameResult gameResult) {
         this.player = player;
         this.gameResult = gameResult;
     }

@@ -41,7 +41,7 @@ public final class InputView {
         }
     }
 
-    public static int readBetAmount(String name) {
+    public static int readBetAmount(final String name) {
         System.out.printf("\n%s의 배팅 금액은?\n", name);
         return Integer.parseInt(SCANNER.nextLine());
     }

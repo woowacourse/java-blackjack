@@ -56,7 +56,7 @@ public final class Player implements Bettable, Gameable {
     }
 
     @Override
-    public Bet makeBet(int betAmount) {
+    public Bet makeBet(final int betAmount) {
         return new Bet(betAmount, this);
     }
 

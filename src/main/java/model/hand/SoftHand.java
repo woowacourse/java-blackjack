@@ -7,7 +7,7 @@ import model.deck.CardRank;
 public final class SoftHand extends ParticipantHand {
     private static final int BURST_SCORE_LIMIT = 21;
 
-    public SoftHand(List<Card> cards) {
+    public SoftHand(final List<Card> cards) {
         super(cards);
     }
 

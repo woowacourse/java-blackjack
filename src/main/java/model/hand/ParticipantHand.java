@@ -14,7 +14,7 @@ public abstract class ParticipantHand {
         this(new ArrayList<>());
     }
 
-    protected ParticipantHand(List<Card> cards) {
+    protected ParticipantHand(final List<Card> cards) {
         this.cards = cards;
     }
 
@@ -23,7 +23,7 @@ public abstract class ParticipantHand {
         cards.add(card);
     }
 
-    private void validateDuplication(Card card) {
+    private void validateDuplication(final Card card) {
         if (cards.contains(card)) {
             throw new IllegalArgumentException("중복 카드가 선택되었습니다.");
         }

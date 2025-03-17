@@ -5,24 +5,24 @@ import java.util.List;
 import model.participant.role.BetOwnable;
 import model.participant.role.Bettable;
 
-public class Bets {
+public final class Bets {
     private final List<Bet> bets;
 
     public Bets() {
         this.bets = new ArrayList<>();
     }
 
-    public void add(Bet bet) {
+    public void add(final Bet bet) {
         this.bets.add(bet);
     }
 
-    public void updateOwner(BetOwnable owner, BetOwnable newOwner) {
+    public void updateOwner(final BetOwnable owner, final BetOwnable newOwner) {
         Bet updatingBet = findByOwner(owner);
         this.bets.remove(updatingBet);
         this.bets.add(updatingBet.changeOwnerTo(newOwner));
     }
 
-    public void updateBetAmount(Bettable better) {
+    public void updateBetAmount(final Bettable better) {
         Bet bet = findByBetter(better);
         this.bets.remove(bet);
         this.bets.add(bet.increase(1.5));
@@ -34,14 +34,14 @@ public class Bets {
                 .sum();
     }
 
-    public Bet findByBetter(Bettable better) {
+    public Bet findByBetter(final Bettable better) {
         return bets.stream()
                 .filter(bet -> bet.betterEquals(better))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("해당하는 플레이어를 찾을 수 없습니다."));
     }
 
-    private Bet findByOwner(Object owner) {
+    private Bet findByOwner(final BetOwnable owner) {
         return bets.stream()
                 .filter(bet -> bet.getOwner().equals(owner))
                 .findAny()

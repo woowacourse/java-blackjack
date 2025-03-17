@@ -64,29 +64,29 @@ public final class Dealer implements BetOwnable, Gameable, GameProcessable {
     }
 
     @Override
-    public void splitInitialDeck(Deck deck, Gameable gamer) {
+    public void splitInitialDeck(final Deck deck, final Gameable gamer) {
         IntStream.range(0, INITIAL_DEAL_CARD_COUNT).forEach(
                 i -> gamer.receiveCard(deck.pick())
         );
     }
 
     @Override
-    public void receiveBet(Bet bet) {
+    public void receiveBet(final Bet bet) {
         this.bets.add(bet);
     }
 
     @Override
-    public void updateBetOwnerFrom(BetOwnable beforeOwner) {
+    public void updateBetOwnerFrom(final BetOwnable beforeOwner) {
         bets.updateOwner(beforeOwner, this);
     }
 
     @Override
-    public void updateBetAmountOf(Bettable better) {
+    public void updateBetAmountOf(final Bettable better) {
         bets.updateBetAmount(better);
     }
 
     @Override
-    public Bet findBetByBetter(Bettable better) {
+    public Bet findBetByBetter(final Bettable better) {
         return bets.findByBetter(better);
     }
 

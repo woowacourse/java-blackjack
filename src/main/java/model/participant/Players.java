@@ -5,10 +5,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Players {
+public final class Players {
     private final List<Player> players;
 
-    public static Players from(List<String> playerNames) {
+    public static Players from(final List<String> playerNames) {
         validatePlayerDuplication(playerNames);
 
         return new Players(playerNames.stream()
@@ -17,7 +17,7 @@ public class Players {
         );
     }
 
-    public Players(List<Player> players) {
+    public Players(final List<Player> players) {
         this.players = players;
     }
 
