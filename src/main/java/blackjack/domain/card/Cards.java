@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Cards {
 
+    public static final int BLACKJACK_CARD_SIZE = 2;
     private final List<Card> cards;
 
     public Cards() {
@@ -32,7 +33,7 @@ public class Cards {
     }
 
     public boolean isBlackJackSize() {
-        return cards.size() == 2;
+        return cards.size() == BLACKJACK_CARD_SIZE;
     }
 
     @Override
