@@ -14,6 +14,9 @@ import java.util.stream.Stream;
 
 public final class ProfitResult {
 
+    private static final double AVERAGE_PROFIT_RATE = 1.0;
+    private static final double BLACKJACK_PROFIT_RATE = 1.5;
+
     private final Map<Gamer, Integer> result;
 
     public ProfitResult(final Dealer dealer, final Map<Player, ResultStatus> winningResult) {
@@ -36,27 +39,11 @@ public final class ProfitResult {
 
     private void calculateEachProfit(final Dealer dealer, final Entry<Player, ResultStatus> entry,
                                      final Map<Gamer, Integer> profits) {
-        Player player = entry.getKey();
-        int bettingAmount = player.getBettingAmount();
-        final int averageProfit = (int) (1.0 * bettingAmount);
-        // 딜러가 이긴 경우
-        if (entry.getValue() == ResultStatus.WIN) {
-            profits.merge(dealer, +averageProfit, Integer::sum);
-            profits.merge(player, -averageProfit, Integer::sum);
-            return;
-        }
-        // 플레이어가 이긴 경우
-        if (entry.getValue() == ResultStatus.LOSE) {
-            profits.merge(dealer, -averageProfit, Integer::sum);
-            profits.merge(player, averageProfit, Integer::sum);
-            return;
-        }
-        // 블랙잭의 경우
-        if (entry.getValue() == ResultStatus.BLACKJACK) {
-            final int blackjackProfit = (int) (1.5 * bettingAmount);
-            profits.merge(dealer, -blackjackProfit, Integer::sum);
-            profits.merge(player, blackjackProfit, Integer::sum);
-        }
+        final Player player = entry.getKey();
+        final int bettingAmount = player.getBettingAmount();
+        final int profit = (int) (entry.getValue().getProfitRate() * bettingAmount);
+        profits.merge(dealer, profit, Integer::sum);
+        profits.merge(player, -profit, Integer::sum);
     }
 
     @Override

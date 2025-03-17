@@ -21,4 +21,19 @@ class ResultStatusTest {
         // When & Then
         assertThat(resultStatus.makeOppositeResult()).isEqualTo(expected);
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "WIN, 1.0",
+            "LOSE, -1.0",
+            "BLACKJACK, -1.5",
+            "PUSH, 0",
+    })
+    @DisplayName("수익률을 반환한다")
+    void calculateProfitRate(final ResultStatus resultStatus, final double profitRate) {
+        // Given
+
+        // When & Then
+        assertThat(resultStatus.getProfitRate()).isEqualTo(profitRate);
+    }
 }
