@@ -1,4 +1,4 @@
-package blackjack.model.game;
+package blackjack.view;
 
 public enum HitOrStand {
     HIT("y"),
