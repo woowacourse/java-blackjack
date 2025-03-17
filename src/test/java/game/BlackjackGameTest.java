@@ -168,7 +168,7 @@ class BlackjackGameTest {
 
         // then
         assertThat(miso.getEarnedMoney())
-                .isEqualTo(misoBettingMoney + misoBettingMoney * GameResult.BLACKJACK.getProfitRate());
+                .isEqualTo((int) (misoBettingMoney + misoBettingMoney * GameResult.BLACKJACK.getProfitRate()));
     }
 
     @Test
@@ -229,7 +229,7 @@ class BlackjackGameTest {
 
         // then
         assertThat(profit.getAmount())
-                .isEqualTo((int) (misoBettingMoney * GameResult.LOSE.getProfitRate()));
+                .isEqualTo((int) (misoBettingMoney * -GameResult.LOSE.getProfitRate()));
     }
 
     @Test

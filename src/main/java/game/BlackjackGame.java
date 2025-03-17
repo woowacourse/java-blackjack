@@ -28,7 +28,8 @@ public class BlackjackGame {
     }
 
     public void updatePlayerMoney(Dealer dealer, Players players) {
-        players.updateMoney(dealer);
+        Map<Player, GameResult> gameResults = dealer.decideGameResults(players);
+        players.updateMoney(gameResults);
     }
 
     public Map<Playable, Profit> calculateParticipantGameResults(Dealer dealer, Players players) {
