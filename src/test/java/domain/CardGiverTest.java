@@ -18,7 +18,7 @@ public class CardGiverTest {
         // given
         List<Card> fixedCards = CardFixture.createFixedCards();
         CardGiver cardGiver = new CardGiver(new Deck(new ArrayList<>(fixedCards)));
-        Player player = new Player("이름", Hand.createEmpty());
+        Player player = new Player("이름");
         Dealer dealer = Dealer.createEmpty();
         //when
         cardGiver.dealingTo(new ArrayList<>(List.of(player, dealer)));

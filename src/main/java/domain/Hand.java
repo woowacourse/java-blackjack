@@ -13,7 +13,8 @@ import java.util.Objects;
 
 public class Hand {
 
-    private static final int VALID_MAX_SUM_LIMIT = 21;
+    private static final int BLACKJACK_NUMBER = 21;
+    private static final int BLACKJACK_CARD_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -38,7 +39,7 @@ public class Hand {
                 .map(Card::cardNumberType)
                 .mapToInt(CardNumberType::getDefaultNumber)
                 .sum();
-        return sumWithLowAce > VALID_MAX_SUM_LIMIT;
+        return sumWithLowAce > BLACKJACK_NUMBER;
     }
 
     public void add(Card card) {
@@ -71,7 +72,7 @@ public class Hand {
     }
 
     private boolean isBlackjack() {
-        return this.cards.size() == 2 && calculateSum() == 21;
+        return this.cards.size() == BLACKJACK_CARD_COUNT && calculateSum() == BLACKJACK_NUMBER;
     }
 
     private GameResultStatus compareCardsSum(Hand dealerHand) {

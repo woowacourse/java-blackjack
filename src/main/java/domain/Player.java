@@ -13,12 +13,11 @@ public class Player extends Participant {
     }
 
     public Player(String name, BettingMoney bettingMoney) {
-        super(name, Hand.createEmpty());
-        this.bettingMoney = bettingMoney;
+        this(name, Hand.createEmpty(), bettingMoney);
     }
 
-    public Player(String name, Hand hand) {
-        this(name, hand, null);
+    public Player(String name) {
+        this(name, Hand.createEmpty(), new BettingMoney(0));
     }
 
     public List<Card> getDealCards() {
