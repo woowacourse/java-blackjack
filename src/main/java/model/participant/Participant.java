@@ -31,6 +31,8 @@ public abstract class Participant {
         }
     }
 
+    public abstract boolean satisfiedCondition();
+
     public abstract boolean ableToDraw();
 
     public boolean isBust() {

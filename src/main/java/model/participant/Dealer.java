@@ -16,6 +16,11 @@ public class Dealer extends Participant {
     }
 
     @Override
+    public boolean satisfiedCondition() {
+        return ableToDraw();
+    }
+
+    @Override
     public boolean ableToDraw() {
         return getScore() < STANDING_CONDITION;
     }

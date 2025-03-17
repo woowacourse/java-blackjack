@@ -45,12 +45,13 @@ public class BlackjackGame {
     }
 
     private static Players createPlayers() {
-        Map<Nickname, Money> batingMoneys = new HashMap<>();
+        List<Player> players = new ArrayList<>();
         for (Nickname nickname : readNicknames()) {
             Money money = readBatingMoneyBy(nickname);
-            batingMoneys.put(nickname, money);
+            Player player = new Player(nickname, money, () -> agreeIntent(nickname.getValue()));
+            players.add(player);
         }
-        return Players.from(batingMoneys);
+        return new Players(players);
     }
 
     private static List<Nickname> readNicknames() {
@@ -78,29 +79,21 @@ public class BlackjackGame {
     }
 
     private void receiveAdditionalCard(Player player) {
-        while (satisfiedConditionByPlayer(player)) {
+        while (player.satisfiedCondition()) {
             distributeCardByParticipant(player, 1);
             OutputView.printCurrentHands(player);
         }
     }
 
     private void receiveAdditionalCard(Dealer dealer) {
-        while (satisfiedConditionByDealer(dealer)) {
+        while (dealer.satisfiedCondition()) {
             distributeCardByParticipant(dealer, 1);
             OutputView.printStandingDealer(dealer);
         }
     }
 
-    private boolean satisfiedConditionByPlayer(Player player) {
-        return player.ableToDraw() && agreeIntent(player);
-    }
-
-    private boolean satisfiedConditionByDealer(Dealer dealer) {
-        return dealer.ableToDraw();
-    }
-
-    private boolean agreeIntent(Player player) {
-        return Intent.from(InputView.readIntent(player.getNickname())).equals(Intent.Y);
+    private static boolean agreeIntent(String nickname) {
+        return Intent.from(InputView.readIntent(nickname)).equals(Intent.Y);
     }
 
     public void printBatingResult() {

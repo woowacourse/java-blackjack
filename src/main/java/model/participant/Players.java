@@ -1,30 +1,16 @@
 package model.participant;
 
-import model.Money;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Players {
 
     private final List<Player> values;
 
-    private Players(List<Player> values) {
+    public Players(List<Player> values) {
         validateNumber(values);
         validateDuplication(values);
         this.values = values;
-    }
-
-    public static Players from(Map<Nickname, Money> batingMoneys) {
-        List<Player> players = new ArrayList<>();
-        for (Nickname nickname : batingMoneys.keySet()) {
-            Money batingMoney = batingMoneys.get(nickname);
-            Player player = new Player(nickname, batingMoney);
-            players.add(player);
-        }
-        return new Players(players);
     }
 
     private void validateDuplication(List<Player> values) {

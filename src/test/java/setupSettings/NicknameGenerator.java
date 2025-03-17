@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
+// TODO: NicknmaeGenerator랑 PlayerGenerator 등 다른 모든 것들도 다 똑같이 생기겠는데? -> 제네릭
 public class NicknameGenerator {
     private static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyz";
     private static final Random RANDOM = new Random();
