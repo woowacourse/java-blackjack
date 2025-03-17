@@ -11,13 +11,6 @@ public class Revenues {
         this.revenues = new ArrayList<>(revenues);
     }
 
-    public Revenue findByName(String name) {
-        return revenues.stream()
-                .filter(revenue -> revenue.playerName().equals(name))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("해당 플레이어의 수익 정보가 없습니다."));
-    }
-
     public Revenue calculateDealerRevenue() {
         int totalPlayersRevenue = revenues.stream()
                 .mapToInt(revenue -> revenue.money())
