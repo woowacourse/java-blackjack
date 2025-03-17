@@ -10,29 +10,10 @@ public class Dealer extends Gamer {
         super(nickname, state);
     }
 
-    public State getState() {
-        return state;
-    }
-
     @Override
     public List<Card> getInitialCards() {
         final Hand hand = getHand();
         final List<Card> cards = hand.getCards();
         return List.of(cards.getFirst());
-    }
-
-    @Override
-    public int calculateSumOfRank() {
-        return getHand().calculateSumOfRank();
-    }
-
-    @Override
-    public String getDisplayName() {
-        return super.getDisplayName();
-    }
-
-    @Override
-    public Nickname getNickname() {
-        return super.getNickname();
     }
 }

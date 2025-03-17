@@ -23,27 +23,4 @@ public class Player extends Gamer {
         final Hand hand = getHand();
         return hand.getCards();
     }
-
-    @Override
-    public Nickname getNickname() {
-        return super.getNickname();
-    }
-
-    @Override
-    public String getDisplayName() {
-        return super.getDisplayName();
-    }
-
-    @Override
-    public int calculateSumOfRank() {
-        return getHand().calculateSumOfRank();
-    }
-
-    public State getState() {
-        return super.state;
-    }
-
-    public BetAmount getBetAmount() {
-        return betAmount;
-    }
 }
