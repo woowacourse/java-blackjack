@@ -1,5 +1,6 @@
 package blackjack.domain.game;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.result.Judge;
 import blackjack.domain.result.PlayerResults;
@@ -26,8 +27,11 @@ class BlackjackGameTest {
         Participant participant = new Player("히로", new Hand(), new BetAmount(1_000));
         blackjackGame.giveMoreCard(participant);
 
-        // when & then
-        assertThat(participant.getCards()).hasSize(1);
+        // when
+        List<Card> actual = participant.getCards();
+
+        // then
+        assertThat(actual).hasSize(1);
     }
 
     @Test

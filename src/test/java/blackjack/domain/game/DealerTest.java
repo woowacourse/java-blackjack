@@ -34,8 +34,11 @@ class DealerTest {
 
         List<Card> expect = List.of(card1, card2);
 
-        // when & then
-        assertThat(dealer.getCards()).isEqualTo(expect);
+        // when
+        List<Card> actual = dealer.getCards();
+
+        // then
+        assertThat(actual).isEqualTo(expect);
     }
 
     @Test
@@ -90,13 +93,22 @@ class DealerTest {
 
     @Test
     void 딜러는_카드를_더_뽑을_수_없다() {
+        // given
         Dealer dealer = new Dealer(new Hand());
-        assertThat(dealer.canDecideToTakeMoreCard()).isFalse();
+
+        // when
+        boolean actual = dealer.canDecideToTakeMoreCard();
+
+        // then
+        assertThat(actual).isFalse();
     }
 
     @Test
     void 딜러는_이름이_없다() {
+        // given
         Dealer dealer = new Dealer(new Hand());
+
+        // when & then
         assertThatThrownBy(dealer::getName)
                 .isInstanceOf(IllegalArgumentException.class);
     }

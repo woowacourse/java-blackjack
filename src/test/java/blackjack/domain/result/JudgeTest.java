@@ -9,7 +9,7 @@ import blackjack.domain.game.Hand;
 import blackjack.domain.game.Player;
 import blackjack.domain.game.Players;
 import java.util.List;
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,6 +24,7 @@ public class JudgeTest {
 
     @Test
     void 둘_다_블랙잭인_경우_무승부를_저장한다() {
+        // given
         Hand playerHand = createHandWithCards(CardRank.ACE, CardRank.TEN);
         Hand dealerHand = createHandWithCards(CardRank.ACE, CardRank.TEN);
 
@@ -31,27 +32,32 @@ public class JudgeTest {
         Dealer dealer = new Dealer(dealerHand);
 
         Judge judge = new Judge(playerResults, dealer);
+
+        // when
         judge.calculateAllResults(dealer, new Players(List.of(player)));
 
+        // then
         PlayerResult result = playerResults.findResultByPlayer(player);
-
-        Assertions.assertTrue(result.isTie());
+        assertTrue(result.isTie());
     }
 
     @Test
     void 딜러만_블랙잭인_경우_딜러는_이긴다() {
-        Hand playerHand = createHandWithCards(CardRank.TWO, CardRank.TEN); // 플레이어 일반 패
-        Hand dealerHand = createHandWithCards(CardRank.ACE, CardRank.TEN); // 딜러 블랙잭
+        // given
+        Hand playerHand = createHandWithCards(CardRank.TWO, CardRank.TEN);
+        Hand dealerHand = createHandWithCards(CardRank.ACE, CardRank.TEN);
 
         Player player = new Player("히로", playerHand, new BetAmount(1_000));
         Dealer dealer = new Dealer(dealerHand);
 
         Judge judge = new Judge(playerResults, dealer);
+
+        // when
         judge.calculateAllResults(dealer, new Players(List.of(player)));
 
+        // then
         PlayerResult result = playerResults.findResultByPlayer(player);
-
-        Assertions.assertTrue(result.isLose());
+        assertTrue(result.isLose());
     }
 
     @Test
@@ -67,7 +73,7 @@ public class JudgeTest {
 
         PlayerResult result = playerResults.findResultByPlayer(player);
 
-        Assertions.assertTrue(result.isWinByBlackjack());
+        assertTrue(result.isWinByBlackjack());
     }
 
     @Test
@@ -83,7 +89,7 @@ public class JudgeTest {
 
         PlayerResult result = playerResults.findResultByPlayer(player);
 
-        Assertions.assertTrue(result.isTie());
+        assertTrue(result.isTie());
     }
 
     @Test
@@ -99,7 +105,7 @@ public class JudgeTest {
 
         PlayerResult result = playerResults.findResultByPlayer(player);
 
-        Assertions.assertTrue(result.isLose());
+        assertTrue(result.isLose());
     }
 
     @Test
@@ -115,7 +121,7 @@ public class JudgeTest {
 
         PlayerResult result = playerResults.findResultByPlayer(player);
 
-        Assertions.assertTrue(result.isWinByNotBlackjack());
+        assertTrue(result.isWinByNotBlackjack());
     }
 
     @Test
@@ -131,7 +137,7 @@ public class JudgeTest {
 
         PlayerResult result = playerResults.findResultByPlayer(player);
 
-        Assertions.assertTrue(result.isLose());
+        assertTrue(result.isLose());
     }
 
     @Test
@@ -147,7 +153,7 @@ public class JudgeTest {
 
         PlayerResult result = playerResults.findResultByPlayer(player);
 
-        Assertions.assertTrue(result.isWinByNotBlackjack());
+        assertTrue(result.isWinByNotBlackjack());
     }
 
     @Test
@@ -163,7 +169,7 @@ public class JudgeTest {
 
         PlayerResult result = playerResults.findResultByPlayer(player);
 
-        Assertions.assertTrue(result.isTie());
+        assertTrue(result.isTie());
     }
 
     private Hand createHandWithCards(CardRank... ranks) {

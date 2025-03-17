@@ -1,8 +1,8 @@
 package blackjack.domain.profit;
 
+import blackjack.domain.game.BetAmount;
 import blackjack.domain.game.Hand;
 import blackjack.domain.game.Player;
-import blackjack.domain.game.BetAmount;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -56,7 +56,10 @@ class DealerProfitsTest {
         DealerProfit dealerProfit = new DealerProfit(0);
         dealerProfits.add(player, dealerProfit);
 
-        // when & then
-        assertThat(dealerProfits.findByPlayer(player)).isEqualTo(dealerProfit);
+        // when
+        DealerProfit actual = dealerProfits.findByPlayer(player);
+
+        // then
+        assertThat(actual).isEqualTo(dealerProfit);
     }
 }

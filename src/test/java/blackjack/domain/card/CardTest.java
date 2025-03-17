@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 
@@ -10,8 +11,11 @@ class CardTest {
         // given
         Card card = new Card(CardSuit.HEART, CardRank.EIGHT);
 
-        // when & then
-        assertThat(card.getRankValues()).contains(8);
+        // when
+        List<Integer> actual = card.getRankValues();
+
+        // then
+        assertThat(actual).contains(8);
     }
 
     @Test
@@ -19,8 +23,11 @@ class CardTest {
         // given
         Card ace = new Card(CardSuit.CLUB, CardRank.ACE);
 
-        // when & then
-        assertThat(ace.getRankValues()).containsExactlyInAnyOrder(1, 11);
+        // when
+        List<Integer> actual = ace.getRankValues();
+
+        // then
+        assertThat(actual).containsExactlyInAnyOrder(1, 11);
     }
 
     @Test

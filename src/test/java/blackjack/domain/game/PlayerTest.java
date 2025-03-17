@@ -73,14 +73,26 @@ class PlayerTest {
 
     @Test
     void 플레이어는_추가로_카드를_뽑을_지_결정할_수_있다() {
+        // given
         Player player = new Player("히로", new Hand(), new BetAmount(1_000));
-        assertThat(player.canDecideToTakeMoreCard()).isTrue();
+
+        // when
+        boolean actual = player.canDecideToTakeMoreCard();
+
+        // then
+        assertThat(actual).isTrue();
     }
 
     @Test
     void 플레이어는_이름을_가지고_있다() {
+        // given
         Player player = new Player("히로", new Hand(), new BetAmount(1_000));
-        assertThat(player.getName()).isEqualTo("히로");
+
+        // when
+        String actual = player.getName();
+
+        // then
+        assertThat(actual).isEqualTo("히로");
     }
 
     @Test

@@ -56,6 +56,7 @@ class ScoreTest {
 
     @Test
     void 둘_다_블랙잭인_경우_무승부를_저장한다() {
+        // given
         Hand comparedHand = createHandWithCards(CardRank.ACE, CardRank.TEN);
         Hand hand = createHandWithCards(CardRank.ACE, CardRank.TEN);
 
@@ -65,12 +66,16 @@ class ScoreTest {
         Player player = new Player("히로", hand, new BetAmount(1_000));
         Score playerScore = new Score(player);
 
+        // when
         GameResult gameResult = playerScore.calculateGameResult(dealerScore);
+
+        // then
         assertTrue(gameResult.isTie());
     }
 
     @Test
     void 상대만_블랙잭인_경우_패한다() {
+        // given
         Hand comparedHand = createHandWithCards(CardRank.ACE, CardRank.TEN);
         Hand hand = createHandWithCards(CardRank.TWO, CardRank.TEN);
 
@@ -80,12 +85,16 @@ class ScoreTest {
         Player player = new Player("히로", hand, new BetAmount(1_000));
         Score playerScore = new Score(player);
 
+        // when
         GameResult gameResult = playerScore.calculateGameResult(dealerScore);
+
+        // then
         assertTrue(gameResult.isLose());
     }
 
     @Test
     void 둘_다_버스트_된_경우_무승부를_저장한다() {
+        // given
         Hand comparedHand = createHandWithCards(CardRank.TEN, CardRank.TEN, CardRank.TEN);
         Hand hand = createHandWithCards(CardRank.TEN, CardRank.TEN, CardRank.TEN);
 
@@ -95,12 +104,16 @@ class ScoreTest {
         Player player = new Player("히로", hand, new BetAmount(1_000));
         Score playerScore = new Score(player);
 
+        // when
         GameResult gameResult = playerScore.calculateGameResult(dealerScore);
+
+        // then
         assertTrue(gameResult.isTie());
     }
 
     @Test
     void 해당_스코어만_버스트된_경우_진다() {
+        // given
         Hand comparedHand = createHandWithCards(CardRank.TEN, CardRank.TEN);
         Hand hand = createHandWithCards(CardRank.TEN, CardRank.TEN, CardRank.TEN);
 
@@ -110,12 +123,16 @@ class ScoreTest {
         Player player = new Player("히로", hand, new BetAmount(1_000));
         Score playerScore = new Score(player);
 
+        // when
         GameResult gameResult = playerScore.calculateGameResult(dealerScore);
+
+        // then
         assertTrue(gameResult.isLose());
     }
 
     @Test
     void 상대만_버스트인_경우_이긴다() {
+        // given
         Hand comparedHand = createHandWithCards(CardRank.TEN, CardRank.TEN, CardRank.TEN);
         Hand hand = createHandWithCards(CardRank.TEN, CardRank.TEN);
 
@@ -125,12 +142,16 @@ class ScoreTest {
         Player player = new Player("히로", hand, new BetAmount(1_000));
         Score playerScore = new Score(player);
 
+        // when
         GameResult gameResult = playerScore.calculateGameResult(dealerScore);
+
+        // then
         assertTrue(gameResult.isWinByNotBlackJack());
     }
 
     @Test
     void 상대의_결과가_더_클_경우_진다() {
+        // given
         Hand comparedHand = createHandWithCards(CardRank.TEN, CardRank.FIVE, CardRank.TWO);
         Hand hand = createHandWithCards(CardRank.TEN, CardRank.FIVE);
 
@@ -140,12 +161,16 @@ class ScoreTest {
         Player player = new Player("히로", hand, new BetAmount(1_000));
         Score playerScore = new Score(player);
 
+        // when
         GameResult gameResult = playerScore.calculateGameResult(dealerScore);
+
+        // then
         assertTrue(gameResult.isLose());
     }
 
     @Test
     void 해당_스코어의_결과가_더_큰_경우_이긴다() {
+        // given
         Hand comparedHand = createHandWithCards(CardRank.TEN, CardRank.FIVE);
         Hand hand = createHandWithCards(CardRank.TEN, CardRank.FIVE, CardRank.TWO);
 
@@ -155,12 +180,16 @@ class ScoreTest {
         Player player = new Player("히로", hand, new BetAmount(1_000));
         Score playerScore = new Score(player);
 
+        // when
         GameResult gameResult = playerScore.calculateGameResult(dealerScore);
+
+        // then
         assertTrue(gameResult.isWinByNotBlackJack());
     }
 
     @Test
     void 결과가_같을_경우_무승부이다() {
+        // given
         Hand comparedHand = createHandWithCards(CardRank.TEN, CardRank.FIVE, CardRank.TWO);
         Hand hand = createHandWithCards(CardRank.TEN, CardRank.FIVE, CardRank.TWO);
 
@@ -170,7 +199,10 @@ class ScoreTest {
         Player player = new Player("히로", hand, new BetAmount(1_000));
         Score playerScore = new Score(player);
 
+        // when
         GameResult gameResult = playerScore.calculateGameResult(dealerScore);
+
+        // then
         assertTrue(gameResult.isTie());
     }
 

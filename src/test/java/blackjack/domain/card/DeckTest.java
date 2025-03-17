@@ -14,12 +14,14 @@ class DeckTest {
         Deck deck = new Deck();
 
         // when
-        assertThat(deck.getCards()).hasSize(52);
+        List<Card> actual = deck.getCards();
 
+        // then
+        assertThat(actual).hasSize(52);
     }
 
     @Test
-    void 중복되는_카드가_존재하면_예외를_던진다() {
+    void 덱에는_중복되는_카드가_존재하지_않는다() {
         // given
         Deck deck = new Deck();
         List<Card> cards = deck.getCards();
@@ -33,8 +35,10 @@ class DeckTest {
 
         @Test
         void 카드가_소진되면_예외를_던진다() {
+            // given
             Deck deck = new Deck();
 
+            // when & then
             for (int i = 0; i < 52; i++) {
                 deck.takeSingleCard();
             }
