@@ -29,6 +29,18 @@ public class PlayerTest {
     }
 
     @Test
+    void 이름이_같은_플레이어는_같게_취급한다() {
+        //given
+        Player player1 = new Player("a");
+        Player player2 = new Player("a");
+        Player player3 = new Player("b");
+
+        //when & then
+        assertThat(player1.equals(player2)).isTrue();
+        assertThat(player2.equals(player3)).isFalse();
+    }
+
+    @Test
     void 플레이어는_한_장의_카드를_받는다() {
         //given
         CardDeck cardDeck = CardDeck.prepareDeck(ArrayList::new);
