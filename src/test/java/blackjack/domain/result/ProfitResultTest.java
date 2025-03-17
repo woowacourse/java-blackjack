@@ -13,19 +13,20 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class DealerWinningResultTest {
+class ProfitResultTest {
 
     @Test
     void 딜러_우승_결과를_조회한다() {
         // Given
+        final Dealer dealer = new Dealer();
         final Player mint = providePlayer("밍트", 10_000);
         final Player mj = providePlayer("엠제이", 20_000);
-        final DealerWinningResult winningResult = new DealerWinningResult(
-                Map.of(mint, ResultStatus.WIN, mj, ResultStatus.LOSE)
+        final ProfitResult profitResult = new ProfitResult(
+                dealer, Map.of(mint, ResultStatus.WIN, mj, ResultStatus.LOSE)
         );
 
         // When & then
-        assertThat(winningResult).isEqualTo(new DealerWinningResult(Map.of(
+        assertThat(profitResult).isEqualTo(new ProfitResult(dealer, Map.of(
                 mint, ResultStatus.WIN,
                 mj, ResultStatus.LOSE
         )));
@@ -41,12 +42,12 @@ class DealerWinningResultTest {
         final Player mj = providePlayer("엠제이", 20_000);
         final Player pobi = providePlayer("포비", 30_000);
         final Player norang = providePlayer("노랑", 50_000);
-        final DealerWinningResult winningResult = new DealerWinningResult(
+        final ProfitResult profitResult = new ProfitResult(dealer,
                 new LinkedHashMap<>(Map.of(mint, ResultStatus.WIN, mj, ResultStatus.LOSE, pobi, ResultStatus.PUSH,
                         norang, ResultStatus.BLACKJACK)));
 
         // When
-        final Map<Gamer, Integer> profits = winningResult.calculateProfit(dealer);
+        final Map<Gamer, Integer> profits = profitResult.getResult();
 
         // Then
         Assertions.assertAll(
