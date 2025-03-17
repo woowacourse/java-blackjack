@@ -32,9 +32,20 @@ public class BlackJackController {
         CardDeck cardDeck = new CardDeck(cardBundle.getShuffledAllCards());
         BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
         giveStartingCardsToParticipants(blackJackGame);
-        processPlayersCardReceiving(blackJackGame);
-        processDealerCardReceiving(blackJackGame);
+        processCardReceiving(blackJackGame);
         calculateBackJackResultProcess(participants);
+    }
+
+    private Participants createGameParticipants() {
+        List<Participant> participants = new ArrayList<>();
+        // NOTE: 딜러를 생성하여 0번에 넣어줘야 한다.
+        participants.add(new Dealer());
+        List<String> userNames = inputView.inputPlayerNames();
+        for (String userName : userNames) {
+            Participant participant = new Player(userName);
+            participants.add(participant);
+        }
+        return new Participants(participants);
     }
 
     private BatMonies createBatMonies(List<String> playerNames) {
@@ -52,26 +63,9 @@ public class BlackJackController {
         outputView.printInitialParticipantHands(blackJackGame.getParticipants());
     }
 
-    private void calculateBackJackResultProcess(Participants participants) {
-        printAllParticipantsInfo(participants);
-        printAllParticipantGameResult(participants);
-    }
-
-    private void printAllParticipantGameResult(Participants participants) {
-        ParticipantsResult participantsResult = BlackJackResultCalculator.calculate(participants);
-        outputView.printGameResult(participantsResult);
-    }
-
-    private void printAllParticipantsInfo(Participants participants) {
-        outputView.printParticipantsFullInfo(participants.getParticipants());
-    }
-
-    private void processDealerCardReceiving(BlackJackGame blackJackGame) {
-        while (blackJackGame.canDealerPick()) {
-            blackJackGame.giveCardToDealer();
-            outputView.printDealerReceivingCardMessage();
-        }
-        outputView.printBlankLine();
+    private void processCardReceiving(BlackJackGame blackJackGame) {
+        processPlayersCardReceiving(blackJackGame);
+        processDealerCardReceiving(blackJackGame);
     }
 
     private void processPlayersCardReceiving(BlackJackGame blackJackGame) {
@@ -96,15 +90,25 @@ public class BlackJackController {
         return playerWantMoreCard.equalsIgnoreCase("y");
     }
 
-    private Participants createGameParticipants() {
-        List<Participant> participants = new ArrayList<>();
-        // 초기 딜러 설정
-        participants.add(new Dealer());
-        List<String> userNames = inputView.inputPlayerNames();
-        for (String userName : userNames) {
-            Participant participant = new Player(userName);
-            participants.add(participant);
+    private void processDealerCardReceiving(BlackJackGame blackJackGame) {
+        while (blackJackGame.canDealerPick()) {
+            blackJackGame.giveCardToDealer();
+            outputView.printDealerReceivingCardMessage();
         }
-        return new Participants(participants);
+        outputView.printBlankLine();
+    }
+
+    private void calculateBackJackResultProcess(Participants participants) {
+        printAllParticipantsInfo(participants);
+        printAllParticipantGameResult(participants);
+    }
+
+    private void printAllParticipantsInfo(Participants participants) {
+        outputView.printParticipantsFullInfo(participants.getParticipants());
+    }
+
+    private void printAllParticipantGameResult(Participants participants) {
+        ParticipantsResult participantsResult = BlackJackResultCalculator.calculate(participants);
+        outputView.printGameResult(participantsResult);
     }
 }
