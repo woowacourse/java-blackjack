@@ -1,11 +1,13 @@
 package blackjack.view;
 
+import blackjack.domain.game.Dealer;
 import blackjack.domain.game.Participant;
-import blackjack.domain.game.Participants;
-import blackjack.domain.game.Player;
-import blackjack.domain.result.ParticipantResult;
-import blackjack.domain.result.ParticipantResults;
-import java.util.List;
+import blackjack.domain.game.Players;
+import blackjack.domain.profit.DealerProfits;
+import blackjack.domain.profit.PlayerProfit;
+import blackjack.domain.profit.PlayerProfits;
+import blackjack.domain.result.DealerResult;
+import blackjack.domain.result.PlayerResults;
 
 public final class OutputView {
 
@@ -14,17 +16,14 @@ public final class OutputView {
     private OutputView() {
     }
 
-    public static void printStartingCardsStatuses(Participants participants) {
-        String names = String.join(DELIMITER, participants.getNamesOfParticipants());
+    public static void printStartingCardsStatuses(Dealer dealer, Players players) {
+        String names = String.join(DELIMITER, players.getNamesOfParticipants());
 
         System.out.println("딜러와 " + names + "에게 2장을 나누었습니다.");
+        System.out.println(Formatter.formatDealerCardStatus(dealer));
 
-        for (Participant participant : participants.getParticipants()) {
-            if (participant.shouldRevealSingleCard()) {
-                System.out.println(Formatter.formatSingleCardStatus(participant));
-                continue;
-            }
-            System.out.println(Formatter.formatMultipleCardStatusWithName(participant));
+        for (Participant participant : players.getPlayers()) {
+            System.out.println(Formatter.formatPlayerCardStatus(participant));
         }
     }
 
@@ -32,35 +31,36 @@ public final class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printCardResult(ParticipantResults participantResults) {
-        List<ParticipantResult> resultsOfDefender = participantResults.findResultsOfDefender();
-        List<ParticipantResult> resultsOfChallenger = participantResults.findResultsOfChallenger();
-
-        Formatter.formatDefenderCardResult(resultsOfDefender).forEach(System.out::println);
-        resultsOfChallenger.stream()
-                .map(Formatter::formatPlayerCardResult)
-                .forEach(System.out::println);
-    }
-
     public static void printCardResult(Participant participant) {
-        System.out.println(Formatter.formatMultipleCardStatusWithName(participant));
+        System.out.println(Formatter.formatPlayerCardStatus(participant));
     }
 
     public static void printBustedParticipantWithName(Participant participant) {
-        if (participant.doesHaveName()) {
-            Player player = (Player) participant;
-            System.out.println(player.getName() + "는 버스트되어 더 이상 카드를 뽑을 수 없습니다!");
-            return;
+        System.out.println(participant.getName() + "는 버스트되어 더 이상 카드를 뽑을 수 없습니다!");
+    }
+
+    public static void printProfitResult(DealerProfits dealerProfits, PlayerProfits playerProfits) {
+        System.out.println("## 최종 수익");
+        printDealerProfit(dealerProfits);
+        printPlayerProfit(playerProfits);
+    }
+
+    private static void printDealerProfit(DealerProfits dealerProfits) {
+        int totalProfit = dealerProfits.calculateTotalProfit();
+        System.out.println("딜러: " + totalProfit);
+    }
+
+    private static void printPlayerProfit(PlayerProfits playerProfits) {
+        for (PlayerProfit playerProfit : playerProfits.getPlayerProfits()) {
+            int profit = playerProfit.getProfit();
+            String name = playerProfit.getPlayerName();
+            System.out.println(name + ": " + profit);
         }
-        throw new IllegalArgumentException("해당 참가자는 이름이 존재하지 않습니다.");
     }
 
-    public static void printGameResult(ParticipantResults participantResults) {
-        System.out.println("## 최종 승패");
-        participantResults.findResultsOfDefender().forEach(participantResult ->
-                System.out.printf("딜러: %s%n", Formatter.formatDefenderGameResult(participantResult)));
-        List<ParticipantResult> resultsOfChallenger = participantResults.findResultsOfChallenger();
-        System.out.println(Formatter.formatChallengerGameResult(resultsOfChallenger));
+    public static void printCardResults(Dealer dealer, DealerResult dealerResult, PlayerResults playerResults) {
+        System.out.println(Formatter.formatDealerCardResult(dealer, dealerResult));
+        playerResults.getPlayerResults()
+                .forEach(result -> System.out.println(Formatter.formatPlayerCardResult(result)));
     }
-
 }

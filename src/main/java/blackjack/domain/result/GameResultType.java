@@ -7,7 +7,8 @@ public enum GameResultType {
 
     WIN((value, comparedValue) -> value > comparedValue),
     TIE(Integer::equals),
-    LOSE((value, comparedValue) -> value < comparedValue);
+    LOSE((value, comparedValue) -> value < comparedValue),
+    UNDEFINED((value, comparedValue) -> false);
 
     private final BiPredicate<Integer, Integer> matchCondition;
 
@@ -21,7 +22,6 @@ public enum GameResultType {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 비교 값입니다."));
     }
-
 
     public GameResultType getOppositeType() {
         if (this.equals(WIN)) {

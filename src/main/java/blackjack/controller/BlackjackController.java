@@ -3,49 +3,74 @@ package blackjack.controller;
 import blackjack.domain.card.Deck;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.Dealer;
-import blackjack.domain.game.GameRuleEvaluator;
 import blackjack.domain.game.Hand;
 import blackjack.domain.game.Participant;
-import blackjack.domain.game.Participants;
 import blackjack.domain.game.Player;
+import blackjack.domain.game.Players;
+import blackjack.domain.profit.BettingResult;
+import blackjack.domain.profit.DealerProfits;
+import blackjack.domain.profit.PlayerProfits;
+import blackjack.domain.game.BetAmount;
+import blackjack.domain.result.DealerResult;
 import blackjack.domain.result.Judge;
-import blackjack.domain.result.ParticipantResults;
+import blackjack.domain.result.PlayerResults;
+import blackjack.domain.result.Score;
 import blackjack.view.Confirmation;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackController {
 
-    private final GameRuleEvaluator gameRuleEvaluator;
-    private final Judge judge;
-
-    public BlackjackController(GameRuleEvaluator gameRuleEvaluator, Judge judge) {
-        this.gameRuleEvaluator = gameRuleEvaluator;
-        this.judge = judge;
-    }
-
     public void run() {
         List<String> names = InputView.readNames();
-        Participants participants = saveParticipants(names);
+        Players players = savePlayers(names);
+        Dealer dealer = new Dealer(new Hand());
 
-        BlackjackGame blackjackGame = new BlackjackGame(new Deck(), participants);
+        BlackjackGame blackjackGame = new BlackjackGame(new Deck(), players, dealer,
+                new Judge(new PlayerResults(), dealer));
         giveStartingCards(blackjackGame);
 
-        participants.getParticipants().forEach(participant -> giveMoreCard(participant, blackjackGame));
+        players.getPlayers().forEach(participant -> giveMoreCard(participant, blackjackGame));
+        takeCardManually(dealer, blackjackGame);
 
-        ParticipantResults participantResults = calculateResultOfParticipants(participants);
+        blackjackGame.judgeResults();
+        PlayerResults playerResults = blackjackGame.getPlayerResults();
+        DealerResult dealerResult = blackjackGame.getDealerResult();
 
-        OutputView.printCardResult(participantResults);
-        OutputView.printGameResult(participantResults);
+        OutputView.printCardResults(dealer, dealerResult, playerResults);
+
+        BettingResult bettingResult = calculateBettingResult(playerResults);
+        DealerProfits dealerProfits = bettingResult.getDealerProfits();
+        PlayerProfits playerProfits = bettingResult.getPlayerProfits();
+
+        OutputView.printProfitResult(dealerProfits, playerProfits);
+    }
+
+    private Players savePlayers(List<String> names) {
+        List<Player> players = new ArrayList<>();
+
+        for (String name : names) {
+            int rawBetAmount = InputView.askBetAmount(name);
+            BetAmount betAmount = new BetAmount(rawBetAmount);
+
+            players.add(new Player(name, new Hand(), betAmount));
+        }
+
+        return new Players(players);
+    }
+
+    private void giveStartingCards(BlackjackGame blackjackGame) {
+        blackjackGame.giveStartingCards();
+
+        OutputView.printStartingCardsStatuses(blackjackGame.getDealer(), blackjackGame.getPlayers());
     }
 
     private void giveMoreCard(Participant participant, BlackjackGame blackjackGame) {
         if (participant.canDecideToTakeMoreCard()) {
             takeCardsAsLongAsWanted(participant, blackjackGame);
-            return;
         }
-        takeCardManually(participant, blackjackGame);
     }
 
     private void takeCardsAsLongAsWanted(Participant participant, BlackjackGame blackjackGame) {
@@ -58,7 +83,7 @@ public class BlackjackController {
         blackjackGame.giveMoreCard(participant);
         OutputView.printCardResult(participant);
 
-        if (gameRuleEvaluator.isBusted(participant)) {
+        if (new Score(participant).isBusted()) {
             OutputView.printBustedParticipantWithName(participant);
             return;
         }
@@ -75,23 +100,15 @@ public class BlackjackController {
         }
     }
 
-
-    private void giveStartingCards(BlackjackGame blackjackGame) {
-        blackjackGame.giveStartingCards();
-
-        OutputView.printStartingCardsStatuses(blackjackGame.getParticipants());
+    private Judge judgeResults(Dealer dealer, Players players) {
+        Judge judge = new Judge(new PlayerResults(), dealer);
+        judge.calculateAllResults(dealer, players);
+        return judge;
     }
 
-    private ParticipantResults calculateResultOfParticipants(Participants participants) {
-        judge.calculateAllResults(participants, gameRuleEvaluator);
-        return judge.getParticipantResults();
-    }
-
-    private Participants saveParticipants(List<String> names) {
-        List<Participant> participants = new java.util.ArrayList<>(names.stream()
-                .map(name -> (Participant) new Player(name, new Hand()))
-                .toList());
-        participants.add(new Dealer(new Hand()));
-        return new Participants(participants);
+    private BettingResult calculateBettingResult(PlayerResults playerResults) {
+        BettingResult bettingResult = new BettingResult(new DealerProfits(), new PlayerProfits());
+        bettingResult.calculateAllResults(playerResults);
+        return bettingResult;
     }
 }

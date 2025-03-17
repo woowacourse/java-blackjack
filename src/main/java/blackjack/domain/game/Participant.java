@@ -4,9 +4,9 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public interface Participant {
-    boolean shouldRevealSingleCard();
+    List<Card> getStartingCards();
 
-    boolean doesHaveName();
+    String getName();
 
     List<Card> getCards();
 
@@ -17,8 +17,4 @@ public interface Participant {
     boolean ableToTakeMoreCards();
 
     boolean canDecideToTakeMoreCard();
-
-    boolean isOverLimit(int limit);
-
-    boolean isChallenger();
 }

@@ -1,13 +1,12 @@
-package blackjack.domain;
+package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
-import blackjack.domain.game.Dealer;
-import blackjack.domain.game.Hand;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
@@ -15,11 +14,10 @@ class DealerTest {
     @Test
     void 딜러는_카드를_가질_수_있다() {
         // given
-        Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
-        Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
-        Hand hand = new Hand();
-        hand.takeCard(card1);
-        hand.takeCard(card2);
+        Hand hand = new Hand(
+                new Card(CardSuit.CLUB, CardRank.ACE),
+                new Card(CardSuit.DIAMOND, CardRank.FIVE)
+        );
 
         // when & then
         assertThatCode(() -> new Dealer(hand))
@@ -31,15 +29,16 @@ class DealerTest {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
-        Hand hand = new Hand();
-        hand.takeCard(card1);
-        hand.takeCard(card2);
+        Hand hand = new Hand(card1, card2);
         Dealer dealer = new Dealer(hand);
 
         List<Card> expect = List.of(card1, card2);
 
-        // when & then
-        assertThat(dealer.getCards()).isEqualTo(expect);
+        // when
+        List<Card> actual = dealer.getCards();
+
+        // then
+        assertThat(actual).isEqualTo(expect);
     }
 
     @Test
@@ -47,9 +46,7 @@ class DealerTest {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
-        Hand hand = new Hand();
-        hand.takeCard(card1);
-        hand.takeCard(card2);
+        Hand hand = new Hand(card1, card2);
         Card newCard = new Card(CardSuit.SPADE, CardRank.KING);
         Dealer dealer = new Dealer(hand);
 
@@ -67,9 +64,7 @@ class DealerTest {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
-        Hand hand = new Hand();
-        hand.takeCard(card1);
-        hand.takeCard(card2);
+        Hand hand = new Hand(card1, card2);
         Dealer dealer = new Dealer(hand);
 
         // when
@@ -83,11 +78,10 @@ class DealerTest {
     @Test
     void 딜러는_모든_카드_합이_16이하일_때만_카드를_더_뽑을_수_있다() {
         // given
-        Hand hand = new Hand();
-        Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
-        Card card2 = new Card(CardSuit.DIAMOND, CardRank.SIX);
-        hand.takeCard(card1);
-        hand.takeCard(card2);
+        Hand hand = new Hand(
+                new Card(CardSuit.CLUB, CardRank.ACE),
+                new Card(CardSuit.DIAMOND, CardRank.SIX)
+        );
         Dealer dealer = new Dealer(hand);
 
         // when
@@ -98,45 +92,39 @@ class DealerTest {
     }
 
     @Test
-    void 카드_합이_한계를_넘으면_제한됨을_나타낸다() {
+    void 딜러는_카드를_더_뽑을_수_없다() {
         // given
-        Hand hand = new Hand();
-        Card card1 = new Card(CardSuit.CLUB, CardRank.TEN);
-        Card card2 = new Card(CardSuit.DIAMOND, CardRank.TEN);
-        Card card3 = new Card(CardSuit.HEART, CardRank.TEN);
-        hand.takeCard(card1);
-        hand.takeCard(card2);
-        hand.takeCard(card3);
-        Dealer dealer = new Dealer(hand);
+        Dealer dealer = new Dealer(new Hand());
 
         // when
-        boolean overLimit = dealer.isOverLimit(21);
+        boolean actual = dealer.canDecideToTakeMoreCard();
 
         // then
-        assertThat(overLimit).isTrue();
-    }
-
-    @Test
-    void 딜러는_챌린저가_아니다() {
-        Dealer dealer = new Dealer(new Hand());
-        assertThat(dealer.isChallenger()).isFalse();
-    }
-
-    @Test
-    void 딜러는_카드를_더_뽑을_수_없다() {
-        Dealer dealer = new Dealer(new Hand());
-        assertThat(dealer.canDecideToTakeMoreCard()).isFalse();
+        assertThat(actual).isFalse();
     }
 
     @Test
     void 딜러는_이름이_없다() {
+        // given
         Dealer dealer = new Dealer(new Hand());
-        assertThat(dealer.doesHaveName()).isFalse();
+
+        // when & then
+        assertThatThrownBy(dealer::getName)
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    void 딜러는_첫번째_카드만_공개해야_한다() {
-        Dealer dealer = new Dealer(new Hand());
-        assertThat(dealer.shouldRevealSingleCard()).isTrue();
+    void 딜러는_가장_처음에_한장만을_공개한다() {
+        // given
+        Dealer dealer = new Dealer(new Hand(
+                new Card(CardSuit.SPADE, CardRank.TWO),
+                new Card(CardSuit.HEART, CardRank.TWO)
+        ));
+
+        // when
+        List<Card> startingCards = dealer.getStartingCards();
+
+        // then
+        assertThat(startingCards).hasSize(1);
     }
 }

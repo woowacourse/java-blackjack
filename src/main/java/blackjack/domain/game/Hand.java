@@ -2,6 +2,7 @@ package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -10,12 +11,16 @@ import java.util.Set;
 
 public class Hand {
 
-    public static final int BUSTED_STANDARD_VALUE = 21;
+    private static final int BUSTED_STANDARD_VALUE = 22;
 
     private final List<Card> cards;
 
     public Hand() {
         this.cards = new ArrayList<>();
+    }
+
+    public Hand(Card... cards) {
+        this.cards = new ArrayList<>(Arrays.stream(cards).toList());
     }
 
     public List<Card> getAllCards() {
@@ -47,8 +52,8 @@ public class Hand {
 
     public int getOptimisticValue() {
         return calculatePossibleSums().stream()
-                .filter(sum -> sum <= BUSTED_STANDARD_VALUE)
+                .filter(sum -> sum < BUSTED_STANDARD_VALUE)
                 .max(Comparator.naturalOrder())
-                .orElse(0);
+                .orElse(BUSTED_STANDARD_VALUE);
     }
 }
