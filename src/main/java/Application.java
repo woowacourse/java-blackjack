@@ -7,17 +7,32 @@ import participant.Participants;
 import participant.Player;
 import participant.Players;
 import strategy.setting.DeckShuffleStrategy;
+import strategy.winning.BlackJackWinStrategy;
+import strategy.winning.DealerBlackJackStrategy;
+import strategy.winning.DrawStrategy;
+import strategy.winning.LoseStrategy;
+import strategy.winning.NormalWinStrategy;
+import strategy.winning.WinningStrategy;
+
+import java.util.List;
 
 public class Application {
     public static final String HIT_COMMAND = "y";
 
     private static final ConsoleInput input = new ConsoleInput();
     private static final ConsoleOutput output = new ConsoleOutput();
+    private static final List<WinningStrategy> strategies = List.of(
+            new BlackJackWinStrategy(),
+            new DealerBlackJackStrategy(),
+            new NormalWinStrategy(),
+            new DrawStrategy(),
+            new LoseStrategy()
+    );
 
     public static void main(String[] args) {
         Deck deck = new Deck(new DeckShuffleStrategy());
         Participants participants = initializeParticipants(deck);
-        BetCenter betCenter = new BetCenter(input.readPlayerBetAmounts(participants));
+        BetCenter betCenter = new BetCenter(input.readPlayerBetAmounts(participants), strategies);
 
         output.printInitialGameSettings(participants);
 

@@ -9,6 +9,12 @@ import org.junit.jupiter.api.Test;
 import participant.Dealer;
 import participant.Nickname;
 import participant.Player;
+import strategy.winning.BlackJackWinStrategy;
+import strategy.winning.DealerBlackJackStrategy;
+import strategy.winning.DrawStrategy;
+import strategy.winning.LoseStrategy;
+import strategy.winning.NormalWinStrategy;
+import strategy.winning.WinningStrategy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +24,14 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BetCenterTest {
+
+    private final List<WinningStrategy> strategies = List.of(
+            new BlackJackWinStrategy(),
+            new DealerBlackJackStrategy(),
+            new NormalWinStrategy(),
+            new DrawStrategy(),
+            new LoseStrategy()
+    );
 
     @Test
     void 게임_시작_시_베팅_금액을_정한다() {
@@ -66,7 +80,7 @@ class BetCenterTest {
         BetCenter betCenter = new BetCenter(Map.of(
                 player1, new BetAmount(10000),
                 player2, new BetAmount(20000)
-        ));
+        ), strategies);
 
         // when
         Map<Player, Integer> bettingResults = betCenter.deriveBettingResults(dealer);
@@ -91,9 +105,7 @@ class BetCenterTest {
         Dealer dealer = new Dealer(deck);
         Player player = new Player(new Nickname("제프"), deck);
 
-        BetCenter betCenter = new BetCenter(Map.of(
-                player, new BetAmount(10000)
-        ));
+        BetCenter betCenter = new BetCenter(Map.of(player, new BetAmount(10000)), strategies);
 
         // when
         Map<Player, Integer> bettingResults = betCenter.deriveBettingResults(dealer);
@@ -121,7 +133,7 @@ class BetCenterTest {
         Dealer dealer = new Dealer(deck);
         Player player = new Player(new Nickname("제프"), deck);
 
-        BetCenter betCenter = new BetCenter(Map.of(player, new BetAmount(10000)));
+        BetCenter betCenter = new BetCenter(Map.of(player, new BetAmount(10000)), strategies);
 
         // when
         Map<Player, Integer> bettingResults = betCenter.deriveBettingResults(dealer);
@@ -149,7 +161,7 @@ class BetCenterTest {
         Dealer dealer = new Dealer(deck);
         Player player = new Player(new Nickname("제프"), deck);
         player.addOneCard(deck.drawOneCard());
-        BetCenter betCenter = new BetCenter(Map.of(player, new BetAmount(10000)));
+        BetCenter betCenter = new BetCenter(Map.of(player, new BetAmount(10000)), strategies);
 
         // when
         Map<Player, Integer> bettingResults = betCenter.deriveBettingResults(dealer);
@@ -178,9 +190,7 @@ class BetCenterTest {
         Player player = new Player(new Nickname("제프"), deck);
         player.addOneCard(deck.drawOneCard());
 
-        BetCenter betCenter = new BetCenter(Map.of(
-                player, new BetAmount(15000)
-        ));
+        BetCenter betCenter = new BetCenter(Map.of(player, new BetAmount(15000)), strategies);
 
         // when
         Map<Player, Integer> bettingResults = betCenter.deriveBettingResults(dealer);
@@ -225,7 +235,7 @@ class BetCenterTest {
                 player1, new BetAmount(15000),
                 player2, new BetAmount(30000),
                 player3, new BetAmount(12000)
-        ));
+        ), strategies);
 
         // when
         Map<Player, Integer> bettingResults = betCenter.deriveBettingResults(dealer);
@@ -268,7 +278,7 @@ class BetCenterTest {
                 player1, new BetAmount(15000),
                 player2, new BetAmount(30000),
                 player3, new BetAmount(12000)
-        ));
+        ), strategies);
 
         // when
         int dealerProfit = betCenter.calculateDealerProfit(dealer);

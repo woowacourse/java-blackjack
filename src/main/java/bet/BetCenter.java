@@ -2,11 +2,6 @@ package bet;
 
 import participant.Dealer;
 import participant.Player;
-import strategy.winning.BlackJackWinStrategy;
-import strategy.winning.DealerBlackJackStrategy;
-import strategy.winning.DrawStrategy;
-import strategy.winning.LoseStrategy;
-import strategy.winning.NormalWinStrategy;
 import strategy.winning.WinningStrategy;
 
 import java.util.LinkedHashMap;
@@ -15,18 +10,12 @@ import java.util.Map;
 
 public class BetCenter {
 
-    private static final List<WinningStrategy> strategies = List.of(
-            new BlackJackWinStrategy(),
-            new DealerBlackJackStrategy(),
-            new NormalWinStrategy(),
-            new DrawStrategy(),
-            new LoseStrategy()
-    );
-
     private final Map<Player, BetAmount> playerBetAmounts;
+    private final List<WinningStrategy> strategies;
 
-    public BetCenter(Map<Player, BetAmount> playerBetAmounts) {
+    public BetCenter(Map<Player, BetAmount> playerBetAmounts, List<WinningStrategy> strategies) {
         this.playerBetAmounts = playerBetAmounts;
+        this.strategies = strategies;
     }
 
     public int calculateDealerProfit(Dealer dealer) {
