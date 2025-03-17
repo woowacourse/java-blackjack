@@ -1,16 +1,16 @@
 package blackjack.fixture;
 
-import blackjack.domain.GameManager;
+import blackjack.controller.BlackjackController;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.gamer.Gamer;
 
-public class GameManagerFixture {
+public class BlackjackControllerFixture {
 
-    public static GameManager GameManagerWith(Deck deck) {
-        return new GameManager() {
+    public static BlackjackController BlackjackControllerWith(Deck deck) {
+        return new BlackjackController() {
             @Override
             public void drawStartingCards(Gamer gamer) {
-                drawCard(gamer, GameManager.STARTING_CARDS_SIZE);
+                drawCard(gamer, STARTING_CARDS_SIZE);
             }
 
             @Override

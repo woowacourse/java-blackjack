@@ -8,12 +8,13 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import blackjack.controller.BlackjackController;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Gamer;
 import blackjack.domain.gamer.Player;
+import blackjack.fixture.BlackjackControllerFixture;
 import blackjack.fixture.DeckFixture;
-import blackjack.fixture.GameManagerFixture;
 
 class BettingTableTest {
 
@@ -39,13 +40,13 @@ class BettingTableTest {
         // given
         double initialMoney = 1000;
         bettingTable.betting(player, initialMoney);
-        GameManager gameManager = GameManagerFixture.GameManagerWith(
+        BlackjackController controller = BlackjackControllerFixture.BlackjackControllerWith(
             DeckFixture.deckOf(CardNumber.JACK, CardNumber.QUEEN, CardNumber.KING)
         );
 
         // when
-        gameManager.drawStartingCards(player);
-        gameManager.drawCard(player);
+        controller.drawStartingCards(player);
+        controller.drawCard(player);
 
         // then
         assertThat(bettingTable.getEndBettingMoney(player)).isZero();
@@ -57,12 +58,12 @@ class BettingTableTest {
         // given
         double initialMoney = 10000;
         bettingTable.betting(player, initialMoney);
-        GameManager gameManager = GameManagerFixture.GameManagerWith(
+        BlackjackController controller = BlackjackControllerFixture.BlackjackControllerWith(
             DeckFixture.deckOf(CardNumber.JACK, CardNumber.ACE)
         );
 
         // when
-        gameManager.drawStartingCards(player);
+        controller.drawStartingCards(player);
         bettingTable.endGameIfBlackjack(player);
 
         // then
@@ -75,13 +76,13 @@ class BettingTableTest {
         // given
         double initialMoney = 10000;
         bettingTable.betting(player, initialMoney);
-        GameManager gameManager = GameManagerFixture.GameManagerWith(
+        BlackjackController controller = BlackjackControllerFixture.BlackjackControllerWith(
             DeckFixture.deckOf(CardNumber.JACK, CardNumber.ACE, CardNumber.JACK, CardNumber.ACE)
         );
 
         // when
-        gameManager.drawStartingCards(player);
-        gameManager.drawStartingCards(dealer);
+        controller.drawStartingCards(player);
+        controller.drawStartingCards(dealer);
 
         bettingTable.endGameIfBlackjack(dealer);
 
@@ -95,15 +96,15 @@ class BettingTableTest {
         // given
         double initialMoney = 10000;
         bettingTable.betting(player, initialMoney);
-        GameManager gameManager = GameManagerFixture.GameManagerWith(
+        BlackjackController controller = BlackjackControllerFixture.BlackjackControllerWith(
             DeckFixture.deckOf(
                 CardNumber.KING, CardNumber.SEVEN, CardNumber.QUEEN, // dealer
                 CardNumber.JACK, CardNumber.ACE)); // player
 
         // when
-        gameManager.drawStartingCards(player);
-        gameManager.drawStartingCards(dealer);
-        gameManager.drawCard(dealer);
+        controller.drawStartingCards(player);
+        controller.drawStartingCards(dealer);
+        controller.drawCard(dealer);
         bettingTable.endGameIfDealerBust();
 
         // then
@@ -120,14 +121,14 @@ class BettingTableTest {
         Player player2 = new Player("moko");
         bettingTable.betting(player1, player1Money);
         bettingTable.betting(player2, player2Money);
-        GameManager gameManager = GameManagerFixture.GameManagerWith(
+        BlackjackController controller = BlackjackControllerFixture.BlackjackControllerWith(
             DeckFixture.deckOf(
                 CardNumber.KING, CardNumber.SEVEN, // dealer
                 CardNumber.TWO, CardNumber.THREE, // player 2
                 CardNumber.JACK, CardNumber.ACE)); // player 1
-        gameManager.drawStartingCards(player1);
-        gameManager.drawStartingCards(player2);
-        gameManager.drawStartingCards(dealer);
+        controller.drawStartingCards(player1);
+        controller.drawStartingCards(player2);
+        controller.drawStartingCards(dealer);
 
         // when
         bettingTable.computeResult();
@@ -147,12 +148,12 @@ class BettingTableTest {
         int initialMoney = 10000;
         Player player = new Player("pobi");
         bettingTable.betting(player, initialMoney);
-        GameManager gameManager = GameManagerFixture.GameManagerWith(
+        BlackjackController controller = BlackjackControllerFixture.BlackjackControllerWith(
             DeckFixture.deckOf(
                 CardNumber.JACK, CardNumber.ACE, // dealer
                 CardNumber.JACK, CardNumber.ACE)); // player 1
-        gameManager.drawStartingCards(player);
-        gameManager.drawStartingCards(dealer);
+        controller.drawStartingCards(player);
+        controller.drawStartingCards(dealer);
 
         // when
         bettingTable.computeResult();

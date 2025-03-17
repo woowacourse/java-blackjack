@@ -1,9 +1,8 @@
-package blackjack;
+package blackjack.controller;
 
 import java.util.List;
 
 import blackjack.domain.BettingTable;
-import blackjack.domain.GameManager;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.deck.RandomCardStrategy;
 import blackjack.domain.gamer.Dealer;
@@ -18,7 +17,10 @@ import blackjack.dto.response.StartingCardsResponseDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-public class BlackjackGame implements GameManager {
+public class BlackjackController {
+
+    // TODO: CARD 관련 상수들 분리
+    public static final int STARTING_CARDS_SIZE = 2;
 
     private Gamers gamers;
     private BettingTable bettingTable;
@@ -106,12 +108,10 @@ public class BlackjackGame implements GameManager {
         OutputView.printProfit(ProfitResponseDto.of(bettingTable.getAllProfit()));
     }
 
-    @Override
     public void drawStartingCards(Gamer gamer) {
         drawCard(gamer, STARTING_CARDS_SIZE);
     }
 
-    @Override
     public void drawCard(Gamer gamer) {
         gamer.drawCard(deck);
     }
