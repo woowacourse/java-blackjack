@@ -15,7 +15,7 @@ public class Dealer extends Participant {
         this.deck = new Deck();
     }
 
-    public void initializeHand() {
+    public void initializeDealerWithHand() {
         hand.addCards(deck.drawCards(HAND_SIZE));
     }
 

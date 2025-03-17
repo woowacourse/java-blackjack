@@ -26,7 +26,7 @@ public class Outcome {
     }
 
     private void evaluateDealerResult(Dealer dealer, Players players) {
-        for (Player player : players.members()) {
+        for (Player player : players.getPlayers()) {
             Result result = Result.evaluateResult(
                     ParticipantType.isDealer(ParticipantType.DEALER), dealer.getHand(), player.getHand());
             dealerOutcome.put(player, result);
@@ -34,7 +34,7 @@ public class Outcome {
     }
 
     private void evaluatePlayersResult(Dealer dealer, Players players) {
-        for (Player player : players.members()) {
+        for (Player player : players.getPlayers()) {
             Result result = Result.evaluateResult(
                     ParticipantType.isDealer(ParticipantType.PLAYER), player.getHand(), dealer.getHand());
             playersOutcome.put(player, result);

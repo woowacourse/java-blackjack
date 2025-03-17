@@ -15,12 +15,11 @@ public class OutcomeTest {
 
     @BeforeEach
     void setUp() {
-        Actors actors = new Actors();
-        actors.inviteDealer();
-        actors.invitePlayers(actors.getDealer(), List.of("player1", "player2"), List.of(1000, 2000));
+        dealer = new Dealer();
+        dealer.initializeDealerWithHand();
 
-        this.dealer = actors.getDealer();
-        this.players = actors.getPlayers();
+        players = new Players();
+        players.initializePlayersWithHand(dealer, List.of("a", "b"), List.of(1000, 2000));
     }
 
     @DisplayName("딜러는 최종 게임 결과를 생성한다")

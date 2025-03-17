@@ -14,7 +14,7 @@ public class ResultTest {
     @Test
     void evaluateResult() {
         Dealer dealer = new Dealer();
-        dealer.initializeHand();
+        dealer.initializeDealerWithHand();
         Hand dealerHand = dealer.getHand();
 
         Player player = new Player(new Name("player"), new Wager(1000), dealer.produceHand());

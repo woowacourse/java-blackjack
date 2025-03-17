@@ -15,7 +15,7 @@ public class DealerTest {
     @Test
     void testDealerHand_Init() {
         Dealer dealer = new Dealer();
-        dealer.initializeHand();
+        dealer.initializeDealerWithHand();
 
         assertThat(dealer.getHandCards().size()).isEqualTo(2);
     }
@@ -41,7 +41,7 @@ public class DealerTest {
     @Test
     void testDealerHand_Add() {
         Dealer dealer = new Dealer();
-        dealer.initializeHand();
+        dealer.initializeDealerWithHand();
 
         Card card = new Card(Rank.ACE, Suit.SPADES);
         dealer.addCardToHand(card);
@@ -53,7 +53,7 @@ public class DealerTest {
     @Test
     void testDealerHandScore() {
         Dealer dealer = new Dealer();
-        dealer.initializeHand();
+        dealer.initializeDealerWithHand();
 
         dealer.calculateHandScore();
 
@@ -64,7 +64,7 @@ public class DealerTest {
     @Test
     void testDealerHandScore_Hit() {
         Dealer dealer = new Dealer();
-        dealer.initializeHand();
+        dealer.initializeDealerWithHand();
 
         dealer.calculateHandScore();
 
@@ -77,7 +77,7 @@ public class DealerTest {
     @Test
     void testDealerHandScore_Stand() {
         Dealer dealer = new Dealer();
-        dealer.initializeHand();
+        dealer.initializeDealerWithHand();
 
         dealer.calculateHandScore();
 

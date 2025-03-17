@@ -6,7 +6,6 @@ import model.participants.Dealer;
 import model.participants.HitOption;
 import model.participants.Player;
 import model.participants.Players;
-import model.rounds.Actors;
 import model.rounds.Outcome;
 import view.Input;
 import view.Output;
@@ -21,9 +20,8 @@ public class GameManager {
     }
 
     public void runBlackjack() {
-        Actors actors = inviteActors();
-        Dealer dealer = actors.getDealer();
-        Players players = actors.getPlayers();
+        Dealer dealer = inviteDealer();
+        Players players = invitePlayers(dealer);
 
         revealHands(dealer, players);
         startRound(dealer, players);
@@ -32,30 +30,34 @@ public class GameManager {
         displayFinalOutcome(dealer, players);
     }
 
-    private Actors inviteActors() {
-        Actors actors = new Actors();
-        actors.inviteDealer();
+    private Dealer inviteDealer() {
+        Dealer dealer = new Dealer();
+        dealer.initializeDealerWithHand();
+        return dealer;
+    }
 
+    private Players invitePlayers(Dealer dealer) {
         List<String> playerNames = input.readPlayerNames();
         List<Integer> playerWagers = playerNames.stream()
                 .map(input::readWager)
                 .collect(Collectors.toList());
 
-        actors.invitePlayers(actors.getDealer(), playerNames, playerWagers);
-        return actors;
+        Players players = new Players();
+        players.initializePlayersWithHand(dealer, playerNames, playerWagers);
+        return players;
     }
 
     private void revealHands(Dealer dealer, Players players) {
-        output.printHandDistribution(players.members());
+        output.printHandDistribution(players.getPlayers());
         output.printDealerHand(dealer.getHandCards());
 
-        for (Player player : players.members()) {
+        for (Player player : players.getPlayers()) {
             output.printParticipantHand(player.getHandCards(), player.getName());
         }
     }
 
     private void startRound(Dealer dealer, Players players) {
-        for (Player player : players.members()) {
+        for (Player player : players.getPlayers()) {
             processPlayerHit(player, dealer);
         }
         processDealerHit(dealer);
@@ -78,7 +80,7 @@ public class GameManager {
 
     private void revealFinalHands(Dealer dealer, Players players) {
         output.printFinalHand(dealer.getHandCards(), dealer.getHandScore());
-        for (Player player : players.members()) {
+        for (Player player : players.getPlayers()) {
             output.printFinalHand(player.getHandCards(), player.getHandScore(), player.getName());
         }
     }

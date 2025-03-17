@@ -67,7 +67,7 @@ public class Output {
         System.out.println("## 최종 수익");
         StringBuilder sb = new StringBuilder();
         sb.append("딜러: ").append(dealer.getWager());
-        for (Player player : players.members()) {
+        for (Player player : players.getPlayers()) {
             sb.append("\n").append(player.getName()).append(": ").append(player.getWager());
         }
         System.out.println(sb);
