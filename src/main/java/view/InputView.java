@@ -5,11 +5,12 @@ import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
-    private final String NAME_SPLITTER = ",";
-    private final String INVALID_INPUT = "입력은 공백일 수 없습니다.";
-    private final String INVALID_BOOLEAN_INPUT = "y나 n만 입력해주세요";
-    private final String NO = "n";
-    private final String YES = "y";
+    private static final String NAME_SPLITTER = ",";
+    private static final String INVALID_INPUT = "입력은 공백일 수 없습니다.";
+    private static final String INVALID_NUMBER_INPUT = "숫자를 입력해주세요.";
+    private static final String INVALID_BOOLEAN_INPUT = "y나 n만 입력해주세요";
+    private static final String NO = "n";
+    private static final String YES = "y";
     private final Scanner scanner;
 
     public InputView() {
@@ -20,6 +21,7 @@ public class InputView {
         String input = scanner.nextLine();
         validateInput(input);
         return Arrays.stream(input.split(NAME_SPLITTER))
+                .map(String::trim)
                 .toList();
     }
 
@@ -29,16 +31,30 @@ public class InputView {
         }
     }
 
+    public int inputNumber() {
+        String input = scanner.nextLine();
+        validateInput(input);
+        return parseInt(input);
+    }
+
+    private int parseInt(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(INVALID_NUMBER_INPUT);
+        }
+    }
+
 
     public boolean askDraw() {
         String input = scanner.nextLine();
         validateInput(input);
         validateBoolean(input);
-        return input.equals(YES);
+        return input.equalsIgnoreCase(YES);
     }
 
     private void validateBoolean(String input) {
-        if (input.equals(YES) || input.equals(NO)) {
+        if (input.equalsIgnoreCase(YES) || input.equalsIgnoreCase(NO)) {
             return;
         }
         throw new IllegalArgumentException(INVALID_BOOLEAN_INPUT);
