@@ -34,6 +34,9 @@ public final class PlayerBlackjackCardHand implements BlackjackWinDeterminable {
     }
     
     public void addCard(final Card card) {
+        if (getBlackjackSum() >= BLACKJACK_SUM) {
+            throw new IllegalStateException("카드를 더 받을 수 없습니다.");
+        }
         cardHand.addCard(card);
     }
     
@@ -65,9 +68,5 @@ public final class PlayerBlackjackCardHand implements BlackjackWinDeterminable {
     
     public boolean isBust() {
         return getBlackjackSum() > BUST_THRESHOLD;
-    }
-    
-    public boolean isFinished() {
-        return getBlackjackSum() >= BLACKJACK_SUM;
     }
 }

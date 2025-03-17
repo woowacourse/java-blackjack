@@ -81,14 +81,15 @@ public class BlackjackController implements Controller {
         outputView.outputAddingMessage(playerBlackjackCardHand.getPlayerName());
         boolean addingCardDecision;
         do {
-            if (playerBlackjackCardHand.isFinished()) {
+            try {
+                addingCardDecision = inputView.getAddingCardDecision(playerBlackjackCardHand.getPlayerName());
+                if (addingCardDecision) {
+                    playerBlackjackCardHand.addCard(deck.draw());
+                    outputView.outputCardsAndSum(playerBlackjackCardHand.getCards(), playerBlackjackCardHand.getBlackjackSum());
+                }
+            } catch (IllegalStateException e) {
                 outputView.outputCardAddingLimitMessage();
                 break;
-            }
-            addingCardDecision = inputView.getAddingCardDecision(playerBlackjackCardHand.getPlayerName());
-            if (addingCardDecision) {
-                playerBlackjackCardHand.addCard(deck.draw());
-                outputView.outputCardsAndSum(playerBlackjackCardHand.getCards(), playerBlackjackCardHand.getBlackjackSum());
             }
         } while (addingCardDecision);
     }
