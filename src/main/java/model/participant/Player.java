@@ -20,23 +20,6 @@ public class Player extends Participant {
         return getScore() < BLACK_JACK_SCORE;
     }
 
-    @Override
-    public String getNickname() {
-        return nickname.getValue();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Player player = (Player) o;
-        return Objects.equals(nickname, player.nickname);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(nickname);
-    }
-
     public int calculateEarnings(Dealer dealer) {
         MatchResult result = compareToScore(dealer);
 
@@ -55,7 +38,7 @@ public class Player extends Participant {
         }
     }
 
-    // TODO: DL: 승패 판단 compare 반환값: https://www.notion.so/DL-compare-1b6cfbb673e4804685c7f7f9f3ce9504?pvs=4
+    // TODO: DL: 상태패턴: https://www.notion.so/DL-compare-1b6cfbb673e4804685c7f7f9f3ce9504?pvs=4
     private MatchResult compareToScore(Dealer dealer) {
         if (isBlackjack() && dealer.isBlackjack()) {
             return MatchResult.PUSH;
@@ -76,5 +59,22 @@ public class Player extends Participant {
             return MatchResult.LOSE;
         }
         return MatchResult.PUSH;
+    }
+
+    @Override
+    public String getNickname() {
+        return nickname.getValue();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return Objects.equals(nickname, player.nickname);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(nickname);
     }
 }

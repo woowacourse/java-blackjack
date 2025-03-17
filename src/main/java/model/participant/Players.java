@@ -39,6 +39,15 @@ public class Players {
         }
     }
 
+    public HashMap<Player, Integer> getMatchResult(Dealer dealer) {
+        HashMap<Player, Integer> batingResults = new HashMap<>();
+        for (Player player : getPlayers()) {
+            int earnings = player.calculateEarnings(dealer);
+            batingResults.put(player, earnings);
+        }
+        return batingResults;
+    }
+
     public List<Player> getPlayers() {
         return values;
     }
@@ -47,14 +56,5 @@ public class Players {
         return values.stream()
                 .map(Participant::getNickname)
                 .toList();
-    }
-
-    public HashMap<Player, Integer> getMatchResult(Dealer dealer) {
-        HashMap<Player, Integer> batingResults = new HashMap<>();
-        for (Player player : getPlayers()) {
-            int earnings = player.calculateEarnings(dealer);
-            batingResults.put(player, earnings);
-        }
-        return batingResults;
     }
 }
