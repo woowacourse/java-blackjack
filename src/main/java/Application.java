@@ -1,6 +1,5 @@
 import deck.Deck;
 import deck.ShuffledDeckCreator;
-import java.util.List;
 import participant.Dealer;
 import participant.Nickname;
 import participant.Player;
@@ -14,11 +13,11 @@ public class Application {
     public static void main(String[] args) {
         BlackjackGame blackjackGame = new BlackjackGame();
 
-        List<Nickname> nicknames = InputView.readNicknames().stream()
-                .map(Nickname::new)
-                .toList();
         Deck deck = new Deck(new ShuffledDeckCreator());
-        Players players = blackjackGame.betPlayers(nicknames);
+        Players players = new Players(InputView.readNicknames().stream()
+                .map(Nickname::new)
+                .map(Player::new)
+                .toList());
         Dealer dealer = new Dealer();
 
         for (Player player : players.getPlayers()) {

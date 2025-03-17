@@ -9,11 +9,14 @@ import state.started.Started;
 public class Player extends Participant {
 
     private final Nickname nickname;
-    private final BettingMoney bettingMoney;
+    private BettingMoney bettingMoney;
 
-    public Player(Nickname nickname, BettingMoney bettingMoney) {
+    public Player(Nickname nickname) {
         this.nickname = nickname;
-        this.bettingMoney = bettingMoney;
+    }
+
+    public void bet(int bettingMoney) {
+        this.bettingMoney = new BettingMoney(bettingMoney);
     }
 
     public void prepareGame(final Card card1, final Card card2) {
