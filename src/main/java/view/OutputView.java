@@ -59,8 +59,8 @@ public class OutputView {
 
     public void printFinalResult(List<PlayerProfit> playerProfits, DealerProfit dealerProfit) {
         System.out.println("## 최종 수익\n");
-        System.out.printf("딜러: %d\n", dealerProfit.getDealerProfit());
-        playerProfits.forEach(playerProfit -> System.out.printf("%s: %d\n", playerProfit.getPlayerName().username(),
-                playerProfit.getPlayerProfit()));
+        System.out.printf("딜러: %d\n", dealerProfit.dealerProfit());
+        playerProfits.forEach(playerProfit -> System.out.printf("%s: %d\n", playerProfit.playerName().username(),
+                playerProfit.playerProfit()));
     }
 }

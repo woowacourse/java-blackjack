@@ -75,10 +75,17 @@ public class Game {
         return Dealer.copyOf(dealer);
     }
 
-    public int calculateDealerProfit() {
-        return -players.getPlayers().stream()
+    public List<PlayerProfit> getPlayerProfits() {
+        return players.getPlayers().stream()
+                .map(player -> new PlayerProfit(player.calculateProfit(dealer), player.getPlayerName()))
+                .toList();
+    }
+
+    public DealerProfit getDealerProfit() {
+        int dealerProfit = -players.getPlayers().stream()
                 .map(player -> player.calculateProfit(dealer))
                 .mapToInt(i -> i)
                 .sum();
+        return new DealerProfit(dealerProfit);
     }
 }

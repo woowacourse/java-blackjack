@@ -1,13 +1,9 @@
 package controller;
 
 import domain.BettingMoney;
-import domain.Dealer;
-import domain.DealerProfit;
 import domain.Game;
-import domain.Player;
 import domain.PlayerName;
 import domain.PlayerNames;
-import domain.PlayerProfit;
 import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
@@ -47,16 +43,8 @@ public class BlackJackController {
     }
 
     private void showFinalState(Game game) {
-        List<Player> finalPlayers = game.getPlayers();
-        Dealer finalDealer = game.getDealer();
-
-        List<PlayerProfit> playerProfits = finalPlayers.stream()
-                .map(player -> new PlayerProfit(player, finalDealer))
-                .toList();
-        DealerProfit dealerProfit = new DealerProfit(game);
-
-        outputView.printFinalState(finalPlayers, finalDealer);
-        outputView.printFinalResult(playerProfits, dealerProfit);
+        outputView.printFinalState(game.getPlayers(), game.getDealer());
+        outputView.printFinalResult(game.getPlayerProfits(), game.getDealerProfit());
     }
 
     private void processGameTurn(Game game, PlayerNames playerNames) {
