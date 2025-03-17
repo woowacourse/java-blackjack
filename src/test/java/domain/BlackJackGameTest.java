@@ -59,62 +59,6 @@ class BlackJackGameTest {
         assertThat(playerNamesExceptDealer).containsExactlyElementsOf(playerNames);
     }
 
-    private static Stream<Arguments> playerCardsArguments() {
-        return Stream.of(
-                Arguments.arguments(
-                        List.of(new Card(Shape.HEART, Rank.KING),
-                                new Card(Shape.HEART, Rank.QUEEN),
-                                new Card(Shape.HEART, Rank.ACE)), true),
-                Arguments.arguments(
-                        List.of(new Card(Shape.HEART, Rank.KING),
-                                new Card(Shape.HEART, Rank.NINE),
-                                new Card(Shape.HEART, Rank.TWO)), true),
-                Arguments.arguments(
-                        List.of(new Card(Shape.HEART, Rank.KING),
-                                new Card(Shape.HEART, Rank.NINE),
-                                new Card(Shape.HEART, Rank.THREE)), false)
-        );
-    }
-
-    @ParameterizedTest
-    @DisplayName("플레이어 이름으로 해당 플레이어가 카드를 더 받을 수 있는지 확인한다")
-    @MethodSource("playerCardsArguments")
-    void should_return_true_when_can_player_pick_by_name(List<Card> cards, boolean expected) {
-        // given
-        String playerName = "a";
-        List<String> playerNames = List.of(playerName);
-        Participants participants = ParticipantsFixture.createParticipants(playerNames);
-        CardDeck cardDeck = new CardDeck(cards);
-        BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
-        for (int cardIndex = 0; cardIndex < cards.size(); ++cardIndex) {
-            blackJackGame.giveCardToPlayer(playerName);
-        }
-
-        // when
-        boolean canPick = blackJackGame.canPlayerPick(playerName);
-
-        // then
-        assertThat(canPick).isEqualTo(expected);
-    }
-
-    @Test
-    @DisplayName("플레이어 이름으로 해당 플레이어에게 카드를 한 장 준다")
-    void should_give_card_to_player_by_name() {
-        // given
-        String playerName = "a";
-        List<String> playerNames = List.of(playerName);
-        Participants participants = ParticipantsFixture.createParticipants(playerNames);
-        CardDeck cardDeck = CardDeckFixture.createCardDeck();
-        BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
-
-        // when
-        blackJackGame.giveCardToPlayer(playerName);
-
-        // then
-        Participant player = blackJackGame.findByName(playerName);
-        assertThat(player.getCards()).hasSize(1);
-    }
-
     @Nested
     @DisplayName("시작 카드 분배 케이스")
     class StartingCardCase {
@@ -174,89 +118,150 @@ class BlackJackGameTest {
         }
     }
 
-    private static Stream<Arguments> dealerCardsArguments() {
-        return Stream.of(
-                Arguments.arguments(
-                        List.of(new Card(Shape.HEART, Rank.SEVEN),
-                                new Card(Shape.HEART, Rank.SIX),
-                                new Card(Shape.HEART, Rank.THREE)), true),
-                Arguments.arguments(
-                        List.of(new Card(Shape.HEART, Rank.SEVEN),
-                                new Card(Shape.HEART, Rank.SIX),
-                                new Card(Shape.HEART, Rank.FOUR)), false)
-        );
-    }
-
-    @ParameterizedTest
-    @DisplayName("딜러가 카드를 더 받을 수 있는지 확인한다")
-    @MethodSource("dealerCardsArguments")
-    void should_return_true_when_can_dealer_pick(List<Card> cards, boolean expected) {
-        // given
-        Participants participants = ParticipantsFixture.createParticipants(List.of("_"));
-        CardDeck cardDeck = new CardDeck(cards);
-        BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
-        for (int cardIndex = 0; cardIndex < cards.size(); ++cardIndex) {
-            blackJackGame.giveCardToDealer();
+    @Nested
+    @DisplayName("카드 추가 받기 케이스")
+    class GiveCardCase {
+        private static Stream<Arguments> playerCardsArguments() {
+            return Stream.of(
+                    Arguments.arguments(
+                            List.of(new Card(Shape.HEART, Rank.KING),
+                                    new Card(Shape.HEART, Rank.QUEEN),
+                                    new Card(Shape.HEART, Rank.ACE)), true),
+                    Arguments.arguments(
+                            List.of(new Card(Shape.HEART, Rank.KING),
+                                    new Card(Shape.HEART, Rank.NINE),
+                                    new Card(Shape.HEART, Rank.TWO)), true),
+                    Arguments.arguments(
+                            List.of(new Card(Shape.HEART, Rank.KING),
+                                    new Card(Shape.HEART, Rank.NINE),
+                                    new Card(Shape.HEART, Rank.THREE)), false)
+            );
         }
 
-        // when
-        boolean canPick = blackJackGame.canDealerPick();
+        @ParameterizedTest
+        @DisplayName("플레이어 이름으로 해당 플레이어가 카드를 더 받을 수 있는지 확인한다")
+        @MethodSource("playerCardsArguments")
+        void should_return_true_when_can_player_pick_by_name(List<Card> cards, boolean expected) {
+            // given
+            String playerName = "a";
+            List<String> playerNames = List.of(playerName);
+            Participants participants = ParticipantsFixture.createParticipants(playerNames);
+            CardDeck cardDeck = new CardDeck(cards);
+            BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
+            for (int cardIndex = 0; cardIndex < cards.size(); ++cardIndex) {
+                blackJackGame.giveCardToPlayer(playerName);
+            }
 
-        // then
-        assertThat(canPick).isEqualTo(expected);
-    }
+            // when
+            boolean canPick = blackJackGame.canPlayerPick(playerName);
 
-    @Test
-    @DisplayName("딜러에게 카드를 한 장 준다")
-    void should_give_card_to_dealer() {
-        // given
-        Participants participants = ParticipantsFixture.createParticipants(List.of("_"));
-        CardDeck cardDeck = CardDeckFixture.createCardDeck();
-        BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
+            // then
+            assertThat(canPick).isEqualTo(expected);
+        }
 
-        // when
-        blackJackGame.giveCardToDealer();
+        @Test
+        @DisplayName("플레이어 이름으로 해당 플레이어에게 카드를 한 장 준다")
+        void should_give_card_to_player_by_name() {
+            // given
+            String playerName = "a";
+            List<String> playerNames = List.of(playerName);
+            Participants participants = ParticipantsFixture.createParticipants(playerNames);
+            CardDeck cardDeck = CardDeckFixture.createCardDeck();
+            BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
 
-        // then
-        Participant dealer = blackJackGame.getDealer();
-        assertThat(dealer.getCards()).hasSize(1);
-    }
+            // when
+            blackJackGame.giveCardToPlayer(playerName);
 
-    @Test
-    @DisplayName("플레이어가 카드를 추가로 받았는지 확인한다")
-    void should_return_true_when_player_has_received_card() {
-        // given
-        String playerName = "a";
-        List<String> playerNames = List.of(playerName);
-        Participants participants = ParticipantsFixture.createParticipants(playerNames);
-        CardDeck cardDeck = CardDeckFixture.createCardDeck();
-        BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
-        blackJackGame.giveStartingCardsToParticipants();
-        blackJackGame.giveCardToPlayer(playerName);
+            // then
+            Participant player = blackJackGame.findByName(playerName);
+            assertThat(player.getCards()).hasSize(1);
+        }
 
-        // when
-        boolean hasReceivedCard = blackJackGame.hasPlayerReceivedCard(playerName);
+        @Test
+        @DisplayName("플레이어가 카드를 추가로 받았는지 확인한다")
+        void should_return_true_when_player_has_received_card() {
+            // given
+            String playerName = "a";
+            List<String> playerNames = List.of(playerName);
+            Participants participants = ParticipantsFixture.createParticipants(playerNames);
+            CardDeck cardDeck = CardDeckFixture.createCardDeck();
+            BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
+            blackJackGame.giveStartingCardsToParticipants();
+            blackJackGame.giveCardToPlayer(playerName);
 
-        // then
-        assertThat(hasReceivedCard).isEqualTo(true);
-    }
+            // when
+            boolean hasReceivedCard = blackJackGame.hasPlayerReceivedCard(playerName);
 
-    @Test
-    @DisplayName("플레이어가 카드를 추가로 받았는지 확인한다")
-    void should_return_false_when_player_has_not_received_card() {
-        // given
-        String playerName = "a";
-        List<String> playerNames = List.of(playerName);
-        Participants participants = ParticipantsFixture.createParticipants(playerNames);
-        CardDeck cardDeck = CardDeckFixture.createCardDeck();
-        BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
-        blackJackGame.giveStartingCardsToParticipants();
+            // then
+            assertThat(hasReceivedCard).isEqualTo(true);
+        }
 
-        // when
-        boolean hasReceivedCard = blackJackGame.hasPlayerReceivedCard(playerName);
+        @Test
+        @DisplayName("플레이어가 카드를 추가로 받았는지 확인한다")
+        void should_return_false_when_player_has_not_received_card() {
+            // given
+            String playerName = "a";
+            List<String> playerNames = List.of(playerName);
+            Participants participants = ParticipantsFixture.createParticipants(playerNames);
+            CardDeck cardDeck = CardDeckFixture.createCardDeck();
+            BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
+            blackJackGame.giveStartingCardsToParticipants();
 
-        // then
-        assertThat(hasReceivedCard).isEqualTo(false);
+            // when
+            boolean hasReceivedCard = blackJackGame.hasPlayerReceivedCard(playerName);
+
+            // then
+            assertThat(hasReceivedCard).isEqualTo(false);
+        }
+
+        private static Stream<Arguments> dealerCardsArguments() {
+            return Stream.of(
+                    Arguments.arguments(
+                            List.of(new Card(Shape.HEART, Rank.SEVEN),
+                                    new Card(Shape.HEART, Rank.SIX),
+                                    new Card(Shape.HEART, Rank.THREE)), true),
+                    Arguments.arguments(
+                            List.of(new Card(Shape.HEART, Rank.SEVEN),
+                                    new Card(Shape.HEART, Rank.SIX),
+                                    new Card(Shape.HEART, Rank.FOUR)), false)
+            );
+        }
+
+        @ParameterizedTest
+        @DisplayName("딜러가 카드를 더 받을 수 있는지 확인한다")
+        @MethodSource("dealerCardsArguments")
+        void should_return_true_when_can_dealer_pick(List<Card> cards, boolean expected) {
+            // given
+            Participants participants = ParticipantsFixture.createParticipants(List.of("_"));
+            CardDeck cardDeck = new CardDeck(cards);
+            BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
+            for (int cardIndex = 0; cardIndex < cards.size(); ++cardIndex) {
+                blackJackGame.giveCardToDealer();
+            }
+
+            // when
+            boolean canPick = blackJackGame.canDealerPick();
+
+            // then
+            assertThat(canPick).isEqualTo(expected);
+        }
+
+        @Test
+        @DisplayName("딜러에게 카드를 한 장 준다")
+        void should_give_card_to_dealer() {
+            // given
+            Participants participants = ParticipantsFixture.createParticipants(List.of("_"));
+            CardDeck cardDeck = CardDeckFixture.createCardDeck();
+            BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
+
+            // when
+            blackJackGame.giveCardToDealer();
+
+            // then
+            Participant dealer = blackJackGame.getDealer();
+            assertThat(dealer.getCards()).hasSize(1);
+        }
+
     }
 
     @Nested
