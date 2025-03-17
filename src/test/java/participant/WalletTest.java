@@ -15,28 +15,59 @@ class WalletTest {
         Wallet wallet = Wallet.of(bettingMoney);
 
         // when
-        double rate = 1.5;
-        wallet.updateMoney(rate);
+        int addedMoney = 10000;
+        wallet.addMoney(addedMoney);
 
         // then
         assertThat(wallet.getEarnedMoney())
-                .isEqualTo((int) (bettingMoney + bettingMoney * rate));
+                .isEqualTo(bettingMoney + addedMoney);
     }
 
     @Test
-    @DisplayName("수익을 반환한다.")
+    @DisplayName("잃은 돈을 업데이트한다.")
     void test2() {
         // given
         int bettingMoney = 10000;
         Wallet wallet = Wallet.of(bettingMoney);
 
         // when
-        double rate = 1.5;
-        wallet.updateMoney(rate);
-        Profit profit = wallet.getProfit();
+        int subtractedMoney = 10000;
+        wallet.subtractMoney(subtractedMoney);
 
         // then
-        assertThat(profit.getAmount())
-                .isEqualTo((int) (bettingMoney * rate));
+        assertThat(wallet.getEarnedMoney())
+                .isEqualTo(bettingMoney - subtractedMoney);
+    }
+
+    @Test
+    @DisplayName("얻은 수익을 반환한다.")
+    void test3() {
+        // given
+        int bettingMoney = 10000;
+        Wallet wallet = Wallet.of(bettingMoney);
+
+        // when
+        int addedMoney = 10000;
+        wallet.addMoney(addedMoney);
+
+        // then
+        assertThat(wallet.getProfit().getAmount())
+                .isEqualTo(addedMoney);
+    }
+
+    @Test
+    @DisplayName("잃은 수익을 반환한다.")
+    void test4() {
+        // given
+        int bettingMoney = 10000;
+        Wallet wallet = Wallet.of(bettingMoney);
+
+        // when
+        int subtractedMoney = 10000;
+        wallet.subtractMoney(subtractedMoney);
+
+        // then
+        assertThat(wallet.getProfit().getAmount())
+                .isEqualTo(-subtractedMoney);
     }
 }
