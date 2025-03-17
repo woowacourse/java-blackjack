@@ -76,8 +76,4 @@ public class ConsoleBlackjackGame {
         betManager.calculateBettingResult(playerResult.getMatchResults());
         outputView.printBettingResult(betManager.calculateDealerBettingResult(), betManager.getWager());
     }
-
-    private void printMatchResults(PlayerResult playerResult) {
-        outputView.printMatchResult(playerResult.computeDealerMatchResult(), playerResult.getMatchResults());
-    }
 }

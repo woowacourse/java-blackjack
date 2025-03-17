@@ -15,15 +15,6 @@ public class PlayerResult {
         this.matchResults = computeParticipantsMatchResult(dealer, participants);
     }
 
-    public Map<MatchResult, Integer> computeDealerMatchResult() {
-        Map<MatchResult, Integer> matchResultCount = new EnumMap<>(MatchResult.class);
-
-        matchResults.forEach((key, value) -> matchResultCount.put(MatchResult.inverse(value),
-                matchResultCount.getOrDefault(MatchResult.inverse(value), 0) + 1));
-
-        return matchResultCount;
-    }
-
     public Map<Player, MatchResult> getMatchResults() {
         return matchResults;
     }

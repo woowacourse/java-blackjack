@@ -13,22 +13,9 @@ import player.Player;
 import player.Players;
 import java.util.ArrayList;
 import java.util.List;
-import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
 class MatchResultTest {
-
-    @Test
-    void 승패_결과를_받아_반전한_승패_결과를_반환한다() {
-        SoftAssertions.assertSoftly(softAssertions -> {
-            softAssertions.assertThat(MatchResult.inverse(MatchResult.WIN))
-                    .isEqualTo(MatchResult.LOSE);
-            softAssertions.assertThat(MatchResult.inverse(MatchResult.LOSE))
-                    .isEqualTo(MatchResult.WIN);
-            softAssertions.assertThat(MatchResult.inverse(MatchResult.DRAW))
-                    .isEqualTo(MatchResult.DRAW);
-        });
-    }
 
     @Test
     void 두_플레이어의_승패_결과를_반환한다() {
