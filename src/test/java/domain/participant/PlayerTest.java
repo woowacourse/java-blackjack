@@ -37,7 +37,8 @@ public class PlayerTest {
     void hitCardsTest() {
         // given
         Hand hand = new Hand(new ArrayList<>());
-        Player player = new Player(hand, new Name("pobi"), new Money(10000));
+        PlayerInfo playerInfo = new PlayerInfo(new Name("pobi"), new Money(10000));
+        Player player = new Player(hand, playerInfo);
         DeckFactory deckFactory = new DeckFactory();
         Deck cardDeck = deckFactory.create();
 
@@ -52,7 +53,8 @@ public class PlayerTest {
         DeckFactory deckFactory = new DeckFactory();
         Deck cardDeck = deckFactory.create();
         Hand hand = new Hand(new ArrayList<>());
-        Player player = new Player(hand, new Name("pobi"), new Money(10000));
+        PlayerInfo playerInfo = new PlayerInfo(new Name("pobi"), new Money(10000));
+        Player player = new Player(hand, playerInfo);
 
         //when-then
         assertDoesNotThrow(() -> player.addCard(cardDeck.hitCard()));
@@ -64,7 +66,8 @@ public class PlayerTest {
         //given
         Deck cardDeck = new Deck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE)));
         Hand hand = new Hand(new ArrayList<>());
-        Player player = new Player(hand, new Name("pobi"), new Money(10000));
+        PlayerInfo playerInfo = new PlayerInfo(new Name("pobi"), new Money(10000));
+        Player player = new Player(hand, playerInfo);
 
         //when
         player.hitCards(cardDeck);
@@ -89,7 +92,8 @@ public class PlayerTest {
 
         Deck cardDeck = new Deck(List.of(new Card(DIAMOND, QUEEN), new Card(SPADE, JACK), new Card(HEART, KING)));
         Hand hand = new Hand(new ArrayList<>());
-        Player player = new Player(hand, new Name("pobi"), new Money(10000));
+        PlayerInfo playerInfo = new PlayerInfo(new Name("pobi"), new Money(10000));
+        Player player = new Player(hand, playerInfo);
 
         //when-then
         assertDoesNotThrow(() -> player.draw(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck, cardDeck));
@@ -98,7 +102,9 @@ public class PlayerTest {
     @Test
     @DisplayName("플레이어 초기 카드 오픈 테스트")
     void openInitialCardsTest() {
-        Player player = new Player(new Hand(new ArrayList<>()), new Name("pobi"), new Money(10000));
+        PlayerInfo playerInfo = new PlayerInfo(new Name("pobi"), new Money(10000));
+        Hand hand = new Hand(new ArrayList<>());
+        Player player = new Player(hand, playerInfo);
         Deck cardDeck = new Deck(List.of(new Card(DIAMOND, JACK), new Card(SPADE, ACE)));
         player.addCard(cardDeck.hitCard());
         player.addCard(cardDeck.hitCard());
@@ -110,7 +116,9 @@ public class PlayerTest {
     @Test
     @DisplayName("수익률 계산 테스트 (승리)")
     void calculateProfitTest() {
-        Player player = new Player(new Hand(List.of()), new Name("pobi"), new Money(10000));
+        PlayerInfo playerInfo = new PlayerInfo(new Name("pobi"), new Money(10000));
+        Hand hand = new Hand(new ArrayList<>());
+        Player player = new Player(hand, playerInfo);
         Deck cardDeck = new Deck(List.of(new Card(DIAMOND, JACK), new Card(SPADE, QUEEN)));
         player.addCard(cardDeck.hitCard());
         player.addCard(cardDeck.hitCard());
@@ -123,7 +131,9 @@ public class PlayerTest {
     @Test
     @DisplayName("수익률 계산 테스트 (블랙잭이면서 승리)")
     void calculateBlackJackProfitTest() {
-        Player player = new Player(new Hand(List.of()), new Name("pobi"), new Money(10000));
+        PlayerInfo playerInfo = new PlayerInfo(new Name("pobi"), new Money(10000));
+        Hand hand = new Hand(new ArrayList<>());
+        Player player = new Player(hand, playerInfo);
         Deck cardDeck = new Deck(List.of(new Card(DIAMOND, TEN), new Card(SPADE, NINE), new Card(DIAMOND, TWO)));
         player.addCard(cardDeck.hitCard());
         player.addCard(cardDeck.hitCard());
@@ -137,7 +147,9 @@ public class PlayerTest {
     @Test
     @DisplayName("수익률 계산 테스트 (패배)")
     void calculateLoseProfitTest() {
-        Player player = new Player(new Hand(List.of()), new Name("pobi"), new Money(10000));
+        PlayerInfo playerInfo = new PlayerInfo(new Name("pobi"), new Money(10000));
+        Hand hand = new Hand(new ArrayList<>());
+        Player player = new Player(hand, playerInfo);
         Deck cardDeck = new Deck(List.of(new Card(DIAMOND, TWO), new Card(SPADE, QUEEN)));
         Dealer dealer = new Dealer(new Hand(List.of()));
 
@@ -150,7 +162,9 @@ public class PlayerTest {
     @Test
     @DisplayName("수익률 계산 테스트 (무승부)")
     void calculateDrawProfitTest() {
-        Player player = new Player(new Hand(List.of()), new Name("pobi"), new Money(10000));
+        PlayerInfo playerInfo = new PlayerInfo(new Name("pobi"), new Money(10000));
+        Hand hand = new Hand(new ArrayList<>());
+        Player player = new Player(hand, playerInfo);
         Deck cardDeck = new Deck(List.of(new Card(DIAMOND, TWO), new Card(SPADE, TWO)));
         Dealer dealer = new Dealer(new Hand(List.of()));
 
