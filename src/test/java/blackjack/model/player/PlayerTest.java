@@ -15,12 +15,12 @@ class PlayerTest {
         // given
 
         // when & then
-        assertThatThrownBy(() -> new Player("한스한스한스"));
+        assertThatThrownBy(() -> new Player("한스한스한스", 1000));
     }
 
     @Test
     void 참여자에게_카드를_한장_준다() {
-        Player player = new Player("프리");
+        Player player = new Player("프리", 1000);
         player.putCard(new Card(CardShape.HEART, CardType.NORMAL_2));
         assertThat(player.getReceivedCards().size()).isEqualTo(1);
     }
@@ -28,10 +28,9 @@ class PlayerTest {
     @Test
     void 참가자에게는_배팅_금액이_있다() {
         //given
-        Player player = new Player("프리");
-        player.setBetting(10000);
+        Player player = new Player("프리", 10000);
         // when
-        int bettingMoney = player.getBettingMoney();
+        int bettingMoney = player.getBettingMoney().getAmount();
         // then
         assertThat(bettingMoney).isEqualTo(10000);
 
