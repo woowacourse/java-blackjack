@@ -1,6 +1,5 @@
-package blackjack.controller;
+package blackjack.model.game;
 
-import blackjack.model.game.Deck;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
 import blackjack.model.player.Players;
