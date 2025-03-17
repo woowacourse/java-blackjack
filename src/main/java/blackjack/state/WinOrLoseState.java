@@ -2,6 +2,8 @@ package blackjack.state;
 
 import blackjack.gamer.Dealer;
 import blackjack.gamer.Player;
+import blackjack.state.finalState.LoseState;
+import blackjack.state.finalState.WinState;
 
 public class WinOrLoseState implements State {
 

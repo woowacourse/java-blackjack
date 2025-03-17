@@ -1,10 +1,11 @@
-package blackjack.state;
+package blackjack.state.finalState;
 
 import static blackjack.blackjack.Blackjack.BLACKJACK_CARD_COUNT;
 import static blackjack.blackjack.Blackjack.BLACKJACK_SCORE;
 
 import blackjack.gamer.Dealer;
 import blackjack.gamer.Player;
+import blackjack.state.State;
 
 public class BlackjackState implements State, FinalState {
 

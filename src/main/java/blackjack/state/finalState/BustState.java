@@ -1,7 +1,8 @@
-package blackjack.state;
+package blackjack.state.finalState;
 
 import blackjack.gamer.Dealer;
 import blackjack.gamer.Player;
+import blackjack.state.State;
 
 public class BustState implements State, FinalState {
 

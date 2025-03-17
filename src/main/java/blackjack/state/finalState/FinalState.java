@@ -1,4 +1,4 @@
-package blackjack.state;
+package blackjack.state.finalState;
 
 import blackjack.gamer.Player;
 

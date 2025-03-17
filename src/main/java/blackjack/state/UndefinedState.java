@@ -5,6 +5,7 @@ import static blackjack.blackjack.Blackjack.BLACKJACK_SCORE;
 
 import blackjack.gamer.Dealer;
 import blackjack.gamer.Player;
+import blackjack.state.finalState.BlackjackState;
 
 public class UndefinedState implements State {
 

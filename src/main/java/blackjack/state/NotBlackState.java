@@ -4,6 +4,7 @@ import static blackjack.blackjack.Blackjack.BLACKJACK_SCORE;
 
 import blackjack.gamer.Dealer;
 import blackjack.gamer.Player;
+import blackjack.state.finalState.BustState;
 
 public class NotBlackState implements State {
 
