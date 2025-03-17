@@ -65,6 +65,7 @@ public class PlayersTest {
     void validateDuplication() {
         //given
         List<Player> actual = List.of(
+                new Player("pobi"),
                 new Player("pobi")
         );
         //when
