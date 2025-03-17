@@ -26,7 +26,7 @@ public class OutputView {
         System.out.println(name + "카드: " + str + " - 결과: " + score);
     }
 
-    public void displayProfitResult(final long dealerProfit, final Map<User, Long> gameResult) {
+    public void displayProfitResult(long dealerProfit, final Map<User, Long> gameResult) {
         System.out.println("\n## 최종 수익");
         System.out.printf("딜러: %d\n", dealerProfit);
         for (User user : gameResult.keySet()) {
