@@ -27,7 +27,7 @@ public class BlackjackConsole {
 
     public void run() {
         try {
-            playBlackjackGame();
+            playBlackjack();
         } catch (IllegalArgumentException exception) {
             outputView.displayError(exception.getMessage());
         } finally {
@@ -35,7 +35,7 @@ public class BlackjackConsole {
         }
     }
 
-    private void playBlackjackGame() {
+    private void playBlackjack() {
         Dealer dealer = new Dealer();
         List<Player> players = getPlayers();
         BlackjackGame blackjackGame = BlackjackGame.of(players, dealer, new CardDeck());

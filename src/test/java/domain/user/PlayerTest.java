@@ -27,7 +27,7 @@ class PlayerTest {
         Assertions.assertThat(cards).hasSize(2);
     }
 
-    @DisplayName("일반 유저는 dealer나 딜러 이름을 사용할 수 없다")
+    @DisplayName("일반 유저는 'dealer', '딜러' 이름을 사용할 수 없다")
     @ParameterizedTest
     @ValueSource(strings = {"dealer", "딜러"})
     void test2(String name) {
