@@ -16,15 +16,11 @@ import org.junit.jupiter.params.provider.CsvSource;
 @DisplayName("승부 결과 테스트")
 class MatchResultTest {
 
-    private Player makePlayer(String name) {
-        return Player.of(name, 1000);
-    }
-
     @DisplayName("플레이어는 버스트인 경우 진다.")
     @Test
     void lose_WhenPlayerBust() {
         // given
-        Player player = makePlayer("pobi");
+        Player player = Player.from("pobi");
         player.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
         player.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
         player.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
@@ -42,7 +38,7 @@ class MatchResultTest {
     @Test
     void win_WhenPlayerNoBustAndDealerBust() {
         // given
-        Player player = makePlayer("pobi");
+        Player player = Player.from("pobi");
         Dealer dealer = new Dealer(UNSHUFFLED_DECK);
         dealer.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
         dealer.receiveHand(new Card(Suit.SPADES, CardValue.TEN));
@@ -60,7 +56,7 @@ class MatchResultTest {
     @Test
     void draw_WhenAllBlackjack() {
         // given
-        Player player = makePlayer("pobi");
+        Player player = Player.from("pobi");
         player.receiveHand(new Card(Suit.SPADES, CardValue.ACE));
         player.receiveHand(new Card(Suit.SPADES, CardValue.KING));
         Dealer dealer = new Dealer(UNSHUFFLED_DECK);
@@ -79,7 +75,7 @@ class MatchResultTest {
     @Test
     void win_WhenOnlyPlayerBlackjack() {
         // given
-        Player player = makePlayer("pobi");
+        Player player = Player.from("pobi");
         player.receiveHand(new Card(Suit.SPADES, CardValue.ACE));
         player.receiveHand(new Card(Suit.SPADES, CardValue.KING));
         Dealer dealer = new Dealer(UNSHUFFLED_DECK);
@@ -98,7 +94,7 @@ class MatchResultTest {
     @Test
     void lose_WhenOnlyDealerBlackjack() {
         // given
-        Player player = makePlayer("pobi");
+        Player player = Player.from("pobi");
         player.receiveHand(new Card(Suit.SPADES, CardValue.KING));
         player.receiveHand(new Card(Suit.SPADES, CardValue.KING));
         Dealer dealer = new Dealer(UNSHUFFLED_DECK);
@@ -124,7 +120,7 @@ class MatchResultTest {
                                    CardValue dealerCard1, CardValue dealerCard2,
                                    MatchResult expected) {
         // given
-        Player player = makePlayer("pobi");
+        Player player = Player.from("pobi");
         player.receiveHand(new Card(Suit.SPADES, playerCard1));
         player.receiveHand(new Card(Suit.SPADES, playerCard2));
         Dealer dealer = new Dealer(UNSHUFFLED_DECK);

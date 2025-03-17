@@ -6,8 +6,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.model.betting.Profit;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardValue;
+import blackjack.model.card.Deck;
+import blackjack.model.card.FixedCardShuffler;
 import blackjack.model.card.Suit;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -156,17 +159,45 @@ class DealerTest {
 
     @DisplayName("딜러의 수익률를 계산한다.")
     @Test
-    void calculateProfitTest() {
+    void calculateDealerProfitTest() {
         // given
         Dealer dealer = new Dealer(UNSHUFFLED_DECK);
         Map<Player, Profit> playerProfit = new HashMap<>();
-        playerProfit.put(Player.of("pobi", 1000), new Profit(10000));
+        playerProfit.put(Player.from("pobi"), new Profit(10000));
 
         // when
-        Profit profit = dealer.calculateProfit(playerProfit);
+        Profit profit = dealer.calculateDealerProfit(playerProfit);
 
         // then
         assertThat(profit.getProfit())
                 .isEqualTo(-10000);
+    }
+
+
+    @DisplayName("모든 플레이어의 수익률을 계산한다.")
+    @Test
+    void calculatePlayerProfitTest() {
+        // given
+        List<Card> cards = List.of(
+                new Card(Suit.SPADES, CardValue.TEN),
+                new Card(Suit.HEARTS, CardValue.TEN),
+                new Card(Suit.SPADES, CardValue.SEVEN),
+                new Card(Suit.SPADES, CardValue.TEN)
+        );
+        Deck deck = Deck.createShuffledDeck(cards, new FixedCardShuffler());
+        Dealer dealer = new Dealer(deck);
+        Player pobi = Player.from("pobi");
+        pobi.receiveHand(dealer.drawCard());
+        pobi.receiveHand(dealer.drawCard());
+        dealer.receiveHand(dealer.drawCard());
+        dealer.receiveHand(dealer.drawCard());
+        dealer.addBetting(pobi, 1000);
+
+        // when
+        Map<Player, Profit> playerMatchResults = dealer.calculatePlayersProfit();
+
+        // then
+        assertThat(playerMatchResults.get(pobi).getProfit())
+                .isEqualTo(1000);
     }
 }

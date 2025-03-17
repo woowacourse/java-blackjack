@@ -1,8 +1,5 @@
 package blackjack.model.participant;
 
-import blackjack.model.betting.MatchResult;
-import blackjack.model.betting.BetAmount;
-import blackjack.model.betting.Profit;
 import blackjack.model.card.Card;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,17 +10,15 @@ public class Player {
 
     private final String name;
     private final Hand hand;
-    private final BetAmount betAmount;
 
-    public Player(String name, Hand hand, BetAmount betAmount) {
+    public Player(String name, Hand hand) {
         this.name = name;
         this.hand = hand;
-        this.betAmount = betAmount;
     }
 
-    public static Player of(String name, int stake) {
+    public static Player from(String name) {
         validateName(name);
-        return new Player(name, new Hand(new ArrayList<>()), new BetAmount(stake));
+        return new Player(name, new Hand(new ArrayList<>()));
     }
 
     private static void validateName(String name) {
@@ -50,10 +45,6 @@ public class Player {
 
     public int calculateHandTotal() {
         return hand.calculateHandTotal();
-    }
-
-    public Profit calculateProfit(MatchResult matchResult) {
-        return Profit.of(betAmount, matchResult);
     }
 
     @Override
