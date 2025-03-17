@@ -3,7 +3,6 @@ package participant;
 import card.Card;
 import java.util.List;
 import state.finished.Blackjack;
-import state.finished.Bust;
 import state.started.Started;
 
 public class Player extends Participant {
