@@ -13,7 +13,6 @@ import blackjack.model.card.Suit;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
 import blackjack.model.participant.Players;
-import blackjack.view.BettingPlayerCreateDto;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +22,7 @@ import org.junit.jupiter.api.Test;
 class GameTest {
 
     private Player makePlayer(String name) {
-        return Player.of(new BettingPlayerCreateDto(name, 1000));
+        return Player.of(name, 1000);
     }
 
     @DisplayName("딜러와 플레이어와 덱을 가진다.")

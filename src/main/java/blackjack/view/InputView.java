@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.model.betting.BetAmount;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -30,10 +31,9 @@ public class InputView {
         throw new IllegalArgumentException("y 또는 n을 입력해주세요.");
     }
 
-    public BettingPlayerCreateDto readPlayerBetAmount(String name) {
+    public int readPlayerStake(String name) {
         System.out.printf("%n%s의 배팅 금액은?%n", name);
-        int stake = parseStake(scanner.nextLine());
-        return new BettingPlayerCreateDto(name, stake);
+        return parseStake(scanner.nextLine());
     }
 
     private int parseStake(String rawStake) {

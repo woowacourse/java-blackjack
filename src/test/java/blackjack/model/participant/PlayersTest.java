@@ -2,7 +2,6 @@ package blackjack.model.participant;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import blackjack.view.BettingPlayerCreateDto;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +11,7 @@ import org.junit.jupiter.api.Test;
 class PlayersTest {
 
     private Player makePlayer(String name) {
-        return Player.of(new BettingPlayerCreateDto(name, 1000));
+        return Player.of(name, 1000);
     }
 
     @DisplayName("플레이어가 1명 ~ 6명이고 이름이 중복되지 않으면 players를 생성한다")

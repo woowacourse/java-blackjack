@@ -8,7 +8,6 @@ import blackjack.model.card.RandomCardShuffler;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
 import blackjack.model.participant.Players;
-import blackjack.view.BettingPlayerCreateDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
@@ -38,8 +37,8 @@ public class BlackjackController {
         List<Player> players = new ArrayList<>();
         List<String> playerNames = inputView.readPlayerNames();
         for (String name : playerNames) {
-            BettingPlayerCreateDto bettingPlayerCreateDto = inputView.readPlayerBetAmount(name);
-            players.add(Player.of(bettingPlayerCreateDto));
+            int stake = inputView.readPlayerStake(name);
+            players.add(Player.of(name, stake));
         }
         return new Players(players);
     }

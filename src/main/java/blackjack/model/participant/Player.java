@@ -4,7 +4,6 @@ import blackjack.model.betting.MatchResult;
 import blackjack.model.betting.BetAmount;
 import blackjack.model.betting.Profit;
 import blackjack.model.card.Card;
-import blackjack.view.BettingPlayerCreateDto;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,17 +15,15 @@ public class Player {
     private final Hand hand;
     private final BetAmount betAmount;
 
-    private Player(String name, Hand hand, BetAmount betAmount) {
+    public Player(String name, Hand hand, BetAmount betAmount) {
         this.name = name;
         this.hand = hand;
         this.betAmount = betAmount;
     }
 
-    public static Player of(BettingPlayerCreateDto bettingPlayerCreateDto) {
-        String name = bettingPlayerCreateDto.name();
-        BetAmount betAmount = new BetAmount(bettingPlayerCreateDto.stake());
+    public static Player of(String name, int stake) {
         validateName(name);
-        return new Player(name, new Hand(new ArrayList<>()), betAmount);
+        return new Player(name, new Hand(new ArrayList<>()), new BetAmount(stake));
     }
 
     private static void validateName(String name) {

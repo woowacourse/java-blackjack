@@ -8,7 +8,6 @@ import blackjack.model.card.CardValue;
 import blackjack.model.card.Suit;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
-import blackjack.view.BettingPlayerCreateDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,7 +17,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 class MatchResultTest {
 
     private Player makePlayer(String name) {
-        return Player.of(new BettingPlayerCreateDto(name, 1000));
+        return Player.of(name, 1000);
     }
 
     @DisplayName("플레이어는 버스트인 경우 진다.")

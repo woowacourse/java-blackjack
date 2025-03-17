@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardValue;
 import blackjack.model.card.Suit;
-import blackjack.view.BettingPlayerCreateDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,7 +16,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 class PlayerTest {
 
     private Player makePlayer(String name) {
-        return Player.of(new BettingPlayerCreateDto(name, 1000));
+        return Player.of(name, 1000);
     }
 
     @DisplayName("이름과 배팅 금액을 가진다.")
@@ -27,7 +26,7 @@ class PlayerTest {
         String name = "pobi";
 
         // when, then
-        assertThatCode(() -> Player.of(BettingPlayerCreateDto.of(name, 10000)))
+        assertThatCode(() -> Player.of(name, 10000))
                 .doesNotThrowAnyException();
     }
 
@@ -35,7 +34,7 @@ class PlayerTest {
     @ParameterizedTest
     @ValueSource(strings = {" ", ""})
     void createPlayerValidateTest(String name) {
-        assertThatCode(() -> Player.of(BettingPlayerCreateDto.of(name, 1000)))
+        assertThatCode(() -> Player.of(name, 1000))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이름은 한글자 이상이어야합니다.");
     }

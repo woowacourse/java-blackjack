@@ -7,7 +7,6 @@ import blackjack.model.betting.Profit;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardValue;
 import blackjack.model.card.Suit;
-import blackjack.view.BettingPlayerCreateDto;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -161,7 +160,7 @@ class DealerTest {
         // given
         Dealer dealer = new Dealer(UNSHUFFLED_DECK);
         Map<Player, Profit> playerProfit = new HashMap<>();
-        playerProfit.put(Player.of(new BettingPlayerCreateDto("pobi", 1000)), new Profit(10000));
+        playerProfit.put(Player.of("pobi", 1000), new Profit(10000));
 
         // when
         Profit profit = dealer.calculateProfit(playerProfit);
