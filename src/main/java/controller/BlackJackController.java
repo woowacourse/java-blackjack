@@ -11,7 +11,6 @@ import domain.gamer.Gamer;
 import domain.gamer.Nickname;
 import domain.gamer.Player;
 import domain.gamer.Players;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,8 +43,8 @@ public class BlackJackController {
     }
 
     private List<Nickname> readNicknames() {
-        final String inputNicknames = InputView.readPlayerName();
-        return Arrays.stream(inputNicknames.split(","))
+        final List<String> inputNicknames = InputView.readPlayersName();
+        return inputNicknames.stream()
                 .map(Nickname::new)
                 .toList();
     }
