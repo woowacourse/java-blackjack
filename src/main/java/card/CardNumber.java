@@ -33,6 +33,10 @@ public enum CardNumber {
         this(List.of(value1, value2));
     }
 
+    public boolean isSame(CardNumber cardNumber) {
+        return this.equals(cardNumber);
+    }
+
     public int getValue() {
         return values.getFirst();
     }
