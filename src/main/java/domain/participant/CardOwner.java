@@ -1,13 +1,31 @@
 package domain.participant;
 
 import domain.card.Card;
+import domain.card.Hand;
+import java.util.List;
 
-public interface CardOwner {
-    void receive(final Card card);
+public abstract class CardOwner {
+    private final Hand ownedHand;
 
-    boolean canReceive();
+    protected CardOwner(Hand ownedHand) {
+        this.ownedHand = ownedHand;
+    }
 
-    int calculateScore();
+    abstract boolean canReceive();
 
-    int countCard();
+    public void receive(final Card card) {
+        ownedHand.add(card);
+    }
+
+    public int calculateScore() {
+        return ownedHand.calculateScore();
+    }
+
+    public int countCard() {
+        return ownedHand.getSize();
+    }
+
+    public List<Card> getOwnedCards() {
+        return ownedHand.getCards();
+    }
 }

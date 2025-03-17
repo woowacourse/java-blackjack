@@ -5,15 +5,12 @@ import static domain.BlackjackGame.DEALER_MIN_SCORE;
 import static domain.BlackjackGame.INITIAL_CARDS;
 
 import domain.BlackjackGame;
-import domain.card.Card;
 import domain.card.Hand;
-import java.util.List;
 
-public class Dealer implements CardOwner {
-    private final Hand ownedHand;
+public class Dealer extends CardOwner {
 
     private Dealer() {
-        this.ownedHand = Hand.of();
+        super(Hand.of());
     }
 
     public static Dealer of() {
@@ -29,26 +26,7 @@ public class Dealer implements CardOwner {
     }
 
     @Override
-    public void receive(Card card) {
-        ownedHand.add(card);
-    }
-
-    @Override
     public boolean canReceive() {
         return (calculateScore() <= DEALER_MIN_SCORE);
-    }
-
-    @Override
-    public int calculateScore() {
-        return ownedHand.calculateScore();
-    }
-
-    @Override
-    public int countCard() {
-        return ownedHand.getSize();
-    }
-
-    public List<Card> getOwnedCards() {
-        return ownedHand.getCards();
     }
 }
