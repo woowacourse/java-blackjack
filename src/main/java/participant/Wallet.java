@@ -16,9 +16,18 @@ public class Wallet {
         return new Wallet(Money.of(0), Money.of(bettingMoney), Profit.of(0));
     }
 
-    public void updateMoney(double rate) {
-        this.earnedMoney = bettingMoney.add(bettingMoney.multiply(rate).getAmount());
+    public void addMoney(int money) {
+        this.earnedMoney = bettingMoney.add(money);
         this.profit = Profit.from(bettingMoney, earnedMoney);
+    }
+
+    public void subtractMoney(int money) {
+        this.earnedMoney = bettingMoney.minus(money);
+        this.profit = Profit.from(bettingMoney, earnedMoney);
+    }
+
+    public int getBettingMoney() {
+        return bettingMoney.getAmount();
     }
 
     public int getEarnedMoney() {
