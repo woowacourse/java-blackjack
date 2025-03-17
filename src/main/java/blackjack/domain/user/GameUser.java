@@ -31,7 +31,7 @@ public class GameUser {
         return hand.calculateTotalPoint();
     }
 
-    public String getNickname() {
-        return nickname.getValue();
+    public Nickname getNickname() {
+        return nickname;
     }
 }

@@ -1,9 +1,10 @@
 package blackjack.domain.io;
 
 import blackjack.domain.game.PlayerProfit;
-import blackjack.domain.value.BettingAmount;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
+import blackjack.domain.value.BettingAmount;
+import blackjack.domain.value.Nickname;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -12,8 +13,8 @@ import java.util.function.Function;
 public class GameInputOutput {
 
     private final BiConsumer<Dealer, List<Player>> printInitialHandsMethod;
-    private final Function<String, Boolean> readWannaHitMethod;
-    private final Function<String, BettingAmount> readBettingAmountMethod;
+    private final Function<Nickname, Boolean> readWannaHitMethod;
+    private final Function<Nickname, BettingAmount> readBettingAmountMethod;
     private final Consumer<Player> printHitResultMethod;
     private final Consumer<Integer> printDealerDrawingMethod;
     private final BiConsumer<Dealer, List<Player>> printFinalHandsMethod;
@@ -21,8 +22,8 @@ public class GameInputOutput {
 
     public GameInputOutput(
             BiConsumer<Dealer, List<Player>> printInitialHandsMethod,
-            Function<String, Boolean> readWannaHitMethod,
-            Function<String, BettingAmount> readBettingAmountMethod,
+            Function<Nickname, Boolean> readWannaHitMethod,
+            Function<Nickname, BettingAmount> readBettingAmountMethod,
             Consumer<Player> printHitResultMethod,
             Consumer<Integer> printDealerDrawingMethod,
             BiConsumer<Dealer, List<Player>> printFinalHandsMethod,
@@ -41,11 +42,11 @@ public class GameInputOutput {
         printInitialHandsMethod.accept(dealer, players);
     }
 
-    public boolean readIngWannaHit(String nickname) {
+    public boolean readIngWannaHit(Nickname nickname) {
         return readWannaHitMethod.apply(nickname);
     }
 
-    public BettingAmount readBettingAmount(String nickname) {
+    public BettingAmount readBettingAmount(Nickname nickname) {
         return readBettingAmountMethod.apply(nickname);
     }
 

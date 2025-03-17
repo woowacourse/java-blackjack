@@ -36,7 +36,7 @@ class BlackJackGameTest {
         List<Player> players = gameUserStorage.getPlayers();
         assertThat(players)
                 .extracting(Player::getNickname)
-                .containsExactlyInAnyOrder("쿠키", "빙봉");
+                .containsExactlyInAnyOrderElementsOf(NICKNAMES);
     }
 
     @Test

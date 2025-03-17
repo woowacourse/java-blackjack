@@ -24,7 +24,7 @@ class GameUserStorageTest {
 
         assertThat(gameUserStorage.getPlayers())
                 .extracting(Player::getNickname)
-                .containsExactlyInAnyOrder("쿠키", "빙봉");
+                .containsExactlyInAnyOrderElementsOf(NICKNAMES);
     }
 
     @Test

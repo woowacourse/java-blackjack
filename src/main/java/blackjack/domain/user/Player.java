@@ -55,11 +55,11 @@ public class Player {
         return gameUser.getPoint();
     }
 
-    public String getNickname() {
+    public Nickname getNickname() {
         return gameUser.getNickname();
     }
 
-    public int getBettingAmount() {
-        return bettingAmount.getValue();
+    public BettingAmount getBettingAmount() {
+        return bettingAmount;
     }
 }

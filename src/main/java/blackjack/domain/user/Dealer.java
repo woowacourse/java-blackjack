@@ -36,7 +36,7 @@ public class Dealer {
         return cards.getFirst();
     }
 
-    public String getDealerName() {
+    public Nickname getDealerName() {
         return gameUser.getNickname();
     }
 

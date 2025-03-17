@@ -21,16 +21,16 @@ public class InputView {
         return rawNicknames.stream().map(Nickname::new).toList();
     }
 
-    public BettingAmount readBettingAmount(String nickname) {
-        String content = String.format("%s의 배팅 금액은?", nickname);
+    public BettingAmount readBettingAmount(Nickname nickname) {
+        String content = String.format("%s의 배팅 금액은?", nickname.getValue());
         System.out.println(content);
         String input = scanner.nextLine();
         validateNonNumericInput(input);
         return new BettingAmount(Integer.parseInt(input));
     }
 
-    public boolean readWannaHit(String nickname) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 나머지는 아니오)%n", nickname);
+    public boolean readWannaHit(Nickname nickname) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 나머지는 아니오)%n", nickname.getValue());
         String wannaHit = scanner.nextLine().toUpperCase();
         return wannaHit.equals("Y");
     }

@@ -1,16 +1,18 @@
 package blackjack.domain.game;
 
+import blackjack.domain.value.Nickname;
+
 public final class PlayerProfit {
 
-    private final String nickname;
+    private final Nickname nickname;
     private final int profit;
 
-    public PlayerProfit(String nickname, int profit) {
+    public PlayerProfit(Nickname nickname, int profit) {
         this.nickname = nickname;
         this.profit = profit;
     }
 
-    public String getNickname() {
+    public Nickname getNickname() {
         return nickname;
     }
 

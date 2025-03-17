@@ -4,6 +4,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.game.PlayerProfit;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
+import blackjack.domain.value.Nickname;
 import java.util.List;
 
 public class OutputView {
@@ -47,14 +48,14 @@ public class OutputView {
 
         for (PlayerProfit playerProfit : playerProfits) {
             String playerProfitContent = String.format("%s: %d",
-                    playerProfit.getNickname(), playerProfit.getProfit());
+                    playerProfit.getNickname().getValue(), playerProfit.getProfit());
             System.out.println(playerProfitContent);
         }
     }
 
     private void printCardDistributionHeader(Dealer dealer, List<Player> players) {
-        String dealerNameContent = dealer.getDealerName();
-        List<String> playerNicknames = players.stream()
+        String dealerNameContent = dealer.getDealerName().getValue();
+        List<Nickname> playerNicknames = players.stream()
                 .map(Player::getNickname)
                 .toList();
         String playerNameContent = makeNicknamesContent(playerNicknames);
@@ -67,16 +68,17 @@ public class OutputView {
         System.out.println(dealerContent);
     }
 
-    private String makeCardContent(String nickname, List<Card> cardsByPlayer) {
+    private String makeCardContent(Nickname nickname, List<Card> cardsByPlayer) {
         List<String> cards = cardsByPlayer.stream()
                 .map(card -> card.getValue().getDescription() + card.getShape())
                 .toList();
         String cardContents = String.join(", ", cards);
-        return String.format("%s카드: %s", nickname, cardContents);
+        return String.format("%s카드: %s", nickname.getValue(), cardContents);
     }
 
-    private String makeNicknamesContent(List<String> nicknames) {
-        return String.join(", ", nicknames);
+    private String makeNicknamesContent(List<Nickname> nicknames) {
+        List<String> nicknameContents = nicknames.stream().map(Nickname::getValue).toList();
+        return String.join(", ", nicknameContents);
     }
 
     private String makeDealerProfitContent(List<PlayerProfit> playerProfits) {

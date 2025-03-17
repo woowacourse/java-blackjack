@@ -5,11 +5,12 @@ import blackjack.domain.io.GameInputOutput;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
 import blackjack.domain.value.BettingAmount;
+import blackjack.domain.value.Nickname;
 import java.util.List;
 
 public class GameInputOutputMock extends GameInputOutput {
 
-    public static final int BETTING_AMOUNT = 10000;
+    public static final BettingAmount BETTING_AMOUNT = new BettingAmount(1000);
 
     public GameInputOutputMock() {
         super(null, null, null,
@@ -21,13 +22,13 @@ public class GameInputOutputMock extends GameInputOutput {
     }
 
     @Override
-    public boolean readIngWannaHit(String nickname) {
+    public boolean readIngWannaHit(Nickname nickname) {
         return true;
     }
 
     @Override
-    public BettingAmount readBettingAmount(String nickname) {
-        return new BettingAmount(10000);
+    public BettingAmount readBettingAmount(Nickname nickname) {
+        return BETTING_AMOUNT;
     }
 
     @Override

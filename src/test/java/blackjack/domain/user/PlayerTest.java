@@ -31,7 +31,7 @@ class PlayerTest {
         BettingAmount expectedBettingAmount = new BettingAmount(1000);
         player.addBettingAmount(expectedBettingAmount);
 
-        assertThat(player.getBettingAmount()).isEqualTo(expectedBettingAmount.getValue());
+        assertThat(player.getBettingAmount()).isEqualTo(expectedBettingAmount);
     }
 
     @Test
@@ -104,7 +104,7 @@ class PlayerTest {
         int expectedProfit = PlayerFixture.DEFAULT_BETTING_AMOUNT.calculateMultiplication(
                 GameResultType.WIN_WITH_INITIAL_HAND_BLACKJACK.getProfitRate());
         assertAll(
-                () -> assertThat(profit.getNickname()).isEqualTo("플레이어"),
+                () -> assertThat(profit.getNickname()).isEqualTo(new Nickname("플레이어")),
                 () -> assertThat(profit.getProfit()).isEqualTo(expectedProfit));
     }
 
@@ -143,7 +143,7 @@ class PlayerTest {
 
         int expectedProfit = PlayerFixture.DEFAULT_BETTING_AMOUNT.calculateMultiplication(expectedType.getProfitRate());
         assertAll(
-                () -> assertThat(profit.getNickname()).isEqualTo("플레이어"),
+                () -> assertThat(profit.getNickname()).isEqualTo(new Nickname("플레이어")),
                 () -> assertThat(profit.getProfit()).isEqualTo(expectedProfit));
     }
 
