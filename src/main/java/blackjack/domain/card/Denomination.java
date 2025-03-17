@@ -2,7 +2,7 @@ package blackjack.domain.card;
 
 import java.util.Set;
 
-public enum CardScore {
+public enum Denomination {
 
     A(1),
     TWO(2),
@@ -18,13 +18,13 @@ public enum CardScore {
     Q(10),
     J(10);
 
-    private static final Set<CardScore> SPECIAL_CARD_SCORE = Set.of(CardScore.A, CardScore.K,
-            CardScore.Q, CardScore.J);
+    private static final Set<Denomination> SPECIAL_CARD_SCORE = Set.of(Denomination.A, Denomination.K,
+            Denomination.Q, Denomination.J);
     private static final int ACE_MAX_NUMBER = 11;
 
     private final int score;
 
-    CardScore(final int score) {
+    Denomination(final int score) {
         this.score = score;
     }
 

@@ -1,8 +1,8 @@
 package blackjack.domain.card.generator;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardScore;
-import blackjack.domain.card.Shape;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,9 +20,9 @@ public final class ShuffleDeckGenerator implements DeckGenerator {
     }
 
     private List<Card> initialize() {
-        return Arrays.stream(Shape.values())
-                .flatMap(shape -> Arrays.stream(CardScore.values())
-                        .map(cardScore -> new Card(shape, cardScore)))
+        return Arrays.stream(Suit.values())
+                .flatMap(suit -> Arrays.stream(Denomination.values())
+                        .map(cardScore -> new Card(suit, cardScore)))
                 .toList();
     }
 }

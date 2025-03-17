@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.card.Hand;
-import blackjack.domain.card.Shape;
+import blackjack.domain.card.Suit;
 import blackjack.domain.participant.Participant;
 import java.util.List;
 import java.util.Map;
@@ -10,11 +10,11 @@ import java.util.stream.Collectors;
 
 public final class ResultView {
 
-    private static final Map<Shape, String> SHAPE_KOREAN = Map.of(
-            Shape.SPADE, "스페이드",
-            Shape.DIAMOND, "다이아몬드",
-            Shape.HEART, "하트",
-            Shape.CLOB, "클로버"
+    private static final Map<Suit, String> SUIT_KOREAN = Map.of(
+            Suit.SPADE, "스페이드",
+            Suit.DIAMOND, "다이아몬드",
+            Suit.HEART, "하트",
+            Suit.CLOB, "클로버"
     );
     private static final String LINE = System.lineSeparator();
     private static final String NAME_FORMAT = "딜러와 %s에게 2장을 나누었습니다.";
@@ -64,7 +64,7 @@ public final class ResultView {
 
     private String makeCardMessage(final Hand hand) {
         return hand.getHand().stream()
-                .map(card -> card.getCardScoreName() + getShapeName(card.getShape()))
+                .map(card -> card.getDenominationName() + getSuitName(card.getSuit()))
                 .collect(Collectors.joining(COMMA));
     }
 
@@ -88,8 +88,8 @@ public final class ResultView {
                 makeCardMessage(entry.getValue()), entry.getValue().calculateResult());
     }
 
-    private String getShapeName(final Shape shape) {
-        return SHAPE_KOREAN.get(shape);
+    private String getSuitName(final Suit suit) {
+        return SUIT_KOREAN.get(suit);
     }
 
     private void showLine(final String line) {

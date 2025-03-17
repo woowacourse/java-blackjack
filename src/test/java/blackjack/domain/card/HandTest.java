@@ -21,7 +21,7 @@ class HandTest {
     @DisplayName("하나의 카드로 hand를 생성한다")
     void createFromOneCard() {
         // Given
-        final Card card = new Card(Shape.CLOB, CardScore.FIVE);
+        final Card card = new Card(Suit.CLOB, Denomination.FIVE);
 
         // When
         Hand hand = new Hand(card);
@@ -70,9 +70,9 @@ class HandTest {
     @DisplayName("부분 카드를 반환한다")
     void subHand() {
         // Given
-        Card firstCard = new Card(Shape.SPADE, CardScore.EIGHT);
-        Card secondCard = new Card(Shape.HEART, CardScore.NINE);
-        Hand hand = new Hand(List.of(firstCard, secondCard, new Card(Shape.HEART, CardScore.A)));
+        Card firstCard = new Card(Suit.SPADE, Denomination.EIGHT);
+        Card secondCard = new Card(Suit.HEART, Denomination.NINE);
+        Hand hand = new Hand(List.of(firstCard, secondCard, new Card(Suit.HEART, Denomination.A)));
 
         // When & Then
         assertThat(hand.subHand(0, 2)).isEqualTo(new Hand(List.of(firstCard, secondCard)));
@@ -86,9 +86,9 @@ class HandTest {
     @DisplayName("부분 카드 반환시 인덱스의 범위가 넘어간다면 예외가 발생한다")
     void subHandFailOutOfRange(final int startInclusive, final int endExclusive) {
         // Given
-        Card firstCard = new Card(Shape.SPADE, CardScore.EIGHT);
-        Card secondCard = new Card(Shape.HEART, CardScore.NINE);
-        Hand hand = new Hand(List.of(firstCard, secondCard, new Card(Shape.HEART, CardScore.A)));
+        Card firstCard = new Card(Suit.SPADE, Denomination.EIGHT);
+        Card secondCard = new Card(Suit.HEART, Denomination.NINE);
+        Hand hand = new Hand(List.of(firstCard, secondCard, new Card(Suit.HEART, Denomination.A)));
 
         // When & Then
         Assertions.assertThatThrownBy(() -> hand.subHand(startInclusive, endExclusive))
@@ -100,9 +100,9 @@ class HandTest {
     @DisplayName("부분 카드 반환시 시작 인덱스가 끝 인덱스보다 크다면 예외가 발생한다")
     void subHandFailInvalidEndIndex() {
         // Given
-        Card firstCard = new Card(Shape.SPADE, CardScore.EIGHT);
-        Card secondCard = new Card(Shape.HEART, CardScore.NINE);
-        Hand hand = new Hand(List.of(firstCard, secondCard, new Card(Shape.HEART, CardScore.A)));
+        Card firstCard = new Card(Suit.SPADE, Denomination.EIGHT);
+        Card secondCard = new Card(Suit.HEART, Denomination.NINE);
+        Hand hand = new Hand(List.of(firstCard, secondCard, new Card(Suit.HEART, Denomination.A)));
 
         // When & Then
         Assertions.assertThatThrownBy(() -> hand.subHand(2, 0))

@@ -27,17 +27,17 @@ class DeckTest {
     void drawInitialCards() {
         // given
         final Deck deck = new Deck(() -> new ArrayDeque<>(Arrays.asList(
-                new Card(Shape.CLOB, CardScore.A),
-                new Card(Shape.DIAMOND, CardScore.SIX))));
+                new Card(Suit.CLOB, Denomination.A),
+                new Card(Suit.DIAMOND, Denomination.SIX))));
 
         // when
         final Hand hand = deck.drawInitialCards(2);
 
         // then
         assertAll(
-                () -> assertThat(hand.getFirstCard()).isEqualTo(new Card(Shape.CLOB, CardScore.A)),
+                () -> assertThat(hand.getFirstCard()).isEqualTo(new Card(Suit.CLOB, Denomination.A)),
                 () -> assertThat(hand.subHand(1, hand.getSize())).isEqualTo(
-                        new Hand(List.of(new Card(Shape.DIAMOND, CardScore.SIX))))
+                        new Hand(List.of(new Card(Suit.DIAMOND, Denomination.SIX))))
         );
     }
 }

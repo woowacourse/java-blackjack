@@ -1,9 +1,9 @@
 package blackjack.fixture;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardScore;
+import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Hand;
-import blackjack.domain.card.Shape;
+import blackjack.domain.card.Suit;
 import blackjack.domain.card.generator.DeckGenerator;
 import blackjack.domain.card.generator.ShuffleDeckGenerator;
 import blackjack.domain.participant.Players;
@@ -33,33 +33,33 @@ public class TestFixture {
     }
 
     public static Hand provideUnder16Cards() {
-        return new Hand(List.of(new Card(Shape.SPADE, CardScore.TWO),
-                new Card(Shape.SPADE, CardScore.FOUR)));
+        return new Hand(List.of(new Card(Suit.SPADE, Denomination.TWO),
+                new Card(Suit.SPADE, Denomination.FOUR)));
     }
 
     public static Hand provideBlackjack() {
-        return new Hand(List.of(new Card(Shape.SPADE, CardScore.TEN),
-                new Card(Shape.HEART, CardScore.A)));
+        return new Hand(List.of(new Card(Suit.SPADE, Denomination.TEN),
+                new Card(Suit.HEART, Denomination.A)));
     }
 
     public static Hand provideSmallerAceCards() {
-        return new Hand(List.of(new Card(Shape.SPADE, CardScore.EIGHT),
-                new Card(Shape.HEART, CardScore.NINE),
-                new Card(Shape.HEART, CardScore.A)
+        return new Hand(List.of(new Card(Suit.SPADE, Denomination.EIGHT),
+                new Card(Suit.HEART, Denomination.NINE),
+                new Card(Suit.HEART, Denomination.A)
         ));
     }
 
     public static Hand provideBiggerAceCards() {
-        return new Hand(List.of(new Card(Shape.SPADE, CardScore.K),
-                new Card(Shape.HEART, CardScore.A)
+        return new Hand(List.of(new Card(Suit.SPADE, Denomination.K),
+                new Card(Suit.HEART, Denomination.A)
         ));
     }
 
     public static Hand provideBiggerAndSmallerAceCards() {
-        return new Hand(List.of(new Card(Shape.SPADE, CardScore.A),
-                new Card(Shape.HEART, CardScore.A),
-                new Card(Shape.HEART, CardScore.TWO),
-                new Card(Shape.HEART, CardScore.THREE)
+        return new Hand(List.of(new Card(Suit.SPADE, Denomination.A),
+                new Card(Suit.HEART, Denomination.A),
+                new Card(Suit.HEART, Denomination.TWO),
+                new Card(Suit.HEART, Denomination.THREE)
         ));
     }
 
@@ -68,6 +68,6 @@ public class TestFixture {
     }
 
     public static Hand provide16Cards() {
-        return new Hand(List.of(new Card(Shape.CLOB, CardScore.A), new Card(Shape.CLOB, CardScore.SIX)));
+        return new Hand(List.of(new Card(Suit.CLOB, Denomination.A), new Card(Suit.CLOB, Denomination.SIX)));
     }
 }

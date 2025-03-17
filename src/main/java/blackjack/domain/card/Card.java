@@ -4,16 +4,16 @@ import java.util.Objects;
 
 public final class Card {
 
-    private final Shape shape;
-    private final CardScore cardScore;
+    private final Suit suit;
+    private final Denomination denomination;
 
-    public Card(final Shape shape, final CardScore cardScore) {
-        this.shape = shape;
-        this.cardScore = cardScore;
+    public Card(final Suit suit, final Denomination denomination) {
+        this.suit = suit;
+        this.denomination = denomination;
     }
 
     public boolean isAce() {
-        return this.cardScore == CardScore.A;
+        return this.denomination == Denomination.A;
     }
 
     @Override
@@ -21,27 +21,27 @@ public final class Card {
         if (!(o instanceof final Card card)) {
             return false;
         }
-        return shape == card.shape && cardScore == card.cardScore;
+        return suit == card.suit && denomination == card.denomination;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(shape, cardScore);
+        return Objects.hash(suit, denomination);
     }
 
-    public Shape getShape() {
-        return shape;
+    public Suit getSuit() {
+        return suit;
     }
 
-    public String getCardScoreName() {
-        return cardScore.getName();
+    public String getDenominationName() {
+        return denomination.getName();
     }
 
     public int getCardMinNumber() {
-        return cardScore.getMinNumber();
+        return denomination.getMinNumber();
     }
 
     public int getCardMaxNumber() {
-        return cardScore.getMaxNumber();
+        return denomination.getMaxNumber();
     }
 }
