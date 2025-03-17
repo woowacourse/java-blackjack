@@ -13,12 +13,7 @@ class PlayerTest {
     @Test
     void 플레이어는_이름과_카드를_가지고_있어야_한다() {
         // given
-        Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
-        Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
-
-        Hand hand = new Hand();
-        hand.takeCard(card1);
-        hand.takeCard(card2);
+        Hand hand = new Hand(new Card(CardSuit.CLUB, CardRank.ACE));
 
         // when & then
         assertThatCode(() -> new Player("히로", hand, new BetAmount(1_000)))
@@ -30,10 +25,7 @@ class PlayerTest {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
-        Hand hand = new Hand();
-
-        hand.takeCard(card1);
-        hand.takeCard(card2);
+        Hand hand = new Hand(card1, card2);
 
         Player player = new Player("꾹이", hand, new BetAmount(1_000));
 
@@ -48,10 +40,7 @@ class PlayerTest {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
-        Hand hand = new Hand();
-
-        hand.takeCard(card1);
-        hand.takeCard(card2);
+        Hand hand = new Hand(card1, card2);
 
         Card newCard = new Card(CardSuit.SPADE, CardRank.KING);
         Player player = new Player("꾹이", hand, new BetAmount(1_000));
@@ -68,12 +57,10 @@ class PlayerTest {
     @Test
     void 플레이어는_카드의_합이_21이하일_때만_카드를_더_뽑을_수_있다() {
         // given
-        Hand hand = new Hand();
-
-        Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
-        Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
-        hand.takeCard(card1);
-        hand.takeCard(card2);
+        Hand hand = new Hand(
+                new Card(CardSuit.CLUB, CardRank.ACE),
+                new Card(CardSuit.DIAMOND, CardRank.FIVE)
+        );
 
         Player player = new Player("히로", hand, new BetAmount(1_000));
 
@@ -99,12 +86,11 @@ class PlayerTest {
     @Test
     void 플레이어는_가장_처음에_두장을_공개한다() {
         // given
-        Player player = new Player("히로", new Hand(), new BetAmount(1_000));
-        Card card1 = new Card(CardSuit.SPADE, CardRank.TWO);
-        Card card2 = new Card(CardSuit.HEART, CardRank.TWO);
-
-        player.takeCard(card1);
-        player.takeCard(card2);
+        Hand hand = new Hand(
+                new Card(CardSuit.SPADE, CardRank.TWO),
+                new Card(CardSuit.HEART, CardRank.TWO)
+        );
+        Player player = new Player("히로", hand, new BetAmount(1_000));
 
         // when
         List<Card> startingCards = player.getStartingCards();

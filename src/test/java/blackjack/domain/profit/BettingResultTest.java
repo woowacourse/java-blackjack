@@ -3,10 +3,9 @@ package blackjack.domain.profit;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
-import blackjack.domain.game.Dealer;
+import blackjack.domain.game.BetAmount;
 import blackjack.domain.game.Hand;
 import blackjack.domain.game.Player;
-import blackjack.domain.game.BetAmount;
 import blackjack.domain.result.GameResult;
 import blackjack.domain.result.GameResultType;
 import blackjack.domain.result.PlayerResult;
@@ -30,10 +29,9 @@ class BettingResultTest {
     void 무승부인_경우_수익은_0이_된다() {
         // given
         Player player = new Player("히로", new Hand(), new BetAmount(1_000));
-
-        PlayerResults playerResults = new PlayerResults();
-        playerResults.add(new PlayerResult(player, new GameResult(GameResultType.TIE, false), new Score(player)));
-
+        PlayerResults playerResults = new PlayerResults(
+                new PlayerResult(player, new GameResult(GameResultType.TIE, false), new Score(player))
+        );
         PlayerProfits playerProfits = bettingResult.getPlayerProfits();
 
         // when
@@ -47,15 +45,14 @@ class BettingResultTest {
     @Test
     void 플레이어가_블랙잭으로_이긴_경우_플레이어는_수익을_얻고_딜러는_잃는다() {
         // given
-        Hand playerHand = new Hand();
+        Hand playerHand = new Hand(
+                new Card(CardSuit.HEART, CardRank.ACE), new Card(CardSuit.HEART, CardRank.TEN)
+        );
         Player player = new Player("히로", playerHand, new BetAmount(1_000));
-        playerHand.takeCard(new Card(CardSuit.HEART, CardRank.ACE));
-        playerHand.takeCard(new Card(CardSuit.HEART, CardRank.TEN));
 
-        PlayerResults playerResults = new PlayerResults();
-        playerResults.add(
-                new PlayerResult(player, new GameResult(GameResultType.WIN, true), new Score(player)));// 블랙잭 조건 충족
-
+        PlayerResults playerResults = new PlayerResults(
+                new PlayerResult(player, new GameResult(GameResultType.WIN, true), new Score(player))
+        );
         PlayerProfits playerProfits = bettingResult.getPlayerProfits();
         DealerProfits dealerProfits = bettingResult.getDealerProfits();
 
@@ -78,9 +75,9 @@ class BettingResultTest {
         Hand playerHand = new Hand();
         Player player = new Player("히로", playerHand, new BetAmount(1_000));
 
-        PlayerResults playerResults = new PlayerResults();
-        playerResults.add(new PlayerResult(player, new GameResult(GameResultType.WIN, false), new Score(player)));
-
+        PlayerResults playerResults = new PlayerResults(
+                new PlayerResult(player, new GameResult(GameResultType.WIN, false), new Score(player))
+        );
         PlayerProfits playerProfits = bettingResult.getPlayerProfits();
         DealerProfits dealerProfits = bettingResult.getDealerProfits();
 
@@ -103,10 +100,9 @@ class BettingResultTest {
         Hand playerHand = new Hand();
         Player player = new Player("히로", playerHand, new BetAmount(1_000));
 
-        Dealer dealer = new Dealer(new Hand());
-
-        PlayerResults playerResults = new PlayerResults();
-        playerResults.add(new PlayerResult(player, new GameResult(GameResultType.LOSE, false), new Score(player)));
+        PlayerResults playerResults = new PlayerResults(
+                new PlayerResult(player, new GameResult(GameResultType.LOSE, false), new Score(player))
+        );
 
         PlayerProfits playerProfits = bettingResult.getPlayerProfits();
         DealerProfits dealerProfits = bettingResult.getDealerProfits();

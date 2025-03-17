@@ -1,9 +1,9 @@
 package blackjack.domain.cardholder;
 
-import blackjack.domain.game.Hand;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardRank;
 import blackjack.domain.card.CardSuit;
+import blackjack.domain.game.Hand;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
@@ -15,9 +15,7 @@ class HandTest {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
-        Hand hand = new Hand();
-        hand.takeCard(card1);
-        hand.takeCard(card2);
+        Hand hand = new Hand(card1, card2);
 
         Card newCard = new Card(CardSuit.SPADE, CardRank.KING);
 
@@ -33,9 +31,7 @@ class HandTest {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.ACE);
-        Hand hand = new Hand();
-        hand.takeCard(card1);
-        hand.takeCard(card2);
+        Hand hand = new Hand(card1, card2);
 
         // when
         List<Integer> totalValues = hand.calculatePossibleSums();
@@ -49,9 +45,7 @@ class HandTest {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
-        Hand hand = new Hand();
-        hand.takeCard(card1);
-        hand.takeCard(card2);
+        Hand hand = new Hand(card1, card2);
 
         // when
         List<Card> cards = hand.getAllCards();

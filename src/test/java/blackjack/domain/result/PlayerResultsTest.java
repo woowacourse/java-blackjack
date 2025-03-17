@@ -10,12 +10,11 @@ class PlayerResultsTest {
     @Test
     void 플레이어에_해당하는_결과를_반환한다() {
         // given
-        PlayerResults playerResults = new PlayerResults();
 
         Player player = new Player("히로", new Hand(), new BetAmount(1_000));
         PlayerResult savedResult = new PlayerResult(player, new GameResult(GameResultType.TIE, false),
                 new Score(player));
-        playerResults.add(savedResult);
+        PlayerResults playerResults = new PlayerResults(savedResult);
 
         // when
         PlayerResult foundResult = playerResults.findResultByPlayer(player);

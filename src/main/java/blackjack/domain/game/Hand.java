@@ -2,6 +2,7 @@ package blackjack.domain.game;
 
 import blackjack.domain.card.Card;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -16,6 +17,10 @@ public class Hand {
 
     public Hand() {
         this.cards = new ArrayList<>();
+    }
+
+    public Hand(Card... cards) {
+        this.cards = new ArrayList<>(Arrays.stream(cards).toList());
     }
 
     public List<Card> getAllCards() {

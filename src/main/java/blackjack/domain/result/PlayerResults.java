@@ -2,6 +2,7 @@ package blackjack.domain.result;
 
 import blackjack.domain.game.Player;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PlayerResults {
@@ -9,6 +10,10 @@ public class PlayerResults {
 
     public PlayerResults() {
         this.playerResults = new ArrayList<>();
+    }
+
+    public PlayerResults(PlayerResult... playerResults) {
+        this.playerResults = new ArrayList<>(Arrays.asList(playerResults));
     }
 
     public void add(PlayerResult playerResult) {
