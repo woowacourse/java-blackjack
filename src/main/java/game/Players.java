@@ -3,7 +3,6 @@ package game;
 import static card.CardDeck.DRAW_COUNT_WHEN_START;
 
 import card.CardDeck;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -39,20 +38,6 @@ public class Players {
         if (uniquePlayers.size() != players.size()) {
             throw new IllegalArgumentException("[ERROR] 중복된 플레이어 이름입니다.");
         }
-    }
-
-    public List<GameResult> judgeGameResult(Dealer dealer) {
-        List<GameResult> gameResults = new ArrayList<>();
-        for (Player player : players) {
-            gameResults.add(GameResult.of(dealer, player));
-        }
-        return gameResults;
-    }
-
-    public List<Integer> evaluate(List<GameResult> gameResults) {
-        return IntStream.range(0, players.size())
-                .mapToObj(i -> players.get(i).evaluate(gameResults.get(i)))
-                .toList();
     }
 
     public void draw(CardDeck cardDeck) {

@@ -100,15 +100,24 @@ public class DealerTest {
     @Test
     void 딜러의_수익을_계산한다() {
         //given
+        CardDeck cardDeck = CardDeck.prepareDeck(cards -> cards);
+
+        Player player1 = new Player("a", 1000);
+        Player player2 = new Player("b", 2000);
+        Players players = new Players(List.of(player1, player2));
+        player1.draw(List.of(new Card(Pattern.CLOVER, CardNumber.EIGHT)));
+        player2.draw(List.of(new Card(Pattern.CLOVER, CardNumber.TEN)));
+
         Dealer dealer = new Dealer();
-        List<Integer> playerProfits = List.of(
-                1000, 2000, -5000);
+        dealer.draw(List.of(new Card(Pattern.CLOVER, CardNumber.NINE)));
+
+        Profits profits = Profits.of(players, GameResults.of(dealer, players));
 
         //when
-        int profit = dealer.evaluate(playerProfits);
+        int dealerProfit = profits.evaluateDealerProfit();
 
         //then
-        assertThat(profit).isEqualTo(2000);
+        assertThat(dealerProfit).isEqualTo(-1000);
     }
 
 }

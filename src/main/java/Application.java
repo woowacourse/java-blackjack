@@ -5,9 +5,10 @@ import card.Card;
 import card.CardDeck;
 import card.RandomCardShuffler;
 import game.Dealer;
-import game.GameResult;
+import game.GameResults;
 import game.Player;
 import game.Players;
+import game.Profits;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -42,13 +43,13 @@ public class Application {
         }
         outputView.printHitProcess(dealer, players);
 
-        List<GameResult> gameResults = players.judgeGameResult(dealer);
-        List<Integer> playerProfits = players.evaluate(gameResults);
+        GameResults gameResults = GameResults.of(dealer, players);
+        Profits profits = Profits.of(players, gameResults);
 
-        int dealerProfit = dealer.evaluate(playerProfits);
+        int dealerProfit = profits.evaluateDealerProfit();
 
         outputView.printDealerProfit(dealerProfit);
-        outputView.printPlayersProfit(players.getAllPlayerNames(), playerProfits);
+        outputView.printPlayersProfit(players.getAllPlayerNames(), profits.getProfits());
     }
 
 }

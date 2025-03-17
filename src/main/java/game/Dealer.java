@@ -41,10 +41,5 @@ public class Dealer {
     public boolean isBlackJack() {
         return hand.isBlackJack();
     }
-
-    public int evaluate(List<Integer> playerProfits) {
-        return (-1) * playerProfits.stream()
-                .mapToInt(Integer::intValue)
-                .sum();
-    }
+    
 }

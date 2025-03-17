@@ -106,10 +106,10 @@ public class PlayersTest {
                 new Card(Pattern.CLOVER, CardNumber.NINE)));
 
         //when
-        List<GameResult> gameResult = players.judgeGameResult(dealer);
+        GameResults gameResults = GameResults.of(dealer, players);
 
         //then
-        Assertions.assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.LOSE));
+        Assertions.assertThat(gameResults.getGameResults()).containsExactlyElementsOf(List.of(GameResult.LOSE));
     }
 
     @Test
@@ -129,10 +129,10 @@ public class PlayersTest {
                 new Card(Pattern.HEART, CardNumber.TWO)));
 
         //when
-        List<GameResult> gameResult = players.judgeGameResult(dealer);
+        GameResults gameResults = GameResults.of(dealer, players);
 
         //then
-        Assertions.assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.LOSE));
+        Assertions.assertThat(gameResults.getGameResults()).containsExactlyElementsOf(List.of(GameResult.LOSE));
     }
 
     @Test
@@ -151,10 +151,10 @@ public class PlayersTest {
                 new Card(Pattern.DIAMOND, CardNumber.TEN)));
 
         //when
-        List<GameResult> gameResult = players.judgeGameResult(dealer);
+        GameResults gameResults = GameResults.of(dealer, players);
 
         //then
-        Assertions.assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.WIN));
+        Assertions.assertThat(gameResults.getGameResults()).containsExactlyElementsOf(List.of(GameResult.WIN));
     }
 
     @Test
@@ -172,10 +172,10 @@ public class PlayersTest {
                 new Card(Pattern.CLOVER, CardNumber.ACE)));
 
         //when
-        List<GameResult> gameResult = players.judgeGameResult(dealer);
+        GameResults gameResults = GameResults.of(dealer, players);
 
         //then
-        Assertions.assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.DRAW));
+        Assertions.assertThat(gameResults.getGameResults()).containsExactlyElementsOf(List.of(GameResult.DRAW));
     }
 
     @Test
@@ -193,10 +193,10 @@ public class PlayersTest {
                 new Card(Pattern.DIAMOND, CardNumber.TEN)));
 
         //when
-        List<GameResult> gameResult = players.judgeGameResult(dealer);
+        GameResults gameResults = GameResults.of(dealer, players);
 
         //then
-        Assertions.assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.LOSE));
+        Assertions.assertThat(gameResults.getGameResults()).containsExactlyElementsOf(List.of(GameResult.LOSE));
     }
 
     @Test
@@ -214,10 +214,10 @@ public class PlayersTest {
                 new Card(Pattern.DIAMOND, CardNumber.ACE)));
 
         //when
-        List<GameResult> gameResult = players.judgeGameResult(dealer);
+        GameResults gameResults = GameResults.of(dealer, players);
 
         //then
-        Assertions.assertThat(gameResult).containsExactlyElementsOf(List.of(GameResult.BLACKJACK));
+        Assertions.assertThat(gameResults.getGameResults()).containsExactlyElementsOf(List.of(GameResult.BLACKJACK));
     }
 
     @Test
@@ -232,9 +232,9 @@ public class PlayersTest {
                 GameResult.BLACKJACK, GameResult.WIN, GameResult.DRAW, GameResult.LOSE);
 
         //when
-        List<Integer> profits = players.evaluate(gameResults);
+        Profits profits = Profits.of(players, new GameResults(gameResults));
 
         //then
-        assertThat(profits).containsExactlyElementsOf(List.of(1500, 1000, 0, -1000));
+        assertThat(profits.getProfits()).containsExactlyElementsOf(List.of(1500, 1000, 0, -1000));
     }
 }
