@@ -1,8 +1,9 @@
 package blackjack.controller;
 
-import blackjack.model.player.Participant;
-import blackjack.model.player.Participants;
+import blackjack.model.player.PlayerName;
+
 import java.util.Arrays;
+import java.util.List;
 
 public class Parser {
 
@@ -10,12 +11,12 @@ public class Parser {
     public static final String ANSWER_YES = "y";
     public static final String ANSWER_NO = "n";
 
-    public static Participants parseParticipants(final String names) {
-        String[] splittedNames = names.split(NAME_DELIMITER);
+    public static List<PlayerName> parseNames(final String namesText) {
+        String[] splittedNames = namesText.split(NAME_DELIMITER);
         validateNameCount(splittedNames);
-        return new Participants(Arrays.stream(splittedNames)
-                .map(name -> new Participant(name.trim()))
-                .toList());
+        return Arrays.stream(splittedNames)
+                .map(name -> new PlayerName(name.trim()))
+                .toList();
     }
 
     private static void validateNameCount(final String[] splittedNames) {

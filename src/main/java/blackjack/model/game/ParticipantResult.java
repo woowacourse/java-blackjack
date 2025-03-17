@@ -2,6 +2,11 @@ package blackjack.model.game;
 
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
+import blackjack.model.player.Participants;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public enum ParticipantResult {
     WIN("승"),
@@ -37,7 +42,12 @@ public enum ParticipantResult {
         return DRAW;
     }
 
-    public String getDescription() {
-        return description;
+    public static Map<Participant, ParticipantResult> calculateParticipantResults(final Dealer dealer, final Participants participants) {
+        Map<Participant, ParticipantResult> participantResults = new HashMap<>();
+        for (Participant participant : participants.getParticipants()) {
+            ParticipantResult participantResult = ParticipantResult.of(dealer, participant);
+            participantResults.put(participant, participantResult);
+        }
+        return participantResults;
     }
 }

@@ -1,13 +1,11 @@
 package blackjack.view;
 
 import blackjack.model.card.Card;
-import blackjack.model.game.ParticipantResult;
 import blackjack.model.game.ReceivedCards;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
 import blackjack.model.player.Participants;
 import blackjack.model.player.Player;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -28,10 +26,8 @@ public class OutputView {
 
     private static String makeFirstDistributionPlayersText(final Participants participants) {
         return String.format(
-                "딜러와 %s에게 2장을 나누었습니다.",
-                participants.getParticipants()
-                        .stream()
-                        .map(Participant::getName)
+                "%n딜러와 %s에게 2장을 나누었습니다.",
+                participants.getAllNames().stream()
                         .collect(Collectors.joining(NAME_DELIMITER))
         );
     }
@@ -48,7 +44,7 @@ public class OutputView {
     }
 
     public void outputPlayerCardStatus(final Player player) {
-        if (player instanceof  Dealer) {
+        if (player instanceof Dealer) {
             System.out.println(makeDealerCardStatusText(generateCardNames(player.getReceivedCards())));
             return;
         }
@@ -85,16 +81,13 @@ public class OutputView {
         System.out.println(LINE + "딜러는 17이상이라 더이상 카드를 받을 수 없습니다." + LINE);
     }
 
-    public void outputFinalResult(final Dealer dealer, final Participants participants) {
-        System.out.println("## 최종 승패");
+    public void outputFinalWinningMoney(final Participants participants, final long dealerMoney, final Map<Participant, Long> winningMoney) {
+        System.out.println("## 최종 수익");
         CustomStringBuilder customStringBuilder = new CustomStringBuilder();
-        Map<ParticipantResult, Integer> winLoseResult = new HashMap<>(Map.of(ParticipantResult.WIN, 0, ParticipantResult.LOSE, 0));
+        customStringBuilder.appendLine(String.format("딜러: %d", dealerMoney));
         for (Participant participant : participants.getParticipants()) {
-            ParticipantResult participantResult = ParticipantResult.of(dealer, participant);
-            customStringBuilder.appendLine(String.format("%s: %s", participant.getName(), participantResult.getDescription()));
-            winLoseResult.merge(participantResult, 1, Integer::sum);
+            customStringBuilder.appendLine(String.format("%s: %s", participant.getName(), winningMoney.get(participant)));
         }
-        System.out.println(String.format("딜러: %d승 %d패", winLoseResult.get(ParticipantResult.LOSE), winLoseResult.get(ParticipantResult.WIN)));
         customStringBuilder.print();
     }
 

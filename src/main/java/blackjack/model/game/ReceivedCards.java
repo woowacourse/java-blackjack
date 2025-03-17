@@ -9,8 +9,9 @@ import java.util.stream.IntStream;
 
 public class ReceivedCards {
 
-    public static final int BUST_LIMIT = 21;
+    public static final int BLACKJACK_POINT = 21;
     public static final int ACE_INCREASABLE_POINT = 10;
+    public static final int BLACKJACK_CARD_COUNT = 2;
     private final List<Card> cards = new ArrayList<>();
 
     public void receive(Card card) {
@@ -46,7 +47,7 @@ public class ReceivedCards {
                 );
     }
 
-    private int plusTenPoint(int currentPoint) {
+    private int plusTenPoint(final int currentPoint) {
         if (isBust(currentPoint + ACE_INCREASABLE_POINT)) {
             return currentPoint;
         }
@@ -58,7 +59,11 @@ public class ReceivedCards {
     }
 
     private boolean isBust(final int point) {
-        return point > BUST_LIMIT;
+        return point > BLACKJACK_POINT;
+    }
+
+    public boolean isBlackJack() {
+        return calculateTotalPoint() == BLACKJACK_POINT && cards.size() == BLACKJACK_CARD_COUNT;
     }
 
     public Card getFirstCard() {

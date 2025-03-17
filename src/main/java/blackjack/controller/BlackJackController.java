@@ -1,12 +1,15 @@
 package blackjack.controller;
 
-import blackjack.model.game.BlackJackGame;
-import blackjack.model.game.DeckInitializer;
+import blackjack.model.BlackJackRule;
+import blackjack.model.game.BettedMoney;
+import blackjack.model.game.Deck;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
 import blackjack.model.player.Participants;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+
+import java.util.Map;
 
 public class BlackJackController {
 
@@ -19,44 +22,64 @@ public class BlackJackController {
     }
 
     public void run() {
-        Participants participants = Parser.parseParticipants(inputView.inputParticipant());
+        Participants participants = generateParticipants();
         Dealer dealer = new Dealer();
-        BlackJackGame blackJackGame = new BlackJackGame(
-                new DeckInitializer(),
-                dealer,
-                participants
-        );
-        blackJackGame.initializeGame();
+        Deck deck = BlackJackRule.generateDeck();
+
+        givePlayersTwoCardsWhenStart(deck, dealer, participants);
+        progressParticipantTurn(participants, deck);
+        progressDealerTurn(dealer, deck);
+        outputFinalResult(dealer, participants);
+    }
+
+    private Participants generateParticipants() {
+        String namesText = inputView.inputParticipantName();
+        return new Participants(Parser.parseNames(namesText).stream()
+                .map(name -> new Participant(name, new BettedMoney(inputView.inputParticipantMoney(name))))
+                .toList());
+    }
+
+    private void givePlayersTwoCardsWhenStart(final Deck deck, final Dealer dealer, final Participants participants) {
+        BlackJackRule.givePlayersTwoCardsWhenStart(deck, dealer, participants);
         outputView.outputFirstCardDistributionResult(participants, dealer);
-        giveMoreCardToWantingParticipants(blackJackGame);
-        giveMoreDealerCard(blackJackGame, dealer);
-        outputView.outputFinalCardStatus(dealer, participants);
-        outputView.outputFinalResult(dealer, participants);
     }
 
-    private void giveMoreCardToWantingParticipants(final BlackJackGame blackJackGame) {
-        while (blackJackGame.canGiveCardToParticipant()) {
-            Participant participant = blackJackGame.getCurrentTurnParticipant();
-            boolean isPlayerWantCard = Parser.parseCommand(inputView.inputCallOrStay(participant.getName()));
-            blackJackGame.giveCardToCurrentTurnParticipant(isPlayerWantCard);
+    private void progressParticipantTurn(final Participants participants, final Deck deck) {
+        for (Participant participant : participants.getParticipants()) {
+            giveCardToParticipantUntilWant(participant, deck);
+        }
+    }
+
+    private void giveCardToParticipantUntilWant(final Participant participant, final Deck deck) {
+        boolean isParticipantWantCard;
+        do {
+            isParticipantWantCard = Parser.parseCommand(inputView.inputCallOrStay(participant.getName()));
+            BlackJackRule.giveCardToParticipantIfWant(participant, isParticipantWantCard, deck);
             outputView.outputPlayerCardStatus(participant);
-            checkBust(blackJackGame, participant);
-        }
+        } while(isParticipantWantCard && isParticipantNotBust(participant));
     }
 
-    private void checkBust(final BlackJackGame blackJackGame, final Participant participant) {
-        if (participant.isBust()) {
+    private boolean isParticipantNotBust(final Participant participant) {
+        if (BlackJackRule.isPlayerBust(participant)) {
             outputView.outputParticipantBust(participant.getName());
-            blackJackGame.skipTurn();
+            return false;
         }
+        return true;
     }
 
-    private void giveMoreDealerCard(final BlackJackGame blackJackGame, final Dealer dealer) {
-        while (blackJackGame.isDealerCardDrawable()) {
-            blackJackGame.drawDealerCard();
+    private void progressDealerTurn(final Dealer dealer, final Deck deck) {
+        while (BlackJackRule.isDealerDrawable(dealer)) {
+            BlackJackRule.giveCard(dealer, deck);
             outputView.outputDealerGetCard();
             outputView.outputPlayerCardStatus(dealer);
         }
         outputView.outputDealerCardFinish();
+    }
+
+    private void outputFinalResult(final Dealer dealer, final Participants participants) {
+        outputView.outputFinalCardStatus(dealer, participants);
+        Map<Participant, Long> winningMoneys = BlackJackRule.calculateWinningMoneys(dealer, participants);
+        long dealerMoney = BlackJackRule.calculateDealerWinningMoney(winningMoneys);
+        outputView.outputFinalWinningMoney(participants, dealerMoney, winningMoneys);
     }
 }

@@ -1,6 +1,7 @@
 package blackjack.model.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.CardShape;
@@ -34,6 +35,18 @@ class DeckTest {
         ));
 
         Card card = deck.drawCard();
-        assertThat(card.getShape()).isEqualTo(CardShape.CLOVER);
+        assertThat(card.getShape()).isEqualTo(CardShape.DIAMOND);
+    }
+
+    @Test
+    void 카드가_다_떨어졌을_경우() {
+        Deck deck = new Deck(List.of(
+                new Card(CardShape.DIAMOND, CardType.ACE)
+        ));
+        deck.drawCard();
+
+        assertThatThrownBy(() -> deck.drawCard())
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("덱에 있는 카드를 모두 사용했습니다.");
     }
 }

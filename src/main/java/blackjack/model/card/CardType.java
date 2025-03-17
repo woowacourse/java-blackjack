@@ -24,6 +24,10 @@ public enum CardType {
         this.point = point;
     }
 
+    boolean isAce() {
+        return this == ACE;
+    }
+
     public String getSymbol() {
         return symbol;
     }
