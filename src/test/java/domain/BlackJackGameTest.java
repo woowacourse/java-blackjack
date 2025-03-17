@@ -3,6 +3,10 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import domain.betting.BatMoney;
+import domain.betting.BatMonies;
+import domain.betting.Revenue;
+import domain.betting.Revenues;
 import domain.card.Card;
 import domain.card.CardBundle;
 import domain.card.CardDeck;
@@ -14,6 +18,7 @@ import domain.participant.Participants;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -238,6 +243,181 @@ class BlackJackGameTest {
         // then
         assertThat(hasReceivedCard).isEqualTo(false);
     }
+
+    @Nested
+    @DisplayName("수익 계산 테스트")
+    class RevenueCase {
+        @Test
+        @DisplayName("플레이어가 블랙잭 승리의 경우 수익을 계산한다")
+        void should_return_revenue_when_player_blackjack_win() {
+            // given
+            String playerName = "a";
+            int batMoneyAmount = 10000;
+            BatMoney batMoney = new BatMoney(playerName, batMoneyAmount);
+            BatMonies batMonies = new BatMonies(List.of(batMoney));
+
+            CardDeck cardDeck = new CardDeck(List.of(
+                    CardFixture.cardOfHeartTwo,
+                    CardFixture.cardOfHeartThree,
+                    CardFixture.cardOfHeartAce,
+                    CardFixture.cardOfHeartKing
+            ));
+            Participants participants = ParticipantsFixture.createParticipants(List.of(playerName));
+            BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
+            blackJackGame.giveCardToDealer();
+            blackJackGame.giveCardToDealer();
+            blackJackGame.giveCardToPlayer(playerName);
+            blackJackGame.giveCardToPlayer(playerName);
+
+            // when
+            Revenues revenues = blackJackGame.calculateRevenue(batMonies);
+
+            // then
+            Revenue playerRevenue = revenues.getRevenues().getFirst();
+            int expected = (int) (batMoneyAmount * 1.5);
+            assertThat(playerRevenue.money()).isEqualTo(expected);
+        }
+
+        @Test
+        @DisplayName("플레이어가 일반적인 승리의 경우 수익을 계산한다")
+        void should_return_revenue_when_player_win() {
+            // given
+            String playerName = "a";
+            int batMoneyAmount = 10000;
+            BatMoney batMoney = new BatMoney(playerName, batMoneyAmount);
+            BatMonies batMonies = new BatMonies(List.of(batMoney));
+
+            CardDeck cardDeck = new CardDeck(List.of(
+                    CardFixture.cardOfHeartTwo,
+                    CardFixture.cardOfHeartThree,
+                    CardFixture.cardOfHeartQueen,
+                    CardFixture.cardOfHeartKing
+            ));
+            Participants participants = ParticipantsFixture.createParticipants(List.of(playerName));
+            BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
+            blackJackGame.giveCardToDealer();
+            blackJackGame.giveCardToDealer();
+            blackJackGame.giveCardToPlayer(playerName);
+            blackJackGame.giveCardToPlayer(playerName);
+
+            // when
+            Revenues revenues = blackJackGame.calculateRevenue(batMonies);
+
+            // then
+            Revenue playerRevenue = revenues.getRevenues().getFirst();
+            int expected = (int) (batMoneyAmount * 1.0);
+            assertThat(playerRevenue.money()).isEqualTo(expected);
+        }
+
+        @Test
+        @DisplayName("플레이어가 무승부인 경우 수익을 계산한다")
+        void should_return_revenue_when_player_draw() {
+            // given
+            String playerName = "a";
+            int batMoneyAmount = 10000;
+            BatMoney batMoney = new BatMoney(playerName, batMoneyAmount);
+            BatMonies batMonies = new BatMonies(List.of(batMoney));
+
+            CardDeck cardDeck = new CardDeck(List.of(
+                    CardFixture.cardOfHeartTwo,
+                    CardFixture.cardOfHeartFive,
+                    CardFixture.cardOfHeartThree,
+                    CardFixture.cardOfHeartFour
+            ));
+            Participants participants = ParticipantsFixture.createParticipants(List.of(playerName));
+            BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
+            blackJackGame.giveCardToDealer();
+            blackJackGame.giveCardToDealer();
+            blackJackGame.giveCardToPlayer(playerName);
+            blackJackGame.giveCardToPlayer(playerName);
+
+            // when
+            Revenues revenues = blackJackGame.calculateRevenue(batMonies);
+
+            // then
+            Revenue playerRevenue = revenues.getRevenues().getFirst();
+            int expected = (int) (batMoneyAmount * 0);
+            assertThat(playerRevenue.money()).isEqualTo(expected);
+        }
+
+        @Test
+        @DisplayName("플레이어가 일반적인 패배의 경우 수익을 계산한다")
+        void should_return_revenue_when_player_lose() {
+            // given
+            String playerName = "a";
+            int batMoneyAmount = 10000;
+            BatMoney batMoney = new BatMoney(playerName, batMoneyAmount);
+            BatMonies batMonies = new BatMonies(List.of(batMoney));
+
+            CardDeck cardDeck = new CardDeck(List.of(
+                    CardFixture.cardOfHeartKing,
+                    CardFixture.cardOfHeartQueen,
+                    CardFixture.cardOfHeartTwo,
+                    CardFixture.cardOfHeartThree
+            ));
+            Participants participants = ParticipantsFixture.createParticipants(List.of(playerName));
+            BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
+            blackJackGame.giveCardToDealer();
+            blackJackGame.giveCardToDealer();
+            blackJackGame.giveCardToPlayer(playerName);
+            blackJackGame.giveCardToPlayer(playerName);
+
+            // when
+            Revenues revenues = blackJackGame.calculateRevenue(batMonies);
+
+            // then
+            Revenue playerRevenue = revenues.getRevenues().getFirst();
+            int expected = (int) (batMoneyAmount * -1.0);
+            assertThat(playerRevenue.money()).isEqualTo(expected);
+        }
+
+        @Test
+        @DisplayName("플레이어가 블랙잭 패배인 경우 수익을 계산한다")
+        void should_return_revenue_when_player_blackjack_lose() {
+            // given
+            String playerName = "a";
+            int batMoneyAmount = 10000;
+            BatMoney batMoney = new BatMoney(playerName, batMoneyAmount);
+            BatMonies batMonies = new BatMonies(List.of(batMoney));
+
+            CardDeck cardDeck = new CardDeck(List.of(
+                    CardFixture.cardOfHeartAce,
+                    CardFixture.cardOfHeartKing,
+                    CardFixture.cardOfHeartQueen,
+                    CardFixture.cardOfHeartJack
+            ));
+            Participants participants = ParticipantsFixture.createParticipants(List.of(playerName));
+            BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
+            blackJackGame.giveCardToDealer();
+            blackJackGame.giveCardToDealer();
+            blackJackGame.giveCardToPlayer(playerName);
+            blackJackGame.giveCardToPlayer(playerName);
+
+            // when
+            Revenues revenues = blackJackGame.calculateRevenue(batMonies);
+
+            // then
+            Revenue playerRevenue = revenues.getRevenues().getFirst();
+            int expected = (int) (batMoneyAmount * -1.0);
+            assertThat(playerRevenue.money()).isEqualTo(expected);
+        }
+    }
+}
+
+class CardFixture {
+    public static Card cardOfHeartAce = new Card(Shape.HEART, Rank.ACE);
+    public static Card cardOfHeartTwo = new Card(Shape.HEART, Rank.TWO);
+    public static Card cardOfHeartThree = new Card(Shape.HEART, Rank.THREE);
+    public static Card cardOfHeartFour = new Card(Shape.HEART, Rank.FOUR);
+    public static Card cardOfHeartFive = new Card(Shape.HEART, Rank.FIVE);
+    public static Card cardOfHeartSix = new Card(Shape.HEART, Rank.SIX);
+    public static Card cardOfHeartSeven = new Card(Shape.HEART, Rank.SEVEN);
+    public static Card cardOfHeartEight = new Card(Shape.HEART, Rank.EIGHT);
+    public static Card cardOfHeartNine = new Card(Shape.HEART, Rank.NINE);
+    public static Card cardOfHeartTen = new Card(Shape.HEART, Rank.TEN);
+    public static Card cardOfHeartJack = new Card(Shape.HEART, Rank.JACK);
+    public static Card cardOfHeartQueen = new Card(Shape.HEART, Rank.QUEEN);
+    public static Card cardOfHeartKing = new Card(Shape.HEART, Rank.KING);
 }
 
 class CardBundleFixture {
