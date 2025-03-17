@@ -8,7 +8,11 @@ public class GameSetupView {
 
     private static final Pattern COMMA_WITH_OPTIONAL_SPACES_PATTERN = Pattern.compile("\\s*,\\s*");
 
-    private final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
+
+    public GameSetupView(Scanner scanner) {
+        this.scanner = scanner;
+    }
 
     public void printStartBanner() {
         System.out.println("""

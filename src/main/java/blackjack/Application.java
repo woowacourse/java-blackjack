@@ -4,6 +4,7 @@ import blackjack.controller.BlackjackController;
 import blackjack.view.GamePlayView;
 import blackjack.view.GameResultView;
 import blackjack.view.GameSetupView;
+import java.util.Scanner;
 
 public class Application {
 
@@ -12,6 +13,10 @@ public class Application {
     }
 
     private static BlackjackController createController() {
-        return new BlackjackController(new GameSetupView(), new GamePlayView(), new GameResultView());
+        Scanner scanner = new Scanner(System.in);
+        return new BlackjackController(
+                new GameSetupView(scanner),
+                new GamePlayView(scanner),
+                new GameResultView());
     }
 }

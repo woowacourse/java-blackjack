@@ -9,7 +9,11 @@ import java.util.stream.Collectors;
 
 public class GamePlayView {
 
-    private final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
+
+    public GamePlayView(Scanner scanner) {
+        this.scanner = scanner;
+    }
 
     public ParticipantAction readHitOrNot(String playerName) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", playerName);
