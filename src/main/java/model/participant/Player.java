@@ -38,7 +38,6 @@ public class Player extends Participant {
         }
     }
 
-    // TODO: DL: 상태패턴: https://www.notion.so/DL-compare-1b6cfbb673e4804685c7f7f9f3ce9504?pvs=4
     private MatchResult compareToScore(Dealer dealer) {
         if (isBlackjack() && dealer.isBlackjack()) {
             return MatchResult.PUSH;
