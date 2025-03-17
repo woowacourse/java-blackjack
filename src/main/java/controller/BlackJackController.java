@@ -9,6 +9,8 @@ import domain.Participant;
 import domain.Participants;
 import domain.ParticipantsResult;
 import domain.Player;
+import domain.betting.BatMoney;
+import domain.betting.BatMonies;
 import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
@@ -26,12 +28,22 @@ public class BlackJackController {
 
     public void start(CardBundle cardBundle) {
         Participants participants = createGameParticipants();
+        BatMonies batMonies = createBatMonies(participants.getPlayerNames());
         CardDeck cardDeck = new CardDeck(cardBundle.getShuffledAllCards());
         BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
         giveStartingCardsToParticipants(blackJackGame);
         processPlayersCardReceiving(blackJackGame);
         processDealerCardReceiving(blackJackGame);
         calculateBackJackResultProcess(participants);
+    }
+
+    private BatMonies createBatMonies(List<String> playerNames) {
+        List<BatMoney> batMonies = new ArrayList<>();
+        for (String playerName : playerNames) {
+            int money = inputView.inputPlayerBatMoney(playerName);
+            batMonies.add(new BatMoney(playerName, money));
+        }
+        return new BatMonies(batMonies);
     }
 
     private void giveStartingCardsToParticipants(BlackJackGame blackJackGame) {

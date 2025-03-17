@@ -23,7 +23,7 @@ public class InputView {
 
     public String inputPlayerWantMoreCard(String playerName) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n"
-            , playerName);
+                , playerName);
 
         String userInput = scanner.nextLine();
         validateIsYOrN(userInput);
@@ -38,9 +38,24 @@ public class InputView {
 
     private void validateIsYOrN(String userInput) {
         if (userInput.equalsIgnoreCase("n") ||
-            userInput.equalsIgnoreCase("y")) {
+                userInput.equalsIgnoreCase("y")) {
             return;
         }
         throw new IllegalArgumentException("입력은 y 혹은 n으로만 가능합니다.");
+    }
+
+    public int inputPlayerBatMoney(String playerName) {
+        String message = String.format("%s의 배팅 금액은?", playerName);
+        System.out.println(message);
+        String input = scanner.nextLine();
+        return validateInputIsNumber(input);
+    }
+
+    private int validateInputIsNumber(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("입력 값이 숫자가 아닙니다.");
+        }
     }
 }
