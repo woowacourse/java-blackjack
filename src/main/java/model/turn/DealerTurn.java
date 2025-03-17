@@ -1,14 +1,25 @@
 package model.turn;
 
+import model.card.Deck;
 import model.participant.Dealer;
+import view.OutputView;
 
-public class DealerTurn extends Turn {
+public class DealerTurn implements Turn {
+    private final Dealer dealer;
 
     public DealerTurn(Dealer dealer) {
-        super(dealer);
+        this.dealer = dealer;
     }
 
-    public Dealer getDealer() {
-        return (Dealer) participant;
+    @Override
+    public void dealInitialCards(Deck deck) {
+        dealCards(dealer, deck);
+    }
+
+    public void runDealerTurn(Deck deck) {
+        while (dealer.checkScoreUnderSixteen()) {
+            OutputView.printDealerDealResult();
+            dealer.receiveCard(deck.pick());
+        }
     }
 }

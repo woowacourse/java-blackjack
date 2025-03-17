@@ -5,12 +5,18 @@ import model.betting.Betting;
 import model.card.Deck;
 import model.participant.Player;
 
-public class PlayerTurn extends Turn {
+public class PlayerTurn implements Turn {
+    private final Player player;
     private final Betting betting;
 
     public PlayerTurn(Player player, Betting betting) {
-        super(player);
+        this.player = player;
         this.betting = betting;
+    }
+
+    @Override
+    public void dealInitialCards(Deck deck) {
+        dealCards(player, deck);
     }
 
     public void betInsurance(int insuranceBet) {
@@ -18,17 +24,14 @@ public class PlayerTurn extends Turn {
     }
 
     public void putBetting(Map<Player, Betting> playerBetting) {
-        Player player = (Player) participant;
         playerBetting.put(player, betting);
     }
 
     public void processHit(Deck deck) {
-        Player player = (Player) participant;
         player.receiveCard(deck.pick());
     }
 
     public void processDoubleDown(Deck deck, int additionalBet) {
-        Player player = (Player) participant;
         player.receiveCard(deck.pick());
         betting.addBet(additionalBet);
     }
@@ -42,6 +45,6 @@ public class PlayerTurn extends Turn {
     }
 
     public Player getPlayer() {
-        return (Player) participant;
+        return player;
     }
 }
