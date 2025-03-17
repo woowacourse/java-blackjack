@@ -1,7 +1,7 @@
 package model.bet;
 
 import bet.Money;
-import bet.ProfitStatus;
+import bet.BetStatus;
 import card.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-public class ProfitStatusTest {
+public class BetStatusTest {
     @DisplayName("플레이어 배팅 상태가 초기화 되는지")
     @ParameterizedTest
     @MethodSource("makeProfitStatusTestData")
@@ -33,8 +33,8 @@ public class ProfitStatusTest {
         }
 
         //when
-        ProfitStatus profitStatus = new ProfitStatus(profits);
-        Map<Player, Money> values = profitStatus.getValues();
+        BetStatus betStatus = new BetStatus(profits);
+        Map<Player, Money> values = betStatus.getValues();
 
         //then
         Assertions.assertThat(values).containsEntry(expectedPlayer, expectedMoney);
@@ -69,9 +69,9 @@ public class ProfitStatusTest {
         TestCardDistributor.divideCardToDealer(dealerCard, dealer);
 
         GameResult gameResult = new GameResult();
-        ProfitStatus profitStatus = new ProfitStatus(profits);
+        BetStatus betStatus = new BetStatus(profits);
         //when
-        Map<Player, Long> betResult = profitStatus.calculateBetResult(gameResult.calculatePlayersMatchResult(players, dealer));
+        Map<Player, Long> betResult = betStatus.calculateBetResult(gameResult.calculatePlayersMatchResult(players, dealer));
         Long actualProfit = betResult.get(new Player("hippo"));
         //then
         Assertions.assertThat(actualProfit).isEqualTo(expectedProfit);
@@ -150,9 +150,9 @@ public class ProfitStatusTest {
         TestCardDistributor.divideCardToDealer(dealerCards, dealer);
 
         GameResult gameResult = new GameResult();
-        ProfitStatus profitStatus = new ProfitStatus(profits);
-        Map<Player, Long> betResult = profitStatus.calculateBetResult(gameResult.calculatePlayersMatchResult(players, dealer));
-        long dealerProfit = profitStatus.calculateDealerBetResult(betResult);
+        BetStatus betStatus = new BetStatus(profits);
+        Map<Player, Long> betResult = betStatus.calculateBetResult(gameResult.calculatePlayersMatchResult(players, dealer));
+        long dealerProfit = betStatus.calculateDealerBetResult(betResult);
         //when
 
         //then

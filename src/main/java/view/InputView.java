@@ -25,6 +25,14 @@ public class InputView {
         return input;
     }
 
+    public static long readBetMoney(String nickname) {
+        System.out.printf("%s의 배팅 금액은?%n",nickname);
+        String input = sc.nextLine();
+        validateEmpty(input);
+        validateNumeric(input);
+        return Long.parseLong(input);
+    }
+
     private static List<String> parse(String input) {
         String[] split = input.split(",", -1);
         return Arrays.asList(split);
@@ -38,6 +46,12 @@ public class InputView {
 
     private static void validateEmpty(String input) {
         if (input.isBlank()) {
+            throw new IllegalArgumentException("올바르지 않은 입력입니다.");
+        }
+    }
+
+    private static void validateNumeric(String input) {
+        if (!input.matches("^\\d+$")) {
             throw new IllegalArgumentException("올바르지 않은 입력입니다.");
         }
     }

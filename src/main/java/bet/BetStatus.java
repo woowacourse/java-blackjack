@@ -6,11 +6,11 @@ import result.MatchResultType;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ProfitStatus {
+public class BetStatus {
 
     private final Map<Player, Money> values;
 
-    public ProfitStatus(Map<Player, Money> values) {
+    public BetStatus(Map<Player, Money> values) {
         this.values = values;
     }
 

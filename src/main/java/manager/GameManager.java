@@ -1,5 +1,7 @@
 package manager;
 
+import bet.BetStatus;
+import bet.Money;
 import game.BlackJack;
 import card.CardDeck;
 import card.ShuffledDeckGenerator;
@@ -11,7 +13,7 @@ import participant.Players;
 import view.InputView;
 import view.OutputView;
 
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 public class GameManager {
@@ -20,6 +22,7 @@ public class GameManager {
         Players players = new Players(InputView.readPlayerNames());
         CardDeck deck = new CardDeck(new ShuffledDeckGenerator().generateDeck());
         Dealer dealer = new Dealer();
+        BetStatus betStatus = settingBetMoney(players);
 
         BlackJack blackJack = new BlackJack(players, dealer, deck);
         blackJack.dealInitialCards();
@@ -39,7 +42,14 @@ public class GameManager {
         OutputView.printResult(dealer,dealerMatchResult,playerMatchResult);
     }
 
-
+    private BetStatus settingBetMoney(Players players) {
+        Map<Player, Money> initialBetStatus = new HashMap<>();
+        for (Player player : players.getPlayers()) {
+            long inputBetMoney = InputView.readBetMoney(player.getNickname());
+            initialBetStatus.put(player, new Money(inputBetMoney));
+        }
+        return new BetStatus(initialBetStatus);
+    }
 
     private void receiveAdditionalCard(Player player, BlackJack blackJack) {
         while (player.canHit() && agreeIntent(player)) {
