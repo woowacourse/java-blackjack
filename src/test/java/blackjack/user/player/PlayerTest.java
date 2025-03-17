@@ -31,6 +31,17 @@ public class PlayerTest {
 
             assertThat(player).isInstanceOf(Player.class);
         }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"iiif", "pppk", "sana"})
+        @DisplayName("이름이 동일한 플레이어는 같은 플레이어이다.")
+        void isSamePlayer(String name) {
+            Player player = createPlayerWithNoMoney(name);
+
+            PlayerName playerName = new PlayerName(name);
+
+            assertThat(player.isSameAs(playerName)).isTrue();
+        }
     }
 
     @Nested

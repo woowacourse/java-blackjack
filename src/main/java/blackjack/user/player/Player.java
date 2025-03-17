@@ -32,6 +32,10 @@ public class Player {
         this.betAmount = betAmount;
     }
 
+    public boolean isSameAs(final PlayerName name) {
+        return this.playerName.equals(name);
+    }
+
     public List<Card> openInitialCards() {
         return cardHand.openInitialCards(PLAYER_OPEN_INITIAL_CARD_COUNT);
     }

@@ -54,7 +54,7 @@ public class Players {
 
     private Player findPlayerByName(final PlayerName name) {
         return joinedPlayers.stream()
-            .filter(player -> player.getName().equals(name))
+            .filter(player -> player.isSameAs(name))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("플레이어를 찾을 수 없습니다."));
     }
