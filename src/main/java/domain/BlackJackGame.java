@@ -34,18 +34,15 @@ public class BlackJackGame {
         Dealer dealer = new Dealer(
                 Started.of(new Hand(deck.drawMultiple(Started.INITIAL_CARD_COUNT)), Score.SEVENTEEN));
         Map<Name, Player> players = playerInfos.entrySet().stream()
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        entry -> new Player(
-                                entry.getKey(),
-                                entry.getValue(),
+                .collect(Collectors.toMap(Map.Entry::getKey,
+                        entry -> new Player(entry.getKey(), entry.getValue(),
                                 Started.of(
                                         new Hand(deck.drawMultiple(Started.INITIAL_CARD_COUNT)), Score.TWENTY_ONE))));
 
         return new BlackJackGame(deck, dealer, players);
     }
 
-    public List<TrumpCard> retrieveTrumpCards(Name playerName) {
+    public List<TrumpCard> retrievePlayerCards(Name playerName) {
         validateContain(playerName);
 
         return players.get(playerName).retrieveCards();
@@ -96,8 +93,8 @@ public class BlackJackGame {
 
     public Integer calculatePlayerRevenueAmount(Name playerName) {
         validateContain(playerName);
-
         Player player = players.get(playerName);
+        
         Score playerScore = player.calculateScore();
         Score dealerScore = dealer.calculateScore();
         GameResult gameResult = GameResult.of(playerScore, dealerScore);

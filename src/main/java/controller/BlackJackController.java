@@ -41,7 +41,7 @@ public class BlackJackController {
         List<Name> PlayerNames = inputView.readPlayerNames().stream()
                 .map(Name::new)
                 .toList();
-        
+
         return new PlayerRoster(PlayerNames);
     }
 
@@ -59,7 +59,7 @@ public class BlackJackController {
 
     private void displayInitializeCards(BlackJackGame blackJackGame, PlayerRoster playerRoster) {
         Map<String, List<TrumpCard>> playerCards = playerRoster.getPlayerNames().stream()
-                .collect(Collectors.toMap(Name::getText, blackJackGame::retrieveTrumpCards));
+                .collect(Collectors.toMap(Name::getText, blackJackGame::retrievePlayerCards));
         TrumpCard dealerFirstCard = blackJackGame.retrieveDealerFirstCard();
 
         outputView.printInitialCards(playerCards, dealerFirstCard);
@@ -71,7 +71,7 @@ public class BlackJackController {
             blackJackGame.processPlayerHit(playerName);
 
             outputView.printPlayerCards(playerName.getText(),
-                    blackJackGame.retrieveTrumpCards(playerName));
+                    blackJackGame.retrievePlayerCards(playerName));
         }
     }
 
@@ -93,7 +93,7 @@ public class BlackJackController {
                                                                 PlayerRoster playerRoster) {
         return playerRoster.getPlayerNames().stream()
                 .collect(Collectors.toMap(Name::getText, playerName -> {
-                    List<TrumpCard> cards = blackJackGame.retrieveTrumpCards(playerName);
+                    List<TrumpCard> cards = blackJackGame.retrievePlayerCards(playerName);
                     Score score = blackJackGame.calculatePlayerScore(playerName);
 
                     return new CardScoreDto(cards, score);

@@ -39,7 +39,7 @@ class BlackJackGameTest {
 
         @Test
         @DisplayName("특정 플레이어의 카드를 가져온다")
-        void retrieveTrumpCards() {
+        void retrievePlayerCards() {
             // given
             Name playerName = new Name("머피");
             Deck deck = new Deck(List.of(TrumpCard.values()), new NoShuffle());
@@ -50,7 +50,7 @@ class BlackJackGameTest {
             BlackJackGame blackJackGame = new BlackJackGame(deck, dealer, Map.of(playerName, player));
 
             // when
-            List<TrumpCard> playerCards = blackJackGame.retrieveTrumpCards(playerName);
+            List<TrumpCard> playerCards = blackJackGame.retrievePlayerCards(playerName);
 
             // then
             assertThat(playerCards).hasSize(2);
@@ -118,7 +118,7 @@ class BlackJackGameTest {
             blackJackGame.processPlayerHit(playerName);
 
             // then
-            assertThat(blackJackGame.retrieveTrumpCards(playerName)).hasSize(3);
+            assertThat(blackJackGame.retrievePlayerCards(playerName)).hasSize(3);
         }
 
         @Test
@@ -218,7 +218,7 @@ class BlackJackGameTest {
             BlackJackGame blackJackGame = new BlackJackGame(deck, dealer, Map.of());
 
             // when & then
-            assertThatThrownBy(() -> blackJackGame.retrieveTrumpCards(nonExistentPlayer))
+            assertThatThrownBy(() -> blackJackGame.retrievePlayerCards(nonExistentPlayer))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("플레이어가 존재하지 않습니다.");
         }
