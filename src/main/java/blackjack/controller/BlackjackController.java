@@ -40,8 +40,9 @@ public class BlackjackController {
     private List<Gambler> getGamblers(List<String> gamblerNames) {
         Map<PlayerName, BetAmount> gamblersBetAmount = getGamblersBetAmount(gamblerNames);
         List<Gambler> gamblers = new ArrayList<>();
-        for (Map.Entry<PlayerName, BetAmount> entry : gamblersBetAmount.entrySet()) {
-            gamblers.add(new Gambler(entry.getKey(), entry.getValue(), new Cards()));
+        for (String gamblerName : gamblerNames) {
+            PlayerName name = new PlayerName(gamblerName);
+            gamblers.add(new Gambler(name, gamblersBetAmount.get(name), new Cards()));
         }
         return gamblers;
     }
