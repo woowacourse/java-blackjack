@@ -3,6 +3,7 @@ package game;
 import card.Deck;
 import card.Hand;
 import client.AnswerType;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import participant.Dealer;
 import participant.Player;
@@ -46,10 +47,12 @@ public class GameTable {
         });
     }
 
-    public void playDealerRound() {
-        if (dealer.shouldDrawCard()) {
+    public void playDealerRound(Consumer<Boolean> dealerAction) {
+        boolean shouldDrawCard = dealer.shouldDrawCard();
+        if (shouldDrawCard) {
             dealer = (Dealer) dealer.updateHandWith(deck.drawCard());
         }
+        dealerAction.accept(shouldDrawCard);
     }
 
     public Hand openDealerFinalHand() {

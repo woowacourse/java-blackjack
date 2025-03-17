@@ -26,11 +26,11 @@ public class OutputPrinter {
         System.out.printf("\n%s카드: %s\n", player.getName(), outputFormatter.formatCards(player.getHand()));
     }
 
-    public void printDealerDraw() {
-        System.out.print("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
-    }
-
-    public void printDealerNoDraw() {
+    public void printDealerDraw(boolean isDraw) {
+        if (isDraw) {
+            System.out.print("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
+            return;
+        }
         System.out.print("\n딜러는 17이상이라 카드를 추가로 받지 않았습니다.\n");
     }
 

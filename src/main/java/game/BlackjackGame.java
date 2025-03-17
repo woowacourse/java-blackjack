@@ -30,7 +30,7 @@ public class BlackjackGame {
         outputPrinter.printInitialHand(gameTable.openDealerHand(), gameTable.openPlayersHand());
 
         gameTable.playPlayersRound(this::requestAdditionalCard);
-        gameTable.playDealerRound();
+        gameTable.playDealerRound(outputPrinter::printDealerDraw);
 
         outputPrinter.printFinalDealerHand(gameTable.openDealerFinalHand(), gameTable.openDealerFinalScore());
         outputPrinter.printFinalPlayersHand(gameTable.openPlayersFinalHand());
