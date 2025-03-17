@@ -23,10 +23,9 @@ class PlayerTest {
     @Test
     void showInitialCards() {
         // given
-        final Dealer dealer = Dealer.getDealer(new CardRandomMachine());
+        final Dealer dealer = new Dealer(new CardRandomMachine());
 
         // when
-        dealer.initCardMachine();
         final List<Card> cards = dealer.spreadTwoCards();
         player.receiveCards(cards);
 
