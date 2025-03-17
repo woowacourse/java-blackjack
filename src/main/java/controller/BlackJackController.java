@@ -84,10 +84,10 @@ public class BlackJackController {
     private void processPlayerCardReceiving(BlackJackGame blackJackGame, String playerName) {
         while (blackJackGame.canPlayerPick(playerName) && doesPlayerWantToReceiveCard(playerName)) {
             blackJackGame.giveCardToPlayer(playerName);
-            outputView.printParticipantHand(playerName, blackJackGame.getPlayerFirstShownCards(playerName));
+            outputView.printParticipantHand(playerName, blackJackGame.getPlayerCards(playerName));
         }
         if (!blackJackGame.hasPlayerReceivedCard(playerName)) {
-            outputView.printParticipantHand(playerName, blackJackGame.getPlayerFirstShownCards(playerName));
+            outputView.printParticipantHand(playerName, blackJackGame.getPlayerCards(playerName));
         }
     }
 

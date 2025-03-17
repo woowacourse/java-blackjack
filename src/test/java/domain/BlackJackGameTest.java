@@ -60,6 +60,24 @@ class BlackJackGameTest {
         assertThat(playerNamesExceptDealer).containsExactlyElementsOf(playerNames);
     }
 
+    @Test
+    @DisplayName("플레이어의 현재 손패를 가져온다")
+    void should_return_player_cards_by_name() {
+        // given
+        String playerName = "a";
+        Participants participants = ParticipantsFixture.createParticipants(List.of(playerName));
+        CardDeck cardDeck = CardDeckFixture.createCardDeck();
+        BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
+        blackJackGame.giveStartingCardsToParticipants();
+        blackJackGame.giveCardToPlayer(playerName);
+
+        // when
+        List<Card> playerCards = blackJackGame.getPlayerCards(playerName);
+
+        // then
+        assertThat(playerCards).hasSize(3);
+    }
+
     @Nested
     @DisplayName("시작 카드 분배 케이스")
     class StartingCardCase {

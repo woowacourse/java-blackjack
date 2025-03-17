@@ -88,4 +88,8 @@ public class BlackJackGame {
     public Participant findByName(String playerName) {
         return participants.findByName(playerName);
     }
+
+    public List<Card> getPlayerCards(String playerName) {
+        return participants.getPlayerCards(playerName);
+    }
 }

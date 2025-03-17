@@ -137,5 +137,22 @@ class ParticipantsTest {
             assertThat(playerFirstShownCards).hasSize(2);
         }
     }
+
+    @Test
+    @DisplayName("플레이어의 현재 손패를 가져온다")
+    void should_return_player_cards_by_name() {
+        // given
+        String playerName = "a";
+        Participant player = new Player(playerName);
+        player.addCard(CardFixture.cardOfHeartAce);
+        player.addCard(CardFixture.cardOfHeartKing);
+        Participants participants = new Participants(List.of(new Dealer(), player));
+
+        // when
+        List<Card> playerCards = participants.getPlayerCards(playerName);
+
+        // then
+        assertThat(playerCards).hasSize(2);
+    }
 }
 

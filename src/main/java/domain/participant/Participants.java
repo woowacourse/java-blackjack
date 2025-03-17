@@ -71,4 +71,8 @@ public class Participants {
     public List<Card> getDealerFirstShownCard() {
         return getDealer().getFirstShownCard();
     }
+
+    public List<Card> getPlayerCards(String playerName) {
+        return findByName(playerName).getCards();
+    }
 }
