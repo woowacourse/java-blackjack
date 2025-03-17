@@ -35,12 +35,8 @@ public class BlackjackController {
     }
 
     private Players getPlayers() {
-        List<Player> players = new ArrayList<>();
         List<String> playerNames = inputView.readPlayerNames();
-        for (String name : playerNames) {
-            players.add(Player.from(name));
-        }
-        return new Players(players);
+        return Players.from(playerNames);
     }
 
     private void readPlayersBetAmount(Dealer dealer, Players players) {
@@ -51,10 +47,7 @@ public class BlackjackController {
     }
 
     private void dealInitialHand(Dealer dealer, Players players) {
-        for (Player player : players.getPlayers()) {
-            player.receiveHand(dealer.drawCard());
-            player.receiveHand(dealer.drawCard());
-        }
+        players.dealInitialHand(dealer);
         dealer.receiveHand(dealer.drawCard());
         dealer.receiveHand(dealer.drawCard());
         outputView.printInitialCards(dealer.getVisibleCard(), players.getPlayers());
