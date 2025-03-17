@@ -2,16 +2,13 @@ package game;
 
 public class Betting {
 
-    private static final int DEFAULT_ODDS = 1;
     private static final double BLACK_JACK_ODDS = 1.5;
 
     private final int betting;
-    private int earned;
 
     public Betting(int money) {
         validatePositive(money);
         this.betting = money;
-        this.earned = 0;
     }
 
     private void validatePositive(int money) {
@@ -34,17 +31,15 @@ public class Betting {
     }
 
     private int earn() {
-        earned = betting * DEFAULT_ODDS;
-        return earned;
+        return betting;
     }
 
     private int same() {
-        return earned;
+        return 0;
     }
 
     private int lose() {
-        earned = betting * -1;
-        return earned;
+        return betting * -1;
     }
 
     public int getBetting() {
