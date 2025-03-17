@@ -1,3 +1,5 @@
+package game;
+
 import constant.Answer;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
@@ -8,20 +10,20 @@ import java.util.List;
 import view.InputView;
 import view.OutputView;
 
-public class Game {
+public class BlackjackGame {
 
     private static final int INITIAL_CARDS = 2;
 
     private final InputView inputView;
     private final OutputView outputView;
 
-    private Game(InputView inputView, OutputView outputView) {
+    private BlackjackGame(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
 
-    public static Game of(InputView inputView, OutputView outputView) {
-        return new Game(inputView, outputView);
+    public static BlackjackGame of(InputView inputView, OutputView outputView) {
+        return new BlackjackGame(inputView, outputView);
     }
 
     public void run() {
