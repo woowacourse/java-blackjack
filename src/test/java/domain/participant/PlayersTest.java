@@ -4,8 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.CardDeckGenerator;
+import domain.card.TrumpNumber;
+import domain.card.TrumpShape;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -77,13 +80,52 @@ class PlayersTest {
                         Player.of("pobi3")
                 )
         );
-        Dealer dealer = Dealer.of(cardDeck);
 
         // when
-        players.receiveCards(dealer);
+        players.receiveCards(cardDeck);
 
         // then
         assertThat(cardDeck.getCards()).hasSize(49);
+    }
+
+    @Test
+    void 사용자의_이름과_카드를_받아_해당_사용자의_카드를_추가한다() {
+        // given
+        Player target = Player.of("pobi1");
+        Players players = Players.of(
+                List.of(
+                        target,
+                        Player.of("pobi2"),
+                        Player.of("pobi3")
+                )
+        );
+
+        // when
+        players.passCardByName("pobi1", Card.of(TrumpNumber.SIX, TrumpShape.HEART));
+        int score = players.getScoreOf("pobi1");
+
+        // then
+        assertThat(score).isEqualTo(6);
+    }
+
+    @Test
+    void 사용자의_이름으로부터_점수를_반환한다() {
+        // given
+        Player target = Player.of("pobi1");
+        Players players = Players.of(
+                List.of(
+                        target,
+                        Player.of("pobi2"),
+                        Player.of("pobi3")
+                )
+        );
+        target.receive(Card.of(TrumpNumber.SIX, TrumpShape.HEART));
+
+        // when
+        int score = players.getScoreOf("pobi1");
+
+        // then
+        assertThat(score).isEqualTo(6);
     }
 
     @Test

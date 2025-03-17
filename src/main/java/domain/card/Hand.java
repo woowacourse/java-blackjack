@@ -1,22 +1,21 @@
 package domain.card;
 
-import static domain.GameManager.*;
+import static domain.BlackjackGame.BLACKJACK_SCORE;
 
-import domain.GameManager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Cards {
+public class Hand {
 
     private final List<Card> cards;
 
-    private Cards() {
+    private Hand() {
         this.cards = new ArrayList<>();
     }
 
-    public static Cards of() {
-        return new Cards();
+    public static Hand of() {
+        return new Hand();
     }
 
     public void add(Card card) {

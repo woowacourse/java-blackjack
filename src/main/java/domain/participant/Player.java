@@ -1,47 +1,73 @@
 package domain.participant;
 
-import domain.card.Card;
-import domain.card.Cards;
-import domain.result.BlackjackResult;
-import java.util.List;
+import static domain.BlackjackGame.BLACKJACK_SCORE;
+import static domain.BlackjackGame.INITIAL_CARDS;
+
+import domain.BlackjackGame;
+import domain.card.Hand;
+import domain.result.GameResult;
 import java.util.Objects;
 
-public class Player {
+public class Player extends CardOwner {
 
     private final String name;
-    private final Cards ownedCards;
 
     private Player(final String name) {
+        super(Hand.of());
         this.name = name;
-        this.ownedCards = Cards.of();
     }
 
     public static Player of(final String name) {
         return new Player(name);
     }
 
-    public void receive(final Card card) {
-        ownedCards.add(card);
+    public GameResult determineBlackjackResult(Dealer dealer) {
+        if (isBust()) {
+            return GameResult.LOSE;
+        }
+        if (dealer.isBust()) {
+            return GameResult.WIN;
+        }
+
+        return determineResultByScore(dealer);
     }
 
-    public int getScore() {
-        return ownedCards.calculateScore();
+    private GameResult determineResultByScore(Dealer dealer) {
+        if (isBlackjack() && !dealer.isBlackjack()) {
+            return GameResult.BLACKJACK_WIN;
+        }
+        if (!isBlackjack() && dealer.isBlackjack()) {
+            return GameResult.LOSE;
+        }
+
+        return compareScoresWith(dealer);
     }
 
-    public int getCardCount() {
-        return ownedCards.getSize();
+    private GameResult compareScoresWith(Dealer dealer) {
+        if (calculateScore() > dealer.calculateScore()) {
+            return GameResult.WIN;
+        }
+        if (calculateScore() < dealer.calculateScore()) {
+            return GameResult.LOSE;
+        }
+        return GameResult.DRAW;
     }
 
-    public List<Card> getOwnedCards() {
-        return ownedCards.getCards();
+    public boolean isBust() {
+        return calculateScore() > BlackjackGame.BLACKJACK_SCORE;
+    }
+
+    public boolean isBlackjack() {
+        return countCard() == INITIAL_CARDS && calculateScore() == BLACKJACK_SCORE;
+    }
+
+    @Override
+    public boolean canReceive() {
+        return (calculateScore() < BLACKJACK_SCORE);
     }
 
     public String getName() {
         return name;
-    }
-
-    public BlackjackResult getBlackjackResult(Dealer dealer) {
-        return BlackjackResult.getPlayerResult(dealer, this);
     }
 
     @Override

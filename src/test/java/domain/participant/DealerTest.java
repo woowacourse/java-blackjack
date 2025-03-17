@@ -14,17 +14,18 @@ class DealerTest {
         // given nothing
 
         // when & then
-        assertThatCode(() -> Dealer.of(CardDeck.of(CardDeckGenerator.generateCardDeck())))
+        assertThatCode(() -> Dealer.of())
                 .doesNotThrowAnyException();
     }
 
     @Test
     void 카드를_한_장_받는다() {
         // given
-        Dealer dealer = Dealer.of(CardDeck.of(CardDeckGenerator.generateCardDeck()));
+        CardDeck cardDeck = CardDeck.of(CardDeckGenerator.generateCardDeck());
+        Dealer dealer = Dealer.of();
 
         // when
-        dealer.receive();
+        dealer.receive(cardDeck.popCard());
 
         // then
         assertThat(dealer.getOwnedCards()).hasSize(1);

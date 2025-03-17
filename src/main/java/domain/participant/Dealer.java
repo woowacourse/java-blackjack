@@ -1,40 +1,32 @@
 package domain.participant;
 
-import domain.card.Card;
-import domain.card.CardDeck;
-import domain.card.Cards;
-import java.util.List;
+import static domain.BlackjackGame.BLACKJACK_SCORE;
+import static domain.BlackjackGame.DEALER_MIN_SCORE;
+import static domain.BlackjackGame.INITIAL_CARDS;
 
-public class Dealer {
-    private final CardDeck cardDeck;
-    private final Cards ownedCards;
+import domain.BlackjackGame;
+import domain.card.Hand;
 
-    private Dealer(CardDeck cardDeck) {
-        this.cardDeck = cardDeck;
-        this.ownedCards = Cards.of();
+public class Dealer extends CardOwner {
+
+    private Dealer() {
+        super(Hand.of());
     }
 
-    public static Dealer of(CardDeck cardDeck) {
-        return new Dealer(cardDeck);
+    public static Dealer of() {
+        return new Dealer();
     }
 
-    public Card drawCard() {
-        return cardDeck.popCard();
+    public boolean isBust() {
+        return calculateScore() > BlackjackGame.BLACKJACK_SCORE;
     }
 
-    public void receive() {
-        ownedCards.add(cardDeck.popCard());
+    public boolean isBlackjack() {
+        return countCard() == INITIAL_CARDS && calculateScore() == BLACKJACK_SCORE;
     }
 
-    public int getScore() {
-        return ownedCards.calculateScore();
-    }
-
-    public int getCardCount() {
-        return ownedCards.getSize();
-    }
-
-    public List<Card> getOwnedCards() {
-        return ownedCards.getCards();
+    @Override
+    public boolean canReceive() {
+        return (calculateScore() <= DEALER_MIN_SCORE);
     }
 }

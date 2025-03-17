@@ -7,7 +7,7 @@ import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.TrumpNumber;
 import domain.card.TrumpShape;
-import domain.result.BlackjackResult;
+import domain.result.GameResult;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class PlayerTest {
+class PlayerTest {
 
     @Test
     void 이름으로부터_플레이어를_생성한다() {
@@ -66,7 +66,7 @@ public class PlayerTest {
         player.receive(card);
 
         // when
-        int score = player.getScore();
+        int score = player.calculateScore();
 
         // then
         assertThat(score).isEqualTo(11);
@@ -74,21 +74,22 @@ public class PlayerTest {
 
     @MethodSource("createPlayerAndResult")
     @ParameterizedTest
-    void 플레이어가_딜러와의_게임_결과를_반환한다(Player player, BlackjackResult result) {
+    void 플레이어가_딜러와의_게임_결과를_반환한다(Player player, GameResult result) {
         // given
         List<Card> cards = List.of(
                 Card.of(TrumpNumber.ACE, TrumpShape.CLUB),
                 Card.of(TrumpNumber.SIX, TrumpShape.CLUB)
         );
-        final Dealer dealer = Dealer.of(CardDeck.of(cards));
-        dealer.receive();
-        dealer.receive();
+        CardDeck cardDeck = CardDeck.of(cards);
+        final Dealer dealer = Dealer.of();
+        dealer.receive(cardDeck.popCard());
+        dealer.receive(cardDeck.popCard());
 
         // when
-        BlackjackResult blackjackResult = player.getBlackjackResult(dealer);
+        GameResult playerResult = player.determineBlackjackResult(dealer);
 
         // then
-        assertThat(blackjackResult).isEqualTo(result);
+        assertThat(playerResult).isEqualTo(result);
     }
 
     private static Stream<Arguments> createPlayerAndResult() {
@@ -105,9 +106,9 @@ public class PlayerTest {
         winner.receive(Card.of(TrumpNumber.SEVEN, TrumpShape.CLUB));
 
         return Stream.of(
-                Arguments.of(loser, BlackjackResult.LOSE),
-                Arguments.of(drawer, BlackjackResult.DRAW),
-                Arguments.of(winner, BlackjackResult.WIN)
+                Arguments.of(loser, GameResult.LOSE),
+                Arguments.of(drawer, GameResult.DRAW),
+                Arguments.of(winner, GameResult.WIN)
         );
     }
 }

@@ -1,5 +1,7 @@
 package domain.participant;
 
+import domain.card.Card;
+import domain.card.CardDeck;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,10 +36,22 @@ public class Players {
         }
     }
 
-    public void receiveCards(Dealer dealer) {
+    public void receiveCards(CardDeck cardDeck) {
         for (Player player : players) {
-            player.receive(dealer.drawCard());
+            player.receive(cardDeck.popCard());
         }
+    }
+
+    public void passCardByName(String name, Card card) {
+        findByName(name).receive(card);
+    }
+
+    public boolean canPlayerReceive(String name) {
+        return findByName(name).canReceive();
+    }
+
+    public int getScoreOf(String name) {
+        return findByName(name).calculateScore();
     }
 
     public Player findByName(String name) {

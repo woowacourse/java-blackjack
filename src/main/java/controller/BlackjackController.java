@@ -1,8 +1,8 @@
 package controller;
 
-import static domain.GameManager.BLACKJACK_SCORE;
-
-import domain.GameManager;
+import domain.BlackjackGame;
+import domain.batting.Bet;
+import domain.batting.BettingPool;
 import domain.card.CardDeck;
 import domain.card.CardDeckGenerator;
 import domain.participant.Dealer;
@@ -10,6 +10,7 @@ import domain.participant.Player;
 import domain.participant.Players;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
@@ -24,63 +25,98 @@ public class BlackjackController {
     }
 
     public void gameStart() {
-        Dealer dealer = Dealer.of(
-                CardDeck.of(CardDeckGenerator.generateCardDeck())
-        );
-        Players players = initParticipants();
-        GameManager gameManager = GameManager.of(dealer, players);
+        BettingPool bettingPool = BettingPool.of();
 
-        gameManager.distributeCards();
-        outputView.printInitCards(dealer, players);
+        BlackjackGame blackjackGame = initBlackjackGame(bettingPool);
 
-        drawToPlayers(gameManager);
-        drawToDealer(gameManager);
+        distributeInitialCards(blackjackGame);
 
-        outputView.printFinalCardsContent(dealer, players);
-        outputView.printResult(dealer, players);
+        playGame(blackjackGame);
+
+        finishGame(blackjackGame, bettingPool);
     }
 
-    private Players initParticipants() {
+    private BlackjackGame initBlackjackGame(BettingPool bettingPool) {
+        Dealer dealer = Dealer.of();
+
+        List<Player> rawPlayers = readPlayers();
+        readPlayersBet(rawPlayers, bettingPool);
+
+        Players players = Players.of(rawPlayers);
+        return BlackjackGame.of(
+                CardDeck.of(CardDeckGenerator.generateCardDeck()), dealer, players
+        );
+    }
+
+    private List<Player> readPlayers() {
         String rawNames = inputView.getPlayerNames();
-        List<Player> players = Arrays.stream(rawNames.split(","))
+        return Arrays.stream(rawNames.split(","))
                 .map(String::trim)
                 .map(Player::of)
                 .toList();
-        return Players.of(players);
     }
 
-    private void drawToPlayers(GameManager gameManager) {
-        List<String> playersNames = gameManager.getPlayersName();
-        for (String name : playersNames) {
-            processPlayerDecision(name, gameManager);
+    private void readPlayersBet(List<Player> ps, BettingPool bettingPool) {
+        for (Player p : ps) {
+            String rawBet = inputView.getPlayerBetAmount(p);
+            int betMoney = parseValidateInteger(rawBet);
+            bettingPool.wager(p, Bet.of(betMoney));
         }
     }
 
-    private void drawToDealer(GameManager gameManager) {
-        boolean received = gameManager.passCardToDealer();
-        while (received) {
-            outputView.printDealerReceived();
-            received = gameManager.passCardToDealer();
+    private int parseValidateInteger(String rawInt) {
+        try {
+            return Integer.parseInt(rawInt);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("유효하지 않은 숫자입니다.");
         }
     }
 
-    private void processPlayerDecision(String name, GameManager gameManager) {
-        while (gameManager.getScoreOf(name) < BLACKJACK_SCORE) {
-            String answer = inputView.askReceive(name);
-            validateBinaryQuestion(answer);
+    private void distributeInitialCards(BlackjackGame game) {
+        game.distributeCards();
+        outputView.printInitCards(game.getDealer(), game.getPlayers());
+    }
+
+    private void playGame(BlackjackGame game) {
+        playPlayerTurns(game);
+        playDealerTurn(game);
+    }
+
+    private void playPlayerTurns(BlackjackGame game) {
+        for (String playerName : game.getPlayersName()) {
+            playPlayerTurn(game, playerName);
+        }
+    }
+
+    private void playPlayerTurn(BlackjackGame game, String playerName) {
+        while (game.checkPlayerCanReceive(playerName)) {
+            String answer = inputView.askReceive(playerName);
+            if (!isValidAnswer(answer)) {
+                throw new IllegalArgumentException("유효하지 않은 입력입니다.");
+            }
+
             if (answer.equals("n")) {
-                outputView.printCardsByName(gameManager.getPlayerByName(name));
                 break;
             }
-            gameManager.passCardToPlayer(name);
-            outputView.printCardsByName(gameManager.getPlayerByName(name));
+
+            game.passCardToPlayer(playerName);
+            outputView.printCardsByName(game.getPlayerByName(playerName));
         }
     }
 
-    private void validateBinaryQuestion(String question) {
-        if (question.equals("y") || question.equals("n")) {
-            return ;
+    private boolean isValidAnswer(String answer) {
+        return answer.equals("y") || answer.equals("n");
+    }
+
+    private void playDealerTurn(BlackjackGame game) {
+        while (game.passCardToDealer()) {
+            outputView.printDealerReceived();
         }
-        throw new IllegalArgumentException("유효하지 않은 입력입니다.");
+    }
+
+    private void finishGame(BlackjackGame game, BettingPool bettingPool) {
+        Map<Player, Integer> profits = game.calculatePlayerProfit(bettingPool);
+        outputView.printFinalCardsContent(game.getDealer(), game.getPlayers());
+        outputView.printProfits(profits);
     }
 }

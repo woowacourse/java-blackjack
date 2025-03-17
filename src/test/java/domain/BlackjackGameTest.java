@@ -2,7 +2,10 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.entry;
 
+import domain.batting.Bet;
+import domain.batting.BettingPool;
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.CardDeckGenerator;
@@ -12,15 +15,16 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 
-class GameManagerTest {
+class BlackjackGameTest {
 
     @Test
     void 게임_메니저를_생성한다() {
         // given
         CardDeck cardDeck = CardDeck.of(CardDeckGenerator.generateCardDeck());
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = Dealer.of();
         Players players = Players.of(
                 List.of(
                         Player.of("pobi1"),
@@ -30,7 +34,7 @@ class GameManagerTest {
         );
 
         // when & then
-        assertThatCode(() -> GameManager.of(dealer, players))
+        assertThatCode(() -> BlackjackGame.of(cardDeck, dealer, players))
                 .doesNotThrowAnyException();
     }
 
@@ -38,7 +42,7 @@ class GameManagerTest {
     void 게임을_시작하고_카드를_두_장씩_배부한다() {
         // given
         CardDeck cardDeck = CardDeck.of(CardDeckGenerator.generateCardDeck());
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = Dealer.of();
         Players players = Players.of(
                 List.of(
                         Player.of("pobi1"),
@@ -46,10 +50,10 @@ class GameManagerTest {
                         Player.of("pobi3")
                 )
         );
-        GameManager gameManager = GameManager.of(dealer, players);
+        BlackjackGame blackjackGame = BlackjackGame.of(cardDeck, dealer, players);
 
         // when
-        gameManager.distributeCards();
+        blackjackGame.distributeCards();
 
         // then
         assertThat(cardDeck.getCards()).hasSize(44);
@@ -59,7 +63,7 @@ class GameManagerTest {
     void 참가자들의_이름_목록을_가져온다() {
         // given
         CardDeck cardDeck = CardDeck.of(CardDeckGenerator.generateCardDeck());
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = Dealer.of();
         Players players = Players.of(
                 List.of(
                         Player.of("pobi1"),
@@ -67,10 +71,10 @@ class GameManagerTest {
                         Player.of("pobi3")
                 )
         );
-        GameManager gameManager = GameManager.of(dealer, players);
+        BlackjackGame blackjackGame = BlackjackGame.of(cardDeck, dealer, players);
 
         // when
-        List<String> names = gameManager.getPlayersName();
+        List<String> names = blackjackGame.getPlayersName();
 
         // then
         assertThat(names).hasSize(3).contains("pobi1", "pobi2", "pobi3");
@@ -81,7 +85,7 @@ class GameManagerTest {
         // given
         CardDeck cardDeck = CardDeck.of(CardDeckGenerator.generateCardDeck());
         Player target = Player.of("pobi1");
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = Dealer.of();
         Players players = Players.of(
                 List.of(
                         target,
@@ -89,37 +93,13 @@ class GameManagerTest {
                         Player.of("pobi3")
                 )
         );
-        GameManager gameManager = GameManager.of(dealer, players);
+        BlackjackGame blackjackGame = BlackjackGame.of(cardDeck, dealer, players);
 
         // when
-        gameManager.passCardToPlayer("pobi1");
+        blackjackGame.passCardToPlayer("pobi1");
 
         // then
         assertThat(target.getOwnedCards()).hasSize(1);
-    }
-
-    @Test
-    void 플레이어의_현재_카드_점수를_계산한다() {
-        // given
-        CardDeck cardDeck = CardDeck.of(CardDeckGenerator.generateCardDeck());
-        Player target = Player.of("pobi1");
-        target.receive(Card.of(TrumpNumber.NINE, TrumpShape.CLUB));
-
-        Dealer dealer = Dealer.of(cardDeck);
-        Players players = Players.of(
-                List.of(
-                        target,
-                        Player.of("pobi2"),
-                        Player.of("pobi3")
-                )
-        );
-        GameManager gameManager = GameManager.of(dealer, players);
-
-        // when
-        int score = gameManager.getScoreOf("pobi1");
-
-        // then
-        assertThat(score).isEqualTo(9);
     }
 
     @Test
@@ -131,9 +111,9 @@ class GameManagerTest {
                 Card.of(TrumpNumber.FIVE, TrumpShape.CLUB)
         );
         CardDeck cardDeck = CardDeck.of(cards);
-        Dealer dealer = Dealer.of(cardDeck);
-        dealer.receive();
-        dealer.receive();
+        Dealer dealer = Dealer.of();
+        dealer.receive(cardDeck.popCard());
+        dealer.receive(cardDeck.popCard());
         Players players = Players.of(
                 List.of(
                         Player.of("pobi1"),
@@ -141,10 +121,10 @@ class GameManagerTest {
                         Player.of("pobi3")
                 )
         );
-        GameManager gameManager = GameManager.of(dealer, players);
+        BlackjackGame blackjackGame = BlackjackGame.of(cardDeck, dealer, players);
 
         // when
-        boolean result = gameManager.passCardToDealer();
+        boolean result = blackjackGame.passCardToDealer();
 
         // then
         assertThat(result).isTrue();
@@ -158,9 +138,9 @@ class GameManagerTest {
                 Card.of(TrumpNumber.SEVEN, TrumpShape.CLUB)
         );
         CardDeck cardDeck = CardDeck.of(cards);
-        Dealer dealer = Dealer.of(cardDeck);
-        dealer.receive();
-        dealer.receive();
+        Dealer dealer = Dealer.of();
+        dealer.receive(cardDeck.popCard());
+        dealer.receive(cardDeck.popCard());
         Players players = Players.of(
                 List.of(
                         Player.of("pobi1"),
@@ -168,12 +148,78 @@ class GameManagerTest {
                         Player.of("pobi3")
                 )
         );
-        GameManager gameManager = GameManager.of(dealer, players);
+        BlackjackGame blackjackGame = BlackjackGame.of(cardDeck, dealer, players);
 
         // when
-        boolean result = gameManager.passCardToDealer();
+        boolean result = blackjackGame.passCardToDealer();
 
         // then
         assertThat(result).isFalse();
+    }
+
+    @Test
+    void 배팅_풀을_통해_플레이어_승리의_이익을_반환한다() {
+        // given
+        Player player = Player.of("pobi");
+        Dealer dealer = Dealer.of();
+
+        BettingPool bettingPool = BettingPool.of();
+        bettingPool.wager(player, Bet.of(10000));
+
+        dealer.receive(Card.of(TrumpNumber.TWO, TrumpShape.HEART));
+        player.receive(Card.of(TrumpNumber.THREE, TrumpShape.HEART));
+
+        BlackjackGame blackjackGame = BlackjackGame.of(CardDeck.of(List.of()), dealer, Players.of(List.of(player)));
+
+        // when
+        Map<Player, Integer> profits = blackjackGame.calculatePlayerProfit(bettingPool);
+
+        // then
+        assertThat(profits).hasSize(1)
+                .contains(entry(Player.of("pobi"), 10000));
+    }
+
+    @Test
+    void 배팅_풀을_통해_플레이어_무승부의_이익을_반환한다() {
+        // given
+        Player player = Player.of("pobi");
+        Dealer dealer = Dealer.of();
+
+        BettingPool bettingPool = BettingPool.of();
+        bettingPool.wager(player, Bet.of(10000));
+
+        dealer.receive(Card.of(TrumpNumber.TWO, TrumpShape.HEART));
+        player.receive(Card.of(TrumpNumber.TWO, TrumpShape.HEART));
+
+        BlackjackGame blackjackGame = BlackjackGame.of(CardDeck.of(List.of()), dealer, Players.of(List.of(player)));
+
+        // when
+        Map<Player, Integer> profits = blackjackGame.calculatePlayerProfit(bettingPool);
+
+        // then
+        assertThat(profits).hasSize(1)
+                .contains(entry(Player.of("pobi"), 0));
+    }
+
+    @Test
+    void 배팅_풀을_통해_플레이어_패배의_이익을_반환한다() {
+        // given
+        Player player = Player.of("pobi");
+        Dealer dealer = Dealer.of();
+
+        BettingPool bettingPool = BettingPool.of();
+        bettingPool.wager(player, Bet.of(10000));
+
+        dealer.receive(Card.of(TrumpNumber.THREE, TrumpShape.HEART));
+        player.receive(Card.of(TrumpNumber.TWO, TrumpShape.HEART));
+
+        BlackjackGame blackjackGame = BlackjackGame.of(CardDeck.of(List.of()), dealer, Players.of(List.of(player)));
+
+        // when
+        Map<Player, Integer> profits = blackjackGame.calculatePlayerProfit(bettingPool);
+
+        // then
+        assertThat(profits).hasSize(1)
+                .contains(entry(Player.of("pobi"), -10000));
     }
 }

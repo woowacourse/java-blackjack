@@ -1,6 +1,6 @@
 package domain.card;
 
-import static domain.GameManager.BLACKJACK_SCORE;
+import static domain.BlackjackGame.BLACKJACK_SCORE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.stream.Stream;
@@ -9,19 +9,19 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class CardsTest {
+class HandTest {
 
     @Test
     void 카드를_입력_받아_리스트에_추가한다() {
         // given
         Card card = Card.of(TrumpNumber.ACE, TrumpShape.CLUB);
-        Cards cards = Cards.of();
+        Hand hand = Hand.of();
 
         // when
-        cards.add(card);
+        hand.add(card);
 
         // then
-        assertThat(cards.getCards()).hasSize(1);
+        assertThat(hand.getCards()).hasSize(1);
     }
 
     @Test
@@ -30,13 +30,13 @@ class CardsTest {
         Card card1 = Card.of(TrumpNumber.TWO, TrumpShape.CLUB);
         Card card2 = Card.of(TrumpNumber.FOUR, TrumpShape.CLUB);
         Card card3 = Card.of(TrumpNumber.SIX, TrumpShape.CLUB);
-        Cards cards = Cards.of();
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
+        Hand hand = Hand.of();
+        hand.add(card1);
+        hand.add(card2);
+        hand.add(card3);
 
         // when
-        int score = cards.calculateScore();
+        int score = hand.calculateScore();
 
         // then
         assertThat(score).isEqualTo(12);
@@ -44,10 +44,10 @@ class CardsTest {
 
     @ParameterizedTest
     @MethodSource("createCardsAndResult")
-    void 에이스에_대한_최적의_선택을_한_점수를_계산한다(Cards cards, int expectedResult) {
+    void 에이스에_대한_최적의_선택을_한_점수를_계산한다(Hand hand, int expectedResult) {
 
         // when
-        int score = cards.calculateScore();
+        int score = hand.calculateScore();
 
         // then
         assertThat(score).isEqualTo(expectedResult);
@@ -67,11 +67,11 @@ class CardsTest {
         );
     }
 
-    private static Cards createCards(Card... inputCards) {
-        Cards cards = Cards.of();
+    private static Hand createCards(Card... inputCards) {
+        Hand hand = Hand.of();
         for (Card card : inputCards) {
-            cards.add(card);
+            hand.add(card);
         }
-        return cards;
+        return hand;
     }
 }
