@@ -7,12 +7,16 @@ import java.util.function.BiFunction;
 import blackjack.domain.gamer.Gamer;
 
 public enum RoundResult {
-    WIN,
-    LOSE,
-    TIE,
+    WIN(2),
+    LOSE(1.5),
+    TIE(1),
+    BLACKJACK(1.5),
     ;
 
-    RoundResult() {
+    private final double bettingAmountMultiple;
+
+    RoundResult(double bettingAmountMultiple) {
+        this.bettingAmountMultiple = bettingAmountMultiple;
     }
 
     public static RoundResult judgeResult(Gamer gamer, Gamer otherGamer) {
@@ -70,5 +74,9 @@ public enum RoundResult {
             return LOSE;
         }
         return null;
+    }
+
+    public double getBettingAmountMultiple() {
+        return bettingAmountMultiple;
     }
 }

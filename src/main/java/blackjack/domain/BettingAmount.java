@@ -5,15 +5,12 @@ public record BettingAmount(
     double end
 ) {
 
-    public static final double WINNER_MULTIPLE = 2;
-    public static final double BLACKJACK_MULTIPLE = 1.5;
-
     public static BettingAmount of(double money) {
         return new BettingAmount(money, 0);
     }
 
     public BettingAmount blackjack() {
-        return new BettingAmount(initial, initial * BLACKJACK_MULTIPLE);
+        return new BettingAmount(initial, initial * RoundResult.BLACKJACK.getBettingAmountMultiple());
     }
 
     public BettingAmount draw() {
@@ -21,7 +18,7 @@ public record BettingAmount(
     }
 
     public BettingAmount win() {
-        return new BettingAmount(initial, initial * WINNER_MULTIPLE);
+        return new BettingAmount(initial, initial * RoundResult.WIN.getBettingAmountMultiple());
     }
 
     public double getProfit() {
