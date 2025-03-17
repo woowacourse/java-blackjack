@@ -1,7 +1,6 @@
 package constant;
 
 public enum WinningResult {
-    BLACKJACK,
     WIN,
     DRAW,
     LOSE;
