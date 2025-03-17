@@ -4,9 +4,30 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum GameResult {
-    WIN((dealerSum, playerSum) -> playerSum > dealerSum),
-    DRAW((dealerSum, playerSum) -> playerSum == dealerSum),
-    LOSE((dealerSum, playerSum) -> playerSum < dealerSum);
+    WIN((dealerSum, playerSum) -> playerSum > dealerSum) {
+        @Override
+        public int calculateProfit(boolean isBlackjack, int principal) {
+            if (isBlackjack) {
+                return (int) (principal * BLACKJACK_PROFIT_RATE);
+            }
+            return principal;
+        }
+    },
+    DRAW((dealerSum, playerSum) -> playerSum == dealerSum) {
+        @Override
+        public int calculateProfit(boolean isBlackjack, int principal) {
+            return DRAW_PROFIT;
+        }
+    },
+    LOSE((dealerSum, playerSum) -> playerSum < dealerSum) {
+        @Override
+        public int calculateProfit(boolean isBlackjack, int principal) {
+            return -principal;
+        }
+    };
+
+    private static final double BLACKJACK_PROFIT_RATE = 1.5;
+    private static final int DRAW_PROFIT = 0;
 
     private final BiPredicate<Integer, Integer> compareSum;
 
@@ -21,15 +42,5 @@ public enum GameResult {
             .orElseThrow();
     }
 
-    public boolean isWin() {
-        return this == WIN;
-    }
-
-    public boolean isDraw() {
-        return this == DRAW;
-    }
-
-    public boolean isLose() {
-        return this == LOSE;
-    }
+    public abstract int calculateProfit(boolean isBlackjack, int principal);
 }

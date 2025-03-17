@@ -47,31 +47,43 @@ class GameResultTest {
     }
 
     @Nested
-    @DisplayName("승패 확인 테스트")
-    class ResultTest {
+    @DisplayName("수익 테스트")
+    class ResultProfitTest {
 
         @Test
-        @DisplayName("승리를 확인할 수 있다.")
-        void checkWin() {
-            GameResult playerResult = GameResult.WIN;
+        @DisplayName("승리면서 블랙잭이면 원금의 1.5배의 이익을 얻는다")
+        void winWithBlackjack() {
+            GameResult gameResult = GameResult.WIN;
+            int profit = gameResult.calculateProfit(true, 10000);
 
-            assertThat(playerResult.isWin()).isTrue();
+            assertThat(profit).isEqualTo(15000);
         }
 
         @Test
-        @DisplayName("무승부를 확인할 수 있다.")
-        void checkDraw() {
-            GameResult playerResult = GameResult.DRAW;
+        @DisplayName("블랙잭이 아닌 승리는 원금 만큼의 이익을 얻는다")
+        void winWithNotBlackjack() {
+            GameResult gameResult = GameResult.WIN;
+            int profit = gameResult.calculateProfit(false, 10000);
 
-            assertThat(playerResult.isDraw()).isTrue();
+            assertThat(profit).isEqualTo(10000);
         }
 
         @Test
-        @DisplayName("패배를 확인할 수 있다.")
-        void checkLose() {
-            GameResult playerResult = GameResult.LOSE;
+        @DisplayName("무승부는 이익이 없다")
+        void draw() {
+            GameResult gameResult = GameResult.DRAW;
+            int profit = gameResult.calculateProfit(false, 10000);
 
-            assertThat(playerResult.isLose()).isTrue();
+            assertThat(profit).isEqualTo(0);
+        }
+
+        @Test
+        @DisplayName("패배는 원금 만큼을 잃는다")
+        void lose() {
+            GameResult gameResult = GameResult.LOSE;
+            int profit = gameResult.calculateProfit(false, 10000);
+
+            assertThat(profit).isEqualTo(-10000);
         }
     }
 }

@@ -13,8 +13,6 @@ public class Dealer {
 
     private static final int DEALER_DISTRIBUTE_CARD_THRESHOLD = 17;
     private static final int DEALER_OPEN_INITIAL_CARD_COUNT = 1;
-    private static final double BLACKJACK_PROFIT_RATE = 1.5;
-    private static final int DRAW_PROFIT = 0;
 
     private final CardDeck cardDeck;
     private final CardHand cardHand;
@@ -66,16 +64,7 @@ public class Dealer {
 
     private int calculateProfit(final GameResult gameResult, final boolean isBlackjack,
         final int principal) {
-        if (gameResult.isWin() && isBlackjack) {
-            return (int) (principal * BLACKJACK_PROFIT_RATE);
-        }
-        if (gameResult.isWin()) {
-            return principal;
-        }
-        if (gameResult.isLose()) {
-            return -principal;
-        }
-        return DRAW_PROFIT;
+        return gameResult.calculateProfit(isBlackjack, principal);
     }
 
     public CardHand getCardHand() {
