@@ -6,6 +6,7 @@ import Blackjack.domain.game.CardDeckGenerator;
 import Blackjack.domain.game.Game;
 import Blackjack.domain.game.GameResult;
 import Blackjack.domain.game.Participants;
+import Blackjack.domain.participant.Players;
 import Blackjack.dto.GameResultDto;
 import Blackjack.dto.ParticipantCardsDto;
 import Blackjack.exception.ExceptionHandler;
@@ -22,7 +23,9 @@ public class GameController {
 
     public void run() {
         CardDeck cardDeck = CardDeckGenerator.generate();
-        Participants participants = registerPlayers();
+        Players players = registerPlayers();
+        players.initializeBet(InputView::readPlayerBet);
+        Participants participants = new Participants(players);
         Game game = new Game(cardDeck, participants);
         game.distributeInitialCards();
         displayInitialParticipantsCards(participants);
@@ -32,10 +35,10 @@ public class GameController {
 //        displayGameResult(participants);
     }
 
-    private Participants registerPlayers() {
+    private Players registerPlayers() {
         return ExceptionHandler.repeatUntilSuccess(() -> {
             List<String> names = InputView.readPlayerNames();
-            return new Participants(names);
+            return Players.of(names);
         });
     }
 

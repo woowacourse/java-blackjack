@@ -1,14 +1,21 @@
 package Blackjack.domain.participant;
 
+import Blackjack.domain.Bet;
 import Blackjack.domain.card.Card;
 import Blackjack.domain.game.GameStatus;
 import java.util.List;
 import java.util.Optional;
 
 public class Player extends Participant {
+    private Bet bet;
 
-    public Player(final String name) {
+    public Player(final String name, final Bet bet) {
         super(name);
+        this.bet = bet;
+    }
+
+    public void increaseBet(final int value) {
+        bet = bet.increase(value);
     }
 
     @Override

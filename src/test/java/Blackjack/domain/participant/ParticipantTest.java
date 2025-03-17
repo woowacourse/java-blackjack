@@ -3,6 +3,7 @@ package Blackjack.domain.participant;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import Blackjack.domain.Bet;
 import Blackjack.domain.card.Card;
 import Blackjack.domain.card.Rank;
 import Blackjack.domain.card.Suit;
@@ -25,7 +26,7 @@ public class ParticipantTest {
     void determineCardsOver21Test(String rankNames, String playerStatus, String dealerStatus) {
         // given
         List<Rank> playerRanks = List.of(Rank.JACK, Rank.QUEEN, Rank.KING);
-        Player player = createParticipant(playerRanks, Player::new);
+        Player player = createParticipant(playerRanks, name -> new Player(name, Bet.startingBet()));
         List<Rank> dealerRanks = createRanks(rankNames);
         Dealer dealer = createParticipant(dealerRanks, Dealer::new);
         // then & when
@@ -40,7 +41,7 @@ public class ParticipantTest {
     void determineCardsUnder21Test(String rankNames, String playerStatus, String dealerStatus) {
         // given
         List<Rank> playerRanks = List.of(Rank.JACK, Rank.TWO);
-        Player player = createParticipant(playerRanks, Player::new);
+        Player player = createParticipant(playerRanks, name -> new Player(name, Bet.startingBet()));
         List<Rank> DealerRanks = createRanks(rankNames);
         Dealer dealer = createParticipant(DealerRanks, Dealer::new);
         // then & when
@@ -53,7 +54,7 @@ public class ParticipantTest {
     @DisplayName("이름이 공백인 참여자 예외 테스트")
     void blankParticipantNameTest(String name) {
         // given & when & then
-        assertThatThrownBy(() -> new Player(name))
+        assertThatThrownBy(() -> new Player(name, Bet.startingBet()))
                 .isInstanceOf(ErrorException.class)
                 .hasMessageContaining("[ERROR]");
     }

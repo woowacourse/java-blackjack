@@ -15,6 +15,11 @@ public class InputView {
         return validateAndParsePlayerNames(response);
     }
 
+    public static int readPlayerBet(final String name) {
+        final String reponse = prompt(System.lineSeparator() + name + "의 배팅 금액은?");
+        return Integer.parseInt(reponse);
+    }
+
     public static boolean readAddPlayerCard(final String name) {
         return ExceptionHandler.repeatUntilSuccess(() -> {
             final String response = prompt(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name));

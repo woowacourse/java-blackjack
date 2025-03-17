@@ -2,6 +2,7 @@ package Blackjack.domain.participant;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import Blackjack.domain.Bet;
 import Blackjack.domain.card.Card;
 import Blackjack.domain.card.Rank;
 import Blackjack.domain.card.Suit;
@@ -25,7 +26,7 @@ public class PlayerTest {
     }
 
     private static Player createPlayerCardsOfRanks(List<Rank> ranks) {
-        Player player = new Player("행성");
+        Player player = new Player("행성", Bet.startingBet());
         ranks.stream()
                 .map(rank -> new Card(rank, Suit.DIAMOND))
                 .forEach(player::addCard);

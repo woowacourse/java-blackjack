@@ -1,5 +1,6 @@
 package Blackjack.domain.participant;
 
+import Blackjack.domain.Bet;
 import Blackjack.domain.card.Card;
 import Blackjack.domain.card.Cards;
 import Blackjack.exception.ErrorException;
@@ -9,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 public class Players {
     private final Map<String, Player> players;
@@ -21,9 +23,16 @@ public class Players {
         validateDistinct(names);
         Map<String, Player> players = new HashMap<>(names.size());
         for (String name : names) {
-            players.put(name, new Player(name));
+            players.put(name, new Player(name, Bet.valueOf(0)));
         }
         return new Players(players);
+    }
+
+    public void initializeBet(Function<String, Integer> betFunction) {
+        for (Player player : players.values()) {
+            int bet = betFunction.apply(player.getName());
+            player.increaseBet(bet);
+        }
     }
 
     public int size() {

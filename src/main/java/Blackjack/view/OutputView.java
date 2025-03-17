@@ -25,7 +25,7 @@ public class OutputView {
     }
 
     public static void printInitialParticipantsCards(final List<ParticipantCardsDto> participantCardsDtos) {
-        System.out.println(formatInitialCardsHeader(participantCardsDtos));
+        System.out.println(System.lineSeparator() + formatInitialCardsHeader(participantCardsDtos));
         printParticipantsCardsByFormat(participantCardsDtos, OutputView::formatParticipantCards);
     }
 

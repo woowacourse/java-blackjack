@@ -28,6 +28,10 @@ public class Participants {
         this(new Dealer(DEALER_NAME), Players.of(names));
     }
 
+    public Participants(final Players players) {
+        this(new Dealer(DEALER_NAME), players);
+    }
+
     public int size() {
         return players.size() + 1;
     }
