@@ -12,11 +12,8 @@ public class Betting {
     }
 
     private void validateBetting(final long bettingMoney) {
-        if (bettingMoney == 0) {
+        if (bettingMoney <= 0) {
             throw new IllegalArgumentException("배팅금액을 1원 이상 입력해 주세요.");
-        }
-        if (bettingMoney < 0) {
-            throw new IllegalArgumentException("배팅금액은 음수가 불가능합니다.");
         }
     }
 

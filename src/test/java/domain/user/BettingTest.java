@@ -22,7 +22,7 @@ public class BettingTest {
         Assertions.assertThat(betting.getBettingMoney()).isEqualTo(30000000);
     }
 
-    @DisplayName("배팅금액이 음수일시 예외가 발생한다.")
+    @DisplayName("배팅금액이 음수 혹은 0일시 예외가 발생한다.")
     @Test
     void test2() {
 
@@ -32,7 +32,7 @@ public class BettingTest {
         // when & then
         SoftAssertions.assertSoftly(softAssertions -> {
             softAssertions.assertThatIllegalArgumentException().isThrownBy(() -> new Betting(minusAmount))
-                    .withMessage("배팅금액은 음수가 불가능합니다.");
+                    .withMessage("배팅금액을 1원 이상 입력해 주세요.");
         });
     }
 
