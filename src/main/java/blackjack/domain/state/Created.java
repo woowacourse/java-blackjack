@@ -27,7 +27,7 @@ public class Created implements State {
     }
 
     @Override
-    public WinningResult decide(State state) {
+    public WinningResult decide(Cards dealerCards) {
         throw new IllegalStateException("승패를 결정할 수 없습니다.");
     }
 

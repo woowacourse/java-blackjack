@@ -15,7 +15,6 @@ import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Players;
 import blackjack.domain.state.Created;
 import blackjack.domain.state.finished.Blackjack;
-import blackjack.domain.state.finished.Stay;
 import blackjack.domain.state.running.Hit;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +31,7 @@ class GameBoardTest {
                 new Card(Suit.CLUB, Rank.TEN),
                 new Card(Suit.CLUB, Rank.TEN)
         );
-        Dealer dealer = new Dealer(new Created());
+        Dealer dealer = new Dealer(new Cards());
         Players players = new Players(
                 new Player("pobi", new Created(), new BettingMoney(1000)),
                 new Player("neo", new Created(), new BettingMoney(1000))
@@ -45,7 +44,7 @@ class GameBoardTest {
         //then
         assertAll(
                 () -> assertThat(dealer).isEqualTo(new Dealer(
-                        new Blackjack(new Cards(new Card(Suit.CLUB, Rank.TEN), new Card(Suit.CLUB, Rank.ACE))))),
+                        new Cards(new Card(Suit.CLUB, Rank.TEN), new Card(Suit.CLUB, Rank.ACE)))),
                 () -> assertThat(players).isEqualTo(new Players(
                         new Player("pobi", new Blackjack(new Cards(
                                 new Card(Suit.CLUB, Rank.TEN),
@@ -66,7 +65,7 @@ class GameBoardTest {
                 new Card(Suit.CLUB, Rank.TEN)
         );
         Player pobi = new Player("pobi", new Hit(new Cards()), new BettingMoney(1000));
-        GameBoard gameBoard = new GameBoard(deck, new Dealer(new Hit(new Cards())), new Players(
+        GameBoard gameBoard = new GameBoard(deck, new Dealer(new Cards()), new Players(
                 pobi,
                 new Player("neo", new Hit(new Cards()), new BettingMoney(1000))
         ));
@@ -86,7 +85,7 @@ class GameBoardTest {
                 new Card(Suit.CLUB, Rank.TEN),
                 new Card(Suit.CLUB, Rank.ACE)
         );
-        Dealer dealer = new Dealer(new Hit(new Cards()));
+        Dealer dealer = new Dealer(new Cards());
         GameBoard gameBoard = new GameBoard(deck, dealer, new Players(
                 new Player("pobi", new Hit(new Cards()), new BettingMoney(1000)),
                 new Player("neo", new Hit(new Cards()), new BettingMoney(1000))
@@ -96,11 +95,11 @@ class GameBoardTest {
         gameBoard.drawAdditionalCardOfDealer();
 
         //then
-        assertThat(dealer).isEqualTo(new Dealer(new Stay(
+        assertThat(dealer).isEqualTo(new Dealer(
                 new Cards(
                         new Card(Suit.CLUB, Rank.TEN),
                         new Card(Suit.CLUB, Rank.ACE)
                 )
-        )));
+        ));
     }
 }

@@ -31,8 +31,8 @@ public class Player {
         return state.calculateTotalScore();
     }
 
-    public int calculateProfit(State competitiveState) {
-        WinningResult winningResult = state.decide(competitiveState);
+    public int calculateProfit(Cards dealerCards) {
+        WinningResult winningResult = state.decide(dealerCards);
         if (winningResult == WinningResult.WIN) {
             return (int) state.profit(bettingMoney.amount());
         }

@@ -15,7 +15,7 @@ public interface State {
 
     Score calculateTotalScore();
 
-    WinningResult decide(State state);
+    WinningResult decide(Cards dealerCards);
 
     boolean isFinished();
 

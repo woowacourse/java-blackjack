@@ -22,7 +22,7 @@ public abstract class Running extends Started {
     }
 
     @Override
-    public WinningResult decide(State state) {
+    public WinningResult decide(Cards dealerCards) {
         throw new IllegalStateException("아직 승패를 결정할 수 없습니다.");
     }
 

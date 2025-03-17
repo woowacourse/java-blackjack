@@ -31,7 +31,7 @@ class BustTest {
     @Test
     void 버스트라면_무조건_진다() {
         //given
-        Stay stay = new Stay(new Cards(new Card(Suit.DIAMOND, Rank.TEN)));
+        Cards cards = new Cards(new Card(Suit.DIAMOND, Rank.TEN));
         Bust bust = new Bust(new Cards(
                 new Card(Suit.DIAMOND, Rank.THREE),
                 new Card(Suit.DIAMOND, Rank.TEN),
@@ -39,7 +39,7 @@ class BustTest {
         ));
 
         //when
-        WinningResult winningResult = bust.calculateWinningResult(stay);
+        WinningResult winningResult = bust.decide(cards);
 
         //then
         assertThat(winningResult).isEqualTo(WinningResult.LOSE);

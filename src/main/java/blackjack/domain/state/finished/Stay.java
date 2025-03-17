@@ -2,7 +2,6 @@ package blackjack.domain.state.finished;
 
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Score;
-import blackjack.domain.state.State;
 import blackjack.domain.winning.WinningResult;
 
 public class Stay extends Finished {
@@ -11,14 +10,14 @@ public class Stay extends Finished {
     }
 
     @Override
-    protected WinningResult calculateWinningResult(State state) {
-        if (state instanceof Bust) {
+    public WinningResult decide(Cards dealerCards) {
+        if (dealerCards.isBust()) {
             return WinningResult.WIN;
         }
-        if (state instanceof Blackjack) {
+        if (dealerCards.isBlackjack()) {
             return WinningResult.LOSE;
         }
-        return compareScore(state);
+        return compareScore(dealerCards);
     }
 
     @Override
@@ -26,9 +25,9 @@ public class Stay extends Finished {
         return 2;
     }
 
-    private WinningResult compareScore(State state) {
+    private WinningResult compareScore(Cards dealerCards) {
         Score myScore = calculateTotalScore();
-        Score otherScore = state.calculateTotalScore();
+        Score otherScore = dealerCards.calculateMaxScore();
         if (myScore.compareTo(otherScore) > 0) {
             return WinningResult.WIN;
         }

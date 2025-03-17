@@ -1,7 +1,7 @@
 package blackjack.domain.participants;
 
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
-import blackjack.domain.state.State;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -52,9 +52,9 @@ public class Players {
         }
     }
 
-    public int calculateTotalProfit(State competitiveState) {
+    public int calculateTotalProfit(Cards dealerCards) {
         return players.stream()
-                .mapToInt(player -> player.calculateProfit(competitiveState))
+                .mapToInt(player -> player.calculateProfit(dealerCards))
                 .sum();
     }
 
@@ -62,7 +62,7 @@ public class Players {
         return players.stream()
                 .collect(Collectors.toMap(
                         player -> player,
-                        player -> player.calculateProfit(dealer.getState())
+                        player -> player.calculateProfit(dealer.getCards())
                 ));
     }
 

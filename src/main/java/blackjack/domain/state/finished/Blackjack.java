@@ -1,7 +1,6 @@
 package blackjack.domain.state.finished;
 
 import blackjack.domain.card.Cards;
-import blackjack.domain.state.State;
 import blackjack.domain.winning.WinningResult;
 
 public class Blackjack extends Finished {
@@ -13,8 +12,8 @@ public class Blackjack extends Finished {
     }
 
     @Override
-    protected WinningResult calculateWinningResult(State state) {
-        if (state instanceof Blackjack) {
+    public WinningResult decide(Cards dealerCards) {
+        if (dealerCards.isBlackjack()) {
             return WinningResult.DRAW;
         }
         return WinningResult.WIN;

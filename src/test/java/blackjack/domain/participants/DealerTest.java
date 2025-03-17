@@ -7,9 +7,7 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
-import blackjack.domain.state.Created;
 import blackjack.domain.state.finished.Stay;
-import blackjack.domain.state.running.Hit;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
@@ -22,14 +20,14 @@ class DealerTest {
                 new Card(Suit.DIAMOND, Rank.NINE),
                 new Card(Suit.CLUB, Rank.TEN)
         );
-        Dealer dealer = new Dealer(new Created());
+        Dealer dealer = new Dealer(new Cards());
 
         //when
         dealer.prepareBlackjack(deck);
 
         //then
         assertThat(dealer).isEqualTo(new Dealer(
-                new Hit(new Cards(new Card(Suit.CLUB, Rank.EIGHT), new Card(Suit.DIAMOND, Rank.NINE)))
+                new Cards(new Card(Suit.CLUB, Rank.EIGHT), new Card(Suit.DIAMOND, Rank.NINE))
         ));
     }
 
@@ -41,29 +39,29 @@ class DealerTest {
                 new Card(Suit.DIAMOND, Rank.NINE),
                 new Card(Suit.CLUB, Rank.TEN)
         );
-        Dealer dealer = new Dealer(new Hit(new Cards()));
+        Dealer dealer = new Dealer(new Cards());
 
         //when
         dealer.drawAdditionalCard(deck);
 
         //then
-        assertThat(dealer).isEqualTo(new Dealer(new Hit(
-                new Cards(
-                        new Card(Suit.CLUB, Rank.EIGHT),
-                        new Card(Suit.DIAMOND, Rank.NINE)
-                )
-        )));
-    }
-
-    @Test
-    void 수익을_계산할_수_있다() {
-        //given
-        Dealer dealer = new Dealer(new Stay(
+        assertThat(dealer).isEqualTo(new Dealer(
                 new Cards(
                         new Card(Suit.CLUB, Rank.EIGHT),
                         new Card(Suit.DIAMOND, Rank.NINE)
                 )
         ));
+    }
+
+    @Test
+    void 수익을_계산할_수_있다() {
+        //given
+        Dealer dealer = new Dealer(
+                new Cards(
+                        new Card(Suit.CLUB, Rank.EIGHT),
+                        new Card(Suit.DIAMOND, Rank.NINE)
+                )
+        );
 
         Players players = new Players(
                 new Player("neo",

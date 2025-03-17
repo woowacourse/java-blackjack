@@ -30,17 +30,17 @@ class BlackjackTest {
     @Test
     void 상대방도_블랙잭이라면_무승부이다() {
         //given
-        Blackjack blackjack1 = new Blackjack(new Cards(
+        Cards cards = new Cards(
                 new Card(Suit.DIAMOND, Rank.TEN),
                 new Card(Suit.DIAMOND, Rank.ACE)
-        ));
-        Blackjack blackjack2 = new Blackjack(new Cards(
+        );
+        Blackjack blackjack = new Blackjack(new Cards(
                 new Card(Suit.HEART, Rank.TEN),
                 new Card(Suit.HEART, Rank.ACE)
         ));
 
         //when
-        WinningResult winningResult = blackjack1.decide(blackjack2);
+        WinningResult winningResult = blackjack.decide(cards);
 
         //then
         assertThat(winningResult).isEqualTo(WinningResult.DRAW);
@@ -53,13 +53,13 @@ class BlackjackTest {
                 new Card(Suit.DIAMOND, Rank.TEN),
                 new Card(Suit.DIAMOND, Rank.ACE)
         ));
-        Stay stay = new Stay(new Cards(
+        Cards cards = new Cards(
                 new Card(Suit.HEART, Rank.TEN),
                 new Card(Suit.DIAMOND, Rank.TEN)
-        ));
+        );
 
         //when
-        WinningResult winningResult = blackjack.decide(stay);
+        WinningResult winningResult = blackjack.decide(cards);
 
         //then
         assertThat(winningResult).isEqualTo(WinningResult.WIN);

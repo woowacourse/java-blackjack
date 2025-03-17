@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.GameBoard;
+import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.RandomCardsShuffler;
 import blackjack.domain.participants.BettingMoney;
@@ -17,7 +18,7 @@ public class BlackjackController {
     public void run() {
         try {
             Deck deck = Deck.defaultDeck();
-            Dealer dealer = new Dealer(new Created());
+            Dealer dealer = new Dealer(new Cards());
             Players players = createPlayers();
             GameBoard gameBoard = new GameBoard(deck, dealer, players);
             handOutCards(gameBoard);

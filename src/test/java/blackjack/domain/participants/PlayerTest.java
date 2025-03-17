@@ -61,12 +61,12 @@ class PlayerTest {
     @Test
     void 딜러에게_승리한다면_수익은_배팅금액의_2배이다() {
         //given
-        Dealer dealer = new Dealer(new Stay(
+        Dealer dealer = new Dealer(
                 new Cards(
                         new Card(Suit.CLUB, Rank.EIGHT),
                         new Card(Suit.DIAMOND, Rank.NINE)
                 )
-        ));
+        );
         Player player = new Player("pobi", new Stay(
                 new Cards(
                         new Card(Suit.CLUB, Rank.TEN),
@@ -75,7 +75,7 @@ class PlayerTest {
         ), new BettingMoney(10000));
 
         //when
-        int result = player.calculateProfit(dealer.getState());
+        int result = player.calculateProfit(dealer.getCards());
 
         //then
         assertThat(result).isEqualTo(10000);
@@ -84,12 +84,12 @@ class PlayerTest {
     @Test
     void 딜러에게_패매한다면_배팅금액만큼_손해이다() {
         //given
-        Dealer dealer = new Dealer(new Stay(
+        Dealer dealer = new Dealer(
                 new Cards(
                         new Card(Suit.CLUB, Rank.TEN),
                         new Card(Suit.DIAMOND, Rank.NINE)
                 )
-        ));
+        );
         Player player = new Player("pobi", new Stay(
                 new Cards(
                         new Card(Suit.CLUB, Rank.EIGHT),
@@ -98,7 +98,7 @@ class PlayerTest {
         ), new BettingMoney(10000));
 
         //when
-        int result = player.calculateProfit(dealer.getState());
+        int result = player.calculateProfit(dealer.getCards());
 
         //then
         assertThat(result).isEqualTo(-10000);
@@ -107,12 +107,12 @@ class PlayerTest {
     @Test
     void 딜러와_무승부라면_수익은_0원이다() {
         //given
-        Dealer dealer = new Dealer(new Stay(
+        Dealer dealer = new Dealer(
                 new Cards(
                         new Card(Suit.CLUB, Rank.EIGHT),
                         new Card(Suit.DIAMOND, Rank.NINE)
                 )
-        ));
+        );
         Player player = new Player("pobi", new Stay(
                 new Cards(
                         new Card(Suit.CLUB, Rank.EIGHT),
@@ -121,7 +121,7 @@ class PlayerTest {
         ), new BettingMoney(10000));
 
         //when
-        int result = player.calculateProfit(dealer.getState());
+        int result = player.calculateProfit(dealer.getCards());
 
         //then
         assertThat(result).isEqualTo(0);
@@ -130,12 +130,12 @@ class PlayerTest {
     @Test
     void 플레이어가_버스트라면_배팅금액만큼_손해이다() {
         //given
-        Dealer dealer = new Dealer(new Stay(
+        Dealer dealer = new Dealer(
                 new Cards(
                         new Card(Suit.CLUB, Rank.EIGHT),
                         new Card(Suit.DIAMOND, Rank.NINE)
                 )
-        ));
+        );
         Player player = new Player("pobi", new Bust(
                 new Cards(
                         new Card(Suit.CLUB, Rank.EIGHT),
@@ -145,7 +145,7 @@ class PlayerTest {
         ), new BettingMoney(10000));
 
         //when
-        int result = player.calculateProfit(dealer.getState());
+        int result = player.calculateProfit(dealer.getCards());
 
         //then
         assertThat(result).isEqualTo(-10000);
@@ -154,12 +154,12 @@ class PlayerTest {
     @Test
     void 플레이어가_블랙잭이면서_승리한다면_수익은_1점5배이다() {
         //given
-        Dealer dealer = new Dealer(new Stay(
+        Dealer dealer = new Dealer(
                 new Cards(
                         new Card(Suit.CLUB, Rank.EIGHT),
                         new Card(Suit.DIAMOND, Rank.NINE)
                 )
-        ));
+        );
         Player player = new Player("pobi", new Blackjack(
                 new Cards(
                         new Card(Suit.CLUB, Rank.ACE),
@@ -168,7 +168,7 @@ class PlayerTest {
         ), new BettingMoney(10000));
 
         //when
-        int result = player.calculateProfit(dealer.getState());
+        int result = player.calculateProfit(dealer.getCards());
 
         //then
         assertThat(result).isEqualTo(15000);

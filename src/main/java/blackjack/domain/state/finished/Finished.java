@@ -4,7 +4,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.state.Started;
 import blackjack.domain.state.State;
-import blackjack.domain.winning.WinningResult;
 
 public abstract class Finished extends Started {
     protected Finished(Cards cards) {
@@ -27,19 +26,9 @@ public abstract class Finished extends Started {
     }
 
     @Override
-    public WinningResult decide(State state) {
-        if (!state.isFinished()) {
-            throw new IllegalArgumentException("끝난 상태와 승패를 결정할 수 있습니다.");
-        }
-        return calculateWinningResult(state);
-    }
-
-    @Override
     public double profit(double bettingMoney) {
         return bettingMoney * earningsRate() - bettingMoney;
     }
-
-    abstract protected WinningResult calculateWinningResult(State state);
 
     abstract protected double earningsRate();
 }

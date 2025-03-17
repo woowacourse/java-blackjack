@@ -53,14 +53,14 @@ class PlayersTest {
     @Test
     void 플레이어들의_총_수익을_알_수_있다() {
         //given
-        Dealer dealer = new Dealer(new Stay(new Cards(new Card(Suit.DIAMOND, Rank.NINE))));
+        Dealer dealer = new Dealer(new Cards(new Card(Suit.DIAMOND, Rank.NINE)));
         Players players = new Players(
                 new Player("pobi", new Stay(new Cards(new Card(Suit.DIAMOND, Rank.TEN))), new BettingMoney(1000)),
                 new Player("neo", new Stay(new Cards(new Card(Suit.DIAMOND, Rank.TEN))), new BettingMoney(2000))
         );
 
         //when
-        int profit = players.calculateTotalProfit(dealer.getState());
+        int profit = players.calculateTotalProfit(dealer.getCards());
 
         //then
         assertThat(profit).isEqualTo(3000);
@@ -69,7 +69,7 @@ class PlayersTest {
     @Test
     void 플레이어들_각각의_수익을_알_수_있다() {
         //given
-        Dealer dealer = new Dealer(new Stay(new Cards(new Card(Suit.DIAMOND, Rank.NINE))));
+        Dealer dealer = new Dealer(new Cards(new Card(Suit.DIAMOND, Rank.NINE)));
         Player pobi = new Player("pobi", new Stay(new Cards(new Card(Suit.DIAMOND, Rank.TEN))), new BettingMoney(1000));
         Player neo = new Player("neo", new Stay(new Cards(new Card(Suit.DIAMOND, Rank.TEN))), new BettingMoney(2000));
         Players players = new Players(pobi, neo);

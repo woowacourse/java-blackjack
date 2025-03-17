@@ -3,49 +3,42 @@ package blackjack.domain.participants;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Score;
-import blackjack.domain.state.Started;
-import blackjack.domain.state.State;
 import java.util.Objects;
 
 public class Dealer {
 
     private static final Score MIN_SCORE_OF_CARDS = new Score(17);
 
-    private State state;
+    private final Cards cards;
 
-    public Dealer(State state) {
-        this.state = state;
+    public Dealer(Cards cards) {
+        this.cards = cards;
     }
 
     public void prepareBlackjack(Deck deck) {
-        state = Started.of(deck.draw(), deck.draw());
+        cards.take(deck.draw(), deck.draw());
     }
 
     public void drawAdditionalCard(Deck deck) {
-        while (state.calculateTotalScore().compareTo(MIN_SCORE_OF_CARDS) < 0) {
-            state = state.draw(deck.draw());
+        while (cards.calculateMaxScore().compareTo(MIN_SCORE_OF_CARDS) < 0) {
+            cards.take(deck.draw());
         }
-        state = state.stay();
     }
 
     public Score calculateMaxScore() {
-        return state.calculateTotalScore();
+        return cards.calculateMaxScore();
     }
 
     public int calculateProfit(Players players) {
-        return -1 * players.calculateTotalProfit(state);
+        return -1 * players.calculateTotalProfit(cards);
     }
 
     public Cards getCards() {
-        return state.cards();
-    }
-
-    public State getState() {
-        return state;
+        return cards;
     }
 
     public int getCardSize() {
-        return state.cards().size();
+        return cards.size();
     }
 
     @Override
