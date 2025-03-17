@@ -44,6 +44,9 @@ public enum CardRank {
         }
     }
 
+    /**
+     * 상속 -> softvalue
+     */
     public static class SoftValue implements CardValue {
         private final int defaultValue;
         private final int maxValue;
@@ -63,6 +66,7 @@ public enum CardRank {
             return maxValue;
         }
     }
+
 
     public static class HardValue implements CardValue {
         private final int defaultValue;

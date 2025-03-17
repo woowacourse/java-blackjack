@@ -94,4 +94,3 @@ public final class Dealer implements BetOwnable, Gameable, GameProcessable {
         return bets.calculateDealerRevenue();
     }
 }
-

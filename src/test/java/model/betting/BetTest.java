@@ -114,6 +114,4 @@ class BetTest {
         assertThat(ownerRevenue).isEqualTo(10000);
         assertThat(betterRevenue).isEqualTo(10000);
     }
-
-
 }

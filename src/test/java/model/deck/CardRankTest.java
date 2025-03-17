@@ -27,5 +27,4 @@ class CardRankTest {
         assertThatThrownBy(notAce::getMaxValue)
                 .isInstanceOf(IllegalStateException.class);
     }
-
 }
