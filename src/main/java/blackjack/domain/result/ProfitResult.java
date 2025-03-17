@@ -14,16 +14,14 @@ import java.util.stream.Stream;
 
 public final class ProfitResult {
 
-    private static final double AVERAGE_PROFIT_RATE = 1.0;
-    private static final double BLACKJACK_PROFIT_RATE = 1.5;
-
     private final Map<Participant, Integer> result;
 
     public ProfitResult(final Dealer dealer, final Map<Player, ResultStatus> winningResult) {
         this.result = calculateProfit(dealer, winningResult);
     }
 
-    private Map<Participant, Integer> calculateProfit(final Dealer dealer, final Map<Player, ResultStatus> winningResult) {
+    private Map<Participant, Integer> calculateProfit(final Dealer dealer,
+                                                      final Map<Player, ResultStatus> winningResult) {
         final Map<Participant, Integer> profits = initializeProfits(dealer, winningResult);
         for (Entry<Player, ResultStatus> entry : winningResult.entrySet()) {
             calculateEachProfit(dealer, entry, profits);
@@ -31,7 +29,8 @@ public final class ProfitResult {
         return profits;
     }
 
-    private Map<Participant, Integer> initializeProfits(final Dealer dealer, final Map<Player, ResultStatus> winningResult) {
+    private Map<Participant, Integer> initializeProfits(final Dealer dealer,
+                                                        final Map<Player, ResultStatus> winningResult) {
         return Stream.concat(Stream.of(dealer), winningResult.keySet().stream())
                 .collect(Collectors.toMap(Function.identity(), key -> 0, (e1, e2) -> e1,
                         LinkedHashMap::new));
