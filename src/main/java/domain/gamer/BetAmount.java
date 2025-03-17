@@ -14,7 +14,7 @@ public class BetAmount {
         this.betAmount = betAmount;
     }
 
-    public static BetAmount of(final String betAmount) {
+    public static BetAmount from(final String betAmount) {
         try {
             return new BetAmount(Long.parseLong(betAmount));
         } catch (final NumberFormatException e) {
