@@ -40,8 +40,8 @@ public class Player {
         return hand.isBlackJack();
     }
 
-    public int evaluate(GameResult gameResult) {
-        return betting.evaluate(gameResult);
+    public int getBettingMoney() {
+        return betting.getBetting();
     }
 
     public Hand getHand() {

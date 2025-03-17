@@ -53,4 +53,10 @@ public class Players {
                 .map(Player::getName)
                 .toList();
     }
+
+    public List<Integer> getBettingMoneys() {
+        return players.stream()
+                .map(Player::getBettingMoney)
+                .toList();
+    }
 }
