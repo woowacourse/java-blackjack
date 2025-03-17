@@ -9,7 +9,7 @@ import static domain.Card.HEART_TWO;
 
 import java.util.List;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.Assertions;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -20,7 +20,10 @@ class CardsTest {
     @MethodSource
     @DisplayName("중복된 카드가 있으면 예외를 반환합니다.")
     void validateDuplicateTest(List<Card> cards) {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new Cards(cards));
+        Assertions.assertThatThrownBy(() -> new Cards(cards))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("카드에 중복이 있습니다.");
+
     }
 
     public static Stream<Arguments> validateDuplicateTest() {
@@ -35,7 +38,7 @@ class CardsTest {
     @MethodSource
     @DisplayName("두 카드에 같은 요소가 있는지 확인합니다.")
     void hasCommonCardTest(List<Card> cards, List<Card> otherCards) {
-        Assertions.assertTrue(new Cards(cards).hasCommonCard(new Cards(otherCards)));
+        Assertions.assertThat(new Cards(cards).hasCommonCard(new Cards(otherCards))).isTrue();
     }
 
     public static Stream<Arguments> hasCommonCardTest() {
@@ -57,7 +60,7 @@ class CardsTest {
         final int cardScore = newCards.calculateScore();
 
         //then
-        Assertions.assertEquals(cardScore, expected);
+        Assertions.assertThat(cardScore).isEqualTo(expected);
     }
 
     public static Stream<Arguments> calculateCardScoreTest() {
@@ -73,7 +76,10 @@ class CardsTest {
     @DisplayName("카드가 21 초과(버스트) 라면 예외가 발생합니다.")
     void validateBustTest(List<Card> cards) {
         Cards originalCards = new Cards(List.of());
-        Assertions.assertThrows(IllegalArgumentException.class, () -> originalCards.addCards(new Cards(cards)));
+        Assertions.assertThatThrownBy(() -> originalCards.addCards(new Cards(cards)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("버스트입니다.");
+
     }
 
     public static Stream<Arguments> validateBustTest() {

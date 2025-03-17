@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.stream.Stream;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ class GameTest {
         // when
         // then
         Cards dealerCards = game.getDealer().getCards();
-        assertTrue(dealerCards.isInitialHands());
+        Assertions.assertThat(dealerCards.isInitialHands()).isTrue();
     }
 
     @Test

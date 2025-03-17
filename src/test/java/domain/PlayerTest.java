@@ -9,7 +9,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.Assertions;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ class PlayerTest {
         player.receiveCards(newCards);
 
         //then
-        Assertions.assertTrue(player.getCards().hasCommonCard(newCards));
+        Assertions.assertThat(player.getCards().hasCommonCard(newCards)).isTrue();
     }
 
     @ParameterizedTest
@@ -79,7 +79,7 @@ class PlayerTest {
         dealer.receiveCards(new Cards(List.of(Card.HEART_JACK, Card.SPADE_QUEEN))); // 20
 
         //when & then
-        Assertions.assertEquals(expected, player.decideGameResult(dealer));
+        Assertions.assertThat(player.decideGameResult(dealer)).isEqualTo(expected);
     }
 
     public static Stream<Arguments> decideGameResultTest() {
@@ -109,7 +109,7 @@ class PlayerTest {
         }
 
         //when & then
-        Assertions.assertEquals(expected, player.decideGameResult(dealer));
+        Assertions.assertThat(player.decideGameResult(dealer)).isEqualTo(expected);
     }
 
     public static Stream<Arguments> decideGameResultBustTest() {
@@ -122,7 +122,7 @@ class PlayerTest {
     @Test
     @DisplayName("같은 이름을 가졌는지 확인합니다.")
     void isSameNameTest() {
-        Assertions.assertTrue(player.isSameName(new PlayerName("코기")));
+        Assertions.assertThat(player.isSameName(new PlayerName("코기"))).isTrue();
     }
 
     @ParameterizedTest

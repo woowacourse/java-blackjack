@@ -1,7 +1,5 @@
 package domain;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
@@ -34,7 +32,7 @@ class PlayersTest {
         players.giveCardsToPlayer(username, newCards);
         // then
         Cards cards = players.getPlayerCard(username);
-        assertTrue(cards.hasCommonCard(newCards));
+        Assertions.assertThat(cards.hasCommonCard(newCards)).isTrue();
     }
 
     @ParameterizedTest
