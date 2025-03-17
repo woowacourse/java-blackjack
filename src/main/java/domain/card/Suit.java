@@ -1,4 +1,4 @@
-package constant;
+package domain.card;
 
 public enum Suit {
   HEART("하트"),

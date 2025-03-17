@@ -1,9 +1,11 @@
 package view;
 
+import domain.Bet;
+import domain.participant.Role;
 import java.util.List;
 import java.util.Map;
 
-public class OutputView {
+public final class OutputView {
 
   private static final String PLAYER_NAME_DELIMITER = ", ";
 
@@ -13,7 +15,7 @@ public class OutputView {
   }
 
   public void printDealerHitResult(final String card) {
-    System.out.printf("딜러카드: %s" + System.lineSeparator(), card);
+    System.out.printf("딜러 카드: %s" + System.lineSeparator(), card);
   }
 
   public void printPlayersHand(final List<Map.Entry<String, List<String>>> players) {
@@ -22,28 +24,29 @@ public class OutputView {
 
   public void printPlayerHand(final String name, final List<String> card) {
     final String cards = String.join(PLAYER_NAME_DELIMITER, card);
-    System.out.printf("%s카드: %s" + System.lineSeparator(), name, cards);
+    System.out.printf("%s 카드: %s" + System.lineSeparator(), name, cards);
   }
 
   public void printDealerHit() {
     System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다.");
   }
 
-  public void printPlayerRoundResult(final String name, final List<String> cards, final int score) {
+  public void printParticipantRoundResult(final String name, final List<String> cards,
+      final int score) {
     final String joinedCards = String.join(PLAYER_NAME_DELIMITER, cards);
-    System.out.printf("%s카드: %s - 결과: %d" + System.lineSeparator(), name, joinedCards, score);
+    System.out.printf("%s 카드: %s - 결과: %d" + System.lineSeparator(), name, joinedCards, score);
   }
 
   public void printRoundResultIntroduce() {
     System.out.println("## 최종 승패");
   }
 
-  public void printRoundResultOnDealer(final Map<Boolean, Integer> result) {
-    System.out.printf("딜러: %d승, %d패" + System.lineSeparator(), result.get(true), result.get(false));
+  public void printRoundResultOnDealer(final Bet result) {
+    System.out.printf("딜러: %s" + System.lineSeparator(), result);
   }
 
 
-  public void printRoundResultOnPlayers(final String name, final String result) {
-    System.out.printf("%s: %s" + System.lineSeparator(), name, result);
+  public void printRoundResultOnPlayers(final Role player) {
+    System.out.printf("%s: %s" + System.lineSeparator(), player.getName(), player.getBet());
   }
 }

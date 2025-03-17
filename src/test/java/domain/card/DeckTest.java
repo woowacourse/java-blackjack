@@ -3,7 +3,6 @@ package domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import constant.Suit;
 import exceptions.BlackjackArgumentException;
 import java.util.ArrayDeque;
 import java.util.List;
@@ -22,9 +21,9 @@ public class DeckTest {
     @ParameterizedTest
     @CsvSource({"1, 52", "2, 104"})
     @DisplayName("요청한 수에 비례하여, 52개의 트럼프카드 덱을 생성한다.")
-    void test_createDecks(final int numberOfDeck, final int expected) {
+    void test_createShuffledDecks(final int numberOfDeck, final int expected) {
       // given
-      final var deck = Deck.createDecks(numberOfDeck);
+      final var deck = Deck.createShuffledDecks(numberOfDeck);
       // when & then
       assertThat(deck.getNumberOfCards()).isEqualTo(expected);
     }

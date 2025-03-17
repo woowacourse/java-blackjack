@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class DomainToTextConverter {
+public final class DomainToTextConverter {
 
   private static DomainToTextConverter converter = null;
 
@@ -36,19 +36,24 @@ public class DomainToTextConverter {
 
   public Map.Entry<String, List<String>> playerToEntry(final Participant player) {
     return new AbstractMap.SimpleEntry<>(player.getName(),
-        participantCardToText(player));
+        participantCardToText(player.getCards()));
   }
 
-  public List<String> participantCardToText(final Participant participant) {
-    return participant.getHand().getCards()
-        .stream()
+  public List<String> participantCardToText(final List<TrumpCard> cars) {
+    return cars.stream()
+        .map(this::cardToText)
+        .toList();
+  }
+
+  public List<String> handToText(final List<TrumpCard> hand) {
+    return hand.stream()
         .map(this::cardToText)
         .toList();
   }
 
   public String cardToText(final TrumpCard dealerFirstTrumpCard) {
-    final String rankToText = RankToTextConverter.convert(dealerFirstTrumpCard.rank());
-    final String suitToText = dealerFirstTrumpCard.suit().getValue();
+    final String rankToText = RankToTextConverter.convert(dealerFirstTrumpCard.getRank());
+    final String suitToText = dealerFirstTrumpCard.getSuit().getValue();
     return rankToText + suitToText;
   }
 }

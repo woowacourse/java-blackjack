@@ -1,35 +1,36 @@
 package domain.participant;
 
-import domain.card.Hand;
+import domain.Bet;
+import domain.card.Score;
+import java.util.Map.Entry;
 
-public class Player extends Participant {
+public final class Player implements Role {
 
   private final String name;
+  private final Bet bet;
 
-  public Player(final String name) {
-    super();
+  public Player(final String name, final Bet bet) {
     this.name = name;
-
+    this.bet = bet;
   }
 
-  public Player(final String name, final Hand hand) {
-    super(hand);
-    this.name = name;
-
+  public static Player generateFrom(final Entry<String, Bet> entry) {
+    return new Player(entry.getKey(), entry.getValue());
   }
 
   @Override
-  public boolean isHit() {
-    return calculateScore() <= BLACKJACK_SCORE;
-  }
-
-  @Override
-  public boolean isDealer() {
-    return false;
+  public boolean isHit(final Score score) {
+    return !score.isBust();
   }
 
   @Override
   public String getName() {
     return name;
   }
+
+  @Override
+  public Bet getBet() {
+    return bet;
+  }
+
 }

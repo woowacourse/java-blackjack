@@ -2,8 +2,19 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Deck;
+import domain.card.Rank;
+import domain.card.Suit;
+import domain.card.TrumpCard;
+import domain.participant.Dealer;
+import domain.participant.DealerRoster;
 import domain.participant.Participant;
+import domain.participant.Participants;
+import domain.participant.Player;
+import java.util.ArrayDeque;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -15,43 +26,59 @@ class BlackjackGameTest {
   class GenerateBlackjack {
 
     @Test
-    @DisplayName("한 명의 딜러와 명단에 따른 플레이어를 추가한다.")
+    @DisplayName("딜러와 명단에 따른 플레이어를 생성한다.")
     void test_initializeBlackjack() {
       //given
-      final BlackjackGame blackjack = BlackjackGame.generate();
-      final var names = List.of("pobi", "bita");
+      final Map<String, Bet> givenParticipants = new HashMap<>();
+      final var name = "name";
+      givenParticipants.put(name, new Bet(1000));
+
       //when
-      blackjack.addParticipants(names);
+      final BlackjackGame blackjack = BlackjackGame.from(givenParticipants);
       //then
       var dealer = blackjack.getDealer();
-      var actualNames = blackjack.getParticipants().stream()
-          .filter(participant -> !participant.isDealer())
-          .map(Participant::getName)
-          .toList();
+      var generated = blackjack.getPlayers();
+      assertThat(dealer.getName()).isEqualTo(DealerRoster.DEFAULT.getName());
+      assertThat(generated.getFirst().getName()).isEqualTo(name);
+    }
+  }
 
-      assertThat(dealer.isDealer()).isTrue();
-      assertThat(actualNames).isEqualTo(names);
+  @Nested
+  @DisplayName("참가자의 히트를 진행한다.")
+  class BlackjackHitByParticipantTest {
+
+    @Test
+    @DisplayName("딜러에 대한 hit을 진행시킨다.")
+    void test_hitByParticipantForDealer() {
+      //given
+      final var bet = new Bet(1000);
+      final Participant dealer = new Participant(new Dealer(bet));
+      final List<Participant> players = List.of(new Participant(new Player("test", bet)));
+      final Participants participants = new Participants(dealer, players);
+      final List<TrumpCard> trumpCards = List.of(new TrumpCard(Rank.ACE, Suit.CLUB));
+      final var deck = new Deck(new ArrayDeque<>(trumpCards));
+
+      final BlackjackGame blackjackGame = new BlackjackGame(participants, deck);
+      //then
+      final var newDealer = blackjackGame.hitByParticipant(dealer);
+      assertThat(newDealer.getCards()).isEqualTo(trumpCards);
     }
 
     @Test
-    @DisplayName("첫 손패를 지급할 때, 카드는 2장씩 지급한다.")
-      //이때 지급되는 카드의 수는 도메인 룰에 따라 달라질 수 있다.
-    void test_initialDeal() {
+    @DisplayName("플레이어에 대한 hit을 진행시킨다.")
+    void test_hitByParticipantForPlayer() {
       //given
-      final BlackjackGame blackjack = BlackjackGame.generate();
-      final var names = List.of("pobi", "bita");
-      blackjack.addParticipants(names);
-      //when
-      blackjack.initialDeal();
-      //then
-      final var participants = blackjack.getParticipants();
-      var counts = participants.stream()
-          .map(Participant::getHandCount)
-          .distinct()
-          .toList();
-
-      assertThat(counts.size()).isEqualTo(1);
-      assertThat(counts.getFirst()).isEqualTo(2);
+      var bet = new Bet(1000);
+      Participant dealer = new Participant(new Dealer(bet));
+      Participant player = new Participant(new Player("test", bet));
+      List<Participant> players = List.of(player);
+      final Participants participants = new Participants(dealer, players);
+      List<TrumpCard> trumpCards = List.of(new TrumpCard(Rank.ACE, Suit.CLUB));
+      final var deck = new Deck(new ArrayDeque<>(trumpCards));
+      final BlackjackGame blackjackGame = new BlackjackGame(participants, deck);
+      //when&then
+      final var newPlayer = blackjackGame.hitByParticipant(player);
+      assertThat(newPlayer.getCards()).isEqualTo(trumpCards);
     }
   }
 }

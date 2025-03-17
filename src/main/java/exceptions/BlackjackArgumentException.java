@@ -1,6 +1,6 @@
 package exceptions;
 
-public class BlackjackArgumentException extends IllegalArgumentException {
+public final class BlackjackArgumentException extends IllegalArgumentException {
 
   private static final String PREFIX = "[ERROR]";
 

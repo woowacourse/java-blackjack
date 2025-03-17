@@ -1,10 +1,9 @@
 package domain.card;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class Hand {
+public final class Hand {
 
   private final List<TrumpCard> cards;
 
@@ -16,34 +15,31 @@ public class Hand {
     this.cards = new ArrayList<>(cards);
   }
 
-  public Hand(final Hand hand) {
-    this.cards = new ArrayList<>(hand.getCards());
-  }
-
-  public void add(final TrumpCard card) {
-    cards.add(card);
-  }
-
-  public int calculateScore() {
-    int score = 0;
-    for (final TrumpCard card : cards) {
-      score = card.add(score);
+  public Score calculateScore() {
+    final Score score = cards.stream()
+        .map(TrumpCard::getScore)
+        .reduce(Score::add)
+        .orElse(new Score(0));
+    if (hasAce()) {
+      return score.withAce();
     }
-
-    return Rank.ifBustAceIsMIN(score, calculateAceCount());
+    return score;
   }
 
-  private int calculateAceCount() {
-    return (int) cards.stream()
-        .filter(card -> card.isMatchRank(Rank.ACE))
-        .count();
+  public boolean isBlackjack() {
+    return calculateScore().isBlackjack(getCount());
+  }
+
+  private boolean hasAce() {
+    return cards.stream()
+        .anyMatch(TrumpCard::isAce);
   }
 
   public List<TrumpCard> getCards() {
-    return Collections.unmodifiableList(cards);
+    return new ArrayList<>(cards);
   }
 
-  public int getCount() {
+  private int getCount() {
     return cards.size();
   }
 }

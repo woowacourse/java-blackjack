@@ -1,4 +1,4 @@
-package constant;
+package domain.participant;
 
 /*
  * 딜러는 현재 요구사항에 따라 고정된 기본 딜러만 존재한다.

@@ -1,64 +1,75 @@
 package domain.participant;
 
-import domain.card.Deck;
+import domain.Bet;
 import domain.card.Hand;
+import domain.card.Score;
 import domain.card.TrumpCard;
+import java.util.List;
+import java.util.Objects;
 
-public abstract class Participant {
+public final class Participant {
 
-  protected static final int BLACKJACK_SCORE = 21;
-  private static final int INITIAL_DEAL_CARD_COUNT = 2;
-
+  private final Role role;
   private final Hand hand;
 
-  public Participant() {
-    hand = new Hand();
+  public Participant(final Role role) {
+    this.role = role;
+    this.hand = new Hand();
   }
 
-  public Participant(final Hand hand) {
-    this.hand = new Hand(hand);
+  public Participant(final Role role, final List<TrumpCard> cards) {
+    this.role = role;
+    this.hand = new Hand(cards);
   }
 
-  public abstract boolean isHit();
-
-  public abstract boolean isDealer();
-
-  public abstract String getName();
-
-  public void initialDeal(final Deck deck) {
-    for (int i = 0; i < INITIAL_DEAL_CARD_COUNT; i++) {
-      final TrumpCard card = deck.draw();
-      hit(card);
-    }
+  public Participant hit(final TrumpCard card) {
+    final List<TrumpCard> cards = getCards();
+    cards.add(card);
+    return new Participant(role, cards);
   }
 
-  public void hit(final TrumpCard card) {
-    isHit();
-    hand.add(card);
-  }
-
-  public int calculateScore() {
+  public Score calculateScore() {
     return hand.calculateScore();
   }
 
-  public boolean round(final Participant dealer) {
-    final var score = this.calculateScore();
-    final var dealerScore = dealer.calculateScore();
-    if (score > BLACKJACK_SCORE) {
-      return false;
-    }
-    if (dealerScore > BLACKJACK_SCORE) {
+  public boolean isBlackjack() {
+    return hand.isBlackjack();
+  }
+
+  public boolean isHit() {
+    return role.isHit(calculateScore());
+  }
+
+  public String getName() {
+    return role.getName();
+  }
+
+  public Bet getBet() {
+    return role.getBet();
+  }
+
+  public List<TrumpCard> getCards() {
+    return hand.getCards();
+  }
+
+  public Role getRole() {
+    return role;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
       return true;
     }
-    return score > dealerScore;
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Participant that = (Participant) o;
+    return Objects.equals(role, that.role);
   }
 
-  public Hand getHand() {
-    return hand;
-  }
-
-  public int getHandCount() {
-    return hand.getCount();
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(role);
   }
 }
-

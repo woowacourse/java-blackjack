@@ -1,18 +1,47 @@
 package domain.card;
 
-import constant.Suit;
 import java.util.Objects;
 
-public record TrumpCard(
-    Rank rank,
-    Suit suit
-) {
+public final class TrumpCard {
 
-  public boolean isMatchRank(final Rank other) {
-    return Objects.equals(rank, other);
+  private final Suit suit;
+  private final Rank rank;
+
+  public TrumpCard(final Rank rank, final Suit suit) {
+    this.rank = rank;
+    this.suit = suit;
   }
 
-  public int add(final int score) {
-    return rank.add(score);
+  public Score getScore() {
+    return rank.getScore();
+  }
+
+  public boolean isAce() {
+    return this.rank == Rank.ACE;
+  }
+
+  public Rank getRank() {
+    return rank;
+  }
+
+  public Suit getSuit() {
+    return suit;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    TrumpCard trumpCard = (TrumpCard) o;
+    return suit == trumpCard.suit && rank == trumpCard.rank;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(suit, rank);
   }
 }

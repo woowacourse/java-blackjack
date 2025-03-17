@@ -1,42 +1,33 @@
 package domain;
 
-import domain.participant.Participant;
+import domain.participant.Player;
+import domain.participant.Role;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-public class RoundHistory {
+public final class RoundHistory {
 
-  private final Map<String, Boolean> history;
+  private final Map<Role, RoundResult> history;
 
-  private RoundHistory(Map<String, Boolean> history) {
+  public RoundHistory(Map<Role, RoundResult> history) {
     this.history = new HashMap<>(history);
   }
 
-  public static RoundHistory of(
-      final Participant dealer,
-      final List<Participant> players
-  ) {
-    final Map<String, Boolean> history = players.stream()
-        .collect(Collectors.toMap(
-            Participant::getName,
-            player -> player.round(dealer)
-        ));
-    return new RoundHistory(history);
+  public List<Role> allocate() {
+    return history.entrySet().stream()
+        .map(this::getAllocatedPlayer)
+        .collect(Collectors.toUnmodifiableList());
   }
 
+  private Player getAllocatedPlayer(final Entry<Role, RoundResult> entry) {
+    final var past = entry.getKey();
+    final var pastName = past.getName();
+    final var pastBet = past.getBet();
+    final var allocated = entry.getValue().allocate(pastBet);
 
-  public Map<Boolean, Integer> getDealerResult() {
-    Map<Boolean, Integer> result = new HashMap<>(Map.of(true, 0, false, 0));
-
-    for (Boolean value : history.values()) {
-      result.put(!value, result.get(value) + 1);
-    }
-    return result;
-  }
-
-  public Map<String, Boolean> getHistory() {
-    return history;
+    return new Player(pastName, allocated.minus(pastBet));
   }
 }

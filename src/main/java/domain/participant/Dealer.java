@@ -1,33 +1,39 @@
 package domain.participant;
 
-import constant.DealerRoster;
-import domain.card.Hand;
+import domain.Bet;
+import domain.card.Score;
+import java.util.Collection;
 
-public class Dealer extends Participant {
+public final class Dealer implements Role {
 
-  private static final int STAND_SCORE = 17;
   private static final String DEFAULT_NAME = DealerRoster.DEFAULT.getName();
+  private final Bet bet;
 
-  public Dealer() {
-    super();
+  public Dealer(final Bet bet) {
+    this.bet = bet;
   }
 
-  public Dealer(final Hand hand) {
-    super(hand);
+  public static Dealer generateByTotalBet(final Collection<Bet> values) {
+    final int total = values.stream()
+        .mapToInt(Bet::getValue)
+        .sum();
+    final Bet bet = new Bet(total);
+    return new Dealer(bet);
   }
 
   @Override
-  public boolean isHit() {
-    return calculateScore() < STAND_SCORE;
+  public boolean isHit(final Score score) {
+    return score.isNeedHitByDealer();
   }
 
   @Override
-  public boolean isDealer() {
-    return true;
+  public Bet getBet() {
+    return bet;
   }
 
   @Override
   public String getName() {
     return DEFAULT_NAME;
   }
+
 }

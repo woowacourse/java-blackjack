@@ -1,6 +1,5 @@
 package domain.card;
 
-import constant.Suit;
 import exceptions.BlackjackArgumentException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -10,7 +9,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.stream.IntStream;
 
-public class Deck {
+public final class Deck {
 
   private final Queue<TrumpCard> deck;
 
@@ -18,12 +17,12 @@ public class Deck {
     this.deck = new ArrayDeque<>(deck);
   }
 
-  public static Deck createDecks(final int numberOfDeck) {
-    final List<TrumpCard> deck = IntStream.range(0, numberOfDeck)
+  public static Deck createShuffledDecks(final int numberOfDeck) {
+    final var deck = new ArrayList<>(IntStream.range(0, numberOfDeck)
         .boxed()
         .flatMap(i -> createSingleDeck().stream())
-        .toList();
-
+        .toList());
+    Collections.shuffle(deck);
     return new Deck(new ArrayDeque<>(deck));
   }
 
@@ -34,20 +33,21 @@ public class Deck {
         .toList();
   }
 
-  public Deck shuffle() {
-    final var cards = new ArrayList<>(deck);
-    Collections.shuffle(cards);
-    return new Deck(new ArrayDeque<>(cards));
-  }
-
-  public int getNumberOfCards() {
-    return deck.size();
-  }
-
   public TrumpCard draw() {
     if (deck.isEmpty()) {
       throw new BlackjackArgumentException("덱에 남아있는 카드가 없습니다.");
     }
     return deck.poll();
+  }
+
+  public List<TrumpCard> drawForInitialDeal() {
+    final List<TrumpCard> cards = new ArrayList<>();
+    cards.add(draw());
+    cards.add(draw());
+    return cards;
+  }
+
+  public int getNumberOfCards() {
+    return deck.size();
   }
 }
