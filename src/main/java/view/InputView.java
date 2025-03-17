@@ -1,6 +1,6 @@
 package view;
 
-import static domain.Players.MAX_PLAYER_QUANTITY;
+import static domain.PlayerNames.MAX_PLAYER_QUANTITY;
 import static view.InputValidator.validateDuplicate;
 import static view.InputValidator.validateInputFormat;
 import static view.InputValidator.validateInputMoney;

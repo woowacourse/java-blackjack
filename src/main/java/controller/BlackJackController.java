@@ -3,6 +3,7 @@ package controller;
 import domain.BettingMoney;
 import domain.Game;
 import domain.PlayerName;
+import domain.PlayerNames;
 import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
@@ -18,11 +19,12 @@ public class BlackJackController {
     }
 
     public void run() {
-        List<PlayerName> playerNames = inputView.insertUsernames();
-        Game game = initializeGame(playerNames);
+        List<PlayerName> rawPlayerNames = inputView.insertUsernames();
+        PlayerNames playerNames = new PlayerNames(rawPlayerNames);
+        Game game = initializeGame(playerNames.getPlayerNames());
         showInitialState(game);
 
-        for (PlayerName playerName : playerNames) {
+        for (PlayerName playerName : playerNames.getPlayerNames()) {
             askPlayer(game, playerName);
         }
         askDealer(game);
