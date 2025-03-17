@@ -6,12 +6,12 @@ public class Dealer extends Participant {
 
     private static final int VALID_DRAW_LIMIT = 16;
 
-    private Dealer(Hand hand) {
+    public Dealer(Hand hand) {
         super(DEALER_NAME, hand);
     }
 
-    public static Dealer createEmpty() {
-        return new Dealer(Hand.createEmpty());
+    public Dealer() {
+        this(Hand.createEmpty());
     }
 
     public Card getDealCard() {
