@@ -30,9 +30,9 @@ class BlackjackGameTest {
 
         @BeforeEach
         void createBlackjackGame() {
-            List<PlayerName> names = List.of(new PlayerName("sana"));
+            List<String> names = List.of("sana");
             List<Player> players = names.stream()
-                .map(name -> Player.createPlayer(name, BetAmount.initAmount()))
+                .map(name -> createPlayerWithNoMoney(name))
                 .toList();
 
             this.players = new Players(players);
@@ -140,12 +140,9 @@ class BlackjackGameTest {
         @BeforeEach
         void initCards() {
             List<Player> players = List.of(
-                Player.createPlayer(new PlayerName("hula"), // 패
-                    BetAmount.initAmountWithPrincipal(10000)),
-                Player.createPlayer(new PlayerName("sana"), // 승(블랙잭)
-                    BetAmount.initAmountWithPrincipal(10000)),
-                Player.createPlayer(new PlayerName("jason"),
-                    BetAmount.initAmountWithPrincipal(10000)) // 패
+                createPlayerWithMoney("hula", 10000), // 패
+                createPlayerWithMoney("sana", 10000), // 승(블랙잭)
+                createPlayerWithMoney("jason", 10000) // 패
             );
 
             List<Card> cards = new ArrayList<>(List.of(
@@ -179,5 +176,14 @@ class BlackjackGameTest {
                 assertThat(totalProfit).isEqualTo(-5000);
             });
         }
+    }
+
+    private Player createPlayerWithNoMoney(String name) {
+        return Player.createPlayer(new PlayerName(name), BetAmount.initAmount());
+    }
+
+    private Player createPlayerWithMoney(String name, int principal) {
+        return Player.createPlayer(new PlayerName(name),
+            BetAmount.initAmountWithPrincipal(principal));
     }
 }

@@ -13,6 +13,7 @@ import blackjack.user.dealer.Dealer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -27,8 +28,8 @@ public class PlayersTest {
         @DisplayName("2명 이상의 플레이어를 입력 받을 수 있다.")
         void createPlayersOverTwo() {
             List<Player> players = List.of(
-                Player.createPlayer(new PlayerName("hula"), BetAmount.initAmount()),
-                Player.createPlayer(new PlayerName("sana"), BetAmount.initAmount())
+                createPlayerWithNoMoney("hula"),
+                createPlayerWithNoMoney("sana")
             );
 
             assertDoesNotThrow(() -> new Players(players));
@@ -62,9 +63,9 @@ public class PlayersTest {
         @DisplayName("중복된 이름이 없는 경우 참가자를 생성할 수 있다.")
         void createParticipantsWithNotDuplicate() {
             List<Player> players = List.of(
-                Player.createPlayer(new PlayerName("a"), BetAmount.initAmount()),
-                Player.createPlayer(new PlayerName("b"), BetAmount.initAmount()),
-                Player.createPlayer(new PlayerName("c"), BetAmount.initAmount())
+                createPlayerWithNoMoney("a"),
+                createPlayerWithNoMoney("b"),
+                createPlayerWithNoMoney("c")
             );
 
             assertDoesNotThrow(() -> new Players(players));
@@ -74,9 +75,9 @@ public class PlayersTest {
         @DisplayName("중복된 이름이 없는 경우 참가자를 생성할 수 없다.")
         void createParticipantsWithDuplicate() {
             List<Player> players = List.of(
-                Player.createPlayer(new PlayerName("a"), BetAmount.initAmount()),
-                Player.createPlayer(new PlayerName("a"), BetAmount.initAmount()),
-                Player.createPlayer(new PlayerName("c"), BetAmount.initAmount())
+                createPlayerWithNoMoney("a"),
+                createPlayerWithNoMoney("a"),
+                createPlayerWithNoMoney("c")
             );
 
             assertThatThrownBy(() -> new Players(players))
@@ -102,8 +103,8 @@ public class PlayersTest {
             Dealer dealer = Dealer.createDealer(cardDeck);
 
             List<Player> playerList = List.of(
-                Player.createPlayer(new PlayerName("hula"), BetAmount.initAmount()),
-                Player.createPlayer(new PlayerName("sana"), BetAmount.initAmount())
+                createPlayerWithNoMoney("hula"),
+                createPlayerWithNoMoney("sana")
             );
             Players players = new Players(playerList);
             players.addPickedCards(dealer, 2);
@@ -115,7 +116,6 @@ public class PlayersTest {
                 assertThat(result.getLast().getCardHand().openCards()).hasSize(2);
             });
         }
-
 
         @Test
         @DisplayName("딜러로부터 추가 카드를 1장씩 배부할 수 있다.")
@@ -132,8 +132,8 @@ public class PlayersTest {
             Dealer dealer = Dealer.createDealer(cardDeck);
 
             List<Player> playerList = List.of(
-                Player.createPlayer(new PlayerName("hula"), BetAmount.initAmount()),
-                Player.createPlayer(new PlayerName("sana"), BetAmount.initAmount())
+                createPlayerWithNoMoney("hula"),
+                createPlayerWithNoMoney("sana")
             );
             Players players = new Players(playerList);
             players.addPickedCards(dealer, 2);
@@ -150,19 +150,18 @@ public class PlayersTest {
     }
 
     @Nested
-    @DisplayName("수익률 총합 테스트")
+    @DisplayName("수익률 테스트")
     class ProfitTest {
 
-        @Test
-        @DisplayName("플레이어의 총 수익을 계산할 수 있다.")
-        void calculateTotalProfit() {
+        Dealer dealer;
+        Players players;
+
+        @BeforeEach
+        void createPlayerAndCard() {
             List<Player> playerList = List.of(
-                Player.createPlayer(new PlayerName("hula"), // 패
-                    BetAmount.initAmountWithPrincipal(10000)),
-                Player.createPlayer(new PlayerName("sana"), // 승(블랙잭)
-                    BetAmount.initAmountWithPrincipal(10000)),
-                Player.createPlayer(new PlayerName("jason"),
-                    BetAmount.initAmountWithPrincipal(10000)) // 무
+                createPlayerWithMoney("hula", 10000), // 패
+                createPlayerWithMoney("sana", 10000), // 승(블랙잭)
+                createPlayerWithMoney("jason", 10000) // 무
             );
 
             List<Card> cards = new ArrayList<>(List.of(
@@ -176,11 +175,16 @@ public class PlayersTest {
                 new Card(Suit.SPADE, Denomination.KING)
             ));
             CardDeck cardDeck = new CardDeck(cards);
-            Dealer dealer = Dealer.createDealer(cardDeck);
-            Players players = new Players(playerList);
+            dealer = Dealer.createDealer(cardDeck);
+            players = new Players(playerList);
 
             dealer.addCards(2);
             players.addPickedCards(dealer, 2);
+        }
+
+        @Test
+        @DisplayName("플레이어의 개별 수익을 계산할 수 있다.")
+        void calculateProfit() {
             players.calculatePlayersProfit(dealer);
 
             List<Player> result = players.getJoinedPlayers();
@@ -191,5 +195,22 @@ public class PlayersTest {
                 assertThat(result.get(2).getBetAmount().getProfit()).isEqualTo(0);
             });
         }
+
+        @Test
+        @DisplayName("플레이어의 총 수익을 계산할 수 있다.")
+        void calculateTotalProfit() {
+            players.calculatePlayersProfit(dealer);
+
+            assertThat(players.calculateTotalProfit()).isEqualTo(5000);
+        }
+    }
+
+    private Player createPlayerWithNoMoney(String name) {
+        return Player.createPlayer(new PlayerName(name), BetAmount.initAmount());
+    }
+
+    private Player createPlayerWithMoney(String name, int principal) {
+        return Player.createPlayer(new PlayerName(name),
+            BetAmount.initAmountWithPrincipal(principal));
     }
 }

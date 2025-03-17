@@ -27,7 +27,7 @@ public class PlayerTest {
         @ValueSource(strings = {"iiif", "pppk"})
         @DisplayName("한 명의 플레이어를 이름으로 생성할 수 있다.")
         void createPlayerByName(String name) {
-            Player player = Player.createPlayer(new PlayerName(name), BetAmount.initAmount());
+            Player player = createPlayerWithNoMoney(name);
 
             assertThat(player).isInstanceOf(Player.class);
         }
@@ -48,7 +48,7 @@ public class PlayerTest {
             CardDeck cardDeck = new CardDeck(cards);
             Dealer dealer = Dealer.createDealer(cardDeck);
 
-            Player player = Player.createPlayer(new PlayerName("sana"), BetAmount.initAmount());
+            Player player = createPlayerWithNoMoney("sana");
             player.addCards(dealer.pickCards(3));
 
             assertThat(player.getCardHand().openCards()).hasSize(3);
@@ -66,7 +66,7 @@ public class PlayerTest {
             CardDeck cardDeck = new CardDeck(cards);
             Dealer dealer = Dealer.createDealer(cardDeck);
 
-            Player player = Player.createPlayer(new PlayerName("sana"), BetAmount.initAmount());
+            Player player = createPlayerWithNoMoney("sana");
             player.addCards(dealer.pickCards(3));
 
             assertThatThrownBy(() -> player.addCards(dealer.pickCards(1)))
@@ -106,7 +106,7 @@ public class PlayerTest {
             CardDeck cardDeck = new CardDeck(cards);
             Dealer dealer = Dealer.createDealer(cardDeck);
 
-            Player player = Player.createPlayer(new PlayerName("sana"), BetAmount.initAmount());
+            Player player = createPlayerWithNoMoney("sana");
             player.addCards(dealer.pickCards(2));
 
             List<Card> result = player.openInitialCards();
@@ -117,5 +117,9 @@ public class PlayerTest {
                 assertThat(result.getLast()).isEqualTo(new Card(Suit.SPADE, Denomination.KING));
             });
         }
+    }
+
+    private Player createPlayerWithNoMoney(String name) {
+        return Player.createPlayer(new PlayerName(name), BetAmount.initAmount());
     }
 }
