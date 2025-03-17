@@ -66,4 +66,79 @@ class PlayerTest {
         Assertions.assertThat(result)
                 .isFalse();
     }
+
+    @Test
+    @DisplayName("플레이어가 우승하면 배팅 금액만큼 수익을 얻는다.")
+    void player_win() {
+        // given
+        Player player = new Player(new Nickname("율무"), new BettingMoney(20000));
+        player.prepareGame(
+                new Card(CardType.SPADE, CardNumber.TWO),
+                new Card(CardType.CLOVER, CardNumber.THREE)
+        );
+        player.stand();
+
+        // when
+        int profit = player.calculateProfit(GameResult.LOSE);
+
+        // then
+        Assertions.assertThat(profit)
+                .isEqualTo(20000);
+    }
+
+    @Test
+    @DisplayName("플레이어가 패배하면 배팅 금액만큼 수익을 잃는다.")
+    void player_lose() {
+        // given
+        Player player = new Player(new Nickname("율무"), new BettingMoney(20000));
+        player.prepareGame(
+                new Card(CardType.SPADE, CardNumber.TWO),
+                new Card(CardType.CLOVER, CardNumber.THREE)
+        );
+        player.stand();
+
+        // when
+        int profit = player.calculateProfit(GameResult.WIN);
+
+        // then
+        Assertions.assertThat(profit)
+                .isEqualTo(-20000);
+    }
+
+    @Test
+    @DisplayName("플레이어와 딜러가 무승부면 수익은 0원이다.")
+    void player_draw() {
+        // given
+        Player player = new Player(new Nickname("율무"), new BettingMoney(20000));
+        player.prepareGame(
+                new Card(CardType.SPADE, CardNumber.TWO),
+                new Card(CardType.CLOVER, CardNumber.THREE)
+        );
+        player.stand();
+
+        // when
+        int profit = player.calculateProfit(GameResult.DRAW);
+
+        // then
+        Assertions.assertThat(profit)
+                .isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("플레이어가 블랙잭으로 이기면 배팅 금액의 1.5배를 수익으로 얻는다.")
+    void player_blackjack() {
+        // given
+        Player player = new Player(new Nickname("율무"), new BettingMoney(20000));
+        player.prepareGame(
+                new Card(CardType.SPADE, CardNumber.ACE),
+                new Card(CardType.CLOVER, CardNumber.TEN)
+        );
+
+        // when
+        int profit = player.calculateProfit(GameResult.LOSE);
+
+        // then
+        Assertions.assertThat(profit)
+                .isEqualTo(30000);
+    }
 }
