@@ -6,16 +6,12 @@ public class Money {
     private int earnMoney;
 
     public Money(int seedMoney) {
-        validate(seedMoney);
+        validateMinimumSeedMoney(seedMoney);
         this.seedMoney = seedMoney;
     }
 
     public static Money makeMoneyInt(int money) {
         return new Money(money);
-    }
-
-    private void validate(int money) {
-        validateMinimumSeedMoney(money);
     }
 
     private void validateMinimumSeedMoney(int money) {
