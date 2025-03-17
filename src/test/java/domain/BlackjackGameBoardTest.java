@@ -1,12 +1,14 @@
 package domain;
 
 import static domain.fixture.BlackjackCardFixture.ACE_HEART;
+import static domain.fixture.BlackjackCardFixture.FIVE_HEART;
 import static domain.fixture.BlackjackCardFixture.JACK_HEART;
 import static domain.fixture.BlackjackCardFixture.KING_HEART;
-import static domain.fixture.BlackjackCardFixture.NINE_HEART;
+import static domain.fixture.BlackjackCardFixture.SIX_HEART;
 import static domain.fixture.BlackjackCardFixture.TEN_HEART;
 import static domain.fixture.BlackjackCardFixture.TWO_HEART;
 
+import domain.card.Cards;
 import domain.card.Deck;
 import domain.player.Dealer;
 import domain.player.User;
@@ -15,6 +17,8 @@ import domain.profit.DefaultProfitStrategy;
 import domain.profit.Profit;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -120,9 +124,10 @@ class BlackjackGameBoardTest {
     void 딜러의_수익을_계산한다() {
         // given
         Deck deck = new Deck(List.of(
+                ACE_HEART(),    // dealer: 17
                 ACE_HEART(), TEN_HEART(),   // 앤지: 블랙잭
-                NINE_HEART(), TEN_HEART(),  // 헤일러: 19
-                KING_HEART(), TEN_HEART()    // dealer: 20
+                TEN_HEART(), FIVE_HEART(),  // 헤일러: 15
+                KING_HEART(), SIX_HEART()    // dealer: 16
         ));
         Dealer dealer = Dealer.createDefaultDealer();
         Users users = Users.from(
@@ -132,11 +137,20 @@ class BlackjackGameBoardTest {
                 }}
         );
         BlackjackGameBoard gameBoard = new BlackjackGameBoard(deck);
-
         gameBoard.distributeInitialCards(dealer);
         for (User user : users.getUsers()) {
             gameBoard.distributeInitialCards(user);
         }
+        Function<User, Boolean> alwaysNo = u -> false;
+        BiConsumer<String, Cards> userOnHit = (s, c) -> {
+        };
+        Runnable onHit = () -> {
+        };
+
+        for (User user : users.getUsers()) {
+            gameBoard.hitUntilStay(user, alwaysNo, userOnHit);
+        }
+        gameBoard.hitUntilNotHittable(dealer, onHit);
 
         // when
         Profit profit = gameBoard.computeDealerProfit(dealer, users, DefaultProfitStrategy.getInstance());

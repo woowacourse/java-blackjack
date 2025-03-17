@@ -4,11 +4,14 @@ import static domain.fixture.BlackjackCardFixture.KING_HEART;
 import static domain.fixture.BlackjackCardFixture.NINE_HEART;
 import static domain.fixture.BlackjackCardFixture.SEVEN_HEART;
 import static domain.fixture.BlackjackCardFixture.TEN_HEART;
+import static domain.fixture.StateFixture.BLACKJACK_STATE;
+import static domain.fixture.StateFixture.BUST_STATE;
+import static domain.fixture.StateFixture.STAY_STATE;
+import static domain.fixture.StateFixture.USER_HITTABLE_STATE;
 
 import domain.BlackjackGameBoard;
 import domain.card.Cards;
 import domain.card.Deck;
-import domain.fixture.StateFixture;
 import domain.player.Dealer;
 import domain.player.User;
 import domain.state.State;
@@ -23,8 +26,8 @@ class UserBattleResultTest {
     @Test
     void 유저가_버스트_상태고_딜러가_버스트_상태면_유저의_패배다() {
         // given
-        State user = StateFixture.BUST_STATE;
-        State dealer = StateFixture.BUST_STATE;
+        State user = BUST_STATE;
+        State dealer = BUST_STATE;
 
         // when
         UserBattleResult result = UserBattleResult.determineUserBattleResult(user, dealer);
@@ -36,8 +39,8 @@ class UserBattleResultTest {
     @Test
     void 유저가_버스트_상태고_딜러가_블랙잭_상태면_유저의_패배다() {
         // given
-        State user = StateFixture.BUST_STATE;
-        State dealer = StateFixture.BLACKJACK_STATE;
+        State user = BUST_STATE;
+        State dealer = BLACKJACK_STATE;
 
         // when
         UserBattleResult result = UserBattleResult.determineUserBattleResult(user, dealer);
@@ -49,8 +52,8 @@ class UserBattleResultTest {
     @Test
     void 유저가_버스트_상태고_딜러가_스테이_상태면_유저의_패배다() {
         // given
-        State user = StateFixture.BUST_STATE;
-        State dealer = StateFixture.STAY_STATE;
+        State user = BUST_STATE;
+        State dealer = STAY_STATE;
 
         // when
         UserBattleResult result = UserBattleResult.determineUserBattleResult(user, dealer);
@@ -62,8 +65,8 @@ class UserBattleResultTest {
     @Test
     void 유저가_블랙잭_상태고_딜러가_버스트_상태면_유저의_블랙잭_승리다() {
         // given
-        State user = StateFixture.BLACKJACK_STATE;
-        State dealer = StateFixture.BUST_STATE;
+        State user = BLACKJACK_STATE;
+        State dealer = BUST_STATE;
 
         // when
         UserBattleResult result = UserBattleResult.determineUserBattleResult(user, dealer);
@@ -75,8 +78,8 @@ class UserBattleResultTest {
     @Test
     void 유저가_블랙잭_상태고_딜러가_블랙잭_상태면_무승부다() {
         // given
-        State user = StateFixture.BLACKJACK_STATE;
-        State dealer = StateFixture.BLACKJACK_STATE;
+        State user = BLACKJACK_STATE;
+        State dealer = BLACKJACK_STATE;
 
         // when
         UserBattleResult result = UserBattleResult.determineUserBattleResult(user, dealer);
@@ -88,8 +91,8 @@ class UserBattleResultTest {
     @Test
     void 유저가_블랙잭_상태고_딜러가_스테이_상태면_유저의_블랙잭_승리다() {
         // given
-        State user = StateFixture.BLACKJACK_STATE;
-        State dealer = StateFixture.STAY_STATE;
+        State user = BLACKJACK_STATE;
+        State dealer = STAY_STATE;
 
         // when
         UserBattleResult result = UserBattleResult.determineUserBattleResult(user, dealer);
@@ -101,8 +104,8 @@ class UserBattleResultTest {
     @Test
     void 유저가_스테이_상태고_딜러가_버스트_상태면_유저의_일반_승리다() {
         // given
-        State user = StateFixture.STAY_STATE;
-        State dealer = StateFixture.BUST_STATE;
+        State user = STAY_STATE;
+        State dealer = BUST_STATE;
 
         // when
         UserBattleResult result = UserBattleResult.determineUserBattleResult(user, dealer);
@@ -114,8 +117,8 @@ class UserBattleResultTest {
     @Test
     void 유저가_스테이_상태고_딜러가_블랙잭_상태면_유저의_패배다() {
         // given
-        State user = StateFixture.STAY_STATE;
-        State dealer = StateFixture.BLACKJACK_STATE;
+        State user = STAY_STATE;
+        State dealer = BLACKJACK_STATE;
 
         // when
         UserBattleResult result = UserBattleResult.determineUserBattleResult(user, dealer);
@@ -151,5 +154,16 @@ class UserBattleResultTest {
 
         // then
         Assertions.assertThat(result).isEqualTo(UserBattleResult.NORMAL_WIN);
+    }
+
+    @Test
+    void 유저_혹은_딜러가_종료_상태가_아닌데_승부_계산을_하려고_하면_예외가_발생한다() {
+        // given
+        State user = USER_HITTABLE_STATE;
+        State dealer = BLACKJACK_STATE;
+
+        // when & then
+        Assertions.assertThatThrownBy(() -> UserBattleResult.determineUserBattleResult(user, dealer))
+                .isInstanceOf(IllegalStateException.class);
     }
 }

@@ -12,6 +12,9 @@ public enum UserBattleResult {
     ;
 
     public static UserBattleResult determineUserBattleResult(State user, State dealer) {
+        if (!user.isFinished() || !dealer.isFinished()) {
+            throw new IllegalStateException("유저나 딜러가 종료 상태가 아닙니다.");
+        }
         if (blackjackExists(user, dealer)) {
             return determineByBlackjack(user, dealer);
         }
