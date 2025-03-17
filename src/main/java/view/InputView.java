@@ -1,5 +1,6 @@
 package view;
 
+import domain.game.BetMoney;
 import domain.participant.Player;
 import java.util.Arrays;
 import java.util.List;
@@ -17,6 +18,12 @@ public class InputView {
             .map(String::trim)
             .map(Player::new)
             .toList();
+    }
+
+    public BetMoney getBetMoney(String name) {
+        System.out.printf("%s의 배팅 금액은?\n", name);
+        String input = scanner.nextLine();
+        return new BetMoney(Integer.parseInt(input));
     }
 
     public boolean getYesOrNo(String name) {
