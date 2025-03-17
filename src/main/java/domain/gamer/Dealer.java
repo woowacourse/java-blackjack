@@ -7,7 +7,7 @@ import java.util.List;
 public class Dealer extends Gamer {
 
     private static final String DEALER_NAME = "딜러";
-    public static final int THRESHOLD = 16;
+    private static final int THRESHOLD = 16;
 
     public Dealer() {
         super(new Nickname(DEALER_NAME), new DealerStrategy());
