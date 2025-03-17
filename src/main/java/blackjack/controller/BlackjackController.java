@@ -82,7 +82,7 @@ public class BlackjackController {
     }
 
     private boolean wantsNoMoreCard(Gambler gambler) {
-        return inputView.readOneMoreDealCard(gambler);
+        return !inputView.readOneMoreDealCard(gambler);
     }
 
     private void dealMoreDealerCards(GameManager gameManager) {
