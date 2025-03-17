@@ -24,9 +24,9 @@ public class Application {
         BlackjackContext blackjackContext = initializeBlackjack(inputView);
         outputView.printInitialGame(blackjackContext.dealer.getSingleCard(), blackjackContext.players.getPlayers());
 
-        handlePlayerDraws(inputView, outputView, blackjackContext.players, blackjackContext.cardDeck);
-        handleDealerDraw(outputView, blackjackContext.dealer, blackjackContext.cardDeck);
-        processResults(outputView, blackjackContext.dealer, blackjackContext.players);
+        playerHitOrStand(inputView, outputView, blackjackContext.players, blackjackContext.cardDeck);
+        dealerHitOrStand(outputView, blackjackContext.dealer, blackjackContext.cardDeck);
+        evaluateProfits(outputView, blackjackContext.dealer, blackjackContext.players);
     }
 
     private static BlackjackContext initializeBlackjack(InputView inputView) {
@@ -43,8 +43,8 @@ public class Application {
         return new BlackjackContext(dealer, players, cardDeck);
     }
 
-    private static void handlePlayerDraws(InputView inputView, OutputView outputView, Players players,
-                                          CardDeck cardDeck) {
+    private static void playerHitOrStand(InputView inputView, OutputView outputView, Players players,
+                                         CardDeck cardDeck) {
         for (Player player : players.getPlayers()) {
             while (!player.isBust() && inputView.readDrawMoreCard(player)) {
                 player.draw(cardDeck.drawCard(DRAW_COUNT_WHEN_HIT));
@@ -53,14 +53,14 @@ public class Application {
         }
     }
 
-    private static void handleDealerDraw(OutputView outputView, Dealer dealer, CardDeck cardDeck) {
+    private static void dealerHitOrStand(OutputView outputView, Dealer dealer, CardDeck cardDeck) {
         while (!dealer.isBust() && !dealer.isOverDrawBound()) {
             dealer.draw(cardDeck.drawCard(DRAW_COUNT_WHEN_HIT));
             outputView.printDealerDrawMessage();
         }
     }
 
-    private static void processResults(OutputView outputView, Dealer dealer, Players players) {
+    private static void evaluateProfits(OutputView outputView, Dealer dealer, Players players) {
         GameResults gameResults = GameResults.determine(dealer, players.getPlayers());
 
         Profits profits = Profits.evaluateProfits(players.getBettingMoneys(), gameResults.getGameResults());
