@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
@@ -39,6 +40,22 @@ public class GamblingMoneyTest {
     void 배팅금은_최대_100만원이다() {
         assertThatThrownBy(() -> GamblingMoney.bet(1_000_001))
             .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 금액의_부호를_반전할_수_있다() {
+        GamblingMoney money = GamblingMoney.bet(10000);
+        GamblingMoney negative = money.negative();
+        assertThat(negative.getAmount()).isEqualTo(-10000);
+    }
+
+    @Test
+    void GamblingMoney들의_금액을_모두_합할_수_있다() {
+        GamblingMoney money1 = GamblingMoney.bet(10000);
+        GamblingMoney money2 = GamblingMoney.bet(5000);
+
+        GamblingMoney sum = GamblingMoney.sum(List.of(money1, money2));
+        assertThat(sum.getAmount()).isEqualTo(15000);
     }
 
     @DisplayName("금액의 1.5배로 된 금액을 얻을 수 있다.")

@@ -1,5 +1,7 @@
 package domain.game;
 
+import java.util.Collection;
+
 public class GamblingMoney {
 
     private static final GamblingMoney ZERO = new GamblingMoney(0);
@@ -12,6 +14,10 @@ public class GamblingMoney {
 
     public GamblingMoney onceHalf() {
         return new GamblingMoney((int) (amount * 1.5));
+    }
+
+    public GamblingMoney negative() {
+        return new GamblingMoney(-amount);
     }
 
     public GamblingMoney calculateProfit(Winning winning) {
@@ -52,6 +58,13 @@ public class GamblingMoney {
         return "GamblingMoney{" +
             "amount=" + amount +
             '}';
+    }
+
+    public static GamblingMoney sum(Collection<GamblingMoney> moneys) {
+        int sum = moneys.stream()
+            .mapToInt(GamblingMoney::getAmount)
+            .sum();
+        return new GamblingMoney(sum);
     }
 
     public static GamblingMoney bet(int amount) {
