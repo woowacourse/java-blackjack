@@ -45,15 +45,15 @@ class PlayersTest {
         Players players = new Players(List.of(miso, yulmu));
         GameResult misoGameResult = GameResult.WIN;
         GameResult yulmuGameResult = GameResult.WIN;
-        miso.updateMoney(misoGameResult.getRate());
-        yulmu.updateMoney(yulmuGameResult.getRate());
+        miso.updateMoney(misoGameResult);
+        yulmu.updateMoney(yulmuGameResult);
 
         // when
         Profit profit = players.sumProfits();
 
         // then
         assertThat(profit.getAmount())
-                .isEqualTo((int) (misoBettingMoney * misoGameResult.getRate()
-                        + player2BettingMoney * yulmuGameResult.getRate()));
+                .isEqualTo((int) (misoBettingMoney * misoGameResult.getProfitRate()
+                        + player2BettingMoney * yulmuGameResult.getProfitRate()));
     }
 }

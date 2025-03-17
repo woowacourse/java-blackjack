@@ -5,16 +5,18 @@ import participant.Player;
 
 public enum GameResult {
 
-    BLACKJACK(1.5),
-    WIN(1),
-    LOSE(-1),
-    DRAW(0),
+    BLACKJACK(1.5, true),
+    WIN(1, true),
+    LOSE(1, false),
+    DRAW(0, true),
     ;
 
-    private final double rate;
+    private final double profitRate;
+    private final boolean isProfitable;
 
-    GameResult(double rate) {
-        this.rate = rate;
+    GameResult(double profitRate, boolean isProfitable) {
+        this.profitRate = profitRate;
+        this.isProfitable = isProfitable;
     }
 
     public static GameResult judgePlayerResult(Dealer dealer, Player player) {
@@ -30,7 +32,11 @@ public enum GameResult {
         return DRAW;
     }
 
-    public double getRate() {
-        return rate;
+    public boolean isProfitable() {
+        return isProfitable;
+    }
+
+    public double getProfitRate() {
+        return profitRate;
     }
 }
