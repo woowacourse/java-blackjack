@@ -48,8 +48,4 @@ public enum MatchResult {
         }
         return DRAW;
     }
-
-    public String getTitle() {
-        return title;
-    }
 }
