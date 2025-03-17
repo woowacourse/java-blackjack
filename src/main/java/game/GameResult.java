@@ -32,6 +32,10 @@ public enum GameResult {
         return DRAW;
     }
 
+    public int calculateEarnings(int bettingMoney) {
+        return (int) (bettingMoney * profitRate);
+    }
+
     public boolean isProfitable() {
         return isProfitable;
     }
