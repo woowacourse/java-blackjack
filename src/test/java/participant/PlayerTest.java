@@ -1,10 +1,11 @@
 package participant;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import card.Card;
 import card.CardNumber;
 import card.CardShape;
 import game.GameResult;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +24,7 @@ class PlayerTest {
         boolean result = player.canReceiveCard();
 
         // then
-        Assertions.assertThat(result)
+        assertThat(result)
                 .isFalse();
     }
 
@@ -39,7 +40,7 @@ class PlayerTest {
         boolean result = player.canReceiveCard();
 
         // then
-        Assertions.assertThat(result)
+        assertThat(result)
                 .isTrue();
     }
 
@@ -55,7 +56,7 @@ class PlayerTest {
         player.updateMoney(gameResult.calculateEarnings(bettingMoney), gameResult.isProfitable());
 
         // then
-        Assertions.assertThat(player.getEarnedMoney())
+        assertThat(player.getEarnedMoney())
                 .isEqualTo((int) (bettingMoney + bettingMoney * gameResult.getProfitRate()));
     }
 
@@ -72,7 +73,7 @@ class PlayerTest {
         Profit profit = player.getProfit();
 
         // then
-        Assertions.assertThat(profit.getAmount())
+        assertThat(profit.getAmount())
                 .isEqualTo((int) (bettingMoney * gameResult.getProfitRate()));
     }
 }

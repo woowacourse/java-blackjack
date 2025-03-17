@@ -1,6 +1,7 @@
 package card;
 
-import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +19,7 @@ public class CardsTest {
         int result = cards.calculateNearestTotal();
 
         // then
-        Assertions.assertThat(result)
+        assertThat(result)
                 .isEqualTo(20);
     }
 
@@ -34,7 +35,7 @@ public class CardsTest {
         int result = cards.calculateNearestTotal();
 
         // then
-        Assertions.assertThat(result)
+        assertThat(result)
                 .isEqualTo(21);
     }
 
@@ -51,7 +52,7 @@ public class CardsTest {
         int result = cards.calculateNearestTotal();
 
         // then
-        Assertions.assertThat(result)
+        assertThat(result)
                 .isEqualTo(20);
     }
 
@@ -69,7 +70,7 @@ public class CardsTest {
         int result = cards.calculateNearestTotal();
 
         // then
-        Assertions.assertThat(result)
+        assertThat(result)
                 .isEqualTo(24);
     }
 }

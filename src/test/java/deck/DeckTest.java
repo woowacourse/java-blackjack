@@ -1,7 +1,8 @@
 package deck;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,7 @@ class DeckTest {
         Deck deck = new Deck(List::of);
 
         // when & then
-        Assertions.assertThatThrownBy(deck::draw)
+        assertThatThrownBy(deck::draw)
                 .isInstanceOf(IllegalStateException.class);
     }
 }
