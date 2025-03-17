@@ -22,7 +22,7 @@ import domain.Card;
 import domain.CardNumberType;
 import domain.CardType;
 import domain.Hand;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,14 +31,14 @@ public class OutputFormatter {
     private static final String NAME_SEPARATOR = ", ";
     private static final String CARD_SEPARATOR = ", ";
 
-    private static final Map<CardType, String> CARD_TYPE_FORMATTER = Map.of(
+    private static final Map<CardType, String> CARD_TYPE_FORMATTER = new EnumMap<>(Map.of(
             SPACE, "스페이드",
             HEART, "하트",
             CLOVER, "클로버",
             DIAMOND, "다이아몬드"
-    );
+    ));
 
-    private static final Map<CardNumberType, String> CARD_NUMBER_TYPE_FORMATTER = new HashMap<>();
+    private static final Map<CardNumberType, String> CARD_NUMBER_TYPE_FORMATTER = new EnumMap<>(CardNumberType.class);
 
     static {
         CARD_NUMBER_TYPE_FORMATTER.put(ACE, "A");
