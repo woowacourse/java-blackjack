@@ -33,6 +33,16 @@ class HandTest {
                     new TrumpCard(Rank.THREE, Suit.SPADES)
             );
         }
+        @DisplayName("카드의 총합이 11을 넘지 않는다면 ace카드는 11로 계산된다.")
+        @Test
+        void aceCardUsedWithTwentyone(){
+            List<TrumpCard> cards = new ArrayList<>();
+            cards.add(new TrumpCard(Rank.ACE, Suit.SPADES));
+            cards.add(new TrumpCard(Rank.KING, Suit.SPADES));
+            Hand hand = new Hand(cards);
+
+            assertThat(hand.calculateTotalScore()).isEqualTo(21);
+        }
     }
 
     @Nested

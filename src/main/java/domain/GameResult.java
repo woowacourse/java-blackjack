@@ -1,47 +1,63 @@
 package domain;
 
 public enum GameResult {
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무");
+    WIN(1),
+    LOSE(-1),
+    DRAW(0),
+    BLACKJACK(0.5);
 
-    private final String title;
+    private final double rate;
 
-    GameResult(String title) {
-        this.title = title;
+    GameResult(double rate) {
+        this.rate = rate;
     }
 
     public static GameResult from(Player player, Dealer dealer) {
-        if (player.isBust()) {
-            return LOSE;
+        if (hasBust(player, dealer)) {
+            return getBustCaseResult(player);
         }
-        if (dealer.isBust()) {
-            return WIN;
+        if (hasBlackJack(player, dealer)) {
+            return getBlackJackCaseResult(player, dealer);
         }
-        if (dealer.isBlackJack() && player.isBlackJack()) {
-            return DRAW;
-        }
-        if (dealer.isBlackJack()) {
-            return LOSE;
-        }
-        if (player.isBlackJack()) {
-            return WIN;
-        }
-
-        return getResultByTotalScore(player, dealer);
+        return getBiggerResult(player, dealer);
     }
 
-    private static GameResult getResultByTotalScore(Player player, Dealer dealer) {
-        if (dealer.getTotalScore() > player.getTotalScore()) {
+    public static boolean hasBust(Player player, Dealer dealer) {
+        return player.isBust() || dealer.isBust();
+    }
+
+    public static GameResult getBustCaseResult(Player player) {
+        if (player.isBust()) {
             return LOSE;
-        }
-        if (dealer.getTotalScore() == player.getTotalScore()) {
-            return DRAW;
         }
         return WIN;
     }
 
-    public String getTitle() {
-        return title;
+    public static boolean hasBlackJack(Player player, Dealer dealer) {
+        return player.isBlackJack() || dealer.isBlackJack();
+    }
+
+    public static GameResult getBlackJackCaseResult(Player player, Dealer dealer) {
+        if (player.isBlackJack() && dealer.isBlackJack()) {
+            return DRAW;
+        }
+        if (player.isBlackJack()) {
+            return BLACKJACK;
+        }
+        return LOSE;
+    }
+
+    private static GameResult getBiggerResult(Player player, Dealer dealer) {
+        if(player.getTotalScore()>dealer.getTotalScore()){
+            return WIN;
+        }
+        if(player.getTotalScore()==dealer.getTotalScore()){
+            return DRAW;
+        }
+        return LOSE;
+    }
+
+    public double getRate() {
+        return rate;
     }
 }

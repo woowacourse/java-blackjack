@@ -4,23 +4,21 @@ import java.util.List;
 
 public class Dealer {
 
+    private static final int INITIAL_DEALER_MONEY = 0;
+    private static final int DEALER_MINIMUM_HAND_COUNT = 17;
     private final Hand hand;
+    private final Money money;
+    private final Deck deck;
 
-    public Dealer(Hand hand) {
-        validate(hand);
-        this.hand = hand;
+    Dealer(Deck deck, Money money) {
+        this.hand = Hand.of(deck.draw(), deck.draw());
+        this.money = money;
+        this.deck = deck;
     }
 
-    private void validate(Hand hand) {
-        validateNotNull(hand);
+    public static Dealer initiallizeDealer(Deck deck){
+        return new Dealer(deck,Money.makeMoneyInt(INITIAL_DEALER_MONEY));
     }
-
-    private void validateNotNull(Hand hand) {
-        if (hand == null) {
-            throw new IllegalArgumentException("딜러는 손패를 가져야합니다.");
-        }
-    }
-
     public TrumpCard retrieveFirstCard() {
         if (hand.getCards().size() != 2) {
             throw new IllegalStateException("딜러는 2장의 카드를 가지고 있어야 합니다.");
@@ -31,14 +29,6 @@ public class Dealer {
 
     public List<TrumpCard> getCards() {
         return hand.getCards();
-    }
-
-    public void addCard(TrumpCard drawnCard) {
-        hand.addCard(drawnCard);
-    }
-
-    public Hand getHand() {
-        return hand;
     }
 
     public int getTotalScore() {
@@ -54,6 +44,25 @@ public class Dealer {
     }
 
     public boolean isHitable() {
-        return hand.calculateTotalScore() < 17;
+        return hand.calculateTotalScore() < DEALER_MINIMUM_HAND_COUNT;
+    }
+
+    public void processBetting(int earnMoney) {
+        money.earnMoney(earnMoney);
+    }
+
+    public int getTotalMoney() {
+        return money.getEarnMoney();
+    }
+
+    public int processDealerHit() {
+        int hitCount = 0;
+
+        while (isHitable()) {
+            hand.addCard(deck.draw());
+            hitCount++;
+        }
+
+        return hitCount;
     }
 }

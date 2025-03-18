@@ -7,6 +7,7 @@ import java.util.Objects;
 
 public class Deck {
 
+    private static final int INITIAL_DECK_COUNT = 52;
     private final List<TrumpCard> cards;
 
     public Deck(List<TrumpCard> cards) {
@@ -27,7 +28,8 @@ public class Deck {
     }
 
     private void validateSize(List<TrumpCard> cards) {
-        if (cards.size() != 52) {
+        if (cards.size() != INITIAL_DECK_COUNT) {
+
             throw new IllegalArgumentException("덱의 크기는 52여야 합니다.");
         }
     }
@@ -40,8 +42,9 @@ public class Deck {
 
     public static Deck create() {
         List<TrumpCard> cards = initializeCards();
-
-        return new Deck(cards);
+        Deck deck = new Deck(cards);
+        deck.shuffle();
+        return deck;
     }
 
     private static List<TrumpCard> initializeCards() {
@@ -66,6 +69,10 @@ public class Deck {
         Collections.shuffle(cards);
     }
 
+    public List<TrumpCard> getCards() {
+        return cards;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {
@@ -80,3 +87,4 @@ public class Deck {
         return Objects.hashCode(cards);
     }
 }
+

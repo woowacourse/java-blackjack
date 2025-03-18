@@ -1,7 +1,9 @@
 package view;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.PatternSyntaxException;
 
@@ -45,5 +47,20 @@ public class InputView {
         }
 
         throw new IllegalArgumentException("선택 입력 형식이 잘못되었습니다.");
+    }
+
+    public Map<String, Integer> readPlayerBetting(List<String> playerNames) {
+        Map<String, Integer> map = new HashMap<>();
+        for (String playerName : playerNames) {
+            System.out.printf("%s의 배팅 금액은?", playerName);
+            System.out.println();
+            try {
+                int money = Integer.parseInt(scanner.nextLine());
+                map.put(playerName, money);
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("잘못된 숫자 형식입니다.");
+            }
+        }
+        return map;
     }
 }

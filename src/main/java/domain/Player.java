@@ -6,19 +6,27 @@ public class Player {
 
     private final String name;
     private final Hand hand;
+    private final Money money;
+    private final Deck deck;
 
-    public Player(String name, Hand hand) {
-        validate(name, hand);
+    Player(String name, Deck deck, Money money) {
+        validate(name);
         this.name = name;
-        this.hand = hand;
+        this.deck = deck;
+        this.hand = Hand.of(deck.draw(), deck.draw());
+        this.money = money;
     }
 
-    private void validate(String name, Hand hand) {
-        validateNotNull(name, hand);
+    public static Player of(String name, Deck deck, Money money) {
+        return new Player(name, deck, money);
     }
 
-    private void validateNotNull(String name, Hand hand) {
-        if (name == null || name.isBlank() || hand == null) {
+    private void validate(String name) {
+        validateNotNull(name);
+    }
+
+    private void validateNotNull(String name) {
+        if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("플레이어는 이름과 손패를 가져야합니다.");
         }
     }
@@ -27,8 +35,8 @@ public class Player {
         return hand.getCards();
     }
 
-    public void addCard(TrumpCard drawnCard) {
-        hand.addCard(drawnCard);
+    public void addCard() {
+        hand.addCard(deck.draw());
     }
 
     public String getName() {
@@ -49,5 +57,13 @@ public class Player {
 
     public boolean isBust() {
         return hand.isBust();
+    }
+
+    public void processBetting(double rate) {
+        money.processBetting(rate);
+    }
+
+    public int getEarnMoney() {
+        return money.getEarnMoney();
     }
 }
