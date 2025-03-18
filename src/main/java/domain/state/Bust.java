@@ -10,11 +10,8 @@ public class Bust extends Finished {
         super(cards);
     }
 
-    public static boolean isBust(Cards cards) {
-        return cards.computeOptimalSum() > Bust.BUST_THRESHOLD;
-    }
-
-    public static boolean isBustThreshold(Cards cards) {
-        return cards.computeOptimalSum() == Bust.BUST_THRESHOLD;
+    @Override
+    public StateType type() {
+        return StateType.BUST;
     }
 }

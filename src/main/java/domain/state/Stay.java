@@ -7,4 +7,9 @@ public class Stay extends Finished {
     public Stay(Cards cards) {
         super(cards);
     }
+
+    @Override
+    public StateType type() {
+        return StateType.STAY;
+    }
 }
