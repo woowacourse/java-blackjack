@@ -5,7 +5,7 @@ import exception.IllegalBlackjackInputException;
 import exception.IllegalBlackjackStateException;
 import java.util.List;
 import model.BlackjackGame;
-import model.bet.BettingResults;
+import model.result.BettingResults;
 import model.cards.Cards;
 import model.cards.DealerCards;
 import view.InputView;
@@ -23,17 +23,21 @@ public class BlackjackController {
 
     public void start() {
         try {
-            BlackjackGame blackjackGame = getBlackjackGame();
-            printPlayersAndInitialCards(blackjackGame);
-            askToAllPlayersForAdditionalCard(blackjackGame);
-            printDealerDraw(blackjackGame);
-            printFinalCards(blackjackGame);
-            printBettingResult(blackjackGame);
+            process();
         } catch (IllegalBlackjackStateException e) {
             outputView.printExceptionMessage(e);
         } catch (Exception e) {
             outputView.informUnexpectedException();
         }
+    }
+
+    private void process() {
+        BlackjackGame blackjackGame = getBlackjackGame();
+        printPlayersAndInitialCards(blackjackGame);
+        askToAllPlayersForAdditionalCard(blackjackGame);
+        printDealerDraw(blackjackGame);
+        printFinalCards(blackjackGame);
+        printBettingResult(blackjackGame);
     }
 
     private BlackjackGame getBlackjackGame() {
