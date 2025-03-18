@@ -1,5 +1,20 @@
 package blackjack.domain.participants;
 
+import static blackjack.fixture.CardFixture.CLUB_FIVE;
+import static blackjack.fixture.CardFixture.CLUB_FOUR;
+import static blackjack.fixture.CardFixture.CLUB_ONE;
+import static blackjack.fixture.CardFixture.DIAMOND_ACE;
+import static blackjack.fixture.CardFixture.DIAMOND_EIGHT;
+import static blackjack.fixture.CardFixture.DIAMOND_FIVE;
+import static blackjack.fixture.CardFixture.DIAMOND_FOUR;
+import static blackjack.fixture.CardFixture.DIAMOND_ONE;
+import static blackjack.fixture.CardFixture.DIAMOND_TEN;
+import static blackjack.fixture.CardFixture.DIAMOND_THREE;
+import static blackjack.fixture.CardFixture.HEART_ONE;
+import static blackjack.fixture.CardFixture.SPADE_ONE;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -10,7 +25,6 @@ import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import java.util.List;
 import java.util.Stack;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class DealerTest {
@@ -19,17 +33,17 @@ public class DealerTest {
     void 블랙잭_게임을_준비한다() {
         //given
         Players players = new Players(
-                List.of(new Player("pobi", new Cards()),
-                        new Player("surf", new Cards())
+                List.of(new Player("pobi", new Cards(), 10000),
+                        new Player("surf", new Cards(), 10000)
                 ));
         Stack<Card> cards = new Stack<>();
         cards.addAll(List.of(
-                new Card(Suit.CLUB, Rank.FOUR),
-                new Card(Suit.CLUB, Rank.FIVE),
-                new Card(Suit.CLUB, Rank.ONE),
-                new Card(Suit.DIAMOND, Rank.ONE),
-                new Card(Suit.HEART, Rank.ONE),
-                new Card(Suit.SPADE, Rank.ONE)
+                CLUB_FOUR,
+                CLUB_FIVE,
+                CLUB_ONE,
+                DIAMOND_ONE,
+                HEART_ONE,
+                SPADE_ONE
         ));
 
         Dealer dealer = new Dealer(players, new Deck(cards));
@@ -39,22 +53,13 @@ public class DealerTest {
 
         //then
         assertAll(
-                () -> assertEquals(dealer.retrieveCards(),
-                        List.of(
-                                new Card(Suit.SPADE, Rank.ONE)
-                        )
+                () -> assertEquals(dealer.getCards(),
+                        new Cards(SPADE_ONE, HEART_ONE)),
+                () -> assertEquals(players.getPlayers().get(0).getCards(),
+                        new Cards(DIAMOND_ONE, CLUB_ONE)
                 ),
-                () -> assertEquals(players.getPlayers().get(0).retrieveCards(),
-                        List.of(
-                                new Card(Suit.HEART, Rank.ONE),
-                                new Card(Suit.DIAMOND, Rank.ONE)
-                        )
-                ),
-                () -> assertEquals(players.getPlayers().get(1).retrieveCards(),
-                        List.of(
-                                new Card(Suit.CLUB, Rank.ONE),
-                                new Card(Suit.CLUB, Rank.FIVE)
-                        )
+                () -> assertEquals(players.getPlayers().get(1).getCards(),
+                        new Cards(CLUB_FIVE, CLUB_FOUR)
                 )
         );
     }
@@ -64,20 +69,21 @@ public class DealerTest {
         //given
         Players players = new Players(
                 List.of(
-                        new Player("pobi", new Cards()),
-                        new Player("surf", new Cards()),
-                        new Player("fora", new Cards())
+                        new Player("pobi", new Cards(), 10000),
+                        new Player("surf", new Cards(), 10000),
+                        new Player("fora", new Cards(), 10000)
                 )
         );
         Stack<Card> cards = new Stack<>();
         cards.addAll(
                 List.of(
-                        new Card(Suit.CLUB, Rank.ACE),
-                        new Card(Suit.CLUB, Rank.ONE),
-                        new Card(Suit.CLUB, Rank.TEN),
-                        new Card(Suit.CLUB, Rank.THREE),
-                        new Card(Suit.CLUB, Rank.FOUR),
-                        new Card(Suit.CLUB, Rank.FIVE))
+                        DIAMOND_ACE,
+                        DIAMOND_ONE,
+                        DIAMOND_TEN,
+                        DIAMOND_EIGHT,
+                        DIAMOND_THREE,
+                        DIAMOND_FIVE
+                )
         );
         Deck deck = new Deck(cards);
         Dealer dealer = new Dealer(players, deck);
@@ -86,24 +92,24 @@ public class DealerTest {
         dealer.pickAdditionalCard();
 
         //then
-        Assertions.assertThat(dealer.getCards().getCards())
+        assertThat(dealer.getCards().getCards())
                 .isEqualTo(List.of(
-                        new Card(Suit.CLUB, Rank.FIVE),
-                        new Card(Suit.CLUB, Rank.FOUR),
-                        new Card(Suit.CLUB, Rank.THREE),
-                        new Card(Suit.CLUB, Rank.TEN)
+                        DIAMOND_FIVE,
+                        DIAMOND_THREE,
+                        DIAMOND_EIGHT,
+                        DIAMOND_TEN
                 ));
     }
 
     @Test
     void 존재하지_않는_플레이어에게_카드를_나누어_줄_수_없다() {
         //given
-        Player foraPlayer = new Player("fora", new Cards());
+        Player foraPlayer = new Player("fora", new Cards(), 10000);
 
         Players players = new Players(
                 List.of(
-                        new Player("pobi", new Cards()),
-                        new Player("surf", new Cards())
+                        new Player("pobi", new Cards(), 10000),
+                        new Player("surf", new Cards(), 10000)
                 )
         );
         Stack<Card> cards = new Stack<>();
@@ -120,7 +126,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(players, deck);
 
         //when & then
-        Assertions.assertThatThrownBy(() -> dealer.sendCardToPlayer(foraPlayer))
+        assertThatThrownBy(() -> dealer.sendCardToPlayer(foraPlayer))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 플레이어는 존재하지 않습니다.");
     }
@@ -128,37 +134,32 @@ public class DealerTest {
     @Test
     void 카드_합이_21이_넘는_플레이어에게_카드를_나누어_줄_수_없다() {
         //given
-        Player pobiPlayer = new Player("pobi", new Cards((
-                List.of(
-                        new Card(Suit.CLUB, Rank.ONE),
-                        new Card(Suit.CLUB, Rank.TEN),
-                        new Card(Suit.CLUB, Rank.THREE),
-                        new Card(Suit.CLUB, Rank.FOUR),
-                        new Card(Suit.CLUB, Rank.FIVE))
-        )));
+        Cards pobiCards = new Cards(DIAMOND_ONE, DIAMOND_TEN, DIAMOND_THREE, DIAMOND_FOUR, DIAMOND_FIVE);
+        Player pobiPlayer = new Player("pobi", pobiCards, 10000);
 
         Players players = new Players(
                 List.of(
                         pobiPlayer,
-                        new Player("surf", new Cards()),
-                        new Player("fora", new Cards())
+                        new Player("surf", new Cards(), 10000),
+                        new Player("fora", new Cards(), 10000)
                 )
         );
         Stack<Card> cards = new Stack<>();
         cards.addAll(
                 List.of(
-                        new Card(Suit.CLUB, Rank.ACE),
-                        new Card(Suit.CLUB, Rank.ONE),
-                        new Card(Suit.CLUB, Rank.TEN),
-                        new Card(Suit.CLUB, Rank.THREE),
-                        new Card(Suit.CLUB, Rank.FOUR),
-                        new Card(Suit.CLUB, Rank.FIVE))
+                        DIAMOND_ACE,
+                        DIAMOND_ONE,
+                        DIAMOND_TEN,
+                        DIAMOND_THREE,
+                        DIAMOND_FOUR,
+                        DIAMOND_FIVE
+                )
         );
         Deck deck = new Deck(cards);
         Dealer dealer = new Dealer(players, deck);
 
         //when & then
-        Assertions.assertThatThrownBy(() -> dealer.sendCardToPlayer(pobiPlayer))
+        assertThatThrownBy(() -> dealer.sendCardToPlayer(pobiPlayer))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("한 플레이어가 가질 수 있는 카드 합의 최대는 21입니다.");
     }
@@ -166,55 +167,30 @@ public class DealerTest {
     @Test
     void 플레이어에게_카드를_나누어_줄_수_있다() {
         //given
-        Player pobiPlayer = new Player("pobi", new Cards());
+        Player pobiPlayer = new Player("pobi", new Cards(), 10000);
 
         Players players = new Players(
                 List.of(
                         pobiPlayer,
-                        new Player("surf", new Cards()),
-                        new Player("fora", new Cards())
+                        new Player("surf", new Cards(), 10000),
+                        new Player("fora", new Cards(), 10000)
                 )
         );
         Stack<Card> cards = new Stack<>();
         cards.addAll(
                 List.of(
-                        new Card(Suit.CLUB, Rank.ACE),
-                        new Card(Suit.CLUB, Rank.ONE),
-                        new Card(Suit.CLUB, Rank.TEN),
-                        new Card(Suit.CLUB, Rank.THREE),
-                        new Card(Suit.CLUB, Rank.FOUR),
-                        new Card(Suit.CLUB, Rank.FIVE))
+                        DIAMOND_ACE,
+                        DIAMOND_ONE,
+                        DIAMOND_TEN,
+                        DIAMOND_THREE,
+                        DIAMOND_FOUR,
+                        DIAMOND_FIVE
+                )
         );
         Deck deck = new Deck(cards);
         Dealer dealer = new Dealer(players, deck);
 
         //when & then
-        Assertions.assertThatCode(() -> dealer.sendCardToPlayer(pobiPlayer)).doesNotThrowAnyException();
-    }
-
-    @Test
-    void 카드가_블랙잭임을_확인할_수_있다() {
-        //given
-        List<Card> dealerCards = List.of(
-                new Card(Suit.CLUB, Rank.ACE),
-                new Card(Suit.CLUB, Rank.TEN)
-        );
-        Players players = new Players(List.of(
-                new Player("surf", new Cards()),
-                new Player("fora", new Cards())
-        ));
-        Stack<Card> cards = new Stack<>();
-        cards.addAll(List.of(
-                new Card(Suit.CLUB, Rank.FOUR),
-                new Card(Suit.CLUB, Rank.FIVE),
-                new Card(Suit.CLUB, Rank.ONE),
-                new Card(Suit.DIAMOND, Rank.ONE),
-                new Card(Suit.HEART, Rank.ONE),
-                new Card(Suit.SPADE, Rank.ONE)
-        ));
-        Dealer dealer = new Dealer(players, new Deck(cards), new Cards(dealerCards));
-
-        //when & then
-        Assertions.assertThat(dealer.isBlackjack()).isTrue();
+        assertThatCode(() -> dealer.sendCardToPlayer(pobiPlayer)).doesNotThrowAnyException();
     }
 }

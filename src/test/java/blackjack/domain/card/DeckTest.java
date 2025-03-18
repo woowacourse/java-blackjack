@@ -1,8 +1,13 @@
 package blackjack.domain.card;
 
+import static blackjack.fixture.CardFixture.DIAMOND_EIGHT;
+import static blackjack.fixture.CardFixture.DIAMOND_ONE;
+import static blackjack.fixture.CardFixture.DIAMOND_TEN;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import java.util.List;
 import java.util.Stack;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class DeckTest {
@@ -12,9 +17,9 @@ public class DeckTest {
         //given
         Stack<Card> cards = new Stack<>();
         cards.addAll(List.of(
-                new Card(Suit.CLUB, Rank.EIGHT),
-                new Card(Suit.CLUB, Rank.ONE),
-                new Card(Suit.CLUB, Rank.TEN)
+                DIAMOND_EIGHT,
+                DIAMOND_ONE,
+                DIAMOND_TEN
         ));
         Deck deck = new Deck(cards);
 
@@ -22,27 +27,17 @@ public class DeckTest {
         deck.shuffleCards(new FixCardsShuffler());
 
         //then
-        Assertions.assertThat(deck.getCards()).isEqualTo(cards);
+        assertThat(deck.getCards()).isEqualTo(cards);
     }
 
     @Test
     void 남아있는_카드가_없을_때_더_뽑을_수_없다() {
         //given
         Stack<Card> cards = new Stack<>();
-        cards.addAll(List.of(
-                new Card(Suit.CLUB, Rank.EIGHT),
-                new Card(Suit.CLUB, Rank.ONE),
-                new Card(Suit.CLUB, Rank.TEN)
-        ));
         Deck deck = new Deck(cards);
 
-        //when
-        deck.draw();
-        deck.draw();
-        deck.draw();
-
         //then
-        Assertions.assertThatThrownBy(() -> deck.draw())
+        assertThatThrownBy(() -> deck.draw())
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("남아있는 카드가 없습니다.");
     }

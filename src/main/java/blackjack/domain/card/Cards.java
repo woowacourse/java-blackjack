@@ -9,27 +9,30 @@ import java.util.Objects;
 
 public class Cards {
     private final List<Card> cards;
-    private final Score score;
 
-    public Cards() {
-        this(new ArrayList<>());
+    public Cards(Card... cards) {
+        this.cards = new ArrayList<>();
+        Collections.addAll(this.cards, cards);
     }
 
-    public Cards(List<Card> cards) {
-        this.cards = cards;
-        this.score = new Score(this);
+    public BlackjackScore calculateScore() {
+        BlackjackScore totalBlackjackScore = new BlackjackScore(cards.stream()
+                .mapToInt(Card::getScore)
+                .sum(), cards.size());
+
+        if (hasAce()) {
+            return totalBlackjackScore.withAce();
+        }
+        return totalBlackjackScore;
     }
 
-    public int calculateMaxScore() {
-        return score.calculateMaxScore();
-    }
-
-    public int calculateMinScore() {
-        return score.calculateMinScore();
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(Card::isAce);
     }
 
     public boolean isBlackjack() {
-        return score.isBlackjack();
+        return calculateScore().isBlackjack();
     }
 
     public List<Card> getCards() {
@@ -41,19 +44,23 @@ public class Cards {
     }
 
     public void additionalTake(Card card) {
-        score.additionalTake(card);
+
+        if (calculateScore().isBust()) {
+            throw new IllegalArgumentException("카드 합이 21이 넘으므로 더 받을 수 없습니다.");
+        }
+        this.cards.add(card);
+    }
+
+    public boolean doesNeedDealerPickAdditionalCard() {
+        return calculateScore().doesNeedDealerPickAdditionalCard();
     }
 
     public boolean canTake() {
-        return score.canTake();
+        return calculateScore().canTake();
     }
 
     public int getSize() {
         return cards.size();
-    }
-
-    public Card getCard(int index) {
-        return cards.get(index);
     }
 
     public void add(Card card) {
@@ -61,23 +68,19 @@ public class Cards {
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (this == object) {
+    public boolean equals(Object o) {
+        if (this == o) {
             return true;
         }
-        if (object == null || getClass() != object.getClass()) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
-        Cards cards1 = (Cards) object;
-        return Objects.equals(getCards(), cards1.getCards()) && Objects.equals(score,
-                cards1.score);
+        Cards cards1 = (Cards) o;
+        return Objects.equals(cards, cards1.cards);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hashCode(getCards());
-        result = 31 * result + Objects.hashCode(score);
-        return result;
+        return Objects.hashCode(cards);
     }
 }

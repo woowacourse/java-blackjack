@@ -4,16 +4,15 @@ import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import blackjack.domain.card.Deck;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Dealer {
     private final Players players;
     private final Deck deck;
     private final Cards cards;
+    private double bettingMoney;
 
     public Dealer(Players players, Deck deck) {
-        this(players, deck, new Cards(new ArrayList<>()));
+        this(players, deck, new Cards());
     }
 
     public Dealer(Players players, Deck deck, Cards cards) {
@@ -23,20 +22,16 @@ public class Dealer {
     }
 
     public void prepareBlackjack() {
-        pickOneCards();
+        pickCards();
         handOutCard();
     }
 
-    public void pickOneCards() {
-        cards.additionalTake(deck.draw());
+    public void pickCards() {
+        cards.take(deck.draw(), deck.draw());
     }
 
     private void handOutCard() {
         players.sendAll((player) -> player.take(deck.draw(), deck.draw()));
-    }
-
-    public int calculateMaxScore() {
-        return cards.calculateMaxScore();
     }
 
     public void sendCardToPlayer(Player player) {
@@ -50,16 +45,12 @@ public class Dealer {
     }
 
     public void pickAdditionalCard() {
-        while (calculateMaxScore() <= 16) {
+        while (cards.doesNeedDealerPickAdditionalCard()) {
             cards.additionalTake(deck.draw());
         }
     }
 
-    public boolean isBlackjack() {
-        return cards.isBlackjack();
-    }
-
-    public GameResult createVictory() {
+    public GameResult createGameResult() {
         return GameResult.create(this, players);
     }
 
@@ -67,11 +58,19 @@ public class Dealer {
         return cards;
     }
 
-    public List<Card> retrieveCards() {
-        return cards.getCards();
+    public Card getFirstCard() {
+        return cards.getCards().get(0);
     }
 
     public int getCardSize() {
         return cards.getSize();
+    }
+
+    public double getBettingMoney() {
+        return bettingMoney;
+    }
+
+    public void updateBettingMoney(double money) {
+        bettingMoney += money;
     }
 }

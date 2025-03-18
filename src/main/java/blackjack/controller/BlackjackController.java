@@ -16,12 +16,13 @@ public class BlackjackController {
     public void run() {
         try {
             Players players = createPlayers();
+            playersBettingMoney(players);
             Dealer dealer = new Dealer(players, DeckFactory.createShuffledDeck(new RandomCardsShuffler()));
             handOutCards(dealer, players);
             additionalCard(dealer, players);
             dealerAdditionalCard(dealer);
             printBlackjackResult(dealer, players);
-            printVictory(dealer, players);
+            printGameResult(dealer, players);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e);
         }
@@ -32,16 +33,22 @@ public class BlackjackController {
         return new Players(toPlayers(playerNames));
     }
 
+    private void playersBettingMoney(Players players) {
+        players.sendAll(player -> {
+            int playerBettingMoney = InputView.inputBettingMoney(player);
+            player.setBettingMoney(playerBettingMoney);
+        });
+    }
+
     private static List<Player> toPlayers(String[] playerNames) {
         return Arrays.stream(playerNames)
-                .map(name -> new Player(name.trim(), new Cards()))
+                .map(name -> new Player(name.trim(), new Cards(), 10000))
                 .toList();
     }
 
     private void handOutCards(Dealer dealer, Players players) {
         dealer.prepareBlackjack();
-        OutputView.printDealerAndPlayerCards(dealer.getCards(), players.getPlayers());
-        dealer.pickOneCards();
+        OutputView.printDealerAndPlayerCards(dealer.getFirstCard(), players.getPlayers());
     }
 
     private void additionalCard(Dealer dealer, Players players) {
@@ -81,8 +88,9 @@ public class BlackjackController {
         OutputView.printPlayerResult(players.getPlayers());
     }
 
-    private void printVictory(Dealer dealer, Players players) {
-        GameResult gameResult = dealer.createVictory();
-        OutputView.printVictory(gameResult, players.getPlayers());
+    private void printGameResult(Dealer dealer, Players players) {
+        GameResult gameResult = dealer.createGameResult();
+        OutputView.printGameResult(gameResult, players.getPlayers());
+        OutputView.printBettingResult(gameResult, players.getPlayers());
     }
 }

@@ -19,6 +19,14 @@ public class Card {
         return rank;
     }
 
+    public int getScore() {
+        return rank.getScore();
+    }
+
+    public boolean isAce() {
+        return rank == Rank.ACE;
+    }
+
     @Override
     public boolean equals(Object object) {
         if (this == object) {
