@@ -36,12 +36,7 @@ public enum CardRank {
     }
 
     public boolean hasMaxValue() {
-        try {
-            getMaxValue();
-            return true;
-        } catch (IllegalStateException e) {
-            return false;
-        }
+        return value.hasMaxValue();
     }
 
     public static class SoftValue implements CardValue {
@@ -59,11 +54,15 @@ public enum CardRank {
         }
 
         @Override
+        public boolean hasMaxValue() {
+            return true;
+        }
+
+        @Override
         public int getMaxValue() {
             return maxValue;
         }
     }
-
 
     public static class HardValue implements CardValue {
         private final int defaultValue;
@@ -75,6 +74,11 @@ public enum CardRank {
         @Override
         public int getDefaultValue() {
             return defaultValue;
+        }
+
+        @Override
+        public boolean hasMaxValue() {
+            return false;
         }
 
         @Override
