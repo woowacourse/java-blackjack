@@ -1,19 +1,17 @@
 package controller;
 
-import static domain.BlackJackConstants.INITIAL_CARD_AMOUNT;
-import static domain.BlackJackConstants.THRESHOLD;
-
 import domain.Command;
-import domain.FinalResult;
+import domain.FinalResults;
 import domain.deck.Card;
 import domain.deck.CardSetGenerator;
 import domain.deck.Deck;
+import domain.gamer.Betting;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Nickname;
 import domain.gamer.Player;
 import domain.gamer.Players;
-import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -21,34 +19,39 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackJackController {
-
-    private static final String DEALER_NAME = "딜러";
-
     public void run() {
         try {
             final Players players = createPlayers();
             final Dealer dealer = createDealer();
             final Deck deck = generateDeck();
-            setGame(players.getPlayers(), dealer, deck);
-            printGameSetting(dealer, players);
-            playGame(dealer, players.getPlayers(), deck);
-            processFinalResult(dealer, players.getPlayers());
-        } catch (IllegalArgumentException e) {
+            setGame(players, dealer, deck);
+            playGame(dealer, players, deck);
+            finishGame(players, dealer);
+        } catch (final IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
         }
     }
 
     private Players createPlayers() {
-        return new Players(readNicknames().stream()
-                .map(Player::new)
+        final List<Nickname> nicknames = readNicknames();
+        return new Players(nicknames.stream()
+                .map(nickname -> {
+                    final Betting betting = readBetAmount(nickname.getDisplayName());
+                    return new Player(nickname, betting);
+                })
                 .toList());
     }
 
     private List<Nickname> readNicknames() {
-        final String inputNicknames = InputView.readPlayerName();
-        return Arrays.stream(inputNicknames.split(","))
+        final List<String> inputNicknames = InputView.readPlayersName();
+        return inputNicknames.stream()
                 .map(Nickname::new)
                 .toList();
+    }
+
+    private Betting readBetAmount(final String playerName) {
+        final int betAmount = Integer.parseInt(InputView.readPlayerBetAmount(playerName));
+        return new Betting(betAmount);
     }
 
     private Deck generateDeck() {
@@ -59,66 +62,71 @@ public class BlackJackController {
     }
 
     private Dealer createDealer() {
-        return new Dealer(new Nickname(DEALER_NAME));
+        return new Dealer();
     }
 
-    private void setGame(final List<Player> players, Dealer dealer, final Deck deck) {
-        players.forEach(player -> receiveInitialCards(player, deck));
-        receiveInitialCards(dealer, deck);
-    }
-
-    private void receiveInitialCards(Gamer gamer, Deck deck) {
-        final Card firstCard = deck.drawCard();
-        final Card secondCard = deck.drawCard();
-        gamer.receiveInitialCards(List.of(firstCard, secondCard));
-    }
-
-    private void printGameSetting(final Dealer dealer,
-                                  final Players players) {
-        final List<String> playerNicknames = players.getPlayersDisplayNicknames();
-        OutputView.printInitialSettingMessage(dealer.getDisplayName(), playerNicknames, INITIAL_CARD_AMOUNT);
+    private void setGame(final Players players, final Dealer dealer, final Deck deck) {
+        players.receiveInitialCards(deck);
+        final List<Card> initialCards = deck.getInitialGameCards();
+        dealer.receiveInitialCards(initialCards);
+        OutputView.printInitialSettingMessage(dealer.getDisplayName(), players.getPlayersDisplayNicknames());
         OutputView.printCardsInHand(dealer.getDisplayName(), List.of(dealer.getFirstCard()));
-        players.getPlayers().forEach(player -> OutputView.printCardsInHand(player.getDisplayName(), player.getCards()));
+        players.getPlayers().forEach(player ->
+                OutputView.printCardsInHand(player.getDisplayName(), player.getCards()));
     }
 
-    private void playGame(final Dealer dealer, final List<Player> players, final Deck deck) {
+    private void playGame(final Dealer dealer, final Players players, final Deck deck) {
         processPlayerHit(players, deck);
         processDealerHit(dealer, deck);
     }
 
-    private void processPlayerHit(final List<Player> players, final Deck deck) {
-        players.stream()
+    private void processPlayerHit(final Players players, final Deck deck) {
+        players.getPlayers().stream()
                 .filter(player -> isMoreCard(deck, player))
                 .forEach(player -> processAdditionalHit(deck, player));
     }
 
     private boolean isMoreCard(final Deck deck, final Player player) {
-        final String input = InputView.readQuestOneMoreCard(player.getDisplayName());
-        if (Command.find(input).equals(Command.YES)) {
-            final Card card = deck.drawCard();
-            player.hit(card);
+        if (player.isImpossibleDrawCard()) {
+            return false;
         }
+
+        final String input = InputView.readQuestOneMoreCard(player.getDisplayName());
+        if (Command.find(input) == Command.YES) {
+            drawCardForPlayer(deck, player);
+        }
+
+        return isContinueDrawing(input, player);
+    }
+
+    private void drawCardForPlayer(final Deck deck, final Player player) {
+        final Card card = deck.drawCard();
+        player.hit(card);
         OutputView.printCardsInHand(player.getDisplayName(), player.getCards());
 
         if (player.isBust()) {
             OutputView.printBustMessage(player.getDisplayName());
+        }
+    }
+
+    private boolean isContinueDrawing(final String input, final Player player) {
+        if (player.isBust() || player.isImpossibleDrawCard()) {
             return false;
         }
 
-        return Command.find(input).equals(Command.YES);
+        return Command.find(input) == Command.YES;
     }
 
     private void processAdditionalHit(final Deck deck, final Player player) {
-        String input = InputView.readQuestOneMoreCard(player.getDisplayName());
-        Command command = Command.find(input);
+        while (true) {
+            final String input = InputView.readQuestOneMoreCard(player.getDisplayName());
+            if (Command.find(input) != Command.YES) {
+                break;
+            }
 
-        while (command.equals(Command.YES)) {
-            final Card card = deck.drawCard();
-            player.hit(card);
-            OutputView.printCardsInHand(player.getDisplayName(), player.getCards());
+            drawCardForPlayer(deck, player);
 
-            if (player.isBust()) {
-                OutputView.printBustMessage(player.getDisplayName());
+            if (player.isBust() || player.isImpossibleDrawCard()) {
                 break;
             }
         }
@@ -128,14 +136,14 @@ public class BlackJackController {
         while (dealer.canHit()) {
             final Card card = deck.drawCard();
             dealer.hit(card);
-            OutputView.printDealerHit(THRESHOLD, dealer.getDisplayName());
+            OutputView.printDealerHit(dealer.getDisplayName());
         }
     }
 
-    private void processFinalResult(final Dealer dealer, final List<Player> players) {
+    private void finishGame(final Players players, final Dealer dealer) {
         OutputView.printCardsInHandWithResults(dealer, players);
-        final Map<Player, FinalResult> playerResults = FinalResult.makePlayerResult(players, dealer);
-        final Map<FinalResult, Integer> resultCounts = FinalResult.makeDealerResult(playerResults);
-        OutputView.printFinalResults(dealer.getDisplayName(), resultCounts, playerResults);
+        final FinalResults finalResults = new FinalResults(players.createFinalResults(dealer));
+        final Map<Gamer, Integer> profitResults = new LinkedHashMap<>(finalResults.createProfitResults(dealer));
+        OutputView.printProfitResults(profitResults);
     }
 }

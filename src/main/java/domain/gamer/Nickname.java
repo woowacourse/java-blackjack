@@ -17,7 +17,7 @@ public class Nickname {
         if (displayName.matches(NICKNAME_REGEX)) {
             return;
         }
-        throw new IllegalArgumentException("이름은 영어로만 작성이 가능하며 2~5글자여야합니다.");
+        throw new IllegalArgumentException("이름은 한글 또는 영어로만 작성이 가능하며 2~5글자여야합니다.");
     }
 
     public String getDisplayName() {

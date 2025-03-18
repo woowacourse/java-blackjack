@@ -1,5 +1,6 @@
 package domain.deck;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -40,6 +41,21 @@ class DeckTest {
             softly.assertThat(drownCard1).isEqualTo(card1);
             softly.assertThat(drownCard2).isEqualTo(card2);
         });
+    }
+
+    @DisplayName("초기 카드 두 장을 추출한다.")
+    @Test
+    void 초기_카드_두_장을_추출한다() {
+
+        // given
+        final CardSetGenerator cardSetGenerator = new CardSetGenerator();
+        final Deck deck = new Deck(cardSetGenerator.generate());
+
+        // when
+        final List<Card> initialCards = deck.getInitialGameCards();
+
+        // when & then
+        assertThat(initialCards.size()).isEqualTo(2);
     }
 
     @DisplayName("카드가 부족하면 예외가 발생한다.")

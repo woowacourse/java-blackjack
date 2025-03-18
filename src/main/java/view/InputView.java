@@ -1,14 +1,24 @@
 package view;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public final class InputView {
 
+    private static final String NAME_DELIMITER = ",";
+
     private InputView() {
     }
 
-    public static String readPlayerName() {
+    public static List<String> readPlayersName() {
         print("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
+        return Arrays.stream(readValidInput().split(NAME_DELIMITER))
+                .toList();
+    }
+
+    public static String readPlayerBetAmount(final String name) {
+        print(String.format("%s의 배팅 금액은?", name));
         return readValidInput();
     }
 

@@ -1,6 +1,5 @@
 package domain.gamer;
 
-import static domain.BlackJackConstants.THRESHOLD;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.deck.Card;
@@ -18,7 +17,7 @@ class DealerTest {
     void 에이스가_없을_때_딜러의_카드가_기준을_넘으면_true를_반환한다() {
 
         // given
-        final Dealer dealer = new Dealer(new Nickname("딜러"));
+        final Dealer dealer = new Dealer();
         dealer.hit(new Card(Rank.JACK, Shape.CLOVER));
         dealer.hit(new Card(Rank.SIX, Shape.CLOVER));
 
@@ -27,7 +26,7 @@ class DealerTest {
 
         // then
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(dealer.calculateSumOfRank()).isEqualTo(THRESHOLD);
+            softly.assertThat(dealer.getScoreSum()).isEqualTo(16);
             softly.assertThat(expected).isTrue();
         });
     }
@@ -37,7 +36,7 @@ class DealerTest {
     void 에이스가_없을_때_딜러의_카드가_기준을_넘지_않으면_false를_반환한다() {
 
         // given
-        final Dealer dealer = new Dealer(new Nickname("딜러"));
+        final Dealer dealer = new Dealer();
         dealer.hit(new Card(Rank.JACK, Shape.CLOVER));
         dealer.hit(new Card(Rank.SEVEN, Shape.CLOVER));
 
@@ -46,7 +45,7 @@ class DealerTest {
 
         // then
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(dealer.calculateSumOfRank()).isEqualTo(17);
+            softly.assertThat(dealer.getScoreSum()).isEqualTo(17);
             softly.assertThat(expected).isFalse();
         });
     }
@@ -56,7 +55,7 @@ class DealerTest {
     void 에이스가_있을_때_에이스_1장을_11로_가정한_카드의_합계가_기준값을_안_넘을_시_true를_반환한다() {
 
         // given
-        final Dealer dealer = new Dealer(new Nickname("새로이"));
+        final Dealer dealer = new Dealer();
         dealer.hit(new Card(Rank.ACE, Shape.CLOVER));
         dealer.hit(new Card(Rank.TWO, Shape.CLOVER));
         // when
@@ -64,7 +63,7 @@ class DealerTest {
 
         // then
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(dealer.calculateSumOfRank()).isEqualTo(13);
+            softly.assertThat(dealer.getScoreSum()).isEqualTo(13);
             softly.assertThat(expected).isTrue();
         });
     }
@@ -74,7 +73,7 @@ class DealerTest {
     void 에이스가_있을_때_에이스_1장을_11로_가정한_카드의_합계까_기준값을_넘을_시_false를_반환한다() {
 
         // given
-        final Dealer dealer = new Dealer(new Nickname("새로이"));
+        final Dealer dealer = new Dealer();
         dealer.hit(new Card(Rank.JACK, Shape.CLOVER));
         dealer.hit(new Card(Rank.ACE, Shape.CLOVER));
 
@@ -83,17 +82,17 @@ class DealerTest {
 
         // then
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(dealer.calculateSumOfRank()).isEqualTo(21);
+            softly.assertThat(dealer.getScoreSum()).isEqualTo(21);
             softly.assertThat(expected).isFalse();
         });
     }
 
     @DisplayName("딜러의 첫번째 카드를 가져온다.")
     @Test
-    void 딜러의_첫번쨰_카드를_가져온다() {
+    void 딜러의_첫번째_카드를_가져온다() {
 
         // given
-        final Dealer dealer = new Dealer(new Nickname("새로이"));
+        final Dealer dealer = new Dealer();
         final Card card1 = new Card(Rank.JACK, Shape.CLOVER);
         final Card card2 = new Card(Rank.ACE, Shape.CLOVER);
         dealer.receiveInitialCards(List.of(card1, card2));
@@ -103,5 +102,36 @@ class DealerTest {
 
         // then
         assertThat(dealerFirstCard).isEqualTo(card1);
+    }
+
+    @DisplayName("블랙잭이면 true를 반환한다.")
+    @Test
+    void 블랙잭이면_true를_반환한다() {
+
+        // given
+        final Dealer dealer = new Dealer();
+
+        // when
+        dealer.hit(new Card(Rank.JACK, Shape.CLOVER));
+        dealer.hit(new Card(Rank.ACE, Shape.CLOVER));
+
+        // then
+        assertThat(dealer.isBlackJack()).isTrue();
+    }
+
+    @DisplayName("블랙잭이 아니라면 false를 반환한다.")
+    @Test
+    void 블랙잭이_아니라면_false를_반환한다() {
+
+        // given
+        final Dealer dealer = new Dealer();
+
+        // when
+        dealer.hit(new Card(Rank.JACK, Shape.CLOVER));
+        dealer.hit(new Card(Rank.FIVE, Shape.CLOVER));
+        dealer.hit(new Card(Rank.SIX, Shape.CLOVER));
+
+        // then
+        assertThat(dealer.isBlackJack()).isFalse();
     }
 }

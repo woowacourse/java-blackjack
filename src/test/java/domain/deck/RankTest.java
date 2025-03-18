@@ -13,7 +13,7 @@ class RankTest {
     @CsvSource(value = {
             "ACE, true", "THREE, false", "JACK, false"
     })
-    void 랭크가_예이스면_true_아니면_false를_반환한다(final Rank rank, final boolean expected) {
+    void 랭크가_에이스면_true_아니면_false를_반환한다(final Rank rank, final boolean expected) {
 
         // given
 

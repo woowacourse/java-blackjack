@@ -18,4 +18,8 @@ public class Deck {
         }
         return cards.poll();
     }
+
+    public List<Card> getInitialGameCards() {
+        return List.of(drawCard(), drawCard());
+    }
 }
