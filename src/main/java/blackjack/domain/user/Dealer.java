@@ -2,6 +2,7 @@ package blackjack.domain.user;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.game.GameRule;
+import blackjack.domain.value.Nickname;
 import blackjack.exception.ExceptionMessage;
 import java.util.List;
 
@@ -18,12 +19,12 @@ public class Dealer {
         gameUser.addCardInHand(cards);
     }
 
-    public boolean checkPossibilityOfDrawing() {
-        return GameRule.checkPossibilityOfDealerDrawing(gameUser.getPoint());
+    public boolean canDraw() {
+        return gameUser.getPoint() <= GameRule.DEALER_DRAW_THRESHOLD.getValue();
     }
 
     public void addCardUntilLimit(Card card) {
-        boolean isPossible = GameRule.checkPossibilityOfDealerDrawing(gameUser.getPoint());
+        boolean isPossible = canDraw();
         if (isPossible) {
             gameUser.addCardInHand(card);
         }
@@ -35,7 +36,7 @@ public class Dealer {
         return cards.getFirst();
     }
 
-    public String getDealerName() {
+    public Nickname getDealerName() {
         return gameUser.getNickname();
     }
 

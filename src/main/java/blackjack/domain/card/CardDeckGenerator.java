@@ -5,21 +5,23 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class CardGenerator {
+public class CardDeckGenerator {
 
-    public List<Card> makeShuffled() {
-        List<Card> newCards = makeCard();
-        Collections.shuffle(newCards);
-        return newCards;
-    }
+    private static final List<Card> DEFAULT_CARDS;
 
-    private List<Card> makeCard() {
+    static {
         List<Card> newCards = new ArrayList<>();
         for (CardShape shape : CardShape.values()) {
             Arrays.stream(CardValue.values())
                     .map(cardValue -> new Card(shape, cardValue))
                     .forEach(newCards::add);
         }
-        return newCards;
+        DEFAULT_CARDS = newCards.stream().toList();
+    }
+
+    public CardDeck makeShuffled() {
+        List<Card> cards = new ArrayList<>(DEFAULT_CARDS);
+        Collections.shuffle(cards);
+        return new CardDeck(cards);
     }
 }

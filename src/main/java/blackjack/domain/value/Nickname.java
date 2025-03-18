@@ -1,4 +1,4 @@
-package blackjack.domain.user;
+package blackjack.domain.value;
 
 import blackjack.exception.ExceptionMessage;
 import java.util.Objects;
@@ -10,16 +10,6 @@ public final class Nickname {
     public Nickname(String nickname) {
         validateBlank(nickname);
         this.value = removeSideSpace(nickname);
-    }
-
-    private String removeSideSpace(String nickname) {
-        return nickname.strip();
-    }
-
-    private void validateBlank(String nickname) {
-        if (nickname == null || nickname.isBlank()) {
-            throw new IllegalArgumentException(ExceptionMessage.NOT_ALLOWED_EMPTY_NICKNAME.getContent());
-        }
     }
 
     public String getValue() {
@@ -41,5 +31,15 @@ public final class Nickname {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    private String removeSideSpace(String nickname) {
+        return nickname.strip();
+    }
+
+    private void validateBlank(String nickname) {
+        if (nickname == null || nickname.isBlank()) {
+            throw new IllegalArgumentException(ExceptionMessage.NOT_ALLOWED_EMPTY_NICKNAME.getContent());
+        }
     }
 }

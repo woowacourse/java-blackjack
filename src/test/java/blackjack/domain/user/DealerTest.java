@@ -35,19 +35,19 @@ class DealerTest {
 
     @Test
     @DisplayName("드로잉 가능한 경우를 체크할 수 있다.")
-    void canCheckPossibilityOfDrawing() {
-        Boolean isPossible = dealer.checkPossibilityOfDrawing();
+    void canDraw() {
+        Boolean isPossible = dealer.canDraw();
         assertThat(isPossible).isTrue();
     }
 
     @Test
     @DisplayName("드로잉 불가능한 경우를 체크할 수 있다.")
-    void canCheckImpossibilityOfDrawing() {
+    void canNotDraw() {
         dealer.addInitialCards(List.of(
                 new Card(CardShape.HEART, CardValue.JACK),
                 new Card(CardShape.HEART, CardValue.SEVEN)));
 
-        Boolean isPossible = dealer.checkPossibilityOfDrawing();
+        Boolean isPossible = dealer.canDraw();
         assertThat(isPossible).isFalse();
     }
 

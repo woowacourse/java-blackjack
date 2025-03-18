@@ -1,11 +1,10 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.game.GameResult;
-import blackjack.domain.game.PlayerWinning;
-import blackjack.domain.game.WinningType;
+import blackjack.domain.game.PlayerProfit;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
+import blackjack.domain.value.Nickname;
 import java.util.List;
 
 public class OutputView {
@@ -42,25 +41,21 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printGameResult(GameResult gameResult) {
-        System.out.println("## 최종 승패");
-        System.out.print("딜러: ");
+    public void printProfit(List<PlayerProfit> playerProfits) {
+        System.out.println("## 최종 수익");
+        String dealerProfitContent = makeDealerProfitContent(playerProfits);
+        System.out.println(dealerProfitContent);
 
-        for (WinningType winningType : WinningType.values()) {
-            System.out.print(gameResult.getDealerWinningState(winningType)
-                    + winningType.getDescription() + " ");
-        }
-        System.out.println();
-
-        List<PlayerWinning> results = gameResult.getPlayerWinnings();
-        for (PlayerWinning result : results) {
-            System.out.println(result.getNickname() + ": " + result.getWinningType().getDescription());
+        for (PlayerProfit playerProfit : playerProfits) {
+            String playerProfitContent = String.format("%s: %d",
+                    playerProfit.getNickname().getValue(), playerProfit.getProfit());
+            System.out.println(playerProfitContent);
         }
     }
 
     private void printCardDistributionHeader(Dealer dealer, List<Player> players) {
-        String dealerNameContent = dealer.getDealerName();
-        List<String> playerNicknames = players.stream()
+        String dealerNameContent = dealer.getDealerName().getValue();
+        List<Nickname> playerNicknames = players.stream()
                 .map(Player::getNickname)
                 .toList();
         String playerNameContent = makeNicknamesContent(playerNicknames);
@@ -73,15 +68,22 @@ public class OutputView {
         System.out.println(dealerContent);
     }
 
-    private String makeCardContent(String nickname, List<Card> cardsByPlayer) {
+    private String makeCardContent(Nickname nickname, List<Card> cardsByPlayer) {
         List<String> cards = cardsByPlayer.stream()
                 .map(card -> card.getValue().getDescription() + card.getShape())
                 .toList();
         String cardContents = String.join(", ", cards);
-        return String.format("%s카드: %s", nickname, cardContents);
+        return String.format("%s카드: %s", nickname.getValue(), cardContents);
     }
 
-    private String makeNicknamesContent(List<String> nicknames) {
-        return String.join(", ", nicknames);
+    private String makeNicknamesContent(List<Nickname> nicknames) {
+        List<String> nicknameContents = nicknames.stream().map(Nickname::getValue).toList();
+        return String.join(", ", nicknameContents);
+    }
+
+    private String makeDealerProfitContent(List<PlayerProfit> playerProfits) {
+        int totalPlayerProfit = playerProfits.stream().mapToInt(PlayerProfit::getProfit).sum();
+        int dealerProfit = totalPlayerProfit * -1;
+        return String.format("딜러: %d", dealerProfit);
     }
 }

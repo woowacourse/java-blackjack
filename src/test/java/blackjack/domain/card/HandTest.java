@@ -1,4 +1,4 @@
-package blackjack.domain.user;
+package blackjack.domain.card;
 
 import static blackjack.fixture.CardFixture.make;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.CardValue;
+import blackjack.domain.card.Hand;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;

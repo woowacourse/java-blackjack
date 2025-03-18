@@ -1,10 +1,12 @@
 package blackjack.domain.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardShape;
 import blackjack.domain.card.CardValue;
+import blackjack.domain.value.Nickname;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,8 +23,9 @@ class GameUserTest {
 
         gameUser.addCardInHand(card);
 
-        assertThat(gameUser.getHand()).hasSize(1);
-        assertThat(gameUser.getHand().getFirst()).isEqualTo(card);
+        assertAll(
+                () -> assertThat(gameUser.getHand()).hasSize(1),
+                () -> assertThat(gameUser.getHand().getFirst()).isEqualTo(card));
     }
 
     @Test
@@ -34,8 +37,9 @@ class GameUserTest {
 
         gameUser.addCardInHand(cards);
 
-        assertThat(gameUser.getHand()).hasSize(2);
-        assertThat(gameUser.getHand().getFirst()).isEqualTo(firstCard);
-        assertThat(gameUser.getHand().getLast()).isEqualTo(secondCard);
+        assertAll(
+                () -> assertThat(gameUser.getHand()).hasSize(2),
+                () -> assertThat(gameUser.getHand().getFirst()).isEqualTo(firstCard),
+                () -> assertThat(gameUser.getHand().getLast()).isEqualTo(secondCard));
     }
 }

@@ -1,47 +1,57 @@
 package blackjack.domain.io;
 
-import blackjack.domain.game.GameResult;
+import blackjack.domain.game.PlayerProfit;
 import blackjack.domain.user.Dealer;
 import blackjack.domain.user.Player;
+import blackjack.domain.value.BettingAmount;
+import blackjack.domain.value.Nickname;
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class GameInputOutput {
 
-    private final DealerAndPlayersFunction printInitialHandsMethod;
-    private final Function<String, Boolean> readWannaHitMethod;
-    private final PlayerFunction printHitResultMethod;
+    private final BiConsumer<Dealer, List<Player>> printInitialHandsMethod;
+    private final Function<Nickname, Boolean> readWannaHitMethod;
+    private final Function<Nickname, BettingAmount> readBettingAmountMethod;
+    private final Consumer<Player> printHitResultMethod;
     private final Consumer<Integer> printDealerDrawingMethod;
-    private final DealerAndPlayersFunction printFinalHandsMethod;
-    private final Consumer<GameResult> printGameResultMethod;
+    private final BiConsumer<Dealer, List<Player>> printFinalHandsMethod;
+    private final Consumer<List<PlayerProfit>> printPlayerProfitsMethod;
 
     public GameInputOutput(
-            DealerAndPlayersFunction printInitialHandsMethod,
-            Function<String, Boolean> readWannaHitMethod,
-            PlayerFunction printHitResultMethod,
+            BiConsumer<Dealer, List<Player>> printInitialHandsMethod,
+            Function<Nickname, Boolean> readWannaHitMethod,
+            Function<Nickname, BettingAmount> readBettingAmountMethod,
+            Consumer<Player> printHitResultMethod,
             Consumer<Integer> printDealerDrawingMethod,
-            DealerAndPlayersFunction printFinalHandsMethod,
-            Consumer<GameResult> printGameResultMethod
+            BiConsumer<Dealer, List<Player>> printFinalHandsMethod,
+            Consumer<List<PlayerProfit>> printPlayerProfitsMethod
     ) {
         this.printInitialHandsMethod = printInitialHandsMethod;
         this.readWannaHitMethod = readWannaHitMethod;
+        this.readBettingAmountMethod = readBettingAmountMethod;
         this.printHitResultMethod = printHitResultMethod;
         this.printDealerDrawingMethod = printDealerDrawingMethod;
         this.printFinalHandsMethod = printFinalHandsMethod;
-        this.printGameResultMethod = printGameResultMethod;
+        this.printPlayerProfitsMethod = printPlayerProfitsMethod;
     }
 
     public void printInitialHands(Dealer dealer, List<Player> players) {
-        printInitialHandsMethod.execute(dealer, players);
+        printInitialHandsMethod.accept(dealer, players);
     }
 
-    public boolean readIngWannaHit(String nickname) {
+    public boolean readIngWannaHit(Nickname nickname) {
         return readWannaHitMethod.apply(nickname);
     }
 
+    public BettingAmount readBettingAmount(Nickname nickname) {
+        return readBettingAmountMethod.apply(nickname);
+    }
+
     public void printingHitResult(Player player) {
-        printHitResultMethod.execute(player);
+        printHitResultMethod.accept(player);
     }
 
     public void printDealerDrawing(int count) {
@@ -49,10 +59,10 @@ public class GameInputOutput {
     }
 
     public void printFinalHands(Dealer dealer, List<Player> players) {
-        printFinalHandsMethod.execute(dealer, players);
+        printFinalHandsMethod.accept(dealer, players);
     }
 
-    public void printGameResult(GameResult gameResult) {
-        printGameResultMethod.accept(gameResult);
+    public void printPlayerProfits(List<PlayerProfit> playerProfits) {
+        printPlayerProfitsMethod.accept(playerProfits);
     }
 }
