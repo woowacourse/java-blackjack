@@ -10,12 +10,12 @@ import model.bet.BettingResults;
 import model.bet.ParticipantsBet;
 import model.cards.Cards;
 import model.cards.DealerCards;
-import model.cards.DealerCardsFactory;
+import model.cards.DealerCardsGenerator;
 import model.cards.ParticipantsCards;
 import model.cards.PlayerCards;
-import model.cards.PlayerCardsFactory;
+import model.cards.PlayerCardsGenerator;
 import model.deck.Deck;
-import model.deck.DeckFactory;
+import model.deck.DeckGenerator;
 import model.result.GameResult;
 import model.result.GameResults;
 
@@ -72,8 +72,8 @@ public class BlackjackGame {
             final List<String> rawPlayers,
             final List<Integer> betAmount
     ) {
-        DeckFactory deckFactory = new DeckFactory();
-        Deck deck = new Deck(deckFactory.getInitializedDeck());
+        DeckGenerator deckGenerator = new DeckGenerator();
+        Deck deck = new Deck(deckGenerator.getInitializedDeck());
         Participants participants = generateParticipants(rawPlayers, betAmount, deck);
         return new BlackjackGame(deck, participants);
     }
@@ -93,13 +93,13 @@ public class BlackjackGame {
             final List<String> names,
             final Deck deck
     ) {
-        DealerCardsFactory dealerCardsFactory = new DealerCardsFactory();
-        PlayerCardsFactory playerCardsFactory = new PlayerCardsFactory();
+        DealerCardsGenerator dealerCardsGenerator = new DealerCardsGenerator();
+        PlayerCardsGenerator playerCardsGenerator = new PlayerCardsGenerator();
 
-        DealerCards dealerCards = (DealerCards) dealerCardsFactory.generate(deck);
+        DealerCards dealerCards = (DealerCards) dealerCardsGenerator.generate(deck);
 
         Map<String, Cards> playerCards = new LinkedHashMap<>(names.size());
-        names.forEach(name -> playerCards.put(name, playerCardsFactory.generate(deck)));
+        names.forEach(name -> playerCards.put(name, playerCardsGenerator.generate(deck)));
 
         return new ParticipantsCards(dealerCards, playerCards);
     }

@@ -4,7 +4,7 @@ import java.util.List;
 import model.card.Card;
 import model.deck.Deck;
 
-final public class DealerCardsFactory extends CardsFactory {
+final public class DealerCardsGenerator extends CardsGenerator {
 
     private static final int DEALER_DRAW_THRESHOLD = 16;
 
