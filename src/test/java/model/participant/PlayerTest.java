@@ -1,7 +1,10 @@
-package model;
+package model.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import model.card.Card;
+import model.card.CardRank;
+import model.card.CardSuit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

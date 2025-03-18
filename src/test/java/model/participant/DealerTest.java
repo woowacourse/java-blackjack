@@ -1,8 +1,10 @@
-package model;
+package model.participant;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeAll;
+import model.card.Card;
+import model.card.CardRank;
+import model.card.CardSuit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,6 +16,7 @@ class DealerTest {
     void setUp() {
         dealer = new Dealer();
     }
+
     @DisplayName("카드의 합이 16이하이면 true를 반환한다.")
     @Test
     void 카드합_16이하이면_true반환() {

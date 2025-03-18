@@ -1,5 +1,4 @@
-package model;
-
+package model.participant;
 
 public class Player extends Participant {
     private final String name;

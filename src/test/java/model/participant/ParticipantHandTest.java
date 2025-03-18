@@ -1,7 +1,10 @@
-package model;
+package model.participant;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import model.card.Card;
+import model.card.CardRank;
+import model.card.CardSuit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +24,7 @@ class ParticipantHandTest {
         participantHand.add(new Card(CardRank.EIGHT, CardSuit.DIAMOND));
 
         //when
-        boolean burst = participantHand.checkBurst();
+        boolean burst = participantHand.checkBust();
 
         //then
         assertFalse(burst);
@@ -36,7 +39,7 @@ class ParticipantHandTest {
         participantHand.add(new Card(CardRank.KING, CardSuit.DIAMOND));
 
         //when
-        boolean burst = participantHand.checkBurst();
+        boolean burst = participantHand.checkBust();
 
         //then
         Assertions.assertTrue(burst);
@@ -51,7 +54,7 @@ class ParticipantHandTest {
         participantHand.add(new Card(CardRank.KING, CardSuit.DIAMOND));
 
         //when
-        boolean burst = participantHand.checkBurst();
+        boolean burst = participantHand.checkBust();
 
         //then
         assertFalse(burst);
@@ -67,7 +70,7 @@ class ParticipantHandTest {
         participantHand.add(new Card(CardRank.KING, CardSuit.DIAMOND));
 
         //when
-        boolean burst = participantHand.checkBurst();
+        boolean burst = participantHand.checkBust();
 
         //then
         Assertions.assertTrue(burst);

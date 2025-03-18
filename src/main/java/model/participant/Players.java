@@ -1,4 +1,4 @@
-package model;
+package model.participant;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -19,12 +19,6 @@ public class Players {
                         .map(Player::new)
                         .toList()
         );
-    }
-
-    public void dealInitialCards(Deck deck) {
-        for (Player player : players) {
-            player.dealInitialCards(deck);
-        }
     }
 
     public List<Player> getPlayers() {

@@ -2,67 +2,70 @@ package controller;
 
 import java.util.List;
 import java.util.Map;
-import model.Dealer;
-import model.Deck;
-import model.GameResult;
-import model.Player;
-import model.ParticipantWinningResult;
-import model.Players;
+import model.betting.PlayersBetting;
+import model.betting.BettingResult;
+import model.card.Deck;
+import model.participant.Dealer;
+import model.participant.Player;
+import model.winning.ParticipantWinningResult;
+import model.participant.Players;
+import model.turn.DealerTurn;
+import model.turn.PlayerTurn;
 import view.InputView;
 import view.OutputView;
 
 public class BlackjackController {
 
     public void run() {
-        List<String> playerNames = InputView.readPlayerNames();
+        Deck deck = Deck.of();
+        List<String> playerNames = inputPlayersName();
         Players players = Players.from(playerNames);
         Dealer dealer = new Dealer();
-        Deck deck = Deck.of();
 
-        dealInitially(players, deck, dealer);
+        List<PlayerTurn> playerTurns = inputPlayersBetting(players);
+        DealerTurn dealerTurn = new DealerTurn(dealer);
+
+        PlayerTurnController playerTurnController = new PlayerTurnController(playerTurns);
+        DealerTurnController dealerTurnController = new DealerTurnController(dealerTurn);
+
+        playerTurnController.dealInitialCards(deck);
+        dealerTurnController.dealInitialCards(deck);
         OutputView.printInitialDealResult(dealer, players);
+        playerTurnController.betInsurance(dealer);
+        playerTurnController.runParticipantsTurn(deck);
+        dealerTurnController.runDealerTurn(deck);
 
-        hitOrStandAtPlayersTurn(players, deck);
-        hitOrStandAtDealerTurn(dealer, deck);
+        ParticipantWinningResult participantWinningResult = new ParticipantWinningResult(players, dealer);
+        PlayersBetting playersBetting = PlayersBetting.from(playerTurns);
+        BettingResult bettingResult = new BettingResult(playersBetting, participantWinningResult);
+        Map<Player, Integer> finalProfitByPlayer = bettingResult.calculatePlayerBettingResult(players, dealer);
+        int finalProfitByDealer = bettingResult.calculateDealerFinalResult(finalProfitByPlayer);
+
         OutputView.printFinalScore(dealer, players);
-
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(players, dealer);
-        Map<GameResult, Integer> dealerWinningResult = participantWinningResult.decideDealerWinning();
-        printFinalGameResult(dealerWinningResult, participantWinningResult);
+        printFinalGameResult(finalProfitByPlayer, finalProfitByDealer);
     }
 
-    private void dealInitially(Players players, Deck deck, Dealer dealer) {
-        players.dealInitialCards(deck);
-        dealer.dealInitialCards(deck);
-    }
-
-    private void hitOrStandAtPlayersTurn(Players players, Deck deck) {
-        for (Player player : players.getPlayers()) {
-            hitOrStandAtOnePlayerTurn(deck, player);
+    private List<String> inputPlayersName() {
+        try {
+            return InputView.readPlayerNames();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return inputPlayersName();
         }
     }
 
-    private void hitOrStandAtOnePlayerTurn(Deck deck, Player player) {
-        boolean flag = true;
-        while (flag == InputView.readHit(player)) {
-            player.receiveCard(deck.pick());
-            OutputView.printHitResult(player);
-            if (player.isBurst()) {
-                break;
-            }
+    private List<PlayerTurn> inputPlayersBetting(Players players) {
+        try {
+            return InputView.startBettingTurn(players);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return inputPlayersBetting(players);
         }
     }
 
-    private void hitOrStandAtDealerTurn(Dealer dealer, Deck deck) {
-        while (dealer.checkScoreUnderSixteen()) {
-            OutputView.printDealerDealResult();
-            dealer.receiveCard(deck.pick());
-        }
-    }
-
-    private void printFinalGameResult(Map<GameResult, Integer> dealerWinningResult,
-                                      ParticipantWinningResult participantWinningResult) {
-        OutputView.printDealerFinalResult(dealerWinningResult);
-        OutputView.printPlayerFinalResult(participantWinningResult);
+    private void printFinalGameResult(Map<Player, Integer> playersProfit, int dealerProfit) {
+        System.out.println();
+        OutputView.printDealerFinalResult(dealerProfit);
+        OutputView.printPlayerFinalResult(playersProfit);
     }
 }

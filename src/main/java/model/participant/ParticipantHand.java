@@ -1,10 +1,15 @@
-package model;
+package model.participant;
 
 import java.util.ArrayList;
 import java.util.List;
+import model.card.AceCard;
+import model.card.Card;
+import model.card.CardRank;
 
 public class ParticipantHand {
-    private static final int BURST_SCORE_LIMIT = 21;
+    private static final int BUST_SCORE_LIMIT = 21;
+    private static final int INITIAL_CARD_COUNT = 2;
+
     private final List<Card> cards;
 
     public ParticipantHand() {
@@ -15,8 +20,12 @@ public class ParticipantHand {
         cards.add(card);
     }
 
-    public boolean checkBurst() {
-        return calculateScoreWithAceAsMinValue() > BURST_SCORE_LIMIT;
+    public boolean checkBust() {
+        return calculateScoreWithAceAsMinValue() > BUST_SCORE_LIMIT;
+    }
+
+    public boolean checkBlackjack() {
+        return cards.size() == INITIAL_CARD_COUNT && calculateFinalScore() == BUST_SCORE_LIMIT;
     }
 
     public boolean checkScoreBelow(int upperBound) {
@@ -31,7 +40,7 @@ public class ParticipantHand {
         return calculateScoreWithAceAsMinValue();
     }
 
-    public Card openFirstCard(){
+    public Card openFirstCard() {
         return cards.getFirst();
     }
 
@@ -41,18 +50,18 @@ public class ParticipantHand {
                 .sum();
     }
 
-    private boolean checkScoreExceptAceBelow(int upperBound) {
-        return calculateExceptAceScore() <= upperBound;
-    }
-
     private boolean canOneAceConvertToMaxValue() {
-        int scoreOfAceAsMinValue = calculateTotalAceScore();
-        if (scoreOfAceAsMinValue == 0) {
+        int aceScoreWithMinValue = calculateTotalAceScore();
+        if (aceScoreWithMinValue == 0) {
             return false;
         }
-        int maxScoreOfAce = convertOneAceToMaxValueFrom(scoreOfAceAsMinValue);
-        int scoreExceptAceUpperBound = BURST_SCORE_LIMIT - maxScoreOfAce;
-        return checkScoreExceptAceBelow(scoreExceptAceUpperBound);
+        int aceScoreWithMaxValue = convertOneAceToMaxValueFrom(aceScoreWithMinValue);
+        int remainingScoreLimit = BUST_SCORE_LIMIT - aceScoreWithMaxValue;
+        return checkScoreExceptAceBelow(remainingScoreLimit);
+    }
+
+    private boolean checkScoreExceptAceBelow(int upperBound) {
+        return calculateExceptAceScore() <= upperBound;
     }
 
     private int calculateTotalAceScore() {
@@ -70,7 +79,7 @@ public class ParticipantHand {
     }
 
     private int convertOneAceToMaxValueFrom(int score) {
-        return score - CardRank.ACE.getDefaultValue() + CardRank.ACE.getMaxValue();
+        return score - CardRank.ACE.getDefaultValue() + AceCard.getAceMaxValue();
     }
 
     public List<Card> getCards() {

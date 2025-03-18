@@ -1,4 +1,4 @@
-package model;
+package model.card;
 
 public enum CardSuit {
     SPADE("스페이드"),
@@ -6,7 +6,7 @@ public enum CardSuit {
     DIAMOND("다이아몬드"),
     CLOVER("클로버");
 
-    private String shapeMeaning;
+    private final String shapeMeaning;
 
     CardSuit(String shapeMeaning) {
         this.shapeMeaning = shapeMeaning;

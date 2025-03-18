@@ -1,4 +1,4 @@
-package model;
+package model.card;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,7 +19,7 @@ public class Deck {
         return new Deck(deck);
     }
 
-    public Deck(List<Card> deckCards) {
+    private Deck(List<Card> deckCards) {
         this.deckCards = deckCards;
     }
 

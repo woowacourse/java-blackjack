@@ -1,6 +1,7 @@
-package model;
+package model.participant;
 
 import java.util.List;
+import model.card.Card;
 
 public class Participant {
     private static final int INITIAL_DEAL_CARD_COUNT = 2;
@@ -14,14 +15,12 @@ public class Participant {
         participantHand.add(card);
     }
 
-    public void dealInitialCards(Deck deck) {
-        for (int i = 0; i < INITIAL_DEAL_CARD_COUNT; i++) {
-            receiveCard(deck.pick());
-        }
+    public boolean isBust() {
+        return participantHand.checkBust();
     }
 
-    public boolean isBurst() {
-        return participantHand.checkBurst();
+    public boolean checkBlackjack() {
+        return getParticipantHand().checkBlackjack();
     }
 
     public int calculateFinalScore() {

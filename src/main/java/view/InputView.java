@@ -1,31 +1,92 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
-import model.Player;
+import model.betting.Betting;
+import model.participant.Player;
+import model.PlayerChoice;
+import model.participant.Players;
+import model.turn.PlayerTurn;
 
 public class InputView {
-    private static final String YES = "y";
-    private static final String NO = "n";
-    private static Scanner SCANNER = new Scanner(System.in);
+    private static final Scanner SCANNER = new Scanner(System.in);
+
+    public static List<PlayerTurn> startBettingTurn(Players players) {
+        List<PlayerTurn> turns = new ArrayList<>();
+        for (Player player : players.getPlayers()) {
+            System.out.println(player.getName() + "의 배팅 금액은?");
+            int bettingPrice = inputPlayerBetting();
+            Betting betting = new Betting(bettingPrice);
+            turns.add(new PlayerTurn(player, betting));
+        }
+        return turns;
+    }
 
     public static List<String> readPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요. (쉼표 기준으로 분리)");
         String[] names = SCANNER.nextLine().split(",", -1);
-        validateDelimeter(names);
+        validateDelimiter(names);
         return Arrays.stream(names).toList();
     }
 
-    public static boolean readHit(Player player) {
-        OutputView.printHitOrStand(player);
-        String hit = SCANNER.nextLine();
-        validateHit(hit);
-        return hit.equals(YES);
+    public static PlayerChoice readFirstChoice(Player player) {
+        try {
+            return handleFirstTurnChoice(player);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return readFirstChoice(player);
+        }
     }
 
-    private static void validateDelimeter(String[] names) {
+    public static PlayerChoice readHitOrStand(Player player) {
+        OutputView.printChoiceResult(player);
+        try {
+            return handleSubsequentTurnChoice(player);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return readHitOrStand(player);
+        }
+    }
+
+    public static int inputAdditionalBet() {
+        System.out.println("추가 베팅 금액을 입력해주세요");
+        return inputPlayerBetting();
+    }
+
+    public static int readInsuranceBet(int maxInsuranceAmount) {
+        System.out.println("최대 보험금액은 " + maxInsuranceAmount + "입니다. 얼마를 보험금으로 설정하시겠습니까?");
+        return inputPlayerInsuranceBet();
+    }
+
+    private static int inputPlayerBetting() {
+        try {
+            return validateInteger(SCANNER.nextLine());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return inputPlayerBetting();
+        }
+    }
+
+    private static int inputPlayerInsuranceBet() {
+        try {
+            return validateInteger(SCANNER.nextLine());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return inputPlayerInsuranceBet();
+        }
+    }
+
+    private static int validateInteger(String inputPrice) {
+        if (inputPrice.chars().allMatch(Character::isDigit)) {
+            return Integer.parseInt(inputPrice);
+        }
+        throw new IllegalArgumentException("[ERROR] 숫자만 입력해주세요 입력값:" + inputPrice);
+    }
+
+    private static void validateDelimiter(String[] names) {
         String regex = "^[a-zA-Zㄱ-ㅎ가-힣]+$";
 
         for (String name : names) {
@@ -39,9 +100,23 @@ public class InputView {
         }
     }
 
-    private static void validateHit(String hit) {
-        if (!(hit.equals(YES) || hit.equals(NO))) {
-            throw new IllegalArgumentException("[ERROR] y 또는 n을 입력해주세요. 입력값 : " + hit);
+    private static PlayerChoice handleFirstTurnChoice(Player player) {
+        System.out.println(player.getName() + "는 선택지중 하나를 골라주세요 (선택지: hit, stand, double down, surrender)");
+        String choice = SCANNER.nextLine();
+        return PlayerChoice.findPlayerChoice(choice);
+    }
+
+    private static PlayerChoice handleSubsequentTurnChoice(Player player) {
+        System.out.println(player.getName() + "는 선택지중 하나를 골라주세요 (선택지: hit, stand)");
+        String choice = SCANNER.nextLine();
+        return validateHitOrStand(choice);
+    }
+
+    private static PlayerChoice validateHitOrStand(String choice) {
+        PlayerChoice playerChoice = PlayerChoice.findPlayerChoice(choice);
+        if (playerChoice != PlayerChoice.HIT && playerChoice != PlayerChoice.STAND) {
+            throw new IllegalArgumentException("[ERROR] 잘못된 선택지 입니다. 입력값 : " + choice);
         }
+        return playerChoice;
     }
 }

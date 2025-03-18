@@ -1,4 +1,4 @@
-package model;
+package model.card;
 
 public class Card {
     private final CardRank cardRank;
@@ -9,12 +9,16 @@ public class Card {
         this.cardSuit = cardSuit;
     }
 
+    public boolean isAce() {
+        return cardRank == CardRank.ACE;
+    }
+
     public int getCardRankDefaultValue() {
         return cardRank.getDefaultValue();
     }
 
-    public boolean isAce(){
-        return cardRank == CardRank.ACE;
+    public CardRank getCardRank() {
+        return cardRank;
     }
 
     public String getCardName() {
