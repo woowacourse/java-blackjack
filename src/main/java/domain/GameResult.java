@@ -1,5 +1,6 @@
 package domain;
 
+import domain.participant.state.hand.Score;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 

@@ -1,6 +1,6 @@
 package controller.dto;
 
-import domain.Score;
+import domain.participant.state.hand.Score;
 import domain.TrumpCard;
 import java.util.List;
 

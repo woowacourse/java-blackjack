@@ -1,5 +1,14 @@
 package domain;
 
+import domain.deck.Deck;
+import domain.deck.DefaultShuffle;
+import domain.participant.BettingMoney;
+import domain.participant.Dealer;
+import domain.participant.state.hand.Hand;
+import domain.participant.Name;
+import domain.participant.Player;
+import domain.participant.state.hand.Score;
+import domain.participant.state.Started;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -94,7 +103,7 @@ public class BlackJackGame {
     public Integer calculatePlayerRevenueAmount(Name playerName) {
         validateContain(playerName);
         Player player = players.get(playerName);
-        
+
         Score playerScore = player.calculateScore();
         Score dealerScore = dealer.calculateScore();
         GameResult gameResult = GameResult.of(playerScore, dealerScore);

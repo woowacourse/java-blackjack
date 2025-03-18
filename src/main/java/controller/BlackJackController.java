@@ -1,12 +1,12 @@
 package controller;
 
 import controller.dto.CardScoreDto;
-import domain.BettingMoney;
 import domain.BlackJackGame;
-import domain.Name;
-import domain.PlayerRoster;
-import domain.Score;
+import domain.participant.state.hand.Score;
 import domain.TrumpCard;
+import domain.participant.BettingMoney;
+import domain.participant.Name;
+import domain.participant.PlayerRoster;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
