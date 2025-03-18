@@ -44,10 +44,15 @@ public class BlackjackController {
         List<String> playerNames = getPlayerNames();
         List<Integer> playersBet = getPlayersBet(playerNames);
 
-        return BlackjackGame.createBlackjackGame(
-                playerNames,
-                playersBet
-        );
+        try {
+            return BlackjackGame.createBlackjackGame(
+                    playerNames,
+                    playersBet
+            );
+        } catch (IllegalBlackjackInputException e) {
+            outputView.printExceptionMessage(e);
+            return getBlackjackGame();
+        }
     }
 
     private List<String> getPlayerNames() {
