@@ -24,16 +24,17 @@ class ResultStatusTest {
 
     @ParameterizedTest
     @CsvSource({
-            "WIN, 1.0",
-            "LOSE, -1.0",
-            "BLACKJACK, 1.5",
+            "WIN, 10_000",
+            "LOSE, -10_000",
+            "BLACKJACK, 15_000",
             "PUSH, 0",
     })
-    @DisplayName("수익률을 반환한다")
-    void calculateProfitRate(final ResultStatus resultStatus, final double profitRate) {
+    @DisplayName("수익을 반환한다")
+    void calculateProfit(final ResultStatus resultStatus, final int expected) {
         // Given
+        final int bettingAmount = 10_000;
 
         // When & Then
-        assertThat(resultStatus.getProfitRate()).isEqualTo(profitRate);
+        assertThat(resultStatus.calculateProfit(bettingAmount)).isEqualTo(expected);
     }
 }

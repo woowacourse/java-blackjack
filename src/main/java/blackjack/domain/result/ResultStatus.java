@@ -23,7 +23,7 @@ public enum ResultStatus {
         return PUSH;
     }
 
-    public double getProfitRate() {
-        return profitRate;
+    public int calculateProfit(final int bettingAmount) {
+        return (int) (profitRate * bettingAmount);
     }
 }

@@ -43,7 +43,7 @@ public final class ProfitResult {
                                             final Map<Participant, Integer> profits) {
         final Player player = entry.getKey();
         final int bettingAmount = player.getBettingAmount();
-        final int profit = (int) (entry.getValue().getProfitRate() * bettingAmount);
+        final int profit = entry.getValue().calculateProfit(bettingAmount);
         profits.merge(dealer, -profit, Integer::sum);
         profits.merge(player, profit, Integer::sum);
     }
