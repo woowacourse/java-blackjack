@@ -33,20 +33,14 @@ public record BlackjackScore(int value, int cardSize) {
     }
 
     public boolean isBlackjackWinning(BlackjackScore subBlackjackScore) {
-        if (this.isBlackjack() && !subBlackjackScore.isBlackjack()) {
-            return true;
-        }
-        return false;
+        return this.isBlackjack() && !subBlackjackScore.isBlackjack();
     }
 
     public boolean isWinning(BlackjackScore subBlackjackScore) {
-        if (!this.isBust() && subBlackjackScore.isBust()) {
-            return true;
+        if (isBust()) {
+            return false;
         }
-        if (!this.isBust()) {
-            return this.isGreaterThan(subBlackjackScore.value);
-        }
-        return false;
+        return subBlackjackScore.isBust() || isGreaterThan(subBlackjackScore.value);
     }
 
     public boolean isLosing(BlackjackScore subBlackjackScore) {
@@ -60,21 +54,6 @@ public record BlackjackScore(int value, int cardSize) {
             return this.isLessThan(subBlackjackScore.value);
         }
         return false;
-    }
-
-    public boolean isDrawing(BlackjackScore subBlackjackScore) {
-        if (this.isBust() && subBlackjackScore.isBust()) {
-            return true;
-        }
-
-        if (this.isBlackjack() && !subBlackjackScore.isBlackjack()) {
-            return false;
-        }
-        if (!this.isBlackjack() && subBlackjackScore.isBlackjack()) {
-            return false;
-        }
-
-        return this.value == subBlackjackScore.value;
     }
 
     public boolean isBlackjack() {
