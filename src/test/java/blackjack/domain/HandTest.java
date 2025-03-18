@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class HandTest {
+
     @DisplayName("Hand 생성 시에 카드는 두 장을 넣을 수 있다")
     @Test
     void test1() {
@@ -18,8 +19,7 @@ class HandTest {
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
 
         // when & then
-        assertThatCode(() -> Hand.of(card1, card2))
-                .doesNotThrowAnyException();
+        assertThatCode(() -> Hand.of(card1, card2)).doesNotThrowAnyException();
     }
 
     @DisplayName("카드를 추가한다")
@@ -58,8 +58,7 @@ class HandTest {
     @Test
     void test6() {
         // give & when & then
-        assertThatThrownBy(() -> Hand.of(null, null))
-                .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Hand.of(null, null)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("원하는 인덱스의 Card를 가져온다.")
@@ -81,8 +80,7 @@ class HandTest {
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
         Hand hand = Hand.of(card1, card2);
 
-        assertThatThrownBy(() -> hand.getCard(2))
-                .isInstanceOf(IllegalArgumentException.class)
+        assertThatThrownBy(() -> hand.getCard(2)).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.INVALID_CARD_INDEX.getMessage());
     }
 
@@ -94,7 +92,6 @@ class HandTest {
 
         Hand hand = Hand.of(card1, card2);
 
-        assertThat(hand.getOptimisticValue()).isEqualTo(16);
-
+        assertThat(hand.getBestCardValue()).isEqualTo(16);
     }
 }

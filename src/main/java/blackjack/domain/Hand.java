@@ -9,7 +9,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Hand  {
+public class Hand {
+
+    private static final int BLACKJACK_TWENTY_ONE = 21;
+    private static final int BLACKJACK_CARD_SIZE = 2;
 
     private final List<Card> cards;
 
@@ -41,7 +44,7 @@ public class Hand  {
         cards.add(newCard);
     }
 
-    public int getOptimisticValue() {
+    public int getBestCardValue() {
         return getPossibleSums().stream()
                 .filter(sum -> sum <= Constants.BUSTED_STANDARD_VALUE)
                 .max(Comparator.naturalOrder())
@@ -63,7 +66,7 @@ public class Hand  {
                 .allMatch(sum -> sum > Constants.BUSTED_STANDARD_VALUE);
     }
 
-    public boolean canTakeCardWithin(int takeBoundary) {
+    public boolean canHitWithin(int takeBoundary) {
         List<Integer> possibleSums = getPossibleSums();
 
         return possibleSums.stream()
@@ -74,7 +77,8 @@ public class Hand  {
         Set<Integer> possibleSums = new HashSet<>();
 
         calculatePossibleSums(possibleSums, 0, 0);
-        return possibleSums.stream().toList();
+        return possibleSums.stream()
+                .toList();
     }
 
     private void calculatePossibleSums(Set<Integer> values, int index, int sum) {
@@ -87,5 +91,9 @@ public class Hand  {
         for (int number : card.getValue()) {
             calculatePossibleSums(values, index + 1, sum + number);
         }
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == BLACKJACK_CARD_SIZE && getBestCardValue() == BLACKJACK_TWENTY_ONE;
     }
 }

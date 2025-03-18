@@ -14,6 +14,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class DealerTest {
 
+    private static Stream<Arguments> canHitArgument() {
+        return Stream.of(Arguments.arguments(HandFixture.createHandWithOptimisticValue15(), true),
+                Arguments.arguments(HandFixture.createHandWithOptimisticValue20(), false));
+    }
+
     @DisplayName("딜러는 카드를 가진다.")
     @Test
     void test1() {
@@ -23,8 +28,7 @@ class DealerTest {
         Hand hand = Hand.of(card1, card2);
 
         // when & then
-        assertThatCode(() -> new Dealer(hand))
-                .doesNotThrowAnyException();
+        assertThatCode(() -> new Dealer(hand)).doesNotThrowAnyException();
     }
 
     @DisplayName("딜러의 모든 카드를 가져온다.")
@@ -110,21 +114,14 @@ class DealerTest {
         assertThat(actual).isFalse();
     }
 
-    private static Stream<Arguments> canTakeCardArgument() {
-        return Stream.of(
-                Arguments.arguments(HandFixture.createHandWithOptimisticValue15(), true),
-                Arguments.arguments(HandFixture.createHandWithOptimisticValue20(), false)
-        );
-    }
-
     @DisplayName("딜러의 카드가 16을 넘으면 카드를 받을 수 없다.")
     @ParameterizedTest
-    @MethodSource("canTakeCardArgument")
+    @MethodSource("canHitArgument")
     void test8(Hand hand, boolean expect) {
         //given
         Dealer dealer = new Dealer(hand);
 
         // when & then
-        assertThat(dealer.canTakeCard()).isEqualTo(expect);
+        assertThat(dealer.canHit()).isEqualTo(expect);
     }
 }

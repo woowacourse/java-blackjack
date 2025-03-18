@@ -1,89 +1,101 @@
 package blackjack.controller;
 
+import blackjack.domain.Card;
 import blackjack.domain.Dealer;
+import blackjack.domain.Deck;
+import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
-import blackjack.dto.ResultDto;
-import blackjack.manager.BlackJackInitManager;
-import blackjack.manager.BlackJackResultManager;
-import blackjack.manager.BlackjackProcessManager;
+import blackjack.factory.DealerFactory;
+import blackjack.factory.PlayersFactory;
+import blackjack.factory.SingleDeckFactory;
 import blackjack.view.Confirmation;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 
 public class BlackjackController {
 
-    private final BlackJackInitManager blackJackInitManager;
-    private final BlackjackProcessManager blackjackProcessManager;
-    private final BlackJackResultManager blackJackResultManager;
-
-    public BlackjackController(BlackJackInitManager blackJackInitManager) {
-        this.blackJackInitManager = blackJackInitManager;
-        this.blackjackProcessManager = new BlackjackProcessManager(blackJackInitManager.generateDeck());
-        this.blackJackResultManager = new BlackJackResultManager();
-    }
-
     public void run() {
         List<String> names = InputView.readNames();
-        Players players = blackJackInitManager.generatePlayers(names);
-        Dealer dealer = blackJackInitManager.generateDealer();
+        List<Integer> bettingMoneyList = InputView.readBettingMoneyList(names);
+        Deck deck = SingleDeckFactory.generate();
+        Players players = PlayersFactory.generate(names, bettingMoneyList);
+        Dealer dealer = DealerFactory.generate();
 
-        giveStartingCards(players, dealer);
+        takeCards(deck, players, dealer);
 
-        giveMoreCardFor(players);
-        giveMoreCardFor(dealer);
-
+        players.adjustBalance(dealer);
         printResult(players, dealer);
     }
 
-    private void giveMoreCardFor(Dealer dealer) {
-        while (dealer.canTakeCard()) {
-            OutputView.printMoreCard();
-            blackjackProcessManager.giveCard(dealer);
-        }
+    private void takeCards(Deck deck, Players players, Dealer dealer) {
+        dealInitialCards(deck, players, dealer);
+
+        hitCard(deck, players);
+        hitCard(deck, dealer);
     }
 
-    private void giveMoreCardFor(Players players) {
+    private void dealInitialCards(Deck deck, Players players, Dealer dealer) {
         for (Player player : players.getPlayers()) {
-            giveMoreCardFor(player);
+            takeCards(Deck::startingHand, deck, player);
+        }
+
+        takeCards(Deck::startingHand, deck, dealer);
+
+        OutputView.printHand(dealer, players);
+    }
+
+    private void takeCards(Function<Deck, List<Card>> function, Deck deck, Participant participant) {
+        List<Card> cards = function.apply(deck);
+
+        cards.forEach(participant::takeCard);
+    }
+
+    private void hitCard(Deck deck, Players players) {
+        for (Player player : players.getPlayers()) {
+            hitCard(deck, player);
         }
     }
 
-    private void giveMoreCardFor(Player player) {
-        Confirmation confirmation = InputView.askToGetMoreCard(player);
-        if (confirmation.equals(Confirmation.N)) {
-            OutputView.printCardResult(player);
+    private void hitCard(Deck deck, Player player) {
+        if (player.isBlackjack()) {
             return;
         }
 
-        blackjackProcessManager.giveCard(player);
-        OutputView.printCardResult(player);
+        while (canDraw(player)) {
+            takeCards(Deck::hit, deck, player);
+            OutputView.printHand(player);
+        }
+    }
 
-        if (player.isBusted()) {
+    private boolean canDraw(Player player) {
+        return isNotBusted(player) && player.canHit() && InputView.askToGetMoreCard(player) != Confirmation.N;
+    }
+
+    private boolean isNotBusted(Player player) {
+        boolean busted = player.isBusted();
+        if (busted) {
             OutputView.printBustedPlayer(player);
-            return;
         }
 
-        if (player.canTakeCard()) {
-            giveMoreCardFor(player);
-        }
+        return !busted;
     }
 
-    private void giveStartingCards(Players players, Dealer dealer) {
-        for (Player player : players.getPlayers()) {
-            blackjackProcessManager.giveStartingCardsFor(player);
+    private void hitCard(Deck deck, Dealer dealer) {
+        while (dealer.canHit()) {
+            OutputView.printMoreCard();
+            takeCards(Deck::hit, deck, dealer);
         }
-
-        blackjackProcessManager.giveStartingCardsFor(dealer);
-
-        OutputView.printStartingCardsStatuses(dealer, players);
     }
 
     private void printResult(Players players, Dealer dealer) {
-        ResultDto resultDto = blackJackResultManager.calculateCardResult(players, dealer);
+        int playersTotalRevenue = players.getTotalRevenue();
+        Map<Player, Integer> revenueMap = players.getRevenueMap();
+
         OutputView.printCardResult(players, dealer);
-        OutputView.printGameResult(resultDto.dealerResult(),
-                resultDto.playersResult());
+        OutputView.printRevenue(playersTotalRevenue, revenueMap);
     }
 }

@@ -3,6 +3,9 @@ package blackjack.domain;
 import blackjack.common.ErrorMessage;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Players {
 
@@ -14,21 +17,41 @@ public class Players {
         this.players = players;
     }
 
+    private void validate(List<Player> players) {
+        if (players.isEmpty()) {
+            throw new IllegalArgumentException(ErrorMessage.NEED_PLAYER_MEMBERS.getMessage());
+        }
+
+        if (players.size() > PLAYERS_VALID_SIZE) {
+            throw new IllegalArgumentException(ErrorMessage.EXCEED_PLAYER_MEMBERS.getMessage());
+        }
+    }
+
     public static Players from(List<Player> players) {
         return new Players(players);
     }
 
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
+    public void adjustBalance(Dealer dealer) {
+        for (Player player : players) {
+            GameResultType gameResultType = GameResultTypePlayerJudgement.find(player, dealer);
+
+            player.adjustBalance(gameResultType);
+        }
     }
 
-    private void validate(List<Player> players) {
-        if (players.isEmpty()){
-            throw new IllegalArgumentException(ErrorMessage.NEED_PLAYER_MEMBERS.getMessage());
-        }
+    public int getTotalRevenue() {
+        return getRevenueMap().values()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .sum();
+    }
 
-        if (players.size() > PLAYERS_VALID_SIZE ) {
-            throw new IllegalArgumentException(ErrorMessage.EXCEED_PLAYER_MEMBERS.getMessage());
-        }
+    public Map<Player, Integer> getRevenueMap() {
+        return players.stream()
+                .collect(Collectors.toMap(Function.identity(), Player::getRevenue));
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 }

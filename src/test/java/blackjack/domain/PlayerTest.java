@@ -17,6 +17,11 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 class PlayerTest {
 
+    private static Stream<Arguments> canHitArgument() {
+        return Stream.of(Arguments.arguments(HandFixture.createHandWithOptimisticValue15(), true),
+                Arguments.arguments(HandFixture.busted(), false));
+    }
+
     @DisplayName("플레이어는 이름과 카드를 가진다.")
     @Test
     void test1() {
@@ -24,13 +29,13 @@ class PlayerTest {
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
 
-        Hand hand = new Hand();
-        hand.takeCard(card1);
-        hand.takeCard(card2);
+        Hand hand = Hand.of(card1, card2);
+        Wallet wallet = Wallet.bet(1000);
+
+        PlayerHand playerHand = new PlayerHand(hand, wallet);
 
         // when & then
-        assertThatCode(() -> new Player("히로", hand))
-                .doesNotThrowAnyException();
+        assertThatCode(() -> new Player("히로", playerHand)).doesNotThrowAnyException();
     }
 
     @DisplayName("플레이어의 이름은 공백일 수 없다.")
@@ -40,12 +45,12 @@ class PlayerTest {
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
 
-        Hand hand = new Hand();
-        hand.takeCard(card1);
-        hand.takeCard(card2);
+        Hand hand = Hand.of(card1, card2);
+        Wallet wallet = Wallet.bet(1000);
 
-        assertThatThrownBy(() -> new Player(name, hand))
-                .isInstanceOf(IllegalArgumentException.class)
+        PlayerHand playerHand = new PlayerHand(hand, wallet);
+
+        assertThatThrownBy(() -> new Player(name, playerHand)).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.USE_VALID_NAME.getMessage());
     }
 
@@ -55,12 +60,13 @@ class PlayerTest {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
-        Hand hand = new Hand();
 
-        hand.takeCard(card1);
-        hand.takeCard(card2);
+        Hand hand = Hand.of(card1, card2);
+        Wallet wallet = Wallet.bet(1000);
 
-        Player player = new Player("꾹이", hand);
+        PlayerHand playerHand = new PlayerHand(hand, wallet);
+
+        Player player = new Player("꾹이", playerHand);
 
         List<Card> expect = List.of(card1, card2);
 
@@ -74,13 +80,14 @@ class PlayerTest {
         // given
         Card card1 = new Card(CardSuit.CLUB, CardRank.ACE);
         Card card2 = new Card(CardSuit.DIAMOND, CardRank.FIVE);
-        Hand hand = new Hand();
 
-        hand.takeCard(card1);
-        hand.takeCard(card2);
+        Hand hand = Hand.of(card1, card2);
+        Wallet wallet = Wallet.bet(1000);
+
+        PlayerHand playerHand = new PlayerHand(hand, wallet);
 
         Card newCard = new Card(CardSuit.SPADE, CardRank.KING);
-        Player player = new Player("꾹이", hand);
+        Player player = new Player("꾹이", playerHand);
 
         List<Card> expect = List.of(card1, card2, newCard);
 
@@ -91,22 +98,35 @@ class PlayerTest {
         assertThat(player.getAllCards()).isEqualTo(expect);
     }
 
-    private static Stream<Arguments> canTakeCardArgument() {
-        return Stream.of(
-                Arguments.arguments(HandFixture.createHandWithOptimisticValue15(), true),
-                Arguments.arguments(HandFixture.busted(), false)
-        );
-    }
-
     @DisplayName("플레이어의 카드가 21을 넘지 않는다면 카드를 받을 수 있다.")
     @ParameterizedTest
-    @MethodSource("canTakeCardArgument")
+    @MethodSource("canHitArgument")
     void test8(Hand hand, boolean expect) {
         //given
+        Wallet wallet = Wallet.bet(1000);
+        PlayerHand playerHand = new PlayerHand(hand, wallet);
 
-        Player player = new Player("꾹이", hand);
+        Player player = new Player("꾹이", playerHand);
 
         // when & then
-        assertThat(player.canTakeCard()).isEqualTo(expect);
+        assertThat(player.canHit()).isEqualTo(expect);
+    }
+
+    @DisplayName("플레이어의 패가 블랙잭이라면 1.5배 더 받을 수 있다.")
+    @Test
+    void test10() {
+        // given
+        Hand blackjack = HandFixture.blackjack();
+        Wallet wallet = Wallet.bet(1000);
+
+        PlayerHand playerHand = new PlayerHand(blackjack, wallet);
+
+        Player player = new Player("꾹이", playerHand);
+
+        // when
+        player.adjustBalance(GameResultType.WIN);
+
+        // then
+        assertThat(player.getRevenue()).isEqualTo(1500);
     }
 }

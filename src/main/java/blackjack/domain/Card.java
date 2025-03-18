@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,7 +14,20 @@ public class Card {
     }
 
     public List<Integer> getValue() {
-        return Collections.unmodifiableList(cardRank.getValues());
+        return cardRank.getValues();
+    }
+
+    public CardSuit getCardSuit() {
+        return cardSuit;
+    }
+
+    public CardRank getCardRank() {
+        return cardRank;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cardSuit, cardRank);
     }
 
     @Override
@@ -25,18 +37,5 @@ public class Card {
         }
         Card card = (Card) o;
         return cardSuit == card.cardSuit && cardRank == card.cardRank;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(cardSuit, cardRank);
-    }
-
-    public CardSuit getCardSuit() {
-        return cardSuit;
-    }
-
-    public CardRank getCardRank() {
-        return cardRank;
     }
 }

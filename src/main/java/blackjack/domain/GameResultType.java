@@ -6,8 +6,9 @@ import java.util.function.BiPredicate;
 public enum GameResultType {
 
     WIN((value, comparedValue) -> value > comparedValue),
-    TIE(Integer::equals),
-    LOSE((value, comparedValue) -> value < comparedValue);
+    PUSH(Integer::equals),
+    LOSE((value, comparedValue) -> value < comparedValue),
+    ;
 
     private final BiPredicate<Integer, Integer> condition;
 
@@ -15,22 +16,30 @@ public enum GameResultType {
         this.condition = condition;
     }
 
-    public static GameResultType find(int value, int comparedValue) {
+    public static GameResultType judgeForPlayer(Player player, Dealer dealer) {
+        if (player.isBlackjack() || dealer.isBlackjack()) {
+            return judgeForPlayerWithBlackjack(player, dealer);
+        }
+
+        int playerBestCardValue = player.getBestCardValue();
+        int dealerBestCardValue = dealer.getBestCardValue();
+
         return Arrays.stream(GameResultType.values())
-                .filter(resultType -> resultType.condition.test(value, comparedValue))
+                .filter(resultType ->
+                        resultType.condition.test(playerBestCardValue, dealerBestCardValue))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 비교 값입니다."));
     }
 
-    public GameResultType getOppositeType() {
-        if (this.equals(WIN)) {
-            return LOSE;
+    private static GameResultType judgeForPlayerWithBlackjack(Player player, Dealer dealer) {
+        if (player.isBlackjack() && dealer.isBlackjack()) {
+            return GameResultType.PUSH;
         }
 
-        if (this.equals(LOSE)) {
-            return WIN;
+        if (player.isBlackjack()) {
+            return GameResultType.WIN;
         }
 
-        return TIE;
+        return GameResultType.LOSE;
     }
 }
