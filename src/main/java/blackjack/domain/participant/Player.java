@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import static blackjack.domain.card.Hand.BURST_THRESHOLD;
 
 import blackjack.domain.card.Hand;
+import blackjack.util.ExceptionMessage;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -24,7 +25,7 @@ public final class Player extends Participant {
 
     private void validateBettingAmount(final int bettingAmount) {
         if (bettingAmount <= 0) {
-            throw new IllegalArgumentException("[ERROR] 베팅 금액을 양수로 입력해주세요.");
+            throw new IllegalArgumentException(ExceptionMessage.makeMessage("베팅 금액을 양수로 입력해주세요."));
         }
     }
 

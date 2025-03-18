@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import blackjack.util.ExceptionMessage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -79,10 +80,10 @@ public final class Hand {
     private void validateIndex(final int start, final int end) {
         final int size = hand.size();
         if (start < 0 || end < 0 || start >= size || end > size) {
-            throw new IllegalArgumentException("[ERROR] 인덱스는 0 이상 hand 크기 이하여야 합니다");
+            throw new IllegalArgumentException(ExceptionMessage.makeMessage("인덱스는 0 이상 hand 크기 이하여야 합니다"));
         }
         if (start > end) {
-            throw new IllegalArgumentException("[ERROR] 끝 인덱스는 시작 인덱스보다 커야합니다");
+            throw new IllegalArgumentException(ExceptionMessage.makeMessage("끝 인덱스는 시작 인덱스보다 커야합니다"));
         }
     }
 

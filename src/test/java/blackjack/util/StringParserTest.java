@@ -40,7 +40,7 @@ public class StringParserTest {
         // when & then
         Assertions.assertThatThrownBy(() -> StringParser.parseInt(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("[ERROR] 숫자 형식이 아닙니다.");
+                .hasMessageContaining("[ERROR] 11.3은 숫자 형식이 아닙니다.");
     }
 
 }

@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Hand;
+import blackjack.util.ExceptionMessage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -59,7 +60,7 @@ public final class Players {
 
     private void validate(List<Player> players) {
         if (isDuplicate(players)) {
-            throw new IllegalArgumentException("[ERROR] 중복된 이름을 입력했습니다.");
+            throw new IllegalArgumentException(ExceptionMessage.makeMessage("중복된 이름을 입력했습니다."));
         }
     }
 
