@@ -3,12 +3,12 @@ package card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cards {
-    private static final int BUST_LIMIT = 21;
+public class HandCards {
+    private static final int BLACKJACK_SCORE = 21;
 
     private final List<Card> cards;
 
-    public Cards() {
+    public HandCards() {
         this.cards = new ArrayList<>();
     }
 
@@ -16,25 +16,17 @@ public class Cards {
         this.cards.addAll(cards);
     }
 
-    public int size() {
-        return cards.size();
-    }
-
     public int computeOptimalSum() {
         List<Integer> candidates = new ArrayList<>();
         computeCandidates(0, 0, cards, candidates);
 
         return candidates.stream()
-                .filter(sum -> sum <= BUST_LIMIT)
+                .filter(sum -> sum <= BLACKJACK_SCORE)
                 .max(Integer::compareTo)
                 .orElseGet(() -> candidates.stream()
-                        .filter(sum -> sum > BUST_LIMIT)
+                        .filter(sum -> sum > BLACKJACK_SCORE)
                         .min(Integer::compareTo)
                         .orElseThrow(() -> new IllegalStateException("논리적으로 도달할 수 없는 예외입니다.")));
-    }
-
-    public boolean isBust() {
-        return computeOptimalSum() > BUST_LIMIT;
     }
 
     private void computeCandidates(int cardIndex, int sum, List<Card> cards, List<Integer> candidates) {
@@ -48,11 +40,23 @@ public class Cards {
         }
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public boolean isBust() {
+        return computeOptimalSum() > BLACKJACK_SCORE;
+    }
+
+    public boolean isBlackjack() {
+        return size() == 2 && computeOptimalSum() == BLACKJACK_SCORE;
+    }
+
+    public int size() {
+        return cards.size();
     }
 
     public List<Card> getCards(int count) {
         return cards.subList(0, count);
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 }

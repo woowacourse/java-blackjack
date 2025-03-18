@@ -1,7 +1,9 @@
 package blackjack;
 
+import bet.BetManager;
 import card.DeckGenerator;
-import player.Player;
+import player.Participant;
+import match.MatchResults;
 import view.InputView;
 import view.OutputView;
 
@@ -17,23 +19,32 @@ public class ConsoleBlackjackGame {
 
     public void run() {
         Blackjack blackjack = new Blackjack(inputView.inputParticipantName(), DeckGenerator.generateDeck());
+        BetManager betManager = new BetManager();
 
+        addInitialBet(blackjack, betManager);
         blackjack.distributeInitialCards();
         openInitialCards(blackjack);
         addMoreCards(blackjack);
 
+        MatchResults matchResults = new MatchResults(blackjack.getDealer(), blackjack.getParticipants());
         outputView.printPlayersCardsAndSum(blackjack.getDealer(),
                 blackjack.getParticipants(), blackjack.getNameAndSumOfAllPlayers());
-        outputView.printMatchResult(blackjack.computeDealerMatchResult(), blackjack.computeParticipantsMatchResult());
+        calculateBettingResult(matchResults, betManager);
+    }
+
+    private void addInitialBet(Blackjack blackjack, BetManager betManager) {
+        for (Participant participant : blackjack.getParticipants()) {
+            betManager.addInitialBet(participant, inputView.inputBetAmount(participant.getName()));
+        }
     }
 
     private void openInitialCards(Blackjack blackjack) {
-        outputView.printOpenInitialCards(blackjack.getDealer(), blackjack.getParticipants());
-        outputView.printInitialCards(blackjack.openInitialCards());
+        outputView.printOpenInitialCards(blackjack.getParticipants());
+        outputView.printInitialCards(blackjack.openDealerInitialCards(), blackjack.openParticipantsInitialCards());
     }
 
     private void addMoreCards(Blackjack blackjack) {
-        for (Player participant : blackjack.getParticipants()) {
+        for (Participant participant : blackjack.getParticipants()) {
             addMoreCardsIfNotBust(blackjack, participant);
         }
         boolean isAdded = blackjack.addCardToDealerIfLowScore();
@@ -42,25 +53,27 @@ public class ConsoleBlackjackGame {
         }
     }
 
-    private void addMoreCards(Blackjack blackjack, Player participant) {
+    private void addMoreCards(Blackjack blackjack, Participant participant) {
         YesOrNo yesOrNo;
         do {
             yesOrNo = YesOrNo.from(inputView.inputWantOneMoreCard(participant.getName()));
             addOneCardIfYes(blackjack, participant, yesOrNo);
             outputView.printPlayerCards(participant.getName(), participant.getCards());
-        } while (yesOrNo.equals(YesOrNo.YES) && !blackjack.isBust(participant));
+        } while (yesOrNo.equals(YesOrNo.YES) && !participant.isBust());
     }
 
-    private void addOneCardIfYes(Blackjack blackjack, Player participant, YesOrNo yesOrNo) {
+    private void addOneCardIfYes(Blackjack blackjack, Participant participant, YesOrNo yesOrNo) {
         if (yesOrNo.equals(YesOrNo.YES)) {
-            blackjack.addCard(participant);
+            blackjack.addCardToParticipant(participant);
         }
     }
 
-    private void addMoreCardsIfNotBust(Blackjack blackjack, Player participant) {
-        if (blackjack.isBust(participant)) {
-            return;
-        }
+    private void addMoreCardsIfNotBust(Blackjack blackjack, Participant participant) {
         addMoreCards(blackjack, participant);
+    }
+
+    private void calculateBettingResult(MatchResults matchResults, BetManager betManager) {
+        betManager.calculateParticipantBetResults(matchResults.getMatchResults());
+        outputView.printBettingResult(betManager.calculateDealerBetResultAmount(), betManager.getBetResults());
     }
 }

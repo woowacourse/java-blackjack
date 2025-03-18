@@ -2,96 +2,67 @@ package blackjack;
 
 import card.Card;
 import card.Deck;
-import player.Dealer;
-import player.Participant;
-import player.Player;
-import player.Players;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import player.Dealer;
+import player.Participant;
+import player.Participants;
 
 public class Blackjack {
-    private final Players players;
-    private final Deck deck;
+    private final Participants participants;
+    private final Dealer dealer;
 
-    public Blackjack(Players players, Deck deck) {
-        this.players = players;
-        this.deck = deck;
+    public Blackjack(Participants participants, Deck deck) {
+        this.participants = participants;
+        this.dealer = new Dealer(deck);
     }
 
     public Blackjack(List<String> names, Deck deck) {
-        this.players = createPlayers(new Dealer(), createParticipants(names));
-        this.deck = deck;
+        this.participants = new Participants(createParticipants(names));
+        this.dealer = new Dealer(deck);
     }
 
-    private Players createPlayers(Player dealer, List<Player> participants) {
-        List<Player> players = new ArrayList<>();
-        players.add(dealer);
-        players.addAll(participants);
-        return new Players(players);
+    public void distributeInitialCards() {
+        dealer.receiveInitialCards();
+        participants.distributeInitialCards(getDeck());
     }
 
-    private List<Player> createParticipants(List<String> names) {
+    public Map<String, List<Card>> openParticipantsInitialCards() {
+        return participants.openInitialCards();
+    }
+
+    public List<Card> openDealerInitialCards() {
+        return dealer.openInitialCards();
+    }
+
+    public void addCardToParticipant(Participant participant) {
+        participant.drawOneCard(getDeck());
+    }
+
+    public boolean addCardToDealerIfLowScore() {
+        return dealer.drawOneCardIfLowScore();
+    }
+
+    public Map<String, Integer> getNameAndSumOfAllPlayers() {
+        return participants.mapToNameAndSum();
+    }
+
+    public List<Participant> getParticipants() {
+        return participants.getParticipants();
+    }
+
+    private List<Participant> createParticipants(List<String> names) {
         return names.stream()
                 .map(Participant::new)
                 .collect(Collectors.toList());
     }
 
-    public void distributeInitialCards() {
-        players.distributeInitialCards(deck);
-    }
-
-    public Map<String, List<Card>> openInitialCards() {
-        return players.openInitialCards();
-    }
-
-    public void addCard(Player player) {
-        player.drawOneCard(deck);
-    }
-
-    public boolean addCardToDealerIfLowScore() {
-        return getDealer().drawOneCardIfLowScore(deck);
-    }
-
-    public Map<String, Integer> getNameAndSumOfAllPlayers() {
-        return players.mapToNameAndSum();
+    private Deck getDeck() {
+        return dealer.getDeck();
     }
 
     public Dealer getDealer() {
-        return players.getDealer();
-    }
-
-    public List<Player> getParticipants() {
-        return players.getParticipants()
-                .stream()
-                .toList();
-    }
-
-    public Map<MatchResult, Integer> computeDealerMatchResult() {
-        Map<String, MatchResult> participantNameAndMatchResult = computeParticipantsMatchResult();
-        Map<MatchResult, Integer> matchResultCount = new EnumMap<>(MatchResult.class);
-
-        participantNameAndMatchResult.forEach((key, value) -> matchResultCount.put(MatchResult.inverse(value),
-                matchResultCount.getOrDefault(MatchResult.inverse(value), 0) + 1));
-
-        return matchResultCount;
-    }
-
-    public Map<String, MatchResult> computeParticipantsMatchResult() {
-        Map<String, MatchResult> participantNameAndMatchResult = new LinkedHashMap<>();
-        Player dealer = getDealer();
-
-        for (Player participant : getParticipants()) {
-            MatchResult matchResult = MatchResult.calculateParticipantMatchResult(dealer, participant);
-            participantNameAndMatchResult.put(participant.getName(), matchResult);
-        }
-        return participantNameAndMatchResult;
-    }
-
-    public boolean isBust(Player player) {
-        return player.isBust();
+        return dealer;
     }
 }

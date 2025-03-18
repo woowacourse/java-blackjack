@@ -10,10 +10,6 @@ public class Deck {
         this.cards = cards;
     }
 
-    public int size() {
-        return cards.size();
-    }
-
     private Card drawCard() {
         return cards.removeLast();
     }
@@ -25,5 +21,9 @@ public class Deck {
         }
 
         return cards;
+    }
+
+    public int size() {
+        return cards.size();
     }
 }

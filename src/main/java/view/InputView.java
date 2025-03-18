@@ -26,6 +26,15 @@ public class InputView {
         return scanner.nextLine();
     }
 
+    public int inputBetAmount(String name) {
+        System.out.printf("%s의 베팅 금액은?%n", name);
+        try {
+            return Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("베팅 금액은 숫자만 입력할 수 있습니다.");
+        }
+    }
+
     private void validateIsEmpty(String input) {
         if (input.isBlank()) {
             throw new IllegalArgumentException("빈 값이 입력되었습니다.");

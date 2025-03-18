@@ -1,28 +1,15 @@
 package player;
 
 import card.Card;
-import card.Cards;
+import card.HandCards;
 import card.Deck;
 import java.util.List;
-import java.util.Objects;
 
-public abstract class Player {
-    private static final int MIN_NAME_LENGTH = 2;
-    private static final int MAX_NAME_LENGTH = 10;
+public class Player {
+    private final HandCards handCards;
 
-    private final String name;
-    private final Cards handCards;
-
-    public Player(String name) {
-        validateName(name);
-        this.name = name;
-        handCards = new Cards();
-    }
-
-    private void validateName(String name) {
-        if (name.length() < MIN_NAME_LENGTH || name.length() > MAX_NAME_LENGTH) {
-            throw new IllegalArgumentException(name + ": 이름은 2자 이상 10자 이하여야 합니다.");
-        }
+    public Player() {
+        this.handCards = new HandCards();
     }
 
     public void receiveInitialCards(Deck deck) {
@@ -33,8 +20,6 @@ public abstract class Player {
         handCards.addAll(deck.drawCards(1));
     }
 
-    public abstract List<Card> openInitialCards();
-
     public int computeOptimalSum() {
         return handCards.computeOptimalSum();
     }
@@ -43,7 +28,11 @@ public abstract class Player {
         return handCards.isBust();
     }
 
-    public Cards getHandCards() {
+    public boolean isBlackjack() {
+        return handCards.isBlackjack();
+    }
+
+    public HandCards getHandCards() {
         return handCards;
     }
 
@@ -53,23 +42,5 @@ public abstract class Player {
 
     public List<Card> getCards(int count) {
         return handCards.getCards(count);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Player player = (Player) o;
-        return Objects.equals(name, player.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(name);
     }
 }
