@@ -38,13 +38,13 @@ public class Player extends Participant {
         if (calculateSum() == dealerSum) {
             return PUSH_PROFIT;
         }
+        if (calculateSum() > BLACKJACK_NUMBER || calculateSum() < dealerSum) {
+            return getMoney() * LOSS_PAYOUT_RATIO;
+        }
         if (calculateSum() > dealerSum && calculateSum() == BLACKJACK_NUMBER) {
             return (int) (getMoney() * BLACKJACK_PAYOUT_RATIO);
         }
-        if (calculateSum() > dealerSum) {
-            return getMoney();
-        }
-        return getMoney() * LOSS_PAYOUT_RATIO;
+        return getMoney();
     }
 
     private boolean isBust() {
