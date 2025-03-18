@@ -12,14 +12,16 @@ import java.util.List;
 
 public final class ShuffleDeckGenerator implements DeckGenerator {
 
+    private static final List<Card> INITIAL_CARDS = initialize();
+
     @Override
     public Deque<Card> makeDeck() {
-        final List<Card> cards = new ArrayList<>(initialize());
+        final List<Card> cards = new ArrayList<>(INITIAL_CARDS);
         Collections.shuffle(cards);
         return new ArrayDeque<>(cards);
     }
 
-    private List<Card> initialize() {
+    private static List<Card> initialize() {
         return Arrays.stream(Suit.values())
                 .flatMap(suit -> Arrays.stream(Denomination.values())
                         .map(cardScore -> new Card(suit, cardScore)))
