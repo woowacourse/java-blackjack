@@ -1,23 +1,27 @@
 package domain.participant;
 
-import static domain.MatchResult.LOSE;
 import static domain.card.Number.ACE;
 import static domain.card.Number.JACK;
 import static domain.card.Number.KING;
+import static domain.card.Number.NINE;
 import static domain.card.Number.QUEEN;
+import static domain.card.Number.TEN;
+import static domain.card.Number.TWO;
 import static domain.card.Shape.DIAMOND;
 import static domain.card.Shape.HEART;
 import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import config.CardDeckFactory;
+import config.DeckFactory;
 import domain.card.Card;
-import domain.card.CardDeck;
+import domain.card.Deck;
+import domain.card.Hand;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import org.junit.jupiter.api.DisplayName;
@@ -32,41 +36,41 @@ public class PlayerTest {
     @DisplayName("카드 두 장 뽑기 테스트")
     void hitCardsTest() {
         // given
-        Player player = new Player("pobi");
-        CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        CardDeck cardDeck = cardDeckFactory.create();
-        Dealer dealer = new Dealer(cardDeck);
+        Hand hand = new Hand(new ArrayList<>());
+        PlayerInfo playerInfo = new PlayerInfo(new Name("pobi"), new Money(10000));
+        Player player = new Player(hand, playerInfo);
+        DeckFactory deckFactory = new DeckFactory();
+        Deck cardDeck = deckFactory.create();
 
-        // when
-        player.hitCards(dealer);
-
-        // then
-        assertDoesNotThrow(() -> player.hitCards(dealer));
+        // when - then
+        assertDoesNotThrow(() -> player.hitCards(cardDeck));
     }
 
     @Test
     @DisplayName("카드 추가 테스트")
     void addCardTest() {
         //given
-        CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        CardDeck cardDeck = cardDeckFactory.create();
-        Dealer dealer = new Dealer(cardDeck);
-        Player player = new Player("pobi");
+        DeckFactory deckFactory = new DeckFactory();
+        Deck cardDeck = deckFactory.create();
+        Hand hand = new Hand(new ArrayList<>());
+        PlayerInfo playerInfo = new PlayerInfo(new Name("pobi"), new Money(10000));
+        Player player = new Player(hand, playerInfo);
 
         //when-then
-        assertDoesNotThrow(() -> player.addCard(dealer));
+        assertDoesNotThrow(() -> player.addCard(cardDeck.hitCard()));
     }
 
     @Test
     @DisplayName("카드 합계 테스트")
     void calculateSumTest() {
         //given
-        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE)));
-        Dealer dealer = new Dealer(cardDeck);
-        Player player = new Player("pobi");
+        Deck cardDeck = new Deck(List.of(new Card(DIAMOND, ACE), new Card(SPADE, ACE)));
+        Hand hand = new Hand(new ArrayList<>());
+        PlayerInfo playerInfo = new PlayerInfo(new Name("pobi"), new Money(10000));
+        Player player = new Player(hand, playerInfo);
 
         //when
-        player.hitCards(dealer);
+        player.hitCards(cardDeck);
 
         //then
         assertThat(player.calculateSum()).isEqualTo(12);
@@ -86,25 +90,87 @@ public class PlayerTest {
         InputView testInputView = new InputView(new Scanner(System.in));
         OutputView testOutputView = new OutputView();
 
-        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, QUEEN), new Card(SPADE, JACK), new Card(HEART, KING)));
-        Dealer dealer = new Dealer(cardDeck);
-        Player player = new Player("pobi");
+        Deck cardDeck = new Deck(List.of(new Card(DIAMOND, QUEEN), new Card(SPADE, JACK), new Card(HEART, KING)));
+        Hand hand = new Hand(new ArrayList<>());
+        PlayerInfo playerInfo = new PlayerInfo(new Name("pobi"), new Money(10000));
+        Player player = new Player(hand, playerInfo);
 
         //when-then
-        assertDoesNotThrow(() -> player.draw(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck, dealer));
+        assertDoesNotThrow(() -> player.draw(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck, cardDeck));
     }
 
     @Test
-    @DisplayName("승패 결정 테스트")
-    void calculateWinner() {
-        //given
-        Player player = new Player("pobi");
-        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, JACK), new Card(SPADE, ACE)));
-        Dealer dealer = new Dealer(cardDeck);
-        player.addCard(dealer);
-        dealer.addCards();
+    @DisplayName("플레이어 초기 카드 오픈 테스트")
+    void openInitialCardsTest() {
+        PlayerInfo playerInfo = new PlayerInfo(new Name("pobi"), new Money(10000));
+        Hand hand = new Hand(new ArrayList<>());
+        Player player = new Player(hand, playerInfo);
+        Deck cardDeck = new Deck(List.of(new Card(DIAMOND, JACK), new Card(SPADE, ACE)));
+        player.addCard(cardDeck.hitCard());
+        player.addCard(cardDeck.hitCard());
 
-        //when-then
-        assertThat(player.calculateWinner(dealer.calculateSum())).isEqualTo(LOSE);
+        assertThat(player.openInitialCards().getFirst()).isEqualTo(new Card(DIAMOND, JACK));
+        assertThat(player.openInitialCards().get(1)).isEqualTo(new Card(SPADE, ACE));
+    }
+
+    @Test
+    @DisplayName("수익률 계산 테스트 (승리)")
+    void calculateProfitTest() {
+        PlayerInfo playerInfo = new PlayerInfo(new Name("pobi"), new Money(10000));
+        Hand hand = new Hand(new ArrayList<>());
+        Player player = new Player(hand, playerInfo);
+        Deck cardDeck = new Deck(List.of(new Card(DIAMOND, JACK), new Card(SPADE, QUEEN)));
+        player.addCard(cardDeck.hitCard());
+        player.addCard(cardDeck.hitCard());
+
+        Dealer dealer = new Dealer(new Hand(List.of()));
+
+        assertThat(player.calculateProfit(dealer.calculateSum())).isEqualTo(10000);
+    }
+
+    @Test
+    @DisplayName("수익률 계산 테스트 (블랙잭이면서 승리)")
+    void calculateBlackJackProfitTest() {
+        PlayerInfo playerInfo = new PlayerInfo(new Name("pobi"), new Money(10000));
+        Hand hand = new Hand(new ArrayList<>());
+        Player player = new Player(hand, playerInfo);
+        Deck cardDeck = new Deck(List.of(new Card(DIAMOND, TEN), new Card(SPADE, NINE), new Card(DIAMOND, TWO)));
+        player.addCard(cardDeck.hitCard());
+        player.addCard(cardDeck.hitCard());
+        player.addCard(cardDeck.hitCard());
+
+        Dealer dealer = new Dealer(new Hand(List.of()));
+
+        assertThat(player.calculateProfit(dealer.calculateSum())).isEqualTo(15000);
+    }
+
+    @Test
+    @DisplayName("수익률 계산 테스트 (패배)")
+    void calculateLoseProfitTest() {
+        PlayerInfo playerInfo = new PlayerInfo(new Name("pobi"), new Money(10000));
+        Hand hand = new Hand(new ArrayList<>());
+        Player player = new Player(hand, playerInfo);
+        Deck cardDeck = new Deck(List.of(new Card(DIAMOND, TWO), new Card(SPADE, QUEEN)));
+        Dealer dealer = new Dealer(new Hand(List.of()));
+
+        player.addCard(cardDeck.hitCard());
+        dealer.addCard(cardDeck.hitCard());
+
+        assertThat(player.calculateProfit(dealer.calculateSum())).isEqualTo(-10000);
+    }
+
+    @Test
+    @DisplayName("수익률 계산 테스트 (무승부)")
+    void calculateDrawProfitTest() {
+        PlayerInfo playerInfo = new PlayerInfo(new Name("pobi"), new Money(10000));
+        Hand hand = new Hand(new ArrayList<>());
+        Player player = new Player(hand, playerInfo);
+        Deck cardDeck = new Deck(List.of(new Card(DIAMOND, TWO), new Card(SPADE, TWO)));
+        Dealer dealer = new Dealer(new Hand(List.of()));
+
+        player.addCard(cardDeck.hitCard());
+        dealer.addCard(cardDeck.hitCard());
+
+        assertThat(player.calculateProfit(dealer.calculateSum())).isEqualTo(0);
     }
 }

@@ -19,6 +19,6 @@ public enum Answer {
             return false;
         }
 
-        throw new IllegalArgumentException("[ERROR] y 또는 n으로 입력해주세요.");
+        throw new IllegalArgumentException(Error.formatMessage("y 또는 n으로 입력해주세요."));
     }
 }

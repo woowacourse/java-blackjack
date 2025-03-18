@@ -1,22 +1,26 @@
 package domain.participant;
 
-import domain.MatchResult;
+import domain.card.Deck;
+import domain.card.Hand;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class Players {
-    private static final int MAXIMUM_PLAYER_NUMBER = 6;
-
     private final List<Player> players;
 
-    public static Players from(final List<String> names) {
-        validatePlayerNumbers(names);
-        validateIsDuplicate(names);
-        List<Player> players = names.stream()
-                .map(Player::new)
-                .toList();
+    public static Players from(final Map<Name, Money> playerBets) {
+        List<Player> players = new ArrayList<>();
+        for (Entry<Name, Money> entry : playerBets.entrySet()) {
+            Name name = entry.getKey();
+            Money money = entry.getValue();
+            PlayerInfo playerInfo = new PlayerInfo(name, money);
+            players.add(new Player(new Hand(List.of()), playerInfo));
+        }
         return new Players(players);
     }
 
@@ -24,34 +28,22 @@ public class Players {
         this.players = players;
     }
 
-    public void hitCards(final Dealer dealer) {
-        players.forEach(player -> player.hitCards(dealer));
+    public void hitCards(final Deck deck) {
+        players.forEach(player -> player.hitCards(deck));
     }
 
-    public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck, final Dealer dealer) {
+    public void draw(final Function<Player, Boolean> answer, final Consumer<Player> playerDeck, final Deck deck) {
         for (Player player : players) {
-            player.draw(answer, playerDeck, dealer);
+            player.draw(answer, playerDeck, deck);
         }
     }
 
-    public LinkedHashMap<Player, MatchResult> calculateWinner(final int dealerSum) {
-        LinkedHashMap<Player, MatchResult> res = new LinkedHashMap<>();
+    public Map<Player, Integer> calculatePlayerProfit(final int dealerSum) {
+        LinkedHashMap<Player, Integer> bettingResults = new LinkedHashMap<>();
         for (Player player : players) {
-            res.put(player, player.calculateWinner(dealerSum));
+            bettingResults.put(player, player.calculateProfit(dealerSum));
         }
-        return res;
-    }
-
-    private static void validatePlayerNumbers(final List<String> names) {
-        if (names.isEmpty() || names.size() > MAXIMUM_PLAYER_NUMBER) {
-            throw new IllegalArgumentException("[ERROR] 플레이어 인원은 1~6명 입니다.");
-        }
-    }
-
-    private static void validateIsDuplicate(final List<String> names) {
-        if (names.stream().distinct().count() != names.size()) {
-            throw new IllegalArgumentException("[ERROR] 중복된 이름의 플레이어가 게임에 참여할 수 없습니다.");
-        }
+        return bettingResults;
     }
 
     public List<Player> getPlayers() {

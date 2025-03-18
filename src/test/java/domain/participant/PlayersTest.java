@@ -8,24 +8,21 @@ import static domain.card.Shape.HEART;
 import static domain.card.Shape.SPADE;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import config.CardDeckFactory;
+import config.DeckFactory;
 import domain.card.Card;
-import domain.card.CardDeck;
+import domain.card.Deck;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import view.InputView;
 import view.OutputView;
 
@@ -34,14 +31,11 @@ public class PlayersTest {
     @DisplayName("카드 분배 테스트")
     void hitCardsTest(){
         //given
-        Players players = Players.from(new ArrayList<>(
-                List.of("pobi", "lisa")
-        ));
+        Map<Name, Money> playerBet = new LinkedHashMap<>(Map.of(new Name("pobi"), new Money(10000), new Name("lisa"), new Money(20000)));
+        Players players = Players.from(playerBet);
 
-        CardDeckFactory cardDeckFactory = new CardDeckFactory();
-        CardDeck cardDeck = cardDeckFactory.create();
-
-        Dealer dealer = new Dealer(cardDeck);
+        DeckFactory deckFactory = new DeckFactory();
+        Deck deck = deckFactory.create();
 
         //when-then
 
@@ -50,33 +44,10 @@ public class PlayersTest {
 //            softly.assertThat(playerList.get(1).getCardDeck().getCardsSize()).isEqualTo(2);
 //        });
 
-        assertDoesNotThrow(() -> players.hitCards(dealer));
+        assertDoesNotThrow(() -> players.hitCards(deck));
 
     }
 
-    @ParameterizedTest
-    @DisplayName("플레이어 인원 검증 테스트")
-    @MethodSource("provideListForPlayers")
-    void validatePlayerNumbers(List<String> names) {
-        assertThatThrownBy(() -> Players.from(names))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 플레이어 인원은 1~6명 입니다.");
-    }
-
-    private static Stream<Arguments> provideListForPlayers(){
-        return Stream.of(Arguments.of(
-                List.of("포비", "이든", "네오", "저스틴", "링크", "말론", "리사"),
-                List.of()
-        ));
-    }
-
-    @Test
-    @DisplayName("중복된 이름 테스트")
-    void validateIsDuplicateTest() {
-        assertThatThrownBy(() -> Players.from(List.of("pobi", "pobi")))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 중복된 이름의 플레이어가 게임에 참여할 수 없습니다.");
-    }
     @Test
     @DisplayName("카드 드로우 테스트")
     void drawTest(){
@@ -91,19 +62,27 @@ public class PlayersTest {
         InputView testInputView = new InputView(new Scanner(System.in));
         OutputView testOutputView = new OutputView();
 
-        CardDeck cardDeck = new CardDeck(List.of(new Card(DIAMOND, QUEEN), new Card(SPADE, JACK), new Card(HEART, KING)));
-        Dealer dealer = new Dealer(cardDeck);
-        Players players = Players.from(List.of("pobi", "lisa"));
+        Deck deck = new Deck(List.of(new Card(DIAMOND, QUEEN), new Card(SPADE, JACK), new Card(HEART, KING)));
+        Map<Name, Money> playerBet = new LinkedHashMap<>(Map.of(new Name("pobi"), new Money(10000), new Name("lisa"), new Money(20000)));
+        Players players = Players.from(playerBet);
 
         //when-then
-        assertDoesNotThrow(() -> players.draw(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck, dealer));
+        assertDoesNotThrow(() -> players.draw(testInputView::askPlayerForHitOrStand, testOutputView::printPlayerDeck, deck));
     }
 
     @Test
-    @DisplayName("0명 플레이어 참가 테스트")
-    void validateZeroPlayerTest() {
-        assertThatThrownBy(() -> Players.from(Collections.emptyList()))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 플레이어 인원은 1~6명 입니다.");
+    @DisplayName("플레이어 결과 산출 테스트")
+    void calculatePlayerProfitTest() {
+        //given
+        Players players = Players.from(Map.of(new Name("pobi"), new Money(10000)));
+        Deck deck = new Deck(List.of(new Card(DIAMOND, QUEEN), new Card(SPADE, JACK), new Card(HEART, KING)));
+        Player player = players.getPlayers().getFirst();
+        player.addCard(deck.hitCard());
+        //when
+        Map<Player, Integer> playerProfit = players.calculatePlayerProfit(9);
+
+        //then
+        assertEquals(10000, playerProfit.get(player));
     }
+
 }

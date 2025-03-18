@@ -3,26 +3,22 @@ package domain.card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardDeck {
+public class Hand {
     private static final int BONUS_THRESHOLD = 11;
     private static final int ACE_BONUS = 10;
 
-    private final List<Card> cards;
+    private final List<Card> hand;
 
-    public CardDeck(final List<Card> cards) {
-        this.cards = new ArrayList<>(cards);
-    }
-
-    public Card hitCard() {
-        return cards.removeFirst();
+    public Hand(final List<Card> hand) {
+        this.hand = new ArrayList<>(hand);
     }
 
     public void addCard(final Card card) {
-        cards.add(card);
+        hand.add(card);
     }
 
-    public int sum() {
-        int sum = cards.stream()
+    public int calculateSum() {
+        int sum = hand.stream()
                 .mapToInt(Card::getScore)
                 .sum();
         if (sum <= BONUS_THRESHOLD && hasA()) {
@@ -32,11 +28,11 @@ public class CardDeck {
     }
 
     private boolean hasA() {
-        return cards.stream()
+        return hand.stream()
                 .anyMatch(Card::isA);
     }
 
-    public List<Card> getCards() {
-        return cards;
+    public List<Card> getHand() {
+        return hand;
     }
 }

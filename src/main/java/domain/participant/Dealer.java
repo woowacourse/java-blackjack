@@ -1,43 +1,42 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.CardDeck;
-import java.util.ArrayList;
+import domain.card.Hand;
+import java.util.List;
 
-public class Dealer {
+public class Dealer extends Participant {
     private static final int DEALER_DRAW_THRESHOLD = 16;
 
-    private final CardDeck standard;
-    private final CardDeck hand;
-
-    public Dealer(final CardDeck standard) {
-        this.standard = standard;
-        this.hand = new CardDeck(new ArrayList<>());
+    public Dealer(final Hand hand) {
+        super(hand);
     }
 
-    public Card hitCard() {
-        return standard.hitCard();
-    }
-
-    public void addCards() {
-        hand.addCard(hitCard());
-    }
-
-    public void draw() {
+    public void draw(final Card card) {
         if (isUnderThreshold()) {
-            addCards();
+            addCard(card);
         }
-    }
-
-    public int calculateSum() {
-        return hand.sum();
     }
 
     public boolean isUnderThreshold() {
         return calculateSum() <= DEALER_DRAW_THRESHOLD;
     }
 
-    public CardDeck getHand() {
-        return hand;
+    @Override
+    public void addCard(final Card card) {
+        super.addCard(card);
+    }
+
+    @Override
+    public int calculateSum() {
+        return super.calculateSum();
+    }
+
+    @Override
+    public List<Card> openInitialCards() {
+        return List.of(getCards().getHand().getFirst());
+    }
+
+    public Hand getCards() {
+        return super.getCards();
     }
 }
