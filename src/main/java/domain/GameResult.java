@@ -4,21 +4,15 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum GameResult {
-    WIN("승", 1.0,
-            (playerScore, dealerScore) -> playerScore.isHigherThan(dealerScore) && playerScore != Score.BLACKJACK),
-    BLACKJACK_WIN("승 (블랙잭)", 1.5,
-            (playerScore, dealerScore) -> playerScore == Score.BLACKJACK && dealerScore != Score.BLACKJACK),
-    LOSE("패", -1.0,
-            (playerScore, dealerScore) -> playerScore.isLowerThan(dealerScore) || playerScore == Score.BUST),
-    DRAW("무", 0.0,
-            (playerScore, dealerScore) -> playerScore == dealerScore && playerScore != Score.BUST);
+    WIN(1.0, (playerScore, dealerScore) -> playerScore.isHigherThan(dealerScore) && playerScore != Score.BLACKJACK),
+    BLACKJACK_WIN(1.5, (playerScore, dealerScore) -> playerScore == Score.BLACKJACK && dealerScore != Score.BLACKJACK),
+    LOSE(-1.0, (playerScore, dealerScore) -> playerScore.isLowerThan(dealerScore) || playerScore == Score.BUST),
+    DRAW(0.0, (playerScore, dealerScore) -> playerScore == dealerScore && playerScore != Score.BUST);
 
-    private final String title;
     private final double multiple;
     private final BiPredicate<Score, Score> condition;
 
-    GameResult(String title, double multiple, BiPredicate<Score, Score> condition) {
-        this.title = title;
+    GameResult(double multiple, BiPredicate<Score, Score> condition) {
         this.multiple = multiple;
         this.condition = condition;
     }
