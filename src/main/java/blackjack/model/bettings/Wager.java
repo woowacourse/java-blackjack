@@ -1,7 +1,5 @@
 package blackjack.model.bettings;
 
-import blackjack.model.participants.ParticipantType;
-
 public class Wager {
     private static final int INDEX_PLAYER_WAGER = 0;
     private static final double VALUE_TIE = 0;
@@ -14,22 +12,14 @@ public class Wager {
         this.wager = wager;
     }
 
-    public void updateWager(ParticipantType type, double multiplier, double... playerWager) {
-        if (ParticipantType.isDealer(type)) {
-            updateDealerWager(multiplier, playerWager[INDEX_PLAYER_WAGER]);
-            return;
-        }
-        updatePlayerWager(multiplier);
-    }
-
-    private void updatePlayerWager(double multiplier) {
+    public void updatePlayerWager(double multiplier) {
         if (multiplier == VALUE_TIE) {
             return;
         }
         wager += wager * multiplier;
     }
 
-    private void updateDealerWager(double multiplier, double playerWager) {
+    public void updateDealerWager(double multiplier, double playerWager) {
         if (multiplier == VALUE_BLACKJACK) {
             multiplier = VALUE_NORMAL;
         }

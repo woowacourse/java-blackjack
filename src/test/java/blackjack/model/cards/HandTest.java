@@ -3,7 +3,6 @@ package blackjack.model.cards;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-import blackjack.model.participants.ParticipantType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +23,7 @@ public class HandTest {
         Hand hand = new Hand();
         hand.addCards(List.of(new Card("A", "스페이드"), new Card("K", "클로버"), new Card("J", "다이아몬드")));
 
-        hand.calculateScore(ParticipantType.DEALER);
+        hand.calculateDealerScore();
         assertThat(hand.getScore()).isEqualTo(31);
     }
 
@@ -38,7 +37,7 @@ public class HandTest {
                 new Card("A", "다이아몬드"))
         );
 
-        hand.calculateScore(ParticipantType.DEALER);
+        hand.calculateDealerScore();
         assertThat(hand.getScore()).isEqualTo(33);
     }
 
@@ -48,7 +47,7 @@ public class HandTest {
         Hand hand = new Hand();
         hand.addCards(List.of(new Card("A", "스페이드"), new Card("K", "클로버"), new Card("J", "다이아몬드")));
 
-        hand.calculateScore(ParticipantType.PLAYER);
+        hand.calculatePlayerScore();
         assertThat(hand.getScore()).isEqualTo(21);
     }
 
@@ -62,7 +61,7 @@ public class HandTest {
                 new Card("A", "다이아몬드"))
         );
 
-        hand.calculateScore(ParticipantType.PLAYER);
+        hand.calculatePlayerScore();
         assertThat(hand.getScore()).isEqualTo(13);
     }
 }

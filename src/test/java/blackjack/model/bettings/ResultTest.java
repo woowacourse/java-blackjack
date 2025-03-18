@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.model.cards.Hand;
 import blackjack.model.participants.Dealer;
 import blackjack.model.participants.Name;
+import blackjack.model.participants.ParticipantType;
 import blackjack.model.participants.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,6 @@ public class ResultTest {
         Player player = new Player(new Name("player"), new Wager(1000), dealer.produceHand());
         Hand playerHand = player.getHand();
 
-        assertThat(Result.evaluateResult(true, dealerHand, playerHand)).isNotNull();
+        assertThat(Result.evaluateResult(ParticipantType.PLAYER, dealerHand, playerHand)).isNotNull();
     }
 }

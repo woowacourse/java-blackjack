@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import blackjack.model.participants.ParticipantType;
 
 public class Hand {
     private static final int BASE_VALUE = 0;
@@ -22,15 +21,7 @@ public class Hand {
         this.cards.addAll(cards);
     }
 
-    public void calculateScore(ParticipantType type) {
-        if (ParticipantType.isDealer(type)) {
-            calculateDealerScore();
-            return;
-        }
-        calculatePlayerScore();
-    }
-
-    private void calculateDealerScore() {
+    public void calculateDealerScore() {
         int score = BASE_VALUE;
         for (Card card : cards) {
             score += card.getRankValue().getFirst();
@@ -38,7 +29,7 @@ public class Hand {
         this.score = score;
     }
 
-    private void calculatePlayerScore() {
+    public void calculatePlayerScore() {
         Set<Integer> possibleScores = calculatePossibleScores();
         this.score = possibleScores.stream()
                 .filter(value -> value <= BUST_THRESHOLD)

@@ -30,7 +30,7 @@ public class Dealer extends Participant {
     }
 
     public void updateWager(double multiplier, double playerWager) {
-        wager.updateWager(ParticipantType.DEALER, multiplier, playerWager);
+        wager.updateDealerWager(multiplier, playerWager);
     }
 
     @Override
@@ -41,6 +41,6 @@ public class Dealer extends Participant {
 
     @Override
     public void calculateHandScore() {
-        hand.calculateScore(ParticipantType.DEALER);
+        hand.calculateDealerScore();
     }
 }

@@ -1,7 +1,8 @@
 package blackjack.model.bettings;
 
-import java.util.Optional;
 import blackjack.model.cards.Hand;
+import blackjack.model.participants.ParticipantType;
+import java.util.Optional;
 
 public enum Result {
     BLACKJACK(1.5),
@@ -19,10 +20,10 @@ public enum Result {
         this.rate = rate;
     }
 
-    public static Result evaluateResult(boolean isDealer, Hand myHand, Hand oppenentHand) {
+    public static Result evaluateResult(ParticipantType type, Hand myHand, Hand oppenentHand) {
         return Optional.ofNullable(checkBlackjack(myHand, oppenentHand))
-                .orElseGet(() -> Optional.ofNullable(checkDealerBust(isDealer, myHand, oppenentHand))
-                        .orElseGet(() -> Optional.ofNullable(checkPlayerBust(isDealer, myHand, oppenentHand))
+                .orElseGet(() -> Optional.ofNullable(checkDealerBust(type, myHand, oppenentHand))
+                        .orElseGet(() -> Optional.ofNullable(checkPlayerBust(type, myHand, oppenentHand))
                                 .orElseGet(() -> checkScore(myHand, oppenentHand))));
     }
 
@@ -43,8 +44,8 @@ public enum Result {
         return hand.getScore() == BLACKJACK_SCORE && hand.getHandSize() == CARD_COUNT_THRESHOLD;
     }
 
-    private static Result checkDealerBust(boolean isDealer, Hand myHand, Hand opponentHand) {
-        if (!isDealer) {
+    private static Result checkDealerBust(ParticipantType type, Hand myHand, Hand opponentHand) {
+        if (!ParticipantType.isDealer(type)) {
             return null;
         }
         if (opponentHand.getScore() > BUST_SCORE_THRESHOLD) {
@@ -56,8 +57,8 @@ public enum Result {
         return null;
     }
 
-    private static Result checkPlayerBust(boolean isDealer, Hand myHand, Hand opponentHand) {
-        if (isDealer) {
+    private static Result checkPlayerBust(ParticipantType type, Hand myHand, Hand opponentHand) {
+        if (ParticipantType.isDealer(type)) {
             return null;
         }
         if (myHand.getScore() > BUST_SCORE_THRESHOLD) {

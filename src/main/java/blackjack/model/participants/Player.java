@@ -15,7 +15,7 @@ public class Player extends Participant {
     }
 
     public void updateWager(double multiplier) {
-        wager.updateWager(ParticipantType.PLAYER, multiplier);
+        wager.updatePlayerWager(multiplier);
     }
 
     public boolean isBust() {
@@ -35,6 +35,6 @@ public class Player extends Participant {
 
     @Override
     public void calculateHandScore() {
-        hand.calculateScore(ParticipantType.PLAYER);
+        hand.calculatePlayerScore();
     }
 }
