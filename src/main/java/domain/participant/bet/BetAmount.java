@@ -46,11 +46,6 @@ public class BetAmount {
         return Objects.hashCode(amount);
     }
 
-    @Override
-    public String toString() {
-        return this.amount + "";
-    }
-
     public long getValue() {
         return amount;
     }
