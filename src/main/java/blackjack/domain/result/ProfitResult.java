@@ -8,7 +8,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -22,18 +21,22 @@ public final class ProfitResult {
 
     public static ProfitResult from(final Dealer dealer,
                                     final Map<Player, ResultStatus> winningResult) {
-        final Map<Participant, Integer> profits = initializeProfits(dealer, winningResult);
+        final Map<Participant, Integer> profits = initializeProfit(dealer, winningResult);
         for (Entry<Player, ResultStatus> entry : winningResult.entrySet()) {
             calculateEachProfit(dealer, entry, profits);
         }
         return new ProfitResult(profits);
     }
 
-    private static Map<Participant, Integer> initializeProfits(final Dealer dealer,
-                                                               final Map<Player, ResultStatus> winningResult) {
-        return Stream.concat(Stream.of(dealer), winningResult.keySet().stream())
-                .collect(Collectors.toMap(Function.identity(), key -> 0, (e1, e2) -> e1,
-                        LinkedHashMap::new));
+    private static Map<Participant, Integer> initializeProfit(final Dealer dealer,
+                                                              final Map<Player, ResultStatus> winningResult) {
+        final Stream<Dealer> dealerStream = Stream.of(dealer);
+        final Stream<Player> playersStream = winningResult.keySet().stream();
+        return Stream.concat(dealerStream, playersStream)
+                .collect(Collectors.toMap(
+                        participant -> participant, key -> 0,
+                        (existing, replacement) -> existing, LinkedHashMap::new)
+                );
     }
 
     private static void calculateEachProfit(final Dealer dealer, final Entry<Player, ResultStatus> entry,
