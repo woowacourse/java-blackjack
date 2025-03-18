@@ -7,10 +7,10 @@ import java.util.List;
 
 public class CardsInitializer {
 
-    private final ShuffleStrategy cardShuffler;
+    private final ShuffleStrategy shuffler;
 
-    public CardsInitializer(final ShuffleStrategy shuffleStrategy) {
-        this.cardShuffler = shuffleStrategy;
+    public CardsInitializer(final ShuffleStrategy shuffler) {
+        this.shuffler = shuffler;
     }
 
     public List<Card> initialize() {
@@ -20,7 +20,7 @@ public class CardsInitializer {
 
     private List<Card> shuffleCards(final List<Card> cards) {
         List<Card> shuffleCards = new ArrayList<>(cards);
-        cardShuffler.shuffle(shuffleCards);
+        shuffler.shuffle(shuffleCards);
 
         return shuffleCards;
     }
