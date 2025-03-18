@@ -10,8 +10,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.deck.RandomCardStrategy;
+import blackjack.fixture.BlackjackControllerFixture;
 import blackjack.fixture.DeckFixture;
-import blackjack.fixture.GameManagerFixture;
 
 class PlayerTest {
 
@@ -24,7 +24,7 @@ class PlayerTest {
         Deck deck = Deck.generateFrom(new RandomCardStrategy());
 
         // when
-        GameManagerFixture.GameManagerWith(deck).drawStartingCards(player);
+        BlackjackControllerFixture.BlackjackControllerWith(deck).drawStartingCards(player);
 
         // then
         assertThat(player.getCards()).hasSize(2);
@@ -41,7 +41,7 @@ class PlayerTest {
         CardNumber cardNumber3, boolean expected) {
         // given
         Deck deck = DeckFixture.deckOf(cardNumber1, cardNumber2, cardNumber3);
-        GameManagerFixture.GameManagerWith(deck).drawStartingCards(player);
+        BlackjackControllerFixture.BlackjackControllerWith(deck).drawStartingCards(player);
         player.drawCard(deck);
 
         // when
@@ -60,7 +60,7 @@ class PlayerTest {
     @DisplayName("버스트되지 않았을 경우 카드를 추가로 지급받을 수 있다")
     void canReceiveAdditionalCards2(CardNumber cardNumber1, CardNumber cardNumber2, boolean expected) {
         // given
-        GameManagerFixture.GameManagerWith(
+        BlackjackControllerFixture.BlackjackControllerWith(
             DeckFixture.deckOf(cardNumber1, cardNumber2)
         ).drawStartingCards(player);
 

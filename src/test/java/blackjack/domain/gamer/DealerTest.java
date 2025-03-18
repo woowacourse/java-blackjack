@@ -7,8 +7,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import blackjack.domain.card.CardNumber;
+import blackjack.fixture.BlackjackControllerFixture;
 import blackjack.fixture.DeckFixture;
-import blackjack.fixture.GameManagerFixture;
 
 class DealerTest {
 
@@ -23,7 +23,7 @@ class DealerTest {
     @DisplayName("딜러는 카드 숫자 합이 16 이하이면 카드를 추가로 받을 수 있다")
     void canReceiveAdditionalCardsTest1(CardNumber cardNumber1, CardNumber cardNumber2, boolean expected) {
         // given
-        GameManagerFixture.GameManagerWith(
+        BlackjackControllerFixture.BlackjackControllerWith(
             DeckFixture.deckOf(cardNumber1, cardNumber2)
         ).drawStartingCards(dealer);
 
@@ -43,7 +43,7 @@ class DealerTest {
     @DisplayName("딜러는 카드 숫자 합이 16 초과면 카드를 추가로 받을 수 없다")
     void canReceiveAdditionalCardsTest2(CardNumber cardNumber1, CardNumber cardNumber2, boolean expected) {
         // given
-        GameManagerFixture.GameManagerWith(
+        BlackjackControllerFixture.BlackjackControllerWith(
             DeckFixture.deckOf(cardNumber1, cardNumber2)
         ).drawStartingCards(dealer);
 

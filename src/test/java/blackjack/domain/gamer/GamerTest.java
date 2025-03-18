@@ -13,8 +13,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 import blackjack.domain.RoundResult;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.deck.Deck;
+import blackjack.fixture.BlackjackControllerFixture;
 import blackjack.fixture.DeckFixture;
-import blackjack.fixture.GameManagerFixture;
 
 class GamerTest {
 
@@ -30,7 +30,7 @@ class GamerTest {
     @DisplayName("21이하인 경우 버스트되지 않는다")
     void isBustTest1(CardNumber cardNumber1, CardNumber cardNumber2, boolean expected) {
         // given
-        GameManagerFixture.GameManagerWith(
+        BlackjackControllerFixture.BlackjackControllerWith(
             DeckFixture.deckOf(cardNumber1, cardNumber2)
         ).drawStartingCards(gamer);
 
@@ -52,7 +52,7 @@ class GamerTest {
         CardNumber cardNumber3, boolean expected) {
         // given
         Deck deck = DeckFixture.deckOf(cardNumber1, cardNumber2, cardNumber3);
-        GameManagerFixture.GameManagerWith(deck).drawStartingCards(gamer);
+        BlackjackControllerFixture.BlackjackControllerWith(deck).drawStartingCards(gamer);
         gamer.drawCard(deck);
 
         // when
@@ -71,7 +71,7 @@ class GamerTest {
     @DisplayName("버스트되지 않으면 Ace는 11로 계산한다")
     void getSumOfCardsTest1(CardNumber cardNumber1, CardNumber cardNumber2, int expected) {
         // given
-        GameManagerFixture.GameManagerWith(
+        BlackjackControllerFixture.BlackjackControllerWith(
             DeckFixture.deckOf(cardNumber1, cardNumber2)
         ).drawStartingCards(gamer);
 
@@ -92,7 +92,7 @@ class GamerTest {
     void getSumOfCardsTest2(CardNumber cardNumber1, CardNumber cardNumber2, CardNumber cardNumber3, int expected) {
         // given
         Deck deck = DeckFixture.deckOf(cardNumber1, cardNumber2, cardNumber3);
-        GameManagerFixture.GameManagerWith(deck).drawStartingCards(gamer);
+        BlackjackControllerFixture.BlackjackControllerWith(deck).drawStartingCards(gamer);
         gamer.drawCard(deck);
 
         // when
@@ -111,7 +111,7 @@ class GamerTest {
     @DisplayName("블랙잭 여부를 확인한다")
     void isBlackjackTest(CardNumber cardNumber1, CardNumber cardNumber2, boolean expected) {
         // given
-        GameManagerFixture.GameManagerWith(
+        BlackjackControllerFixture.BlackjackControllerWith(
             DeckFixture.deckOf(cardNumber1, cardNumber2)
         ).drawStartingCards(gamer);
 
@@ -131,10 +131,10 @@ class GamerTest {
         Player b = new Player("bb");
         Player c = new Player("cc");
 
-        GameManagerFixture.GameManagerWith(DeckFixture.deckOf(CardNumber.ACE, CardNumber.SIX)).drawStartingCards(dealer);
-        GameManagerFixture.GameManagerWith(DeckFixture.deckOf(CardNumber.ACE, CardNumber.JACK)).drawStartingCards(a);
-        GameManagerFixture.GameManagerWith(DeckFixture.deckOf(CardNumber.ACE, CardNumber.TWO)).drawStartingCards(b);
-        GameManagerFixture.GameManagerWith(DeckFixture.deckOf(CardNumber.ACE, CardNumber.THREE)).drawStartingCards(c);
+        BlackjackControllerFixture.BlackjackControllerWith(DeckFixture.deckOf(CardNumber.ACE, CardNumber.SIX)).drawStartingCards(dealer);
+        BlackjackControllerFixture.BlackjackControllerWith(DeckFixture.deckOf(CardNumber.ACE, CardNumber.JACK)).drawStartingCards(a);
+        BlackjackControllerFixture.BlackjackControllerWith(DeckFixture.deckOf(CardNumber.ACE, CardNumber.TWO)).drawStartingCards(b);
+        BlackjackControllerFixture.BlackjackControllerWith(DeckFixture.deckOf(CardNumber.ACE, CardNumber.THREE)).drawStartingCards(c);
 
         List<Gamer> players = List.of(a, b, c);
 

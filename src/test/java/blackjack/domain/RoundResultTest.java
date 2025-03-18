@@ -9,8 +9,8 @@ import blackjack.domain.card.CardNumber;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
+import blackjack.fixture.BlackjackControllerFixture;
 import blackjack.fixture.DeckFixture;
-import blackjack.fixture.GameManagerFixture;
 
 class RoundResultTest {
 
@@ -23,8 +23,8 @@ class RoundResultTest {
         // given
         Deck playerDeck = DeckFixture.deckOf(CardNumber.JACK, CardNumber.TWO);
         Deck dealerDeck = DeckFixture.deckOf(CardNumber.KING, CardNumber.QUEEN, CardNumber.NINE);
-        GameManagerFixture.GameManagerWith(playerDeck).drawStartingCards(player);
-        GameManagerFixture.GameManagerWith(dealerDeck).drawStartingCards(dealer);
+        BlackjackControllerFixture.BlackjackControllerWith(playerDeck).drawStartingCards(player);
+        BlackjackControllerFixture.BlackjackControllerWith(dealerDeck).drawStartingCards(dealer);
         dealer.drawCard(dealerDeck);
 
         // when
@@ -40,8 +40,8 @@ class RoundResultTest {
         // given
         Deck playerDeck = DeckFixture.deckOf(CardNumber.JACK, CardNumber.TWO);
         Deck dealerDeck = DeckFixture.deckOf(CardNumber.THREE, CardNumber.QUEEN);
-        GameManagerFixture.GameManagerWith(playerDeck).drawStartingCards(player);
-        GameManagerFixture.GameManagerWith(dealerDeck).drawStartingCards(dealer);
+        BlackjackControllerFixture.BlackjackControllerWith(playerDeck).drawStartingCards(player);
+        BlackjackControllerFixture.BlackjackControllerWith(dealerDeck).drawStartingCards(dealer);
 
         // when
         RoundResult roundResult = RoundResult.judgeResult(player, dealer);
@@ -56,8 +56,8 @@ class RoundResultTest {
         // given
         Deck playerDeck = DeckFixture.deckOf(CardNumber.JACK, CardNumber.ACE);
         Deck dealerDeck = DeckFixture.deckOf(CardNumber.QUEEN, CardNumber.NINE, CardNumber.TWO);
-        GameManagerFixture.GameManagerWith(playerDeck).drawStartingCards(player);
-        GameManagerFixture.GameManagerWith(dealerDeck).drawStartingCards(dealer);
+        BlackjackControllerFixture.BlackjackControllerWith(playerDeck).drawStartingCards(player);
+        BlackjackControllerFixture.BlackjackControllerWith(dealerDeck).drawStartingCards(dealer);
         dealer.drawCard(dealerDeck);
 
         // when
@@ -73,8 +73,8 @@ class RoundResultTest {
         // given
         Deck playerDeck = DeckFixture.deckOf(CardNumber.JACK, CardNumber.ACE);
         Deck dealerDeck = DeckFixture.deckOf(CardNumber.JACK, CardNumber.ACE);
-        GameManagerFixture.GameManagerWith(playerDeck).drawStartingCards(player);
-        GameManagerFixture.GameManagerWith(dealerDeck).drawStartingCards(dealer);
+        BlackjackControllerFixture.BlackjackControllerWith(playerDeck).drawStartingCards(player);
+        BlackjackControllerFixture.BlackjackControllerWith(dealerDeck).drawStartingCards(dealer);
 
         // when
         RoundResult roundResult = RoundResult.judgeResult(player, dealer);
@@ -89,8 +89,8 @@ class RoundResultTest {
         // given
         Deck playerDeck = DeckFixture.deckOf(CardNumber.JACK, CardNumber.TWO);
         Deck dealerDeck = DeckFixture.deckOf(CardNumber.JACK, CardNumber.TWO);
-        GameManagerFixture.GameManagerWith(playerDeck).drawStartingCards(player);
-        GameManagerFixture.GameManagerWith(dealerDeck).drawStartingCards(dealer);
+        BlackjackControllerFixture.BlackjackControllerWith(playerDeck).drawStartingCards(player);
+        BlackjackControllerFixture.BlackjackControllerWith(dealerDeck).drawStartingCards(dealer);
 
         // when
         RoundResult roundResult = RoundResult.judgeResult(player, dealer);
