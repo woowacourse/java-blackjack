@@ -50,7 +50,7 @@ public class BlackJackController {
                 .stream()
                 .map(nickname -> {
                     final String betAmount = InputView.readBetAmount(nickname);
-                    return new Player(nickname, HittableState.initializePlayerState(), BetAmount.of(betAmount));
+                    return new Player(nickname, HittableState.initializePlayerState(), BetAmount.from(betAmount));
                 })
                 .toList();
     }

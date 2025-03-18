@@ -17,7 +17,7 @@ class BetAmountTest {
         // when
 
         // then
-        assertThatCode(() -> BetAmount.of(betAmount))
+        assertThatCode(() -> BetAmount.from(betAmount))
                 .doesNotThrowAnyException();
     }
 
@@ -29,7 +29,7 @@ class BetAmountTest {
         // when
 
         // then
-        assertThatThrownBy(() -> BetAmount.of(betAmount))
+        assertThatThrownBy(() -> BetAmount.from(betAmount))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
