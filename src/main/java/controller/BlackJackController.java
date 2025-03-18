@@ -54,9 +54,9 @@ public class BlackJackController {
 
     private boolean isPrepareBlackjack(final Dealer dealer, final List<Player> players, final BetSystem betSystem) {
         if (isPrepareCardsBlackjack(dealer, players)) {
-            Map<Gamer, Long> gamerIntegerMap = betSystem.calculateProfit(dealer, players);
+            Map<Gamer, Long> profitResult = betSystem.calculateProfit(dealer, players);
             outputView.printCardResult(dealer, players);
-            outputView.printProfitResult(gamerIntegerMap);
+            outputView.printProfitResult(profitResult);
             return true;
         }
         return false;
