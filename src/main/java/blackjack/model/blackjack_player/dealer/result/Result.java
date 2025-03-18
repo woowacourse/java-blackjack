@@ -30,11 +30,11 @@ public enum Result {
     }
 
     private static boolean isDealerWin(final Dealer dealer, final Player player) {
+        if (isPlayerOnlyBust(dealer, player) || isDealerOnlyBlackjack(dealer, player)) {
+            return true;
+        }
         if (dealer.isBust() || isPlayerOnlyBlackjack(dealer, player)) {
             return false;
-        }
-        if (isDealerOnlyBlackjack(dealer, player) || isPlayerOnlyBust(dealer, player)) {
-            return true;
         }
         if (dealer.isBlackjack() && player.isBlackjack()) {
             return false;
