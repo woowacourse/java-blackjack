@@ -1,42 +1,50 @@
 package blackjack.model.game;
 
-import java.util.Map;
-
-import blackjack.model.player.Player;
+import blackjack.model.player.Dealer;
+import blackjack.model.player.User;
 
 public enum GameResult {
 
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    BLACKJACK_WIN,
+    WIN,
+    DRAW,
+    LOSE;
 
-    private final String name;
+    GameResult() {}
 
-    GameResult(final String name) {
-        this.name = name;
-    }
-
-    public static GameResult calculateResult(final Player player, final Player challenger,
-                                             final BlackJackRule blackJackRule
-    ) {
-        if (blackJackRule.isDraw(player, challenger)) {
+    public static GameResult calculateResult(final User user, final Dealer dealer) {
+        if (isUserBlackJackWin(user, dealer)) {
+            return BLACKJACK_WIN;
+        }
+        if (isDraw(user, dealer)) {
             return DRAW;
         }
-        if (blackJackRule.getWinner(player, challenger).equals(player)) {
+        if (isUserWin(user, dealer)) {
             return WIN;
         }
         return LOSE;
     }
 
-    public static Map<GameResult, Integer> getResultBoard() {
-        return Map.of(
-                WIN, 0,
-                DRAW, 0,
-                LOSE, 0
-        );
+    private static boolean isUserBlackJackWin(final User user, final Dealer dealer) {
+        return user.isBlackjack() && !dealer.isBlackjack();
     }
 
-    public String getName() {
-        return name;
+    private static boolean isUserWin(final User user, final Dealer dealer) {
+        int playerPoint = user.calculatePoint();
+        int otherPlayerPoint = dealer.calculatePoint();
+        if (!user.isBust() && dealer.isBust()) {
+            return true;
+        }
+        return !user.isBust() && !dealer.isBust() && playerPoint > otherPlayerPoint;
     }
+
+    private static boolean isDraw(final User user, final Dealer dealer) {
+        if (user.isBlackjack() && dealer.isBlackjack()) {
+            return true;
+        }
+        int userPoint = user.calculatePoint();
+        int dealerPoint = dealer.calculatePoint();
+        return !user.isBust() && !dealer.isBust() && (userPoint == dealerPoint);
+    }
+
 }

@@ -2,12 +2,15 @@ package blackjack.model.card;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Cards {
+
+    private static final int BLACK_JACK_SIZE = 2;
+    private static final int BLACK_JACK_POINT = 21;
+    private static final int BUST_THRESHOLD = 22;
 
     private final List<Card> values;
 
@@ -16,19 +19,31 @@ public class Cards {
     }
 
     public Cards(final Card... cards) {
-        this.values = new ArrayList<>(Arrays.stream(cards)
-                .toList());
+        this(Arrays.stream(cards)
+                .toList()
+        );
     }
 
     private Cards() {
-        this.values = new LinkedList<>();
+        this.values = new ArrayList<>();
     }
 
     public static Cards empty() {
         return new Cards();
     }
 
-    public List<Integer> calculatePossiblePoints() {
+    public int calculateOptimalPoint() {
+        List<Integer> possiblePoints = calculatePossiblePoints();
+        return possiblePoints.stream()
+                .filter(point -> point < BUST_THRESHOLD)
+                .max(Integer::compareTo)
+                .orElseGet(() -> possiblePoints.stream()
+                        .min(Integer::compareTo)
+                        .orElseThrow(IllegalStateException::new)
+                );
+    }
+
+    private List<Integer> calculatePossiblePoints() {
         List<Integer> possiblePoints = new ArrayList<>();
         addPossiblePoint(possiblePoints, 0, 0);
 
@@ -45,10 +60,6 @@ public class Cards {
         }
     }
 
-    public boolean hasSize(final int size) {
-        return values.size() == size;
-    }
-
     public void merge(final Cards otherCards) {
         this.values.addAll(otherCards.values);
     }
@@ -62,7 +73,6 @@ public class Cards {
                             values.removeLast();
                         }
                 );
-
         return cards;
     }
 
@@ -70,6 +80,14 @@ public class Cards {
         if (values.size() < size) {
             throw new IllegalArgumentException("남은 카드가 부족합니다.");
         }
+    }
+
+    public boolean isBlackjack() {
+        return calculateOptimalPoint() == BLACK_JACK_POINT && values.size() == BLACK_JACK_SIZE;
+    }
+
+    public boolean isBust() {
+        return calculateOptimalPoint() >= BUST_THRESHOLD;
     }
 
     public Card getFirst() {

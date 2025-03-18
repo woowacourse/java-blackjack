@@ -1,7 +1,5 @@
 package blackjack.model.player;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 
 import blackjack.model.card.Cards;
@@ -10,28 +8,32 @@ public abstract class Player {
 
     protected final String name;
     protected final Cards cards;
-    protected final Role role;
 
-    protected Player(final String name, final Role role) {
+    protected Player(final String name) {
         this.name = name;
         this.cards = Cards.empty();
-        this.role = role;
     }
 
-    public List<Integer> calculatePossiblePoints() {
-        return cards.calculatePossiblePoints();
-    }
+    public abstract boolean isDealer();
 
-    public int getMinimumPoint() {
-        return Collections.min(cards.calculatePossiblePoints());
-    }
+    public abstract Cards openCards();
+
+    public abstract boolean canDrawMoreCard();
 
     public void receiveCards(final Cards cards) {
         this.cards.merge(cards);
     }
 
-    public boolean hasRole(final Role role) {
-        return this.role == role;
+    public int calculatePoint() {
+        return cards.calculateOptimalPoint();
+    }
+
+    public boolean isBlackjack() {
+        return cards.isBlackjack();
+    }
+
+    public boolean isBust() {
+        return cards.isBust();
     }
 
     public Cards getCards() {
@@ -50,12 +52,12 @@ public abstract class Player {
         if (!(o instanceof Player player)) {
             return false;
         }
-        return Objects.equals(getName(), player.getName()) && role == player.role;
+        return Objects.equals(getName(), player.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), role);
+        return Objects.hashCode(getName());
     }
 
 }

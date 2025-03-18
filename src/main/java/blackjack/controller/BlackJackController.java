@@ -1,14 +1,15 @@
 package blackjack.controller;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
-import blackjack.model.card.Cards;
 import blackjack.model.card.initializer.DefaultCardDeckInitializer;
 import blackjack.model.game.BlackJackGame;
+import blackjack.model.game.GameResult;
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
-import blackjack.model.player.Role;
+import blackjack.model.player.Players;
 import blackjack.model.player.User;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -25,48 +26,47 @@ public class BlackJackController {
 
     public void run() {
         BlackJackGame blackJackGame = new BlackJackGame(new DefaultCardDeckInitializer());
+        Players players = makePlayers();
 
-        List<Player> players = makePlayers();
-        blackJackGame.dealInitialCards(players);
-        List<Cards> openCards = players.stream()
-                .map(blackJackGame::openInitialCards)
-                .toList();
-        outputView.printDealInitialCardsResult(players, openCards);
+        blackJackGame.drawInitialCards(players);
+        outputView.printDealInitialCardsResult(players);
 
-        usersDrawMoreCards(players, blackJackGame);
+        usersDrawMoreCards(players.getUsers(), blackJackGame);
+        dealerDrawMoreCards(blackJackGame, players.getDealer());
+        outputView.printOptimalPoints(players);
 
-        dealerDrawMoreCards(blackJackGame, players.getFirst());
-        outputView.printOptimalPoints(blackJackGame.calculateOptimalPoints(players));
-        outputView.printGameResult(blackJackGame.calculateResult(players));
+        Map<User, GameResult> userGameResults = blackJackGame.calculateUserGameResults(players);
+        Map<Player, BigDecimal> playerWinnings = players.calculateWinnings(userGameResults);
+        outputView.printFinalWinnings(playerWinnings);
     }
 
-    private List<Player> makePlayers() {
-        List<Player> players = new ArrayList<>();
-        players.add(new Dealer());
-        for (String username : inputView.readUserNames()) {
-            players.add(new User(username));
-        }
-        return players;
+    private Players makePlayers() {
+        Map<String, Integer> userNamesAndBettingAmount = inputView.readUserNamesAndBettingAmount();
+        return new Players(new Dealer(), userNamesAndBettingAmount);
     }
 
-    private void usersDrawMoreCards(final List<Player> players, final BlackJackGame blackJackGame) {
-        for (Player player : players) {
-            userDrawMoreCards(blackJackGame, player);
+    private void usersDrawMoreCards(final List<User> users, final BlackJackGame blackJackGame) {
+        for (User user : users) {
+            userDrawMoreCards(blackJackGame, user);
         }
     }
 
     private void userDrawMoreCards(final BlackJackGame blackJackGame, final Player player) {
-        if (player.hasRole(Role.DEALER)) {
+        if (player.isDealer()) {
             return;
         }
         while (blackJackGame.canDrawMoreCard(player) && inputView.readUserDrawMoreCard(player)) {
-            outputView.printPlayerCards(player, player.getCards());
+            blackJackGame.drawOneCard(player);
+            outputView.printPlayerCards(player);
         }
     }
 
     private void dealerDrawMoreCards(final BlackJackGame blackJackGame, final Player dealer) {
-        boolean isDrawn = blackJackGame.canDrawMoreCard(dealer);
-        outputView.printDealerDrawnMoreCards(isDrawn);
+        boolean isDealerDrawn = blackJackGame.canDrawMoreCard(dealer);
+        if (isDealerDrawn) {
+            blackJackGame.drawOneCard(dealer);
+        }
+        outputView.printDealerDrawnMoreCards(isDealerDrawn);
     }
 
 }

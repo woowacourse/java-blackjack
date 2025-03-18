@@ -3,12 +3,15 @@ package blackjack.model.player;
 import static blackjack.model.card.CardCreator.createCard;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.Cards;
@@ -19,7 +22,7 @@ class UserTest {
 
     @BeforeEach
     void setUp() {
-        user = new User("pobi");
+        user = new User("pobi", 1_000);
     }
 
     @Test
@@ -32,30 +35,74 @@ class UserTest {
     }
 
     @Test
-    void 자신이_가진_카드의_합을_반환한다() {
-        user.receiveCards(new Cards(
-                List.of(createCard(CardNumber.ACE), createCard(CardNumber.SIX), createCard(CardNumber.TWO))
-        ));
-        List<Integer> expected = List.of(9, 19);
-
-        assertThat(user.calculatePossiblePoints()).containsExactlyInAnyOrderElementsOf(expected);
-    }
-
-    @CsvSource(value = {
-            "DEALER,false", "USER,true"
-    })
-    @ParameterizedTest
-    void 자신의_역할과_같은_역할인지_확인한다(Role role, boolean expected) {
-        assertThat(user.hasRole(role)).isEqualTo(expected);
-    }
-
-    @Test
-    void 자신의_최저_포인트를_계산한다() {
+    void 자신이_가진_카드의_최적합을_반환한다() {
         user.receiveCards(new Cards(
                 List.of(createCard(CardNumber.JACK), createCard(CardNumber.QUEEN), createCard(CardNumber.ACE))
         ));
 
-        assertThat(user.getMinimumPoint()).isEqualTo(21);
+        assertThat(user.calculatePoint()).isEqualTo(21);
+    }
+
+    @MethodSource("유저가_카드를_뽑을_수_있는지_알려준다_테스트_케이스")
+    @ParameterizedTest
+    void 유저가_카드를_뽑을_수_있는지_알려준다(Cards cards, boolean expected) {
+        user.receiveCards(cards);
+
+        assertThat(user.canDrawMoreCard()).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> 유저가_카드를_뽑을_수_있는지_알려준다_테스트_케이스() {
+        return Stream.of(
+                Arguments.of(new Cards(createCard(CardNumber.TEN), createCard(CardNumber.JACK)), true),
+                Arguments.of(new Cards(createCard(CardNumber.TEN), createCard(CardNumber.ACE)), false)
+        );
+    }
+
+    @Test
+    void 자신이_딜러인지_확인해준다() {
+        assertThat(user.isDealer()).isFalse();
+    }
+
+    @MethodSource("유저가_블랙잭인지_확인한다_테스트_케이스")
+    @ParameterizedTest
+    void 유저가_블랙잭인지_확인한다(Cards cards, boolean expected) {
+        user.receiveCards(cards);
+
+        assertThat(user.isBlackjack()).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> 유저가_블랙잭인지_확인한다_테스트_케이스() {
+        return Stream.of(
+                Arguments.of(new Cards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.ACE))), true),
+                Arguments.of(new Cards(List.of(createCard(CardNumber.TEN), createCard(CardNumber.JACK))), false),
+                Arguments.of(new Cards(List.of(
+                        createCard(CardNumber.TEN), createCard(CardNumber.JACK), createCard(CardNumber.ACE))), false
+                )
+        );
+    }
+
+    @MethodSource("유저가_버스트인지_확인한다_테스트_케이스")
+    @ParameterizedTest
+    void 유저가_버스트인지_확인한다(Cards cards, boolean expected) {
+        user.receiveCards(cards);
+
+        assertThat(user.isBust()).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> 유저가_버스트인지_확인한다_테스트_케이스() {
+        return Stream.of(
+                Arguments.of(
+                        new Cards(createCard(CardNumber.TEN), createCard(CardNumber.TEN), createCard(CardNumber.TWO)),
+                        true),
+                Arguments.of(
+                        new Cards(createCard(CardNumber.TEN), createCard(CardNumber.TEN), createCard(CardNumber.ACE)),
+                        false)
+        );
+    }
+
+    @Test
+    void 유저의_수익을_계산한다() {
+        assertThat(user.calculateProfit(1.5)).isEqualTo(BigDecimal.valueOf(1_500));
     }
 
 }
