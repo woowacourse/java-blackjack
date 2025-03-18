@@ -39,15 +39,8 @@ public class BlackJackController {
     }
 
     private Participants createGameParticipants() {
-        List<Participant> participants = new ArrayList<>();
-        // NOTE: 딜러를 생성하여 0번에 넣어줘야 한다.
-        participants.add(new Dealer());
         List<String> userNames = inputView.inputPlayerNames();
-        for (String userName : userNames) {
-            Participant participant = new Player(userName);
-            participants.add(participant);
-        }
-        return new Participants(participants);
+        return Participants.of(userNames);
     }
 
     private BatMonies createBatMonies(List<String> playerNames) {

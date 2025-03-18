@@ -1,7 +1,9 @@
 package domain.participant;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Participants {
     private static final int PLAYER_MAX_SIZE = 8;
@@ -13,6 +15,16 @@ public class Participants {
         validateParticipantSize(participants);
         validateParticipantNameDuplication(participants);
         this.participants = participants;
+    }
+
+    public static Participants of(List<String> userNames) {
+        List<Participant> participants = new ArrayList<>();
+        participants.add(new Dealer());
+        List<Player> players = userNames.stream()
+                .map(Player::new)
+                .toList();
+        participants.addAll(players);
+        return new Participants(participants);
     }
 
     private void validateParticipantSize(List<Participant> participants) {
