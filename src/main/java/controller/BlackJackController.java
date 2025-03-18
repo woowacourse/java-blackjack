@@ -63,15 +63,9 @@ public class BlackJackController {
     }
 
     private boolean isPrepareCardsBlackjack(final Dealer dealer, final List<Player> players) {
-        if (dealer.isBlackjack()) {
-            return true;
-        }
-        for (Player player : players) {
-            if (player.isBlackjack()) {
-                return true;
-            }
-        }
-        return false;
+        return dealer.isBlackjack()
+                || players.stream()
+                .anyMatch(Gamer::isBlackjack);
     }
 
     private void playerBetting(final List<Player> players, final BetSystem betSystem) {
@@ -110,7 +104,6 @@ public class BlackJackController {
             selectChoice(player, deck);
         }
         dealerHit(dealer, deck);
-
     }
 
     private void dealerHit(Dealer dealer, Deck deck) {
