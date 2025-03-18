@@ -1,25 +1,21 @@
-package blackjack.domain;
+package blackjack.domain.game;
 
-import blackjack.domain.card.BlackjackShuffle;
 import blackjack.domain.card.CardPack;
 import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Gambler;
 import blackjack.domain.player.Player;
-
-import java.util.List;
+import blackjack.domain.player.Players;
 
 public class GameManager {
 
     private final CardPack cardPack;
     private final Players players;
 
-    public GameManager(final BlackjackShuffle blackjackShuffle) {
-        cardPack = new CardPack(blackjackShuffle);
-        players = new Players();
+    public GameManager(CardPack cardPack, Players players) {
+        this.cardPack = cardPack;
+        this.players = players;
     }
 
-    public void addGamblersAndDealInitCards(List<Gambler> gamblers) {
-        players.addGamblers(gamblers);
+    public void dealInitCards() {
         players.dealInitCardsToPlayers(cardPack);
     }
 
@@ -28,12 +24,12 @@ public class GameManager {
     }
 
     public void dealAddCard(Player player) {
-        player.pushDealCard(cardPack, 1);
+        player.pushDealCards(cardPack.getDealCards(1));
     }
 
     public boolean isDealerHitThenDealAddCard(Dealer dealer) {
         if (dealer.isDealerHit()) {
-            dealer.pushDealCard(cardPack, 1);
+            dealer.pushDealCards(cardPack.getDealCards(1));
             return true;
         }
         return false;

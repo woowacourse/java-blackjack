@@ -1,66 +1,46 @@
 package blackjack.domain.player;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.CardPack;
+import blackjack.domain.card.Cards;
+import blackjack.domain.game.GameScore;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.IntStream;
 
 public abstract class Player {
 
-    private final Name name;
-    private final List<Card> cards;
-    private static final int MAX_HAND_VALUE = 21;
-    private static final int ACE_ADDITIONAL_VALUE = 10;
+    private final PlayerName playerName;
+    private final Cards cards;
 
-    public Player(final String name) {
-        this.name = new Name(name);
-        cards = new ArrayList<>();
+    public Player(PlayerName playerName, Cards cards) {
+        this.playerName = playerName;
+        this.cards = cards;
     }
 
-    public void pushDealCard(final CardPack cardPack, final int count) {
-        IntStream.range(0, count)
-                .mapToObj(i -> cardPack.getDeal())
-                .forEach(cards::add);
+    public void pushDealCards(final List<Card> cards) {
+        this.cards.addAll(cards);
+    }
+
+    public GameScore getGameScore() {
+        return cards.getGameScore();
     }
 
     public boolean isPlayerBust() {
-        return calculateCardNumber() > MAX_HAND_VALUE;
+        return getGameScore().isBust();
     }
 
     public boolean isPlayerNotBust() {
         return !isPlayerBust();
     }
 
-    public int calculateCardNumber() {
-        int sum = cards.stream()
-                .mapToInt(Card::getValue)
-                .sum();
-        if (canCalculateAceWithEleven(sum)) {
-            sum += 10;
-        }
-        return sum;
-    }
-
     public String getName() {
-        return name.getName();
+        return playerName.name();
     }
 
     abstract public List<Card> getOpenedCards();
 
     public List<Card> getCards() {
-        return cards;
-    }
-
-    private boolean canCalculateAceWithEleven(int sum) {
-        return hasAce() && sum + ACE_ADDITIONAL_VALUE <= MAX_HAND_VALUE;
-    }
-
-    private boolean hasAce() {
-        return cards.stream()
-                .anyMatch(Card::isAce);
+        return cards.getCards();
     }
 
     @Override
@@ -68,11 +48,11 @@ public abstract class Player {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Player player = (Player) o;
-        return Objects.equals(name, player.name);
+        return Objects.equals(playerName, player.playerName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(playerName);
     }
 }

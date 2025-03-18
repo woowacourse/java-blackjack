@@ -1,10 +1,10 @@
-package blackjack.domain;
+package blackjack.domain.player;
 
 import blackjack.domain.card.CardPack;
-import blackjack.domain.player.Dealer;
-import blackjack.domain.player.Gambler;
+import blackjack.domain.game.GameProfits;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
@@ -12,16 +12,13 @@ public class Players {
 
     private final Dealer dealer;
     private final List<Gambler> gamblers;
+
     private static final int PLAYERS_INIT_CARD_COUNT = 2;
 
-    protected Players() {
-        dealer = new Dealer();
-        gamblers = new ArrayList<>();
-    }
-
-    public void addGamblers(List<Gambler> gamblers) {
+    public Players(Dealer dealer, List<Gambler> gamblers) {
+        this.dealer = dealer;
         validateHasDuplication(gamblers);
-        this.gamblers.addAll(gamblers);
+        this.gamblers = new ArrayList<>(gamblers);
     }
 
     private void validateHasDuplication(List<Gambler> gamblers) {
@@ -36,16 +33,16 @@ public class Players {
     }
 
     public List<Gambler> getGamblers() {
-        return gamblers;
+        return Collections.unmodifiableList(gamblers);
     }
 
     public void dealInitCardsToPlayers(CardPack cardPack) {
-        dealer.pushDealCard(cardPack, PLAYERS_INIT_CARD_COUNT);
+        dealer.pushDealCards(cardPack.getDealCards(PLAYERS_INIT_CARD_COUNT));
         gamblers.forEach(gambler ->
-                gambler.pushDealCard(cardPack, PLAYERS_INIT_CARD_COUNT));
+                gambler.pushDealCards(cardPack.getDealCards(PLAYERS_INIT_CARD_COUNT)));
     }
 
-    public GameResults getGameResult() {
-        return new GameResults(dealer, gamblers);
+    public GameProfits getGameResult() {
+        return new GameProfits(dealer, gamblers);
     }
 }
