@@ -5,23 +5,23 @@ import model.participant.role.BetOwnable;
 import model.participant.role.Bettable;
 
 public final class Bet {
-    private final int money;
+    private final Money money;
     private final Bettable better;
     private final BetOwnable owner;
 
-    public Bet(final int money, final Bettable better) {
+    public Bet(final Money money, final Bettable better) {
         this(money, better, better);
     }
 
-    public Bet(final int money, final Bettable better, final BetOwnable owner) {
+    public Bet(final Money money, final Bettable better, final BetOwnable owner) {
         this.money = money;
         this.better = better;
         this.owner = owner;
     }
 
-    public Bet increase(final double rate) {
-        int increaseAmount = (int) (money * rate);
-        return new Bet(increaseAmount, better);
+    public Bet increase(final IncreasingRate increasingRate) {
+        Money increasedMoney = new Money(increasingRate.multiplyWith(money));
+        return new Bet(increasedMoney, better);
     }
 
     public Bet changeOwnerTo(final BetOwnable owner) {
@@ -30,13 +30,13 @@ public final class Bet {
 
     public int calculateBetterRevenue() {
         if (isEqualOwnerAndBetter()) {
-            return money;
+            return money.getValue();
         }
-        return -money;
+        return money.getReverseValue();
     }
 
     public int calculateOwnerRevenue() {
-        return -calculateBetterRevenue();
+        return money.getValue();
     }
 
     public boolean betterEquals(final Bettable better) {
@@ -60,8 +60,8 @@ public final class Bet {
             return false;
         }
         Bet bet = (Bet) o;
-        return money == bet.money && Objects.equals(better, bet.better) && Objects.equals(owner,
-                bet.owner);
+        return Objects.equals(money, bet.money) && Objects.equals(better, bet.better)
+                && Objects.equals(owner, bet.owner);
     }
 
     @Override

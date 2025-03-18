@@ -25,12 +25,12 @@ public final class Bets {
     public void updateBetAmount(final Bettable better) {
         Bet bet = findByBetter(better);
         this.bets.remove(bet);
-        this.bets.add(bet.increase(1.5));
+        this.bets.add(bet.increase(IncreasingRate.whenBlackjackWin()));
     }
 
     public int calculateDealerRevenue() {
         return bets.stream()
-                .mapToInt(Bet::calculateOwnerRevenue)
+                .mapToInt(bet -> -bet.calculateBetterRevenue())
                 .sum();
     }
 

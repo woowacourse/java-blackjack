@@ -1,6 +1,7 @@
 package model.betting;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.in;
 
 import model.participant.Dealer;
 import model.participant.Player;
@@ -17,10 +18,10 @@ class BetTest {
         int money = 10000;
 
         //when
-        Bet bet = new Bet(money, player);
+        Bet bet = new Bet(new Money(money), player);
 
         //then
-        assertThat(bet.equals(new Bet(money, player))).isTrue();
+        assertThat(bet.equals(new Bet(new Money(money), player))).isTrue();
     }
 
     @Test
@@ -29,13 +30,13 @@ class BetTest {
         //given
         Player player = new Player("moda");
         int money = 10000;
-        Bet bet = new Bet(money, player);
+        Bet bet = new Bet(new Money(money), player);
 
         //when
-        Bet increasedBet = bet.increase(1.5);
+        Bet increasedBet = bet.increase(new IncreasingRate(1.5));
 
         //then
-        assertThat(increasedBet.equals(new Bet(15000, player))).isTrue();
+        assertThat(increasedBet.equals(new Bet(new Money(15000), player))).isTrue();
     }
 
     @Test
@@ -45,7 +46,7 @@ class BetTest {
         Player player = new Player("moda");
         Dealer dealer = new Dealer();
         int money = 10000;
-        Bet bet = new Bet(money, player);
+        Bet bet = new Bet(new Money(money), player);
 
         //when
         Bet newBet = bet.changeOwnerTo(dealer);
@@ -60,7 +61,7 @@ class BetTest {
         //given
         Player player = new Player("moda");
         Dealer dealer = new Dealer();
-        Bet bet = new Bet(10000, player, dealer);
+        Bet bet = new Bet(new Money(10000), player, dealer);
 
         //when
         boolean same = bet.betterEquals(player);
@@ -75,7 +76,7 @@ class BetTest {
         //given
         Player player = new Player("moda");
         Dealer dealer = new Dealer();
-        Bet bet = new Bet(10000, player, dealer);
+        Bet bet = new Bet(new Money(10000), player, dealer);
 
         //when
         int betterRevenue = bet.calculateBetterRevenue();
@@ -90,7 +91,7 @@ class BetTest {
         //given
         Player player = new Player("moda");
         Dealer dealer = new Dealer();
-        Bet bet = new Bet(10000, player, dealer);
+        Bet bet = new Bet(new Money(10000), player, dealer);
 
         //when
         int ownerRevenue = bet.calculateOwnerRevenue();
@@ -104,7 +105,7 @@ class BetTest {
     void 소유자가_같을때_수익금_계산() {
         //given
         Player player = new Player("moda");
-        Bet bet = new Bet(10000, player, player);
+        Bet bet = new Bet(new Money(10000), player, player);
 
         //when
         int ownerRevenue = bet.calculateOwnerRevenue();

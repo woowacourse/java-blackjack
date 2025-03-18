@@ -2,6 +2,7 @@ package model.participant;
 
 import java.util.List;
 import model.betting.Bet;
+import model.betting.Money;
 import model.hand.HardHand;
 import model.hand.ParticipantHand;
 import model.participant.role.Bettable;
@@ -57,7 +58,7 @@ public final class Player implements Bettable, Gameable {
 
     @Override
     public Bet makeBet(final int betAmount) {
-        return new Bet(betAmount, this);
+        return new Bet(new Money(betAmount), this);
     }
 
     public String getName() {

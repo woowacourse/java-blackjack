@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import model.betting.Bet;
+import model.betting.Money;
 import model.deck.Card;
 import model.deck.CardRank;
 import model.deck.CardSuit;
@@ -74,7 +75,7 @@ class DealerTest {
         //given
         int money = 10000;
         Player better = new Player("moda");
-        Bet bet = new Bet(money, better);
+        Bet bet = new Bet(new Money(money), better);
 
         //when
         dealer.receiveBet(bet);
@@ -89,7 +90,7 @@ class DealerTest {
         //given
         int money = 10000;
         Player better = new Player("moda");
-        Bet bet = new Bet(money, better);
+        Bet bet = new Bet(new Money(money), better);
         dealer.receiveBet(bet);
 
         //then
@@ -104,9 +105,9 @@ class DealerTest {
     void 패배한_플레이어의_배팅금액은_딜러의_것이_된다() {
         //given
         Player pobi = new Player("pobi");
-        dealer.receiveBet(new Bet(10000, pobi));
+        dealer.receiveBet(new Bet(new Money(10000), pobi));
         Player jason = new Player("jason");
-        dealer.receiveBet(new Bet(20000, jason));
+        dealer.receiveBet(new Bet(new Money(20000), jason));
 
         //when
         dealer.updateBetOwnerFrom(jason);
@@ -122,9 +123,9 @@ class DealerTest {
     void 딜러는_10000원의_수익이_발생한다() {
         //given
         Player pobi = new Player("pobi");
-        dealer.receiveBet(new Bet(10000, pobi));
+        dealer.receiveBet(new Bet(new Money(10000), pobi));
         Player jason = new Player("jason");
-        dealer.receiveBet(new Bet(20000, jason));
+        dealer.receiveBet(new Bet(new Money(20000), jason));
 
         //when
         dealer.updateBetOwnerFrom(jason);
@@ -138,9 +139,9 @@ class DealerTest {
     void 딜러는_마이너스10000원의_수익이_발생한다() {
         //given
         Player pobi = new Player("pobi");
-        dealer.receiveBet(new Bet(10000, pobi));
         Player jason = new Player("jason");
-        dealer.receiveBet(new Bet(20000, jason));
+        dealer.receiveBet(new Bet(new Money(10000), pobi));
+        dealer.receiveBet(new Bet(new Money(20000), jason));
 
         //when
         dealer.updateBetOwnerFrom(pobi);

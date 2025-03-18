@@ -6,7 +6,8 @@ import java.util.List;
 import model.deck.Card;
 
 public abstract class ParticipantHand {
-    private static final int BURST_SCORE_LIMIT = 21;
+    private static final int BLACKJACK_LIMIT = 21;
+    private static final int INITIAL_DEAL_CARD_COUNT = 2;
 
     protected final List<Card> cards;
 
@@ -30,12 +31,12 @@ public abstract class ParticipantHand {
     }
 
     public boolean checkBlackJack() {
-        return this.cards.size() == 2
-                && calculateFinalScore() == 21;
+        return this.cards.size() == INITIAL_DEAL_CARD_COUNT
+                && calculateFinalScore() == BLACKJACK_LIMIT;
     }
 
     public boolean checkBurst() {
-        return calculateDefaultScore() > BURST_SCORE_LIMIT;
+        return calculateDefaultScore() > BLACKJACK_LIMIT;
     }
 
     public boolean checkScoreBelow(final int upperBound) {
