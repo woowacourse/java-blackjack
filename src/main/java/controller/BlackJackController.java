@@ -3,15 +3,12 @@ package controller;
 import domain.BlackJackGame;
 import domain.BlackJackResultCalculator;
 import domain.ParticipantsResult;
-import domain.betting.BatMoney;
-import domain.betting.BatMonies;
+import domain.betting.BetMoney;
+import domain.betting.BetMonies;
 import domain.betting.Revenues;
 import domain.card.CardBundle;
 import domain.card.CardDeck;
-import domain.participant.Dealer;
-import domain.participant.Participant;
 import domain.participant.Participants;
-import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
@@ -29,13 +26,13 @@ public class BlackJackController {
 
     public void start(CardBundle cardBundle) {
         Participants participants = createGameParticipants();
-        BatMonies batMonies = createBatMonies(participants.getPlayerNames());
+        BetMonies betMonies = createBetMonies(participants.getPlayerNames());
         CardDeck cardDeck = new CardDeck(cardBundle.getShuffledAllCards());
         BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
         giveStartingCardsToParticipants(blackJackGame);
         processCardReceiving(blackJackGame);
         calculateBackJackResultProcess(participants);
-        calculateBlackjackRevenue(blackJackGame, batMonies);
+        calculateBlackjackRevenue(blackJackGame, betMonies);
     }
 
     private Participants createGameParticipants() {
@@ -43,13 +40,13 @@ public class BlackJackController {
         return Participants.of(userNames);
     }
 
-    private BatMonies createBatMonies(List<String> playerNames) {
-        List<BatMoney> batMonies = new ArrayList<>();
+    private BetMonies createBetMonies(List<String> playerNames) {
+        List<BetMoney> betMonies = new ArrayList<>();
         for (String playerName : playerNames) {
-            int money = inputView.inputPlayerBatMoney(playerName);
-            batMonies.add(new BatMoney(playerName, money));
+            int money = inputView.inputPlayerBetMoney(playerName);
+            betMonies.add(new BetMoney(playerName, money));
         }
-        return new BatMonies(batMonies);
+        return new BetMonies(betMonies);
     }
 
     private void giveStartingCardsToParticipants(BlackJackGame blackJackGame) {
@@ -108,8 +105,8 @@ public class BlackJackController {
         outputView.printGameResult(participantsResult);
     }
 
-    private void calculateBlackjackRevenue(BlackJackGame blackJackGame, BatMonies batMonies) {
-        Revenues revenues = blackJackGame.calculateRevenue(batMonies);
+    private void calculateBlackjackRevenue(BlackJackGame blackJackGame, BetMonies betMonies) {
+        Revenues revenues = blackJackGame.calculateRevenue(betMonies);
         outputView.printRevenue(revenues);
     }
 }

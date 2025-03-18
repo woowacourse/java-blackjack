@@ -6,21 +6,21 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BatMoniesTest {
+class BetMoniesTest {
 
     @Test
     @DisplayName("참여자의 이름을 토대로 배팅 정보를 가져온다.")
-    void should_return_batMoney_by_player_name() {
+    void should_return_betMoney_by_player_name() {
         // given
         String playerName = "a";
         int money = 10000;
-        BatMoney batMoney = new BatMoney(playerName, money);
-        BatMonies batMonies = new BatMonies(List.of(batMoney));
+        BetMoney betMoney = new BetMoney(playerName, money);
+        BetMonies betMonies = new BetMonies(List.of(betMoney));
 
         // when
-        BatMoney foundBatMoney = batMonies.findByPlayerName(playerName);
+        BetMoney foundBetMoney = betMonies.findByPlayerName(playerName);
 
         // then
-        assertThat(foundBatMoney).isEqualTo(batMoney);
+        assertThat(foundBetMoney).isEqualTo(betMoney);
     }
 }
