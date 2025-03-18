@@ -3,6 +3,7 @@ package view;
 import controller.Answer;
 import domain.participant.Player;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,7 +21,16 @@ public class InputView {
         return Arrays.stream(names).map(String::trim).toList();
     }
 
-    public Answer readYesOrNo(Player player) {
+    public int readBettingAmount(String name) {
+        System.out.printf("%s의 배팅 금액은?%n", name);
+        try {
+            return scanner.nextInt();
+        } catch (InputMismatchException e) {
+            throw new IllegalArgumentException("정수 형식이 아닙니다.");
+        }
+    }
+
+    public Answer readPlayerHit(Player player) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", player.getName());
         return Answer.of(scanner.nextLine());
     }

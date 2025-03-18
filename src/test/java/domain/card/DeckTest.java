@@ -1,14 +1,10 @@
-package domain;
+package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.card.Card;
-import domain.card.CardNumber;
-import domain.card.CardShape;
-import domain.card.Deck;
-import domain.card.Hand;
 import domain.card.cardsGenerator.RandomCardsGenerator;
+import domain.participant.Money;
 import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,14 +44,10 @@ public class DeckTest {
         assertThat(outputCards).doesNotHaveDuplicates();
     }
 
-    @DisplayName("덱은 52장의 카드를 갖고 있다.")
     @Test
-    void 덱은_52장() {
+    void 덱에_카드가_없을_때_카드를_뽑으면_예외를_발생시킨다() {
         // given
-        Deck deck = new Deck(new RandomCardsGenerator());
-        for (int i = 0; i < 52; ++i) {
-            deck.pick();
-        }
+        Deck deck = new Deck(new StaticCardGenerator());
 
         // when & then
         assertThatThrownBy(deck::pick).isInstanceOf(IllegalStateException.class);
@@ -67,9 +59,9 @@ public class DeckTest {
         //given
         Card card = new Card(CardNumber.A, CardShape.CLOVER);
         Deck deck = new Deck(new StaticCardGenerator(List.of(card)));
-        Player player = Player.init("플레이어");
+        Player player = Player.init("플레이어", Money.of(100000));
 
-        Player expected = Player.from("플레이어", Hand.of(List.of(card)));
+        Player expected = Player.of(Hand.of(List.of(card)), "플레이어", Money.of(100000));
 
         //when
         deck.giveCardTo(player, 1);

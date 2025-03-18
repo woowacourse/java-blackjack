@@ -3,6 +3,7 @@ package domain.participant;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class Players {
 
@@ -10,10 +11,21 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<Player> players) {
+    private Players(List<Player> players) {
         validateDuplicate(players);
         validateSize(players);
         this.players = players;
+    }
+
+    public static Players of(List<Player> players) {
+        return new Players(players);
+    }
+
+    public static Players of(List<String> names, List<Money> monies) {
+        return new Players(
+                IntStream.range(0, names.size())
+                        .mapToObj(i -> Player.init(names.get(i), monies.get(i))).toList()
+        );
     }
 
     private void validateDuplicate(List<Player> players) {

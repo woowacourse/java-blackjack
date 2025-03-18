@@ -41,6 +41,53 @@ public class Dealer extends Participant {
         deck.giveCardTo(participant, count);
     }
 
+    public GameResult judgeResult(Player player) {
+        if (isPlayerBlackJackWin(player)) {
+            return GameResult.BLACKJACK;
+        }
+        if (isPlayerWin(player)) {
+            return GameResult.WIN;
+        }
+        if (isPlayerLose(player)) {
+            return GameResult.LOSE;
+        }
+        return GameResult.DRAW;
+    }
+
+    private boolean isPlayerBlackJackWin(Player player) {
+        return player.isBlackJack() && !this.isBlackJack();
+    }
+
+    private boolean isPlayerWin(Player player) {
+        return (this.isBurst() && !player.isBurst()) ||
+                (!player.isBurst() && player.calculateScore() > this.calculateScore());
+    }
+
+    private boolean isPlayerLose(Player player) {
+        return player.isBurst() || (player.calculateScore() < this.calculateScore()) && !this.isBurst();
+    }
+
+    public Map<Player, Money> getPlayersRevenue(Players players) {
+        return players.getPlayers().stream()
+                .collect(Collectors.toMap(player -> player, this::calculateRevenue));
+    }
+
+    private Money calculateRevenue(Player player) {
+        GameResult result = judgeResult(player);
+        return player.calculateRevenue(result);
+    }
+
+    public Map<Player, GameResult> getGameResult(Players players) {
+        return players.getPlayers().stream()
+                .collect(Collectors.toMap(player -> player, this::judgeResult));
+    }
+
+    public int getNewCardCount() {
+        int beforeCount = super.handSize();
+        drawUntilLimit();
+        return super.handSize() - beforeCount;
+    }
+
     public void drawUntilLimit() {
         while (hasToDraw()) {
             deck.giveCardTo(this, 1);
@@ -49,16 +96,6 @@ public class Dealer extends Participant {
 
     private boolean hasToDraw() {
         return this.calculateScore() <= DRAW_BOUNDARY;
-    }
-
-
-    public Map<Player, GameResult> getGameResult(Players players) {
-        return players.getPlayers().stream()
-                .collect(Collectors.toMap(player -> player, player -> GameResult.getResult(player, this)));
-    }
-
-    public int getNewCardCount() {
-        return super.handSize() - INIT_COUNT;
     }
 
     @Override

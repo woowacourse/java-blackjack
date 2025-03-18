@@ -2,223 +2,52 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.card.Card;
-import domain.card.CardNumber;
-import domain.card.CardShape;
-import domain.card.Hand;
-import domain.participant.Dealer;
-import domain.participant.Player;
-import java.util.List;
-import java.util.stream.Stream;
+import domain.participant.Money;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.MethodSource;
 
 class GameResultTest {
-    @DisplayName("승리를 패배로, 패배를 승리로 바꾼다")
-    @ParameterizedTest
-    @CsvSource({
-            "WIN, LOSE",
-            "LOSE, WIN"
-    })
-    void test(GameResult origin, GameResult expected) {
-        //when
-        GameResult actual = origin.getReverse();
-        //then
-        assertThat(actual).isEqualTo(expected);
-    }
 
-    @DisplayName("게임 결과를 올바르게 반환할 수 있다.")
-    @ParameterizedTest
-    @MethodSource("createGameResultCase")
-    void 게임_결과_반환(List<Card> self, List<Card> other, GameResult expected) {
+    @DisplayName("블랙잭으로 이긴 경우 수익은 배팅금의 1.5배이다")
+    @Test
+    void test1() {
         // given
-        Hand playerHand = Hand.of(self);
-        Hand dealerHand = Hand.of(other);
-        Player player = Player.from("player", playerHand);
-        Dealer dealer = Dealer.of(dealerHand, new StaticCardGenerator());
-
+        Money money = Money.of(100000);
         // when
-        GameResult actual = GameResult.getResult(player, dealer);
-
+        Money expected = GameResult.BLACKJACK.applyReturnRate(money);
         // then
-        assertThat(actual).isSameAs(expected);
+        assertThat(expected).isEqualTo(Money.of(150000));
     }
 
-    private static Stream createGameResultCase() {
-        return Stream.of(
-                Arguments.of(
-                        // 21
-                        List.of(
-                                new Card(CardNumber.A, CardShape.CLOVER),
-                                new Card(CardNumber.QUEEN, CardShape.CLOVER)
-                        ),
-                        // 12
-                        List.of(
-                                new Card(CardNumber.TEN, CardShape.CLOVER),
-                                new Card(CardNumber.TWO, CardShape.CLOVER)
-                        ),
-                        "WIN"
-                ),
-                Arguments.of(
-                        // 12
-                        List.of(
-                                new Card(CardNumber.QUEEN, CardShape.CLOVER),
-                                new Card(CardNumber.TWO, CardShape.CLOVER)
-                        ),
-                        // 13
-                        List.of(
-                                new Card(CardNumber.A, CardShape.CLOVER),
-                                new Card(CardNumber.TEN, CardShape.CLOVER),
-                                new Card(CardNumber.TWO, CardShape.CLOVER)
-                        ),
-                        "LOSE"
-                ),
-                Arguments.of(
-                        // 22
-                        List.of(
-                                new Card(CardNumber.TEN, CardShape.CLOVER),
-                                new Card(CardNumber.QUEEN, CardShape.CLOVER),
-                                new Card(CardNumber.TWO, CardShape.CLOVER)
-                        ),
-                        // 22
-                        List.of(
-                                new Card(CardNumber.TEN, CardShape.CLOVER),
-                                new Card(CardNumber.QUEEN, CardShape.CLOVER),
-                                new Card(CardNumber.TWO, CardShape.CLOVER)
-                        ),
-                        "LOSE"
-                ),
-                Arguments.of(
-                        // 20
-                        List.of(
-                                new Card(CardNumber.TEN, CardShape.CLOVER),
-                                new Card(CardNumber.QUEEN, CardShape.CLOVER)
-                        ),
-                        // 20
-                        List.of(
-                                new Card(CardNumber.JACK, CardShape.CLOVER),
-                                new Card(CardNumber.KING, CardShape.CLOVER)
-                        ),
-                        "DRAW"
-                )
-        );
-    }
-
-    @DisplayName("두 명 모두 버스트가 아닌 경우, 합이 더 큰 사람이 승리한다")
     @Test
-    void 승패_검증() {
+    void 숫자로_이긴_경우_수익은_배팅금의_1배이다() {
         // given
-        Hand playerHand = Hand.of(List.of(
-                new Card(CardNumber.TEN, CardShape.CLOVER),
-                new Card(CardNumber.THREE, CardShape.CLOVER)
-        ));
-        Hand dealerHand = Hand.of(List.of(
-                new Card(CardNumber.TEN, CardShape.CLOVER),
-                new Card(CardNumber.TWO, CardShape.CLOVER)
-        ));
-        Player player = Player.from("player", playerHand);
-        Dealer dealer = Dealer.of(dealerHand, new StaticCardGenerator());
-
+        Money money = Money.of(100000);
         // when
-        GameResult actual = GameResult.getResult(player, dealer);
-
-        //then
-        assertThat(actual).isEqualTo(GameResult.WIN);
+        Money expected = GameResult.WIN.applyReturnRate(money);
+        // then
+        assertThat(expected).isEqualTo(Money.of(100000));
     }
 
-    @DisplayName("플레이어의 카드가 버스트인 경우, 패배한다")
     @Test
-    void 플레이어의_카드가_버스트인_경우_패배한다() {
+    void 비긴_경우_수익은_배팅금의_0배이다() {
         // given
-        Hand playerHand = Hand.of(List.of(
-                new Card(CardNumber.TEN, CardShape.CLOVER),
-                new Card(CardNumber.TEN, CardShape.CLOVER),
-                new Card(CardNumber.TWO, CardShape.CLOVER)
-        ));
-        Hand dealerHand = Hand.of(List.of(
-                new Card(CardNumber.TEN, CardShape.CLOVER),
-                new Card(CardNumber.TWO, CardShape.CLOVER)
-        ));
-        Player player = Player.from("player", playerHand);
-        Dealer dealer = Dealer.of(dealerHand, new StaticCardGenerator());
-
+        Money money = Money.of(100000);
         // when
-        GameResult actual = GameResult.getResult(player, dealer);
-
-        //then
-        assertThat(actual).isEqualTo(GameResult.LOSE);
+        Money expected = GameResult.DRAW.applyReturnRate(money);
+        // then
+        assertThat(expected).isEqualTo(Money.of(0));
     }
 
-    @DisplayName("딜러가 버스트인 경우, 승리한다")
+    @DisplayName("비긴 경우 수깅은 배팅금의 -1배이다")
     @Test
-    void 딜러가_버스트인_경우_승리한다() {
+    void test2() {
         // given
-        Hand playerHand = Hand.of(List.of(
-                new Card(CardNumber.TEN, CardShape.CLOVER),
-                new Card(CardNumber.A, CardShape.CLOVER)
-        ));
-        Hand dealerHand = Hand.of(List.of(
-                new Card(CardNumber.TEN, CardShape.CLOVER),
-                new Card(CardNumber.TEN, CardShape.CLOVER),
-                new Card(CardNumber.TWO, CardShape.CLOVER)
-        ));
-        Player player = Player.from("player", playerHand);
-        Dealer dealer = Dealer.of(dealerHand, new StaticCardGenerator());
-
+        Money money = Money.of(100000);
         // when
-        GameResult actual = GameResult.getResult(player, dealer);
-
-        //then
-        assertThat(actual).isEqualTo(GameResult.WIN);
+        Money expected = GameResult.LOSE.applyReturnRate(money);
+        // then
+        assertThat(expected).isEqualTo(Money.of(-100000));
     }
 
-    @DisplayName("모두 버스트가 아니면서 합이 같으면 비긴다")
-    @Test
-    void 두명_모두_버스트가_아니면서_합이_같으면_비긴다() {
-        // given
-        Hand playerHand = Hand.of(List.of(
-                new Card(CardNumber.TEN, CardShape.CLOVER),
-                new Card(CardNumber.TWO, CardShape.CLOVER)
-        ));
-        Hand dealerHand = Hand.of(List.of(
-                new Card(CardNumber.TEN, CardShape.CLOVER),
-                new Card(CardNumber.TWO, CardShape.CLOVER)
-        ));
-        Player player = Player.from("player", playerHand);
-        Dealer dealer = Dealer.of(dealerHand, new StaticCardGenerator());
-
-        // when
-        GameResult actual = GameResult.getResult(player, dealer);
-
-        //then
-        assertThat(actual).isEqualTo(GameResult.DRAW);
-    }
-
-    @DisplayName("둘 다 버스트인 경우, 패배한다")
-    @Test
-    void 둘_다_버스트인_경우_패배한다() {
-        // given
-        Hand playerHand = Hand.of(List.of(
-                new Card(CardNumber.TEN, CardShape.CLOVER),
-                new Card(CardNumber.TEN, CardShape.CLOVER),
-                new Card(CardNumber.TWO, CardShape.CLOVER)
-        ));
-        Hand dealerHand = Hand.of(List.of(
-                new Card(CardNumber.TEN, CardShape.CLOVER),
-                new Card(CardNumber.TEN, CardShape.CLOVER),
-                new Card(CardNumber.TWO, CardShape.CLOVER)
-        ));
-        Player player = Player.from("player", playerHand);
-        Dealer dealer = Dealer.of(dealerHand, new StaticCardGenerator());
-
-        // when
-        GameResult actual = GameResult.getResult(player, dealer);
-
-        //then
-        assertThat(actual).isEqualTo(GameResult.LOSE);
-    }
 }
