@@ -8,7 +8,8 @@ import java.util.List;
 
 public class Hand {
 
-    private static final int MAX_SCORE = 21;
+    private static final int WIN_SCORE = 21;
+    private static final int BLACKJACK_HAND_SIZE = 2;
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -48,7 +49,7 @@ public class Hand {
     }
 
     private int calculateAcePoint(int totalPoint, Rank ace) {
-        if (totalPoint + Rank.SOFT_ACE.getPoint() > MAX_SCORE) {
+        if (totalPoint + Rank.SOFT_ACE.getPoint() > WIN_SCORE) {
             return ace.getPoint();
         }
         return Rank.SOFT_ACE.getPoint();
@@ -78,7 +79,11 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return calculateTotalScore() > MAX_SCORE;
+        return calculateTotalScore() > WIN_SCORE;
+    }
+
+    public boolean isBlackjack() {
+        return (calculateTotalScore() == WIN_SCORE && cards.size() == BLACKJACK_HAND_SIZE);
     }
 
     private MatchResult checkBustResult(final Hand other) {
@@ -97,9 +102,5 @@ public class Hand {
 
     public List<Card> getCards() {
         return cards;
-    }
-
-    public boolean isBlackjack() {
-        return (calculateTotalScore() == 21 && cards.size() == 2);
     }
 }
