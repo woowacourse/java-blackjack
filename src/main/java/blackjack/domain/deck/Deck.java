@@ -1,14 +1,12 @@
 package blackjack.domain.deck;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.TrumpCards;
 
-import java.util.ArrayDeque;
-import java.util.Collections;
-import java.util.Deque;
-import java.util.List;
+import java.util.*;
 
 public final class Deck implements CardDrawer {
-
+    
     private final Deque<Card> cards;
     
     public Deck() {
@@ -16,7 +14,7 @@ public final class Deck implements CardDrawer {
     }
     
     private Deque<Card> initCards() {
-        final List<Card> cards = Card.createTrumpCards();
+        final List<Card> cards = new ArrayList<>(TrumpCards.createTrumpCards());
         Collections.shuffle(cards);
         return new ArrayDeque<>(cards);
     }

@@ -6,11 +6,7 @@ import java.util.List;
 
 public final class BlackjackDeck implements BlackjackCardHandInitializer, CardDrawer {
     
-    private final Deck deck;
-    
-    public BlackjackDeck() {
-        this.deck = new Deck();
-    }
+    private final Deck deck = new Deck();
     
     @Override
     public List<Card> handoutInitialCards() {
@@ -19,6 +15,6 @@ public final class BlackjackDeck implements BlackjackCardHandInitializer, CardDr
     
     @Override
     public Card draw() {
-         return deck.draw();
+        return deck.draw();
     }
 }

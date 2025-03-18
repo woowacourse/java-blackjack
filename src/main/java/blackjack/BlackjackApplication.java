@@ -1,27 +1,26 @@
 package blackjack;
 
 import blackjack.controller.BlackjackController;
-import blackjack.controller.Controller;
-import blackjack.controller.ExceptionMessagePrintControllerProxy;
-import blackjack.service.BlackjackService;
+import blackjack.util.RetryHandler;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.reader.SystemReader;
 import blackjack.view.writer.SystemWriter;
 
-public class BlackjackApplication {
+public final class BlackjackApplication {
     
     public static void main(String[] args) {
         getController().run();
     }
     
-    private static Controller getController() {
+    private static BlackjackController getController() {
         final SystemWriter writer = new SystemWriter();
-        final Controller controller = new BlackjackController(
-                new InputView(writer, new SystemReader()),
-                new OutputView(writer),
-                new BlackjackService()
+        final OutputView outputView = new OutputView(writer);
+        final RetryHandler retryHandler = new RetryHandler(outputView);
+        return new BlackjackController(
+                new InputView(writer, new SystemReader(), retryHandler),
+                outputView,
+                retryHandler
         );
-        return new ExceptionMessagePrintControllerProxy(controller, writer);
     }
 }

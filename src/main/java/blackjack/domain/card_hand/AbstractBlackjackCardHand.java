@@ -2,23 +2,36 @@ package blackjack.domain.card_hand;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.deck.BlackjackCardHandInitializer;
+import blackjack.util.GlobalValidator;
 
 import java.util.List;
 
-public final class BlackjackCardHand implements BlackjackWinDeterminable {
+public abstract class AbstractBlackjackCardHand {
     
     private static final int BUST_THRESHOLD = 21;
-    private static final int BLACK_JACK_MAX_SUM = 21;
-    public static final int BLACK_JACK_CARD_COUNT = 2;
+    private static final int BLACK_JACK_SUM = 21;
+    private static final int BLACK_JACK_CARD_COUNT = 2;
     
     private final CardHand cardHand;
     
-    public BlackjackCardHand(final BlackjackCardHandInitializer initializer) {
-        this.cardHand = new CardHand();
-        this.cardHand.addCards(initializer.handoutInitialCards());
+    protected AbstractBlackjackCardHand(final BlackjackCardHandInitializer initializer) {
+        GlobalValidator.validateNotNull(initializer);
+        final CardHand cardHand = new CardHand();
+        cardHand.addCards(initializer.handoutInitialCards());
+        this.cardHand = cardHand;
     }
     
-    @Override
+    abstract List<Card> getInitialCards();
+    
+    /**
+     * 카드를 한장 추가하는 기능입니다.
+     * 만약 카드를 한장 추가하는 기능을 외부로 노출시켜야 하는 경우에는 public 으로 재정의하여 사용하세요.
+     * @param card 추가할 카드
+     */
+    protected void addCard(Card card) {
+        cardHand.addCard(card);
+    }
+    
     public int getBlackjackSum() {
         List<Integer> sums = calculatePossibleSums();
         int minSum = findMinimumSum(sums);
@@ -27,16 +40,6 @@ public final class BlackjackCardHand implements BlackjackWinDeterminable {
             return minSum;
         }
         return findClosestToBlackjack(sums);
-    }
-    
-    @Override
-    public boolean isBust() {
-        return getBlackjackSum() > BLACK_JACK_MAX_SUM;
-    }
-    
-    @Override
-    public boolean isBlackjack() {
-        return getBlackjackSum() == BLACK_JACK_MAX_SUM && cardHand.getCardCount() == BLACK_JACK_CARD_COUNT;
     }
     
     private List<Integer> calculatePossibleSums() {
@@ -73,11 +76,19 @@ public final class BlackjackCardHand implements BlackjackWinDeterminable {
         return cardHand.getCards();
     }
     
-    public void addCard(Card card) {
-        cardHand.addCard(card);
-    }
-    
     public int getCardCount() {
         return cardHand.getCardCount();
+    }
+    
+    public boolean isBust() {
+        return getBlackjackSum() > BUST_THRESHOLD;
+    }
+    
+    public boolean isAddedUpToMax() {
+        return getBlackjackSum() == BLACK_JACK_SUM;
+    }
+    
+    public boolean isBlackjack() {
+        return getBlackjackSum() == BLACK_JACK_SUM && cardHand.getCardCount() == BLACK_JACK_CARD_COUNT;
     }
 }

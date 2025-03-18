@@ -1,16 +1,15 @@
-package blackjack.domain;
+package blackjack.domain.deck;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardNumber;
+import blackjack.domain.card.CardShape;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.EnumMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardNumber;
-import blackjack.domain.card.CardShape;
-import blackjack.domain.deck.BlackjackDeck;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 public class BlackjackDeckTest {
     
@@ -30,7 +29,7 @@ public class BlackjackDeckTest {
         for (int i = 0; i < 52; i++) {
             deck.draw();
         }
-
+        
         // expected
         assertThatThrownBy(() -> deck.draw())
                 .isInstanceOf(IllegalStateException.class);

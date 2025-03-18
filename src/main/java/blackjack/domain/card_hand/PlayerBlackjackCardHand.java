@@ -3,61 +3,33 @@ package blackjack.domain.card_hand;
 import blackjack.domain.card.Card;
 import blackjack.domain.deck.BlackjackCardHandInitializer;
 import blackjack.domain.player.Player;
+import blackjack.util.GlobalValidator;
 
 import java.util.List;
 
-public final class PlayerBlackjackCardHand implements BlackjackWinDeterminable {
+public final class PlayerBlackjackCardHand extends AbstractBlackjackCardHand {
     
-    private final BlackjackCardHand cardHand;
     private final Player player;
     
-    public PlayerBlackjackCardHand(final Player player, final BlackjackCardHandInitializer initializer) {
-        validateNotNull(player, initializer);
-        this.cardHand = new BlackjackCardHand(initializer);
+    public PlayerBlackjackCardHand(final BlackjackCardHandInitializer initializer, final Player player) {
+        super(initializer);
+        GlobalValidator.validateNotNull(player);
         this.player = player;
     }
     
-    private void validateNotNull(final Player player, final BlackjackCardHandInitializer initializer) {
-        if (player == null) {
-            throw new IllegalArgumentException("플레이어는 null이 될 수 없습니다.");
-        }
-        if (initializer == null) {
-            throw new IllegalArgumentException("초기 카드 지급 방식은 null이 될 수 없습니다.");
-        }
-    }
-    
+    @Override
     public List<Card> getInitialCards() {
-        return List.of(cardHand.getCards().getFirst(), cardHand.getCards().get(1));
+        return getCards().stream()
+                .limit(2)
+                .toList();
     }
     
+    @Override
     public void addCard(final Card card) {
-        cardHand.addCard(card);
+        super.addCard(card);
     }
     
     public String getPlayerName() {
         return player.getName();
-    }
-    
-    public List<Card> getCards() {
-        return cardHand.getCards();
-    }
-    
-    @Override
-    public int getBlackjackSum() {
-        return cardHand.getBlackjackSum();
-    }
-    
-    @Override
-    public boolean isBlackjack() {
-        return cardHand.isBlackjack();
-    }
-    
-    @Override
-    public boolean isBust() {
-        return cardHand.isBust();
-    }
-    
-    public boolean isAddedTo21() {
-        return getBlackjackSum() == 21;
     }
 }

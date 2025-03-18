@@ -1,40 +1,83 @@
 package blackjack.controller;
 
-import blackjack.domain.BlackjackGame;
-import blackjack.domain.BlackjackJudge;
-import blackjack.service.BlackjackService;
+import blackjack.domain.card_hand.DealerBlackjackCardHand;
+import blackjack.domain.card_hand.PlayerBettingBlackjackCardHand;
+import blackjack.domain.deck.BlackjackDeck;
+import blackjack.domain.deck.CardDrawer;
+import blackjack.domain.player.Players;
+import blackjack.util.RetryHandler;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.List;
+import java.util.Map;
 
-public class BlackjackController implements Controller {
+public final class BlackjackController {
     
     private final InputView inputView;
     private final OutputView outputView;
-    private final BlackjackService blackjackService;
+    private final RetryHandler retryHandler;
     
-    public BlackjackController(final InputView inputView, final OutputView outputView, final BlackjackService blackjackService) {
+    public BlackjackController(final InputView inputView, final OutputView outputView, final RetryHandler retryHandler) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.blackjackService = blackjackService;
+        this.retryHandler = retryHandler;
     }
     
-    @Override
     public void run() {
-        final List<String> playerNames = inputView.getPlayerNames();
-        final BlackjackGame game = BlackjackGame.from(playerNames);
-        outputView.outputInitialCards(game.getDealerHand(), game.getPlayerHands());
-        blackjackService.addPlayerCards(
-                game,
-                outputView::outputAddingMessage,
-                outputView::addTo21Warning,
-                outputView::bustWarning,
-                inputView::getAddingCardDecision,
-                outputView::outputCardsAndSum
-        );
-        blackjackService.addDealerCards(game, outputView::outputDealerAddedCards);
-        outputView.outputOpenCards(game.getDealerHand(), game.getPlayerHands());
-        outputView.outputFinalWinOrLoss(BlackjackJudge.from(game));
+        final Players players = createPlayersUntilSuccess();
+        final BlackjackDeck deck = new BlackjackDeck();
+        final DealerBlackjackCardHand dealerHands = new DealerBlackjackCardHand(deck);
+        final List<PlayerBettingBlackjackCardHand> playerHands = createPlayerHandsUntilSuccess(players, deck);
+        outputView.outputInitialCards(dealerHands, playerHands);
+        addPlayerCards(playerHands, deck);
+        addDealerCards(dealerHands, deck);
+        outputView.outputOpenCards(dealerHands, playerHands);
+        outputView.outputFinalProfit(dealerHands, playerHands);
+    }
+    
+    private Players createPlayersUntilSuccess() {
+        return retryHandler.runWithRetry(() -> {
+            final List<String> playerNames = inputView.getPlayerNames();
+            return Players.from(playerNames);
+        });
+    }
+    
+    private List<PlayerBettingBlackjackCardHand> createPlayerHandsUntilSuccess(final Players players, final BlackjackDeck deck) {
+        return retryHandler.runWithRetry(() -> {
+            final Map<String, Integer> bettingAmounts = inputView.getBettingAmounts(players.getPlayerNames());
+            return players.toBlackjackBettingCardHand(deck, bettingAmounts);
+        });
+    }
+    
+    private void addPlayerCards(final List<PlayerBettingBlackjackCardHand> playerHands, final CardDrawer cardDrawer) {
+        for (PlayerBettingBlackjackCardHand playerHand : playerHands) {
+            outputView.outputAddingMessage(playerHand.getPlayerName());
+            outputView.outputCardsAndSum(playerHand);
+            startAddingPlayerCards(cardDrawer, playerHand);
+        }
+    }
+    
+    private void startAddingPlayerCards(final CardDrawer cardDrawer, final PlayerBettingBlackjackCardHand playerHand) {
+        while (true) {
+            if (playerHand.isAddedUpToMax()) {
+                outputView.reachedMaxWarning();
+                return;
+            }
+            if (playerHand.isBust()) {
+                outputView.bustWarning();
+                return;
+            }
+            if (!inputView.getAddingCardDecision(playerHand.getPlayerName())) {
+                return;
+            }
+            playerHand.addCard(cardDrawer.draw());
+            outputView.outputCardsAndSum(playerHand);
+        }
+    }
+    
+    private void addDealerCards(final DealerBlackjackCardHand dealerHand, final CardDrawer cardDrawer) {
+        final int addedSize = dealerHand.startAddingAndGetAddedSize(cardDrawer);
+        outputView.outputDealerAddedCards(addedSize);
     }
 }
