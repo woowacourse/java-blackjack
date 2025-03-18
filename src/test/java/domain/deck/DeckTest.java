@@ -1,8 +1,9 @@
-package domain;
+package domain.deck;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.TrumpCard;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

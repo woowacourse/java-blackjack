@@ -2,6 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.participant.state.hand.Score;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -43,8 +44,26 @@ class GameResultTest {
         static Stream<Arguments> provideDrawCases() {
             return Stream.of(
                     Arguments.of(Score.TWENTY_ONE, Score.TWENTY_ONE),
+                    Arguments.of(Score.BLACKJACK, Score.BLACKJACK),
                     Arguments.of(Score.TWENTY, Score.TWENTY),
                     Arguments.of(Score.SEVENTEEN, Score.SEVENTEEN)
+            );
+        }
+
+        @ParameterizedTest
+        @DisplayName("플레이어가 블랙잭이면 BLACKJACK_WIN을을 반환한다.")
+        @MethodSource("provideBlackJackWinCases")
+        void playerBlackJackWins(Score playerScore, Score dealerScore) {
+            GameResult result = GameResult.of(playerScore, dealerScore);
+            assertThat(result).isEqualTo(GameResult.BLACKJACK_WIN);
+        }
+
+        static Stream<Arguments> provideBlackJackWinCases() {
+            return Stream.of(
+                    Arguments.of(Score.BLACKJACK, Score.TWENTY),
+                    Arguments.of(Score.BLACKJACK, Score.SEVENTEEN),
+                    Arguments.of(Score.BLACKJACK, Score.SEVEN),
+                    Arguments.of(Score.BLACKJACK, Score.BUST)
             );
         }
 

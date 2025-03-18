@@ -1,12 +1,16 @@
-package domain;
+package domain.participant;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import domain.TrumpCard;
+import domain.participant.state.Bust;
+import domain.participant.state.Started;
+import domain.participant.state.State;
+import domain.participant.state.hand.Hand;
+import domain.participant.state.hand.Score;
 import java.util.List;
 import java.util.stream.Stream;
-import org.assertj.core.api.Assertions;
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -27,8 +31,8 @@ class DealerTest {
                     TrumpCard.ACE_OF_SPADES,
                     TrumpCard.TWO_OF_SPADES
             );
-            Hand hand = new Hand(cards);
-            Dealer dealer = new Dealer(hand);
+            State state = Started.of(new Hand(cards), Score.SEVENTEEN);
+            Dealer dealer = new Dealer(state);
 
             // when
             List<TrumpCard> retrievedCards = dealer.retrieveCards();
@@ -41,18 +45,16 @@ class DealerTest {
         @Test
         void receiveCard() {
             // given
-            List<TrumpCard> cards = List.of(
-                    TrumpCard.ACE_OF_SPADES
-            );
-            Hand hand = new Hand(cards);
-            Dealer dealer = new Dealer(hand);
+            State state = Started.of(new Hand(List.of(
+                            TrumpCard.FIVE_OF_CLUBS, TrumpCard.JACK_OF_CLUBS)),
+                    Score.SEVENTEEN);
+            Dealer dealer = new Dealer(state);
 
             // when
             dealer.receiveCard(TrumpCard.TWO_OF_SPADES);
 
             // then
-            assertThat(dealer.retrieveCards()).isEqualTo(
-                    List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.TWO_OF_SPADES));
+            assertThat(dealer.retrieveCards().size()).isEqualTo(3);
         }
 
         @Test
@@ -60,14 +62,14 @@ class DealerTest {
         void calculateDealerScore() {
             // given
             List<TrumpCard> cards = List.of(TrumpCard.ACE_OF_SPADES, TrumpCard.KING_OF_HEARTS);
-            Dealer dealer = new Dealer(new Hand(cards));
-            Rule rule = new Rule();
+            State state = Started.of(new Hand(cards), Score.SEVENTEEN);
+            Dealer dealer = new Dealer(state);
 
             // when
-            Score score = dealer.calculateScore(rule);
+            Score score = dealer.calculateScore();
 
             // then
-            Assertions.assertThat(score).isEqualTo(Score.BLACKJACK);
+            assertThat(score).isEqualTo(Score.BLACKJACK);
         }
 
         @DisplayName("딜러의 첫번째 카드를 가져온다.")
@@ -78,37 +80,36 @@ class DealerTest {
                     TrumpCard.ACE_OF_SPADES,
                     TrumpCard.TWO_OF_SPADES
             );
-            Hand hand = new Hand(cards);
-            Dealer dealer = new Dealer(hand);
+            State state = Started.of(new Hand(cards), Score.SEVENTEEN);
+            Dealer dealer = new Dealer(state);
 
             // when
             TrumpCard dealerFirstCard = dealer.retrieveFirstCard();
 
             // then
-            AssertionsForClassTypes.assertThat(dealerFirstCard).isEqualTo(TrumpCard.ACE_OF_SPADES);
+            assertThat(dealerFirstCard).isEqualTo(TrumpCard.ACE_OF_SPADES);
         }
 
         @ParameterizedTest
-        @DisplayName("딜러의 히트 판단 여부를 판단한다")
+        @DisplayName("딜러의 히트 가능 여부를 확인한다")
         @MethodSource("provideDealerHitAllowedCases")
-        void isHitAllowed(List<TrumpCard> cards) {
+        void isHitAllowed(List<TrumpCard> cards, Score limitScore, boolean expected) {
             // given
-            Dealer dealer = new Dealer(new Hand(cards));
-            Rule rule = new Rule();
+            State state = Started.of(new Hand(cards), limitScore);
+            Dealer dealer = new Dealer(state);
 
             // when
-            boolean result = dealer.isHitAllowed(rule);
+            boolean result = dealer.isHitAllowed();
 
             // then
-            assertThat(result).isTrue();
+            assertThat(result).isEqualTo(expected);
         }
 
         static Stream<Arguments> provideDealerHitAllowedCases() {
             return Stream.of(
-                    Arguments.of(List.of(TrumpCard.FIVE_OF_CLUBS, TrumpCard.SIX_OF_HEARTS)),
-                    Arguments.of(List.of(TrumpCard.SEVEN_OF_DIAMONDS, TrumpCard.TWO_OF_SPADES)),
-                    Arguments.of(
-                            List.of(TrumpCard.THREE_OF_HEARTS, TrumpCard.THREE_OF_DIAMONDS, TrumpCard.TWO_OF_SPADES))
+                    Arguments.of(List.of(TrumpCard.FIVE_OF_CLUBS, TrumpCard.SIX_OF_HEARTS), Score.SEVENTEEN, true),
+                    Arguments.of(List.of(TrumpCard.SEVEN_OF_DIAMONDS, TrumpCard.TWO_OF_SPADES), Score.SEVENTEEN, true),
+                    Arguments.of(List.of(TrumpCard.TEN_OF_SPADES, TrumpCard.KING_OF_HEARTS), Score.SEVENTEEN, false)
             );
         }
     }
@@ -116,32 +117,32 @@ class DealerTest {
     @Nested
     class InvalidCases {
 
-        @DisplayName("딜러는 손패를 가져야 한다.")
+        @DisplayName("딜러는 상태를 가져야 한다.")
         @Test
         void validateNotNull() {
             // given
-            Hand nullHand = null;
+            State nullState = null;
 
             // when & then
-            assertThatThrownBy(() -> new Dealer(nullHand))
+            assertThatThrownBy(() -> new Dealer(nullState))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("참가자는 손패를 가져야합니다.");
+                    .hasMessage("참가자는 상태를 가져야합니다.");
         }
 
-        @DisplayName("딜러의 첫번째 카드를 가져올 때 딜러는 초기 카드의 개수를 가지고 있어야 한다.")
+        @DisplayName("딜러의 첫번째 카드를 가져올 때 초기 카드의 개수를 가지고 있어야 한다.")
         @Test
         void retrieveFirstCard() {
             // given
             List<TrumpCard> cards = List.of(
-                    TrumpCard.ACE_OF_SPADES
+                    TrumpCard.TEN_OF_DIAMONDS, TrumpCard.JACK_OF_CLUBS, TrumpCard.THREE_OF_SPADES
             );
-            Hand hand = new Hand(cards);
-            Dealer dealer = new Dealer(hand);
+            State state = new Bust(new Hand(cards));
+            Dealer dealer = new Dealer(state);
 
             // when & then
             assertThatThrownBy(dealer::retrieveFirstCard)
                     .isInstanceOf(IllegalStateException.class)
-                    .hasMessage("딜러는 " + BlackJackGame.INITIAL_CARD_COUNT + "장의 카드를 가지고 있어야 합니다.");
+                    .hasMessage("딜러는 " + Started.INITIAL_CARD_COUNT + "장의 카드를 가지고 있어야 합니다.");
         }
     }
 }

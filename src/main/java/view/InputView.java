@@ -24,6 +24,19 @@ public class InputView {
         }
     }
 
+    public int readBettingMoney(String playerName) {
+        System.out.printf("%s의 배팅 금액은?\n", playerName);
+        return parseBettingMoney(readInput());
+    }
+
+    private int parseBettingMoney(String bettingMoney) {
+        try {
+            return Integer.parseInt(bettingMoney);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("배팅 금액 입력 형식이 잘못되었습니다.");
+        }
+    }
+
     private String readInput() {
         return scanner.nextLine();
     }

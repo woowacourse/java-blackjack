@@ -1,5 +1,6 @@
-package domain;
+package domain.deck;
 
+import domain.TrumpCard;
 import java.util.List;
 
 @FunctionalInterface

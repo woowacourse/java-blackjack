@@ -1,5 +1,6 @@
-package domain;
+package domain.participant.state.hand;
 
+import domain.TrumpCard;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -39,6 +40,10 @@ public class Hand {
         if (cards.contains(card)) {
             throw new IllegalArgumentException("이미 손패에 있는 카드입니다.");
         }
+    }
+
+    public Score calculateScore() {
+        return Score.from(cards);
     }
 
     public List<TrumpCard> getCards() {

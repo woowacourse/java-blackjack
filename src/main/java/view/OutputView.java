@@ -1,7 +1,6 @@
 package view;
 
 import controller.dto.CardScoreDto;
-import domain.GameResult;
 import domain.TrumpCard;
 import java.util.List;
 import java.util.Map;
@@ -60,47 +59,19 @@ public class OutputView {
         return card.getRank().getTitle() + card.getSuit().getTitle();
     }
 
-    public void printGameResult(Map<String, GameResult> playerGameResults, List<GameResult> dealerGameResult) {
-        System.out.println("## 최종 승패");
-        displayDealerGameResult(dealerGameResult);
-        displayPlayerGameResult(playerGameResults);
+    public void printRevenueAmount(Map<String, Integer> playersRevenueAmount, int dealerRevenueAmount) {
+        System.out.println("## 최종 수익");
+        displayDealerRevenueAmount(dealerRevenueAmount);
+        displayPlayerRevenueAmount(playersRevenueAmount);
     }
 
-    private void displayDealerGameResult(List<GameResult> dealerGameResult) {
-        int dealerWinCount = Math.toIntExact(
-                dealerGameResult.stream().filter(gameResult -> gameResult == GameResult.WIN)
-                        .count());
-        int dealerDrawCount = Math.toIntExact(
-                dealerGameResult.stream().filter(gameResult -> gameResult == GameResult.DRAW)
-                        .count());
-        int dealerLoseCount = Math.toIntExact(
-                dealerGameResult.stream().filter(gameResult -> gameResult == GameResult.LOSE)
-                        .count());
-
-        displayDealerGameResultCount(dealerWinCount, dealerLoseCount, dealerDrawCount);
+    private void displayDealerRevenueAmount(int dealerRevenueAmount) {
+        System.out.printf("딜러: %s\n", dealerRevenueAmount);
     }
 
-    private void displayDealerGameResultCount(int dealerWinCount, int dealerLoseCount, int dealerDrawCount) {
-        StringBuilder sb = new StringBuilder("딜러: ");
-
-        if (dealerWinCount > 0) {
-            sb.append(String.format("%d승 ", dealerWinCount));
-        }
-
-        if (dealerLoseCount > 0) {
-            sb.append(String.format("%d패 ", dealerLoseCount));
-        }
-
-        if (dealerDrawCount > 0) {
-            sb.append(String.format("%d무 ", dealerDrawCount));
-        }
-
-        System.out.println(sb.toString().trim());
-    }
-
-    private void displayPlayerGameResult(Map<String, GameResult> playerGameResults) {
-        playerGameResults.forEach((playerName, gameResult) -> {
-            System.out.printf("%s: %s\n", playerName, gameResult.getTitle());
+    private void displayPlayerRevenueAmount(Map<String, Integer> playersRevenueAmount) {
+        playersRevenueAmount.forEach((playerName, revenueAmount) -> {
+            System.out.printf("%s: %s\n", playerName, revenueAmount);
         });
     }
 }

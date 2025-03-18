@@ -1,7 +1,7 @@
-package domain;
+package domain.deck;
 
+import domain.TrumpCard;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -39,7 +39,7 @@ public class Deck {
             throw new IllegalArgumentException("덱에 중복된 카드가 있습니다.");
         }
     }
-    
+
     public List<TrumpCard> drawMultiple(int count) {
         List<TrumpCard> cards = new ArrayList<>();
 
@@ -56,10 +56,6 @@ public class Deck {
         }
 
         return cards.removeLast();
-    }
-
-    public void shuffle() {
-        Collections.shuffle(cards);
     }
 
     @Override

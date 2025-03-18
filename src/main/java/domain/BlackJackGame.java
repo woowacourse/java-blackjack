@@ -1,81 +1,84 @@
 package domain;
 
-import java.util.ArrayList;
+import domain.deck.Deck;
+import domain.deck.DefaultShuffle;
+import domain.participant.BettingMoney;
+import domain.participant.Dealer;
+import domain.participant.state.hand.Hand;
+import domain.participant.Name;
+import domain.participant.Player;
+import domain.participant.state.hand.Score;
+import domain.participant.state.Started;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackJackGame {
 
-    public static final int INITIAL_CARD_COUNT = 2;
-
     private final Deck deck;
     private final Dealer dealer;
-    private final Rule rule;
+    private final Map<Name, Player> players;
 
-    public BlackJackGame(Deck deck, Dealer dealer, Rule rule) {
-        validate(deck, dealer, rule);
+    public BlackJackGame(Deck deck, Dealer dealer, Map<Name, Player> players) {
+        validate(deck, dealer, players);
         this.deck = deck;
         this.dealer = dealer;
-        this.rule = rule;
+        this.players = players;
     }
 
-    private void validate(Deck deck, Dealer dealer, Rule rule) {
-        validateNotNull(deck, dealer, rule);
+    private void validate(Deck deck, Dealer dealer, Map<Name, Player> players) {
+        validateNotNull(deck, dealer, players);
     }
 
-    private void validateNotNull(Deck deck, Dealer dealer, Rule rule) {
-        if (deck == null || dealer == null || rule == null) {
-            throw new IllegalArgumentException("블랙잭게임은 덱과 딜러와 룰을 가지고 있어야합니다.");
+    private void validateNotNull(Deck deck, Dealer dealer, Map<Name, Player> players) {
+        if (deck == null || dealer == null || players == null) {
+            throw new IllegalArgumentException("블랙잭게임은 덱과 딜러와 룰과 플레이어들을 가지고 있어야합니다.");
         }
     }
 
-    public static BlackJackGame create() {
-        Deck deck = new Deck(Arrays.asList(TrumpCard.values()), new DefaultShuffle());
-        Dealer dealer = new Dealer(new Hand(deck.drawMultiple(INITIAL_CARD_COUNT)));
-        Rule rule = new Rule();
+    public static BlackJackGame create(Map<Name, BettingMoney> playerInfos) {
+        Deck deck = new Deck(
+                Arrays.asList(TrumpCard.values()), new DefaultShuffle());
+        Dealer dealer = new Dealer(
+                Started.of(new Hand(deck.drawMultiple(Started.INITIAL_CARD_COUNT)), Score.SEVENTEEN));
+        Map<Name, Player> players = playerInfos.entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey,
+                        entry -> new Player(entry.getKey(), entry.getValue(),
+                                Started.of(
+                                        new Hand(deck.drawMultiple(Started.INITIAL_CARD_COUNT)), Score.TWENTY_ONE))));
 
-        return new BlackJackGame(deck, dealer, rule);
+        return new BlackJackGame(deck, dealer, players);
     }
 
-    public List<Player> createPlayers(List<String> names) {
-        validateNotDuplicate(names);
-        List<Player> players = new ArrayList<>();
+    public List<TrumpCard> retrievePlayerCards(Name playerName) {
+        validateContain(playerName);
 
-        names.forEach(name -> {
-            players.add(new Player(name, new Hand(deck.drawMultiple(INITIAL_CARD_COUNT))));
-        });
-
-        return players;
-    }
-
-    private void validateNotDuplicate(List<String> names) {
-        if (names.stream().distinct().count() != names.size()) {
-            throw new IllegalArgumentException("플레이어의 이름은 중복될 수 없습니다.");
-        }
+        return players.get(playerName).retrieveCards();
     }
 
     public TrumpCard retrieveDealerFirstCard() {
         return dealer.retrieveFirstCard();
     }
 
-    public boolean isPlayerHitAllowed(Player player) {
-        return player.isHitAllowed(rule);
+    public boolean isPlayerHitAllowed(Name playerName) {
+        validateContain(playerName);
+
+        return players.get(playerName).isHitAllowed();
     }
 
-    public void processPlayerHit(Player player) {
-        if (!isPlayerHitAllowed(player)) {
+    public void processPlayerHit(Name playerName) {
+        if (!isPlayerHitAllowed(playerName)) {
             throw new IllegalStateException("플레이어는 더이상 히트할 수 없습니다.");
         }
 
-        player.receiveCard(deck.draw());
+        players.get(playerName).receiveCard(deck.draw());
     }
 
     public int processDealerHit() {
         int hitCount = 0;
 
-        while (dealer.isHitAllowed(rule)) {
+        while (dealer.isHitAllowed()) {
             dealer.receiveCard(deck.draw());
             hitCount++;
         }
@@ -83,8 +86,10 @@ public class BlackJackGame {
         return hitCount;
     }
 
-    public Score calculatePlayerScore(Player player) {
-        return player.calculateScore(rule);
+    public Score calculatePlayerScore(Name playerName) {
+        validateContain(playerName);
+
+        return players.get(playerName).calculateScore();
     }
 
     public List<TrumpCard> retrieveDealerCards() {
@@ -92,19 +97,25 @@ public class BlackJackGame {
     }
 
     public Score calculateDealerScore() {
-        return dealer.calculateScore(rule);
+        return dealer.calculateScore();
     }
 
-    public Map<String, GameResult> calculateGameResults(List<Player> players) {
-        Map<String, GameResult> results = new HashMap<>();
+    public Integer calculatePlayerRevenueAmount(Name playerName) {
+        validateContain(playerName);
+        Player player = players.get(playerName);
 
-        players.forEach(player -> {
-            List<TrumpCard> playerCards = player.retrieveCards();
-            GameResult gameResult = dealer.calculateGameResult(rule, playerCards);
+        Score playerScore = player.calculateScore();
+        Score dealerScore = dealer.calculateScore();
+        GameResult gameResult = GameResult.of(playerScore, dealerScore);
 
-            results.put(player.getName(), gameResult);
-        });
+        BettingMoney bettingMoney = player.getBettingMoney();
 
-        return results;
+        return bettingMoney.calculateRevenueAmount(gameResult.getMultiple());
+    }
+
+    private void validateContain(Name playerName) {
+        if (!players.containsKey(playerName)) {
+            throw new IllegalArgumentException("플레이어가 존재하지 않습니다.");
+        }
     }
 }
