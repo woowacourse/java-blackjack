@@ -1,13 +1,17 @@
-package domain;
+package model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import model.card.Ace;
+import model.card.Card;
+import model.card.Denomination;
+import model.card.Suit;
+import model.participants.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
-
     @Test
     @DisplayName("Player 는 핸드의 총합값을 반환할 수 있다")
     void test1() {

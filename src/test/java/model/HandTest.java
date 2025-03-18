@@ -1,8 +1,13 @@
-package domain;
+package model;
 
-import static domain.Denomination.ACE;
+import static model.card.Denomination.ACE;
+import static model.card.Suit.CLUB;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import model.card.Ace;
+import model.card.Card;
+import model.card.Denomination;
+import model.card.Hand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -14,7 +19,7 @@ public class HandTest {
     void test1() {
         Hand hand = new Hand();
 
-        Card card = new Card(ACE, Suit.CLUB);
+        Card card = new Card(ACE, CLUB);
         hand.addCard(card);
 
         assertThat(hand.getCards().size()).isEqualTo(1);
@@ -25,12 +30,27 @@ public class HandTest {
     void test2() {
         Hand hand = new Hand();
 
-        hand.addCard(new Card(Denomination.TWO, Suit.CLUB));    // 2
-        hand.addCard(new Card(Denomination.THREE, Suit.CLUB));  // 3
-        hand.addCard(new Card(Denomination.JACK, Suit.CLUB));   // 10
+        hand.addCard(new Card(Denomination.TWO, CLUB));    // 2
+        hand.addCard(new Card(Denomination.THREE, CLUB));  // 3
+        hand.addCard(new Card(Denomination.JACK, CLUB));   // 10
 
         assertThat(hand.getTotal()).isEqualTo(15);
     }
+
+    @Test
+    @DisplayName("Hand 는 블랙잭 여부를 판단할 수 있다.")
+    void test3() {
+        // given
+        Hand hand = new Hand();
+        hand.addCard(new Ace(CLUB));    // 11
+        hand.addCard(new Card(Denomination.JACK, CLUB));  // 10
+        // 2장으로 21 -> 블랙잭
+
+        // when & then
+        assertThat(hand.isBlackJack()).isTrue();
+    }
+
+
     @Nested
     @DisplayName("ACE 고유 숫자값 테스트")
     class AceDetectTest{
@@ -39,9 +59,9 @@ public class HandTest {
         void test3() {
             Hand hand = new Hand();
 
-            hand.addCard(new Card(Denomination.TWO, Suit.CLUB));
-            hand.addCard(new Card(Denomination.THREE, Suit.CLUB));
-            hand.addCard(new Ace(Suit.CLUB));
+            hand.addCard(new Card(Denomination.TWO, CLUB));
+            hand.addCard(new Card(Denomination.THREE, CLUB));
+            hand.addCard(new Ace(CLUB));
 
             assertThat(hand.containsOriginalAce()).isTrue();
         }
@@ -51,8 +71,8 @@ public class HandTest {
         void test4() {
             Hand hand = new Hand();
 
-            hand.addCard(new Card(Denomination.TWO, Suit.CLUB));
-            hand.addCard(new Card(Denomination.THREE, Suit.CLUB));
+            hand.addCard(new Card(Denomination.TWO, CLUB));
+            hand.addCard(new Card(Denomination.THREE, CLUB));
 
             assertThat(hand.containsOriginalAce()).isFalse();
         }
@@ -62,8 +82,8 @@ public class HandTest {
         void test5() {
             Hand hand = new Hand();
 
-            hand.addCard(new Card(Denomination.TWO, Suit.CLUB));
-            hand.addCard(new Ace(Suit.CLUB));
+            hand.addCard(new Card(Denomination.TWO, CLUB));
+            hand.addCard(new Ace(CLUB));
 
             hand.setOriginalAceValueToOne();
 
@@ -76,8 +96,8 @@ public class HandTest {
     void test6() {
         Hand hand = new Hand();
 
-        hand.addCard(new Card(Denomination.TWO, Suit.CLUB));
-        hand.addCard(new Ace(Suit.CLUB));
+        hand.addCard(new Card(Denomination.TWO, CLUB));
+        hand.addCard(new Ace(CLUB));
 
         assertThat(hand.isBust()).isFalse();
     }

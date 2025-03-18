@@ -1,8 +1,14 @@
-package domain;
+package model.casino;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import model.card.Ace;
+import model.card.Card;
+import model.card.Denomination;
+import model.card.Suit;
+import model.participants.Participants;
+import model.participants.Player;
 
 public class Deck {
 
@@ -25,10 +31,10 @@ public class Deck {
         deck.add(new Card(denomination, suit));
     }
 
-    public void distributeCards(Dealer dealer, Players players) {
+    public void distributeCards(Participants participants) {
         shuffle();
-        drawTwoCardFromDeck(dealer);
-        for (Player player : players.getPlayers()) {
+        drawTwoCardFromDeck(participants.getDealer());
+        for (Player player : participants.getPlayerGroup().getPlayers()) {
             drawTwoCardFromDeck(player);
         }
     }

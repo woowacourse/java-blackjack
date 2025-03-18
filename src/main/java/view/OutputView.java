@@ -1,25 +1,26 @@
 package view;
 
-import static domain.Dealer.THRESHOLD;
+import static model.participants.Dealer.THRESHOLD;
 
-import controller.dto.WinLossCountDto;
-import domain.Card;
-import domain.Dealer;
-import domain.Hand;
-import domain.Player;
-import domain.Players;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+import model.card.Card;
+import model.card.Hand;
+import model.participants.Dealer;
+import model.participants.Participants;
+import model.participants.Player;
+import model.participants.PlayerGroup;
 
 public class OutputView {
-    public static void printDistributeResult(Players playersObject, Dealer dealer) {
-        List<Player> players = playersObject.getPlayers();
+    public static void printDistributeResult(Participants participants) {
+        List<Player> players = participants.getPlayerGroup().getPlayers();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("딜러와 ")
                 .append(players.stream().map(Player::getName).collect(Collectors.joining(",")))
                 .append("에게 2장을 나누었습니다.\n");
 
-        printEveryoneCardsNames(players, dealer, stringBuilder);
+        printEveryoneCardsNames(participants, stringBuilder);
 
         System.out.println(stringBuilder);
     }
@@ -30,10 +31,10 @@ public class OutputView {
         System.out.println(stringBuilder.append("\n"));
     }
 
-    public static void printEveryOneCardsNamesWithTotal(Players players, Dealer dealer) {
+    public static void printEveryOneCardsNamesWithTotal(PlayerGroup playerGroup, Dealer dealer) {
         StringBuilder stringBuilder = new StringBuilder();
         openCardsWithTotal(dealer, stringBuilder);
-        for (Player player : players.getPlayers()) {
+        for (Player player : playerGroup.getPlayers()) {
             openCardsWithTotal(player, stringBuilder);
         }
         System.out.println(stringBuilder);
@@ -41,29 +42,16 @@ public class OutputView {
 
     public static void printDealerExtraCardsCount(Dealer dealer) {
         int dealerExtraCardsCount = dealer.getExtraSize();
-        if (dealerExtraCardsCount > 0)
+        if (dealerExtraCardsCount > 0) {
             System.out.printf("%s는 %d이하라 %d장의 카드를 더 받았습니다.\n\n", dealer.getName(), THRESHOLD, dealerExtraCardsCount);
-    }
-
-    public static void printWinLossResult(Players players, Dealer dealer, WinLossCountDto winLossCountResult) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("## 최종 승패\n");
-        stringBuilder.append(String.format("%s: %d승 %d패 %d무\n", dealer.getName(),
-                winLossCountResult.winCount(),
-                winLossCountResult.lossCount(),
-                winLossCountResult.drawCount()));
-        for (Player player : players.getPlayers()) {
-            stringBuilder.append(String.format("%s: %s\n", player.getName(),
-                    player.getWinLoss(dealer.getHandTotal()).getWinLossMessage()));
         }
-        System.out.println(stringBuilder);
     }
 
     public static void printBust() {
         System.out.println("YOU DIE!!!!!!!!!!!!!!!!");
     }
 
-    public static String getFormattedOpenedCard(Card card){
+    public static String getFormattedOpenedCard(Card card) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(card.getDenomination().getValue())
                 .append(card.getSuit().getShape());
@@ -82,14 +70,32 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
     }
 
-    private static void printEveryoneCardsNames(List<Player> players, Dealer dealer, StringBuilder stringBuilder) {
+    private static void printEveryoneCardsNames(Participants participants, StringBuilder stringBuilder) {
+        Dealer dealer = participants.getDealer();
         stringBuilder.append(String.format("%s카드: ", dealer.getName()));
         stringBuilder.append(getFormattedOpenedCard(dealer.openOneCard()))
                 .append(", (???)\n");
-        for (Player player : players) {
+        for (Player player : participants.getPlayerGroup().getPlayers()) {
             openHand(player, stringBuilder);
             stringBuilder.append("\n");
         }
+    }
+
+    public static void printProfitPerParticipant(Map<Player, Integer> profitPerParticipant, Dealer dealer) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(dealer.getName())
+                .append(": ")
+                .append(profitPerParticipant.get(dealer))
+                .append("\n")
+        ;
+
+        profitPerParticipant.entrySet().stream().filter(it -> it.getKey().isNotDealer()).forEach(it -> {
+            stringBuilder.append(it.getKey().getName())
+                    .append(": ")
+                    .append(it.getValue())
+                    .append("\n");
+        });
+        System.out.println(stringBuilder);
     }
 
     private static void openCardsWithTotal(Player player, StringBuilder stringBuilder) {

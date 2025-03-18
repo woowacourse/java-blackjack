@@ -1,4 +1,4 @@
-package domain;
+package model.card;
 
 public class Ace extends Card {
 

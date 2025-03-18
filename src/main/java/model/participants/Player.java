@@ -1,12 +1,14 @@
-package domain;
+package model.participants;
 
-import static view.InputView.getContinueOrNot;
 import static view.OutputView.printBust;
 import static view.OutputView.printHandCardsNames;
 
+import model.card.Card;
+import model.card.Hand;
+import model.casino.Deck;
+import model.casino.HitOrHoldPolicy;
+
 public class Player {
-    private static final String YES = "y";
-    private static final String NO = "n";
 
     private final String name;
     protected Hand hand;
@@ -20,21 +22,6 @@ public class Player {
         hand.addCard(card);
     }
 
-    public void drawByChoice(Deck deck) {
-        boolean isAlive = resolveBust();
-        while (isAlive) {
-            String continueOrNot = getContinueOrNot(this);
-            if (continueOrNot.equalsIgnoreCase(YES)) {
-                isAlive = drawOneMoreCard(deck);
-            }
-            if (continueOrNot.equalsIgnoreCase(NO)) {
-                return;
-            }
-        }
-        printBust();
-        setHandTotalToZero();
-    }
-
     public boolean resolveBust() {
         if (isHandBust() && containsOriginalAce()) {
             setOriginalAceValueToOne();
@@ -43,7 +30,19 @@ public class Player {
         return !isHandBust();
     }
 
-    public boolean drawOneMoreCard(Deck deck) {
+    public void bustCheckOfHitOrHold(Deck deck, HitOrHoldPolicy hitOrHoldPolicy) {
+        boolean isAlive = resolveBust();
+        while (isAlive) {
+            if (hitOrHoldPolicy.hold()) {
+                return;
+            }
+            isAlive = bustWithDrawOneMoreCard(deck);
+        }
+        setHandTotalToZero();
+        printBust();
+    }
+
+    private boolean bustWithDrawOneMoreCard(Deck deck) {
         addCard(deck.draw());
         if (isNotDealer()) {
             printHandCardsNames(this);
@@ -51,7 +50,7 @@ public class Player {
         return resolveBust();
     }
 
-    boolean isNotDealer() {
+    public boolean isNotDealer() {
         return true;
     }
 
@@ -61,6 +60,10 @@ public class Player {
 
     public boolean isHandBust() {
         return hand.isBust();
+    }
+
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
     }
 
     public boolean containsOriginalAce() {
@@ -73,10 +76,6 @@ public class Player {
 
     public void setHandTotalToZero() {
         hand.setAllCardValueToZero();
-    }
-
-    public WinLossResult getWinLoss(int dealerTotal) {
-        return WinLossResult.of(Integer.compare(getHandTotal(), dealerTotal));
     }
 
     public String getName() {

@@ -1,15 +1,14 @@
-package domain;
+package model.card;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class Hand {
 
-    private static final int ORIGINAL_ACE_VALUE = 11;
     private static final int BUST_THRESHOLD = 21;
     public static final int INITIAL_SIZE = 2;
+
     private final List<Card> cards;
 
     public Hand() {
@@ -21,12 +20,12 @@ public class Hand {
     }
 
     public boolean containsOriginalAce() {
-        return cards.stream().anyMatch(originalAcePredicate());
+        return cards.stream().anyMatch(Card::isOriginalAce);
     }
 
     public void setOriginalAceValueToOne() {
         Ace originalAce = (Ace) cards.stream()
-                .filter(originalAcePredicate())
+                .filter(Card::isOriginalAce)
                 .findFirst()
                 .orElseThrow();
         originalAce.setValueToOne();
@@ -40,10 +39,6 @@ public class Hand {
         return getTotal() > BUST_THRESHOLD;
     }
 
-    private Predicate<Card> originalAcePredicate() {
-        return card -> card.isAce() && card.getValue() == ORIGINAL_ACE_VALUE;
-    }
-
     public int getTotal() {
         return cards.stream().mapToInt(Card::getValue).sum();
     }
@@ -53,7 +48,7 @@ public class Hand {
     }
 
     public int getExtraSize() {
-        return cards.size()- INITIAL_SIZE;
+        return cards.size() - INITIAL_SIZE;
     }
 
     public List<Card> getCards() {
@@ -61,8 +56,10 @@ public class Hand {
     }
 
     public Card getFirstCard() {
-        return cards.getFirst();
+        return new Card(cards.getFirst());
     }
 
-
+    public boolean isBlackJack() {
+        return getSize() == INITIAL_SIZE && getTotal() == BUST_THRESHOLD;
+    }
 }

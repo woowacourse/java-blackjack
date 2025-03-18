@@ -1,11 +1,18 @@
-package domain;
+package model.card;
 
-import static domain.Denomination.ACE;
+import static model.card.Denomination.ACE;
+import static model.card.Denomination.ORIGINAL_ACE_VALUE;
 
 public class Card {
     private final Denomination denomination;
     private final Suit suit;
     protected int value;
+
+    public Card(Card card) {
+        this.denomination = card.denomination;
+        this.suit = card.suit;
+        this.value = card.value;
+    }
 
     public Card(Denomination denomination, Suit suit) {
         this.denomination = denomination;
@@ -15,6 +22,10 @@ public class Card {
 
     public boolean isAce() {
         return denomination == ACE;
+    }
+
+    public boolean isOriginalAce() {
+        return isAce() && value == ORIGINAL_ACE_VALUE;
     }
 
     public void setValueToZero() {
