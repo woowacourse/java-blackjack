@@ -2,7 +2,7 @@ package blackjack;
 
 import blackjack.config.GameConfig;
 import blackjack.constant.UserAction;
-import blackjack.gametable.BlackjackTable;
+import blackjack.gametable.BlackjackGame;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -19,7 +19,7 @@ public class BlackjackController {
 
     public void run() {
         List<String> playerNames = inputView.readParticipantsNames();
-        BlackjackTable gameTable = new BlackjackTable(playerNames);
+        BlackjackGame gameTable = new BlackjackGame(playerNames);
         gameTable.initializeGame();
 
         for (String playerName : gameTable.getPlayerNames()) {

@@ -1,16 +1,16 @@
 package blackjack.view;
 
-import blackjack.gametable.BlackjackTable;
+import blackjack.gametable.BlackjackGame;
 
 public interface OutputView {
 
-    void printInitialGameSettings(BlackjackTable table);
+    void printInitialGameSettings(BlackjackGame table);
 
     void printDealerOneMoreCardMessage();
 
-    void printGameSummary(BlackjackTable gameTable);
+    void printGameSummary(BlackjackGame gameTable);
 
-    void printPlayerCards(BlackjackTable gameTable, String playerName);
+    void printPlayerCards(BlackjackGame gameTable, String playerName);
 
-    void printGameResult(BlackjackTable gameTable);
+    void printGameResult(BlackjackGame gameTable);
 }

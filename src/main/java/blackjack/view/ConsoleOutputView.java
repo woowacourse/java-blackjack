@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.gametable.BlackjackTable;
+import blackjack.gametable.BlackjackGame;
 import blackjack.gametable.card.Card;
 import blackjack.gametable.gambler.Dealer;
 import blackjack.gametable.gambler.Player;
@@ -10,7 +10,7 @@ import java.util.List;
 public class ConsoleOutputView implements OutputView {
 
     @Override
-    public void printInitialGameSettings(BlackjackTable table) {
+    public void printInitialGameSettings(BlackjackGame table) {
         Players players = table.getPlayers();
         Dealer dealer = table.getDealer();
 
@@ -29,13 +29,13 @@ public class ConsoleOutputView implements OutputView {
     }
 
     @Override
-    public void printPlayerCards(BlackjackTable gameTable, String playerName) {
+    public void printPlayerCards(BlackjackGame gameTable, String playerName) {
         Player player = gameTable.findPlayer(playerName);
         System.out.println(player.getPlayerName() + "카드: " + processCardsInfo(player.openCards()));
     }
 
     @Override
-    public void printGameResult(BlackjackTable gameTable) {
+    public void printGameResult(BlackjackGame gameTable) {
         Dealer dealer = gameTable.getDealer();
         List<Player> players = gameTable.getPlayers().getPlayers();
 
@@ -48,7 +48,7 @@ public class ConsoleOutputView implements OutputView {
     }
 
     @Override
-    public void printGameSummary(BlackjackTable gameTable) {
+    public void printGameSummary(BlackjackGame gameTable) {
         Players players = gameTable.getPlayers();
         Dealer dealer = gameTable.getDealer();
         System.out.println("딜러카드: " + processCardsInfo(dealer.openCards()) + " - 결과: " + dealer.sumCardScores());

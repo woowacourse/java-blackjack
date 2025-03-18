@@ -9,13 +9,13 @@ import blackjack.gametable.gambler.PlayerName;
 import blackjack.gametable.gambler.Players;
 import java.util.List;
 
-public class BlackjackTable {
+public class BlackjackGame {
 
     private final Deck deck;
     private final Dealer dealer;
     private final Players players;
 
-    public BlackjackTable(List<String> playerNames) {
+    public BlackjackGame(List<String> playerNames) {
         validatePlayerCount(playerNames);
         this.deck = Deck.initialize();
         this.dealer = new Dealer();
