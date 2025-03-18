@@ -21,7 +21,15 @@ class PlayerTest {
     @DisplayName("플레이어의 이름이 null이거나 blank라면 예외가 발생한다.")
     @ParameterizedTest
     @NullAndEmptySource
-    void validateNullOrEmpty(final String name) {
+    void validateNullOrEmptyTest(final String name) {
+        assertThatThrownBy(() -> new Player(name))
+                .isInstanceOf(IllegalBlackjackInputException.class);
+    }
+
+    @DisplayName("플레이어의 이름이 10자 초과라면 예외가 발생한다.")
+    @ParameterizedTest
+    @ValueSource(strings = {"12345678901", "11글자짜리이름입니다"})
+    void validateLengthTest(final String name) {
         assertThatThrownBy(() -> new Player(name))
                 .isInstanceOf(IllegalBlackjackInputException.class);
     }
