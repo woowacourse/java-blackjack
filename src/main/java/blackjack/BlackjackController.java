@@ -7,12 +7,12 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 
-public class BlackjackGame {
+public class BlackjackController {
 
     private final InputView inputView;
     private final OutputView outputView;
 
-    public BlackjackGame(GameConfig gameConfig) {
+    public BlackjackController(GameConfig gameConfig) {
         this.inputView = gameConfig.getInputView();
         this.outputView = gameConfig.getOutputView();
     }

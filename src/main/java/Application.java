@@ -1,4 +1,4 @@
-import blackjack.BlackjackGame;
+import blackjack.BlackjackController;
 import blackjack.config.GameConfig;
 import blackjack.view.ConsoleInputView;
 import blackjack.view.ConsoleOutputView;
@@ -11,7 +11,7 @@ public class Application {
                 new ConsoleInputView(),
                 new ConsoleOutputView()
         );
-        BlackjackGame blackJackGame = new BlackjackGame(gameConfig);
-        blackJackGame.run();
+        BlackjackController blackJackController = new BlackjackController(gameConfig);
+        blackJackController.run();
     }
 }
