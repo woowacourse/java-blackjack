@@ -3,7 +3,6 @@ package controller;
 import java.util.List;
 import java.util.Map;
 import model.betting.Bet;
-import model.betting.Money;
 import model.participant.Dealer;
 import model.deck.Deck;
 import model.participant.Players;
@@ -103,7 +102,7 @@ public class BlackjackController {
                 continue;
             }
             if (winningResults.isBlackjackWin(player)) {
-                dealer.updateBetAmountOf(player);
+                dealer.updateBetAmountWhenBlackJackOf(player);
             }
         }
     }

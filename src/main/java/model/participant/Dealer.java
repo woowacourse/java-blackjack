@@ -81,7 +81,7 @@ public final class Dealer implements BetOwnable, Gameable, GameProcessable {
     }
 
     @Override
-    public void updateBetAmountOf(final Bettable better) {
+    public void updateBetAmountWhenBlackJackOf(final Bettable better) {
         bets.updateBetAmount(better);
     }
 

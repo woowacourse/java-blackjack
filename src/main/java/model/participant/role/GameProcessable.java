@@ -10,7 +10,7 @@ public interface GameProcessable {
 
     void updateBetOwnerFrom(BetOwnable beforeOwner);
 
-    void updateBetAmountOf(Bettable better);
+    void updateBetAmountWhenBlackJackOf(Bettable better);
 
     Bet findBetByBetter(Bettable better);
 }
