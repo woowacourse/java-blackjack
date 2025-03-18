@@ -14,4 +14,9 @@ public class InputView {
         System.out.println(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name));
         return scanner.nextLine();
     }
+
+    public String inputBetAmount(String name) {
+        System.out.println(String.format("%s의 배팅 금액은?", name));
+        return scanner.nextLine();
+    }
 }

@@ -1,10 +1,7 @@
 package blackjack.model.player;
 
 import blackjack.model.card.Card;
-import blackjack.model.game.ParticipantResult;
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.Map;
+import java.util.List;
 
 public class Dealer extends Player {
 
@@ -14,18 +11,14 @@ public class Dealer extends Player {
         return calculatePoint() <= RECEIVABLE_POINT;
     }
 
-    public Card getInitialCard() {
-        return getReceivedCards().getFirstCard();
+    public double calculateProfitAmount(Participants participants) {
+        return participants.stream()
+                .mapToDouble(participant -> participant.calculateProfitAmount(participant.duelWith(this)))
+                .reduce(0, (total, profitAmount) -> total - profitAmount);
     }
 
-    public Map<ParticipantResult, Integer> calculateResult(Participants participants) {
-        Map<ParticipantResult, Integer> result = new EnumMap<>(ParticipantResult.class);
-        Arrays.stream(ParticipantResult.values())
-                .forEach(participantResult -> result.put(participantResult, 0));
-        participants.stream().forEach(participant -> {
-            ParticipantResult participantResult = participant.dueWith(this);
-            result.merge(participantResult, 1, Integer::sum);
-        });
-        return result;
+    @Override
+    public List<Card> getInitialCards() {
+        return List.of(getReceivedCards().getFirstCard());
     }
 }

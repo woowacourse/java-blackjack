@@ -7,6 +7,8 @@ import blackjack.model.card.Card;
 import blackjack.model.card.CardShape;
 import blackjack.model.card.CardType;
 import blackjack.model.game.ParticipantResult;
+import java.util.List;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
 class ParticipantTest {
@@ -35,7 +37,7 @@ class ParticipantTest {
         participant.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_2));
 
         // when
-        ParticipantResult result = participant.dueWith(dealer);
+        ParticipantResult result = participant.duelWith(dealer);
 
         // then
         assertThat(result).isEqualTo(ParticipantResult.LOSE);
@@ -52,7 +54,7 @@ class ParticipantTest {
         participant.putCard(new Card(CardShape.CLOVER, CardType.KING));
 
         // when
-        ParticipantResult result = participant.dueWith(dealer);
+        ParticipantResult result = participant.duelWith(dealer);
 
         // then
         assertThat(result).isEqualTo(ParticipantResult.LOSE);
@@ -68,7 +70,7 @@ class ParticipantTest {
         participant.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_8));
 
         // when
-        ParticipantResult result = participant.dueWith(dealer);
+        ParticipantResult result = participant.duelWith(dealer);
 
         // then
         assertThat(result).isEqualTo(ParticipantResult.DRAW);
@@ -86,7 +88,7 @@ class ParticipantTest {
         dealer.putCard(new Card(CardShape.CLOVER, CardType.KING));
 
         // when
-        ParticipantResult result = participant.dueWith(dealer);
+        ParticipantResult result = participant.duelWith(dealer);
 
         // then
         assertThat(result).isEqualTo(ParticipantResult.WIN);
@@ -107,9 +109,79 @@ class ParticipantTest {
         participant.putCard(new Card(CardShape.CLOVER, CardType.KING));
 
         // when
-        ParticipantResult result = participant.dueWith(dealer);
+        ParticipantResult result = participant.duelWith(dealer);
 
         // then
         assertThat(result).isEqualTo(ParticipantResult.LOSE);
+    }
+
+    @Test
+    void 참여자가_블랙잭인_경우_참여자는_블랙잭으로_승리한다() {
+        // given
+        Dealer dealer = new Dealer();
+        Participant participant = new Participant("프리");
+        participant.putCard(new Card(CardShape.CLOVER, CardType.ACE));
+        participant.putCard(new Card(CardShape.CLOVER, CardType.KING));
+
+        // when
+        ParticipantResult result = participant.duelWith(dealer);
+
+        // then
+        assertThat(result).isEqualTo(ParticipantResult.BLACKJACK);
+    }
+
+    @Test
+    void 딜러와_플레이어_모두_블랙잭인_경우_무승부이다(){
+        // given
+        Dealer dealer = new Dealer();
+        Participant participant = new Participant("프리");
+        participant.putCard(new Card(CardShape.CLOVER, CardType.ACE));
+        participant.putCard(new Card(CardShape.CLOVER, CardType.KING));
+        dealer.putCard(new Card(CardShape.CLOVER, CardType.ACE));
+        dealer.putCard(new Card(CardShape.CLOVER, CardType.KING));
+
+        // when
+        ParticipantResult result = participant.duelWith(dealer);
+
+        // then
+        assertThat(result).isEqualTo(ParticipantResult.DRAW);
+    }
+
+    @Test
+    void 세_장의_카드로_21인_경우_블랙잭이_아니다() {
+        // given
+        Dealer dealer = new Dealer();
+        Participant participant = new Participant("프리");
+        participant.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_10));
+        participant.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_10));
+        participant.putCard(new Card(CardShape.CLOVER, CardType.ACE));
+        dealer.putCard(new Card(CardShape.CLOVER, CardType.ACE));
+        dealer.putCard(new Card(CardShape.CLOVER, CardType.KING));
+
+        // when
+        ParticipantResult result = participant.duelWith(dealer);
+
+        // then
+        assertThat(result).isEqualTo(ParticipantResult.LOSE);
+    }
+
+    @Test
+    void 플레이어는_게임이_시작하면_카드를_모두_공개한다() {
+        // given
+        Participant participant = new Participant("프리");
+        participant.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_10));
+        participant.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_10));
+        participant.putCard(new Card(CardShape.CLOVER, CardType.ACE));
+
+        // when
+        List<Card> cards = participant.getInitialCards();
+
+        // then
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(cards.size()).isEqualTo(3);
+        softly.assertThat(cards.get(0).getCardType()).isEqualTo(CardType.NORMAL_10);
+        softly.assertThat(cards.get(1).getCardType()).isEqualTo(CardType.NORMAL_10);
+        softly.assertThat(cards.get(2).getCardType()).isEqualTo(CardType.ACE);
+        softly.assertAll();
     }
 }

@@ -1,36 +1,47 @@
 package blackjack.model.player;
 
+import blackjack.model.card.Card;
+import blackjack.model.game.BetAmount;
 import blackjack.model.game.ParticipantResult;
+import java.util.List;
 import java.util.Objects;
 
 public class Participant extends Player {
     private final String name;
+    private final BetAmount betAmount;
 
     public Participant(String name) {
-        validate(name);
-        this.name = name;
+        this(name, new BetAmount(0));
     }
 
-    public ParticipantResult dueWith(Dealer dealer) {
-        if (isBust()) {
+    public Participant(String name, BetAmount betAmount) {
+        validate(name);
+        this.name = name;
+        this.betAmount = betAmount;
+    }
+
+    public ParticipantResult duelWith(Dealer dealer) {
+        if (isBothBlackJack(dealer)) {
+            return ParticipantResult.DRAW;
+        }
+        if (isBlackJack()) {
+            return ParticipantResult.BLACKJACK;
+        }
+        if (isBust() || dealer.isBlackJack()) {
             return ParticipantResult.LOSE;
         }
         if (dealer.isBust()) {
             return ParticipantResult.WIN;
         }
-        int dealerPoint = dealer.calculatePoint();
-        int participantPoint = calculatePoint();
-        if (dealerPoint > participantPoint) {
-            return ParticipantResult.LOSE;
-        }
-        if (dealerPoint < participantPoint) {
-            return ParticipantResult.WIN;
-        }
-        return ParticipantResult.DRAW;
+        return comparePoints(dealer);
     }
 
     public String getName() {
         return name;
+    }
+
+    public double calculateProfitAmount(ParticipantResult participantResult) {
+        return betAmount.calculateProfitAmount(participantResult);
     }
 
     @Override
@@ -54,5 +65,26 @@ public class Participant extends Player {
         if (name.length() < 2 || name.length() > 5) {
             throw new IllegalArgumentException("참여자 이름은 2~5글자 입니다.");
         }
+    }
+
+    private boolean isBothBlackJack(Dealer dealer) {
+        return this.isBlackJack() && dealer.isBlackJack();
+    }
+
+    private ParticipantResult comparePoints(Dealer dealer) {
+        int dealerPoint = dealer.calculatePoint();
+        int participantPoint = calculatePoint();
+        if (dealerPoint > participantPoint) {
+            return ParticipantResult.LOSE;
+        }
+        if (dealerPoint < participantPoint) {
+            return ParticipantResult.WIN;
+        }
+        return ParticipantResult.DRAW;
+    }
+
+    @Override
+    public List<Card> getInitialCards() {
+        return getReceivedCards().stream().toList();
     }
 }

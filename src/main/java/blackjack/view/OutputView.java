@@ -7,7 +7,7 @@ import blackjack.model.player.Dealer;
 import blackjack.model.player.Participant;
 import blackjack.model.player.Participants;
 import blackjack.model.player.Player;
-import java.util.Map;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -21,11 +21,11 @@ public class OutputView {
         ));
         customStringBuilder.appendLine(outputPlayerCardStatus(
                 "딜러",
-                generateCardName(dealer.getInitialCard())
+                generateCardNames(dealer.getInitialCards())
         ));
         participants.stream().forEach(participant -> customStringBuilder.appendLine(outputPlayerCardStatus(
                 participant.getName(),
-                generateCardNames(participant.getReceivedCards())
+                generateCardNames(participant.getInitialCards())
         )));
         customStringBuilder.print();
     }
@@ -56,20 +56,14 @@ public class OutputView {
     }
 
     public void printFinalResult(Dealer dealer, Participants participants) {
-        Map<ParticipantResult, Integer> winLoseResult = dealer.calculateResult(participants);
-        CustomStringBuilder playerContents = new CustomStringBuilder();
-        CustomStringBuilder dealerContents = new CustomStringBuilder();
-        dealerContents.appendLine("## 최종 승패");
-        dealerContents.appendLine(String.format("딜러: %d승 %d패",
-                winLoseResult.get(ParticipantResult.LOSE),
-                winLoseResult.get(ParticipantResult.WIN))
-        );
+        CustomStringBuilder stringBuilder = new CustomStringBuilder();
+        stringBuilder.appendLine("## 최종 수익");
+        stringBuilder.appendLine(String.format("딜러: %d", dealer.calculateProfitAmount(participants)));
         participants.stream().forEach(participant -> {
-            ParticipantResult participantResult = participant.dueWith(dealer);
-            playerContents.appendLine(String.format("%s: %s", participant.getName(), participantResult.getDetail()));
+            ParticipantResult participantResult = participant.duelWith(dealer);
+            stringBuilder.appendLine(String.format("%s: %s", participant.getName(), participant.calculateProfitAmount(participantResult)));
         });
-        dealerContents.print();
-        playerContents.print();
+        stringBuilder.print();
     }
 
 
@@ -79,6 +73,12 @@ public class OutputView {
 
     private String generateCardNames(ReceivedCards receivedCards) {
         return receivedCards.stream()
+                .map(this::generateCardName)
+                .collect(Collectors.joining(", "));
+    }
+
+    private String generateCardNames(List<Card> cards) {
+        return cards.stream()
                 .map(this::generateCardName)
                 .collect(Collectors.joining(", "));
     }

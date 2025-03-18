@@ -7,6 +7,7 @@ import blackjack.model.player.Participant;
 import blackjack.model.player.Participants;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.List;
 
 public class BlackJackController {
     private final InputView inputView;
@@ -18,7 +19,8 @@ public class BlackJackController {
     }
 
     public void run() {
-        Participants participants = Parser.parseParticipants(inputView.inputParticipant());
+        List<String> participantNames = Parser.parseNames(inputView.inputParticipant());
+        Participants participants = inputBetAmount(participantNames);
         Dealer dealer = new Dealer();
         DeckInitializer deckInitializer = new DeckInitializer();
         BlackJackGame blackJackGame = new BlackJackGame(
@@ -34,19 +36,26 @@ public class BlackJackController {
         outputView.printFinalResult(dealer, participants);
     }
 
+    private Participants inputBetAmount(List<String> participantNames) {
+        return new Participants(participantNames.stream().map(participantName -> new Participant(
+                participantName,
+                Parser.parseBetAmount(inputView.inputBetAmount(participantName))
+        )).toList());
+    }
+
     private void giveMoreParticipantCard(BlackJackGame blackJackGame) {
         while (blackJackGame.hasReadyParticipant()) {
-            Participant participant = blackJackGame.getCurrentTurnParticipant();
-            boolean isReceive = Parser.parseCommand(inputView.inputCallOrStay(participant.getName()));
+            String participantName = blackJackGame.getCurrentTurnParticipantName();
+            boolean isReceive = Parser.parseCommand(inputView.inputCallOrStay(participantName));
             blackJackGame.receiveCard(isReceive);
-            outputView.printPlayerCardStatus(participant.getName(), participant);
-            handleBust(participant, blackJackGame);
+            outputView.printPlayerCardStatus(participantName, blackJackGame.getCurrentTurnParticipant());
+            handleBust(participantName, blackJackGame);
         }
     }
 
-    private void handleBust(Participant participant, BlackJackGame blackJackGame) {
-        if (participant.isBust()) {
-            outputView.printParticipantBust(participant.getName());
+    private void handleBust(String participantName, BlackJackGame blackJackGame) {
+        if (blackJackGame.isCurrentParticipantBust()) {
+            outputView.printParticipantBust(participantName);
             blackJackGame.changeNextTurn();
         }
     }
