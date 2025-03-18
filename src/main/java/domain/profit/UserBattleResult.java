@@ -1,7 +1,5 @@
 package domain.profit;
 
-import domain.state.Blackjack;
-import domain.state.Bust;
 import domain.state.State;
 
 public enum UserBattleResult {
@@ -16,33 +14,33 @@ public enum UserBattleResult {
         if (!user.isFinished() || !dealer.isFinished()) {
             throw new IllegalStateException("유저나 딜러가 종료 상태가 아닙니다.");
         }
-        if (Blackjack.isBlackjack(user.cards()) || Blackjack.isBlackjack(dealer.cards())) {
+        if (user.type().isBlackjack() || dealer.type().isBlackjack()) {
             return determineByBlackjack(user, dealer);
         }
-        if (Bust.isBust(user.cards()) || Bust.isBust(dealer.cards())) {
+        if (user.type().isBust() || dealer.type().isBust()) {
             return determineByBust(user, dealer);
         }
         return compareBySum(user.cards().computeOptimalSum(), dealer.cards().computeOptimalSum());
     }
 
     private static UserBattleResult determineByBlackjack(State user, State dealer) {
-        if (Blackjack.isBlackjack(user.cards()) && Blackjack.isBlackjack(dealer.cards())) {
+        if (user.type().isBlackjack() && dealer.type().isBlackjack()) {
             return DRAW;
         }
-        if (Blackjack.isBlackjack(user.cards())) {
+        if (user.type().isBlackjack()) {
             return BLACKJACK_WIN;
         }
-        if (Blackjack.isBlackjack(dealer.cards())) {
+        if (dealer.type().isBlackjack()) {
             return LOSE;
         }
         throw new IllegalStateException("블랙잭 상태 여부로 승부를 결정할 수 없습니다.");
     }
 
     private static UserBattleResult determineByBust(State user, State dealer) {
-        if (Bust.isBust(user.cards())) {
+        if (user.type().isBust()) {
             return LOSE;
         }
-        if (Bust.isBust(dealer.cards())) {
+        if (dealer.type().isBust()) {
             return NORMAL_WIN;
         }
         throw new IllegalStateException("버스트 상태 여부로 승부를 결정할 수 없습니다.");

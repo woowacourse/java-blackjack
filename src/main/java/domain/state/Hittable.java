@@ -27,21 +27,38 @@ public class Hittable extends Running {
     public State hit(Card card) {
         Cards cards = cards();
         cards.addCard(card);
-        if (Blackjack.isBlackjack(cards)) {
+        if (isBlackjack(cards)) {
             return new Blackjack(cards);
-        } else if (Bust.isBust(cards)) {
+        } else if (isBust(cards)) {
             return new Bust(cards);
-        } else if (Bust.isBustThreshold(cards) || isOverHittableThreshold()) {
+        } else if (isBustThreshold(cards) || isOverHittableThreshold()) {
             return new Stay(cards);
         }
         return new Hittable(cards, this.hittableThreshold);
+    }
+
+    private boolean isBustThreshold(Cards cards) {
+        return cards.computeOptimalSum() == Bust.BUST_THRESHOLD;
     }
 
     @Override
     public State stay() {
         return new Stay(cards());
     }
-    
+
+    @Override
+    public StateType type() {
+        return StateType.HITTABLE;
+    }
+
+    private boolean isBlackjack(Cards cards) {
+        return cards.size() == Blackjack.BLACKJACK_CARD_SIZE && cards.computeOptimalSum() == Blackjack.BLACKJACK_SUM;
+    }
+
+    private boolean isBust(Cards cards) {
+        return cards.computeOptimalSum() > Bust.BUST_THRESHOLD;
+    }
+
     private boolean isOverHittableThreshold() {
         return cards().computeOptimalSum() > this.hittableThreshold;
     }

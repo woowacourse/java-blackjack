@@ -12,4 +12,22 @@ public interface State {
     boolean isFinished();
 
     Cards cards();
+
+    StateType type();
+
+    enum StateType {
+        BLACKJACK,
+        STAY,
+        BUST,
+        HITTABLE,
+        ;
+
+        public boolean isBlackjack() {
+            return this == BLACKJACK;
+        }
+
+        public boolean isBust() {
+            return this == BUST;
+        }
+    }
 }
