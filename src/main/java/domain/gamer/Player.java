@@ -14,7 +14,7 @@ public class Player extends Gamer {
         this.betAmount = betAmount;
     }
 
-    public Double calculateProfit(final Profit profit) {
+    public long calculateProfit(final Profit profit) {
         return betAmount.calculateProfit(profit);
     }
 

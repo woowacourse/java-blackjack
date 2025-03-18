@@ -82,14 +82,14 @@ public final class OutputView {
         );
     }
 
-    public static void printProfitResult(final Map<String, Double> result, final double dealerProfit) {
+    public static void printProfitResult(final Map<String, Long> result, final double dealerProfit) {
         final NumberFormat formatter = NumberFormat.getInstance(Locale.KOREA);
 
         print(String.format("%n## 최종 수익"));
         print(String.format("딜러: %s원", formatter.format((int) -dealerProfit)));
-        for (final Entry<String, Double> playerEntry : result.entrySet()) {
+        for (final Entry<String, Long> playerEntry : result.entrySet()) {
             final String playerNickname = playerEntry.getKey();
-            final Double profit = playerEntry.getValue();
+            final Long profit = playerEntry.getValue();
             print(String.format("%s: %s원", playerNickname, formatter.format(profit)));
         }
     }

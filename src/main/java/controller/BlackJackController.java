@@ -32,7 +32,7 @@ public class BlackJackController {
         processHit(players, blackJackGame, dealer);
         OutputView.printCardsInHandWithResult(dealer, players);
 
-        final Map<String, Double> playersProfit = blackJackGame.calculatePlayersProfit(dealer, players);
+        final Map<String, Long> playersProfit = blackJackGame.calculatePlayersProfit(dealer, players);
         final double dealerProfit = blackJackGame.calculateDealerProfit(playersProfit);
         OutputView.printProfitResult(playersProfit, dealerProfit);
     }

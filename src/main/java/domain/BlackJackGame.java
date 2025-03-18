@@ -44,21 +44,21 @@ public class BlackJackGame {
         }
     }
 
-    public Map<String, Double> calculatePlayersProfit(final Dealer dealer, final List<Player> players) {
-        final Map<String, Double> result = new LinkedHashMap<>();
+    public Map<String, Long> calculatePlayersProfit(final Dealer dealer, final List<Player> players) {
+        final Map<String, Long> result = new LinkedHashMap<>();
         players.forEach(player -> result.put(player.getDisplayName(), calculateProfit(dealer, player)));
         return result;
     }
 
-    private Double calculateProfit(final Dealer dealer, final Player player) {
+    private long calculateProfit(final Dealer dealer, final Player player) {
         final Profit profit = dealer.evaluateResult(player);
         return player.calculateProfit(profit);
     }
 
-    public double calculateDealerProfit(final Map<String, Double> playersProfit) {
+    public double calculateDealerProfit(final Map<String, Long> playersProfit) {
         return playersProfit.values()
                 .stream()
-                .mapToDouble(Double::doubleValue)
+                .mapToLong(Long::longValue)
                 .sum();
     }
 }

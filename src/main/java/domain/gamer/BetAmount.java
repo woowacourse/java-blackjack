@@ -27,7 +27,7 @@ public class BetAmount {
         }
     }
 
-    public Double calculateProfit(final Profit profit) {
+    public long calculateProfit(final Profit profit) {
         return profit.calculate(betAmount);
     }
 }

@@ -14,7 +14,8 @@ public enum Profit {
         this.profitFunction = profitFunction;
     }
 
-    public Double calculate(final Long profit) {
-        return profitFunction.apply(profit);
+    public long calculate(final long profit) {
+        final Double result = profitFunction.apply(profit);
+        return result.longValue();
     }
 }
