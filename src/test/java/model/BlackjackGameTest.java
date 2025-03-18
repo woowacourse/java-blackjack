@@ -1,6 +1,8 @@
 package model;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.ArrayList;
@@ -121,6 +123,20 @@ class BlackjackGameTest {
                 () -> assertThat(bettingResults.getBettingResultByName("pobi")).isEqualTo(10_000),
                 () -> assertThat(bettingResults.getBettingResultByName("hotteok")).isEqualTo(-1_000),
                 () -> assertThat(bettingResults.calculateDealerBettingResult()).isEqualTo(-9_000)
+        );
+    }
+
+    @DisplayName("플레이어들의 이름과 배팅금액을 통해 BlackjackGame을 생성한다.")
+    @Test
+    void createTest() {
+        List<String> rawPlayers = List.of("pobi", "hotteok");
+        List<Integer> betAmount = List.of(10_000, 1_000);
+        BlackjackGame game = BlackjackGame.createBlackjackGame(rawPlayers, betAmount);
+
+        assertAll(
+                () -> assertThat(game.getSequencedPlayerNames()).containsSequence("pobi", "hotteok"),
+                () -> assertThat(game.getDealerCards()).isNotNull(),
+                () -> assertThatCode(() -> game.giveCardToPlayer("pobi")).doesNotThrowAnyException()
         );
     }
 }
