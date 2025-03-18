@@ -8,7 +8,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import model.bet.BettingResults;
 import model.bet.ParticipantsBet;
-import model.cards.Cards;
 import model.cards.DealerCards;
 import model.cards.DealerCardsGenerator;
 import model.cards.ParticipantsCards;
@@ -98,8 +97,8 @@ public class BlackjackGame {
 
         DealerCards dealerCards = (DealerCards) dealerCardsGenerator.generate(deck);
 
-        Map<String, Cards> playerCards = new LinkedHashMap<>(names.size());
-        names.forEach(name -> playerCards.put(name, playerCardsGenerator.generate(deck)));
+        Map<String, PlayerCards> playerCards = new LinkedHashMap<>(names.size());
+        names.forEach(name -> playerCards.put(name, (PlayerCards) playerCardsGenerator.generate(deck)));
 
         return new ParticipantsCards(dealerCards, playerCards);
     }

@@ -14,7 +14,7 @@ class ParticipantsCardsTest {
     @DisplayName("플레이어 이름을 통해 Cards를 찾는다.")
     @Test
     void test1() {
-        Cards pobiCards = new PlayerCards(new ArrayList<>());
+        PlayerCards pobiCards = new PlayerCards(new ArrayList<>());
         ParticipantsCards participantsCards = new ParticipantsCards(
                 new DealerCards(new ArrayList<>()),
                 Map.of(

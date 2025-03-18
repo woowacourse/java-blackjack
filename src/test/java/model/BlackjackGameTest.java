@@ -30,12 +30,12 @@ class BlackjackGameTest {
     void setUp() {
         Deck deck = new Deck(new ArrayList<>(List.of(new Card(CardNumber.THREE, CardShape.DIAMOND))));
 
-        Cards pobiCards = new PlayerCards(new ArrayList<>(List.of(
+        PlayerCards pobiCards = new PlayerCards(new ArrayList<>(List.of(
                 new Card(CardNumber.NINE, CardShape.CLOVER),
                 new Card(CardNumber.TEN, CardShape.DIAMOND)))
         );
 
-        Cards hotteokCards = new PlayerCards(new ArrayList<>(List.of(
+        PlayerCards hotteokCards = new PlayerCards(new ArrayList<>(List.of(
                 new Card(CardNumber.FIVE, CardShape.CLOVER),
                 new Card(CardNumber.SEVEN, CardShape.SPADE),
                 new Card(CardNumber.QUEEN, CardShape.CLOVER)
@@ -47,7 +47,7 @@ class BlackjackGameTest {
                 new Card(CardNumber.QUEEN, CardShape.SPADE)))
         );
 
-        Map<String, Cards> map = new LinkedHashMap<>();
+        Map<String, PlayerCards> map = new LinkedHashMap<>();
         map.put("pobi", pobiCards);
         map.put("hotteok", hotteokCards);
 
