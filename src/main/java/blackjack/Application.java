@@ -1,6 +1,8 @@
 package blackjack;
 
-import blackjack.game.BlackjackGame;
+import blackjack.controller.Controller;
+import blackjack.domain.BlackjackGameFactory;
+import blackjack.domain.card.Deck;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
 import java.util.Scanner;
@@ -8,13 +10,14 @@ import java.util.Scanner;
 public final class Application {
 
     public static void main(String[] args) {
-        final BlackjackGame blackjackGame = makeBlackjackGame();
-        blackjackGame.run();
+        Controller controller = makeController();
+        BlackjackGameFactory blackjackGameFactory = new BlackjackGameFactory(Deck.shuffled());
+        controller.startGame(blackjackGameFactory);
     }
 
-    private static BlackjackGame makeBlackjackGame() {
+    private static Controller makeController() {
         final InputView inputView = new InputView(new Scanner(System.in));
         final ResultView resultView = new ResultView();
-        return new BlackjackGame(inputView, resultView);
+        return new Controller(inputView, resultView);
     }
 }

@@ -26,8 +26,8 @@ public final class ResultView {
     private static final String TITLE_PROFITS = "## 최종 수익";
     private static final String PROFITS_FORMAT = "%s: %d";
 
-    public void showSpreadCard(final List<String> playerNames, final Entry<String, Hand> dealerCards,
-                               final Map<String, Hand> playersCards) {
+    public void dealInitialCards(final List<String> playerNames, final Entry<String, Hand> dealerCards,
+                                 final Map<String, Hand> playersCards) {
         showNames(playerNames);
         showDealerCards(dealerCards);
         showPlayersCards(playersCards);
