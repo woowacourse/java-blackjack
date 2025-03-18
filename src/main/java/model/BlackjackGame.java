@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import model.bet.BettingResults;
+import model.result.BettingResults;
 import model.bet.ParticipantsBet;
 import model.cards.DealerCards;
 import model.cards.DealerCardsGenerator;

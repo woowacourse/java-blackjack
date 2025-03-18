@@ -1,4 +1,4 @@
-package model.bet;
+package model.result;
 
 import java.util.Map;
 

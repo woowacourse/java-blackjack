@@ -3,6 +3,8 @@ package model.bet;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import model.result.BettingOdds;
+import model.result.BettingResults;
 import model.result.GameResult;
 import model.result.GameResults;
 

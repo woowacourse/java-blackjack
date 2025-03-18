@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Map;
+import model.result.BettingResults;
 import model.result.GameResult;
 import model.result.GameResults;
 import org.junit.jupiter.api.DisplayName;

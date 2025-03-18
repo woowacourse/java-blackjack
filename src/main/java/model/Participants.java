@@ -1,7 +1,7 @@
 package model;
 
 import java.util.Set;
-import model.bet.BettingResults;
+import model.result.BettingResults;
 import model.bet.ParticipantsBet;
 import model.cards.DealerCards;
 import model.cards.ParticipantsCards;

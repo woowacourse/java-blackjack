@@ -1,8 +1,7 @@
-package model.bet;
+package model.result;
 
 import exception.IllegalBlackjackStateException;
 import java.util.Arrays;
-import model.result.GameResult;
 
 public enum BettingOdds {
     WIN_ODDS(GameResult.WIN, +1.0),

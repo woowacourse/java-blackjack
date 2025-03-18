@@ -2,6 +2,7 @@ package model.bet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import model.result.BettingOdds;
 import model.result.GameResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
