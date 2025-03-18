@@ -56,15 +56,6 @@ public record GameResult(Map<Player, Result> playerResults, Result dealerResults
 
     public static double getMultiplyRatio(BlackjackScore playerScore, BlackjackScore dealerScore) {
         WinningResult winningResult = playerScore.decide(dealerScore);
-        if (winningResult.equals(WinningResult.BLACKJACK_WIN)) {
-            return 1.5;
-        }
-        if (winningResult.equals(WinningResult.WIN)) {
-            return 1;
-        }
-        if (winningResult.equals(WinningResult.LOSE)) {
-            return -1;
-        }
-        return 0;
+        return winningResult.getProfit();
     }
 }
