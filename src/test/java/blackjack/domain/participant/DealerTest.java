@@ -1,14 +1,11 @@
 package blackjack.domain.participant;
 
-import static blackjack.fixture.TestFixture.provide16Cards;
 import static blackjack.fixture.TestFixture.provideBiggerAceCards;
 import static blackjack.fixture.TestFixture.provideBiggerAndSmallerAceCards;
-import static blackjack.fixture.TestFixture.provideBlackjack;
 import static blackjack.fixture.TestFixture.provideCards;
 import static blackjack.fixture.TestFixture.provideEmptyCards;
 import static blackjack.fixture.TestFixture.providePlayer;
 import static blackjack.fixture.TestFixture.provideSmallerAceCards;
-import static blackjack.fixture.TestFixture.provideUnder16Cards;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
@@ -16,6 +13,7 @@ import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Hand;
 import blackjack.domain.card.Suit;
 import blackjack.domain.result.ProfitResult;
+import blackjack.domain.result.ResultStatus;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -110,13 +108,14 @@ class DealerTest {
         );
     }
 
+    @DisplayName("우승 결과를 계산한다")
     @ParameterizedTest
     @MethodSource
-    void 우승_결과를_계산한다(final Hand dealerHand, final Hand playerHand, final int dealerProfit, final int playerProfit) {
+    void calculateWinningResult(final ResultStatus playerResult, final int dealerProfit, final int playerProfit) {
         // Given
-        dealer = new Dealer(dealerHand);
+        dealer = new Dealer();
         final Player player = providePlayer("밍트", 10_000);
-        final Map<Player, Hand> playerScores = Map.of(player, playerHand);
+        final Map<Player, ResultStatus> playerScores = Map.of(player, playerResult);
 
         // When
         final ProfitResult profitResult = dealer.calculateProfit(playerScores);
@@ -125,14 +124,12 @@ class DealerTest {
         assertThat(profitResult.getResult()).isEqualTo(Map.of(dealer, dealerProfit, player, playerProfit));
     }
 
-    private static Stream<Arguments> 우승_결과를_계산한다() {
+    private static Stream<Arguments> calculateWinningResult() {
         return Stream.of(
-                Arguments.of(provideBlackjack(), provideBlackjack(), 0, 0),
-                Arguments.of(provideBlackjack(), provideUnder16Cards(), 10_000, -10_000),
-                Arguments.of(provideUnder16Cards(), provideBlackjack(), -15_000, 15_000),
-                Arguments.of(provideUnder16Cards(), provideEmptyCards(), 10_000, -10_000),
-                Arguments.of(provideEmptyCards(), provideUnder16Cards(), -10_000, 10_000),
-                Arguments.of(provide16Cards(), provide16Cards(), 0, 0)
+                Arguments.of(ResultStatus.PUSH, 0, 0),
+                Arguments.of(ResultStatus.LOSE, 10_000, -10_000),
+                Arguments.of(ResultStatus.BLACKJACK, -15_000, 15_000),
+                Arguments.of(ResultStatus.WIN, -10_000, 10_000)
         );
     }
 }

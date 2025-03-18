@@ -1,21 +1,12 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.card.Hand.BURST_THRESHOLD;
-import static blackjack.domain.result.ResultStatus.BLACKJACK;
-import static blackjack.domain.result.ResultStatus.LOSE;
-import static blackjack.domain.result.ResultStatus.PUSH;
-import static blackjack.domain.result.ResultStatus.WIN;
-
 import blackjack.domain.card.Hand;
 import blackjack.domain.result.ProfitResult;
 import blackjack.domain.result.ResultStatus;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public final class Dealer extends Participant implements GameRule {
 
@@ -47,55 +38,8 @@ public final class Dealer extends Participant implements GameRule {
         players.receiveCardsByCount(hand.subHand(SPREAD_CARD_SIZE, hand.getSize()), SPREAD_CARD_SIZE);
     }
 
-    public ProfitResult calculateProfit(final Map<Player, Hand> playerScores) {
-        final Map<Player, ResultStatus> result = playerScores.entrySet().stream()
-                .collect(Collectors.toMap(Entry::getKey,
-                        entry -> determinePlayerResult(entry.getValue()),
-                        (e1, e2) -> e1, LinkedHashMap::new));
-        return new ProfitResult(this, result);
-    }
-
-    private ResultStatus determinePlayerResult(final Hand playerHand) {
-        if (hand.isBlackjack() && !playerHand.isBlackjack()) {
-            return LOSE;
-        }
-        if (!hand.isBlackjack() && playerHand.isBlackjack()) {
-            return BLACKJACK;
-        }
-        return determineRegularGameResult(hand, playerHand);
-    }
-
-    private ResultStatus determineRegularGameResult(final Hand dealerHand, final Hand playerHand) {
-        int dealerScore = dealerHand.calculateResult();
-        int playerScore = playerHand.calculateResult();
-        if (dealerScore <= BURST_THRESHOLD) {
-            return determineResultWhenDealerNotBusted(dealerScore, playerScore);
-        }
-        return determineResultWhenDealerBusted(playerScore);
-    }
-
-    private ResultStatus determineResultWhenDealerNotBusted(final int dealerScore, final int playerScore) {
-        if (playerScore <= BURST_THRESHOLD) {
-            return determineResultWhenPlayerNotBusted(dealerScore, playerScore);
-        }
-        return LOSE;
-    }
-
-    private ResultStatus determineResultWhenPlayerNotBusted(final int dealerScore, final int playerScore) {
-        if (dealerScore > playerScore) {
-            return LOSE;
-        }
-        if (dealerScore == playerScore) {
-            return PUSH;
-        }
-        return WIN;
-    }
-
-    private ResultStatus determineResultWhenDealerBusted(final int playerScore) {
-        if (playerScore > BURST_THRESHOLD) {
-            return WIN;
-        }
-        return LOSE;
+    public ProfitResult calculateProfit(final Map<Player, ResultStatus> playerScores) {
+        return ProfitResult.from(this, playerScores);
     }
 
     @Override

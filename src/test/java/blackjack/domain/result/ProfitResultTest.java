@@ -21,17 +21,16 @@ class ProfitResultTest {
         final Dealer dealer = new Dealer();
         final Player mint = providePlayer("밍트", 10_000);
         final Player mj = providePlayer("엠제이", 20_000);
-        final ProfitResult profitResult = new ProfitResult(
+        final ProfitResult profitResult = ProfitResult.from(
                 dealer, Map.of(mint, ResultStatus.WIN, mj, ResultStatus.LOSE)
         );
 
         // When & then
-        assertThat(profitResult).isEqualTo(new ProfitResult(dealer, Map.of(
+        assertThat(profitResult).isEqualTo(ProfitResult.from(dealer, Map.of(
                 mint, ResultStatus.WIN,
                 mj, ResultStatus.LOSE
         )));
     }
-
 
     @Test
     @DisplayName("수익을 계산한다")
@@ -42,7 +41,7 @@ class ProfitResultTest {
         final Player mj = providePlayer("엠제이", 20_000);
         final Player pobi = providePlayer("포비", 30_000);
         final Player norang = providePlayer("노랑", 50_000);
-        final ProfitResult profitResult = new ProfitResult(dealer,
+        final ProfitResult profitResult = ProfitResult.from(dealer,
                 new LinkedHashMap<>(Map.of(mint, ResultStatus.WIN, mj, ResultStatus.LOSE, pobi, ResultStatus.PUSH,
                         norang, ResultStatus.BLACKJACK)));
 
