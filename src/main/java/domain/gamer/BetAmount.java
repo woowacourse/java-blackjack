@@ -1,6 +1,5 @@
 package domain.gamer;
 
-import domain.profit.Outcome;
 import domain.profit.Profit;
 
 public class BetAmount {
@@ -28,8 +27,7 @@ public class BetAmount {
         }
     }
 
-    public Double calculateProfit(final Outcome outcome) {
-        final Profit profit = Profit.findByOutcome(outcome);
+    public Double calculateProfit(final Profit profit) {
         return profit.calculate(betAmount);
     }
 }

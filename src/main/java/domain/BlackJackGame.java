@@ -5,7 +5,7 @@ import domain.gamer.Dealer;
 import domain.gamer.Gamer;
 import domain.gamer.Hand;
 import domain.gamer.Player;
-import domain.profit.Outcome;
+import domain.profit.Profit;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,8 +51,8 @@ public class BlackJackGame {
     }
 
     private Double calculateProfit(final Dealer dealer, final Player player) {
-        final Outcome outcome = Outcome.compare(player, dealer);
-        return player.calculateProfit(outcome);
+        final Profit profit = dealer.evaluateResult(player);
+        return player.calculateProfit(profit);
     }
 
     public double calculateDealerProfit(final Map<String, Double> playersProfit) {
