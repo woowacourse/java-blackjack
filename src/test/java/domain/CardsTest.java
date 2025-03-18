@@ -27,20 +27,7 @@ public class CardsTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"TWO:WIN", "JACK,QUEEN,KING:TIE"}, delimiterString = ":")
-    @DisplayName("GameOver인 카드 묶음이 있는 GameStatus 계산 기능 테스트")
-    void determineCardsOver21Test(String rankNames, String gameStatusName) {
-        // given
-        List<Rank> ranks = List.of(Rank.JACK, Rank.QUEEN, Rank.KING);
-        Cards cards = createCardsOfRanks(ranks);
-        List<Rank> otherRanks = createRanks(rankNames);
-        Cards otherCards = createCardsOfRanks(otherRanks);
-        // then & when
-        assertEquals(GameStatus.valueOf(gameStatusName), otherCards.determineGameStatus(cards));
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"JACK,QUEEN:WIN", "QUEEN,TWO:TIE", "JACK:LOSE", "JACK,QUEEN,KING:LOSE"}, delimiterString = ":")
+    @CsvSource(value = {"JACK,QUEEN:WIN", "QUEEN,TWO:TIE", "JACK:LOSE"}, delimiterString = ":")
     @DisplayName("GameOver인 카드 묶음이 없는 GameStatus 계산 기능 테스트")
     void determineCardsUnder21Test(String rankNames, String gameStatusName) {
         // given
@@ -49,7 +36,7 @@ public class CardsTest {
         List<Rank> otherRanks = createRanks(rankNames);
         Cards otherCards = createCardsOfRanks(otherRanks);
         // then & when
-        assertEquals(GameStatus.valueOf(gameStatusName), otherCards.determineGameStatus(cards));
+        assertEquals(GameStatus.valueOf(gameStatusName), otherCards.determineGameStatusByScore(cards));
     }
 
     @Test

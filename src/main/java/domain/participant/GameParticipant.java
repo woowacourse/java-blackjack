@@ -1,8 +1,6 @@
 package domain.participant;
 
 import domain.CardDeck;
-import domain.GameResult;
-import domain.GameStatus;
 import domain.card.Card;
 import exception.ErrorException;
 import java.util.ArrayList;
@@ -36,26 +34,6 @@ public class GameParticipant {
         for (List<Card> cards : cardsStack) {
             distributeInitialCard(cards);
         }
-    }
-
-    public GameResult determineDealerGameResult() {
-        GameResult dealerGameResult = new GameResult(dealer.getName());
-        for (Player player : players) {
-            GameStatus dealerGameStatus = dealer.determineGameStatus(player);
-            dealerGameResult.addStatusCount(dealerGameStatus);
-        }
-        return dealerGameResult;
-    }
-
-    public List<GameResult> determinePlayerGameResults() {
-        List<GameResult> playerGameResults = new ArrayList<>();
-        for (Player player : players) {
-            GameResult playerGameResult = new GameResult(player.getName());
-            GameStatus playerGameStatus = player.determineGameStatus(dealer);
-            playerGameResult.addStatusCount(playerGameStatus);
-            playerGameResults.add(playerGameResult);
-        }
-        return playerGameResults;
     }
 
     public void addExtraCard(Participant participant, CardDeck cardDeck) {

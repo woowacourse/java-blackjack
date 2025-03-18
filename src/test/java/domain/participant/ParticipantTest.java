@@ -4,10 +4,8 @@ import static domain.participant.ParticipantFactory.createParticipantCardsOfRank
 import static domain.participant.ParticipantFactory.createRanks;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import domain.GameStatus;
 import domain.card.Rank;
 import java.util.List;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -15,28 +13,24 @@ import org.junit.jupiter.params.provider.CsvSource;
 public class ParticipantTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"TWO:WIN", "JACK,QUEEN,KING:TIE"}, delimiterString = ":")
-    @DisplayName("GameOver인 참여자가 있는 GameStatus 계산 기능 테스트")
-    void determineCardsOver21Test(String rankNames, String gameStatusName) {
+    @CsvSource(value = {"ACE,JACK:true", "ACE,ACE,NINE:false", "JACK,TWO,NINE:false"}, delimiterString = ":")
+    @DisplayName("블랙잭 상태 계산 기능 테스트")
+    void determineBlackjackCardsTest(String rankNames, boolean isBlackjack) {
         // given
-        List<Rank> ranks = List.of(Rank.JACK, Rank.QUEEN, Rank.KING);
+        List<Rank> ranks = createRanks(rankNames);
         Participant participant = createParticipantCardsOfRanks(ranks);
-        List<Rank> otherRanks = createRanks(rankNames);
-        Participant otherParticipant = createParticipantCardsOfRanks(otherRanks);
         // then & when
-        Assertions.assertEquals(GameStatus.valueOf(gameStatusName), otherParticipant.determineGameStatus(participant));
+        assertEquals(isBlackjack, participant.isBlackjack());
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"JACK,QUEEN:WIN", "QUEEN,TWO:TIE", "JACK:LOSE", "JACK,QUEEN,KING:LOSE"}, delimiterString = ":")
-    @DisplayName("GameOver인 참여자가 없는 GameStatus 계산 기능 테스트")
-    void determineCardsUnder21Test(String rankNames, String gameStatusName) {
+    @CsvSource(value = {"JACK,QUEEN,TWO:true", "ACE,JACK,TWO,NINE:true"}, delimiterString = ":")
+    @DisplayName("버스트 상태 계산 기능 테스트")
+    void determineBustCardsTest(String rankNames, boolean isBust) {
         // given
-        List<Rank> ranks = List.of(Rank.JACK, Rank.TWO);
+        List<Rank> ranks = createRanks(rankNames);
         Participant participant = createParticipantCardsOfRanks(ranks);
-        List<Rank> otherRanks = createRanks(rankNames);
-        Participant otherParticipant = createParticipantCardsOfRanks(otherRanks);
         // then & when
-        assertEquals(GameStatus.valueOf(gameStatusName), otherParticipant.determineGameStatus(participant));
+        assertEquals(isBust, participant.isBust());
     }
 }

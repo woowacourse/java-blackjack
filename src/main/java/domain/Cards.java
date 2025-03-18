@@ -30,13 +30,10 @@ public class Cards {
         return score;
     }
 
-    public GameStatus determineGameStatus(Cards otherCards) {
+    public GameStatus determineGameStatusByScore(Cards otherCards) {
         int cardsScore = calculateScore();
         int otherCardsScore = otherCards.calculateScore();
-        if (!isGameOver(cardsScore) && !isGameOver(otherCardsScore)) {
-            return evaluateStatusByScore(cardsScore, otherCardsScore);
-        }
-        return evaluateStatusByGameOver(cardsScore, otherCardsScore);
+        return evaluateStatusByScore(cardsScore, otherCardsScore);
     }
 
     public int calculateAceCount() {
@@ -49,6 +46,14 @@ public class Cards {
         return cards.removeFirst();
     }
 
+    public boolean isBlackjack() {
+        return cards.size() == 2 && calculateScore() == CARDS_BUST_THRESHOLD;
+    }
+
+    public boolean isBust() {
+        return calculateScore() > CARDS_BUST_THRESHOLD;
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
@@ -58,16 +63,6 @@ public class Cards {
             return GameStatus.WIN;
         }
         if (cardsScore < otherCardsScore) {
-            return GameStatus.LOSE;
-        }
-        return GameStatus.TIE;
-    }
-
-    private GameStatus evaluateStatusByGameOver(int cardsScore, int otherCardsScore) {
-        if (!isGameOver(cardsScore) && isGameOver(otherCardsScore)) {
-            return GameStatus.WIN;
-        }
-        if (isGameOver(cardsScore) && !isGameOver(otherCardsScore)) {
             return GameStatus.LOSE;
         }
         return GameStatus.TIE;
