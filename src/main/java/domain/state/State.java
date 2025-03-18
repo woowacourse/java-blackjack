@@ -30,5 +30,4 @@ public interface State {
             return this == BUST;
         }
     }
-
 }
