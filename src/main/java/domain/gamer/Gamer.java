@@ -8,7 +8,7 @@ import java.util.Objects;
 public abstract class Gamer {
 
     private final Nickname nickname;
-    protected State state;
+    private State state;
 
     public Gamer(final Nickname nickname, final State state) {
         this.nickname = nickname;
