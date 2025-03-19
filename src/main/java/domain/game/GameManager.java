@@ -29,13 +29,11 @@ public class GameManager {
     }
 
     public EarningResult evaluateEarning(PlayerBets playerBets) {
-        ScoreInfo dealerScoreInfo = new ScoreInfo(dealer.calculateScore(), dealer.getCardCount());
 
         Map<Player, Double> earningResult = players.stream()
                 .collect(Collectors.toMap(player -> player
-                        , player -> Winning.determine(
-                                new ScoreInfo(player.calculateScore(), player.getCardCount()), dealerScoreInfo
-                        ).getEarningRate() * playerBets.getBetAmountByPlayer(player)
+                        , player -> Winning.determine(player.getHands(), dealer.getHands())
+                                .getEarningRate() * playerBets.getBetAmountByPlayer(player)
                         , (player1, player2) -> player1, LinkedHashMap::new));
 
         return new EarningResult(earningResult);
@@ -67,7 +65,7 @@ public class GameManager {
     public List<Card> getPlayerCards(String name) {
         Player player = findPlayerByName(name);
         if(player != null) {
-            return player.getCards();
+            return player.getHands().getCards();
         }
         return new ArrayList<>();
     }

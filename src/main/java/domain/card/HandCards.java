@@ -1,11 +1,12 @@
 package domain.card;
 
-import domain.game.ScoreInfo;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class HandCards {
+
+    public static final int BLACKJACK_SCORE = 21;
+    public static final int BLACKJACK_CARD_COUNT = 2;
 
     private final List<Card> deck = new ArrayList<>();
 
@@ -16,6 +17,14 @@ public class HandCards {
 
     public void takeMore(Card card) {
         deck.add(card);
+    }
+
+    public boolean isBlackJack() {
+        return (calculateScore() == BLACKJACK_SCORE && getCardCount() == BLACKJACK_CARD_COUNT);
+    }
+
+    public boolean isBust() {
+        return (calculateScore() > BLACKJACK_SCORE);
     }
 
     public int calculateScore() {
@@ -35,7 +44,7 @@ public class HandCards {
     }
 
     private int calculateOptimalScore(int sum){
-        if (sum + Rank.ACE_LOW_HIGH_GAP <= ScoreInfo.BLACKJACK_SCORE) {
+        if (sum + Rank.ACE_LOW_HIGH_GAP <= BLACKJACK_SCORE) {
             return sum + Rank.ACE_LOW_HIGH_GAP;
         }
         return sum;

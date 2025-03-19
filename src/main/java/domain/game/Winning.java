@@ -1,5 +1,7 @@
 package domain.game;
 
+import domain.card.HandCards;
+
 public enum Winning {
     BLACKJACK("블랙잭", 1.5),
     WIN("승", 1),
@@ -15,25 +17,25 @@ public enum Winning {
         this.earningRate = earningRate;
     }
 
-    public static Winning determine(ScoreInfo playerScoreInfo, ScoreInfo dealerScoreInfo) {
-        if(playerScoreInfo.isBlackJack() && dealerScoreInfo.isBlackJack()) {
+    public static Winning determine(HandCards playerHands, HandCards dealerHands) {
+        if(playerHands.isBlackJack() && dealerHands.isBlackJack()) {
             return DRAW;
         }
-        if(playerScoreInfo.isBlackJack()) {
+        if(playerHands.isBlackJack()) {
             return BLACKJACK;
         }
-        if(dealerScoreInfo.isBlackJack()) {
+        if(dealerHands.isBlackJack()) {
             return LOSE;
         }
 
-        if(playerScoreInfo.isBust()) {
+        if(playerHands.isBust()) {
             return LOSE;
         }
-        if(dealerScoreInfo.isBust()) {
+        if(dealerHands.isBust()) {
             return WIN;
         }
 
-        return getWinningByScore(playerScoreInfo.getScore(), dealerScoreInfo.getScore());
+        return getWinningByScore(playerHands.calculateScore(), dealerHands.calculateScore());
     }
 
     private static Winning getWinningByScore(int playerScore, int dealerScore) {

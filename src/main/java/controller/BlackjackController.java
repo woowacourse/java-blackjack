@@ -99,7 +99,7 @@ public class BlackjackController {
         Card dealerOpenCard = dealer.getOpenCard();
 
         Map<String, List<Card>> cards = players.stream()
-                .collect(Collectors.toMap(Player::getName, Participant::getCards
+                .collect(Collectors.toMap(Player::getName, player -> player.getHands().getCards()
                         , (player1, player2) -> player1, LinkedHashMap::new));
 
         return new SetUpCardsDTO(dealerOpenCard, cards);
@@ -107,10 +107,10 @@ public class BlackjackController {
 
     public List<FinalResultDTO> createFinalResultDTOs(Dealer dealer, List<Player> players) {
         List<FinalResultDTO> finalResultDTOs = new ArrayList<>();
-        FinalResultDTO dealerFinalResultDTO = new FinalResultDTO("딜러", dealer.getCards(), dealer.calculateScore());
+        FinalResultDTO dealerFinalResultDTO = new FinalResultDTO("딜러", dealer.getHands().getCards(), dealer.calculateScore());
         finalResultDTOs.add(dealerFinalResultDTO);
         for (Player player : players) {
-            FinalResultDTO playerFinalResultDTO = new FinalResultDTO(player.getName(), player.getCards(), player.calculateScore());
+            FinalResultDTO playerFinalResultDTO = new FinalResultDTO(player.getName(), player.getHands().getCards(), player.calculateScore());
             finalResultDTOs.add(playerFinalResultDTO);
         }
 

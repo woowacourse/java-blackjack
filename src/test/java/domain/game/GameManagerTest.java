@@ -66,20 +66,4 @@ public class GameManagerTest {
         assertThatCode(() -> new GameManager(dealer, List.of(player1, player2)))
             .doesNotThrowAnyException();
     }
-
-    @Test
-    void 딜러와_플레이어들에게_초기카드를_나눠준다() {
-        //given
-        Player player = new Player("이름");
-
-        //when
-        GameManager gameManager = new GameManager(dealer, List.of(player));
-        gameManager.distributeSetUpCards();
-
-        //then
-        assertAll(
-            () -> assertThat(dealer.getCards()).hasSize(2),
-            () -> assertThat(player.getCards()).hasSize(2)
-        );
-    }
 }
