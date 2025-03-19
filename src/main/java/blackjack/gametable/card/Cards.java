@@ -35,8 +35,8 @@ public class Cards {
         return sum;
     }
 
-    public List<Card> drawInitialCards() {
-        return new ArrayList<>(List.of(drawCard(), drawCard()));
+    public Cards drawInitialCards() {
+        return new Cards(List.of(drawCard(), drawCard()));
     }
 
     public List<Card> openDealerInitialCards() {

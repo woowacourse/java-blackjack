@@ -26,7 +26,7 @@ public class Deck {
     }
 
     public Cards drawInitialCards() {
-        return new Cards(cards.drawInitialCards());
+        return cards.drawInitialCards();
     }
 
     public List<Cards> drawInitialCards(int count) {

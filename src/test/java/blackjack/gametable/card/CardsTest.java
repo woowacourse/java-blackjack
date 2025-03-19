@@ -87,7 +87,7 @@ class CardsTest {
                 createCard(TrumpRank.FOUR, TrumpSuit.HEART)
         );
         // when
-        List<Card> initialCards = cards.drawInitialCards();
+        List<Card> initialCards = cards.drawInitialCards().getCards();
 
         // then
         assertThat(initialCards).hasSize(2);
@@ -117,7 +117,7 @@ class CardsTest {
                 createCard(TrumpRank.TWO, TrumpSuit.SPADE)
         );
         // when
-        List<Card> initialCards = cards.drawInitialCards();
+        List<Card> initialCards = cards.drawInitialCards().getCards();
 
         // then
         assertThat(initialCards).hasSize(2);
