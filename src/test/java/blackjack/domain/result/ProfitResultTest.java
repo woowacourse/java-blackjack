@@ -51,11 +51,11 @@ class ProfitResultTest {
 
         // Then
         Assertions.assertAll(
-                () -> assertThat(profits.get(dealer)).isEqualTo(BigDecimal.valueOf(-65_000.0)),
-                () -> assertThat(profits.get(mint)).isEqualTo(BigDecimal.valueOf(10_000.0)),
-                () -> assertThat(profits.get(mj)).isEqualTo(BigDecimal.valueOf(-20_000.0)),
-                () -> assertThat(profits.get(pobi)).isEqualTo(BigDecimal.valueOf(0.0)),
-                () -> assertThat(profits.get(norang)).isEqualTo(BigDecimal.valueOf(75_000.0))
+                () -> assertThat(profits.get(dealer)).isEqualTo(new BigDecimal("-65000.0")),
+                () -> assertThat(profits.get(mint)).isEqualTo(new BigDecimal("10000.0")),
+                () -> assertThat(profits.get(mj)).isEqualTo(new BigDecimal("-20000.0")),
+                () -> assertThat(profits.get(pobi)).isEqualTo(new BigDecimal("0.0")),
+                () -> assertThat(profits.get(norang)).isEqualTo(new BigDecimal("75000.0"))
         );
     }
 }

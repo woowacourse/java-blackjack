@@ -128,10 +128,10 @@ class DealerTest {
 
     private static Stream<Arguments> calculateWinningResult() {
         return Stream.of(
-                Arguments.of(ResultStatus.PUSH, BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0)),
-                Arguments.of(ResultStatus.LOSE, BigDecimal.valueOf(10_000.0), BigDecimal.valueOf(-10_000.0)),
-                Arguments.of(ResultStatus.BLACKJACK, BigDecimal.valueOf(-15_000.0), BigDecimal.valueOf(15_000.0)),
-                Arguments.of(ResultStatus.WIN, BigDecimal.valueOf(-10_000.0), BigDecimal.valueOf(10_000.0))
+                Arguments.of(ResultStatus.PUSH, new BigDecimal("0.0"), new BigDecimal("0.0")),
+                Arguments.of(ResultStatus.LOSE, new BigDecimal("10000.0"), new BigDecimal("-10000.0")),
+                Arguments.of(ResultStatus.BLACKJACK, new BigDecimal("-15000.0"), new BigDecimal("15000.0")),
+                Arguments.of(ResultStatus.WIN, new BigDecimal("-10000.0"), new BigDecimal("10000.0"))
         );
     }
 }
