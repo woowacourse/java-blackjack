@@ -11,6 +11,7 @@ public class CardDeck {
 
     public CardDeck() {
         cards = initializeCardPack();
+        shuffle();
     }
 
     private List<Card> initializeCardPack() {
