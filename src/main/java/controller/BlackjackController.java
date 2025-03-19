@@ -87,7 +87,7 @@ public class BlackjackController {
     }
 
     private void evaluateAndDisplayEarnings(GameManager gameManager, PlayerBets playerBets) {
-        EarningResult earningResult = gameManager.evaluateEarning(playerBets);
+        EarningResult earningResult = playerBets.evaluateEarning(gameManager.getPlayers(), gameManager.getDealer());
         outputView.printFinalEarning(earningResult);
     }
 
