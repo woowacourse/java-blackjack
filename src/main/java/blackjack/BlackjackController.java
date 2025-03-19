@@ -18,16 +18,16 @@ public class BlackjackController {
 
     public void run() {
         List<String> playerNames = inputView.readParticipantsNames();
-        BlackjackGame gameTable = new BlackjackGame(playerNames);
+        BlackjackGame blackjackGame = new BlackjackGame(playerNames);
 
-        for (String playerName : gameTable.getPlayerNames()) {
+        for (String playerName : blackjackGame.getPlayerNames()) {
             int betAmount = inputView.readParticipantsBetAmount(playerName);
-            gameTable.updateBetAmount(playerName, betAmount);
+            blackjackGame.updateBetAmount(playerName, betAmount);
         }
 
-        outputView.printInitialGameSettings(gameTable);
-        gameTable.playGame(inputView, outputView);
-        outputView.printGameSummary(gameTable);
-        outputView.printGameResult(gameTable);
+        outputView.printInitialGameSettings(blackjackGame);
+        blackjackGame.playGame(inputView, outputView);
+        outputView.printGameSummary(blackjackGame);
+        outputView.printGameResult(blackjackGame);
     }
 }

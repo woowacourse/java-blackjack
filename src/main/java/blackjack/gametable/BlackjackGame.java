@@ -44,6 +44,10 @@ public class BlackjackGame {
         dealer.updateBetAmounts(players);
     }
 
+    public Player findPlayer(String playerName) {
+        return players.findPlayer(playerName);
+    }
+
     private void playPlayerTurn(String playerName, InputView inputView, OutputView outputView) {
         while (inputView.readOneMoreCardResponse(playerName).equals(UserAction.HIT)) {
             addCardTo(playerName);
@@ -61,10 +65,6 @@ public class BlackjackGame {
 
     private void addCardTo(String playerName) {
         findPlayer(playerName).addCard(deck.drawCard());
-    }
-
-    private Player findPlayer(String playerName) {
-        return players.findPlayer(playerName);
     }
 
     private Players registerPlayers(List<String> names) {
@@ -88,4 +88,11 @@ public class BlackjackGame {
         return players.getPlayers().size();
     }
 
+    public Players getPlayers() {
+        return players;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
 }
