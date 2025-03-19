@@ -1,7 +1,6 @@
 package blackjack.gametable.gambler;
 
 import blackjack.gametable.card.Card;
-import blackjack.gametable.card.Cards;
 import java.util.List;
 import java.util.Objects;
 
