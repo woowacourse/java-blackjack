@@ -47,21 +47,10 @@ public class Dealer extends Gambler {
 
     private double handleMatchResult(MatchResult matchResult, Player player) {
         double betAmount = player.getBetAmount();
+        double profit = matchResult.calculatePayout(betAmount);
+        player.updateBetAmount(profit);
 
-        if (matchResult == MatchResult.BLACKJACK_WIN) {
-            double blackjackAmount = betAmount * 1.5;
-            player.updateBetAmount(blackjackAmount);
-            return -blackjackAmount;
-        }
-        if (matchResult == MatchResult.WIN) {
-            return -betAmount;
-        }
-        if (matchResult == MatchResult.LOSE) {
-            player.updateBetAmount(-betAmount);
-            return betAmount;
-        }
-        player.updateBetAmount(0);
-        return 0;
+        return -profit;
     }
 
     private MatchResult calculateMatchResultWhenBlackjack(Cards playerCards) {
