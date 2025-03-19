@@ -14,17 +14,17 @@ public class Dealer extends Gambler {
         return cards.openDealerInitialCards();
     }
 
-    public void updateBetAmounts(Players players) {
+    public void applyBetAmounts(Players players) {
         double dealerAmount = 0;
 
         for (Player player : players.getPlayers()) {
             MatchResult matchResult = BlackjackRule.evaluate(this, player);
             double profit = calculateProfit(matchResult, player.getBetAmount());
-            player.updateBetAmount(profit);
+            player.applyBetResult(profit);
             dealerAmount -= profit;
         }
 
-        super.updateBetAmount(dealerAmount);
+        super.applyBetResult(dealerAmount);
     }
 
     public boolean shouldDrawCard() {

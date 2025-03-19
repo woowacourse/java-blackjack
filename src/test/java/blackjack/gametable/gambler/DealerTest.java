@@ -102,13 +102,13 @@ class DealerTest {
 
         dealer.drawInitializeHand(dealerCards);
         player1.drawInitializeHand(player1Cards);
-        player1.updateBetAmount(10000);
+        player1.applyBetResult(10000);
         player2.drawInitializeHand(player2Cards);
-        player2.updateBetAmount(20000);
+        player2.applyBetResult(20000);
         Players players = new Players(List.of(player1, player2));
 
         // when
-        dealer.updateBetAmounts(players);
+        dealer.applyBetAmounts(players);
 
         // then
         assertThat(dealer.getBetAmount()).isEqualTo(expectedBetAmount);

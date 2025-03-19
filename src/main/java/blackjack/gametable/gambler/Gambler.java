@@ -24,7 +24,12 @@ public abstract class Gambler {
     }
 
     public void updateBetAmount(double betAmount) {
+        validateBetAmount(betAmount);
         this.betAmount = betAmount;
+    }
+
+    public void applyBetResult(double profit) {
+        this.betAmount = profit;
     }
 
     public void addCard(Card card) {
@@ -38,6 +43,12 @@ public abstract class Gambler {
     private void validateInitialCardsSize(Cards cards) {
         if (cards.getSize() != INITIAL_CARD_COUNT) {
             throw new IllegalArgumentException("[ERROR] 초기 카드는 " + INITIAL_CARD_COUNT + "장을 받아야 합니다.");
+        }
+    }
+
+    private void validateBetAmount(double amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("[ERROR] 베팅 금액은 0원 이상이어야 합니다.");
         }
     }
 

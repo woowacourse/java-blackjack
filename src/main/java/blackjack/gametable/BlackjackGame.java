@@ -41,7 +41,7 @@ public class BlackjackGame {
     }
 
     public void calculateTotalPayout() {
-        dealer.updateBetAmounts(players);
+        dealer.applyBetAmounts(players);
     }
 
     public Player findPlayer(String playerName) {
