@@ -1,12 +1,13 @@
 package blackjack.gametable;
 
-import blackjack.gametable.card.Card;
-import blackjack.gametable.card.Cards;
+import blackjack.constant.UserAction;
 import blackjack.gametable.card.Deck;
 import blackjack.gametable.gambler.Dealer;
 import blackjack.gametable.gambler.Player;
 import blackjack.gametable.gambler.PlayerName;
 import blackjack.gametable.gambler.Players;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
 import java.util.List;
 
 public class BlackjackGame {
@@ -20,34 +21,19 @@ public class BlackjackGame {
         this.deck = Deck.initialize();
         this.dealer = new Dealer();
         this.players = registerPlayers(playerNames);
+        initializeGame();
     }
 
-    public void initializeGame() {
-        Cards dealerInitialCards = deck.drawInitialCards();
-        List<Cards> playerInitialCards = deck.drawInitialCards(getPlayersCount());
-        dealer.initializeHand(dealerInitialCards);
-        players.initializeHands(playerInitialCards);
+    private void initializeGame() {
+        dealer.initializeHand(deck.drawInitialCards());
+        players.initializeHands(deck.drawInitialCards(getPlayersCount()));
     }
 
-    public void addCardTo(String playerName) {
-        Player player = findPlayer(playerName);
-        Card card = deck.drawCard();
-        player.addCard(card);
-    }
-
-    public Player findPlayer(String playerName) {
-        return players.findPlayer(playerName);
-    }
-
-    public boolean isDealerDrawCard() {
-        return dealer.shouldDrawCard();
-    }
-
-    public void determineDealerAdditionalCard() {
-        if (isDealerDrawCard()) {
-            Card card = deck.drawCard();
-            dealer.addCard(card);
+    public void playGame(InputView inputView, OutputView outputView) {
+        for (String playerName : getPlayerNames()) {
+            playPlayerTurn(playerName, inputView, outputView);
         }
+        playDealerTurn(outputView);
     }
 
     public void updateBetAmount(String playerName, int betAmount) {
@@ -58,20 +44,27 @@ public class BlackjackGame {
         dealer.updateBetAmounts(players);
     }
 
-    public int getPlayersCount() {
-        return players.getPlayers().size();
+    private void playPlayerTurn(String playerName, InputView inputView, OutputView outputView) {
+        while (inputView.readOneMoreCardResponse(playerName).equals(UserAction.HIT)) {
+            addCardTo(playerName);
+            outputView.printPlayerCards(this, playerName);
+        }
     }
 
-    public List<String> getPlayerNames() {
-        return players.getPlayerNames();
+    private void playDealerTurn(OutputView outputView) {
+        if (dealer.shouldDrawCard()) {
+            outputView.printDealerOneMoreCardMessage();
+            dealer.addCard(deck.drawCard());
+        }
+        calculateTotalPayout();
     }
 
-    public Players getPlayers() {
-        return players;
+    private void addCardTo(String playerName) {
+        findPlayer(playerName).addCard(deck.drawCard());
     }
 
-    public Dealer getDealer() {
-        return dealer;
+    private Player findPlayer(String playerName) {
+        return players.findPlayer(playerName);
     }
 
     private Players registerPlayers(List<String> names) {
@@ -82,12 +75,17 @@ public class BlackjackGame {
     }
 
     private void validatePlayerCount(List<String> playerNames) {
-        if (playerNames.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 플레이어는 최소 한 명 이상 필요합니다.");
+        if (playerNames.isEmpty() || playerNames.size() > 6) {
+            throw new IllegalArgumentException("[ERROR] 플레이어는 1명 이상, 6명 이하로 지정해야 합니다.");
         }
-        if (playerNames.size() > 6) {
-            throw new IllegalArgumentException("[ERROR] 플레이어는 최대 여섯 명 까지 지정할 수 있습니다.");
-        }
+    }
+
+    public List<String> getPlayerNames() {
+        return players.getPlayerNames();
+    }
+
+    public int getPlayersCount() {
+        return players.getPlayers().size();
     }
 
 }

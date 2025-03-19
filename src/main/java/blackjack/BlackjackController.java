@@ -1,7 +1,6 @@
 package blackjack;
 
 import blackjack.config.GameConfig;
-import blackjack.constant.UserAction;
 import blackjack.gametable.BlackjackGame;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -20,7 +19,6 @@ public class BlackjackController {
     public void run() {
         List<String> playerNames = inputView.readParticipantsNames();
         BlackjackGame gameTable = new BlackjackGame(playerNames);
-        gameTable.initializeGame();
 
         for (String playerName : gameTable.getPlayerNames()) {
             int betAmount = inputView.readParticipantsBetAmount(playerName);
@@ -28,25 +26,8 @@ public class BlackjackController {
         }
 
         outputView.printInitialGameSettings(gameTable);
-
-        for (String playerName : gameTable.getPlayerNames()) {
-            UserAction userAction = inputView.readOneMoreCardResponse(playerName);
-            while (userAction.equals(UserAction.HIT)) {
-                gameTable.addCardTo(playerName);
-                outputView.printPlayerCards(gameTable, playerName);
-                userAction = inputView.readOneMoreCardResponse(playerName);
-            }
-        }
-
-        if (gameTable.isDealerDrawCard()) {
-            outputView.printDealerOneMoreCardMessage();
-        }
-        gameTable.determineDealerAdditionalCard();
-
+        gameTable.playGame(inputView, outputView);
         outputView.printGameSummary(gameTable);
-
-        gameTable.calculateTotalPayout();
         outputView.printGameResult(gameTable);
     }
-
 }
