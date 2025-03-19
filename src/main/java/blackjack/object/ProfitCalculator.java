@@ -56,13 +56,17 @@ public class ProfitCalculator {
         if (playerScore == BLACK_JACK && dealerScore == BLACK_JACK) {
             return 0;
         }
+
         if (playerScore == BLACK_JACK) {
             double profit = bettingAmount * 1.5 ;
+
            return (int) profit;
         }
+
         if (dealerScore == BLACK_JACK) {
             return -bettingAmount;
         }
+
         return judgeNonBlackJackCase(playerName, bettingAmount);
     }
 
