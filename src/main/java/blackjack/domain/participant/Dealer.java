@@ -6,7 +6,6 @@ import blackjack.domain.result.ResultStatus;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public final class Dealer extends Participant implements GameRule {
 
@@ -40,19 +39,6 @@ public final class Dealer extends Participant implements GameRule {
 
     public ProfitResult calculateProfit(final Map<Player, ResultStatus> playerScores) {
         return ProfitResult.from(this, playerScores);
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (!(o instanceof final Dealer dealer)) {
-            return false;
-        }
-        return Objects.equals(hand, dealer.hand);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(hand);
     }
 
     @Override

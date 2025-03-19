@@ -43,7 +43,7 @@ class DealerTest {
         dealer.receiveCards(hand);
 
         // then
-        assertThat(dealer).isEqualTo(new Dealer(hand));
+        assertThat(dealer.showAllCards()).isEqualTo(hand);
     }
 
     @DisplayName("딜러는 카드 2개 중 1개만 보여준다.")
