@@ -5,8 +5,6 @@ import blackjack.object.gambler.Name;
 import java.util.*;
 
 import static blackjack.object.WinningType.*;
-import static java.util.function.Function.identity;
-import static java.util.stream.Collectors.toMap;
 
 public class ProfitCalculator {
     public static final int BLACK_JACK = 21;
@@ -16,12 +14,6 @@ public class ProfitCalculator {
     public ProfitCalculator(final Map<Name, Integer> gamblerScores, final Map<Name, Integer> bettingRecords) {
         this.gamblerScores = gamblerScores;
         this.bettingRecords = bettingRecords;
-    }
-
-    public Map<Name, WinningType> judgePlayersResult() {
-        return bettingRecords.keySet()
-                .stream()
-                .collect(toMap(identity(), this::judgePlayerResult));
     }
 
     public Map<Name, Integer> calculateGamblerProfit() {
