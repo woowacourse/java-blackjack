@@ -64,4 +64,29 @@ class ProfitCalculatorTest {
         // then
         assertThat(result.get(name)).isEqualTo(expected);
     }
+
+
+    @DisplayName("딜러의 합계가 21(블랙잭)인 경우 겜블러의 수익을 구한다.")
+    @CsvSource(value = {"라젤:-5000", "레오:0", "비타:-5000", "딜러:10000"}, delimiterString = ":")
+    @ParameterizedTest
+    void calculateGamblerProfit_DealerIsBlackJack_Test(Name name, int expected) {
+        // given
+        Map<Name, Integer> bettingRecords = new HashMap<>(Map.of(
+                new Name("라젤"), 5000,
+                new Name("레오"), 10000,
+                new Name("비타"), 5000
+        ));
+        Map<Name, Integer> gamblerScores = Map.of(
+                Name.getDealerName(), 21,
+                new Name("라젤"), 19, // 딜러 승리
+                new Name("레오"), 21, // 무승부
+                new Name("비타"), 24); // 딜러 승리 (플레이어 버스트)
+        ProfitCalculator profitCalculator = new ProfitCalculator(gamblerScores, bettingRecords);
+
+        // when
+        Map<Name, Integer> result = profitCalculator.calculateGamblerProfit();
+
+        // then
+        assertThat(result.get(name)).isEqualTo(expected);
+    }
 }
