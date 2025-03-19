@@ -12,13 +12,12 @@ public class Money {
     }
 
     public static Money from(String input) {
-        validateInteger(input);
-        return new Money(Integer.parseInt(input));
+        return new Money(parseInteger(input));
     }
 
-    private static void validateInteger(String input) {
+    private static int parseInteger(String input) {
         try {
-            Integer.parseInt(input);
+            return Integer.parseInt(input);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("숫자 형식이어야 합니다");
         }
