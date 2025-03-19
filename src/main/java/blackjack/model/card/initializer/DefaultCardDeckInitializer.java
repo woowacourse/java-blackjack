@@ -1,30 +1,30 @@
 package blackjack.model.card.initializer;
 
-import blackjack.model.card.Card;
+import blackjack.model.card.BlackJackCard;
+import blackjack.model.card.BlackJackCards;
 import blackjack.model.card.CardNumber;
 import blackjack.model.card.CardType;
-import blackjack.model.card.Cards;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class DefaultCardDeckInitializer implements CardDeckInitializer {
+public final class DefaultCardDeckInitializer implements CardDeckInitializer {
 
     @Override
-    public Cards initialize() {
-        return new Cards(initializeCardDeck());
+    public BlackJackCards initialize() {
+        return new BlackJackCards(initializeCardDeck());
     }
 
-    private List<Card> initializeCardDeck() {
-        List<Card> cards = new ArrayList<>();
+    private List<BlackJackCard> initializeCardDeck() {
+        List<BlackJackCard> blackJackCards = new ArrayList<>();
         Arrays.stream(CardType.values())
                 .forEach(cardType -> Arrays.stream(CardNumber.values())
                         .forEach(
-                                cardNumber -> cards.add(new Card(cardType, cardNumber))
+                                cardNumber -> blackJackCards.add(new BlackJackCard(cardType, cardNumber))
                         )
                 );
-        Collections.shuffle(cards);
-        return cards;
+        Collections.shuffle(blackJackCards);
+        return blackJackCards;
     }
 }

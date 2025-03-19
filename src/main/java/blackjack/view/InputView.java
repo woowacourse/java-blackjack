@@ -1,11 +1,11 @@
 package blackjack.view;
 
-import blackjack.model.player.Player;
+import blackjack.model.blackjack_player.player.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class InputView {
+public final class InputView {
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -14,6 +14,11 @@ public class InputView {
         return Arrays.stream(scanner.nextLine()
                 .split(",")
         ).toList();
+    }
+
+    public int readBettingMoney(final String userName) {
+        System.out.println(userName + "의 배팅 금액은?");
+        return Integer.parseInt(scanner.nextLine());
     }
 
     public boolean readUserDrawMoreCard(final Player player) {

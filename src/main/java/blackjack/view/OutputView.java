@@ -1,33 +1,31 @@
 package blackjack.view;
 
-import blackjack.model.card.Cards;
-import blackjack.model.game.Result;
-import blackjack.model.player.BlackJackPlayer;
-import blackjack.model.player.Dealer;
-import blackjack.model.player.Player;
+import blackjack.model.blackjack_player.dealer.Dealer;
+import blackjack.model.blackjack_player.player.Player;
+import blackjack.model.card.BlackJackCards;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-public class OutputView {
+public final class OutputView {
 
     public void printDealInitialCardsResult(final Dealer dealer, final List<Player> players) {
         String userNames = players.stream()
-                .map(BlackJackPlayer::getName)
+                .map(Player::getName)
                 .collect(Collectors.joining(", "));
         System.out.println();
-        System.out.println(dealer.getName() + "와 " + userNames + "에게 2장을 나누었습니다.");
-        printPlayerCards(dealer);
+        System.out.println("딜러와 " + userNames + "에게 2장을 나누었습니다.");
+        System.out.println("딜러카드: " + formatCards(dealer.openCards()));
         players.forEach(this::printPlayerCards);
         System.out.println();
     }
 
-    public void printPlayerCards(final BlackJackPlayer blackJackPlayer) {
-        System.out.println(blackJackPlayer.getName() + "카드: " + formatCards(blackJackPlayer.openInitialCards()));
+    public void printPlayerCards(final Player player) {
+        System.out.println(
+                player.getName() + "카드: " + formatCards(player.getCards()));
     }
 
-    private String formatCards(final Cards cards) {
-        return cards.getValues()
+    private String formatCards(final BlackJackCards blackJackCards) {
+        return blackJackCards.getValues()
                 .stream()
                 .map(card -> card.cardNumber().getName() + card.cardType().getName())
                 .collect(Collectors.joining(", "));
@@ -42,37 +40,31 @@ public class OutputView {
         System.out.println("딜러는 한장의 카드를 더 받지 않았습니다." + System.lineSeparator());
     }
 
+    public void printGameResult(final List<Player> players) {
+        System.out.println("## 최종 수익");
+        printDealerResult(players);
+        printUsersResults(players);
+    }
+
+    private void printDealerResult(final List<Player> players) {
+        int dealerProfit = (-1) * players.stream()
+                .mapToInt(Player::getProfit)
+                .sum();
+        System.out.println("딜러: " + dealerProfit);
+    }
+
+    private void printUsersResults(final List<Player> players) {
+        players.forEach(
+                player -> System.out.println(player.getName() + ": " + player.getProfit()));
+    }
+
     public void printOptimalPoints(final Dealer dealer, final List<Player> players) {
         System.out.println(
-                dealer.getName() + "카드: " + formatCards(dealer.openAllCards()) + " - 결과: "
-                        + dealer.calculateOptimalPoint());
-        players.forEach(user -> System.out.println(
-                user.getName() + "카드: " + formatCards(user.openAllCards()) + " - 결과: " + user.calculateOptimalPoint()));
+                "딜러카드: " + formatCards(dealer.getAllCards()) + " - 결과: "
+                        + dealer.getOptimalPoint());
+        players.forEach(player -> System.out.println(
+                player.getName() + "카드: " + formatCards(player.getCards()) + " - 결과: "
+                        + player.getOptimalPoint()));
         System.out.println();
-    }
-
-    public void printGameResult(final Map<Result, Integer> dealerResult, final Map<Player, Result> usersResults) {
-        System.out.println("## 최종 승패");
-        printDealerResult(dealerResult);
-        printUsersResults(usersResults);
-    }
-
-    private void printDealerResult(final Map<Result, Integer> dealerResult) {
-        System.out.println("딜러: " + formatDealerResult(dealerResult));
-    }
-
-    private String formatDealerResult(final Map<Result, Integer> dealerResult) {
-        return dealerResult.entrySet().stream()
-                .filter(entry -> entry.getValue() > 0)
-                .map(entry -> entry.getValue() + entry.getKey().getName())
-                .collect(Collectors.joining(" "));
-    }
-
-    private void printUsersResults(final Map<Player, Result> userResults) {
-        userResults.forEach(this::printUserResult);
-    }
-
-    private void printUserResult(final Player player, final Result result) {
-        System.out.println(player.getName() + ": " + result.getName());
     }
 }

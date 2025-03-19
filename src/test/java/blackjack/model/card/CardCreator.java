@@ -2,8 +2,8 @@ package blackjack.model.card;
 
 public class CardCreator {
 
-    public static Card createCard(final CardNumber cardNumber) {
-        return new Card(CardType.CLOVER, cardNumber);
+    public static BlackJackCard createCard(final CardNumber cardNumber) {
+        return new BlackJackCard(CardType.CLOVER, cardNumber);
     }
 
 }

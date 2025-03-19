@@ -1,11 +1,12 @@
 package blackjack.model.card;
 
 import static blackjack.model.card.CardCreator.createCard;
-import java.util.List;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
+
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
-class CardDeckTest {
+class BlackJackPlayerDeckTest {
 
     @Test
     void N_개의_카드를_반환한다() {
