@@ -40,17 +40,4 @@ class DeckTest {
         assertThat(cards.getSize()).isEqualTo(2);
     }
 
-    @Test
-    void 플레이어_수만큼_초기_카드를_뽑는다() {
-        // given
-        Deck deck = Deck.initialize();
-
-        // when
-        List<Cards> cards = deck.drawInitialCards(3);
-
-        // then
-        assertThat(cards).hasSize(3);
-        assertThat(cards.getFirst().getSize()).isEqualTo(2);
-    }
-
 }

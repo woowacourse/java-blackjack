@@ -2,13 +2,8 @@ package blackjack.gametable.gambler;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.constant.TrumpRank;
-import blackjack.constant.TrumpSuit;
-import blackjack.gametable.card.Card;
-import blackjack.gametable.card.Cards;
-import java.util.Arrays;
+import blackjack.gametable.card.Deck;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 
 class PlayersTest {
@@ -70,33 +65,14 @@ class PlayersTest {
         Player player1 = new Player(playerName1);
         Player player2 = new Player(playerName2);
         Players players = new Players(List.of(player1, player2));
-
-        Cards cards1 = createCards(
-                createCard(TrumpRank.ACE, TrumpSuit.DIAMOND),
-                createCard(TrumpRank.TWO, TrumpSuit.SPADE)
-        );
-        Cards cards2 = createCards(
-                createCard(TrumpRank.NINE, TrumpSuit.CLOVER),
-                createCard(TrumpRank.TEN, TrumpSuit.HEART)
-        );
+        Deck deck = Deck.initialize();
 
         // when
-        players.drawInitializeHands(List.of(cards1, cards2));
+        players.drawInitializeHands(deck);
 
         // then
         assertThat(player1.openInitialCards()).hasSize(2);
         assertThat(player2.openInitialCards()).hasSize(2);
-        assertThat(player2.openInitialCards().getFirst().getRank()).isEqualTo(TrumpRank.NINE);
-        assertThat(player2.openInitialCards().getFirst().getSuit()).isEqualTo(TrumpSuit.CLOVER);
-    }
-
-    private Cards createCards(Card... cards) {
-        return Arrays.stream(cards)
-                .collect(Collectors.collectingAndThen(Collectors.toList(), Cards::new));
-    }
-
-    private Card createCard(TrumpRank rank, TrumpSuit suit) {
-        return new Card(rank, suit);
     }
 
 }

@@ -29,14 +29,6 @@ public class Deck {
         return cards.drawInitialCards();
     }
 
-    public List<Cards> drawInitialCards(int count) {
-        List<Cards> cards = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            cards.add(drawInitialCards());
-        }
-        return new ArrayList<>(cards);
-    }
-
     public Card drawCard() {
         return cards.drawCard();
     }

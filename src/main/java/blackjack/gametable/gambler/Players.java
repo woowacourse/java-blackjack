@@ -1,9 +1,8 @@
 package blackjack.gametable.gambler;
 
-import blackjack.gametable.card.Cards;
+import blackjack.gametable.card.Deck;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class Players {
 
@@ -13,9 +12,8 @@ public class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public void drawInitializeHands(List<Cards> cards) {
-        IntStream.range(0, cards.size())
-                .forEach(i -> players.get(i).drawInitializeHand(cards.get(i)));
+    public void drawInitializeHands(Deck deck) {
+        players.forEach(player -> player.drawInitializeHand(deck.drawInitialCards()));
     }
 
     public Player findPlayer(String playerName) {

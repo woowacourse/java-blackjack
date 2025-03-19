@@ -26,7 +26,7 @@ public class BlackjackGame {
 
     private void distributeStartingHands() {
         dealer.drawInitializeHand(deck.drawInitialCards());
-        players.drawInitializeHands(deck.drawInitialCards(getPlayersCount()));
+        players.drawInitializeHands(deck);
     }
 
     public void playGame(InputView inputView, OutputView outputView) {
@@ -84,10 +84,6 @@ public class BlackjackGame {
         return players.getPlayerNames();
     }
 
-    public int getPlayersCount() {
-        return players.getPlayers().size();
-    }
-
     public Players getPlayers() {
         return players;
     }
@@ -95,4 +91,5 @@ public class BlackjackGame {
     public Dealer getDealer() {
         return dealer;
     }
+
 }
