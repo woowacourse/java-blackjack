@@ -1,6 +1,7 @@
 package domain.card;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class CardDeck {
 
@@ -12,10 +13,10 @@ public class CardDeck {
     }
 
     private List<Card> initializeCardPack() {
-        return new ArrayList<>(Arrays.stream(Rank.values())
-                        .flatMap(rank -> Arrays.stream(Shape.values())
-                                .map(shape -> new Card(rank, shape)))
-                                .toList());
+        return Arrays.stream(Rank.values())
+                .flatMap(rank -> Arrays.stream(Shape.values())
+                        .map(shape -> new Card(rank, shape)))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public void shuffle() {
