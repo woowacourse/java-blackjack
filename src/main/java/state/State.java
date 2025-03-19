@@ -17,4 +17,6 @@ public interface State {
     GameScore calculateScore();
 
     GameResult calculatePlayerResult(final State dealerState);
+
+    StateType type();
 }
