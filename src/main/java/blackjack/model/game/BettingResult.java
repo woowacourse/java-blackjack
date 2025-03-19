@@ -7,40 +7,26 @@ import java.util.Map;
 
 public class BettingResult {
 
-    private final Map<Player, Integer> bettingResult;
+    private final Map<Player, Double> bettingResult;
 
     public BettingResult(Map<Player, PlayerResult> winLoseResult) {
-        Map<Player, Integer> bettingResult = new HashMap<>();
+        Map<Player, Double> bettingResult = new HashMap<>();
         winLoseResult.forEach((participant, result) -> {
             int betAmount = participant.getBettingMoney().getAmount();
-            int payout = calculatePayout(result, betAmount);
+            double payout = result.calculatePayout(betAmount);
             bettingResult.put(participant, payout);
         });
         this.bettingResult = bettingResult;
     }
 
-    private int calculatePayout(PlayerResult result, int betAmount) {
-        if (result.equals(PlayerResult.WIN)) {
-            return betAmount;
-        }
-        if (result.equals(PlayerResult.DRAW)) {
-            return 0;
-        }
-        if (result.equals(PlayerResult.LOSE)) {
-            return -betAmount;
-        } else {
-            return (int) (betAmount * 1.5);
-        }
-    }
 
-
-    public Map<Player, Integer> getBettingResult() {
+    public Map<Player, Double> getBettingResult() {
         return bettingResult;
     }
 
     public int getDealerResult() {
         return -bettingResult.values().stream()
-                .mapToInt(Integer::intValue)
+                .mapToInt(Double::intValue)
                 .sum();
     }
 }
