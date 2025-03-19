@@ -7,6 +7,7 @@ public class Cards {
 
     public static final int MAX_SCORE = 21;
     public static final int SOFT_ACE_DIFFERENCE = 10;
+    public static final int BLACKJACK_CARD_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -47,7 +48,7 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return sumCardScores() == MAX_SCORE && cards.size() == 2;
+        return sumCardScores() == MAX_SCORE && cards.size() == BLACKJACK_CARD_COUNT;
     }
 
     private int calculateScore() {
