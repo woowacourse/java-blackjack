@@ -10,12 +10,12 @@ public abstract class StartedState implements State {
         this.hand = hand;
     }
 
-    public Hand getHand() {
+    public final Hand getHand() {
         return hand;
     }
 
     @Override
-    public int compareTo(final State other) {
+    public final int compareTo(final State other) {
         final Hand otherHand = other.getHand();
         final int otherSum = otherHand.calculateSumOfRank();
 

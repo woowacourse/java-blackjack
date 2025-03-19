@@ -9,7 +9,7 @@ public abstract class RunningState extends StartedState {
     }
 
     @Override
-    public boolean isFinished() {
+    public final boolean isFinished() {
         return false;
     }
 }

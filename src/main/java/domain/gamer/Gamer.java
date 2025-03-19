@@ -17,39 +17,39 @@ public abstract class Gamer {
 
     public abstract List<Card> getInitialCards();
 
-    public int calculateSumOfRank() {
+    public final int calculateSumOfRank() {
         return getHand().calculateSumOfRank();
     }
 
-    public void hit(final Card card) {
+    public final void hit(final Card card) {
         this.state = state.hit(card);
     }
 
-    public boolean isRunning() {
+    public final boolean isRunning() {
         return !state.isFinished();
     }
 
-    public void stay() {
+    public final void stay() {
         this.state = state.stay();
     }
 
-    public boolean isBlackjack() {
+    public final boolean isBlackjack() {
         return state.getHand().isBlackjack();
     }
 
-    public int compareTo(final Gamer otherGamer) {
+    public final int compareTo(final Gamer otherGamer) {
         return state.compareTo(otherGamer.getState());
     }
 
-    public Hand getHand() {
+    public final Hand getHand() {
         return state.getHand();
     }
 
-    public String getDisplayName() {
+    public final String getDisplayName() {
         return nickname.getDisplayName();
     }
 
-    public State getState() {
+    public final State getState() {
         return state;
     }
 

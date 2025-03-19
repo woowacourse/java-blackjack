@@ -10,17 +10,17 @@ public abstract class FinishedState extends StartedState {
     }
 
     @Override
-    public State hit(final Card card) {
+    public final State hit(final Card card) {
         throw new IllegalArgumentException("더 이상 카드를 받을 수 없습니다. 이미 종료된 상태입니다.");
     }
 
     @Override
-    public State stay() {
+    public final State stay() {
         throw new IllegalArgumentException("이미 종료된 상태입니다.");
     }
 
     @Override
-    public boolean isFinished() {
+    public final boolean isFinished() {
         return true;
     }
 }
