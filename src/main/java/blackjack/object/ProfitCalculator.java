@@ -26,17 +26,27 @@ public class ProfitCalculator {
 
     public Map<Name, Integer> calculateGamblerProfit() {
         Map<Name, Integer> gamblerProfit = new HashMap<>();
-        int dealerProfit = 0;
 
-        for (Name playerName : bettingRecords.keySet()) {
-            int bettingAmount = bettingRecords.get(playerName);
-            int playerProfit = judgeBlackJackCase(playerName, bettingAmount);
+        calculatePlayerProfit(gamblerProfit);
 
-            gamblerProfit.put(playerName, playerProfit);
-            dealerProfit -= playerProfit;
-        }
-        gamblerProfit.put(Name.getDealerName(), dealerProfit);
+        calculateDealerProfit(gamblerProfit);
+
         return gamblerProfit;
+    }
+
+    private void calculatePlayerProfit(Map<Name, Integer> gamblerProfit) {
+        bettingRecords.forEach((playerName, bettingAmount) ->
+                gamblerProfit.put(playerName, judgeBlackJackCase(playerName, bettingAmount))
+        );
+    }
+
+    private void calculateDealerProfit(Map<Name, Integer> gamblerProfit) {
+        int dealerProfit = 0;
+        dealerProfit -= gamblerProfit.values().stream()
+                .mapToInt(Integer::intValue)
+                .sum();
+
+        gamblerProfit.put(Name.getDealerName(), dealerProfit);
     }
 
     private int judgeBlackJackCase(Name playerName, int bettingAmount) {
