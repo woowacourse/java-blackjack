@@ -71,19 +71,6 @@ public final class Players {
                 .count();
     }
 
-    @Override
-    public boolean equals(final Object o) {
-        if (!(o instanceof final Players players1)) {
-            return false;
-        }
-        return Objects.equals(players, players1.players);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(players);
-    }
-
     public List<String> getNames() {
         return players.stream()
                 .map(Participant::getNickname)

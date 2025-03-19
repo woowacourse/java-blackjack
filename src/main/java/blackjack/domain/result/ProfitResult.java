@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -47,19 +46,6 @@ public final class ProfitResult {
         final BigDecimal profit = entry.getValue().calculateProfit(bettingAmount);
         profits.merge(dealer, profit.multiply(BigDecimal.valueOf(-1)), BigDecimal::add);
         profits.merge(player, profit, BigDecimal::add);
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (!(o instanceof final ProfitResult that)) {
-            return false;
-        }
-        return Objects.equals(result, that.result);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(result);
     }
 
     public Map<Participant, BigDecimal> getResult() {

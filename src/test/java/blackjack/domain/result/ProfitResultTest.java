@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 class ProfitResultTest {
 
     @Test
-    void 딜러_우승_결과를_조회한다() {
+    void 플레이어_우승_결과를_조회한다() {
         // Given
         final Dealer dealer = new Dealer();
         final Player mint = providePlayer("밍트", 10_000);
@@ -27,10 +27,11 @@ class ProfitResultTest {
         );
 
         // When & then
-        assertThat(profitResult).isEqualTo(ProfitResult.from(dealer, Map.of(
-                mint, ResultStatus.WIN,
-                mj, ResultStatus.LOSE
-        )));
+        assertThat(profitResult.getResult()).isEqualTo(Map.of(
+                dealer, new BigDecimal("10000.0"),
+                mint, new BigDecimal("10000.0"),
+                mj, new BigDecimal("-20000.0")
+        ));
     }
 
     @Test
