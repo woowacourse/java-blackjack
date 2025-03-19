@@ -28,7 +28,7 @@ public class ProfitCalculator {
 
     private void calculatePlayerProfit(Map<Name, Integer> gamblerProfit) {
         bettingRecords.forEach((playerName, bettingAmount) ->
-                gamblerProfit.put(playerName, judgeBlackJackCase(playerName, bettingAmount))
+                gamblerProfit.put(playerName, calculatePlayerProfitByScore(playerName, bettingAmount))
         );
     }
 
@@ -41,7 +41,14 @@ public class ProfitCalculator {
         gamblerProfit.put(Name.getDealerName(), dealerProfit);
     }
 
-    private int judgeBlackJackCase(Name playerName, int bettingAmount) {
+    private int calculatePlayerProfitByScore(Name playerName, int bettingAmount) {
+        Integer x = judgeBlackJackCase(playerName, bettingAmount);
+        if (x != null) return x;
+
+        return judgeNonBlackJackCase(playerName, bettingAmount);
+    }
+
+    private Integer judgeBlackJackCase(Name playerName, int bettingAmount) {
         int dealerScore = gamblerScores.get(Name.getDealerName());
         int playerScore = gamblerScores.get(playerName);
 
@@ -52,14 +59,13 @@ public class ProfitCalculator {
         if (playerScore == BLACK_JACK) {
             double profit = bettingAmount * 1.5 ;
 
-           return (int) profit;
+            return (int) profit;
         }
 
         if (dealerScore == BLACK_JACK) {
             return -bettingAmount;
         }
-
-        return judgeNonBlackJackCase(playerName, bettingAmount);
+        return null;
     }
 
     private int judgeNonBlackJackCase(Name playerName, int bettingAmount) {
