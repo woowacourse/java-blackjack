@@ -3,15 +3,18 @@ package participant;
 import betting.BettingMoney;
 import card.Card;
 import java.util.List;
-import state.finished.Blackjack;
+import state.State;
 import state.started.Started;
 
-public class Player extends Participant {
+public class Player {
 
     private final Nickname nickname;
+
+    private State state;
     private BettingMoney bettingMoney;
 
-    public Player(Nickname nickname) {
+    public Player(Nickname nickname, BettingMoney bettingMoney) {
+        this.bettingMoney = bettingMoney;
         this.nickname = nickname;
     }
 
@@ -35,9 +38,28 @@ public class Player extends Participant {
         return 0;
     }
 
-    @Override
-    public boolean canReceiveCard() {
-        return !state.isFinished();
+    public void stand() {
+        this.state = state.stand();
+    }
+
+    public boolean isBlackjack() {
+        return state.isBlackjack();
+    }
+
+    public boolean isBust() {
+        return state.isBlackjack();
+    }
+
+    public boolean isFinished() {
+        return state.isFinished();
+    }
+
+    public void hit(Card card) {
+        this.state.draw(card);
+    }
+
+    public int score() {
+        return this.state.cards().calculateScore();
     }
 
     public String getNickname() {
@@ -46,17 +68,5 @@ public class Player extends Participant {
 
     public List<Card> cards() {
         return this.state.cards().getCards();
-    }
-
-    public void stand() {
-        this.state = state.stand();
-    }
-
-    public boolean isBlackjack() {
-        return state instanceof Blackjack;
-    }
-
-    public boolean isFinished() {
-        return state.isFinished();
     }
 }

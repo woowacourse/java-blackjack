@@ -1,5 +1,7 @@
+import betting.BettingMoney;
 import deck.Deck;
 import deck.ShuffledDeckCreator;
+import java.util.List;
 import participant.Dealer;
 import participant.Nickname;
 import participant.Player;
@@ -14,16 +16,20 @@ public class Application {
         BlackjackGame blackjackGame = new BlackjackGame();
 
         Deck deck = new Deck(new ShuffledDeckCreator());
-        Players players = new Players(InputView.readNicknames().stream()
-                .map(Nickname::new)
-                .map(Player::new)
-                .toList());
         Dealer dealer = new Dealer();
 
-        for (Player player : players.getPlayers()) {
-            blackjackGame.preparePlayerCards(player, deck);
+        List<Nickname> nicknames = InputView.readNicknames().stream()
+                .map(Nickname::new)
+                .toList();
+        Players players = new Players();
+
+        for (Nickname nickname : nicknames) {
+            int bettingMoney = InputView.readPlayerBettingMoney(nickname.getNickname());
+            players.enterPlayer(new Player(nickname, new BettingMoney(bettingMoney)));
         }
-        blackjackGame.prepareDealer(dealer, deck);
+
+        blackjackGame.preparePlayerCards(players, deck);
+        blackjackGame.prepareDealerCards(dealer, deck);
         OutputView.printInitialCards(dealer, players);
 
         for (Player player : players.getPlayers()) {
