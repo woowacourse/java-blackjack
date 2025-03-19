@@ -4,10 +4,10 @@ import blackjack.object.gambler.Name;
 
 import java.util.*;
 
-import static blackjack.object.WinningType.*;
-
 public class ProfitCalculator {
     public static final int BLACK_JACK = 21;
+    public static final double BLACKJACK_GAIN_RATE = 1.5;
+
     private final Map<Name, Integer> gamblerScores;
     private final Map<Name, Integer> bettingRecords;
 
@@ -57,7 +57,7 @@ public class ProfitCalculator {
         }
 
         if (playerScore == BLACK_JACK) {
-            double profit = bettingAmount * 1.5 ;
+            double profit = BLACKJACK_GAIN_RATE * bettingAmount;
 
             return (int) profit;
         }
@@ -68,45 +68,32 @@ public class ProfitCalculator {
         return null;
     }
 
-    private int judgeNonBlackJackCase(Name playerName, int bettingAmount) {
-        WinningType result = judgePlayerResult(playerName);
-
-        if (result == WIN) {
-            return bettingAmount;
+    private int judgeNonBlackJackCase(final Name playerName, final int bettingAmount) {
+        if (hasBust(playerName)) {
+            return judgeBustCase(playerName, bettingAmount);
         }
-        if (result == DEFEAT) {
-            return -bettingAmount;
-        }
-        return 0; // DRAW
-    }
-
-    private WinningType judgePlayerResult(final Name name) {
-        int dealerScore = gamblerScores.get(Name.getDealerName());
-
-        if (hasBust(name)) {
-            return judgeBustCase(name);
-        }
-        return judgeNonBustCase(name, dealerScore);
+        return judgeNonBustCase(playerName, bettingAmount);
     }
 
     private boolean hasBust(final Name name) {
         return gamblerScores.get(Name.getDealerName()) > BLACK_JACK || gamblerScores.get(name) > BLACK_JACK;
     }
 
-    private WinningType judgeBustCase(final Name name) {
+    private int judgeBustCase(final Name name, final int bettingAmount) {
         if (gamblerScores.get(name) > BLACK_JACK) {
-            return DEFEAT;
+            return -bettingAmount;
         }
-        return WIN;
+        return bettingAmount;
     }
 
-    private WinningType judgeNonBustCase(final Name name, final int dealerScore) {
+    private int judgeNonBustCase(final Name name, final int bettingAmount) {
+        int dealerScore = gamblerScores.get(Name.getDealerName());
         if (gamblerScores.get(name) > dealerScore) {
-            return WIN;
+            return bettingAmount;
         }
         if (gamblerScores.get(name) < dealerScore) {
-            return DEFEAT;
+            return -bettingAmount;
         }
-        return DRAW;
+        return 0;
     }
 }
