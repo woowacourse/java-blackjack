@@ -15,6 +15,7 @@ import java.util.function.Function;
 public class Participants {
 
     public static final String DEALER_NAME = "딜러";
+    private static final int DEALER_COUNT = 1;
 
     private final Dealer dealer;
     private final Players players;
@@ -33,7 +34,7 @@ public class Participants {
     }
 
     public int size() {
-        return players.size() + 1;
+        return players.size() + DEALER_COUNT;
     }
 
     public void addInitialCards(final List<Card> cards) {
@@ -47,7 +48,7 @@ public class Participants {
 
     private void addCardToAll(final List<Card> cards) {
         dealer.addCard(cards.getFirst());
-        List<Card> playerCards = cards.stream().skip(1).toList();
+        List<Card> playerCards = cards.stream().skip(DEALER_COUNT).toList();
         players.addCardToAll(playerCards);
     }
 
