@@ -1,15 +1,16 @@
-package domain;
+package domain.card;
 
+import domain.card.shufflestrategy.ShuffleStrategy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class CardsInitializer {
 
-    private final CardShuffler cardShuffler;
+    private final ShuffleStrategy shuffler;
 
-    public CardsInitializer(final CardShuffler cardShuffler) {
-        this.cardShuffler = cardShuffler;
+    public CardsInitializer(final ShuffleStrategy shuffler) {
+        this.shuffler = shuffler;
     }
 
     public List<Card> initialize() {
@@ -19,7 +20,7 @@ public class CardsInitializer {
 
     private List<Card> shuffleCards(final List<Card> cards) {
         List<Card> shuffleCards = new ArrayList<>(cards);
-        cardShuffler.shuffle(shuffleCards);
+        shuffler.shuffle(shuffleCards);
 
         return shuffleCards;
     }

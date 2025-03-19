@@ -1,11 +1,15 @@
-package domain;
+package domain.participant;
 
+import domain.card.Card;
+import domain.card.Rank;
+import domain.match.MatchResult;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
 
-    private static final int MAX_SCORE = 21;
+    private static final int WIN_SCORE = 21;
+    private static final int BLACKJACK_HAND_SIZE = 2;
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -45,21 +49,41 @@ public class Hand {
     }
 
     private int calculateAcePoint(int totalPoint, Rank ace) {
-        if (totalPoint + Rank.SOFT_ACE.getPoint() > MAX_SCORE) {
+        if (totalPoint + Rank.SOFT_ACE.getPoint() > WIN_SCORE) {
             return ace.getPoint();
         }
         return Rank.SOFT_ACE.getPoint();
     }
 
     public MatchResult determineMatchResult(final Hand other) {
+        if (this.isBlackjack() || other.isBlackjack()) {
+            return checkBlackjackResult(other);
+        }
+
         if (this.isBust() || other.isBust()) {
             return checkBustResult(other);
         }
         return checkScoreResult(other);
     }
 
+    private MatchResult checkBlackjackResult(final Hand other) {
+        if (!this.isBlackjack() && other.isBlackjack()) {
+            return MatchResult.DEALER_BLACKJACK_LOSE;
+        }
+
+        if (this.isBlackjack() && other.isBlackjack()) {
+            return MatchResult.DRAW;
+        }
+
+        return MatchResult.DEALER_WIN;
+    }
+
     public boolean isBust() {
-        return calculateTotalScore() > MAX_SCORE;
+        return calculateTotalScore() > WIN_SCORE;
+    }
+
+    public boolean isBlackjack() {
+        return (calculateTotalScore() == WIN_SCORE && cards.size() == BLACKJACK_HAND_SIZE);
     }
 
     private MatchResult checkBustResult(final Hand other) {
@@ -67,9 +91,9 @@ public class Hand {
             return MatchResult.DRAW;
         }
         if (this.isBust()) {
-            return MatchResult.LOSE;
+            return MatchResult.DEALER_LOSE;
         }
-        return MatchResult.WIN;
+        return MatchResult.DEALER_WIN;
     }
 
     private MatchResult checkScoreResult(final Hand other) {

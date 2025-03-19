@@ -1,10 +1,11 @@
-package domain;
+package domain.match;
 
 public enum MatchResult {
 
-    WIN("승"),
+    DEALER_WIN("승"),
     DRAW("무"),
-    LOSE("패");
+    DEALER_LOSE("패"),
+    DEALER_BLACKJACK_LOSE("블랙잭 패배");
 
     private final String state;
 
@@ -21,17 +22,17 @@ public enum MatchResult {
             return DRAW;
         }
         if (dealerScore > playerScore) {
-            return WIN;
+            return DEALER_WIN;
         }
-        return LOSE;
+        return DEALER_LOSE;
     }
 
     public MatchResult reverse() {
-        if (this == WIN) {
-            return LOSE;
+        if (this == DEALER_WIN) {
+            return DEALER_LOSE;
         }
-        if (this == LOSE) {
-            return WIN;
+        if (this == DEALER_LOSE) {
+            return DEALER_WIN;
         }
         return DRAW;
     }

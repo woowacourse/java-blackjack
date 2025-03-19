@@ -1,9 +1,10 @@
-package domain;
+package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.card.shufflestrategy.CardShuffler;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

@@ -1,4 +1,8 @@
-package domain;
+package domain.participant;
+
+import domain.card.Deck;
+import domain.match.MatchResult;
+import java.util.Objects;
 
 public class Dealer extends Gamer {
 
@@ -25,4 +29,13 @@ public class Dealer extends Gamer {
         }
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Dealer;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(NAME);
+    }
 }

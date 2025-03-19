@@ -1,7 +1,10 @@
-package domain;
+package domain.card.shufflestrategy;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Symbol;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

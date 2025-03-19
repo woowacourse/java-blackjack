@@ -1,4 +1,6 @@
-package domain;
+package domain.participant;
+
+import domain.card.Deck;
 
 public abstract class Gamer {
 
@@ -26,6 +28,10 @@ public abstract class Gamer {
 
     public int getScore() {
         return hand.calculateTotalScore();
+    }
+
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
     }
 
     public String getName() {

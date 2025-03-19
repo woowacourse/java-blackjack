@@ -1,4 +1,6 @@
-package domain;
+package domain.participant;
+
+import domain.card.Deck;
 
 public class Player extends Gamer {
 
@@ -8,11 +10,11 @@ public class Player extends Gamer {
 
     @Override
     public void hit(Deck totalCards) {
-        validateBurst();
+        validateBust();
         add(totalCards);
     }
 
-    private void validateBurst() {
+    private void validateBust() {
         if (isBust()) {
             throw new IllegalStateException("[ERROR] 버스트되면 카드를 뽑을 수 없습니다.");
         }

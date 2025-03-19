@@ -1,12 +1,14 @@
 package view;
 
-import domain.Card;
-import domain.Dealer;
-import domain.Gamer;
-import domain.MatchResult;
-import domain.Player;
+import domain.card.Card;
+import domain.match.MatchResult;
+import domain.participant.Dealer;
+import domain.participant.Gamer;
+import domain.participant.Player;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -88,5 +90,19 @@ public class OutputView {
 
     public void printDealerNonHit() {
         System.out.println(NEXT_LINE + "딜러의 점수가 16점을 초과하므로 카드를 뽑지 않았습니다." + NEXT_LINE);
+    }
+
+    public void printProfitResult(final Map<Gamer, Long> profitResult) {
+        StringJoiner sj = new StringJoiner(NEXT_LINE);
+
+        for (Entry<Gamer, Long> profit : profitResult.entrySet()) {
+            String profitFormat = String.format("%s: %d",
+                    profit.getKey().getName(),
+                    profit.getValue());
+            sj.add(profitFormat);
+        }
+
+        System.out.println(NEXT_LINE + "## 최종 수익");
+        System.out.println(sj);
     }
 }
