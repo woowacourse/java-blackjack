@@ -37,7 +37,7 @@ public final class GameSetupConsole extends Console {
         display(gameSetupView.getInputNameGuide());
         List<Name> playerNames = Arrays.stream(readLine().split(","))
                 .map(String::trim)
-                .filter(name -> !name.isBlank() && !name.isEmpty())
+                .filter(name -> !name.isBlank())
                 .map(Name::new)
                 .toList();
         return new PlayerNames(playerNames);
