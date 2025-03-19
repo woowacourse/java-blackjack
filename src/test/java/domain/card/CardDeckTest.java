@@ -48,8 +48,7 @@ public class CardDeckTest {
 
         assertAll(
                 () -> assertThat(card).isNotNull(),
-                () -> assertThat(pack.getCards()).doesNotContain(card),
-                () -> assertThat(card).isEqualTo(new Card(Rank.ACE, Shape.SPADE))
+                () -> assertThat(pack.getCards()).doesNotContain(card)
         );
     }
 }

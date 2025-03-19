@@ -1,9 +1,6 @@
 package domain.card;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class CardDeck {
 
@@ -27,7 +24,7 @@ public class CardDeck {
 
     public Card poll() {
         if (cards.isEmpty()) {
-            throw new IllegalArgumentException("카드가 모두 소진되었습니다.");
+            throw new NoSuchElementException("카드가 모두 소진되었습니다.");
         }
         return cards.removeFirst();
     }
