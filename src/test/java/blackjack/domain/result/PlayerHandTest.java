@@ -16,7 +16,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class PlayerScoreResultTest {
+class PlayerHandTest {
 
     @ParameterizedTest
     @MethodSource
@@ -25,7 +25,7 @@ class PlayerScoreResultTest {
         final Dealer dealer = new Dealer(dealerHand);
         final Player player = providePlayer("밍트", 10_000);
         final Map<Player, Hand> playerScores = Map.of(player, playerHand);
-        PlayerScoreResult playerScoreResult = new PlayerScoreResult(playerScores);
+        PlayerHand playerScoreResult = new PlayerHand(playerScores);
 
         // When & Then
         assertThat(playerScoreResult.calculateScoreResult(dealer)).isEqualTo(Map.of(player, resultStatus));

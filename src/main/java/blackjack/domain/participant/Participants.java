@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Hand;
-import blackjack.domain.result.PlayerScoreResult;
+import blackjack.domain.result.PlayerHand;
 import blackjack.domain.result.ProfitResult;
 import java.util.List;
 import java.util.Map;
@@ -60,7 +60,7 @@ public final class Participants {
 
     public ProfitResult makeDealerWinningResult() {
         final Map<Player, Hand> playerScores = players.showAllCards();
-        PlayerScoreResult result = new PlayerScoreResult(playerScores);
+        PlayerHand result = new PlayerHand(playerScores);
         return dealer.calculateProfit(result.calculateScoreResult(dealer));
     }
 

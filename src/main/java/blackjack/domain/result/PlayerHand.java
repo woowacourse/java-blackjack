@@ -14,11 +14,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-public class PlayerScoreResult {
+public class PlayerHand {
 
     private final Map<Player, Hand> playerHands;
 
-    public PlayerScoreResult(final Map<Player, Hand> playerHands) {
+    public PlayerHand(final Map<Player, Hand> playerHands) {
         this.playerHands = playerHands;
     }
 
