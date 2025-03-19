@@ -31,6 +31,14 @@ public class Dealer extends Participant {
     }
 
     public boolean isBlackjack() {
-        return state instanceof Blackjack;
+        return cards.calculateScore() == 21 && cards.size() == 2;
+    }
+
+    public boolean isBust() {
+        return cards.calculateScore() > 21;
+    }
+
+    public boolean canReceiveCard() {
+        return score() <= 16;
     }
 }

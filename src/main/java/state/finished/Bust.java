@@ -12,4 +12,14 @@ public class Bust extends Finished {
     public double earningRate() {
         return -1;
     }
+
+    @Override
+    public boolean isBlackjack() {
+        return false;
+    }
+
+    @Override
+    public boolean isBust() {
+        return true;
+    }
 }

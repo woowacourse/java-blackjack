@@ -10,4 +10,6 @@ public interface State {
     boolean isFinished();
     Cards cards();
     double profit(final int bettingMoney);
+    boolean isBlackjack();
+    boolean isBust();
 }

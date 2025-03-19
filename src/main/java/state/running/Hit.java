@@ -27,4 +27,14 @@ public class Hit extends Running {
     public State stand() {
         return new Stand(cards);
     }
+
+    @Override
+    public boolean isBlackjack() {
+        return false;
+    }
+
+    @Override
+    public boolean isBust() {
+        return false;
+    }
 }
