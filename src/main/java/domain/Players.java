@@ -1,5 +1,7 @@
 package domain;
 
+import exception.CustomException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -9,37 +11,41 @@ public class Players {
 
     private final List<Player> players;
 
-    private Players(List<Player> players) {
+    public Players(List<Player> players) {
         this.players = players;
     }
 
-    public static Players createByNames(List<String> playerNames) {
-        List<Player> players = playerNames.stream()
-                .map(playerName -> new Player(playerName, Hand.createEmpty()))
-                .toList();
-        return new Players(players);
+    public Players() {
+        this(new ArrayList<>());
     }
 
-    public static Players create(List<Player> players) {
-        return new Players(players);
+    public void addAll(List<Player> players) {
+        this.players.addAll(players);
     }
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 
-    public GameResults calculateGameResult(Dealer dealer) {
-        Map<Player, GameResultStatus> gameResult = players.stream()
-                .collect(Collectors.toMap(
-                        player -> player,
-                        player -> player.calculateResultStatus(dealer.getHand())
-                ));
-        return new GameResults(gameResult);
-    }
-
     public List<String> getAllPlayersName() {
         return players.stream()
                 .map(Player::getName)
                 .toList();
+    }
+
+    public Player findPlayerByName(String playerName) {
+        return players.stream()
+                .filter(player -> player.isEqualName(playerName))
+                .findFirst()
+                .orElseThrow(() -> new CustomException("해당 이름을 가진 플레이어가 없습니다."));
+    }
+
+    public ProfitResults calculateProfitResults(Hand dealerHand) {
+        Map<Player, Profit> profitResults = players.stream()
+                .collect(Collectors.toMap(
+                        player -> player,
+                        player -> player.calculateProfit(dealerHand)
+                ));
+        return new ProfitResults(profitResults);
     }
 }

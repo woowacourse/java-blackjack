@@ -3,20 +3,20 @@ package domain;
 public class Dealer extends Participant {
 
     private static final int VALID_DRAW_LIMIT = 16;
+    public static final String DEALER_NAME = "딜러";
 
-    private Dealer(Hand hand) {
-        super(hand);
+    public Dealer(Hand hand) {
+        super(DEALER_NAME, hand);
     }
 
-    public static Dealer createEmpty() {
-        return new Dealer(Hand.createEmpty());
+    public Dealer() {
+        this(Hand.createEmpty());
     }
 
-    public Card getFirstCard() {
+    public Card getDealCard() {
         return hand.getFirst();
     }
 
-    @Override
     public boolean isPossibleDraw() {
         return hand.calculateSum() <= VALID_DRAW_LIMIT;
     }

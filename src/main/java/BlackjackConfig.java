@@ -1,5 +1,6 @@
-import controller.BlackjackApplication;
-import domain.CardFactory;
+import controller.BlackjackController;
+import controller.BlackjackFrontController;
+import domain.BlackjackParticipants;
 import domain.CardGiver;
 import domain.Deck;
 import view.ConsoleView;
@@ -11,7 +12,15 @@ import view.support.OutputFormatter;
 public class BlackjackConfig {
 
     public BlackjackApplication blackjackApplication() {
-        return new BlackjackApplication(new ConsoleView(inputView(), outputView()), cardGiver());
+        return new BlackjackApplication(blackjackFrontController());
+    }
+
+    private BlackjackFrontController blackjackFrontController() {
+        return new BlackjackFrontController(new ConsoleView(inputView(), outputView()), blackjackController());
+    }
+
+    private BlackjackController blackjackController() {
+        return new BlackjackController(new BlackjackParticipants(), cardGiver());
     }
 
     private InputView inputView() {
@@ -23,6 +32,6 @@ public class BlackjackConfig {
     }
 
     private CardGiver cardGiver() {
-        return new CardGiver(new Deck(CardFactory.createShuffledCards()));
+        return new CardGiver(Deck.createShuffledBlackJackCards());
     }
 }

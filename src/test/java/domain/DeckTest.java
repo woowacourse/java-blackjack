@@ -2,6 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import exception.CustomException;
 import fixture.CardFixture;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,35 @@ class DeckTest {
 
         // then
         assertThat(card).isEqualTo(cards.get(0));
+    }
+
+    @DisplayName("카드가 1장 미만일 시 예외가 발생한다")
+    @Test
+    void test5() {
+        // given
+        List<Card> emptyCards = CardFixture.createEmptyCards();
+        Deck deck = new Deck(new ArrayList<>(emptyCards));
+
+        //when & then
+        assertThatThrownBy(
+                deck::drawCard
+        ).isInstanceOf(CustomException.class)
+                .hasMessageContaining("카드가 충분하지 않습니다.");
+    }
+
+    @DisplayName("배분할 카드의 개수가 요청한 수보다 적다면 예외가 발생한다")
+    @Test
+    void test19() {
+        // given
+        List<Card> emptyCards = CardFixture.createEmptyCards();
+        emptyCards.add(new Card(CardNumberType.ACE, CardType.CLOVER));
+        Deck deck = new Deck(new ArrayList<>(emptyCards));
+
+        //when & then
+        assertThatThrownBy(
+                () -> deck.drawCards(2)
+        ).isInstanceOf(CustomException.class)
+                .hasMessageContaining("카드가 충분하지 않습니다.");
     }
 
     @DisplayName("덱에 카드를 원하는 개수만큼 뽑을 수 있다")

@@ -1,9 +1,10 @@
 package view;
 
-import domain.Dealer;
-import domain.GameResults;
-import domain.Player;
-import domain.Players;
+import controller.dto.BettingRequest;
+import controller.dto.CardsResultResponse;
+import controller.dto.InitialDealResponse;
+import controller.dto.PlayerHitResponse;
+import controller.dto.ProfitResultResponse;
 import java.util.List;
 
 public class ConsoleView {
@@ -16,39 +17,46 @@ public class ConsoleView {
         this.outputView = outputView;
     }
 
-    public List<String> requestPlayerNames() {
-        return inputView.requestPlayerNames();
+    public List<BettingRequest> requestBetting() {
+        List<String> playerNames = inputView.requestPlayerNames();
+        return playerNames.stream()
+                .map(playerName -> {
+                    int bettingMoney = inputView.requestBettingMoney(playerName);
+                    return new BettingRequest(playerName, bettingMoney);
+                })
+                .toList();
     }
 
-    public void printInitialCards(Dealer dealer, Players players) {
-        outputView.printInitialCards(dealer, players);
+    public void printInitialDealResult(InitialDealResponse initialDealResponses) {
+        outputView.printInitialDealResult(initialDealResponses);
     }
 
-    public void printDealerDraw(boolean possibleDraw) {
-        if (possibleDraw) {
+    public void printDealerDrawResult(boolean isDealerDrawing) {
+        if (isDealerDrawing) {
             outputView.printDealerDraw();
             return;
         }
         outputView.printDealerNoDraw();
     }
 
-    public void printCardsResult(Dealer dealer, Players players) {
-        outputView.printCardsResult(dealer, players);
+    public void printCardsResults(List<CardsResultResponse> cardsResultResponses) {
+        outputView.printCardsResults(cardsResultResponses);
     }
 
-    public void printGameResults(GameResults gameResults) {
-        outputView.printGameResults(gameResults);
+    public boolean requestHitDecision(String playerName) {
+        AnswerType answerType = inputView.requestAdditionalCard(playerName);
+        return answerType == AnswerType.YES;
     }
 
-    public AnswerType requestAdditionalCard(Player player) {
-        return inputView.requestAdditionalCard(player);
+    public void printMessage(String message) {
+        outputView.printMessage(message);
     }
 
-    public void printCurrentCard(Player player) {
-        outputView.printCurrentCard(player);
+    public void printPlayerHitResult(PlayerHitResponse playerHitResponse) {
+        outputView.printPlayerHitResult(playerHitResponse);
     }
 
-    public void printBustMessage() {
-        outputView.printBustMessage();
+    public void printProfitResults(List<ProfitResultResponse> profitResultResponses) {
+        outputView.printProfitResults(profitResultResponses);
     }
 }

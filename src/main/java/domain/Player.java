@@ -1,51 +1,40 @@
 package domain;
 
-import static domain.GameResultStatus.DRAW;
-import static domain.GameResultStatus.LOSE;
-import static domain.GameResultStatus.WIN;
-
+import java.util.List;
 import java.util.Objects;
 
 public class Player extends Participant {
 
-    private final String name;
+    private final BettingMoney bettingMoney;
+
+    public Player(String name, Hand hand, BettingMoney bettingMoney) {
+        super(name, hand);
+        this.bettingMoney = bettingMoney;
+    }
+
+    public Player(String name, BettingMoney bettingMoney) {
+        this(name, Hand.createEmpty(), bettingMoney);
+    }
 
     public Player(String name, Hand hand) {
-        super(hand);
-        this.name = name;
+        this(name, hand, new BettingMoney(0));
     }
 
-    public String getName() {
-        return name;
+    public Player(String name) {
+        this(name, Hand.createEmpty(), new BettingMoney(0));
     }
 
-    public boolean hasBustCards() {
+    public List<Card> getDealCards() {
+        return hand.getCards();
+    }
+
+    public boolean isImpossibleHit() {
         return hand.isBust();
     }
 
-    @Override
-    public boolean isPossibleDraw() {
-        return !hand.isBust();
-    }
-
-    public GameResultStatus calculateResultStatus(Hand dealerHand) {
-        if (hand.isBust()) {
-            return LOSE;
-        }
-        if (dealerHand.isBust()) {
-            return WIN;
-        }
-        return compareCardsSum(hand, dealerHand);
-    }
-
-    private GameResultStatus compareCardsSum(Hand playerHand, Hand dealerHand) {
-        if (playerHand.isLargerThan(dealerHand)) {
-            return WIN;
-        }
-        if (dealerHand.isLargerThan(playerHand)) {
-            return LOSE;
-        }
-        return DRAW;
+    public Profit calculateProfit(Hand dealerHand) {
+        GameResultStatus gameResultStatus = hand.calculateGameResultStatus(dealerHand);
+        return bettingMoney.calculateProfit(gameResultStatus);
     }
 
     @Override

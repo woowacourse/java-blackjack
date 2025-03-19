@@ -1,6 +1,10 @@
 package domain;
 
-import static domain.CardNumberType.*;
+import static domain.CardNumberType.determineAceNumber;
+import static domain.GameResultStatus.BLACKJACK;
+import static domain.GameResultStatus.DRAW;
+import static domain.GameResultStatus.LOSE;
+import static domain.GameResultStatus.WIN;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,7 +13,8 @@ import java.util.Objects;
 
 public class Hand {
 
-    private static final int VALID_MAX_SUM_LIMIT = 21;
+    private static final int BLACKJACK_NUMBER = 21;
+    private static final int BLACKJACK_CARD_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -34,7 +39,7 @@ public class Hand {
                 .map(Card::cardNumberType)
                 .mapToInt(CardNumberType::getDefaultNumber)
                 .sum();
-        return sumWithLowAce > VALID_MAX_SUM_LIMIT;
+        return sumWithLowAce > BLACKJACK_NUMBER;
     }
 
     public void add(Card card) {
@@ -45,16 +50,46 @@ public class Hand {
         cards.addAll(receiveCards);
     }
 
-    public boolean isLargerThan(Hand dealerHand) {
-        return this.calculateSum() > dealerHand.calculateSum();
-    }
-
     public int calculateSum() {
         int cardsSumWithoutAce = calculateSumWithoutAce();
         return calculateSumWithAces(cardsSumWithoutAce);
     }
 
-    public int calculateSumWithoutAce() {
+    public GameResultStatus calculateGameResultStatus(Hand dealerHand) {
+        if (isBlackjack() && dealerHand.isBlackjack()) {
+            return DRAW;
+        }
+        if (isBlackjack()) {
+            return BLACKJACK;
+        }
+        if (isBust() || dealerHand.isBlackjack()) {
+            return LOSE;
+        }
+        if (dealerHand.isBust()) {
+            return WIN;
+        }
+        return compareCardsSum(dealerHand);
+    }
+
+    private boolean isBlackjack() {
+        return this.cards.size() == BLACKJACK_CARD_COUNT && calculateSum() == BLACKJACK_NUMBER;
+    }
+
+    private GameResultStatus compareCardsSum(Hand dealerHand) {
+        if (isLargerThan(dealerHand)) {
+            return WIN;
+        }
+        if (dealerHand.isLargerThan(this)) {
+            return LOSE;
+        }
+        return DRAW;
+    }
+
+    private boolean isLargerThan(Hand dealerHand) {
+        return this.calculateSum() > dealerHand.calculateSum();
+    }
+
+    private int calculateSumWithoutAce() {
         return cards.stream()
                 .filter(Card::isNotAce)
                 .mapToInt(Card::getDefaultNumber)
