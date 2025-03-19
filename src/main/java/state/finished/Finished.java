@@ -2,7 +2,6 @@ package state.finished;
 
 import card.Card;
 import card.CardHand;
-import result.GameResult;
 import state.Started;
 import state.State;
 
@@ -10,8 +9,6 @@ public abstract class Finished extends Started {
     public Finished(final CardHand cardHand) {
         super(cardHand);
     }
-
-    public abstract GameResult calculatePlayerResult(final Finished dealerState);
 
     @Override
     public State receiveCard(final Card card) {

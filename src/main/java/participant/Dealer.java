@@ -6,9 +6,7 @@ import card.GameScore;
 import java.util.List;
 import result.GameResult;
 import state.State;
-import state.finished.Finished;
 import state.running.DealerHit;
-import state.running.Running;
 
 public final class Dealer {
     private State state;
@@ -23,11 +21,8 @@ public final class Dealer {
     }
 
     public GameResult judgeResult(final Player player) {
-        if (this.state instanceof Running || player.getState() instanceof Running) {
-            throw new IllegalStateException();
-        }
-        Finished playerState = (Finished) player.getState();
-        return playerState.calculatePlayerResult((Finished) this.state);
+        State playerState = player.getState();
+        return playerState.calculatePlayerResult(this.state);
     }
 
     public boolean isRunning() {

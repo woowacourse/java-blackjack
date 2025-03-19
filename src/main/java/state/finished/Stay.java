@@ -3,6 +3,7 @@ package state.finished;
 import card.CardHand;
 import card.GameScore;
 import result.GameResult;
+import state.State;
 
 public final class Stay extends Finished {
     public Stay(final CardHand cardHand) {
@@ -10,7 +11,7 @@ public final class Stay extends Finished {
     }
 
     @Override
-    public GameResult calculatePlayerResult(Finished dealerState) {
+    public GameResult calculatePlayerResult(State dealerState) {
         if (dealerState instanceof Bust) {
             return GameResult.WIN;
         }

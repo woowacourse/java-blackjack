@@ -3,6 +3,7 @@ package state;
 import card.Card;
 import card.CardHand;
 import card.GameScore;
+import result.GameResult;
 
 public interface State {
     State receiveCard(final Card card);
@@ -14,4 +15,6 @@ public interface State {
     CardHand cardHand();
 
     GameScore calculateScore();
+
+    GameResult calculatePlayerResult(final State dealerState);
 }

@@ -2,6 +2,7 @@ package state.finished;
 
 import card.CardHand;
 import result.GameResult;
+import state.State;
 
 public final class BlackJack extends Finished {
     public BlackJack(final CardHand cardHand) {
@@ -9,7 +10,7 @@ public final class BlackJack extends Finished {
     }
 
     @Override
-    public GameResult calculatePlayerResult(Finished dealerState) {
+    public GameResult calculatePlayerResult(State dealerState) {
         if (dealerState instanceof BlackJack) {
             return GameResult.PUSH;
         }
