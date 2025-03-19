@@ -14,7 +14,7 @@ public abstract class Gambler {
 
     public abstract List<Card> openInitialCards();
 
-    public void initializeHand(Cards cards) {
+    public void drawInitializeHand(Cards cards) {
         validateInitialCardsSize(cards);
         this.cards = cards;
     }

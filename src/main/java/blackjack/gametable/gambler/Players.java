@@ -13,9 +13,9 @@ public class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public void initializeHands(List<Cards> cards) {
+    public void drawInitializeHands(List<Cards> cards) {
         IntStream.range(0, cards.size())
-                .forEach(i -> players.get(i).initializeHand(cards.get(i)));
+                .forEach(i -> players.get(i).drawInitializeHand(cards.get(i)));
     }
 
     public Player findPlayer(String playerName) {

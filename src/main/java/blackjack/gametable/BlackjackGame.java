@@ -21,12 +21,12 @@ public class BlackjackGame {
         this.deck = Deck.initialize();
         this.dealer = new Dealer();
         this.players = registerPlayers(playerNames);
-        initializeGame();
+        distributeStartingHands();
     }
 
-    private void initializeGame() {
-        dealer.initializeHand(deck.drawInitialCards());
-        players.initializeHands(deck.drawInitialCards(getPlayersCount()));
+    private void distributeStartingHands() {
+        dealer.drawInitializeHand(deck.drawInitialCards());
+        players.drawInitializeHands(deck.drawInitialCards(getPlayersCount()));
     }
 
     public void playGame(InputView inputView, OutputView outputView) {

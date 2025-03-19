@@ -81,7 +81,7 @@ class PlayersTest {
         );
 
         // when
-        players.initializeHands(List.of(cards1, cards2));
+        players.drawInitializeHands(List.of(cards1, cards2));
 
         // then
         assertThat(player1.openInitialCards()).hasSize(2);

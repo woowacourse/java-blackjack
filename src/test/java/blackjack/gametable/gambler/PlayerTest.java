@@ -25,7 +25,7 @@ class PlayerTest {
         Player player = new Player(playerName);
 
         // when
-        player.initializeHand(cards);
+        player.drawInitializeHand(cards);
 
         // then
         assertThat(player.getCards().getSize()).isEqualTo(2);
@@ -41,7 +41,7 @@ class PlayerTest {
         Player player = new Player(playerName);
 
         // when // then
-        assertThatThrownBy(() -> player.initializeHand(cards))
+        assertThatThrownBy(() -> player.drawInitializeHand(cards))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 초기 카드는 2장을 받아야 합니다.");
     }
@@ -58,7 +58,7 @@ class PlayerTest {
         Player player = new Player(playerName);
 
         // when // then
-        assertThatThrownBy(() -> player.initializeHand(cards))
+        assertThatThrownBy(() -> player.drawInitializeHand(cards))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 초기 카드는 2장을 받아야 합니다.");
     }
@@ -86,7 +86,7 @@ class PlayerTest {
         );
         PlayerName playerName = new PlayerName("제프리");
         Player player = new Player(playerName);
-        player.initializeHand(cards);
+        player.drawInitializeHand(cards);
 
         // when
         List<Card> openedCards = player.openCards();
@@ -106,7 +106,7 @@ class PlayerTest {
         );
         PlayerName playerName = new PlayerName("제프리");
         Player player = new Player(playerName);
-        player.initializeHand(cards);
+        player.drawInitializeHand(cards);
         Card card = createCard(TrumpRank.THREE, TrumpSuit.SPADE);
 
         // when

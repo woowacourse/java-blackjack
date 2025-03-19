@@ -25,7 +25,7 @@ class DealerTest {
         Dealer dealer = new Dealer();
 
         // when
-        dealer.initializeHand(cards);
+        dealer.drawInitializeHand(cards);
 
         // then
         assertThat(dealer.getCards().getSize()).isEqualTo(2);
@@ -39,7 +39,7 @@ class DealerTest {
                 createCard(TrumpRank.TWO, TrumpSuit.SPADE)
         );
         Dealer dealer = new Dealer();
-        dealer.initializeHand(cards);
+        dealer.drawInitializeHand(cards);
 
         // when
         List<Card> openedCards = dealer.openInitialCards();
@@ -64,7 +64,7 @@ class DealerTest {
                 createCard(rank2, TrumpSuit.CLOVER)
         );
         Dealer dealer = new Dealer();
-        dealer.initializeHand(cards);
+        dealer.drawInitializeHand(cards);
 
         // when
         boolean dealerShouldDrawCard = dealer.shouldDrawCard();
@@ -103,10 +103,10 @@ class DealerTest {
         Player player1 = new Player(new PlayerName("pobi"));
         Player player2 = new Player(new PlayerName("jason"));
 
-        dealer.initializeHand(dealerCards);
-        player1.initializeHand(player1Cards);
+        dealer.drawInitializeHand(dealerCards);
+        player1.drawInitializeHand(player1Cards);
         player1.updateBetAmount(10000);
-        player2.initializeHand(player2Cards);
+        player2.drawInitializeHand(player2Cards);
         player2.updateBetAmount(20000);
         Players players = new Players(List.of(player1, player2));
 
