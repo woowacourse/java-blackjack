@@ -86,7 +86,7 @@ public class BlackjackGame {
     }
 
     private void receiveAdditionalCard(Participant participant, Consumer<Participant> printState) {
-        while (participant.satisfiedCondition()) {
+        while (participant.canHit()) {
             distributeCard(participant, 1);
             printState.accept(participant);
         }

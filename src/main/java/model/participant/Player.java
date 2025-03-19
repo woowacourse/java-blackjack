@@ -19,7 +19,7 @@ public class Player extends Participant {
     }
 
     @Override
-    public boolean satisfiedCondition() {
+    public boolean canHit() {
         return ableToDraw() && agreeIntent();
     }
 
