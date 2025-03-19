@@ -15,16 +15,6 @@ public enum ResultStatus {
         this.profitRate = profitRate;
     }
 
-    public ResultStatus makeOppositeResult() {
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == LOSE) {
-            return WIN;
-        }
-        return PUSH;
-    }
-
     public BigDecimal calculateProfit(final BigDecimal bettingAmount) {
         return bettingAmount.multiply(BigDecimal.valueOf(profitRate));
     }
