@@ -8,6 +8,6 @@ public final class GamePlayView extends BlackjackView {
     }
 
     public String getDealerHitGuide() {
-        return String.format("딜러는 16이하라 한장의 카드를 더 받았습니다.%n");
+        return String.format("%s는 16이하라 한장의 카드를 더 받았습니다.%n", DEALER_NAME);
     }
 }

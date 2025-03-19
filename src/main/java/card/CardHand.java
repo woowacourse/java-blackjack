@@ -47,7 +47,6 @@ public final class CardHand {
         return !calculateScore().isDealerHit();
     }
 
-
     public List<Card> getCards() {
         return cards;
     }

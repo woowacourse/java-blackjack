@@ -1,12 +1,14 @@
 package view;
 
-import java.util.List;
 import card.Card;
 import card.Rank;
 import card.Suit;
+import java.util.List;
 import participant.Name;
 
 public abstract class BlackjackView {
+    protected static final Name DEALER_NAME = new Name("딜러");
+
     public String getParticipantCards(final Name name, final List<Card> cards) {
         List<String> cardNotations = cards.stream()
                 .map(this::getCardNotation)

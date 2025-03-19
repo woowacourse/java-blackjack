@@ -7,6 +7,10 @@ import participant.Name;
 import result.Profit;
 
 public final class GameResultView extends BlackjackView {
+    public String getFinalDealerScore(final List<Card> cards, final GameScore score) {
+        return getFinalScore(DEALER_NAME, cards, score);
+    }
+
     public String getFinalScore(final Name name, final List<Card> cards, final GameScore score) {
         return String.format("%s - 결과: %s%n", getParticipantCards(name, cards), score);
     }
@@ -17,5 +21,9 @@ public final class GameResultView extends BlackjackView {
 
     public String getFinalProfit(final Name name, final Profit profit) {
         return String.format("%s: %s%n", name, profit);
+    }
+
+    public String getFinalDealerProfit(final Profit profit) {
+        return getFinalProfit(DEALER_NAME, profit);
     }
 }

@@ -26,10 +26,10 @@ public final class GameSetupConsole extends Console {
 
     public void displaySetupResult(final Dealer dealer, final List<Player> players) {
         List<Name> playerNames = players.stream().map(Player::getName).toList();
-        display(gameSetupView.getSetupHeader(dealer.getName(), playerNames));
-        display(gameSetupView.getSetupResult(dealer));
+        display(gameSetupView.getSetupHeader(playerNames));
+        display(gameSetupView.getDealerSetupResult(dealer));
         for (Player player : players) {
-            display(gameSetupView.getSetupResult(player));
+            display(gameSetupView.getSetUpResult(player.getName(), player.openInitialCard()));
         }
     }
 

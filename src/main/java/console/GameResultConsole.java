@@ -11,7 +11,7 @@ public final class GameResultConsole extends Console {
 
     public void displayFinalScores(final Dealer dealer, final List<Player> players) {
         display(gameResultView.getEmptyLine());
-        display(gameResultView.getFinalScore(dealer.getName(), dealer.getCards(), dealer.getScore()));
+        display(gameResultView.getFinalDealerScore(dealer.getCards(), dealer.getScore()));
         for (Player player : players) {
             display(gameResultView.getFinalScore(player.getName(), player.getCards(), player.getScore()));
         }
@@ -20,7 +20,7 @@ public final class GameResultConsole extends Console {
     public void displayFinalProfits(final Dealer dealer, final List<Player> players) {
         display(gameResultView.getFinalProfitHeader());
         FinalProfit finalProfit = new FinalProfit(dealer, players);
-        display(gameResultView.getFinalProfit(dealer.getName(), finalProfit.calculateDealerProfit()));
+        display(gameResultView.getFinalDealerProfit(finalProfit.calculateDealerProfit()));
         for (Player player : players) {
             display(gameResultView.getFinalProfit(player.getName(), finalProfit.getProfit(player)));
         }

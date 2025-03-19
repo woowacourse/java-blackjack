@@ -1,9 +1,10 @@
 package view;
 
+import card.Card;
 import java.util.List;
 import java.util.stream.Collectors;
+import participant.Dealer;
 import participant.Name;
-import participant.Participant;
 
 public final class GameSetupView extends BlackjackView {
     public String getInputNameGuide() {
@@ -14,15 +15,19 @@ public final class GameSetupView extends BlackjackView {
         return String.format("%n%s의 배팅 금액은?%n", playerName);
     }
 
-    public String getSetupHeader(final Name dealerName, final List<Name> playerNames) {
+    public String getSetupHeader(final List<Name> playerNames) {
         String names = playerNames.stream()
                 .map(Name::toString)
                 .collect(Collectors.joining(", "));
-        return String.format("%n%s, %s에게 2장을 나누었습니다.%n", dealerName, names);
+        return String.format("%n%s, %s에게 2장을 나누었습니다.%n", DEALER_NAME, names);
     }
 
-    public String getSetupResult(final Participant participant) {
-        String participantCards = getParticipantCards(participant.getName(), participant.openInitialCard());
+    public String getDealerSetupResult(final Dealer dealer) {
+        return getSetUpResult(DEALER_NAME, dealer.openInitialCard());
+    }
+
+    public String getSetUpResult(final Name name, final List<Card> initialCards) {
+        String participantCards = getParticipantCards(name, initialCards);
         return String.format("%s%n", participantCards);
     }
 }
