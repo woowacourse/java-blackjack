@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
+import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Assertions;
@@ -46,15 +47,15 @@ class ProfitResultTest {
                         norang, ResultStatus.BLACKJACK)));
 
         // When
-        final Map<Participant, Integer> profits = profitResult.getResult();
+        final Map<Participant, BigDecimal> profits = profitResult.getResult();
 
         // Then
         Assertions.assertAll(
-                () -> assertThat(profits.get(dealer)).isEqualTo(-65_000),
-                () -> assertThat(profits.get(mint)).isEqualTo(10_000),
-                () -> assertThat(profits.get(mj)).isEqualTo(-20_000),
-                () -> assertThat(profits.get(pobi)).isEqualTo(0),
-                () -> assertThat(profits.get(norang)).isEqualTo(75_000)
+                () -> assertThat(profits.get(dealer)).isEqualTo(BigDecimal.valueOf(-65_000.0)),
+                () -> assertThat(profits.get(mint)).isEqualTo(BigDecimal.valueOf(10_000.0)),
+                () -> assertThat(profits.get(mj)).isEqualTo(BigDecimal.valueOf(-20_000.0)),
+                () -> assertThat(profits.get(pobi)).isEqualTo(BigDecimal.valueOf(0.0)),
+                () -> assertThat(profits.get(norang)).isEqualTo(BigDecimal.valueOf(75_000.0))
         );
     }
 }

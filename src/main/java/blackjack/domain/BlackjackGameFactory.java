@@ -3,6 +3,7 @@ package blackjack.domain;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Players;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class BlackjackGameFactory {
@@ -13,7 +14,7 @@ public class BlackjackGameFactory {
         this.deck = deck;
     }
 
-    public BlackjackGame createGame(final List<String> names, final List<Integer> amounts) {
+    public BlackjackGame createGame(final List<String> names, final List<BigDecimal> amounts) {
         Participants participants = Participants.of(Players.from(names, amounts));
         return new BlackjackGame(deck, participants);
     }

@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Hand;
 import blackjack.util.ExceptionMessage;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -20,7 +21,7 @@ public final class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public static Players from(final List<String> names, final List<Integer> bettingAmounts) {
+    public static Players from(final List<String> names, final List<BigDecimal> bettingAmounts) {
         return new Players(IntStream.range(0, names.size())
                 .mapToObj(index -> new Player(names.get(index), bettingAmounts.get(index)))
                 .toList());

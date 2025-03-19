@@ -12,6 +12,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Hand;
 import blackjack.domain.card.Suit;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
@@ -29,7 +30,7 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player(provideEmptyCards(), "엠제이", 10_000);
+        player = new Player(provideEmptyCards(), "엠제이", BigDecimal.valueOf(10_000));
     }
 
     @DisplayName("이름과 베팅 금액으로 Player 객체를 생성한다.")
@@ -39,7 +40,7 @@ public class PlayerTest {
         String nickname = "pobi";
 
         // when & then
-        assertThatCode(() -> new Player(provideEmptyCards(), nickname, 10_000))
+        assertThatCode(() -> new Player(provideEmptyCards(), nickname, BigDecimal.valueOf(10_000)))
                 .doesNotThrowAnyException();
     }
 
@@ -50,7 +51,7 @@ public class PlayerTest {
         // Given
 
         // When & Then
-        Assertions.assertThatThrownBy(() -> new Player(provideEmptyCards(), "밍트", bettingAmount))
+        Assertions.assertThatThrownBy(() -> new Player(provideEmptyCards(), "밍트", BigDecimal.valueOf(bettingAmount)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR] 베팅 금액을 양수로 입력해주세요.");
     }
@@ -65,7 +66,7 @@ public class PlayerTest {
         player.receiveCards(hand);
 
         // then
-        assertThat(player).isEqualTo(new Player(hand, "엠제이", 10_000));
+        assertThat(player).isEqualTo(new Player(hand, "엠제이", BigDecimal.valueOf(10_000)));
     }
 
     @DisplayName("플레이어는 모든 카드를 보여준다.")
@@ -102,7 +103,7 @@ public class PlayerTest {
     @MethodSource
     void canHit(final Hand hand, final boolean expected) {
         // given
-        final Player player = new Player(hand, "엠제이", 10_000);
+        final Player player = new Player(hand, "엠제이", BigDecimal.valueOf(10_000));
 
         // when & then
         assertThat(player.canHit()).isEqualTo(expected);

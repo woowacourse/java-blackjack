@@ -12,6 +12,7 @@ import blackjack.domain.result.ProfitResult;
 import blackjack.util.StringParser;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +33,7 @@ public class Controller {
 
     private BlackjackGame makeBlackjackGame(final BlackjackGameFactory blackjackGameFactory) {
         List<String> names = readNames();
-        List<Integer> amount = readBettingAmount(names);
+        List<BigDecimal> amount = readBettingAmount(names);
         return blackjackGameFactory.createGame(names, amount);
     }
 
@@ -40,10 +41,11 @@ public class Controller {
         return StringParser.parseByComma(inputView.readNames());
     }
 
-    private List<Integer> readBettingAmount(final List<String> names) {
+    private List<BigDecimal> readBettingAmount(final List<String> names) {
         return names.stream()
                 .map(inputView::askBettingAmount)
                 .map(StringParser::parseInt)
+                .map(BigDecimal::valueOf)
                 .toList();
     }
 

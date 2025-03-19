@@ -14,6 +14,7 @@ import blackjack.domain.card.Hand;
 import blackjack.domain.card.Suit;
 import blackjack.domain.result.ProfitResult;
 import blackjack.domain.result.ResultStatus;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -111,7 +112,8 @@ class DealerTest {
     @DisplayName("우승 결과를 계산한다")
     @ParameterizedTest
     @MethodSource
-    void calculateWinningResult(final ResultStatus playerResult, final int dealerProfit, final int playerProfit) {
+    void calculateWinningResult(final ResultStatus playerResult, final BigDecimal dealerProfit,
+                                final BigDecimal playerProfit) {
         // Given
         dealer = new Dealer();
         final Player player = providePlayer("밍트", 10_000);
@@ -126,10 +128,10 @@ class DealerTest {
 
     private static Stream<Arguments> calculateWinningResult() {
         return Stream.of(
-                Arguments.of(ResultStatus.PUSH, 0, 0),
-                Arguments.of(ResultStatus.LOSE, 10_000, -10_000),
-                Arguments.of(ResultStatus.BLACKJACK, -15_000, 15_000),
-                Arguments.of(ResultStatus.WIN, -10_000, 10_000)
+                Arguments.of(ResultStatus.PUSH, BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0)),
+                Arguments.of(ResultStatus.LOSE, BigDecimal.valueOf(10_000.0), BigDecimal.valueOf(-10_000.0)),
+                Arguments.of(ResultStatus.BLACKJACK, BigDecimal.valueOf(-15_000.0), BigDecimal.valueOf(15_000.0)),
+                Arguments.of(ResultStatus.WIN, BigDecimal.valueOf(-10_000.0), BigDecimal.valueOf(10_000.0))
         );
     }
 }

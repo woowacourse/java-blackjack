@@ -1,5 +1,7 @@
 package blackjack.domain.result;
 
+import java.math.BigDecimal;
+
 public enum ResultStatus {
 
     WIN(1.0),
@@ -23,7 +25,7 @@ public enum ResultStatus {
         return PUSH;
     }
 
-    public int calculateProfit(final int bettingAmount) {
-        return (int) (profitRate * bettingAmount);
+    public BigDecimal calculateProfit(final BigDecimal bettingAmount) {
+        return bettingAmount.multiply(BigDecimal.valueOf(profitRate));
     }
 }
