@@ -4,7 +4,7 @@ import java.util.List;
 
 import card.CardDeck;
 import card.ShuffledDeckGenerator;
-import game.BlackJack;
+import game.BlackJackGame;
 import participant.Dealer;
 import participant.Player;
 import participant.Players;
@@ -22,7 +22,7 @@ public class GameManagerTest {
     ));
     private final Dealer dealer = new Dealer();
     private final CardDeck deck = new CardDeck(new ShuffledDeckGenerator().generateDeck());
-    private final BlackJack blackJack = new BlackJack(players, dealer, deck);
+    private final BlackJackGame blackJackGame = new BlackJackGame(players, dealer, deck);
 
     @ParameterizedTest
     @ValueSource(ints = {1, 2})
@@ -32,7 +32,7 @@ public class GameManagerTest {
         //when
         //then
         for (Player player : players.getPlayers()) {
-            blackJack.dealCard(player, amount);
+            blackJackGame.dealCard(player, amount);
             Assertions.assertThat(player.getCards().size()).isEqualTo(amount);
         }
     }
@@ -43,7 +43,7 @@ public class GameManagerTest {
         // given
         int amount = 2;
         // when
-        blackJack.dealInitialCards();
+        blackJackGame.dealInitialCards();
         // then
         for (Player player : players.getPlayers()) {
             Assertions.assertThat(player.getCards().size()).isEqualTo(amount);

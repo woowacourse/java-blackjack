@@ -30,7 +30,7 @@ public class Cards {
         return calculateScore().isBust();
     }
 
-    public boolean isHit(int condition) {
+       public boolean isHit(int condition) {
         return calculateScore().isOver(condition);
     }
 

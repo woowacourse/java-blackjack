@@ -5,7 +5,7 @@ import participant.Dealer;
 import participant.Player;
 import participant.Players;
 
-public class BlackJack {
+public class BlackJackGame {
 
     private static final int INITIAL_DEAL_COUNT = 2;
     private static final int ADDITIONAL_CARD_DEFAULT_COUNT = 1;
@@ -14,7 +14,7 @@ public class BlackJack {
     private final Dealer dealer;
     private final CardDeck deck;
 
-    public BlackJack(Players players, Dealer dealer, CardDeck deck) {
+    public BlackJackGame(Players players, Dealer dealer, CardDeck deck) {
         this.players = players;
         this.dealer = dealer;
         this.deck = deck;

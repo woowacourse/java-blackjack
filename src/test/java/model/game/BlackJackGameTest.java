@@ -1,7 +1,7 @@
 package model.game;
 
 import card.*;
-import game.BlackJack;
+import game.BlackJackGame;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,7 @@ import participant.Players;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlackJackTest {
+public class BlackJackGameTest {
 
     private final Players players = new Players(
             List.of( new Player("hippo"))
@@ -31,7 +31,7 @@ public class BlackJackTest {
         }
     };
     private final CardDeck deck = new CardDeck(deckGenerator.generateDeck());
-    private final BlackJack blackJack = new BlackJack(players, dealer, deck);
+    private final BlackJackGame blackJackGame = new BlackJackGame(players, dealer, deck);
 
 
     @DisplayName("게임 첫 턴에 카드 2장 씩 나눠주는 지")
@@ -39,7 +39,7 @@ public class BlackJackTest {
     void dealInitialCardsTest() {
         //given
         //when
-        blackJack.dealInitialCards();
+        blackJackGame.dealInitialCards();
         //then
         for (Player player : players.getPlayers()) {
             Assertions.assertThat(player.getCards()).contains(new Card(Suit.DIAMONDS, NormalRank.FOUR));
@@ -54,7 +54,7 @@ public class BlackJackTest {
     void dealCardToDealerTest() {
         //given
         //when
-        blackJack.dealCard(dealer, 2);
+        blackJackGame.dealCard(dealer, 2);
         //then
         Assertions.assertThat(dealer.getCards()).contains(new Card(Suit.DIAMONDS, NormalRank.TWO));
         Assertions.assertThat(dealer.getCards()).contains(new Card(Suit.DIAMONDS, NormalRank.THREE));
@@ -66,7 +66,7 @@ public class BlackJackTest {
         //given
         //when
         for (Player player : players.getPlayers()) {
-            blackJack.dealCard(player, 2);
+            blackJackGame.dealCard(player, 2);
             Assertions.assertThat(player.getCards()).contains(new Card(Suit.DIAMONDS, NormalRank.TWO));
             Assertions.assertThat(player.getCards()).contains(new Card(Suit.DIAMONDS, NormalRank.THREE));
         }
@@ -78,7 +78,7 @@ public class BlackJackTest {
     void receiveAdditionalCardOfDealerTest() {
         //given
         //when
-        blackJack.receiveAdditionalCard(dealer);
+        blackJackGame.receiveAdditionalCard(dealer);
         //then
         Assertions.assertThat(dealer.getCards()).contains(new Card(Suit.DIAMONDS, NormalRank.TWO));
     }
@@ -87,7 +87,7 @@ public class BlackJackTest {
     @Test
     void receiveAdditionalCardOfPlayerTest() {
         for (Player player : players.getPlayers()) {
-            blackJack.receiveAdditionalCard(player);
+            blackJackGame.receiveAdditionalCard(player);
             Assertions.assertThat(player.getCards()).contains(new Card(Suit.DIAMONDS, NormalRank.TWO));
         }
     }

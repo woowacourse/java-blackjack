@@ -2,7 +2,7 @@ package manager;
 
 import bet.BetStatus;
 import bet.Money;
-import game.BlackJack;
+import game.BlackJackGame;
 import card.CardDeck;
 import card.ShuffledDeckGenerator;
 import result.GameResult;
@@ -24,15 +24,15 @@ public class GameManager {
         Dealer dealer = new Dealer();
         BetStatus betStatus = settingBetMoney(players);
 
-        BlackJack blackJack = new BlackJack(players, dealer, deck);
-        blackJack.dealInitialCards();
+        BlackJackGame blackJackGame = new BlackJackGame(players, dealer, deck);
+        blackJackGame.dealInitialCards();
 
         OutputView.printDivisionStart(dealer, players.getPlayers());
 
         for (Player player : players.getPlayers()) {
-            receiveAdditionalCard(player, blackJack);
+            receiveAdditionalCard(player, blackJackGame);
         }
-        receiveAdditionalCard(dealer, blackJack);
+        receiveAdditionalCard(dealer, blackJackGame);
         OutputView.printAllParticipantScore(dealer, players);
 
         GameResult gameResult = new GameResult();
@@ -50,16 +50,16 @@ public class GameManager {
         return new BetStatus(initialBetStatus);
     }
 
-    private void receiveAdditionalCard(Player player, BlackJack blackJack) {
+    private void receiveAdditionalCard(Player player, BlackJackGame blackJackGame) {
         while (player.canHit() && agreeIntent(player)) {
-            blackJack.receiveAdditionalCard(player);
+            blackJackGame.receiveAdditionalCard(player);
             OutputView.printCurrentHands(player);
         }
     }
 
-    private void receiveAdditionalCard(Dealer dealer, BlackJack blackJack) {
+    private void receiveAdditionalCard(Dealer dealer, BlackJackGame blackJackGame) {
         while (dealer.canHit()) {
-            blackJack.receiveAdditionalCard(dealer);
+            blackJackGame.receiveAdditionalCard(dealer);
             OutputView.printHittingDealer(dealer);
         }
     }
