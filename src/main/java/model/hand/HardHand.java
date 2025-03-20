@@ -7,8 +7,13 @@ public final class HardHand extends ParticipantHand {
     }
 
     @Override
-    public int calculateFinalScore() {
-        return calculateDefaultScore();
+    public Score calculateDefaultScore() {
+        return Score.calculateDefault(cards);
+    }
+
+    @Override
+    public Score calculateFinalScore() {
+        return Score.calculateDefault(cards);
     }
 
     @Override

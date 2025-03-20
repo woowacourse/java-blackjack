@@ -18,9 +18,9 @@ class HardHandTest {
         hardHand.add(new Card(CardRank.THREE, CardSuit.DIAMOND));
 
         //when
-        int score = hardHand.calculateFinalScore();
+        Score score = hardHand.calculateFinalScore();
 
         //then
-        assertThat(score).isEqualTo(5);
+        assertThat(score).isEqualTo(new Score(5));
     }
 }

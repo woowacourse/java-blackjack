@@ -8,6 +8,7 @@ import model.betting.Money;
 import model.deck.Card;
 import model.deck.CardRank;
 import model.deck.CardSuit;
+import model.hand.Score;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -63,7 +64,7 @@ class DealerTest {
 
         //when
         dealer.receiveCard(card);
-        int softCardValue = CardRank.ACE.getMaxValue();
+        Score softCardValue = new Score(CardRank.ACE.getMaxValue());
 
         //then
         assertThat(dealer.calculateFinalScore()).isEqualTo(softCardValue);

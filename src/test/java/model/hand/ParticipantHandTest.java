@@ -87,7 +87,7 @@ class ParticipantHandTest {
         participantHand.add(new Card(CardRank.KING, CardSuit.DIAMOND));
 
         //when, then
-        assertTrue(participantHand.checkScoreBelow(16));
+        assertTrue(participantHand.checkScoreBelow(new Score(16)));
     }
 
     @Test

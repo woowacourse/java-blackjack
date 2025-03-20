@@ -6,6 +6,7 @@ import model.betting.Bet;
 import model.deck.Card;
 import model.deck.CardRank;
 import model.deck.CardSuit;
+import model.hand.Score;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,7 +40,7 @@ class PlayerTest {
 
         //when
         player.receiveCard(card);
-        int softCardValue = CardRank.ACE.getMaxValue();
+        Score softCardValue = new Score(CardRank.ACE.getMaxValue());
 
         //then
         assertThat(player.calculateFinalScore()).isEqualTo(softCardValue);

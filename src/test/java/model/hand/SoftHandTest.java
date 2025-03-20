@@ -21,8 +21,8 @@ class SoftHandTest {
         participantHand.add(new Card(CardRank.TWO, CardSuit.DIAMOND));
 
         //when
-        int expect = 21;
-        int result = participantHand.calculateFinalScore();
+        Score expect = new Score(21);
+        Score result = participantHand.calculateFinalScore();
 
         //then
         assertEquals(expect, result);
@@ -39,8 +39,8 @@ class SoftHandTest {
         participantHand.add(new Card(CardRank.TWO, CardSuit.DIAMOND));
 
         //when
-        int expect = 21;
-        int result = participantHand.calculateFinalScore();
+        Score expect = new Score(21);
+        Score result = participantHand.calculateFinalScore();
 
         //then
         assertEquals(expect, result);
@@ -55,10 +55,10 @@ class SoftHandTest {
         softHand.add(new Card(CardRank.THREE, CardSuit.DIAMOND));
 
         //when
-        int score = softHand.calculateFinalScore();
+        Score score = softHand.calculateFinalScore();
 
         //then
-        assertThat(score).isEqualTo(14);
+        assertThat(score).isEqualTo(new Score(14));
     }
 
     @Test
@@ -70,10 +70,10 @@ class SoftHandTest {
         softHand.add(new Card(CardRank.JACK, CardSuit.DIAMOND));
 
         //when
-        int score = softHand.calculateFinalScore();
+        Score score = softHand.calculateFinalScore();
 
         //then
-        assertThat(score).isEqualTo(21);
+        assertThat(score).isEqualTo(new Score(21));
     }
 
     @Test
@@ -86,9 +86,9 @@ class SoftHandTest {
         softHand.add(new Card(CardRank.JACK, CardSuit.DIAMOND));
 
         //when
-        int score = softHand.calculateFinalScore();
+        Score score = softHand.calculateFinalScore();
 
         //then
-        assertThat(score).isEqualTo(21);
+        assertThat(score).isEqualTo(new Score(21));
     }
 }

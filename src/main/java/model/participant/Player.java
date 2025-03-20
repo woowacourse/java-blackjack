@@ -5,6 +5,7 @@ import model.betting.Bet;
 import model.betting.Money;
 import model.hand.HardHand;
 import model.hand.ParticipantHand;
+import model.hand.Score;
 import model.participant.role.Bettable;
 import model.deck.Card;
 import model.participant.role.Gameable;
@@ -37,7 +38,7 @@ public final class Player implements Bettable, Gameable {
     }
 
     @Override
-    public int calculateFinalScore() {
+    public Score calculateFinalScore() {
         return participantHand.calculateFinalScore();
     }
 

@@ -1,5 +1,6 @@
 package model.result;
 
+import model.hand.Score;
 import model.participant.Dealer;
 import model.participant.Player;
 
@@ -25,13 +26,13 @@ public final class PlayerWinningResult {
     }
 
     private static GameResult checkResultIfNotBurst(final Dealer dealer, final Player player) {
-        int dealerScore = dealer.calculateFinalScore();
-        int playerScore = player.calculateFinalScore();
+        Score dealerScore = dealer.calculateFinalScore();
+        Score playerScore = player.calculateFinalScore();
 
-        if (dealerScore > playerScore) {
+        if (dealerScore.isBiggerThan(playerScore)) {
             return GameResult.LOSE;
         }
-        if (dealerScore < playerScore) {
+        if (dealerScore.isLessThan(playerScore)) {
             return GameResult.WIN;
         }
         return GameResult.DRAW;

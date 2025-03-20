@@ -2,10 +2,8 @@ package model.hand;
 
 import java.util.List;
 import model.deck.Card;
-import model.deck.CardRank;
 
 public final class SoftHand extends ParticipantHand {
-    private static final int BURST_SCORE_LIMIT = 21;
 
     public SoftHand(final List<Card> cards) {
         super(cards);
@@ -16,21 +14,22 @@ public final class SoftHand extends ParticipantHand {
     }
 
     @Override
-    public int calculateFinalScore() {
-        int defaultScore = calculateDefaultScore();
-        int maxScore = convertOneAceToMaxValueFrom(defaultScore);
-        if (maxScore <= BURST_SCORE_LIMIT) {
-            return maxScore;
+    public Score calculateDefaultScore() {
+        return Score.calculateDefault(cards);
+    }
+
+    @Override
+    public Score calculateFinalScore() {
+        Score defaultScore = Score.calculateDefault(cards);
+        Score maxScore = defaultScore.calculateMax();
+        if (maxScore.isBurst()) {
+            return defaultScore;
         }
-        return defaultScore;
+        return maxScore;
     }
 
     @Override
     public ParticipantHand cloneToSoftHand() {
         return this;
-    }
-
-    private int convertOneAceToMaxValueFrom(final int score) {
-        return score - CardRank.ACE.getDefaultValue() + CardRank.ACE.getMaxValue();
     }
 }

@@ -2,6 +2,7 @@ package model.participant.role;
 
 import java.util.List;
 import model.deck.Card;
+import model.hand.Score;
 
 public interface Gameable {
     void receiveCard(final Card card);
@@ -12,7 +13,7 @@ public interface Gameable {
 
     boolean canHit();
 
-    int calculateFinalScore();
+    Score calculateFinalScore();
 
     List<Card> openInitialDeal();
 

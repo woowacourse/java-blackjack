@@ -3,13 +3,14 @@ package model.participant;
 import java.util.List;
 import model.hand.HardHand;
 import model.hand.ParticipantHand;
+import model.hand.Score;
 import model.participant.role.BetOwnable;
 import model.betting.Bets;
 import model.deck.Card;
 import model.participant.role.Gameable;
 
 public final class Dealer implements BetOwnable, Gameable {
-    private static final int DEALER_HIT_THRESHOLD = 16;
+    private static final Score DEALER_HIT_THRESHOLD = new Score(16);
 
     private ParticipantHand participantHand;
     private final Bets bets;
@@ -38,7 +39,7 @@ public final class Dealer implements BetOwnable, Gameable {
     }
 
     @Override
-    public int calculateFinalScore() {
+    public Score calculateFinalScore() {
         return participantHand.calculateFinalScore();
     }
 

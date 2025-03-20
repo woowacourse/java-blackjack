@@ -6,7 +6,6 @@ import java.util.List;
 import model.deck.Card;
 
 public abstract class ParticipantHand {
-    private static final int BLACKJACK_LIMIT = 21;
     private static final int INITIAL_DEAL_CARD_COUNT = 2;
 
     protected final List<Card> cards;
@@ -32,26 +31,24 @@ public abstract class ParticipantHand {
 
     public boolean checkBlackJack() {
         return this.cards.size() == INITIAL_DEAL_CARD_COUNT
-                && calculateFinalScore() == BLACKJACK_LIMIT;
+                && calculateFinalScore().isBlackjack();
     }
 
     public boolean checkBurst() {
-        return calculateDefaultScore() > BLACKJACK_LIMIT;
+        return calculateDefaultScore().isBurst();
     }
 
-    public boolean checkScoreBelow(final int upperBound) {
-        return calculateDefaultScore() <= upperBound;
+    public boolean checkScoreBelow(final Score upperBound) {
+        Score defaultScore = calculateDefaultScore();
+        return defaultScore.isLessThan(upperBound) || defaultScore.isSame(upperBound);
     }
 
-    public abstract int calculateFinalScore();
+    public abstract Score calculateDefaultScore();
+
+    public abstract Score calculateFinalScore();
 
     public abstract ParticipantHand cloneToSoftHand();
 
-    protected int calculateDefaultScore() {
-        return cards.stream()
-                .mapToInt(Card::getCardRankDefaultValue)
-                .sum();
-    }
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
