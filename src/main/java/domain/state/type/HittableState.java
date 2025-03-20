@@ -26,6 +26,11 @@ public class HittableState extends RunningState {
     }
 
     @Override
+    public StateType type() {
+        return StateType.HITTABLE_STATE;
+    }
+
+    @Override
     public State hit(final Card card) {
         final Hand hand = getHand();
         hand.add(card);

@@ -2,6 +2,7 @@ package domain.gamer;
 
 import domain.deck.Card;
 import domain.state.State;
+import domain.state.type.StateType;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,7 +35,7 @@ public abstract class Gamer {
     }
 
     public final boolean isBlackjack() {
-        return state.getHand().isBlackjack();
+        return state.type() == StateType.BLACKJACK_STATE;
     }
 
     public final int compareTo(final Gamer otherGamer) {
