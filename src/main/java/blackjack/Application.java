@@ -1,7 +1,6 @@
 package blackjack;
 
 import blackjack.controller.Controller;
-import blackjack.domain.BlackjackGameFactory;
 import blackjack.domain.card.Deck;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
@@ -11,8 +10,7 @@ public final class Application {
 
     public static void main(String[] args) {
         Controller controller = makeController();
-        BlackjackGameFactory blackjackGameFactory = new BlackjackGameFactory(Deck.shuffled());
-        controller.startGame(blackjackGameFactory);
+        controller.startGame(Deck.shuffled());
     }
 
     private static Controller makeController() {

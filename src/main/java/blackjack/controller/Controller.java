@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.BlackjackGameFactory;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
@@ -26,15 +25,15 @@ public class Controller {
         this.resultView = resultView;
     }
 
-    public void startGame(final BlackjackGameFactory blackjackGameFactory) {
-        BlackjackGame blackjackGame = makeBlackjackGame(blackjackGameFactory);
-        runGame(blackjackGame);
+    public void startGame(final Deck deck) {
+        BlackjackGame blackjackGame = makeBlackjackGame();
+        runGame(blackjackGame, deck);
     }
 
-    private BlackjackGame makeBlackjackGame(final BlackjackGameFactory blackjackGameFactory) {
+    private BlackjackGame makeBlackjackGame() {
         List<String> names = readNames();
         List<BigDecimal> amount = readBettingAmount(names);
-        return blackjackGameFactory.createGame(names, amount);
+        return new BlackjackGame(Participants.of(Players.from(names, amount)));
     }
 
     private List<String> readNames() {
@@ -49,10 +48,10 @@ public class Controller {
                 .toList();
     }
 
-    private void runGame(final BlackjackGame blackjackGame) {
-        blackjackGame.dealInitialCards();
+    private void runGame(final BlackjackGame blackjackGame, final Deck deck) {
+        blackjackGame.dealInitialCards(deck);
         showInitialCards(blackjackGame.getParticipants());
-        dealAdditionalCards(blackjackGame.getParticipants(), blackjackGame.getDeck());
+        dealAdditionalCards(blackjackGame, deck);
 
         showParticipantsScore(blackjackGame.getParticipants());
         showProfitResult(blackjackGame.makeProfitResult());
@@ -64,19 +63,19 @@ public class Controller {
                 participants.showInitialPlayersCards());
     }
 
-    private void dealAdditionalCards(final Participants participants, final Deck deck) {
-        dealAdditionalCardsToPlayers(participants, deck);
+    private void dealAdditionalCards(final BlackjackGame blackjackGame, final Deck deck) {
+        final Participants participants = blackjackGame.getParticipants();
+        dealAdditionalCardsToPlayers(blackjackGame, deck);
         dealAdditionalCardsToDealer(participants, deck);
     }
 
-    private void dealAdditionalCardsToPlayers(final Participants participants, final Deck deck) {
-        Players hitEligiblePlayers = participants.findHitEligiblePlayers();
-        for (Player player : hitEligiblePlayers.getPlayers()) {
-            dealAdditionalCardToPlayer(deck, player);
+    private void dealAdditionalCardsToPlayers(final BlackjackGame blackjackGame, final Deck deck) {
+        while (blackjackGame.isPlaying()) {
+            dealAdditionalCardToPlayer(blackjackGame.findCurrentTurnPlayer(), deck);
         }
     }
 
-    private void dealAdditionalCardToPlayer(final Deck deck, final Player player) {
+    private void dealAdditionalCardToPlayer(final Player player, final Deck deck) {
         while (player.canHit() && askHit(player)) {
             final Card card = deck.drawCard();
             player.receiveCard(card);
