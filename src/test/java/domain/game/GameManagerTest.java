@@ -66,40 +66,4 @@ public class GameManagerTest {
         assertThatCode(() -> new GameManager(dealer, List.of(player1, player2)))
             .doesNotThrowAnyException();
     }
-
-    @Test
-    void 딜러와_플레이어들에게_초기카드를_나눠준다() {
-        //given
-        Player player = new Player("이름");
-
-        //when
-        GameManager gameManager = new GameManager(dealer, List.of(player));
-        gameManager.distributeSetUpCards();
-
-        //then
-        assertAll(
-            () -> assertThat(dealer.getCards()).hasSize(2),
-            () -> assertThat(player.getCards()).hasSize(2)
-        );
-    }
-
-    @Test
-    void 딜러의_승무패_횟수를_계산한다() {
-        //given
-        setUpDealerAndPlayersCards();
-
-        //when
-        GameResult gameResult = gameManager.evaluateFinalScore();
-
-        int dealerWinCount = gameResult.countDealerWin();
-        int dealerDrawCount = gameResult.countDealerDraw();
-        int dealerLoseCount = gameResult.countDealerLose();
-
-        //then
-        assertAll(
-            () -> assertThat(dealerWinCount).isEqualTo(3),
-            () -> assertThat(dealerDrawCount).isEqualTo(2),
-            () -> assertThat(dealerLoseCount).isEqualTo(1)
-        );
-    }
 }

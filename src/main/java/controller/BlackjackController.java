@@ -1,11 +1,12 @@
 package controller;
 
 import domain.card.Card;
+import domain.game.EarningResult;
+import domain.game.PlayerBets;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import dto.FinalResultDTO;
 import domain.game.GameManager;
-import domain.game.GameResult;
 import domain.participant.Player;
 import dto.SetUpCardsDTO;
 
@@ -31,45 +32,74 @@ public class BlackjackController {
     public void play() {
         Dealer dealer = new Dealer();
         List<Player> players = inputView.getPlayers();
+        PlayerBets playerBets = placeBets(players);
         GameManager gameManager = new GameManager(dealer, players);
-        gameManager.shuffle();
-        gameManager.distributeSetUpCards();
+
+        dealSetUpCards(gameManager);
+        displaySetUpCards(dealer, players);
+
+        playTurns(gameManager);
+        displayFinalResult(dealer, players);
+        evaluateAndDisplayEarnings(gameManager, playerBets);
+    }
+
+    private void displaySetUpCards(Dealer dealer, List<Player> players) {
         SetUpCardsDTO setUpCardsDTO = createSetUpCardsDTO(dealer, players);
         outputView.printSetUpCardDeck(setUpCardsDTO);
-
-        distributeExtraCardToPlayers(gameManager, players);
-        distributeExtraCardToDealer(gameManager, dealer);
-
-        List<FinalResultDTO> finalResultDTOS = createFinalResultDTOs(dealer, players);
-        outputView.printFinalCardDeck(finalResultDTOS);
-
-        GameResult gameResult = gameManager.evaluateFinalScore();
-        outputView.printGameResult(gameResult);
     }
 
-    private void distributeExtraCardToPlayers(GameManager gameManager, List<Player> players) {
-        players.forEach(player -> distributeExtraCardToPlayer(gameManager, player));
+    private PlayerBets placeBets(List<Player> players) {
+        return new PlayerBets(players.stream()
+                .collect(Collectors.toMap(
+                        player -> player,
+                        player -> inputView.getBetMoney(player.getName()),
+                        (player1, player2) -> player1,
+                        LinkedHashMap::new
+                )));
     }
 
-    private void distributeExtraCardToPlayer(GameManager gameManager, Player player) {
-        while (player.canTakeMoreCard() && inputView.getYesOrNo(player.getName())) {
-            gameManager.distributeExtraCardToParticipant(player);
-            outputView.printTakenMoreCards(player.getName(), player.getCards());
+    private void playTurns(GameManager gameManager) {
+        distributeExtraCardToPlayers(gameManager);
+        distributeExtraCardToDealer(gameManager);
+    }
+
+    private void distributeExtraCardToPlayers(GameManager gameManager) {
+        gameManager.getPlayerNames().forEach(name -> distributeExtraCardToPlayer(gameManager, name));
+    }
+
+    private void distributeExtraCardToPlayer(GameManager gameManager, String name) {
+        while (gameManager.canPlayerTakeMoreCard(name) && inputView.getYesOrNo(name)) {
+            gameManager.distributeExtraCardToPlayer(name);
+            outputView.printTakenMoreCards(name, gameManager.getPlayerCards(name));
         }
     }
 
-    private void distributeExtraCardToDealer(GameManager gameManager, Dealer dealer) {
-        if(dealer.canTakeMoreCard()){
-            gameManager.distributeExtraCardToParticipant(dealer);
+    private void distributeExtraCardToDealer(GameManager gameManager) {
+        if (gameManager.canDealerTakeMoreCard()) {
+            gameManager.distributeExtraCardToDealer();
             outputView.printDealerTake();
         }
+    }
+
+    private void displayFinalResult(Dealer dealer, List<Player> players) {
+        List<FinalResultDTO> finalResultDTOS = createFinalResultDTOs(dealer, players);
+        outputView.printFinalCardDeck(finalResultDTOS);
+    }
+
+    private void evaluateAndDisplayEarnings(GameManager gameManager, PlayerBets playerBets) {
+        EarningResult earningResult = playerBets.evaluateEarning(gameManager.getPlayers(), gameManager.getDealer());
+        outputView.printFinalEarning(earningResult);
+    }
+
+    private void dealSetUpCards(GameManager gameManager) {
+        gameManager.distributeSetUpCards();
     }
 
     public SetUpCardsDTO createSetUpCardsDTO(Dealer dealer, List<Player> players) {
         Card dealerOpenCard = dealer.getOpenCard();
 
         Map<String, List<Card>> cards = players.stream()
-                .collect(Collectors.toMap(Player::getName, Participant::getCards
+                .collect(Collectors.toMap(Player::getName, player -> player.getHands().getCards()
                         , (player1, player2) -> player1, LinkedHashMap::new));
 
         return new SetUpCardsDTO(dealerOpenCard, cards);
@@ -77,10 +107,10 @@ public class BlackjackController {
 
     public List<FinalResultDTO> createFinalResultDTOs(Dealer dealer, List<Player> players) {
         List<FinalResultDTO> finalResultDTOs = new ArrayList<>();
-        FinalResultDTO dealerFinalResultDTO = new FinalResultDTO("딜러", dealer.getCards(), dealer.calculateScore());
+        FinalResultDTO dealerFinalResultDTO = new FinalResultDTO("딜러", dealer.getHands().getCards(), dealer.calculateScore());
         finalResultDTOs.add(dealerFinalResultDTO);
         for (Player player : players) {
-            FinalResultDTO playerFinalResultDTO = new FinalResultDTO(player.getName(), player.getCards(), player.calculateScore());
+            FinalResultDTO playerFinalResultDTO = new FinalResultDTO(player.getName(), player.getHands().getCards(), player.calculateScore());
             finalResultDTOs.add(playerFinalResultDTO);
         }
 

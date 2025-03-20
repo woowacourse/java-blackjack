@@ -2,7 +2,6 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.HandCards;
-import java.util.List;
 
 public abstract class Participant {
 
@@ -26,7 +25,11 @@ public abstract class Participant {
         return handCards.calculateScore();
     }
 
-    public List<Card> getCards() {
-        return handCards.getCards();
+    public int getCardCount() {
+        return handCards.getCardCount();
+    }
+
+    public HandCards getHands() {
+        return handCards;
     }
 }

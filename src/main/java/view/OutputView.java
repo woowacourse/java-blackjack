@@ -1,12 +1,10 @@
 package view;
 
 import domain.card.Card;
+import domain.game.EarningResult;
 import dto.FinalResultDTO;
-import domain.game.GameResult;
-import domain.card.Rank;
 import dto.SetUpCardsDTO;
-import domain.card.Shape;
-import domain.game.Winning;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -45,30 +43,15 @@ public class OutputView {
         );
     }
 
-    public void printGameResult(GameResult gameResult) {
+    public void printFinalEarning(EarningResult earningResult) {
         System.out.println();
-        System.out.println("## 최종 승패");
-        printDealerWinnings(gameResult);
-
-        gameResult.getPlayerWinningResult()
-            .forEach(
-                (player, winning) -> System.out.printf("%s: %s\n",
-                    player.getName(), winning.getName())
-            );
-    }
-
-    private static void printDealerWinnings(GameResult gameResult) {
-        System.out.print("딜러: ");
-        if(gameResult.countDealerWin() > 0){
-            System.out.print(gameResult.countDealerWin() + "승 ");
-        }
-        if(gameResult.countDealerDraw() > 0){
-            System.out.print(gameResult.countDealerDraw() + "무 ");
-        }
-        if(gameResult.countDealerLose() > 0){
-            System.out.print(gameResult.countDealerLose() + "패 ");
-        }
-        System.out.println();
+        System.out.println("## 최종 수익");
+        System.out.printf("딜러: %.0f\n", earningResult.calcualteDealerEarning());
+        earningResult.getEarningResult()
+                .forEach(
+                        (player, amout) -> System.out.printf("%s: %.0f\n",
+                                player.getName(), amout)
+                );
     }
 
     private String cardNames(List<Card> cards) {

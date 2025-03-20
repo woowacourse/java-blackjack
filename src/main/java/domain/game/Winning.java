@@ -1,41 +1,58 @@
 package domain.game;
 
+import domain.card.HandCards;
+
 public enum Winning {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패"),
+    BLACKJACK("블랙잭", 1.5),
+    WIN("승", 1),
+    DRAW("무", 0),
+    LOSE("패", -1),
     ;
 
-    public static final int BLACK_JACK = 21;
-
     private final String name;
+    private final double earningRate;
 
-    Winning(String name) {
+    Winning(String name, double earningRate) {
         this.name = name;
+        this.earningRate = earningRate;
     }
 
-    public static Winning determine(int playerScore, int dealerScore) {
-        if(isBust(playerScore)){
+    public static Winning determine(HandCards playerHands, HandCards dealerHands) {
+        if(playerHands.isBlackJack() && dealerHands.isBlackJack()) {
+            return DRAW;
+        }
+        if(playerHands.isBlackJack()) {
+            return BLACKJACK;
+        }
+        if(dealerHands.isBlackJack()) {
             return LOSE;
         }
-        if(isBust(dealerScore)){
+
+        if(playerHands.isBust()) {
+            return LOSE;
+        }
+        if(dealerHands.isBust()) {
             return WIN;
         }
 
-        if(playerScore > dealerScore){
+        return getWinningByScore(playerHands.calculateScore(), dealerHands.calculateScore());
+    }
+
+    private static Winning getWinningByScore(int playerScore, int dealerScore) {
+        if(playerScore > dealerScore) {
             return WIN;
         }
-        if(playerScore < dealerScore){
+        if(playerScore < dealerScore) {
             return LOSE;
         }
         return DRAW;
     }
 
-    public static boolean isBust(int score) {
-        return (score > BLACK_JACK);
-    }
-
     public String getName() {
         return name;
+    }
+
+    public double getEarningRate() {
+        return earningRate;
     }
 }

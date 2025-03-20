@@ -1,7 +1,6 @@
 package domain.participant;
 
 import domain.card.HandCards;
-import domain.game.Winning;
 
 public class Player extends Participant {
 
@@ -32,7 +31,7 @@ public class Player extends Participant {
 
     @Override
     public boolean canTakeMoreCard() {
-        return (calculateScore() <= Winning.BLACK_JACK);
+        return (calculateScore() <= HandCards.BLACKJACK_SCORE);
     }
 
     public String getName() {

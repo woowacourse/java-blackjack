@@ -1,15 +1,12 @@
 package domain.game;
 
 import domain.card.Card;
-import domain.participant.Dealer;
-import domain.participant.Participant;
-import domain.participant.Player;
 import domain.card.CardDeck;
+import domain.participant.Dealer;
+import domain.participant.Player;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class GameManager {
 
@@ -23,27 +20,61 @@ public class GameManager {
         this.cardDeck = new CardDeck();
     }
 
-    public void shuffle() {
-        cardDeck.shuffle();
-    }
-
     public void distributeSetUpCards() {
         dealer.setUpCardDeck(cardDeck.poll(), cardDeck.poll());
         players.forEach(player -> player.setUpCardDeck(cardDeck.poll(), cardDeck.poll()));
     }
 
-    public void distributeExtraCardToParticipant(Participant participant) {
-        participant.takeMoreCard(cardDeck.poll());
+    public boolean canDealerTakeMoreCard() {
+        return dealer.canTakeMoreCard();
     }
 
-    public GameResult evaluateFinalScore() {
-        int dealerScore = dealer.calculateScore();
+    public boolean canPlayerTakeMoreCard(String name) {
+        Player player = findPlayerByName(name);
+        if(player != null) {
+            return player.canTakeMoreCard();
+        }
+        return false;
+    }
 
-        Map<Player, Winning> playerWinnings = players.stream()
-                .collect(Collectors.toMap(player -> player
-                        , player -> Winning.determine(player.calculateScore(), dealerScore)
-                        , (player1, player2) -> player1, LinkedHashMap::new));
+    public void distributeExtraCardToDealer() {
+        dealer.takeMoreCard(cardDeck.poll());
+    }
 
-        return new GameResult(playerWinnings);
+    public void distributeExtraCardToPlayer(String name) {
+        Player player = findPlayerByName(name);
+        if(player != null) {
+            player.takeMoreCard(cardDeck.poll());
+        }
+    }
+
+    public List<Card> getPlayerCards(String name) {
+        Player player = findPlayerByName(name);
+        if(player != null) {
+            return player.getHands().getCards();
+        }
+        return new ArrayList<>();
+    }
+
+
+    private Player findPlayerByName(String name) {
+        return players.stream()
+                .filter(player -> player.getName().equals(name))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public List<String> getPlayerNames() {
+        return players.stream()
+                .map(Player::getName)
+                .toList();
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }

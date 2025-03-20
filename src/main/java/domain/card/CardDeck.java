@@ -1,22 +1,22 @@
 package domain.card;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class CardDeck {
 
-    private final List<Card> cards = new ArrayList<>();
+    private final List<Card> cards;
 
     public CardDeck() {
-        initializeCardPack();
+        cards = initializeCardPack();
+        shuffle();
     }
 
-    private void initializeCardPack() {
-        Arrays.stream(Rank.values())
-                .forEach(rank -> Arrays.stream(Shape.values())
-                        .forEach(shape -> cards.add(new Card(rank, shape))));
+    private List<Card> initializeCardPack() {
+        return Arrays.stream(Rank.values())
+                .flatMap(rank -> Arrays.stream(Shape.values())
+                        .map(shape -> new Card(rank, shape)))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public void shuffle() {
@@ -25,7 +25,7 @@ public class CardDeck {
 
     public Card poll() {
         if (cards.isEmpty()) {
-            initializeCardPack();
+            throw new NoSuchElementException("카드가 모두 소진되었습니다.");
         }
         return cards.removeFirst();
     }
