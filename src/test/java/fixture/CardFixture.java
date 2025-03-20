@@ -1,10 +1,10 @@
 package fixture;
 
-import domain.deck.Card;
-import domain.deck.Deck;
-import domain.deck.DeckGenerator;
-import domain.deck.Rank;
-import domain.deck.Suit;
+import card.Card;
+import card.Deck;
+import card.DeckGenerator;
+import card.Rank;
+import card.Suit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +14,7 @@ public class CardFixture {
 
     static {
         for (int i = 0; i < 52; i++) {
-            deckFixture.add(deck.drawNewCard());
+            deckFixture.add(deck.draw());
         }
     }
 
