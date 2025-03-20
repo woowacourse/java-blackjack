@@ -5,23 +5,147 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.model.card.Card;
 import blackjack.model.card.CardShape;
 import blackjack.model.card.CardType;
+import blackjack.model.game.PlayerResult;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    @Test
-    void 딜러를_생성한다() {
-        // given
-        Dealer dealer = new Dealer();
+    private Dealer dealer;
+    private Player player1;
+    private Player player2;
+    private Players players;
 
-        // when & then
-        assertThat(dealer).isNotNull();
+    @BeforeEach
+    void setUp() {
+        dealer = new Dealer();
+        player1 = new Player("벡터", 1000);
+        player2 = new Player("제프", 1000);
+        players = new Players(List.of(player1, player2));
     }
 
     @Test
-    void 딜러에게_카드를_한장_준다() {
-        Dealer dealer = new Dealer();
-        dealer.putCard(new Card(CardShape.CLOVER, CardType.NORMAL_8));
-        assertThat(dealer.getReceivedCards().size()).isEqualTo(1);
+    void 참가자가_버스트면_딜러가_승리한다() {
+        // given
+        setBust(player1);
+
+        // when
+        PlayerResult result = getGameResult(player1);
+
+        // then
+        assertThat(result).isEqualTo(PlayerResult.LOSE);
+    }
+
+    @Test
+    void 딜러가_버스트면_참가자가_승리한다() {
+        // given
+        setBust(dealer);
+        setHand(player1, CardType.KING, CardType.QUEEN);
+
+        // when
+        PlayerResult result = getGameResult(player1);
+
+        // then
+        assertThat(result).isEqualTo(PlayerResult.WIN);
+    }
+
+    @Test
+    void 참가자의_점수가_딜러보다_높으면_승리한다() {
+        // given
+        setHand(dealer, CardType.KING, CardType.NORMAL_6);
+        setHand(player1, CardType.KING, CardType.NORMAL_8);
+
+        // when
+        PlayerResult result = getGameResult(player1);
+
+        // then
+        assertThat(result).isEqualTo(PlayerResult.WIN);
+    }
+
+    @Test
+    void 딜러의_점수가_참가자보다_높으면_딜러가_승리한다() {
+        // given
+        setHand(dealer, CardType.KING, CardType.NORMAL_8);
+        setHand(player1, CardType.KING, CardType.NORMAL_6);
+
+        // when
+        PlayerResult result = getGameResult(player1);
+
+        // then
+        assertThat(result).isEqualTo(PlayerResult.LOSE);
+    }
+
+    @Test
+    void 딜러와_참가자의_점수가_같으면_무승부() {
+        // given
+        setHand(dealer, CardType.KING, CardType.NORMAL_8);
+        setHand(player1, CardType.KING, CardType.NORMAL_8);
+
+        // when
+        PlayerResult result = getGameResult(player1);
+
+        // then
+        assertThat(result).isEqualTo(PlayerResult.DRAW);
+    }
+
+    @Test
+    void 참가자가_블랙잭이면_승리한다() {
+        // given
+        setHand(dealer, CardType.KING, CardType.NORMAL_9);
+        setBlackjack(player1);
+
+        // when
+        PlayerResult result = getGameResult(player1);
+
+        // then
+        assertThat(result).isEqualTo(PlayerResult.BLACKJACK);
+    }
+
+    @Test
+    void 딜러가_블랙잭이면_딜러가_승리한다() {
+        // given
+        setBlackjack(dealer);
+        setHand(player1, CardType.KING, CardType.NORMAL_9);
+
+        // when
+        PlayerResult result = getGameResult(player1);
+
+        // then
+        assertThat(result).isEqualTo(PlayerResult.LOSE);
+    }
+
+    @Test
+    void 딜러와_참가자가_블랙잭이면_무승부() {
+        // given
+        setBlackjack(dealer);
+        setBlackjack(player1);
+
+        // when
+        PlayerResult result = getGameResult(player1);
+
+        // then
+        assertThat(result).isEqualTo(PlayerResult.DRAW);
+    }
+
+
+    private void setHand(Participant participant, CardType card1, CardType card2) {
+        participant.putCard(new Card(CardShape.HEART, card1));
+        participant.putCard(new Card(CardShape.SPADE, card2));
+    }
+
+    private void setBust(Participant participant) {
+        participant.putCard(new Card(CardShape.HEART, CardType.KING));
+        participant.putCard(new Card(CardShape.HEART, CardType.QUEEN));
+        participant.putCard(new Card(CardShape.HEART, CardType.NORMAL_5));
+    }
+
+    private void setBlackjack(Participant participant) {
+        participant.putCard(new Card(CardShape.HEART, CardType.ACE));
+        participant.putCard(new Card(CardShape.SPADE, CardType.KING));
+    }
+
+    private PlayerResult getGameResult(Player player) {
+        return dealer.calculateGameResult(players).get(player);
     }
 }
