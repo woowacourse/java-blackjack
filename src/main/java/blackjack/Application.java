@@ -1,25 +1,26 @@
 package blackjack;
 
-import static blackjack.view.InputView.inputPlayerHit;
-import static blackjack.view.InputView.inputPlayerName;
-import static blackjack.view.OutputView.printBusted;
-import static blackjack.view.OutputView.printDealerReceiveCard;
-import static blackjack.view.OutputView.printGamblerCards;
-import static blackjack.view.OutputView.printGamblerResult;
-import static blackjack.view.OutputView.printInitialDistributionPrompt;
-import static blackjack.view.OutputView.printWinning;
+import static blackjack.object.view.InputView.*;
+import static blackjack.object.view.OutputView.printBusted;
+import static blackjack.object.view.OutputView.printDealerReceiveCard;
+import static blackjack.object.view.OutputView.printGamblerCards;
+import static blackjack.object.view.OutputView.printGamblerResult;
+import static blackjack.object.view.OutputView.printInitialDistributionPrompt;
+import static blackjack.object.view.OutputView.printWinning;
 import static java.util.stream.Collectors.toList;
 
-import blackjack.domain.Round;
-import blackjack.domain.WinningDiscriminator;
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardDeck;
-import blackjack.domain.card.CardShape;
-import blackjack.domain.card.CardShuffler;
-import blackjack.domain.card.CardType;
-import blackjack.domain.gambler.Name;
+import blackjack.object.Round;
+import blackjack.object.ProfitCalculator;
+import blackjack.object.card.Card;
+import blackjack.object.card.CardDeck;
+import blackjack.object.card.CardShape;
+import blackjack.object.card.CardShuffler;
+import blackjack.object.card.CardType;
+import blackjack.object.gambler.Name;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -27,13 +28,16 @@ public class Application {
     public static void main(String[] args) {
         CardDeck cardDeck = createCardDeck();
         List<Name> playerNames = getPlayerNames();
+        Map<Name, Integer> bettingRecords = getBettingRecords(playerNames);
+
         Round round = new Round(cardDeck, playerNames);
+
         round.distributeInitialCards();
         printInitialDistributionPrompt(playerNames);
         printInitialCards(round, playerNames);
         processPlayersTurn(playerNames, round);
         processDealerTurn(round);
-        printGameResult(round, playerNames);
+        printGameResult(round, bettingRecords);
     }
 
     private static CardDeck createCardDeck() {
@@ -57,6 +61,24 @@ public class Application {
         }
     }
 
+    private static Map<Name, Integer> getBettingRecords(List<Name> playerNames) {
+        Map<Name, Integer> bettingRecords = new HashMap<>();
+        for (Name playerName : playerNames) {
+            int money = getBettingAmountByName(playerName);
+            bettingRecords.put(playerName, money);
+        }
+        return bettingRecords;
+    }
+
+    private static int getBettingAmountByName(Name playerName) {
+        try {
+            return inputBettingAmount(playerName);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return getBettingAmountByName(playerName);
+        }
+    }
+
     private static void printInitialCards(final Round round, final List<Name> playerNames) {
         printGamblerCards(Name.getDealerName(), round.getInitialCards(Name.getDealerName()));
         for (Name playerName : playerNames) {
@@ -70,19 +92,12 @@ public class Application {
         }
     }
 
-    private static void processDealerTurn(final Round round) {
-        if (round.isGamblerCanReceiveCard(Name.getDealerName(), Round.DEALER_RECEIVE_CRITERIA)) {
-            round.distributeCards(Name.getDealerName(), 1);
-            printDealerReceiveCard();
-        }
-    }
-
     private static void processPlayerTurn(final Round round, final Name playerName) {
-        while (round.isGamblerCanReceiveCard(playerName, WinningDiscriminator.BLACK_JACK) && isHit(playerName)) {
+        while (round.isGamblerCanReceiveCard(playerName, ProfitCalculator.BLACK_JACK) && isHit(playerName)) {
             round.distributeCards(playerName, 1);
             printGamblerCards(playerName, round.getCards(playerName));
         }
-        if (!round.isGamblerCanReceiveCard(playerName, WinningDiscriminator.BLACK_JACK)) {
+        if (!round.isGamblerCanReceiveCard(playerName, ProfitCalculator.BLACK_JACK)) {
             printBusted(playerName);
         }
         if (!round.isPlayerOwnsCardExceptInitialCards(playerName)) {
@@ -99,14 +114,21 @@ public class Application {
         }
     }
 
-    private static void printGameResult(final Round round, final List<Name> playerNames) {
+    private static void processDealerTurn(final Round round) {
+        if (round.isGamblerCanReceiveCard(Name.getDealerName(), Round.DEALER_RECEIVE_CRITERIA)) {
+            round.distributeCards(Name.getDealerName(), 1);
+            printDealerReceiveCard();
+        }
+    }
+
+    private static void printGameResult(final Round round, final Map<Name, Integer> bettingRecords) {
         printGamblerResult(Name.getDealerName(), round.getCards(Name.getDealerName()), round.getScore(Name.getDealerName()));
-        for (Name playerName : playerNames) {
+        for (Name playerName : bettingRecords.keySet()) {
             List<Card> cards = round.getCards(playerName);
             int score = round.getScore(playerName);
             printGamblerResult(playerName, cards, score);
         }
-        WinningDiscriminator discriminator = round.getWinningDiscriminator();
+        ProfitCalculator discriminator = round.getProfitCalculator(bettingRecords);
         printWinning(discriminator);
     }
 }
