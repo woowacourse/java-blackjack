@@ -44,7 +44,7 @@ class DealerTest {
     void 딜러가_버스트면_참가자가_승리한다() {
         // given
         setBust(dealer);
-        setHand(player1, CardType.KING, CardType.QUEEN); // 20점
+        setHand(player1, CardType.KING, CardType.QUEEN);
 
         // when
         PlayerResult result = getGameResult(player1);
@@ -56,8 +56,8 @@ class DealerTest {
     @Test
     void 참가자의_점수가_딜러보다_높으면_승리한다() {
         // given
-        setHand(dealer, CardType.KING, CardType.NORMAL_6); // 16점
-        setHand(player1, CardType.KING, CardType.NORMAL_8); // 18점
+        setHand(dealer, CardType.KING, CardType.NORMAL_6);
+        setHand(player1, CardType.KING, CardType.NORMAL_8);
 
         // when
         PlayerResult result = getGameResult(player1);
@@ -69,8 +69,8 @@ class DealerTest {
     @Test
     void 딜러의_점수가_참가자보다_높으면_딜러가_승리한다() {
         // given
-        setHand(dealer, CardType.KING, CardType.NORMAL_8); // 18점
-        setHand(player1, CardType.KING, CardType.NORMAL_6); // 16점
+        setHand(dealer, CardType.KING, CardType.NORMAL_8);
+        setHand(player1, CardType.KING, CardType.NORMAL_6);
 
         // when
         PlayerResult result = getGameResult(player1);
@@ -82,8 +82,8 @@ class DealerTest {
     @Test
     void 딜러와_참가자의_점수가_같으면_무승부() {
         // given
-        setHand(dealer, CardType.KING, CardType.NORMAL_8); // 18점
-        setHand(player1, CardType.KING, CardType.NORMAL_8); // 18점
+        setHand(dealer, CardType.KING, CardType.NORMAL_8);
+        setHand(player1, CardType.KING, CardType.NORMAL_8);
 
         // when
         PlayerResult result = getGameResult(player1);
@@ -95,7 +95,7 @@ class DealerTest {
     @Test
     void 참가자가_블랙잭이면_승리한다() {
         // given
-        setHand(dealer, CardType.KING, CardType.NORMAL_9); // 19점
+        setHand(dealer, CardType.KING, CardType.NORMAL_9);
         setBlackjack(player1);
 
         // when
@@ -109,7 +109,7 @@ class DealerTest {
     void 딜러가_블랙잭이면_딜러가_승리한다() {
         // given
         setBlackjack(dealer);
-        setHand(player1, CardType.KING, CardType.NORMAL_9); // 19점
+        setHand(player1, CardType.KING, CardType.NORMAL_9);
 
         // when
         PlayerResult result = getGameResult(player1);
@@ -140,12 +140,12 @@ class DealerTest {
     private void setBust(Participant participant) {
         participant.putCard(new Card(CardShape.HEART, CardType.KING));
         participant.putCard(new Card(CardShape.HEART, CardType.QUEEN));
-        participant.putCard(new Card(CardShape.HEART, CardType.NORMAL_5)); // 25점, 버스트
+        participant.putCard(new Card(CardShape.HEART, CardType.NORMAL_5));
     }
 
     private void setBlackjack(Participant participant) {
         participant.putCard(new Card(CardShape.HEART, CardType.ACE));
-        participant.putCard(new Card(CardShape.SPADE, CardType.KING)); // 블랙잭
+        participant.putCard(new Card(CardShape.SPADE, CardType.KING));
     }
 
     private PlayerResult getGameResult(Player player) {
