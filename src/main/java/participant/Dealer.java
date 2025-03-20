@@ -32,7 +32,7 @@ public class Dealer {
         return cards.isHit(HIT_CONDITION);
     }
 
-    public Score getScore() {
+    public Score calculateScore() {
         return cards.calculateScore();
     }
 

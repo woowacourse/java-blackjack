@@ -57,7 +57,7 @@ public class PlayersTest {
         divideCardToPlayer(cards, player);
 
         // when
-        int sum = player.getScore().getValue();
+        int sum = player.calculateScore().getValue();
 
         // then
         Assertions.assertThat(sum).isEqualTo(expected);

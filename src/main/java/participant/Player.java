@@ -31,7 +31,7 @@ public class Player {
         return cards.isBust();
     }
 
-    public Score getScore() {
+    public Score calculateScore() {
         return cards.calculateScore();
     }
 

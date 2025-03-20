@@ -76,9 +76,9 @@ public class OutputView {
 
 
     public static void printAllParticipantScore(Dealer dealer, Players players) {
-        printScore(formHandsOfDealer(dealer), dealer.getScore().getValue());
+        printScore(formHandsOfDealer(dealer), dealer.calculateScore().getValue());
         for (Player player : players.getPlayers()) {
-            printScore(formatHandsOfPlayer(player), player.getScore().getValue());
+            printScore(formatHandsOfPlayer(player), player.calculateScore().getValue());
         }
     }
 

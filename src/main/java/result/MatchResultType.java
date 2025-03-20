@@ -25,7 +25,7 @@ public enum MatchResultType {
             return WIN;
         }
         return Arrays.stream(MatchResultType.values())
-                .filter(result -> result.condition == player.getScore().compareTo(dealer.getScore()))
+                .filter(result -> result.condition == player.calculateScore().compareTo(dealer.calculateScore()))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재할 수 없는 결과 입니다"));
     }
