@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import model.bet.BettingMoney;
 import model.participant.Participants;
 import model.result.BettingResults;
 import model.bet.ParticipantsBet;
@@ -56,7 +57,7 @@ class BlackjackGameTest {
         ParticipantsCards participantsCards = new ParticipantsCards(dealerCards, map);
 
         ParticipantsBet participantsBet = new ParticipantsBet(
-                Map.of("pobi", 10_000, "hotteok", 1_000));
+                Map.of("pobi", new BettingMoney(10_000), "hotteok", new BettingMoney(1_000)));
 
         Participants participants = new Participants(participantsCards, participantsBet);
 

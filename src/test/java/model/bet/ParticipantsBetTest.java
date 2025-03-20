@@ -25,10 +25,10 @@ class ParticipantsBetTest {
     @Test
     void calculateBettingResultsTest() {
         ParticipantsBet participantsBet = new ParticipantsBet(Map.of(
-                "pobi", 10_000,
-                "jason", 20_000,
-                "danny", 5_000,
-                "hotteok", 50_000
+                "pobi", new BettingMoney(10_000),
+                "jason", new BettingMoney(20_000),
+                "danny", new BettingMoney(5_000),
+                "hotteok", new BettingMoney(50_000)
         ));
         GameResults gameResults = new GameResults(Map.of(
                 "pobi", GameResult.WIN,

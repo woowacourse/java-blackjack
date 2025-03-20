@@ -6,8 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import model.participant.Participants;
-import model.result.BettingResults;
+import model.bet.BettingMoney;
 import model.bet.ParticipantsBet;
 import model.cards.DealerCards;
 import model.cards.DealerCardsGenerator;
@@ -16,6 +15,8 @@ import model.cards.PlayerCards;
 import model.cards.PlayerCardsGenerator;
 import model.deck.Deck;
 import model.deck.DeckGenerator;
+import model.participant.Participants;
+import model.result.BettingResults;
 import model.result.GameResult;
 import model.result.GameResults;
 
@@ -108,9 +109,9 @@ public class BlackjackGame {
             final List<String> names,
             final List<Integer> betAmount
     ) {
-        Map<String, Integer> playerBet = new LinkedHashMap<>(names.size());
+        Map<String, BettingMoney> playerBet = new LinkedHashMap<>(names.size());
         for (int i = 0; i < names.size(); i++) {
-            playerBet.put(names.get(i), betAmount.get(i));
+            playerBet.put(names.get(i), new BettingMoney(betAmount.get(i)));
         }
         return new ParticipantsBet(playerBet);
     }
