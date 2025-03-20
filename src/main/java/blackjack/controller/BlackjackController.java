@@ -15,7 +15,7 @@ import java.util.List;
 public class BlackjackController {
 
     private final ProfitCalculator profitCalculator = new ProfitCalculator();
-    private final Round round = new Round();
+    private Round round;
 
     public void run() {
         setRound();
@@ -27,7 +27,7 @@ public class BlackjackController {
     private void setRound() {
         NamesRequestDto namesRequestDto = InputView.readNames();
         getPlayerBets(namesRequestDto.names());
-        round.initialize(namesRequestDto.names());
+        round = new Round(namesRequestDto.names());
         OutputView.printStartingCards(round.getStartingCards());
     }
 

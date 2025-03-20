@@ -15,10 +15,9 @@ class RoundTest {
     @DisplayName("플레이어에게 카드를 지급한다")
     void drawPlayerCardTest() {
         // given
-        Round round = new Round();
+        Round round = new Round(List.of("Pobi"));
 
         // when
-        round.initialize(List.of("Pobi"));
         round.drawPlayerCard("Pobi");
         List<Player> players = round.getPlayers();
 
@@ -30,10 +29,7 @@ class RoundTest {
     @DisplayName("플레이어 카드 지급 시 플레이어 목록에 없는 이름을 전달할 경우 예외가 발생한다")
     void drawPlayerCardExceptionTest() {
         // given
-        Round round = new Round();
-
-        // when
-        round.initialize(List.of("Pobi"));
+        Round round = new Round(List.of("Pobi"));
 
         // then
         assertThatThrownBy(() -> round.drawPlayerCard("Neo")).isInstanceOf(IllegalArgumentException.class);
@@ -43,10 +39,9 @@ class RoundTest {
     @DisplayName("딜러에게 카드를 지급한다")
     void drawDealerCardTest() {
         // given
-        Round round = new Round();
+        Round round = new Round(List.of("Pobi"));
 
         // when
-        round.initialize(List.of("Pobi"));
         round.drawDealerCard();
 
         // then

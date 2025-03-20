@@ -12,14 +12,14 @@ import java.util.List;
 
 public class Round {
 
-    private Dealer dealer;
-    private List<Player> players;
-    private Deck deck;
+    private final Dealer dealer;
+    private final List<Player> players;
+    private final Deck deck;
 
-    public void initialize(List<String> playerNames) {
-        deck = Deck.generateFrom(new RandomCardStrategy());
-        dealer = new Dealer(deck.draw(), deck.draw());
-        players = playerNames.stream()
+    public Round(List<String> playerNames) {
+        this.deck = Deck.generateFrom(new RandomCardStrategy());
+        this.dealer = new Dealer(deck.draw(), deck.draw());
+        this.players = playerNames.stream()
                 .map(name -> new Player(name, deck.draw(), deck.draw()))
                 .toList();
     }
