@@ -1,5 +1,6 @@
 package blackjack.model.player;
 
+import blackjack.model.game.Deck;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -45,9 +46,8 @@ public class Players {
         return new ArrayList<>(players);
     }
 
-    public void giveInitialCards() {
-
-        players.g0etParticipants().forEach(p -> p.initialCard(deck.drawCard(), deck.drawCard()));
+    public void giveInitialCards(Deck deck) {
+        players.forEach(p -> p.initialCard(deck.drawCard(), deck.drawCard()));
 
     }
 }
