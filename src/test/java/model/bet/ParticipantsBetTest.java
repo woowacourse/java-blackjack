@@ -1,8 +1,10 @@
 package model.bet;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
+import exception.IllegalBlackjackInputException;
 import java.util.Map;
 import model.result.BettingResults;
 import model.result.GameResult;
@@ -11,6 +13,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ParticipantsBetTest {
+
+    @DisplayName("배팅을 하는 플레이어가 없다면 예외가 발생한다.")
+    @Test
+    void validateParticipantBetsCount() {
+        assertThatThrownBy(() -> new ParticipantsBet(Map.of()))
+                .isInstanceOf(IllegalBlackjackInputException.class);
+    }
 
     @DisplayName("GameResults를 통해 BettingResults를 계산한다.")
     @Test
