@@ -1,8 +1,8 @@
 package blackjack.domain.card;
 
 public record Card(
-    CardType type,
-    CardNumber number
+        CardType type,
+        CardNumber number
 ) {
 
     public boolean isAce() {

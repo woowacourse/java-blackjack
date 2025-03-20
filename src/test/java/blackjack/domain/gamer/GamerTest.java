@@ -1,34 +1,27 @@
 package blackjack.domain.gamer;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-import java.util.Map;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-
-import blackjack.domain.round.RoundResult;
 import blackjack.domain.card.CardNumber;
 import blackjack.domain.deck.Deck;
 import blackjack.fixture.DeckFixture;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class GamerTest {
 
-    private Gamer gamer= new Player("Pobi");
-
     @ParameterizedTest
     @CsvSource({
-        "ACE,TWO,false",
-        "ACE,ACE,false",
-        "ACE,JACK,false",
+            "ACE,TWO,false",
+            "ACE,ACE,false",
+            "ACE,JACK,false",
     })
     @DisplayName("21이하인 경우 버스트되지 않는다")
     void isBustTest1(CardNumber cardNumber1, CardNumber cardNumber2, boolean expected) {
         // given
-        gamer.initialize(DeckFixture.deckOf(cardNumber1, cardNumber2));
+        Deck deck = DeckFixture.deckOf(cardNumber1, cardNumber2);
+        Gamer gamer = new Player("Pobi", deck.draw(), deck.draw());
 
         // when
         boolean actual = gamer.isBust();
@@ -39,17 +32,16 @@ class GamerTest {
 
     @ParameterizedTest
     @CsvSource({
-        "FIVE,JACK,KING,true",
-        "TWO,JACK,QUEEN,true",
-        "JACK,QUEEN,KING,true",
+            "FIVE,JACK,KING,true",
+            "TWO,JACK,QUEEN,true",
+            "JACK,QUEEN,KING,true",
     })
     @DisplayName("21초과인 경우 버스트된다")
     void isBustTest2(CardNumber cardNumber1, CardNumber cardNumber2,
-        CardNumber cardNumber3, boolean expected) {
+                     CardNumber cardNumber3, boolean expected) {
         // given
         Deck deck = DeckFixture.deckOf(cardNumber1, cardNumber2, cardNumber3);
-        gamer.initialize(deck);
-        gamer.drawCard(deck);
+        Gamer gamer = new Player("Pobi", deck.draw(), deck.draw(), deck.draw());
 
         // when
         boolean actual = gamer.isBust();
@@ -60,14 +52,15 @@ class GamerTest {
 
     @ParameterizedTest
     @CsvSource({
-        "ACE,ACE,12",
-        "ACE,TWO,13",
-        "ACE,KING,21",
+            "ACE,ACE,12",
+            "ACE,TWO,13",
+            "ACE,KING,21",
     })
     @DisplayName("버스트되지 않으면 Ace는 11로 계산한다")
     void getSumOfCardsTest1(CardNumber cardNumber1, CardNumber cardNumber2, int expected) {
         // given
-        gamer.initialize(DeckFixture.deckOf(cardNumber1, cardNumber2));
+        Deck deck = DeckFixture.deckOf(cardNumber1, cardNumber2);
+        Gamer gamer = new Player("Pobi", deck.draw(), deck.draw());
 
         // when
         int sumOfCards = gamer.getSumOfCards();
@@ -78,16 +71,15 @@ class GamerTest {
 
     @ParameterizedTest
     @CsvSource({
-        "ACE,ACE,ACE,13",
-        "ACE,ACE,KING,12",
-        "ACE,QUEEN,KING,21",
+            "ACE,ACE,ACE,13",
+            "ACE,ACE,KING,12",
+            "ACE,QUEEN,KING,21",
     })
     @DisplayName("버스트될 것 같으면 Ace는 1로 계산한다")
     void getSumOfCardsTest2(CardNumber cardNumber1, CardNumber cardNumber2, CardNumber cardNumber3, int expected) {
         // given
         Deck deck = DeckFixture.deckOf(cardNumber1, cardNumber2, cardNumber3);
-        gamer.initialize(deck);
-        gamer.drawCard(deck);
+        Gamer gamer = new Player("Pobi", deck.draw(), deck.draw(), deck.draw());
 
         // when
         int sumOfCards = gamer.getSumOfCards();
@@ -98,44 +90,20 @@ class GamerTest {
 
     @ParameterizedTest
     @CsvSource({
-        "ACE,KING,true",
-        "ACE,TWO,false",
-        "ACE,ACE,false",
+            "ACE,KING,true",
+            "ACE,TWO,false",
+            "ACE,ACE,false",
     })
     @DisplayName("블랙잭 여부를 확인한다")
     void isBlackjackTest(CardNumber cardNumber1, CardNumber cardNumber2, boolean expected) {
         // given
-        gamer.initialize(DeckFixture.deckOf(cardNumber1, cardNumber2));
+        Deck deck = DeckFixture.deckOf(cardNumber1, cardNumber2);
+        Gamer gamer = new Player("Pobi", deck.draw(), deck.draw());
 
         // when
         boolean actual = gamer.isBlackjack();
 
         // then
         assertThat(actual).isEqualTo(expected);
-    }
-
-    @Test
-    @DisplayName("최종 승패를 계산한다")
-    void getFinalResultTest() {
-        // given
-        Gamer dealer = new Dealer();
-        Player a = new Player("aa");
-        Player b = new Player("bb");
-        Player c = new Player("cc");
-
-        dealer.initialize(DeckFixture.deckOf(CardNumber.ACE, CardNumber.SIX));
-        a.initialize(DeckFixture.deckOf(CardNumber.ACE, CardNumber.JACK));
-        b.initialize(DeckFixture.deckOf(CardNumber.ACE, CardNumber.TWO));
-        c.initialize(DeckFixture.deckOf(CardNumber.ACE, CardNumber.THREE));
-
-        List<Gamer> players = List.of(a, b, c);
-
-        // when
-        Map<RoundResult, Integer> finalResult = dealer.getFinalResult(players);
-
-        // then
-        assertThat(finalResult.getOrDefault(RoundResult.WIN, 0)).isEqualTo(2);
-        assertThat(finalResult.getOrDefault(RoundResult.LOSE, 0)).isEqualTo(1);
-        assertThat(finalResult.getOrDefault(RoundResult.TIE, 0)).isEqualTo(0);
     }
 }

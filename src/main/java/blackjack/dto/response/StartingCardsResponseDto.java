@@ -1,25 +1,25 @@
 package blackjack.dto.response;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import blackjack.domain.gamer.Dealer;
 import blackjack.domain.gamer.Player;
 import blackjack.dto.GamerDto;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public record StartingCardsResponseDto(
-    int startingCardsSize,
-    GamerDto dealer,
-    List<GamerDto> players
+        int startingCardsSize,
+        GamerDto dealer,
+        List<GamerDto> players
 ) {
 
     public static StartingCardsResponseDto of(Dealer dealer, List<Player> players) {
         return new StartingCardsResponseDto(
-            players.getFirst().getCardCount(),
-            GamerDto.dealerFrom(dealer),
-            players.stream()
-                .map(GamerDto::from)
-                .toList()
+                players.getFirst().getCardCount(),
+                GamerDto.from(dealer),
+                players.stream()
+                        .map(GamerDto::from)
+                        .toList()
         );
     }
 
@@ -29,7 +29,7 @@ public record StartingCardsResponseDto(
 
     public String getPlayerNames() {
         return players().stream()
-            .map(GamerDto::name)
-            .collect(Collectors.joining(", "));
+                .map(GamerDto::name)
+                .collect(Collectors.joining(", "));
     }
 }

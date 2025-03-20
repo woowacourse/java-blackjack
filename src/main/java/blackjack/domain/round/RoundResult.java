@@ -1,33 +1,34 @@
 package blackjack.domain.round;
 
+import blackjack.domain.gamer.Gamer;
+
 import java.util.List;
 import java.util.function.BiFunction;
 
-import blackjack.domain.gamer.Gamer;
-
 public enum RoundResult {
-    WIN("승"),
-    LOSE("패"),
-    TIE("무"),
-    ;
+    WIN(1),
+    LOSE(-1),
+    TIE(0),
+    BLACKJACK_WIN(1.5),
+    BUST(-1);
 
-    private final String displayName;
+    private final double profitMultiplier;
 
-    RoundResult(String displayName) {
-        this.displayName = displayName;
+    RoundResult(double profitMultiplier) {
+        this.profitMultiplier = profitMultiplier;
     }
 
     public static RoundResult judgeResult(Gamer gamer, Gamer otherGamer) {
         return getResultOf(
-            List.of(
-                RoundResult::getBustResult,
-                RoundResult::getSumResult,
-                RoundResult::getBlackjackResult),
-            gamer, otherGamer);
+                List.of(
+                        RoundResult::getBustResult,
+                        RoundResult::getBlackjackResult,
+                        RoundResult::getSumResult),
+                gamer, otherGamer);
     }
 
     private static RoundResult getResultOf(List<BiFunction<Gamer, Gamer, RoundResult>> getResultFunctions, Gamer gamer,
-        Gamer otherGamer) {
+                                           Gamer otherGamer) {
         for (var function : getResultFunctions) {
             RoundResult roundResult = function.apply(gamer, otherGamer);
             if (roundResult != null) {
@@ -38,11 +39,8 @@ public enum RoundResult {
     }
 
     private static RoundResult getBustResult(Gamer gamer, Gamer otherGamer) {
-        if (gamer.isBust() && otherGamer.isBust()) {
-            return TIE;
-        }
         if (gamer.isBust()) {
-            return LOSE;
+            return BUST;
         }
         if (otherGamer.isBust()) {
             return WIN;
@@ -68,7 +66,7 @@ public enum RoundResult {
             return TIE;
         }
         if (gamer.isBlackjack()) {
-            return WIN;
+            return BLACKJACK_WIN;
         }
         if (otherGamer.isBlackjack()) {
             return LOSE;
@@ -76,7 +74,7 @@ public enum RoundResult {
         return null;
     }
 
-    public String getDisplayName() {
-        return displayName;
+    public double getProfitMultiplier() {
+        return profitMultiplier;
     }
 }
