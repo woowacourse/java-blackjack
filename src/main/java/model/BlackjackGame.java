@@ -1,8 +1,6 @@
 package model;
 
 import model.bating.Money;
-import model.card.Card;
-import model.card.CardDeck;
 import model.participant.*;
 import view.InputView;
 import view.Intent;
@@ -17,23 +15,18 @@ import java.util.stream.Collectors;
 
 public class BlackjackGame {
 
-    private static final int INITIAL_DEAL_COUNT = 2;
-
     private final Players players;
     private final Dealer dealer;
-    private final CardDeck deck;
 
-    private BlackjackGame(Players players, Dealer dealer, CardDeck deck) {
+    private BlackjackGame(Players players, Dealer dealer) {
         this.players = players;
         this.dealer = dealer;
-        this.deck = deck;
     }
 
     public static BlackjackGame create() {
         Players players = createPlayers();
         Dealer dealer = Dealer.create();
-        CardDeck deck = new CardDeck();
-        return new BlackjackGame(players, dealer, deck);
+        return new BlackjackGame(players, dealer);
     }
 
     public void start() {
@@ -47,7 +40,7 @@ public class BlackjackGame {
     }
 
     private void distributeAdditionalCard() {
-        for (Player player : players.getPlayers().keySet()) {
+        for (Player player : players.getAllPlayer()) {
             receiveAdditionalCard(player, OutputView::printCurrentHands);
         }
         receiveAdditionalCard(dealer, OutputView::printStandingDealer);
@@ -58,9 +51,6 @@ public class BlackjackGame {
         for (Nickname nickname : readNicknames()) {
             Money money = readBatingMoneyBy(nickname);
             Player player = new Player(nickname, () -> agreeIntent(nickname.getValue()));
-            if (players.get(player) == null) {
-                throw new IllegalArgumentException("중복 플레이어 닉네임 불가능");
-            }
             players.put(player, money);
         }
         return new Players(players);
@@ -81,18 +71,13 @@ public class BlackjackGame {
         participants.add(dealer);
         participants.addAll(players.getPlayers().keySet());
         for (Participant participant : participants) {
-            distributeCard(participant, INITIAL_DEAL_COUNT);
+            dealer.distributeStartingHand(participant);
         }
-    }
-
-    public void distributeCard(Participant participant, int amount) {
-        List<Card> pickCards = deck.pickCard(amount);
-        participant.addCards(pickCards);
     }
 
     private void receiveAdditionalCard(Participant participant, Consumer<Participant> printState) {
         while (participant.canHit()) {
-            distributeCard(participant, 1);
+            dealer.distributeAdditionalCard(participant);
             printState.accept(participant);
         }
     }
