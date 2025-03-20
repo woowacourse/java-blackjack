@@ -39,14 +39,14 @@ public class BlackJackApplication {
     }
 
     private Players initializeGame(InputView inputView) {
-        List<String> names = inputView.inputParticipant();
-        List<Player> playersList = new ArrayList<>();
+        List<String> inputNames = inputView.inputPlayers();
+        List<Player> inputPlayers = new ArrayList<>();
 
-        for (String name : names) {
-            playersList.add(new Player(name, inputView.inputBetting(name)));
+        for (String name : inputNames) {
+            inputPlayers.add(new Player(name, inputView.inputBetting(name)));
         }
 
-        return new Players(playersList);
+        return new Players(inputPlayers);
     }
 
     private void playPlayersTurn(Players players, BlackJackGame blackJackGame, InputView inputView,
@@ -70,7 +70,7 @@ public class BlackJackApplication {
     private boolean processHit(Player player, BlackJackGame blackJackGame, OutputView outputView) {
         if (blackJackGame.isBustAfterDraw(player)) {
             outputView.printPlayerCardStatus(player.getName(), player);
-            outputView.printParticipantBust(player.getName());
+            outputView.printPlayerBust(player.getName());
             return true;
         }
         outputView.printPlayerCardStatus(player.getName(), player);

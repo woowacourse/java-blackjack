@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Set;
 
 public class Players {
-    private static final int MIN_PARTICIPANT = 2;
-    private static final int MAX_PARTICIPANT = 8;
+    private static final int MIN_PLAYER = 2;
+    private static final int MAX_PLAYER = 8;
 
     private final List<Player> players;
 
@@ -23,7 +23,7 @@ public class Players {
     }
 
     private void validatePlayerCount(List<Player> players) {
-        if (players.size() < MIN_PARTICIPANT || players.size() > MAX_PARTICIPANT) {
+        if (players.size() < MIN_PLAYER || players.size() > MAX_PLAYER) {
             throw new IllegalArgumentException("참여자는 2~8명 이여야 합니다.");
         }
     }

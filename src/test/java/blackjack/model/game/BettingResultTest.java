@@ -16,21 +16,30 @@ public class BettingResultTest {
     @BeforeEach
     void setUp() {
         player1 = new Player("벡터", 10000);
-        player2 = new Player("한스", 5000);
     }
 
     @Test
-    void 참가자가_승_이면_배팅금액만큼_얻고_패면_배팅금액을_잃는다() {
+    void 참가자가_승_이면_배팅금액을_잃는다() {
         // given
         Map<Player, PlayerResult> winLoseResult = new HashMap<>();
         winLoseResult.put(player1, PlayerResult.WIN);
-        winLoseResult.put(player2, PlayerResult.LOSE);
 
         BettingResult bettingResult = new BettingResult(winLoseResult);
 
         // then
         assertThat(bettingResult.getBettingResult().get(player1)).isEqualTo(10000);
-        assertThat(bettingResult.getBettingResult().get(player2)).isEqualTo(-5000);
+    }
+
+    @Test
+    void 참가자가_패면_배팅금액을_잃는다() {
+        // given
+        Map<Player, PlayerResult> winLoseResult = new HashMap<>();
+        winLoseResult.put(player1, PlayerResult.LOSE);
+
+        BettingResult bettingResult = new BettingResult(winLoseResult);
+
+        // then
+        assertThat(bettingResult.getBettingResult().get(player1)).isEqualTo(-10000);
     }
 
     @Test
@@ -62,28 +71,12 @@ public class BettingResultTest {
         // given
         Map<Player, PlayerResult> winLoseResult = new HashMap<>();
         winLoseResult.put(player1, PlayerResult.WIN);
-        winLoseResult.put(player2, PlayerResult.LOSE);
-
         BettingResult bettingResult = new BettingResult(winLoseResult);
 
         // when
         int dealerResult = bettingResult.getDealerResult();
 
         // then
-        assertThat(dealerResult).isEqualTo(-5000);
-    }
-
-    @Test
-    void 여러명의_참가자에_대한_배팅_결과를_검증한다() {
-        // given
-        Map<Player, PlayerResult> winLoseResult = new HashMap<>();
-        winLoseResult.put(player1, PlayerResult.WIN);
-        winLoseResult.put(player2, PlayerResult.BLACKJACK);
-
-        BettingResult bettingResult = new BettingResult(winLoseResult);
-
-        // then
-        assertThat(bettingResult.getBettingResult().get(player1)).isEqualTo(10000);
-        assertThat(bettingResult.getBettingResult().get(player2)).isEqualTo(7500);
+        assertThat(dealerResult).isEqualTo(-10000);
     }
 }

@@ -24,10 +24,10 @@ public class OutputView {
                 "딜러",
                 generateCardName(dealer.getReceivedCards().getFirstCard()))
         );
-        players.getPlayers().forEach(participant ->
+        players.getPlayers().forEach(player ->
                 customStringBuilder.appendLine(outputPlayerCardStatus(
-                        participant.getName(),
-                        generateCardNames(participant.getReceivedCards())
+                        player.getName(),
+                        generateCardNames(player.getReceivedCards())
                 )));
         customStringBuilder.print();
     }
@@ -55,10 +55,10 @@ public class OutputView {
         customStringBuilder.appendLine(String.format("%s - 결과 : %d",
                 outputPlayerCardStatus("딜러", generateCardNames(dealer.getReceivedCards())), dealer.calculatePoint()));
         players.getPlayers()
-                .forEach(participant -> customStringBuilder.appendLine(String.format("%s - 결과 : %d",
-                        outputPlayerCardStatus(participant.getName(),
-                                generateCardNames(participant.getReceivedCards())),
-                        participant.calculatePoint())));
+                .forEach(player -> customStringBuilder.appendLine(String.format("%s - 결과 : %d",
+                        outputPlayerCardStatus(player.getName(),
+                                generateCardNames(player.getReceivedCards())),
+                        player.calculatePoint())));
         customStringBuilder.print();
     }
 
@@ -70,7 +70,7 @@ public class OutputView {
         System.out.println("딜러는 17이상이라 더이상 카드를 받을 수 없습니다.");
     }
 
-    public void printParticipantBust(String name) {
+    public void printPlayerBust(String name) {
         System.out.println(String.format("%s는 bust입니다.", name));
     }
 
@@ -79,7 +79,7 @@ public class OutputView {
         customStringBuilder.appendLine("## 최종 수익");
         customStringBuilder.appendLine(String.format("딜러 : %d", dealerResult));
         for (Entry<Player, Double> entry : bettingResult.entrySet()) {
-            customStringBuilder.appendLine(String.format("%s : %f.0원", entry.getKey().getName(), entry.getValue()));
+            customStringBuilder.appendLine(String.format("%s : %.0f원", entry.getKey().getName(), entry.getValue()));
         }
         customStringBuilder.print();
     }

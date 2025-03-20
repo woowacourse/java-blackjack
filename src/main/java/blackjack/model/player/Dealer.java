@@ -17,14 +17,14 @@ public class Dealer extends Participant {
     public Map<Player, PlayerResult> calculateGameResult(Players players) {
         Map<Player, PlayerResult> winLoseResult = new HashMap<>();
         players.getPlayers().forEach(
-                participant -> {
-                    winLoseResult.put(participant, getParticipantResult(participant));
+                player -> {
+                    winLoseResult.put(player, getPlayerResult(player));
                 }
         );
         return winLoseResult;
     }
 
-    private PlayerResult getParticipantResult(Player player) {
+    private PlayerResult getPlayerResult(Player player) {
         if (isBustResult(player)) {
             return LOSE;
         }
