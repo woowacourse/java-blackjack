@@ -1,4 +1,4 @@
-package model.game;
+package game;
 
 import card.*;
 import game.BlackJackGame;

@@ -1,4 +1,4 @@
-package model.participant;
+package participant;
 
 import card.*;
 import org.assertj.core.api.Assertions;

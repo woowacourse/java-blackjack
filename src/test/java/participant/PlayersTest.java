@@ -1,4 +1,4 @@
-package model.participant;
+package participant;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static util.TestCardDistributor.divideCardToPlayer;

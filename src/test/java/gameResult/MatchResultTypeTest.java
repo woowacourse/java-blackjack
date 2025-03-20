@@ -1,4 +1,4 @@
-package model.gameResult;
+package gameResult;
 
 import card.AceRank;
 import card.Card;

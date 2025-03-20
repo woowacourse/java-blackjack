@@ -1,4 +1,4 @@
-package model.participant;
+package participant;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
