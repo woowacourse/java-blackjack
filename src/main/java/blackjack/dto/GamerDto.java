@@ -18,7 +18,7 @@ public record GamerDto(
                         .toList()));
     }
 
-    public static GamerDto dealerFrom(Dealer dealer) {
+    public static GamerDto from(Dealer dealer) {
         return new GamerDto(
                 dealer.getName(),
                 new CardsDto(List.of(CardDto.from(dealer.getCards().getLast()))));
