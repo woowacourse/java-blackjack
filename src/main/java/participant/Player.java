@@ -31,10 +31,6 @@ public class Player {
         return cards.isBust();
     }
 
-    public void applyAceRule() {
-        cards.applyAceRule();
-    }
-
     public Score getScore() {
         return cards.calculateScore();
     }

@@ -19,7 +19,9 @@ public class Cards {
         int totalScore = cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
-        return new Score(totalScore);
+        Score convertedScore = new Score(totalScore);
+        applyAceRule(convertedScore);
+        return convertedScore;
     }
 
     public boolean isBlackJack() {
@@ -30,7 +32,7 @@ public class Cards {
         return calculateScore().isBust();
     }
 
-       public boolean isHit(int condition) {
+    public boolean isHit(int condition) {
         return calculateScore().isOver(condition);
     }
 
@@ -39,8 +41,8 @@ public class Cards {
                 .anyMatch(card -> card.matchesRank(AceRank.SOFT_ACE));
     }
 
-    public void applyAceRule() {
-        if (isBust() && hasSoftAce()) {
+    public void applyAceRule(Score score) {
+        if (score.isBust() && hasSoftAce()) {
             convertSoftAceToHardAce();
         }
     }

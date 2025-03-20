@@ -30,24 +30,20 @@ public class BlackJackGame {
     public void dealCard(Player player, int amount) {
         for (int i = 0; i < amount; i++) {
             player.addCard(deck.pickCard());
-            player.applyAceRule();
         }
     }
 
     public void dealCard(Dealer dealer, int amount) {
         for (int i = 0; i < amount; i++) {
             dealer.addCard(deck.pickCard());
-            dealer.applyAceRule();
         }
     }
 
     public void receiveAdditionalCard(Player player) {
         dealCard(player, ADDITIONAL_CARD_DEFAULT_COUNT);
-        player.applyAceRule();
     }
 
     public void receiveAdditionalCard(Dealer dealer) {
         dealCard(dealer, ADDITIONAL_CARD_DEFAULT_COUNT);
-        dealer.applyAceRule();
     }
 }

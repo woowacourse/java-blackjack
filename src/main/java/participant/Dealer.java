@@ -32,10 +32,6 @@ public class Dealer {
         return cards.isHit(HIT_CONDITION);
     }
 
-    public void applyAceRule() {
-        cards.applyAceRule();
-    }
-
     public Score getScore() {
         return cards.calculateScore();
     }
