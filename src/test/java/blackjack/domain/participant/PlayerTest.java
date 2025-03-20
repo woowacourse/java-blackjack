@@ -31,7 +31,7 @@ public class PlayerTest {
     @ParameterizedTest
     @CsvSource(value = {"TWO,FIVE:BLACKJACK", "QUEEN,ACE:TIE", "QUEEN,NINE,TWO:BLACKJACK"}, delimiterString = ":")
     @DisplayName("Blackjack인 플레이어가 있는 GameStatus 계산 기능 테스트")
-    void determineGameStatusWithBlackjackTest(String dealerRankNames, String playerStatus) {
+    void determineGameStatusWithBlackjackTest(String dealerRankNames, GameStatus playerStatus) {
         // given
         List<Rank> playerRanks = List.of(Rank.JACK, Rank.ACE);
         Player player = createParticipant(playerRanks, name -> new Player(name, Bet.startingBet()));
@@ -40,13 +40,13 @@ public class PlayerTest {
         // when
         GameStatus actual = player.determineGameStatus(dealer);
         // then
-        assertThat(actual).isEqualTo(GameStatus.valueOf(playerStatus));
+        assertThat(actual).isEqualTo(playerStatus);
     }
 
     @ParameterizedTest
     @CsvSource(value = {"TWO:LOSE", "JACK,QUEEN,KING:LOSE"}, delimiterString = ":")
     @DisplayName("Bust인 플레이어가 있는 GameStatus 계산 기능 테스트")
-    void determineGameStatusWithBustTest(String dealerRankNames, String playerStatus) {
+    void determineGameStatusWithBustTest(String dealerRankNames, GameStatus playerStatus) {
         // given
         List<Rank> playerRanks = List.of(Rank.JACK, Rank.QUEEN, Rank.KING);
         Player player = createParticipant(playerRanks, name -> new Player(name, Bet.startingBet()));
@@ -55,13 +55,13 @@ public class PlayerTest {
         // when
         GameStatus actual = player.determineGameStatus(dealer);
         // then
-        assertThat(actual).isEqualTo(GameStatus.valueOf(playerStatus));
+        assertThat(actual).isEqualTo(playerStatus);
     }
 
     @ParameterizedTest
     @CsvSource(value = {"JACK,QUEEN:LOSE", "QUEEN,TWO:TIE", "JACK:WIN", "JACK,QUEEN,KING:WIN"}, delimiterString = ":")
     @DisplayName("Bust인 플레이어가 없는 GameStatus 계산 기능 테스트")
-    void determineGameStatusTest(String dealerRankNames, String playerStatus) {
+    void determineGameStatusTest(String dealerRankNames, GameStatus playerStatus) {
         // given
         List<Rank> playerRanks = List.of(Rank.JACK, Rank.TWO);
         Player player = createParticipant(playerRanks, name -> new Player(name, Bet.startingBet()));
@@ -70,7 +70,7 @@ public class PlayerTest {
         // when
         GameStatus actual = player.determineGameStatus(dealer);
         // then
-        assertThat(actual).isEqualTo(GameStatus.valueOf(playerStatus));
+        assertThat(actual).isEqualTo(playerStatus);
     }
 
     @ParameterizedTest
