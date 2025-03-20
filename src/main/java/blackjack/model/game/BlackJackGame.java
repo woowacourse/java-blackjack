@@ -14,7 +14,8 @@ public class BlackJackGame {
     }
 
     public void initializeGame(Players players, Dealer dealer) {
-        players.getParticipants().forEach(p -> p.initialCard(deck.drawCard(), deck.drawCard()));
+        players.giveInitialCards();
+        players.getPlayers().forEach(p -> p.initialCard(deck.drawCard(), deck.drawCard()));
         dealer.initialCard(deck.drawCard(), deck.drawCard());
     }
 

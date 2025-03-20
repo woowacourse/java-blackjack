@@ -51,7 +51,7 @@ public class BlackJackApplication {
 
     private void playPlayersTurn(Players players, BlackJackGame blackJackGame, InputView inputView,
                                  OutputView outputView) {
-        players.getParticipants().forEach(player -> playTurnForPlayer(player, blackJackGame, inputView, outputView));
+        players.getPlayers().forEach(player -> playTurnForPlayer(player, blackJackGame, inputView, outputView));
     }
 
     private void playTurnForPlayer(Player player, BlackJackGame blackJackGame, InputView inputView,
