@@ -1,13 +1,17 @@
 package view;
 
 import exception.IllegalBlackjackInputException;
+import java.util.Arrays;
 import java.util.List;
 
 public class InputConverter {
 
     public static List<String> splitByDelimiter(final String input, final String delimiter) {
         validateNotNullOrBlankInput(input);
-        return List.of(input.trim().split(delimiter));
+        return Arrays.stream(input.split(delimiter))
+                .map(String::trim)
+                .filter(value -> !value.isBlank())
+                .toList();
     }
 
     public static int parseToInt(final String input) {
