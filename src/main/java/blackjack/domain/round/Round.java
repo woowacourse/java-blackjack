@@ -7,7 +7,6 @@ import blackjack.domain.gamer.Player;
 import blackjack.dto.response.RoundResultsResponseDto;
 import blackjack.dto.response.StartingCardsResponseDto;
 
-import java.util.Collections;
 import java.util.List;
 
 public class Round {
@@ -29,7 +28,7 @@ public class Round {
     }
 
     public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
+        return players;
     }
 
     public void drawPlayerCard(String playerName) {
