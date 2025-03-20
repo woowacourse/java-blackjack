@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.List;
+
 class PlayerTest {
     @DisplayName("이름을 통해 플레이어를 생성한다.")
     @Test
@@ -49,5 +51,24 @@ class PlayerTest {
 
         // then
         assertThat(result).isEqualTo(expected);
+    }
+
+    @DisplayName("처음 카드를 받은 후 플레이어는 두 장의 카드만 오픈한다.")
+    @Test
+    void getInitialCardsTest() {
+        // given
+        Player player = new Player(new Name("라젤"));
+        Card card1 = new Card(CardShape.CLOVER, CardType.TEN);
+        Card card2 = new Card(CardShape.HEART, CardType.EIGHT);
+        player.addCard(card1);
+        player.addCard(card2);
+
+        // when
+        List<Card> result = player.getInitialCards();
+
+        // then
+        assertThat(result).hasSize(2);
+        assertThat(result.getFirst()).isEqualTo(card1);
+        assertThat(result.getLast()).isEqualTo(card2);
     }
 }
