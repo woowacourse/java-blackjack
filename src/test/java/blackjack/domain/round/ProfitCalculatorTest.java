@@ -31,7 +31,7 @@ class ProfitCalculatorTest {
         // when
         profitCalculator.addPlayerBet("Pobi", 10_000);
         ProfitsResponseDto response = profitCalculator.getProfits(dealer, List.of(player));
-        double actual = response.gamers().stream()
+        double actual = response.profits().stream()
                 .filter(gamer -> gamer.name().equals("Pobi"))
                 .findFirst()
                 .orElseThrow()
@@ -53,7 +53,7 @@ class ProfitCalculatorTest {
         // when
         profitCalculator.addPlayerBet("Pobi", 10_000);
         ProfitsResponseDto response = profitCalculator.getProfits(dealer, List.of(player));
-        double actual = response.gamers().stream()
+        double actual = response.profits().stream()
                 .filter(gamer -> gamer.name().equals("Pobi"))
                 .findFirst()
                 .orElseThrow()
@@ -75,7 +75,7 @@ class ProfitCalculatorTest {
         // when
         profitCalculator.addPlayerBet("Pobi", 20_000);
         ProfitsResponseDto response = profitCalculator.getProfits(dealer, List.of(player));
-        double actual = response.gamers().stream()
+        double actual = response.profits().stream()
                 .filter(gamer -> gamer.name().equals("Pobi"))
                 .findFirst()
                 .orElseThrow()
@@ -97,7 +97,7 @@ class ProfitCalculatorTest {
         // when
         profitCalculator.addPlayerBet("Pobi", 20_000);
         ProfitsResponseDto response = profitCalculator.getProfits(dealer, List.of(player));
-        double actual = response.gamers().stream()
+        double actual = response.profits().stream()
                 .filter(gamer -> gamer.name().equals("Pobi"))
                 .findFirst()
                 .orElseThrow()
@@ -119,7 +119,7 @@ class ProfitCalculatorTest {
         // when
         profitCalculator.addPlayerBet("Pobi", 30_000);
         ProfitsResponseDto response = profitCalculator.getProfits(dealer, List.of(player));
-        double actual = response.gamers().stream()
+        double actual = response.profits().stream()
                 .filter(gamer -> gamer.name().equals("딜러"))
                 .findFirst()
                 .orElseThrow()
@@ -143,7 +143,7 @@ class ProfitCalculatorTest {
         profitCalculator.addPlayerBet("Pobi", 10_000);
         profitCalculator.addPlayerBet("Neo", 12_000);
         ProfitsResponseDto response = profitCalculator.getProfits(dealer, List.of(player1, player2));
-        double actual = response.gamers().stream()
+        double actual = response.profits().stream()
                 .filter(gamer -> gamer.name().equals("딜러"))
                 .findFirst()
                 .orElseThrow()
@@ -170,7 +170,7 @@ class ProfitCalculatorTest {
         // when
         profitCalculator.addPlayerBet("Pobi", 10_000);
         ProfitsResponseDto response = profitCalculator.getProfits(dealer, List.of(player));
-        double actual = response.gamers().stream()
+        double actual = response.profits().stream()
                 .filter(gamer -> gamer.name().equals("Pobi"))
                 .findFirst()
                 .orElseThrow()
@@ -197,7 +197,7 @@ class ProfitCalculatorTest {
         // when
         profitCalculator.addPlayerBet("Pobi", 10_000);
         ProfitsResponseDto response = profitCalculator.getProfits(dealer, List.of(player));
-        double actual = response.gamers().stream()
+        double actual = response.profits().stream()
                 .filter(gamer -> gamer.name().equals("딜러"))
                 .findFirst()
                 .orElseThrow()

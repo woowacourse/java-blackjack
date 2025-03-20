@@ -42,7 +42,7 @@ public class OutputView {
 
     public static void printFinalResult(ProfitsResponseDto responseDto) {
         System.out.println("## 최종 수익");
-        for (var gamer : responseDto.gamers()) {
+        for (var gamer : responseDto.profits()) {
             System.out.println(gamer);
         }
     }

@@ -4,17 +4,17 @@ import java.util.List;
 import java.util.Map;
 
 public record ProfitsResponseDto(
-        List<InnerGamer> gamers
+        List<PlayerProfit> profits
 ) {
 
     public static ProfitsResponseDto of(Map<String, Double> dealerProfit, Map<String, Double> playerProfits) {
         dealerProfit.putAll(playerProfits);
         return new ProfitsResponseDto(dealerProfit.entrySet().stream()
-                .map((entry) -> new InnerGamer(entry.getKey(), entry.getValue()))
+                .map((entry) -> new PlayerProfit(entry.getKey(), entry.getValue()))
                 .toList());
     }
 
-    public record InnerGamer(
+    public record PlayerProfit(
             String name,
             double profit
     ) {

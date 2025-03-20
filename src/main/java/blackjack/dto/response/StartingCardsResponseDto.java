@@ -16,7 +16,7 @@ public record StartingCardsResponseDto(
     public static StartingCardsResponseDto of(Dealer dealer, List<Player> players) {
         return new StartingCardsResponseDto(
                 players.getFirst().getCardCount(),
-                GamerDto.dealerFrom(dealer),
+                GamerDto.from(dealer),
                 players.stream()
                         .map(GamerDto::from)
                         .toList()
