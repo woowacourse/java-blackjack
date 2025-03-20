@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ShuffledDeckCreator implements DeckCreateStrategy {
+public class ShuffledDeckCreator implements DeckShuffleStrategy {
 
     @Override
     public List<Card> createAllCards() {

@@ -1,33 +1,32 @@
 package participant;
 
 import card.Card;
+import card.Cards;
 import java.util.List;
-import state.finished.Blackjack;
-import state.started.Started;
 
-public class Dealer extends Participant {
+public class Dealer {
 
-    public static final int DEALER_MAX_NUMBER_FOR_BUST = 16;
+    private final Cards cards;
 
     public Dealer() {
-        super();
+        cards = new Cards();
     }
 
     public void prepareGame(final Card card1, final Card card2) {
-        state = Started.start(card1, card2);
+        cards.add(card1);
+        cards.add(card2);
+    }
+
+    public void hit(Card card) {
+        cards.add(card);
     }
 
     public Card firstRoundCard() {
-        return state.cards().get(1);
+        return cards.get(1);
     }
 
-    @Override
-    public boolean canReceiveCard() {
-        return score() <= DEALER_MAX_NUMBER_FOR_BUST && !state.isFinished();
-    }
-
-    public List<Card> cards() {
-        return state.cards().getCards();
+    public int score() {
+        return cards.calculateScore();
     }
 
     public boolean isBlackjack() {
@@ -40,5 +39,9 @@ public class Dealer extends Participant {
 
     public boolean canReceiveCard() {
         return score() <= 16;
+    }
+
+    public List<Card> cards() {
+        return cards.getCards();
     }
 }

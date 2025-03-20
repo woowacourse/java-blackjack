@@ -8,8 +8,8 @@ public class Deck {
 
     private final Deque<Card> cards;
 
-    public Deck(DeckCreateStrategy createStrategy) {
-        this.cards = new ArrayDeque<>(createStrategy.createAllCards());
+    public Deck(DeckShuffleStrategy deckShuffleStrategy) {
+        this.cards = new ArrayDeque<>(deckShuffleStrategy.createAllCards());
     }
 
     public Card draw() {

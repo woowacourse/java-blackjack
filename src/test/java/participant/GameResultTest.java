@@ -5,7 +5,7 @@ import card.Card;
 import card.CardNumber;
 import card.CardType;
 import deck.Deck;
-import deck.DeckCreateStrategy;
+import deck.DeckShuffleStrategy;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +27,7 @@ class GameResultTest {
     @DisplayName("둘 다 블랙잭이면 딜러가 이긴다.")
     void both_blackjack() {
         // given
-        Deck deck = new Deck(new DeckCreateStrategy() {
+        Deck deck = new Deck(new DeckShuffleStrategy() {
             @Override
             public List<Card> createAllCards() {
                 return List.of(
@@ -47,14 +47,14 @@ class GameResultTest {
 
         // then
         Assertions.assertThat(result)
-                .isEqualTo(GameResult.WIN);
+                .isEqualTo(GameResult.LOSE);
     }
 
     @Test
     @DisplayName("둘 다 버스트면 딜러가 이긴다.")
     void both_bust() {
         // given
-        Deck deck = new Deck(new DeckCreateStrategy() {
+        Deck deck = new Deck(new DeckShuffleStrategy() {
             @Override
             public List<Card> createAllCards() {
                 return List.of(
@@ -85,7 +85,7 @@ class GameResultTest {
     @DisplayName("둘 다 Bust가 아니고, 딜러 점수가 높으면 딜러가 이긴다.")
     void not_bust_everybody_and_dealer_score_higher_then_player() {
         // given
-        Deck deck = new Deck(new DeckCreateStrategy() {
+        Deck deck = new Deck(new DeckShuffleStrategy() {
             @Override
             public List<Card> createAllCards() {
                 return List.of(
@@ -105,14 +105,14 @@ class GameResultTest {
 
         // then
         Assertions.assertThat(result)
-                .isEqualTo(GameResult.WIN);
+                .isEqualTo(GameResult.LOSE);
     }
 
     @Test
     @DisplayName("둘 다 Bust가 아니고, 플레이어 점수가 높으면 딜러는 진다.")
     void not_bust_everybody_and_player_score_higher_then_dealer() {
         // given
-        Deck deck = new Deck(new DeckCreateStrategy() {
+        Deck deck = new Deck(new DeckShuffleStrategy() {
             @Override
             public List<Card> createAllCards() {
                 return List.of(
@@ -132,14 +132,14 @@ class GameResultTest {
 
         // then
         Assertions.assertThat(result)
-                .isEqualTo(GameResult.LOSE);
+                .isEqualTo(GameResult.WIN);
     }
 
     @Test
     @DisplayName("플레이어가 bust면 딜러가 이긴다.")
     void player_is_bust() {
         // given
-        Deck deck = new Deck(new DeckCreateStrategy() {
+        Deck deck = new Deck(new DeckShuffleStrategy() {
             @Override
             public List<Card> createAllCards() {
                 return List.of(
@@ -168,7 +168,7 @@ class GameResultTest {
     @DisplayName("딜러와 플레이어 점수가 같으면 비긴다.")
     void player_and_dealer_same_score() {
         // given
-        Deck deck = new Deck(new DeckCreateStrategy() {
+        Deck deck = new Deck(new DeckShuffleStrategy() {
             @Override
             public List<Card> createAllCards() {
                 return List.of(

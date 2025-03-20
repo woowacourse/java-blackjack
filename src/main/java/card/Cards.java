@@ -19,10 +19,6 @@ public class Cards {
         cards.add(card);
     }
 
-    public void addAll(List<Card> cards) {
-        this.cards.addAll(cards);
-    }
-
     private int totalWithoutAce() {
         return cards.stream()
                 .filter(card -> !card.isAce())

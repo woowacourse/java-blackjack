@@ -4,7 +4,7 @@ import card.Card;
 import card.CardNumber;
 import card.CardType;
 import deck.Deck;
-import deck.DeckCreateStrategy;
+import deck.DeckShuffleStrategy;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -16,7 +16,7 @@ class DealerTest {
     @DisplayName("딜러는 카드 패의 합이 16이 넘으면 카드를 받을 수 없다.")
     void test1() {
         // given
-        Deck deck = new Deck(new DeckCreateStrategy() {
+        Deck deck = new Deck(new DeckShuffleStrategy() {
             @Override
             public List<Card> createAllCards() {
                 return List.of(
@@ -41,7 +41,7 @@ class DealerTest {
     @DisplayName("딜러는 카드 패의 합이 16 넘지않으면 카드를 받을 수 있다.")
     void test2() {
         // given
-        Deck deck = new Deck(new DeckCreateStrategy() {
+        Deck deck = new Deck(new DeckShuffleStrategy() {
             @Override
             public List<Card> createAllCards() {
                 return List.of(
