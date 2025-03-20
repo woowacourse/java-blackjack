@@ -37,7 +37,7 @@ public class GameManager {
 
         GameResult gameResult = new GameResult();
         Map<Player, MatchResultType> playerMatchResult = gameResult.calculatePlayersMatchResult(players, dealer);
-        Map<Player, Long> playersProfitResult = betStatus.calculateBetResult(playerMatchResult);
+        Map<Player, Money> playersProfitResult = betStatus.calculateBetResult(playerMatchResult);
         OutputView.printProfitResult(betStatus.calculateDealerBetResult(playersProfitResult), playersProfitResult);
     }
 

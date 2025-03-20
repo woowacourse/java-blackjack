@@ -33,7 +33,7 @@ public enum BettingRateType {
         return matchResultType == this.matchResultType && player.isBlackJack() == isBlackJack;
     }
 
-    public long calculateProfitMoney(long money) {
-        return (long) (money * rate);
+    public Money calculateProfitMoney(Money money) {
+        return money.times(rate);
     }
 }

@@ -71,10 +71,10 @@ public class BetStatusTest {
         GameResult gameResult = new GameResult();
         BetStatus betStatus = new BetStatus(profits);
         //when
-        Map<Player, Long> betResult = betStatus.calculateBetResult(gameResult.calculatePlayersMatchResult(players, dealer));
-        Long actualProfit = betResult.get(new Player("hippo"));
+        Map<Player, Money> betResult = betStatus.calculateBetResult(gameResult.calculatePlayersMatchResult(players, dealer));
+        Money actualProfit = betResult.get(new Player("hippo"));
         //then
-        Assertions.assertThat(actualProfit).isEqualTo(expectedProfit);
+        Assertions.assertThat(actualProfit.getValue()).isEqualTo(expectedProfit);
     }
 
     private static Stream<Arguments> makeBetResultTestData() {
@@ -151,11 +151,11 @@ public class BetStatusTest {
 
         GameResult gameResult = new GameResult();
         BetStatus betStatus = new BetStatus(profits);
-        Map<Player, Long> betResult = betStatus.calculateBetResult(gameResult.calculatePlayersMatchResult(players, dealer));
-        long dealerProfit = betStatus.calculateDealerBetResult(betResult);
+        Map<Player, Money> betResult = betStatus.calculateBetResult(gameResult.calculatePlayersMatchResult(players, dealer));
+        Money dealerProfit = betStatus.calculateDealerBetResult(betResult);
         //when
 
         //then
-        Assertions.assertThat(dealerProfit).isEqualTo(-2000L);
+        Assertions.assertThat(dealerProfit.getValue()).isEqualTo(-2000L);
     }
 }

@@ -18,21 +18,22 @@ public class BetStatus {
         return values;
     }
 
-    public Map<Player, Long> calculateBetResult(Map<Player, MatchResultType> playerMatchResult) {
-        HashMap<Player, Long> betResult = new HashMap<>();
+    public Map<Player, Money> calculateBetResult(Map<Player, MatchResultType> playerMatchResult) {
+        HashMap<Player, Money> betResult = new HashMap<>();
         for (Map.Entry<Player, MatchResultType> entry : playerMatchResult.entrySet()) {
             Player player = entry.getKey();
             MatchResultType result = entry.getValue();
-            long betMoney = values.get(player).getValue();
+            Money money = values.get(player);
             BettingRateType bettingRateType = BettingRateType.of(player, result);
-            betResult.put(player, bettingRateType.calculateProfitMoney(betMoney));
+            betResult.put(player, bettingRateType.calculateProfitMoney(money));
         }
         return betResult;
     }
 
-    public long calculateDealerBetResult(Map<Player, Long> betResult) {
-        return -1 * betResult.values().stream()
-                .mapToLong(Long::longValue)
-                .sum();
+    public Money calculateDealerBetResult(Map<Player, Money> betResult) {
+        Money money = betResult.values().stream()
+                .reduce(Money::plus)
+                .orElseThrow(() -> new IllegalArgumentException(""));
+        return money.times(-1);
     }
 }

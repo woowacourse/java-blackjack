@@ -1,5 +1,6 @@
 package view;
 
+import bet.Money;
 import card.Card;
 import card.Suit;
 import card.Rank;
@@ -105,16 +106,17 @@ public class OutputView {
     }
 
     public static void printProfitResult(
-            Long dealerProfitResult,
-            Map<Player, Long> playerProfitResult
+            Money dealerProfitResult,
+            Map<Player, Money> playerProfitResult
     ) {
         System.out.println();
         System.out.println("## 최종 수익");
-        System.out.println(formProfitResult(DEALER_NICKNAME, dealerProfitResult));
+        System.out.println(formProfitResult(DEALER_NICKNAME, dealerProfitResult.getValue()));
 
-        for (Map.Entry<Player, Long> entry : playerProfitResult.entrySet()) {
+        for (Map.Entry<Player, Money> entry : playerProfitResult.entrySet()) {
             String nickname = entry.getKey().getNickname();
-            Long profit = entry.getValue();
+            Money money = entry.getValue();
+            long profit = money.getValue();
             System.out.println(formProfitResult(nickname, profit));
         }
 

@@ -10,11 +10,11 @@ public class Money {
 
 
     public Money(long value) {
-        validate(value);
+//        validate(value);
         this.value = value;
     }
 
-    private void validate(long value) {
+    /*private void validate(long value) {
         validateMin(value);
         validateUnit(value);
     }
@@ -29,6 +29,14 @@ public class Money {
         if (value % MONEY_UNIT != 0L) {
             throw new IllegalArgumentException("배팅 금액은 100원 단위만 가능합니다.");
         }
+    }*/
+
+    public Money times(double rate) {
+        return new Money((long) (value * rate));
+    }
+
+    public Money plus(Money money) {
+        return new Money(money.value + value);
     }
 
     public long getValue() {
@@ -45,5 +53,10 @@ public class Money {
     @Override
     public int hashCode() {
         return Objects.hashCode(value);
+    }
+
+    @Override
+    public String toString() {
+        return value + "";
     }
 }
