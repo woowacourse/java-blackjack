@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class CardsTest {
 
     @DisplayName("Cards 내의 카드 총 점수 계산 확인")
@@ -25,7 +27,7 @@ public class CardsTest {
         Score score = cards.calculateScore();
 
         //then
-        Assertions.assertThat(score.getValue()).isEqualTo(15);
+        assertThat(score.getValue()).isEqualTo(15);
     }
 
     @DisplayName("카드 총 점수가 버스트인 경우 : true")
@@ -41,7 +43,7 @@ public class CardsTest {
 
         //when
         //then
-        Assertions.assertThat(cards.isBust()).isTrue();
+        assertThat(cards.isBust()).isTrue();
     }
 
     @DisplayName("카드 총 점수가 버스트가 아닌 경우: false ")
@@ -56,7 +58,7 @@ public class CardsTest {
 
         //when
         //then
-        Assertions.assertThat(cards.isBust()).isFalse();
+        assertThat(cards.isBust()).isFalse();
     }
 
     @DisplayName("카트 총 점수가 특정 조건 미만이면 Hit: true")
@@ -71,7 +73,7 @@ public class CardsTest {
 
         //when
         //then
-        Assertions.assertThat(cards.isHit(17)).isTrue();
+        assertThat(cards.isHit(17)).isTrue();
     }
 
     @DisplayName("카트 총 점수가 특정 조건이 이상이면: false")
@@ -86,7 +88,7 @@ public class CardsTest {
 
         //when
         //then
-        Assertions.assertThat(cards.isHit(17)).isFalse();
+        assertThat(cards.isHit(17)).isFalse();
     }
 
     @DisplayName("SOFT ACE를 가지고 있는 경우: True")
@@ -101,7 +103,7 @@ public class CardsTest {
 
         //when
         //then
-        Assertions.assertThat(cards.hasSoftAce()).isTrue();
+        assertThat(cards.hasSoftAce()).isTrue();
     }
 
     @DisplayName("SOFT ACE를 가지고 있지 않은 경우: false")
@@ -116,7 +118,7 @@ public class CardsTest {
 
         //when
         //then
-        Assertions.assertThat(cards.hasSoftAce()).isFalse();
+        assertThat(cards.hasSoftAce()).isFalse();
     }
 
     @DisplayName("SoftAce를 가지고 있는 경우 HardAce로 변경")
@@ -133,7 +135,7 @@ public class CardsTest {
         cards.convertSoftAceToHardAce();
 
         //then
-        Assertions.assertThat(cards.hasSoftAce()).isFalse();
+        assertThat(cards.hasSoftAce()).isFalse();
     }
 
 
@@ -143,5 +145,24 @@ public class CardsTest {
             cards.add(card);
         }
         return cards;
+    }
+
+    @DisplayName("블랙잭인 경우 : true")
+    @Test
+    void blackjackTrueTest() {
+        Cards cards = new Cards();
+        cards.add(new Card(Suit.DIAMONDS,AceRank.SOFT_ACE));
+        cards.add(new Card(Suit.DIAMONDS, NormalRank.TEN));
+        assertThat(cards.isBlackJack()).isTrue();
+    }
+
+    @DisplayName("블랙잭인 경우 : false")
+    @Test
+    void blackjackFalseTest() {
+        Cards cards = new Cards();
+        cards.add(new Card(Suit.DIAMONDS,NormalRank.FIVE));
+        cards.add(new Card(Suit.DIAMONDS, NormalRank.SIX));
+        cards.add(new Card(Suit.DIAMONDS, NormalRank.TEN));
+        assertThat(cards.isBlackJack()).isFalse();
     }
 }
