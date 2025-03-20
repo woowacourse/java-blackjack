@@ -12,7 +12,6 @@ public class BettingResultTest {
 
     private Player player1;
     private Player player2;
-    private Player player3;
 
     @BeforeEach
     void setUp() {
@@ -62,8 +61,8 @@ public class BettingResultTest {
     void 딜러의_손익을_계산한다() {
         // given
         Map<Player, PlayerResult> winLoseResult = new HashMap<>();
-        winLoseResult.put(player1, PlayerResult.WIN); // +10,000
-        winLoseResult.put(player2, PlayerResult.LOSE); // -5,000
+        winLoseResult.put(player1, PlayerResult.WIN);
+        winLoseResult.put(player2, PlayerResult.LOSE);
 
         BettingResult bettingResult = new BettingResult(winLoseResult);
 
@@ -71,7 +70,7 @@ public class BettingResultTest {
         int dealerResult = bettingResult.getDealerResult();
 
         // then
-        assertThat(dealerResult).isEqualTo(-10000 + 5000); // -10,000 - 3,000 + 5,000 = -8,000
+        assertThat(dealerResult).isEqualTo(-5000);
     }
 
     @Test
