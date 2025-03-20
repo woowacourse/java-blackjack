@@ -1,5 +1,6 @@
 package model.participant;
 
+import model.bating.Money;
 import model.card.Card;
 import model.card.Rank;
 import model.card.SingleScoreCard;
@@ -14,6 +15,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import setupSettings.PlayerGenerator;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 public class PlayersTest {
@@ -22,7 +24,7 @@ public class PlayersTest {
 
     @BeforeEach
     void setup() {
-        List<Player> playerData = PlayerGenerator.generatePlayers(3);
+        Map<Player, Money> playerData = PlayerGenerator.generatePlayers(3);
         players = new Players(playerData);
     }
 
@@ -48,7 +50,7 @@ public class PlayersTest {
                 .mapToInt(Card::getScore)
                 .sum();
 
-        Player player = PlayerGenerator.generatePlayers(1).getFirst();
+        Player player = PlayerGenerator.generatePlayer();
         player.addCards(distributeCards);
 
         // when
@@ -61,11 +63,11 @@ public class PlayersTest {
     @ParameterizedTest
     @MethodSource("createPlayers")
     @DisplayName("참여 가능한 플레이어 수가 아닐 때 예외 처리")
-    void validateNumber(List<Player> playerData) {
+    void validateNumber(Map<Player, Money> playerDatas) {
         //given
         //when
         //then
-        Assertions.assertThatThrownBy(() -> new Players(playerData))
+        Assertions.assertThatThrownBy(() -> new Players(playerDatas))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

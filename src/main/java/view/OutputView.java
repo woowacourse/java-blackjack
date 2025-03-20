@@ -45,7 +45,7 @@ public class OutputView {
         String formattedDealerCard = getCardFormat(card);
         String handsHeader = formatHandsHeader(dealerNickname);
         System.out.println(formatBasicForm(handsHeader, formattedDealerCard));
-        List<Player> players = values.getPlayers();
+        List<Player> players = values.getPlayers().keySet().stream().toList();
         for (Player player : players) {
             System.out.println(formatHands(player));
         }
@@ -64,7 +64,7 @@ public class OutputView {
 
     public static void printAllParticipantScore(Dealer dealer, Players players) {
         printScore(dealer);
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.getPlayers().keySet()) {
             printScore(player);
         }
     }

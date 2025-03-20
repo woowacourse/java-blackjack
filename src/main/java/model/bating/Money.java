@@ -1,4 +1,4 @@
-package model;
+package model.bating;
 
 import java.util.Objects;
 

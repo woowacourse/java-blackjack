@@ -1,5 +1,6 @@
 package model;
 
+import model.bating.Money;
 import model.card.Card;
 import model.card.CardDeck;
 import model.participant.*;
@@ -8,6 +9,7 @@ import view.Intent;
 import view.OutputView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -45,18 +47,21 @@ public class BlackjackGame {
     }
 
     private void distributeAdditionalCard() {
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.getPlayers().keySet()) {
             receiveAdditionalCard(player, OutputView::printCurrentHands);
         }
         receiveAdditionalCard(dealer, OutputView::printStandingDealer);
     }
 
     private static Players createPlayers() {
-        List<Player> players = new ArrayList<>();
+        Map<Player, Money> players = new HashMap<>();
         for (Nickname nickname : readNicknames()) {
             Money money = readBatingMoneyBy(nickname);
-            Player player = new Player(nickname, money, () -> agreeIntent(nickname.getValue()));
-            players.add(player);
+            Player player = new Player(nickname, () -> agreeIntent(nickname.getValue()));
+            if (players.get(player) == null) {
+                throw new IllegalArgumentException("중복 플레이어 닉네임 불가능");
+            }
+            players.put(player, money);
         }
         return new Players(players);
     }
@@ -74,7 +79,7 @@ public class BlackjackGame {
     public void distributeStartingHand() {
         List<Participant> participants = new ArrayList<>();
         participants.add(dealer);
-        participants.addAll(players.getPlayers());
+        participants.addAll(players.getPlayers().keySet());
         for (Participant participant : participants) {
             distributeCard(participant, INITIAL_DEAL_COUNT);
         }
@@ -97,7 +102,7 @@ public class BlackjackGame {
     }
 
     public void printBatingResult() {
-        Map<Player, Integer> playersBatingResult = players.getMatchResult(dealer);
+        Map<Player, Integer> playersBatingResult = players.calculateEarnings(dealer);
         OutputView.printBatingResult(playersBatingResult);
     }
 }

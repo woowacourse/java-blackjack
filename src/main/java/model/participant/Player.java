@@ -1,6 +1,5 @@
 package model.participant;
 
-import model.Money;
 import model.score.MatchResult;
 
 import java.util.Objects;
@@ -9,12 +8,10 @@ import java.util.function.Supplier;
 public class Player extends Participant {
 
     private final Nickname nickname;
-    private final Money batingMoney;
     private final Supplier<Boolean> intentSupplier;
 
-    public Player(Nickname nickname, Money batingMoney, Supplier<Boolean> intentSupplier) {
+    public Player(Nickname nickname, Supplier<Boolean> intentSupplier) {
         this.nickname = nickname;
-        this.batingMoney = batingMoney;
         this.intentSupplier = intentSupplier;
     }
 
@@ -32,26 +29,7 @@ public class Player extends Participant {
         return intentSupplier.get();
     }
 
-    public int calculateEarnings(Dealer dealer) {
-        MatchResult result = compareToScore(dealer);
-
-        switch (result) {
-            case WIN:
-                return batingMoney.getValue();
-            case BLACKJACK:
-                return (int) (batingMoney.getValue() * 1.5);
-            case LOSE:
-            case BUST:
-                return -1 * batingMoney.getValue();
-            case PUSH:
-                return 0;
-            default:
-                throw new IllegalStateException("존재할 수 없는 결과 입니다.");
-        }
-    }
-
-    // TODO: DL: 상태패턴: https://www.notion.so/DL-compare-1b6cfbb673e4804685c7f7f9f3ce9504?pvs=4
-    private MatchResult compareToScore(Dealer dealer) {
+    public MatchResult compareToScore(Dealer dealer) {
         if (isBlackjack() && dealer.isBlackjack()) {
             return MatchResult.PUSH;
         }
