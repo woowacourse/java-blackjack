@@ -10,11 +10,6 @@ import java.util.Map;
 
 public class ProfitCalculator {
 
-    private static final double NORMAL_WIN_MULTIPLIER = 1;
-    private static final double LOSE_MULTIPLIER = -1;
-    private static final double TIE_MULTIPLIER = 0;
-    private static final double BLACKJACK_WIN_MULTIPLIER = 1.5;
-
     private final LinkedHashMap<String, Bet> playerBets = new LinkedHashMap<>();
 
     public void addPlayerBet(String playerName, int amount) {
@@ -43,16 +38,7 @@ public class ProfitCalculator {
     }
 
     private double getProfit(Bet bet, RoundResult roundResult) {
-        if (roundResult == RoundResult.LOSE || roundResult == RoundResult.BUST) {
-            return bet.value() * LOSE_MULTIPLIER;
-        }
-        if (roundResult == RoundResult.TIE) {
-            return bet.value() * TIE_MULTIPLIER;
-        }
-        if (roundResult == RoundResult.BLACKJACK_WIN) {
-            return bet.value() * BLACKJACK_WIN_MULTIPLIER;
-        }
-        return bet.value() * NORMAL_WIN_MULTIPLIER;
+        return bet.value() * roundResult.getProfitMultiplier();
     }
 
     private Map<String, Double> getDealerProfit(Dealer dealer, Map<String, Double> playerProfits) {

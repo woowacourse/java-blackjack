@@ -6,11 +6,17 @@ import java.util.List;
 import java.util.function.BiFunction;
 
 public enum RoundResult {
-    WIN,
-    LOSE,
-    TIE,
-    BLACKJACK_WIN,
-    BUST;
+    WIN(1),
+    LOSE(-1),
+    TIE(0),
+    BLACKJACK_WIN(1.5),
+    BUST(-1);
+
+    private final double profitMultiplier;
+
+    RoundResult(double profitMultiplier) {
+        this.profitMultiplier = profitMultiplier;
+    }
 
     public static RoundResult judgeResult(Gamer gamer, Gamer otherGamer) {
         return getResultOf(
@@ -66,5 +72,9 @@ public enum RoundResult {
             return LOSE;
         }
         return null;
+    }
+
+    public double getProfitMultiplier() {
+        return profitMultiplier;
     }
 }
