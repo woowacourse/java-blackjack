@@ -3,8 +3,12 @@ package model.deck;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.IntStream;
+import model.participant.role.Gameable;
 
 public final class Deck {
+    private static final int INITIAL_DEAL_CARD_COUNT = 2;
+
     private final List<Card> deck;
 
     public static Deck of() {
@@ -25,8 +29,17 @@ public final class Deck {
 
     public Card pick() {
         validateDeckEmpty();
-        Card removingCard = deck.removeFirst();
-        return removingCard;
+        return deck.removeFirst();
+    }
+
+    public void dealInitiallyTo(Gameable gameable) {
+        IntStream.range(0, INITIAL_DEAL_CARD_COUNT).forEach(
+                i -> dealTo(gameable)
+        );
+    }
+
+    public void dealTo(Gameable gameable) {
+        gameable.receiveCard(pick());
     }
 
     private void validateDeckEmpty() {

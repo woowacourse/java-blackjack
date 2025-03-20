@@ -1,7 +1,6 @@
 package model.betting;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.in;
 
 import model.participant.Dealer;
 import model.participant.Player;
@@ -83,36 +82,5 @@ class BetTest {
 
         //then
         assertThat(betterRevenue).isEqualTo(-10000);
-    }
-
-    @Test
-    @DisplayName("베팅의 소유자가 다를 때 베팅을 소유한 사람 기준 수익금을 계산한다.")
-    void 소유자가_다를때_베팅을_소유한_사람_기준_수익금_계산() {
-        //given
-        Player player = new Player("moda");
-        Dealer dealer = new Dealer();
-        Bet bet = new Bet(new Money(10000), player, dealer);
-
-        //when
-        int ownerRevenue = bet.calculateOwnerRevenue();
-
-        //then
-        assertThat(ownerRevenue).isEqualTo(10000);
-    }
-
-    @Test
-    @DisplayName("베팅의 소유자와 베팅을 제시한 사람이 같을 때 수익금을 계산한다.")
-    void 소유자가_같을때_수익금_계산() {
-        //given
-        Player player = new Player("moda");
-        Bet bet = new Bet(new Money(10000), player, player);
-
-        //when
-        int ownerRevenue = bet.calculateOwnerRevenue();
-        int betterRevenue = bet.calculateBetterRevenue();
-
-        //then
-        assertThat(ownerRevenue).isEqualTo(10000);
-        assertThat(betterRevenue).isEqualTo(10000);
     }
 }

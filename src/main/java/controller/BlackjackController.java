@@ -3,9 +3,12 @@ package controller;
 import java.util.List;
 import java.util.Map;
 import model.betting.Bet;
+import model.betting.Croupier;
 import model.participant.Dealer;
 import model.deck.Deck;
 import model.participant.Players;
+import model.participant.role.BetOwnable;
+import model.participant.role.Gameable;
 import model.result.GameResult;
 import model.participant.Player;
 import model.result.InitialDealResult;
@@ -20,9 +23,10 @@ public class BlackjackController {
             List<String> playerNames = InputView.readPlayerNames();
             Players players = Players.from(playerNames);
             Dealer dealer = new Dealer();
+            Croupier croupier = new Croupier();
             Deck deck = Deck.of();
 
-            receiveBets(players, dealer);
+            receiveBets(players, croupier);
 
             dealInitially(players, dealer, deck);
             if (continueGame(players, dealer)) {
@@ -33,25 +37,23 @@ public class BlackjackController {
             printFinalScore(players, dealer);
             WinningResults winningResults = printWinningResult(players, dealer);
 
-            adjustRevenue(winningResults, players, dealer);
-            printRevenue(players, dealer);
+            adjustRevenue(winningResults, dealer, players, croupier);
+            printRevenue(players, croupier);
         } catch (RuntimeException e) {
             OutputView.printExceptionMessage(e.getMessage());
         }
     }
 
-    private void receiveBets(final Players players, final Dealer dealer) {
+    private void receiveBets(final Players players, final Croupier croupier) {
         for (Player player : players.getPlayers()) {
             int betAmount = InputView.readBetAmount(player.getName());
-            dealer.receiveBet(player.makeBet(betAmount));
+            croupier.receiveBet(player.makeBet(betAmount));
         }
     }
 
     private void dealInitially(final Players players, final Dealer dealer, final Deck deck) {
-        players.getPlayers().forEach(player ->
-                dealer.splitInitialDeck(deck, player)
-        );
-        dealer.splitInitialDeck(deck, dealer);
+        players.getPlayers().forEach(deck::dealInitiallyTo);
+        deck.dealInitiallyTo(dealer);
         OutputView.printInitialDeal(players, dealer);
     }
 
@@ -68,14 +70,14 @@ public class BlackjackController {
 
     private void hitOrStandAtOnePlayerTurn(final Deck deck, final Player player) {
         while (player.canHit() && InputView.readHit(player)) {
-            player.receiveCard(deck.pick());
+            deck.dealTo(player);
             OutputView.printPlayerHitResult(player);
         }
     }
 
     private static void hitOrStandAtDealerTurn(final Dealer dealer, final Deck deck) {
         while (dealer.canHit()) {
-            dealer.receiveCard(deck.pick());
+            deck.dealTo(dealer);
             OutputView.printDealerHitResult();
         }
     }
@@ -95,23 +97,23 @@ public class BlackjackController {
         return winningResults;
     }
 
-    private void adjustRevenue(final WinningResults winningResults, final Players players, final Dealer dealer) {
+    private void adjustRevenue(final WinningResults winningResults, final BetOwnable dealer, final Players players,
+                               final Croupier croupier) {
         for (Player player : players.getPlayers()) {
             if (winningResults.isLose(player)) {
-                dealer.updateBetOwnerFrom(player);
+                croupier.updateBetOwnerFrom(player, dealer);
                 continue;
             }
             if (winningResults.isBlackjackWin(player)) {
-                dealer.updateBetAmountWhenBlackJackOf(player);
+                croupier.updateBetAmountWhenBlackJackOf(player);
             }
         }
     }
 
-    private void printRevenue(final Players players, final Dealer dealer) {
-        OutputView.printDealerRevenue(dealer);
+    private void printRevenue(final Players players, final Croupier croupier) {
+        OutputView.printDealerRevenue(croupier);
         for (Player player : players.getPlayers()) {
-            Bet bet = dealer.findBetByBetter(player);
-            OutputView.printPlayersRevenue(player, bet);
+            OutputView.printPlayersRevenue(player, croupier);
         }
     }
 }

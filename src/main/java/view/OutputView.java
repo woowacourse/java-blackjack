@@ -2,7 +2,7 @@ package view;
 
 import java.util.List;
 import java.util.Map;
-import model.betting.Bet;
+import model.betting.Croupier;
 import model.deck.Card;
 import model.participant.role.Gameable;
 import model.participant.Dealer;
@@ -122,13 +122,13 @@ public final class OutputView {
     /**
      * 최종 수익 출력
      */
-    public static void printDealerRevenue(final Dealer dealer) {
+    public static void printDealerRevenue(final Croupier croupier) {
         System.out.println("\n## 최종 수익");
-        System.out.printf("%s: %,d\n", DEALER_PRINT_MESSAGE, dealer.calculateRevenue());
+        System.out.printf("%s: %,d\n", DEALER_PRINT_MESSAGE, -croupier.calculateRevenueByAllBetters());
     }
 
-    public static void printPlayersRevenue(final Player player, final Bet bet) {
-        int revenue = bet.calculateBetterRevenue();
+    public static void printPlayersRevenue(final Player player, final Croupier croupier) {
+        int revenue = croupier.calculateRevenueByBetter(player);
         System.out.printf("%s: %,d\n", player.getName(), revenue);
     }
 

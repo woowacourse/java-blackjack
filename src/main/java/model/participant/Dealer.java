@@ -1,21 +1,15 @@
 package model.participant;
 
 import java.util.List;
-import java.util.stream.IntStream;
-import model.betting.Bet;
 import model.hand.HardHand;
 import model.hand.ParticipantHand;
 import model.participant.role.BetOwnable;
 import model.betting.Bets;
 import model.deck.Card;
-import model.deck.Deck;
-import model.participant.role.Bettable;
-import model.participant.role.GameProcessable;
 import model.participant.role.Gameable;
 
-public final class Dealer implements BetOwnable, Gameable, GameProcessable {
+public final class Dealer implements BetOwnable, Gameable {
     private static final int DEALER_HIT_THRESHOLD = 16;
-    private static final int INITIAL_DEAL_CARD_COUNT = 2;
 
     private ParticipantHand participantHand;
     private final Bets bets;
@@ -61,36 +55,5 @@ public final class Dealer implements BetOwnable, Gameable, GameProcessable {
     @Override
     public List<Card> getHandCards() {
         return participantHand.getCards();
-    }
-
-    @Override
-    public void splitInitialDeck(final Deck deck, final Gameable gamer) {
-        IntStream.range(0, INITIAL_DEAL_CARD_COUNT).forEach(
-                i -> gamer.receiveCard(deck.pick())
-        );
-    }
-
-    @Override
-    public void receiveBet(final Bet bet) {
-        this.bets.add(bet);
-    }
-
-    @Override
-    public void updateBetOwnerFrom(final BetOwnable beforeOwner) {
-        bets.updateOwner(beforeOwner, this);
-    }
-
-    @Override
-    public void updateBetAmountWhenBlackJackOf(final Bettable better) {
-        bets.updateBetAmount(better);
-    }
-
-    @Override
-    public Bet findBetByBetter(final Bettable better) {
-        return bets.findByBetter(better);
-    }
-
-    public int calculateRevenue() {
-        return bets.calculateDealerRevenue();
     }
 }

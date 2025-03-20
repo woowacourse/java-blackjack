@@ -1,6 +1,7 @@
 package model.betting;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import model.participant.role.BetOwnable;
 import model.participant.role.Bettable;
@@ -28,10 +29,8 @@ public final class Bets {
         this.bets.add(bet.increase(IncreasingRate.whenBlackjackWin()));
     }
 
-    public int calculateDealerRevenue() {
-        return bets.stream()
-                .mapToInt(bet -> -bet.calculateBetterRevenue())
-                .sum();
+    public int calculateRevenueByAllBetters() {
+        return bets.stream().mapToInt(Bet::calculateBetterRevenue).sum();
     }
 
     public Bet findByBetter(final Bettable better) {

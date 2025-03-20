@@ -35,10 +35,6 @@ public final class Bet {
         return money.getReverseValue();
     }
 
-    public int calculateOwnerRevenue() {
-        return money.getValue();
-    }
-
     public boolean betterEquals(final Bettable better) {
         return this.better.equals(better);
     }
