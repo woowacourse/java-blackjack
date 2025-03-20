@@ -17,11 +17,11 @@ public class Players {
     }
 
     public void validate(List<Player> players) {
-        validateParticipantCount(players);
+        validatePlayerCount(players);
         validateDuplicateName(players);
     }
 
-    private void validateParticipantCount(List<Player> players) {
+    private void validatePlayerCount(List<Player> players) {
         if (players.size() < MIN_PARTICIPANT || players.size() > MAX_PARTICIPANT) {
             throw new IllegalArgumentException("참여자는 2~8명 이여야 합니다.");
         }
@@ -41,7 +41,13 @@ public class Players {
     }
 
 
-    public List<Player> getParticipants() {
+    public List<Player> getPlayers() {
         return new ArrayList<>(players);
+    }
+
+    public void giveInitialCards() {
+
+        players.g0etParticipants().forEach(p -> p.initialCard(deck.drawCard(), deck.drawCard()));
+
     }
 }

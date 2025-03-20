@@ -16,7 +16,7 @@ public class Dealer extends Participant {
 
     public Map<Player, PlayerResult> calculateGameResult(Players players) {
         Map<Player, PlayerResult> winLoseResult = new HashMap<>();
-        players.getParticipants().forEach(
+        players.getPlayers().forEach(
                 participant -> {
                     winLoseResult.put(participant, getParticipantResult(participant));
                 }
