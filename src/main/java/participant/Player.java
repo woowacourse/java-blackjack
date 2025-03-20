@@ -9,17 +9,13 @@ import state.started.Started;
 public class Player {
 
     private final Nickname nickname;
+    private final BettingMoney bettingMoney;
 
     private State state;
-    private BettingMoney bettingMoney;
 
     public Player(Nickname nickname, BettingMoney bettingMoney) {
         this.bettingMoney = bettingMoney;
         this.nickname = nickname;
-    }
-
-    public void bet(int bettingMoney) {
-        this.bettingMoney = new BettingMoney(bettingMoney);
     }
 
     public void prepareGame(final Card card1, final Card card2) {
@@ -55,7 +51,7 @@ public class Player {
     }
 
     public void hit(Card card) {
-        this.state.draw(card);
+        state = this.state.draw(card);
     }
 
     public int score() {

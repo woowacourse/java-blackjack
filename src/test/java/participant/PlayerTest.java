@@ -5,7 +5,7 @@ import card.Card;
 import card.CardNumber;
 import card.CardType;
 import deck.Deck;
-import deck.DeckCreateStrategy;
+import deck.DeckShuffleStrategy;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +25,7 @@ class PlayerTest {
     @DisplayName("플레이어는 bust면 카드를 받을 수 없다.")
     void test1() {
         // given
-        Deck deck = new Deck(new DeckCreateStrategy() {
+        Deck deck = new Deck(new DeckShuffleStrategy() {
             @Override
             public List<Card> createAllCards() {
                 return List.of(
@@ -48,7 +48,7 @@ class PlayerTest {
     @DisplayName("플레이어는 bust가 아니면 카드를 받을 수 있다.")
     void test2() {
         // given
-        Deck deck = new Deck(new DeckCreateStrategy() {
+        Deck deck = new Deck(new DeckShuffleStrategy() {
             @Override
             public List<Card> createAllCards() {
                 return List.of(
