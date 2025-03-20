@@ -1,17 +1,14 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.DealerWinningResult;
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
+import blackjack.domain.result.PlayerHand;
+import blackjack.domain.result.ProfitResult;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
-public class Participants {
+public final class Participants {
 
-    private static final int DEALER_COUNT = 1;
-    private static final int SPREAD_MULTIPLY_SIZE = 2;
-    private static final int SPREAD_SIZE = 1;
+    private static final int DEALER_SIZE = 1;
 
     private final Dealer dealer;
     private final Players players;
@@ -21,69 +18,57 @@ public class Participants {
         this.players = players;
     }
 
-//    public void spreadAllTwoCards(final Hand hand) {
-//        dealer.receiveCards(hand.getPartialCards(0, SPREAD_MULTIPLY_SIZE));
-//        players.receiveCards(hand.getPartialCards(SPREAD_MULTIPLY_SIZE, hand.getSize()), SPREAD_MULTIPLY_SIZE);
-//    }
+    public static Participants of(final Players players) {
+        return new Participants(new Dealer(), players);
+    }
 
-//    public int getPlayerSize() {
-//        return players.getSize();
-//    }
-//
-//    public Entry<String, Hand> showInitialDealerCards() {
-//        return Map.entry(dealer.getNickname(), dealer.showInitialCards());
-//    }
-//
-//    public Map<String, Hand> showInitialParticipantsCards() {
-//        return players.showTotalInitialCards();
-//    }
+    public int getInitialCardSize() {
+        return (DEALER_SIZE + players.getSize()) * dealer.getSpreadCardSize();
+    }
 
-//    public boolean canDealerHit() {
-//        return dealer.canHit();
-//    }
+    public void dealInitialCards(final Hand hand) {
+        dealer.dealInitialCards(players, hand);
+    }
 
-//    public boolean canPlayerHit(final int index) {
-//        final Gamer player = players.getPlayer(index);
-//        return player.canHit();
-//    }
+    public Players findHitEligiblePlayers() {
+        return players.findHitAvailablePlayers();
+    }
 
-//    public Players findHitAvailablePlayers() {
-//        return players.findHitAvailablePlayers();
-//    }
-//
-//    public void spreadOneCardToDealer(final Card card) {
-//        spreadOneCard(dealer, card);
-//    }
-//
-//    public Entry<String, Hand> showDealerCards() {
-//        return Map.entry(dealer.getNickname(), dealer.showAllCards());
-//    }
-//
-//    public Map<String, Hand> showPlayersCards() {
-//        return players.showTotalCards();
-//    }
-//
-//    public DealerWinningResult makeDealerWinningResult() {
-//        return dealer.makeDealerWinningResult(players.calculateScores());
-//    }
+    public Hand showInitialDealerCards() {
+        return dealer.showInitialCards();
+    }
 
-//    public int getInitialTotalCardsSize() {
-//        return (DEALER_COUNT + players.getSize()) * SPREAD_MULTIPLY_SIZE;
-//    }
-//
-//    private void spreadOneCard(final Gamer gamer, final Card card) {
-//        gamer.receiveCards(new Hand(List.of(card)));
-//    }
+    public Map<String, Hand> showInitialPlayersCards() {
+        return players.showTotalInitialCards();
+    }
 
-//    public Gamer getDealer() {
-//        return dealer;
-//    }
+    public boolean canDealerHit() {
+        return dealer.canHit();
+    }
 
-//    public List<String> getPlayersNames() {
-//        return players.getNames();
-//    }
+    public void receiveCardToDealer(final Hand hand) {
+        dealer.receiveCards(hand);
+    }
 
-//    public Players getPlayers() {
-//        return players;
-//    }
+    public Hand showAllDealerCard() {
+        return dealer.showAllCards();
+    }
+
+    public Map<String, Hand> showAllPlayersCard() {
+        return players.showTotalCards();
+    }
+
+    public ProfitResult makeDealerWinningResult() {
+        final Map<Player, Hand> playerScores = players.showAllCards();
+        PlayerHand result = new PlayerHand(playerScores);
+        return dealer.calculateProfit(result.calculateScoreResult(dealer));
+    }
+
+    public String getDealerName() {
+        return dealer.getNickname();
+    }
+
+    public List<String> getPlayerNames() {
+        return players.getNames();
+    }
 }

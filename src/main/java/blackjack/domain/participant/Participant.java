@@ -1,12 +1,13 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 
-public abstract class Gamer {
+public abstract class Participant {
 
     protected final Hand hand;
 
-    public Gamer(final Hand hand) {
+    public Participant(final Hand hand) {
         this.hand = hand;
     }
 
@@ -18,6 +19,10 @@ public abstract class Gamer {
 
     public void receiveCards(final Hand givenHand) {
         hand.addAll(givenHand);
+    }
+
+    public void receiveCard(final Card card) {
+        hand.add(card);
     }
 
     public int calculateScore() {

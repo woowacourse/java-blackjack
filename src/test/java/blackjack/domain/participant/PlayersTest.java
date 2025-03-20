@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.card.Hand;
+import java.math.BigDecimal;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +27,8 @@ public class PlayersTest {
     @Test
     void createPlayers() {
         // given
-        List<Player> players = List.of(new Player("엠제이", provideEmptyCards()), new Player("밍트", provideEmptyCards()));
+        List<Player> players = List.of(new Player(provideEmptyCards(), "엠제이", BigDecimal.valueOf(10_000)),
+                new Player(provideEmptyCards(), "밍트", BigDecimal.valueOf(20_000)));
 
         // when & then
         Assertions.assertThatCode(() -> new Players(players))
@@ -37,7 +39,8 @@ public class PlayersTest {
     @Test
     void createDuplicatePlayers() {
         // given
-        List<Player> players = List.of(new Player("엠제이", provideEmptyCards()), new Player("엠제이", provideEmptyCards()));
+        List<Player> players = List.of(new Player(provideEmptyCards(), "엠제이", BigDecimal.valueOf(10_000)),
+                new Player(provideEmptyCards(), "엠제이", BigDecimal.valueOf(20_000)));
 
         // when & then
         Assertions.assertThatThrownBy(() -> new Players(players))
@@ -47,19 +50,20 @@ public class PlayersTest {
 
     @DisplayName("플레이어들이 카드를 받는다.")
     @Test
-    void receiveCards() {
+    void receiveCardsByCount() {
         // given
         final Hand hand = provideCards(4);
         final int count = 2;
 
         // when
-        players.receiveCards(hand, count);
+        players.receiveCardsByCount(hand, count);
 
         // then
         assertAll(
                 () -> assertThat(players.getPlayers().getFirst()).isEqualTo(
-                        new Player("엠제이", hand.getPartialCards(0, 2))),
-                () -> assertThat(players.getPlayers().get(1)).isEqualTo(new Player("밍트", hand.getPartialCards(2, 4)))
+                        new Player(hand.subHand(0, 2), "엠제이", BigDecimal.valueOf(10_000))),
+                () -> assertThat(players.getPlayers().get(1)).isEqualTo(
+                        new Player(hand.subHand(2, 4), "밍트", BigDecimal.valueOf(20_000)))
         );
     }
 }

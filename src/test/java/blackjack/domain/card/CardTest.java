@@ -8,13 +8,13 @@ class CardTest {
 
     @DisplayName("카드를 생성한다.")
     @Test
-    void test() {
+    void createCard() {
         // given
-        final Shape shape = Shape.DIAMOND;
-        final CardScore cardScore = CardScore.A;
+        final Suit suit = Suit.DIAMOND;
+        final Denomination denomination = Denomination.A;
 
         // when & then
-        Assertions.assertThatCode(() -> new Card(shape, cardScore))
+        Assertions.assertThatCode(() -> new Card(suit, denomination))
                 .doesNotThrowAnyException();
     }
 }

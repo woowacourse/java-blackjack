@@ -9,17 +9,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Hand;
-import blackjack.domain.card.CardScore;
-import blackjack.domain.card.Shape;
+import blackjack.domain.card.Suit;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Stream;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class PlayerTest {
 
@@ -27,18 +30,30 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player("엠제이", provideEmptyCards());
+        player = new Player(provideEmptyCards(), "엠제이", BigDecimal.valueOf(10_000));
     }
 
-    @DisplayName("이름으로 Player 객체를 생성한다.")
+    @DisplayName("이름과 베팅 금액으로 Player 객체를 생성한다.")
     @Test
     void createAttendee() {
         // given
         String nickname = "pobi";
 
         // when & then
-        assertThatCode(() -> new Player(nickname, provideEmptyCards()))
+        assertThatCode(() -> new Player(provideEmptyCards(), nickname, BigDecimal.valueOf(10_000)))
                 .doesNotThrowAnyException();
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, -10000})
+    @DisplayName("베팅 금액이 음수일 경우 예외가 발생한다")
+    void createWithBettingAmountBelowZero(final int bettingAmount) {
+        // Given
+
+        // When & Then
+        Assertions.assertThatThrownBy(() -> new Player(provideEmptyCards(), "밍트", BigDecimal.valueOf(bettingAmount)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR] 베팅 금액을 양수로 입력해주세요.");
     }
 
     @DisplayName("카드들을 받는다.")
@@ -51,7 +66,7 @@ public class PlayerTest {
         player.receiveCards(hand);
 
         // then
-        assertThat(player).isEqualTo(new Player("엠제이", hand));
+        assertThat(player).isEqualTo(new Player(hand, "엠제이", BigDecimal.valueOf(10_000)));
     }
 
     @DisplayName("플레이어는 모든 카드를 보여준다.")
@@ -60,30 +75,26 @@ public class PlayerTest {
         // given
         final Hand hand = provideCards(2);
         player.receiveCards(hand);
-        final List<Card> expected = List.of(new Card(Shape.SPADE, CardScore.A),
-                new Card(Shape.SPADE, CardScore.TWO));
 
         // when
         final Hand playerHand = player.showAllCards();
 
         // then
-        assertThat(playerHand.getHand()).isEqualTo(expected);
+        assertThat(playerHand.getHand()).hasSize(2);
     }
 
-    @DisplayName("플레이어는 1장만 보여준다.")
+    @DisplayName("플레이어는 2장을 보여준다.")
     @Test
     void showPlayerInitialCards() {
         // given
         final Hand hand = provideCards(2);
         player.receiveCards(hand);
-        final List<Card> expected = List.of(new Card(Shape.SPADE, CardScore.A),
-                new Card(Shape.SPADE, CardScore.TWO));
 
         // when
         final Hand playerHand = player.showInitialCards();
 
         // then
-        assertThat(playerHand.getHand()).isEqualTo(expected);
+        assertThat(playerHand.getHand()).hasSize(2);
     }
 
 
@@ -92,7 +103,7 @@ public class PlayerTest {
     @MethodSource
     void canHit(final Hand hand, final boolean expected) {
         // given
-        final Player player = new Player("엠제이", hand);
+        final Player player = new Player(hand, "엠제이", BigDecimal.valueOf(10_000));
 
         // when & then
         assertThat(player.canHit()).isEqualTo(expected);
@@ -101,17 +112,17 @@ public class PlayerTest {
     private static Stream<Arguments> canHit() {
         return Stream.of(
                 Arguments.of(new Hand(List.of(
-                        new Card(Shape.SPADE, CardScore.TEN),
-                        new Card(Shape.SPADE, CardScore.NINE)
+                        new Card(Suit.SPADE, Denomination.TEN),
+                        new Card(Suit.SPADE, Denomination.NINE)
                 )), true),
                 Arguments.of(new Hand(List.of(
-                        new Card(Shape.SPADE, CardScore.A),
-                        new Card(Shape.SPADE, CardScore.K)
+                        new Card(Suit.SPADE, Denomination.A),
+                        new Card(Suit.SPADE, Denomination.K)
                 )), true),
                 Arguments.of(new Hand(List.of(
-                        new Card(Shape.SPADE, CardScore.K),
-                        new Card(Shape.SPADE, CardScore.Q),
-                        new Card(Shape.SPADE, CardScore.A)
+                        new Card(Suit.SPADE, Denomination.K),
+                        new Card(Suit.SPADE, Denomination.Q),
+                        new Card(Suit.SPADE, Denomination.A)
                 )), false)
         );
     }

@@ -1,19 +1,25 @@
 package blackjack.domain.card;
 
+import blackjack.util.ExceptionMessage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class Hand {
+public final class Hand {
 
     public static final int BURST_THRESHOLD = 21;
     private static final int ACE_SUBTRACT = 10;
+    private static final int BLACKJACK_SIZE = 2;
 
     private final List<Card> hand;
 
     public Hand(final List<Card> hand) {
         this.hand = new ArrayList<>(hand);
+    }
+
+    public Hand(final Card card) {
+        this(List.of(card));
     }
 
     public int calculateResult() {
@@ -30,8 +36,21 @@ public class Hand {
                 .sum();
     }
 
+    public void add(final Card card) {
+        hand.add(card);
+    }
+
     public void addAll(final Hand givenHand) {
         hand.addAll(givenHand.getHand());
+    }
+
+    public boolean isBlackjack() {
+        return hand.size() == BLACKJACK_SIZE && calculateResult() == BURST_THRESHOLD;
+    }
+
+    public Hand subHand(final int startInclusive, final int endExclusive) {
+        validateIndex(startInclusive, endExclusive);
+        return new Hand(hand.subList(startInclusive, endExclusive));
     }
 
     private int calculateMaxScore(final List<Card> cards) {
@@ -58,6 +77,16 @@ public class Hand {
                 .count();
     }
 
+    private void validateIndex(final int start, final int end) {
+        final int size = hand.size();
+        if (start < 0 || end < 0 || start >= size || end > size) {
+            throw new IllegalArgumentException(ExceptionMessage.makeMessage("인덱스는 0 이상 hand 크기 이하여야 합니다"));
+        }
+        if (start > end) {
+            throw new IllegalArgumentException(ExceptionMessage.makeMessage("끝 인덱스는 시작 인덱스보다 커야합니다"));
+        }
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (!(o instanceof final Hand hand1)) {
@@ -71,19 +100,15 @@ public class Hand {
         return Objects.hashCode(hand);
     }
 
-    public List<Card> getHand() {
-        return Collections.unmodifiableList(hand);
-    }
-
-    public Hand getPartialCards(int start, int end) {
-        return new Hand(hand.subList(start, end));
+    public int getSize() {
+        return hand.size();
     }
 
     public Card getFirstCard() {
         return hand.getFirst();
     }
 
-    public int getSize() {
-        return hand.size();
+    public List<Card> getHand() {
+        return Collections.unmodifiableList(hand);
     }
 }

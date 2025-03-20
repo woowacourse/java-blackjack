@@ -1,19 +1,21 @@
 package blackjack;
 
-import blackjack.controller.BlackjackController;
+import blackjack.controller.Controller;
+import blackjack.domain.card.Deck;
 import blackjack.view.InputView;
 import blackjack.view.ResultView;
+import java.util.Scanner;
 
-public class Application {
+public final class Application {
 
     public static void main(String[] args) {
-        final BlackjackController blackjackController = makeController();
-        blackjackController.run();
+        Controller controller = makeController();
+        controller.startGame(Deck.shuffled());
     }
 
-    private static BlackjackController makeController() {
-        final InputView inputView = new InputView();
+    private static Controller makeController() {
+        final InputView inputView = new InputView(new Scanner(System.in));
         final ResultView resultView = new ResultView();
-        return new BlackjackController(inputView, resultView);
+        return new Controller(inputView, resultView);
     }
 }

@@ -3,50 +3,41 @@ package blackjack.domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import blackjack.domain.shuffle.CardGenerator;
-import blackjack.domain.shuffle.ShuffleCardGenerator;
-import blackjack.fixture.TestFixture.TestCardGeneratorGenerator;
-import org.junit.jupiter.api.BeforeEach;
+import java.util.ArrayDeque;
+import java.util.Arrays;
+import java.util.List;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DeckTest {
 
-    private Deck deck;
+    @Test
+    @DisplayName("셔플된 덱을 생성한다")
+    void createShuffledDeck() {
+        // Given
 
-    @BeforeEach
-    void setUp() {
-        deck = new Deck(new ShuffleCardGenerator());
+        // When
+        Assertions.assertThatCode(Deck::shuffled)
+                .doesNotThrowAnyException();
     }
 
-    @DisplayName("카드를 여러장 분배한다.")
+    @DisplayName("카드를 순서대로 뽑는다.")
     @Test
-    void spreadCards() {
+    void drawInitialCards() {
         // given
-        final int count = 2;
+        final Deck deck = new Deck(() -> new ArrayDeque<>(Arrays.asList(
+                new Card(Suit.CLOB, Denomination.A),
+                new Card(Suit.DIAMOND, Denomination.SIX))));
 
         // when
-        final Hand hand = deck.spreadCards(count);
-
-        // then
-        assertThat(hand.getHand()).hasSize(count);
-    }
-
-    @DisplayName("사용한 카드를 뽑았을 경우 다시 뽑는다.")
-    @Test
-    void spreadAgain() {
-        // given
-        final CardGenerator cardGenerator = new TestCardGeneratorGenerator();
-        final Deck deck = new Deck(cardGenerator);
-
-        // when
-        final Card firstCard = deck.spreadCards(1).getFirstCard();
-        final Card secondCard = deck.spreadCards(1).getFirstCard();
+        final Hand hand = deck.drawInitialCards(2);
 
         // then
         assertAll(
-                () -> assertThat(firstCard).isEqualTo(new Card(Shape.DIAMOND, CardScore.TWO)),
-                () -> assertThat(secondCard).isEqualTo(new Card(Shape.DIAMOND, CardScore.THREE))
+                () -> assertThat(hand.getFirstCard()).isEqualTo(new Card(Suit.CLOB, Denomination.A)),
+                () -> assertThat(hand.subHand(1, hand.getSize())).isEqualTo(
+                        new Hand(List.of(new Card(Suit.DIAMOND, Denomination.SIX))))
         );
     }
 }
