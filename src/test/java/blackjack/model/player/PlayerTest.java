@@ -35,5 +35,4 @@ class PlayerTest {
         assertThat(bettingMoney).isEqualTo(10000);
 
     }
-
 }

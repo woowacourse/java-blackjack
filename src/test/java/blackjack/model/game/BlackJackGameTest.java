@@ -1,6 +1,7 @@
 package blackjack.model.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.model.player.Dealer;
 import blackjack.model.player.Player;
@@ -34,9 +35,11 @@ class BlackJackGameTest {
         blackJackGame.initializeGame(players, dealer);
 
         // then
-        assertThat(dealer.getReceivedCards().size()).isEqualTo(2);
-        assertThat(player1.getReceivedCards().size()).isEqualTo(2);
-        assertThat(player2.getReceivedCards().size()).isEqualTo(2);
+        assertAll(
+                () -> assertThat(dealer.getReceivedCards().size()).isEqualTo(2),
+                () -> assertThat(player1.getReceivedCards().size()).isEqualTo(2),
+                () -> assertThat(player2.getReceivedCards().size()).isEqualTo(2)
+        );
     }
 
     @Test
