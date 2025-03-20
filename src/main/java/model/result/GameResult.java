@@ -5,7 +5,8 @@ import model.cards.Cards;
 public enum GameResult {
     WIN("승"),
     LOSE("패"),
-    DRAW("무");
+    DRAW("무"),
+    BLACKJACK_WIN("승");
 
     private final String name;
 
@@ -24,21 +25,35 @@ public enum GameResult {
     }
 
     public static GameResult determineGameResult(final Cards dealerCards, final Cards playerCards) {
-        if (playerCards.isBust()) {
-            return GameResult.LOSE;
-        }
-        if (dealerCards.isBust()) {
-            return GameResult.WIN;
-        }
-        return determineGameResultByScore(dealerCards, playerCards);
+        return determineByBlackjack(dealerCards, playerCards);
     }
 
-    private static GameResult determineGameResultByScore(final Cards dealerCards, final Cards playerCards) {
+    private static GameResult determineByBlackjack(final Cards dealerCards, final Cards playerCards) {
+        if (playerCards.isBlackjack() && !dealerCards.isBlackjack()) {
+            return BLACKJACK_WIN;
+        }
+        if (!playerCards.isBlackjack() && dealerCards.isBlackjack()) {
+            return LOSE;
+        }
+        return determineByBust(dealerCards, playerCards);
+    }
+
+    private static GameResult determineByBust(final Cards dealerCards, final Cards playerCards) {
+        if (playerCards.isBust()) {
+            return LOSE;
+        }
+        if (dealerCards.isBust()) {
+            return WIN;
+        }
+        return determineByScore(dealerCards, playerCards);
+    }
+
+    private static GameResult determineByScore(final Cards dealerCards, final Cards playerCards) {
         if (playerCards.calculateResult() > dealerCards.calculateResult()) {
-            return GameResult.WIN;
+            return WIN;
         }
         if (playerCards.calculateResult() < dealerCards.calculateResult()) {
-            return GameResult.LOSE;
+            return LOSE;
         }
         return DRAW;
     }

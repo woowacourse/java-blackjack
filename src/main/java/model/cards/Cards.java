@@ -9,7 +9,8 @@ import model.card.CardNumber;
 
 public abstract class Cards {
 
-    private static final int BUST_THRESHOLD = 21;
+    protected static final int MAX_SCORE = 21;
+    protected static final int INITIAL_CARDS_COUNT = 2;
 
     protected final List<Card> cards;
 
@@ -22,15 +23,20 @@ public abstract class Cards {
             throw new IllegalBlackjackStateException("버스트일 때는 카드를 추가할 수 없습니다.");
         }
         cards.add(card);
+        changeAceElevenToOneUntilNotBust();
     }
 
     public boolean isBust() {
-        return calculateSum() > BUST_THRESHOLD;
+        return calculateSum() > MAX_SCORE;
     }
 
     public int calculateResult() {
         changeAceElevenToOneUntilNotBust();
         return calculateSum();
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == INITIAL_CARDS_COUNT && calculateResult() == MAX_SCORE;
     }
 
     public List<Card> getCards() {
@@ -41,11 +47,11 @@ public abstract class Cards {
         int aceCount = findAceElevenCount();
         while (isBust() && aceCount > 0) {
             aceCount--;
-            changeAceElevenToOne();
+            changeAceElevenToOneOrThrow();
         }
     }
 
-    private int calculateSum() {
+    protected int calculateSum() {
         return cards.stream()
                 .mapToInt(Card::getNumberValue)
                 .sum();
@@ -57,14 +63,14 @@ public abstract class Cards {
                 .count();
     }
 
-    private void changeAceElevenToOne() {
+    private void changeAceElevenToOneOrThrow() {
         Card aceElevenCard = cards.stream()
                 .filter(card -> card.isSameNumber(CardNumber.ACE_ELEVEN))
                 .findAny()
                 .orElseThrow(() -> new IllegalBlackjackStateException("ACE11이 존재하지 않습니다."));
 
-        cards.remove(aceElevenCard);
-        cards.add(new Card(CardNumber.ACE_ONE, aceElevenCard.getShape()));
+        int aceElevenCardIndex = cards.indexOf(aceElevenCard);
+        cards.set(aceElevenCardIndex, new Card(CardNumber.ACE_ONE, aceElevenCard.getShape()));
     }
 
     @Override

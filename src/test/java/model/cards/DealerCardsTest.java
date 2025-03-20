@@ -2,6 +2,7 @@ package model.cards;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,5 +139,25 @@ public class DealerCardsTest {
         )));
 
         assertThat(cards.calculateResult()).isEqualTo(22);
+    }
+
+    @DisplayName("블랙잭인지 확인한다.")
+    @Test
+    void isBlackjackTest() {
+        Cards normalCards = new DealerCards(new ArrayList<>(List.of(
+                new Card(CardNumber.TEN, CardShape.DIAMOND),
+                new Card(CardNumber.FIVE, CardShape.SPADE),
+                new Card(CardNumber.SIX, CardShape.SPADE)
+        )));
+
+        Cards blackjackCards = new DealerCards(new ArrayList<>(List.of(
+                new Card(CardNumber.ACE_ELEVEN, CardShape.CLOVER),
+                new Card(CardNumber.QUEEN, CardShape.SPADE)
+        )));
+
+        assertAll(
+                () -> assertThat(normalCards.isBlackjack()).isFalse(),
+                () -> assertThat(blackjackCards.isBlackjack()).isTrue()
+        );
     }
 }
