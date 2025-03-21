@@ -8,6 +8,7 @@ public class CardGroup {
 
     private static final int ACE_DISTANCE_SCORE = 10;
     private static final int BUST_THRESHOLD = 21;
+    private static final int BLACKJACK_CARD_QUANTITY = 2;
 
     private final List<Card> cards;
 
@@ -29,7 +30,7 @@ public class CardGroup {
 
 
     public boolean isBlackjack() {
-        return cards.size() == 2 && calculateScore() == BUST_THRESHOLD;
+        return cards.size() == BLACKJACK_CARD_QUANTITY && calculateScore() == BUST_THRESHOLD;
     }
 
     public int calculateScore() {
