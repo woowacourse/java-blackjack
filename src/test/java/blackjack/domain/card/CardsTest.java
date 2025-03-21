@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Arrays;
@@ -19,6 +20,29 @@ public class CardsTest {
         Cards cards = createCardsOfRanks(ranks);
         // when & then
         assertEquals(cardsScore, cards.calculateScore());
+    }
+
+    @DisplayName("Blackjack 판별 테스트")
+    @ParameterizedTest
+    @CsvSource(value = {"JACK,ACE:true", "ACE,QUEEN,JACK:false", "JACK,QUEEN:false"}, delimiterString = ":")
+    void blackjackTest(String rankNames, boolean expected) {
+        // given
+        List<Rank> ranks = createRanks(rankNames);
+        Cards cards = createCardsOfRanks(ranks);
+
+        // when & then
+        assertThat(cards.isBlackjack()).isEqualTo(expected);
+    }
+
+    @DisplayName("Bust 판별 테스트")
+    @ParameterizedTest
+    @CsvSource(value = {"22,true", "21,false", "20,false"})
+    void bustTest(int score, boolean expected) {
+        // given
+        Cards cards = new Cards();
+
+        // when & then
+        assertThat(cards.isBust(score)).isEqualTo(expected);
     }
 
     private static Cards createCardsOfRanks(List<Rank> ranks) {
