@@ -20,11 +20,8 @@ class BlackjackMatchResultTest {
         Card card2 = new Card(CardSymbol.COLVER, CardRank.THREE);
         Card card3 = new Card(CardSymbol.COLVER, CardRank.TWO);
 
-        Hand dealerHand = HandFixture.createHand(card1, card1);
-        Hand playerHand = HandFixture.createHand(card1, card1);
-
-        dealerHand.add(card2);
-        playerHand.add(card3);
+        Hand dealerHand = HandFixture.createHandOf(card1, card1, card2);
+        Hand playerHand = HandFixture.createHandOf(card1, card1, card3);
 
         //when
         BlackjackMatchResult actual = dealerHand.determineMatchResultFor(playerHand);
@@ -40,8 +37,8 @@ class BlackjackMatchResultTest {
         Card card1 = new Card(CardSymbol.COLVER, CardRank.KING);
         Card card2 = new Card(CardSymbol.COLVER, CardRank.THREE);
 
-        Hand dealerHand = HandFixture.createHand(card1, card2);
-        Hand playerHand = HandFixture.createHand(card1, card2);
+        Hand dealerHand = HandFixture.createHandOf(card1, card2);
+        Hand playerHand = HandFixture.createHandOf(card1, card2);
 
         //when
         BlackjackMatchResult actual = dealerHand.determineMatchResultFor(playerHand);
@@ -58,8 +55,8 @@ class BlackjackMatchResultTest {
         Card card2 = new Card(CardSymbol.COLVER, CardRank.THREE);
         Card card3 = new Card(CardSymbol.COLVER, CardRank.TWO);
 
-        Hand dealerHand = HandFixture.createHand(card1, card2);
-        Hand playerHand = HandFixture.createHand(card1, card1);
+        Hand dealerHand = HandFixture.createHandOf(card1, card2);
+        Hand playerHand = HandFixture.createHandOf(card1, card1);
 
         playerHand.add(card3);
 
@@ -77,8 +74,8 @@ class BlackjackMatchResultTest {
         Card card2 = new Card(CardSymbol.COLVER, CardRank.THREE);
         Card card3 = new Card(CardSymbol.COLVER, CardRank.TWO);
 
-        Hand dealerHand = HandFixture.createHand(card1, card3);
-        Hand playerHand = HandFixture.createHand(card1, card2);
+        Hand dealerHand = HandFixture.createHandOf(card1, card3);
+        Hand playerHand = HandFixture.createHandOf(card1, card2);
 
         //when
         BlackjackMatchResult actual = dealerHand.determineMatchResultFor(playerHand);

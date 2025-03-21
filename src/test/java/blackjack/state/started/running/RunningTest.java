@@ -17,7 +17,7 @@ class RunningTest {
     @Test
     void cannotGetProfit() {
         // given
-        Hand hand = HandFixture.createHand(Card.of(CardSymbol.SPADE, CardRank.KING),
+        Hand hand = HandFixture.createHandOf(Card.of(CardSymbol.SPADE, CardRank.KING),
                 Card.of(CardSymbol.SPADE, CardRank.JACK));
         Hit hitState = new Hit(hand);
 
@@ -31,7 +31,7 @@ class RunningTest {
     @Test
     void isFinished() {
         // given
-        Hand hand = HandFixture.createHand(Card.of(CardSymbol.SPADE, CardRank.KING),
+        Hand hand = HandFixture.createHandOf(Card.of(CardSymbol.SPADE, CardRank.KING),
                 Card.of(CardSymbol.SPADE, CardRank.JACK));
         Hit hitState = new Hit(hand);
 

@@ -2,13 +2,10 @@ package blackjack.gamer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.card.Card;
-import blackjack.card.CardRank;
-import blackjack.card.CardSymbol;
+import blackjack.card.Hand;
 import blackjack.state.State;
-import blackjack.state.started.finished.Blackjack;
+import blackjack.state.started.ready.Ready;
 import fixture.BettingFixture;
-import fixture.HandFixture;
 import fixture.NicknameFixture;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -21,23 +18,21 @@ public class GamerTest {
     public static Stream<Arguments> provideInstancesOfGamer() {
         return Stream.of(
                 Arguments.of(
-                        new Player(HandFixture.createHand(Card.of(CardSymbol.SPADE, CardRank.ACE),
-                                Card.of(CardSymbol.SPADE, CardRank.JACK)),
+                        new Player(new Hand(),
                                 NicknameFixture.createNickname("ad"),
                                 BettingFixture.createBetting(1000)),
-                        new Dealer(HandFixture.createHand(Card.of(CardSymbol.SPADE, CardRank.ACE),
-                                Card.of(CardSymbol.SPADE, CardRank.JACK)))
+                        new Dealer(new Hand())
                 ));
     }
 
-    @DisplayName("Gamer는 생성시에 블랙잭이라면 블랙잭 상태를가진다")
+    @DisplayName("Gamer는 생성시에 준비 상태를가진다")
     @ParameterizedTest
     @MethodSource("provideInstancesOfGamer")
-    void isBlackjack(Gamer gamer) {
+    void isReady(Gamer gamer) {
         // when
         State actual = gamer.state;
 
         // then
-        assertThat(actual).isInstanceOf(Blackjack.class);
+        assertThat(actual).isInstanceOf(Ready.class);
     }
 }

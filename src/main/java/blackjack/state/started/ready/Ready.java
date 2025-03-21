@@ -1,21 +1,27 @@
-package blackjack.state.started.running;
+package blackjack.state.started.ready;
 
-import blackjack.card.CardDeck;
+import blackjack.card.Card;
 import blackjack.card.Hand;
 import blackjack.state.State;
 import blackjack.state.started.Started;
 import java.math.BigDecimal;
 
-public abstract class Running extends Started {
+public abstract class Ready extends Started {
 
-    public Running(Hand hand) {
+    public Ready(Hand hand) {
         super(hand);
     }
 
     @Override
-    public State initialDeal(CardDeck cardDeck) {
-        throw new IllegalStateException("[ERROR] 이미 초기 카드가 배부되었습니다.");
+    public State hit(Card card) {
+        throw new IllegalStateException("[ERROR] 아직 게임 시작 준비가 되지 않았습니다.");
     }
+
+    @Override
+    public State stay() {
+        throw new IllegalStateException("[ERROR] 아직 게임 시작 준비가 되지 않았습니다.");
+    }
+
 
     @Override
     public BigDecimal getProfit(BigDecimal bettingAmount) {
@@ -26,4 +32,5 @@ public abstract class Running extends Started {
     public boolean isFinished() {
         return false;
     }
+
 }

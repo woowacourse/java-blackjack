@@ -1,12 +1,15 @@
 package fixture;
 
 import blackjack.card.Card;
-import blackjack.card.CardDeck;
 import blackjack.card.Hand;
+import java.util.Arrays;
 
 public class HandFixture {
-    public static Hand createHand(Card card1, Card card2) {
-        CardDeck cardDeck = CardDeckFixture.createCardDeck(card1, card2);
-        return new Hand(cardDeck);
+    public static Hand createHandOf(Card... cards) {
+        Hand hand = new Hand();
+        Arrays.stream(cards)
+                .forEach(hand::add);
+
+        return hand;
     }
 }

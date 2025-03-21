@@ -3,18 +3,13 @@ package blackjack.gamer;
 import blackjack.card.CardDeck;
 import blackjack.card.Hand;
 import blackjack.state.State;
-import blackjack.state.started.finished.Blackjack;
-import blackjack.state.started.running.Hit;
+import blackjack.state.started.ready.InitialDealing;
 
 public abstract class Gamer {
     protected State state;
 
     public Gamer(Hand hand) {
-        if (hand.isBlackjack()) {
-            state = new Blackjack(hand);
-            return;
-        }
-        state = new Hit(hand);
+        state = new InitialDealing(hand);
     }
 
     public int getScore() {
@@ -26,6 +21,8 @@ public abstract class Gamer {
     }
 
     public abstract String getNickname();
+
+    public abstract void initialDeal(CardDeck cardDeck);
 
     public void stay() {
         state = state.stay();

@@ -27,8 +27,10 @@ public class BlackJackController {
     public void start() {
         CardDeck deck = new CardDeck(new StandardCardsInitializer());
 
-        Dealer dealer = new Dealer(new Hand(deck));
+        Dealer dealer = new Dealer(new Hand());
         List<Player> players = setPlayers(deck);
+
+        processInitialDeal(dealer, players, deck);
 
         outputView.printInitialCards(dealer, players);
 
@@ -41,6 +43,11 @@ public class BlackJackController {
         outputView.printProfitResult(dealer.calculateProfits(players));
     }
 
+    private void processInitialDeal(Dealer dealer, List<Player> players, CardDeck deck) {
+        dealer.initialDeal(deck);
+        players.forEach(player -> player.initialDeal(deck));
+    }
+
     private List<Player> setPlayers(CardDeck deck) {
         List<Player> players = new ArrayList<>();
 
@@ -50,7 +57,7 @@ public class BlackJackController {
 
         for (Nickname nickname : nicknames) {
             Betting betting = new Betting(inputView.readBettingAmount(nickname));
-            players.add(new Player(new Hand(deck), nickname, betting));
+            players.add(new Player(new Hand(), nickname, betting));
         }
 
         return players;

@@ -18,7 +18,7 @@ class HitTest {
     @Test
     void hitToHit() {
         // given
-        Hand hand = HandFixture.createHand(Card.of(CardSymbol.SPADE, CardRank.EIGHT),
+        Hand hand = HandFixture.createHandOf(Card.of(CardSymbol.SPADE, CardRank.EIGHT),
                 Card.of(CardSymbol.SPADE, CardRank.EIGHT));
         Hit hitState = new Hit(hand);
 
@@ -33,7 +33,7 @@ class HitTest {
     @Test
     void hitToBust() {
         // given
-        Hand hand = HandFixture.createHand(Card.of(CardSymbol.SPADE, CardRank.KING),
+        Hand hand = HandFixture.createHandOf(Card.of(CardSymbol.SPADE, CardRank.KING),
                 Card.of(CardSymbol.SPADE, CardRank.JACK));
         Hit hitState = new Hit(hand);
 
@@ -48,7 +48,7 @@ class HitTest {
     @Test
     void hitToStay() {
         // given
-        Hand hand = HandFixture.createHand(Card.of(CardSymbol.SPADE, CardRank.EIGHT),
+        Hand hand = HandFixture.createHandOf(Card.of(CardSymbol.SPADE, CardRank.EIGHT),
                 Card.of(CardSymbol.SPADE, CardRank.EIGHT));
         Hit hitState = new Hit(hand);
 

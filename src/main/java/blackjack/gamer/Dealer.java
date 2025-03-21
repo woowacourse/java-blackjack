@@ -17,13 +17,6 @@ public class Dealer extends Gamer {
 
     public Dealer(Hand hand) {
         super(hand);
-        checkState(hand);
-    }
-
-    private void checkState(Hand hand) {
-        if (hand.calculateTotalPoint() > HIT_THRESHOLD) {
-            state = new Stay(hand);
-        }
     }
 
     private BlackjackMatchResult determineMatchResultFor(Player player) {
@@ -43,6 +36,18 @@ public class Dealer extends Gamer {
         }
 
         return new ProfitResult(dealerProfit, playerProfits);
+    }
+
+    @Override
+    public void initialDeal(CardDeck cardDeck) {
+        state = state.initialDeal(cardDeck);
+        checkState(getHand());
+    }
+
+    private void checkState(Hand hand) {
+        if (hand.calculateTotalPoint() > HIT_THRESHOLD && !hand.isBlackjack()) {
+            state = new Stay(hand);
+        }
     }
 
     @Override

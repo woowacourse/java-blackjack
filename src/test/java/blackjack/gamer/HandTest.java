@@ -51,52 +51,21 @@ class HandTest {
         );
     }
 
-    @DisplayName("Hand는 처음 생성 될 때 2장의 카드를 가진다.")
-    @Test
-    void initHand() {
-        // given
-        Card card1 = Card.of(CardSymbol.HEART, CardRank.KING);
-        Card card2 = Card.of(CardSymbol.HEART, CardRank.JACK);
-        CardDeck cardDeck = CardDeckFixture.createCardDeck(card1, card2);
-
-        Hand hand = new Hand(cardDeck);
-
-        // when
-        int actual = hand.getCards().size();
-
-        // then
-        assertThat(actual).isEqualTo(2);
-    }
-
     @DisplayName("Hand의 카드들의 점수의 합을 계산할 수 있다")
     @ParameterizedTest
     @MethodSource("provideEachCardDecksAndExpected")
     void calculateTotalPoint(CardDeck cardDeck, int expected) {
         //given
-        Hand hand = new Hand(cardDeck);
+        Hand hand = new Hand();
+
+        hand.add(cardDeck.drawCard());
+        hand.add(cardDeck.drawCard());
 
         //when
         int actual = hand.calculateTotalPoint();
 
         //then
         assertThat(actual).isEqualTo(expected);
-    }
-
-    @DisplayName("처음 생성 될 때 2장의 카드의 합이 21이라면 블랙잭이다.")
-    @Test
-    void blackjackHand() {
-        // given
-        Card card1 = Card.of(CardSymbol.HEART, CardRank.KING);
-        Card card2 = Card.of(CardSymbol.HEART, CardRank.ACE);
-        CardDeck cardDeck = CardDeckFixture.createCardDeck(card1, card2);
-
-        Hand hand = new Hand(cardDeck);
-
-        // when
-        boolean actual = hand.isBlackjack();
-
-        // then
-        assertThat(actual).isTrue();
     }
 
     @DisplayName("카드 뭉치에 카드를 추가할 수 있다")
@@ -107,7 +76,7 @@ class HandTest {
         Card card2 = Card.of(CardSymbol.HEART, CardRank.ACE);
         CardDeck cardDeck = CardDeckFixture.createCardDeck(card1, card2);
 
-        Hand hand = new Hand(cardDeck);
+        Hand hand = new Hand();
 
         Card card = new Card(CardSymbol.COLVER, CardRank.FIVE);
 
@@ -125,7 +94,9 @@ class HandTest {
         Card card3 = Card.of(CardSymbol.HEART, CardRank.TWO);
         CardDeck cardDeck = CardDeckFixture.createCardDeck(card1, card2, card3);
 
-        Hand hand = new Hand(cardDeck);
+        Hand hand = new Hand();
+        hand.add(cardDeck.drawCard());
+        hand.add(cardDeck.drawCard());
         hand.add(cardDeck.drawCard());
 
         //when
@@ -144,7 +115,7 @@ class HandTest {
         Card card3 = Card.of(CardSymbol.HEART, CardRank.ACE);
         CardDeck cardDeck = CardDeckFixture.createCardDeck(card1, card2, card3);
 
-        Hand hand = new Hand(cardDeck);
+        Hand hand = new Hand();
         hand.add(cardDeck.drawCard());
 
         //when
@@ -159,7 +130,9 @@ class HandTest {
     @MethodSource("provideCardsWithAce")
     void processAcePoint(CardDeck cardDeck, int expected) {
         // given
-        Hand hand = new Hand(cardDeck);
+        Hand hand = new Hand();
+        hand.add(cardDeck.drawCard());
+        hand.add(cardDeck.drawCard());
         hand.add(cardDeck.drawCard());
 
         // when

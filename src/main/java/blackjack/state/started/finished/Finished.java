@@ -1,6 +1,7 @@
 package blackjack.state.started.finished;
 
 import blackjack.card.Card;
+import blackjack.card.CardDeck;
 import blackjack.card.Hand;
 import blackjack.state.State;
 import blackjack.state.started.Started;
@@ -9,6 +10,11 @@ import java.math.BigDecimal;
 public abstract class Finished extends Started {
     public Finished(Hand hand) {
         super(hand);
+    }
+
+    @Override
+    public State initialDeal(CardDeck cardDeck) {
+        throw new IllegalStateException("[ERROR] 이미 초기 카드가 배부되었습니다.");
     }
 
     @Override

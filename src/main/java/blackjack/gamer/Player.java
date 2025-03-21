@@ -1,5 +1,6 @@
 package blackjack.gamer;
 
+import blackjack.card.CardDeck;
 import blackjack.card.Hand;
 import blackjack.result.BlackjackMatchResult;
 import java.math.BigDecimal;
@@ -16,6 +17,11 @@ public class Player extends Gamer {
 
     public BigDecimal getProfit(BlackjackMatchResult result) {
         return state.getProfit(betting.getAmount()).multiply(BigDecimal.valueOf(result.getRatio()));
+    }
+
+    @Override
+    public void initialDeal(CardDeck cardDeck) {
+        state = state.initialDeal(cardDeck);
     }
 
     @Override

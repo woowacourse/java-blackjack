@@ -12,7 +12,6 @@ import blackjack.state.started.finished.Stay;
 import blackjack.state.started.running.Hit;
 import fixture.BettingFixture;
 import fixture.CardDeckFixture;
-import fixture.HandFixture;
 import fixture.NicknameFixture;
 import java.math.BigDecimal;
 import java.util.List;
@@ -41,19 +40,22 @@ class DealerTest {
 
     public static Stream<Arguments> providePlayersAndExpected() {
         return Stream.of(
-                Arguments.of(new Player(HandFixture.createHand(Card.of(CardSymbol.SPADE, CardRank.EIGHT),
-                                Card.of(CardSymbol.SPADE, CardRank.EIGHT)),
+                Arguments.of(new Player(new Hand(),
                                 NicknameFixture.createNickname("ad"), BettingFixture.createBetting(1000)),
+                        CardDeckFixture.createCardDeck(Card.of(CardSymbol.SPADE, CardRank.EIGHT),
+                                Card.of(CardSymbol.SPADE, CardRank.EIGHT)),
                         BigDecimal.valueOf(-1000)
                 ),
-                Arguments.of(new Player(HandFixture.createHand(Card.of(CardSymbol.SPADE, CardRank.EIGHT),
-                                Card.of(CardSymbol.SPADE, CardRank.JACK)),
+                Arguments.of(new Player(new Hand(),
                                 NicknameFixture.createNickname("ad"), BettingFixture.createBetting(1000)),
+                        CardDeckFixture.createCardDeck(Card.of(CardSymbol.SPADE, CardRank.EIGHT),
+                                Card.of(CardSymbol.SPADE, CardRank.JACK)),
                         BigDecimal.valueOf(1000)
                 ),
-                Arguments.of(new Player(HandFixture.createHand(Card.of(CardSymbol.SPADE, CardRank.EIGHT),
-                                Card.of(CardSymbol.SPADE, CardRank.NINE)),
+                Arguments.of(new Player(new Hand(),
                                 NicknameFixture.createNickname("ad"), BettingFixture.createBetting(1000)),
+                        CardDeckFixture.createCardDeck(Card.of(CardSymbol.SPADE, CardRank.EIGHT),
+                                Card.of(CardSymbol.SPADE, CardRank.NINE)),
                         BigDecimal.valueOf(0)
                 )
         );
@@ -64,9 +66,11 @@ class DealerTest {
     @MethodSource("provideCardDeckAndExpected")
     void checkState(CardDeck cardDeck, Class<?> expected) {
         // given
-        Hand hand = new Hand(cardDeck);
+        Hand hand = new Hand();
 
         Dealer dealer = new Dealer(hand);
+
+        dealer.initialDeal(cardDeck);
 
         // when
         final var actual = dealer.state;
@@ -78,15 +82,17 @@ class DealerTest {
     @DisplayName("딜러는 플레이어의 수익 결과를 도출한다.")
     @ParameterizedTest
     @MethodSource("providePlayersAndExpected")
-    void determineMatchResult(Player player, BigDecimal expected) {
+    void determineMatchResult(Player player, CardDeck cardDeckForPlayer, BigDecimal expected) {
         // given
         CardDeck cardDeck = CardDeckFixture.createCardDeck(
                 Card.of(CardSymbol.SPADE, CardRank.SEVEN),
                 Card.of(CardSymbol.SPADE, CardRank.KING));
 
-        Hand hand = new Hand(cardDeck);
+        Hand hand = new Hand();
 
         Dealer dealer = new Dealer(hand);
+        dealer.initialDeal(cardDeck);
+        player.initialDeal(cardDeckForPlayer);
         player.stay();
 
         // when

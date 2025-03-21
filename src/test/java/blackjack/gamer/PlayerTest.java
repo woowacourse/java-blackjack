@@ -48,16 +48,16 @@ class PlayerTest {
     @Test
     void hit() {
         //given
-        CardDeck cardDeck = CardDeckFixture.createCardDeck(
-                Card.of(CardSymbol.SPADE, CardRank.EIGHT),
-                Card.of(CardSymbol.SPADE, CardRank.SEVEN),
-                Card.of(CardSymbol.SPADE, CardRank.TWO)
-        );
-        Hand hand = new Hand(cardDeck);
+        Card card1 = Card.of(CardSymbol.SPADE, CardRank.EIGHT);
+        Card card2 = Card.of(CardSymbol.SPADE, CardRank.SEVEN);
+        Card card3 = Card.of(CardSymbol.SPADE, CardRank.TWO);
 
-        Player player = new Player(hand, NicknameFixture.createNickname("ad"),
+        CardDeck cardDeck = CardDeckFixture.createCardDeck(card1, card2, card3);
+
+        Player player = new Player(new Hand(), NicknameFixture.createNickname("ad"),
                 BettingFixture.createBetting(1000));
 
+        player.initialDeal(cardDeck);
         //when
         int initialSize = player.getHand().getCards().size();
         player.hit(cardDeck);
@@ -72,15 +72,13 @@ class PlayerTest {
     @MethodSource("provideResultAndExpectedForBlackjack")
     void getProfitOfBlackjack(BlackjackMatchResult result, BigDecimal expected) {
         // given
-        CardDeck cardDeck = CardDeckFixture.createCardDeck(
-                Card.of(CardSymbol.SPADE, CardRank.ACE),
-                Card.of(CardSymbol.SPADE, CardRank.JACK)
-        );
+        CardDeck cardDeck = CardDeckFixture.createCardDeck(Card.of(CardSymbol.SPADE, CardRank.ACE),
+                Card.of(CardSymbol.SPADE, CardRank.JACK));
 
-        Hand hand = new Hand(cardDeck);
-
-        Player player = new Player(hand, NicknameFixture.createNickname("ad"),
+        Player player = new Player(new Hand(), NicknameFixture.createNickname("ad"),
                 BettingFixture.createBetting(1000));
+
+        player.initialDeal(cardDeck);
 
         //when
         BigDecimal actual = player.getProfit(result);
@@ -94,15 +92,12 @@ class PlayerTest {
     @MethodSource("provideResultAndExpectedForStay")
     void getProfitOfStay(BlackjackMatchResult result, BigDecimal expected) {
         // given
-        CardDeck cardDeck = CardDeckFixture.createCardDeck(
-                Card.of(CardSymbol.SPADE, CardRank.KING),
-                Card.of(CardSymbol.SPADE, CardRank.JACK)
-        );
+        CardDeck cardDeck = CardDeckFixture.createCardDeck(Card.of(CardSymbol.SPADE, CardRank.KING),
+                Card.of(CardSymbol.SPADE, CardRank.JACK));
 
-        Hand hand = new Hand(cardDeck);
-
-        Player player = new Player(hand, NicknameFixture.createNickname("ad"),
+        Player player = new Player(new Hand(), NicknameFixture.createNickname("ad"),
                 BettingFixture.createBetting(1000));
+        player.initialDeal(cardDeck);
         player.stay();
 
         //when
@@ -123,10 +118,9 @@ class PlayerTest {
                 Card.of(CardSymbol.SPADE, CardRank.JACK)
         );
 
-        Hand hand = new Hand(cardDeck);
-
-        Player player = new Player(hand, NicknameFixture.createNickname("ad"),
+        Player player = new Player(new Hand(), NicknameFixture.createNickname("ad"),
                 BettingFixture.createBetting(1000));
+        player.initialDeal(cardDeck);
         player.hit(cardDeck);
 
         //when

@@ -8,28 +8,17 @@ public class Hand {
 
     public static final int SOFT_ACE_POINT = 11;
     private static final int HIGHEST_SCORE = 21;
-    private static final int DEFAULT_SIZE = 2;
 
     private final List<Card> cards = new ArrayList<>();
-    private final boolean isBlackjack;
+    private boolean isInitial = true;
 
-    public Hand(CardDeck cardDeck) {
-        initCards(cardDeck);
-        isBlackjack = calculateTotalPoint() == HIGHEST_SCORE;
-    }
-
-    private void initCards(CardDeck cardDeck) {
-        for (int i = 0; i < DEFAULT_SIZE; i++) {
-            add(cardDeck.drawCard());
-        }
-    }
 
     public void add(Card card) {
         cards.add(card);
     }
 
     public BlackjackMatchResult determineMatchResultFor(Hand other) {
-        if (this.isBlackjack || other.isBlackjack) {
+        if (this.isBlackjack() || other.isBlackjack()) {
             return checkBlackjackResult(other);
         }
 
@@ -41,10 +30,10 @@ public class Hand {
     }
 
     private BlackjackMatchResult checkBlackjackResult(Hand other) {
-        if (this.isBlackjack && other.isBlackjack) {
+        if (this.isBlackjack() && other.isBlackjack()) {
             return BlackjackMatchResult.DRAW;
         }
-        if (this.isBlackjack) {
+        if (this.isBlackjack()) {
             return BlackjackMatchResult.LOSE;
         }
 
@@ -110,8 +99,12 @@ public class Hand {
         return calculateTotalPoint() > HIGHEST_SCORE;
     }
 
+    public void finishInitialDeal() {
+        isInitial = false;
+    }
+
     public boolean isBlackjack() {
-        return isBlackjack;
+        return isInitial && calculateTotalPoint() == HIGHEST_SCORE;
     }
 
     public List<Card> getCards() {

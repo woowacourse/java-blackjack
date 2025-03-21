@@ -19,11 +19,11 @@ class FinishedTest {
     public static Stream<Arguments> provideInstancesOfFinished() {
         return Stream.of(
                 Arguments.of(
-                        new Blackjack(HandFixture.createHand(Card.of(CardSymbol.SPADE, CardRank.ACE),
+                        new Blackjack(HandFixture.createHandOf(Card.of(CardSymbol.SPADE, CardRank.ACE),
                                 Card.of(CardSymbol.SPADE, CardRank.JACK))),
-                        new Stay(HandFixture.createHand(Card.of(CardSymbol.SPADE, CardRank.KING),
+                        new Stay(HandFixture.createHandOf(Card.of(CardSymbol.SPADE, CardRank.KING),
                                 Card.of(CardSymbol.SPADE, CardRank.JACK))),
-                        new Bust(HandFixture.createHand(Card.of(CardSymbol.SPADE, CardRank.ACE),
+                        new Bust(HandFixture.createHandOf(Card.of(CardSymbol.SPADE, CardRank.ACE),
                                 Card.of(CardSymbol.SPADE, CardRank.JACK)))
                 ));
     }
@@ -31,17 +31,17 @@ class FinishedTest {
     public static Stream<Arguments> provideInstancesOfFinishedWithExpected() {
         return Stream.of(
                 Arguments.of(
-                        new Blackjack(HandFixture.createHand(Card.of(CardSymbol.SPADE, CardRank.ACE),
+                        new Blackjack(HandFixture.createHandOf(Card.of(CardSymbol.SPADE, CardRank.ACE),
                                 Card.of(CardSymbol.SPADE, CardRank.JACK))),
                         BigDecimal.valueOf(1500)
                 ),
                 Arguments.of(
-                        new Stay(HandFixture.createHand(Card.of(CardSymbol.SPADE, CardRank.KING),
+                        new Stay(HandFixture.createHandOf(Card.of(CardSymbol.SPADE, CardRank.KING),
                                 Card.of(CardSymbol.SPADE, CardRank.JACK))),
                         BigDecimal.valueOf(1000)
                 ),
                 Arguments.of(
-                        new Bust(HandFixture.createHand(Card.of(CardSymbol.SPADE, CardRank.ACE),
+                        new Bust(HandFixture.createHandOf(Card.of(CardSymbol.SPADE, CardRank.ACE),
                                 Card.of(CardSymbol.SPADE, CardRank.JACK))),
                         BigDecimal.valueOf(1000)
                 ));
