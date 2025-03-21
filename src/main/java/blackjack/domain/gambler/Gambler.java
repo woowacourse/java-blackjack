@@ -1,5 +1,6 @@
 package blackjack.domain.gambler;
 
+import blackjack.constant.GamblerStatus;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Cards;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ public abstract class Gambler {
     public static final int INITIAL_CARD_COUNT = 2;
 
     protected Cards cards;
+    protected GamblerStatus status;
     private double betAmount;
 
     public abstract List<Card> openInitialCards();
@@ -17,6 +19,7 @@ public abstract class Gambler {
     public void drawInitializeHand(Cards cards) {
         validateInitialCardsSize(cards);
         this.cards = cards;
+        this.status = GamblerStatus.IN_PROGRESS;
     }
 
     public List<Card> openCards() {
@@ -38,6 +41,10 @@ public abstract class Gambler {
 
     public int sumCardScores() {
         return cards.sumCardScores();
+    }
+
+    public boolean isInProgress() {
+        return status == GamblerStatus.IN_PROGRESS;
     }
 
     private void validateInitialCardsSize(Cards cards) {

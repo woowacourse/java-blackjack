@@ -17,6 +17,10 @@ public class Player extends Gambler {
         return cards.openPlayerInitialCards();
     }
 
+    public void changeStatusToEnd() {
+        super.status = GamblerStatus.END;
+    }
+
     public String getPlayerName() {
         return playerName.getValue();
     }
