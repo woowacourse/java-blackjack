@@ -1,4 +1,4 @@
-package blackjack.gametable.card;
+package blackjack.domain.card;
 
 import blackjack.constant.TrumpRank;
 import blackjack.constant.TrumpSuit;

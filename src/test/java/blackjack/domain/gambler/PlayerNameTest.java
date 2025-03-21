@@ -1,4 +1,4 @@
-package blackjack.gametable.gambler;
+package blackjack.domain.gambler;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;

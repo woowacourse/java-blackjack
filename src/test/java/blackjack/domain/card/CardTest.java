@@ -1,11 +1,9 @@
-package blackjack.gametable.card;
+package blackjack.domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.constant.TrumpSuit;
 import blackjack.constant.TrumpRank;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class CardTest {

@@ -1,7 +1,7 @@
-package blackjack;
+package blackjack.controller;
 
 import blackjack.config.GameConfig;
-import blackjack.gametable.BlackjackGame;
+import blackjack.domain.BlackjackGame;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;

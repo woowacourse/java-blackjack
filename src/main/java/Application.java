@@ -1,4 +1,4 @@
-import blackjack.BlackjackController;
+import blackjack.controller.BlackjackController;
 import blackjack.config.GameConfig;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;

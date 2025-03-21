@@ -1,4 +1,4 @@
-package blackjack.gametable.gambler;
+package blackjack.domain.gambler;
 
 import static blackjack.constant.TrumpRank.ACE;
 import static blackjack.constant.TrumpRank.EIGHT;
@@ -18,8 +18,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.constant.TrumpRank;
 import blackjack.constant.TrumpSuit;
-import blackjack.gametable.card.Card;
-import blackjack.gametable.card.Cards;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Cards;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,8 +1,8 @@
-package blackjack.gametable.gambler;
+package blackjack.domain.gambler;
 
 import blackjack.constant.MatchResult;
-import blackjack.gametable.BlackjackRule;
-import blackjack.gametable.card.Card;
+import blackjack.domain.BlackjackRule;
+import blackjack.domain.card.Card;
 import java.util.List;
 
 public class Dealer extends Gambler {

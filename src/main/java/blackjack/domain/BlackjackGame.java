@@ -1,11 +1,11 @@
-package blackjack.gametable;
+package blackjack.domain;
 
 import blackjack.constant.UserAction;
-import blackjack.gametable.card.Deck;
-import blackjack.gametable.gambler.Dealer;
-import blackjack.gametable.gambler.Player;
-import blackjack.gametable.gambler.PlayerName;
-import blackjack.gametable.gambler.Players;
+import blackjack.domain.card.Deck;
+import blackjack.domain.gambler.Dealer;
+import blackjack.domain.gambler.Player;
+import blackjack.domain.gambler.PlayerName;
+import blackjack.domain.gambler.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;

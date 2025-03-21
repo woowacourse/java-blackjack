@@ -1,9 +1,9 @@
-package blackjack.gametable;
+package blackjack.domain;
 
 import blackjack.constant.MatchResult;
-import blackjack.gametable.card.Cards;
-import blackjack.gametable.gambler.Dealer;
-import blackjack.gametable.gambler.Player;
+import blackjack.domain.card.Cards;
+import blackjack.domain.gambler.Dealer;
+import blackjack.domain.gambler.Player;
 
 public class BlackjackRule {
 

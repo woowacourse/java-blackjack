@@ -1,10 +1,10 @@
 package blackjack.view;
 
-import blackjack.gametable.BlackjackGame;
-import blackjack.gametable.card.Card;
-import blackjack.gametable.gambler.Dealer;
-import blackjack.gametable.gambler.Player;
-import blackjack.gametable.gambler.Players;
+import blackjack.domain.BlackjackGame;
+import blackjack.domain.card.Card;
+import blackjack.domain.gambler.Dealer;
+import blackjack.domain.gambler.Player;
+import blackjack.domain.gambler.Players;
 import java.util.List;
 
 public class OutputView {
