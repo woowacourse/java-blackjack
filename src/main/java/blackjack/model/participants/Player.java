@@ -15,7 +15,7 @@ public class Player extends Participant {
     }
 
     public void updateWager(double multiplier) {
-        wager.updatePlayerWager(multiplier);
+        wager = wager.updatePlayerWager(multiplier);
     }
 
     public boolean isBust() {

@@ -12,7 +12,7 @@ public class WagerTest {
     void wager_Dealer() {
         Wager dealerWager = new Wager(1000);
 
-        dealerWager.updateDealerWager(1, 1000);
+        dealerWager = dealerWager.updateDealerWager(1, 1000);
 
         assertThat(dealerWager.getWager()).isEqualTo(2000);
     }
@@ -22,7 +22,7 @@ public class WagerTest {
     void wager_Player() {
         Wager playerWager = new Wager(1000);
 
-        playerWager.updatePlayerWager(1.5);
+        playerWager = playerWager.updatePlayerWager(1.5);
 
         assertThat(playerWager.getWager()).isEqualTo(2500);
     }

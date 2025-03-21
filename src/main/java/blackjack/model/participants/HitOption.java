@@ -13,7 +13,7 @@ public enum HitOption {
     }
 
     public static boolean isNo(String option) {
-        if (!option.equalsIgnoreCase("y") && !option.equalsIgnoreCase("n")) {
+        if (!option.equalsIgnoreCase(YES.option) && !option.equalsIgnoreCase(NO.option)) {
             throw new IllegalArgumentException(INVALID_OPTION);
         }
         return option.equalsIgnoreCase(NO.option);

@@ -30,7 +30,7 @@ public class Dealer extends Participant {
     }
 
     public void updateWager(double multiplier, double playerWager) {
-        wager.updateDealerWager(multiplier, playerWager);
+        wager = wager.updateDealerWager(multiplier, playerWager);
     }
 
     @Override
