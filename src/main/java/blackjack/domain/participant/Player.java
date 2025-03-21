@@ -17,17 +17,13 @@ public class Player extends Participant {
         bet = bet.increase(value);
     }
 
-    @Override
-    public List<Card> getInitialCards() {
-        return super.getCards();
+    public int calculateProfit(final Dealer dealer) {
+        GameStatus gameStatus = determineGameStatus(dealer);
+        double profit = gameStatus.calculateBetResult(bet);
+        return (int) Math.ceil(profit);
     }
 
-    @Override
-    public boolean ableToAddCard() {
-        return !isBust();
-    }
-
-    protected GameStatus determineGameStatus(final Dealer dealer) {
+    public GameStatus determineGameStatus(final Dealer dealer) {
         if (isBlackjack() && !dealer.isBlackjack()) {
             return GameStatus.BLACKJACK;
         }
@@ -43,9 +39,13 @@ public class Player extends Participant {
         return GameStatus.TIE;
     }
 
-    public int calculateProfit(final Dealer dealer) {
-        GameStatus gameStatus = determineGameStatus(dealer);
-        double profit = gameStatus.calculateBetResult(bet);
-        return (int) Math.ceil(profit);
+    @Override
+    public List<Card> getInitialCards() {
+        return super.getCards();
+    }
+
+    @Override
+    public boolean ableToAddCard() {
+        return !isBust();
     }
 }
