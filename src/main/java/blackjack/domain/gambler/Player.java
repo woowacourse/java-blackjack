@@ -1,5 +1,6 @@
 package blackjack.domain.gambler;
 
+import blackjack.constant.GamblerStatus;
 import blackjack.domain.card.Card;
 import java.util.List;
 import java.util.Objects;

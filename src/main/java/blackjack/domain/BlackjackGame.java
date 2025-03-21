@@ -1,13 +1,10 @@
 package blackjack.domain;
 
-import blackjack.constant.UserAction;
 import blackjack.domain.card.Deck;
 import blackjack.domain.gambler.Dealer;
 import blackjack.domain.gambler.Player;
 import blackjack.domain.gambler.PlayerName;
 import blackjack.domain.gambler.Players;
-import blackjack.view.InputView;
-import blackjack.view.OutputView;
 import java.util.List;
 
 public class BlackjackGame {
@@ -24,54 +21,52 @@ public class BlackjackGame {
         distributeStartingHands();
     }
 
-    private void distributeStartingHands() {
-        dealer.drawInitializeHand(deck.drawInitialCards());
-        players.drawInitializeHands(deck);
-    }
-
-    public void playGame(InputView inputView, OutputView outputView) {
-        for (String playerName : getPlayerNames()) {
-            playPlayerTurn(playerName, inputView, outputView);
+    public void processDealerTurn() {
+        if (isDealerShouldDrawCard()) {
+            dealer.addCard(deck.drawCard());
         }
-        playDealerTurn(outputView);
+        calculateTotalPayout();
     }
 
     public void updateBetAmount(String playerName, int betAmount) {
         findPlayer(playerName).updateBetAmount(betAmount);
     }
 
-    public void calculateTotalPayout() {
-        dealer.applyBetAmounts(players);
-    }
-
     public Player findPlayer(String playerName) {
         return players.findPlayer(playerName);
     }
 
-    private void playPlayerTurn(String playerName, InputView inputView, OutputView outputView) {
-        while (inputView.readOneMoreCardResponse(playerName).equals(UserAction.HIT)) {
-            addCardTo(playerName);
-            outputView.printPlayerCards(this, playerName);
-        }
+    public String findCurrentTurnPlayerName() {
+        return players.findCurrentPlayer().getPlayerName();
     }
 
-    private void playDealerTurn(OutputView outputView) {
-        if (dealer.shouldDrawCard()) {
-            outputView.printDealerOneMoreCardMessage();
-            dealer.addCard(deck.drawCard());
-        }
-        calculateTotalPayout();
-    }
-
-    private void addCardTo(String playerName) {
+    public void addCardTo(String playerName) {
         findPlayer(playerName).addCard(deck.drawCard());
     }
 
+    public boolean isPlaying() {
+        return players.countInProgressPlayers() != 0;
+    }
+
+    public boolean isDealerShouldDrawCard() {
+        return dealer.shouldDrawCard();
+    }
+
+    public void endPlayerTurn(String playerName) {
+        players.endPlayerTurn(playerName);
+    }
+
+    private void calculateTotalPayout() {
+        dealer.applyBetAmounts(players);
+    }
+
+    private void distributeStartingHands() {
+        dealer.drawInitializeHand(deck.drawInitialCards());
+        players.drawInitializeHands(deck);
+    }
+
     private Players registerPlayers(List<String> names) {
-        return new Players(names.stream()
-                .map(PlayerName::new)
-                .map(Player::new)
-                .toList());
+        return new Players(names.stream().map(PlayerName::new).map(Player::new).toList());
     }
 
     private void validatePlayerCount(List<String> playerNames) {
