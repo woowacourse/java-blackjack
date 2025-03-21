@@ -1,24 +1,29 @@
 package view;
 
-import domain.Participant;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class InputView {
+    private final Scanner scanner;
 
-    private static final String INPUT_USER_NAME_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    public InputView(Scanner scanner) {
+        this.scanner = scanner;
+    }
 
-    private final Scanner scanner = new Scanner(System.in);
-
-    public String inputUserNames() {
-        System.out.println(INPUT_USER_NAME_MESSAGE);
+    public List<String> inputPlayerNames() {
+        System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String userInput = scanner.nextLine();
         validateIsNotBlank(userInput);
-        return userInput;
+        return Stream.of(userInput.split(","))
+                .map(String::trim)
+                .collect(Collectors.toList());
     }
 
     public String inputPlayerWantMoreCard(String playerName) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n"
-            , playerName);
+                , playerName);
 
         String userInput = scanner.nextLine();
         validateIsYOrN(userInput);
@@ -33,9 +38,24 @@ public class InputView {
 
     private void validateIsYOrN(String userInput) {
         if (userInput.equalsIgnoreCase("n") ||
-            userInput.equalsIgnoreCase("y")) {
+                userInput.equalsIgnoreCase("y")) {
             return;
         }
         throw new IllegalArgumentException("입력은 y 혹은 n으로만 가능합니다.");
+    }
+
+    public int inputPlayerBatMoney(String playerName) {
+        String message = String.format("%s의 배팅 금액은?", playerName);
+        System.out.println(message);
+        String input = scanner.nextLine();
+        return validateInputIsNumber(input);
+    }
+
+    private int validateInputIsNumber(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("입력 값이 숫자가 아닙니다.");
+        }
     }
 }

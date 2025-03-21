@@ -1,8 +1,8 @@
-package domain;
+package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
-import domain.card.Card;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -22,7 +22,10 @@ public class CardBundleTest {
 
         //then
         Set<Card> testAllCards = new HashSet<>(allCards);
-        assertThat(allCards).hasSize(testAllCards.size());
+        assertAll(
+                () -> assertThat(allCards).hasSize(testAllCards.size()),
+                () -> assertThat(allCards).hasSize(52)
+        );
     }
 
     @Test
@@ -36,6 +39,9 @@ public class CardBundleTest {
 
         //then
         List<Card> expected = cardBundle.getAllCards();
-        assertThat(shuffledAllCards).containsExactlyInAnyOrderElementsOf(expected);
+        assertAll(
+                () -> assertThat(shuffledAllCards).containsExactlyInAnyOrderElementsOf(expected),
+                () -> assertThat(shuffledAllCards).hasSize(52)
+        );
     }
 }

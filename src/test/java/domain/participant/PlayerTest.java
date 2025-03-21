@@ -1,6 +1,7 @@
-package domain;
+package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import domain.card.Card;
 import domain.card.Rank;
@@ -17,28 +18,34 @@ public class PlayerTest {
 
     @Test
     @DisplayName("카드를 받아 수중에 카드를 추가한다")
-    void should_add_Card_card() {
+    void should_add_card() {
         // given
-        Card card = new Card(Shape.HEART, Rank.ACE);
+        Card cardOfHeartAce = new Card(Shape.HEART, Rank.ACE);
         Player player = new Player("a");
 
         // then
-        player.addCard(card);
+        player.addCard(cardOfHeartAce);
 
         // when
-        assertThat(player.getCards()).hasSize(1);
+        List<Card> cards = player.getCards();
+        assertAll(
+                () -> assertThat(cards).hasSize(1),
+                () -> assertThat(cards).contains(cardOfHeartAce)
+        );
     }
 
     @Test
-    @DisplayName("모두에게 보여줄 플레이어 카드를 가져온다.")
-    void should_return_public_able_cards() {
+    @DisplayName("블랙잭 시작 후 받은 모두에게 보여줄 카드들을 가져온다.")
+    void should_return_cards_to_show_when_blackjack_started() {
         //given
         Participant player = new Player("amy");
-        player.addCard(new Card(Shape.HEART, Rank.ACE));
-        player.addCard(new Card(Shape.HEART, Rank.KING));
+        Card cardOfHeartAce = new Card(Shape.HEART, Rank.ACE);
+        Card cardOfHeartKing = new Card(Shape.HEART, Rank.KING);
+        player.addCard(cardOfHeartAce);
+        player.addCard(cardOfHeartKing);
 
         //when
-        List<Card> shownCard = player.getShownCard();
+        List<Card> shownCard = player.getFirstShownCard();
 
         //then
         assertThat(shownCard).hasSize(2);
@@ -87,21 +94,17 @@ public class PlayerTest {
         assertThat(totalValue).isEqualTo(expected);
     }
 
-    /***
-     * 플레이어 21 이하면 다시 입력받기 -> boolean true/ false
-     * 딜러 16이하면 다시 뽑기
-     */
     @Test
-    @DisplayName("현재 카드의 합이 카드를 뽑을 수 있는 조건인 21 이하일 경우, true를 반환한다")
+    @DisplayName("현재 플레이어가 카드를 받을 수 있는지 여부를 반환한다")
     void should_return_true_when_can_pick() {
         //given
-        List<Card> cards = List.of(new Card(Shape.HEART, Rank.KING),
-                new Card(Shape.HEART, Rank.NINE),
-                new Card(Shape.HEART, Rank.TWO));
+        Card cardOfHeartKing = new Card(Shape.HEART, Rank.KING);
+        Card cardOfHeartNine = new Card(Shape.HEART, Rank.NINE);
+        Card cardOfHeartTwo = new Card(Shape.HEART, Rank.TWO);
         Participant player = new Player("a");
-        for (Card card : cards) {
-            player.addCard(card);
-        }
+        player.addCard(cardOfHeartKing);
+        player.addCard(cardOfHeartNine);
+        player.addCard(cardOfHeartTwo);
 
         // when
         boolean canPick = player.canPick();
@@ -111,21 +114,55 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("현재 카드의 합이 카드를 뽑을 수 있는 조건인 22 이상 경우, false를 반환한다")
-    void should_return_false_when_cannot_pick() {
+    @DisplayName("현재 플레이어가 카드를 받을 수 있는지 여부를 반환한다")
+    void should_return_false_when_can_not_pick() {
         //given
-        List<Card> cards = List.of(new Card(Shape.HEART, Rank.KING),
-                new Card(Shape.HEART, Rank.QUEEN),
-                new Card(Shape.HEART, Rank.TWO));
+        Card cardOfHeartKing = new Card(Shape.HEART, Rank.KING);
+        Card cardOfHeartQueen = new Card(Shape.HEART, Rank.QUEEN);
+        Card cardOfHeartTwo = new Card(Shape.HEART, Rank.TWO);
         Participant player = new Player("a");
-        for (Card card : cards) {
-            player.addCard(card);
-        }
+        player.addCard(cardOfHeartKing);
+        player.addCard(cardOfHeartQueen);
+        player.addCard(cardOfHeartTwo);
 
         //when
         boolean canPick = player.canPick();
 
         //then
-        assertThat(canPick).isFalse();
+        assertThat(canPick).isEqualTo(false);
+    }
+
+    @Test
+    @DisplayName("블랙잭인 경우를 반환한다.")
+    void should_return_true_when_is_black_jack() {
+        // given
+        Card cardOfHeartAce = new Card(Shape.HEART, Rank.ACE);
+        Card cardOfHeartKing = new Card(Shape.HEART, Rank.KING);
+        Participant player = new Player("a");
+        player.addCard(cardOfHeartAce);
+        player.addCard(cardOfHeartKing);
+
+        // when
+        boolean isBlackJack = player.isBlackJack();
+
+        // then
+        assertThat(isBlackJack).isEqualTo(true);
+    }
+
+    @Test
+    @DisplayName("블랙잭인 경우를 반환한다.")
+    void should_return_false_when_is_not_black_jack() {
+        // given
+        Card cardOfHeartKing = new Card(Shape.HEART, Rank.KING);
+        Card cardOfHeartQueen = new Card(Shape.HEART, Rank.QUEEN);
+        Participant player = new Player("a");
+        player.addCard(cardOfHeartKing);
+        player.addCard(cardOfHeartQueen);
+
+        // when
+        boolean isBlackJack = player.isBlackJack();
+
+        // then
+        assertThat(isBlackJack).isEqualTo(false);
     }
 }

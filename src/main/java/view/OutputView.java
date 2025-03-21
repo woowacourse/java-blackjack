@@ -1,22 +1,26 @@
 package view;
 
-import static domain.GameResult.DRAW;
-import static domain.GameResult.LOSE;
-import static domain.GameResult.WIN;
+import static domain.BlackJackWinningStatus.BLACK_JACK_LOSE;
+import static domain.BlackJackWinningStatus.BLACK_JACK_WIN;
+import static domain.BlackJackWinningStatus.DRAW;
+import static domain.BlackJackWinningStatus.LOSE;
+import static domain.BlackJackWinningStatus.WIN;
 import static domain.card.Shape.CLUB;
 import static domain.card.Shape.DIAMOND;
 import static domain.card.Shape.HEART;
 import static domain.card.Shape.SPADE;
 
-import domain.GameResult;
-import domain.Participant;
+import domain.BlackJackWinningStatus;
 import domain.ParticipantsResult;
-import domain.PlayerResult;
+import domain.betting.Revenue;
+import domain.betting.Revenues;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Shape;
+import domain.participant.Participant;
+import domain.result.DealerResults;
+import domain.result.PlayerWinningStatus;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -28,17 +32,12 @@ public class OutputView {
         System.out.println(result);
     }
 
-    public void printInitialParticipantHands(List<Participant> participants) {
-        for (Participant participant : participants) {
-            String playerNameAndShownCards = formatInitialParticipantHands(participant);
-            System.out.println(playerNameAndShownCards);
-        }
-        System.out.println();
+    public void printInitialParticipantHand(String playerName, List<Card> cards) {
+        String playerNameAndShownCards = formatInitialParticipantHand(playerName, cards);
+        System.out.println(playerNameAndShownCards);
     }
 
-    private String formatInitialParticipantHands(Participant participant) {
-        String playerName = participant.getName();
-        List<Card> cards = participant.getShownCard();
+    private String formatInitialParticipantHand(String playerName, List<Card> cards) {
         String cardMessage = cards.stream()
                 .map(this::formatCard)
                 .collect(Collectors.joining(", "));
@@ -123,21 +122,22 @@ public class OutputView {
 
     public void printGameResult(ParticipantsResult participantsResult) {
         System.out.println("## 최종 승패");
-        String dealerResultMessage = formatDealerResultMessage(participantsResult.dealerResult()
-                .getDealerResult());
+        String dealerResultMessage = formatDealerResultMessage(participantsResult.dealerResults());
         System.out.println(dealerResultMessage);
 
-        for (PlayerResult playerResult : participantsResult.playerResults()) {
-            String playerGameResult = formatPlayerGameResult(playerResult);
+        for (PlayerWinningStatus playerWinningStatus : participantsResult.playerResults().getPlayerResult()) {
+            String playerGameResult = formatPlayerGameResult(playerWinningStatus);
             System.out.println(playerGameResult);
         }
     }
 
-    private String formatDealerResultMessage(Map<GameResult, Integer> dealerResult) {
+    private String formatDealerResultMessage(DealerResults dealerResults) {
         return String.format("딜러: %s%s%s",
-                formatDealerWinMessage(dealerResult.get(WIN)),
-                formatDealerLoseMessage(dealerResult.get(LOSE)),
-                formatDealerDrawMessage(dealerResult.get(DRAW)));
+                formatDealerWinMessage(
+                        dealerResults.getStatusCount(WIN) + dealerResults.getStatusCount(BLACK_JACK_WIN)),
+                formatDealerLoseMessage(
+                        dealerResults.getStatusCount(LOSE) + dealerResults.getStatusCount(BLACK_JACK_LOSE)),
+                formatDealerDrawMessage(dealerResults.getStatusCount(DRAW)));
     }
 
     private String formatDealerWinMessage(Integer integer) {
@@ -161,22 +161,40 @@ public class OutputView {
         return String.format("%d무 ", integer);
     }
 
-    private String formatPlayerGameResult(PlayerResult playerResult) {
-        return String.format("%s: %s", playerResult.getPlayerName(),
-                formatGameResult(playerResult.getGameResult()));
+    private String formatPlayerGameResult(PlayerWinningStatus playerWinningStatus) {
+        return String.format("%s: %s", playerWinningStatus.playerName(),
+                formatGameResult(playerWinningStatus.status()));
     }
 
-    private String formatGameResult(GameResult gameResult) {
-        if (gameResult == WIN) {
+    private String formatGameResult(BlackJackWinningStatus blackJackWinningStatus) {
+        if (blackJackWinningStatus == WIN) {
             return "승";
         }
-        if (gameResult == DRAW) {
+        if (blackJackWinningStatus == DRAW) {
             return "무";
         }
-        if (gameResult == LOSE) {
+        if (blackJackWinningStatus == LOSE) {
             return "패";
         }
         return "";
+    }
+
+    public void printRevenue(Revenues revenues) {
+        System.out.println("## 최종 수익");
+        String dealerRevenue = formatDealerRevenue(revenues.calculateDealerRevenue());
+        System.out.println(dealerRevenue);
+        for (Revenue revenue : revenues.getRevenues()) {
+            String playerRevenue = formatPlayerRevenue(revenue);
+            System.out.println(playerRevenue);
+        }
+    }
+
+    private String formatDealerRevenue(Revenue dealerRevenue) {
+        return String.format("딜러: %d", dealerRevenue.money());
+    }
+
+    private String formatPlayerRevenue(Revenue playerRevenue) {
+        return String.format("%s: %d", playerRevenue.playerName(), playerRevenue.money());
     }
 
     public void printBlankLine() {
