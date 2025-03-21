@@ -1,19 +1,21 @@
 package view;
 
-import model.card.Card;
-import model.card.Suit;
-import model.card.Rank;
-import model.participant.Dealer;
-import model.participant.Participant;
-import model.participant.Player;
-import model.participant.Players;
-import model.score.MatchType;
+import bet.Money;
+import card.Card;
+import card.Suit;
+import card.Rank;
+import result.MatchResultType;
+import participant.Dealer;
+import participant.Player;
+import participant.Players;
 
 import java.util.List;
 import java.util.Map;
 
 public class OutputView {
     private static final String BASIC_FORM = "%s: %s";
+    private static final String DEALER_NICKNAME = "딜러";
+
     private static final Map<String, String> MATCH_FORMAT = Map.of(
             "WIN", "승",
             "DRAW", "무",
@@ -45,76 +47,99 @@ public class OutputView {
     );
 
     public static void printDivisionStart(Dealer dealer, List<Player> players) {
-        String dealerNickname = dealer.getNickname();
+
         List<String> playerNicknames = players.stream()
                 .map(Player::getNickname)
                 .toList();
 
-        System.out.println(formatDivideCommentByNickname(dealerNickname, playerNicknames));
+        System.out.println(formatDivideCommentByNickname(DEALER_NICKNAME, playerNicknames));
 
         Card card = dealer.getCards().getFirst();
         String formattedDealerCard = getCardFormat(card);
-        String handsHeader = formatHandsHeader(dealerNickname);
+        String handsHeader = formatHandsHeader(DEALER_NICKNAME);
         System.out.println(formatBasicForm(handsHeader, formattedDealerCard));
 
         for (Player player : players) {
-            System.out.println(formatHands(player));
+            System.out.println(formatHandsOfPlayer(player));
         }
         System.out.println();
     }
 
     public static void printCurrentHands(Player player) {
-        System.out.println(formatHands(player));
+        System.out.println(formatHandsOfPlayer(player));
     }
 
-    public static void printStandingDealer(Dealer dealer) {
-        String dealerNickname = dealer.getNickname();
+    public static void printHittingDealer(Dealer dealer) {
         System.out.println();
-        System.out.println(String.format("%s는 %d이하라 한장의 카드를 더 받았습니다.", dealerNickname, 16));
+        System.out.println(String.format("%s는 %d이하라 한장의 카드를 더 받았습니다.", DEALER_NICKNAME, 16));
     }
 
 
     public static void printAllParticipantScore(Dealer dealer, Players players) {
-        printScore(dealer);
+        printScore(formHandsOfDealer(dealer), dealer.calculateScore().getValue());
         for (Player player : players.getPlayers()) {
-            printScore(player);
+            printScore(formatHandsOfPlayer(player), player.calculateScore().getValue());
         }
     }
 
-    private static void printScore(Participant participant) {
-        System.out.printf("%s - 결과: %d%n", formatHands(participant), participant.getScore());
+    private static void printScore(String hands, int score) {
+        System.out.printf("%s - 결과: %d%n", hands, score);
     }
 
-    public static void printResult(Dealer dealer, Map<MatchType, Integer> dealerResult ,Players players) {
-        String dealerNickname = dealer.getNickname();
-        String resultFormatByDealer = getResultFormatByDealer(dealerResult);
+    public static void printResult(
+            Dealer dealer,
+            Map<MatchResultType, Long> dealerMatchResult,
+            Map<Player, MatchResultType> playerMatchResult
+    ) {
+        String resultFormatByDealer = getDealerResultFormat(dealerMatchResult);
 
         System.out.println();
         System.out.println("## 최종 승패");
-        System.out.printf("%s: %s%n", dealerNickname, resultFormatByDealer);
+        System.out.printf("%s: %s%n", DEALER_NICKNAME, resultFormatByDealer);
 
-        for (Player player : players.getPlayers()) {
-            String nickname = player.getNickname();
-            String resultFormatByPlayer = getResultFormatByPlayer(player.getMatchType());
+        for (Map.Entry<Player, MatchResultType> entry : playerMatchResult.entrySet()) {
+            String nickname = entry.getKey().getNickname();
+            String resultFormatByPlayer = getResultFormatByPlayer(entry.getValue());
             System.out.printf("%s: %s%n", nickname, resultFormatByPlayer);
         }
 
     }
 
-    public static String getResultFormatByDealer(Map<MatchType, Integer> matchResult) {
+    public static void printProfitResult(
+            Money dealerProfitResult,
+            Map<Player, Money> playerProfitResult
+    ) {
+        System.out.println();
+        System.out.println("## 최종 수익");
+        System.out.println(formProfitResult(DEALER_NICKNAME, dealerProfitResult.getValue()));
+
+        for (Map.Entry<Player, Money> entry : playerProfitResult.entrySet()) {
+            String nickname = entry.getKey().getNickname();
+            Money money = entry.getValue();
+            long profit = money.getValue();
+            System.out.println(formProfitResult(nickname, profit));
+        }
+
+    }
+
+    public static String formProfitResult(String nickname, long profit) {
+        return String.format(BASIC_FORM, nickname, profit);
+    }
+
+    public static String getDealerResultFormat(Map<MatchResultType, Long> matchResult) {
         StringBuilder result = new StringBuilder();
-        for (MatchType matchType : matchResult.keySet()) {
-            int matchCount = matchResult.get(matchType);
+        for (MatchResultType matchResultType : matchResult.keySet()) {
+            long matchCount = matchResult.get(matchResultType);
             if (matchCount != 0) {
-                result.append(matchCount).append(MATCH_FORMAT.get(matchType.name()));
+                result.append(matchCount).append(MATCH_FORMAT.get(matchResultType.name()));
                 result.append(" ");
             }
         }
         return result.toString();
     }
 
-    public static String getResultFormatByPlayer(MatchType matchType) {
-        return MATCH_FORMAT.get(matchType.name());
+    public static String getResultFormatByPlayer(MatchResultType matchResultType) {
+        return MATCH_FORMAT.get(matchResultType.name());
     }
 
     public static String getCardFormat(Card card) {
@@ -123,14 +148,25 @@ public class OutputView {
         return RANK_FORMAT.get(rank.toString()) + SUIT_FORMAT.get(suit.name());
     }
 
-    private static String formatHands(Participant participant) {
-        String nickname = participant.getNickname();
-        List<String> joinedCards = participant.getCards().stream().map(
+    private static String formHandsOfDealer(Dealer dealer) {
+        String handsHeader = formatHandsHeader("딜러");
+        String dealerCards = formatHands(dealer.getCards());
+        return formatBasicForm(handsHeader, dealerCards);
+
+    }
+
+    private static String formatHandsOfPlayer(Player player) {
+        String nickname = player.getNickname();
+        String handsHeader = formatHandsHeader(nickname);
+        String playerCards = formatHands(player.getCards());
+        return formatBasicForm(handsHeader, playerCards);
+    }
+
+    private static String formatHands(List<Card> cards) {
+        List<String> joinedCards = cards.stream().map(
                 OutputView::getCardFormat
         ).toList();
-        String joinedHands = String.join(", ", joinedCards);
-        String handsHeader = formatHandsHeader(nickname);
-        return formatBasicForm(handsHeader, joinedHands);
+        return String.join(", ", joinedCards);
     }
 
     private static String formatDivideCommentByNickname(String nickname, List<String> nicknames) {
