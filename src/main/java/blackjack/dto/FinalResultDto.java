@@ -17,7 +17,7 @@ public record FinalResultDto(
                 .map(card -> card.getRank().getName() + card.getSuit().getName())
                 .toList();
         Score score = participant.getScore();
-        boolean isBust = participant.isBust();
+        boolean isBust = participant.getState().isBust();
 
         return new FinalResultDto(name, cardInfos, score.intValue(), isBust);
     }

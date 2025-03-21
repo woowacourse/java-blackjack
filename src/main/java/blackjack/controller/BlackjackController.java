@@ -9,6 +9,7 @@ import blackjack.domain.participant.ParticipantName;
 import blackjack.domain.participant.Player;
 import blackjack.dto.CardInfoDto;
 import blackjack.dto.FinalResultDto;
+import blackjack.state.Start;
 import blackjack.util.RetryUtil;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -28,10 +29,8 @@ public class BlackjackController {
     }
 
     public void run() {
-        Dealer dealer = new Dealer(new CardHand());
-        List<ParticipantName> playerNames = createPlayerNames();
-        List<Player> players = createPlayers(playerNames);
-
+        Dealer dealer = createDealer();
+        List<Player> players = createPlayers();
         BlackjackGame game = new BlackjackGame(players, dealer, cardDeck);
 
         game.distributeInitialCards();
@@ -46,6 +45,23 @@ public class BlackjackController {
         displayAllFinalProfitsInfo(game);
     }
 
+    private Dealer createDealer() {
+        return new Dealer(new Start(new CardHand()));
+    }
+    private List<Player> createPlayers() {
+        List<ParticipantName> playerNames = createPlayerNames();
+
+        return RetryUtil.getReturnWithRetry(() -> {
+            List<Player> players = new ArrayList<>();
+            for (ParticipantName playerName : playerNames) {
+                int money = inputView.readBettingMoney(playerName.getValue());
+                BettingMoney bettingMoney = new BettingMoney(money);
+                players.add(new Player(new Start(new CardHand()), playerName, bettingMoney));
+            }
+            return players;
+        });
+    }
+
     private List<ParticipantName> createPlayerNames() {
         return RetryUtil.getReturnWithRetry(() -> {
             String[] playerNames = inputView.readPlayerName();
@@ -54,18 +70,6 @@ public class BlackjackController {
                 participantNames.add(new ParticipantName(playerName));
             }
             return participantNames;
-        });
-    }
-
-    private List<Player> createPlayers(List<ParticipantName> playerNames) {
-        return RetryUtil.getReturnWithRetry(() -> {
-            List<Player> players = new ArrayList<>();
-            for (ParticipantName playerName : playerNames) {
-                int money = inputView.readBettingMoney(playerName.getValue());
-                BettingMoney bettingMoney = new BettingMoney(money);
-                players.add(new Player(playerName, new CardHand(), bettingMoney));
-            }
-            return players;
         });
     }
 
@@ -80,25 +84,23 @@ public class BlackjackController {
                 .map(player -> CardInfoDto.from(player.getName(), player.getCardDeck()))
                 .toList();
         CardInfoDto dealerStartCardInfo = CardInfoDto.from(dealer.getName(), dealer.getCardDeck());
-        outputView.displayCardDistribution(
-                dealerStartCardInfo,
-                playerStartCardInfos
-        );
+        outputView.displayCardDistribution(dealerStartCardInfo, playerStartCardInfos);
     }
 
     private void processPlayerTurn(Player player, BlackjackGame game) {
-        while (game.canHit(player)) {
+        while (player.canHit()) {
             HitOption wantHit = getHitOption(player);
             if (wantHit.isNo()) {
                 break;
             }
             game.playerHit(player);
             outputView.displayCardInfo(CardInfoDto.from(player.getName(), player.getCardDeck()));
-            if (player.isBust()) {
+            if (player.getState().isBust()) {
                 outputView.displayBustNotice();
                 break;
             }
         }
+        player.finishTurn();
     }
 
     private void processDealerTurn(BlackjackGame game) {

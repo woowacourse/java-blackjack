@@ -20,35 +20,23 @@ public class BlackjackGame {
 
     public void distributeInitialCards() {
         for (Player player : players) {
-            player.receiveCard(cardDeck.drawCard());
-            player.receiveCard(cardDeck.drawCard());
+            player.startGame(cardDeck.drawCard(), cardDeck.drawCard());
         }
-        dealer.receiveCard(cardDeck.drawCard());
-        dealer.receiveCard(cardDeck.drawCard());
-    }
-
-    public boolean canHit(Player player) {
-        return player.canHit();
+        dealer.startGame(cardDeck.drawCard(), cardDeck.drawCard());
     }
 
     public void playerHit(Player player) {
-        if (!player.canHit()) {
-            return;
-        }
-        player.receiveCard(cardDeck.drawCard());
+        player.hit(cardDeck.drawCard());
     }
 
     public void dealerTurn() {
-        while (dealer.canHit()) {
-            dealer.receiveCard(cardDeck.drawCard());
-        }
+        dealer.playTurn(cardDeck);
     }
 
     public Map<Player, Integer> calculatePlayersProfit() {
         HashMap<Player, Integer> playersProfit = new HashMap<>();
         for (Player player : players) {
-            GameResult playerResult = dealer.informResultTo(player);
-            int profit = player.calculateProfit(playerResult);
+            int profit = player.calculateProfit(dealer.getState());
             playersProfit.put(player, profit);
         }
         return playersProfit;
