@@ -8,7 +8,6 @@ import domain.card.Deck;
 import domain.card.RandomCardGenerator;
 import domain.gamer.Dealer;
 import domain.gamer.PlayerGroup;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import util.LoopTemplate;
@@ -88,7 +87,7 @@ public class BlackJackController {
     }
 
     private void printDealerReceiveCardCount(final GameManager gameManager) {
-        final int count = gameManager.giveCardsToDealer();
+        final int count = gameManager.promptDealerHit();
         if (count > 0) {
             outputView.printDealerReceivedCardCount(count);
         }

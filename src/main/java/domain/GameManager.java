@@ -24,11 +24,15 @@ public class GameManager {
     public void initializeGame(final List<String> playerNames) {
         deck.shuffleCards();
         giveCardsToPlayers(playerNames);
+        giveCardsToDealer();
+    }
+
+    private void giveCardsToDealer() {
         dealer.giveCard(deck.pollCard());
         dealer.giveCard(deck.pollCard());
     }
 
-    public int giveCardsToDealer() {
+    public int promptDealerHit() {
         int count = 0;
         while (dealer.canReceiveCard()) {
             dealer.giveCard(deck.pollCard());
