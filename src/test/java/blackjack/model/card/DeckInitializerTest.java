@@ -1,7 +1,9 @@
-package blackjack.model.game;
+package blackjack.model.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.model.game.Deck;
+import blackjack.model.game.DeckInitializer;
 import org.junit.jupiter.api.Test;
 
 class DeckInitializerTest {

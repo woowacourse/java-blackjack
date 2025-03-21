@@ -1,39 +1,32 @@
 package blackjack.model.player;
 
-import java.util.Objects;
+import blackjack.model.card.Card;
+import blackjack.model.game.ReceivedCards;
 
-public class Participant extends Player {
-    private final String name;
+public abstract class Participant {
+    private final ReceivedCards receivedCards = new ReceivedCards();
 
-    public Participant(String name) {
-        validate(name);
-        this.name = name;
+    protected Participant() {
     }
 
-    private void validate(String name) {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("참여자 이름을 입력해주세요.");
-        }
-        if (name.length() < 2 || name.length() > 5) {
-            throw new IllegalArgumentException("참여자 이름은 2~5글자 입니다.");
-        }
+    public void putCard(Card card) {
+        receivedCards.receive(card);
     }
 
-    public String getName() {
-        return name;
+    public void initialCard(Card card1, Card card2) {
+        putCard(card1);
+        putCard(card2);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Participant that = (Participant) o;
-        return Objects.equals(name, that.name);
+    public ReceivedCards getReceivedCards() {
+        return receivedCards;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(name);
+    public boolean isBust() {
+        return receivedCards.isBust();
+    }
+
+    public int calculatePoint() {
+        return receivedCards.calculateTotalPoint();
     }
 }
