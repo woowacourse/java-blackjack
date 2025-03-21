@@ -1,6 +1,7 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import domain.card.Card;
 import domain.card.CardGroup;
@@ -85,5 +86,49 @@ public class PlayerGroupTest {
 
         //then
         assertThat(result).isFalse();
+    }
+
+    @Test
+    void 플레이어의_이름으로_카드를_가져온다() {
+        //given
+        final List<String> playerNames = List.of("윌슨");
+        final Card card1 = new Card(CardType.HEART, CardScore.JACK);
+        final Card card2 = new Card(CardType.CLOVER, CardScore.QUEEN);
+        final Card card3 = new Card(CardType.DIAMOND, CardScore.TEN);
+
+        //when
+        final PlayerGroup playerGroup = PlayerGroup.of(playerNames);
+        playerGroup.giveCardByName("윌슨", card1);
+        playerGroup.giveCardByName("윌슨", card2);
+        playerGroup.giveCardByName("윌슨", card3);
+        final List<Card> cards = playerGroup.getCardsByName("윌슨");
+
+        //then
+        assertThat(cards).containsExactlyInAnyOrderElementsOf(List.of(card1, card2, card3));
+    }
+
+    @Test
+    void 플레이어가_카드를_더_받을_수_있는지_판단한다() {
+        //given
+        final List<String> playerNames = List.of("윌슨", "가이온");
+        final Card card1 = new Card(CardType.HEART, CardScore.JACK);
+        final Card card2 = new Card(CardType.CLOVER, CardScore.QUEEN);
+        final Card card3 = new Card(CardType.DIAMOND, CardScore.TEN);
+        final Card card4 = new Card(CardType.HEART, CardScore.TWO);
+
+        //when
+        final PlayerGroup playerGroup = PlayerGroup.of(playerNames);
+        playerGroup.giveCardByName("윌슨", card1);
+        playerGroup.giveCardByName("윌슨", card2);
+        playerGroup.giveCardByName("윌슨", card3);
+        playerGroup.giveCardByName("가이온", card4);
+        final boolean result1 = playerGroup.canPlayerReceiveCard("윌슨");
+        final boolean result2 = playerGroup.canPlayerReceiveCard("가이온");
+
+        //then
+        assertAll(
+                () -> assertThat(result1).isFalse(),
+                () -> assertThat(result2).isTrue()
+        );
     }
 }
