@@ -4,10 +4,8 @@ import blackjack.domain.card.Cards;
 import blackjack.domain.game.CardDeck;
 import blackjack.domain.game.CardDeckGenerator;
 import blackjack.domain.game.Game;
-import blackjack.domain.game.GameResult;
 import blackjack.domain.game.Participants;
 import blackjack.domain.participant.Players;
-import blackjack.dto.GameResultDto;
 import blackjack.dto.ParticipantCardsDto;
 import blackjack.exception.ExceptionHandler;
 import blackjack.view.InputView;
@@ -19,7 +17,6 @@ import java.util.Map.Entry;
 import java.util.function.Consumer;
 
 public class GameController {
-
 
     public void run() {
         CardDeck cardDeck = CardDeckGenerator.generate();
@@ -33,8 +30,6 @@ public class GameController {
         distributeDealerExtraCard(game);
         displayFinalParticipantsCards(participants);
         displayProfitResult(participants);
-
-//        displayGameResult(participants);
     }
 
     private void displayProfitResult(final Participants participants) {
@@ -86,18 +81,7 @@ public class GameController {
         printer.accept(participantCardsDtos);
     }
 
-    /*private void displayGameResult(Participants participants) {
-        Map<String, GameResult> gameResults = participants.determineGameResult();
-        List<GameResultDto> gameResultDtos = new ArrayList<>();
-        gameResults.forEach((key, value) -> gameResultDtos.add(createGameResultDto(key, value)));
-        OutputView.printGameResult(gameResultDtos);
-    }*/
-
     private ParticipantCardsDto createParticipantCardsDto(String name, Cards cards) {
         return new ParticipantCardsDto(name, cards.getCards(), cards.calculateScore());
-    }
-
-    private GameResultDto createGameResultDto(String name, GameResult gameResult) {
-        return new GameResultDto(name, gameResult.getGameResult());
     }
 }

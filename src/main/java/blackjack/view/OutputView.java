@@ -3,8 +3,6 @@ package blackjack.view;
 import static blackjack.domain.game.Participants.DEALER_NAME;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.game.GameStatus;
-import blackjack.dto.GameResultDto;
 import blackjack.dto.ParticipantCardsDto;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +17,6 @@ public class OutputView {
     private static final String CARDS_SCORE_FORMAT = " - 결과: %d";
     private static final String DEALER_CARD_ADDED_FORMAT = "%s는 16이하라 한 장의 카드를 더 받았습니다.";
     private static final String DEALER_CARD_NOT_ADDED_FORMAT = "%s는 16초과라 카드를 더 받지 않았습니다.";
-    private static final String GAME_RESULT_HEADER = "## 최종 승패";
     private static final String PROFIT_RESULT_HEADER = "## 최종 수익";
 
     public static void printErrorMessage(final String message) {
@@ -104,45 +101,6 @@ public class OutputView {
         playerProfits.entrySet().stream()
                 .map(entry -> entry.getKey() + ": " + entry.getValue())
                 .forEach(System.out::println);
-    }
-
-    public static void printGameResult(final List<GameResultDto> gameResultDtos) {
-        final GameResultDto dealerGameResultDto = findDealerDto(gameResultDtos, GameResultDto::name);
-        gameResultDtos.remove(dealerGameResultDto);
-        printGameResult(dealerGameResultDto, gameResultDtos);
-    }
-
-    public static void printGameResult(final GameResultDto dealerGameResultDto,
-                                       final List<GameResultDto> playerGameResultDtos) {
-        final StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(GAME_RESULT_HEADER).append(System.lineSeparator());
-        stringBuilder.append(formatDealerGameResult(dealerGameResultDto)).append(System.lineSeparator());
-        for (GameResultDto playerGameResultDto : playerGameResultDtos) {
-            stringBuilder.append(formatPlayerGameResult(playerGameResultDto)).append(System.lineSeparator());
-        }
-        System.out.println(stringBuilder);
-    }
-
-    private static String formatDealerGameResult(final GameResultDto gameResultDto) {
-        return formatGameResult(gameResultDto, String::valueOf);
-    }
-
-    private static String formatPlayerGameResult(final GameResultDto gameResultDto) {
-        return formatGameResult(gameResultDto, (Integer count) -> "");
-    }
-
-    private static String formatGameResult(final GameResultDto gameResultDto,
-                                           final Function<Integer, String> formatter) {
-        final StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(gameResultDto.name()).append(": ");
-        for (GameStatus gameStatus : GameStatus.values()) {
-            final int count = gameResultDto.gameResults().get(gameStatus);
-            if (count == 0) {
-                continue;
-            }
-            stringBuilder.append(formatter.apply(count)).append(gameStatus.getName());
-        }
-        return stringBuilder.toString();
     }
 
     private static <T> T findDealerDto(final List<T> dtos, final Function<T, String> converter) {

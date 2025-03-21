@@ -76,26 +76,6 @@ public class Participants {
         return players.calculateProfits(dealer);
     }
 
-    /*public Map<String, GameResult> determineGameResult() {
-        final Map<String, GameResult> gameResults = new HashMap<>();
-        gameResults.put(dealer.getName(), new GameResult());
-        for (String playerName : getPlayerNames()) {
-            gameResults.put(playerName, new GameResult());
-            determineParticipantsGameResult(gameResults, playerName, dealer.getName());
-            determineParticipantsGameResult(gameResults, dealer.getName(), playerName);
-        }
-        return gameResults;
-    }
-
-    private void determineParticipantsGameResult(
-            final Map<String, GameResult> playerResults,
-            final String name,
-            final String otherName
-    ) {
-        final GameStatus gameStatus = participants.get(name).determineGameStatus(participants.get(otherName));
-        playerResults.get(name).addStatusCount(gameStatus);
-    }*/
-
     public Map<String, Cards> getInitialCardsOfAll() {
         return getCardsBy(Participant::getInitialCards);
     }

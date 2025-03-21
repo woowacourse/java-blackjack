@@ -22,4 +22,6 @@ public class CardDeckGenerator {
         Collections.shuffle(cards);
         return new CardDeck(cards);
     }
+
+
 }

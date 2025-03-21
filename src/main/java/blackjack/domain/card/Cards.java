@@ -48,7 +48,6 @@ public class Cards {
                 .count();
     }
 
-
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }

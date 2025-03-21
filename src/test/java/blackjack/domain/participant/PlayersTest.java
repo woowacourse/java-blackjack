@@ -61,7 +61,6 @@ class PlayersTest {
                 .hasMessage("[ERROR] 총 3장의 카드가 필요합니다.");
     }
 
-
     @ParameterizedTest
     @CsvSource({"pobi,THREE,10000,-10000", "jason,FIVE,20000,0", "neo,SEVEN,30000,30000"})
     @DisplayName("플레이어들의 수익 계산 기능 테스트")
