@@ -16,7 +16,7 @@ class CardTest {
             Card card = new Card(CardType.CLOVER, CardScore.ACE);
 
             assertThat(card).isInstanceOf(Card.class);
-            assertThat(card.getType()).isEqualTo(CardType.CLOVER);
+            assertThat(card.type()).isEqualTo(CardType.CLOVER);
         }
 
         @Test

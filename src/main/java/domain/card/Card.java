@@ -1,24 +1,9 @@
 package domain.card;
 
-public class Card {
+public record Card(CardType type, CardScore score) {
 
     private static final int ACE_HIGH_SCORE = 11;
     private static final int ACE_LOW_SCORE = 1;
-    private final CardType type;
-    private final CardScore score;
-
-    public Card(CardType type, final CardScore score) {
-        this.type = type;
-        this.score = score;
-    }
-
-    public CardScore getScore() {
-        return score;
-    }
-
-    public CardType getType() {
-        return type;
-    }
 
     public boolean isAce() {
         return score == CardScore.ACE;

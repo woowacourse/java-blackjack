@@ -33,7 +33,7 @@ public class DeckTest {
         final Card card = deck.pollCard();
 
         //then
-        assertThat(card.getScore()).isEqualTo(CardScore.ACE);
+        assertThat(card.score()).isEqualTo(CardScore.ACE);
 
     }
 }
