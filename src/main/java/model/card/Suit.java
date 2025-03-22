@@ -1,6 +1,6 @@
 package model.card;
 
-public enum SuitType {
+public enum Suit {
 
     DIAMONDS,
     HEARTS,

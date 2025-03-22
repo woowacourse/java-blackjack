@@ -1,43 +1,50 @@
 package model.participant;
 
-import java.util.List;
+import model.bating.BatingManager;
+import model.bating.Money;
+import model.score.MatchResult;
+
+import java.util.*;
 
 public class Players {
 
-  private final List<Player> values;
+    private final Map<Player, Money> values;
+    private static final int PLAYER_MAX_NUMBER = 30;
 
-  private Players(List<Player> values) {
-    validateDuplication(values);
-    validateNumber(values);
-    this.values = values;
-  }
-
-  public static Players from(List<String> input) {
-    List<Player> inputPlayers = input.stream()
-            .map(Player::from)
-            .toList();
-    return new Players(inputPlayers);
-  }
-
-  private void validateDuplication(List<Player> values) {
-    if(values.stream().distinct().count() != values.size()) {
-      throw new IllegalArgumentException("중복된 플레이어는 등록할 수 없습니다.");
+    public Players(Map<Player, Money> values) {
+        validateNumber(values);
+        this.values = values;
     }
-  }
 
-  private void validateNumber(List<Player> values) {
-    if (values.isEmpty() || values.size() > 30) {
-      throw new IllegalArgumentException("게임 참가자는 1~30명까지 가능합니다.");
+    private void validateNumber(Map<Player, Money> values) {
+        if (values.isEmpty() || values.size() > PLAYER_MAX_NUMBER) {
+            throw new IllegalArgumentException("게임 참가자는 1~30명까지 가능합니다.");
+        }
     }
-  }
 
-  public List<Player> getPlayers() {
-    return values;
-  }
+    public Map<Player, Integer> calculateEarnings(Dealer dealer) {
+        Map<Player, Integer> earnings = new HashMap<>();
+        for (final Player player : values.keySet()) {
+            MatchResult matchResult = player.compareToScore(dealer);
+            Money money = values.get(player);
+            int benefit = BatingManager.batingBenefit(matchResult, money);
+            earnings.put(player, benefit);
+        }
+        return earnings;
+    }
 
-  public List<String> getNicknames() {
-    return values.stream()
-            .map(Participant::getNickname)
-            .toList();
-  }
+    public Map<Player, Money> getPlayers() {
+        return values;
+    }
+
+    public List<Player> getAllPlayer() {
+        Set<Player> players = values.keySet();
+        return new ArrayList<>(players);
+    }
+
+    public List<String> getNicknames() {
+        return values.keySet().stream()
+                .map(Participant::getNickname)
+                .toList();
+    }
 }

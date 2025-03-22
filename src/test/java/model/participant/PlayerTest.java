@@ -1,30 +1,38 @@
 package model.participant;
 
-import model.card.Card;
-import model.card.CardDeck;
-import model.card.RankType;
-import model.card.SuitType;
+import model.card.*;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import setupSettings.NicknameGenerator;
+import setupSettings.PlayerGenerator;
 
 import java.util.List;
 import java.util.stream.Stream;
 
 public class PlayerTest {
 
+    Player player;
+
+    @BeforeEach
+    void setUp() {
+        player = PlayerGenerator.generatePlayer();
+    }
+
     @Test
     @DisplayName("플레이어가 생성 확인")
     void newPlayer() {
+
         //given
-        String expected = "pobi";
+        Nickname nickname = NicknameGenerator.generateNickname();
         //when
-        Player player = Player.from("pobi");
+        player = PlayerGenerator.generatePlayerBy(nickname);
         //then
-        Assertions.assertThat(player.getNickname()).isEqualTo(expected);
+        Assertions.assertThat(player.getNickname()).isEqualTo(nickname.getValue());
     }
 
     @Test
@@ -36,7 +44,6 @@ public class PlayerTest {
         final List<Card> cards = new CardDeck().pickCard(2);
 
         // when
-        Player player = Player.from("pobi");
         player.addCards(cards);
 
         // then
@@ -48,27 +55,26 @@ public class PlayerTest {
     @DisplayName("게임 진행 점수 조건이 충분한 지 : true")
     void isNotEnoughScoreConditionTrue(List<Card> cards) {
         //given
-        Participant player = Player.from("pobi");
         player.addCards(cards);
         //when
         //then
-        Assertions.assertThat(player.canHit()).isTrue();
+        Assertions.assertThat(player.ableToDraw()).isTrue();
     }
 
     private static Stream<Arguments> createNotBustCards() {
         return Stream.of(
                 Arguments.arguments(
                         List.of(
-                                new Card(SuitType.CLUBS, RankType.ACE),
-                                new Card(SuitType.HEARTS, RankType.FIVE),
-                                new Card(SuitType.SPADES, RankType.SEVEN)
+                                new MultiScoreCard(Suit.CLUBS, Rank.ACE),
+                                new SingleScoreCard(Suit.HEARTS, Rank.FIVE),
+                                new SingleScoreCard(Suit.SPADES, Rank.SEVEN)
                         )
                 ),
                 Arguments.arguments(
                         List.of(
-                                new Card(SuitType.CLUBS, RankType.ACE),
-                                new Card(SuitType.SPADES, RankType.FIVE),
-                                new Card(SuitType.HEARTS, RankType.ACE)
+                                new MultiScoreCard(Suit.CLUBS, Rank.ACE),
+                                new SingleScoreCard(Suit.SPADES, Rank.FIVE),
+                                new MultiScoreCard(Suit.HEARTS, Rank.ACE)
                         )
                 )
         );
@@ -79,13 +85,16 @@ public class PlayerTest {
     void isNotEnoughScoreConditionFalse() {
         //given
         List<Card> cards = List.of(
-                new Card(SuitType.CLUBS, RankType.ACE),
-                new Card(SuitType.HEARTS, RankType.KING)
+                new MultiScoreCard(Suit.CLUBS, Rank.ACE),
+                new SingleScoreCard(Suit.HEARTS, Rank.KING)
         );
-        Participant player = Player.from("pobi");
+
+        for (Card card : cards) {
+            System.out.println(card.getRank());
+        }
         player.addCards(cards);
         //when
         //then
-        Assertions.assertThat(player.canHit()).isFalse();
+        Assertions.assertThat(player.ableToDraw()).isFalse();
     }
 }

@@ -1,9 +1,9 @@
-import controller.BlackjackController;
+import model.BlackjackGame;
 
 public class Application {
 
     public static void main(String[] args) {
-        BlackjackController controller = new BlackjackController();
-        controller.run();
+        BlackjackGame gameManager = BlackjackGame.create();
+        gameManager.start();
     }
 }

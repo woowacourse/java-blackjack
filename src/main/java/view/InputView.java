@@ -1,5 +1,7 @@
 package view;
 
+import model.participant.Nickname;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -15,8 +17,13 @@ public class InputView {
         return parse(input);
     }
 
+    public static String readMoney(Nickname nickname) {
+        System.out.println(String.format("%s의 배팅 금액은?", nickname.getValue()));
+        return sc.nextLine();
+    }
+
     public static String readIntent(String nickname) {
-        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n",nickname);
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", nickname);
         String input = sc.nextLine();
         validateEmpty(input);
         return input;

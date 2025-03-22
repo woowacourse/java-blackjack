@@ -13,11 +13,11 @@ class CardTest {
     void newCard() {
 
         // given
-        final SuitType suit = SuitType.HEARTS;
-        final RankType rank = RankType.FIVE;
+        final Suit suit = Suit.HEARTS;
+        final Rank rank = Rank.FIVE;
 
         // when
-        final Card card = new Card(suit, rank);
+        final Card card = new SingleScoreCard(suit, rank);
 
         // then
         assertAll(

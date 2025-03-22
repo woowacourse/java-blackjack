@@ -1,16 +1,11 @@
 package model.participant;
 
-import model.card.Card;
-import model.card.CardDeck;
-import model.card.RankType;
-import model.card.SuitType;
-import model.score.MatchType;
+import model.card.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Map;
 
 class DealerTest {
 
@@ -19,7 +14,7 @@ class DealerTest {
     void newDealer() {
 
         // given
-        final Participant dealer = Dealer.newInstance();
+        final Participant dealer = Dealer.create();
         String expected = "딜러";
 
         // when
@@ -38,7 +33,7 @@ class DealerTest {
         final List<Card> cards = new CardDeck().pickCard(2);
 
         // when
-        Participant dealer = Dealer.newInstance();
+        Participant dealer = Dealer.create();
         dealer.addCards(cards);
 
         // then
@@ -50,19 +45,19 @@ class DealerTest {
     void sum() {
         // given
         // 총 합이 9
-        List<Card> divideCards = List.of(
-                new Card(SuitType.HEARTS, RankType.FIVE),
-                new Card(SuitType.CLUBS, RankType.FOUR)
+        List<Card> distributeCards = List.of(
+                new SingleScoreCard(Suit.HEARTS, Rank.FIVE),
+                new SingleScoreCard(Suit.CLUBS, Rank.FOUR)
         );
-        int expected = divideCards.stream()
-                .mapToInt(Card::getRankScore)
+        int expected = distributeCards.stream()
+                .mapToInt(Card::getScore)
                 .sum();
 
-        Participant dealer = Dealer.newInstance();
-        dealer.addCards(divideCards);
+        Participant dealer = Dealer.create();
+        dealer.addCards(distributeCards);
 
         // when
-        int sum = dealer.getSum();
+        int sum = dealer.getScore();
 
         // then
         Assertions.assertThat(sum).isEqualTo(expected);
@@ -73,17 +68,17 @@ class DealerTest {
     void isNotUpTrue() {
 
         // given
-        List<Card> divideCards = List.of(
-                new Card(SuitType.HEARTS, RankType.JACK),
-                new Card(SuitType.CLUBS, RankType.FOUR)
+        List<Card> distributeCards = List.of(
+                new SingleScoreCard(Suit.HEARTS, Rank.JACK),
+                new SingleScoreCard(Suit.CLUBS, Rank.FOUR)
         );
 
-        Dealer dealer = Dealer.newInstance();
-        dealer.addCards(divideCards);
+        Dealer dealer = Dealer.create();
+        dealer.addCards(distributeCards);
 
         // when
         // then
-        Assertions.assertThat(dealer.isNotUp()).isTrue();
+        Assertions.assertThat(dealer.ableToDraw()).isTrue();
     }
 
     @Test
@@ -91,26 +86,17 @@ class DealerTest {
     void isNotUpFalse() {
 
         // given
-        List<Card> divideCards = List.of(
-                new Card(SuitType.HEARTS, RankType.JACK),
-                new Card(SuitType.CLUBS, RankType.KING)
+        List<Card> distributeCards = List.of(
+                new SingleScoreCard(Suit.HEARTS, Rank.JACK),
+                new SingleScoreCard(Suit.CLUBS, Rank.KING)
         );
 
-        Dealer dealer = Dealer.newInstance();
-        dealer.addCards(divideCards);
+        Dealer dealer = Dealer.create();
+        dealer.addCards(distributeCards);
 
         // when
         // then
-        System.out.println(dealer.getSum());
-        Assertions.assertThat(dealer.isNotUp()).isFalse();
-    }
-
-    @Test
-    @DisplayName("딜러의 게임 결과 업데이트가 잘 되는 지")
-    void dealerGameResult() {
-        Dealer dealer = Dealer.newInstance();
-        dealer.updateResult(MatchType.WIN);
-        Map<MatchType, Integer> matchResult = dealer.getMatchResult();
-        Assertions.assertThat(matchResult.get(MatchType.WIN)).isEqualTo(1);
+        System.out.println(dealer.getScore());
+        Assertions.assertThat(dealer.ableToDraw()).isFalse();
     }
 }

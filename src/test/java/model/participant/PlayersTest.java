@@ -1,37 +1,40 @@
 package model.participant;
 
+import model.bating.Money;
 import model.card.Card;
-import model.card.RankType;
-import model.card.SuitType;
+import model.card.Rank;
+import model.card.SingleScoreCard;
+import model.card.Suit;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import setupSettings.PlayerGenerator;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-
 public class PlayersTest {
+
+    Players players;
+
+    @BeforeEach
+    void setup() {
+        Map<Player, Money> playerData = PlayerGenerator.generatePlayers(3);
+        players = new Players(playerData);
+    }
 
     @Test
     @DisplayName("여러명의_플레이어가_생성됐는지_확인")
     void newPlayers() {
         // given
-        List<Player> actual = List.of(
-                Player.from("pobi"),
-                Player.from("hippo")
-        );
         // when
-        Players players = Players.from(List.of("pobi", "hippo"));
         // then
-        assertAll(
-                () -> Assertions.assertThat(players.getPlayers().size()).isEqualTo(2),
-                () -> Assertions.assertThat(players.getPlayers()).containsAll(actual)
-        );
+        Assertions.assertThat(players.getPlayers().size()).isEqualTo(3);
     }
 
     @Test
@@ -39,62 +42,39 @@ public class PlayersTest {
     void sum() {
         // given
         // 총 합이 9
-        List<Card> divideCards = List.of(
-                new Card(SuitType.HEARTS, RankType.FIVE),
-                new Card(SuitType.CLUBS, RankType.FOUR)
+        List<Card> distributeCards = List.of(
+                new SingleScoreCard(Suit.HEARTS, Rank.FIVE),
+                new SingleScoreCard(Suit.CLUBS, Rank.FOUR)
         );
-        int expected = divideCards.stream()
-                .mapToInt(Card::getRankScore)
+        int expected = distributeCards.stream()
+                .mapToInt(Card::getScore)
                 .sum();
 
-        String nickname = "pobi";
-        Player player = Player.from(nickname);
-        player.addCards(divideCards);
+        Player player = PlayerGenerator.generatePlayer();
+        player.addCards(distributeCards);
 
         // when
-        int sum = player.getSum();
+        int sum = player.getScore();
 
         // then
         Assertions.assertThat(sum).isEqualTo(expected);
     }
 
-    @Test
-    @DisplayName("중복된 플레이어가 존재하는 지")
-    void validateDuplication() {
-        //given
-        List<String> actual = List.of(
-                "pobi",
-                "pobi"
-        );
-        //when
-        //then
-        Assertions.assertThatThrownBy(() -> Players.from(actual))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
     @ParameterizedTest
     @MethodSource("createPlayers")
     @DisplayName("참여 가능한 플레이어 수가 아닐 때 예외 처리")
-    void validateNumber(List<String> values) {
+    void validateNumber(Map<Player, Money> playerDatas) {
         //given
         //when
         //then
-        Assertions.assertThatThrownBy(() -> Players.from(values))
+        Assertions.assertThatThrownBy(() -> new Players(playerDatas))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     private static Stream<Arguments> createPlayers() {
         return Stream.of(
-                Arguments.arguments(
-                        List.of(
-                        )
-                ),
-                Arguments.arguments(
-                        List.of("Adam", "Alan", "Alex", "Andy", "Brad", "Carl", "Cody", "Dale",
-                                "Drew", "Eric", "Evan", "Gary", "Glen", "Hank", "Jack", "Jake",
-                                "Jeff", "Joel", "John", "Josh", "Kirk", "Leon", "Mark", "Matt",
-                                "Mike", "Nick", "Paul", "Rick", "Sean", "Wade", "hippo")
-                )
+                Arguments.arguments(PlayerGenerator.generatePlayers(0)),
+                Arguments.arguments(PlayerGenerator.generatePlayers(31))
         );
     }
 }
