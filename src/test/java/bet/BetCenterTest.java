@@ -286,4 +286,118 @@ class BetCenterTest {
         // then
         assertThat(dealerProfit).isEqualTo(-3000);
     }
+
+    @Test
+    void 플레이어와_딜러가_버스트인_경우_딜러가_승리한다() {
+        // given
+        Deck deck = new Deck(() -> {
+            List<Card> cards = new ArrayList<>();
+
+            // 추가 카드
+            cards.add(new Card(Rank.NINE, Suit.CLOVER));
+            cards.add(new Card(Rank.NINE, Suit.HEART));
+            cards.add(new Card(Rank.SEVEN, Suit.SPADE));
+            cards.add(new Card(Rank.EIGHT, Suit.SPADE));
+
+            // 플레이어 3 초기 덱
+            cards.add(new Card(Rank.FIVE, Suit.SPADE));
+            cards.add(new Card(Rank.JACK, Suit.HEART));
+
+            // 플레이어 2 초기 덱
+            cards.add(new Card(Rank.NINE, Suit.SPADE));
+            cards.add(new Card(Rank.KING, Suit.HEART));
+
+            // 플레이어 1 초기 덱
+            cards.add(new Card(Rank.SIX, Suit.HEART));
+            cards.add(new Card(Rank.KING, Suit.DIAMOND));
+
+            // 딜러 초기 덱
+            cards.add(new Card(Rank.ACE, Suit.DIAMOND));
+            cards.add(new Card(Rank.KING, Suit.SPADE));
+            return new Cards(cards);
+        });
+        Dealer dealer = new Dealer(deck);
+        Player player1 = new Player(new Nickname("제프"), deck);
+        Player player2 = new Player(new Nickname("짱수"), deck);
+        Player player3 = new Player(new Nickname("빙봉"), deck);
+        dealer.addOneCard(deck.drawOneCard());
+        player1.addOneCard(deck.drawOneCard());
+        player2.addOneCard(deck.drawOneCard());
+        player3.addOneCard(deck.drawOneCard());
+
+        BetCenter betCenter = new BetCenter(Map.of(
+                player1, new BetAmount(15000),
+                player2, new BetAmount(30000),
+                player3, new BetAmount(12000)
+        ), strategies);
+
+        // when
+        Map<Player, Integer> bettingResults = betCenter.deriveBettingResults(dealer);
+
+        // then
+        assertThat(bettingResults.get(player1)).isEqualTo(-15000);
+        assertThat(bettingResults.get(player2)).isEqualTo(-30000);
+        assertThat(bettingResults.get(player3)).isEqualTo(-12000);
+    }
+
+    @Test
+    void 플레이어와_딜러가_버스트인_경우_딜러가_승리한다2() {
+        // given
+        Deck deck = new Deck(() -> {
+            List<Card> cards = new ArrayList<>();
+
+            // 추가 카드
+            cards.add(new Card(Rank.KING, Suit.CLOVER));
+            cards.add(new Card(Rank.JACK, Suit.SPADE));
+            cards.add(new Card(Rank.THREE, Suit.DIAMOND));
+            cards.add(new Card(Rank.QUEEN, Suit.SPADE));
+            cards.add(new Card(Rank.NINE, Suit.HEART));
+
+            // 플레이어 3 초기 덱
+            cards.add(new Card(Rank.EIGHT, Suit.SPADE));
+            cards.add(new Card(Rank.KING, Suit.HEART));
+
+            // 플레이어 2 초기 덱
+            cards.add(new Card(Rank.TWO, Suit.SPADE));
+            cards.add(new Card(Rank.SEVEN, Suit.HEART));
+
+            // 플레이어 1 초기 덱
+            cards.add(new Card(Rank.QUEEN, Suit.HEART));
+            cards.add(new Card(Rank.ACE, Suit.DIAMOND));
+
+            // 딜러 초기 덱
+            cards.add(new Card(Rank.QUEEN, Suit.DIAMOND));
+            cards.add(new Card(Rank.KING, Suit.SPADE));
+            return new Cards(cards);
+        });
+        Dealer dealer = new Dealer(deck);
+        Player player1 = new Player(new Nickname("제프"), deck);
+        Player player2 = new Player(new Nickname("짱수"), deck);
+        Player player3 = new Player(new Nickname("빙봉"), deck);
+
+        player1.addOneCard(deck.drawOneCard());
+        player1.addOneCard(deck.drawOneCard());
+        player2.addOneCard(deck.drawOneCard());
+        player2.addOneCard(deck.drawOneCard());
+        player3.addOneCard(deck.drawOneCard());
+
+        System.out.println(dealer.sumCardNumbers());
+        System.out.println(player1.sumCardNumbers());
+        System.out.println(player2.sumCardNumbers());
+        System.out.println(player3.sumCardNumbers());
+
+        BetCenter betCenter = new BetCenter(Map.of(
+                player1, new BetAmount(20000),
+                player2, new BetAmount(30000),
+                player3, new BetAmount(10000)
+        ), strategies);
+
+        // when
+        Map<Player, Integer> bettingResults = betCenter.deriveBettingResults(dealer);
+
+        // then
+        assertThat(bettingResults.get(player1)).isEqualTo(-20000);
+        assertThat(bettingResults.get(player2)).isEqualTo(-30000);
+        assertThat(bettingResults.get(player3)).isEqualTo(-10000);
+    }
 }
