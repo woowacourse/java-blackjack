@@ -1,16 +1,20 @@
 package participant;
 
 import game.Card;
+import game.Cards;
 import game.Deck;
 
 import java.util.Comparator;
+import java.util.List;
 
-public class Dealer extends Participant {
+public class Dealer {
 
     private static final int DEALER_HIT_THRESHOLD = 16;
 
+    private final Cards cards;
+
     public Dealer(Deck deck) {
-        super(deck);
+        this.cards = deck.drawInitialCards();
     }
 
     public Card openOneCard() {
@@ -20,6 +24,22 @@ public class Dealer extends Participant {
     }
 
     public boolean shouldDealerHit() {
-        return sumCardNumbers() <= DEALER_HIT_THRESHOLD;
+        return cards.sumCardNumbers() <= DEALER_HIT_THRESHOLD;
+    }
+
+    public boolean addOneCard(Card card) {
+        return cards.addOneCard(card);
+    }
+
+    public List<Card> openCards() {
+        return cards.getCards();
+    }
+
+    public int sumCardNumbers() {
+        return cards.sumCardNumbers();
+    }
+
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
     }
 }
