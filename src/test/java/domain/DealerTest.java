@@ -60,7 +60,7 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("카드 2장의 합계가 16 이하인지 판단한다")
+    @DisplayName("카드 2장의 합계가 16 이하인지 판단한다.")
     void testDoesNeedCard() {
         // given
         CardHand cardHand = new CardHand(

@@ -36,7 +36,7 @@ public class BettingTest {
     private final int PLAYER2_BET_AMOUNT = 20000;
 
     @Test
-    @DisplayName("배팅 금액은 0원보다 작을 수 없다")
+    @DisplayName("배팅 금액은 0원보다 작을 수 없다.")
     void testBettingAmount() {
         // given
         Player player = createPlayer("pobi", TEN, HEART, NINE, DIAMOND);
@@ -49,7 +49,7 @@ public class BettingTest {
     }
 
     @Test
-    @DisplayName("플레이어는 게임을 시작할 때 배팅 금액을 정해야 한다")
+    @DisplayName("플레이어는 게임을 시작할 때 배팅 금액을 정해야 한다.")
     void testPlayerBetting() {
         // given
         Player player = createPlayer("pobi", TEN, HEART, NINE, DIAMOND);
@@ -61,7 +61,7 @@ public class BettingTest {
     }
 
     @Test
-    @DisplayName("카드를 추가로 뽑아 21을 초과할 경우 배팅 금액을 모두 잃게 된다")
+    @DisplayName("카드를 추가로 뽑아 21을 초과할 경우 배팅 금액을 모두 잃게 된다.")
     void testBetIsLostIfPlayerBusts() {
         // given
         Player player = createPlayer("pobi", TEN, HEART, NINE, DIAMOND);
@@ -74,7 +74,7 @@ public class BettingTest {
     }
 
     @Test
-    @DisplayName("처음 두 장의 카드 합이 21일 경우 블랙잭이 되면 베팅 금액의 1.5 배를 받는다")
+    @DisplayName("처음 두 장의 카드 합이 21일 경우 블랙잭이 되면 베팅 금액의 1.5 배를 받는다.")
     void testBlackJackBetAmount() {
         // given
         Player player = createPlayer("pobi", TEN, HEART, ACE, DIAMOND);
@@ -86,7 +86,7 @@ public class BettingTest {
     }
 
     @Test
-    @DisplayName("딜러와 플레이어가 모두 동시에 블랙잭인 경우 플레이어는 베팅한 금액을 돌려받는다")
+    @DisplayName("딜러와 플레이어가 모두 동시에 블랙잭인 경우 플레이어는 베팅한 금액을 돌려받는다.")
     void testWhenBothBlackJack() {
         // given
         Player player = createPlayer("pobi", TEN, HEART, ACE, DIAMOND);
@@ -98,7 +98,7 @@ public class BettingTest {
     }
 
     @Test
-    @DisplayName("딜러가 21을 초과하면 그 시점까지 남아 있던 플레이어들은 승리해 베팅 금액을 받는다")
+    @DisplayName("딜러가 21을 초과하면 그 시점까지 남아 있던 플레이어들은 승리해 베팅 금액을 받는다.")
     void testPlayersReceiveBetIfDealerBusts() {
         // given
         Player player1 = createPlayer("pobi", TEN, HEART, TWO, DIAMOND);
@@ -114,7 +114,7 @@ public class BettingTest {
     }
 
     @Test
-    @DisplayName("게임 결과를 바탕으로 플레이어가 승리할 경우 최종 수익을 계산한다")
+    @DisplayName("게임 결과를 바탕으로 플레이어가 승리할 경우 최종 수익을 계산한다.")
     void testCalculateProfitWhenPlayerWin() {
         // given
         Player player1 = createPlayer("pobi", TEN, HEART, ACE, DIAMOND); // 블랙잭 승리
@@ -135,7 +135,7 @@ public class BettingTest {
     }
 
     @Test
-    @DisplayName("게임 결과를 바탕으로 딜러가 1승 1패 했을 때 최종 수익을 계산한다")
+    @DisplayName("게임 결과를 바탕으로 딜러가 1승 1패 했을 때 최종 수익을 계산한다.")
     void testCalculateProfitWhenDealer1Win1Lose() {
         // given
         Player player1 = createPlayer("pobi", TWO, HEART, EIGHT, DIAMOND); // 승리
