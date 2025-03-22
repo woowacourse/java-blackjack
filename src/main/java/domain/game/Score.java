@@ -17,9 +17,9 @@ public record Score(int value) {
     }
 
     private static Score calculateTotalScore(Set<Card> cards) {
-        return new Score(cards.stream()
-                .mapToInt(Card::score)
-                .sum());
+        return cards.stream()
+                .map(Card::getScore)
+                .reduce(new Score(0), Score::add);
     }
 
     private static boolean hasAce(Set<Card> cards) {
@@ -28,7 +28,7 @@ public record Score(int value) {
     }
 
     private Score withAce() {
-        Score maximumScore = this.addScore(ADDITIONAL_ACE_SCORE);
+        Score maximumScore = this.add(ADDITIONAL_ACE_SCORE);
         if (maximumScore.isGreaterThan(BLACKJACK_SCORE)) {
             return this;
         }
@@ -47,7 +47,7 @@ public record Score(int value) {
         return calculate(cards).value <= DEALER_HIT_THRESHOLD.value();
     }
 
-    private Score addScore(Score other) {
+    private Score add(Score other) {
         return new Score(this.value + other.value);
     }
 
