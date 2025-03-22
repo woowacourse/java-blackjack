@@ -25,8 +25,9 @@ public class ConsoleOutput {
         System.out.println(player.getNickname() + "카드: " + processCardsInfo(player.openCards()));
     }
 
-    public void printDealerHitMessage() {
+    public void printDealerHitMessage(Dealer dealer) {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println("딜러 카드 현재 총합: " + dealer.sumCardNumbers());
     }
 
     public void printGameResults(Players players, Dealer dealer) {
