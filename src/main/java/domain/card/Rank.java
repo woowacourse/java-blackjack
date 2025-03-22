@@ -1,30 +1,32 @@
 package domain.card;
 
+import domain.game.Score;
+
 public enum Rank {
-    ACE("A", 1),
-    TWO("2", 2),
-    THREE("3", 3),
-    FOUR("4", 4),
-    FIVE("5", 5),
-    SIX("6", 6),
-    SEVEN("7", 7),
-    EIGHT("8", 8),
-    NINE("9", 9),
-    TEN("10", 10),
-    JACK("J", 10),
-    QUEEN("Q", 10),
-    KING("K", 10);
+    ACE("A", new Score(1)),
+    TWO("2", new Score(2)),
+    THREE("3", new Score(3)),
+    FOUR("4", new Score(4)),
+    FIVE("5", new Score(5)),
+    SIX("6", new Score(6)),
+    SEVEN("7", new Score(7)),
+    EIGHT("8", new Score(8)),
+    NINE("9", new Score(9)),
+    TEN("10", new Score(10)),
+    JACK("J", new Score(10)),
+    QUEEN("Q", new Score(10)),
+    KING("K", new Score(10));
 
     private final String name;
-    private final int value;
+    private final Score score;
 
-    Rank(String name, int value) {
+    Rank(String name, Score score) {
         this.name = name;
-        this.value = value;
+        this.score = score;
     }
 
-    public int getValue() {
-        return value;
+    public Score getScore() {
+        return score;
     }
 
     public String getName() {
