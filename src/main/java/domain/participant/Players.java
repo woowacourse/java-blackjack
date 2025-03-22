@@ -38,6 +38,10 @@ public class Players {
         findPlayerByName(playerName).hit(card);
     }
 
+    public void bet(String playerName, int betAmount) {
+        findPlayerByName(playerName).bet(betAmount);
+    }
+
     public boolean canHit(String playerName) {
         return findPlayerByName(playerName).canHit();
     }
@@ -47,6 +51,12 @@ public class Players {
                 .filter(player -> player.getName().equals(playerName))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 일치하는 플레이어가 없습니다."));
+    }
+
+    public double getPlayersProfit(Dealer dealer) {
+        return players.stream()
+                .mapToDouble(player -> player.calculateProfit(dealer))
+                .sum();
     }
 
     public List<String> getPlayerNames() {

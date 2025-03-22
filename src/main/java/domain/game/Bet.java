@@ -1,8 +1,6 @@
 package domain.game;
 
 public class Bet {
-    private final double BLACKJACK_BONUS = 1.5;
-
     private final double amount;
 
     public Bet(double amount) {
@@ -18,13 +16,5 @@ public class Bet {
 
     public double getAmount() {
         return amount;
-    }
-
-    public double getBlackjackWinAmount() {
-        return amount * BLACKJACK_BONUS;
-    }
-
-    public double getLossAmount() {
-        return -amount;
     }
 }

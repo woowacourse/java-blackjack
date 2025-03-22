@@ -4,14 +4,16 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 
 public enum GameResult {
-    WIN("승"),
-    LOSE("패"),
-    PUSH("무");
+    WIN("승", 1.0),
+    LOSE("패", -1.0),
+    PUSH("무", 1.0);
 
     private final String name;
+    private final double earningRate;
 
-    GameResult(String name) {
+    GameResult(String name, double earningRate) {
         this.name = name;
+        this.earningRate = earningRate;
     }
 
     public static GameResult calculateDealerGameResult(Dealer dealer, Player player) {
@@ -46,6 +48,13 @@ public enum GameResult {
             return WIN;
         }
         return PUSH;
+    }
+
+    public double getEarningRate(boolean isBlackjack) {
+        if (isBlackjack && this == GameResult.WIN) {
+            return 1.5;
+        }
+        return earningRate;
     }
 
     public String getName() {

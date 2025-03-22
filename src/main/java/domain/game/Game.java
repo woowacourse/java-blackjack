@@ -29,12 +29,21 @@ public class Game {
         dealer.hit(card);
     }
 
+    public void bet(String name, int betAmount) {
+        players.bet(name, betAmount);
+    }
+
     public boolean canPlayerHit(String name) {
         return players.canHit(name);
     }
 
     public boolean canDealerHit() {
         return dealer.canHit();
+    }
+
+    public double getDealerProfit() {
+        double playersProfit = players.getPlayersProfit(dealer);
+        return dealer.calculateProfit(playersProfit);
     }
 
     public List<Card> getCardsOf(String name) {

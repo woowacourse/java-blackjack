@@ -22,6 +22,10 @@ public class Dealer extends GameParticipant {
         return deck.drawCard();
     }
 
+    public double calculateProfit(double playersProfit) {
+        return -1 * playersProfit;
+    }
+
     @Override
     public boolean canHit() {
         return cardHand.doesDealerNeedCard();

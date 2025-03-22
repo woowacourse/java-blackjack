@@ -2,7 +2,6 @@ package controller;
 
 import domain.card.Card;
 import domain.card.Deck;
-import domain.game.BettingSession;
 import domain.game.Game;
 import domain.participant.Dealer;
 import domain.participant.Player;
@@ -19,15 +18,14 @@ public class BlackJackController {
 
     public void run() {
         Game game = retryUntilSuccess(this::startGame);
-        BettingSession bettingSession = startBetting();
-        bet(game, bettingSession);
+        bet(game);
         outputView.displayInitialDeal(game);
 
         dealAdditionalCardsToPlayers(game);
         dealAdditionalCardsToDealer(game);
 
         outputView.displayScore(game);
-        displayAllProfits(game, bettingSession);
+        displayAllProfit(game);
     }
 
     private Game startGame() {
@@ -35,20 +33,17 @@ public class BlackJackController {
         return new Game(playerNames, new Deck(new RandomShuffler()));
     }
 
-    private BettingSession startBetting() {
-        return new BettingSession();
-    }
-
-    private void bet(Game game, BettingSession bettingSession) {
-        game.getPlayers().forEach(player -> {
-            int betAmount = inputView.readBetAmount(player.getName());
-            bettingSession.bet(player, betAmount);
+    private void bet(Game game) {
+        game.getPlayerNames().forEach(name -> {
+            int betAmount = inputView.readBetAmount(name);
+            game.bet(name, betAmount);
         });
     }
 
     private void dealAdditionalCardsToPlayers(Game game) {
-        game.getPlayerNames()
-                .forEach((name) -> hitOrStay(game, name));
+        for (String name : game.getPlayerNames()) {
+            hitOrStay(game, name);
+        }
     }
 
     private void hitOrStay(Game game, String playerName) {
@@ -78,23 +73,21 @@ public class BlackJackController {
         outputView.displayEmptyLine();
     }
 
-    private void displayAllProfits(Game game, BettingSession bettingSession) {
-        List<Player> players = game.getPlayers();
-        bettingSession.calculateProfit(players, game.getDealer());
-
+    private void displayAllProfit(Game game) {
         outputView.displayProfitMessage();
-        displayDealerProfit(bettingSession);
-        displayPlayersProfit(players, bettingSession);
+        displayDealerProfit(game);
+        displayPlayersProfit(game);
     }
 
-    private void displayDealerProfit(BettingSession bettingSession) {
-        outputView.displayParticipantProfit(Dealer.NAME, bettingSession.getDealerProfit());
+    private void displayDealerProfit(Game game) {
+        outputView.displayParticipantProfit(Dealer.NAME, game.getDealerProfit());
     }
 
-    private void displayPlayersProfit(List<Player> players, BettingSession bettingSession) {
+    private void displayPlayersProfit(Game game) {
+        List<Player> players = game.getPlayers();
+        Dealer dealer = game.getDealer();
         for (Player player : players) {
-            double profit = bettingSession.getPlayerProfit(player);
-            outputView.displayParticipantProfit(player.getName(), profit);
+            outputView.displayParticipantProfit(player.getName(), player.calculateProfit(dealer));
         }
     }
 

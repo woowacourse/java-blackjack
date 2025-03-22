@@ -16,19 +16,17 @@ import static domain.card.Suit.DIAMOND;
 import static domain.card.Suit.HEART;
 import static domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 import domain.card.CardHand;
 import domain.card.Deck;
 import domain.card.Rank;
 import domain.card.Suit;
-import domain.game.BettingSession;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.shuffler.RandomShuffler;
 import fixture.CardFixture;
-import java.util.List;
 import java.util.Set;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -36,22 +34,30 @@ public class BettingTest {
 
     private final int PLAYER1_BET_AMOUNT = 10000;
     private final int PLAYER2_BET_AMOUNT = 20000;
-    private BettingSession bettingSession;
 
-    @BeforeEach
-    void setUp() {
-        bettingSession = new BettingSession();
+    @Test
+    @DisplayName("배팅 금액은 0원보다 작을 수 없다")
+    void testBettingAmount() {
+        // given
+        Player player = createPlayer("pobi", TEN, HEART, NINE, DIAMOND);
+        // when
+        // then
+        assertThatCode(() -> {
+            player.bet(-10000);
+        }).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 배팅 금액은 0보다 커야 합니다.");
     }
 
     @Test
     @DisplayName("플레이어는 게임을 시작할 때 배팅 금액을 정해야 한다")
-    void playerBettingTest() {
+    void testPlayerBetting() {
         // given
         Player player = createPlayer("pobi", TEN, HEART, NINE, DIAMOND);
         // when
-        bettingSession.bet(player, PLAYER1_BET_AMOUNT);
         // then
-        assertThat(bettingSession.getBetAmount(player)).isEqualTo(PLAYER1_BET_AMOUNT);
+        assertThatCode(() -> {
+            player.bet(PLAYER1_BET_AMOUNT);
+        }).doesNotThrowAnyException();
     }
 
     @Test
@@ -61,11 +67,10 @@ public class BettingTest {
         Player player = createPlayer("pobi", TEN, HEART, NINE, DIAMOND);
         Dealer dealer = createDealer(TEN, SPADE, NINE, CLOVER);
         // when
-        bettingSession.bet(player, PLAYER1_BET_AMOUNT);
+        player.bet(PLAYER1_BET_AMOUNT);
         player.hit(CardFixture.of(FIVE, CLOVER));
-        bettingSession.calculateProfit(List.of(player), dealer);
         // then
-        assertThat(bettingSession.getEarnings(player)).isEqualTo(-PLAYER1_BET_AMOUNT);
+        assertThat(player.calculateProfit(dealer)).isEqualTo(-PLAYER1_BET_AMOUNT);
     }
 
     @Test
@@ -75,10 +80,9 @@ public class BettingTest {
         Player player = createPlayer("pobi", TEN, HEART, ACE, DIAMOND);
         Dealer dealer = createDealer(TEN, SPADE, NINE, CLOVER);
         // when
-        bettingSession.bet(player, PLAYER1_BET_AMOUNT);
-        bettingSession.calculateProfit(List.of(player), dealer);
+        player.bet(PLAYER1_BET_AMOUNT);
         // then
-        assertThat(bettingSession.getEarnings(player)).isEqualTo(PLAYER1_BET_AMOUNT * 1.5);
+        assertThat(player.calculateProfit(dealer)).isEqualTo(PLAYER1_BET_AMOUNT * 1.5);
     }
 
     @Test
@@ -88,10 +92,9 @@ public class BettingTest {
         Player player = createPlayer("pobi", TEN, HEART, ACE, DIAMOND);
         Dealer dealer = createDealer(TEN, SPADE, ACE, CLOVER);
         // when
-        bettingSession.bet(player, PLAYER1_BET_AMOUNT);
-        bettingSession.calculateProfit(List.of(player), dealer);
+        player.bet(PLAYER1_BET_AMOUNT);
         // then
-        assertThat(bettingSession.getEarnings(player)).isEqualTo(PLAYER1_BET_AMOUNT);
+        assertThat(player.calculateProfit(dealer)).isEqualTo(PLAYER1_BET_AMOUNT);
     }
 
     @Test
@@ -102,13 +105,12 @@ public class BettingTest {
         Player player2 = createPlayer("jason", NINE, HEART, THREE, DIAMOND);
         Dealer dealer = createDealer(TEN, SPADE, JACK, CLOVER);
         // when
-        bettingSession.bet(player1, PLAYER1_BET_AMOUNT);
-        bettingSession.bet(player2, PLAYER2_BET_AMOUNT);
+        player1.bet(PLAYER1_BET_AMOUNT);
+        player2.bet(PLAYER2_BET_AMOUNT);
         dealer.hit(CardFixture.of(QUEEN, HEART));
-        bettingSession.calculateProfit(List.of(player1, player2), dealer);
         // then
-        assertThat(bettingSession.getEarnings(player1)).isEqualTo(PLAYER1_BET_AMOUNT);
-        assertThat(bettingSession.getEarnings(player2)).isEqualTo(PLAYER2_BET_AMOUNT);
+        assertThat(player1.calculateProfit(dealer)).isEqualTo(PLAYER1_BET_AMOUNT);
+        assertThat(player2.calculateProfit(dealer)).isEqualTo(PLAYER2_BET_AMOUNT);
     }
 
     @Test
@@ -119,15 +121,16 @@ public class BettingTest {
         Player player2 = createPlayer("jason", TEN, DIAMOND, TWO, DIAMOND); // 승리
         Dealer dealer = createDealer(TEN, SPADE, JACK, CLOVER); // 버스트
         // when
-        bettingSession.bet(player1, PLAYER1_BET_AMOUNT);
-        bettingSession.bet(player2, PLAYER2_BET_AMOUNT);
+        player1.bet(PLAYER1_BET_AMOUNT);
+        player2.bet(PLAYER2_BET_AMOUNT);
         player2.hit(CardFixture.of(ACE, SPADE));
         dealer.hit(CardFixture.of(QUEEN, HEART));
-        bettingSession.calculateProfit(List.of(player1, player2), dealer);
+        double player1Profit = player1.calculateProfit(dealer);
+        double player2Profit = player2.calculateProfit(dealer);
         // then
-        assertThat(bettingSession.getPlayerProfit(player1)).isEqualTo(PLAYER1_BET_AMOUNT * 1.5);
-        assertThat(bettingSession.getPlayerProfit(player2)).isEqualTo(PLAYER2_BET_AMOUNT);
-        assertThat(bettingSession.getDealerProfit()).isEqualTo(
+        assertThat(player1Profit).isEqualTo(PLAYER1_BET_AMOUNT * 1.5);
+        assertThat(player2Profit).isEqualTo(PLAYER2_BET_AMOUNT);
+        assertThat(dealer.calculateProfit(player1Profit + player2Profit)).isEqualTo(
                 (int) (-PLAYER1_BET_AMOUNT * 1.5) - PLAYER2_BET_AMOUNT);
     }
 
@@ -139,15 +142,17 @@ public class BettingTest {
         Player player2 = createPlayer("jason", SEVEN, DIAMOND, KING, DIAMOND); // 패배
         Dealer dealer = createDealer(THREE, SPADE, NINE, CLOVER); // 1승 1패
         // when
-        bettingSession.bet(player1, PLAYER1_BET_AMOUNT);
-        bettingSession.bet(player2, PLAYER2_BET_AMOUNT);
+        player1.bet(PLAYER1_BET_AMOUNT);
+        player2.bet(PLAYER2_BET_AMOUNT);
         player1.hit(CardFixture.of(ACE, CLOVER));
         dealer.hit(CardFixture.of(EIGHT, HEART));
-        bettingSession.calculateProfit(List.of(player1, player2), dealer);
+        double player1Profit = player1.calculateProfit(dealer);
+        double player2Profit = player2.calculateProfit(dealer);
         // then
-        assertThat(bettingSession.getPlayerProfit(player1)).isEqualTo(PLAYER1_BET_AMOUNT);
-        assertThat(bettingSession.getPlayerProfit(player2)).isEqualTo(-PLAYER2_BET_AMOUNT);
-        assertThat(bettingSession.getDealerProfit()).isEqualTo(-PLAYER1_BET_AMOUNT + PLAYER2_BET_AMOUNT);
+        assertThat(player1Profit).isEqualTo(PLAYER1_BET_AMOUNT);
+        assertThat(player2Profit).isEqualTo(-PLAYER2_BET_AMOUNT);
+        assertThat(dealer.calculateProfit(player1Profit + player2Profit))
+                .isEqualTo(-PLAYER1_BET_AMOUNT + PLAYER2_BET_AMOUNT);
     }
 
     private Player createPlayer(String name, Rank rank1, Suit suit1, Rank rank2, Suit suit2) {
