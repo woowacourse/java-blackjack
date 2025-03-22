@@ -1,11 +1,10 @@
-package model;
+package model.hand;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import model.Deck.Card;
-import model.Deck.CardRank;
-import model.Deck.CardSuit;
-import model.participant.ParticipantHand;
+import model.deck.Card;
+import model.deck.CardRank;
+import model.deck.CardSuit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,8 +15,9 @@ class ParticipantHandTest {
 
     @BeforeEach
     void setUp() {
-        participantHand = new ParticipantHand();
+        participantHand = new HardHand();
     }
+
     @Test
     @DisplayName("받은 카드 합이 21 이하면 burst가 아니라고 반환한다")
     void 받은카드_isBurst_아닐때_계산() {
@@ -50,6 +50,7 @@ class ParticipantHandTest {
     @DisplayName("받은 카드 중에 ace가 있으면, ace가 1일때 합이 21 이하일때 burst인지 확인한다.")
     void 받은카드가_ace포함일때_isBurst_계산() {
         //given
+        participantHand = new SoftHand();
         participantHand.add(new Card(CardRank.ACE, CardSuit.DIAMOND));
         participantHand.add(new Card(CardRank.KING, CardSuit.HEART));
         participantHand.add(new Card(CardRank.KING, CardSuit.DIAMOND));
@@ -65,6 +66,7 @@ class ParticipantHandTest {
     @DisplayName("받은 카드 중에 ace가 있으면, ace가 1일때 합이 21 초과일때 burst인지 확인한다.")
     void 받은카드가_ace포함일때_계산_합_21_초과일때_isBurst_계산() {
         //given
+        participantHand = new SoftHand();
         participantHand.add(new Card(CardRank.ACE, CardSuit.DIAMOND));
         participantHand.add(new Card(CardRank.ACE, CardSuit.DIAMOND));
         participantHand.add(new Card(CardRank.KING, CardSuit.HEART));
@@ -85,54 +87,18 @@ class ParticipantHandTest {
         participantHand.add(new Card(CardRank.KING, CardSuit.DIAMOND));
 
         //when, then
-        assertTrue(participantHand.checkScoreBelow(16));
+        assertTrue(participantHand.checkScoreBelow(new Score(16)));
     }
 
     @Test
-    @DisplayName("ACE를 뺀 나머지의 합이 10 이하일 경우 ACE 한 장을 11로 계산한다")
-    void ACE_를_뺸_나머지의_합이_10이하일_경우_ACE_한_장을_11로_계산() {
+    @DisplayName("카드를 2장 뽑았을 때 합이 21이면 블랙잭이다.")
+    void 카드_두장_뽑고_합이_21이면_블랙잭() {
         //given
+        participantHand = new SoftHand();
         participantHand.add(new Card(CardRank.ACE, CardSuit.DIAMOND));
-        participantHand.add(new Card(CardRank.EIGHT, CardSuit.HEART));
-        participantHand.add(new Card(CardRank.TWO, CardSuit.DIAMOND));
+        participantHand.add(new Card(CardRank.JACK, CardSuit.DIAMOND));
 
-        //when
-        int expect = 21;
-        int result = participantHand.calculateFinalScore();
-
-        //then
-        assertEquals(expect, result);
-    }
-
-    @Test
-    @DisplayName("ACE가 2장일때, 뺀 나머지의 합이 10 이하일 경우 ACE 한 장을 11로 계산한다")
-    void ACE가_두장일때_ACE를_뺸_나머지의_합이_10이하일_경우_ACE_한_장을_11로_계산() {
-        //given
-        participantHand.add(new Card(CardRank.ACE, CardSuit.DIAMOND));
-        participantHand.add(new Card(CardRank.ACE, CardSuit.DIAMOND));
-        participantHand.add(new Card(CardRank.SEVEN, CardSuit.HEART));
-        participantHand.add(new Card(CardRank.TWO, CardSuit.DIAMOND));
-
-        //when
-        int expect = 21;
-        int result = participantHand.calculateFinalScore();
-
-        //then
-        assertEquals(expect, result);
-    }
-
-    @Test
-    @DisplayName("ACE가 없는 경우 최종결과 계산")
-    void ACE가_없는_경우_최종결과_계산() {
-        //given
-        participantHand.add(new Card(CardRank.EIGHT, CardSuit.DIAMOND));
-        participantHand.add(new Card(CardRank.TWO, CardSuit.DIAMOND));
-
-        //when
-        int expect = 10;
-        int result = participantHand.calculateFinalScore();
-
-        //then
-        assertEquals(expect, result);
+        //when, then
+        assertTrue(participantHand.checkBlackJack());
     }
 }

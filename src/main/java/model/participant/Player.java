@@ -1,14 +1,45 @@
 package model.participant;
 
 import java.util.List;
-import model.Deck.Card;
+import model.betting.Bet;
+import model.betting.Money;
+import model.hand.HardHand;
+import model.hand.ParticipantHand;
+import model.hand.Score;
+import model.participant.role.Bettable;
+import model.deck.Card;
+import model.participant.role.Gameable;
 
-public final class Player extends Participant {
+public final class Player implements Bettable, Gameable {
     private final String name;
+    private ParticipantHand participantHand;
 
     public Player(final String name) {
-        super();
         this.name = name;
+        this.participantHand = new HardHand();
+    }
+
+    @Override
+    public void receiveCard(final Card card) {
+        if (card.isSoftCard()) {
+            participantHand = participantHand.cloneToSoftHand();
+        }
+        participantHand.add(card);
+    }
+
+    @Override
+    public boolean isBurst() {
+        return participantHand.checkBurst();
+    }
+
+    @Override
+    public boolean isBlackjack() {
+        return participantHand.checkBlackJack();
+    }
+
+    @Override
+    public Score calculateFinalScore() {
+        return participantHand.calculateFinalScore();
     }
 
     @Override
@@ -19,6 +50,16 @@ public final class Player extends Participant {
     @Override
     public boolean canHit() {
         return !isBurst();
+    }
+
+    @Override
+    public List<Card> getHandCards() {
+        return participantHand.getCards();
+    }
+
+    @Override
+    public Bet makeBet(final int betAmount) {
+        return new Bet(new Money(betAmount), this);
     }
 
     public String getName() {

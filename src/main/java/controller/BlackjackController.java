@@ -2,12 +2,17 @@ package controller;
 
 import java.util.List;
 import java.util.Map;
+import model.betting.Bet;
+import model.betting.Croupier;
 import model.participant.Dealer;
-import model.Deck.Deck;
-import model.participant.Participants;
+import model.deck.Deck;
+import model.participant.Players;
+import model.participant.role.BetOwnable;
+import model.participant.role.Gameable;
 import model.result.GameResult;
 import model.participant.Player;
-import model.result.ParticipantWinningResult;
+import model.result.InitialDealResult;
+import model.result.WinningResults;
 import view.InputView;
 import view.OutputView;
 
@@ -16,52 +21,99 @@ public class BlackjackController {
     public void run() {
         try {
             List<String> playerNames = InputView.readPlayerNames();
-            Participants participants = Participants.from(playerNames);
+            Players players = Players.from(playerNames);
+            Dealer dealer = new Dealer();
+            Croupier croupier = new Croupier();
             Deck deck = Deck.of();
 
-            dealInitially(participants, deck);
+            receiveBets(players, croupier);
 
-            hitOrStandAtPlayersTurn(participants, deck);
-            hitOrStandAtDealerTurn(participants, deck);
+            dealInitially(players, dealer, deck);
+            if (continueGame(players, dealer)) {
+                hitOrStandAtPlayersTurn(players, deck);
+                hitOrStandAtDealerTurn(dealer, deck);
+            }
 
-            OutputView.printFinalScores(participants);
-            printWinningResult(participants);
+            printFinalScore(players, dealer);
+            WinningResults winningResults = printWinningResult(players, dealer);
+
+            adjustRevenue(winningResults, dealer, players, croupier);
+            printRevenue(players, croupier);
         } catch (RuntimeException e) {
             OutputView.printExceptionMessage(e.getMessage());
         }
     }
 
-    private void dealInitially(final Participants participants, final Deck deck) {
-        participants.dealInitialCards(deck);
-        OutputView.printInitialDeal(participants);
+    private void receiveBets(final Players players, final Croupier croupier) {
+        for (Player player : players.getPlayers()) {
+            int betAmount = InputView.readBetAmount(player.getName());
+            croupier.receiveBet(player.makeBet(betAmount));
+        }
     }
 
-    private void hitOrStandAtPlayersTurn(final Participants participants, final Deck deck) {
-        participants.getPlayers().forEach(player ->
+    private void dealInitially(final Players players, final Dealer dealer, final Deck deck) {
+        players.getPlayers().forEach(deck::dealInitiallyTo);
+        deck.dealInitiallyTo(dealer);
+        OutputView.printInitialDeal(players, dealer);
+    }
+
+    private boolean continueGame(final Players players, final Dealer dealer) {
+        InitialDealResult initialDealResult = InitialDealResult.from(dealer, players);
+        return !initialDealResult.isAllPlayersLose(players);
+    }
+
+    private void hitOrStandAtPlayersTurn(final Players players, final Deck deck) {
+        players.getPlayers().forEach(player ->
                 hitOrStandAtOnePlayerTurn(deck, player)
         );
     }
 
     private void hitOrStandAtOnePlayerTurn(final Deck deck, final Player player) {
         while (player.canHit() && InputView.readHit(player)) {
-            player.receiveCard(deck.pick());
-            OutputView.printDealResultOf(player);
+            deck.dealTo(player);
+            OutputView.printPlayerHitResult(player);
         }
     }
 
-    private static void hitOrStandAtDealerTurn(final Participants participants, final Deck deck) {
-        Dealer dealer = participants.getDealer();
+    private static void hitOrStandAtDealerTurn(final Dealer dealer, final Deck deck) {
         while (dealer.canHit()) {
-            dealer.receiveCard(deck.pick());
-            OutputView.printDealerDealResult();
+            deck.dealTo(dealer);
+            OutputView.printDealerHitResult();
         }
     }
 
-    private void printWinningResult(final Participants participants) {
-        ParticipantWinningResult participantWinningResult = ParticipantWinningResult.of(participants);
-        Map<GameResult, Integer> dealerWinningResult = participantWinningResult.decideDealerWinning();
+    private static void printFinalScore(final Players players, final Dealer dealer) {
+        OutputView.printDealerFinalScore(dealer);
+        OutputView.printPlayersFinalScore(players);
+    }
+
+    private WinningResults printWinningResult(final Players players, final Dealer dealer) {
+        WinningResults winningResults = WinningResults.of(players, dealer);
+        Map<GameResult, Integer> dealerWinningResult = winningResults.decideDealerWinning();
 
         OutputView.printDealerFinalResult(dealerWinningResult);
-        OutputView.printPlayerFinalResult(participantWinningResult);
+        OutputView.printPlayerFinalResult(winningResults);
+
+        return winningResults;
+    }
+
+    private void adjustRevenue(final WinningResults winningResults, final BetOwnable dealer, final Players players,
+                               final Croupier croupier) {
+        for (Player player : players.getPlayers()) {
+            if (winningResults.isLose(player)) {
+                croupier.updateBetOwnerFrom(player, dealer);
+                continue;
+            }
+            if (winningResults.isBlackjackWin(player)) {
+                croupier.updateBetAmountWhenBlackJackOf(player);
+            }
+        }
+    }
+
+    private void printRevenue(final Players players, final Croupier croupier) {
+        OutputView.printDealerRevenue(croupier);
+        for (Player player : players.getPlayers()) {
+            OutputView.printPlayersRevenue(player, croupier);
+        }
     }
 }

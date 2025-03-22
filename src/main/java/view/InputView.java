@@ -40,4 +40,9 @@ public final class InputView {
             throw new IllegalArgumentException("y 또는 n을 입력해주세요. 입력값 : " + hit);
         }
     }
+
+    public static int readBetAmount(final String name) {
+        System.out.printf("\n%s의 배팅 금액은?\n", name);
+        return Integer.parseInt(SCANNER.nextLine());
+    }
 }

@@ -1,4 +1,4 @@
-package model.Deck;
+package model.deck;
 
 public final class Card {
     private final CardRank cardRank;
@@ -9,15 +9,19 @@ public final class Card {
         this.cardSuit = cardSuit;
     }
 
+    public boolean isSoftCard() {
+        return this.cardRank.hasMaxValue();
+    }
+
     public int getCardRankDefaultValue() {
         return cardRank.getDefaultValue();
     }
 
-    public CardRank getCardRank() {
-        return cardRank;
+    public String getCardRankName() {
+        return cardRank.getName();
     }
 
-    public String getCardName() {
-        return cardRank.getName() + cardSuit.getShapeMeaning();
+    public String getCardSuitMeaning() {
+        return cardSuit.getShapeMeaning();
     }
 }
