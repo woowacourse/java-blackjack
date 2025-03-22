@@ -24,7 +24,7 @@ public class Dealer extends Gamer {
     }
 
     public ProfitResult calculateProfits(List<Player> players) {
-        BigDecimal dealerProfit = BigDecimal.valueOf(0);
+        BigDecimal dealerProfit = BigDecimal.ZERO;
         Map<Player, BigDecimal> playerProfits = new LinkedHashMap<>();
 
         for (Player player : players) {

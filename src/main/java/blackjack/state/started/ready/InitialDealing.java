@@ -14,15 +14,12 @@ public class InitialDealing extends Ready {
 
     @Override
     public State initialDeal(CardDeck cardDeck) {
-        hand.add(cardDeck.drawCard());
-        hand.add(cardDeck.drawCard());
+        hand.initialDeal(cardDeck);
 
         if (hand.isBlackjack()) {
-            hand.finishInitialDeal();
             return new Blackjack(hand);
         }
 
-        hand.finishInitialDeal();
         return new Hit(hand);
 
     }
