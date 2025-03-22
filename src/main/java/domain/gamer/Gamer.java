@@ -1,17 +1,19 @@
 package domain.gamer;
 
+import domain.card.Betting;
 import domain.GameResult;
 import domain.card.Card;
 import domain.card.CardGroup;
 import java.util.List;
 
 public abstract class Gamer {
-    public static final int LIMIT = 21;
 
-    protected final CardGroup cardGroup;
+    private final CardGroup cardGroup;
+    private Betting betting;
 
     protected Gamer(CardGroup cardGroup) {
         this.cardGroup = cardGroup;
+        this.betting = new Betting(0);
     }
 
     public void giveCard(final Card card) {
@@ -19,21 +21,39 @@ public abstract class Gamer {
     }
 
     public boolean isBust() {
-        return this.cardGroup.calculateScore(LIMIT) > LIMIT;
+        return cardGroup.isBust();
     }
 
     public GameResult calculateGameResult(final int compareScore) {
         if (isBust()) {
             return GameResult.LOSE;
         }
-        return GameResult.findByScores(cardGroup.calculateScore(LIMIT), compareScore);
+        return GameResult.findByScores(cardGroup.calculateScore(), compareScore);
     }
 
     public int calculateScore() {
-        return cardGroup.calculateScore(LIMIT);
+        return cardGroup.calculateScore();
+    }
+
+    public boolean isBlackjack() {
+        return cardGroup.isBlackjack();
     }
 
     public List<Card> getCards() {
         return cardGroup.getCards();
+    }
+
+    public CardGroup getCardGroup() {
+        return cardGroup;
+    }
+
+    public double calculateBettingScore(final GameResult gameResult, final boolean isBlackjackOnlyPlayer) {
+        return betting.calculateBettingOfReturn(gameResult, isBlackjackOnlyPlayer);
+    }
+
+    public abstract boolean canReceiveCard();
+
+    public void betAmount(final Betting betting) {
+        this.betting = betting;
     }
 }

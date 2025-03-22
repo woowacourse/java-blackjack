@@ -1,14 +1,13 @@
 package controller;
 
 import domain.AnswerCommand;
+import domain.card.Betting;
 import domain.GameManager;
-import domain.GameResult;
 import domain.card.CardGroup;
 import domain.card.Deck;
 import domain.card.RandomCardGenerator;
 import domain.gamer.Dealer;
 import domain.gamer.PlayerGroup;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import util.LoopTemplate;
@@ -28,49 +27,59 @@ public class BlackJackController {
     public void gameStart() {
         final List<String> playerNames = LoopTemplate.tryCatchLoop(inputView::readPlayers);
         final PlayerGroup playerGroup = LoopTemplate.tryCatchLoop(() -> PlayerGroup.of(playerNames));
-        final Dealer dealer = new Dealer(new CardGroup(new ArrayList<>()));
+        collectPlayerBets(playerNames, playerGroup);
+
+        final Dealer dealer = new Dealer(CardGroup.empty());
         final Deck deck = Deck.of(new RandomCardGenerator());
         final GameManager gameManager = new GameManager(dealer, playerGroup, deck);
-        gameManager.shuffleCards();
-        gameManager.giveCardsToDealer();
-        gameManager.giveCardsToPlayers(playerNames);
-        outputView.printDealerAndPlayersCards(dealer, playerGroup.getPlayers());
-        requestHit(playerNames, playerGroup, gameManager);
-        printDealerReceiveCardCount(gameManager);
-        responseGameResult(dealer, playerGroup);
+        gameManager.initializeGame(playerNames);
+
+        processPlayerTurns(dealer, playerGroup, playerNames, gameManager);
+        responseGameResult(dealer, playerGroup, gameManager);
     }
 
-    private void responseGameResult(final Dealer dealer, final PlayerGroup playerGroup) {
-        final Map<String, GameResult> playersGameResult = playerGroup.calculatePlayersGameResult(dealer);
+    private void responseGameResult(final Dealer dealer, final PlayerGroup playerGroup, final GameManager gameManager) {
         outputView.printGamerCardsAndScore(dealer, playerGroup.getPlayers());
-        outputView.printGameResult(dealer.calculateDealerGameResult(playersGameResult),
-                playerGroup.calculatePlayersGameResult(dealer));
+        responseBettingOfReturn(gameManager);
     }
 
-    private void requestHit(final List<String> playerNames, final PlayerGroup playerGroup,
-                            final GameManager gameManager) {
+    private void processPlayerTurns(final Dealer dealer, final PlayerGroup playerGroup, final List<String> playerNames,
+                           final GameManager gameManager) {
+        outputView.printDealerAndPlayersCards(dealer, playerGroup.getPlayers());
+        requestHit(playerNames, gameManager);
+        printDealerReceiveCardCount(gameManager);
+    }
+
+    private void collectPlayerBets (final List<String> playerNames, final PlayerGroup playerGroup) {
         for (String playerName : playerNames) {
-            giveCardToPlayer(playerName, playerGroup, gameManager);
+            final Betting betting = LoopTemplate.tryCatchLoop(
+                    () -> new Betting(inputView.readBettingAmount(playerName)));
+            playerGroup.betAmountByPlayerName(playerName, betting);
         }
     }
 
-    private void giveCardToPlayer(final String playerName, final PlayerGroup playerGroup,
-                                  final GameManager gameManager) {
-        if (!playerGroup.isBustByPlayerName(playerName)) {
-            receiveCardIsAbleToGetCard(playerName, playerGroup, gameManager);
+    private void responseBettingOfReturn(final GameManager gameManager) {
+        final double dealerBettingAmountOfReturn = gameManager.calculateDealerBettingAmountOfReturn();
+        final Map<String, Double> playerBettingAmountOfReturn = gameManager.calculatePlayerBettingAmountOfReturn();
+        outputView.printBettingAmountOfReturn(dealerBettingAmountOfReturn, playerBettingAmountOfReturn);
+    }
+
+    private void requestHit(final List<String> playerNames, final GameManager gameManager) {
+        for (String playerName : playerNames) {
+            processPlayerHit(playerName, gameManager);
         }
     }
 
-    private void receiveCardIsAbleToGetCard(final String playerName, final PlayerGroup playerGroup,
-                                            final GameManager gameManager) {
-        if (!requestAnswerCommand(playerName).isYes()) {
-            outputView.printPlayerCards(playerName, playerGroup.getCardsByName(playerName));
+    private void processPlayerHit(final String playerName, final GameManager gameManager) {
+        if (!gameManager.canPlayerReceiveCard(playerName)) {
             return;
         }
-        do {
-            gameManager.giveOneCardToPlayerByName(playerName);
-            outputView.printPlayerCards(playerName, playerGroup.getCardsByName(playerName));
-        } while (playerGroup.isBustByPlayerName(playerName) && requestAnswerCommand(playerName).isYes());
+        final boolean shouldContinue = gameManager.shouldContinuePlayerHit(playerName,
+                requestAnswerCommand(playerName));
+        outputView.printPlayerCards(playerName, gameManager.getPlayerCardsByName(playerName));
+        if (shouldContinue) {
+            processPlayerHit(playerName, gameManager);
+        }
     }
 
     private AnswerCommand requestAnswerCommand(final String playerName) {
@@ -78,7 +87,7 @@ public class BlackJackController {
     }
 
     private void printDealerReceiveCardCount(final GameManager gameManager) {
-        final int count = gameManager.giveCardsToDealer();
+        final int count = gameManager.promptDealerHit();
         if (count > 0) {
             outputView.printDealerReceivedCardCount(count);
         }

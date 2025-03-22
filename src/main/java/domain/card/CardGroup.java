@@ -7,34 +7,46 @@ import java.util.List;
 public class CardGroup {
 
     private static final int ACE_DISTANCE_SCORE = 10;
-    private final List<Card> cards;
+    private static final int BUST_THRESHOLD = 21;
+    private static final int BLACKJACK_CARD_QUANTITY = 2;
 
-    public CardGroup() {
-        cards = new ArrayList<>();
-    }
+    private final List<Card> cards;
 
     public CardGroup(final List<Card> cards) {
         this.cards = new ArrayList<>(cards);
+    }
+
+    public static CardGroup empty() {
+        return new CardGroup(Collections.emptyList());
     }
 
     public void addCard(final Card card) {
         cards.add(card);
     }
 
-    public int calculateScore(int limit) {
-        return calculateScoreWithAce(calculateScoreWithOutAce(), limit, countAce());
+    public boolean isBust() {
+        return calculateScore() > BUST_THRESHOLD;
+    }
+
+
+    public boolean isBlackjack() {
+        return cards.size() == BLACKJACK_CARD_QUANTITY && calculateScore() == BUST_THRESHOLD;
+    }
+
+    public int calculateScore() {
+        return calculateScoreWithAce(calculateScoreWithOutAce(), countAce());
     }
 
     private int calculateScoreWithOutAce() {
         return cards.stream()
                 .filter(card -> !card.isAce())
-                .mapToInt(card -> card.getScore().getValue())
+                .mapToInt(card -> card.score().getValue())
                 .sum();
     }
 
-    private int calculateScoreWithAce(int sum, int limit, int aceCount) {
+    private int calculateScoreWithAce(int sum, int aceCount) {
         final int result = sum + aceCount;
-        return result + addScoreWithAce(0, limit - result, aceCount);
+        return result + addScoreWithAce(0, BUST_THRESHOLD - result, aceCount);
     }
 
     private int addScoreWithAce(int sum, int limit, int aceCount) {

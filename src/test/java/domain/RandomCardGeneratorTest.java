@@ -29,7 +29,7 @@ public class RandomCardGeneratorTest {
         AceCardGenerator aceCardGenerator = new AceCardGenerator();
         final List<Card> cards = aceCardGenerator.generate();
 
-        assertThat(cards.getFirst().getScore()).isEqualTo(CardScore.ACE);
+        assertThat(cards.getFirst().score()).isEqualTo(CardScore.ACE);
     }
 
 }

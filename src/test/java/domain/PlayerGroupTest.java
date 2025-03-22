@@ -1,6 +1,7 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import domain.card.Card;
 import domain.card.CardGroup;
@@ -8,6 +9,7 @@ import domain.card.CardScore;
 import domain.card.CardType;
 import domain.gamer.Dealer;
 import domain.gamer.PlayerGroup;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -18,7 +20,7 @@ public class PlayerGroupTest {
     void 플레이어가_버스트_하지_않고_딜러보다_점수가_높아야_승리() {
         //given
         final List<String> playerNames = List.of("윌슨", "가이온");
-        final Dealer dealer = new Dealer(new CardGroup());
+        final Dealer dealer = new Dealer(new CardGroup(new ArrayList<>()));
 
         //when
         final PlayerGroup playerGroup = PlayerGroup.of(playerNames);
@@ -38,7 +40,7 @@ public class PlayerGroupTest {
     void 딜러와_플레이어의_점수가_같은_경우_무승부() {
         //given
         final List<String> playerNames = List.of("윌슨", "가이온");
-        final Dealer dealer = new Dealer(new CardGroup());
+        final Dealer dealer = new Dealer(new CardGroup(new ArrayList<>()));
 
         //when
         final PlayerGroup playerGroup = PlayerGroup.of(playerNames);
@@ -51,10 +53,10 @@ public class PlayerGroupTest {
     }
 
     @Test
-    void 플레이어와_딜러_둘_다_버스트_하는_경우_무승부() {
+    void 플레이어가_버스트_라면_플레이어_패배() {
         //given
         final List<String> playerNames = List.of("윌슨");
-        final Dealer dealer = new Dealer(new CardGroup());
+        final Dealer dealer = new Dealer(new CardGroup(new ArrayList<>()));
 
         //when
         final PlayerGroup playerGroup = PlayerGroup.of(playerNames);
@@ -67,7 +69,7 @@ public class PlayerGroupTest {
         final Map<String, GameResult> playersGameResult = playerGroup.calculatePlayersGameResult(dealer);
 
         //then
-        assertThat(playersGameResult).containsEntry("윌슨", GameResult.DRAW);
+        assertThat(playersGameResult).containsEntry("윌슨", GameResult.LOSE);
     }
 
     @Test
@@ -80,9 +82,53 @@ public class PlayerGroupTest {
         playerGroup.giveCardByName("윌슨", new Card(CardType.HEART, CardScore.JACK));
         playerGroup.giveCardByName("윌슨",new Card(CardType.CLOVER, CardScore.QUEEN));
         playerGroup.giveCardByName("윌슨", new Card(CardType.DIAMOND, CardScore.TEN));
-        final boolean result = playerGroup.isBustByPlayerName("윌슨");
+        final boolean result = playerGroup.canPlayerReceiveCard("윌슨");
 
         //then
-        assertThat(result).isTrue();
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    void 플레이어의_이름으로_카드를_가져온다() {
+        //given
+        final List<String> playerNames = List.of("윌슨");
+        final Card card1 = new Card(CardType.HEART, CardScore.JACK);
+        final Card card2 = new Card(CardType.CLOVER, CardScore.QUEEN);
+        final Card card3 = new Card(CardType.DIAMOND, CardScore.TEN);
+
+        //when
+        final PlayerGroup playerGroup = PlayerGroup.of(playerNames);
+        playerGroup.giveCardByName("윌슨", card1);
+        playerGroup.giveCardByName("윌슨", card2);
+        playerGroup.giveCardByName("윌슨", card3);
+        final List<Card> cards = playerGroup.getCardsByName("윌슨");
+
+        //then
+        assertThat(cards).containsExactlyInAnyOrderElementsOf(List.of(card1, card2, card3));
+    }
+
+    @Test
+    void 플레이어가_카드를_더_받을_수_있는지_판단한다() {
+        //given
+        final List<String> playerNames = List.of("윌슨", "가이온");
+        final Card card1 = new Card(CardType.HEART, CardScore.JACK);
+        final Card card2 = new Card(CardType.CLOVER, CardScore.QUEEN);
+        final Card card3 = new Card(CardType.DIAMOND, CardScore.TEN);
+        final Card card4 = new Card(CardType.HEART, CardScore.TWO);
+
+        //when
+        final PlayerGroup playerGroup = PlayerGroup.of(playerNames);
+        playerGroup.giveCardByName("윌슨", card1);
+        playerGroup.giveCardByName("윌슨", card2);
+        playerGroup.giveCardByName("윌슨", card3);
+        playerGroup.giveCardByName("가이온", card4);
+        final boolean result1 = playerGroup.canPlayerReceiveCard("윌슨");
+        final boolean result2 = playerGroup.canPlayerReceiveCard("가이온");
+
+        //then
+        assertAll(
+                () -> assertThat(result1).isFalse(),
+                () -> assertThat(result2).isTrue()
+        );
     }
 }

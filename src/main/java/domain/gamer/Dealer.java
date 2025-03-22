@@ -8,12 +8,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Dealer extends Gamer {
+
+    private static final int DEALER_MUST_HIT_THRESHOLD = 16;
+
     public Dealer(CardGroup cardGroup) {
         super(cardGroup);
-    }
-
-    public boolean isLessThen(int score) {
-        return this.cardGroup.calculateScore(Gamer.LIMIT) <= score;
     }
 
     public Map<GameResult, Integer> calculateDealerGameResult(final Map<String, GameResult> playerGameResults) {
@@ -25,5 +24,17 @@ public class Dealer extends Gamer {
                         result -> Collections.frequency(results, result),
                         (newResult, oldResult) -> oldResult
                 ));
+    }
+
+    public double calculateBettingAmountOfReturn(final Map<String, Double> playerBettingOfReturns) {
+        return playerBettingOfReturns.values()
+                .stream()
+                .mapToDouble(value -> -value)
+                .sum();
+    }
+
+    @Override
+    public boolean canReceiveCard() {
+        return super.calculateScore() <= DEALER_MUST_HIT_THRESHOLD;
     }
 }
