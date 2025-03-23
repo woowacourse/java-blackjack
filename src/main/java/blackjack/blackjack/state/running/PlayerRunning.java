@@ -1,11 +1,11 @@
 package blackjack.blackjack.state.running;
 
 import blackjack.blackjack.card.Hand;
+import blackjack.blackjack.state.State;
 import blackjack.blackjack.state.finished.Blackjack;
 import blackjack.blackjack.state.finished.Bust;
-import blackjack.blackjack.state.State;
 
-public final class PlayerRunning extends Running implements State {
+public final class PlayerRunning extends Running {
 
     private PlayerRunning(final Hand cards) {
         super(cards);

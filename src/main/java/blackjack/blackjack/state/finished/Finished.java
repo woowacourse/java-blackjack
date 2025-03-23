@@ -6,7 +6,7 @@ import blackjack.blackjack.state.StateType;
 import blackjack.blackjack.state.started.Started;
 import java.math.BigDecimal;
 
-public abstract class Finished extends Started implements State {
+public abstract class Finished extends Started {
 
     public Finished(final Hand cards, final StateType stateType) {
         super(cards, stateType);
