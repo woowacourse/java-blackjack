@@ -8,8 +8,8 @@ import blackjack.blackjack.state.finished.Stay;
 
 public final class DealerRunning extends Running {
 
-    private DealerRunning(final Hand cards) {
-        super(cards);
+    private DealerRunning(final Hand hand) {
+        super(hand);
     }
 
     public static State initialState(final Hand hand) {
@@ -24,12 +24,12 @@ public final class DealerRunning extends Running {
 
     @Override
     public State receiveCards(final Hand hand) {
-        cards.addAll(hand);
+        this.hand.addAll(hand);
         if (cards().isBust()) {
-            return new Bust(cards);
+            return new Bust(this.hand);
         }
         if (cards().isDealerStay()) {
-            return new Stay(cards);
+            return new Stay(this.hand);
         }
         return this;
     }

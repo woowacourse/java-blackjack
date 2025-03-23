@@ -7,8 +7,8 @@ import blackjack.blackjack.state.finished.Bust;
 
 public final class PlayerRunning extends Running {
 
-    private PlayerRunning(final Hand cards) {
-        super(cards);
+    private PlayerRunning(final Hand hand) {
+        super(hand);
     }
 
     public static State initialState(final Hand hand) {
@@ -20,12 +20,12 @@ public final class PlayerRunning extends Running {
 
     @Override
     public State receiveCards(final Hand hand) {
-        cards.addAll(hand);
-        if (cards.isBust()) {
-            return new Bust(cards);
+        this.hand.addAll(hand);
+        if (this.hand.isBust()) {
+            return new Bust(this.hand);
         }
-        if (cards.isBlackjack()) {
-            return new Blackjack(cards);
+        if (this.hand.isBlackjack()) {
+            return new Blackjack(this.hand);
         }
         return this;
     }

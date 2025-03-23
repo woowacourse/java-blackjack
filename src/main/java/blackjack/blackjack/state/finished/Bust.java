@@ -7,8 +7,8 @@ import java.math.BigDecimal;
 
 public final class Bust extends Finished {
 
-    public Bust(final Hand cards) {
-        super(cards, StateType.BUST);
+    public Bust(final Hand hand) {
+        super(hand, StateType.BUST);
     }
 
     @Override

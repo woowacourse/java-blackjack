@@ -13,18 +13,18 @@ import java.util.stream.Stream;
 
 public final class ProfitResult {
 
-    private final Map<Participant, BigDecimal> result;
+    private final Map<Participant, BigDecimal> profitByParticipant;
 
-    public ProfitResult(final Map<Participant, BigDecimal> result) {
-        this.result = result;
+    public ProfitResult(final Map<Participant, BigDecimal> profitByParticipant) {
+        this.profitByParticipant = profitByParticipant;
     }
 
     public static ProfitResult from(final Dealer dealer, final Players players) {
-        final Map<Participant, BigDecimal> profits = initializeProfit(dealer, players);
+        final Map<Participant, BigDecimal> profit = initializeProfit(dealer, players);
         for (Player player : players.getPlayers()) {
-            calculateEachProfit(dealer, player, profits);
+            calculateEachProfit(dealer, player, profit);
         }
-        return new ProfitResult(profits);
+        return new ProfitResult(profit);
     }
 
     private static Map<Participant, BigDecimal> initializeProfit(final Dealer dealer,
@@ -45,7 +45,7 @@ public final class ProfitResult {
         profits.merge(player, profit, BigDecimal::add);
     }
 
-    public Map<Participant, BigDecimal> getResult() {
-        return Collections.unmodifiableMap(result);
+    public Map<Participant, BigDecimal> getProfitByParticipant() {
+        return Collections.unmodifiableMap(profitByParticipant);
     }
 }

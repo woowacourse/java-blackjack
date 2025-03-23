@@ -8,8 +8,8 @@ import java.math.BigDecimal;
 
 public abstract class Finished extends Started {
 
-    public Finished(final Hand cards, final StateType stateType) {
-        super(cards, stateType);
+    public Finished(final Hand hand, final StateType stateType) {
+        super(hand, stateType);
     }
 
     @Override

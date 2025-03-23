@@ -35,7 +35,7 @@ class ProfitResultTest {
         final ProfitResult profitResult = ProfitResult.from(dealer, new Players(List.of(mint, mj, pobi, norang)));
 
         // When
-        final Map<Participant, BigDecimal> profits = profitResult.getResult();
+        final Map<Participant, BigDecimal> profits = profitResult.getProfitByParticipant();
 
         // Then
         Assertions.assertAll(

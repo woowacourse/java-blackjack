@@ -111,6 +111,6 @@ public class Controller {
     }
 
     private void showProfitResult(final ProfitResult profitResult) {
-        resultView.showProfit(profitResult.getResult());
+        resultView.showProfit(profitResult.getProfitByParticipant());
     }
 }

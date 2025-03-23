@@ -6,22 +6,22 @@ import blackjack.blackjack.state.StateType;
 
 public abstract class Started implements State {
 
-    protected final Hand cards;
+    protected final Hand hand;
     protected final StateType stateType;
 
-    public Started(final Hand cards, final StateType stateType) {
-        this.cards = cards;
+    public Started(final Hand hand, final StateType stateType) {
+        this.hand = hand;
         this.stateType = stateType;
     }
 
     @Override
     public int calculateScore() {
-        return cards.calculateScore();
+        return hand.calculateScore();
     }
 
     @Override
     public Hand cards() {
-        return cards;
+        return hand;
     }
 
     @Override

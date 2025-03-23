@@ -9,13 +9,13 @@ import java.math.BigDecimal;
 
 public abstract class Running extends Started {
 
-    public Running(final Hand cards) {
-        super(cards, StateType.RUNNING);
+    public Running(final Hand hand) {
+        super(hand, StateType.RUNNING);
     }
 
     @Override
     public State stay() {
-        return new Stay(cards);
+        return new Stay(hand);
     }
 
     @Override

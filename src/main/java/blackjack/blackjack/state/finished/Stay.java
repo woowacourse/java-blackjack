@@ -7,8 +7,8 @@ import java.math.BigDecimal;
 
 public class Stay extends Finished {
 
-    public Stay(final Hand cards) {
-        super(cards, StateType.STAY);
+    public Stay(final Hand hand) {
+        super(hand, StateType.STAY);
     }
 
     @Override
@@ -25,10 +25,10 @@ public class Stay extends Finished {
     }
 
     private BigDecimal compareByScore(final BigDecimal bettingAmount, final State dealerState) {
-        int playerScore = cards.calculateScore();
+        int playerScore = hand.calculateScore();
         int dealerScore = dealerState.cards().calculateScore();
         if (playerScore < dealerScore) {
-            return new Bust(cards).calculateProfit(bettingAmount, dealerState);
+            return new Bust(hand).calculateProfit(bettingAmount, dealerState);
         }
         if (playerScore == dealerScore) {
             return BigDecimal.ZERO;
