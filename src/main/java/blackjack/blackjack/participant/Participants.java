@@ -8,6 +8,8 @@ import java.util.Map;
 
 public final class Participants {
 
+    private static final int SPREAD_CARD_SIZE = 2;
+
     private final Dealer dealer;
     private final Players players;
 
@@ -21,7 +23,8 @@ public final class Participants {
     }
 
     public void dealInitialCards(final Deck deck) {
-        dealer.dealInitialCards(players, deck);
+        dealer.dealInitialCards(deck, SPREAD_CARD_SIZE);
+        players.dealInitialCards(deck, SPREAD_CARD_SIZE);
     }
 
     public Players findHitEligiblePlayers() {

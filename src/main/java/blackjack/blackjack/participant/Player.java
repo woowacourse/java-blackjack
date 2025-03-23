@@ -11,6 +11,8 @@ import java.util.ArrayList;
 
 public final class Player extends Participant {
 
+    private static final int SPREAD_CARD_SIZE = 2;
+
     private final String nickname;
     private final BigDecimal bettingAmount;
     private State state;

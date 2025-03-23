@@ -5,7 +5,7 @@ import blackjack.blackjack.result.ProfitResult;
 
 public interface GameRule {
 
-    void dealInitialCards(Players players, Deck deck);
+    void dealInitialCards(Deck deck, int count);
 
     ProfitResult calculateProfit(Players players);
 }

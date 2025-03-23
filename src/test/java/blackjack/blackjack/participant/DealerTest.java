@@ -101,17 +101,13 @@ class DealerTest {
         final Deck deck = new Deck(() -> new ArrayDeque<>(Arrays.asList(firstCard, secondCard, thirdCard, fourthCard)));
 
         final Dealer dealer = new Dealer();
-        Player mint = new Player("밍트", new BigDecimal(3000));
-        final Players players = new Players(List.of(mint));
+        final int count = 2;
 
         // when
-        dealer.dealInitialCards(players, deck);
+        dealer.dealInitialCards(deck, count);
 
         // then
-        Assertions.assertAll(
-                () -> assertThat(dealer.showAllCards()).isEqualTo(new Hand(List.of(firstCard, secondCard))),
-                () -> assertThat(mint.showAllCards()).isEqualTo(new Hand(List.of(thirdCard, fourthCard)))
-        );
+        assertThat(dealer.showAllCards()).isEqualTo(new Hand(List.of(firstCard, secondCard)));
     }
 
     @DisplayName("카드 합을 구한다")

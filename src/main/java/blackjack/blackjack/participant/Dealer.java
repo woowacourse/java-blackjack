@@ -12,7 +12,6 @@ import java.util.List;
 public final class Dealer extends Participant implements GameRule {
 
     private static final String NICKNAME = "딜러";
-    private static final int SPREAD_CARD_SIZE = 2;
 
     private State state;
 
@@ -49,13 +48,9 @@ public final class Dealer extends Participant implements GameRule {
         return state.cards();
     }
 
-    @Override
-    public void dealInitialCards(final Players players, final Deck deck) {
-        Hand dealerHand = deck.drawCardsByCount(SPREAD_CARD_SIZE);
+    public void dealInitialCards(final Deck deck, final int count) {
+        Hand dealerHand = deck.drawCardsByCount(count);
         changeState(state.receiveCards(dealerHand));
-
-        Hand playerHand = deck.drawCardsByCount(SPREAD_CARD_SIZE * players.getSize());
-        players.receiveCardsByCount(playerHand, SPREAD_CARD_SIZE);
     }
 
     public void receiveCards(final Hand hand) {

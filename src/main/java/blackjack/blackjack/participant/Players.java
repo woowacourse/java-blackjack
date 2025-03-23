@@ -1,5 +1,6 @@
 package blackjack.blackjack.participant;
 
+import blackjack.blackjack.card.Deck;
 import blackjack.blackjack.card.Hand;
 import blackjack.util.ExceptionMessage;
 import java.math.BigDecimal;
@@ -52,6 +53,11 @@ public final class Players {
                 .toList());
     }
 
+    public void dealInitialCards(final Deck deck, final int count) {
+        Hand playerHand = deck.drawCardsByCount(count * players.size());
+        receiveCardsByCount(playerHand, count);
+    }
+
     private void validate(List<Player> players) {
         if (hasDuplicateName(players)) {
             throw new IllegalArgumentException(ExceptionMessage.makeMessage("[ERROR] 중복된 이름을 입력했습니다."));
@@ -69,10 +75,6 @@ public final class Players {
         return players.stream()
                 .map(Participant::getNickname)
                 .toList();
-    }
-
-    public int getSize() {
-        return players.size();
     }
 
     public List<Player> getPlayers() {
