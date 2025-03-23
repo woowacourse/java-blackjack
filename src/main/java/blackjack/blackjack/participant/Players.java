@@ -29,7 +29,7 @@ public final class Players {
     public void receiveCardsByCount(final Hand hand, final int count) {
         for (int i = 0; i < players.size(); i++) {
             final Player player = players.get(i);
-            player.receiveCards(hand.subHand(i * count, (i + 1) * count));
+            player.receiveCards(hand.getPartialHand(i * count, (i + 1) * count));
         }
     }
 

@@ -36,7 +36,7 @@ class DeckTest {
         // then
         assertAll(
                 () -> assertThat(hand.getFirstCard()).isEqualTo(new Card(Suit.CLOB, Denomination.A)),
-                () -> assertThat(hand.subHand(1, hand.getSize())).isEqualTo(
+                () -> assertThat(hand.getPartialHand(1, hand.getSize())).isEqualTo(
                         new Hand(List.of(new Card(Suit.DIAMOND, Denomination.SIX))))
         );
     }

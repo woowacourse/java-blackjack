@@ -52,11 +52,6 @@ public final class Hand {
         return calculateScore() > BURST_THRESHOLD;
     }
 
-    public Hand subHand(final int startInclusive, final int endExclusive) {
-        validateIndex(startInclusive, endExclusive);
-        return new Hand(cards.subList(startInclusive, endExclusive));
-    }
-
     private int calculateMaxScore(final List<Card> cards) {
         return cards.stream()
                 .mapToInt(Card::getCardMaxNumber)
@@ -110,6 +105,11 @@ public final class Hand {
 
     public Card getFirstCard() {
         return cards.getFirst();
+    }
+
+    public Hand getPartialHand(final int startInclusive, final int endExclusive) {
+        validateIndex(startInclusive, endExclusive);
+        return new Hand(cards.subList(startInclusive, endExclusive));
     }
 
     public List<Card> getCards() {

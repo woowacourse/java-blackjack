@@ -61,9 +61,9 @@ public class PlayersTest {
         // then
         assertAll(
                 () -> assertThat(players.getPlayers().getFirst().getState().cards()).isEqualTo(
-                        hand.subHand(0, 2)),
+                        hand.getPartialHand(0, 2)),
                 () -> assertThat(players.getPlayers().get(1).getState().cards()).isEqualTo(
-                        hand.subHand(2, 4))
+                        hand.getPartialHand(2, 4))
         );
     }
 }
