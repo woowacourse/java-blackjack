@@ -20,4 +20,10 @@ public class InputView {
         String input = scanner.nextLine();
         return Answer.of(input);
     }
+
+    public int readBetAmount(String playerName) {
+        System.out.printf("%n%s의 배팅 금액은?%n", playerName);
+        String input = scanner.nextLine();
+        return Integer.parseInt(input);
+    }
 }

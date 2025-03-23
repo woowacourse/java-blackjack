@@ -10,8 +10,10 @@ import static domain.card.Suit.CLOVER;
 import static domain.card.Suit.DIAMOND;
 import static domain.card.Suit.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 import domain.card.CardHand;
+import domain.participant.Dealer;
 import domain.participant.Player;
 import fixture.CardFixture;
 import java.util.Set;
@@ -20,7 +22,7 @@ import org.junit.jupiter.api.Test;
 
 class PlayerTest {
     @Test
-    @DisplayName("자기 점수를 계산한다.")
+    @DisplayName("점수를 계산한다.")
     void testCalculateScore() {
         // given
         CardHand cardHand = new CardHand(
@@ -33,7 +35,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("자기가 버스트인지 판단한다.")
+    @DisplayName("버스트인지 판단한다.")
     void testIsBust() {
         // given
         CardHand cardHand = new CardHand(
@@ -44,7 +46,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("자기가 블랙잭인지 판단한다.")
+    @DisplayName("블랙잭인지 판단한다.")
     void testIsBlackJack() {
         // given
         CardHand cardHand = new CardHand(
@@ -52,5 +54,19 @@ class PlayerTest {
         Player player = new Player("pobi", cardHand);
         // when & then
         assertThat(player.isBlackJack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("이름이 딜러와 같은 경우 예외가 발생한다.")
+    void testValidateName() {
+        // given
+        CardHand cardHand = new CardHand(
+                Set.of(CardFixture.of(TEN, HEART), CardFixture.of(ACE, DIAMOND)));
+        // when & then
+        assertThatCode(() -> {
+            new Player(Dealer.NAME, cardHand);
+        })
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(String.format("[ERROR] '%s'는 플레이어 이름으로 사용할 수 없습니다.", Dealer.NAME));
     }
 }

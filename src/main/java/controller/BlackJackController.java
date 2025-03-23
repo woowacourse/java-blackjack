@@ -3,6 +3,8 @@ package controller;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.game.Game;
+import domain.participant.Dealer;
+import domain.participant.Player;
 import domain.shuffler.RandomShuffler;
 import java.util.List;
 import java.util.function.Supplier;
@@ -16,59 +18,77 @@ public class BlackJackController {
 
     public void run() {
         Game game = retryUntilSuccess(this::startGame);
+        bet(game);
         outputView.displayInitialDeal(game);
-        giveAdditionalCardsForPlayer(game);
-        giveAdditionalCardsForDealer(game);
-        displayScores(game);
-        calculateAndDisplayGameResult(game);
+
+        dealAdditionalCardsToPlayers(game);
+        dealAdditionalCardsToDealer(game);
+
+        outputView.displayScore(game);
+        displayAllProfit(game);
     }
 
-    public Game startGame() {
+    private Game startGame() {
         List<String> playerNames = inputView.readPlayerNames();
         return new Game(playerNames, new Deck(new RandomShuffler()));
     }
 
-    private void giveAdditionalCardsForPlayer(Game game) {
-        game.getPlayerNames()
-                .forEach((name) -> hitOrStay(game, name));
+    private void bet(Game game) {
+        game.getPlayerNames().forEach(name -> {
+            int betAmount = inputView.readBetAmount(name);
+            game.bet(name, betAmount);
+        });
     }
 
-    private void giveAdditionalCardsForDealer(Game game) {
-        outputView.displayEmptyLine();
-        while (game.doesDealerNeedCard()) {
-            game.dealerHit();
-            outputView.displayDealerHitResult();
+    private void dealAdditionalCardsToPlayers(Game game) {
+        for (String name : game.getPlayerNames()) {
+            hitOrStay(game, name);
         }
-        outputView.displayEmptyLine();
-    }
-
-    private void displayScores(Game game) {
-        outputView.displayScore(game);
-    }
-
-    private void calculateAndDisplayGameResult(Game game) {
-        outputView.displayGameResult(game);
     }
 
     private void hitOrStay(Game game, String playerName) {
-        Answer answer = Answer.YES;
-        while (game.canHit(playerName) && answer == Answer.YES) {
-            answer = retryUntilSuccess(() -> inputView.readHitOrStay(playerName));
-            hitByAnswer(game, playerName, answer);
+        while (game.canPlayerHit(playerName)) {
+            Answer answer = retryUntilSuccess(() -> inputView.readHitOrStay(playerName));
+            if (answer == Answer.NO) {
+                displayPlayerCards(game, playerName);
+                return;
+            }
+            game.playerHit(playerName);
             displayPlayerCards(game, playerName);
         }
     }
 
-    private void hitByAnswer(Game game, String playerName, Answer answer) {
-        if (answer == Answer.YES) {
-            game.playerHit(playerName);
-        }
-    }
-
     private void displayPlayerCards(Game game, String playerName) {
-        List<Card> cards = game.getPlayerCards(playerName);
+        List<Card> cards = game.getCardsOf(playerName);
         outputView.displayNameAndCards(playerName, cards);
         outputView.displayEmptyLine();
+    }
+
+    private void dealAdditionalCardsToDealer(Game game) {
+        outputView.displayEmptyLine();
+        while (game.canDealerHit()) {
+            game.dealerHit();
+            outputView.displayDealerHitMessage();
+        }
+        outputView.displayEmptyLine();
+    }
+
+    private void displayAllProfit(Game game) {
+        outputView.displayProfitMessage();
+        displayDealerProfit(game);
+        displayPlayersProfit(game);
+    }
+
+    private void displayDealerProfit(Game game) {
+        outputView.displayParticipantProfit(Dealer.NAME, game.getDealerProfit());
+    }
+
+    private void displayPlayersProfit(Game game) {
+        List<Player> players = game.getPlayers();
+        Dealer dealer = game.getDealer();
+        for (Player player : players) {
+            outputView.displayParticipantProfit(player.getName(), player.calculateProfit(dealer));
+        }
     }
 
     private <T> T retryUntilSuccess(Supplier<T> supplier) {

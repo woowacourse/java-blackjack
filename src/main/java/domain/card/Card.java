@@ -1,5 +1,6 @@
 package domain.card;
 
+import domain.game.Score;
 import java.util.Objects;
 
 public class Card {
@@ -11,12 +12,12 @@ public class Card {
         this.suit = suit;
     }
 
-    public int score() {
-        return rank.getValue();
-    }
-
     public boolean isAce() {
         return rank == Rank.ACE;
+    }
+
+    public Score getScore() {
+        return rank.getScore();
     }
 
     public String getNotation() {

@@ -86,7 +86,7 @@ class CardHandTest {
     }
 
     @Test
-    @DisplayName("카드가 블랙잭인지 판단한다")
+    @DisplayName("카드가 블랙잭인지 판단한다.")
     void testIsBlackJack() {
         // given
         CardHand cardHand = new CardHand(
@@ -96,13 +96,13 @@ class CardHandTest {
     }
 
     @Test
-    @DisplayName("카드가 3장인 경우에 블랙잭인지 판단한다")
+    @DisplayName("카드가 3장인 경우에 블랙잭인지 판단한다.")
     void testIsNotBlackJack() {
         // given
         CardHand cardHand = new CardHand(
                 Set.of(CardFixture.of(ACE, CLOVER), CardFixture.of(JACK, SPADE), CardFixture.of(QUEEN, SPADE)));
         // when & then
-        assertThat(cardHand.isBlackJack()).isTrue();
+        assertThat(cardHand.isBlackJack()).isFalse();
     }
 
     private static Stream<Arguments> cardArguments() {

@@ -40,7 +40,7 @@ class GameResultTest {
 
     @ParameterizedTest
     @MethodSource("cardArguments")
-    @DisplayName("딜러와 플레이어가 모두 21점 이하일 때 딜러의 승패 여부를 판단할 수 있다")
+    @DisplayName("딜러와 플레이어가 모두 21점 이하일 때 딜러의 승패 여부를 판단할 수 있다.")
     void testCalculateDealerGameResult(Set<Card> dealerCards, Set<Card> playerCards, GameResult expectedResult) {
         // given
         CardHand dealerCardHand = new CardHand(dealerCards);
