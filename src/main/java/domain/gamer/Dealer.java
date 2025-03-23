@@ -9,6 +9,7 @@ public class Dealer extends Gamer {
 
     private static final int WIN = 1;
     private static final int DRAW = 0;
+    private static final int LOSE = -1;
 
     public Dealer(final Nickname nickname, final State state) {
         super(nickname, state);
@@ -16,24 +17,23 @@ public class Dealer extends Gamer {
 
     @Override
     public List<Card> getInitialCards() {
-        final Hand hand = getHand();
-        final List<Card> cards = hand.getCards();
+        final List<Card> cards = getCards();
         return List.of(cards.getFirst());
     }
 
     public Profit evaluateResult(final Gamer gamer) {
         final int result = gamer.compareTo(this);
 
-        if (isWin(result)) {
-            if (gamer.isBlackjack()) {
-                return Profit.WIN_BLACKJACK;
-            }
-            return Profit.WIN;
-        }
         if (isDraw(result)) {
             return Profit.DRAW;
         }
-        return Profit.LOSE;
+        if (isLose(result)) {
+            return Profit.LOSE;
+        }
+        if (isWin(result) && gamer.isBlackjack()) {
+            return Profit.WIN_BLACKJACK;
+        }
+        return Profit.WIN;
     }
 
     private boolean isWin(final int result) {
@@ -42,5 +42,9 @@ public class Dealer extends Gamer {
 
     private boolean isDraw(final int result) {
         return result == DRAW;
+    }
+
+    private boolean isLose(final int result) {
+        return result == LOSE;
     }
 }

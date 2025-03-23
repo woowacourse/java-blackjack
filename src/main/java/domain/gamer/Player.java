@@ -20,7 +20,6 @@ public class Player extends Gamer {
 
     @Override
     public List<Card> getInitialCards() {
-        final Hand hand = getHand();
-        return hand.getCards();
+        return getCards();
     }
 }

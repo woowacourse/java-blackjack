@@ -19,7 +19,7 @@ public abstract class Gamer {
     public abstract List<Card> getInitialCards();
 
     public final int calculateSumOfRank() {
-        return getHand().calculateSumOfRank();
+        return state.getHand().calculateSumOfRank();
     }
 
     public final void hit(final Card card) {
@@ -42,8 +42,9 @@ public abstract class Gamer {
         return state.compareTo(otherGamer.getState());
     }
 
-    public final Hand getHand() {
-        return state.getHand();
+    public final List<Card> getCards() {
+        final Hand hand = state.getHand();
+        return hand.getCards();
     }
 
     public final String getDisplayName() {

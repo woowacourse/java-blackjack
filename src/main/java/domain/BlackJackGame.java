@@ -1,9 +1,9 @@
 package domain;
 
+import domain.deck.Card;
 import domain.deck.Deck;
 import domain.gamer.Dealer;
 import domain.gamer.Gamer;
-import domain.gamer.Hand;
 import domain.gamer.Player;
 import domain.profit.Profit;
 import java.util.LinkedHashMap;
@@ -27,10 +27,11 @@ public class BlackJackGame {
         }
     }
 
-    public void hit(final Gamer gamer, final Function<Gamer, Boolean> wantHit, final BiConsumer<Gamer, Hand> onHit) {
+    public void hit(final Gamer gamer, final Function<Gamer, Boolean> wantHit,
+                    final BiConsumer<Gamer, List<Card>> onHit) {
         while (gamer.isRunning() && wantHit.apply(gamer)) {
             gamer.hit(deck.drawCard());
-            onHit.accept(gamer, gamer.getHand());
+            onHit.accept(gamer, gamer.getCards());
         }
         if (gamer.isRunning()) {
             gamer.stay();

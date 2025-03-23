@@ -68,7 +68,7 @@ public final class OutputView {
     }
 
     private static String getMessage(final Gamer gamer) {
-        final List<Card> cards = gamer.getHand().getCards();
+        final List<Card> cards = gamer.getCards();
         final List<String> cardGroup = cards.stream()
                 .map(card -> RANK_BUNDLE.getString(card.getRank().name()) + SHAPE_BUNDLE.getString(
                         card.getShape().name()))
