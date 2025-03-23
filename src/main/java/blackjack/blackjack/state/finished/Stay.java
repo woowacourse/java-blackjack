@@ -21,9 +21,6 @@ public class Stay extends Finished {
         if (dealerState.getStateType() == StateType.BUST) {
             return bettingAmount;
         }
-        if (dealerState.getStateType() == StateType.BLACKJACK) {
-            return bettingAmount.multiply(BigDecimal.valueOf(-1));
-        }
         return compareByScore(bettingAmount, dealerState);
     }
 
