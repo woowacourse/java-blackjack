@@ -11,6 +11,6 @@ public class Application {
 
         BlackJackController blackJackController = new BlackJackController(inputView, outputView);
 
-        blackJackController.run();
+        blackJackController.start();
     }
 }

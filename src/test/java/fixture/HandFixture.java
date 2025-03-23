@@ -1,14 +1,15 @@
 package fixture;
 
-import domain.Card;
-import domain.Hand;
+import blackjack.card.Card;
+import blackjack.card.Hand;
+import java.util.Arrays;
 
 public class HandFixture {
-    public static Hand createHand(Card... cards) {
+    public static Hand createHandOf(Card... cards) {
         Hand hand = new Hand();
-        for (Card card : cards) {
-            hand.add(card);
-        }
+        Arrays.stream(cards)
+                .forEach(hand::add);
+
         return hand;
     }
 }
