@@ -13,10 +13,10 @@ public final class Hand {
     private static final int BLACKJACK_SIZE = 2;
     private static final int DEALER_THRESHOLD = 16;
 
-    private final List<Card> hand;
+    private final List<Card> cards;
 
-    public Hand(final List<Card> hand) {
-        this.hand = new ArrayList<>(hand);
+    public Hand(final List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
     }
 
     public Hand(final Card card) {
@@ -24,7 +24,7 @@ public final class Hand {
     }
 
     public int calculateScore() {
-        int maxScore = calculateMaxScore(hand);
+        int maxScore = calculateMaxScore(cards);
         if (isNotBurst(maxScore)) {
             return maxScore;
         }
@@ -32,21 +32,21 @@ public final class Hand {
     }
 
     public int calculateWithHardHand() {
-        return hand.stream()
+        return cards.stream()
                 .mapToInt(Card::getCardMinNumber)
                 .sum();
     }
 
     public void add(final Card card) {
-        hand.add(card);
+        cards.add(card);
     }
 
     public void addAll(final Hand givenHand) {
-        hand.addAll(givenHand.getHand());
+        cards.addAll(givenHand.getCards());
     }
 
     public boolean isBlackjack() {
-        return hand.size() == BLACKJACK_SIZE && calculateScore() == BURST_THRESHOLD;
+        return cards.size() == BLACKJACK_SIZE && calculateScore() == BURST_THRESHOLD;
     }
 
     public boolean isBust() {
@@ -59,7 +59,7 @@ public final class Hand {
 
     public Hand subHand(final int startInclusive, final int endExclusive) {
         validateIndex(startInclusive, endExclusive);
-        return new Hand(hand.subList(startInclusive, endExclusive));
+        return new Hand(cards.subList(startInclusive, endExclusive));
     }
 
     private int calculateMaxScore(final List<Card> cards) {
@@ -73,7 +73,7 @@ public final class Hand {
     }
 
     private int subtractAce(int score) {
-        int aceCount = countAce(hand);
+        int aceCount = countAce(cards);
         while (!isNotBurst(score) && aceCount-- > 0) {
             score -= ACE_SUBTRACT;
         }
@@ -87,7 +87,7 @@ public final class Hand {
     }
 
     private void validateIndex(final int start, final int end) {
-        final int size = hand.size();
+        final int size = cards.size();
         if (start < 0 || end < 0 || start >= size || end > size) {
             throw new IllegalArgumentException(ExceptionMessage.makeMessage("인덱스는 0 이상 hand 크기 이하여야 합니다"));
         }
@@ -101,23 +101,23 @@ public final class Hand {
         if (!(o instanceof final Hand hand1)) {
             return false;
         }
-        return Objects.equals(hand, hand1.hand);
+        return Objects.equals(cards, hand1.cards);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(hand);
+        return Objects.hashCode(cards);
     }
 
     public int getSize() {
-        return hand.size();
+        return cards.size();
     }
 
     public Card getFirstCard() {
-        return hand.getFirst();
+        return cards.getFirst();
     }
 
-    public List<Card> getHand() {
-        return Collections.unmodifiableList(hand);
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }

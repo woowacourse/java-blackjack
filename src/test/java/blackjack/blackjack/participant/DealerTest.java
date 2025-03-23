@@ -60,7 +60,7 @@ class DealerTest {
         final Hand dealerHand = dealer.showInitialCards();
 
         // then
-        assertThat(dealerHand.getHand()).hasSize(1);
+        assertThat(dealerHand.getCards()).hasSize(1);
     }
 
     @DisplayName("딜러의 카드의 합이 블랙잭이 아니면서 16 이하면 추가로 뽑을 수 있다.")
@@ -150,7 +150,7 @@ class DealerTest {
         final ProfitResult profitResult = dealer.calculateProfit(new Players(List.of(player)));
 
         // Then
-        assertThat(profitResult.getResult()).isEqualTo(Map.of(dealer, dealerProfit, player, playerProfit));
+        assertThat(profitResult.getProfitByParticipant()).isEqualTo(Map.of(dealer, dealerProfit, player, playerProfit));
     }
 
     private static Stream<Arguments> calculateWinningResultExceptBlackjack() {
@@ -182,7 +182,7 @@ class DealerTest {
         final ProfitResult profitResult = dealer.calculateProfit(new Players(List.of(player)));
 
         // Then
-        assertThat(profitResult.getResult()).isEqualTo(
+        assertThat(profitResult.getProfitByParticipant()).isEqualTo(
                 Map.of(dealer, new BigDecimal("-15000.0"), player, new BigDecimal("15000.0")));
     }
 }

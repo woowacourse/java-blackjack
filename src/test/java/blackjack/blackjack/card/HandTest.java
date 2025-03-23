@@ -31,7 +31,7 @@ class HandTest {
         Hand hand = new Hand(card);
 
         // Then
-        assertThat(hand.getHand()).isEqualTo(List.of(card));
+        assertThat(hand.getCards()).isEqualTo(List.of(card));
     }
 
     @DisplayName("21 이하에서 카드 최대 합을 구한다")

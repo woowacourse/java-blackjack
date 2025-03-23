@@ -80,7 +80,7 @@ public class PlayerTest {
         final Hand playerHand = player.showAllCards();
 
         // then
-        assertThat(playerHand.getHand()).hasSize(2);
+        assertThat(playerHand.getCards()).hasSize(2);
     }
 
     @DisplayName("플레이어는 2장을 보여준다.")
@@ -94,7 +94,7 @@ public class PlayerTest {
         final Hand playerHand = player.showInitialCards();
 
         // then
-        assertThat(playerHand.getHand()).hasSize(2);
+        assertThat(playerHand.getCards()).hasSize(2);
     }
 
 

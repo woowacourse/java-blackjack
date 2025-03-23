@@ -64,7 +64,7 @@ public final class ResultView {
     }
 
     private String makeCardMessage(final Hand hand) {
-        return hand.getHand().stream()
+        return hand.getCards().stream()
                 .map(card -> card.getDenominationName() + getSuitName(card.getSuit()))
                 .collect(Collectors.joining(COMMA));
     }
