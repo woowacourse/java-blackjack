@@ -34,10 +34,6 @@ public final class BlackjackGame {
         return participants.makeDealerWinningResult();
     }
 
-    public void stayToPlayerIfRunning(final Player currentTurnPlayer) {
-        currentTurnPlayer.stayIfRunning();
-    }
-
     public Participants getParticipants() {
         return participants;
     }
