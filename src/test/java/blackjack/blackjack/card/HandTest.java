@@ -1,11 +1,9 @@
 package blackjack.blackjack.card;
 
-import static blackjack.fixture.TestFixture.provide16Cards;
 import static blackjack.fixture.TestFixture.provideBiggerAceCards;
 import static blackjack.fixture.TestFixture.provideBiggerAndSmallerAceCards;
 import static blackjack.fixture.TestFixture.provideBlackjack;
 import static blackjack.fixture.TestFixture.provideBustCards;
-import static blackjack.fixture.TestFixture.provideOver16Cards;
 import static blackjack.fixture.TestFixture.provideSmallerAceCards;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -132,21 +130,5 @@ class HandTest {
 
         // When & Then
         assertThat(hand.isBust()).isTrue();
-    }
-
-    @ParameterizedTest
-    @MethodSource
-    void 딜러의_카드_합이_17이상이면_stay이다(final Hand hand, final boolean expected) {
-        // Given
-
-        // When & Then
-        assertThat(hand.isDealerStay()).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> 딜러의_카드_합이_17이상이면_stay이다() {
-        return Stream.of(
-                Arguments.of(provideOver16Cards(), true),
-                Arguments.of(provide16Cards(), false)
-        );
     }
 }

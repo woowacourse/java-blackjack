@@ -8,10 +8,9 @@ import java.util.Objects;
 
 public final class Hand {
 
+    private static final int BLACKJACK_SIZE = 2;
     public static final int BURST_THRESHOLD = 21;
     private static final int ACE_SUBTRACT = 10;
-    private static final int BLACKJACK_SIZE = 2;
-    private static final int DEALER_THRESHOLD = 16;
 
     private final List<Card> cards;
 
@@ -51,10 +50,6 @@ public final class Hand {
 
     public boolean isBust() {
         return calculateScore() > BURST_THRESHOLD;
-    }
-
-    public boolean isDealerStay() {
-        return calculateScore() > DEALER_THRESHOLD;
     }
 
     public Hand subHand(final int startInclusive, final int endExclusive) {

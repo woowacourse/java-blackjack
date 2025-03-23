@@ -8,28 +8,34 @@ import blackjack.blackjack.state.finished.Stay;
 
 public final class DealerRunning extends Running {
 
+    private static final int DEALER_THRESHOLD = 16;
+
     private DealerRunning(final Hand hand) {
         super(hand);
     }
 
-    public static State initialState(final Hand hand) {
-        if (hand.isBlackjack()) {
-            return new Blackjack(hand);
+    public static State initialState(final Hand givenHand) {
+        if (givenHand.isBlackjack()) {
+            return new Blackjack(givenHand);
         }
-        if (hand.isDealerStay()) {
-            return new Stay(hand);
+        if (isStay(givenHand)) {
+            return new Stay(givenHand);
         }
-        return new DealerRunning(hand);
+        return new DealerRunning(givenHand);
+    }
+
+    private static boolean isStay(final Hand givenHand) {
+        return givenHand.calculateScore() > DEALER_THRESHOLD;
     }
 
     @Override
-    public State receiveCards(final Hand hand) {
-        this.hand.addAll(hand);
-        if (cards().isBust()) {
-            return new Bust(this.hand);
+    public State receiveCards(final Hand givenHand) {
+        hand.addAll(givenHand);
+        if (hand.isBust()) {
+            return new Bust(hand);
         }
-        if (cards().isDealerStay()) {
-            return new Stay(this.hand);
+        if (isStay(hand)) {
+            return new Stay(hand);
         }
         return this;
     }
