@@ -1,8 +1,6 @@
 package game;
 
 import card.CardDeck;
-import user.Dealer;
-import user.Player;
 import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
@@ -11,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import user.Dealer;
+import user.Player;
 
 public class BlackjackGameTest {
     @DisplayName("유저는 최소 1명 이상 7명 이하여야 한다.")

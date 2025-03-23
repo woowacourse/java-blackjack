@@ -1,12 +1,9 @@
 package game;
 
-import card.CardDeck;
 import card.Card;
+import card.CardDeck;
 import card.CardRank;
 import card.CardShape;
-import user.Dealer;
-import user.Player;
-import user.Participant;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -16,6 +13,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import user.Dealer;
+import user.Participant;
+import user.Player;
 
 class ScoreTest {
     @DisplayName("딜러와 유저의 카드의 총합을 가져온다.")
