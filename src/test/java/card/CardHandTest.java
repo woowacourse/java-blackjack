@@ -15,10 +15,7 @@ class CardHandTest {
     @MethodSource("hasAce")
     void test(List<Card> cards, int expectedSum) {
         //given
-        CardHand cardHand = new CardHand();
-        for (Card card : cards) {
-            cardHand.add(card);
-        }
+        CardHand cardHand = generateCardHand(cards);
 
         // when
         int realSum = cardHand.calculateScore();
@@ -48,10 +45,7 @@ class CardHandTest {
     @MethodSource("cardDeck")
     void test2(List<Card> cards, int expectedSum) {
         // given
-        CardHand cardDeck = new CardHand();
-        for (Card card : cards) {
-            cardDeck.add(card);
-        }
+        CardHand cardDeck = generateCardHand(cards);
 
         // when
         int realSum = cardDeck.calculateScore();
@@ -99,5 +93,13 @@ class CardHandTest {
 
         // then
         Assertions.assertThat(isBlackjack).isEqualTo(true);
+    }
+
+    private CardHand generateCardHand(List<Card> cards) {
+        CardHand cardHand = new CardHand();
+        for (Card card : cards) {
+            cardHand.add(card);
+        }
+        return cardHand;
     }
 }
