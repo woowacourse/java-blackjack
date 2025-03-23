@@ -1,15 +1,14 @@
+package game;
+
 import betting.BettingTable;
 import card.Card;
 import card.CardDeck;
-import game.BlackjackGame;
-import game.GameResult;
-import game.Score;
-import user.Dealer;
-import user.Player;
-import user.Participant;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import user.Dealer;
+import user.Participant;
+import user.Player;
 import view.InputView;
 import view.OutputView;
 import view.YesOrNo;

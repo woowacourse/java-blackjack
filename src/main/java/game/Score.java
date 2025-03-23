@@ -1,9 +1,9 @@
 package game;
 
-import user.Participants;
-import user.Participant;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import user.Participant;
+import user.Participants;
 
 public class Score {
     private final Participants participants;

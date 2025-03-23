@@ -1,10 +1,10 @@
 package betting;
 
 import game.GameResult;
-import user.Participant;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import user.Participant;
 
 public class BettingTable {
     private static final double BLACKJACK_REWARD_RATE = 1.5;

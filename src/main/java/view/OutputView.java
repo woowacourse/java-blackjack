@@ -1,11 +1,11 @@
 package view;
 
-import game.GameResult;
 import card.Card;
-import user.Participant;
+import game.GameResult;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import user.Participant;
 
 public class OutputView {
     public void displayDealerAddCard() {
