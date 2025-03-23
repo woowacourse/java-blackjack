@@ -24,7 +24,7 @@ public abstract class Running extends Started {
     }
 
     @Override
-    public BigDecimal profit(final BigDecimal bettingAmount, final State dealerState) {
+    public BigDecimal calculateProfit(final BigDecimal bettingAmount, final State dealerState) {
         throw new IllegalStateException("[ERROR] 게임이 아직 종료되지 않았습니다.");
     }
 }

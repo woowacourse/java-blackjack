@@ -11,7 +11,7 @@ public interface State {
 
     boolean isNotFinished();
 
-    BigDecimal profit(BigDecimal bettingAmount, State dealerState);
+    BigDecimal calculateProfit(BigDecimal bettingAmount, State dealerState);
 
     int calculateScore();
 

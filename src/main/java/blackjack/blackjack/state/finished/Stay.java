@@ -17,7 +17,7 @@ public class Stay extends Finished {
     }
 
     @Override
-    public BigDecimal profit(final BigDecimal bettingAmount, final State dealerState) {
+    public BigDecimal calculateProfit(final BigDecimal bettingAmount, final State dealerState) {
         if (dealerState.getStateType() == StateType.BUST) {
             return bettingAmount;
         }
@@ -31,7 +31,7 @@ public class Stay extends Finished {
         int playerScore = cards.calculateScore();
         int dealerScore = dealerState.cards().calculateScore();
         if (playerScore < dealerScore) {
-            return new Bust(cards).profit(bettingAmount, dealerState);
+            return new Bust(cards).calculateProfit(bettingAmount, dealerState);
         }
         if (playerScore == dealerScore) {
             return BigDecimal.ZERO;

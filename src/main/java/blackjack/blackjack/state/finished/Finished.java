@@ -28,5 +28,5 @@ public abstract class Finished extends Started implements State {
     }
 
     @Override
-    public abstract BigDecimal profit(BigDecimal bettingAmount, State dealerState);
+    public abstract BigDecimal calculateProfit(BigDecimal bettingAmount, State dealerState);
 }

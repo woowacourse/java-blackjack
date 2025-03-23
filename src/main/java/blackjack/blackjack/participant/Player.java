@@ -71,7 +71,7 @@ public final class Player extends Participant {
     }
 
     public BigDecimal calculateProfit(final State dealerState) {
-        return state.profit(bettingAmount, dealerState);
+        return state.calculateProfit(bettingAmount, dealerState);
     }
 
     public void stayIfRunning() {
