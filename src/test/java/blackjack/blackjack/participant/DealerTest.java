@@ -8,14 +8,18 @@ import static blackjack.fixture.TestFixture.provideSmallerAceCards;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.blackjack.card.Card;
+import blackjack.blackjack.card.Deck;
 import blackjack.blackjack.card.Denomination;
 import blackjack.blackjack.card.Hand;
 import blackjack.blackjack.card.Suit;
 import blackjack.blackjack.result.ProfitResult;
 import java.math.BigDecimal;
+import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -84,6 +88,29 @@ class DealerTest {
                         new Card(Suit.SPADE, Denomination.TEN),
                         new Card(Suit.SPADE, Denomination.SIX)
                 )), true)
+        );
+    }
+
+    @Test
+    void 초기_카드를_나눠준다() {
+        // given
+        Card firstCard = new Card(Suit.SPADE, Denomination.TEN);
+        Card secondCard = new Card(Suit.SPADE, Denomination.SEVEN);
+        Card thirdCard = new Card(Suit.CLOB, Denomination.A);
+        Card fourthCard = new Card(Suit.DIAMOND, Denomination.SIX);
+        final Deck deck = new Deck(() -> new ArrayDeque<>(Arrays.asList(firstCard, secondCard, thirdCard, fourthCard)));
+
+        final Dealer dealer = new Dealer();
+        Player mint = new Player("밍트", new BigDecimal(3000));
+        final Players players = new Players(List.of(mint));
+
+        // when
+        dealer.dealInitialCards(players, deck);
+
+        // then
+        Assertions.assertAll(
+                () -> assertThat(dealer.showAllCards()).isEqualTo(new Hand(List.of(firstCard, secondCard))),
+                () -> assertThat(mint.showAllCards()).isEqualTo(new Hand(List.of(thirdCard, fourthCard)))
         );
     }
 
