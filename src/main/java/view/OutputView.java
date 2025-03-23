@@ -2,6 +2,10 @@ package view;
 
 import card.Card;
 import game.GameResult;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -56,9 +60,22 @@ public class OutputView {
 
     public void displayRewards(Map<Participant, Double> rewards) {
         System.out.println("\n## 최종 수익");
-        for (Entry<Participant, Double> rewardEntry : rewards.entrySet()) {
-            System.out.println(rewardEntry.getKey().getName() + ": " + rewardEntry.getValue());
+        Map<Participant, Double> sortedRewards = sortedRewards(rewards);
+        for (Entry<Participant, Double> reward : sortedRewards.entrySet()) {
+            System.out.println(reward.getKey().getName() + ": " + reward.getValue());
         }
+    }
+
+    private Map<Participant, Double> sortedRewards(Map<Participant, Double> rewards) {
+        List<Map.Entry<Participant, Double>> newRewards = new ArrayList<>(rewards.entrySet());
+        newRewards.sort(Comparator.comparing(
+                (Map.Entry<Participant, Double> reward) -> !reward.getKey().getName().equals("딜러")));
+
+        Map<Participant, Double> sortedRewards = new LinkedHashMap<>();
+        for (Entry<Participant, Double> newReward : newRewards) {
+            sortedRewards.put(newReward.getKey(), newReward.getValue());
+        }
+        return sortedRewards;
     }
 
     public void displayError(String message) {

@@ -65,7 +65,7 @@ public class Score {
     }
 
     public Map<Participant, Double> calculateRewards(Map<Participant, GameResult> gameResult, Dealer dealer) {
-        Map<Participant, Double> rewards = new HashMap<>();
+        Map<Participant, Double> rewards = new LinkedHashMap<>();
 
         for (Entry<Participant, GameResult> userGameResult : gameResult.entrySet()) {
             Participant participant = userGameResult.getKey();
