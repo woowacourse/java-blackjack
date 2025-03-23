@@ -1,13 +1,13 @@
 package blackjack.fixture;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Denomination;
-import blackjack.domain.card.Hand;
-import blackjack.domain.card.Suit;
-import blackjack.domain.card.generator.DeckGenerator;
-import blackjack.domain.card.generator.ShuffleDeckGenerator;
-import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
+import blackjack.blackjack.card.Card;
+import blackjack.blackjack.card.Denomination;
+import blackjack.blackjack.card.Hand;
+import blackjack.blackjack.card.Suit;
+import blackjack.blackjack.card.generator.DeckGenerator;
+import blackjack.blackjack.card.generator.ShuffleDeckGenerator;
+import blackjack.blackjack.participant.Player;
+import blackjack.blackjack.participant.Players;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Deque;

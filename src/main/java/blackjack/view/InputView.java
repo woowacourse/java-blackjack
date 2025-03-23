@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.participant.Player;
+import blackjack.blackjack.participant.Player;
 import blackjack.util.ExceptionMessage;
 import java.util.Scanner;
 

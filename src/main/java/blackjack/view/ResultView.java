@@ -1,8 +1,8 @@
 package blackjack.view;
 
-import blackjack.domain.card.Hand;
-import blackjack.domain.card.Suit;
-import blackjack.domain.participant.Participant;
+import blackjack.blackjack.card.Hand;
+import blackjack.blackjack.card.Suit;
+import blackjack.blackjack.participant.Participant;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
