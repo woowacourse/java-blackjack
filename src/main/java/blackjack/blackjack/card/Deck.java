@@ -27,7 +27,7 @@ public final class Deck {
     public Card drawCard() {
         Card card = cards.pollFirst();
         if (card == null) {
-            throw new IllegalStateException(ExceptionMessage.makeMessage("카드가 더이상 없습니다."));
+            throw new IllegalStateException(ExceptionMessage.makeMessage("[ERROR] 카드가 더이상 없습니다."));
         }
         return card;
     }

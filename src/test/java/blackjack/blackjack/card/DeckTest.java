@@ -22,7 +22,7 @@ class DeckTest {
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("카드를 순서대로 뽑는다.")
+    @DisplayName("카드를 주어진 개수만큼 뽑는다.")
     @Test
     void drawCardsByCount() {
         // given
@@ -39,5 +39,27 @@ class DeckTest {
                 () -> assertThat(hand.subHand(1, hand.getSize())).isEqualTo(
                         new Hand(List.of(new Card(Suit.DIAMOND, Denomination.SIX))))
         );
+    }
+
+    @Test
+    void 카드를_뽑는다() {
+        // Given
+        final Deck deck = Deck.shuffled();
+
+        // When & Then
+        assertThat(deck.drawCard()).isInstanceOf(Card.class);
+    }
+
+    @Test
+    void 카드가_더이상_없으면_예외가_발생한다() {
+        // Given
+        final Deck deck = new Deck(() -> new ArrayDeque<>(List.of(
+                new Card(Suit.CLOB, Denomination.A))));
+        deck.drawCard();
+
+        // When & Then
+        Assertions.assertThatThrownBy(deck::drawCard)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("[ERROR] 카드가 더이상 없습니다.");
     }
 }

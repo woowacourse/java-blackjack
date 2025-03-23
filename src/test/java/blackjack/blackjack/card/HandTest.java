@@ -1,7 +1,11 @@
 package blackjack.blackjack.card;
 
+import static blackjack.fixture.TestFixture.provide16Cards;
 import static blackjack.fixture.TestFixture.provideBiggerAceCards;
 import static blackjack.fixture.TestFixture.provideBiggerAndSmallerAceCards;
+import static blackjack.fixture.TestFixture.provideBlackjack;
+import static blackjack.fixture.TestFixture.provideBustCards;
+import static blackjack.fixture.TestFixture.provideOver16Cards;
 import static blackjack.fixture.TestFixture.provideSmallerAceCards;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -81,7 +85,9 @@ class HandTest {
     @ParameterizedTest
     @CsvSource({
             "-1,-1",
-            "0,5"
+            "3,-1",
+            "0,5",
+            "10,5",
     })
     @DisplayName("부분 카드 반환시 인덱스의 범위가 넘어간다면 예외가 발생한다")
     void subHandFailOutOfRange(final int startInclusive, final int endExclusive) {
@@ -108,5 +114,39 @@ class HandTest {
         Assertions.assertThatThrownBy(() -> hand.subHand(2, 0))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR] 끝 인덱스는 시작 인덱스보다 커야합니다");
+    }
+
+    @Test
+    void 카드_합이_21이면_블랙잭이다() {
+        // Given
+        Hand hand = provideBlackjack();
+
+        // When & Then
+        assertThat(hand.isBlackjack()).isTrue();
+    }
+
+    @Test
+    void 카드_합이_21_초과이면_버스트이다() {
+        // Given
+        Hand hand = provideBustCards();
+
+        // When & Then
+        assertThat(hand.isBust()).isTrue();
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    void 딜러의_카드_합이_17이상이면_stay이다(final Hand hand, final boolean expected) {
+        // Given
+
+        // When & Then
+        assertThat(hand.isDealerStay()).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> 딜러의_카드_합이_17이상이면_stay이다() {
+        return Stream.of(
+                Arguments.of(provideOver16Cards(), true),
+                Arguments.of(provide16Cards(), false)
+        );
     }
 }
