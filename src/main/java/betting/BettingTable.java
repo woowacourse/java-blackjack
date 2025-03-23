@@ -4,6 +4,7 @@ import game.GameResult;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import user.Dealer;
 import user.Participant;
 
 public class BettingTable {
@@ -16,7 +17,7 @@ public class BettingTable {
         bet.put(participant, money);
     }
 
-    public Map<Participant, Long> calculateRewards(Map<Participant, GameResult> gameResult, Participant dealer) {
+    public Map<Participant, Long> calculateRewards(Map<Participant, GameResult> gameResult, Dealer dealer) {
         Map<Participant, Long> rewards = new HashMap<>();
 
         for (Entry<Participant, GameResult> userGameResult : gameResult.entrySet()) {
