@@ -71,7 +71,7 @@ public class TestFixture {
     }
 
     public static Hand provide16Cards() {
-        return new Hand(List.of(new Card(Suit.CLOB, Denomination.A), new Card(Suit.CLOB, Denomination.SIX)));
+        return new Hand(List.of(new Card(Suit.CLOB, Denomination.TEN), new Card(Suit.CLOB, Denomination.SIX)));
     }
 
     public static Hand provideBustCards() {
