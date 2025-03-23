@@ -6,9 +6,11 @@ import java.util.List;
 
 public abstract class Participant {
     protected final CardHand cardHand;
+    protected double betMoney;
 
     protected Participant() {
         this.cardHand = new CardHand();
+        this.betMoney = 0;
     }
 
     public abstract boolean isDrawable();
@@ -23,6 +25,14 @@ public abstract class Participant {
 
     public int getSize() {
         return cardHand.size();
+    }
+
+    public void setMoney(double money) {
+        this.betMoney = money;
+    }
+
+    public double getBetMoney() {
+        return this.betMoney;
     }
 
     public int calculateScore() {

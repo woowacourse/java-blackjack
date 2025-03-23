@@ -54,9 +54,9 @@ public class OutputView {
         System.out.print(name + "카드: " + String.join(", ", displayCards + (" - 결과: " + score)) + "\n");
     }
 
-    public void displayRewards(Map<Participant, Long> rewards) {
+    public void displayRewards(Map<Participant, Double> rewards) {
         System.out.println("\n## 최종 수익");
-        for (Entry<Participant, Long> rewardEntry : rewards.entrySet()) {
+        for (Entry<Participant, Double> rewardEntry : rewards.entrySet()) {
             System.out.println(rewardEntry.getKey().getName() + ": " + rewardEntry.getValue());
         }
     }

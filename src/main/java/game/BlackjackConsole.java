@@ -1,6 +1,5 @@
 package game;
 
-import betting.BettingTable;
 import card.Card;
 import card.CardDeck;
 import java.util.List;
@@ -8,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import user.Dealer;
 import user.Participant;
+import user.Participants;
 import user.Player;
 import view.InputView;
 import view.OutputView;
@@ -36,7 +36,7 @@ public class BlackjackConsole {
         Dealer dealer = new Dealer();
         List<Player> players = getPlayers();
         BlackjackGame blackjackGame = BlackjackGame.of(players, dealer, new CardDeck());
-        BettingTable bettingTable = setUpBets(players, dealer);
+        betMoney(blackjackGame);
 
         blackjackGame.firstHandOutCard();
         openFirstCards(blackjackGame);
@@ -44,18 +44,15 @@ public class BlackjackConsole {
         controlTurn(players, blackjackGame, dealer);
 
         openAllCards(players, dealer, blackjackGame);
-        calculateBettingReward(blackjackGame, bettingTable, dealer);
+        calculateBettingReward(blackjackGame, dealer);
     }
 
-    private BettingTable setUpBets(List<Player> users, Dealer dealer) {
-        BettingTable bettingTable = new BettingTable();
-
-        for (Player user : users) {
-            Long bettingMoney = inputView.inputBettingMoney(user.getName());
-            bettingTable.betMoney(user, bettingMoney);
+    private void betMoney(BlackjackGame blackjackGame) {
+        Participants participants = blackjackGame.getParticipants();
+        for (Participant participant : participants.getPlayers()) {
+            Long bettingMoney = inputView.inputBettingMoney(participant.getName());
+            participant.setMoney(bettingMoney);
         }
-        bettingTable.betMoney(dealer, 0L);
-        return bettingTable;
     }
 
     private void openFirstCards(BlackjackGame blackjackGame) {
@@ -91,11 +88,11 @@ public class BlackjackConsole {
         }
     }
 
-    private void calculateBettingReward(BlackjackGame blackjackGame, BettingTable bettingTable, Dealer dealer) {
+    private void calculateBettingReward(BlackjackGame blackjackGame, Dealer dealer) {
         Score score = new Score(blackjackGame.getParticipants());
         Map<Participant, GameResult> gameResult = score.calculatePlayerScore();
 
-        Map<Participant, Long> rewards = bettingTable.calculateRewards(gameResult, dealer);
+        Map<Participant, Double> rewards = score.calculateRewards(gameResult, dealer);
 
         outputView.displayRewards(rewards);
     }

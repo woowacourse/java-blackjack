@@ -1,7 +1,10 @@
 package game;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import user.Dealer;
 import user.Participant;
 import user.Participants;
 
@@ -27,6 +30,10 @@ public class Score {
             gameResult.put(participant, GameResult.LOSE);
             return;
         }
+        if (participant.isBlackjack()) {
+            gameResult.put(participant, GameResult.BLACKJACK);
+            return;
+        }
         gameResult.put(participant, GameResult.WIN);
     }
 
@@ -36,6 +43,9 @@ public class Score {
 
         if (player.isBust()) {
             return GameResult.LOSE;
+        }
+        if (dealerScore < playerScore && player.isBlackjack()) {
+            return GameResult.BLACKJACK;
         }
         if (dealerScore < playerScore) {
             return GameResult.WIN;
@@ -52,5 +62,18 @@ public class Score {
             return GameResult.LOSE;
         }
         return GameResult.DRAW;
+    }
+
+    public Map<Participant, Double> calculateRewards(Map<Participant, GameResult> gameResult, Dealer dealer) {
+        Map<Participant, Double> rewards = new HashMap<>();
+
+        for (Entry<Participant, GameResult> userGameResult : gameResult.entrySet()) {
+            Participant participant = userGameResult.getKey();
+            GameResult result = userGameResult.getValue();
+            rewards.put(participant, result.calculateReward(participant, dealer));
+        }
+
+        rewards.put(dealer, dealer.getBetMoney());
+        return rewards;
     }
 }
