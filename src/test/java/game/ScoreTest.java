@@ -6,7 +6,7 @@ import card.CardRank;
 import card.CardShape;
 import user.Dealer;
 import user.Player;
-import user.User;
+import user.Participant;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -25,8 +25,8 @@ class ScoreTest {
         List<String> names = List.of("수양");
         List<Player> users = names.stream().map(Player::new).toList();
         BlackjackGame blackjackGame = BlackjackGame.of(users, new Dealer(), new CardDeck());
-        User player = users.getFirst();
-        User dealer = blackjackGame.getDealer();
+        Participant player = users.getFirst();
+        Participant dealer = blackjackGame.getDealer();
 
         player.addTrumpCard(new Card(CardShape.DIA, CardRank.ACE));
         player.addTrumpCard(new Card(CardShape.DIA, CardRank.NINE));
@@ -36,7 +36,7 @@ class ScoreTest {
 
         //when
         Score score = new Score(blackjackGame.getParticipants());
-        Map<User, GameResult> gameResult = score.calculatePlayerScore();
+        Map<Participant, GameResult> gameResult = score.calculatePlayerScore();
 
         //then
         Assertions.assertThat(gameResult.get(player)).isEqualTo(GameResult.WIN);
@@ -50,8 +50,8 @@ class ScoreTest {
         List<String> names = List.of("수양");
         List<Player> users = names.stream().map(Player::new).toList();
         BlackjackGame blackjackGame = BlackjackGame.of(users, new Dealer(), new CardDeck());
-        User player = users.getFirst();
-        User dealer = blackjackGame.getDealer();
+        Participant player = users.getFirst();
+        Participant dealer = blackjackGame.getDealer();
 
         for (Card card : playerCards) {
             player.addTrumpCard(card);
@@ -62,7 +62,7 @@ class ScoreTest {
 
         //when
         Score score = new Score(blackjackGame.getParticipants());
-        Map<User, GameResult> gameResult = score.calculatePlayerScore();
+        Map<Participant, GameResult> gameResult = score.calculatePlayerScore();
 
         //then
         Assertions.assertThat(gameResult.get(player)).isEqualTo(expectStatus);
@@ -107,10 +107,10 @@ class ScoreTest {
         List<String> names = List.of("유저");
         List<Player> users = names.stream().map(Player::new).toList();
         BlackjackGame blackjackGame = BlackjackGame.of(users, new Dealer(), new CardDeck());
-        User user = users.getFirst();
-        user.addTrumpCard(new Card(CardShape.CLOVER, CardRank.J));
-        user.addTrumpCard(new Card(CardShape.CLOVER, CardRank.J));
-        user.addTrumpCard(new Card(CardShape.CLOVER, CardRank.J));
+        Participant participant = users.getFirst();
+        participant.addTrumpCard(new Card(CardShape.CLOVER, CardRank.J));
+        participant.addTrumpCard(new Card(CardShape.CLOVER, CardRank.J));
+        participant.addTrumpCard(new Card(CardShape.CLOVER, CardRank.J));
 
         blackjackGame.getDealer().addTrumpCard(new Card(CardShape.CLOVER, CardRank.K));
         blackjackGame.getDealer().addTrumpCard(new Card(CardShape.CLOVER, CardRank.J));
@@ -118,9 +118,9 @@ class ScoreTest {
 
         // when
         Score score = new Score(blackjackGame.getParticipants());
-        Map<User, GameResult> gameResult = score.calculatePlayerScore();
+        Map<Participant, GameResult> gameResult = score.calculatePlayerScore();
 
         // then
-        Assertions.assertThat(gameResult.get(user)).isEqualTo(GameResult.LOSE);
+        Assertions.assertThat(gameResult.get(participant)).isEqualTo(GameResult.LOSE);
     }
 }

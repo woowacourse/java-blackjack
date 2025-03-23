@@ -2,7 +2,7 @@ package view;
 
 import game.GameResult;
 import card.Card;
-import user.User;
+import user.Participant;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -23,7 +23,7 @@ public class OutputView {
         System.out.printf("딜러: %d승 %d패 %d 무승부\n", winCount, loseCount, drawCount);
     }
 
-    public void displayGameResult(Map<User, GameResult> gameResult) {
+    public void displayGameResult(Map<Participant, GameResult> gameResult) {
         gameResult.forEach((key, value) -> displayUserGameResult(
                 key.getName(),
                 convertGameResult(value)));
@@ -54,9 +54,9 @@ public class OutputView {
         System.out.print(name + "카드: " + String.join(", ", displayCards + (" - 결과: " + score)) + "\n");
     }
 
-    public void displayRewards(Map<User, Long> rewards) {
+    public void displayRewards(Map<Participant, Long> rewards) {
         System.out.println("\n## 최종 수익");
-        for (Entry<User, Long> rewardEntry : rewards.entrySet()) {
+        for (Entry<Participant, Long> rewardEntry : rewards.entrySet()) {
             System.out.println(rewardEntry.getKey().getName() + ": " + rewardEntry.getValue());
         }
     }

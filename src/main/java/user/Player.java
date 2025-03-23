@@ -4,7 +4,7 @@ import card.Card;
 import card.CardHand;
 import java.util.List;
 
-public class Player extends User {
+public class Player extends Participant {
     private final String name;
 
     public Player(String name) {

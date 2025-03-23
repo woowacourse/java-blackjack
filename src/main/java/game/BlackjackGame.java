@@ -4,7 +4,7 @@ import card.CardDeck;
 import user.Dealer;
 import user.Participants;
 import user.Player;
-import user.User;
+import user.Participant;
 import card.Card;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public class BlackjackGame {
     }
 
     public static BlackjackGame of(List<Player> players, Dealer dealer, CardDeck cardDeck) {
-        List<User> users = new ArrayList<>();
+        List<Participant> users = new ArrayList<>();
         users.add(dealer);
         users.addAll(players);
         Participants participants = new Participants(users);
@@ -36,7 +36,7 @@ public class BlackjackGame {
         }
     }
 
-    public User getDealer() {
+    public Participant getDealer() {
         return participants.getDealer();
     }
 
@@ -45,18 +45,18 @@ public class BlackjackGame {
     }
 
     public List<Card> openFirstDealerCard() {
-        User dealer = getDealer();
+        Participant dealer = getDealer();
         return dealer.openInitialCard();
     }
 
-    public void controlTurn(User user, YesOrNo yesOrNo) {
-        if (yesOrNo == YesOrNo.YES && user.isDrawable()) {
-            user.drawCard(cardDeck.drawCard());
+    public void controlTurn(Participant participant, YesOrNo yesOrNo) {
+        if (yesOrNo == YesOrNo.YES && participant.isDrawable()) {
+            participant.drawCard(cardDeck.drawCard());
         }
     }
 
-    public int calculateScore(User user) {
-        return participants.calculateScore(user);
+    public int calculateScore(Participant participant) {
+        return participants.calculateScore(participant);
     }
 
     public Participants getParticipants() {

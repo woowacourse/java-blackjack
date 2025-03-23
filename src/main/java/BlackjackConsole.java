@@ -6,7 +6,7 @@ import game.GameResult;
 import game.Score;
 import user.Dealer;
 import user.Player;
-import user.User;
+import user.Participant;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -94,9 +94,9 @@ public class BlackjackConsole {
 
     private void calculateBettingReward(BlackjackGame blackjackGame, BettingTable bettingTable, Dealer dealer) {
         Score score = new Score(blackjackGame.getParticipants());
-        Map<User, GameResult> gameResult = score.calculatePlayerScore();
+        Map<Participant, GameResult> gameResult = score.calculatePlayerScore();
 
-        Map<User, Long> rewards = bettingTable.calculateRewards(gameResult, dealer);
+        Map<Participant, Long> rewards = bettingTable.calculateRewards(gameResult, dealer);
 
         outputView.displayRewards(rewards);
     }
@@ -116,14 +116,14 @@ public class BlackjackConsole {
         }
     }
 
-    private void openAllCardIn(User user, BlackjackGame blackjackGame) {
-        List<Card> cards = user.openAllCard();
-        int score = blackjackGame.calculateScore(user);
-        outputView.displayOpenCardsResult(user.getName(), cards, score);
+    private void openAllCardIn(Participant participant, BlackjackGame blackjackGame) {
+        List<Card> cards = participant.openAllCard();
+        int score = blackjackGame.calculateScore(participant);
+        outputView.displayOpenCardsResult(participant.getName(), cards, score);
     }
 
-    private void displayOpenCard(User user) {
-        List<Card> cards = user.openInitialCard();
-        outputView.displayOpenCards(user.getName(), cards);
+    private void displayOpenCard(Participant participant) {
+        List<Card> cards = participant.openInitialCard();
+        outputView.displayOpenCards(participant.getName(), cards);
     }
 }

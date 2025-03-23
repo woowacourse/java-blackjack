@@ -1,7 +1,7 @@
 package game;
 
 import user.Participants;
-import user.User;
+import user.Participant;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -12,8 +12,8 @@ public class Score {
         this.participants = participants;
     }
 
-    public Map<User, GameResult> calculatePlayerScore() {
-        Map<User, GameResult> gameResult = new LinkedHashMap<>();
+    public Map<Participant, GameResult> calculatePlayerScore() {
+        Map<Participant, GameResult> gameResult = new LinkedHashMap<>();
         if (participants.getDealer().isBust()) {
             participants.getPlayers().forEach((user) -> putGameResultBust(user, gameResult));
             return gameResult;
@@ -22,15 +22,15 @@ public class Score {
         return gameResult;
     }
 
-    private void putGameResultBust(User user, Map<User, GameResult> gameResult) {
-        if (user.isBust()) {
-            gameResult.put(user, GameResult.LOSE);
+    private void putGameResultBust(Participant participant, Map<Participant, GameResult> gameResult) {
+        if (participant.isBust()) {
+            gameResult.put(participant, GameResult.LOSE);
             return;
         }
-        gameResult.put(user, GameResult.WIN);
+        gameResult.put(participant, GameResult.WIN);
     }
 
-    private GameResult compareScore(User player) {
+    private GameResult compareScore(Participant player) {
         int dealerScore = participants.getDealer().calculateScore();
         int playerScore = player.calculateScore();
 
@@ -46,8 +46,8 @@ public class Score {
         return compareSameScore(player);
     }
 
-    private GameResult compareSameScore(User player) {
-        User dealer = participants.getDealer();
+    private GameResult compareSameScore(Participant player) {
+        Participant dealer = participants.getDealer();
         if (dealer.isBlackjack() && !player.isBlackjack()) {
             return GameResult.LOSE;
         }

@@ -8,7 +8,7 @@ import game.Score;
 import user.Dealer;
 import user.Participants;
 import user.Player;
-import user.User;
+import user.Participant;
 import java.util.List;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -33,10 +33,10 @@ class BettingTableTest {
         Score score = new Score(participants);
 
         bettingTable.betMoney(player, 1000);
-        Map<User, GameResult> userGameResultMap = score.calculatePlayerScore();
+        Map<Participant, GameResult> userGameResultMap = score.calculatePlayerScore();
 
         // when
-        Map<User, Long> rewards = bettingTable.calculateRewards(userGameResultMap, dealer);
+        Map<Participant, Long> rewards = bettingTable.calculateRewards(userGameResultMap, dealer);
 
         // then
         Assertions.assertThat(rewards.get(player)).isEqualTo(1000);
@@ -59,10 +59,10 @@ class BettingTableTest {
         Score score = new Score(participants);
 
         bettingTable.betMoney(player, 1000);
-        Map<User, GameResult> userGameResultMap = score.calculatePlayerScore();
+        Map<Participant, GameResult> userGameResultMap = score.calculatePlayerScore();
 
         // when
-        Map<User, Long> rewards = bettingTable.calculateRewards(userGameResultMap, dealer);
+        Map<Participant, Long> rewards = bettingTable.calculateRewards(userGameResultMap, dealer);
 
         // then
         Assertions.assertThat(rewards.get(player)).isEqualTo(-1000);
@@ -85,10 +85,10 @@ class BettingTableTest {
         Score score = new Score(participants);
 
         bettingTable.betMoney(player, 1000);
-        Map<User, GameResult> userGameResultMap = score.calculatePlayerScore();
+        Map<Participant, GameResult> userGameResultMap = score.calculatePlayerScore();
 
         // when
-        Map<User, Long> rewards = bettingTable.calculateRewards(userGameResultMap, dealer);
+        Map<Participant, Long> rewards = bettingTable.calculateRewards(userGameResultMap, dealer);
 
         // then
         Assertions.assertThat(rewards.get(player)).isEqualTo(1500);

@@ -3,7 +3,7 @@ package user;
 import card.Card;
 import java.util.List;
 
-public class Dealer extends User {
+public class Dealer extends Participant {
     public static final String DEALER_NAME = "딜러";
     private static final int DEALER_MAX_SCORE = 16;
 

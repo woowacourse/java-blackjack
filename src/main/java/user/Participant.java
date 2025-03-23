@@ -4,10 +4,10 @@ import card.Card;
 import card.CardHand;
 import java.util.List;
 
-public abstract class User {
+public abstract class Participant {
     protected final CardHand cardHand;
 
-    protected User() {
+    protected Participant() {
         this.cardHand = new CardHand();
     }
 
