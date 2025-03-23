@@ -48,13 +48,5 @@ class PlayerRunningTest {
             // When & Then
             assertThat(state.receiveCards(provideBustCards()).getStateType()).isEqualTo(StateType.BUST);
         }
-
-        @Test
-        void 카드가_블랙잭이면_블랙잭_상태를_반환한다() {
-            // Given
-
-            // When & Then
-            assertThat(state.receiveCards(provideBlackjack()).getStateType()).isEqualTo(StateType.BLACKJACK);
-        }
     }
 }

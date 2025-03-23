@@ -24,9 +24,6 @@ public final class PlayerRunning extends Running {
         if (hand.isBust()) {
             return new Bust(hand);
         }
-        if (hand.isBlackjack()) {
-            return new Blackjack(hand);
-        }
         return this;
     }
 }
