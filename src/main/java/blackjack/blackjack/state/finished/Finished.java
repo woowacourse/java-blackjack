@@ -19,7 +19,7 @@ public abstract class Finished extends Started {
 
     @Override
     public State stay() {
-        throw new IllegalStateException("[ERROR] 종료된 게임에서는 stay할 수 없습니다.");
+        return this;
     }
 
     @Override

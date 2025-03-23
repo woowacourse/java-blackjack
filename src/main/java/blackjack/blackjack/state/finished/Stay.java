@@ -12,11 +12,6 @@ public class Stay extends Finished {
     }
 
     @Override
-    public State stay() {
-        throw new IllegalStateException("[ERROR] 현재 Stay 상태입니다.");
-    }
-
-    @Override
     public BigDecimal calculateProfit(final BigDecimal bettingAmount, final State dealerState) {
         if (dealerState.getStateType() == StateType.BUST) {
             return bettingAmount;

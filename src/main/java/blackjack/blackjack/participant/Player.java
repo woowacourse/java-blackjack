@@ -71,9 +71,7 @@ public final class Player extends Participant {
     }
 
     public void stayIfRunning() {
-        if (state.getStateType() == StateType.RUNNING) {
-            changeState(state.stay());
-        }
+        changeState(state.stay());
     }
 
     private void validateBettingAmount(final BigDecimal bettingAmount) {

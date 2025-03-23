@@ -58,9 +58,7 @@ public final class Dealer extends Participant implements GameRule {
     }
 
     public void stayIfRunning() {
-        if (state.getStateType() == StateType.RUNNING) {
-            changeState(state.stay());
-        }
+        changeState(state.stay());
     }
 
     @Override
