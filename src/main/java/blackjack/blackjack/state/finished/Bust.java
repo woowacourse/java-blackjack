@@ -12,13 +12,7 @@ public final class Bust extends Finished {
     }
 
     @Override
-    public State receiveCards(final Hand hand) {
-        cards.addAll(hand);
-        return this;
-    }
-
-    @Override
-    public BigDecimal profit(final BigDecimal bettingAmount, final State dealerState) {
+    public BigDecimal calculateProfit(final BigDecimal bettingAmount, final State dealerState) {
         return bettingAmount.multiply(BigDecimal.valueOf(-1));
     }
 }
