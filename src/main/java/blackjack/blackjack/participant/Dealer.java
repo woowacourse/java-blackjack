@@ -17,7 +17,7 @@ public final class Dealer extends Participant implements GameRule {
     private State state;
 
     public Dealer(final Hand hand) {
-        this.state = DealerRunning.from(hand);
+        this.state = DealerRunning.initialState(hand);
     }
 
     public Dealer() {

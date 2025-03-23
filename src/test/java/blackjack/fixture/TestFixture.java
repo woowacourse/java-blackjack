@@ -30,10 +30,6 @@ public class TestFixture {
                         new Player(provideEmptyCards(), "밍트", BigDecimal.valueOf(20_000))));
     }
 
-    public static Player providePlayer(final String nickname, final int bettingAmount) {
-        return new Player(provideEmptyCards(), nickname, BigDecimal.valueOf(bettingAmount));
-    }
-
     public static Hand provideUnder16Cards() {
         return new Hand(List.of(new Card(Suit.SPADE, Denomination.TWO),
                 new Card(Suit.SPADE, Denomination.FOUR)));
@@ -76,5 +72,12 @@ public class TestFixture {
 
     public static Hand provide16Cards() {
         return new Hand(List.of(new Card(Suit.CLOB, Denomination.A), new Card(Suit.CLOB, Denomination.SIX)));
+    }
+
+    public static Hand provideBustCards() {
+        return new Hand(List.of(new Card(Suit.SPADE, Denomination.TEN),
+                new Card(Suit.SPADE, Denomination.Q),
+                new Card(Suit.SPADE, Denomination.J)
+        ));
     }
 }

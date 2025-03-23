@@ -98,34 +98,33 @@ public class PlayerTest {
     }
 
 
-    @DisplayName("플레이어가 가진 카드의 합이 21 이하이면 true를 반환한다.")
-    @ParameterizedTest
-    @MethodSource
-    void canHit(final Hand hand, final boolean expected) {
+    @DisplayName("플레이어의 초기 카드의 합이 21 이하이면 true를 반환한다.")
+    @Test
+    void canHit() {
         // given
+        final Hand hand = new Hand(List.of(
+                new Card(Suit.SPADE, Denomination.TEN),
+                new Card(Suit.DIAMOND, Denomination.TEN)
+        ));
         final Player player = new Player(hand, "엠제이", BigDecimal.valueOf(10_000));
 
         // when & then
-        assertThat(player.canHit()).isEqualTo(expected);
+        assertThat(player.canHit()).isTrue();
     }
 
-    private static Stream<Arguments> canHit() {
-        return Stream.of(
-                Arguments.of(new Hand(List.of(
-                        new Card(Suit.SPADE, Denomination.TEN),
-                        new Card(Suit.DIAMOND, Denomination.TEN),
-                        new Card(Suit.SPADE, Denomination.A)
-                )), true),
-                Arguments.of(new Hand(List.of(
-                        new Card(Suit.SPADE, Denomination.TEN),
-                        new Card(Suit.DIAMOND, Denomination.TEN)
-                )), true),
-                Arguments.of(new Hand(List.of(
-                        new Card(Suit.SPADE, Denomination.TEN),
-                        new Card(Suit.DIAMOND, Denomination.TEN),
-                        new Card(Suit.DIAMOND, Denomination.TWO)
-                )), false)
-        );
+    @DisplayName("플레이어의 카드의 합이 21 초과이면 false를 반환한다.")
+    @Test
+    void canNotHit() {
+        // given
+        final Hand hand = new Hand(List.of(
+                new Card(Suit.SPADE, Denomination.TEN),
+                new Card(Suit.DIAMOND, Denomination.TEN)
+        ));
+        final Player player = new Player(hand, "엠제이", BigDecimal.valueOf(10_000));
+        player.receiveCard(new Card(Suit.DIAMOND, Denomination.FOUR));
+
+        // when & then
+        assertThat(player.canHit()).isFalse();
     }
 
     @DisplayName("카드 합을 구한다")

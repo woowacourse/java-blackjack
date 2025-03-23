@@ -12,10 +12,7 @@ public final class DealerRunning extends Running implements State {
         super(cards);
     }
 
-    public static State from(final Hand hand) {
-        if (hand.isBust()) {
-            return new Bust(hand);
-        }
+    public static State initialState(final Hand hand) {
         if (hand.isBlackjack()) {
             return new Blackjack(hand);
         }
@@ -30,9 +27,6 @@ public final class DealerRunning extends Running implements State {
         cards.addAll(hand);
         if (cards().isBust()) {
             return new Bust(cards);
-        }
-        if (cards().isBlackjack()) {
-            return new Blackjack(cards);
         }
         if (cards().isDealerStay()) {
             return new Stay(cards);

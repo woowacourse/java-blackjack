@@ -19,7 +19,7 @@ public final class Player extends Participant {
         validateBettingAmount(bettingAmount);
         this.nickname = nickname;
         this.bettingAmount = bettingAmount;
-        this.state = PlayerRunning.from(givenHand);
+        this.state = PlayerRunning.initialState(givenHand);
     }
 
     public Player(final String nickname, final BigDecimal bettingAmount) {
