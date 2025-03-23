@@ -17,7 +17,7 @@ public enum GameResult {
     }
 
     public double calculateReward(Participant participant, Dealer dealer) {
-        double reward = (double) (participant.getBetMoney() * this.rewardRate);
+        double reward = participant.getBetMoney() * this.rewardRate;
 
         dealer.setMoney(dealer.getBetMoney() - reward);
         return reward;

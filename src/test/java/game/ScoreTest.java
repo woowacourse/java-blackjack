@@ -15,6 +15,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import user.Dealer;
 import user.Participant;
+import user.Participants;
 import user.Player;
 
 class ScoreTest {
@@ -122,5 +123,102 @@ class ScoreTest {
 
         // then
         Assertions.assertThat(gameResult.get(participant)).isEqualTo(GameResult.LOSE);
+    }
+
+    @DisplayName("플레이어가 블랙잭으로 승리하면 150%의 수익을 얻는다.")
+    @Test
+    void test4() {
+        // given
+        Player a = new Player("A");
+        a.setMoney(1000);
+        a.drawCard(new Card(CardShape.CLOVER, CardRank.ACE));
+        a.drawCard(new Card(CardShape.CLOVER, CardRank.J));
+
+        Dealer dealer = new Dealer();
+        dealer.drawCard(new Card(CardShape.CLOVER, CardRank.ACE));
+
+        Participants participants = new Participants(List.of(dealer, a));
+        Score score = new Score(participants);
+        Map<Participant, GameResult> gameResults = score.calculatePlayerScore();
+
+        // when
+        Map<Participant, Double> rewards = score.calculateRewards(gameResults, dealer);
+
+        // then
+        Assertions.assertThat(rewards.get(a)).isEqualTo(1500);
+        Assertions.assertThat(rewards.get(dealer)).isEqualTo(-1500);
+    }
+
+    @DisplayName("플레이어가 승리하면 100%의 수익을 얻는다.")
+    @Test
+    void test5() {
+        // given
+        Player a = new Player("A");
+        a.setMoney(1000);
+        a.drawCard(new Card(CardShape.CLOVER, CardRank.ACE));
+        a.drawCard(new Card(CardShape.CLOVER, CardRank.ACE));
+
+        Dealer dealer = new Dealer();
+        dealer.drawCard(new Card(CardShape.CLOVER, CardRank.ACE));
+
+        Participants participants = new Participants(List.of(dealer, a));
+        Score score = new Score(participants);
+        Map<Participant, GameResult> gameResults = score.calculatePlayerScore();
+
+        // when
+        Map<Participant, Double> rewards = score.calculateRewards(gameResults, dealer);
+
+        // then
+        Assertions.assertThat(rewards.get(a)).isEqualTo(1000);
+        Assertions.assertThat(rewards.get(dealer)).isEqualTo(-1000);
+    }
+
+    @DisplayName("무승부 시 플레이어와 딜러 누구도 수익을 얻지 않는다.")
+    @Test
+    void test6() {
+        // given
+        Player a = new Player("A");
+        a.setMoney(1000);
+        a.drawCard(new Card(CardShape.CLOVER, CardRank.ACE));
+        a.drawCard(new Card(CardShape.CLOVER, CardRank.ACE));
+
+        Dealer dealer = new Dealer();
+        dealer.drawCard(new Card(CardShape.CLOVER, CardRank.ACE));
+        dealer.drawCard(new Card(CardShape.CLOVER, CardRank.ACE));
+
+        Participants participants = new Participants(List.of(dealer, a));
+        Score score = new Score(participants);
+        Map<Participant, GameResult> gameResults = score.calculatePlayerScore();
+
+        // when
+        Map<Participant, Double> rewards = score.calculateRewards(gameResults, dealer);
+
+        // then
+        Assertions.assertThat(rewards.get(a)).isEqualTo(0);
+        Assertions.assertThat(rewards.get(dealer)).isEqualTo(0);
+    }
+
+    @DisplayName("플레이어가 패배하면 100%의 손해를 얻는다.")
+    @Test
+    void test7() {
+        // given
+        Player a = new Player("A");
+        a.setMoney(1000);
+        a.drawCard(new Card(CardShape.CLOVER, CardRank.ACE));
+
+        Dealer dealer = new Dealer();
+        dealer.drawCard(new Card(CardShape.CLOVER, CardRank.ACE));
+        dealer.drawCard(new Card(CardShape.CLOVER, CardRank.ACE));
+
+        Participants participants = new Participants(List.of(dealer, a));
+        Score score = new Score(participants);
+        Map<Participant, GameResult> gameResults = score.calculatePlayerScore();
+
+        // when
+        Map<Participant, Double> rewards = score.calculateRewards(gameResults, dealer);
+
+        // then
+        Assertions.assertThat(rewards.get(a)).isEqualTo(-1000);
+        Assertions.assertThat(rewards.get(dealer)).isEqualTo(1000);
     }
 }

@@ -3,12 +3,12 @@ package view;
 import card.Card;
 import game.GameResult;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import user.Dealer;
 import user.Participant;
 
 public class OutputView {
@@ -69,7 +69,7 @@ public class OutputView {
     private Map<Participant, Double> sortedRewards(Map<Participant, Double> rewards) {
         List<Map.Entry<Participant, Double>> newRewards = new ArrayList<>(rewards.entrySet());
         newRewards.sort(Comparator.comparing(
-                (Map.Entry<Participant, Double> reward) -> !reward.getKey().getName().equals("딜러")));
+                (Map.Entry<Participant, Double> reward) -> !reward.getKey().getName().equals(Dealer.DEALER_NAME)));
 
         Map<Participant, Double> sortedRewards = new LinkedHashMap<>();
         for (Entry<Participant, Double> newReward : newRewards) {
