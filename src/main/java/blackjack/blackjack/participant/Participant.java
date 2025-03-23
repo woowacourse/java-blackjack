@@ -9,11 +9,11 @@ public abstract class Participant {
 
     public abstract boolean canHit();
 
-    public abstract String getNickname();
-
-    public abstract Hand showAllCards();
-
     public abstract int calculateScore();
 
     public abstract void changeState(State inputState);
+
+    public abstract Hand showAllCards();
+
+    public abstract String getNickname();
 }

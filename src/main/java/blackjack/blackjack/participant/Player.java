@@ -26,38 +26,14 @@ public final class Player extends Participant {
         this(new Hand(new ArrayList<>()), nickname, bettingAmount);
     }
 
-    private void validateBettingAmount(final BigDecimal bettingAmount) {
-        if (bettingAmount.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException(ExceptionMessage.makeMessage("베팅 금액을 양수로 입력해주세요."));
-        }
-    }
-
+    @Override
     public Hand showInitialCards() {
         return state.cards();
     }
 
+    @Override
     public boolean canHit() {
         return state.isNotFinished();
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public BigDecimal getBettingAmount() {
-        return bettingAmount;
-    }
-
-    public void receiveCards(final Hand hand) {
-        changeState(state.receiveCards(hand));
-    }
-
-    public void receiveCard(final Card card) {
-        changeState(state.receiveCards(new Hand(card)));
-    }
-
-    public Hand showAllCards() {
-        return state.cards();
     }
 
     @Override
@@ -70,6 +46,24 @@ public final class Player extends Participant {
         this.state = inputState;
     }
 
+    @Override
+    public Hand showAllCards() {
+        return state.cards();
+    }
+
+    @Override
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void receiveCards(final Hand hand) {
+        changeState(state.receiveCards(hand));
+    }
+
+    public void receiveCard(final Card card) {
+        changeState(state.receiveCards(new Hand(card)));
+    }
+
     public BigDecimal calculateProfit(final State dealerState) {
         return state.calculateProfit(bettingAmount, dealerState);
     }
@@ -78,6 +72,16 @@ public final class Player extends Participant {
         if (state.getStateType() == StateType.RUNNING) {
             changeState(state.stay());
         }
+    }
+
+    private void validateBettingAmount(final BigDecimal bettingAmount) {
+        if (bettingAmount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException(ExceptionMessage.makeMessage("베팅 금액을 양수로 입력해주세요."));
+        }
+    }
+
+    public BigDecimal getBettingAmount() {
+        return bettingAmount;
     }
 
     public State getState() {

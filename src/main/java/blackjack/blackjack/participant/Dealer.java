@@ -24,25 +24,14 @@ public final class Dealer extends Participant implements GameRule {
         this(new Hand(new ArrayList<>()));
     }
 
+    @Override
     public Hand showInitialCards() {
         return new Hand(List.of(state.cards().getFirstCard()));
     }
 
+    @Override
     public boolean canHit() {
         return state.isNotFinished();
-    }
-
-    @Override
-    public void dealInitialCards(final Players players, final Deck deck) {
-        Hand dealerHand = deck.drawCardsByCount(SPREAD_CARD_SIZE);
-        changeState(state.receiveCards(dealerHand));
-
-        Hand playerHand = deck.drawCardsByCount(SPREAD_CARD_SIZE * players.getSize());
-        players.receiveCardsByCount(playerHand, SPREAD_CARD_SIZE);
-    }
-
-    public ProfitResult calculateProfit(final Players players) {
-        return ProfitResult.from(this, players);
     }
 
     @Override
@@ -55,6 +44,20 @@ public final class Dealer extends Participant implements GameRule {
         this.state = inputState;
     }
 
+    @Override
+    public Hand showAllCards() {
+        return state.cards();
+    }
+
+    @Override
+    public void dealInitialCards(final Players players, final Deck deck) {
+        Hand dealerHand = deck.drawCardsByCount(SPREAD_CARD_SIZE);
+        changeState(state.receiveCards(dealerHand));
+
+        Hand playerHand = deck.drawCardsByCount(SPREAD_CARD_SIZE * players.getSize());
+        players.receiveCardsByCount(playerHand, SPREAD_CARD_SIZE);
+    }
+
     public void receiveCards(final Hand hand) {
         changeState(state.receiveCards(hand));
     }
@@ -65,8 +68,9 @@ public final class Dealer extends Participant implements GameRule {
         }
     }
 
-    public Hand showAllCards() {
-        return state.cards();
+    @Override
+    public ProfitResult calculateProfit(final Players players) {
+        return ProfitResult.from(this, players);
     }
 
     public State getState() {
