@@ -8,17 +8,23 @@ import org.junit.jupiter.api.Test;
 class ParticipantTest {
     @DisplayName("카드를 뽑았을 때 21을 넘기면 버스트된다")
     @Test
-    void test3() {
+    void test() {
         // given
-        Participant participant = new Player("수양");
+        Participant player = new Player("수양");
+        Participant dealer = new Dealer();
+
         CardDeck cardDeck = new CardDeck();
-        participant.drawCard(cardDeck.drawCard());
-        participant.drawCard(cardDeck.drawCard());
+        player.drawCard(cardDeck.drawCard());
+        player.drawCard(cardDeck.drawCard());
+        dealer.drawCard(cardDeck.drawCard());
+        dealer.drawCard(cardDeck.drawCard());
         for (int i = 0; i < 12; i++) {
-            participant.drawCard(cardDeck.drawCard());
+            player.drawCard(cardDeck.drawCard());
+            dealer.drawCard(cardDeck.drawCard());
         }
 
         // when && then
-        Assertions.assertThat(participant.isBust()).isEqualTo(true);
+        Assertions.assertThat(player.isBust()).isEqualTo(true);
+        Assertions.assertThat(dealer.isBust()).isEqualTo(true);
     }
 }
