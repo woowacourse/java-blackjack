@@ -71,7 +71,9 @@ public class Controller {
 
     private void dealAdditionalCardsToPlayers(final BlackjackGame blackjackGame, final Deck deck) {
         while (blackjackGame.isPlaying()) {
-            dealAdditionalCardToPlayer(blackjackGame.findCurrentTurnPlayer(), deck);
+            Player currentTurnPlayer = blackjackGame.findCurrentTurnPlayer();
+            dealAdditionalCardToPlayer(currentTurnPlayer, deck);
+            currentTurnPlayer.stayIfRunning();
         }
     }
 
@@ -96,6 +98,7 @@ public class Controller {
             participants.receiveCardToDealer(new Hand(deck.drawCard()));
             showDealerExtraCard();
         }
+        participants.stayToDealerIfRunning();
     }
 
     private void showDealerExtraCard() {

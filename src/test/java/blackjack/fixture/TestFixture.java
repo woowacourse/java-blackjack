@@ -39,6 +39,11 @@ public class TestFixture {
                 new Card(Suit.SPADE, Denomination.FOUR)));
     }
 
+    public static Hand provideOver16Cards() {
+        return new Hand(List.of(new Card(Suit.SPADE, Denomination.TEN),
+                new Card(Suit.SPADE, Denomination.K)));
+    }
+
     public static Hand provideBlackjack() {
         return new Hand(List.of(new Card(Suit.SPADE, Denomination.TEN),
                 new Card(Suit.HEART, Denomination.A)));

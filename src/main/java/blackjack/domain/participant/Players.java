@@ -52,20 +52,15 @@ public final class Players {
                 .toList());
     }
 
-    public Map<Player, Hand> showAllCards() {
-        return players.stream()
-                .collect(Collectors.toMap(player -> player, Participant::showAllCards, (e1, e2) -> e1,
-                        LinkedHashMap::new));
-    }
-
     private void validate(List<Player> players) {
-        if (isDuplicate(players)) {
-            throw new IllegalArgumentException(ExceptionMessage.makeMessage("중복된 이름을 입력했습니다."));
+        if (hasDuplicateName(players)) {
+            throw new IllegalArgumentException(ExceptionMessage.makeMessage("[ERROR] 중복된 이름을 입력했습니다."));
         }
     }
 
-    private boolean isDuplicate(final List<Player> players) {
+    private boolean hasDuplicateName(final List<Player> players) {
         return players.size() != players.stream()
+                .map(Player::getNickname)
                 .distinct()
                 .count();
     }

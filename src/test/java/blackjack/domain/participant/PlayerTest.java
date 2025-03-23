@@ -12,6 +12,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Hand;
 import blackjack.domain.card.Suit;
+import blackjack.domain.state.PlayerRunning;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Stream;
@@ -66,7 +67,7 @@ public class PlayerTest {
         player.receiveCards(hand);
 
         // then
-        assertThat(player).isEqualTo(new Player(hand, "엠제이", BigDecimal.valueOf(10_000)));
+        assertThat(player.getState().cards()).isEqualTo(hand);
     }
 
     @DisplayName("플레이어는 모든 카드를 보여준다.")
@@ -98,7 +99,7 @@ public class PlayerTest {
     }
 
 
-    @DisplayName("플레이어가 가진 카드의 합이 21 미만이면 true를 반환한다.")
+    @DisplayName("플레이어가 가진 카드의 합이 21 이하이면 true를 반환한다.")
     @ParameterizedTest
     @MethodSource
     void canHit(final Hand hand, final boolean expected) {
@@ -113,16 +114,17 @@ public class PlayerTest {
         return Stream.of(
                 Arguments.of(new Hand(List.of(
                         new Card(Suit.SPADE, Denomination.TEN),
-                        new Card(Suit.SPADE, Denomination.NINE)
-                )), true),
-                Arguments.of(new Hand(List.of(
-                        new Card(Suit.SPADE, Denomination.A),
-                        new Card(Suit.SPADE, Denomination.K)
-                )), true),
-                Arguments.of(new Hand(List.of(
-                        new Card(Suit.SPADE, Denomination.K),
-                        new Card(Suit.SPADE, Denomination.Q),
+                        new Card(Suit.DIAMOND, Denomination.TEN),
                         new Card(Suit.SPADE, Denomination.A)
+                )), true),
+                Arguments.of(new Hand(List.of(
+                        new Card(Suit.SPADE, Denomination.TEN),
+                        new Card(Suit.DIAMOND, Denomination.TEN)
+                )), true),
+                Arguments.of(new Hand(List.of(
+                        new Card(Suit.SPADE, Denomination.TEN),
+                        new Card(Suit.DIAMOND, Denomination.TEN),
+                        new Card(Suit.DIAMOND, Denomination.TWO)
                 )), false)
         );
     }

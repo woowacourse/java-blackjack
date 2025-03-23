@@ -60,10 +60,10 @@ public class PlayersTest {
 
         // then
         assertAll(
-                () -> assertThat(players.getPlayers().getFirst()).isEqualTo(
-                        new Player(hand.subHand(0, 2), "엠제이", BigDecimal.valueOf(10_000))),
-                () -> assertThat(players.getPlayers().get(1)).isEqualTo(
-                        new Player(hand.subHand(2, 4), "밍트", BigDecimal.valueOf(20_000)))
+                () -> assertThat(players.getPlayers().getFirst().getState().cards()).isEqualTo(
+                        hand.subHand(0, 2)),
+                () -> assertThat(players.getPlayers().get(1).getState().cards()).isEqualTo(
+                        hand.subHand(2, 4))
         );
     }
 }

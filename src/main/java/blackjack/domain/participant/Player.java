@@ -1,23 +1,25 @@
 package blackjack.domain.participant;
 
-import static blackjack.domain.card.Hand.BURST_THRESHOLD;
-
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
+import blackjack.domain.state.PlayerRunning;
+import blackjack.domain.state.State;
+import blackjack.domain.state.StateType;
 import blackjack.util.ExceptionMessage;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public final class Player extends Participant {
 
     private final String nickname;
     private final BigDecimal bettingAmount;
+    private State state;
 
-    public Player(final Hand hand, final String nickname, final BigDecimal bettingAmount) {
-        super(hand);
+    public Player(final Hand givenHand, final String nickname, final BigDecimal bettingAmount) {
         validateBettingAmount(bettingAmount);
         this.nickname = nickname;
         this.bettingAmount = bettingAmount;
+        this.state = PlayerRunning.from(givenHand);
     }
 
     public Player(final String nickname, final BigDecimal bettingAmount) {
@@ -30,36 +32,55 @@ public final class Player extends Participant {
         }
     }
 
-    @Override
     public Hand showInitialCards() {
-        return hand;
+        return state.cards();
     }
 
-    @Override
     public boolean canHit() {
-        int score = hand.calculateWithHardHand();
-        return score < BURST_THRESHOLD;
+        return state.isNotFinished();
     }
 
-    @Override
-    public boolean equals(final Object o) {
-        if (!(o instanceof final Player player)) {
-            return false;
-        }
-        return Objects.equals(nickname, player.nickname) && Objects.equals(hand, player.hand);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(nickname, hand);
-    }
-
-    @Override
     public String getNickname() {
         return nickname;
     }
 
     public BigDecimal getBettingAmount() {
         return bettingAmount;
+    }
+
+    public void receiveCards(final Hand hand) {
+        changeState(state.receiveCards(hand));
+    }
+
+    public void receiveCard(final Card card) {
+        changeState(state.receiveCards(new Hand(card)));
+    }
+
+    public Hand showAllCards() {
+        return state.cards();
+    }
+
+    @Override
+    public int calculateScore() {
+        return state.calculateScore();
+    }
+
+    @Override
+    public void changeState(final State inputState) {
+        this.state = inputState;
+    }
+
+    public BigDecimal calculateProfit(final State dealerState) {
+        return state.profit(bettingAmount, dealerState);
+    }
+
+    public void stayIfRunning() {
+        if (state.getStateType() == StateType.RUNNING) {
+            changeState(state.stay());
+        }
+    }
+
+    public State getState() {
+        return state;
     }
 }

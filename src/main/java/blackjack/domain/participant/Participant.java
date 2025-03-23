@@ -1,15 +1,9 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
+import blackjack.domain.state.State;
 
 public abstract class Participant {
-
-    protected final Hand hand;
-
-    public Participant(final Hand hand) {
-        this.hand = hand;
-    }
 
     public abstract Hand showInitialCards();
 
@@ -17,19 +11,9 @@ public abstract class Participant {
 
     public abstract String getNickname();
 
-    public void receiveCards(final Hand givenHand) {
-        hand.addAll(givenHand);
-    }
+    public abstract Hand showAllCards();
 
-    public void receiveCard(final Card card) {
-        hand.add(card);
-    }
+    public abstract int calculateScore();
 
-    public int calculateScore() {
-        return hand.calculateResult();
-    }
-
-    public Hand showAllCards() {
-        return hand;
-    }
+    public abstract void changeState(State inputState);
 }

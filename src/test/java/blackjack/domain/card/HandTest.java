@@ -37,7 +37,7 @@ class HandTest {
         // given
 
         // when & then
-        assertThat(hand.calculateResult()).isEqualTo(expected);
+        assertThat(hand.calculateScore()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> calculateMaxScore() {

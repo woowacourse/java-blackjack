@@ -3,11 +3,11 @@ package blackjack.domain.result;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -19,31 +19,28 @@ public final class ProfitResult {
         this.result = result;
     }
 
-    public static ProfitResult from(final Dealer dealer,
-                                    final Map<Player, ResultStatus> winningResult) {
-        final Map<Participant, BigDecimal> profits = initializeProfit(dealer, winningResult);
-        for (Entry<Player, ResultStatus> entry : winningResult.entrySet()) {
-            calculateEachProfit(dealer, entry, profits);
+    public static ProfitResult from(final Dealer dealer, final Players players) {
+        final Map<Participant, BigDecimal> profits = initializeProfit(dealer, players);
+        for (Player player : players.getPlayers()) {
+            calculateEachProfit(dealer, player, profits);
         }
         return new ProfitResult(profits);
     }
 
     private static Map<Participant, BigDecimal> initializeProfit(final Dealer dealer,
-                                                                 final Map<Player, ResultStatus> winningResult) {
+                                                                 final Players players) {
         final Stream<Dealer> dealerStream = Stream.of(dealer);
-        final Stream<Player> playersStream = winningResult.keySet().stream();
-        return Stream.concat(dealerStream, playersStream)
+        final Stream<Player> playerStream = players.getPlayers().stream();
+        return Stream.concat(dealerStream, playerStream)
                 .collect(Collectors.toMap(
                         participant -> participant, key -> BigDecimal.ZERO,
                         (existing, replacement) -> existing, LinkedHashMap::new)
                 );
     }
 
-    private static void calculateEachProfit(final Dealer dealer, final Entry<Player, ResultStatus> entry,
+    private static void calculateEachProfit(final Dealer dealer, final Player player,
                                             final Map<Participant, BigDecimal> profits) {
-        final Player player = entry.getKey();
-        final BigDecimal bettingAmount = player.getBettingAmount();
-        final BigDecimal profit = entry.getValue().calculateProfit(bettingAmount);
+        final BigDecimal profit = player.calculateProfit(dealer.getState());
         profits.merge(dealer, profit.multiply(BigDecimal.valueOf(-1)), BigDecimal::add);
         profits.merge(player, profit, BigDecimal::add);
     }

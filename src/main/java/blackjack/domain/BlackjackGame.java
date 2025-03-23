@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.card.Hand;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.result.ProfitResult;
@@ -20,8 +19,7 @@ public final class BlackjackGame {
     }
 
     public void dealInitialCards(final Deck deck) {
-        final Hand hand = deck.drawInitialCards(participants.getInitialCardSize());
-        participants.dealInitialCards(hand);
+        participants.dealInitialCards(deck);
     }
 
     public boolean isPlaying() {
@@ -34,6 +32,10 @@ public final class BlackjackGame {
 
     public ProfitResult makeProfitResult() {
         return participants.makeDealerWinningResult();
+    }
+
+    public void stayToPlayerIfRunning(final Player currentTurnPlayer) {
+        currentTurnPlayer.stayIfRunning();
     }
 
     public Participants getParticipants() {

@@ -1,52 +1,79 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
 import blackjack.domain.result.ProfitResult;
-import blackjack.domain.result.ResultStatus;
+import blackjack.domain.state.DealerRunning;
+import blackjack.domain.state.State;
+import blackjack.domain.state.StateType;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public final class Dealer extends Participant implements GameRule {
 
     private static final String NICKNAME = "딜러";
-    private static final int DEALER_THRESHOLD = 16;
     private static final int SPREAD_CARD_SIZE = 2;
 
+    private State state;
+
     public Dealer(final Hand hand) {
-        super(hand);
+        this.state = DealerRunning.from(hand);
     }
 
     public Dealer() {
         this(new Hand(new ArrayList<>()));
     }
 
-    @Override
     public Hand showInitialCards() {
-        return new Hand(List.of(hand.getFirstCard()));
+        return new Hand(List.of(state.cards().getFirstCard()));
     }
 
-    @Override
     public boolean canHit() {
-        int score = hand.calculateWithHardHand();
-        return score <= DEALER_THRESHOLD;
-    }
-
-    public void dealInitialCards(final Players players, final Hand hand) {
-        receiveCards(hand.subHand(0, SPREAD_CARD_SIZE));
-        players.receiveCardsByCount(hand.subHand(SPREAD_CARD_SIZE, hand.getSize()), SPREAD_CARD_SIZE);
-    }
-
-    public ProfitResult calculateProfit(final Map<Player, ResultStatus> playerScores) {
-        return ProfitResult.from(this, playerScores);
+        return state.isNotFinished();
     }
 
     @Override
+    public void dealInitialCards(final Players players, final Deck deck) {
+        Hand dealerHand = deck.drawCardsByCount(2);
+        changeState(state.receiveCards(dealerHand));
+
+        Hand playerHand = deck.drawCardsByCount(SPREAD_CARD_SIZE * players.getSize());
+        players.receiveCardsByCount(playerHand, SPREAD_CARD_SIZE);
+    }
+
+    public ProfitResult calculateProfit(final Players players) {
+        return ProfitResult.from(this, players);
+    }
+
+    @Override
+    public int calculateScore() {
+        return state.calculateScore();
+    }
+
+    @Override
+    public void changeState(final State inputState) {
+        this.state = inputState;
+    }
+
+    public void receiveCards(final Hand hand) {
+        changeState(state.receiveCards(hand));
+    }
+
+    public void stayIfRunning() {
+        if (state.getStateType() == StateType.RUNNING) {
+            changeState(state.stay());
+        }
+    }
+
+    public Hand showAllCards() {
+        return state.cards();
+    }
+
+    public State getState() {
+        return state;
+    }
+
     public String getNickname() {
         return NICKNAME;
-    }
-
-    public int getSpreadCardSize() {
-        return SPREAD_CARD_SIZE;
     }
 }

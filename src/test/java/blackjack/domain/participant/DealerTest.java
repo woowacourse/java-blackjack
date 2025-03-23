@@ -4,7 +4,6 @@ import static blackjack.fixture.TestFixture.provideBiggerAceCards;
 import static blackjack.fixture.TestFixture.provideBiggerAndSmallerAceCards;
 import static blackjack.fixture.TestFixture.provideCards;
 import static blackjack.fixture.TestFixture.provideEmptyCards;
-import static blackjack.fixture.TestFixture.providePlayer;
 import static blackjack.fixture.TestFixture.provideSmallerAceCards;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -13,7 +12,6 @@ import blackjack.domain.card.Denomination;
 import blackjack.domain.card.Hand;
 import blackjack.domain.card.Suit;
 import blackjack.domain.result.ProfitResult;
-import blackjack.domain.result.ResultStatus;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +59,7 @@ class DealerTest {
         assertThat(dealerHand.getHand()).hasSize(1);
     }
 
-    @DisplayName("딜러가 가진 카드의 합이 16 이하면 true를 반환한다.")
+    @DisplayName("딜러의 카드의 합이 블랙잭이 아니면서 16 이하면 추가로 뽑을 수 있다.")
     @ParameterizedTest
     @MethodSource
     void canHit(final Hand hand, final boolean expected) {
@@ -76,17 +74,16 @@ class DealerTest {
         return Stream.of(
                 Arguments.of(new Hand(List.of(
                         new Card(Suit.SPADE, Denomination.TEN),
-                        new Card(Suit.SPADE, Denomination.NINE)
+                        new Card(Suit.SPADE, Denomination.SEVEN)
                 )), false),
                 Arguments.of(new Hand(List.of(
                         new Card(Suit.SPADE, Denomination.A),
                         new Card(Suit.SPADE, Denomination.K)
-                )), true),
+                )), false),
                 Arguments.of(new Hand(List.of(
-                        new Card(Suit.SPADE, Denomination.K),
-                        new Card(Suit.SPADE, Denomination.Q),
-                        new Card(Suit.SPADE, Denomination.A)
-                )), false)
+                        new Card(Suit.SPADE, Denomination.TEN),
+                        new Card(Suit.SPADE, Denomination.SIX)
+                )), true)
         );
     }
 
@@ -109,29 +106,56 @@ class DealerTest {
         );
     }
 
-    @DisplayName("우승 결과를 계산한다")
+    @DisplayName("플레이어가 블랙잭이 아닌 경우의 우승 수익을 계산한다")
     @ParameterizedTest
     @MethodSource
-    void calculateWinningResult(final ResultStatus playerResult, final BigDecimal dealerProfit,
-                                final BigDecimal playerProfit) {
+    void calculateWinningResultExceptBlackjack(final Hand playerHand, final BigDecimal dealerProfit,
+                                               final BigDecimal playerProfit) {
         // Given
-        dealer = new Dealer();
-        final Player player = providePlayer("밍트", 10_000);
-        final Map<Player, ResultStatus> playerScores = Map.of(player, playerResult);
+        final Hand dealerHand = new Hand(
+                List.of(new Card(Suit.DIAMOND, Denomination.FIVE), new Card(Suit.HEART, Denomination.THREE)));
+        dealer = new Dealer(dealerHand);
+        final Player player = new Player(playerHand, "밍트", new BigDecimal("10000"));
+        dealer.stayIfRunning();
+        player.stayIfRunning();
 
         // When
-        final ProfitResult profitResult = dealer.calculateProfit(playerScores);
+        final ProfitResult profitResult = dealer.calculateProfit(new Players(List.of(player)));
 
         // Then
         assertThat(profitResult.getResult()).isEqualTo(Map.of(dealer, dealerProfit, player, playerProfit));
     }
 
-    private static Stream<Arguments> calculateWinningResult() {
+    private static Stream<Arguments> calculateWinningResultExceptBlackjack() {
         return Stream.of(
-                Arguments.of(ResultStatus.PUSH, new BigDecimal("0.0"), new BigDecimal("0.0")),
-                Arguments.of(ResultStatus.LOSE, new BigDecimal("10000.0"), new BigDecimal("-10000.0")),
-                Arguments.of(ResultStatus.BLACKJACK, new BigDecimal("-15000.0"), new BigDecimal("15000.0")),
-                Arguments.of(ResultStatus.WIN, new BigDecimal("-10000.0"), new BigDecimal("10000.0"))
+                Arguments.of(new Hand(
+                                List.of(new Card(Suit.CLOB, Denomination.FIVE), new Card(Suit.SPADE, Denomination.THREE))),
+                        BigDecimal.ZERO, BigDecimal.ZERO),
+                Arguments.of(new Hand(
+                                List.of(new Card(Suit.CLOB, Denomination.FIVE), new Card(Suit.SPADE, Denomination.TWO))),
+                        new BigDecimal(10000), new BigDecimal(-10000)),
+                Arguments.of(new Hand(
+                                List.of(new Card(Suit.CLOB, Denomination.FIVE), new Card(Suit.SPADE, Denomination.FOUR))),
+                        new BigDecimal(-10000), new BigDecimal(10000))
         );
+    }
+
+    @DisplayName("플레이어가 블랙잭인 경우 우승 수익을 계산한다")
+    @Test
+    void calculateWinningResultWhenBlackjack() {
+        // Given
+        final Hand dealerHand = new Hand(
+                List.of(new Card(Suit.DIAMOND, Denomination.FIVE), new Card(Suit.HEART, Denomination.THREE)));
+        final Hand playerHand = new Hand(
+                List.of(new Card(Suit.CLOB, Denomination.TEN), new Card(Suit.SPADE, Denomination.A)));
+        dealer = new Dealer(dealerHand);
+        final Player player = new Player(playerHand, "밍트", new BigDecimal("10000"));
+
+        // When
+        final ProfitResult profitResult = dealer.calculateProfit(new Players(List.of(player)));
+
+        // Then
+        assertThat(profitResult.getResult()).isEqualTo(
+                Map.of(dealer, new BigDecimal("-15000.0"), player, new BigDecimal("15000.0")));
     }
 }

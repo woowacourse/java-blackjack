@@ -18,8 +18,8 @@ public final class Deck {
         return new Deck(new ShuffleDeckGenerator());
     }
 
-    public Hand drawInitialCards(final int size) {
-        return new Hand(IntStream.range(0, size)
+    public Hand drawCardsByCount(final int count) {
+        return new Hand(IntStream.range(0, count)
                 .mapToObj(o -> drawCard())
                 .toList());
     }

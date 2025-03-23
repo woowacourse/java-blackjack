@@ -86,7 +86,7 @@ public final class ResultView {
 
     private String showParticipantsScore(final Entry<String, Hand> entry) {
         return String.format(CARD_SCORE_FORMAT, entry.getKey(),
-                makeCardMessage(entry.getValue()), entry.getValue().calculateResult());
+                makeCardMessage(entry.getValue()), entry.getValue().calculateScore());
     }
 
     private String getSuitName(final Suit suit) {
