@@ -1,14 +1,28 @@
-import controller.BlackJackController;
-import view.InputView;
-import view.OutputView;
+import io.ConsoleInput;
+import io.ConsoleOutput;
 
 public class Application {
     public static void main(String[] args) {
+        ConsoleInput input = new ConsoleInput();
+        ConsoleOutput output = new ConsoleOutput();
 
-        InputView inputView = new InputView();
-        OutputView outputView = new OutputView();
+        BlackJackManager manager = new BlackJackManager(
+                input.readParticipantsNames(),
+                input::readPlayerBetAmounts
+                );
 
-        BlackJackController controller = new BlackJackController(inputView, outputView);
-        controller.run();
+        output.printInitialGameSettings(manager.getPlayers(), manager.getDealer());
+
+        manager.performPlayerTurn(
+                player -> input.readShouldHit(player.getNickname()),
+                output::printPlayerCards
+        );
+
+        manager.performDealerTurn(
+                output::printDealerHitMessage
+        );
+
+        output.printGameResults(manager.getPlayers(), manager.getDealer());
+        output.printFinalProfit(manager.getBetCenter(), manager.getDealer());
     }
 }
