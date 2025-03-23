@@ -11,21 +11,21 @@ public final class PlayerRunning extends Running {
         super(hand);
     }
 
-    public static State initialState(final Hand hand) {
-        if (hand.isBlackjack()) {
-            return new Blackjack(hand);
+    public static State initialState(final Hand givenHand) {
+        if (givenHand.isBlackjack()) {
+            return new Blackjack(givenHand);
         }
-        return new PlayerRunning(hand);
+        return new PlayerRunning(givenHand);
     }
 
     @Override
-    public State receiveCards(final Hand hand) {
-        this.hand.addAll(hand);
-        if (this.hand.isBust()) {
-            return new Bust(this.hand);
+    public State receiveCards(final Hand givenHand) {
+        hand.addAll(givenHand);
+        if (hand.isBust()) {
+            return new Bust(hand);
         }
-        if (this.hand.isBlackjack()) {
-            return new Blackjack(this.hand);
+        if (hand.isBlackjack()) {
+            return new Blackjack(hand);
         }
         return this;
     }
