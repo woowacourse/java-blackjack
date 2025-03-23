@@ -2,16 +2,13 @@ package blackjack.blackjack.participant;
 
 import blackjack.blackjack.card.Card;
 import blackjack.blackjack.card.Hand;
-import blackjack.blackjack.state.running.PlayerRunning;
 import blackjack.blackjack.state.State;
-import blackjack.blackjack.state.StateType;
+import blackjack.blackjack.state.running.PlayerRunning;
 import blackjack.util.ExceptionMessage;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-public final class Player extends Participant {
-
-    private static final int SPREAD_CARD_SIZE = 2;
+public final class Player implements Participant {
 
     private final String nickname;
     private final BigDecimal bettingAmount;

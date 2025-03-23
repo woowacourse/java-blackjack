@@ -3,17 +3,17 @@ package blackjack.blackjack.participant;
 import blackjack.blackjack.card.Hand;
 import blackjack.blackjack.state.State;
 
-public abstract class Participant {
+public interface Participant {
 
-    public abstract Hand showInitialCards();
+    Hand showInitialCards();
 
-    public abstract boolean canHit();
+    boolean canHit();
 
-    public abstract int calculateScore();
+    int calculateScore();
 
-    public abstract void changeState(State inputState);
+    void changeState(State inputState);
 
-    public abstract Hand showAllCards();
+    Hand showAllCards();
 
-    public abstract String getNickname();
+    String getNickname();
 }
