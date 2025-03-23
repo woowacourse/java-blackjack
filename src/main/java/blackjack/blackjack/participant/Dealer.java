@@ -34,7 +34,7 @@ public final class Dealer extends Participant implements GameRule {
 
     @Override
     public void dealInitialCards(final Players players, final Deck deck) {
-        Hand dealerHand = deck.drawCardsByCount(2);
+        Hand dealerHand = deck.drawCardsByCount(SPREAD_CARD_SIZE);
         changeState(state.receiveCards(dealerHand));
 
         Hand playerHand = deck.drawCardsByCount(SPREAD_CARD_SIZE * players.getSize());
