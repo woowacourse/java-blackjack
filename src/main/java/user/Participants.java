@@ -113,7 +113,7 @@ public class Participants {
         Map<String, List<Card>> firstPlayersCard = new HashMap<>();
         List<Participant> players = this.getPlayers();
         for (Participant player : players) {
-            List<Card> cards = player.openInitialCard();
+            List<Card> cards = player.openAllCard();
             firstPlayersCard.put(player.getName(), cards);
         }
         return firstPlayersCard;
