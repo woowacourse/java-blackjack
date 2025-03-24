@@ -1,10 +1,15 @@
 package blackjack.blackjack.participant;
 
+import static blackjack.fixture.TestFixture.provide16Cards;
 import static blackjack.fixture.TestFixture.provideBiggerAceCards;
 import static blackjack.fixture.TestFixture.provideBiggerAndSmallerAceCards;
+import static blackjack.fixture.TestFixture.provideBlackjack;
+import static blackjack.fixture.TestFixture.provideBustCards;
 import static blackjack.fixture.TestFixture.provideCards;
 import static blackjack.fixture.TestFixture.provideEmptyCards;
+import static blackjack.fixture.TestFixture.provideOver16Cards;
 import static blackjack.fixture.TestFixture.provideSmallerAceCards;
+import static blackjack.fixture.TestFixture.provideUnder16Cards;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
@@ -18,6 +23,7 @@ import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -144,5 +150,78 @@ public class PlayerTest {
                 Arguments.of(provideBiggerAceCards(), 21),
                 Arguments.of(provideBiggerAndSmallerAceCards(), 17)
         );
+    }
+
+    @Nested
+    class calculateProfitTest {
+
+        @Test
+        void 블랙잭_수익을_계산한다() {
+            // Given
+            BigDecimal bettingAmount = BigDecimal.valueOf(3_000);
+            Dealer dealer = new Dealer(provideUnder16Cards());
+            Player player = new Player(provideBlackjack(), "밍트", bettingAmount);
+
+            // When & Then
+            assertThat(player.calculateProfit(dealer)).isEqualTo(new BigDecimal("4500.0"));
+        }
+
+        @Test
+        void 버스트_수익을_계산한다() {
+            // Given
+            BigDecimal bettingAmount = BigDecimal.valueOf(3_000);
+            Dealer dealer = new Dealer(provideUnder16Cards());
+            Player player = new Player(provideEmptyCards(), "밍트", bettingAmount);
+            player.receiveCards(provideBustCards());
+
+            // When & Then
+            assertThat(player.calculateProfit(dealer)).isEqualTo(new BigDecimal(-3000));
+        }
+
+        @Test
+        void 딜러가_버스트이면_베팅금을_얻는다() {
+            // Given
+            BigDecimal bettingAmount = BigDecimal.valueOf(3_000);
+            Dealer dealer = new Dealer(provide16Cards());
+            dealer.receiveCards(new Hand(List.of(new Card(Suit.DIAMOND, Denomination.J))));
+            Player player = new Player(provide16Cards(), "밍트", bettingAmount);
+
+            // When & Then
+            assertThat(player.calculateProfit(dealer)).isEqualTo(new BigDecimal(3000));
+        }
+
+
+        @Test
+        void 딜러_점수가_더_높으면_베팅금을_잃는다() {
+            // Given
+            BigDecimal bettingAmount = BigDecimal.valueOf(3_000);
+            Dealer dealer = new Dealer(provideOver16Cards());
+            Player player = new Player(provide16Cards(), "밍트", bettingAmount);
+
+            // When & Then
+            assertThat(player.calculateProfit(dealer)).isEqualTo(new BigDecimal(-3000));
+        }
+
+        @Test
+        void 딜러_점수가_더_낮으면_베팅금을_얻는다() {
+            // Given
+            BigDecimal bettingAmount = BigDecimal.valueOf(3_000);
+            Dealer dealer = new Dealer(provideUnder16Cards());
+            Player player = new Player(provide16Cards(), "밍트", bettingAmount);
+
+            // When & Then
+            assertThat(player.calculateProfit(dealer)).isEqualTo(new BigDecimal(3000));
+        }
+
+        @Test
+        void 딜러와_플레이어가_버스트가_아닌_상황에서_동점이면_0원이다() {
+            // Given
+            BigDecimal bettingAmount = BigDecimal.valueOf(3_000);
+            Dealer dealer = new Dealer(provide16Cards());
+            Player player = new Player(provide16Cards(), "밍트", bettingAmount);
+
+            // When & Then
+            assertThat(player.calculateProfit(dealer)).isEqualTo(BigDecimal.ZERO);
+        }
     }
 }

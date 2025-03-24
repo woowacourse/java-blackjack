@@ -3,12 +3,14 @@ package blackjack.blackjack.participant;
 import blackjack.blackjack.card.Card;
 import blackjack.blackjack.card.Hand;
 import blackjack.blackjack.state.State;
+import blackjack.blackjack.state.StateType;
 import blackjack.blackjack.state.running.PlayerRunning;
 import blackjack.util.ExceptionMessage;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 
 public final class Player implements Participant {
+
+    private static final BigDecimal BLACKJACK_PROFIT_RATE = new BigDecimal("1.5");
 
     private final String nickname;
     private final BigDecimal bettingAmount;
@@ -21,8 +23,8 @@ public final class Player implements Participant {
         this.state = PlayerRunning.initialState(givenHand);
     }
 
-    public Player(final String nickname, final BigDecimal bettingAmount) {
-        this(new Hand(new ArrayList<>()), nickname, bettingAmount);
+    public Player(final String nickname, final BigDecimal bettingAmount, final Hand hand) {
+        this(hand, nickname, bettingAmount);
     }
 
     @Override
@@ -64,7 +66,16 @@ public final class Player implements Participant {
     }
 
     public BigDecimal calculateProfit(final Dealer dealer) {
-        return state.calculateProfit(bettingAmount, dealer);
+        if (state.getStateType() == StateType.BUST) {
+            return bettingAmount.multiply(BigDecimal.valueOf(-1));
+        }
+        if (dealer.getStateType() == StateType.BUST) {
+            return bettingAmount;
+        }
+        if (state.getStateType() == StateType.BLACKJACK) {
+            return bettingAmount.multiply(BLACKJACK_PROFIT_RATE);
+        }
+        return compareByScore(bettingAmount, dealer);
     }
 
     public void stayIfRunning() {
@@ -77,7 +88,15 @@ public final class Player implements Participant {
         }
     }
 
-    public BigDecimal getBettingAmount() {
+    private BigDecimal compareByScore(final BigDecimal bettingAmount, final Dealer dealer) {
+        int playerScore = calculateScore();
+        int dealerScore = dealer.calculateScore();
+        if (playerScore < dealerScore) {
+            return bettingAmount.multiply(BigDecimal.valueOf(-1));
+        }
+        if (playerScore == dealerScore) {
+            return BigDecimal.ZERO;
+        }
         return bettingAmount;
     }
 

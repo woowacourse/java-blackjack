@@ -21,9 +21,11 @@ public final class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public static Players from(final List<String> names, final List<BigDecimal> bettingAmounts) {
+    public static Players from(final List<String> names, final List<BigDecimal> bettingAmounts, final Deck deck,
+                               final int count) {
         return new Players(IntStream.range(0, names.size())
-                .mapToObj(index -> new Player(names.get(index), bettingAmounts.get(index)))
+                .mapToObj(
+                        index -> new Player(names.get(index), bettingAmounts.get(index), deck.drawCardsByCount(count)))
                 .toList());
     }
 

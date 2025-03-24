@@ -41,7 +41,7 @@ public class TestFixture {
     }
 
     public static Hand provideBlackjack() {
-        return new Hand(List.of(new Card(Suit.SPADE, Denomination.TEN),
+        return new Hand(List.of(new Card(Suit.SPADE, Denomination.Q),
                 new Card(Suit.HEART, Denomination.A)));
     }
 
