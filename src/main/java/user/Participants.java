@@ -51,16 +51,17 @@ public class Participants {
     }
 
     public GameResult compareScore(Participant player) {
-        int dealerScore = this.getDealer().calculateScore();
+        Participant dealer = this.getDealer();
+        int dealerScore = dealer.calculateScore();
         int playerScore = player.calculateScore();
 
         if (player.isBust()) {
             return GameResult.LOSE;
         }
-        if (dealerScore < playerScore && player.isBlackjack()) {
+        if (player.isBlackjack() && !dealer.isBlackjack()) {
             return GameResult.BLACKJACK;
         }
-        if (dealerScore < playerScore) {
+        if (dealer.isBust() || dealerScore < playerScore) {
             return GameResult.WIN;
         }
         if (dealerScore > playerScore) {
