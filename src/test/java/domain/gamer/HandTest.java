@@ -47,11 +47,11 @@ class HandTest {
         final Hand hand = new Hand();
 
         // when
-        hand.add(card1);
-        hand.add(card2);
+        hand.add(card4);
+        hand.add(card5);
 
         // then
-        assertThat(hand.calculateSumOfRank()).isEqualTo(3);
+        assertThat(hand.calculateSumOfRank()).isEqualTo(9);
     }
 
     @DisplayName("버스트이면 true, 아니면 false를 반환한다.")

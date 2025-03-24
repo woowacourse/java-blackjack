@@ -1,5 +1,7 @@
 package view;
 
+import domain.gamer.Gamer;
+import domain.gamer.Nickname;
 import java.util.Scanner;
 
 public final class InputView {
@@ -12,9 +14,16 @@ public final class InputView {
         return readValidInput();
     }
 
-    public static String readQuestOneMoreCard(final String name) {
-        print(String.format("%s는(은) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", name));
+    public static String readBetAmount(final Nickname nickname) {
+        print(String.format("%s의 배팅 금액은?", nickname.getDisplayName()));
         return readValidInput();
+    }
+
+    public static boolean readQuestOneMoreCard(final Gamer gamer) {
+        print(String.format("%s는(은) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", gamer.getDisplayName()));
+        final String input = readValidInput();
+
+        return input.equals("y");
     }
 
     private static String readValidInput() {

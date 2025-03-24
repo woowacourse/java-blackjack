@@ -19,7 +19,7 @@ public class Deck {
         return new Deck(shuffledCards);
     }
 
-    public static Deck from(final List<Card> cards) {
+    public static Deck createDeck(final List<Card> cards) {
         return new Deck(cards);
     }
 

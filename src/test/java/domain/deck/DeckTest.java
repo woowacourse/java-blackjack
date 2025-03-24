@@ -41,7 +41,7 @@ class DeckTest {
         // given
         final Card card1 = new Card(Rank.ACE, Shape.CLOVER);
         final Card card2 = new Card(Rank.KING, Shape.CLOVER);
-        final Deck deck = Deck.from(List.of(card1, card2));
+        final Deck deck = Deck.createDeck(List.of(card1, card2));
 
         // when
         final Card drownCard1 = deck.drawCard();
@@ -59,7 +59,7 @@ class DeckTest {
     void 카드가_부족하면_예외가_발생한다() {
 
         // given
-        final Deck deck = Deck.from(List.of());
+        final Deck deck = Deck.createDeck(List.of());
 
         // when & then
         assertThatThrownBy(deck::drawCard)
