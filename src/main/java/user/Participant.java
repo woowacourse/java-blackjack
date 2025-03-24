@@ -19,6 +19,8 @@ public abstract class Participant {
 
     public abstract String getName();
 
+    public abstract boolean isPlayer();
+
     public void drawCard(Card card) {
         cardHand.add(card);
     }
@@ -53,5 +55,9 @@ public abstract class Participant {
 
     public List<Card> openAllCard() {
         return this.cardHand.getAllCard();
+    }
+
+    public double calculateReward(double rewardRate) {
+        return this.betMoney * rewardRate;
     }
 }

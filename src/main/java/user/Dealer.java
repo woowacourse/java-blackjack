@@ -11,6 +11,10 @@ public class Dealer extends Participant {
         super();
     }
 
+    public void payReward(double reward) {
+        this.betMoney -= reward;
+    }
+
     @Override
     public boolean isDrawable() {
         return !cardHand.isAtLeastScore(DEALER_MAX_SCORE);
@@ -24,5 +28,10 @@ public class Dealer extends Participant {
     @Override
     public String getName() {
         return DEALER_NAME;
+    }
+
+    @Override
+    public boolean isPlayer() {
+        return false;
     }
 }

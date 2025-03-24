@@ -40,14 +40,14 @@ public class Participants {
 
     public Participant getDealer() {
         return participants.stream()
-                .filter(participant -> participant.getName().equals(Dealer.DEALER_NAME))
+                .filter(participant -> !participant.isPlayer())
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("딜러가 게임에 참여하지 않았습니다."));
     }
 
     public List<Participant> getPlayers() {
         return participants.stream()
-                .filter(participant -> !participant.getName().equals(Dealer.DEALER_NAME))
+                .filter(participant -> !participant.isPlayer())
                 .toList();
     }
 
