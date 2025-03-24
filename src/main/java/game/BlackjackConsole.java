@@ -89,10 +89,9 @@ public class BlackjackConsole {
     }
 
     private void calculateBettingReward(BlackjackGame blackjackGame, Dealer dealer) {
-        Score score = new Score(blackjackGame.getParticipants());
-        Map<Participant, GameResult> gameResult = score.calculatePlayerScore();
+        Map<Participant, GameResult> gameResult = blackjackGame.calculatePlayerScore();
 
-        Map<Participant, Double> rewards = score.calculateRewards(gameResult, dealer);
+        Map<Participant, Double> rewards = blackjackGame.calculateRewards(gameResult, dealer);
 
         outputView.displayRewards(rewards);
     }

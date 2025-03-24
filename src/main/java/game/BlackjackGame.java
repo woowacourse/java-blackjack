@@ -3,8 +3,10 @@ package game;
 import card.Card;
 import card.CardDeck;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import user.Dealer;
 import user.Participant;
 import user.Participants;
@@ -61,5 +63,22 @@ public class BlackjackGame {
 
     public Participants getParticipants() {
         return this.participants;
+    }
+
+    public Map<Participant, GameResult> calculatePlayerScore() {
+        return participants.calculateGameResults();
+    }
+
+    public Map<Participant, Double> calculateRewards(Map<Participant, GameResult> gameResult, Dealer dealer) {
+        Map<Participant, Double> rewards = new LinkedHashMap<>();
+
+        for (Entry<Participant, GameResult> userGameResult : gameResult.entrySet()) {
+            Participant participant = userGameResult.getKey();
+            GameResult result = userGameResult.getValue();
+            rewards.put(participant, result.calculateReward(participant, dealer));
+        }
+
+        rewards.put(dealer, dealer.getBetMoney());
+        return rewards;
     }
 }

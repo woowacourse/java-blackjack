@@ -2,8 +2,10 @@ package user;
 
 import card.Card;
 import card.CardDeck;
+import game.GameResult;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +32,61 @@ public class Participants {
         if (participants.size() < USER_MIN_COUNT || participants.size() > USER_MAX_COUNT) {
             throw new IllegalArgumentException("유저는 " + USER_MIN_COUNT + "명 이상 " + USER_MAX_COUNT + "명 이하로 등록해야 합니다.");
         }
+    }
+
+    public Map<Participant, GameResult> calculateGameResults() {
+        Map<Participant, GameResult> gameResult = new LinkedHashMap<>();
+        Participant dealer = this.getDealer();
+
+        if (dealer.isBust()) {
+            this.participants.stream()
+                    .filter(Participant::isPlayer)
+                    .forEach(player -> putGameResultBust(player, gameResult));
+            return gameResult;
+        }
+        this.participants.stream()
+                .filter(Participant::isPlayer)
+                .forEach(player -> gameResult.put(player, compareScore(player)));
+        return gameResult;
+    }
+
+    public GameResult compareScore(Participant player) {
+        int dealerScore = this.getDealer().calculateScore();
+        int playerScore = player.calculateScore();
+
+        if (player.isBust()) {
+            return GameResult.LOSE;
+        }
+        if (dealerScore < playerScore && player.isBlackjack()) {
+            return GameResult.BLACKJACK;
+        }
+        if (dealerScore < playerScore) {
+            return GameResult.WIN;
+        }
+        if (dealerScore > playerScore) {
+            return GameResult.LOSE;
+        }
+        return compareSameScore(player);
+    }
+
+    private GameResult compareSameScore(Participant player) {
+        Participant dealer = this.getDealer();
+        if (dealer.isBlackjack() && !player.isBlackjack()) {
+            return GameResult.LOSE;
+        }
+        return GameResult.DRAW;
+    }
+
+    private void putGameResultBust(Participant participant, Map<Participant, GameResult> gameResult) {
+        if (participant.isBust()) {
+            gameResult.put(participant, GameResult.LOSE);
+            return;
+        }
+        if (participant.isBlackjack()) {
+            gameResult.put(participant, GameResult.BLACKJACK);
+            return;
+        }
+        gameResult.put(participant, GameResult.WIN);
     }
 
     public void drawCardAllParticipant(CardDeck cardDeck) {
