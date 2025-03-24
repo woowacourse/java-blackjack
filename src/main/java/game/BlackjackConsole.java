@@ -51,7 +51,7 @@ public class BlackjackConsole {
         Participants participants = blackjackGame.getParticipants();
         for (Participant participant : participants.getPlayers()) {
             Long bettingMoney = inputView.inputBettingMoney(participant.getName());
-            participant.setMoney(bettingMoney);
+            participant.betMoney(bettingMoney);
         }
     }
 

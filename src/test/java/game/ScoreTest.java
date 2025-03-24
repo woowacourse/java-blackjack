@@ -130,7 +130,7 @@ class ScoreTest {
     void test4() {
         // given
         Player a = new Player("A");
-        a.setMoney(1000);
+        a.betMoney(1000);
         a.drawCard(new Card(CardShape.CLOVER, CardRank.ACE));
         a.drawCard(new Card(CardShape.CLOVER, CardRank.J));
 
@@ -154,7 +154,7 @@ class ScoreTest {
     void test5() {
         // given
         Player a = new Player("A");
-        a.setMoney(1000);
+        a.betMoney(1000);
         a.drawCard(new Card(CardShape.CLOVER, CardRank.ACE));
         a.drawCard(new Card(CardShape.CLOVER, CardRank.ACE));
 
@@ -178,7 +178,7 @@ class ScoreTest {
     void test6() {
         // given
         Player a = new Player("A");
-        a.setMoney(1000);
+        a.betMoney(1000);
         a.drawCard(new Card(CardShape.CLOVER, CardRank.ACE));
         a.drawCard(new Card(CardShape.CLOVER, CardRank.ACE));
 
@@ -203,7 +203,7 @@ class ScoreTest {
     void test7() {
         // given
         Player a = new Player("A");
-        a.setMoney(1000);
+        a.betMoney(1000);
         a.drawCard(new Card(CardShape.CLOVER, CardRank.ACE));
 
         Dealer dealer = new Dealer();

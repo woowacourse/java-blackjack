@@ -27,7 +27,7 @@ public abstract class Participant {
         return cardHand.size();
     }
 
-    public void setMoney(double money) {
+    public void betMoney(double money) {
         this.betMoney = money;
     }
 
