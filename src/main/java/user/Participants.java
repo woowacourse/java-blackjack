@@ -11,11 +11,11 @@ public class Participants {
     private static final int USER_MIN_COUNT = 2;
     private static final int USER_MAX_COUNT = 8;
 
-    private final List<Participant> participants = new ArrayList<>();
+    private final List<Participant> participants;
 
     public Participants(List<Participant> participants) {
         validate(participants);
-        this.participants.addAll(participants);
+        this.participants = new ArrayList<>(participants);
     }
 
     private void validate(List<Participant> participants) {
