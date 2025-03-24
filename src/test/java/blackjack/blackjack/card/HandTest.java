@@ -35,14 +35,14 @@ class HandTest {
     @DisplayName("21 이하에서 카드 최대 합을 구한다")
     @ParameterizedTest
     @MethodSource
-    void calculateMaxScore(final Hand hand, final int expected) {
+    void calculateScore(final Hand hand, final int expected) {
         // given
 
         // when & then
         assertThat(hand.calculateScore()).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> calculateMaxScore() {
+    private static Stream<Arguments> calculateScore() {
         return Stream.of(
                 Arguments.of(provideSmallerAceCards(), 18),
                 Arguments.of(provideBiggerAceCards(), 21),

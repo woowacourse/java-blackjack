@@ -1,14 +1,11 @@
 package blackjack.blackjack.participant;
 
 import static blackjack.fixture.TestFixture.provide16Cards;
-import static blackjack.fixture.TestFixture.provideBiggerAceCards;
-import static blackjack.fixture.TestFixture.provideBiggerAndSmallerAceCards;
 import static blackjack.fixture.TestFixture.provideBlackjack;
 import static blackjack.fixture.TestFixture.provideBustCards;
 import static blackjack.fixture.TestFixture.provideCards;
 import static blackjack.fixture.TestFixture.provideEmptyCards;
 import static blackjack.fixture.TestFixture.provideOver16Cards;
-import static blackjack.fixture.TestFixture.provideSmallerAceCards;
 import static blackjack.fixture.TestFixture.provideUnder16Cards;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -19,15 +16,12 @@ import blackjack.blackjack.card.Hand;
 import blackjack.blackjack.card.Suit;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class PlayerTest {
@@ -131,25 +125,6 @@ public class PlayerTest {
 
         // when & then
         assertThat(player.canHit()).isFalse();
-    }
-
-    @DisplayName("카드 합을 구한다")
-    @ParameterizedTest
-    @MethodSource
-    void calculateMaxScore(final Hand hand, final int expected) {
-        // given
-        player.receiveCards(hand);
-
-        // when & then
-        assertThat(player.calculateScore()).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> calculateMaxScore() {
-        return Stream.of(
-                Arguments.of(provideSmallerAceCards(), 18),
-                Arguments.of(provideBiggerAceCards(), 21),
-                Arguments.of(provideBiggerAndSmallerAceCards(), 17)
-        );
     }
 
     @Nested

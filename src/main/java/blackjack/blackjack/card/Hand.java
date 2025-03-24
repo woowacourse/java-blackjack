@@ -23,7 +23,7 @@ public final class Hand {
     }
 
     public int calculateScore() {
-        int maxScore = calculateMaxScore(cards);
+        int maxScore = calculateScore(cards);
         if (isNotBurst(maxScore)) {
             return maxScore;
         }
@@ -52,7 +52,7 @@ public final class Hand {
         return calculateScore() > BURST_THRESHOLD;
     }
 
-    private int calculateMaxScore(final List<Card> cards) {
+    private int calculateScore(final List<Card> cards) {
         return cards.stream()
                 .mapToInt(Card::getCardMaxNumber)
                 .sum();
