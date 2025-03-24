@@ -65,7 +65,7 @@ public final class Participants {
         return players.getNames();
     }
 
-    public void stayToDealerIfRunning() {
+    public void stay() {
         dealer.stay();
     }
 }

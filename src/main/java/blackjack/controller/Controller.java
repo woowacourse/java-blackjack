@@ -97,7 +97,7 @@ public class Controller {
             participants.receiveCardToDealer(new Hand(deck.drawCard()));
             showDealerExtraCard();
         }
-        participants.stayToDealerIfRunning();
+        participants.stay();
     }
 
     private void showDealerExtraCard() {
