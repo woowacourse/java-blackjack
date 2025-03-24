@@ -23,11 +23,11 @@ public class CardHand {
         return cards.size();
     }
 
-    public List<Card> getFirstCard() {
+    public Card getFirstCard() {
         if (cards.isEmpty()) {
             throw new IllegalArgumentException("갖고 있는 카드가 없습니다.");
         }
-        return List.of(cards.getFirst());
+        return cards.getFirst();
     }
 
     public List<Card> getAllCard() {
