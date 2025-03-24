@@ -48,11 +48,6 @@ public final class Dealer implements Participant, GameRule {
         return ProfitResult.from(this, players);
     }
 
-    public void dealInitialCards(final Deck deck, final int count) {
-        Hand dealerHand = deck.drawCardsByCount(count);
-        changeState(state.receiveCards(dealerHand));
-    }
-
     public int calculateScore() {
         return state.calculateScore();
     }

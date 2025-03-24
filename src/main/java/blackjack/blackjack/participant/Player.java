@@ -23,10 +23,6 @@ public final class Player implements Participant {
         this.state = PlayerRunning.initialState(givenHand);
     }
 
-    public Player(final String nickname, final BigDecimal bettingAmount, final Hand hand) {
-        this(hand, nickname, bettingAmount);
-    }
-
     @Override
     public Hand showInitialCards() {
         return state.cards();

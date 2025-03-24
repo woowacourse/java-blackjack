@@ -18,10 +18,6 @@ public final class BlackjackGame {
         this.players = new ArrayDeque<>(participants.findHitEligiblePlayers().getPlayers());
     }
 
-    public void dealInitialCards(final Deck deck) {
-        participants.dealInitialCards(deck);
-    }
-
     public boolean isPlaying() {
         return !players.isEmpty();
     }

@@ -91,25 +91,6 @@ class DealerTest {
         );
     }
 
-    @Test
-    void 초기_카드를_나눠준다() {
-        // given
-        Card firstCard = new Card(Suit.SPADE, Denomination.TEN);
-        Card secondCard = new Card(Suit.SPADE, Denomination.SEVEN);
-        Card thirdCard = new Card(Suit.CLOB, Denomination.A);
-        Card fourthCard = new Card(Suit.DIAMOND, Denomination.SIX);
-        final Deck deck = new Deck(() -> new ArrayDeque<>(Arrays.asList(firstCard, secondCard, thirdCard, fourthCard)));
-
-        final Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
-        final int count = 2;
-
-        // when
-        dealer.dealInitialCards(deck, count);
-
-        // then
-        assertThat(dealer.showAllCards()).isEqualTo(new Hand(List.of(firstCard, secondCard)));
-    }
-
     @DisplayName("카드 합을 구한다")
     @ParameterizedTest
     @MethodSource

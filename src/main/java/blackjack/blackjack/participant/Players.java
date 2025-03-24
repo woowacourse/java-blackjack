@@ -25,7 +25,7 @@ public final class Players {
                                final int count) {
         return new Players(IntStream.range(0, names.size())
                 .mapToObj(
-                        index -> new Player(names.get(index), bettingAmounts.get(index), deck.drawCardsByCount(count)))
+                        index -> new Player(deck.drawCardsByCount(count), names.get(index), bettingAmounts.get(index)))
                 .toList());
     }
 

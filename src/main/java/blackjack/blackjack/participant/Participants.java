@@ -25,11 +25,6 @@ public final class Participants {
         return new Participants(initializedDealer, initializedPlayers);
     }
 
-    public void dealInitialCards(final Deck deck) {
-        dealer.dealInitialCards(deck, SPREAD_CARD_SIZE);
-        players.dealInitialCards(deck, SPREAD_CARD_SIZE);
-    }
-
     public Players findHitEligiblePlayers() {
         return players.findHitAvailablePlayers();
     }
