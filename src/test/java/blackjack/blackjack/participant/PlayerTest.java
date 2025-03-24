@@ -1,0 +1,202 @@
+package blackjack.blackjack.participant;
+
+import static blackjack.fixture.TestFixture.provide16Cards;
+import static blackjack.fixture.TestFixture.provideBlackjack;
+import static blackjack.fixture.TestFixture.provideBustCards;
+import static blackjack.fixture.TestFixture.provideCards;
+import static blackjack.fixture.TestFixture.provideEmptyCards;
+import static blackjack.fixture.TestFixture.provideOver16Cards;
+import static blackjack.fixture.TestFixture.provideUnder16Cards;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+
+import blackjack.blackjack.card.Card;
+import blackjack.blackjack.card.Denomination;
+import blackjack.blackjack.card.Hand;
+import blackjack.blackjack.card.Suit;
+import java.math.BigDecimal;
+import java.util.List;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+public class PlayerTest {
+
+    private Player player;
+
+    @BeforeEach
+    void setUp() {
+        player = new Player(provideEmptyCards(), "엠제이", BigDecimal.valueOf(10_000));
+    }
+
+    @DisplayName("이름과 베팅 금액으로 Player 객체를 생성한다.")
+    @Test
+    void createAttendee() {
+        // given
+        String nickname = "pobi";
+
+        // when & then
+        assertThatCode(() -> new Player(provideEmptyCards(), nickname, BigDecimal.valueOf(10_000)))
+                .doesNotThrowAnyException();
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, -10000})
+    @DisplayName("베팅 금액이 음수일 경우 예외가 발생한다")
+    void createWithBettingAmountBelowZero(final int bettingAmount) {
+        // Given
+
+        // When & Then
+        Assertions.assertThatThrownBy(() -> new Player(provideEmptyCards(), "밍트", BigDecimal.valueOf(bettingAmount)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR] 베팅 금액을 양수로 입력해주세요.");
+    }
+
+    @DisplayName("카드들을 받는다.")
+    @Test
+    void receiveCards() {
+        // given
+        Hand hand = provideCards(2);
+
+        // when
+        player.receiveCards(hand);
+
+        // then
+        assertThat(player.getState().cards()).isEqualTo(hand);
+    }
+
+    @DisplayName("플레이어는 모든 카드를 보여준다.")
+    @Test
+    void showPlayerAllCards() {
+        // given
+        final Hand hand = provideCards(2);
+        player.receiveCards(hand);
+
+        // when
+        final Hand playerHand = player.showAllCards();
+
+        // then
+        assertThat(playerHand.getCards()).hasSize(2);
+    }
+
+    @DisplayName("플레이어는 2장을 보여준다.")
+    @Test
+    void showPlayerInitialCards() {
+        // given
+        final Hand hand = provideCards(2);
+        player.receiveCards(hand);
+
+        // when
+        final Hand playerHand = player.showInitialCards();
+
+        // then
+        assertThat(playerHand.getCards()).hasSize(2);
+    }
+
+
+    @DisplayName("플레이어의 초기 카드의 합이 21 이하이면 true를 반환한다.")
+    @Test
+    void canHit() {
+        // given
+        final Hand hand = new Hand(List.of(
+                new Card(Suit.SPADE, Denomination.TEN),
+                new Card(Suit.DIAMOND, Denomination.TEN)
+        ));
+        final Player player = new Player(hand, "엠제이", BigDecimal.valueOf(10_000));
+
+        // when & then
+        assertThat(player.canHit()).isTrue();
+    }
+
+    @DisplayName("플레이어의 카드의 합이 21 초과이면 false를 반환한다.")
+    @Test
+    void canNotHit() {
+        // given
+        final Hand hand = new Hand(List.of(
+                new Card(Suit.SPADE, Denomination.TEN),
+                new Card(Suit.DIAMOND, Denomination.TEN)
+        ));
+        final Player player = new Player(hand, "엠제이", BigDecimal.valueOf(10_000));
+        player.receiveCard(new Card(Suit.DIAMOND, Denomination.FOUR));
+
+        // when & then
+        assertThat(player.canHit()).isFalse();
+    }
+
+    @Nested
+    class calculateProfitTest {
+
+        @Test
+        void 블랙잭_수익을_계산한다() {
+            // Given
+            BigDecimal bettingAmount = BigDecimal.valueOf(3_000);
+            Dealer dealer = new Dealer(provideUnder16Cards());
+            Player player = new Player(provideBlackjack(), "밍트", bettingAmount);
+
+            // When & Then
+            assertThat(player.calculateProfit(dealer)).isEqualTo(new BigDecimal("4500.0"));
+        }
+
+        @Test
+        void 버스트_수익을_계산한다() {
+            // Given
+            BigDecimal bettingAmount = BigDecimal.valueOf(3_000);
+            Dealer dealer = new Dealer(provideUnder16Cards());
+            Player player = new Player(provideEmptyCards(), "밍트", bettingAmount);
+            player.receiveCards(provideBustCards());
+
+            // When & Then
+            assertThat(player.calculateProfit(dealer)).isEqualTo(new BigDecimal(-3000));
+        }
+
+        @Test
+        void 딜러가_버스트이면_베팅금을_얻는다() {
+            // Given
+            BigDecimal bettingAmount = BigDecimal.valueOf(3_000);
+            Dealer dealer = new Dealer(provide16Cards());
+            dealer.receiveCards(new Hand(List.of(new Card(Suit.DIAMOND, Denomination.J))));
+            Player player = new Player(provide16Cards(), "밍트", bettingAmount);
+
+            // When & Then
+            assertThat(player.calculateProfit(dealer)).isEqualTo(new BigDecimal(3000));
+        }
+
+
+        @Test
+        void 딜러_점수가_더_높으면_베팅금을_잃는다() {
+            // Given
+            BigDecimal bettingAmount = BigDecimal.valueOf(3_000);
+            Dealer dealer = new Dealer(provideOver16Cards());
+            Player player = new Player(provide16Cards(), "밍트", bettingAmount);
+
+            // When & Then
+            assertThat(player.calculateProfit(dealer)).isEqualTo(new BigDecimal(-3000));
+        }
+
+        @Test
+        void 딜러_점수가_더_낮으면_베팅금을_얻는다() {
+            // Given
+            BigDecimal bettingAmount = BigDecimal.valueOf(3_000);
+            Dealer dealer = new Dealer(provideUnder16Cards());
+            Player player = new Player(provide16Cards(), "밍트", bettingAmount);
+
+            // When & Then
+            assertThat(player.calculateProfit(dealer)).isEqualTo(new BigDecimal(3000));
+        }
+
+        @Test
+        void 딜러와_플레이어가_버스트가_아닌_상황에서_동점이면_0원이다() {
+            // Given
+            BigDecimal bettingAmount = BigDecimal.valueOf(3_000);
+            Dealer dealer = new Dealer(provide16Cards());
+            Player player = new Player(provide16Cards(), "밍트", bettingAmount);
+
+            // When & Then
+            assertThat(player.calculateProfit(dealer)).isEqualTo(BigDecimal.ZERO);
+        }
+    }
+}
