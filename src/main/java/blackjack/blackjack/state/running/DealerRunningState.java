@@ -2,26 +2,26 @@ package blackjack.blackjack.state.running;
 
 import blackjack.blackjack.card.Hand;
 import blackjack.blackjack.state.State;
-import blackjack.blackjack.state.finished.Blackjack;
-import blackjack.blackjack.state.finished.Bust;
-import blackjack.blackjack.state.finished.Stay;
+import blackjack.blackjack.state.finished.BlackjackState;
+import blackjack.blackjack.state.finished.BustState;
+import blackjack.blackjack.state.finished.StayState;
 
-public final class DealerRunning extends Running {
+public final class DealerRunningState extends RunningState {
 
     private static final int DEALER_THRESHOLD = 16;
 
-    private DealerRunning(final Hand hand) {
+    private DealerRunningState(final Hand hand) {
         super(hand);
     }
 
     public static State initialState(final Hand givenHand) {
         if (givenHand.isBlackjack()) {
-            return new Blackjack(givenHand);
+            return new BlackjackState(givenHand);
         }
         if (isStay(givenHand)) {
-            return new Stay(givenHand);
+            return new StayState(givenHand);
         }
-        return new DealerRunning(givenHand);
+        return new DealerRunningState(givenHand);
     }
 
     private static boolean isStay(final Hand givenHand) {
@@ -32,10 +32,10 @@ public final class DealerRunning extends Running {
     public State receiveCards(final Hand givenHand) {
         hand.addAll(givenHand);
         if (hand.isBust()) {
-            return new Bust(hand);
+            return new BustState(hand);
         }
         if (isStay(hand)) {
-            return new Stay(hand);
+            return new StayState(hand);
         }
         return this;
     }

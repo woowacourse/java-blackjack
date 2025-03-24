@@ -4,7 +4,7 @@ import blackjack.blackjack.card.Card;
 import blackjack.blackjack.card.Hand;
 import blackjack.blackjack.state.State;
 import blackjack.blackjack.state.StateType;
-import blackjack.blackjack.state.running.PlayerRunning;
+import blackjack.blackjack.state.running.PlayerRunningState;
 import blackjack.util.ExceptionMessage;
 import java.math.BigDecimal;
 
@@ -20,7 +20,7 @@ public final class Player implements Participant {
         validateBettingAmount(bettingAmount);
         this.nickname = nickname;
         this.bettingAmount = bettingAmount;
-        this.state = PlayerRunning.initialState(givenHand);
+        this.state = PlayerRunningState.initialState(givenHand);
     }
 
     @Override

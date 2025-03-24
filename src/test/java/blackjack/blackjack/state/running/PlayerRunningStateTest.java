@@ -12,7 +12,7 @@ import java.util.List;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-class PlayerRunningTest {
+class PlayerRunningStateTest {
 
     @Nested
     class initialStateTest {
@@ -20,7 +20,7 @@ class PlayerRunningTest {
         @Test
         void 초기_카드가_블랙잭이면_블랙잭_상태를_반환한다() {
             // Given
-            State state = PlayerRunning.initialState(provideBlackjack());
+            State state = PlayerRunningState.initialState(provideBlackjack());
 
             // When & Then
             assertThat(state.getStateType()).isEqualTo(StateType.BLACKJACK);
@@ -29,7 +29,7 @@ class PlayerRunningTest {
         @Test
         void 초기_카드가_블랙잭이_아니면_현재_상태를_반환한다() {
             // Given
-            State state = PlayerRunning.initialState(provide16Cards());
+            State state = PlayerRunningState.initialState(provide16Cards());
 
             // When & Then
             assertThat(state.getStateType()).isEqualTo(StateType.RUNNING);
@@ -39,7 +39,7 @@ class PlayerRunningTest {
     @Nested
     class receiveCardTest {
 
-        State state = PlayerRunning.initialState(new Hand(List.of()));
+        State state = PlayerRunningState.initialState(new Hand(List.of()));
 
         @Test
         void 카드가_버스트이면_버스트_상태를_반환한다() {

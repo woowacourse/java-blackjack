@@ -5,7 +5,7 @@ import blackjack.blackjack.card.Hand;
 import blackjack.blackjack.result.ProfitResult;
 import blackjack.blackjack.state.State;
 import blackjack.blackjack.state.StateType;
-import blackjack.blackjack.state.running.DealerRunning;
+import blackjack.blackjack.state.running.DealerRunningState;
 import java.util.List;
 
 public final class Dealer implements Participant, GameRule {
@@ -15,7 +15,7 @@ public final class Dealer implements Participant, GameRule {
     private State state;
 
     public Dealer(final Hand hand) {
-        this.state = DealerRunning.initialState(hand);
+        this.state = DealerRunningState.initialState(hand);
     }
 
     public static Dealer initializeDealer(final Deck deck, final int count) {

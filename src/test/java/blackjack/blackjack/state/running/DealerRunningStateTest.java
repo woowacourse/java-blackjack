@@ -15,7 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-class DealerRunningTest {
+class DealerRunningStateTest {
 
     @Nested
     class initialStateTest {
@@ -23,7 +23,7 @@ class DealerRunningTest {
         @Test
         void 초기_카드가_블랙잭이면_블랙잭_상태를_반환한다() {
             // Given
-            State state = DealerRunning.initialState(provideBlackjack());
+            State state = DealerRunningState.initialState(provideBlackjack());
 
             // When & Then
             assertThat(state.getStateType()).isEqualTo(StateType.BLACKJACK);
@@ -32,7 +32,7 @@ class DealerRunningTest {
         @Test
         void 초기_카드가_16초과이면_stay_상태를_반환한다() {
             // Given
-            State state = DealerRunning.initialState(provideOver16Cards());
+            State state = DealerRunningState.initialState(provideOver16Cards());
 
             // When & Then
             assertThat(state.getStateType()).isEqualTo(StateType.STAY);
@@ -41,7 +41,7 @@ class DealerRunningTest {
         @Test
         void 초기_카드가_16이하이면_현재_상태를_반환한다() {
             // Given
-            State state = DealerRunning.initialState(provideUnder16Cards());
+            State state = DealerRunningState.initialState(provideUnder16Cards());
 
             // When & Then
             assertThat(state.getStateType()).isEqualTo(StateType.RUNNING);
@@ -55,7 +55,7 @@ class DealerRunningTest {
 
         @BeforeEach
         void setUp() {
-            state = DealerRunning.initialState(new Hand(List.of()));
+            state = DealerRunningState.initialState(new Hand(List.of()));
         }
 
         @Test

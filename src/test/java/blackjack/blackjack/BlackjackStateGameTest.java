@@ -14,7 +14,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class BlackjackGameTest {
+class BlackjackStateGameTest {
 
     private Dealer dealer;
 

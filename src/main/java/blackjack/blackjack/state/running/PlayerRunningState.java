@@ -2,27 +2,27 @@ package blackjack.blackjack.state.running;
 
 import blackjack.blackjack.card.Hand;
 import blackjack.blackjack.state.State;
-import blackjack.blackjack.state.finished.Blackjack;
-import blackjack.blackjack.state.finished.Bust;
+import blackjack.blackjack.state.finished.BlackjackState;
+import blackjack.blackjack.state.finished.BustState;
 
-public final class PlayerRunning extends Running {
+public final class PlayerRunningState extends RunningState {
 
-    private PlayerRunning(final Hand hand) {
+    private PlayerRunningState(final Hand hand) {
         super(hand);
     }
 
     public static State initialState(final Hand givenHand) {
         if (givenHand.isBlackjack()) {
-            return new Blackjack(givenHand);
+            return new BlackjackState(givenHand);
         }
-        return new PlayerRunning(givenHand);
+        return new PlayerRunningState(givenHand);
     }
 
     @Override
     public State receiveCards(final Hand givenHand) {
         hand.addAll(givenHand);
         if (hand.isBust()) {
-            return new Bust(hand);
+            return new BustState(hand);
         }
         return this;
     }
