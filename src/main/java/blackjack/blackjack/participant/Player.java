@@ -38,11 +38,6 @@ public final class Player implements Participant {
     }
 
     @Override
-    public int calculateScore() {
-        return state.calculateScore();
-    }
-
-    @Override
     public void changeState(final State inputState) {
         this.state = inputState;
     }
@@ -78,7 +73,7 @@ public final class Player implements Participant {
         return compareByScore(bettingAmount, dealer);
     }
 
-    public void stayIfRunning() {
+    public void stay() {
         changeState(state.stay());
     }
 
@@ -98,6 +93,10 @@ public final class Player implements Participant {
             return BigDecimal.ZERO;
         }
         return bettingAmount;
+    }
+
+    private int calculateScore() {
+        return state.calculateScore();
     }
 
     public State getState() {

@@ -9,8 +9,6 @@ public interface Participant {
 
     boolean canHit();
 
-    int calculateScore();
-
     void changeState(State inputState);
 
     Hand showAllCards();

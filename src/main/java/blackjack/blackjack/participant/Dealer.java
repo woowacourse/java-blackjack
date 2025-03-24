@@ -6,7 +6,6 @@ import blackjack.blackjack.result.ProfitResult;
 import blackjack.blackjack.state.State;
 import blackjack.blackjack.state.StateType;
 import blackjack.blackjack.state.running.DealerRunning;
-import java.util.ArrayList;
 import java.util.List;
 
 public final class Dealer implements Participant, GameRule {
@@ -17,10 +16,6 @@ public final class Dealer implements Participant, GameRule {
 
     public Dealer(final Hand hand) {
         this.state = DealerRunning.initialState(hand);
-    }
-
-    public Dealer() {
-        this(new Hand(new ArrayList<>()));
     }
 
     public static Dealer initializeDealer(final Deck deck, final int count) {
@@ -39,11 +34,6 @@ public final class Dealer implements Participant, GameRule {
     }
 
     @Override
-    public int calculateScore() {
-        return state.calculateScore();
-    }
-
-    @Override
     public void changeState(final State inputState) {
         this.state = inputState;
     }
@@ -53,22 +43,26 @@ public final class Dealer implements Participant, GameRule {
         return state.cards();
     }
 
+    @Override
+    public ProfitResult calculateProfit(final Players players) {
+        return ProfitResult.from(this, players);
+    }
+
     public void dealInitialCards(final Deck deck, final int count) {
         Hand dealerHand = deck.drawCardsByCount(count);
         changeState(state.receiveCards(dealerHand));
+    }
+
+    public int calculateScore() {
+        return state.calculateScore();
     }
 
     public void receiveCards(final Hand hand) {
         changeState(state.receiveCards(hand));
     }
 
-    public void stayIfRunning() {
+    public void stay() {
         changeState(state.stay());
-    }
-
-    @Override
-    public ProfitResult calculateProfit(final Players players) {
-        return ProfitResult.from(this, players);
     }
 
     public StateType getStateType() {

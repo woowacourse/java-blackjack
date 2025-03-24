@@ -72,7 +72,7 @@ public class Controller {
         while (blackjackGame.isPlaying()) {
             Player currentTurnPlayer = blackjackGame.findCurrentTurnPlayer();
             dealAdditionalCardToPlayer(currentTurnPlayer, deck);
-            currentTurnPlayer.stayIfRunning();
+            currentTurnPlayer.stay();
         }
     }
 

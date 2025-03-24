@@ -29,9 +29,9 @@ class ProfitResultTest {
         final Player pobi = new Player(provide16Cards(), "포비", BigDecimal.valueOf(30_000));
         final Player norang = new Player(provideBlackjack(), "노랑", BigDecimal.valueOf(50_000));
 
-        mint.stayIfRunning();
-        mj.stayIfRunning();
-        pobi.stayIfRunning();
+        mint.stay();
+        mj.stay();
+        pobi.stay();
         final ProfitResult profitResult = ProfitResult.from(dealer, new Players(List.of(mint, mj, pobi, norang)));
 
         // When

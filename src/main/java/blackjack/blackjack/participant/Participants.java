@@ -71,6 +71,6 @@ public final class Participants {
     }
 
     public void stayToDealerIfRunning() {
-        dealer.stayIfRunning();
+        dealer.stay();
     }
 }

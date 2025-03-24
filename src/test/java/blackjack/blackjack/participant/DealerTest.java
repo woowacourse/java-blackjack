@@ -15,11 +15,11 @@ import blackjack.blackjack.card.Suit;
 import blackjack.blackjack.result.ProfitResult;
 import java.math.BigDecimal;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -100,7 +100,7 @@ class DealerTest {
         Card fourthCard = new Card(Suit.DIAMOND, Denomination.SIX);
         final Deck deck = new Deck(() -> new ArrayDeque<>(Arrays.asList(firstCard, secondCard, thirdCard, fourthCard)));
 
-        final Dealer dealer = new Dealer();
+        final Dealer dealer = new Dealer(new Hand(new ArrayList<>()));
         final int count = 2;
 
         // when
@@ -139,8 +139,8 @@ class DealerTest {
                 List.of(new Card(Suit.DIAMOND, Denomination.FIVE), new Card(Suit.HEART, Denomination.THREE)));
         dealer = new Dealer(dealerHand);
         final Player player = new Player(playerHand, "밍트", new BigDecimal("10000"));
-        dealer.stayIfRunning();
-        player.stayIfRunning();
+        dealer.stay();
+        player.stay();
 
         // When
         final ProfitResult profitResult = dealer.calculateProfit(new Players(List.of(player)));
