@@ -46,4 +46,23 @@ class ProfitResultTest {
                 () -> assertThat(profits.get(norang)).isEqualTo(new BigDecimal("75000.0"))
         );
     }
+
+    @Test
+    void 딜러와_플레이어_모두_블랙잭이면_수익은_0원이다() {
+        // Given
+        final Dealer dealer = new Dealer(provideBlackjack());
+        final Player mint = new Player(provideBlackjack(), "밍트", BigDecimal.valueOf(10_000));
+        mint.stay();
+
+        final ProfitResult profitResult = ProfitResult.from(dealer, new Players(List.of(mint)));
+
+        // When
+        final Map<Participant, BigDecimal> profits = profitResult.getProfitByParticipant();
+
+        // Then
+        Assertions.assertAll(
+                () -> assertThat(profits.get(dealer)).isEqualTo(BigDecimal.ZERO),
+                () -> assertThat(profits.get(mint)).isEqualTo(BigDecimal.ZERO)
+        );
+    }
 }

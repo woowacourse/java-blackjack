@@ -41,7 +41,7 @@ public final class ProfitResult {
     private static void calculateEachProfit(final Dealer dealer, final Player player,
                                             final Map<Participant, BigDecimal> profits) {
         final BigDecimal profit = player.calculateProfit(dealer);
-        profits.merge(dealer, profit.multiply(BigDecimal.valueOf(-1)), BigDecimal::add);
+        profits.merge(dealer, profit.negate(), BigDecimal::add);
         profits.merge(player, profit, BigDecimal::add);
     }
 

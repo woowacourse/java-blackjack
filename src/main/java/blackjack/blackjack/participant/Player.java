@@ -58,13 +58,10 @@ public final class Player implements Participant {
 
     public BigDecimal calculateProfit(final Dealer dealer) {
         if (state.getStateType() == StateType.BUST) {
-            return bettingAmount.multiply(BigDecimal.valueOf(-1));
+            return bettingAmount.negate();
         }
         if (dealer.getStateType() == StateType.BUST) {
             return bettingAmount;
-        }
-        if (state.getStateType() == StateType.BLACKJACK) {
-            return bettingAmount.multiply(BLACKJACK_PROFIT_RATE);
         }
         return compareByScore(bettingAmount, dealer);
     }
@@ -82,11 +79,14 @@ public final class Player implements Participant {
     private BigDecimal compareByScore(final BigDecimal bettingAmount, final Dealer dealer) {
         int playerScore = calculateScore();
         int dealerScore = dealer.calculateScore();
-        if (playerScore < dealerScore) {
-            return bettingAmount.multiply(BigDecimal.valueOf(-1));
-        }
         if (playerScore == dealerScore) {
             return BigDecimal.ZERO;
+        }
+        if (playerScore < dealerScore) {
+            return bettingAmount.negate();
+        }
+        if (state.getStateType() == StateType.BLACKJACK) {
+            return bettingAmount.multiply(BLACKJACK_PROFIT_RATE);
         }
         return bettingAmount;
     }
