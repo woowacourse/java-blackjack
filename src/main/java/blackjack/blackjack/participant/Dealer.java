@@ -23,6 +23,11 @@ public final class Dealer implements Participant, GameRule {
         this(new Hand(new ArrayList<>()));
     }
 
+    public static Dealer initializeDealer(final Deck deck, final int count) {
+        Hand dealerHand = deck.drawCardsByCount(count);
+        return new Dealer(dealerHand);
+    }
+
     @Override
     public Hand showInitialCards() {
         return new Hand(List.of(state.cards().getFirstCard()));

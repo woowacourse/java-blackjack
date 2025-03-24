@@ -6,7 +6,6 @@ import blackjack.blackjack.card.Deck;
 import blackjack.blackjack.card.Hand;
 import blackjack.blackjack.participant.Participants;
 import blackjack.blackjack.participant.Player;
-import blackjack.blackjack.participant.Players;
 import blackjack.blackjack.result.ProfitResult;
 import blackjack.util.StringParser;
 import blackjack.view.InputView;
@@ -26,14 +25,15 @@ public class Controller {
     }
 
     public void startGame(final Deck deck) {
-        BlackjackGame blackjackGame = makeBlackjackGame();
+        BlackjackGame blackjackGame = makeBlackjackGame(deck);
         runGame(blackjackGame, deck);
     }
 
-    private BlackjackGame makeBlackjackGame() {
+    private BlackjackGame makeBlackjackGame(final Deck deck) {
         List<String> names = readNames();
         List<BigDecimal> amount = readBettingAmount(names);
-        return new BlackjackGame(Participants.of(Players.from(names, amount)));
+        Participants participants = Participants.of(deck, names, amount);
+        return new BlackjackGame(participants);
     }
 
     private List<String> readNames() {
@@ -49,7 +49,6 @@ public class Controller {
     }
 
     private void runGame(final BlackjackGame blackjackGame, final Deck deck) {
-        blackjackGame.dealInitialCards(deck);
         showInitialCards(blackjackGame.getParticipants());
         dealAdditionalCards(blackjackGame, deck);
 

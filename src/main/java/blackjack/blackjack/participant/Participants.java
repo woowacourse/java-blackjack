@@ -3,6 +3,7 @@ package blackjack.blackjack.participant;
 import blackjack.blackjack.card.Deck;
 import blackjack.blackjack.card.Hand;
 import blackjack.blackjack.result.ProfitResult;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -18,8 +19,10 @@ public final class Participants {
         this.players = players;
     }
 
-    public static Participants of(final Players players) {
-        return new Participants(new Dealer(), players);
+    public static Participants of(final Deck deck, final List<String> names, final List<BigDecimal> bettingAmounts) {
+        Dealer initializedDealer = Dealer.initializeDealer(deck, SPREAD_CARD_SIZE);
+        Players initializedPlayers = Players.from(names, bettingAmounts, deck, SPREAD_CARD_SIZE);
+        return new Participants(initializedDealer, initializedPlayers);
     }
 
     public void dealInitialCards(final Deck deck) {
