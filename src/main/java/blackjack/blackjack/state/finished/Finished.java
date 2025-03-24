@@ -1,6 +1,7 @@
 package blackjack.blackjack.state.finished;
 
 import blackjack.blackjack.card.Hand;
+import blackjack.blackjack.participant.Dealer;
 import blackjack.blackjack.state.State;
 import blackjack.blackjack.state.StateType;
 import blackjack.blackjack.state.started.Started;
@@ -28,5 +29,5 @@ public abstract class Finished extends Started {
     }
 
     @Override
-    public abstract BigDecimal calculateProfit(BigDecimal bettingAmount, State dealerState);
+    public abstract BigDecimal calculateProfit(BigDecimal bettingAmount, Dealer dealer);
 }

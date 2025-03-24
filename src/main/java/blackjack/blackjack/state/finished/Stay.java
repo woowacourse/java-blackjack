@@ -1,7 +1,7 @@
 package blackjack.blackjack.state.finished;
 
 import blackjack.blackjack.card.Hand;
-import blackjack.blackjack.state.State;
+import blackjack.blackjack.participant.Dealer;
 import blackjack.blackjack.state.StateType;
 import java.math.BigDecimal;
 
@@ -12,18 +12,18 @@ public class Stay extends Finished {
     }
 
     @Override
-    public BigDecimal calculateProfit(final BigDecimal bettingAmount, final State dealerState) {
-        if (dealerState.getStateType() == StateType.BUST) {
+    public BigDecimal calculateProfit(final BigDecimal bettingAmount, final Dealer dealer) {
+        if (dealer.getStateType() == StateType.BUST) {
             return bettingAmount;
         }
-        return compareByScore(bettingAmount, dealerState);
+        return compareByScore(bettingAmount, dealer);
     }
 
-    private BigDecimal compareByScore(final BigDecimal bettingAmount, final State dealerState) {
+    private BigDecimal compareByScore(final BigDecimal bettingAmount, final Dealer dealer) {
         int playerScore = hand.calculateScore();
-        int dealerScore = dealerState.cards().calculateScore();
+        int dealerScore = dealer.calculateScore();
         if (playerScore < dealerScore) {
-            return new Bust(hand).calculateProfit(bettingAmount, dealerState);
+            return new Bust(hand).calculateProfit(bettingAmount, dealer);
         }
         if (playerScore == dealerScore) {
             return BigDecimal.ZERO;

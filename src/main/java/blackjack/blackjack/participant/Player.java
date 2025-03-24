@@ -63,8 +63,8 @@ public final class Player implements Participant {
         changeState(state.receiveCards(new Hand(card)));
     }
 
-    public BigDecimal calculateProfit(final State dealerState) {
-        return state.calculateProfit(bettingAmount, dealerState);
+    public BigDecimal calculateProfit(final Dealer dealer) {
+        return state.calculateProfit(bettingAmount, dealer);
     }
 
     public void stayIfRunning() {

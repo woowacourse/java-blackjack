@@ -8,8 +8,8 @@ import blackjack.blackjack.card.Card;
 import blackjack.blackjack.card.Denomination;
 import blackjack.blackjack.card.Hand;
 import blackjack.blackjack.card.Suit;
+import blackjack.blackjack.participant.Dealer;
 import blackjack.blackjack.state.State;
-import blackjack.blackjack.state.running.DealerRunning;
 import blackjack.blackjack.state.running.PlayerRunning;
 import java.math.BigDecimal;
 import java.util.List;
@@ -30,10 +30,9 @@ class BustTest {
     void 수익을_계산한다() {
         // Given
         BigDecimal bettingAmount = BigDecimal.valueOf(3_000);
-        State dealerState = DealerRunning.initialState(provideUnder16Cards());
-        dealerState = dealerState.stay();
+        Dealer dealer = new Dealer(provideUnder16Cards());
 
         // When & Then
-        assertThat(playerState.calculateProfit(bettingAmount, dealerState)).isEqualTo(new BigDecimal(-3000));
+        assertThat(playerState.calculateProfit(bettingAmount, dealer)).isEqualTo(new BigDecimal(-3000));
     }
 }

@@ -4,6 +4,7 @@ import blackjack.blackjack.card.Deck;
 import blackjack.blackjack.card.Hand;
 import blackjack.blackjack.result.ProfitResult;
 import blackjack.blackjack.state.State;
+import blackjack.blackjack.state.StateType;
 import blackjack.blackjack.state.running.DealerRunning;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,8 +66,8 @@ public final class Dealer implements Participant, GameRule {
         return ProfitResult.from(this, players);
     }
 
-    public State getState() {
-        return state;
+    public StateType getStateType() {
+        return state.getStateType();
     }
 
     public String getNickname() {

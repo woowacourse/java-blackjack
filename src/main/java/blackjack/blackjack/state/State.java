@@ -1,6 +1,7 @@
 package blackjack.blackjack.state;
 
 import blackjack.blackjack.card.Hand;
+import blackjack.blackjack.participant.Dealer;
 import java.math.BigDecimal;
 
 public interface State {
@@ -11,7 +12,7 @@ public interface State {
 
     boolean isNotFinished();
 
-    BigDecimal calculateProfit(BigDecimal bettingAmount, State dealerState);
+    BigDecimal calculateProfit(BigDecimal bettingAmount, Dealer dealer);
 
     int calculateScore();
 

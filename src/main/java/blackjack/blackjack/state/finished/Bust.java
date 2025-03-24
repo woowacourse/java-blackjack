@@ -1,7 +1,7 @@
 package blackjack.blackjack.state.finished;
 
 import blackjack.blackjack.card.Hand;
-import blackjack.blackjack.state.State;
+import blackjack.blackjack.participant.Dealer;
 import blackjack.blackjack.state.StateType;
 import java.math.BigDecimal;
 
@@ -12,7 +12,7 @@ public final class Bust extends Finished {
     }
 
     @Override
-    public BigDecimal calculateProfit(final BigDecimal bettingAmount, final State dealerState) {
+    public BigDecimal calculateProfit(final BigDecimal bettingAmount, final Dealer dealer) {
         return bettingAmount.multiply(BigDecimal.valueOf(-1));
     }
 }
