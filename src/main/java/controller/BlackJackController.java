@@ -3,14 +3,14 @@ package controller;
 import domain.BlackJackGame;
 import domain.BlackJackResultCalculator;
 import domain.ParticipantsResult;
-import domain.betting.BetMoney;
 import domain.betting.BetMonies;
 import domain.betting.Revenues;
 import domain.card.CardBundle;
 import domain.card.CardDeck;
 import domain.participant.Participants;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
@@ -41,10 +41,10 @@ public class BlackJackController {
     }
 
     private BetMonies createBetMonies(List<String> playerNames) {
-        List<BetMoney> betMonies = new ArrayList<>();
+        Map<String, Integer> betMonies = new HashMap<>();
         for (String playerName : playerNames) {
             int money = inputView.inputPlayerBetMoney(playerName);
-            betMonies.add(new BetMoney(playerName, money));
+            betMonies.put(playerName, money);
         }
         return new BetMonies(betMonies);
     }
