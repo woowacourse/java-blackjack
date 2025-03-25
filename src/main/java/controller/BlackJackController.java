@@ -29,7 +29,7 @@ public class BlackJackController {
         BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
         giveStartingCardsToParticipants(blackJackGame);
         processCardReceiving(blackJackGame);
-        calculateBackJackResultProcess(participants);
+        printAllParticipantsInfo(participants);
         calculateBlackjackRevenue(blackJackGame, playerBetMonies);
     }
 
@@ -90,12 +90,6 @@ public class BlackJackController {
             outputView.printDealerReceivingCardMessage();
         }
         outputView.printBlankLine();
-    }
-
-    private void calculateBackJackResultProcess(Participants participants) {
-        printAllParticipantsInfo(participants);
-        // NOTE: 모든 참가자들의 승패 결과를 출력하지 않도록 명세가 수정되었다.
-        // printAllParticipantGameResult(participants);
     }
 
     private void printAllParticipantsInfo(Participants participants) {
