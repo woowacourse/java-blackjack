@@ -1,10 +1,10 @@
-import controller.BlackjackController;
+import game.BlackjackConsole;
 import view.InputView;
 import view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
-        BlackjackController blackjackController = new BlackjackController(new OutputView(), new InputView());
-        blackjackController.run();
+        BlackjackConsole blackjackConsole = new BlackjackConsole(new OutputView(), new InputView());
+        blackjackConsole.run();
     }
 }
