@@ -4,7 +4,6 @@ import domain.card.Card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Participants {
     private static final int PLAYER_MAX_SIZE = 8;
@@ -74,6 +73,10 @@ public class Participants {
                 .filter(participant -> participant.getName().equals(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 참가자가 존재하지 않습니다."));
+    }
+
+    public boolean hasPlayerReceivedExtraCard(String playerName) {
+        return findByName(playerName).hasReceivedExtraCard();
     }
 
     public List<Card> getPlayerFirstShownCard(String playerName) {

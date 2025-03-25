@@ -154,5 +154,40 @@ class ParticipantsTest {
         // then
         assertThat(playerCards).hasSize(2);
     }
+    
+    @Test
+    @DisplayName("플레이어의 이름이 주어졌을 때 해당 플레이어가 시작 이후 추가 카드를 받았다면 true 반환한다.")
+    void should_return_true_when_player_received_extra_card_by_playerName() {
+        // given
+        String playerName = "a";
+        Participant player = new Player(playerName);
+        player.addCard(CardFixture.cardOfHeartAce);
+        player.addCard(CardFixture.cardOfHeartTwo);
+        player.addCard(CardFixture.cardOfHeartThree);
+        Participants participants = new Participants(List.of(new Dealer(), player));
+
+        // when
+        boolean hasPlayerReceivedExtraCard = participants.hasPlayerReceivedExtraCard(playerName);
+
+        // then
+        assertThat(hasPlayerReceivedExtraCard).isEqualTo(true);
+    }
+
+    @Test
+    @DisplayName("플레이어의 이름이 주어졌을 때 해당 플레이어가 시작 이후 추가 카드를 받지 않았다면 false 반환한다.")
+    void should_return_false_when_player_not_received_extra_card_by_playerName() {
+        // given
+        String playerName = "a";
+        Participant player = new Player(playerName);
+        player.addCard(CardFixture.cardOfHeartAce);
+        player.addCard(CardFixture.cardOfHeartTwo);
+        Participants participants = new Participants(List.of(new Dealer(), player));
+
+        // when
+        boolean hasPlayerReceivedExtraCard = participants.hasPlayerReceivedExtraCard(playerName);
+
+        // then
+        assertThat(hasPlayerReceivedExtraCard).isEqualTo(false);
+    }
 }
 

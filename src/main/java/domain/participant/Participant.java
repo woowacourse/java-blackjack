@@ -101,4 +101,8 @@ public abstract class Participant {
                 ", cards=" + cards +
                 '}';
     }
+
+    public boolean hasReceivedExtraCard() {
+        return cards.size() > BLACK_JACK_SIZE;
+    }
 }

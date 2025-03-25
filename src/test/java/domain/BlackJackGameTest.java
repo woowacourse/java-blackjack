@@ -197,7 +197,7 @@ class BlackJackGameTest {
         }
 
         @Test
-        @DisplayName("플레이어가 카드를 추가로 받았는지 확인한다")
+        @DisplayName("플레이어의 이름이 주어졌을 때 해당 플레이어가 시작 이후 추가 카드를 받았다면 true 반환한다")
         void should_return_true_when_player_has_received_card() {
             // given
             String playerName = "a";
@@ -216,7 +216,7 @@ class BlackJackGameTest {
         }
 
         @Test
-        @DisplayName("플레이어가 카드를 추가로 받았는지 확인한다")
+        @DisplayName("플레이어의 이름이 주어졌을 때 해당 플레이어가 시작 이후 추가 카드를 받지 않았다면 false 반환한다")
         void should_return_false_when_player_has_not_received_card() {
             // given
             String playerName = "a";

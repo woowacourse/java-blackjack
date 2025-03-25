@@ -165,4 +165,40 @@ public class PlayerTest {
         // then
         assertThat(isBlackJack).isEqualTo(false);
     }
+
+    @Test
+    @DisplayName("플레이어가 시작 이후 추가 카드를 받았다면 true 반환한다.")
+    void should_return_true_when_player_received_extra_card() {
+        // given
+        Card cardOfHeartAce = new Card(Shape.HEART, Rank.ACE);
+        Card cardOfHeartTwo = new Card(Shape.HEART, Rank.TWO);
+        Card cardOfHeartThree = new Card(Shape.HEART, Rank.THREE);
+        Participant player = new Player("a");
+        player.addCard(cardOfHeartAce);
+        player.addCard(cardOfHeartTwo);
+        player.addCard(cardOfHeartThree);
+
+        // when
+        boolean hasReceivedExtraCard = player.hasReceivedExtraCard();
+
+        // then
+        assertThat(hasReceivedExtraCard).isEqualTo(true);
+    }
+
+    @Test
+    @DisplayName("플레이어가 시작 이후 추가 카드를 받지 않았다면 false 반환한다.")
+    void should_return_false_when_player_not_received_extra_card() {
+        // given
+        Card cardOfHeartAce = new Card(Shape.HEART, Rank.ACE);
+        Card cardOfHeartTwo = new Card(Shape.HEART, Rank.TWO);
+        Participant player = new Player("a");
+        player.addCard(cardOfHeartAce);
+        player.addCard(cardOfHeartTwo);
+
+        // when
+        boolean hasReceivedExtraCard = player.hasReceivedExtraCard();
+
+        // then
+        assertThat(hasReceivedExtraCard).isEqualTo(false);
+    }
 }
