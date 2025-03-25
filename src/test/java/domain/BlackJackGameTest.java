@@ -3,8 +3,9 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import domain.betting.BetMoney;
 import domain.betting.BetMonies;
+import domain.betting.Money;
+import domain.betting.PlayerBetMoney;
 import domain.betting.Revenue;
 import domain.betting.Revenues;
 import domain.card.Card;
@@ -13,9 +14,12 @@ import domain.card.CardDeck;
 import domain.card.Rank;
 import domain.card.Shape;
 import domain.fixture.CardFixture;
+import domain.fixture.MoneyFixture;
 import domain.fixture.ParticipantsFixture;
+import domain.fixture.PlayerNameFixture;
 import domain.participant.Participant;
 import domain.participant.Participants;
+import domain.participant.PlayerName;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -290,10 +294,10 @@ class BlackJackGameTest {
         @DisplayName("플레이어가 블랙잭 승리의 경우 수익을 계산한다")
         void should_return_revenue_when_player_blackjack_win() {
             // given
-            String playerName = "a";
-            int betMoneyAmount = 10000;
-            BetMoney betMoney = new BetMoney(playerName, betMoneyAmount);
-            BetMonies betMonies = new BetMonies(List.of(betMoney));
+            PlayerName playerName = PlayerNameFixture.playerNameFirst;
+            Money money = MoneyFixture.money10000;
+            PlayerBetMoney playerBetMoney = new PlayerBetMoney(playerName, money);
+            BetMonies betMonies = new BetMonies(List.of(playerBetMoney));
 
             CardDeck cardDeck = new CardDeck(List.of(
                     CardFixture.cardOfHeartTwo,
@@ -301,12 +305,12 @@ class BlackJackGameTest {
                     CardFixture.cardOfHeartAce,
                     CardFixture.cardOfHeartKing
             ));
-            Participants participants = ParticipantsFixture.createParticipants(List.of(playerName));
+            Participants participants = ParticipantsFixture.createParticipants(List.of(playerName.name()));
             BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
             blackJackGame.giveCardToDealer();
             blackJackGame.giveCardToDealer();
-            blackJackGame.giveCardToPlayer(playerName);
-            blackJackGame.giveCardToPlayer(playerName);
+            blackJackGame.giveCardToPlayer(playerName.name());
+            blackJackGame.giveCardToPlayer(playerName.name());
 
             // when
             Revenues revenues = blackJackGame.calculateRevenue(betMonies);
@@ -314,7 +318,7 @@ class BlackJackGameTest {
             // then
             Revenue playerRevenue = revenues.getRevenues()
                     .getFirst();
-            int expected = (int) (betMoneyAmount * 1.5);
+            int expected = (int) (money.value() * 1.5);
             assertThat(playerRevenue.money()).isEqualTo(expected);
         }
 
@@ -322,10 +326,10 @@ class BlackJackGameTest {
         @DisplayName("플레이어가 일반적인 승리의 경우 수익을 계산한다")
         void should_return_revenue_when_player_win() {
             // given
-            String playerName = "a";
-            int betMoneyAmount = 10000;
-            BetMoney betMoney = new BetMoney(playerName, betMoneyAmount);
-            BetMonies betMonies = new BetMonies(List.of(betMoney));
+            PlayerName playerName = PlayerNameFixture.playerNameFirst;
+            Money money = MoneyFixture.money10000;
+            PlayerBetMoney playerBetMoney = new PlayerBetMoney(playerName, money);
+            BetMonies betMonies = new BetMonies(List.of(playerBetMoney));
 
             CardDeck cardDeck = new CardDeck(List.of(
                     CardFixture.cardOfHeartTwo,
@@ -333,12 +337,12 @@ class BlackJackGameTest {
                     CardFixture.cardOfHeartQueen,
                     CardFixture.cardOfHeartKing
             ));
-            Participants participants = ParticipantsFixture.createParticipants(List.of(playerName));
+            Participants participants = ParticipantsFixture.createParticipants(List.of(playerName.name()));
             BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
             blackJackGame.giveCardToDealer();
             blackJackGame.giveCardToDealer();
-            blackJackGame.giveCardToPlayer(playerName);
-            blackJackGame.giveCardToPlayer(playerName);
+            blackJackGame.giveCardToPlayer(playerName.name());
+            blackJackGame.giveCardToPlayer(playerName.name());
 
             // when
             Revenues revenues = blackJackGame.calculateRevenue(betMonies);
@@ -346,7 +350,7 @@ class BlackJackGameTest {
             // then
             Revenue playerRevenue = revenues.getRevenues()
                     .getFirst();
-            int expected = (int) (betMoneyAmount * 1.0);
+            int expected = (int) (money.value() * 1.0);
             assertThat(playerRevenue.money()).isEqualTo(expected);
         }
 
@@ -354,10 +358,10 @@ class BlackJackGameTest {
         @DisplayName("플레이어가 무승부인 경우 수익을 계산한다")
         void should_return_revenue_when_player_draw() {
             // given
-            String playerName = "a";
-            int betMoneyAmount = 10000;
-            BetMoney betMoney = new BetMoney(playerName, betMoneyAmount);
-            BetMonies betMonies = new BetMonies(List.of(betMoney));
+            PlayerName playerName = PlayerNameFixture.playerNameFirst;
+            Money money = MoneyFixture.money10000;
+            PlayerBetMoney playerBetMoney = new PlayerBetMoney(playerName, money);
+            BetMonies betMonies = new BetMonies(List.of(playerBetMoney));
 
             CardDeck cardDeck = new CardDeck(List.of(
                     CardFixture.cardOfHeartTwo,
@@ -365,12 +369,12 @@ class BlackJackGameTest {
                     CardFixture.cardOfHeartThree,
                     CardFixture.cardOfHeartFour
             ));
-            Participants participants = ParticipantsFixture.createParticipants(List.of(playerName));
+            Participants participants = ParticipantsFixture.createParticipants(List.of(playerName.name()));
             BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
             blackJackGame.giveCardToDealer();
             blackJackGame.giveCardToDealer();
-            blackJackGame.giveCardToPlayer(playerName);
-            blackJackGame.giveCardToPlayer(playerName);
+            blackJackGame.giveCardToPlayer(playerName.name());
+            blackJackGame.giveCardToPlayer(playerName.name());
 
             // when
             Revenues revenues = blackJackGame.calculateRevenue(betMonies);
@@ -378,7 +382,7 @@ class BlackJackGameTest {
             // then
             Revenue playerRevenue = revenues.getRevenues()
                     .getFirst();
-            int expected = (int) (betMoneyAmount * 0);
+            int expected = (int) (money.value() * 0);
             assertThat(playerRevenue.money()).isEqualTo(expected);
         }
 
@@ -386,10 +390,10 @@ class BlackJackGameTest {
         @DisplayName("플레이어가 일반적인 패배의 경우 수익을 계산한다")
         void should_return_revenue_when_player_lose() {
             // given
-            String playerName = "a";
-            int betMoneyAmount = 10000;
-            BetMoney betMoney = new BetMoney(playerName, betMoneyAmount);
-            BetMonies betMonies = new BetMonies(List.of(betMoney));
+            PlayerName playerName = PlayerNameFixture.playerNameFirst;
+            Money money = MoneyFixture.money10000;
+            PlayerBetMoney playerBetMoney = new PlayerBetMoney(playerName, money);
+            BetMonies betMonies = new BetMonies(List.of(playerBetMoney));
 
             CardDeck cardDeck = new CardDeck(List.of(
                     CardFixture.cardOfHeartKing,
@@ -397,12 +401,12 @@ class BlackJackGameTest {
                     CardFixture.cardOfHeartTwo,
                     CardFixture.cardOfHeartThree
             ));
-            Participants participants = ParticipantsFixture.createParticipants(List.of(playerName));
+            Participants participants = ParticipantsFixture.createParticipants(List.of(playerName.name()));
             BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
             blackJackGame.giveCardToDealer();
             blackJackGame.giveCardToDealer();
-            blackJackGame.giveCardToPlayer(playerName);
-            blackJackGame.giveCardToPlayer(playerName);
+            blackJackGame.giveCardToPlayer(playerName.name());
+            blackJackGame.giveCardToPlayer(playerName.name());
 
             // when
             Revenues revenues = blackJackGame.calculateRevenue(betMonies);
@@ -410,7 +414,7 @@ class BlackJackGameTest {
             // then
             Revenue playerRevenue = revenues.getRevenues()
                     .getFirst();
-            int expected = (int) (betMoneyAmount * -1.0);
+            int expected = (int) (money.value() * -1.0);
             assertThat(playerRevenue.money()).isEqualTo(expected);
         }
 
@@ -418,10 +422,10 @@ class BlackJackGameTest {
         @DisplayName("플레이어가 블랙잭 패배인 경우 수익을 계산한다")
         void should_return_revenue_when_player_blackjack_lose() {
             // given
-            String playerName = "a";
-            int betMoneyAmount = 10000;
-            BetMoney betMoney = new BetMoney(playerName, betMoneyAmount);
-            BetMonies betMonies = new BetMonies(List.of(betMoney));
+            PlayerName playerName = PlayerNameFixture.playerNameFirst;
+            Money money = MoneyFixture.money10000;
+            PlayerBetMoney playerBetMoney = new PlayerBetMoney(playerName, money);
+            BetMonies betMonies = new BetMonies(List.of(playerBetMoney));
 
             CardDeck cardDeck = new CardDeck(List.of(
                     CardFixture.cardOfHeartAce,
@@ -429,12 +433,12 @@ class BlackJackGameTest {
                     CardFixture.cardOfHeartQueen,
                     CardFixture.cardOfHeartJack
             ));
-            Participants participants = ParticipantsFixture.createParticipants(List.of(playerName));
+            Participants participants = ParticipantsFixture.createParticipants(List.of(playerName.name()));
             BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
             blackJackGame.giveCardToDealer();
             blackJackGame.giveCardToDealer();
-            blackJackGame.giveCardToPlayer(playerName);
-            blackJackGame.giveCardToPlayer(playerName);
+            blackJackGame.giveCardToPlayer(playerName.name());
+            blackJackGame.giveCardToPlayer(playerName.name());
 
             // when
             Revenues revenues = blackJackGame.calculateRevenue(betMonies);
@@ -442,7 +446,7 @@ class BlackJackGameTest {
             // then
             Revenue playerRevenue = revenues.getRevenues()
                     .getFirst();
-            int expected = (int) (betMoneyAmount * -1.0);
+            int expected = (int) (money.value() * -1.0);
             assertThat(playerRevenue.money()).isEqualTo(expected);
         }
     }

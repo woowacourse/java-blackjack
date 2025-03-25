@@ -1,25 +1,28 @@
 package domain.betting;
 
+import domain.participant.PlayerName;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class BetMonies {
-    private final List<BetMoney> betMonies;
+    private final List<PlayerBetMoney> betMonies;
 
-    public BetMonies(List<BetMoney> betMonies) {
+    public BetMonies(List<PlayerBetMoney> betMonies) {
         this.betMonies = new ArrayList<>(betMonies);
     }
 
     public BetMonies(Map<String, Integer> betMonies) {
         this.betMonies = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : betMonies.entrySet()) {
-            BetMoney betMoney = new BetMoney(entry.getKey(), entry.getValue());
-            this.betMonies.add(betMoney);
+            PlayerBetMoney playerBetMoney = new PlayerBetMoney(
+                    new PlayerName(entry.getKey()),
+                    new Money(entry.getValue()));
+            this.betMonies.add(playerBetMoney);
         }
     }
 
-    public BetMoney findByPlayerName(String playerName) {
+    public PlayerBetMoney findByPlayerName(PlayerName playerName) {
         return betMonies.stream()
                 .filter(betMoney -> betMoney.isSameName(playerName))
                 .findFirst()
