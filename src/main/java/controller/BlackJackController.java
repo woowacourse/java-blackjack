@@ -1,8 +1,6 @@
 package controller;
 
 import domain.BlackJackGame;
-import domain.BlackJackResultCalculator;
-import domain.ParticipantsResult;
 import domain.betting.PlayerBetMonies;
 import domain.betting.PlayerRevenues;
 import domain.card.CardBundle;
@@ -102,11 +100,6 @@ public class BlackJackController {
 
     private void printAllParticipantsInfo(Participants participants) {
         outputView.printParticipantsFullInfo(participants.getParticipants());
-    }
-
-    private void printAllParticipantGameResult(Participants participants) {
-        ParticipantsResult participantsResult = BlackJackResultCalculator.calculate(participants);
-        outputView.printGameResult(participantsResult);
     }
 
     private void calculateBlackjackRevenue(BlackJackGame blackJackGame, PlayerBetMonies playerBetMonies) {
