@@ -4,7 +4,7 @@ import domain.BlackJackGame;
 import domain.BlackJackResultCalculator;
 import domain.ParticipantsResult;
 import domain.betting.BetMonies;
-import domain.betting.Revenues;
+import domain.betting.PlayerRevenues;
 import domain.card.CardBundle;
 import domain.card.CardDeck;
 import domain.participant.Participants;
@@ -110,7 +110,7 @@ public class BlackJackController {
     }
 
     private void calculateBlackjackRevenue(BlackJackGame blackJackGame, BetMonies betMonies) {
-        Revenues revenues = blackJackGame.calculateRevenue(betMonies);
-        outputView.printRevenue(revenues);
+        PlayerRevenues playerRevenues = blackJackGame.calculateRevenue(betMonies);
+        outputView.printRevenue(playerRevenues);
     }
 }

@@ -12,8 +12,8 @@ import static domain.card.Shape.SPADE;
 
 import domain.BlackJackWinningStatus;
 import domain.ParticipantsResult;
-import domain.betting.Revenue;
-import domain.betting.Revenues;
+import domain.betting.PlayerRevenue;
+import domain.betting.PlayerRevenues;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Shape;
@@ -179,22 +179,23 @@ public class OutputView {
         return "";
     }
 
-    public void printRevenue(Revenues revenues) {
+    public void printRevenue(PlayerRevenues playerRevenues) {
         System.out.println("## 최종 수익");
-        String dealerRevenue = formatDealerRevenue(revenues.calculateDealerRevenue());
+        String dealerRevenue = formatDealerRevenue(playerRevenues.calculateDealerRevenue());
         System.out.println(dealerRevenue);
-        for (Revenue revenue : revenues.getRevenues()) {
-            String playerRevenue = formatPlayerRevenue(revenue);
-            System.out.println(playerRevenue);
+
+        for (PlayerRevenue playerRevenue : playerRevenues.getPlayerRevenues()) {
+            String playerRevenueMessage = formatPlayerRevenue(playerRevenue);
+            System.out.println(playerRevenueMessage);
         }
     }
 
-    private String formatDealerRevenue(Revenue dealerRevenue) {
-        return String.format("딜러: %d", dealerRevenue.money());
+    private String formatDealerRevenue(PlayerRevenue dealerRevenue) {
+        return String.format("딜러: %d", dealerRevenue.revenueValue());
     }
 
-    private String formatPlayerRevenue(Revenue playerRevenue) {
-        return String.format("%s: %d", playerRevenue.playerName(), playerRevenue.money());
+    private String formatPlayerRevenue(PlayerRevenue playerRevenue) {
+        return String.format("%s: %d", playerRevenue.playerName(), playerRevenue.revenueValue());
     }
 
     public void printBlankLine() {

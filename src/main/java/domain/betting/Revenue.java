@@ -1,4 +1,8 @@
 package domain.betting;
 
-public record Revenue(String playerName, int money) {
+public record Revenue(int value) {
+
+    public Revenue reverse() {
+        return new Revenue(-value);
+    }
 }

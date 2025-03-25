@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import domain.betting.BetMonies;
 import domain.betting.Money;
 import domain.betting.PlayerBetMoney;
+import domain.betting.PlayerRevenues;
 import domain.betting.Revenue;
-import domain.betting.Revenues;
 import domain.card.Card;
 import domain.card.CardBundle;
 import domain.card.CardDeck;
@@ -313,13 +313,12 @@ class BlackJackGameTest {
             blackJackGame.giveCardToPlayer(playerName.name());
 
             // when
-            Revenues revenues = blackJackGame.calculateRevenue(betMonies);
+            PlayerRevenues playerRevenues = blackJackGame.calculateRevenue(betMonies);
 
             // then
-            Revenue playerRevenue = revenues.getRevenues()
-                    .getFirst();
+            Revenue playerRevenue = playerRevenues.getRevenueByPlayerName(playerName);
             int expected = (int) (money.value() * 1.5);
-            assertThat(playerRevenue.money()).isEqualTo(expected);
+            assertThat(playerRevenue.value()).isEqualTo(expected);
         }
 
         @Test
@@ -345,13 +344,12 @@ class BlackJackGameTest {
             blackJackGame.giveCardToPlayer(playerName.name());
 
             // when
-            Revenues revenues = blackJackGame.calculateRevenue(betMonies);
+            PlayerRevenues playerRevenues = blackJackGame.calculateRevenue(betMonies);
 
             // then
-            Revenue playerRevenue = revenues.getRevenues()
-                    .getFirst();
+            Revenue playerRevenue = playerRevenues.getRevenueByPlayerName(playerName);
             int expected = (int) (money.value() * 1.0);
-            assertThat(playerRevenue.money()).isEqualTo(expected);
+            assertThat(playerRevenue.value()).isEqualTo(expected);
         }
 
         @Test
@@ -377,13 +375,12 @@ class BlackJackGameTest {
             blackJackGame.giveCardToPlayer(playerName.name());
 
             // when
-            Revenues revenues = blackJackGame.calculateRevenue(betMonies);
+            PlayerRevenues playerRevenues = blackJackGame.calculateRevenue(betMonies);
 
             // then
-            Revenue playerRevenue = revenues.getRevenues()
-                    .getFirst();
+            Revenue playerRevenue = playerRevenues.getRevenueByPlayerName(playerName);
             int expected = (int) (money.value() * 0);
-            assertThat(playerRevenue.money()).isEqualTo(expected);
+            assertThat(playerRevenue.value()).isEqualTo(expected);
         }
 
         @Test
@@ -409,13 +406,12 @@ class BlackJackGameTest {
             blackJackGame.giveCardToPlayer(playerName.name());
 
             // when
-            Revenues revenues = blackJackGame.calculateRevenue(betMonies);
+            PlayerRevenues playerRevenues = blackJackGame.calculateRevenue(betMonies);
 
             // then
-            Revenue playerRevenue = revenues.getRevenues()
-                    .getFirst();
+            Revenue playerRevenue = playerRevenues.getRevenueByPlayerName(playerName);
             int expected = (int) (money.value() * -1.0);
-            assertThat(playerRevenue.money()).isEqualTo(expected);
+            assertThat(playerRevenue.value()).isEqualTo(expected);
         }
 
         @Test
@@ -441,13 +437,12 @@ class BlackJackGameTest {
             blackJackGame.giveCardToPlayer(playerName.name());
 
             // when
-            Revenues revenues = blackJackGame.calculateRevenue(betMonies);
+            PlayerRevenues playerRevenues = blackJackGame.calculateRevenue(betMonies);
 
             // then
-            Revenue playerRevenue = revenues.getRevenues()
-                    .getFirst();
+            Revenue playerRevenue = playerRevenues.getRevenueByPlayerName(playerName);
             int expected = (int) (money.value() * -1.0);
-            assertThat(playerRevenue.money()).isEqualTo(expected);
+            assertThat(playerRevenue.value()).isEqualTo(expected);
         }
     }
 }

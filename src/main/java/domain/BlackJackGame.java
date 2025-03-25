@@ -2,8 +2,9 @@ package domain;
 
 import domain.betting.BetMonies;
 import domain.betting.PlayerBetMoney;
+import domain.betting.PlayerRevenue;
+import domain.betting.PlayerRevenues;
 import domain.betting.Revenue;
-import domain.betting.Revenues;
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.participant.Participant;
@@ -70,18 +71,25 @@ public class BlackJackGame {
         dealer.addCard(cardDeck.getAndRemoveFrontCard());
     }
 
-    public Revenues calculateRevenue(BetMonies betMonies) {
+    public PlayerRevenues calculateRevenue(BetMonies betMonies) {
         ParticipantsResult participantsResult = BlackJackResultCalculator.calculate(participants);
-        List<Revenue> totalRevenues = new ArrayList<>();
+        List<PlayerRevenue> playerRevenues = new ArrayList<>();
+
         for (PlayerWinningStatus playerWinningStatus : participantsResult.playerResults()
                 .getPlayerResult()) {
+
             PlayerBetMoney playerBetMoney = betMonies.findByPlayerName(
                     new PlayerName(playerWinningStatus.playerName()));
+
             double rate = BlackjackPlayerRevenueRate.getRate(playerWinningStatus.status());
+
             int resultMoney = (int) (playerBetMoney.getMoneyValue() * rate);
-            totalRevenues.add(new Revenue(playerWinningStatus.playerName(), resultMoney));
+
+            var addValue = new PlayerRevenue(
+                    new PlayerName(playerWinningStatus.playerName()), new Revenue(resultMoney));
+            playerRevenues.add(addValue);
         }
-        return new Revenues(totalRevenues);
+        return new PlayerRevenues(playerRevenues);
     }
 
     public Participant getDealer() {
