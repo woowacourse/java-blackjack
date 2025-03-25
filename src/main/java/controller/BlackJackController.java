@@ -30,7 +30,7 @@ public class BlackJackController {
         giveStartingCardsToParticipants(blackJackGame);
         processCardReceiving(blackJackGame);
         printAllParticipantsInfo(participants);
-        calculateBlackjackRevenue(blackJackGame, playerBetMonies);
+        printBlackjackRevenue(blackJackGame.calculateRevenue(playerBetMonies));
     }
 
     private Participants createGameParticipants() {
@@ -96,8 +96,7 @@ public class BlackJackController {
         outputView.printParticipantsFullInfo(participants.getParticipants());
     }
 
-    private void calculateBlackjackRevenue(BlackJackGame blackJackGame, PlayerBetMonies playerBetMonies) {
-        PlayerRevenues playerRevenues = blackJackGame.calculateRevenue(playerBetMonies);
+    private void printBlackjackRevenue(PlayerRevenues playerRevenues) {
         outputView.printRevenue(playerRevenues);
     }
 }
