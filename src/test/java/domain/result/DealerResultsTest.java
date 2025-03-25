@@ -9,9 +9,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DealerResultsTest {
-    
+
     @Test
-    @DisplayName("주어진 승패 결과에 맞는 딜러의 승패 결과의 수를 반환한다")
+    @DisplayName("딜러가 블랙잭으로 한명을 이겼을 때의 계산되는 승패 결과의 수가 올바른지 확인한다")
     void should_return_dealer_winning_status_count_blackjack_win_count_1() {
         // given
         int blackjackWinCount = 1;
@@ -27,7 +27,7 @@ class DealerResultsTest {
     }
 
     @Test
-    @DisplayName("주어진 승패 결과에 맞는 딜러의 승패 결과의 수를 반환한다")
+    @DisplayName("딜러가 두명을 이겼을 때의 계산되는 승패 결과의 수가 올바른지 확인한다")
     void should_return_dealer_winning_status_count_win_count_2() {
         // given
         int winCount = 2;
@@ -44,7 +44,7 @@ class DealerResultsTest {
     }
 
     @Test
-    @DisplayName("주어진 승패 결과에 맞는 딜러의 승패 결과의 수를 반환한다")
+    @DisplayName("딜러가 세명에게 비겼을 때의 계산되는 승패 결과의 수가 올바른지 확인한다")
     void should_return_dealer_winning_status_count_draw_count_3() {
         // given
         int drawCount = 3;
@@ -63,7 +63,7 @@ class DealerResultsTest {
 
 
     @Test
-    @DisplayName("주어진 승패 결과에 맞는 딜러의 승패 결과의 수를 반환한다")
+    @DisplayName("딜러가 네명에게 블랙잭으로 졌을 때의 계산되는 승패 결과의 수가 올바른지 확인한다")
     void should_return_dealer_winning_status_blackjack_lose_count_4() {
         // given
         int blackjackLoseCount = 4;
@@ -83,7 +83,7 @@ class DealerResultsTest {
 
 
     @Test
-    @DisplayName("주어진 승패 결과에 맞는 딜러의 승패 결과의 수를 반환한다")
+    @DisplayName("딜러가 다섯명에게 졌을 때의 계산되는 승패 결과의 수가 올바른지 확인한다")
     void should_return_dealer_winning_status_lose_count_5() {
         // given
         int loseCount = 5;
