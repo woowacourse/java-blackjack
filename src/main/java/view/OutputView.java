@@ -195,7 +195,7 @@ public class OutputView {
     }
 
     private String formatPlayerRevenue(PlayerRevenue playerRevenue) {
-        return String.format("%s: %d", playerRevenue.playerName(), playerRevenue.revenueValue());
+        return String.format("%s: %d", playerRevenue.playerName().name(), playerRevenue.revenueValue());
     }
 
     public void printBlankLine() {
