@@ -1,7 +1,7 @@
 package domain;
 
-import domain.betting.BatMoney;
-import domain.betting.BatMonies;
+import domain.betting.BetMoney;
+import domain.betting.BetMonies;
 import domain.betting.Revenue;
 import domain.betting.Revenues;
 import domain.card.Card;
@@ -56,7 +56,9 @@ public class BlackJackGame {
     }
 
     public boolean hasPlayerReceivedCard(String playerName) {
-        return participants.findByName(playerName).getCards().size() > 2;
+        return participants.findByName(playerName)
+                .getCards()
+                .size() > 2;
     }
 
     public boolean canDealerPick() {
@@ -69,13 +71,14 @@ public class BlackJackGame {
         dealer.addCard(cardDeck.getAndRemoveFrontCard());
     }
 
-    public Revenues calculateRevenue(BatMonies batMonies) {
+    public Revenues calculateRevenue(BetMonies betMonies) {
         ParticipantsResult participantsResult = BlackJackResultCalculator.calculate(participants);
         List<Revenue> totalRevenues = new ArrayList<>();
-        for (PlayerWinningStatus playerWinningStatus : participantsResult.playerResults().getPlayerResult()) {
-            BatMoney batMoney = batMonies.findByPlayerName(playerWinningStatus.playerName());
+        for (PlayerWinningStatus playerWinningStatus : participantsResult.playerResults()
+                .getPlayerResult()) {
+            BetMoney betMoney = betMonies.findByPlayerName(playerWinningStatus.playerName());
             double rate = BlackjackPlayerRevenueRate.getRate(playerWinningStatus.status());
-            int resultMoney = (int) (batMoney.getMoney() * rate);
+            int resultMoney = (int) (betMoney.getMoney() * rate);
             totalRevenues.add(new Revenue(playerWinningStatus.playerName(), resultMoney));
         }
         return new Revenues(totalRevenues);

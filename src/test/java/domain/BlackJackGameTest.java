@@ -3,8 +3,8 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import domain.betting.BatMoney;
-import domain.betting.BatMonies;
+import domain.betting.BetMoney;
+import domain.betting.BetMonies;
 import domain.betting.Revenue;
 import domain.betting.Revenues;
 import domain.card.Card;
@@ -291,9 +291,9 @@ class BlackJackGameTest {
         void should_return_revenue_when_player_blackjack_win() {
             // given
             String playerName = "a";
-            int batMoneyAmount = 10000;
-            BatMoney batMoney = new BatMoney(playerName, batMoneyAmount);
-            BatMonies batMonies = new BatMonies(List.of(batMoney));
+            int betMoneyAmount = 10000;
+            BetMoney betMoney = new BetMoney(playerName, betMoneyAmount);
+            BetMonies betMonies = new BetMonies(List.of(betMoney));
 
             CardDeck cardDeck = new CardDeck(List.of(
                     CardFixture.cardOfHeartTwo,
@@ -309,11 +309,12 @@ class BlackJackGameTest {
             blackJackGame.giveCardToPlayer(playerName);
 
             // when
-            Revenues revenues = blackJackGame.calculateRevenue(batMonies);
+            Revenues revenues = blackJackGame.calculateRevenue(betMonies);
 
             // then
-            Revenue playerRevenue = revenues.getRevenues().getFirst();
-            int expected = (int) (batMoneyAmount * 1.5);
+            Revenue playerRevenue = revenues.getRevenues()
+                    .getFirst();
+            int expected = (int) (betMoneyAmount * 1.5);
             assertThat(playerRevenue.money()).isEqualTo(expected);
         }
 
@@ -322,9 +323,9 @@ class BlackJackGameTest {
         void should_return_revenue_when_player_win() {
             // given
             String playerName = "a";
-            int batMoneyAmount = 10000;
-            BatMoney batMoney = new BatMoney(playerName, batMoneyAmount);
-            BatMonies batMonies = new BatMonies(List.of(batMoney));
+            int betMoneyAmount = 10000;
+            BetMoney betMoney = new BetMoney(playerName, betMoneyAmount);
+            BetMonies betMonies = new BetMonies(List.of(betMoney));
 
             CardDeck cardDeck = new CardDeck(List.of(
                     CardFixture.cardOfHeartTwo,
@@ -340,11 +341,12 @@ class BlackJackGameTest {
             blackJackGame.giveCardToPlayer(playerName);
 
             // when
-            Revenues revenues = blackJackGame.calculateRevenue(batMonies);
+            Revenues revenues = blackJackGame.calculateRevenue(betMonies);
 
             // then
-            Revenue playerRevenue = revenues.getRevenues().getFirst();
-            int expected = (int) (batMoneyAmount * 1.0);
+            Revenue playerRevenue = revenues.getRevenues()
+                    .getFirst();
+            int expected = (int) (betMoneyAmount * 1.0);
             assertThat(playerRevenue.money()).isEqualTo(expected);
         }
 
@@ -353,9 +355,9 @@ class BlackJackGameTest {
         void should_return_revenue_when_player_draw() {
             // given
             String playerName = "a";
-            int batMoneyAmount = 10000;
-            BatMoney batMoney = new BatMoney(playerName, batMoneyAmount);
-            BatMonies batMonies = new BatMonies(List.of(batMoney));
+            int betMoneyAmount = 10000;
+            BetMoney betMoney = new BetMoney(playerName, betMoneyAmount);
+            BetMonies betMonies = new BetMonies(List.of(betMoney));
 
             CardDeck cardDeck = new CardDeck(List.of(
                     CardFixture.cardOfHeartTwo,
@@ -371,11 +373,12 @@ class BlackJackGameTest {
             blackJackGame.giveCardToPlayer(playerName);
 
             // when
-            Revenues revenues = blackJackGame.calculateRevenue(batMonies);
+            Revenues revenues = blackJackGame.calculateRevenue(betMonies);
 
             // then
-            Revenue playerRevenue = revenues.getRevenues().getFirst();
-            int expected = (int) (batMoneyAmount * 0);
+            Revenue playerRevenue = revenues.getRevenues()
+                    .getFirst();
+            int expected = (int) (betMoneyAmount * 0);
             assertThat(playerRevenue.money()).isEqualTo(expected);
         }
 
@@ -384,9 +387,9 @@ class BlackJackGameTest {
         void should_return_revenue_when_player_lose() {
             // given
             String playerName = "a";
-            int batMoneyAmount = 10000;
-            BatMoney batMoney = new BatMoney(playerName, batMoneyAmount);
-            BatMonies batMonies = new BatMonies(List.of(batMoney));
+            int betMoneyAmount = 10000;
+            BetMoney betMoney = new BetMoney(playerName, betMoneyAmount);
+            BetMonies betMonies = new BetMonies(List.of(betMoney));
 
             CardDeck cardDeck = new CardDeck(List.of(
                     CardFixture.cardOfHeartKing,
@@ -402,11 +405,12 @@ class BlackJackGameTest {
             blackJackGame.giveCardToPlayer(playerName);
 
             // when
-            Revenues revenues = blackJackGame.calculateRevenue(batMonies);
+            Revenues revenues = blackJackGame.calculateRevenue(betMonies);
 
             // then
-            Revenue playerRevenue = revenues.getRevenues().getFirst();
-            int expected = (int) (batMoneyAmount * -1.0);
+            Revenue playerRevenue = revenues.getRevenues()
+                    .getFirst();
+            int expected = (int) (betMoneyAmount * -1.0);
             assertThat(playerRevenue.money()).isEqualTo(expected);
         }
 
@@ -415,9 +419,9 @@ class BlackJackGameTest {
         void should_return_revenue_when_player_blackjack_lose() {
             // given
             String playerName = "a";
-            int batMoneyAmount = 10000;
-            BatMoney batMoney = new BatMoney(playerName, batMoneyAmount);
-            BatMonies batMonies = new BatMonies(List.of(batMoney));
+            int betMoneyAmount = 10000;
+            BetMoney betMoney = new BetMoney(playerName, betMoneyAmount);
+            BetMonies betMonies = new BetMonies(List.of(betMoney));
 
             CardDeck cardDeck = new CardDeck(List.of(
                     CardFixture.cardOfHeartAce,
@@ -433,11 +437,12 @@ class BlackJackGameTest {
             blackJackGame.giveCardToPlayer(playerName);
 
             // when
-            Revenues revenues = blackJackGame.calculateRevenue(batMonies);
+            Revenues revenues = blackJackGame.calculateRevenue(betMonies);
 
             // then
-            Revenue playerRevenue = revenues.getRevenues().getFirst();
-            int expected = (int) (batMoneyAmount * -1.0);
+            Revenue playerRevenue = revenues.getRevenues()
+                    .getFirst();
+            int expected = (int) (betMoneyAmount * -1.0);
             assertThat(playerRevenue.money()).isEqualTo(expected);
         }
     }

@@ -2,11 +2,11 @@ package domain.betting;
 
 import java.util.Objects;
 
-public class BatMoney {
+public class BetMoney {
     private final String name;
     private final int money;
 
-    public BatMoney(String name, int money) {
+    public BetMoney(String name, int money) {
         validateNameIsNotBlank(name);
         validateMoneyIsPositive(money);
         this.name = name;
@@ -38,8 +38,8 @@ public class BatMoney {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        BatMoney batMoney = (BatMoney) o;
-        return money == batMoney.money && Objects.equals(name, batMoney.name);
+        BetMoney betMoney = (BetMoney) o;
+        return money == betMoney.money && Objects.equals(name, betMoney.name);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class BatMoney {
 
     @Override
     public String toString() {
-        return "BatMoney{" +
+        return "BetMoney{" +
                 "name='" + name + '\'' +
                 ", money=" + money +
                 '}';

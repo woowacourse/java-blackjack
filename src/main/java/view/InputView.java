@@ -44,7 +44,7 @@ public class InputView {
         throw new IllegalArgumentException("입력은 y 혹은 n으로만 가능합니다.");
     }
 
-    public int inputPlayerBatMoney(String playerName) {
+    public int inputPlayerBetMoney(String playerName) {
         String message = String.format("%s의 배팅 금액은?", playerName);
         System.out.println(message);
         String input = scanner.nextLine();
