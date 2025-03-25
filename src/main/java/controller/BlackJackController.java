@@ -3,7 +3,7 @@ package controller;
 import domain.BlackJackGame;
 import domain.BlackJackResultCalculator;
 import domain.ParticipantsResult;
-import domain.betting.BetMonies;
+import domain.betting.PlayerBetMonies;
 import domain.betting.PlayerRevenues;
 import domain.card.CardBundle;
 import domain.card.CardDeck;
@@ -26,13 +26,13 @@ public class BlackJackController {
 
     public void start(CardBundle cardBundle) {
         Participants participants = createGameParticipants();
-        BetMonies betMonies = createBetMonies(participants.getPlayerNames());
+        PlayerBetMonies playerBetMonies = createBetMonies(participants.getPlayerNames());
         CardDeck cardDeck = new CardDeck(cardBundle.getShuffledAllCards());
         BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
         giveStartingCardsToParticipants(blackJackGame);
         processCardReceiving(blackJackGame);
         calculateBackJackResultProcess(participants);
-        calculateBlackjackRevenue(blackJackGame, betMonies);
+        calculateBlackjackRevenue(blackJackGame, playerBetMonies);
     }
 
     private Participants createGameParticipants() {
@@ -40,13 +40,13 @@ public class BlackJackController {
         return Participants.of(userNames);
     }
 
-    private BetMonies createBetMonies(List<String> playerNames) {
+    private PlayerBetMonies createBetMonies(List<String> playerNames) {
         Map<String, Integer> betMonies = new HashMap<>();
         for (String playerName : playerNames) {
             int money = inputView.inputPlayerBetMoney(playerName);
             betMonies.put(playerName, money);
         }
-        return new BetMonies(betMonies);
+        return new PlayerBetMonies(betMonies);
     }
 
     private void giveStartingCardsToParticipants(BlackJackGame blackJackGame) {
@@ -109,8 +109,8 @@ public class BlackJackController {
         outputView.printGameResult(participantsResult);
     }
 
-    private void calculateBlackjackRevenue(BlackJackGame blackJackGame, BetMonies betMonies) {
-        PlayerRevenues playerRevenues = blackJackGame.calculateRevenue(betMonies);
+    private void calculateBlackjackRevenue(BlackJackGame blackJackGame, PlayerBetMonies playerBetMonies) {
+        PlayerRevenues playerRevenues = blackJackGame.calculateRevenue(playerBetMonies);
         outputView.printRevenue(playerRevenues);
     }
 }

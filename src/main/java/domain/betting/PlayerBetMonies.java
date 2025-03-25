@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class BetMonies {
+public class PlayerBetMonies {
     private final List<PlayerBetMoney> betMonies;
 
-    public BetMonies(List<PlayerBetMoney> betMonies) {
+    public PlayerBetMonies(List<PlayerBetMoney> betMonies) {
         this.betMonies = new ArrayList<>(betMonies);
     }
 
-    public BetMonies(Map<String, Integer> betMonies) {
+    public PlayerBetMonies(Map<String, Integer> betMonies) {
         this.betMonies = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : betMonies.entrySet()) {
             PlayerBetMoney playerBetMoney = new PlayerBetMoney(

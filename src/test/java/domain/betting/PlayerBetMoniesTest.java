@@ -9,7 +9,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BetMoniesTest {
+class PlayerBetMoniesTest {
 
     @Test
     @DisplayName("참여자의 이름을 토대로 배팅 정보를 가져온다.")
@@ -17,10 +17,10 @@ class BetMoniesTest {
         // given
         PlayerName playerName = PlayerNameFixture.playerNameFirst;
         PlayerBetMoney playerBetMoney = PlayerBetMoneyFixture.FIRST_10000;
-        BetMonies betMonies = new BetMonies(List.of(playerBetMoney));
+        PlayerBetMonies playerBetMonies = new PlayerBetMonies(List.of(playerBetMoney));
 
         // when
-        PlayerBetMoney foundPlayerBetMoney = betMonies.findByPlayerName(playerName);
+        PlayerBetMoney foundPlayerBetMoney = playerBetMonies.findByPlayerName(playerName);
 
         // then
         assertThat(foundPlayerBetMoney).isEqualTo(playerBetMoney);

@@ -3,9 +3,9 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import domain.betting.BetMonies;
 import domain.betting.Money;
 import domain.betting.PlayerBetMoney;
+import domain.betting.PlayerBetMonies;
 import domain.betting.PlayerRevenues;
 import domain.betting.Revenue;
 import domain.card.Card;
@@ -297,7 +297,7 @@ class BlackJackGameTest {
             PlayerName playerName = PlayerNameFixture.playerNameFirst;
             Money money = MoneyFixture.money10000;
             PlayerBetMoney playerBetMoney = new PlayerBetMoney(playerName, money);
-            BetMonies betMonies = new BetMonies(List.of(playerBetMoney));
+            PlayerBetMonies playerBetMonies = new PlayerBetMonies(List.of(playerBetMoney));
 
             CardDeck cardDeck = new CardDeck(List.of(
                     CardFixture.cardOfHeartTwo,
@@ -313,7 +313,7 @@ class BlackJackGameTest {
             blackJackGame.giveCardToPlayer(playerName.name());
 
             // when
-            PlayerRevenues playerRevenues = blackJackGame.calculateRevenue(betMonies);
+            PlayerRevenues playerRevenues = blackJackGame.calculateRevenue(playerBetMonies);
 
             // then
             Revenue playerRevenue = playerRevenues.getRevenueByPlayerName(playerName);
@@ -328,7 +328,7 @@ class BlackJackGameTest {
             PlayerName playerName = PlayerNameFixture.playerNameFirst;
             Money money = MoneyFixture.money10000;
             PlayerBetMoney playerBetMoney = new PlayerBetMoney(playerName, money);
-            BetMonies betMonies = new BetMonies(List.of(playerBetMoney));
+            PlayerBetMonies playerBetMonies = new PlayerBetMonies(List.of(playerBetMoney));
 
             CardDeck cardDeck = new CardDeck(List.of(
                     CardFixture.cardOfHeartTwo,
@@ -344,7 +344,7 @@ class BlackJackGameTest {
             blackJackGame.giveCardToPlayer(playerName.name());
 
             // when
-            PlayerRevenues playerRevenues = blackJackGame.calculateRevenue(betMonies);
+            PlayerRevenues playerRevenues = blackJackGame.calculateRevenue(playerBetMonies);
 
             // then
             Revenue playerRevenue = playerRevenues.getRevenueByPlayerName(playerName);
@@ -359,7 +359,7 @@ class BlackJackGameTest {
             PlayerName playerName = PlayerNameFixture.playerNameFirst;
             Money money = MoneyFixture.money10000;
             PlayerBetMoney playerBetMoney = new PlayerBetMoney(playerName, money);
-            BetMonies betMonies = new BetMonies(List.of(playerBetMoney));
+            PlayerBetMonies playerBetMonies = new PlayerBetMonies(List.of(playerBetMoney));
 
             CardDeck cardDeck = new CardDeck(List.of(
                     CardFixture.cardOfHeartTwo,
@@ -375,7 +375,7 @@ class BlackJackGameTest {
             blackJackGame.giveCardToPlayer(playerName.name());
 
             // when
-            PlayerRevenues playerRevenues = blackJackGame.calculateRevenue(betMonies);
+            PlayerRevenues playerRevenues = blackJackGame.calculateRevenue(playerBetMonies);
 
             // then
             Revenue playerRevenue = playerRevenues.getRevenueByPlayerName(playerName);
@@ -390,7 +390,7 @@ class BlackJackGameTest {
             PlayerName playerName = PlayerNameFixture.playerNameFirst;
             Money money = MoneyFixture.money10000;
             PlayerBetMoney playerBetMoney = new PlayerBetMoney(playerName, money);
-            BetMonies betMonies = new BetMonies(List.of(playerBetMoney));
+            PlayerBetMonies playerBetMonies = new PlayerBetMonies(List.of(playerBetMoney));
 
             CardDeck cardDeck = new CardDeck(List.of(
                     CardFixture.cardOfHeartKing,
@@ -406,7 +406,7 @@ class BlackJackGameTest {
             blackJackGame.giveCardToPlayer(playerName.name());
 
             // when
-            PlayerRevenues playerRevenues = blackJackGame.calculateRevenue(betMonies);
+            PlayerRevenues playerRevenues = blackJackGame.calculateRevenue(playerBetMonies);
 
             // then
             Revenue playerRevenue = playerRevenues.getRevenueByPlayerName(playerName);
@@ -421,7 +421,7 @@ class BlackJackGameTest {
             PlayerName playerName = PlayerNameFixture.playerNameFirst;
             Money money = MoneyFixture.money10000;
             PlayerBetMoney playerBetMoney = new PlayerBetMoney(playerName, money);
-            BetMonies betMonies = new BetMonies(List.of(playerBetMoney));
+            PlayerBetMonies playerBetMonies = new PlayerBetMonies(List.of(playerBetMoney));
 
             CardDeck cardDeck = new CardDeck(List.of(
                     CardFixture.cardOfHeartAce,
@@ -437,7 +437,7 @@ class BlackJackGameTest {
             blackJackGame.giveCardToPlayer(playerName.name());
 
             // when
-            PlayerRevenues playerRevenues = blackJackGame.calculateRevenue(betMonies);
+            PlayerRevenues playerRevenues = blackJackGame.calculateRevenue(playerBetMonies);
 
             // then
             Revenue playerRevenue = playerRevenues.getRevenueByPlayerName(playerName);
