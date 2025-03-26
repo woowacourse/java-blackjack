@@ -1,17 +1,14 @@
 package controller;
 
-import domain.BlackJackManager;
-import domain.BlackJackResultCalculator;
-import domain.CardBundle;
-import domain.CardDeck;
-import domain.Dealer;
-import domain.Participant;
-import domain.Participants;
-import domain.ParticipantsResult;
-import domain.Player;
-import java.util.ArrayList;
+import domain.BlackJackGame;
+import domain.betting.PlayerBetMonies;
+import domain.betting.PlayerRevenues;
+import domain.card.CardBundle;
+import domain.card.CardDeck;
+import domain.participant.Participants;
+import java.util.HashMap;
 import java.util.List;
-import utils.InputSplitter;
+import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
@@ -27,58 +24,58 @@ public class BlackJackController {
 
     public void start(CardBundle cardBundle) {
         Participants participants = createGameParticipants();
+        PlayerBetMonies playerBetMonies = createBetMonies(participants.getPlayerNames());
         CardDeck cardDeck = new CardDeck(cardBundle.getShuffledAllCards());
-        BlackJackManager blackJackManager = new BlackJackManager(participants, cardDeck);
-        giveStartingCardsToParticipants(blackJackManager);
-        processPlayersCardReceiving(blackJackManager);
-        processDealerCardReceiving(blackJackManager);
-        calculateBackJackResultProcess(participants);
-    }
-
-    private void giveStartingCardsToParticipants(BlackJackManager blackJackManager) {
-        blackJackManager.giveStartingCardsToParticipants();
-        outputView.printInitialParticipantHandsMessage(blackJackManager.getPlayerNames());
-        outputView.printInitialParticipantHands(blackJackManager.getParticipants());
-    }
-
-    private void calculateBackJackResultProcess(Participants participants) {
+        BlackJackGame blackJackGame = new BlackJackGame(participants, cardDeck);
+        giveStartingCardsToParticipants(blackJackGame);
+        processCardReceiving(blackJackGame);
         printAllParticipantsInfo(participants);
-        printAllParticipantGameResult(participants);
+        printBlackjackRevenue(blackJackGame.calculateRevenue(playerBetMonies));
     }
 
-    private void printAllParticipantGameResult(Participants participants) {
-        ParticipantsResult participantsResult = BlackJackResultCalculator.calculate(participants);
-        outputView.printGameResult(participantsResult);
+    private Participants createGameParticipants() {
+        List<String> userNames = inputView.inputPlayerNames();
+        return Participants.of(userNames);
     }
 
-    private void printAllParticipantsInfo(Participants participants) {
-        outputView.printParticipantsFullInfo(participants.getParticipants());
+    private PlayerBetMonies createBetMonies(List<String> playerNames) {
+        Map<String, Integer> betMonies = new HashMap<>();
+        for (String playerName : playerNames) {
+            int money = inputView.inputPlayerBetMoney(playerName);
+            betMonies.put(playerName, money);
+        }
+        return new PlayerBetMonies(betMonies);
     }
 
-    private void processDealerCardReceiving(BlackJackManager blackJackManager) {
-        while(blackJackManager.canDealerPick()) {
-            blackJackManager.giveCardToDealer();
-            outputView.printDealerReceivingCardMessage();
+    private void giveStartingCardsToParticipants(BlackJackGame blackJackGame) {
+        blackJackGame.giveStartingCardsToParticipants();
+        outputView.printInitialParticipantHandsMessage(blackJackGame.getPlayerNames());
+        outputView.printInitialParticipantHand(blackJackGame.getDealer().getName(),
+                blackJackGame.getDealerFirstShownCards());
+        for (String playerName : blackJackGame.getPlayerNames()) {
+            outputView.printInitialParticipantHand(playerName, blackJackGame.getPlayerFirstShownCards(playerName));
+        }
+    }
+
+    private void processCardReceiving(BlackJackGame blackJackGame) {
+        processPlayersCardReceiving(blackJackGame);
+        processDealerCardReceiving(blackJackGame);
+    }
+
+    private void processPlayersCardReceiving(BlackJackGame blackJackGame) {
+        for (String playerName : blackJackGame.getPlayerNames()) {
+            processPlayerCardReceiving(blackJackGame, playerName);
         }
         outputView.printBlankLine();
     }
 
-    private void processPlayersCardReceiving(BlackJackManager blackJackManager) {
-        for (String playerName : blackJackManager.getPlayerNames()) {
-            processPlayerCardReceiving(blackJackManager, playerName);
+    private void processPlayerCardReceiving(BlackJackGame blackJackGame, String playerName) {
+        while (blackJackGame.canPlayerPick(playerName) && doesPlayerWantToReceiveCard(playerName)) {
+            blackJackGame.giveCardToPlayer(playerName);
+            outputView.printParticipantHand(playerName, blackJackGame.getPlayerCards(playerName));
         }
-        outputView.printBlankLine();
-    }
-
-    private void processPlayerCardReceiving(BlackJackManager blackJackManager, String playerName) {
-        boolean isFinalHandsPrinted = false;
-        while (blackJackManager.canPlayerPick(playerName) && doesPlayerWantToReceiveCard(playerName)) {
-            blackJackManager.giveCardToPlayer(playerName);
-            outputView.printParticipantHand(playerName, blackJackManager.getPlayerShownCards(playerName));
-            isFinalHandsPrinted = true;
-        }
-        if (!isFinalHandsPrinted) {
-            outputView.printParticipantHand(playerName, blackJackManager.getPlayerShownCards(playerName));
+        if (!blackJackGame.hasPlayerReceivedCard(playerName)) {
+            outputView.printParticipantHand(playerName, blackJackGame.getPlayerCards(playerName));
         }
     }
 
@@ -87,16 +84,19 @@ public class BlackJackController {
         return playerWantMoreCard.equalsIgnoreCase("y");
     }
 
-    private Participants createGameParticipants() {
-        List<Participant> participants = new ArrayList<>();
-        // 초기 딜러 설정
-        participants.add(new Dealer());
-        String inputUserNames = inputView.inputUserNames();
-        List<String> userNames = InputSplitter.split(inputUserNames);
-        for (String userName : userNames) {
-            Participant participant = new Player(userName);
-            participants.add(participant);
+    private void processDealerCardReceiving(BlackJackGame blackJackGame) {
+        while (blackJackGame.canDealerPick()) {
+            blackJackGame.giveCardToDealer();
+            outputView.printDealerReceivingCardMessage();
         }
-        return new Participants(participants);
+        outputView.printBlankLine();
+    }
+
+    private void printAllParticipantsInfo(Participants participants) {
+        outputView.printParticipantsFullInfo(participants.getParticipants());
+    }
+
+    private void printBlackjackRevenue(PlayerRevenues playerRevenues) {
+        outputView.printRevenue(playerRevenues);
     }
 }

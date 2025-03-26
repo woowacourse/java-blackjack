@@ -1,7 +1,8 @@
 package domain;
 
-import java.util.List;
+import domain.result.DealerResults;
+import domain.result.PlayerResults;
 
-public record ParticipantsResult(DealerResult dealerResult, List<PlayerResult> playerResults) {
+public record ParticipantsResult(DealerResults dealerResults, PlayerResults playerResults) {
 
 }
