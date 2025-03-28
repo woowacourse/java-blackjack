@@ -5,14 +5,9 @@ import exception.IllegalBlackjackInputException;
 import exception.IllegalBlackjackStateException;
 import java.util.List;
 import model.BlackjackGame;
-import model.Players;
+import model.result.BettingResults;
 import model.cards.Cards;
 import model.cards.DealerCards;
-import model.cards.DealerCardsFactory;
-import model.cards.PlayerCardsFactory;
-import model.deck.DeckFactory;
-import model.result.GameResult;
-import model.result.GameResults;
 import view.InputView;
 import view.OutputView;
 
@@ -28,12 +23,7 @@ public class BlackjackController {
 
     public void start() {
         try {
-            BlackjackGame blackjackGame = getBlackjackGame();
-            printPlayersAndInitialCards(blackjackGame);
-            askToAllPlayersForAdditionalCard(blackjackGame);
-            printDealerDraw(blackjackGame);
-            printFinalCards(blackjackGame);
-            printGameResult(blackjackGame);
+            process();
         } catch (IllegalBlackjackStateException e) {
             outputView.printExceptionMessage(e);
         } catch (Exception e) {
@@ -41,17 +31,28 @@ public class BlackjackController {
         }
     }
 
-    private BlackjackGame getBlackjackGame() {
-        DeckFactory deckFactory = new DeckFactory();
-        PlayerCardsFactory playerCardsFactory = new PlayerCardsFactory();
-        DealerCardsFactory dealerCardsFactory = new DealerCardsFactory();
+    private void process() {
+        BlackjackGame blackjackGame = getBlackjackGame();
+        printPlayersAndInitialCards(blackjackGame);
+        askToAllPlayersForAdditionalCard(blackjackGame);
+        printDealerDraw(blackjackGame);
+        printFinalCards(blackjackGame);
+        printBettingResult(blackjackGame);
+    }
 
-        return BlackjackGame.getBlackjackGame(
-                getPlayerNames(),
-                deckFactory,
-                playerCardsFactory,
-                dealerCardsFactory
-        );
+    private BlackjackGame getBlackjackGame() {
+        List<String> playerNames = getPlayerNames();
+        List<Integer> playersBet = getPlayersBet(playerNames);
+
+        try {
+            return BlackjackGame.createBlackjackGame(
+                    playerNames,
+                    playersBet
+            );
+        } catch (IllegalBlackjackInputException e) {
+            outputView.printExceptionMessage(e);
+            return getBlackjackGame();
+        }
     }
 
     private List<String> getPlayerNames() {
@@ -63,17 +64,34 @@ public class BlackjackController {
         }
     }
 
+    private List<Integer> getPlayersBet(final List<String> playerNames) {
+        return playerNames.stream()
+                .map(this::getPlayerBet)
+                .toList();
+    }
+
+    private int getPlayerBet(final String name) {
+        try {
+            outputView.printNewLine();
+            return inputView.readPlayersBet(name);
+        } catch (IllegalBlackjackInputException e) {
+            outputView.printExceptionMessage(e);
+            return getPlayerBet(name);
+        }
+    }
+
     private void printPlayersAndInitialCards(final BlackjackGame blackjackGame) {
         outputView.printNewLine();
         outputView.printPlayers(blackjackGame.getSequencedPlayerNames());
-        printInitialCardsWithName(blackjackGame.getDealerCards(), blackjackGame.getPlayers());
+        printInitialCardsWithName(blackjackGame);
         outputView.printNewLine();
     }
 
-    private void printInitialCardsWithName(final DealerCards dealerCards, final Players players) {
+    private void printInitialCardsWithName(final BlackjackGame blackjackGame) {
+        DealerCards dealerCards = blackjackGame.getDealerCards();
         outputView.printDealerFirstCard(CardDto.from(dealerCards.getFirstCard()));
-        for (String name : players.getNames()) {
-            List<CardDto> playerCardDtos = getCardDtos(players.findCardsByName(name));
+        for (String name : blackjackGame.getSequencedPlayerNames()) {
+            List<CardDto> playerCardDtos = getCardDtos(blackjackGame.getPlayerCardsByName(name));
             outputView.printCardsWithName(name, playerCardDtos);
         }
     }
@@ -84,7 +102,7 @@ public class BlackjackController {
     }
 
     private void askForAdditionalCardByName(final String name, final BlackjackGame blackjackGame) {
-        while (!blackjackGame.checkIsBustByName(name)) {
+        while (blackjackGame.canPlayerDrawCard(name)) {
             UserInput decision = getUserInput(name);
             if (decision == UserInput.NO) {
                 break;
@@ -114,8 +132,10 @@ public class BlackjackController {
 
     private void printFinalCards(final BlackjackGame blackjackGame) {
         outputView.printNewLine();
-        outputView.printDealerCardsWithResult(getCardDtos(blackjackGame.getDealerCards()),
-                blackjackGame.getDealerResult());
+        outputView.printDealerCardsWithResult(
+                getCardDtos(blackjackGame.getDealerCards()),
+                blackjackGame.getDealerResult()
+        );
 
         blackjackGame.getSequencedPlayerNames().forEach(name -> outputView.printCardsWithNameAndResult(
                 name,
@@ -124,18 +144,14 @@ public class BlackjackController {
         ));
     }
 
-    private void printGameResult(final BlackjackGame blackjackGame) {
+    private void printBettingResult(final BlackjackGame blackjackGame) {
         outputView.printNewLine();
-        GameResults gameResults = blackjackGame.calculateGameResults();
+        BettingResults bettingResults = blackjackGame.calculateBettingResults();
         outputView.printGameResultHeader();
-        outputView.printDealerGameResult(
-                gameResults.calculateDealerResultCount(GameResult.WIN),
-                gameResults.calculateDealerResultCount(GameResult.DRAW),
-                gameResults.calculateDealerResultCount(GameResult.LOSE)
-        );
+        outputView.printDealerBettingResult(bettingResults.calculateDealerBettingResult());
 
         blackjackGame.getSequencedPlayerNames().forEach(name ->
-                outputView.printPlayerGameResult(name, gameResults.getGameResultByName(name).getName()));
+                outputView.printPlayerBettingResult(name, bettingResults.getBettingResultByName(name)));
     }
 
     private List<CardDto> getCardDtos(final Cards cards) {

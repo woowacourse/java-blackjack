@@ -55,12 +55,12 @@ public class OutputView {
         System.out.println("## 최종 승패");
     }
 
-    public void printDealerGameResult(final int winCount, final int drawCount, final int loseCount) {
-        System.out.printf("딜러: %d승 %d무 %d패" + LINE, winCount, drawCount, loseCount);
+    public void printDealerBettingResult(final int bettingResult) {
+        System.out.printf("딜러: %d" + LINE, bettingResult);
     }
 
-    public void printPlayerGameResult(final String name, final String result) {
-        System.out.printf("%s: %s" + LINE, name, result);
+    public void printPlayerBettingResult(final String name, final int bettingResult) {
+        System.out.printf("%s: %s" + LINE, name, bettingResult);
     }
 
     public void printExceptionMessage(final RuntimeException exception) {

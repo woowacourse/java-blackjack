@@ -16,6 +16,11 @@ public class InputView {
         return InputConverter.splitByDelimiter(scanner.nextLine(), PLAYER_NAMES_DELIMITER);
     }
 
+    public int readPlayersBet(final String name) {
+        System.out.println(name + "의 배팅 금액은?");
+        return InputConverter.parseToInt(scanner.nextLine());
+    }
+
     public String askForAdditionalCard(final String name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)" + LINE, name);
         String input = scanner.nextLine();

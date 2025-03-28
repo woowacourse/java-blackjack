@@ -8,7 +8,7 @@ import model.card.Card;
 import model.card.CardNumber;
 import model.card.CardShape;
 
-public class DeckFactory {
+public class DeckGenerator {
 
     public List<Card> getInitializedDeck() {
         List<Card> initialDeck = new ArrayList<>(Arrays.stream(CardNumber.values())

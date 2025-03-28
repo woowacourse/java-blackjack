@@ -11,14 +11,14 @@ import model.deck.Deck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class PlayerCardsFactoryTest {
+public class PlayerCardsGeneratorTest {
 
     @DisplayName("덱에서 2장을 뽑아 플레이어 카드를 생성한다.")
     @Test
     void test1() {
         Card fisrtCard = new Card(CardNumber.QUEEN, CardShape.SPADE);
         Card secondCard = new Card(CardNumber.EIGHT, CardShape.HEART);
-        Cards cards = new PlayerCardsFactory().generate(new Deck(
+        Cards cards = new PlayerCardsGenerator().generate(new Deck(
                 new ArrayList<>(List.of(fisrtCard, secondCard))
         ));
 

@@ -5,7 +5,7 @@ import java.util.List;
 import model.card.Card;
 import model.deck.Deck;
 
-public abstract class CardsFactory {
+public abstract class CardsGenerator {
 
     public Cards generate(final Deck deck) {
         List<Card> cards = new ArrayList<>();

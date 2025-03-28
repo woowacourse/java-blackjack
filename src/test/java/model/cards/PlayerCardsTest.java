@@ -2,6 +2,7 @@ package model.cards;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import exception.IllegalBlackjackStateException;
 import java.util.ArrayList;
@@ -68,6 +69,28 @@ class PlayerCardsTest {
         assertThat(cards.isBust()).isFalse();
     }
 
+    @DisplayName("카드 계산 결과가 21 미만이라면 카드를 더 뽑을 수 있다.")
+    @Test
+    void canDrawTest() {
+        PlayerCards cards = new PlayerCards(List.of(
+                new Card(CardNumber.THREE, CardShape.DIAMOND),
+                new Card(CardNumber.NINE, CardShape.CLOVER),
+                new Card(CardNumber.EIGHT, CardShape.DIAMOND)
+        ));
+        assertThat(cards.canDraw()).isTrue();
+    }
+
+    @DisplayName("카드 계산 결과가 21 이상이라면 카드를 더 뽑을 수 없다.")
+    @Test
+    void canNotDrawTest() {
+        PlayerCards cards = new PlayerCards(List.of(
+                new Card(CardNumber.THREE, CardShape.DIAMOND),
+                new Card(CardNumber.NINE, CardShape.CLOVER),
+                new Card(CardNumber.NINE, CardShape.DIAMOND)
+        ));
+        assertThat(cards.canDraw()).isFalse();
+    }
+
     @DisplayName("카드의 숫자 계산은 카드 문양이 아닌 카드 숫자로 한다.")
     @Test
     void calculateResultTest() {
@@ -115,4 +138,23 @@ class PlayerCardsTest {
         assertThat(cards.calculateResult()).isEqualTo(22);
     }
 
+    @DisplayName("블랙잭인지 확인한다.")
+    @Test
+    void isBlackjackTest() {
+        Cards normalCards = new PlayerCards(new ArrayList<>(List.of(
+                new Card(CardNumber.TEN, CardShape.DIAMOND),
+                new Card(CardNumber.FIVE, CardShape.SPADE),
+                new Card(CardNumber.SIX, CardShape.SPADE)
+        )));
+
+        Cards blackjackCards = new PlayerCards(new ArrayList<>(List.of(
+                new Card(CardNumber.ACE_ELEVEN, CardShape.CLOVER),
+                new Card(CardNumber.QUEEN, CardShape.SPADE)
+        )));
+
+        assertAll(
+                () -> assertThat(normalCards.isBlackjack()).isFalse(),
+                () -> assertThat(blackjackCards.isBlackjack()).isTrue()
+        );
+    }
 }
