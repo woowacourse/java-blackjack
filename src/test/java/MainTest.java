@@ -56,7 +56,7 @@ public class MainTest {
             });
 
             // Then
-            assertThat(exception.getMessage()).isEqualTo("잘못된 범위의 숫자 카드입니다.");
+            assertThat(exception.getMessage()).isEqualTo("잘못된 범위의 카드입니다.");
         }
     }
 

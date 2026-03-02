@@ -18,13 +18,15 @@ public class Main {
 
     private static int modifyScore(String card) {
         final String CARD_DELIMITER = "[KQJ]";
+        final String CARD_NUMBER_BOUNDARY_DELIMITER = "[1-9]";
 
         if (card.matches(CARD_DELIMITER)) {
             return 10;
         }
-        if (card.matches("\\d")) {
+        if (card.matches(CARD_NUMBER_BOUNDARY_DELIMITER)) {
             return Integer.parseInt(card);
         }
-        return 0;
+
+        throw new IllegalArgumentException("잘못된 범위의 카드입니다.");
     }
 }
