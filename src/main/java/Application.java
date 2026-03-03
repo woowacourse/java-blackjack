@@ -9,7 +9,7 @@ public class Application {
         }
     }
 
-    private static int calculateCardScore(String card) {
+    public static int calculateCardScore(String card) {
         if (card.equals("J") || card.equals("Q") || card.equals("K")) {
             return 10;
         }
