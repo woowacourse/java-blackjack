@@ -1,7 +1,12 @@
+import java.util.List;
+
 public class Application {
     public static void main(String[] args) {
-        System.out.println("카드 8의 점수: " + calculateCardScore("8"));
-        System.out.println("카드 K의 점수: " + calculateCardScore("K"));
+        List<String> cards = List.of("J", "1", "Q");
+
+        for (String card : cards) {
+            System.out.println("카드 " + card + "의 점수: " + calculateCardScore(card));
+        }
     }
 
     private static int calculateCardScore(String card) {
