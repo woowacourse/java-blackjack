@@ -1,3 +1,4 @@
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -38,5 +39,32 @@ public class DeckTest {
                         " QUEENDIAMOND, KINGDIAMOND, ACECLUB, TWOCLUB, THREECLUB, FOURCLUB, FIVECLUB, SIXCLUB," +
                         " SEVENCLUB, EIGHTCLUB, NINECLUB, TENCLUB, JACKCLUB, QUEENCLUB, KINGCLUB]"
         );
+    }
+
+    @Test
+    void 카드_셔플_테스트() {
+        Deck deck1 = new Deck();
+        deck1.init();
+        deck1.shuffle();
+        int deckSize = deck1.size();
+
+        List<Card> result1 = new ArrayList<>();
+        for (int i = 0; i < deckSize; i++) {
+            Card card = deck1.draw();
+            result1.add(card);
+        }
+
+        Deck deck2 = new Deck();
+        deck2.init();
+
+        List<Card> result2 = new ArrayList<>();
+        for (int i = 0; i < deckSize; i++) {
+            Card card = deck2.draw();
+            result2.add(card);
+        }
+
+        assertThat(result1.size()).isEqualTo(result2.size());
+        assertThat(result1).containsExactlyInAnyOrderElementsOf(result2);
+
     }
 }
