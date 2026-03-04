@@ -10,6 +10,10 @@ public class Card {
         this.suit = suit;
     }
 
+    public int getRank() {
+        return this.rank.getValue();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
