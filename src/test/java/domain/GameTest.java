@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,15 @@ public class GameTest {
     @Nested
     @DisplayName("정상 경우")
     class success {
+
+        private Game game;
+
+        @BeforeEach
+        void setUp() {
+            List<String> names = List.of("피즈", "스타크");
+            game = new Game(names);
+        }
+
         @DisplayName("모든 플레이어가 정상적으로 생성된다.")
         @Test
         public void 모든_플레이어가_정상적으로_생성된다() {
@@ -34,6 +44,23 @@ public class GameTest {
             assertThat(playerNames).contains("피즈");
             assertThat(playerNames).contains("스타크");
         }
+
+        @DisplayName("게임 시작 후 모든 플레이어가 2장의 카드를 분배 받는다.")
+        @Test
+        void 게임_시작_후_모든_플레이어_2장의_카드_분배를_받는다() {
+            //given
+            //when
+            game.startGame();
+            Set<Player> players = game.getPlayers();
+            Dealer dealer = game.getDealer();
+            //then
+            for (Player player : players) {
+                assertThat(player.getCards().size()).isEqualTo(2);
+            }
+
+            assertThat(dealer.getCards().size()).isEqualTo(2);
+        }
+
     }
 
     @Nested
