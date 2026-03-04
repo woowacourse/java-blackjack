@@ -29,4 +29,11 @@ public class Player {
     public List<Card> getHand() {
         return List.copyOf(hand);
     }
-}
+
+@Override public String toString() {
+    return "Player{" +
+            "name='" + name + '\'' +
+            ", hand=" + hand +
+            ", isBust=" + isBust +
+            '}';
+}}

@@ -23,4 +23,12 @@ public class GameManager {
             currentPlayer.setBust();
         }
     }
+
+    public int calculateScore(List<Card> hand) {
+        return scoreCalculator.calculateScore(hand);
+    }
+
+    public void drawCard(Player player) {
+        player.addCard(deck.draw());
+    }
 }

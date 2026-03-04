@@ -23,6 +23,5 @@ public class Deck {
 
     public void shuffle() {
         Collections.shuffle(cards);
-        System.out.println("cards = " + cards);
     }
 }
