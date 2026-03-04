@@ -28,9 +28,18 @@ public class OutputView {
         }
     }
 
-    public void gameResult() {
-        System.out.println("## 최종 승패");
-    }
+    /**
+     * 최종 승패
+     * 추후 비즈니스로직 완성 후 결정
+     */
+//    public void gameResult(List<PlayerWinningCondition> winningConditions) {
+//        System.out.println("## 최종 승패");
+//
+//        long playersWin = winningConditions.stream().filter(cond -> cond.condition().).count();
+//        System.out.printf("딜러: %d승 %d패" + System.lineSeparator(), winningConditions.size() - playersWin, playersWin);
+//        winningConditions.forEach(c -> System.out.printf("%s: %s"));
+//    }
+//
 
     private String getGameLog(GameStatus gameStatuses) {
         return String.format("%s카드: %s", gameStatuses.name(), String.join(", ", gameStatuses.cards()));
