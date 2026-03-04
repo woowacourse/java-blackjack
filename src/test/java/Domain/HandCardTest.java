@@ -2,8 +2,11 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
+import domain.card.CardRank;
+import domain.card.CardSuit;
+import domain.card.HandCard;
 import java.util.List;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +30,7 @@ public class HandCardTest {
 
     @BeforeEach
     void setup(){
-        Card two = new Card(CardRank.TWO,CardSuit.CLOVER);
+        Card two = new Card(CardRank.TWO, CardSuit.CLOVER);
         Card three = new Card(CardRank.THREE, CardSuit.CLOVER);
         handCard = new HandCard();
         handCard.addCard(two);
