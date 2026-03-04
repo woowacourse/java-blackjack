@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import model.dto.Card;
 import model.dto.PlayerResult;
 
 public class Player {
