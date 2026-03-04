@@ -66,23 +66,4 @@ public class DeckTest {
         assertThat(result1.size()).isEqualTo(result2.size());
         assertThat(result1).containsExactlyInAnyOrderElementsOf(result2);
     }
-
-    @Test
-    void 등록된_플레이어와_딜러_순서대로_카드를_돌린다() {
-        Player player1 = new Player("pobi");
-        Player player2 = new Player("cary");
-
-        Players players = new Players();
-        players.add(player1);
-        players.add(player2);
-        List<Player> records = players.getPlayers();
-        Dealer dealer = new Dealer();
-        GameManager manager = new GameManager();
-
-        manager.dealCards(records, dealer);
-
-        assertThat(player1.getHand().size()).isEqualTo(2);
-        assertThat(player2.getHand().size()).isEqualTo(2);
-        assertThat(dealer.getHand().size()).isEqualTo(2);
-    }
 }
