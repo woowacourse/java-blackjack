@@ -6,7 +6,7 @@ import java.util.Objects;
 public enum Card {
 
 
-    ACE("1", 1),
+    ACE("1", 11),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
@@ -37,6 +37,10 @@ public enum Card {
         return all().stream()
             .filter(card -> Objects.equals(card.symbol, symbol))
             .findFirst().orElseThrow(() -> new IllegalArgumentException("올바른 카드가 아닙니다."));
+    }
+
+    public boolean isTypeOf(Card card) {
+        return Objects.equals(this.symbol, card.symbol);
     }
 
     public int toScore() {
