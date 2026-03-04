@@ -29,8 +29,8 @@ class GameServiceTest {
     @DisplayName("페이스 카드가 포함된 점수를 계산한다")
     void calculateAceAsEleven() {
         // given, when
-        int score = gameService.calculateScore(List.of(1, "J", "Q", "K"));
+        int score = gameService.calculateScore(List.of("1", "J", "Q", "K"));
         //then
-        assertThat(score).isEqualTo(21);
+        assertThat(score).isEqualTo(31);
     }
 }
