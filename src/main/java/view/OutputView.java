@@ -1,7 +1,9 @@
 package view;
 
 import dto.BlackjackResultDto;
+import dto.DealerResultDto;
 import dto.HandDto;
+import dto.PlayerResultDto;
 import java.util.List;
 
 public class OutputView {
@@ -32,5 +34,37 @@ public class OutputView {
             System.out.printf(" - 결과: %d\n", resultDto.score());
         }
         System.out.println();
+    }
+
+    public void printBlackjackStatistics(DealerResultDto dealerResultDto,
+        List<PlayerResultDto> playerResultDtoList) {
+        System.out.println("## 최종 승패");
+        System.out.printf("딜러:%s%s%s", printWin(dealerResultDto.win()),
+            printDraw(dealerResultDto.draw()), printLose(dealerResultDto.lose()));
+        for (PlayerResultDto playerResultDto : playerResultDtoList) {
+            System.out.printf("%s: %s\n", playerResultDto.name(),
+                playerResultDto.result().getResult());
+        }
+    }
+
+    private String printLose(int lose) {
+        if (lose == 0) {
+            return "";
+        }
+        return " " + lose + "패";
+    }
+
+    private String printDraw(int draw) {
+        if (draw == 0) {
+            return "";
+        }
+        return " " + draw + "무";
+    }
+
+    private String printWin(int win) {
+        if (win == 0) {
+            return "";
+        }
+        return " " + win + "승";
     }
 }
