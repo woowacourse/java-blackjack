@@ -19,4 +19,28 @@ public class HandTest {
 
         assertThat(actual).isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("버스트 판정 테스트")
+    void 점수_합계가_21_초과인_경우() {
+        List<Card> cards = List.of(Card.JACK, Card.TEN, Card.FIVE);
+        Hand hand = new Hand(cards);
+        boolean expected = true;
+
+        boolean actual = hand.isBurst();
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("버스트 판정 테스트")
+    void 점수_합계가_21_이하인_경우() {
+        List<Card> cards = List.of(Card.JACK, Card.NINE, Card.TWO);
+        Hand hand = new Hand(cards);
+        boolean expected = false;
+
+        boolean actual = hand.isBurst();
+
+        assertThat(actual).isEqualTo(expected);
+    }
 }
