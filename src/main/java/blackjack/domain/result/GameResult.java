@@ -1,7 +1,11 @@
 package blackjack.domain.result;
 
 public enum GameResult {
-    WIN, DRAW, LOSE;
+
+    WIN,
+    DRAW,
+    LOSE,
+    ;
 
     private static final int BUST_THRESHOLD = 21;
 
