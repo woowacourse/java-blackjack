@@ -20,7 +20,7 @@ class GameServiceTest {
     @DisplayName("일반 카드들의 합산 점수를 계산한다")
     void calculateBasicScore() {
         //given, when
-        int score = gameService.calculateScore(List.of(2, 5, 10));
+        int score = gameService.calculateScore(List.of("2", "5", "10"));
         //then
         assertThat(score).isEqualTo(17);
     }
