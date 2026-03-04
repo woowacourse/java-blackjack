@@ -41,7 +41,7 @@ public class TestCards {
         //then
         assertThat(deck.size()).isEqualTo(52);
 
-        assertThatThrownBy(cards.draw())
+        assertThatThrownBy(cards::draw)
                 .isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessage("오류메시지");
     }
