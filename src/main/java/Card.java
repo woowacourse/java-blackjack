@@ -1,7 +1,12 @@
-import java.io.IOException;
-import java.util.Objects;
-
 public class Card {
+
+    private final String rank;
+    private final String shape;
+
+    public Card(String rank, String shape) {
+        this.rank = rank;
+        this.shape = shape;
+    }
 
     public static int translateToScore(String rank) {
         if (rank.equals("J") || rank.equals("Q") || rank.equals("K")) {
