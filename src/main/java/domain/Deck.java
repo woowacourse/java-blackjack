@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -15,9 +16,8 @@ public class Deck {
     private List<Card> initialize() {
         List<Card> results = new ArrayList<>();
         for (CardShape cardShape : CardShape.values()) {
-            for (CardNumber cardNumber : CardNumber.values()) {
-                results.add(new Card(cardNumber, cardShape));
-            }
+            Arrays.stream(CardNumber.values())
+                    .forEach(cardNumber -> results.add(new Card(cardNumber, cardShape)));
         }
         Collections.shuffle(results);
         return results;
