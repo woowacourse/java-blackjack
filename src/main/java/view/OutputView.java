@@ -18,7 +18,21 @@ public class OutputView {
         System.out.println();
     }
 
-    private String getGameLog(GameStatus g) {
-        return String.format("%s카드: %s", g.name(), String.join(", ", g.cards()));
+    public void dealerStay() {
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public void participantsResults(List<GameStatus> gameStatuses) {
+        for (GameStatus gameStatus : gameStatuses) {
+            System.out.printf("%s - 결과: %d"+System.lineSeparator(), getGameLog(gameStatus), gameStatus.scoreSum());
+        }
+    }
+
+    public void gameResult() {
+        System.out.println("## 최종 승패");
+    }
+
+    private String getGameLog(GameStatus gameStatuses) {
+        return String.format("%s카드: %s", gameStatuses.name(), String.join(", ", gameStatuses.cards()));
     }
 }
