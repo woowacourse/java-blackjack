@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.Arrays;
+import java.util.List;
 import view.InputView;
 
 public class GameController {
@@ -10,6 +12,10 @@ public class GameController {
     }
 
     public void run() {
-        inputView.readPlayerName();
+        String rawPlayerNames = inputView.readPlayerName();
+        List<String> playerNames = Arrays.stream(rawPlayerNames.split(",")).toList();
+
+        System.out.println("---");
+
     }
 }
