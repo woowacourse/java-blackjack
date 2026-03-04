@@ -21,8 +21,8 @@ public class HandTest {
     }
 
     @Test
-    @DisplayName("버스트 판정 테스트")
-    void 점수_합계가_21_초과인_경우() {
+    @DisplayName("버스트 판정 테스트: 점수 합계가 21 초과인 경우")
+    void 정상_테스트_2() {
         List<Card> cards = List.of(Card.JACK, Card.TEN, Card.FIVE);
         Hand hand = new Hand(cards);
         boolean expected = true;
@@ -33,8 +33,8 @@ public class HandTest {
     }
 
     @Test
-    @DisplayName("버스트 판정 테스트")
-    void 점수_합계가_21_이하인_경우() {
+    @DisplayName("버스트 판정 테스트: 점수 합계가 21 이하인 경우")
+    void 정상_테스트_3() {
         List<Card> cards = List.of(Card.JACK, Card.NINE, Card.TWO);
         Hand hand = new Hand(cards);
         boolean expected = false;
