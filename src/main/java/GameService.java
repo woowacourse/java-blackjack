@@ -33,4 +33,11 @@ public class GameService {
         }
         return false;
     }
+
+    public boolean isHit(int score) {
+        if (score <= 16) {
+            return true;
+        }
+        return false;
+    }
 }
