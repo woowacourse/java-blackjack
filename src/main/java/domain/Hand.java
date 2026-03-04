@@ -21,7 +21,7 @@ public class Hand {
 
     public long countAce() {
         return cards.stream()
-            .filter(card -> card.isTypeOf(Card.ACE))
+            .filter(Card::isAce)
             .count();
     }
 

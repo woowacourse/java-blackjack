@@ -11,7 +11,9 @@ public class HandTest {
     @Test
     @DisplayName("점수 합계 테스트")
     void 정상_테스트_1() {
-        List<Card> cards = List.of(Card.JACK, Card.TEN);
+        List<Card> cards = List.of(
+            new Card(Suit.DIAMOND, Denomination.JACK),
+            new Card(Suit.DIAMOND, Denomination.TEN));
         Hand hand = new Hand(cards);
 
         int expected = 20;
@@ -23,7 +25,10 @@ public class HandTest {
     @Test
     @DisplayName("버스트 판정 테스트: 점수 합계가 21 초과인 경우")
     void 정상_테스트_2() {
-        List<Card> cards = List.of(Card.JACK, Card.TEN, Card.FIVE);
+        List<Card> cards = List.of(
+            new Card(Suit.DIAMOND, Denomination.JACK),
+            new Card(Suit.DIAMOND, Denomination.TEN),
+            new Card(Suit.DIAMOND, Denomination.FIVE));
         Hand hand = new Hand(cards);
         boolean expected = true;
 
@@ -35,7 +40,10 @@ public class HandTest {
     @Test
     @DisplayName("버스트 판정 테스트: 점수 합계가 21 이하인 경우")
     void 정상_테스트_3() {
-        List<Card> cards = List.of(Card.JACK, Card.NINE, Card.TWO);
+        List<Card> cards = List.of(
+            new Card(Suit.DIAMOND, Denomination.JACK),
+            new Card(Suit.DIAMOND, Denomination.NINE),
+            new Card(Suit.DIAMOND, Denomination.TWO));
         Hand hand = new Hand(cards);
         boolean expected = false;
 
@@ -47,7 +55,9 @@ public class HandTest {
     @Test
     @DisplayName("ACE 처리 테스트: 버스트가 되지 않은 경우")
     void 정상_테스트_4() {
-        List<Card> cards = List.of(Card.NINE, Card.ACE);
+        List<Card> cards = List.of(
+            new Card(Suit.DIAMOND, Denomination.NINE),
+            new Card(Suit.DIAMOND, Denomination.ACE));
         Hand hand = new Hand(cards);
         int expected = 20;
 
@@ -59,7 +69,9 @@ public class HandTest {
     @Test
     @DisplayName("ACE 처리 테스트: 버스트가 된 경우")
     void 정상_테스트_5() {
-        List<Card> cards = List.of(Card.ACE, Card.ACE);
+        List<Card> cards = List.of(
+            new Card(Suit.DIAMOND, Denomination.ACE),
+            new Card(Suit.DIAMOND, Denomination.ACE));
         Hand hand = new Hand(cards);
         int expected = 12;
 
