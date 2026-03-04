@@ -2,6 +2,7 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Deck {
@@ -9,6 +10,7 @@ public class Deck {
 
     public Deck() {
         makeCards();
+        Collections.shuffle(cards);
     }
 
     private void makeCards() {
@@ -22,5 +24,11 @@ public class Deck {
 
     public List<Card> getCards() {
         return List.copyOf(cards);
+    }
+
+    public Card drawCard() {
+        Card drawCard = cards.getFirst();
+        cards.removeFirst();
+        return drawCard;
     }
 }

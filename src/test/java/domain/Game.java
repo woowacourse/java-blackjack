@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 public class Game {
 
     private final Set<Player> players = new HashSet<>();
+    private final Dealer dealer = new Dealer();
+    private final Deck deck = new Deck();
 
     public Game(List<String> names) {
         validatePlayers(names);
@@ -37,5 +39,36 @@ public class Game {
 
     public Set<Player> getPlayers() {
         return Set.copyOf(players);
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public void startGame() {
+        players.forEach(this::initializeCard);
+        initializeCard();
+    }
+
+    private void initializeCard(Player player) {
+        for (int i = 0; i < 2; i++) {
+            distributeCard(player);
+        }
+    }
+
+    private void initializeCard() {
+        for (int i = 0; i < 2; i++) {
+            distributeCard();
+        }
+    }
+
+    private void distributeCard(Player player) {
+        Card card = deck.drawCard();
+        player.addCard(card);
+    }
+
+    private void distributeCard() {
+        Card firstCard = deck.drawCard();
+        dealer.addCard(firstCard);
     }
 }
