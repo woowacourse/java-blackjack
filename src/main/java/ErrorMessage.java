@@ -6,7 +6,7 @@ public enum ErrorMessage {
     //입력에 의한 예외가 아님. 코딩이 잘못된거임.
     HANDS_CARDS_SIZE("처음 게임 시작 시, 두장을 나눠줘야한다."),
     ACE_SCORE("ACE는 스코어가 변동된다."),
-    ;
+    BURST_TOTAL_SCORE("토탈 스코어는 0 이하일 수 없습니다.");
 
     private final String message;
 
