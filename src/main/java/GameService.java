@@ -21,6 +21,9 @@ public class GameService {
     
 
     public boolean isBlackjack(int score) {
-        
+        if(score == 21) {
+            return true;
+        }
+        return false;
     }
 }
