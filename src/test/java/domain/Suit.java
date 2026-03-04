@@ -1,0 +1,14 @@
+package domain;
+
+public enum Suit {
+    HEART("하트"),
+    DIAMOND("다이아"),
+    SPADE("스페이드"),
+    CLOVER("클로버");
+
+    private final String suit;
+
+    Suit(String suit) {
+        this.suit = suit;
+    }
+}
