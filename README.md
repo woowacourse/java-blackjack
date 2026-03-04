@@ -12,14 +12,14 @@
 ## 비지니스 기능
 
 - 플레이어 등록
-    - [] 최소 2자 ~ 최대 7자, 이외 범위는 `IllegalArgumentException`을 발생시킨다.
-    - [] 영어만 가능, 이외 형식은 `IllegalArgumentException`을 발생시킨다.
+    - [x] 최소 2자 ~ 최대 7자, 이외 범위는 `IllegalArgumentException`을 발생시킨다.
+    - [x] 영어만 가능, 이외 형식은 `IllegalArgumentException`을 발생시킨다.
     - [] 중복된 이름이 존재할 경우 `IllegalArgumentException`을 발생시킨다.
 
 - 게임 초기화
     - [x] 게임 시작 시, 모든 카드를 덱에 등록한다.
     - [x] 카드를 섞는다.
-    - [] 딜러와 플레이어에게 카드를 부여한다.
+    - [] 딜러와 플레이어는 카드를 받는다.
 
 - 히트/스탠드 여부 판정
     - [] 딜러와 플레이어의 히트/스탠드 여부를 판정한다.
