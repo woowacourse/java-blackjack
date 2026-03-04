@@ -137,4 +137,20 @@ class GameServiceTest {
         boolean result = gameService.isBurst(score);
         assertThat(result).isFalse();
     }
+
+    @Test
+    @DisplayName("딜러는 처음 받은 2장의 합이 16 이하면 1장을 추가로 받아야 한다")
+    public void if_dealer_card_sum_under16_must_one_more(){
+        int score = 16;
+        boolean result = gameService.isHit(score);
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러는 처음 받은 2장의 합이 17 이상이면 추가로 받을 수 없다")
+    public void if_dealer_card_sum_over17_stop(){
+        int score = 18;
+        boolean result = gameService.isHit(score);
+        assertThat(result).isFalse();
+    }
 }
