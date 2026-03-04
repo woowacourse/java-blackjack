@@ -27,7 +27,13 @@ public class CardsSumTest {
                 new Card("2", "하트"),
                 new Card("3", "스페이드"),
                 new Card("A", "다이아몬드")));
+        Cards cards3 = new Cards(List.of(
+                new Card("2", "하트"),
+                new Card("3", "스페이드"),
+                new Card("A", "다이아몬드"),
+                new Card("A", "클로버")));
         assertThat(cards1.sumScore()).isEqualTo(26);
         assertThat(cards2.sumScore()).isEqualTo(16);
+        assertThat(cards3.sumScore()).isEqualTo(17);
     }
 }
