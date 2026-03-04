@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-    public List<Card> cards;
+    private List<Card> cards;
 
     public Deck() {
         this.cards = CardFactory.createDeck();
@@ -29,4 +29,9 @@ public class Deck {
             throw new IllegalStateException(ErrorMessage.EMPTY_DECK.getMessage());
         }
     }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
 }
