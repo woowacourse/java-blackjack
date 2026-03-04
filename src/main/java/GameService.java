@@ -18,4 +18,9 @@ public class GameService {
         }
         return score;
     }
+    
+
+    public boolean isBlackjack(int score) {
+        
+    }
 }

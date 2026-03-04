@@ -105,4 +105,12 @@ class GameServiceTest {
         assertThat(dealer.getLoseRounds()).isEqualTo(totalUserWinRounds);
         assertThat(dealer.getDrawRounds()).isEqualTo(totalUserDrawRounds);
     }
+
+    @Test
+    @DisplayName("첫 배부 때 합이 21 나오면 블랙잭 판정이다")
+    public void if_card_sum_equals21_blackjack(){
+        int score = 21;
+        boolean result = gameService.isBlackjack(score);
+        assertThat(result).isTrue();
+    }
 }
