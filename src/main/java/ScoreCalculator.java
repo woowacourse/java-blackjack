@@ -25,4 +25,8 @@ public class ScoreCalculator {
 
         return currentScore + 10;
     }
+
+    public boolean isBust(int score) {
+        return score > 21;
+    }
 }

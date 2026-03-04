@@ -38,4 +38,12 @@ public class ScoreCalculatorTest {
 
         assertThat(score).isEqualTo(12);
     }
+
+    @Test
+    void 핸드가_21점이_넘으면_버스트다() {
+        ScoreCalculator calculator = new ScoreCalculator();
+        boolean result = calculator.isBust(22);
+
+        assertThat(result).isTrue();
+    }
 }

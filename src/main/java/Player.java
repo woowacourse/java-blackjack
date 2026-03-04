@@ -4,6 +4,15 @@ import java.util.List;
 public class Player {
     private String name;
     private List<Card> hand = new ArrayList<>();
+    private boolean isBust = false;
+
+    public boolean isBust() {
+        return isBust;
+    }
+
+    public void setBust() {
+        isBust = true;
+    }
 
     public Player(String name) {
         this.name = name;
