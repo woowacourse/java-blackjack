@@ -16,4 +16,8 @@ public class Hand {
             .mapToInt(Card::toScore)
             .sum();
     }
+
+    public boolean isBurst() {
+        return calculateScore() > BURST_THRESHOLD;
+    }
 }
