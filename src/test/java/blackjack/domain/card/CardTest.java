@@ -8,12 +8,23 @@ import org.junit.jupiter.api.Test;
 class CardTest {
 
     @Test
-    @DisplayName("ACE 카드인지 여부를 확인할 수 있다")
-    void isAce() {
+    @DisplayName("ACE 랭크의 카드는 isAce가 참이다")
+    void ACE_랭크의_카드는_isAce가_참이다() {
         Card aceCard = new Card(Suit.CLUB, Rank.ACE);
-        Card kingCard = new Card(Suit.CLUB, Rank.KING);
-
         assertThat(aceCard.isAce()).isTrue();
+    }
+
+    @Test
+    @DisplayName("ACE가 아닌 랭크의 카드는 isAce가 거짓이다")
+    void ACE가_아닌_랭크의_카드는_isAce가_거짓이다() {
+        Card kingCard = new Card(Suit.CLUB, Rank.KING);
         assertThat(kingCard.isAce()).isFalse();
+    }
+
+    @Test
+    @DisplayName("ACE 바로 다음 순서인 TWO 카드는 isAce가 거짓이다")
+    void ACE_바로_다음_순서인_TWO_카드는_isAce가_거짓이다() {
+        Card twoCard = new Card(Suit.CLUB, Rank.TWO);
+        assertThat(twoCard.isAce()).isFalse();
     }
 }

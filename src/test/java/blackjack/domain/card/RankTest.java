@@ -8,9 +8,20 @@ import org.junit.jupiter.api.Test;
 class RankTest {
 
     @Test
-    @DisplayName("ACE 여부를 확인할 수 있다")
-    void isAce() {
+    @DisplayName("ACE 카드는 isAce가 참이다")
+    void ACE_카드는_isAce가_참이다() {
         assertThat(Rank.ACE.isAce()).isTrue();
+    }
+
+    @Test
+    @DisplayName("ACE가 아닌 카드는 isAce가 거짓이다")
+    void ACE가_아닌_카드는_isAce가_거짓이다() {
         assertThat(Rank.KING.isAce()).isFalse();
+    }
+
+    @Test
+    @DisplayName("ACE 바로 다음 순서인 TWO는 isAce가 거짓이다")
+    void ACE_바로_다음_순서인_TWO는_isAce가_거짓이다() {
+        assertThat(Rank.TWO.isAce()).isFalse();
     }
 }
