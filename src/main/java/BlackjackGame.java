@@ -1,4 +1,5 @@
 import domain.Dealer;
+import domain.GameState;
 import domain.Hand;
 import domain.Name;
 import domain.Player;
@@ -30,6 +31,13 @@ public class BlackjackGame {
             dealer.receiveCard(card);
         }
 
-        System.out.println();
+        for (Player player : players.getPlayers()) {
+            while (player.getGameState() == GameState.HIT) {
+                String gameCommand = InputView.readHitOrStand(player.getName()); // y or n
+                // 랜덤 카드 부여
+                // 게임 상태 판단
+            }
+        }
+
     }
 }

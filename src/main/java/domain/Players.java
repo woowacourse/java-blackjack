@@ -14,4 +14,8 @@ public class Players {
     public void add(Player player) {
         players.add(player);
     }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 }

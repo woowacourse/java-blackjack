@@ -4,19 +4,29 @@ import domain.card.Card;
 
 public class Player {
 
-    private Name name;
-    private Hand hand;
+    private final Name name;
+    private final Hand hand;
+    private GameState gameState;
 
     public Player(Name name, Hand hand) {
         this.name = name;
         this.hand = hand;
+        this.gameState = GameState.HIT;
     }
 
     public void receiveCard(Card card) {
         hand.receiveCard(card);
     }
 
-    public Hand getHand() {
-        return hand;
+    public String getName() {
+        return name.getValue();
+    }
+
+    public int getScore() {
+        return hand.calculate();
+    }
+
+    public GameState getGameState() {
+        return gameState;
     }
 }

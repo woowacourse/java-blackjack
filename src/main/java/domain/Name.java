@@ -35,4 +35,8 @@ public class Name {
             throw new IllegalArgumentException(ExceptionMessage.INVALID_NAME_FORMAT.getMessage());
         }
     }
+
+    public String getValue() {
+        return value;
+    }
 }
