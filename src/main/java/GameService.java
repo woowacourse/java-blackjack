@@ -40,4 +40,11 @@ public class GameService {
         }
         return false;
     }
+
+    public int calculateOptimalAceScore(int sum) {
+        if (sum > 10) {
+         return 1;
+        }
+        return 11;
+    }
 }
