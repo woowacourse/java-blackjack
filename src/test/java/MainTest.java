@@ -59,5 +59,4 @@ public class MainTest {
             assertThat(exception.getMessage()).isEqualTo("잘못된 범위의 카드입니다.");
         }
     }
-
 }

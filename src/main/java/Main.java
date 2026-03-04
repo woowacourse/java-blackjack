@@ -16,7 +16,7 @@ public class Main {
         return sum;
     }
 
-    private static int modifyScore(String card) {
+    static int modifyScore(String card) {
         final String CARD_DELIMITER = "[KQJ]";
         final String CARD_NUMBER_BOUNDARY_DELIMITER = "[1-9]";
 
