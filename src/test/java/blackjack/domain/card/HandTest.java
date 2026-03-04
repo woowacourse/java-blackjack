@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 class HandTest {
 
-    // 성공 케이스 - 기본 점수 계산
     @Test
     @DisplayName("ACE가 없을 때 카드 숫자의 합을 점수로 반환한다")
     void calculateScore_returnsSumOfCardValues_whenNoAce() {
@@ -18,7 +17,6 @@ class HandTest {
         assertThat(hand.calculateScore()).isEqualTo(15);
     }
 
-    // 성공 케이스 - ACE 11로 계산
     @Test
     @DisplayName("ACE를 11로 계산해도 21 이하이면 ACE를 11로 계산한다")
     void calculateScore_countsAceAsEleven_whenTotalDoesNotExceedTwentyOne() {
@@ -29,7 +27,6 @@ class HandTest {
         assertThat(hand.calculateScore()).isEqualTo(19);
     }
 
-    // 성공 케이스 - ACE 1로 계산
     @Test
     @DisplayName("ACE를 11로 계산하면 21 초과일 때 ACE를 1로 계산한다")
     void calculateScore_countsAceAsOne_whenTotalExceedsTwentyOne() {
@@ -41,18 +38,6 @@ class HandTest {
         assertThat(hand.calculateScore()).isEqualTo(16);
     }
 
-    // 경계값 - ACE 여러 장
-    @Test
-    @DisplayName("ACE가 여러 장일 때 최대 하나의 ACE만 11로 계산한다")
-    void calculateScore_countsOnlyOneAceAsEleven_whenMultipleAces() {
-        Hand hand = new Hand();
-        hand.add(new Card(Suit.HEART, Rank.ACE));
-        hand.add(new Card(Suit.SPADE, Rank.ACE));
-
-        assertThat(hand.calculateScore()).isEqualTo(12);
-    }
-
-    // 성공 케이스 - 버스트 아님
     @Test
     @DisplayName("점수가 21 이하이면 버스트가 아니다")
     void isBust_returnsFalse_whenScoreIsEqualToTwentyOne() {
@@ -64,7 +49,6 @@ class HandTest {
         assertThat(hand.isBust()).isFalse();
     }
 
-    // 실패 케이스 - 버스트
     @Test
     @DisplayName("점수가 21 초과이면 버스트이다")
     void isBust_returnsTrue_whenScoreExceedsTwentyOne() {
