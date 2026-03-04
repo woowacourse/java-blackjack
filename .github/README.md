@@ -41,14 +41,14 @@
 ## 기능 설계
 
 #### 도메인 설계
-``` 
+
 Card(숫자, 모양) - 카드 단일 한장
 HandCard(Cards) - 사람 손의 카드
-Deck(52개의 Card) - 52장의 카드 
+domain.Deck(52개의 Card) - 52장의 카드 
 Player(이름, HandCard)
 Dealer(HandCard)
 BlackJack()
-```
+
 
 
 ## 팀 단위 규칙
