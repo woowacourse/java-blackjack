@@ -19,6 +19,11 @@ public class InputView {
         return Parser.parseByDelimiter(DELIMITER, input);
     }
 
+    public static String readHitOrStand(String name) {
+        System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n");
+        return readLine();
+    }
+
     private static String readLine() {
         String input = scanner.nextLine().strip();
         validateInput(input);
