@@ -10,9 +10,10 @@ public class PlayersTest {
     void 플레이어를_등록한다() {
         Players players = new Players();
         players.add(new Player("pobi"));
+        players.add(new Player("abc"));
 
         List<Player> records = players.getPlayers();
 
-        assertThat(records).anyMatch(player -> player.getName().equals("pobi"));
+        assertThat(records).anyMatch(player -> player.getName().equals("abc"));
     }
 }
