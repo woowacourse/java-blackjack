@@ -1,0 +1,25 @@
+package model;
+
+import static org.assertj.core.api.Assertions.*;
+
+import model.dto.Card;
+import org.junit.jupiter.api.Test;
+
+public class TestCard {
+    @Test
+    public void 카드_저장_정상_작동() {
+        //given
+        //init
+
+        Shape shape = Shape.CLOVER;
+        CardNumber number = CardNumber.FIVE;
+
+        Card card = new Card(shape, number);
+
+        //then
+        assertThat(card.shape()).isEqualTo(shape);
+        assertThat(card.cardNumber()).isEqualTo(number);
+
+    }
+
+}
