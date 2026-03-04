@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import service.GameService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -173,13 +174,14 @@ class GameServiceTest {
     @Test
     @DisplayName("덱을 셔플하면 카드의 순서가 바뀐다.")
     public void shuffled_card_must_different() {
-        Deck deck = new Deck();
-        List<String> beforeShuffle = new ArrayList<>(deck.getCards());
+        CardDeck deck = new CardDeck();
+        ArrayList<Card> beforeShuffle = new ArrayList<>(deck.getCards());
 
         deck.shuffle();
-        List<String> afterShuffle = deck.getCards();
+        List<Card> afterShuffle = deck.getCards();
 
         assertThat(afterShuffle).isNotEqualTo(beforeShuffle);
         assertThat(afterShuffle).containsExactlyInAnyOrderElementsOf(beforeShuffle);
     }
 }
+

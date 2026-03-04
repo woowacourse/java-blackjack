@@ -10,7 +10,7 @@ public class GameService {
                 score += 10;
             }
             else if (card.equals("A")) {
-
+                score += calculateOptimalAceScore(score);
             }
             else {
                 score += Integer.parseInt(card);
