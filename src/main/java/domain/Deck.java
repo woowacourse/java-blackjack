@@ -3,6 +3,7 @@ package domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class Deck {
     private List<Card> cards = new ArrayList<>();
@@ -18,6 +19,7 @@ public class Deck {
                 results.add(new Card(cardNumber, cardShape));
             }
         }
+        Collections.shuffle(results);
         return results;
     }
 
