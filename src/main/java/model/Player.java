@@ -9,16 +9,16 @@ public class Player {
 
     private final String CARD_DUPLICATE_ERROR = "덱에 중복된 카드가 있습니다.";
 
-    private final String name;
+    private final PlayerName name;
     private Integer score = 0;
     private final List<Card> deck = new ArrayList<>();
 
     public Player(String name) {
-        this.name = name;
+        this.name = new PlayerName(name);
     }
 
     public PlayerResult getResult() {
-        return new PlayerResult(name, List.copyOf(deck), score);
+        return new PlayerResult(name.get(), List.copyOf(deck), score);
     }
 
     public void addCard(Card card) {
@@ -32,5 +32,6 @@ public class Player {
             throw new IllegalArgumentException(CARD_DUPLICATE_ERROR);
         }
     }
+
 
 }
