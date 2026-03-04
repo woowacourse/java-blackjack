@@ -13,4 +13,9 @@ public class Card {
     public int getCardValue() {
         return grade.getValue();
     }
+
+    public boolean isAce() {
+        return grade.isAce();
+    }
+
 }

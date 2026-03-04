@@ -21,8 +21,21 @@ public class Hand {
     }
 
     public int calculate() {
-        return cards.stream()
+        int sum = cards.stream()
                 .mapToInt(Card::getCardValue)
                 .sum();
+        int aCount = 0;
+        for (Card card : cards) {
+            if (card.isAce()) {
+                aCount++;
+            }
+        }
+
+        while (aCount > 0 && sum > 21) {
+            sum -= 10;
+            aCount--;
+        }
+
+        return sum;
     }
 }
