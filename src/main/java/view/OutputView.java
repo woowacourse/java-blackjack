@@ -11,8 +11,12 @@ public class OutputView {
 
     public void printHandList(List<HandDto> handDtoList) {
         for (HandDto handDto : handDtoList) {
-            System.out.printf("%s카드: %s\n", handDto.name(), String.join(", ", handDto.hand()));
+            printHand(handDto);
         }
         System.out.println();
+    }
+
+    public void printHand(HandDto handDto) {
+        System.out.printf("%s카드: %s\n", handDto.name(), String.join(", ", handDto.hand()));
     }
 }
