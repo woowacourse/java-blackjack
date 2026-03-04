@@ -22,7 +22,7 @@ class DeckTest {
             cards.add(new Card(Rank.ACE, Suit.SPADE));
             assertThatThrownBy(() -> new Deck(cards))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage(ErrorMessage.ERROR_DECK_SIZE.getMessage());
+                    .hasMessage(ErrorMessage.DECK_SIZE.getMessage());
         }
 
         @Test
@@ -35,7 +35,7 @@ class DeckTest {
 
             assertThatThrownBy(() -> new Deck(cards))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage(ErrorMessage.ERROR_DECK_DUPLICATE.getMessage());
+                    .hasMessage(ErrorMessage.DECK_DUPLICATE.getMessage());
         }
 
     }
@@ -72,7 +72,7 @@ class DeckTest {
             Deck deck = TestDefaults.createDeck();
             assertThatThrownBy(() -> deck.drawCard(idx))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage(ErrorMessage.ERROR_INDEX_RANGE.getMessage());
+                    .hasMessage(ErrorMessage.INDEX_RANGE.getMessage());
         }
     }
 

@@ -14,19 +14,19 @@ public class Deck {
 
     private void validateSize(List<Card> cards) {
         if (cards.size() != CARD_SIZE) {
-            throw new IllegalArgumentException(ErrorMessage.ERROR_DECK_SIZE.getMessage());
+            throw new IllegalArgumentException(ErrorMessage.DECK_SIZE.getMessage());
         }
     }
 
     private void validateDuplicate(List<Card> cards) {
         if (new HashSet<>(cards).size() != cards.size()) {
-            throw new IllegalArgumentException(ErrorMessage.ERROR_DECK_DUPLICATE.getMessage());
+            throw new IllegalArgumentException(ErrorMessage.DECK_DUPLICATE.getMessage());
         }
     }
 
     public Card drawCard(int idx) {
         if (idx < 0 || idx > cards.size()) {
-            throw new IllegalArgumentException(ErrorMessage.ERROR_INDEX_RANGE.getMessage());
+            throw new IllegalArgumentException(ErrorMessage.INDEX_RANGE.getMessage());
         }
 
         Card card = cards.get(idx);
