@@ -43,4 +43,28 @@ public class HandTest {
 
         assertThat(actual).isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("ACE 처리 테스트: 버스트가 되지 않은 경우")
+    void 정상_테스트_4() {
+        List<Card> cards = List.of(Card.NINE, Card.ACE);
+        Hand hand = new Hand(cards);
+        int expected = 20;
+
+        int actual = hand.calculateScore();
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("ACE 처리 테스트: 버스트가 된 경우")
+    void 정상_테스트_5() {
+        List<Card> cards = List.of(Card.ACE, Card.ACE);
+        Hand hand = new Hand(cards);
+        int expected = 12;
+
+        int actual = hand.calculateScore();
+
+        assertThat(actual).isEqualTo(expected);
+    }
 }
