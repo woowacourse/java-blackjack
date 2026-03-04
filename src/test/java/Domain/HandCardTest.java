@@ -50,6 +50,27 @@ public class HandCardTest {
         //then
         assertThat(result).isEquals(21);
     }
+
+
+    @Test
+    @DisplayName("손에 있는 카드 버스트")
+    void 보유카드_버스트(){
+        //given
+        Card aceClover = new Card(CardRank.ACE, CardSuit.CLOVER); // A
+        Card aceHeart = new Card(CardRank.ACE, CardSuit.HEART); // A
+        Card four = new Card(CardRank.FOUR, CardSuit.CLOVER); // 4
+        Card five = new Card(CardRank.FIVE, CardSuit.CLOVER); // 5
+        handCard.addCard(aceClover);
+        handCard.addCard(aceHeart);
+        handCard.addCard(four);
+        handCard.addCard(five);
+
+        //when
+        int result = handCard.cardCalculator();
+
+        //then
+        assertThat(result).isEquals(0);
+    }
     
     @Test
     @DisplayName("카드 합 정상 계산")
@@ -67,4 +88,6 @@ public class HandCardTest {
         //then
         assertThat(result).isEquals(18);        
     }
+
+    
 }
