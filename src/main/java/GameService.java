@@ -26,4 +26,11 @@ public class GameService {
         }
         return false;
     }
+
+    public boolean isBurst(int score) {
+        if(score > 21) {
+            return true;
+        }
+        return false;
+    }
 }
