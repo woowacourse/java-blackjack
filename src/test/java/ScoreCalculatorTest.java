@@ -24,6 +24,20 @@ public class ScoreCalculatorTest {
         int currentScore = calculator.sumScore(hand);
         int finalScore = calculator.checkAce(currentScore, hand);
 
-        assertThat(currentScore).isEqualTo(21);
+        assertThat(finalScore).isEqualTo(21);
+    }
+
+    @Test
+    void 핸드에_A가_있고_합산점수가_11점_초과이면_원래점수를_사용한다() {
+        ScoreCalculator calculator = new ScoreCalculator();
+        List<Card> hand = List.of(
+                new Card(Rank.ACE, Suit.SPADE),
+                new Card(Rank.ACE, Suit.HEART),
+                new Card(Rank.KING, Suit.HEART));
+
+        int currentScore = calculator.sumScore(hand);
+        int finalScore = calculator.checkAce(currentScore, hand);
+
+        assertThat(finalScore).isEqualTo(12);
     }
 }

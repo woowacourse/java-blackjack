@@ -8,4 +8,19 @@ public class ScoreCalculator {
         }
         return score;
     }
+
+    public int checkAce(int currentScore, List<Card> hand) {
+        Card findCard
+                = hand.stream().filter(c -> c.getRank() == 1).findAny().orElse(null);
+
+        if (findCard == null) {
+            return currentScore;
+        }
+
+        if (currentScore + 10 > 21) {
+            return currentScore;
+        }
+
+        return currentScore + 10;
+    }
 }
