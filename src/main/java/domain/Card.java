@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Objects;
+
 public class Card {
     private CardNumber cardNumber;
     private CardShape cardShape;
@@ -17,5 +19,19 @@ public class Card {
             return 10;
         }
         return Integer.parseInt(cardNumber.getNumber());
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        Card card = (Card) object;
+        return cardNumber == card.cardNumber && cardShape == card.cardShape;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cardNumber, cardShape);
     }
 }
