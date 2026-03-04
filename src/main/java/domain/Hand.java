@@ -19,4 +19,10 @@ public class Hand {
     public List<Card> getCards() {
         return List.copyOf(cards);
     }
+
+    public int calculate() {
+        return cards.stream()
+                .mapToInt(Card::getCardValue)
+                .sum();
+    }
 }

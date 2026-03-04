@@ -25,4 +25,7 @@ public enum Grade {
         this.name = name;
     }
 
+    public int getValue() {
+        return value;
+    }
 }

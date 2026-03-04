@@ -10,5 +10,7 @@ public class Card {
         this.grade = grade;
     }
 
-
+    public int getCardValue() {
+        return grade.getValue();
+    }
 }
