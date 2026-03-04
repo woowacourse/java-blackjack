@@ -2,12 +2,17 @@ package domain;
 
 import domain.card.Card;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static domain.card.Rank.ACE;
 
 public class Hand {
     private List<Card> cards;
+
+    public Hand() {
+        cards = new ArrayList<>();
+    }
 
     public int getSum() {
         int sum = getSumFirst();
@@ -36,5 +41,9 @@ public class Hand {
 
     public void addCard(Card card) {
         cards.add(card);
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 }
