@@ -1,0 +1,40 @@
+package domain;
+
+import domain.card.Card;
+
+import java.util.List;
+
+import static domain.card.Rank.ACE;
+
+public class Hand {
+    private List<Card> cards;
+
+    public int getSum() {
+        int sum = getSumFirst();
+        long aceCount = countAce();
+
+        while (aceCount > 0 && sum > 21) {
+            sum -= 10;
+            aceCount--;
+        }
+
+        return sum;
+    }
+
+    // todo : 메서드명 변경
+    private int getSumFirst() {
+        return cards.stream()
+                .mapToInt(c -> c.rank().getScore())
+                .sum();
+    }
+
+    private long countAce() {
+        return cards.stream()
+                .filter(c -> c.rank() == ACE)
+                .count();
+    }
+
+    public void addCard(Card card) {
+        cards.add(card);
+    }
+}
