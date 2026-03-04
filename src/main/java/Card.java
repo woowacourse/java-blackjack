@@ -8,7 +8,7 @@ public class Card {
         this.shape = shape;
     }
 
-    public static int translateToScore(String rank) {
+    public int translateToScore() {
         if (rank.equals("J") || rank.equals("Q") || rank.equals("K")) {
             return 10;
         }
