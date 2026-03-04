@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,11 +12,11 @@ public class CardTest {
     void 카드_생성_테스트() {
         // given
         String value = "1";
-        String shape = "diamond";
+        Shape shape = Shape.DIAMOND;
 
-        // when
-
-        // then
+        // when & then
+        assertThatCode(() -> new Card(value, shape))
+                .doesNotThrowAnyException();
     }
 
 }
