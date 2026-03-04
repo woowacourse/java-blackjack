@@ -153,4 +153,20 @@ class GameServiceTest {
         boolean result = gameService.isHit(score);
         assertThat(result).isFalse();
     }
+
+    @Test
+    @DisplayName("Ace를 제외한 점수의 합이 10 이하면 Ace 점수는 11이 된다.")
+    public void if_remain_score_under10_ace_score_11() {
+        int sum = 10;
+        int aceScore = gameService.calculateOptimalAceScore(sum);
+        assertThat(aceScore).isEqualTo(11);
+    }
+
+    @Test
+    @DisplayName("Ace를 제외한 점수의 합이 11 이상이면 Ace 점수는 1이 된다.")
+    public void if_remain_score_over11_ace_score_1() {
+        int sum = 11;
+        int aceScore = gameService.calculateOptimalAceScore(sum);
+        assertThat(aceScore).isEqualTo(1);
+    }
 }
