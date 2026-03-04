@@ -1,7 +1,7 @@
 import java.util.List;
 
 public class ScoreCalculator {
-    public int sumScore(List<Card> hand) {
+    private int sumScore(List<Card> hand) {
         int score = 0;
         for (Card card : hand) {
             score += card.getRank();
@@ -9,7 +9,9 @@ public class ScoreCalculator {
         return score;
     }
 
-    public int checkAce(int currentScore, List<Card> hand) {
+    public int calculateScore(List<Card> hand) {
+        int currentScore = sumScore(hand);
+
         Card findCard
                 = hand.stream().filter(c -> c.getRank() == 1).findAny().orElse(null);
 

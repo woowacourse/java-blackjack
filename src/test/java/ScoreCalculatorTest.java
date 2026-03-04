@@ -11,9 +11,9 @@ public class ScoreCalculatorTest {
         ScoreCalculator calculator = new ScoreCalculator();
         List<Card> hand = List.of(new Card(Rank.JACK, Suit.SPADE), new Card(Rank.TEN, Suit.SPADE));
 
-        int currentScore = calculator.sumScore(hand);
+        int score = calculator.calculateScore(hand);
 
-        assertThat(currentScore).isEqualTo(20);
+        assertThat(score).isEqualTo(20);
     }
 
     @Test
@@ -21,10 +21,9 @@ public class ScoreCalculatorTest {
         ScoreCalculator calculator = new ScoreCalculator();
         List<Card> hand = List.of(new Card(Rank.ACE, Suit.SPADE), new Card(Rank.KING, Suit.SPADE));
 
-        int currentScore = calculator.sumScore(hand);
-        int finalScore = calculator.checkAce(currentScore, hand);
+        int score = calculator.calculateScore(hand);
 
-        assertThat(finalScore).isEqualTo(21);
+        assertThat(score).isEqualTo(21);
     }
 
     @Test
@@ -35,9 +34,8 @@ public class ScoreCalculatorTest {
                 new Card(Rank.ACE, Suit.HEART),
                 new Card(Rank.KING, Suit.HEART));
 
-        int currentScore = calculator.sumScore(hand);
-        int finalScore = calculator.checkAce(currentScore, hand);
+        int score = calculator.calculateScore(hand);
 
-        assertThat(finalScore).isEqualTo(12);
+        assertThat(score).isEqualTo(12);
     }
 }
