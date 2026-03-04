@@ -12,6 +12,9 @@ public class Card {
         if (rank.equals("J") || rank.equals("Q") || rank.equals("K")) {
             return 10;
         }
+        if (rank.equals("A")) {
+            return 11;
+        }
 
         return convertToNumber(rank);
     }
