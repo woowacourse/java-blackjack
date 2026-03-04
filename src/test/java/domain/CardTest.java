@@ -14,8 +14,15 @@ public class CardTest {
         }
     }
 
+    class DefaultRankNumberGenerator implements NumberGenerator {
+        @Override
+        public int generate() {
+            return 2;
+        }
+    }
+
     @Test
-    void 랜덤_카드_모양_테스트() {
+    void 랜덤_카드_모양_생성_테스트() {
         // given
         NumberGenerator numberGenerator = new DefaultShapeNumberGenerator();
 
@@ -24,5 +31,17 @@ public class CardTest {
 
         // then
         assertThat(cardShape).isEqualTo(CardShape.HEART);
+    }
+
+    @Test
+    void 랜덤_카드_랭크_생성_테스트() {
+        // given
+        NumberGenerator numberGenerator = new DefaultRankNumberGenerator();
+
+        // when
+        CardRank cardRank = CardRank.getRank(numberGenerator.generate());
+
+        // then
+        assertThat(cardRank).isEqualTo(CardRank.TWO);
     }
 }
