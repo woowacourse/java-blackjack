@@ -11,7 +11,7 @@ public class Card {
     }
 
     public String getDisplayName() {
-        return rank.getDisplayName() + suit.getDisplayName();
+        return rank.getName() + suit.getDisplayName();
     }
 
     public int getValue() {
