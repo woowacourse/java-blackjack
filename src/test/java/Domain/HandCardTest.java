@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class HandCardTest {
@@ -25,7 +27,7 @@ public class HandCardTest {
 
     @BeforeEach
     void setup(){
-        Card two = new Card(CardRank.TWO,CardSuit.ClOVER);
+        Card two = new Card(CardRank.TWO,CardSuit.CLOVER);
         Card three = new Card(CardRank.THREE, CardSuit.CLOVER);
         handCard = new HandCard();
         handCard.addCard(two);
@@ -48,7 +50,7 @@ public class HandCardTest {
         int result = handCard.cardCalculator();
 
         //then
-        assertThat(result).isEquals(21);
+        assertThat(result).isEqualTo(21);
     }
 
 
@@ -58,18 +60,18 @@ public class HandCardTest {
         //given
         Card aceClover = new Card(CardRank.ACE, CardSuit.CLOVER); // A
         Card aceHeart = new Card(CardRank.ACE, CardSuit.HEART); // A
-        Card four = new Card(CardRank.FOUR, CardSuit.CLOVER); // 4
         Card five = new Card(CardRank.FIVE, CardSuit.CLOVER); // 5
+        Card jack = new Card(CardRank.JACK, CardSuit.CLOVER); //J
         handCard.addCard(aceClover);
         handCard.addCard(aceHeart);
-        handCard.addCard(four);
         handCard.addCard(five);
+        handCard.addCard(jack);
 
         //when
         int result = handCard.cardCalculator();
 
         //then
-        assertThat(result).isEquals(0);
+        assertThat(result).isEqualTo(0);
     }
     
     @Test
@@ -86,8 +88,10 @@ public class HandCardTest {
         int result = handCard.cardCalculator();
 
         //then
-        assertThat(result).isEquals(18);        
-    }
+        assertThat(result).isEqualTo(18);        
+
+        Card jack = new Card(CardRank.JACK, CardSuit.CLOVER);
+        handCard.addCard(jack);    }
 
     
 }
