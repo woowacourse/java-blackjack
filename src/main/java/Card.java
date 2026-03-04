@@ -19,6 +19,10 @@ public class Card {
         return convertToNumber(rank);
     }
 
+    public String getRank() {
+        return rank;
+    }
+
     private static int convertToNumber(String rank) {
         int score;
         try {
