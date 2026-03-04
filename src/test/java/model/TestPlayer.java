@@ -2,11 +2,13 @@ package model;
 
 
 import model.dto.PlayerResult;
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.api.Assertions.*;
 
 public class TestPlayer {
 
+    @Test
     public void 결과_출력_정상_작동() {
         //given
         //init
@@ -23,7 +25,7 @@ public class TestPlayer {
                 .isEqualTo(0);
     }
 
-
+    @Test
     public void 카드_받기_정상_작동() {
         //given
         //init
