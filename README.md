@@ -42,3 +42,27 @@
     - [형식] `딜러: x승 y패`
   - [ ] 각 플레이어는 승 또는 패 출력
     - [형식] `[플레이어]: '승' or '패'`
+
+## 고민사항
+
+---
+
+- 딜러가 버스트 된 경우:
+  - 버스트되지 않은 플레이어는 모두 승, 버스트 된 플레이어는 모두 패
+- 딜러와 플레이어가 동점인 경우:
+  - 무승부 처리
+
+## 초기 구상
+
+---
+
+### Model
+- Hands(List<Card>)
+- Suit(enum)
+- Rank(enum)
+- Card(Suit, Rank)
+- CardDeck(List<Card>)
+- Dealer(Hands)
+- Player(Hands)
+- Result(enum: Win, Draw, Lose)
+- DealerResult(Map<Result, Count>)
