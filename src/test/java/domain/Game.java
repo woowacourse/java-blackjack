@@ -10,11 +10,22 @@ public class Game {
     private final Set<Player> players = new HashSet<>();
 
     public Game(List<String> names) {
-        validateDuplicatedName(names);
+        validatePlayers(names);
 
         players.addAll(names.stream()
                 .map(Player::new)
                 .collect(Collectors.toSet()));
+    }
+
+    private void validatePlayers(List<String> names) {
+        validateDuplicatedName(names);
+        validatePlayerNumber(names);
+    }
+
+    private void validatePlayerNumber(List<String> names) {
+        if (names.isEmpty() || names.size() > 7) {
+            throw new IllegalArgumentException("[ERROR] 플레이어는 1명 이상 7명 이하여야 합니다.");
+        }
     }
 
     private void validateDuplicatedName(List<String> names) {
