@@ -6,7 +6,12 @@ import java.util.List;
 
 public abstract class Participant {
 
+    private final String name;
     private final Hand hand = new Hand();
+
+    protected Participant(final String name) {
+        this.name = name;
+    }
 
     public void receiveCard(final Card card) {
         hand.add(card);
@@ -24,7 +29,9 @@ public abstract class Participant {
         return hand.getCards();
     }
 
-    public abstract String getName();
+    public String getName() {
+        return name;
+    }
 
     public abstract boolean canReceiveCard();
 }
