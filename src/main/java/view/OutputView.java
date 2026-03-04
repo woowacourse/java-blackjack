@@ -1,5 +1,6 @@
 package view;
 
+import dto.BlackjackResultDto;
 import dto.HandDto;
 import java.util.List;
 
@@ -12,15 +13,24 @@ public class OutputView {
     public void printHandList(List<HandDto> handDtoList) {
         for (HandDto handDto : handDtoList) {
             printHand(handDto);
+            System.out.println();
         }
         System.out.println();
     }
 
     public void printHand(HandDto handDto) {
-        System.out.printf("%s카드: %s\n", handDto.name(), String.join(", ", handDto.hand()));
+        System.out.printf("%s카드: %s", handDto.name(), String.join(", ", handDto.hand()));
     }
 
     public void printDealerHit() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public void printBlackjackResult(List<BlackjackResultDto> blackjackResultDtoList) {
+        for (BlackjackResultDto resultDto : blackjackResultDtoList) {
+            printHand(resultDto.handDto());
+            System.out.printf(" - 결과: %d\n", resultDto.score());
+        }
+        System.out.println();
     }
 }
