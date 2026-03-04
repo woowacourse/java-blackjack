@@ -25,13 +25,20 @@ public class Participant {
         return new Participant(input, isDealer);
     }
 
-
     public String getName() {
         return name;
     }
 
     public List<Card> draw(Card card) {
         hands.add(card);
+        return List.copyOf(hands);
+    }
+
+    public List<Card> open(int round) {
+        if (isDealer && round == 1) {
+            return List.of(hands.getFirst());
+        }
+
         return List.copyOf(hands);
     }
 }
