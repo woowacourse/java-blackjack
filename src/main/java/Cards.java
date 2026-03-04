@@ -8,6 +8,18 @@ public class Cards {
         this.cards = cards;
     }
 
+    public int sumScore() {
+        int totalScore = 0;
+        for (Card card : cards) {
+            totalScore += card.translateToScore();
+        }
+        int aceCount = countAces();
+        while (totalScore > 21 && aceCount > 0) {
+            totalScore -= 10;
+            aceCount--;
+        }
+        return totalScore;
+    }
 
     private int countAces() {
         int count = 0;
