@@ -1,6 +1,8 @@
 package model;
 
 
+import java.util.List;
+import model.dto.Card;
 import model.dto.PlayerResult;
 import org.junit.jupiter.api.Test;
 
@@ -29,8 +31,8 @@ public class TestPlayer {
     public void 카드_받기_정상_작동() {
         //given
         //init
-        Card card = new Card(문양, 번호);
-        Player player = new Player();
+        Card card = new Card(Shape.CLOVER, CardNumber.EIGHT);
+        Player player = new Player("jason");
         Integer originalScore = player.getResult().score();
 
         //when
