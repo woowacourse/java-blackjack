@@ -17,5 +17,9 @@ public class GameController {
 
         System.out.println("---");
 
+        for (String playerName : playerNames) {
+            inputView.readHitOption(playerName);
+        }
+
     }
 }
