@@ -1,5 +1,4 @@
 import java.util.List;
-import java.util.Scanner;
 
 public class GameController {
 
@@ -14,45 +13,49 @@ public class GameController {
     }
 
     public void run() {
-        // 플레이어 입력
-        List<String> playerNames = inputView.readPlayerName();
-        for (String playerName : playerNames) {
-            manager.addPlayer(playerName);
-        }
+        registerPlayer();
+        initGame();
+        playPlayerTurn();
+        playDealerTurn();
+        outputView.printScoreResults(manager.getScoreResults());
+        outputView.printFinalResult(manager.getFinalResult());
+    }
 
-        // 카드를 2장씩 세팅
-        manager.startGame();
-
-        // 초기 정보 표출
-        List<GameInitialInfoDto> initialInfo = manager.getInitialInfo();
-        outputView.printInitialInfo(initialInfo);
-
-        // 플레이어 턴 실행
-        for (Player player : manager.getPlayerSequence()) {
-            while (true) {
-                if (player.isBust() || manager.isBlackjack(player)) {
-                    break;
-                }
-
-                if (inputView.readCommand(player.getName()).equals("n")) {
-                    break;
-                }
-
-                List<String> playerHand = manager.drawPlayerCard(player);
-                outputView.printHand(playerHand, player.getName());
-            }
-        }
-
-        // 딜러 턴 실행
+    private void playDealerTurn() {
         while (manager.isDealerTurn()) {
             manager.drawDealerCard();
             outputView.printDealerTurn();
         }
+    }
 
-        // 점수 결과 출력
-        outputView.printScoreResults(manager.getScoreResults());
+    private void playPlayerTurn() {
+        for (Player player : manager.getPlayerSequence()) {
+            while (isPlayerTurn(player) && isStand(player)) {
+                List<String> playerHand = manager.drawPlayerCard(player);
+                outputView.printHand(playerHand, player.getName());
+            }
+        }
+    }
 
-        // 최종 승패 출력
-        outputView.printFinalResult(manager.getFinalResult());
+    private void registerPlayer() {
+        List<String> playerNames = inputView.readPlayerName();
+        for (String playerName : playerNames) {
+            manager.addPlayer(playerName);
+        }
+    }
+
+    private void initGame() {
+        manager.startGame();
+
+        List<GameInitialInfoDto> initialInfo = manager.getInitialInfo();
+        outputView.printInitialInfo(initialInfo);
+    }
+
+    private boolean isStand(Player player) {
+        return !inputView.readCommand(player.getName()).equals("n");
+    }
+
+    private boolean isPlayerTurn(Player player) {
+        return !(player.isBust() && manager.isBlackjack(player));
     }
 }
