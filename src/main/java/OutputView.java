@@ -1,32 +1,18 @@
 import java.text.MessageFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String DEAL_MESSAGE = "딜러와 {0}에게 {1}장을 나누었습니다.";
     private static final String SHOW_HAND_MESSAGE = "{0}카드: {1}";
     private static final String FINAL_RESULT_MESSAGE = "{0}: {1}";
+    private static final String DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
     public void printInitialInfo(List<GameInitialInfoDto> initialInfo) {
-        String playerNames = initialInfo.stream()
-                .skip(1) // 0번은 딜러
-                .map(GameInitialInfoDto::getPlayerName)
-                .collect(Collectors.joining(", "));
-
-        System.out.println(MessageFormat.format(
-                DEAL_MESSAGE,
-                playerNames,
-                initialInfo.getFirst().getInitialHandSize()
-        ));
-
-        for (GameInitialInfoDto info : initialInfo) {
-            System.out.println(MessageFormat.format(
-                    SHOW_HAND_MESSAGE,
-                    info.getPlayerName(),
-                    String.join(", ", info.getHand())
-            ));
-        }
-        System.out.println();
+        printHandOutNotice(initialInfo);
+        printInitialHands(initialInfo);
     }
 
     public void printHand(List<String> hand, String name) {
@@ -39,7 +25,7 @@ public class OutputView {
 
     public void printDealerTurn() {
         System.out.println();
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(DEALER_DRAW_MESSAGE);
     }
 
     public void printScoreResults(List<GameScoreResultDto> scoreResults) {
@@ -49,7 +35,7 @@ public class OutputView {
                     SHOW_HAND_MESSAGE,
                     scoreResult.getPlayerName(),
                     String.join(", ", scoreResult.getHand())
-                    + " - 결과: " + scoreResult.getResult()
+                            + " - 결과: " + scoreResult.getResult()
             ));
         }
         System.out.println();
@@ -57,43 +43,30 @@ public class OutputView {
 
     public void printFinalResult(List<GameFinalResultDto> finalResult) {
         System.out.println("## 최종 승패");
-
-        int winCount = 0;
-        int drawCount = 0;
-        int loseCount = 0;
-
         GameFinalResultDto firstPlayer = finalResult.removeFirst();
+        Map<Result, Integer> resultCounts = new HashMap<>();
+        countDealerResult(finalResult, resultCounts);
+        printDealerResult(firstPlayer, resultCounts);
+        printPlayerResult(finalResult);
+    }
 
+    private void countDealerResult(List<GameFinalResultDto> finalResult, Map<Result, Integer> resultCounts) {
         for (GameFinalResultDto result : finalResult) {
-            if (result.getResult() == Result.LOSE) {
-                loseCount++;
-                continue;
-            }
-
-            if (result.getResult() == Result.DRAW) {
-                drawCount++;
-                continue;
-            }
-
-            winCount++;
+            Integer beforeCount = resultCounts.getOrDefault(result.result, 0);
+            resultCounts.put(result.result, ++beforeCount);
         }
+    }
 
+    private void printDealerResult(GameFinalResultDto firstPlayer, Map<Result, Integer> resultCounts) {
         StringBuilder sb = new StringBuilder();
-        sb.append(firstPlayer.getName());
-        sb.append(": ");
-        if (winCount != 0) {
-            sb.append(winCount).append("승 ");
-        }
-
-        if (drawCount != 0) {
-            sb.append(winCount).append("무 ");
-        }
-
-        if (loseCount != 0) {
-            sb.append(winCount).append("패 ");
+        sb.append(firstPlayer.getName()).append(": ");
+        for (Result result : resultCounts.keySet()) {
+            sb.append(resultCounts.get(result)).append(result.getName());
         }
         System.out.println(sb);
+    }
 
+    private void printPlayerResult(List<GameFinalResultDto> finalResult) {
         for (GameFinalResultDto result : finalResult) {
             System.out.println(MessageFormat.format(
                     FINAL_RESULT_MESSAGE,
@@ -101,5 +74,29 @@ public class OutputView {
                     result.getResult()
             ));
         }
+    }
+
+    private void printHandOutNotice(List<GameInitialInfoDto> initialInfo) {
+        String playerNames = initialInfo.stream()
+                .skip(1) // 0번은 딜러
+                .map(GameInitialInfoDto::getPlayerName)
+                .collect(Collectors.joining(", "));
+
+        System.out.println(MessageFormat.format(
+                DEAL_MESSAGE,
+                playerNames,
+                initialInfo.getFirst().getInitialHandSize()
+        ));
+    }
+
+    private void printInitialHands(List<GameInitialInfoDto> initialInfo) {
+        for (GameInitialInfoDto info : initialInfo) {
+            System.out.println(MessageFormat.format(
+                    SHOW_HAND_MESSAGE,
+                    info.getPlayerName(),
+                    String.join(", ", info.getHand())
+            ));
+        }
+        System.out.println();
     }
 }
