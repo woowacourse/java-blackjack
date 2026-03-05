@@ -25,6 +25,7 @@ public class BlackjackController {
         Dealer dealer = new Dealer();
 
         cardProvider.provideInitCards(players, dealer);
+        checkBlackjack(players, dealer);
         OutputView.printInitCards(players, dealer);
 
         hit(players, dealer);
@@ -44,6 +45,15 @@ public class BlackjackController {
             cardProvider.provideOneCard(dealer);
         }
     }
+
+    private void checkBlackjack(List<Player> players, Dealer dealer) {
+        for (Player player : players) {
+            if (cardCalculator.totalScore(player.getCardStatus().getCards()) == 21) {
+                player.markBlackjack();
+            }
+        }
+    }
+
 
     private boolean checkAddCard(Player player, CardCalculator cardCalculator) {
         if (cardCalculator.totalScore(player.getCardStatus().getCards()) >= 21) {

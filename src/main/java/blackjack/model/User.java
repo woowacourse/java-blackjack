@@ -21,4 +21,12 @@ public class User {
     public void addCard(Card card) {
         cardStatus.addCard(card);
     }
+
+    public void markBlackjack() {
+        cardStatus.markBlackjack();
+    }
+
+    public boolean isBlackjack() {
+        return cardStatus.isBlackjack();
+    }
 }

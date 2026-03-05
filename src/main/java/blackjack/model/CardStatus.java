@@ -7,14 +7,12 @@ public class CardStatus {
 
     private final List<Card> cards;
     private int totalScore;
-    private boolean isBlackjack;
-    private boolean isBust;
+    private boolean blackjack;
 
     public CardStatus() {
         this.cards = new ArrayList<>();
         this.totalScore = 0;
-        this.isBlackjack = false;
-        this.isBust = false;
+        this.blackjack = false;
     }
 
     public List<Card> getCards() {
@@ -26,10 +24,14 @@ public class CardStatus {
     }
 
     public boolean isBlackjack() {
-        return isBlackjack;
+        return blackjack;
     }
 
     public void addCard(Card card) {
         cards.add(card);
+    }
+
+    public void markBlackjack() {
+        this.blackjack = true;
     }
 }
