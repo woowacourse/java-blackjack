@@ -47,8 +47,6 @@ public class GameController {
             dealer.addCard(deck.peekCard());
             outputView.printDealerReceiveCard();
         }
-
-
     }
 
     private void printGameStart(List<String> playerNames, Dealer dealer, List<Player> players) {
@@ -64,7 +62,7 @@ public class GameController {
         }
         outputView.printCurrentHoldCard(player);
 
-        while (hitOption.equals("y")) {
+        while (hitOption.equals("y") && !player.isBust()) {
             hitOption = inputView.readHitOption(player.getName());
             if (hitOption.equals("n")) {
                 break;

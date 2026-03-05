@@ -85,8 +85,7 @@ public class PlayerTest {
         Player player = new Player("pobi", cards);
 
         player.addCard(new Card(CardNumber.EIGHT, CardShape.CLUB));
-        int playerTotalScore = player.calculateTotalScore();
-        boolean isBust = player.isBust(playerTotalScore);
+        boolean isBust = player.isBust();
 
         assertTrue(isBust);
     }
