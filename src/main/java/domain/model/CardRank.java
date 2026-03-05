@@ -14,9 +14,9 @@ public enum CardRank {
     EIGHT(8, "8", 8, 8),
     NINE(9, "9", 9, 9),
     TEN(10, "10", 10, 10),
-    JACK(11, "", 10, 10),
-    QUEEN(12, "A", 10, 10),
-    KING(13, "A", 10, 10);
+    JACK(11, "J", 10, 10),
+    QUEEN(12, "Q", 10, 10),
+    KING(13, "K", 10, 10);
 
     private int code;
     private String name;
@@ -35,5 +35,17 @@ public enum CardRank {
                 .filter(value -> value.code == code)
                 .findFirst()
                 .orElse(null);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public int getAdditionalValue() {
+        return additionalValue;
     }
 }

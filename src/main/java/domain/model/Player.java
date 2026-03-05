@@ -19,6 +19,10 @@ public class Player implements Person {
         return name;
     }
 
+    public Deck getDeck() {
+        return deck;
+    }
+
     // 플레이어에게 초기 생성된 카드 2개가 있는 덱을 부여
     public void assignDeck(Deck deck) {
         this.deck = deck;

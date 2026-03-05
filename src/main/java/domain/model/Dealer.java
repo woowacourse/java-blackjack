@@ -13,6 +13,10 @@ public class Dealer implements Person {
         return new Dealer(deck);
     }
 
+    public Deck getDeck() {
+        return deck;
+    }
+
     @Override
     public int getDeckSum() {
         return 0;

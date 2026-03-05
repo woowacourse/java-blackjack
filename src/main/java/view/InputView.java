@@ -6,9 +6,17 @@ import java.io.InputStreamReader;
 
 public class InputView {
 
-    private static BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+    public InputView() {
+    }
 
-    public static String inputPlayerNames() throws IOException {
-        return bufferedReader.readLine();
+    private final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+    public String inputPlayerNames() {
+        System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
+        try {
+            return bufferedReader.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

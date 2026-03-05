@@ -21,17 +21,17 @@ public class CardFactory {
 
     // 카드 생성 후 저장
     public Card createCard() {
-        CardRank rank = CardRank.getRank(randomRankNumberGenerator.generate());
-        CardShape shape = CardShape.getShape(randomShapeNumberGenerator.generate());
-
-        Card card = getCard(rank, shape);
+        Card card = getCard();
         return cardRepository.save(card);
     }
 
-    private Card getCard(CardRank rank, CardShape shape) {
-        while (!cardRepository.isExistByShapeAndRank(rank, shape)) {
+    private Card getCard() {
+        CardRank rank = CardRank.getRank(randomRankNumberGenerator.generate());
+        CardShape shape = CardShape.getShape(randomShapeNumberGenerator.generate());
+
+        if (!cardRepository.isExistByShapeAndRank(rank, shape)) {
             return Card.of(rank, shape);
         }
-        return null;
+        return getCard();
     }
 }
