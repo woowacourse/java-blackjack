@@ -1,4 +1,7 @@
+package domain;
+
 import java.util.List;
+import util.ErrorMessage;
 
 public class BlackjackHand {
     public static final int ACE_PROFIT_VALUE = 10;

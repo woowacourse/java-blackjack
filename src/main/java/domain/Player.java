@@ -1,3 +1,7 @@
+package domain;
+
+import util.ErrorMessage;
+
 public class Player {
     private static final int MIN_NAME_SIZE = 2;
     private static final int MAX_NAME_SIZE = 7;

@@ -1,3 +1,7 @@
+package util;
+
+import domain.Deck;
+
 public enum ErrorMessage {
     DECK_SIZE("카드 사이즈는 %d 이어야 합니다.".formatted(Deck.CARD_SIZE)),
     DECK_DUPLICATE("카드는 중복될 수 없습니다."),

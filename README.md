@@ -61,15 +61,15 @@
   - 추후 idx 값을 주입받는다.
   - idx 값이 삭제되기 때문에 LinkedList 사용 O(1)
 - 동일한 호출이 하위 클래스에서 상위 클래스로 반복될것 같다면 캡슐화가 깨졌는지 확인하자.
-  ex) Card에서 Rank.equals()를 통해 FaceCard(J/Q/K) 확인 -> 해당 값을 가장 잘 아는 Rank에게 책임 맡김
-- BlackjackHand 에서 카드 값의 총합을 반환하는 메서드를 만들려고 했다. 
+  ex) Card에서 domain.Rank.equals()를 통해 FaceCard(J/Q/K) 확인 -> 해당 값을 가장 잘 아는 Rank에게 책임 맡김
+- domain.BlackjackHand 에서 카드 값의 총합을 반환하는 메서드를 만들려고 했다. 
   - 하나의 카드 값을 반환하는 메서드를 만들었다. 
-  - BlackjackHand <- Card <- Rank 순으로 값을 포장만 하고 넘기는 케이스가 발생
-  - Card 값자체를 가장 잘 아는 Card에게 책임을 넘기고 BlackjackHand 는 함수를 사용했다.
+  - domain.BlackjackHand <- domain.Card <- domain.Rank 순으로 값을 포장만 하고 넘기는 케이스가 발생
+  - domain.Card 값자체를 가장 잘 아는 Card에게 책임을 넘기고 domain.BlackjackHand 는 함수를 사용했다.
 - 테스트 주도 개발에서 테스트를 안한 케이스
   enum과 같이 get만을 이용한 상수는 테스트를 진행하지 않았다.
   이유: 상수이기 때문에 테스트 할 필요 없다. (로직이 아니다.)
-- 아이디어가 떠올라서 막 구현하다보니 단위테스트가 제대로 진행되지 않았다.(BlackjackHand)
+- 아이디어가 떠올라서 막 구현하다보니 단위테스트가 제대로 진행되지 않았다.(domain.BlackjackHand)
   - 설계 구조가 바뀌면서 테스트를 진행하기보다 구조가 명확해진 후에 테스트를 진행하려고 했다.
 
 - 내비게이터가 TODO 리스트 작성하는것 좋은것 같다.

@@ -1,5 +1,8 @@
+package domain;
+
 import java.util.HashSet;
 import java.util.List;
+import util.ErrorMessage;
 
 public class Deck {
     public static final int CARD_SIZE = 52;

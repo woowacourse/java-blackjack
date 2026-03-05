@@ -1,3 +1,5 @@
+package domain;
+
 public class Dealer {
     private static final String NAME = "딜러";
     private static final int BOUNDARY = 16;
