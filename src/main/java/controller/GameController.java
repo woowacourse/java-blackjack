@@ -33,31 +33,34 @@ public class GameController {
             players.add(player);
         }
 
-        List<Card> cards = deck.handOutCards();
-        System.out.println(cards);
-        Dealer dealer = new Dealer(cards);
-
-        System.out.println(dealer);
-        outputView.printStartCardMessage(playerNames);
-        System.out.println(dealer.getHoldCards().getFirst());
-        outputView.printDealerStartCard(dealer.getHoldCards().getFirst());
-        outputView.printStartCard(players);
+        Dealer dealer = new Dealer(deck.handOutCards());
+        printGameStart(playerNames, dealer, players);
 
         for (Player player : players) {
-            String hitOption = inputView.readHitOption(player.getName());
-            if(hitOption.equals("y")) {
-                player.addCard(deck.peekCard());
-            }
-            outputView.printCurrentHoldCard(player);
+            processRound(player, deck);
+        }
+    }
 
-            while (hitOption.equals("y")) {
-                hitOption = inputView.readHitOption(player.getName());
-                if (hitOption.equals("n")) {
-                    break;
-                }
-                player.addCard(deck.peekCard());
-                outputView.printCurrentHoldCard(player);
+    private void printGameStart(List<String> playerNames, Dealer dealer, List<Player> players) {
+        outputView.printStartCardMessage(playerNames);
+        outputView.printDealerStartCard(dealer.getHoldCards().getFirst());
+        outputView.printStartCard(players);
+    }
+
+    private void processRound(Player player, Deck deck) {
+        String hitOption = inputView.readHitOption(player.getName());
+        if (hitOption.equals("y")) {
+            player.addCard(deck.peekCard());
+        }
+        outputView.printCurrentHoldCard(player);
+
+        while (hitOption.equals("y")) {
+            hitOption = inputView.readHitOption(player.getName());
+            if (hitOption.equals("n")) {
+                break;
             }
+            player.addCard(deck.peekCard());
+            outputView.printCurrentHoldCard(player);
         }
     }
 }

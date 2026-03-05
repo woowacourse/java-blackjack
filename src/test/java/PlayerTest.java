@@ -1,6 +1,7 @@
 import domain.Card;
 import domain.CardNumber;
 import domain.CardShape;
+import domain.Deck;
 import domain.Player;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -15,10 +16,9 @@ public class PlayerTest {
     @Test
     @DisplayName("숫자에 대한 카드 점수를 계산한다.")
     void calculateNumberTotalScoreTest() {
-        List<Card> cards1 = List.of(new Card(CardNumber.EIGHT, CardShape.CLUB), new Card(CardNumber.FOUR, CardShape.CLUB));
+        List<Card> cards1 = List.of(new Card(CardNumber.EIGHT, CardShape.CLUB),
+                new Card(CardNumber.FOUR, CardShape.CLUB));
         Player player1 = new Player("pobi", cards1);
-
-
 
         int totalScore1 = player1.calculateTotalScore();
 
@@ -89,5 +89,16 @@ public class PlayerTest {
         boolean isBust = player.isBust(playerTotalScore);
 
         assertTrue(isBust);
+    }
+
+    @Test
+    @DisplayName("카드를 한 장 받는다.")
+    void receiveOneCardTest() {
+        Deck deck = new Deck();
+        Card card = deck.peekCard();
+
+        Assertions.assertThat(deck.getCards().size()).isEqualTo(51);
+        Assertions.assertThat(card).isInstanceOf(Card.class);
+        Assertions.assertThat(card).isNotIn(deck.getCards());
     }
 }
