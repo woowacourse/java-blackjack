@@ -2,37 +2,45 @@ import domain.Card;
 import domain.CardDeck;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardDeckTest {
 
     @Test
-    void 생성한_카드덱의_갯수가_중복되지_않는_52개이다() {
-        //given: 생성된 카드덱을 가져오기만?
+    void 생성한_카드덱은_카드_52장을_가진다() {
+        //given
         CardDeck cardDeck = new CardDeck();
-        //when: 카드덱 개수 파악
+        //when
         Integer size = cardDeck.getDeckSize();
-        //then: 개수가 52개인지 확인
+        //then
         assertThat(size).isEqualTo(52);
     }
 
     @Test
-    void 뽑은_카드가_올바른_카드이다(){
-        List<String> rank=List.of("A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K");
-        List<String> pattern=List.of("스페이드", "다이아몬드", "하트", "클로버");
-        //given: 카드덱 준비
-        CardDeck cardDeck=new CardDeck();
+    void 카드덱의_52장은_중복되지_않는다() {
+        //given
+        CardDeck cardDeck = new CardDeck();
+        Set<Card> notDuplicatedDeck = new HashSet<>();
 
-        //when: 카드 뽑기
-        Card popCard=cardDeck.drawCard();
+        //when
+        notDuplicatedDeck.addAll(cardDeck.getCardDeck());
 
-        //then: 뽑은 카드의 Rank와 Pattern이 각각 Rank 클래스와 Pattern 클래스에 포함되는지 확인 (목업 사용)
-        assertThat(rank).contains(popCard.getCardCode());
-        assertThat(pattern).contains(popCard.getCardShape());
+        //then
+        assertThat(notDuplicatedDeck.size()).isEqualTo(52);
+    }
 
-        System.out.println(popCard.getCardCode());
-        System.out.println(popCard.getCardShape());
+    @Test
+    void 카드덱에서_한장을_뽑으면_카드덱_사이즈가_1만큼_감소한다() {
+        //given
+        CardDeck cardDeck = new CardDeck();
+
+        //when
+        cardDeck.drawCard();
+
+        //then
+        assertThat(cardDeck.getDeckSize()).isEqualTo(51);
     }
 }
