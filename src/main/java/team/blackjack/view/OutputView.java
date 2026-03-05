@@ -1,10 +1,7 @@
 package team.blackjack.view;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Scanner;
 import team.blackjack.control.dto.DrawResult;
 
 public class OutputView {
@@ -31,9 +28,19 @@ public class OutputView {
 
         println("딜러카드: %s".formatted(result.dealerCard()));
         for (Entry<String, List<String>> entry : result.playerCards().entrySet()) {
-            String playerCardNames = String.join(", ", entry.getValue());
-            println("%s카드: %s".formatted(entry.getKey(),playerCardNames));
+            printPlayerCards(entry.getKey(), entry.getValue());
         }
+    }
 
+    public static void printAskDrawCard(String playerName) {
+        println("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)".formatted(playerName));
+    }
+
+    public static void printPlayerCards(String playerName, List<String> cardNames) {
+        println("%s카드: %s".formatted(playerName, String.join(", ", cardNames)));
+    }
+
+    public static void printDealerHitMessage() {
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 }

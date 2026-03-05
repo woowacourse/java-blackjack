@@ -20,4 +20,10 @@ public class Hand {
     public int getCardCount() {
         return cards.size();
     }
+
+    public List<String> getCardNames() {
+        return cards.stream()
+                .map(Card::getCardName)
+                .toList();
+    }
 }

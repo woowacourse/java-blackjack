@@ -11,7 +11,6 @@ import team.blackjack.view.InputView;
 import team.blackjack.view.OutputView;
 
 public class BlackJackController {
-    private BlackjackGame blackjackGame;
     private final BlackJackService blackJackService;
 
     public BlackJackController(BlackJackService blackJackService) {
@@ -44,7 +43,31 @@ public class BlackJackController {
         blackJackService.drawInitialCards();
         OutputView.printDrawResult(convert(blackjackGame));
 
+        readHitDecision(blackjackGame, blackjackGame.getPlayers());
 
+        while (blackJackService.shouldDealerHit()) {
+            OutputView.printDealerHitMessage();
+            blackJackService.hitDealer();
+        }
+    }
+
+    private void decideDealer(BlackjackGame blackjackGame) {
+
+    }
+
+    private void readHitDecision(BlackjackGame game, List<Player> players) {
+        players.forEach(player -> processHit(game, player));
+    }
+
+    private void processHit(BlackjackGame game, Player player) {
+        while (true) {
+            OutputView.printAskDrawCard(player.getName());
+            if (!InputView.readHitDecision()) {
+                return;
+            }
+            blackJackService.draw(game, player);
+            OutputView.printPlayerCards(player.getName(), player.getHands().getFirst().getCardNames());
+        }
     }
 
     private DrawResult convert(BlackjackGame game) {
@@ -55,6 +78,5 @@ public class BlackJackController {
         final Map<String, List<String>> playerCards = game.getAllPlayerCards();
 
         return new DrawResult(playerNames, cards.getFirst().getCardName(), playerCards);
-
     }
 }
