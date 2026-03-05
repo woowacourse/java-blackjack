@@ -10,6 +10,6 @@ public class Dealer extends Participant{
 
     @Override
     protected boolean isPlaying() {
-        return super.hand.scoreSum() <= PLAYING_VALUE;
+        return hand.scoreSum() <= PLAYING_VALUE;
     }
 }

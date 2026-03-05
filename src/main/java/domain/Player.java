@@ -2,12 +2,14 @@ package domain;
 
 public class Player extends Participant {
 
+    private static final int PLAYING_VALUE = 20;
+
     protected Player(String name, Hand hand) {
         super(name, hand);
     }
 
     @Override
     protected boolean isPlaying() {
-        return false;
+        return hand.scoreSum() <= PLAYING_VALUE;
     }
 }
