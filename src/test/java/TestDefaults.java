@@ -3,10 +3,23 @@ import java.util.Collections;
 import java.util.List;
 
 public class TestDefaults {
+    private static final Suit FIRST_SUIT = Suit.SPADE;
+    private static final Suit SECOND_SUIT = Suit.HEART;
+    private static final Rank DEFAULT_RANK = Rank.ACE;
+
     private static final List<Card> DEFAULT_CARDS = createCards();
+    private static final BlackjackHand DEFAULT_BLACKJACK_HAND = createBlackjackHand();
 
     public static Deck createDeck() {
         return new Deck(createCards());
+    }
+
+    public static BlackjackHand createBlackjackHand() {
+        return new BlackjackHand(List.of(new Card(DEFAULT_RANK, FIRST_SUIT), new Card(DEFAULT_RANK, FIRST_SUIT)));
+    }
+
+    public static BlackjackHand getBlackjackHand() {
+        return DEFAULT_BLACKJACK_HAND;
     }
 
     public static List<Card> createCards() {
@@ -23,18 +36,19 @@ public class TestDefaults {
     public static List<Card> getCardsByRanks(List<Rank> ranks) {
         List<Card> cards = new ArrayList<>();
 
-        int rankIdx = 0;
-
-        for (Card card : DEFAULT_CARDS) {
-            if (rankIdx == ranks.size()) {
-                break;
-            }
-            if (card.rank().equals(ranks.get(rankIdx))) {
-                cards.add(card);
-                rankIdx++;
-            }
+        for (Rank rank : ranks) {
+            addCardByRank(rank, cards);
         }
         return cards;
+    }
+
+    private static void addCardByRank(Rank rank, List<Card> cards) {
+        for (Card card : DEFAULT_CARDS) {
+            if (card.rank().equals(rank)) {
+                cards.add(card);
+                return;
+            }
+        }
     }
 
     public static Card getCardByRank(Rank rank) {
