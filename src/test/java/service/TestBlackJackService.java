@@ -3,12 +3,16 @@ package service;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import java.util.List;
+import java.util.Map;
 import model.Cards;
 import model.Dealer;
+import model.DealerWinning;
+import model.MatchStatus;
 import model.Player;
 import model.PlayerName;
 import model.Players;
 import model.PlayersWinning;
+import model.dto.ParticipantWinning;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -60,10 +64,28 @@ public class TestBlackJackService {
         dealer.addScore(dealerScore);
         player.addScore(playerScore);
 
-        PlayersWinning gameResult = blackJackService.getGameResult(players, dealer);
-
+        ParticipantWinning gameResult = blackJackService.getGameResult(players, dealer);
+        Map<MatchStatus, Integer> dealerWinning = gameResult.dealerWinning().getDealerWinning();
 
         //then
-        assertThat(gameResult.getPlayersWinnings().getFirst().matchStatus().getStatus()).isEqualTo(result);
+        assertThat(gameResult.playersWinning().getPlayersWinnings().getFirst().matchStatus().getStatus()).isEqualTo(result);
+
+        if(result.equals("승")) {
+            assertThat(dealerWinning.get(MatchStatus.WIN)).isEqualTo(1);
+            assertThat(dealerWinning.get(MatchStatus.LOSE)).isEqualTo(0);
+            assertThat(dealerWinning.get(MatchStatus.DRAW)).isEqualTo(0);
+            return;
+        }
+
+        if(result.equals("패")) {
+            assertThat(dealerWinning.get(MatchStatus.WIN)).isEqualTo(0);
+            assertThat(dealerWinning.get(MatchStatus.LOSE)).isEqualTo(1);
+            assertThat(dealerWinning.get(MatchStatus.DRAW)).isEqualTo(0);
+            return;
+        }
+
+        assertThat(dealerWinning.get(MatchStatus.WIN)).isEqualTo(0);
+        assertThat(dealerWinning.get(MatchStatus.LOSE)).isEqualTo(0);
+        assertThat(dealerWinning.get(MatchStatus.DRAW)).isEqualTo(1);
     }
 }
