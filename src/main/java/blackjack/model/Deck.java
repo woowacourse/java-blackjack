@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-    private List<Card> cards; // 52장을 가지고 있음
+    private final List<Card> cards; // 52장을 가지고 있음
 
     public Deck() {
         this.cards = createDeck();
