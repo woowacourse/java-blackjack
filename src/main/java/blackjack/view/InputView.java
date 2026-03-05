@@ -1,6 +1,6 @@
-package view;
+package blackjack.view;
 
-import utils.Console;
+import blackjack.utils.Console;
 
 public class InputView {
 

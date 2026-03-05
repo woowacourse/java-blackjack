@@ -1,4 +1,4 @@
-package utils;
+package blackjack.utils;
 
 import java.util.Scanner;
 

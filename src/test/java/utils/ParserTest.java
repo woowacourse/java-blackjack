@@ -2,6 +2,7 @@ package utils;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import blackjack.utils.Parser;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
