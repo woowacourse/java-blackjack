@@ -10,10 +10,18 @@ public class InputParser {
         StringTokenizer stringTokenizer = new StringTokenizer(input.strip(), ",");
         List<String> names = new ArrayList<>();
 
+        validateEmptyInput(names);
+
         while(stringTokenizer.hasMoreTokens()){
             names.add(stringTokenizer.nextToken());
         }
 
         return names;
+    }
+
+    private static void validateEmptyInput(List<String> names) {
+        if (names.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
     }
 }
