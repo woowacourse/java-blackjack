@@ -1,8 +1,8 @@
 package domain;
 
 public class Card {
-    private final CardNumber cardNumber;
-    private final CardShape cardShape;
+    private CardNumber cardNumber;
+    private CardShape cardShape;
 
     private Card(CardNumber cardNumber, CardShape cardShape) {
         this.cardNumber = cardNumber;
