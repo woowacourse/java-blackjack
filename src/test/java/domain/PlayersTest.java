@@ -21,4 +21,11 @@ class PlayersTest {
         List<String> players = List.of("pobi", "james", "eunoh", "ruro", "ruro1", "ruro2");
         Assertions.assertThrows(IllegalArgumentException.class, () -> new Players(players));
     }
+
+    @Test
+    @DisplayName("플레이어 이름이 중복되는 경우 오류가 발생해야 한다.")
+    void 플레이어_이름_중복_금지() {
+        List<String> players = List.of("pobi", "james", "eunoh", "ruro", "ruro");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Players(players));
+    }
 }

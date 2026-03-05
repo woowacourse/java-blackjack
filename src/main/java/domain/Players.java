@@ -1,14 +1,17 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Players {
 
     private final List<Player> players;
 
     public Players(List<String> playerNames) {
-        validate(playerNames);
+        validateSize(playerNames);
+        validateDuplicateNames(playerNames);
         this.players = from(playerNames);
     }
 
@@ -22,8 +25,16 @@ public class Players {
         return players;
     }
 
-    private void validate(List<String> players) {
+    private void validateSize(List<String> players) {
         if (players.size() > 5)
             throw new IllegalArgumentException("플레이어 인원 수는 5명 이하여야 합니다.");
+    }
+
+    private void validateDuplicateNames(List<String> players) {
+        Set<String> uniqNames = new HashSet<>(players);
+
+        if (uniqNames.size() != players.size()) {
+            throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
+        }
     }
 }
