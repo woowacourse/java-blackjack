@@ -32,7 +32,7 @@ public class Deck {
     }
 
     public List<Card> getCards() {
-        return List.copyOf(cards);
+        return cards;
     }
 
     public Card draw() {
