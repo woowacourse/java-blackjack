@@ -6,7 +6,7 @@ public class Participants {
 
     private Participants(String[] values) {
         this.values = Arrays.stream(values)
-                .map(Participant::from)
+                .map(Participant::of)
                 .toList();
     }
 

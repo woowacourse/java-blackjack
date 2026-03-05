@@ -1,7 +1,5 @@
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ApplicationTest {
@@ -24,7 +22,7 @@ class ApplicationTest {
         String input = "pobi";
 
         //when
-        Participant from = Participant.from(input);
+        Participant from = Participant.of(input);
 
         //then
         assertThat(from.getName()).isEqualTo(input);

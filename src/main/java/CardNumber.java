@@ -14,7 +14,7 @@ public enum CardNumber {
     J(10),
     Q(10),
     K(10),
-    NONE(0);
+    ACE(11);
 
     private int value;
 
