@@ -2,6 +2,7 @@ package domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,9 +22,15 @@ class PlayerTest {
                 // given
                 String name = "jacob";
 
-                // when & then
-                new Player(name);
+                // when
+                Player player = new Player(name);
+                String actual = player.getName();
+
+                // then
+                String expected = "jacob";
+                Assertions.assertEquals(expected, actual);
             }
+            
         }
 
         @Nested
