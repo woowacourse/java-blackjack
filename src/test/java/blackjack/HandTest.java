@@ -20,10 +20,39 @@ public class HandTest {
     }
 
     @Test
-    void 총_점수_계산() {
+    void 총_점수_계산_노멀() {
         Hand hand = new Hand();
         hand.addCard(new Card(CardPoint.TWO, CardPattern.DIAMOND));
         hand.addCard(new Card(CardPoint.QUEEN, CardPattern.DIAMOND));
         assertThat(hand.getTotalPoint()).isEqualTo(12);
     }
+
+    @Test
+    void 총_점수_계산_에이스_버스트_아님() {
+        Hand hand = new Hand();
+        hand.addCard(new Card(CardPoint.ACE, CardPattern.DIAMOND));
+        hand.addCard(new Card(CardPoint.QUEEN, CardPattern.DIAMOND));
+        assertThat(hand.getTotalPoint()).isEqualTo(21);
+    }
+
+    @Test
+    void 총_점수_계산_에이스_버스트_처리() {
+        Hand hand = new Hand();
+        hand.addCard(new Card(CardPoint.ACE, CardPattern.DIAMOND));
+        hand.addCard(new Card(CardPoint.FIVE, CardPattern.DIAMOND));
+        hand.addCard(new Card(CardPoint.QUEEN, CardPattern.DIAMOND));
+        assertThat(hand.getTotalPoint()).isEqualTo(16);
+    }
+
+    @Test
+    void 총_점수_계산_에이스_버스트_처리_에이스_여러개() {
+        Hand hand = new Hand();
+        hand.addCard(new Card(CardPoint.ACE, CardPattern.DIAMOND));
+        hand.addCard(new Card(CardPoint.ACE, CardPattern.CLUB));
+        hand.addCard(new Card(CardPoint.ACE, CardPattern.HEART));
+        hand.addCard(new Card(CardPoint.FIVE, CardPattern.DIAMOND));
+        hand.addCard(new Card(CardPoint.QUEEN, CardPattern.DIAMOND));
+        assertThat(hand.getTotalPoint()).isEqualTo(18);
+    }
+
 }
