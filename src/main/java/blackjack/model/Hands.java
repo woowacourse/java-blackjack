@@ -24,10 +24,20 @@ public class Hands {
         cards.add(card);
     }
 
-    //핸즈가 가진 카드들의 점수를 계산한다.
+    // 핸즈가 가진 카드들의 점수를 계산한다.
+    // 에이스 개수가 1개 이상이면서 베이스 스코어가 10점 이하이면 10을 추가로 더해준다
     public int calculateTotalScore() {
-        return this.cards.stream()
+        int baseScore = this.cards.stream()
                 .mapToInt(Card::score)
                 .sum();
+
+        boolean hasAce = cards.stream()
+                .anyMatch(Card::isAce);
+
+        if (hasAce && baseScore <= 11) {
+            baseScore += 10;
+        }
+
+        return baseScore;
     }
 }

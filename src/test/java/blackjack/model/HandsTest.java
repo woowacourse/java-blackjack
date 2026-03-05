@@ -33,4 +33,35 @@ class HandsTest {
         // when & then
         assertThat(hands.calculateTotalScore()).isEqualTo(20);
     }
+
+    @Test
+    @DisplayName("에이스 점수 판별 - 에이스가 1점으로 계산되는 경우")
+    void aceScoreTest1() {
+        // given
+        Hands hands = Hands.empty();
+        hands.addACard(new Card(Rank.TEN, Suit.CLOVER));
+        hands.addACard(new Card(Rank.TWO, Suit.CLOVER));
+        hands.addACard(new Card(Rank.ACE, Suit.CLOVER));
+
+        // when
+        int totalScore = hands.calculateTotalScore();
+
+        // then
+        assertThat(totalScore).isEqualTo(13);
+    }
+
+    @Test
+    @DisplayName("에이스 점수 판별 - 에이스가 11점으로 계산되는 경우")
+    void aceScoreTest2() {
+        // given
+        Hands hands = Hands.empty();
+        hands.addACard(new Card(Rank.TEN, Suit.CLOVER));
+        hands.addACard(new Card(Rank.ACE, Suit.CLOVER));
+
+        // when
+        int totalScore = hands.calculateTotalScore();
+
+        // then
+        assertThat(totalScore).isEqualTo(21);
+    }
 }
