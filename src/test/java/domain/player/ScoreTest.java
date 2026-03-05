@@ -23,7 +23,7 @@ class ScoreTest {
 
     @Test
     @DisplayName("카드가 에이스일 때 버스트일 경우 1이 더해지는지 검증")
-    void 카드_에이스_11로_계산() {
+    void 카드_에이스_1로_계산() {
         // given
         Score score = new Score();
         Card card1 = new Card("K", "하트");
