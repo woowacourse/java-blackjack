@@ -29,6 +29,15 @@ public class OutputView {
         System.out.println("딜러카드: " + card);
     }
 
+    public static void printCardByParticipantsWithScore(Participant player, int sum) {
+        List<String> cards = player.getCards()
+                .stream()
+                .map(OutputView::convert)
+                .toList();
+        System.out.print(player.getName() + "카드: " + String.join(", ", cards));
+        System.out.println(" - 결과: "+sum);
+    }
+
     private static String convert(Card card) {
         int value = card.value().getValue();
         String convertedValue = switch (value) {
@@ -44,5 +53,10 @@ public class OutputView {
     public static void printToOpenNewCard(String name, int base) {
         System.out.println();
         System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.", name, base);
+    }
+
+    // TODO 리팩토링 대상
+    public static void printBlank() {
+        System.out.println();
     }
 }

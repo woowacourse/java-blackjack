@@ -69,6 +69,13 @@ public class BlackjackController {
             sum = calculateSum(dealer.getCards());
         }
 
+        OutputView.printBlank();
+        OutputView.printCardByParticipantsWithScore(dealer, sum);
+        for(Participant player : players) {
+            int playerSum = calculateSum(player.getCards());
+            OutputView.printCardByParticipantsWithScore(player, playerSum);
+        }
+
     }
 
     private int calculateSum(List<Card> cards) {
