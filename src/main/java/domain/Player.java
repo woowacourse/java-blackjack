@@ -19,8 +19,18 @@ public class Player {
     }
 
     public int calculateScore() {
-        return cards.stream()
+        int cardScore = cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
+
+        if (isBustWithAce(cardScore)) {
+            cardScore -= 10;
+        }
+
+        return cardScore;
+    }
+
+    private boolean isBustWithAce(int cardScore) {
+        return cardScore > 21 && cards.stream().anyMatch(Card::isAce);
     }
 }
