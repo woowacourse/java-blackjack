@@ -19,6 +19,10 @@ public class Card {
         return pattern.getShape();
     }
 
+    public Rank getRank() {
+        return rank;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
