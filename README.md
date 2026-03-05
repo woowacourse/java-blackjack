@@ -14,7 +14,7 @@
 - [x] 랜덤 카드 뽑기
 - [x] 점수의 합 계산
 - [ ] ACE카드 처리(1과 11처리)
-- [ ] 카드 정보들 `List<String>` 반환
+- [x] 카드 정보들 `List<String>` 반환
 
 3. Participant
 - 공통

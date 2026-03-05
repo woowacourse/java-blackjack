@@ -2,6 +2,7 @@ package domain;
 
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class Hand {
 
@@ -19,6 +20,10 @@ public class Hand {
         return cards.stream()
                 .mapToInt(Card::score)
                 .sum();
+    }
+
+    List<String> cardInfos() {
+        return cards.stream().map(Card::info).collect(Collectors.toList());
     }
 
     private Card createCard() {
