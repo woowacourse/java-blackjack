@@ -14,6 +14,14 @@ public class User {
         this.cards = new ArrayList<>();
     }
 
+    public void bring(Card card) {
+        cards.add(card);
+    }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
     private void validate(String name) {
         if (name.length() > 5) {
             throw new IllegalArgumentException("유저 이름은 5자가 넘을 수 없습니다.");

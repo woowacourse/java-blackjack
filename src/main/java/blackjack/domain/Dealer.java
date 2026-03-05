@@ -13,6 +13,10 @@ public class Dealer {
         this.cards = new ArrayList<>();
     }
 
+    public void bring(Card card) {
+        cards.add(card);
+    }
+
     public Card bringCard() {
         return deck.bringTopCard();
     }
