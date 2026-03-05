@@ -20,7 +20,7 @@
 - 숫자 검증
 - 카드 패턴 검증
 ---
-### Cards(1급 컬렉션)
+### Hand(1급 컬렉션)
 #### field
 - List Card
 - 카드 주인
@@ -39,9 +39,9 @@
 - roleIsDealer 딜러인지 확인 후 카드 뽑을지
 - decideWinner(Member(역할이 dealer))
 ---
-### GameTable(Service)
+### GameTable
 #### field
-- List Members
+- Members(일급 컬렉션)
 
 #### method
 - join : player 추가
@@ -61,13 +61,14 @@ jason카드: 7클로버, K스페이드 - 결과: 17
   jason: 패
  ```
 
+### Service
 
 ### Controller
 - inputView로 입력받는 멤버 추가 (join 호출)
 - GameTable에서 멤버 리스트를 받아와서 멤버별 draw의사 판별 반복
 
 ---
-### CardGenerator
+### Deck
 #### method
 - draw
 - Card Generator 52 queue에 초기화
