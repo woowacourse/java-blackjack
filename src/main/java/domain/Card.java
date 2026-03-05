@@ -15,6 +15,6 @@ public class Card {
     }
 
     public boolean isAce() {
-        return this.rank.isAce();
+        return rank == Rank.ACE;
     }
 }

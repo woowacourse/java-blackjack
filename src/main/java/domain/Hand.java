@@ -13,6 +13,10 @@ public class Hand {
         this.hand.add(card);
     }
 
+    public boolean isBust() {
+        return calculateSum() > 21;
+    }
+
     public int calculateSum() {
         int sum = 0;
         int aceCount = 0;

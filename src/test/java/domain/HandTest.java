@@ -40,4 +40,15 @@ class HandTest {
         }
         Assertions.assertEquals(hand.calculateSum(), 12);
     }
+
+    @Test
+    @DisplayName("점수 합산이 21 초과이면 버스트로 판단한다.")
+    void Ace_21초과_버스트_판단() {
+        List<Card> cards = List.of(new Card(Rank.EIGHT, Suit.DIAMOND), new Card(Rank.KING, Suit.HEART), new Card(Rank.JACK, Suit.DIAMOND));
+        Hand hand = new Hand();
+        for (Card card : cards) {
+            hand.drawCard(card);
+        }
+        Assertions.assertTrue(hand.isBust());
+    }
 }
