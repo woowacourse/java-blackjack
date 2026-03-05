@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Participant {
     public static final int BUST_THRESHOLD = 21;
+    public static final int DEALER_THRESHOLD = 16;
     private String name;
     private List<Card> hands;
     private boolean isDealer;
@@ -36,13 +37,17 @@ public class Participant {
         return name;
     }
 
+    public boolean dealerNeedDraw() {
+        return calculateScore() <= DEALER_THRESHOLD;
+    }
+
     public List<Card> draw(Card card) {
         hands.add(card);
         return List.copyOf(hands);
     }
 
-    public List<String> open(int round) {
-        if (isDealer && round == 1) {
+    public List<String> open(boolean firstTurn) {
+        if (isDealer && firstTurn) {
             return List.of(hands.getFirst().toString());
         }
 

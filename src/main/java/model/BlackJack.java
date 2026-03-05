@@ -8,7 +8,7 @@ import util.Randoms;
 
 public class BlackJack {
     private Participants participants;
-    private int round;
+    private boolean firstTurn = Boolean.TRUE;
     private List<Card> pickedCards = new ArrayList<>();
 
     private BlackJack(Participants participants) {
@@ -26,7 +26,7 @@ public class BlackJack {
         List<Participant> players = participants.getPlayers();
 
         for (Participant player : players) {
-            if (dealer.calculateScore() > player.calculateScore()) {
+            if (dealer.calculateScore() > player.calculateScore() || player.isBust()) {
                 resultMap.merge("승", 1, Integer::sum);
                 continue;
             }
@@ -44,7 +44,7 @@ public class BlackJack {
         List<Participant> players = participants.getPlayers();
 
         for (Participant player : players) {
-            if (dealer.calculateScore() > player.calculateScore()) {
+            if (dealer.calculateScore() > player.calculateScore() || player.isBust()) {
                 resultMap.put(player.getName(), Boolean.FALSE);
                 continue;
             }
@@ -66,5 +66,13 @@ public class BlackJack {
                 participant.draw(pick);
             }
         }
+    }
+
+    public boolean isFirstTurn() {
+        return firstTurn;
+    }
+
+    public void setFirstTurn() {
+        this.firstTurn = Boolean.FALSE;
     }
 }

@@ -40,7 +40,7 @@ public class ParticipantTest {
 
             // when
 //            List<Card> opened = participant.open(1);
-            List<String> opened = participant.open(1);
+            List<String> opened = participant.open(true);
 
             // then
             assertThat(opened.getFirst()).isEqualTo("1스페이드");
@@ -56,7 +56,7 @@ public class ParticipantTest {
             participant.draw(secondCard);
 
             // when
-            List<String> opened = participant.open(2);
+            List<String> opened = participant.open(false);
 
             // then
             assertThat(opened).hasSize(2);
@@ -72,7 +72,7 @@ public class ParticipantTest {
             participant.draw(secondCard);
 
             // when
-            List<String> opened = participant.open(1);
+            List<String> opened = participant.open(true);
 
             // then
             assertThat(opened).hasSize(2);

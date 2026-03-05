@@ -1,8 +1,10 @@
 package controller;
 
 import model.BlackJack;
+import model.Participant;
 import model.Participants;
 import util.InputParser;
+import util.Randoms;
 import view.InputView;
 import view.OutputView;
 
@@ -21,13 +23,51 @@ public class BlackJackController {
         rawParticipants += inputView.readParticipantNames();
         String[] parsedName = InputParser.parseName(rawParticipants);
 
-
         Participants participants = Participants.of(parsedName);
         participants.getDealer().setDealer(true);
         BlackJack blackJack = BlackJack.from(participants);
 
         blackJack.dealOut();
+        outputView.printDealOut(participants, blackJack.isFirstTurn());
+        blackJack.setFirstTurn();
 
-        outputView.printDealOut(participants, 1);
+        for (Participant participant : participants) {
+            if (participant.getName().equals("딜러")) {
+                continue;
+            }
+
+            if (participant.calculateScore() == 21) continue;
+
+            if (participant.calculateScore() == 21) {
+                continue;
+            }
+
+            String input;
+            do {
+                input = inputView.readHitOrNot(participant.getName());
+                if (input.equals("n")) {
+                    outputView.printHands(participant, blackJack.isFirstTurn());
+                    break;
+                }
+                participant.draw(Randoms.pick());
+                if (participant.isBust()) {
+                    participant.open(blackJack.isFirstTurn());
+                    outputView.printBustState(participant.getName(), participant.calculateScore());
+                    outputView.printHands(participant, blackJack.isFirstTurn());
+                    break;
+                }
+                outputView.printHands(participant, blackJack.isFirstTurn());
+
+            } while (input.equals("y"));
+        }
+
+        Participant dealer = participants.getDealer();
+        if (dealer.dealerNeedDraw()) {
+            dealer.draw(Randoms.pick());
+            outputView.printDealerDraw();
+        }
+
+        outputView.printHandsAndScore(participants, blackJack.isFirstTurn());
+        outputView.printResult(blackJack.calculateDealerResult(), blackJack.calculatePlayerResult());
     }
 }
