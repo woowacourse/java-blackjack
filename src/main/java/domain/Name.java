@@ -8,7 +8,7 @@ public class Name {
 
     private static final int MINIMUM_RANGE = 2;
     private static final int MAXIMUM_RANGE = 7;
-    private static final Pattern FORMAT = Pattern.compile("^[a-zA-Z]*$");
+    private static final Pattern FORMAT = Pattern.compile("^[a-zA-Zㄱ-힣]*$");
 
     private String value;
 
