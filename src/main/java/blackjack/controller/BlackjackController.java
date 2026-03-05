@@ -4,9 +4,11 @@ import blackjack.model.CardCalculator;
 import blackjack.model.CardProvider;
 import blackjack.model.Dealer;
 import blackjack.model.Player;
+import blackjack.model.User;
 import blackjack.util.PlayerParser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,6 +32,13 @@ public class BlackjackController {
         OutputView.printInitCards(players, dealer);
 
         hit(players, dealer);
+
+        List<User> users = new ArrayList<>(players);
+        users.addFirst(dealer);
+
+        for (User user : users) {
+            OutputView.printCardStatus(user, cardCalculator.totalScore(user.getCardStatus().getCards()));
+        }
     }
 
     public void hit(List<Player> players, Dealer dealer) {
