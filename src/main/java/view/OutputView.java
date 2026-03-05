@@ -74,6 +74,7 @@ public class OutputView {
         for(Entry<MatchStatus, Integer> matchStatus : dealerWinning.getDealerWinning().entrySet()) {
             printStatusResult(matchStatus.getKey(), matchStatus.getValue());
         }
+        printNewLine();
     }
 
 
