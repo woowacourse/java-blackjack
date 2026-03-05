@@ -17,7 +17,7 @@ class DealerTest {
         Dealer dealer = new Dealer("딜러", 1);
 
         //when
-        dealer.drawCards(player);
+        dealer.giveCard(player);
 
         //then
         Assertions.assertThat(player.getCardSize()).isEqualTo(1);
