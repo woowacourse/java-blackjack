@@ -1,0 +1,33 @@
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
+
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
+import org.junit.jupiter.api.Test;
+
+public class CardDistributorTest {
+    @Test
+    void draw_random_card() {
+        Random mockRandom = mock(Random.class);
+        CardDistributor cardDistributor = new CardDistributor(mockRandom);
+
+        when(mockRandom.nextInt(13)).thenReturn(0); // "2"
+        when(mockRandom.nextInt(4)).thenReturn(0); // "하트"
+
+        assertThat(cardDistributor.drawCard()).isEqualTo(new Card("2", "하트"));
+    }
+
+    @Test
+    void same_card_is_not_drawn_twice() {
+        CardDistributor cardDistributor = new CardDistributor(new Random());
+
+        Set<Card> drawn = new HashSet<>();
+
+        for (int i = 0; i < 52; i++) {
+            Card card = cardDistributor.drawCard();
+            assertThat(drawn).doesNotContain(card);
+            drawn.add(card);
+        }
+    }
+}
