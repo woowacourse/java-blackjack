@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Hand {
@@ -24,6 +25,10 @@ public class Hand {
 
     public Integer getHandSize() {
         return hand.size();
+    }
+
+    public List<Card> getHand() {
+        return Collections.unmodifiableList(hand);
     }
 
     public Integer calculateTotalScore() {
