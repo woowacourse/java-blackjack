@@ -15,4 +15,15 @@ public class DeckTest {
 
         Assertions.assertThat(cardSet.size()).isEqualTo(52);
     }
+
+    @Test
+    @DisplayName("카드를 한 장 뽑는다.")
+    void peekOneCardTest() {
+        Deck deck = new Deck();
+        Card card = deck.peekCard();
+
+        Assertions.assertThat(deck.getCards().size()).isEqualTo(51);
+        Assertions.assertThat(card).isInstanceOf(Card.class);
+        Assertions.assertThat(card).isNotIn(deck.getCards());
+    }
 }

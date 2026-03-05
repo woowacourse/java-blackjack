@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class Deck {
     private List<Card> cards = new ArrayList<>();
@@ -25,5 +24,12 @@ public class Deck {
 
     public List<Card> getCards() {
         return List.copyOf(cards);
+    }
+
+    public Card peekCard() {
+        Card lastCard = cards.getLast();
+        cards.remove(lastCard);
+
+        return lastCard;
     }
 }
