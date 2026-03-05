@@ -1,6 +1,8 @@
 package blackjack;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -53,6 +55,23 @@ public class HandTest {
         hand.addCard(new Card(CardPoint.FIVE, CardPattern.DIAMOND));
         hand.addCard(new Card(CardPoint.QUEEN, CardPattern.DIAMOND));
         assertThat(hand.getTotalPoint()).isEqualTo(18);
+    }
+
+    @Test
+    void 버스트인_경우() {
+        Hand hand = new Hand();
+        hand.addCard(new Card(CardPoint.QUEEN, CardPattern.HEART));
+        hand.addCard(new Card(CardPoint.FIVE, CardPattern.DIAMOND));
+        hand.addCard(new Card(CardPoint.QUEEN, CardPattern.DIAMOND));
+        assertTrue(hand.isBust());
+    }
+
+    @Test
+    void 버스트가_아닌_경우() {
+        Hand hand = new Hand();
+        hand.addCard(new Card(CardPoint.FIVE, CardPattern.DIAMOND));
+        hand.addCard(new Card(CardPoint.QUEEN, CardPattern.DIAMOND));
+        assertFalse(hand.isBust());
     }
 
 }
