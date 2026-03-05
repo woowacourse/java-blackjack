@@ -9,4 +9,9 @@ public class Card {
         this.rank = rank;
         this.suit = suit;
     }
+
+    // 카드의 점수를 반환한다.
+    public int score() {
+        return rank.getScore();
+    }
 }
