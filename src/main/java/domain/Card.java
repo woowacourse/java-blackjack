@@ -11,6 +11,10 @@ public class Card {
         this.cardShape = cardShape;
     }
 
+    public CardNumber getCardNumber() {
+        return cardNumber;
+    }
+
     public int getScore() {
         if(cardNumber == CardNumber.ACE){
             return 1;

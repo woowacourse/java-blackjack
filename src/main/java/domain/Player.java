@@ -19,6 +19,12 @@ public class Player {
         for (Card holdCard : holdCards) {
             results += holdCard.getScore();
         }
+
+        boolean isAceExist = holdCards.stream()
+                .anyMatch(holdCard -> holdCard.getCardNumber() == CardNumber.ACE);
+        if (isAceExist && (results + 10) <= 21) {
+            return results + 10;
+        }
         return results;
     }
 
