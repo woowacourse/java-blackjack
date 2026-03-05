@@ -12,4 +12,8 @@ public class Card {
     public boolean isAce() {
         return rank.equals(Rank.ACE);
     }
+
+    public int score(){
+        return rank.getValue();
+    }
 }

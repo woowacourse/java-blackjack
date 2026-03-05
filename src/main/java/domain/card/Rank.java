@@ -13,7 +13,7 @@ public enum Rank {
     TEN("10", 10),
     JACK("J",10),
     QUEEN("Q",10),
-    KIN("K",10);
+    KING("K",10);
 
     private String title;
     private int value;
@@ -21,5 +21,9 @@ public enum Rank {
     Rank(String title, int value) {
         this.title = title;
         this.value = value;
+    }
+
+    public int getValue(){
+        return value;
     }
 }
