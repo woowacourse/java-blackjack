@@ -1,19 +1,23 @@
 package service;
 
+import converter.BlackjackConverter;
 import domain.Player;
+import dto.PlayersDto;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
 public class BlackjackService {
 
-    public List<Player> createPlayers(List<String> names) {
+    private final BlackjackConverter blackjackConverter = new BlackjackConverter();
+
+    public PlayersDto createPlayers(List<String> names) {
         validatePlayerNames(names);
         List<Player> players = new ArrayList<>();
         for (String name : names) {
             players.add(new Player(name));
         }
-        return players;
+        return blackjackConverter.convertPlayersDto(players);
     }
 
     private void validatePlayerNames(List<String> names) {
