@@ -33,6 +33,10 @@ public class Hand {
         return sum;
     }
 
+    public List<Card> getHand() {
+        return hand;
+    }
+
     private int handleAce(int sum, int aceCount) {
         while (sum > 21 && aceCount > 0) {
             aceCount--;

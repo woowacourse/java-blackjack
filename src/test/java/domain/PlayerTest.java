@@ -29,4 +29,13 @@ public class PlayerTest {
     void 이름_특수_문자_실패() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> new Player("&*&@$"));
     }
+
+    @Test
+    @DisplayName("hit 처리 시, 1장을 뽑는다.")
+    void Hand에_1장_추가() {
+        Player player = new Player("pobi");
+        player.hit(new Card(Rank.ACE, Suit.DIAMOND));
+
+        Assertions.assertEquals(player.getHand().getHand().size(), 1);
+    }
 }

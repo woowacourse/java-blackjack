@@ -7,11 +7,21 @@ public class Player {
     private static final String STRING_REGEX = "^[a-zA-Z]*$";
 
     private final String name;
+    private final Hand hand;
 
     public Player(String name) {
         validateNameLength(name);
         validateOnlyEnglish(name);
         this.name = name;
+        this.hand = new Hand();
+    }
+
+    public void hit(Card card) {
+        hand.drawCard(card);
+    }
+
+    public Hand getHand() {
+        return hand;
     }
 
     private void validateNameLength(String name) {
