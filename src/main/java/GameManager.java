@@ -31,8 +31,10 @@ public class GameManager {
         return scoreCalculator.calculateScore(hand);
     }
 
-    public void drawCard(Player player) {
+    public List<String> drawCard(Player player) {
         player.addCard(deck.draw());
+        judgeBust(calculateScore(player.getHand()), player);
+        return player.getHandToString();
     }
 
     public void addPlayer(String name) {
@@ -86,5 +88,9 @@ public class GameManager {
         }
 
         return results;
+    }
+
+    public boolean isBlackjack(Player player) {
+        return false;
     }
 }

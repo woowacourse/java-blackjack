@@ -6,24 +6,20 @@ public class Player {
     private List<Card> hand = new ArrayList<>();
     private boolean isBust = false;
 
-    public boolean isBust() {
-        return isBust;
-    }
-
-    public void setBust() {
-        isBust = true;
-    }
-
     public Player(String name) {
         this.name = name;
     }
 
-    public String getName() {
-        return name;
+    public boolean isBust() {
+        return isBust;
     }
 
     public void addCard(Card card) {
         hand.add(card);
+    }
+
+    public String getName() {
+        return name;
     }
 
     public List<Card> getHand() {
@@ -32,6 +28,10 @@ public class Player {
 
     public List<String> getHandToString() {
         return hand.stream().map(Card::toString).toList();
+    }
+
+    public void setBust() {
+        isBust = true;
     }
 
     @Override

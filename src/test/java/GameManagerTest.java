@@ -79,4 +79,14 @@ class GameManagerTest {
         GameManager manager = new GameManager();
     }
 
+    @Test
+    void 합계가_21점이면_블랙잭이다() {
+        GameManager manager = new GameManager();
+        Player player = new Player("pobi");
+        player.addCard(new Card(Rank.ACE, Suit.SPADE));
+        player.addCard(new Card(Rank.KING, Suit.SPADE));
+
+        assertThat(manager.isBlackjack(player)).isTrue();
+    }
+
 }

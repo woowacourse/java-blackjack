@@ -9,12 +9,30 @@ public class GameController {
     }
 
     public void run() {
-
+        // 플레이어 입력
         List<String> playerName = List.of("pobi", "cary");
+
         // 카드를 2장씩 세팅
         manager.startGame();
 
+        // 초기 정보 표출
+        List<GameInitialInfoDto> initialInfo = manager.getInitialInfo();
 
+        for (Player player : manager.getPlayerSequence()) {
+            while (true) {
+                if (!player.isBust()) {
+                    break;
+                }
+
+//                if (view.isYes().equals("n")) {
+//                    break;
+//                }
+
+                List<String> playerHand = manager.drawCard(player);
+
+
+            }
+        }
 
 
 
