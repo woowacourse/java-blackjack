@@ -23,16 +23,15 @@ public class GameTest {
         @BeforeEach
         void setUp() {
             List<String> names = List.of("피즈", "스타크");
-            game = new Game(names);
+            Deck deck = new Deck(List.of(new Card(Rank.FIVE, Suit.CLOVER), new Card(Rank.FIVE, Suit.CLOVER),
+                    new Card(Rank.SIX, Suit.CLOVER), new Card(Rank.SEVEN, Suit.CLOVER),
+                    new Card(Rank.FOUR, Suit.SPADE), new Card(Rank.SEVEN, Suit.HEART)));
+            game = new Game(names, deck);
         }
 
         @DisplayName("모든 플레이어가 정상적으로 생성된다.")
         @Test
         public void 모든_플레이어가_정상적으로_생성된다() {
-            List<String> names = List.of("피즈", "스타크");
-
-            //given
-            Game game = new Game(names);
             //when
             List<Player> players = game.getPlayers();
             List<String> playerNames = players.stream()
@@ -59,6 +58,36 @@ public class GameTest {
             assertThat(dealer.getCards().size()).isEqualTo(2);
         }
 
+        @DisplayName("플레이어의 카드 총합이 21미만이고 히트 요청 시 한장을 더 분배한다.")
+        @Test
+        void 플레이어_카드_합_21_미만_히트_요청_시_한장_더_분배한다() {
+            //given
+            Player firstPlayer = game.getPlayers().getFirst();
+            //when
+            firstPlayer.addCard(new Card(Rank.ACE, Suit.CLOVER));
+            firstPlayer.addCard(new Card(Rank.FOUR, Suit.CLOVER));
+            firstPlayer.addCard(new Card(Rank.EIGHT, Suit.CLOVER));
+            //then
+            game.playerHit(firstPlayer, true);
+
+            assertThat(firstPlayer.getCards().size()).isEqualTo(4);
+        }
+
+        @DisplayName("딜러의 카드 총합이 17미만이면 한장을 더 분배한다.")
+        @Test
+        void 딜러의_카드_총합이_17미만이면_한장을_더_분배한다() {
+            //given
+            Dealer dealer = game.getDealer();
+            //when
+            dealer.addCard(new Card(Rank.ACE, Suit.CLOVER));
+            dealer.addCard(new Card(Rank.FOUR, Suit.CLOVER));
+            dealer.addCard(new Card(Rank.EIGHT, Suit.CLOVER));
+            //then
+            game.playerHit(dealer, true);
+
+            assertThat(dealer.getCards().size()).isEqualTo(4);
+        }
+
     }
 
     @Nested
@@ -70,7 +99,7 @@ public class GameTest {
         void 플레이어_이름이_중복된_경우_예외가_발생한다() {
             List<String> duplicatedNames = List.of("피즈", "피즈", "스타크");
 
-            assertThatThrownBy(() -> new Game(duplicatedNames))
+            assertThatThrownBy(() -> new Game(duplicatedNames, new Deck(List.of())))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("[ERROR] 플레이어 이름은 중복될 수 없습니다.");
         }
@@ -86,7 +115,7 @@ public class GameTest {
         @ParameterizedTest
         @MethodSource("playerNumberOutOfRange")
         void 게임_참여_플레이어가_1명에서_7명_사이가_아닐_경우_예외가_발생한다(List<String> names) {
-            assertThatThrownBy(() -> new Game(names))
+            assertThatThrownBy(() -> new Game(names, new Deck(List.of())))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("[ERROR] 플레이어는 1명 이상 7명 이하여야 합니다.");
         }

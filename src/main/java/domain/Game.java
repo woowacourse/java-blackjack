@@ -8,14 +8,16 @@ public class Game {
 
     private final List<Player> players = new ArrayList<>();
     private final Dealer dealer = new Dealer();
-    private final Deck deck = new Deck();
+    private final Deck deck;
 
-    public Game(List<String> names) {
+    public Game(List<String> names, Deck deck) {
         validatePlayers(names);
 
         players.addAll(names.stream()
                 .map(Player::new)
                 .toList());
+
+        this.deck = deck;
     }
 
     private void validatePlayers(List<String> names) {
@@ -58,5 +60,11 @@ public class Game {
     private void distributeCard(Participant participant) {
         Card firstCard = deck.drawCard();
         participant.addCard(firstCard);
+    }
+
+    public void playerHit(Participant participant, boolean isHit) {
+        if (participant.checkScoreUnderCriterion() && isHit) {
+            distributeCard(participant);
+        }
     }
 }
