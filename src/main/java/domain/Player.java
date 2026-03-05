@@ -1,12 +1,14 @@
 package domain;
 
 
+import controller.CardContentDto;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
     private final String name;
-    private final List<Card> cards =  new ArrayList<>();
+    protected final List<Card> cards =  new ArrayList<>();
 
     public Player(String name) {
         this.name = name;
@@ -26,5 +28,9 @@ public class Player {
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    public CardContentDto toCardContentDto() {
+        return new CardContentDto(this.name, this.cards);
     }
 }

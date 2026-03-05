@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class BlackjackController {
-    private static final int MAX_RETRY = 10;
     public static final String DEALER_NAME = "딜러";
+    private static final int MAX_RETRY = 10;
     private final InputView inputView;
 
     public BlackjackController() {
@@ -41,22 +41,37 @@ public class BlackjackController {
 
         List<CardContentDto> firstCardContents = new ArrayList<>();
 
-        firstCardContents.add(new CardContentDto(dealer.getName(),List.of(dealer.getFirstCard())));
+        firstCardContents.add(new CardContentDto(dealer.getName(), List.of(dealer.getFirstCard())));
         for (Player player : playerList) {
             firstCardContents.add(new CardContentDto(player.getName(), player.getCards()));
         }
 
         OutputView.displayCardContent(firstCardContents);
-        /**
-         * TODO: 카드 출력하기
-         * 딜러카드: 3다이아몬드
-         * pobi카드: 2하트, 8스페이드
-         * jason카드: 7클로버, K스페이드
-         */
+
 
         Players players = new Players(playerList);
         for (Player player : players) {
-            boolean hasCard = hasAdditionalCard(player.getName());
+            String name = player.getName();
+            boolean hasCard = hasAdditionalCard(name);
+            handCardWithRetry(player, hasCard, cards, name);
+        }
+
+        // TODO: 딜러 더 받기
+        determineAdditionalCard(dealer, cards);
+    }
+
+    private void determineAdditionalCard(Dealer dealer, Cards cards) {
+        if (dealer.needAdditionalCard()) {
+            dealer.add(cards.pop());
+            OutputView.displayDealerCard();
+        }
+    }
+
+    private void handCardWithRetry(Player player, boolean hasCard, Cards cards, String name) {
+        while (hasCard) {
+            player.add(cards.pop());
+            OutputView.displayCardContent(List.of(player.toCardContentDto()));
+            hasCard = hasAdditionalCard(name);
         }
     }
 
