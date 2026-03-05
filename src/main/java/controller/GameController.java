@@ -45,7 +45,6 @@ public class GameController {
         outputView.printFinalScore(dealer, players);
 
         Map<String, GameResult> playerFinalResults = new HashMap<>();
-
         int dealerWinningCount = 0;
         int dealerLosingCount = 0;
 
@@ -61,11 +60,8 @@ public class GameController {
             }
         }
 
-        for (String s : playerFinalResults.keySet()) {
-            GameResult gameResult = playerFinalResults.get(s);
-
-            System.out.println(gameResult.getValue());
-        }
+        outputView.printDealerFinalCount(dealerWinningCount, dealerLosingCount);
+        outputView.printPlayerFinalResults(playerFinalResults);
     }
 
     private void printGameStart(List<String> playerNames, Dealer dealer, List<Player> players) {

@@ -3,9 +3,12 @@ package view;
 import domain.Card;
 
 import domain.Dealer;
+import domain.GameResult;
 import domain.Player;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class OutputView {
     public void printStartCardMessage(List<String> playerNames) {
@@ -50,6 +53,18 @@ public class OutputView {
                 playerScore = "버스트";
             }
             System.out.println(player.getName() + "카드: " + holdCardToString(player.getHoldCards()) + " - 결과: " + playerScore);
+        }
+    }
+
+    public void printDealerFinalCount(int dealerWinningCount, int dealerLosingCount) {
+        System.out.println();
+        System.out.println("## 최종 승패");
+        System.out.println("딜러: " + dealerWinningCount + "승 " + dealerLosingCount + "패");
+    }
+
+    public void printPlayerFinalResults(Map<String, GameResult> playerFinalResults) {
+        for (Entry<String, GameResult> playerFinalResult : playerFinalResults.entrySet()) {
+            System.out.println(playerFinalResult.getKey() + ": " + playerFinalResult.getValue().getValue());
         }
     }
 
