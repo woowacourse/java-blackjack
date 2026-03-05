@@ -22,7 +22,7 @@ public class OutputView {
 
     public static void printPlayerCurrentDeck(PlayerResult playerResult) {
         List<String> cardString = playerResult.deck().stream().map(Card::getString).toList();
-        System.out.print(playerResult.name() + "카드: " + String.join(", ", cardString));
+        System.out.print(playerResult.name().get() + "카드: " + String.join(", ", cardString));
     }
 
     public static void printDealerCardDrawMessage() {
