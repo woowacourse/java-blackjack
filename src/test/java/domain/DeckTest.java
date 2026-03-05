@@ -1,5 +1,4 @@
-import domain.Card;
-import domain.Deck;
+package domain;
 
 import java.util.HashSet;
 import java.util.List;
