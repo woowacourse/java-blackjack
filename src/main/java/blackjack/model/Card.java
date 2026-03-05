@@ -15,6 +15,14 @@ public class Card {
         return number.getName() + figure.getName();
     }
 
+    public int getNumberValue() {
+        return number.getValue();
+    }
+
+    public Number getNumber() {
+        return number;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
