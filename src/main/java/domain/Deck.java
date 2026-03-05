@@ -1,6 +1,7 @@
 package domain;
 
 import domain.card.Card;
+import domain.card.Cards;
 import domain.card.Rank;
 import domain.card.Suit;
 
@@ -8,22 +9,18 @@ import java.util.*;
 
 
 public class Deck {
-    private Stack<Card> cards = new Stack<>();
+    private Cards cards;
 
-    private Deck(Stack<Card> cards) {
-        this.cards = cards;
+    public Deck() {
+        setUp();
     }
 
-    public static Deck of() {
-        Stack<Card> cards = new Stack<>();
-
+    private void setUp() {
         prepareCards(cards);
         Collections.shuffle(List.of(cards));
-
-        return new Deck(cards);
     }
 
-    private static void prepareCards(Stack<Card> cards) {
+    private static void prepareCards(Cards cards) {
         for (Rank rank : Rank.values()) {
             for (Suit suit : Suit.values()) {
                 Card card = new Card(rank, suit);
@@ -37,6 +34,6 @@ public class Deck {
     }
 
     public Card draw() {
-        return cards.pop();
+        return cards.draw();
     }
 }

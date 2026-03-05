@@ -10,9 +10,16 @@ public class Participants {
 
     public Participants(List<String> names) {
         validateDuplicatedName(names);
+        validatePlayerCount(names);
 
         preparePlayers(names);
         prepareDealer();
+    }
+
+    private void validatePlayerCount(List<String> names) {
+        if (names.size() > 5) {
+            throw new IllegalArgumentException();
+        }
     }
 
     private void preparePlayers(List<String> names) {
@@ -33,5 +40,4 @@ public class Participants {
             throw new IllegalArgumentException();
         }
     }
-
 }

@@ -1,15 +1,12 @@
 package domain;
 
-import domain.card.Card;
-
-import java.util.ArrayList;
-import java.util.List;
+import domain.card.Cards;
 
 public class Hand {
     public static final int BLACK_JACK = 21;
-    private List<Card> cards = new ArrayList<>();
+    private Cards cards;
 
-    public Hand(List<Card> cards) {
+    public Hand(Cards cards) {
         this.cards = cards;
     }
 
@@ -18,8 +15,18 @@ public class Hand {
     }
 
     public int score() {
-        return cards.stream()
-                .mapToInt(Card::score)
-                .sum();
+        int total = total();
+
+        if (cards.hasAce()) {
+            while (total > BLACK_JACK) {
+                total -= 10;
+            }
+        }
+
+        return total;
+    }
+
+    public int total() {
+        return cards.total();
     }
 }
