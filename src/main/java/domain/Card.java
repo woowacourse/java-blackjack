@@ -10,6 +10,10 @@ public class Card {
         this.mark = mark;
     }
 
+    public String info() {
+        return rank.label() + mark.description();
+    }
+
     public int score() {
         return rank.score();
     }
