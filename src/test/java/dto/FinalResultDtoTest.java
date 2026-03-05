@@ -1,9 +1,8 @@
 package dto;
 
+import domain.WinningStatus;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -14,9 +13,9 @@ class FinalResultDtoTest {
     @Test
     void from() {
         // given, when
-        SortedMap<String, Boolean> map = new TreeMap<>();
-        map.put("봉구스", true);
-        map.put("시오", false);
+        SortedMap<String, WinningStatus> map = new TreeMap<>();
+        map.put("봉구스", WinningStatus.WIN);
+        map.put("시오", WinningStatus.LOSE);
 
         FinalResultDto finalResultDto = FinalResultDto.from(map);
         // then
