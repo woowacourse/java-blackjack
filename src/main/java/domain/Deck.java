@@ -12,6 +12,11 @@ public class Deck {
         this.cards = shuffleCards(beforeShuffledCards);
     }
 
+    public Card distributeCard() {
+        Card card = cards.removeFirst();
+        return card;
+    }
+
     private List<Card> generateDeck() {
         List<Card> cards = new ArrayList<>();
 
@@ -29,4 +34,6 @@ public class Deck {
         Collections.shuffle(shuffledCards);
         return shuffledCards;
     }
+
+
 }

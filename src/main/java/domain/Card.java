@@ -9,6 +9,7 @@ public class Card {
         this.number = number;
     }
 
-
-
+    public int getScore() {
+        return number.getValue();
+    }
 }
