@@ -5,9 +5,11 @@ import java.util.List;
 
 public class Player {
     private List<Card> holdCards;
+    private final String name;
 
-    public Player() {
+    public Player(String name) {
         this.holdCards = new ArrayList<>();
+        this.name = name;
     }
 
     public void addCard(Card card) {
