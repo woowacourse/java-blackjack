@@ -1,4 +1,5 @@
 import domain.Dealer;
+import domain.GameCommand;
 import domain.GameState;
 import domain.Hand;
 import domain.Name;
@@ -33,11 +34,23 @@ public class BlackjackGame {
 
         for (Player player : players.getPlayers()) {
             while (player.getGameState() == GameState.HIT) {
-                String gameCommand = InputView.readHitOrStand(player.getName()); // y or n
-                // 랜덤 카드 부여
-                // 게임 상태 판단
+                GameCommand gameCommand = GameCommand.from(
+                        InputView.readHitOrStand(player.getName()));
+                if (!gameCommand.isYes()) {
+                    player.changeState();
+                }
+                if (gameCommand.isYes()) {
+                    Card hitCard = deck.drawCard();
+                    player.receiveCard(hitCard);
+                    if (player.isBust()) {
+                        player.changeState();
+                    }
+                }
             }
         }
+        // 딜러도 16이하 시 카드 추
+
+        // 딜러&플레이 카드 목록 및 결과 출력
 
     }
 }

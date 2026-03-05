@@ -30,7 +30,15 @@ public class Player {
         return gameState;
     }
 
-    boolean isBust() {
+    public boolean isBust() {
         return getScore() > 21;
+    }
+
+    public void changeState() {
+        if (gameState == GameState.HIT) {
+            this.gameState = GameState.STAND;
+            return;
+        }
+        this.gameState = GameState.HIT;
     }
 }

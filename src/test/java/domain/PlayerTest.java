@@ -6,8 +6,6 @@ import domain.card.Card;
 import domain.card.Emblem;
 import domain.card.Grade;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 public class PlayerTest {
 
@@ -46,17 +44,15 @@ public class PlayerTest {
         assertThat(result).isEqualTo(expect);
     }
 
-    @ParameterizedTest
-    @CsvSource(value = {"n, STAND", "y, HIT"})
-    void 플레이어의_게임_진행_상태를_변경한다(String command, GameState gameState) {
+    @Test
+    void 플레이어의_게임_진행_상태를_변경한다() {
         // given
         Player player = new Player(new Name("test"), new Hand());
-        String gameCommand = command;
-
+        GameState expectedState = GameState.STAND;
         // when
-        player.changeState(gameCommand);
+        player.changeState();
 
         // then
-        assertThat(player.getGameState()).isEqualTo(gameState);
+        assertThat(player.getGameState()).isEqualTo(expectedState);
     }
 }
