@@ -36,9 +36,20 @@ public class OutputView {
 
     public void printFinalScore(Dealer dealer, List<Player> players) {
         System.out.println();
-        System.out.println("딜러카드: " + holdCardToString(dealer.getHoldCards()) + " - 결과: " + dealer.calculateTotalScore());
+        String dealerScore = String.valueOf(dealer.calculateTotalScore());
+        if(dealer.isBust()) {
+            dealerScore = "버스트";
+        }
+
+        System.out.println("딜러카드: " + holdCardToString(dealer.getHoldCards()) + " - 결과: " + dealerScore);
+
+
         for (Player player : players) {
-            System.out.println(player.getName() + "카드: " + holdCardToString(player.getHoldCards()) + " - 결과: " + player.calculateTotalScore());
+            String playerScore = String.valueOf(player.calculateTotalScore());
+            if(player.isBust()) {
+                playerScore = "버스트";
+            }
+            System.out.println(player.getName() + "카드: " + holdCardToString(player.getHoldCards()) + " - 결과: " + playerScore);
         }
     }
 

@@ -35,7 +35,7 @@ public class Dealer {
         return List.copyOf(holdCards);
     }
 
-    public boolean isBust(int playerTotalScore) {
-        return playerTotalScore > 21;
+    public boolean isBust() {
+        return calculateTotalScore() > 21;
     }
 }
