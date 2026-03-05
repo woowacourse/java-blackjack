@@ -39,6 +39,10 @@ public class Hand {
                 .count();
     }
 
+    public boolean isBurst() {
+        return getSum() > 21;
+    }
+
     public void addCard(Card card) {
         cards.add(card);
     }

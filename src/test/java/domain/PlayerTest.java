@@ -20,4 +20,19 @@ class PlayerTest {
         // then
         assertEquals(1, player.getHand().getCards().size());
     }
+
+    @Test
+    void 플레이어가_Burst인_경우() {
+        // given
+        Player player = new Player("봉구스");
+
+        // when
+        player.draw(new Card(Suit.CLUBS, Rank.KING));
+        player.draw(new Card(Suit.CLUBS, Rank.QUEEN));
+        player.draw(new Card(Suit.CLUBS, Rank.JACK));
+
+        // then
+        assertTrue(player.isBurst());
+    }
+
 }

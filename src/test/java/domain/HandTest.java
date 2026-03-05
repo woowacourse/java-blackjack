@@ -58,4 +58,27 @@ class HandTest {
         // when, then
         assertTrue(hand.getCards().contains(new Card(Suit.SPADES, Rank.ACE)));
     }
+
+    @Test
+    void 손패가_Burst인_경우() {
+        //given
+        Hand hand = new Hand();
+        hand.addCard(new Card(Suit.SPADES, Rank.KING));
+        hand.addCard(new Card(Suit.SPADES, Rank.QUEEN));
+        hand.addCard(new Card(Suit.SPADES, Rank.NUM2));
+
+        // when, then
+        assertTrue(hand.isBurst());
+    }
+    @Test
+    void 손패가_Burst가_아닌_경우() {
+        //given
+        Hand hand = new Hand();
+        hand.addCard(new Card(Suit.SPADES, Rank.KING));
+        hand.addCard(new Card(Suit.SPADES, Rank.NUM2));
+        hand.addCard(new Card(Suit.SPADES, Rank.NUM9));
+
+        // when, then
+        assertFalse(hand.isBurst());
+    }
 }

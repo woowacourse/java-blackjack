@@ -20,4 +20,19 @@ class DealerTest {
         // then
         assertEquals(1, dealer.getHand().getCards().size());
     }
+
+    @Test
+    void 딜러가_Burst인_경우() {
+        // given
+        Dealer dealer = new Dealer();
+
+        // when
+        dealer.draw(new Card(Suit.CLUBS, Rank.KING));
+        dealer.draw(new Card(Suit.CLUBS, Rank.QUEEN));
+        dealer.draw(new Card(Suit.CLUBS, Rank.JACK));
+
+        // then
+        assertTrue(dealer.isBurst());
+    }
+
 }
