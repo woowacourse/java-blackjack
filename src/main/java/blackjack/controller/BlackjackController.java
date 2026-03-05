@@ -24,6 +24,7 @@ public class BlackjackController {
         Dealer dealer = new Dealer(new Deck());
 
         gameService.settingCards(users, dealer);
+        OutputView.printSettingCardsResult(dealer.getName(), dealer.getCardsName().subList(0, 1));
         for (User user : users) {
             OutputView.printSettingCardsResult(user.getName(), user.getCardsName());
         }
