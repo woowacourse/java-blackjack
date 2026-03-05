@@ -42,13 +42,12 @@ public class GameController {
             processRound(player, deck);
         }
 
-
         while (dealer.isReceiveCard()) {
             dealer.addCard(deck.peekCard());
             outputView.printDealerReceiveCard();
         }
 
-
+        outputView.printFinalScore(dealer, players);
     }
 
     private void printGameStart(List<String> playerNames, Dealer dealer, List<Player> players) {
@@ -64,7 +63,7 @@ public class GameController {
         }
         outputView.printCurrentHoldCard(player);
 
-        while (hitOption.equals("y")) {
+        while (hitOption.equals("y") && !player.isBust()) {
             hitOption = inputView.readHitOption(player.getName());
             if (hitOption.equals("n")) {
                 break;
