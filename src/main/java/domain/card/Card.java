@@ -12,4 +12,8 @@ public class Card {
     public int getRankScore(){
         return rank.getScore();
     }
+
+    public String getCardInfo(){
+        return rank.getName()+suit.getSuit();
+    }
 }

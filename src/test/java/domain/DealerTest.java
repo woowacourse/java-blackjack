@@ -6,8 +6,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.CardRank;
 import domain.card.CardSuit;
+import domain.player.Dealer;
 import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -44,12 +44,11 @@ public class DealerTest {
         Dealer dealer = new Dealer();
         dealer.deal(sd);
         dealer.deal(sd);
-        dealer.turn(sd);
 
         //when
-        int result = dealer.getScore();
+        boolean canStand = dealer.canStand();
 
         //then
-        assertThat(result).isEqualTo(0);
+        assertThat(canStand).isFalse(); // 딜러가 16을 넘어 멈출 수 있는가?
     }
 }

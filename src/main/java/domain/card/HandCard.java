@@ -43,4 +43,12 @@ public class HandCard {
     public void addCard(Card card){
         cards.add(card);
     }
+
+    public List<String> getCardInfos(){
+        return cards.stream().map(Card::getCardInfo).toList();
+    }
+
+    public String getFirstCardInfo(){
+        return cards.get(0).getCardInfo();
+    }
 }
