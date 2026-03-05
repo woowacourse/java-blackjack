@@ -4,6 +4,8 @@ import blackjack.exception.ErrorCode;
 
 public class Name {
 
+    public static final int NAME_MIN_LENGTH = 2;
+    public static final int NAME_MAX_LENGTH = 5;
     private final String name;
 
     public Name(String name) {
@@ -12,7 +14,7 @@ public class Name {
     }
 
     private void validateNameLength(String name) {
-        if (name.length() < 2 || name.length() > 5) {
+        if (name.length() < NAME_MIN_LENGTH || name.length() > NAME_MAX_LENGTH) {
             throw new IllegalArgumentException(ErrorCode.OUT_OF_NAME_LENGTH);
         }
     }
