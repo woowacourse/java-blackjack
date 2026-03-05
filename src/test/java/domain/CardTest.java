@@ -44,4 +44,22 @@ public class CardTest {
         // then
         assertThat(cardRank).isEqualTo(CardRank.TWO);
     }
+
+    @Test
+    void 모양과_랭크를_조합하여_카드_생성_테스트() {
+        // given
+        NumberGenerator shapeNumberGenerator = new DefaultShapeNumberGenerator();
+        NumberGenerator rankNumberGenerator = new DefaultRankNumberGenerator();
+
+        CardRank cardRank = CardRank.getRank(rankNumberGenerator.generate());
+        CardShape cardShape = CardShape.getShape(shapeNumberGenerator.generate());
+
+        // when
+        Card card = Card.of(cardRank, cardShape);
+
+        // then
+        assertThat(card.getCardShape()).isEqualTo(CardShape.HEART);
+        assertThat(card.getCardRank()).isEqualTo(CardRank.TWO);
+
+    }
 }
