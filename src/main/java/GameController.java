@@ -1,3 +1,4 @@
+import domain.Dealer;
 import domain.User;
 
 
@@ -9,6 +10,8 @@ public class GameController {
     private final InputView inputView;
     private final OutputView outputView;
 
+    private final Dealer dealer = new Dealer();
+
     public GameController(InputView inputView, OutputView outputVIew, GameService gameService) {
         this.inputView = inputView;
         this.outputView = outputVIew;
@@ -17,12 +20,17 @@ public class GameController {
 
     public void run() {
         List<User> users = setUpUsers();
+        initDeal(users);
         processUserTurns(users);
     }
 
     private List<User> setUpUsers(){
         String input = inputView.readUsers();
         return InputParser.parseUsers(input);
+    }
+
+    private void initDeal(List<User> users){
+        gameService.initDeal(users, dealer);
     }
 
     private void processUserTurns(List<User> users) {

@@ -1,7 +1,8 @@
 import domain.Card;
 import domain.CardDeck;
+import domain.Dealer;
+import domain.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GameService {
@@ -10,6 +11,15 @@ public class GameService {
 
     public GameService() {
         this.cardDeck = new CardDeck();
+    }
+
+    public void initDeal(List<User> users, Dealer dealer) {
+        for (int i = 0; i < 2; i++) {
+            for (User user : users) {
+                user.receiveCard(deal());
+            }
+            dealer.receiveCard(deal());
+        }
     }
 
     public int calculateScore(List<String> cards) {
