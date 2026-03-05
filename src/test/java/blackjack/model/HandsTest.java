@@ -3,6 +3,7 @@ package blackjack.model;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,13 +12,13 @@ class HandsTest {
 
     @Test
     @DisplayName("인자로 넘겨받은 카드를 핸즈에 추가한다.")
-    void addACard() {
+    void addCards() {
         // given
         Hands hands = Hands.empty();
         Card card = new Card(Rank.ACE, Suit.CLOVER);
 
         // when && then
-        assertThatCode(() -> hands.addACard(card))
+        assertThatCode(() -> hands.addCards(List.of(card)))
                 .doesNotThrowAnyException();
     }
 
@@ -27,8 +28,10 @@ class HandsTest {
         // given
         Hands hands = Hands.empty();
 
-        hands.addACard(new Card(Rank.J, Suit.CLOVER));
-        hands.addACard(new Card(Rank.K, Suit.DIAMOND));
+        hands.addCards(List.of(
+                new Card(Rank.J, Suit.CLOVER),
+                new Card(Rank.TEN, Suit.CLOVER))
+        );
 
         // when & then
         assertThat(hands.calculateTotalScore()).isEqualTo(20);
@@ -39,9 +42,11 @@ class HandsTest {
     void aceScoreTest1() {
         // given
         Hands hands = Hands.empty();
-        hands.addACard(new Card(Rank.TEN, Suit.CLOVER));
-        hands.addACard(new Card(Rank.TWO, Suit.CLOVER));
-        hands.addACard(new Card(Rank.ACE, Suit.CLOVER));
+        hands.addCards(List.of(
+                new Card(Rank.TEN, Suit.CLOVER),
+                new Card(Rank.TWO, Suit.CLOVER),
+                new Card(Rank.ACE, Suit.CLOVER))
+        );
 
         // when
         int totalScore = hands.calculateTotalScore();
@@ -55,8 +60,10 @@ class HandsTest {
     void aceScoreTest2() {
         // given
         Hands hands = Hands.empty();
-        hands.addACard(new Card(Rank.TEN, Suit.CLOVER));
-        hands.addACard(new Card(Rank.ACE, Suit.CLOVER));
+        hands.addCards(List.of(
+                new Card(Rank.TEN, Suit.CLOVER),
+                new Card(Rank.ACE, Suit.CLOVER))
+        );
 
         // when
         int totalScore = hands.calculateTotalScore();
@@ -70,8 +77,10 @@ class HandsTest {
     void isTotalScoreOver() {
         // given
         Hands hands = Hands.empty();
-        hands.addACard(new Card(Rank.SIX, Suit.CLOVER));
-        hands.addACard(new Card(Rank.ACE, Suit.CLOVER));
+        hands.addCards(List.of(
+                new Card(Rank.SIX, Suit.CLOVER),
+                new Card(Rank.ACE, Suit.CLOVER))
+        );
 
         assertThat(hands.isTotalScoreOver(16)).isTrue();
     }

@@ -16,23 +16,23 @@ public class Hands {
     }
 
     //카드를 한 장 추가한다.
-    public void addACard(Card card) {
-        if (card == null) {
+    public void addCards(List<Card> other) {
+        if (other == null || other.isEmpty()) {
             throw new IllegalArgumentException("card가 null입니다.");
         }
 
-        cards.add(card);
+        this.cards.addAll(other);
     }
 
     // 핸즈가 가진 카드들의 점수를 계산한다.
     // 에이스 개수가 1개 이상이면서 베이스 스코어가 10점 이하이면 10을 추가로 더해준다
     public int calculateTotalScore() {
         int baseScore = this.cards.stream()
-                .mapToInt(Card::score)
+                .mapToInt(card -> card.rank().getDefaultScore())
                 .sum();
 
         boolean hasAce = cards.stream()
-                .anyMatch(Card::isAce);
+                .anyMatch(card -> card.rank() == Rank.ACE);
 
         if (hasAce && baseScore <= 11) {
             baseScore += 10;
@@ -44,5 +44,10 @@ public class Hands {
     //총 점수가 인자로 넘겨받은 점수보다 큰지 여부를 반환한다.
     public boolean isTotalScoreOver(final int score) {
         return calculateTotalScore() > score;
+    }
+
+    // 첫 번째 카드 반환
+    public Card getFirstCard() {
+        return this.cards.getFirst();
     }
 }

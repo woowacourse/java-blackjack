@@ -8,17 +8,18 @@ import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    PickStrategy mockStrategy = cards -> new Card(Rank.TEN, Suit.CLOVER);
+    PickStrategy mustPickTwo = cards -> new Card(Rank.TWO, Suit.CLOVER);
+    PickStrategy mustPickTen = cards -> new Card(Rank.TEN, Suit.CLOVER);
 
     @Test
     @DisplayName("카드 덱에서 카드를 뽑아서 핸즈에 추가한다.")
-    void pickACard() {
+    void pickCard() {
         // given
         Dealer dealer = Dealer.create();
-        CardDeck cardDeck = CardDeck.of(mockStrategy);
+        CardDeck cardDeck = CardDeck.of(mustPickTen);
 
         // when & then
-        assertThatCode(() -> dealer.pickACard(cardDeck))
+        assertThatCode(() -> dealer.pickCard(cardDeck))
                 .doesNotThrowAnyException();
     }
 
@@ -27,11 +28,11 @@ class DealerTest {
     void canPick() {
         //given
         Dealer dealer = Dealer.create();
-        CardDeck cardDeck = CardDeck.of(mockStrategy);
+        CardDeck cardDeck = CardDeck.of(mustPickTen);
 
 
-        dealer.pickACard(cardDeck);
-        dealer.pickACard(cardDeck);
+        dealer.pickCard(cardDeck);
+        dealer.pickCard(cardDeck);
 
         // when & then
         assertThat(dealer.canPick()).isFalse();
@@ -41,15 +42,27 @@ class DealerTest {
     @DisplayName("딜러의 총 점수가 21 초과이면 true를 반환한다.")
     void isBust() {
         // given
-        CardDeck cardDeck = CardDeck.of(mockStrategy);
+        CardDeck cardDeck = CardDeck.of(mustPickTen);
 
         Dealer dealer = Dealer.create();
 
-        dealer.pickACard(cardDeck);
-        dealer.pickACard(cardDeck);
-        dealer.pickACard(cardDeck);
+        dealer.pickCard(cardDeck);
+        dealer.pickCard(cardDeck);
+        dealer.pickCard(cardDeck);
 
         // when & then
         assertThat(dealer.isBust()).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러랑 플레이어 핸드 비교 결과 테스트")
+    void dealerResultTest() {
+        // given
+        Dealer dealer = Dealer.create();
+        Player player = Player.of("player1");
+
+        // when
+
+        // then
     }
 }

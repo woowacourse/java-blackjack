@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,17 +14,25 @@ public class InputView {
     }
 
     public List<String> inputPlayerNames() {
-        return Arrays.stream(scanner.nextLine().split(",")).toList();
+        List<String> names = Arrays.stream(
+                scanner.nextLine().split(",")
+        ).toList();
+
+        InputValidator.validatePlayerNames(names);
+
+        return names;
     }
 
     public boolean inputMoreCard() {
         String input = scanner.nextLine();
+
         if("y".equals(input)){
             return true;
         }
         if("n".equals(input)) {
             return false;
         }
+
         throw new IllegalArgumentException("'y' 또는 'n'만 입력 가능합니다.");
     }
 
