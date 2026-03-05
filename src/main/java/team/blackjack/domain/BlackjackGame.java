@@ -1,5 +1,6 @@
 package team.blackjack.domain;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,17 +23,22 @@ public class BlackjackGame {
         return players;
     }
 
-    /*public Map<String, List<String>> getAllPlayerCards(){
+    public Map<String, List<String>> getAllPlayerCards(){
+        final HashMap<String, List<String>> result = new HashMap<>();
         for (Player player : players) {
-            getPlayerCardInHand()
+            result.put(player.getName(), getPlayerCardInAllHand(player));
         }
+
+        return result;
     }
 
-    private Map<String,List<Card>> getPlayerCardInOneHand(Hand hand) {
-        for (Hand hand : player.getHands()) {
-            hand.getCards();
-        }
-    }*/
+    private List<String> getPlayerCardInAllHand(Player player) {
+        return player.getHands().stream()
+                .map(Hand::getCards)
+                .flatMap(List::stream)
+                .map(Card::getCardName)
+                .toList();
+    }
 
     public Deck getDeck() {
         return deck;

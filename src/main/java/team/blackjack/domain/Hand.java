@@ -20,9 +20,4 @@ public class Hand {
     public int getCardCount() {
         return cards.size();
     }
-
-    public int getScore() {
-
-    }
-
 }

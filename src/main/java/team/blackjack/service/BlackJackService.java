@@ -1,112 +1,50 @@
 package team.blackjack.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import team.blackjack.domain.Card;
-import team.blackjack.service.dto.DrawResult;
-import team.blackjack.service.dto.GameResult;
-import team.blackjack.service.dto.GameResult.DealerResult;
-import team.blackjack.service.dto.GameResult.PlayerResult;
-import team.blackjack.service.dto.ScoreResult;
 import team.blackjack.domain.BlackjackGame;
 import team.blackjack.domain.Dealer;
+import team.blackjack.domain.Deck;
+import team.blackjack.domain.Hand;
 import team.blackjack.domain.Player;
-import team.blackjack.domain.Result;
 
 public class BlackJackService {
     private BlackjackGame blackjackGame;
 
     public void initGame(List<String> playerNames) {
-        blackjackGame = new BlackjackGame(playerNames);
+        final Dealer dealer = new Dealer();
+        final List<Player> players = playerNames.stream()
+                .map(Player::new)
+                .toList();
+
+        blackjackGame = new BlackjackGame(dealer, players);
     }
+
 
     /**
-     * 각 게임(라운드)에 앞서 기본 카드를 발급하는 로직
+     * TODO: Draw 위치에 대한 고민 다시 해보기
      */
-    public void dealInitialCards() {
+    public void drawInitialCards() {
+        final Deck deck = blackjackGame.getDeck();
+        final Dealer dealer = blackjackGame.getDealer();
+
+        // 플레이어 카드 초기화
         for (Player player : blackjackGame.getPlayers()) {
-            blackjackGame.dealInitialCardsTo(player);
+            Hand hand = new Hand();
+            hand.addCard(dealer.draw(deck));
+            hand.addCard(dealer.draw(deck));
+
+            player.addHand(hand);
         }
 
-        final Dealer dealer = blackjackGame.getDealer();
-        blackjackGame.dealInitialCardsTo(dealer);
+        // 딜러 카드 초기화
+        Hand dealerHand = dealer.getHand();
+        dealerHand.addCard(dealer.draw(deck));
+        dealerHand.addCard(dealer.draw(deck));
     }
 
-    public DrawResult getHandResult() {
-        final List<String> playerNames = blackjackGame.getPlayerNames();
-        final List<Card> cards = blackjackGame.getDealer().getHand().getCards();
-        final Map<String, List<String>> playerCards = blackjackGame.getAllPlayerCards();
-
-        return new DrawResult(playerNames, cards.getFirst().getCardName(), playerCards);
+    public BlackjackGame getBlackjackGame() {
+        return this.blackjackGame;
     }
 
-    public List<Player> getPlayer() {
-        return this.blackjackGame.getPlayers();
-    }
 
-    public void playerHit(Player player) {
-        blackjackGame.dealCardTo(player);
-    }
-
-    public void dealerHit() {
-        final Dealer dealer = blackjackGame.getDealer();
-        blackjackGame.dealCardTo(dealer);
-    }
-
-    public boolean shouldDealerHit() {
-        return blackjackGame.getDealer().shouldHit();
-    }
-
-    public ScoreResult calculateAllParticipantScore() {
-        final List<String> playerNames = blackjackGame.getPlayerNames();
-        final Map<String, List<String>> playerCards = blackjackGame.getAllPlayerCards();
-        final Map<String, Integer> playerScores = blackjackGame.getAllPlayerScores();
-        final List<String> dealerCards = blackjackGame.getDealerCards();
-        final int dealerScore = blackjackGame.getDealerScore();
-
-        return new ScoreResult(
-                dealerCards,
-                dealerScore,
-                playerNames,
-                playerCards,
-                playerScores
-        );
-    }
-
-    public GameResult getGameResult() {
-        final Map<String, PlayerResult> playerResults = calculatePlayersResult();
-        final DealerResult dealerResult = calculateDealerResult();
-
-        return new GameResult(dealerResult, playerResults);
-    }
-
-    private Map<String, PlayerResult> calculatePlayersResult() {
-        final Map<String, PlayerResult> playerResults = new HashMap<>();
-
-        final Dealer dealer = blackjackGame.getDealer();
-        final List<Player> players = blackjackGame.getPlayers();
-
-        for (Player player : players) {
-            PlayerResult playerResult = new PlayerResult(blackjackGame.getPlayerResult(player, dealer));
-            playerResults.put(player.getName(), playerResult);
-        }
-
-        return playerResults;
-    }
-
-    private DealerResult calculateDealerResult() {
-        List<Result> dealerResults = new ArrayList<>();
-
-        final Dealer dealer = blackjackGame.getDealer();
-        final List<Player> players = blackjackGame.getPlayers();
-
-        for (Player player : players) {
-            Result dealerResult = blackjackGame.getDealerResult(dealer, player);
-            dealerResults.add(dealerResult);
-        }
-
-        return new DealerResult(dealerResults);
-    }
 }

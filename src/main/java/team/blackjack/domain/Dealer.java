@@ -8,10 +8,6 @@ public class Dealer {
         this.hand = new Hand();
     }
 
-    public int getScore() {
-        return this.hand.getScore();
-    }
-
     public Card draw(Deck deck) {
         return deck.draw();
     }
