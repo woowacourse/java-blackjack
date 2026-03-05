@@ -155,4 +155,3 @@ class GameServiceTest {
         assertThat(aceScore).isEqualTo(1);
     }
 }
-
