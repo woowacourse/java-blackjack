@@ -48,7 +48,7 @@ public class GameController {
             outputView.printDealerReceiveCard();
         }
 
-
+        outputView.printFinalScore(dealer, players);
     }
 
     private void printGameStart(List<String> playerNames, Dealer dealer, List<Player> players) {
