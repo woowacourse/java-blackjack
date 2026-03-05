@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Deck {
-    private static final int INIT_DECK_SIZE = 2;
     private static final int BUST_CRITERIA = 21;
     private final List<Card> cards;
 
@@ -19,20 +18,21 @@ public class Deck {
     }
 
     public static Deck createParticipantDeck(Deck deck) {
-        return new Deck(deck.drawCard(INIT_DECK_SIZE));
+        List<Card> cards = new ArrayList<>(
+                List.of(
+                        deck.drawCard(),
+                        deck.drawCard()
+                )
+        );
+        return new Deck(cards);
     }
 
-    public List<Card> drawCard(int count) {
-
-        if (count > cards.size() || count < 1) {
+    public Card drawCard() {
+        if (cards.isEmpty()) {
             throw new IllegalArgumentException(ErrorMessage.DRAW_CARD_OUT_OF_RANGE.getMessage());
         }
 
-        ArrayList<Card> selectedCards = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            selectedCards.add(cards.removeFirst());
-        }
-        return selectedCards;
+        return cards.removeFirst();
     }
 
     public boolean isBust() {
@@ -46,6 +46,11 @@ public class Deck {
         return sumAce + sumExceptAce;
     }
 
+    public int addCard(Card card) {
+        this.cards.add(card);
+        return cards.size();
+    }
+
     private int calculateCardScoreSumExceptAce() {
         int sum = 0;
         for (Card card : cards) {
@@ -54,8 +59,7 @@ public class Deck {
 
         return sum;
     }
-
-
+    
     private int addCardScoreExceptAce(Card card, int sum) {
         if (!card.isAce()) {
             sum += card.getCardContents().getScore();
