@@ -67,4 +67,40 @@ public class Game {
             distributeCard(participant);
         }
     }
+
+    public void settlementOfResults() {
+        int dealerScore = dealer.calculateScore();
+        for (Player player : players) {
+            addResult(player, dealerScore);
+        }
+    }
+
+    private void addResult(Player player, int dealerScore) {
+        int playerScore = player.calculateScore();
+
+        if (player.isBurst() || (playerScore < dealerScore && !dealer.isBurst())) {
+            addPlayerLose(player);
+            return;
+        }
+        if (playerScore == dealerScore) {
+            addPlayerDraw(player);
+            return;
+        }
+        addPlayerWin(player);
+    }
+
+    private void addPlayerWin(Player player) {
+        player.addResult(Result.WIN);
+        dealer.addResult(Result.LOSE);
+    }
+
+    private void addPlayerDraw(Player player) {
+        player.addResult(Result.DRAW);
+        dealer.addResult(Result.DRAW);
+    }
+
+    private void addPlayerLose(Player player) {
+        player.addResult(Result.LOSE);
+        dealer.addResult(Result.WIN);
+    }
 }
