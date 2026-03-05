@@ -30,10 +30,15 @@ public class Player {
         return List.copyOf(hand);
     }
 
-@Override public String toString() {
-    return "Player{" +
-            "name='" + name + '\'' +
-            ", hand=" + hand +
-            ", isBust=" + isBust +
-            '}';
-}}
+    public List<String> getHandToString() {
+        return hand.stream().map(Card::toString).toList();
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "name='" + name + '\'' +
+                ", hand=" + hand +
+                ", isBust=" + isBust +
+                '}';
+    }}

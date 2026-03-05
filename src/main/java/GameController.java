@@ -15,7 +15,7 @@ public class GameController {
 
         // 카드 뿌리기
         Dealer dealer = new Dealer();
-        manager.dealCards(players.getPlayers(), dealer);
+        manager.startGame();
 
         for (Player player : players.getPlayers()) {
             while (!player.isBust()) {
