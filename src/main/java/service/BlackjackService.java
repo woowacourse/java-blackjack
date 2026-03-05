@@ -3,8 +3,6 @@ package service;
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.BlackjackController;
-import domain.Card;
 import domain.Cards;
 import domain.Dealer;
 import domain.Player;
@@ -27,8 +25,7 @@ public class BlackjackService {
         List<Player> playerList = new ArrayList<>();
         for (String name : names) {
             Player player = new Player(name);
-            player.add(cards.pop());
-            player.add(cards.pop());
+            player.addInitialedCard(cards);
             playerList.add(player);
         }
         return playerList;

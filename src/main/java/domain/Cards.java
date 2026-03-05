@@ -20,4 +20,8 @@ public class Cards {
 
         // 리스트 비었을 때 처리 필요
     }
+
+    public int getLength() {
+        return cards.size();
+    }
 }
