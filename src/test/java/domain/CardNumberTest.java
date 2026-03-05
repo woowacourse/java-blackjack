@@ -4,6 +4,7 @@ import domain.exception.OutOfBoundException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class CardNumberTest {
@@ -22,5 +23,18 @@ class CardNumberTest {
     void courtTest_notContainsABJQK_IllegalArgumentException(String value) {
         Assertions.assertThatThrownBy(() -> CardNumber.matchCardNumber(value))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("입력이 A, J, Q, K인 경우 CardNumber는 A를 반환한다.")
+    @ParameterizedTest
+    @CsvSource({
+            "A, A",
+            "J, J",
+            "Q, Q",
+            "K, K"
+    })
+    void courtTest_inputA_A(String value, CardNumber cardNumber) {
+        Assertions.assertThat(CardNumber.matchCardNumber(value))
+                .isEqualTo(cardNumber);
     }
 }
