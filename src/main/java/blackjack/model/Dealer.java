@@ -21,4 +21,9 @@ public class Dealer {
     public void pickACard(CardDeck cardDeck) {
         hands.addACard(cardDeck.draw());
     }
+
+    // 16점을 초과하면 false를 반환한다.
+    public boolean canPick() {
+        return !hands.isTotalScoreOver(PICK_THRESHOLD);
+    }
 }

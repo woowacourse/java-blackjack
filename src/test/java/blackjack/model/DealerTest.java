@@ -1,5 +1,6 @@
 package blackjack.model;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,5 +19,20 @@ class DealerTest {
         // when & then
         assertThatCode(() -> dealer.pickACard(cardDeck))
                 .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("딜러의 점수가 16점을 초과하면 false를 반환한다.")
+    void canPick() {
+        //given
+        Dealer dealer = Dealer.create();
+        CardDeck cardDeck = CardDeck.init();
+
+        for (int i = 0; i < 16; i++) {
+            dealer.pickACard(cardDeck);
+        }
+
+        // when & then
+        assertThat(dealer.canPick()).isFalse();
     }
 }
