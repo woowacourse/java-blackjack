@@ -1,7 +1,7 @@
 package model.dto;
 
-import java.util.List;
 import model.DealerWinning;
+import model.PlayersWinning;
 
-public record ParticipantWinning(DealerWinning dealerWinning, List<PlayerWinning> playersWinning) {
+public record ParticipantWinning(DealerWinning dealerWinning, PlayersWinning playersWinning) {
 }

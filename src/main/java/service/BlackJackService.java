@@ -4,6 +4,7 @@ import java.util.Objects;
 import model.CardNumber;
 import model.Cards;
 import model.Dealer;
+import model.DealerWinning;
 import model.MatchStatus;
 import model.Participant;
 import model.Player;
@@ -11,6 +12,7 @@ import model.Players;
 import model.PlayersWinning;
 import model.Scorer;
 import model.dto.Card;
+import model.dto.ParticipantWinning;
 import model.dto.PlayerWinning;
 
 public class BlackJackService {
@@ -36,8 +38,14 @@ public class BlackJackService {
         return score > 21;
     }
 
-    public PlayersWinning getGameResult(Players players, Dealer dealer) {
+    public ParticipantWinning getGameResult(Players players, Dealer dealer) {
+        PlayersWinning playersWinning = getPlayersResult(players, dealer);
+        DealerWinning dealerWinning = getDealerResult(playersWinning);
 
+        return new ParticipantWinning(dealerWinning, playersWinning);
+    }
+
+    private PlayersWinning getPlayersResult(Players players, Dealer dealer) {
         PlayersWinning playersWinning = new PlayersWinning();
 
         for(Player player : players.getPlayers()) {
@@ -46,6 +54,15 @@ public class BlackJackService {
         }
 
         return playersWinning;
+    }
+
+    private DealerWinning getDealerResult(PlayersWinning playersWinning) {
+        DealerWinning dealerWinning = new DealerWinning();
+
+        for(PlayerWinning playerWinning : playersWinning.getPlayersWinnings()) {
+            dealerWinning.increase(playerWinning.matchStatus());
+        }
+        return dealerWinning;
     }
 
     private Integer getScore(Card card, Integer score) {
