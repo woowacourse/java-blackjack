@@ -25,6 +25,24 @@ class PlayerTest {
 
 
     // 버스트 확인
+    @Test
+    @DisplayName("카드 버스트 확인 테스트")
+    void 카드_버스트_테스트() {
+        // given
+        Card card1 = new Card("2", "하트");
+        Card card2 = new Card("K", "다이아몬드");
+        Card card3 = new Card("K", "클로버");
+
+        Player player = new Player("coco");
+
+        // when
+        player.addCard(card1);
+        player.addCard(card2);
+        player.addCard(card3);
+
+        // then
+        Assertions.assertThat(player.isBust()).isEqualTo(true);
+    }
 
 
     // 합산
