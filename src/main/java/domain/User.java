@@ -24,6 +24,10 @@ public class User {
         hand.addAll(cards);
     }
 
+    public void receiveCard(Card card) {
+        hand.add(card);
+    }
+
     public List<Card> getHand() {
         return hand;
     }

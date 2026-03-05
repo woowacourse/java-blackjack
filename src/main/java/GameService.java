@@ -1,7 +1,16 @@
+import domain.Card;
+import domain.CardDeck;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameService {
 
+    private final CardDeck cardDeck;
+
+    public GameService() {
+        this.cardDeck = new CardDeck();
+    }
 
     public int calculateScore(List<String> cards) {
         int score = 0;
@@ -17,6 +26,10 @@ public class GameService {
             }
         }
         return score;
+    }
+
+    public Card deal() {
+        return cardDeck.deal();
     }
     
 
