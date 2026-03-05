@@ -1,12 +1,13 @@
-package domain;
+package domain.card;
 
-import java.io.InputStream;
+import domain.card.Card;
+import domain.card.CardKind;
+import domain.card.CardValue;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class GameCards {
     private List<Card> cards;
