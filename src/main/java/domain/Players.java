@@ -15,4 +15,6 @@ public class Players {
         if (players.size() > 5)
             throw new IllegalArgumentException("플레이어 인원 수는 5명 이하여야 합니다.");
     }
+
+
 }
