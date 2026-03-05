@@ -18,7 +18,7 @@ class NameTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"나는A", "안녕하세요"})
+    @ValueSource(strings = {"tori>_<", "러키ㅉ6"})
     void 이름의_형식이_맞지_않는_경우_예외_발생(String name) {
         // when & then
         assertThatThrownBy(() -> new Name(name))
