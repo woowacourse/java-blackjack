@@ -18,7 +18,6 @@ public enum CardRank {
     QUEEN(12, "A", 10, 10),
     KING(13, "A", 10, 10);
 
-
     private int code;
     private String name;
     private int value;
