@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Scanner;
 
 public class GameController {
 
@@ -10,7 +11,8 @@ public class GameController {
 
     public void run() {
         // 플레이어 입력
-        List<String> playerName = List.of("pobi", "cary");
+        manager.addPlayer("pobi");
+        manager.addPlayer("cary");
 
         // 카드를 2장씩 세팅
         manager.startGame();
@@ -20,40 +22,17 @@ public class GameController {
 
         for (Player player : manager.getPlayerSequence()) {
             while (true) {
-                if (!player.isBust()) {
+                if (player.isBust() || manager.isBlackjack(player)) {
                     break;
                 }
 
-//                if (view.isYes().equals("n")) {
-//                    break;
-//                }
+                if (new Scanner(System.in).nextLine().equals("n")) {
+                    break;
+                }
 
                 List<String> playerHand = manager.drawCard(player);
-
-
+                System.out.println("playerHand = " + playerHand);
             }
         }
-
-
-
-
-        /*
-        for (Player player : players.getPlayers()) {
-            while (!player.isBust()) {
-                int score = manager.calculateScore(player.getHand());
-                manager.judgeBust(score, player);
-                if (player.isBust()) {
-                    continue;
-                }
-                manager.drawCard(player);
-            }
-        }
-
-        for (Player player : players.getPlayers()) {
-            System.out.println("player = " + player);
-        }
-        */
-
-
     }
 }
