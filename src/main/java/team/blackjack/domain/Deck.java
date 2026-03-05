@@ -1,32 +1,26 @@
 package team.blackjack.domain;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Deck {
-    private final List<Card> cards = new ArrayList<>();
+    private final List<Card> cards;
 
     public Deck() {
-        for(Suit suit : Suit.values()){
-            for (Rank rank : Rank.values()) {
-                cards.add(new Card(suit,rank));
-            }
-        }
+        this.cards = Arrays.stream(Card.values())
+                .collect(Collectors.toList());
 
-        shuffle();
+        // 카드 섞기
+        Collections.shuffle(this.cards);
     }
 
     public Card draw() {
-        shuffle();
         try {
             return cards.getFirst();
         } finally {
             cards.removeFirst();
         }
-    }
-
-    private void shuffle(){
-        Collections.shuffle(this.cards);
     }
 }

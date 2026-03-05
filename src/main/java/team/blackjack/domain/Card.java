@@ -2,32 +2,37 @@ package team.blackjack.domain;
 
 import java.util.List;
 
-public class Card {
-    private final Suit suit;
-    private final Rank rank;
+public enum Card {
+    ACE_OF_HEARTS(Suit.HEARTS, "A하트", List.of(1, 11)),
+    TWO_OF_HEARTS(Suit.HEARTS, "2하트", List.of(2)),
+    THREE_OF_HEARTS(Suit.HEARTS, "3하트", List.of(3));
 
-    public Card(Suit suit, Rank rank) {
+    private final Suit suit;
+    private final String name;
+    private final List<Integer> values;
+
+    Card(Suit suit, String name, List<Integer> values) {
         this.suit = suit;
-        this.rank = rank;
+        this.name = name;
+        this.values = values;
+    }
+
+    public enum Suit {
+
+        HEARTS(true), DIAMONDS(true), CLUBS(false), SPADES(false);
+
+        private final boolean isRed;
+
+        Suit(boolean isRed) {
+            this.isRed = isRed;
+        }
+
+        public boolean isRed() {
+            return isRed;
+        }
     }
 
     public String getCardName() {
-        return this.rank.getName() + this.suit.getKoreanName();
-    }
-
-    public boolean isAce() {
-        return this.rank.isAce();
-    }
-
-    public List<Integer> getScore() {
-        return this.rank.getScore();
-    }
-
-    public Rank getRank() {
-        return this.rank;
-    }
-
-    public Suit getSuit() {
-        return this.suit;
+        return this.name;
     }
 }
