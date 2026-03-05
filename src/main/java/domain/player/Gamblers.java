@@ -1,5 +1,7 @@
 package domain.player;
 
+import domain.deck.CardDeck;
+import dto.BlackjackResult;
 import expcetion.BlackjackException;
 import expcetion.ExceptionMessage;
 import java.util.ArrayList;
@@ -27,13 +29,37 @@ public class Gamblers {
     private void init(List<String> names) {
         names.stream().map(Gambler::new).forEach(gamblers::add);
 
-        //for(String name : names){
-        //    gamblers.add(new Gambler(name));
-        //} 학습을 위해 남겨두었습니다.
+        /*
+        for(String name : names){
+           gamblers.add(new Gambler(name));
+        } 학습을 위해 남겨두었습니다.
+
+         */
     }
 
     public List<Gambler> getGamblers() {
         return gamblers;
+    }
+
+    public void dealAll(CardDeck cardDeck) {
+        gamblers.forEach(gambler -> gambler.deal(cardDeck));
+        /*
+        for(Gambler gambler : gamblers) {
+            gambler.deal(cardDeck.deal());
+        }
+         */
+    }
+
+    public BlackjackResult getResult(int dealerScore) {
+        int winCount = 0;
+        List<String> logs = new ArrayList<>();
+        for(Gambler gambler : gamblers) {
+            boolean isWinner = gambler.isWinner(dealerScore);
+            if(isWinner) winCount++;
+            logs.add(gambler.getResult(isWinner));
+        }
+
+        return new BlackjackResult(winCount, gamblers.size() - winCount , logs);
     }
 
 }
