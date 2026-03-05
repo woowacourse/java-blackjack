@@ -23,18 +23,24 @@ public class GameTest {
 
         @BeforeEach
         void setUp() {
-            List<String> names = List.of("피즈", "스타크");
+
             Deck deck = new Deck(List.of(new Card(Rank.FIVE, Suit.CLOVER), new Card(Rank.FIVE, Suit.CLOVER),
                     new Card(Rank.SIX, Suit.CLOVER), new Card(Rank.SEVEN, Suit.CLOVER),
                     new Card(Rank.FOUR, Suit.SPADE), new Card(Rank.SEVEN, Suit.HEART)));
-            game = new Game(names, deck);
+
+            List<String> twoPlayer = List.of("피즈", "스타크");
+            twoPlayerGame = new Game(twoPlayer, deck);
+
+            List<String> onePlayer = List.of("피즈");
+            onePlayerGame = new Game(onePlayer, new Deck(List.of()));
+
         }
 
         @DisplayName("모든 플레이어가 정상적으로 생성된다.")
         @Test
         public void 모든_플레이어가_정상적으로_생성된다() {
             //when
-            List<Player> players = game.getPlayers();
+            List<Player> players = twoPlayerGame.getPlayers();
             List<String> playerNames = players.stream()
                     .map(Player::getName)
                     .toList();
@@ -48,9 +54,9 @@ public class GameTest {
         void 게임_시작_후_모든_플레이어_2장의_카드_분배를_받는다() {
             //given
             //when
-            game.startGame();
-            List<Player> players = game.getPlayers();
-            Dealer dealer = game.getDealer();
+            twoPlayerGame.startGame();
+            List<Player> players = twoPlayerGame.getPlayers();
+            Dealer dealer = twoPlayerGame.getDealer();
             //then
             for (Player player : players) {
                 assertThat(player.getCards().size()).isEqualTo(2);
@@ -63,13 +69,13 @@ public class GameTest {
         @Test
         void 플레이어_카드_합_21_미만_히트_요청_시_한장_더_분배한다() {
             //given
-            Player firstPlayer = game.getPlayers().getFirst();
+            Player firstPlayer = twoPlayerGame.getPlayers().getFirst();
             //when
             firstPlayer.addCard(new Card(Rank.ACE, Suit.CLOVER));
             firstPlayer.addCard(new Card(Rank.FOUR, Suit.CLOVER));
             firstPlayer.addCard(new Card(Rank.EIGHT, Suit.CLOVER));
             //then
-            game.playerHit(firstPlayer, true);
+            twoPlayerGame.playerHit(firstPlayer, true);
 
             assertThat(firstPlayer.getCards().size()).isEqualTo(4);
         }
@@ -78,13 +84,13 @@ public class GameTest {
         @Test
         void 딜러의_카드_총합이_17미만이면_한장을_더_분배한다() {
             //given
-            Dealer dealer = game.getDealer();
+            Dealer dealer = twoPlayerGame.getDealer();
             //when
             dealer.addCard(new Card(Rank.ACE, Suit.CLOVER));
             dealer.addCard(new Card(Rank.FOUR, Suit.CLOVER));
             dealer.addCard(new Card(Rank.EIGHT, Suit.CLOVER));
             //then
-            game.playerHit(dealer, true);
+            twoPlayerGame.playerHit(dealer, true);
 
             assertThat(dealer.getCards().size()).isEqualTo(4);
         }
