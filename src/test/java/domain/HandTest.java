@@ -1,16 +1,17 @@
 package domain;
 
+import domain.exception.DuplicatedException;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class HandTest {
 
-    private final Hand hand;
+    private Hand hand;
 
-    @BeforeAll
-    static void setUp() {
+    @BeforeEach
+    void setUp() {
         hand = new Hand();
     }
 
@@ -20,7 +21,7 @@ public class HandTest {
         hand.appendCard(new Card("2", "하트"));
 
         Assertions.assertThatThrownBy(
-                hand.appendCard(new Card("2", "하트")))
+                () -> hand.appendCard(new Card("2", "하트")))
                 .isInstanceOf(DuplicatedException.class);
     }
 

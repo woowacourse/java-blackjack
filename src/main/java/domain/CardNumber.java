@@ -57,4 +57,8 @@ public enum CardNumber {
     private static void validateCourt(String value) {
         CardNumber.valueOf(value);
     }
+
+    public int getValue() {
+        return number;
+    }
 }
