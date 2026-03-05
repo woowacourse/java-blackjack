@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Card {
 
     private final String rank;
@@ -35,5 +37,22 @@ public class Card {
             throw new IllegalArgumentException("2~10 사이의 숫자만 가능합니다.");
         }
         return score;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Card card)) {
+            return false;
+        }
+        return rank.equals(card.rank) &&
+                shape.equals(card.shape);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(rank, shape);
     }
 }
