@@ -100,7 +100,7 @@ class GameManagerTest {
     }
 
     @Test
-    void 딜러가_17점_이상인지_확인한다() {
+    void 딜러가_16점_이하인지_확인한다() {
         GameManager manager = new GameManager();
 
         assertThat(manager.isDealerTurn()).isTrue();
