@@ -22,6 +22,11 @@ public class Player {
         cards.add(card);
     }
 
+    public void addInitialedCard(Cards totalCards) {
+        cards.add(totalCards.pop());
+        cards.add(totalCards.pop());
+    }
+
     public String getName() {
         return name;
     }

@@ -4,6 +4,7 @@ import domain.Cards;
 import domain.Dealer;
 import domain.Player;
 import domain.Players;
+import service.BlackjackService;
 import utils.generator.CardGenerator;
 import view.InputView;
 import view.OutputView;
@@ -16,39 +17,27 @@ public class BlackjackController {
     public static final String DEALER_NAME = "딜러";
     private static final int MAX_RETRY = 10;
     private final InputView inputView;
+    private final BlackjackService blackjackService;
 
-    public BlackjackController() {
+    public BlackjackController(BlackjackService blackjackService) {
         this.inputView = new InputView();
+        this.blackjackService = blackjackService;
     }
 
     public void run() {
-        Cards cards = CardGenerator.generate();
-        cards.shuffle();
+        Cards cards = blackjackService.generateCards();
         List<String> names = inputNames();
-        List<Player> playerList = new ArrayList<>();
-        Dealer dealer = new Dealer(DEALER_NAME);
 
-        OutputView.displayCardDistribution(names);
-        dealer.add(cards.pop());
-        dealer.add(cards.pop());
-
-        for (String name : names) {
-            Player player = new Player(name);
-            player.add(cards.pop());
-            player.add(cards.pop());
-            playerList.add(player);
-        }
+        Dealer dealer = createDealer(names, cards);
+        List<Player> playerList = blackjackService.createPlayers(names, cards);
 
         List<CardContentDto> firstCardContents = new ArrayList<>();
-
         firstCardContents.add(new CardContentDto(dealer.getName(), List.of(dealer.getFirstCard())));
         for (Player player : playerList) {
             firstCardContents.add(new CardContentDto(player.getName(), player.getCards()));
         }
-
         OutputView.displayCardContent(firstCardContents);
-
-
+        
         Players players = new Players(playerList);
         for (Player player : players) {
             String name = player.getName();
@@ -56,16 +45,18 @@ public class BlackjackController {
             handCardWithRetry(player, hasCard, cards, name);
         }
 
-        // TODO: 딜러 더 받기
-        determineAdditionalCard(dealer, cards);
+        blackjackService.determineAdditionalCard(dealer, cards);
     }
 
-    private void determineAdditionalCard(Dealer dealer, Cards cards) {
-        if (dealer.needAdditionalCard()) {
-            dealer.add(cards.pop());
-            OutputView.displayDealerCard();
-        }
+    public Dealer createDealer(List<String> names, Cards cards) {
+        Dealer dealer = new Dealer(BlackjackController.DEALER_NAME);
+        OutputView.displayCardDistribution(names);
+        blackjackService.giveInitialedCard(cards, dealer);
+        return dealer;
     }
+
+
+
 
     private void handCardWithRetry(Player player, boolean hasCard, Cards cards, String name) {
         while (hasCard) {
