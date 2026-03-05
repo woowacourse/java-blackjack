@@ -21,30 +21,34 @@ public class Participant {
                 .mapToInt(Card::getRankScore)
                 .sum();
 
-        boolean aExist = cards.stream()
+        boolean aceExist = cards.stream()
                 .anyMatch(card -> card.getRank().equals(Rank.ACE));
 
-        if (aExist) {
-            return (score + calculateAScore(21 - score));
+        if (aceExist) {
+            return (score + calculateAceScore(21 - score));
         }
 
         return score;
     }
 
-    private int calculateAScore(int remainScore) {
-        int minAScore = cards.stream()
+    private int calculateAceScore(int remainScore) {
+        int minAceScore = cards.stream()
                 .filter(card -> card.getRank().equals(Rank.ACE))
                 .mapToInt(Card::getRankScore)
                 .sum();
 
-        if (remainScore < minAScore + 10) {
-            return minAScore;
+        if (remainScore < minAceScore + 10) {
+            return minAceScore;
         }
 
-        return minAScore + 10;
+        return minAceScore + 10;
     }
 
     public boolean isBurst() {
         return calculateScore() > 21;
+    }
+
+    public boolean checkScoreUnderCriterion() {
+        return calculateScore() < 21;
     }
 }
