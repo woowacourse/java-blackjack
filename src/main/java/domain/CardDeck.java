@@ -43,6 +43,10 @@ public class CardDeck {
         return deck.pop();
     }
 
+    public List<Card> getCardDeck(){
+        return Collections.unmodifiableList(deck);
+    }
+
     private void validate(Stack<Card> items) {
         if (items == null || items.isEmpty()) {
             throw new IllegalArgumentException("[ERROR] 리스트가 비어있습니다.");
