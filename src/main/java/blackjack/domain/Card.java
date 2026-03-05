@@ -9,4 +9,9 @@ public class Card {
         this.value = value;
         this.shape = shape;
     }
+
+    public String getName() {
+        return value.getName() + shape.getName();
+    }
+
 }

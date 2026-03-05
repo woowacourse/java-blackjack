@@ -18,8 +18,21 @@ public class User {
         cards.add(card);
     }
 
+    public String getName() {
+        return name;
+    }
+
     public List<Card> getCards() {
         return cards;
+    }
+
+    public List<String> getCardsName() {
+        List<String> cardsName = new ArrayList<>();
+        for (Card card : cards) {
+            cardsName.add(card.getName());
+        }
+        
+        return cardsName;
     }
 
     private void validate(String name) {
