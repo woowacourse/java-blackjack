@@ -17,6 +17,10 @@ public class Player {
     }
 
     public void add(Card card) {
+        cards.add(card);
+    }
 
+    public String getName() {
+        return name;
     }
 }

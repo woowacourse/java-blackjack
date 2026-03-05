@@ -1,11 +1,11 @@
 package view;
 
+import utils.Parser;
+import validator.Validator;
+
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-
-import utils.Parser;
-import validator.Validator;
 
 
 public class InputView {
@@ -15,30 +15,27 @@ public class InputView {
         String input = readInput(List.of(
                 Validator::validateNotBlank
         ));
-        return Parser.splitBy(input,",");
+        return Parser.splitBy(input, ",");
     }
 
     public boolean readAdditionalCard(String name) {
-        System.out.println(name+"는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = readInput(List.of(
                 Validator::validateNotBlank,
                 Validator::validateChoice
         ));
-        if (input.equals("y")){
-            return true;
-        }
-        return false;
 
+        return input.equals("y");
     }
 
     private String readInput(List<Validator> validators) {
-        try{
+        try {
             String input = new Scanner(System.in).nextLine();
             for (Validator v : validators) {
                 v.validate(input);
             }
             return input;
-        } catch(NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             throw new IllegalArgumentException("입력이 비어있습니다.");
         }
 
