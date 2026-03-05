@@ -46,15 +46,23 @@ class DeckTest {
         );
     }
 
-    /*
     @Test
-    @DisplayName("여러 장의 카드의 합을 구함")
-    void calculate_card_score_sum() {
-        List<Card> cards
-        assertThat(deck.calculateCardScoreSum()).isEqualTo(340);
+    @DisplayName("Ace를 제외한 나머지 카드들의 합을 구함")
+    void calculate_card_score_sum_except_ace() {
+        CardCreationStrategy fixedCardCreationStrategy = new CardCreationStrategy() {
+            @Override
+            public List<Card> create() {
+                Card spadeJ = new Card(CardShape.스페이드, CardContents.J);
+                Card clover5 = new Card(CardShape.클로버, CardContents.FIVE);
+                Card diamondAce = new Card(CardShape.다이아몬드, CardContents.A);
+
+                return List.of(spadeJ, clover5, diamondAce);
+            }
+        };
+        Deck deck = Deck.createDeck(fixedCardCreationStrategy);
+        assertThat(deck.calculateCardScoreSumExceptAce()).isEqualTo(15);
     }
 
-     */
     @Nested
     class drawTest {
         @ParameterizedTest

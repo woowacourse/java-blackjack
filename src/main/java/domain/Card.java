@@ -9,7 +9,11 @@ public class Card {
         this.cardContents = cardContents;
     }
 
-    //getter setter 테스트 ???
+    public CardContents getCardContents() {
+        return cardContents;
+    }
 
-
+    public boolean isAce() {
+        return cardContents.getNumber().equals("A");
+    }
 }

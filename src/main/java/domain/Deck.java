@@ -33,4 +33,20 @@ public class Deck {
         }
         return selectedCards;
     }
+
+    public int calculateCardScoreSumExceptAce() {
+        int sum = 0;
+        for (Card card : cards) {
+            sum = addCardScoreExceptAce(card, sum);
+        }
+
+        return sum;
+    }
+
+    private int addCardScoreExceptAce(Card card, int sum) {
+        if (!card.isAce()) {
+            sum += card.getCardContents().getScore();
+        }
+        return sum;
+    }
 }
