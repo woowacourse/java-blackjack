@@ -1,5 +1,6 @@
 package domain.card;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,6 +14,16 @@ public class CardBundle {
 
     public static CardBundle of(List<Card> cardBundle) {
         return new CardBundle(cardBundle);
+    }
+
+    public static CardBundle empty() {
+        return new CardBundle(new ArrayList<>());
+    }
+
+    public void addUp(CardBundle newCardBundle) {
+        for (Card card : newCardBundle.cardBundle) {
+            addUp(card);
+        }
     }
 
     // TODO Method Name Refactor
@@ -30,6 +41,11 @@ public class CardBundle {
     @Override
     public int hashCode() {
         return Objects.hashCode(cardBundle);
+    }
+
+    public boolean checkExist(Card targetCard) {
+        return cardBundle.stream().
+                anyMatch(c -> c.equals(targetCard));
     }
 
 }

@@ -3,6 +3,7 @@ package domain.dealer;
 import domain.card.Card;
 import domain.card.CardBundle;
 import domain.card.CardDeck;
+import domain.player.Player;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -30,6 +31,11 @@ public class Dealer {
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("딜러가 카드를 나눠줄 수 없습니다.");
         }
+    }
+
+    public void handOutCardToPlayer(Player player, int tryCount) {
+        CardBundle cardBundle = handOutCard(tryCount);
+        player.addCardBundle(cardBundle);
     }
 
     private Card drawCard() {
