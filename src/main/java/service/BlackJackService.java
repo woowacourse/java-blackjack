@@ -13,6 +13,7 @@ import model.PlayersWinning;
 import model.Scorer;
 import model.dto.Card;
 import model.dto.ParticipantWinning;
+import model.dto.PlayerResult;
 import model.dto.PlayerWinning;
 
 public class BlackJackService {
@@ -22,14 +23,14 @@ public class BlackJackService {
         this.cards = cards;
     }
 
-    public void draw(Player player) {
+    public void draw(Participant participant) {
         Card card = cards.draw();
-        Integer currentScore = player.getResult().score();
+        Integer currentScore = participant.getResult().score();
 
         Integer score = getScore(card, currentScore);
 
-        player.addCard(card);
-        player.addScore(score);
+        participant.addCard(card);
+        participant.addScore(score);
     }
 
     public boolean isBust(Participant participant) {
@@ -37,6 +38,7 @@ public class BlackJackService {
 
         return score > 21;
     }
+
 
     public ParticipantWinning getGameResult(Players players, Dealer dealer) {
         PlayersWinning playersWinning = getPlayersResult(players, dealer);
