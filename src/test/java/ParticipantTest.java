@@ -1,4 +1,5 @@
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -71,6 +72,19 @@ public class ParticipantTest {
 
             // then
             assertThat(opened).hasSize(2);
+        }
+
+        @Test
+        void 참가자_패의_총합계_점수가_21점_초과하면_버스트로_판정한다() {
+            // given
+            Participant jason = Participant.of("jason", false);
+            jason.draw(Card.of("스페이드", 10));
+            jason.draw(Card.of("스페이드", 9));
+            jason.draw(Card.of("스페이드", 8));
+
+            // when
+            // then
+            assertThat(jason.isBust()).isTrue();
         }
 
         @ParameterizedTest

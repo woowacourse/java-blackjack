@@ -54,6 +54,14 @@ public class Participant {
         return total;
     }
 
+    public boolean isBust() {
+        if (calculateScore() > BUST_THRESHOLD) {
+            return true;
+        }
+
+        return false;
+    }
+
     private int calculate() {
         return hands.stream()
                 .map(Card::getCardNumber)
