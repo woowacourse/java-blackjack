@@ -1,9 +1,10 @@
 package domain;
 
 public abstract class Participant {
+    private static final int BUST_NUMBER = 21;
 
     private final String name;
-    private final Hand hand;
+    protected final Hand hand;
 
     protected Participant(String name, Hand hand) {
         this.name = name;
@@ -11,8 +12,10 @@ public abstract class Participant {
     }
 
     public boolean isBusted() {
-        return hand.scoreSum() >= 21;
+        return hand.scoreSum() >= BUST_NUMBER;
     }
+
+    protected abstract boolean isPlaying();
 
     public String name() {
         return name;
