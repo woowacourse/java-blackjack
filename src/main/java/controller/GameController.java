@@ -1,6 +1,7 @@
 package controller;
 
 import domain.Card;
+import domain.Dealer;
 import domain.Deck;
 import domain.Player;
 import java.util.ArrayList;
@@ -32,7 +33,14 @@ public class GameController {
             players.add(player);
         }
 
+        List<Card> cards = deck.handOutCards();
+        System.out.println(cards);
+        Dealer dealer = new Dealer(cards);
+
+        System.out.println(dealer);
         outputView.printStartCardMessage(playerNames);
+        System.out.println(dealer.getHoldCards().getFirst());
+        outputView.printDealerStartCard(dealer.getHoldCards().getFirst());
         outputView.printStartCard(players);
 
         for (Player player : players) {

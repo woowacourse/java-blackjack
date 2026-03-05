@@ -22,6 +22,10 @@ public class OutputView {
         System.out.println();
     }
 
+    public void printDealerStartCard(Card firstCard) {
+        System.out.println("딜러카드: " + firstCard.toString());
+    }
+
     public void printCurrentHoldCard(Player player) {
         List<String> startCard = new ArrayList<>();
         for (Card holdCard : player.getHoldCards()) {
