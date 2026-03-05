@@ -3,11 +3,10 @@ package domain;
 import java.util.List;
 
 public class Dealer {
-    private final String name;
+    private static final String DEALER_NAME = "딜러";
     private final Hand hand;
 
-    public Dealer(String name, Hand hand) {
-        this.name = name;
+    public Dealer(Hand hand) {
         this.hand = hand;
     }
 
@@ -28,7 +27,7 @@ public class Dealer {
     }
 
     public String getName() {
-        return name;
+        return DEALER_NAME;
     }
 
     public List<Card> getHand() {
