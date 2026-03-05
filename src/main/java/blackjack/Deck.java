@@ -28,7 +28,9 @@ public class Deck {
         return deck.size();
     }
 
-
+    public Card draw(){
+        return deck.removeLast();
+    }
 
 
 }
