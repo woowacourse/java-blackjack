@@ -7,13 +7,13 @@ public class Deck {
     private static final int CARDS_COUNT = 52;
     private final List<TrumpCard> cards;
 
+    public static Deck of(List<TrumpCard> cards) {
+        return new Deck(cards);
+    }
+
     private Deck(List<TrumpCard> cards) {
         validate(cards);
         this.cards = new ArrayList<>(cards);
-    }
-
-    public static Deck of(List<TrumpCard> cards) {
-        return new Deck(cards);
     }
 
     private void validate(List<TrumpCard> cards) {
@@ -35,5 +35,12 @@ public class Deck {
         if (uniqueCardCount != cards.size()) {
             throw new IllegalArgumentException("카드는 중복되면 안됩니다.");
         }
+    }
+
+    public TrumpCard draw() {
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException("덱에 카드가 없습니다.");
+        }
+        return cards.removeFirst();
     }
 }
