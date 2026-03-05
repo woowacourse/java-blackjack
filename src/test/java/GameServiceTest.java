@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -84,5 +83,19 @@ class GameServiceTest {
         int sum = 11;
         int aceScore = gameService.calculateOptimalAceScore(sum);
         assertThat(aceScore).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("처음 카드를 분배받으면 각 사람들이 패에 2장씩 가지고 있어야 한다.")
+    public void when_init_deal_each_must_have_2cards() {
+        Dealer dealer = new Dealer();
+        User user1 = User.from("json");
+        User user2 = User.from("poby");
+        List<User> users = List.of(user1,user2);
+
+        gameService.initDeal(users,dealer);
+        assertThat(dealer.getHand().size()).isEqualTo(2);
+        assertThat(user1.getHand().size()).isEqualTo(2);
+        assertThat(user2.getHand().size()).isEqualTo(2);
     }
 }
