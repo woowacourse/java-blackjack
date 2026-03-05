@@ -24,4 +24,10 @@ public class Player {
                 .mapToInt(Card::getValue)
                 .sum() > 21;
     }
+
+    public int getTotalValue() {
+        return cards.stream()
+                .mapToInt(Card::getValue)
+                .sum();
+    }
 }
