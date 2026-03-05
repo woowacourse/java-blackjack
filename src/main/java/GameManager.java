@@ -64,6 +64,27 @@ public class GameManager {
     }
 
     public List<GameInitialInfoDto> getInitialInfo() {
-        return null;
+        List<GameInitialInfoDto> results = new ArrayList<>();
+
+        // 딜러 첫 카드 공개
+        List<String> dealerOpenCard = new ArrayList<>();
+        dealerOpenCard.add(dealer.getHandToString().getFirst());
+
+        // dealer
+        results.add(new GameInitialInfoDto(
+                dealer.getName(),
+                2,
+                dealerOpenCard
+        ));
+        //players
+        for (Player player : players.getPlayers()) {
+            results.add(new GameInitialInfoDto(
+                    player.getName(),
+                    2,
+                    player.getHandToString()
+            ));
+        }
+
+        return results;
     }
 }
