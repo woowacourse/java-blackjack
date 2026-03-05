@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 class CardTest {
 
     @Test
-    @DisplayName("카드 숫자 정상 반환 검증")
+    @DisplayName("카드가 숫자일 때 정상 반환 검증")
     void 카드_숫자_정상_반환_테스트() {
         //given
         Card card = new Card("2", "하트");
@@ -19,4 +19,5 @@ class CardTest {
         //then
         assertThat(number).isEqualTo(2);
     }
+
 }
