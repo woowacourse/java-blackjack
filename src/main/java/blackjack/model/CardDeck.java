@@ -32,11 +32,15 @@ public class CardDeck {
         return new CardDeck(cards);
     }
 
+    // 카드를 덱에서 1장 드로우 한다.
     public Card draw() {
-        // 카드를 덱에서 1장 드로우 한다.
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("카드 덱에 카드가 더 이상 존재하지 않습니다.");
+        }
+
         Random random = new Random();
         int randomIndex = random.nextInt(0, cards.size());
 
-        return cards.get(randomIndex);
+        return cards.remove(randomIndex);
     }
 }
