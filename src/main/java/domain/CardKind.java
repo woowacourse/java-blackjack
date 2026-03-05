@@ -14,6 +14,10 @@ public enum CardKind {
         this.kind = kind;
     }
 
+    public String getKind() {
+        return kind;
+    }
+
     public static CardKind of(final String kind){
         return Arrays.stream(values())
                 .filter(val -> val.kind.equals(kind))

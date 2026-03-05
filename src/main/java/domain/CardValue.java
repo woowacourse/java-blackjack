@@ -29,6 +29,10 @@ public enum CardValue {
         return this.number;
     }
 
+    public String getValue() {
+        return this.value;
+    }
+
     public static CardValue of(final String value){
         return Arrays.stream(values())
                 .filter(val -> val.value.equals(value))

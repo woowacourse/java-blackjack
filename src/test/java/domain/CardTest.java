@@ -64,4 +64,17 @@ class CardTest {
                     new Card("10", "별");
         });
     }
+
+    @Test
+    @DisplayName("카드 value와 kind 동시 반환")
+    void 카드_value_kind_반환_테스트() {
+        // given
+        Card card = new Card("K", "하트");
+
+        // when
+        String cardInfo = card.getCardInfo();
+
+        // then
+        assertThat(cardInfo).isEqualTo("K하트");
+    }
 }
