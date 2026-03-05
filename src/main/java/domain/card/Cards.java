@@ -1,33 +1,16 @@
 package domain.card;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
-    List<Card> cards;
+    List<Card> cards = new ArrayList<>();
 
-    public Cards(List<Card> cards) {
-        this.cards = cards;
-    }
-
-    public void add(Card card){
+    public void add(Card card) {
         cards.add(card);
     }
 
-    public boolean hasAce() {
-        for (Card card : cards) {
-            return card.isAce();
-        }
-
-        return false;
-    }
-
-    public int total() {
-        return cards.stream()
-                .mapToInt(Card::score)
-                .sum();
-    }
-
-    public int size(){
+    public int size() {
         return cards.size();
     }
 

@@ -6,14 +6,14 @@ public enum Rank {
     THREE("3", 3),
     FOUR("4", 4),
     FIVE("5", 5),
-    SIX("6",6),
-    SEVEN("7",7),
+    SIX("6", 6),
+    SEVEN("7", 7),
     EIGHT("8", 8),
     NINE("9", 9),
     TEN("10", 10),
-    JACK("J",10),
-    QUEEN("Q",10),
-    KING("K",10);
+    JACK("J", 10),
+    QUEEN("Q", 10),
+    KING("K", 10);
 
     private String title;
     private int value;
@@ -23,7 +23,7 @@ public enum Rank {
         this.value = value;
     }
 
-    public int getValue(){
+    public int getValue() {
         return value;
     }
 

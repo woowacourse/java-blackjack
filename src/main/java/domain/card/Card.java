@@ -13,7 +13,7 @@ public class Card {
         return rank.equals(Rank.ACE);
     }
 
-    public int score(){
+    public int score() {
         return rank.getValue();
     }
 }

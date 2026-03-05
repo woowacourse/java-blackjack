@@ -8,12 +8,12 @@ import java.util.Set;
 public class Participants {
     List<Participant> participants = new ArrayList<>();
 
-    public Participants(List<String> names) {
+    public Participants(List<String> names, Hand hand) {
         validateDuplicatedName(names);
         validatePlayerCount(names);
 
-        preparePlayers(names);
-        prepareDealer();
+        preparePlayers(names, hand);
+        prepareDealer(hand);
     }
 
     private void validatePlayerCount(List<String> names) {
@@ -22,14 +22,15 @@ public class Participants {
         }
     }
 
-    private void preparePlayers(List<String> names) {
-        names.stream()
-                .map(Player::new)
-                .forEach(participant -> participants.add(participant));
+    private void preparePlayers(List<String> names, Hand hand) {
+        for (String name : names) {
+            Player player = new Player(name, hand);
+            participants.add(player);
+        }
     }
 
-    private void prepareDealer() {
-        Participant dealer = new Dealer();
+    private void prepareDealer(Hand hand) {
+        Participant dealer = new Dealer(hand);
         participants.add(dealer);
     }
 

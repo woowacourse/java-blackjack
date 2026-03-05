@@ -1,16 +1,11 @@
 package domain;
 
-import domain.card.Cards;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class DeckTest {
-    Cards cards = new Cards(new ArrayList<>());
-
     @Test
     void 중복되지_않은_52장의_카드_묶음을_만든다() {
 

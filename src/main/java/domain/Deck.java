@@ -9,7 +9,7 @@ import java.util.*;
 
 
 public class Deck {
-    private Cards cards;
+    private Cards cards = new Cards();
 
     public Deck() {
         setUp();

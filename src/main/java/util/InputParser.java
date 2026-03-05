@@ -10,11 +10,11 @@ public class InputParser {
         StringTokenizer stringTokenizer = new StringTokenizer(input.strip(), ",");
         List<String> names = new ArrayList<>();
 
-        validateEmptyInput(names);
-
-        while(stringTokenizer.hasMoreTokens()){
+        while (stringTokenizer.hasMoreTokens()) {
             names.add(stringTokenizer.nextToken());
         }
+
+        validateEmptyInput(names);
 
         return names;
     }
