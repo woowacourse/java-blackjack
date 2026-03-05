@@ -35,18 +35,20 @@ public class GameController {
         }
 
         outputView.printStartCardMessage(playerNames);
+        outputView.printStartCard(players);
 
         for (Player player : players) {
-            List<Card> holdCards = player.getHoldCards();
-            outputView.printStartCard(player.getName(), holdCards);
+            String hitOption = inputView.readHitOption(player.getName());
+            outputView.printCurrentHoldCard(player);
+
+            while (hitOption.equals("y")) {
+                hitOption = inputView.readHitOption(player.getName());
+                if (hitOption.equals("n")) {
+                    break;
+                }
+                player.addCard(deck.peekCard());
+                outputView.printCurrentHoldCard(player);
+            }
         }
-
-
-
-
-        for (String playerName : playerNames) {
-            inputView.readHitOption(playerName);
-        }
-
     }
 }
