@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Deck {
     private static final int INIT_DECK_SIZE = 2;
+    private static final int BUST_CRITERIA = 21;
     private final List<Card> cards;
 
     private Deck(List<Card> cards) {
@@ -34,7 +35,18 @@ public class Deck {
         return selectedCards;
     }
 
-    public int calculateCardScoreSumExceptAce() {
+    public boolean isBust() {
+        return calculateCardScoreSum() > BUST_CRITERIA;
+    }
+
+    public int calculateCardScoreSum() {
+        int sumExceptAce = calculateCardScoreSumExceptAce();
+        int sumAce = new AceScoreDiscriminator().calculateAceCardsSum(cards, sumExceptAce);
+
+        return sumAce + sumExceptAce;
+    }
+
+    private int calculateCardScoreSumExceptAce() {
         int sum = 0;
         for (Card card : cards) {
             sum = addCardScoreExceptAce(card, sum);
@@ -42,6 +54,7 @@ public class Deck {
 
         return sum;
     }
+
 
     private int addCardScoreExceptAce(Card card, int sum) {
         if (!card.isAce()) {
