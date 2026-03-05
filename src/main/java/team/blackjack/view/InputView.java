@@ -23,5 +23,4 @@ public class InputView {
     public static boolean readHitDecision() {
         return readInput().equalsIgnoreCase("y");
     }
-
 }
