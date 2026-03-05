@@ -1,9 +1,8 @@
 package domain.card;
 
-import domain.card.Card;
-import domain.card.CardKind;
-import domain.card.CardValue;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,5 +31,13 @@ public class GameCards {
 
     public int getSize() {
         return cards.size();
+    }
+
+    public void shuffle() {
+        Collections.shuffle(cards);
+    }
+
+    public Card drawCard() {
+        return cards.removeFirst();
     }
 }
