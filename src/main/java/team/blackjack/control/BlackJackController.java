@@ -3,6 +3,7 @@ package team.blackjack.control;
 import java.util.List;
 import java.util.Map;
 import team.blackjack.control.dto.DrawResult;
+import team.blackjack.control.dto.ScoreResult;
 import team.blackjack.domain.BlackjackGame;
 import team.blackjack.domain.Card;
 import team.blackjack.domain.Player;
@@ -49,11 +50,11 @@ public class BlackJackController {
             OutputView.printDealerHitMessage();
             blackJackService.hitDealer();
         }
+
+        ScoreResult scoreResult = blackJackService.calculateAllParticipantScore();
+        OutputView.printParticipantScoreResult(scoreResult);
     }
 
-    private void decideDealer(BlackjackGame blackjackGame) {
-
-    }
 
     private void readHitDecision(BlackjackGame game, List<Player> players) {
         players.forEach(player -> processHit(game, player));

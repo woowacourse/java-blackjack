@@ -3,6 +3,7 @@ package team.blackjack.view;
 import java.util.List;
 import java.util.Map.Entry;
 import team.blackjack.control.dto.DrawResult;
+import team.blackjack.control.dto.ScoreResult;
 
 public class OutputView {
 
@@ -42,5 +43,20 @@ public class OutputView {
 
     public static void printDealerHitMessage() {
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public static void printParticipantScoreResult(ScoreResult scoreResult) {
+        println("딜러의 최종 카드: %s - 결과: %d".formatted(String.join(", ", scoreResult.dealerCard()), scoreResult.dealerScore()));
+        for (String playerName : scoreResult.playerNames()) {
+            //pobi카드: 2하트, 8스페이드, A클로버 - 결과: 21
+
+            println("%s의 카드: %s - 결과: %d".formatted(playerName,
+                    String.join(", ", scoreResult.playerCards().get(playerName)),
+                    scoreResult.playerScores().get(playerName)));
+        }
+    }
+
+     public static void printGameResult(String playerName, String result) {
+        println("%s: %s".formatted(playerName, result));
     }
 }
