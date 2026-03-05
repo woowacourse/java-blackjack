@@ -21,4 +21,16 @@ public class InputView {
                 .filter(c -> !c.isEmpty()) // 콤마가 두번 겹치는 경우 필터링
                 .collect(Collectors.toList());
     }
+
+    public String readCommand(String playerName) {
+        Scanner sc = new Scanner(System.in);
+        while (true) {
+            System.out.println(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+            String input = sc.nextLine();
+            if (input.equals("y") || input.equals("n")) {
+                return input;
+            }
+            System.out.println("y 혹은 n만 입력할 수 있습니다.");
+        }
+    }
 }

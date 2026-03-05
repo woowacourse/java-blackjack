@@ -34,24 +34,25 @@ public class GameController {
                     break;
                 }
 
-                if (new Scanner(System.in).nextLine().equals("n")) {
+                if (inputView.readCommand(player.getName()).equals("n")) {
                     break;
                 }
 
                 List<String> playerHand = manager.drawPlayerCard(player);
-                System.out.println("playerHand = " + playerHand);
+                outputView.printHand(playerHand, player.getName());
             }
         }
 
         // 딜러 턴 실행
         while (manager.isDealerTurn()) {
             manager.drawDealerCard();
+            outputView.printDealerTurn();
         }
 
         // 점수 결과 출력
-        System.out.println(manager.getScoreResults());
+        outputView.printScoreResults(manager.getScoreResults());
 
         // 최종 승패 출력
-        System.out.println(manager.getFinalResult());
+        outputView.printFinalResult(manager.getFinalResult());
     }
 }
