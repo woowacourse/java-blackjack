@@ -1,5 +1,6 @@
 package domain.player;
 
+import domain.card.Card;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -23,5 +24,4 @@ class GamblersTest {
         Assertions.assertThat(allContainName).isEqualTo(true);
     }
 
-    // player에게 카드 추가할 건지 묻기(player의 카드 합이 burst가 안났을 경우에만 묻기)
 }
