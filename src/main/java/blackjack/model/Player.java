@@ -12,4 +12,8 @@ public class Player extends User {
     public GameResult getGameResult() {
         return gameResult;
     }
+
+    public void mark(GameResult gameResult) {
+        this.gameResult = gameResult;
+    }
 }

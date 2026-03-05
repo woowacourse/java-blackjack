@@ -2,8 +2,11 @@ package blackjack.view;
 
 import blackjack.model.Card;
 import blackjack.model.Dealer;
+import blackjack.model.GameResult;
+import blackjack.model.GameSummary;
 import blackjack.model.Player;
 import blackjack.model.User;
+import java.util.EnumMap;
 import java.util.List;
 
 public class OutputView {
@@ -43,15 +46,36 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printCardStatus(User user, int totalScore) {
-        StringBuilder sb = new StringBuilder();
+    public static void printCardStatus(GameSummary gameSummary) {
+        User user = gameSummary.user();
 
+        StringBuilder sb = new StringBuilder();
         sb.append(user.getName() + "카드: ");
         List<String> cardFormats = user.getCardStatus().getCards().stream().map(Card::getFormat).toList();
         sb.append(String.join(", ", cardFormats));
-        sb.append(" - 결과: " + totalScore).append("\n");
+        sb.append(" - 결과: " + gameSummary.totalScore()).append("\n");
 
         System.out.println(sb);
+    }
+
+    public static void printGameResult(List<User> users) {
+        System.out.println("## 최종 승패");
+
+        Dealer dealer = (Dealer) users.getFirst();
+        EnumMap<GameResult, Integer> dealerGameResult = dealer.getGameResults();
+        System.out.println(
+                dealer.getName() + ": " + dealerGameResult.getOrDefault(GameResult.WIN, 0) + "승 " +
+                        dealerGameResult.getOrDefault(GameResult.DRAW, 0) + "무 " + dealerGameResult.getOrDefault(
+                        GameResult.LOSE, 0) + "패");
+
+        List<Player> players = users.stream()
+                .skip(1)
+                .map(user -> (Player) user)
+                .toList();
+        for (Player player : players) {
+            System.out.print(player.getName() + ": ");
+            System.out.println(player.getGameResult().getFormat());
+        }
     }
 
 }

@@ -13,4 +13,8 @@ public class Dealer extends User {
     public EnumMap<GameResult, Integer> getGameResults() {
         return gameResults;
     }
+
+    public void addResult(GameResult gameResult) {
+        gameResults.put(gameResult, gameResults.getOrDefault(gameResult, 0) + 1);
+    }
 }

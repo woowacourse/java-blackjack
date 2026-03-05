@@ -3,6 +3,8 @@ package blackjack.controller;
 import blackjack.model.CardCalculator;
 import blackjack.model.CardProvider;
 import blackjack.model.Dealer;
+import blackjack.model.GameResultCalculator;
+import blackjack.model.GameSummary;
 import blackjack.model.Player;
 import blackjack.model.User;
 import blackjack.util.PlayerParser;
@@ -16,10 +18,13 @@ public class BlackjackController {
 
     private final CardProvider cardProvider;
     private final CardCalculator cardCalculator;
+    private final GameResultCalculator gameResultCalculator;
 
-    public BlackjackController(CardProvider cardProvider, CardCalculator cardCalculator) {
+    public BlackjackController(CardProvider cardProvider, CardCalculator cardCalculator,
+                               GameResultCalculator gameResultCalculator) {
         this.cardProvider = cardProvider;
         this.cardCalculator = cardCalculator;
+        this.gameResultCalculator = gameResultCalculator;
     }
 
     public void run() {
@@ -36,9 +41,16 @@ public class BlackjackController {
         List<User> users = new ArrayList<>(players);
         users.addFirst(dealer);
 
+        List<GameSummary> gameSummaries = new ArrayList<>();
         for (User user : users) {
-            OutputView.printCardStatus(user, cardCalculator.totalScore(user.getCardStatus().getCards()));
+            GameSummary gameSummary = new GameSummary(user, cardCalculator.totalScore(user.getCardStatus().getCards()));
+            gameSummaries.add(gameSummary);
+            OutputView.printCardStatus(gameSummary);
         }
+
+        gameResultCalculator.calculate(gameSummaries);
+
+        OutputView.printGameResult(users);
     }
 
     public void hit(List<Player> players, Dealer dealer) {
