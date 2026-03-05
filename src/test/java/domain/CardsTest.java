@@ -65,4 +65,12 @@ public class CardsTest {
 
         Assertions.assertEquals(cards.decideBurst(sum), true);
     }
+
+    @Test
+    void 합계가_21보다_작으면_버스트로_판정되면_안_된다() {
+        Cards cards = new Cards();
+        int sum = 20;
+
+        Assertions.assertEquals(cards.decideBurst(sum), false);
+    }
 }
