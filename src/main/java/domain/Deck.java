@@ -1,13 +1,15 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Deck {
     private final List<Card> cards;
 
     public Deck() {
-        this.cards = generateDeck();
+        List<Card> beforeShuffledCards = generateDeck();
+        this.cards = shuffleCards(beforeShuffledCards);
     }
 
     private List<Card> generateDeck() {
@@ -19,5 +21,12 @@ public class Deck {
             }
         }
         return cards;
+    }
+
+    // TODO: 변수명 추후 수정
+    private List<Card> shuffleCards(List<Card> cards) {
+        List<Card> shuffledCards = new ArrayList<>(cards);
+        Collections.shuffle(shuffledCards);
+        return shuffledCards;
     }
 }
