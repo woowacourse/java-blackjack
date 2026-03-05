@@ -22,9 +22,11 @@ public class BlackJackController {
     public void run() {
         Players players = inputController.getParticipantsName();
         Dealer dealer = new Dealer();
-        OutputView.printDealerCardDrawMessage();
+
+        OutputView.printNewLine();
 
         initDraw(dealer, players);
+
         drawPlayersTurn(players);
         drawDealer(dealer);
 
@@ -58,6 +60,7 @@ public class BlackJackController {
         for(Player player : players.getPlayers()) {
             drawPlayerTurn(player);
         }
+        OutputView.printNewLine();
     }
 
     private void drawPlayerTurn(Player player) {

@@ -18,15 +18,18 @@ public class OutputView {
         printInitDeckDrawMessage(playerNames);
         printDealerInitDeck(dealer.deck().getFirst());
         printPlayersCurrentDeck(players);
+        printNewLine();
     }
 
     public static void printPlayerCurrentDeck(PlayerResult playerResult) {
         List<String> cardString = playerResult.deck().stream().map(Card::getString).toList();
         System.out.print(playerResult.name().get() + "카드: " + String.join(", ", cardString));
+        printNewLine();
     }
 
     public static void printDealerCardDrawMessage() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        printNewLine();
     }
 
 
@@ -35,6 +38,7 @@ public class OutputView {
             printPlayerScore(playerResult);
             printNewLine();
         }
+        printNewLine();
     }
 
     public static void printNewLine() {
