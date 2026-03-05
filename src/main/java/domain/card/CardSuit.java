@@ -7,11 +7,12 @@ public enum CardSuit {
     SPADE("스페이드");
 
     private final String suit;
-    CardSuit(String suit){
+
+    CardSuit(String suit) {
         this.suit = suit;
     }
 
-    public String getSuit(){
+    public String getSuit() {
         return suit;
     }
 }

@@ -11,16 +11,16 @@ public abstract class Player {
         this.handCard = new HandCard();
     }
 
-    public void deal(CardDeck cardDeck){
+    public void deal(CardDeck cardDeck) {
         handCard.addCard(cardDeck.deal());
     }
 
-    public CardInfos showAllCards(){
+    public CardInfos showAllCards() {
         return new CardInfos(handCard.getCardInfos());
     }
 
-    public int score(){
-       return handCard.cardCalculator();
+    public int score() {
+        return handCard.cardCalculator();
     }
 }
 

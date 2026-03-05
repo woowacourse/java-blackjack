@@ -13,9 +13,9 @@ public class InputView {
     }
 
     public static String readLine() {
-        try{
+        try {
             return br.readLine();
-        }catch(IOException e){
+        } catch (IOException e) {
             throw new BlackjackException(ExceptionMessage.INPUT_ERROR);
         }
     }

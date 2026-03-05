@@ -6,6 +6,7 @@ public class Dealer extends Player {
         int score = handCard.cardCalculator();
         return score >= 17;
     }
+
     public String showFirstCard() {
         return handCard.getFirstCardInfo();
     }

@@ -9,11 +9,11 @@ public class Card {
         this.suit = suit;
     }
 
-    public int getRankScore(){
+    public int getRankScore() {
         return rank.getScore();
     }
 
-    public String getCardInfo(){
-        return rank.getName()+suit.getSuit();
+    public String getCardInfo() {
+        return rank.getName() + suit.getSuit();
     }
 }

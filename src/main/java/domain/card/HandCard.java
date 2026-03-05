@@ -4,29 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HandCard {
-    private final List<Card> cards;
-
     private static final int BLACKJACK_MAX_LIMIT = 21;
     private static final int ACE_MAX_VALUE = 11;
     private static final int ACE_MIN_VALUE = 1;
+    private final List<Card> cards;
 
-    public HandCard(){
+    public HandCard() {
         this.cards = new ArrayList<>();
     }
-    
-    public int cardCalculator(){
+
+    public int cardCalculator() {
         int nonAceTotal = cards.stream().map(Card::getRankScore).filter(e -> e != 1).mapToInt(Integer::intValue).sum();
         int aceCnt = (int) cards.stream().map(Card::getRankScore).filter(e -> e == 1).count();
 
         return aceCalculator(nonAceTotal, aceCnt);
     }
 
-    private int aceCalculator(int nonAceTotal, int aceCnt){
-        int totalSum = nonAceTotal + (aceCnt*ACE_MAX_VALUE);
+    private int aceCalculator(int nonAceTotal, int aceCnt) {
+        int totalSum = nonAceTotal + (aceCnt * ACE_MAX_VALUE);
         int remainingAce = aceCnt;
-        while(totalSum > BLACKJACK_MAX_LIMIT && remainingAce > 0){
-           totalSum -= (ACE_MAX_VALUE - ACE_MIN_VALUE);
-           remainingAce--;
+        while (totalSum > BLACKJACK_MAX_LIMIT && remainingAce > 0) {
+            totalSum -= (ACE_MAX_VALUE - ACE_MIN_VALUE);
+            remainingAce--;
         }
         return totalSum;
     }
@@ -36,15 +35,15 @@ public class HandCard {
     }
      */
 
-    public void addCard(Card card){
+    public void addCard(Card card) {
         cards.add(card);
     }
 
-    public List<String> getCardInfos(){
+    public List<String> getCardInfos() {
         return cards.stream().map(Card::getCardInfo).toList();
     }
 
-    public String getFirstCardInfo(){
+    public String getFirstCardInfo() {
         return cards.getFirst().getCardInfo();
     }
 }

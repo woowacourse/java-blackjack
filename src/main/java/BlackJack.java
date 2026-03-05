@@ -2,7 +2,6 @@ import domain.deck.CardDeck;
 import domain.deck.Deck;
 import domain.player.Dealer;
 import domain.player.Gambler;
-import java.util.ArrayList;
 import java.util.List;
 import parser.PlayNameParser;
 import view.InputView;
@@ -16,16 +15,14 @@ public class BlackJack {
         this.cardDeck = new Deck();
     }
 
-    public void start(){
+    public void start() {
         Dealer dealer = new Dealer();
-        List<Gambler>  gamblers = getGamblers();
-
-
+        List<Gambler> gamblers = getGamblers();
 
 
     }
 
-    private List<Gambler> getGamblers(){
+    private List<Gambler> getGamblers() {
         List<String> gamblerNames = PlayNameParser.splitNames(InputView.readLine());
         return gamblerNames.stream().map(Gambler::new).toList();
     }
