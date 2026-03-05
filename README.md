@@ -102,8 +102,7 @@
 5. 상수화
 
 ### 피노 공부해야할거
-- Interface, abstract
 - 객체지향의 5원칙
 - SOLID
 - stream
-- 
+- exception

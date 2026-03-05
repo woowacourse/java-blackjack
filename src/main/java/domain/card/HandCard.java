@@ -18,11 +18,7 @@ public class HandCard {
         int nonAceTotal = cards.stream().map(Card::getRankScore).filter(e -> e != 1).mapToInt(Integer::intValue).sum();
         int aceCnt = (int) cards.stream().map(Card::getRankScore).filter(e -> e == 1).count();
 
-        int result = aceCalculator(nonAceTotal, aceCnt);
-
-        if(result > BLACKJACK_MAX_LIMIT) return 0;
-
-        return result;
+        return aceCalculator(nonAceTotal, aceCnt);
     }
 
     private int aceCalculator(int nonAceTotal, int aceCnt){
@@ -49,6 +45,6 @@ public class HandCard {
     }
 
     public String getFirstCardInfo(){
-        return cards.get(0).getCardInfo();
+        return cards.getFirst().getCardInfo();
     }
 }

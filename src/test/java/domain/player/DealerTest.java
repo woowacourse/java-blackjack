@@ -1,12 +1,12 @@
-package domain;
+package domain.player;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.StubDeck;
 import domain.card.Card;
 import domain.card.CardRank;
 import domain.card.CardSuit;
-import domain.player.Dealer;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

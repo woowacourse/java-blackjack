@@ -3,6 +3,8 @@ package domain.deck;
 import domain.card.Card;
 import domain.card.CardRank;
 import domain.card.CardSuit;
+import expcetion.BlackjackException;
+import expcetion.ExceptionMessage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -31,9 +33,10 @@ public class Deck implements CardDeck{
         index = 0;
     }
 
-    //TODO : INDEX가 52를 넘는다면? --> 나중에 생각
     @Override
     public Card deal(){
+        if(index >= cards.size()) throw new BlackjackException(ExceptionMessage.EMPTY_CARD_DECK);
+
         return cards.get(index++);
     }
 }
