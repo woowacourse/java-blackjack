@@ -1,17 +1,15 @@
 package util;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class Parser {
     private static final Pattern CONTAINS_DIGIT = Pattern.compile(".*\\d.*");
     private static final Pattern VALID_INPUT = Pattern.compile("^[a-zA-Z가-힣,]+$");
 
-    // 쉼표 기준으로 분리
-    // 예외 처리
-    public void parseParticipantsName(String participantsName) {
-        validateEmptyInput(participantsName);
-        validateNonLiteralInput(participantsName);
-        validateInvalidSymbolInput(participantsName);
+    public List<String> parseParticipantsName(String participantsName) {
+        validateParticipantsName(participantsName);
+        return List.of(participantsName.split(","));
     }
 
     public void validateParticipantsName(String participantsName) {
