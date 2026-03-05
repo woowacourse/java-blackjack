@@ -1,15 +1,10 @@
 package model;
 
-import model.dto.Card;
-import model.dto.PlayerResult;
-
-public class Player {
-
-    private final Participant player;
+public class Player extends Participant {
 
     public Player(PlayerName name) {
+        super(name);
         validate(name);
-        this.player = new Participant(name);
     }
 
     private void validate(PlayerName name) {
@@ -18,15 +13,12 @@ public class Player {
         }
     }
 
-    public PlayerResult getResult() {
-        return player.getResult();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player other = (Player) o;
+        return this.getResult().name().equals(other.getResult().name());
     }
 
-    public void addCard(Card card) {
-        player.addCard(card);
-    }
-
-    public void addScore(Integer score) {
-        player.addScore(score);
-    }
 }
