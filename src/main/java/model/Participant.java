@@ -24,8 +24,14 @@ public class Participant {
     public void addCard(Card card) {
         validateCardDuplicate(card);
         deck.add(card);
-        //점수 갱신 (메서드는 분리)
     }
+
+
+    /*점수 갱신(int 점수 받기)*/
+    public void addScore(Integer score) {
+        this.score += score;
+    }
+
 
     private void validateCardDuplicate(Card card) {
         if(deck.contains(card)) {

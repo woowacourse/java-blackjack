@@ -25,4 +25,8 @@ public class Player {
     public void addCard(Card card) {
         player.addCard(card);
     }
+
+    public void addScore(Integer score) {
+        player.addScore(score);
+    }
 }

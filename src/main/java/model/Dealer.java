@@ -19,4 +19,8 @@ public class Dealer {
         dealer.addCard(card);
     }
 
+    public void addScore(Integer score) {
+        dealer.addScore(score);
+    }
+
 }
