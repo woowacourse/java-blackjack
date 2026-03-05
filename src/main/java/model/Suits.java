@@ -21,4 +21,8 @@ public enum Suits {
                 .findFirst()
                 .orElseThrow();
     }
+
+    public String getName() {
+        return name;
+    }
 }

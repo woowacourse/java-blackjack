@@ -1,12 +1,15 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import util.Randoms;
 
 public class BlackJack {
     private Participants participants;
     private int round;
+    private List<Card> pickedCards = new ArrayList<>();
 
     private BlackJack(Participants participants) {
         this.participants = participants;
@@ -50,5 +53,18 @@ public class BlackJack {
         }
 
         return resultMap;
+    }
+
+    public void dealOut() {
+        for (Participant participant : participants) {
+            for (int i = 0; i < 2; i++) {
+                Card pick = Randoms.pick();
+                while (pickedCards.contains(pick)) {
+                    pick = Randoms.pick();
+                }
+                pickedCards.add(pick);
+                participant.draw(pick);
+            }
+        }
     }
 }
