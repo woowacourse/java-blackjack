@@ -1,4 +1,4 @@
-package rule;
+package team.blackjack.domain.rule;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
