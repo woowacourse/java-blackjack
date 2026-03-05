@@ -1,0 +1,21 @@
+package domain;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+public class RankTest {
+
+    @Test
+    void 에이스와의_합이_21이하인_경우_11을_반환해야_한다(){
+        int result = Rank.decideAceValue(10);
+
+        Assertions.assertEquals(result, 11);
+    }
+
+    @Test
+    void 에이스와의_합이_21초과인_경우_1을_반환해야_한다(){
+        int result = Rank.decideAceValue(11);
+
+        Assertions.assertEquals(result, 1);
+    }
+}
