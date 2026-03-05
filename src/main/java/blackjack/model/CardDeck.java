@@ -7,9 +7,14 @@ import java.util.Random;
 
 public class CardDeck {
 
+    private static final int CARD_DECK_SIZE = 52;
+
     private final List<Card> cards;
 
     private CardDeck(List<Card> cards) {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("cards가 null입니다.");
+        }
         this.cards = cards;
     }
 
@@ -19,6 +24,10 @@ public class CardDeck {
         Arrays.stream(Suit.values())
                 .forEach(suit -> Arrays.stream(Rank.values())
                         .forEach(rank -> cards.add(new Card(rank, suit))));
+
+        if (cards.size() != CARD_DECK_SIZE) {
+            throw new IllegalStateException("덱이 잘 못 생성됐습니다.");
+        }
 
         return new CardDeck(cards);
     }
