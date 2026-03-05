@@ -1,7 +1,9 @@
 package team.blackjack.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+import team.blackjack.control.dto.ScoreResult;
 import team.blackjack.domain.BlackjackGame;
 import team.blackjack.domain.Card;
 import team.blackjack.domain.Dealer;
@@ -68,6 +70,35 @@ public class BlackJackService {
         Hand hand = dealer.getHand();
         hand.addCard(dealer.draw(blackjackGame.getDeck()));
         return calculateSum(hand.getCards());
+    }
+
+    public ScoreResult calculateAllParticipantScore() {
+        final List<String> playerNames = blackjackGame.getPlayers().stream()
+                .map(Player::getName)
+                .toList();
+
+        final Map<String, List<String>> playerCards = blackjackGame.getPlayers().stream()
+                .collect(Collectors.toMap(
+                        Player::getName,
+                        player -> player.getHands().getFirst().getCardNames()
+                ));
+
+        final Map<String, Integer> playerScores = blackjackGame.getPlayers().stream()
+                .collect(Collectors.toMap(
+                        Player::getName,
+                        player -> calculateSum(player.getHands().getFirst().getCards())
+                ));
+
+        final Dealer dealer = blackjackGame.getDealer();
+        final int dealerScore = calculateSum(dealer.getHand().getCards());
+
+        return new ScoreResult(
+                dealer.getHand().getCardNames(),
+                dealerScore,
+                playerNames,
+                playerCards,
+                playerScores
+        );
     }
 
     /**
