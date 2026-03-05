@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+// card를 가지고 일급 컬렉션을 만든 느낌이다. Deck이.
+// deck이 cards를 갖고 있으면
+// cards는 플레이어들이 갖고있는 카드.
+// card -> cards와 deck을 만든다.
 public class Deck {
     private final List<Card> cards;
 
