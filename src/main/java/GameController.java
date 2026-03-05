@@ -20,6 +20,7 @@ public class GameController {
         // 초기 정보 표출
         List<GameInitialInfoDto> initialInfo = manager.getInitialInfo();
 
+        // 플레이어 턴 실행
         for (Player player : manager.getPlayerSequence()) {
             while (true) {
                 if (player.isBust() || manager.isBlackjack(player)) {
@@ -34,5 +35,7 @@ public class GameController {
                 System.out.println("playerHand = " + playerHand);
             }
         }
+
+
     }
 }
