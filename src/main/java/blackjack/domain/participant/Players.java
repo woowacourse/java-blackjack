@@ -1,8 +1,7 @@
 package blackjack.domain.participant;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Players {
 
@@ -28,11 +27,12 @@ public class Players {
     }
 
     private void validateNoDuplicateNames(final List<Player> players) {
-        Set<String> names = new HashSet<>();
-        for (Player player : players) {
-            if (!names.add(player.getName())) {
-                throw new IllegalArgumentException(DUPLICATE_NAME_MESSAGE);
-            }
+        final long uniqueCount = players.stream()
+                .map(Player::getName)
+                .distinct()
+                .count();
+        if (uniqueCount != players.size()) {
+            throw new IllegalArgumentException(DUPLICATE_NAME_MESSAGE);
         }
     }
 

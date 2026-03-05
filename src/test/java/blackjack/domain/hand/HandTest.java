@@ -17,7 +17,7 @@ class HandTest {
         hand.add(new Card(Suit.HEART, Rank.SEVEN));
         hand.add(new Card(Suit.SPADE, Rank.EIGHT));
 
-        assertThat(hand.calculateScore()).isEqualTo(15);
+        assertThat(hand.calculateScore().getValue()).isEqualTo(15);
     }
 
     @Test
@@ -27,7 +27,7 @@ class HandTest {
         hand.add(new Card(Suit.HEART, Rank.ACE));
         hand.add(new Card(Suit.SPADE, Rank.EIGHT));
 
-        assertThat(hand.calculateScore()).isEqualTo(19);
+        assertThat(hand.calculateScore().getValue()).isEqualTo(19);
     }
 
     @Test
@@ -38,7 +38,7 @@ class HandTest {
         hand.add(new Card(Suit.SPADE, Rank.EIGHT));
         hand.add(new Card(Suit.CLUB, Rank.SEVEN));
 
-        assertThat(hand.calculateScore()).isEqualTo(16);
+        assertThat(hand.calculateScore().getValue()).isEqualTo(16);
     }
 
     @Test

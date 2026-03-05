@@ -1,29 +1,28 @@
 package blackjack.domain.result;
 
+import blackjack.domain.hand.Score;
+
 public enum GameResult {
 
     WIN,
     DRAW,
-    LOSE,
-    ;
+    LOSE;
 
-    private static final int BUST_THRESHOLD = 21;
-
-    public static GameResult of(final int playerScore, final int dealerScore) {
-        if (playerScore > BUST_THRESHOLD) {
+    public static GameResult of(final Score playerScore, final Score dealerScore) {
+        if (playerScore.isBust()) {
             return LOSE;
         }
-        if (dealerScore > BUST_THRESHOLD) {
+        if (dealerScore.isBust()) {
             return WIN;
         }
         return compare(playerScore, dealerScore);
     }
 
-    private static GameResult compare(final int playerScore, final int dealerScore) {
-        if (playerScore > dealerScore) {
+    private static GameResult compare(final Score playerScore, final Score dealerScore) {
+        if (playerScore.isGreaterThan(dealerScore)) {
             return WIN;
         }
-        if (playerScore < dealerScore) {
+        if (playerScore.isLessThan(dealerScore)) {
             return LOSE;
         }
         return DRAW;

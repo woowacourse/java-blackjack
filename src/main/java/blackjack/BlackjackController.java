@@ -23,13 +23,10 @@ public class BlackjackController {
         final Deck deck = new Deck();
         final Players players = createPlayers();
         final Dealer dealer = new Dealer();
-
         dealInitialCards(deck, players, dealer);
         outputView.printInitialDeal(players, dealer);
-
         processPlayersTurn(deck, players);
         processDealerTurn(deck, dealer);
-
         printResults(players, dealer);
     }
 
@@ -43,9 +40,13 @@ public class BlackjackController {
 
     private void dealInitialCards(final Deck deck, final Players players, final Dealer dealer) {
         for (int i = 0; i < 2; i++) {
-            players.getPlayers().forEach(player -> player.receiveCard(deck.draw()));
-            dealer.receiveCard(deck.draw());
+            dealOneRound(deck, players, dealer);
         }
+    }
+
+    private void dealOneRound(final Deck deck, final Players players, final Dealer dealer) {
+        players.getPlayers().forEach(player -> player.receiveCard(deck.draw()));
+        dealer.receiveCard(deck.draw());
     }
 
     private void processPlayersTurn(final Deck deck, final Players players) {
@@ -55,13 +56,15 @@ public class BlackjackController {
     private void processPlayerTurn(final Deck deck, final Player player) {
         boolean hasHit = false;
         while (player.canReceiveCard()) {
-            if (!askHitAndProcess(deck, player)) {
-                if (!hasHit) {
-                    outputView.printPlayerCards(player);
-                }
-                return;
-            }
-            hasHit = true;
+            final boolean hit = askHitAndProcess(deck, player);
+            hasHit = hasHit || hit;
+        }
+        printCardsIfNeverHit(player, hasHit);
+    }
+
+    private void printCardsIfNeverHit(final Player player, final boolean hasHit) {
+        if (!hasHit) {
+            outputView.printPlayerCards(player);
         }
     }
 

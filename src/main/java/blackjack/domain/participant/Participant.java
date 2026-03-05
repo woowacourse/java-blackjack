@@ -2,14 +2,15 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.hand.Hand;
+import blackjack.domain.hand.Score;
 import java.util.List;
 
 public abstract class Participant {
 
-    private final String name;
+    private final Name name;
     private final Hand hand = new Hand();
 
-    protected Participant(final String name) {
+    protected Participant(final Name name) {
         this.name = name;
     }
 
@@ -17,7 +18,7 @@ public abstract class Participant {
         hand.add(card);
     }
 
-    public int calculateScore() {
+    public Score calculateScore() {
         return hand.calculateScore();
     }
 
@@ -30,7 +31,7 @@ public abstract class Participant {
     }
 
     public String getName() {
-        return name;
+        return name.getValue();
     }
 
     public abstract boolean canReceiveCard();

@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     public void printInitialDeal(final Players players, final Dealer dealer) {
-        String playerNames = players.getPlayers().stream()
+        final String playerNames = players.getPlayers().stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(", "));
         System.out.printf("%n딜러와 %s에게 2장을 나누었습니다.%n", playerNames);
@@ -32,9 +32,9 @@ public class OutputView {
 
     public void printFinalCards(final Players players, final Dealer dealer) {
         System.out.println();
-        printParticipantFinalCards(dealer.getName(), dealer.getCards(), dealer.calculateScore());
+        printParticipantFinalCards(dealer.getName(), dealer.getCards(), dealer.calculateScore().getValue());
         players.getPlayers().forEach(player ->
-                printParticipantFinalCards(player.getName(), player.getCards(), player.calculateScore())
+                printParticipantFinalCards(player.getName(), player.getCards(), player.calculateScore().getValue())
         );
     }
 
@@ -49,26 +49,40 @@ public class OutputView {
     }
 
     private void printDealerResult(final Map<GameResult, Integer> dealerResults) {
-        StringBuilder sb = new StringBuilder("딜러: ");
-        if (dealerResults.containsKey(GameResult.WIN)) {
-            sb.append(dealerResults.get(GameResult.WIN)).append("승 ");
+        System.out.println("딜러: " + buildDealerResultText(dealerResults).trim());
+    }
+
+    private String buildDealerResultText(final Map<GameResult, Integer> dealerResults) {
+        final StringBuilder stringBuilder = new StringBuilder();
+        appendResultIfExists(stringBuilder, dealerResults, GameResult.WIN, "승 ");
+        appendResultIfExists(stringBuilder, dealerResults, GameResult.DRAW, "무 ");
+        appendResultIfExists(stringBuilder, dealerResults, GameResult.LOSE, "패");
+        return stringBuilder.toString();
+    }
+
+    private void appendResultIfExists(
+            final StringBuilder stringBuilder,
+            final Map<GameResult, Integer> dealerResults,
+            final GameResult result,
+            final String label
+    ) {
+        if (dealerResults.containsKey(result)) {
+            stringBuilder.append(dealerResults.get(result)).append(label);
         }
-        if (dealerResults.containsKey(GameResult.DRAW)) {
-            sb.append(dealerResults.get(GameResult.DRAW)).append("무 ");
-        }
-        if (dealerResults.containsKey(GameResult.LOSE)) {
-            sb.append(dealerResults.get(GameResult.LOSE)).append("패");
-        }
-        System.out.println(sb.toString().trim());
     }
 
     private void printPlayerResult(final Player player, final GameResult result) {
-        String resultText = switch (result) {
-            case WIN -> "승";
-            case DRAW -> "무";
-            case LOSE -> "패";
-        };
-        System.out.printf("%s: %s%n", player.getName(), resultText);
+        System.out.printf("%s: %s%n", player.getName(), toDisplayText(result));
+    }
+
+    private String toDisplayText(final GameResult result) {
+        if (result == GameResult.WIN) {
+            return "승";
+        }
+        if (result == GameResult.LOSE) {
+            return "패";
+        }
+        return "무";
     }
 
     private String formatCards(final List<Card> cards) {

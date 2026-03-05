@@ -6,7 +6,6 @@ import java.util.List;
 
 public class Hand {
 
-    private static final int BLACKJACK_SCORE = 21;
     private static final int ACE_BONUS = 10;
 
     private final List<Card> cards = new ArrayList<>();
@@ -19,19 +18,23 @@ public class Hand {
         return List.copyOf(cards);
     }
 
-    public int calculateScore() {
-        int score = cards.stream()
-                .mapToInt(Card::getValue)
-                .sum();
-
-        if (hasAce() && score + ACE_BONUS <= BLACKJACK_SCORE) {
-            return score + ACE_BONUS;
+    public Score calculateScore() {
+        final int rawScore = sumCardValues();
+        final Score scoreWithAce = new Score(rawScore + ACE_BONUS);
+        if (hasAce() && !scoreWithAce.isBust()) {
+            return scoreWithAce;
         }
-        return score;
+        return new Score(rawScore);
     }
 
     public boolean isBust() {
-        return calculateScore() > BLACKJACK_SCORE;
+        return calculateScore().isBust();
+    }
+
+    private int sumCardValues() {
+        return cards.stream()
+                .mapToInt(Card::getValue)
+                .sum();
     }
 
     private boolean hasAce() {
