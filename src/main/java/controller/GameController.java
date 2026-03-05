@@ -30,9 +30,6 @@ public class GameController {
 
             Player player = new Player(playerName, deck.handOutCards());
             players.add(player);
-            for (int i = 0; i < 2; i++) {
-                player.addCard(deck.peekCard());
-            }
         }
 
         outputView.printStartCardMessage(playerNames);
@@ -40,6 +37,9 @@ public class GameController {
 
         for (Player player : players) {
             String hitOption = inputView.readHitOption(player.getName());
+            if(hitOption.equals("y")) {
+                player.addCard(deck.peekCard());
+            }
             outputView.printCurrentHoldCard(player);
 
             while (hitOption.equals("y")) {
