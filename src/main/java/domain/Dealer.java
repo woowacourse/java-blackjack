@@ -11,5 +11,11 @@ public class Dealer {
         return hand.getFirst();
     }
 
-    public final
+    public void receiveInitCard(List<Card> cards) {
+        hand.addAll(cards);
+    }
+
+    public List<Card> getHand() {
+        return hand;
+    }
 }

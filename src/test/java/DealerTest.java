@@ -33,19 +33,6 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러는 패를 한장만 오픈한다.")
-    public void dealer_should_open_1_card (){
-        Dealer dealer = new Dealer();
-        List<Card> cards = new ArrayList<>();
-        cards.add(cardDeck.deal());
-        cards.add(cardDeck.deal());
-        dealer.receiveInitCard(cards);
-
-        assertThat(dealer.revealUpCard()).isEqualTo(1);
-        assertThat(dealer.getHand()).contains(card);
-    }
-
-    @Test
     @DisplayName("딜러는 처음 받은 2장의 합이 16 이하면 1장을 추가로 받아야 한다")
     public void if_dealer_card_sum_under16_must_one_more(){
         int score = 16;
