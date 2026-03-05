@@ -36,4 +36,8 @@ public class Hand {
         }
         return aceCount;
     }
+
+    public boolean isBust() {
+        return getTotalPoint() > 21;
+    }
 }
