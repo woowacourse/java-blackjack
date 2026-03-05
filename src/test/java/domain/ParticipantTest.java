@@ -2,13 +2,26 @@ package domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class ParticipantTest {
+
+    static Hand emptyHand = new Hand(new ArrayList<>());
+    static Hand playingHand = new Hand(
+            List.of(
+                    new Card(CardRank.QUEEN, CardMark.SPADE),
+                    new Card(CardRank.EIGHT, CardMark.HEART)));
+    static Hand bustedHand = new Hand(
+            List.of(new Card(CardRank.QUEEN, CardMark.SPADE),
+                    new Card(CardRank.EIGHT, CardMark.HEART),
+                    new Card(CardRank.QUEEN, CardMark.CLOVER)));
 
     @ParameterizedTest(name = "[{index}] 참여자: {0}")
     @MethodSource("participantsAndNames")
@@ -19,12 +32,44 @@ class ParticipantTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    @DisplayName("참여자(딜러)는 버스트(패의 합 21 초과) 상태인지 반환할 수 있어야 한다.")
+    void 딜러_버스트_상태_확인() {
+        Participant participant = new Dealer("딜러", bustedHand);
+
+        assertTrue(participant.isBusted());
+    }
+
+    @Test
+    @DisplayName("참여자(플레이어)는 버스트(패의 합 21 초과) 상태인지 반환할 수 있어야 한다.")
+    void 플레이어_버스트_상태_확인() {
+        Participant participant = new Player("pobi", bustedHand);
+
+        assertTrue(participant.isBusted());
+    }
+
+    @Test
+    @DisplayName("참여자(딜러)는 버스트(패의 합 21 초과) 상태인지 반환할 수 있어야 한다.")
+    void 딜러_버스트_아닌_상태_확인() {
+        Participant participant = new Dealer("딜러", playingHand);
+
+        assertFalse(participant.isBusted());
+    }
+
+    @Test
+    @DisplayName("참여자(플레이어)는 버스트(패의 합 21 초과) 상태인지 반환할 수 있어야 한다.")
+    void 플레이어_버스트_아닌_상태_확인() {
+        Participant participant = new Player("pobi", playingHand);
+
+        assertFalse(participant.isBusted());
+    }
+
     private static Stream<Arguments> participantsAndNames() {
         return Stream.of(
-                Arguments.arguments("딜러", new Dealer("딜러")),
-                Arguments.arguments("pobi", new Player("pobi")),
-                Arguments.arguments("jason", new Player("jason")),
-                Arguments.arguments("tars", new Player("tars"))
+                Arguments.arguments("딜러", new Dealer("딜러", emptyHand)),
+                Arguments.arguments("pobi", new Player("pobi", emptyHand)),
+                Arguments.arguments("jason", new Player("jason", emptyHand)),
+                Arguments.arguments("tars", new Player("tars", emptyHand))
         );
     }
 }
