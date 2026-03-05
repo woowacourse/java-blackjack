@@ -17,7 +17,7 @@ public class Player {
     }
 
     public void pickACard(CardDeck cardDeck) {
-        hands.addACard(cardDeck.draw());
+        hands.addCards(cardDeck.draw(1));
     }
 
     //핸즈의 총 점수가 21 초과이면 true를 반환한다.

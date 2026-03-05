@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -25,24 +26,20 @@ class CardDeckTest {
         CardDeck cardDeck = CardDeck.of(mockStrategy);
 
         // when
-        Card draw = cardDeck.draw();
+        List<Card> draw = cardDeck.draw(1);
 
         // then
-        assertThat(draw).isNotNull();
+        assertThat(draw.size()).isEqualTo(1);
     }
 
     @Test
-    @DisplayName("카드 덱에 더 이상 카드가 없는 경우, 드로우 시도하면 예외가 발생한다.")
+    @DisplayName("카드 덱에 남아있는 카드보다 더 많이 드로우를 시도하면 예외가 발생한다.")
     void drawExceptionTest() {
         // given
         CardDeck cardDeck = CardDeck.of(new RandomPickStrategy());
-        for (int i = 0; i < 52; i++) {
-            cardDeck.draw();
-        }
 
         // when & then
-        assertThatThrownBy(cardDeck::draw)
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining("카드 덱에 카드가 더 이상 존재하지 않습니다.");
+        assertThatThrownBy(() -> cardDeck.draw(53))
+                .isInstanceOf(IllegalStateException.class);
     }
 }

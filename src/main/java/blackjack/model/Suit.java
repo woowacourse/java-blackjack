@@ -2,8 +2,18 @@ package blackjack.model;
 
 public enum Suit {
 
-    SPADE,
-    HEART,
-    CLOVER,
-    DIAMOND;
+    SPADE("스페이드"),
+    HEART("하트"),
+    CLOVER("클로버"),
+    DIAMOND("다이아몬드");
+
+    private final String displayName;
+
+    Suit(String suit) {
+        this.displayName = suit;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
 }
