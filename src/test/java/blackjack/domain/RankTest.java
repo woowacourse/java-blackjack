@@ -8,39 +8,39 @@ import org.junit.jupiter.api.Test;
 class RankTest {
 
     @Test
-    void 범위에_맞는_숫자가_들어오면_값을_그대로_반환한다() {
+    void 범위에_맞는_숫자가_들어오면_숫자_그대로_반환한다() {
         String input = "2";
         Rank two = Rank.of(input);
         assertThat(two).isEqualTo(Rank.TWO);
     }
 
     @Test
-    void A가_들어오면_11을_반환한다() {
+    void A가_들어오면_ACE을_반환한다() {
         String input = "A";
         Rank ace = Rank.of(input);
         assertThat(ace).isEqualTo(Rank.ACE);
     }
 
     @Test
-    void J가_들어오면_10을_반환한다() {
+    void J가_들어오면_JACK을_반환한다() {
         String input = "J";
-        Rank ace = Rank.of(input);
-        assertThat(ace).isEqualTo(Rank.JACK);
+        Rank jack = Rank.of(input);
+        assertThat(jack).isEqualTo(Rank.JACK);
     }
 
     @Test
-    void Q가_들어오면_10을_반환한다() {
+    void Q가_들어오면_QUEEN을_반환한다() {
         String input = "Q";
-        Rank ace = Rank.of(input);
-        assertThat(ace).isEqualTo(Rank.QUEEN);
+        Rank queen = Rank.of(input);
+        assertThat(queen).isEqualTo(Rank.QUEEN);
 
     }
 
     @Test
-    void K가_들어오면_10을_반환한다() {
+    void K가_들어오면_KING을_반환한다() {
         String input = "K";
-        Rank ace = Rank.of(input);
-        assertThat(ace).isEqualTo(Rank.KING);
+        Rank king = Rank.of(input);
+        assertThat(king).isEqualTo(Rank.KING);
     }
 
 
