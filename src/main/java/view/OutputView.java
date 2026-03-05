@@ -1,12 +1,20 @@
 package view;
 
-import dto.*;
+import dto.CardDto;
+import dto.InitialDto;
+import dto.PlayerDeckDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
+//    딜러와 pobi, jason에게 2장을 나누었습니다.
+//    딜러카드: 3다이아몬드
+//    pobi카드: 2하트, 8스페이드
+//    jason카드: 7클로버, K스페이드
+
     public void outputInitialMessage(InitialDto initialDto) {
+
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("딜러와 ");
         List<String> playerNames = initialDto.playerDeckDtos().stream()
@@ -19,50 +27,12 @@ public class OutputView {
         stringBuilder.append("딜러카드: ").append(initialDto.dealerCard().toString()).append("\n");
         for (PlayerDeckDto playerDeckDto : initialDto.playerDeckDtos()) {
             stringBuilder.append(playerDeckDto.playerName()).append(": ");
-            String cardDtoStrings = getCardDtoStrings(playerDeckDto.cardDtos());
+            String cardDtoStrings = playerDeckDto.cardDtos().stream()
+                    .map(CardDto::toString)
+                    .collect(Collectors.joining(", "));
             stringBuilder.append(cardDtoStrings);
             stringBuilder.append("\n");
         }
         System.out.println(stringBuilder);
-    }
-
-    public void playerResultMessage(ResultDto resultDto) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("\n").append("딜러카드: ");
-        String dealerDtoStrings = getCardDtoStrings(resultDto.dealerResultDto().cardDtos());
-        stringBuilder.append(dealerDtoStrings);
-        stringBuilder.append(" - 결과: ").append(resultDto.dealerResultDto().sum()).append("\n");
-
-        for (PlayerResultDto playerResult : resultDto.playerResultDtos()) {
-            stringBuilder.append(playerResult.playerName()).append("카드: ");
-            String cardDtoStrings = getCardDtoStrings(playerResult.cardDtos());
-            stringBuilder.append(cardDtoStrings);
-            stringBuilder.append(" - 결과: ").append(playerResult.sum()).append("\n");
-        }
-
-        stringBuilder.append("\n").append("## 최종 승패").append("\n");
-        stringBuilder.append("딜러: ").append(resultDto.dealerWinCount()).append("승 ");
-        stringBuilder.append(resultDto.dealerLossCount()).append("패").append("\n");
-        for (PlayerResultDto playerResultDto : resultDto.playerResultDtos()) {
-            stringBuilder.append(playerResultDto.playerName()).append(": ").append(playerResultDto.isWin()).append("\n");
-        }
-        System.out.println(stringBuilder);
-    }
-
-    public void outputPlayerDeckDtos(PlayerResultDto playerResultDto) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(playerResultDto.playerName()).append("카드: ");
-        stringBuilder.append(getCardDtoStrings(playerResultDto.cardDtos())).append("\n");
-        System.out.println(stringBuilder);
-    }
-
-    public void outputDealerAdditionCardMessage() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-    }
-
-    private String getCardDtoStrings(List<CardDto> cardDtos) {
-        return cardDtos.stream()
-                .map(CardDto::toString)
-                .collect(Collectors.joining(", "));
     }
 }

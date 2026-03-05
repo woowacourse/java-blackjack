@@ -1,7 +1,6 @@
 package domain;
 
 import domain.model.Player;
-import domain.service.BlackJackService;
 import domain.service.CardDistributor;
 import domain.service.CardFactory;
 import org.junit.jupiter.api.Test;
@@ -23,7 +22,6 @@ public class CardDistributorTest {
                     new RandomShapeNumberGenerator()
             )
     );
-
 
     @Test
     void 초기_카드_분배_테스트() {
