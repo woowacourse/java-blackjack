@@ -31,4 +31,19 @@ public class UserTest {
                 .hasMessageContaining("5자");
     }
 
+    @Test
+    @DisplayName("유저가 카드 한 장을 가져오는 테스트")
+    void 유저가_카드_한_장을_가져오는_테스트() {
+        // given
+        User user = new User("밀란");
+        Card card = new Card(CardValue.A, Shape.DIAMOND);
+
+        // when
+        int before = user.getCards().size();
+        user.bring(card);
+
+        // then
+        assertThat(user.getCards().size()).isEqualTo(before + 1);
+    }
+
 }
