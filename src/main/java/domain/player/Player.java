@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
+
     private final String name;
+
     private final List<Card> cards = new ArrayList<>();
 
     public Player(String name) {
@@ -30,5 +32,10 @@ public class Player {
         return cards.stream()
                 .mapToInt(Card::getValue)
                 .sum();
+    }
+
+    public boolean isEqualName(String name) {
+        if(this.name.equals(name)) return true;
+        return false;
     }
 }
