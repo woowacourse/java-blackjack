@@ -1,0 +1,52 @@
+package blackjack.view;
+
+import blackjack.model.TotalResult;
+import java.util.List;
+
+public class OutputView {
+
+    public void printPlayerNamesInputPrompt() {
+        System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
+    }
+
+    public void printCardDistributionCompletePrompt(List<String> names) {
+        String joinedName = String.join(", ", names);
+        System.out.println("딜러와 " + joinedName + "에게 2장을 나누었습니다.");
+    }
+
+    public void printDealerCards(List<String> cardNames) {
+        String joinedCardNames = String.join(", ", cardNames);
+        System.out.println("딜러카드: " + joinedCardNames);
+    }
+
+    public void printPlayersCards(String name, List<String> cardNames) {
+        String joinedCardNames = String.join(", ", cardNames);
+        System.out.println(name + "카드: " + joinedCardNames);
+    }
+
+    public void printCardPickInputPrompt(String name) {
+        System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+    }
+
+    public void printDealerPicksCard() {
+        System.out.println("딜러는 16이하라 한 장의 카드를 더 받았습니다.");
+    }
+
+    public void printDealerDoesNotPickCard() {
+        System.out.println("딜러는 16초과라 더 이상 카드를 받지 않습니다.");
+    }
+
+    public void printResult(TotalResult totalResult) {
+        System.out.println("## 최종 승패");
+        printDealerResult(totalResult.getDealerResult());
+        printAllPlayerResult(totalResult);
+    }
+
+    private void printDealerResult(String dealerResult) {
+        System.out.println("딜러: " + dealerResult);
+    }
+
+    private void printAllPlayerResult(TotalResult totalResult) {
+
+    }
+}
