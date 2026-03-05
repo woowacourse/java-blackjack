@@ -41,4 +41,11 @@ public class Participant {
 
         return List.copyOf(hands);
     }
+
+    public int calculateScore() {
+        return hands.stream()
+                .map(Card::getCardNumber)
+                .mapToInt(CardNumber::toValue)
+                .sum();
+    }
 }

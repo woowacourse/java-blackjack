@@ -28,4 +28,8 @@ public enum CardNumber {
                 .findFirst()
                 .orElseThrow();
     }
+
+    public int toValue() {
+        return value;
+    }
 }

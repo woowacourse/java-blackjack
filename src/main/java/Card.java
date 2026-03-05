@@ -11,4 +11,8 @@ public class Card {
     public static Card of(String suits, int cardNumber) {
         return new Card(Suits.findByName(suits), CardNumber.findByValue(cardNumber));
     }
+
+    public CardNumber getCardNumber() {
+        return cardNumber;
+    }
 }
