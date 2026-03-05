@@ -3,15 +3,19 @@ package domain.player;
 import domain.card.GameCards;
 
 public class Dealer extends Player {
-    private final GameCards cards;
+    private final GameCards deck;
 
     public Dealer(String name, int amount) {
         super(name);
-        this.cards = new GameCards(amount);
-        this.cards.shuffle();
+        this.deck = new GameCards(amount);
+        this.deck.shuffle();
     }
 
     public void giveCard(Player player) {
-        player.addCard(cards.drawCard());
+        player.addCard(deck.drawCard());
+    }
+
+    public boolean isTotalValue16OrLess() {
+        return getTotalValue() <= 16;
     }
 }

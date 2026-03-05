@@ -1,16 +1,9 @@
 package domain.player;
 
-import static org.mockito.Mockito.when;
-
-import java.util.Random;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
-@ExtendWith(MockitoExtension.class)
 class DealerTest {
 
     @Test
@@ -27,16 +20,14 @@ class DealerTest {
         Assertions.assertThat(player.getCardSize()).isEqualTo(1);
     }
 
-    @Mock
-    private Dealer dealer = new Dealer("딜러", 1);
-
     @Test
-    @DisplayName("딜러 카드 값의 합이 16이하인지 확인하는 테스트")
+    @DisplayName("딜러 카드 값의 합이 16이하면 true 반환하는지 테스트")
     void 딜러_카드_합_16_이하_테스트() {
         //given
+        Dealer dealer = new Dealer("딜러", 1);
 
         //when
-        when(dealer.getTotalValue()).thenReturn(14);
+        dealer.giveCard(dealer);
 
         //then
         Assertions.assertThat(dealer.isTotalValue16OrLess()).isEqualTo(true);
