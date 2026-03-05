@@ -22,4 +22,8 @@ public enum Continuation {
     public boolean isStop() {
         return this == STOP;
     }
+
+    public boolean isContinue() {
+        return this == CONTINUE;
+    }
 }

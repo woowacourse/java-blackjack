@@ -3,6 +3,7 @@ package controller;
 import java.util.List;
 import model.Card;
 import model.CardGenerator;
+import model.CardValue;
 import model.Participant;
 import view.InputView;
 import view.OutputView;
@@ -36,16 +37,53 @@ public class BlackjackController {
         OutputView.printCardByPlayers(players);
 
         players.forEach(player -> {
+            boolean isFirst = true;
             while(true) {
                 String input = InputView.readMoreCard(player);
                 Continuation command = Continuation.from(input);
-                if(command.isStop()) break;
+                if (command.isStop()) {
+                    if (isFirst) {
+                        OutputView.printCardByPlayer(player);
+                    }
+                    break;
+                }
 
                 Card card = cardGenerator.generateCard();
                 player.addCard(card);
-                OutputView.printCardByPlayer(player);
+                isFirst = false;
+
+                if (command.isContinue()) {
+                    OutputView.printCardByPlayer(player);
+                }
             }
         });
 
+        // 딜러의 카드 더 받기 판정
+        int sum = calculateSum(dealer.getCards());
+        // TODO: 네이밍 리팩토링
+        int base = 16;
+        while (sum <= base) {
+            OutputView.printToOpenNewCard(dealer.getName(), base);
+            Card card = cardGenerator.generateCard();
+            dealer.addCard(card);
+            sum = calculateSum(dealer.getCards());
+        }
+
+    }
+
+    private int calculateSum(List<Card> cards) {
+        int sum = cards.stream()
+                .mapToInt(card -> {
+                    int value = card.value().getValue();
+                    return Math.min(value, 10);
+                })
+                .sum();
+
+        for (Card card : cards) {
+            if (card.value() == CardValue.ACE && sum + 10 <= 21) {
+                sum += 10;
+            }
+        }
+        return sum;
     }
 }
