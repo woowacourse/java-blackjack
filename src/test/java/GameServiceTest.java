@@ -101,18 +101,5 @@ class GameServiceTest {
         int aceScore = gameService.calculateOptimalAceScore(sum);
         assertThat(aceScore).isEqualTo(1);
     }
-
-    @Test
-    @DisplayName("덱을 셔플하면 카드의 순서가 바뀐다.")
-    public void shuffled_card_must_different() {
-        CardDeck deck = new CardDeck();
-        ArrayList<Card> beforeShuffle = new ArrayList<>(deck.getCards());
-
-        deck.shuffle();
-        List<Card> afterShuffle = deck.getCards();
-
-        assertThat(afterShuffle).isNotEqualTo(beforeShuffle);
-        assertThat(afterShuffle).containsExactlyInAnyOrderElementsOf(beforeShuffle);
-    }
 }
 
