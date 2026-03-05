@@ -21,18 +21,19 @@ public enum Rank {
     KING("K", 10);
 
     private final String rankName;
-    private final int value;
+    private final int score;
 
     private static final Map<String, Rank> RANK_MAP = Arrays.stream(values())
             .collect(Collectors.toMap(rank -> rank.rankName, rank -> rank));
 
-    Rank(String rankName, int value) {
+    Rank(String rankName, int score) {
         this.rankName = rankName;
-        this.value = value;
+        this.score = score;
     }
 
     public static Rank of(String rankName) {
         return Optional.ofNullable(RANK_MAP.get(rankName))
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드 이름입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드 이름입니다."))
+                ;
     }
 }
