@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.List;
-
 public enum Rank {
 
     TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6),
@@ -12,5 +10,13 @@ public enum Rank {
 
     Rank(int score) {
         this.score = score;
+    }
+
+    public boolean isAce() {
+        return this == ACE;
+    }
+
+    public int getScore() {
+        return score;
     }
 }

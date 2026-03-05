@@ -9,4 +9,12 @@ public class Card {
         this.rank = rank;
         this.suit = suit;
     }
+
+    public int getScore() {
+        return rank.getScore();
+    }
+
+    public boolean isAce() {
+        return this.rank.isAce();
+    }
 }
