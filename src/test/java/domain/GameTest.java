@@ -18,7 +18,8 @@ public class GameTest {
     @DisplayName("정상 경우")
     class success {
 
-        private Game game;
+        private Game twoPlayerGame;
+        private Game onePlayerGame;
 
         @BeforeEach
         void setUp() {
@@ -88,6 +89,105 @@ public class GameTest {
             assertThat(dealer.getCards().size()).isEqualTo(4);
         }
 
+        @DisplayName("플레이어가 버스트 되면 플레이어는 패배하고 딜러는 승리한다.")
+        @Test
+        void 플레이어_버스트_시_무조건_플레이어는_패배한다() {
+            //given
+            Player firstPlayer = onePlayerGame.getPlayers().getFirst();
+            Dealer dealer = onePlayerGame.getDealer();
+
+            //when
+            firstPlayer.addCard(new Card(Rank.JACK, Suit.CLOVER));
+            firstPlayer.addCard(new Card(Rank.QUEEN, Suit.CLOVER));
+            firstPlayer.addCard(new Card(Rank.EIGHT, Suit.CLOVER));
+
+            onePlayerGame.settlementOfResults();
+
+            assertThat(firstPlayer.getResult().get(Result.LOSE)).isEqualTo(1);
+            assertThat(dealer.getResult().get(Result.WIN)).isEqualTo(1);
+        }
+
+        @DisplayName("플레이어가 버스트 되지 않았을 때 플레이어의 점수가 더 높으면 플레이어가 승리하고 딜러는 패배한다.")
+        @Test
+        void 플레이어_점수_더_높으면_플레이어_승리한다() {
+            //given
+            Player firstPlayer = onePlayerGame.getPlayers().getFirst();
+            Dealer dealer = onePlayerGame.getDealer();
+
+            //when
+            firstPlayer.addCard(new Card(Rank.JACK, Suit.CLOVER));
+            firstPlayer.addCard(new Card(Rank.QUEEN, Suit.CLOVER));
+            firstPlayer.addCard(new Card(Rank.ACE, Suit.CLOVER));
+
+            dealer.addCard(new Card(Rank.JACK, Suit.HEART));
+            dealer.addCard(new Card(Rank.QUEEN, Suit.HEART));
+
+            onePlayerGame.settlementOfResults();
+
+            assertThat(firstPlayer.getResult().get(Result.WIN)).isEqualTo(1);
+            assertThat(dealer.getResult().get(Result.LOSE)).isEqualTo(1);
+        }
+
+        @DisplayName("플레이어가 버스트 되지 않았을 때 딜러가 버스트된 경우 플레이어가 승리한다.")
+        @Test
+        void 딜러가_버스트된_경우_플레이어가_승리한다() {
+            //given
+            Player firstPlayer = onePlayerGame.getPlayers().getFirst();
+            Dealer dealer = onePlayerGame.getDealer();
+
+            //when
+            firstPlayer.addCard(new Card(Rank.JACK, Suit.CLOVER));
+            firstPlayer.addCard(new Card(Rank.QUEEN, Suit.CLOVER));
+
+            dealer.addCard(new Card(Rank.JACK, Suit.HEART));
+            dealer.addCard(new Card(Rank.SIX, Suit.HEART));
+            dealer.addCard(new Card(Rank.SEVEN, Suit.HEART));
+
+            onePlayerGame.settlementOfResults();
+
+            assertThat(firstPlayer.getResult().get(Result.WIN)).isEqualTo(1);
+            assertThat(dealer.getResult().get(Result.LOSE)).isEqualTo(1);
+        }
+
+        @DisplayName("플레이어가 버스트 되지 않았을 때 플레이어의 점수가 더 낮으면 플레이어가 패배하고 딜러는 승리한다.")
+        @Test
+        void 플레이어_점수_더_높으면_플레이어_패배한다() {
+            //given
+            Player firstPlayer = onePlayerGame.getPlayers().getFirst();
+            Dealer dealer = onePlayerGame.getDealer();
+
+            //when
+            firstPlayer.addCard(new Card(Rank.JACK, Suit.CLOVER));
+            firstPlayer.addCard(new Card(Rank.NINE, Suit.CLOVER));
+
+            dealer.addCard(new Card(Rank.JACK, Suit.HEART));
+            dealer.addCard(new Card(Rank.QUEEN, Suit.HEART));
+
+            onePlayerGame.settlementOfResults();
+
+            assertThat(firstPlayer.getResult().get(Result.LOSE)).isEqualTo(1);
+            assertThat(dealer.getResult().get(Result.WIN)).isEqualTo(1);
+        }
+
+        @DisplayName("플레이어가 버스트 되지 않았을 때 플레이어와 딜러의 점수가 같으면 무승부가 된다.")
+        @Test
+        void 플레이어_딜러_점수_같으면_무승부_된다() {
+            //given
+            Player firstPlayer = onePlayerGame.getPlayers().getFirst();
+            Dealer dealer = onePlayerGame.getDealer();
+
+            //when
+            firstPlayer.addCard(new Card(Rank.JACK, Suit.CLOVER));
+            firstPlayer.addCard(new Card(Rank.QUEEN, Suit.CLOVER));
+
+            dealer.addCard(new Card(Rank.JACK, Suit.HEART));
+            dealer.addCard(new Card(Rank.QUEEN, Suit.HEART));
+
+            onePlayerGame.settlementOfResults();
+
+            assertThat(firstPlayer.getResult().get(Result.DRAW)).isEqualTo(1);
+            assertThat(dealer.getResult().get(Result.DRAW)).isEqualTo(1);
+        }
     }
 
     @Nested
