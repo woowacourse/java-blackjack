@@ -62,7 +62,7 @@ public class BlackJackService {
         DealerWinning dealerWinning = new DealerWinning();
 
         for(PlayerWinning playerWinning : playersWinning.getPlayersWinnings()) {
-            dealerWinning.increase(playerWinning.matchStatus());
+            dealerWinning.increase(reverseMatchResult(playerWinning.matchStatus()));
         }
         return dealerWinning;
     }
@@ -72,6 +72,18 @@ public class BlackJackService {
             return Scorer.calculate(card, score);
         }
         return Scorer.calculate(card);
+    }
+
+    private MatchStatus reverseMatchResult(MatchStatus matchStatus) {
+        if(matchStatus.equals(MatchStatus.WIN)) {
+            return MatchStatus.LOSE;
+        }
+
+        if(matchStatus.equals(MatchStatus.LOSE)) {
+            return MatchStatus.WIN;
+        }
+
+        return matchStatus;
     }
 
 
