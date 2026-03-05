@@ -1,3 +1,5 @@
+package util;
+
 public class InputParser {
     private static final String DELIMITER = ",";
 
