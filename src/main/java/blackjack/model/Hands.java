@@ -40,4 +40,9 @@ public class Hands {
 
         return baseScore;
     }
+
+    //총 점수가 인자로 넘겨받은 점수보다 큰지 여부를 반환한다.
+    public boolean isTotalScoreOver(final int score) {
+        return calculateTotalScore() > score;
+    }
 }

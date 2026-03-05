@@ -64,4 +64,15 @@ class HandsTest {
         // then
         assertThat(totalScore).isEqualTo(21);
     }
+
+    @Test
+    @DisplayName("현재 총 점수가 인자로 넘겨받은 점수보다 크면 true를 반환한다.")
+    void isTotalScoreOver() {
+        // given
+        Hands hands = Hands.empty();
+        hands.addACard(new Card(Rank.SIX, Suit.CLOVER));
+        hands.addACard(new Card(Rank.ACE, Suit.CLOVER));
+
+        assertThat(hands.isTotalScoreOver(16)).isTrue();
+    }
 }
