@@ -24,4 +24,12 @@ public class Card {
     public int hashCode() {
         return Objects.hash(rank, suit);
     }
+
+    public Rank getRank() {
+        return rank;
+    }
+
+    public int getRankScore() {
+        return rank.getScore();
+    }
 }

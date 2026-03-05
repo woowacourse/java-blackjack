@@ -22,4 +22,8 @@ public enum Rank {
         this.rank = rank;
         this.score = score;
     }
+
+    public int getScore() {
+        return score;
+    }
 }
