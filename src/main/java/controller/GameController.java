@@ -27,7 +27,8 @@ public class GameController {
 
         List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
-            Player player = new Player(playerName);
+
+            Player player = new Player(playerName, deck.handOutCards());
             players.add(player);
             for (int i = 0; i < 2; i++) {
                 player.addCard(deck.peekCard());

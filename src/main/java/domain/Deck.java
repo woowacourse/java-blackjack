@@ -26,10 +26,17 @@ public class Deck {
         return List.copyOf(cards);
     }
 
+    public List<Card> handOutCards() {
+        List<Card> handOutCards = new ArrayList<>();
+        for (int index = 0; index < 2; index++) {
+            handOutCards.add(peekCard());
+        }
+        return handOutCards;
+    }
+
     public Card peekCard() {
         Card lastCard = cards.getLast();
         cards.remove(lastCard);
-
         return lastCard;
     }
 }

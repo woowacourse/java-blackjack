@@ -4,17 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
-    private List<Card> holdCards;
-
-    public String getName() {
-        return name;
-    }
-
     private final String name;
+    private final List<Card> holdCards;
 
-    public Player(String name) {
-        this.holdCards = new ArrayList<>();
+    public Player(String name, List<Card> holdCards) {
         this.name = name;
+        this.holdCards = holdCards;
+
     }
 
     public void addCard(Card card) {
@@ -33,6 +29,10 @@ public class Player {
             return results + 10;
         }
         return results;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public List<Card> getHoldCards(){
