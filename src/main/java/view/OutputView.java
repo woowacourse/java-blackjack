@@ -65,7 +65,7 @@ public class OutputView {
 
     private static void printPlayerScore(PlayerResult playerResult) {
         List<String> cardString = playerResult.deck().stream().map(Card::getString).toList();
-        System.out.print(playerResult.name() + "카드: " + String.join(", ", cardString) + " - 결과: " + playerResult.score());
+        System.out.print(playerResult.name().get() + "카드: " + String.join(", ", cardString) + " - 결과: " + playerResult.score());
     }
 
     private static void printDealerResult(DealerWinning dealerWinning) {
@@ -73,6 +73,7 @@ public class OutputView {
         for(Entry<MatchStatus, Integer> matchStatus : dealerWinning.getDealerWinning().entrySet()) {
             printStatusResult(matchStatus.getKey(), matchStatus.getValue());
         }
+        printNewLine();
     }
 
 
@@ -90,7 +91,7 @@ public class OutputView {
     }
 
     private static void printPlayerResult(PlayerWinning playerWinning) {
-        System.out.println(playerWinning.name() + ": " + playerWinning.matchStatus().getStatus());
+        System.out.println(playerWinning.name().get() + ": " + playerWinning.matchStatus().getStatus());
     }
 
 
