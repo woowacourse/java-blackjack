@@ -6,6 +6,7 @@ import domain.card.Card;
 import domain.card.CardRank;
 import domain.card.CardSuit;
 import domain.card.HandCard;
+import domain.deck.CardDeck;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -13,20 +14,7 @@ import org.junit.jupiter.api.Test;
 
 public class HandCardTest {
     private HandCard handCard;
-    
-    public class StebDeck {
-        private final List<Card> deck;
-        private int index;
 
-        public StebDeck(List<Card> deck){
-            this.deck = deck;
-            this.index = 0;
-        }
-
-        public Card deal(){
-            return deck.get(index++);
-        }
-    }
 
     @BeforeEach
     void setup(){
@@ -83,7 +71,7 @@ public class HandCardTest {
         //given
         Card aceHeart = new Card(CardRank.ACE, CardSuit.HEART); // A
         Card two = new Card(CardRank.TWO, CardSuit.CLOVER); // 2
-        StebDeck sd = new StebDeck(List.of(aceHeart, two));
+        StubDeck sd = new StubDeck(List.of(aceHeart, two));
         handCard.addCard(sd.deal());
         handCard.addCard(sd.deal());
         
@@ -91,10 +79,8 @@ public class HandCardTest {
         int result = handCard.cardCalculator();
 
         //then
-        assertThat(result).isEqualTo(18);        
-
-        Card jack = new Card(CardRank.JACK, CardSuit.CLOVER);
-        handCard.addCard(jack);    }
+        assertThat(result).isEqualTo(18);
+    }
 
     
 }

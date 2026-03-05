@@ -15,23 +15,30 @@ public class HandCard {
     }
     
     public int cardCalculator(){
-        int sum = cards.stream().map(Card::getRankScore).filter(e -> e != 1).mapToInt(Integer::intValue).sum();
-        int ace_cnt = (int) cards.stream().map(Card::getRankScore).filter(e -> e == 1).count();
-        int result = sum + aceCalculator(sum, ace_cnt);
+        int nonAceTotal = cards.stream().map(Card::getRankScore).filter(e -> e != 1).mapToInt(Integer::intValue).sum();
+        int aceCnt = (int) cards.stream().map(Card::getRankScore).filter(e -> e == 1).count();
+
+        int result = aceCalculator(nonAceTotal, aceCnt);
 
         if(result > BLACKJACK_MAX_LIMIT) return 0;
-        
+
         return result;
     }
 
-    private int aceCalculator(int sum, int ace_cnt){
-        int totalSum = sum + (ace_cnt*ACE_MAX_VALUE);
-        while(totalSum > BLACKJACK_MAX_LIMIT && ace_cnt > 0){
+    private int aceCalculator(int nonAceTotal, int aceCnt){
+        int totalSum = nonAceTotal + (aceCnt*ACE_MAX_VALUE);
+        int remainingAce = aceCnt;
+        while(totalSum > BLACKJACK_MAX_LIMIT && remainingAce > 0){
            totalSum -= (ACE_MAX_VALUE - ACE_MIN_VALUE);
-           ace_cnt--;
+           remainingAce--;
         }
-        return totalSum - sum;
+        return totalSum;
     }
+    /*
+    private int aceCalculator(int sum, int ace_cnt){
+        return Math.min(ace_cnt, Math.max(0, (BLACKJACK_MAX_LIMIT - sum) / (ACE_MAX_VALUE - ACE_MIN_VALUE)));
+    }
+     */
 
     public void addCard(Card card){
         cards.add(card);

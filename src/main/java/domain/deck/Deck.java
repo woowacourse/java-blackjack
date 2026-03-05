@@ -1,4 +1,4 @@
-package domain;
+package domain.deck;
 
 import domain.card.Card;
 import domain.card.CardRank;
@@ -8,9 +8,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class Deck {
-    private final List<Card> cards; //유지해야하는 52장의 카드
-    private int index; //카드가 가리키는 리스트 좌표
+public class Deck implements CardDeck{
+    private final List<Card> cards;
+    private int index;
 
     public Deck(){
         this.cards = new ArrayList<>();
@@ -31,7 +31,8 @@ public class Deck {
         index = 0;
     }
 
-    //TODO : INDEX가 52를 넘는다면?
+    //TODO : INDEX가 52를 넘는다면? --> 나중에 생각
+    @Override
     public Card deal(){
         return cards.get(index++);
     }
