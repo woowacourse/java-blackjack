@@ -15,10 +15,10 @@ class CardTest {
         Card card = new Card("2", "하트");
 
         //when
-        int number = card.getNumber();
+        int value = card.getValue();
 
         //then
-        assertThat(number).isEqualTo(2);
+        assertThat(value).isEqualTo(2);
     }
 
     @Test
@@ -28,10 +28,10 @@ class CardTest {
         Card card = new Card("K", "하트");
 
         //when
-        int number = card.getNumber();
+        int value = card.getValue();
 
         //then
-        assertThat(number).isEqualTo(10);
+        assertThat(value).isEqualTo(10);
     }
 
     @Test
@@ -41,10 +41,10 @@ class CardTest {
         Card card = new Card("A", "하트");
 
         //when
-        int number = card.getNumber();
+        int value = card.getValue();
 
         //then
-        assertThat(number).isEqualTo(1);
+        assertThat(value).isEqualTo(1);
     }
 
     @Test

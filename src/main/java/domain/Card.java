@@ -1,26 +1,17 @@
 package domain;
 
 public class Card {
-    private final String value;
-    private final String pattern;
+    private final CardValue value;
+    private final CardKind kind;
 
-    public Card(String value, String pattern) {
-        // value가 범위 내에 있는지
 
-        // pattern이 범위 내에 있는지
-
-        this.value = value;
-        this.pattern = pattern;
+    public Card(String value, String kind) {
+        this.value = CardValue.of(value);
+        this.kind = CardKind.of(kind);
     }
 
-    public int getNumber() {
-        if (value.equals("K") || value.equals("Q") || value.equals("J")) {
-            return 10;
-        }
-        if (value.equals("A")) {
-            return 1;
-        }
-        return Integer.parseInt(value);
+    public int getValue() {
+        return value.getNumber();
     }
 
     // value + string 합친 값 내보내는 메서드
