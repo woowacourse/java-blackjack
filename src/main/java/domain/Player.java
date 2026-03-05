@@ -1,6 +1,6 @@
 package domain;
 
-public class Player extends Participant{
+public class Player extends Participant {
 
     private final String name;
 
