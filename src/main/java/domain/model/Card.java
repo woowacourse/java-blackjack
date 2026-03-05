@@ -1,4 +1,4 @@
-package domain;
+package domain.model;
 
 public class Card {
     private CardRank cardRank;

@@ -1,5 +1,6 @@
 package domain;
 
+import domain.model.Player;
 import org.junit.jupiter.api.Test;
 import util.Parser;
 import util.StringParser;

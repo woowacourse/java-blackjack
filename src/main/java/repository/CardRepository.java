@@ -1,6 +1,6 @@
 package repository;
 
-import domain.Card;
+import domain.model.Card;
 
 import java.util.ArrayList;
 import java.util.List;
