@@ -13,6 +13,10 @@ public class Card {
         return new Card(rank, suit);
     }
 
+    public boolean isAce() {
+        return rank.isAce();
+    }
+
     public String getName() {
         return rank.getName() + suit.getName();
     }

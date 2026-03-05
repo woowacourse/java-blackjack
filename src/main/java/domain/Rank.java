@@ -24,6 +24,10 @@ public enum Rank {
         this.name = name;
     }
 
+    public boolean isAce() {
+        return this == ACE;
+    }
+
     public int getValue() {
         return value;
     }
