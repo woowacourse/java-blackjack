@@ -15,4 +15,8 @@ public class Player {
     public Cards getDrawnCards() {
         return drawnCards;
     }
+
+    public boolean isBust() {
+        return drawnCards.sumScore() > 21;
+    }
 }
