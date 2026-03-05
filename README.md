@@ -25,13 +25,14 @@
 - List Card
 - 카드 주인
 #### method
+- Append Card (카드 추가)
 - 전체 값(필드로 두지는 않고, 계산으로 반환) 계산 calculate
 - 문양과 숫자가 중복되는지 검사
 - Ace 값을 결정?
 ---
 ### Member
 #### field
-- Cards
+- Hand
 - Role(player | dealer)
 
 #### method
