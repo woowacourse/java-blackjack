@@ -18,7 +18,7 @@ public class DealerTest {
     @Test
     void 핸드가_16_이하면_카드를_뽑는다() {
         Card card = new Card(Rank.FOUR, Pattern.CLOVER);
-        Dealer dealer = new Dealer(name, dummyHand);
+        Dealer dealer = new Dealer(dummyHand);
         Integer beforeSize = dealer.handSize();
 
         if (dealer.dealerRule()) {
@@ -36,7 +36,7 @@ public class DealerTest {
         Card card3 = new Card(Rank.KING, Pattern.CLOVER);
         dummyHand.addCard(card1);
         dummyHand.addCard(card2);
-        Dealer dealer = new Dealer(name, dummyHand);
+        Dealer dealer = new Dealer(dummyHand);
         Integer beforeSize = dealer.handSize();
 
         if (dealer.dealerRule()) {
