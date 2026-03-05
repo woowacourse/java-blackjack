@@ -2,6 +2,7 @@ package blackjack.model;
 
 public class Dealer {
     private static final int PICK_THRESHOLD = 16;
+    private static final int BLACKJACK_SCORE = 21;
 
     private final Hands hands;
 
@@ -25,5 +26,10 @@ public class Dealer {
     // 16점을 초과하면 false를 반환한다.
     public boolean canPick() {
         return !hands.isTotalScoreOver(PICK_THRESHOLD);
+    }
+
+    //핸즈의 총 점수가 21 초과이면 true를 반환한다.
+    public boolean isBust() {
+        return hands.isTotalScoreOver(BLACKJACK_SCORE);
     }
 }

@@ -35,4 +35,20 @@ class DealerTest {
         // when & then
         assertThat(dealer.canPick()).isFalse();
     }
+
+    @Test
+    @DisplayName("딜러의 총 점수가 21 초과이면 true를 반환한다.")
+    void isBust() {
+        // given
+        CardDeck cardDeck = CardDeck.init();
+
+        Dealer dealer = Dealer.create();
+
+        for (int i = 0; i < 21; i++) {
+            dealer.pickACard(cardDeck);
+        }
+
+        // when & then
+        assertThat(dealer.isBust()).isTrue();
+    }
 }
