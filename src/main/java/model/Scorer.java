@@ -4,11 +4,16 @@ import model.dto.Card;
 
 public class Scorer {
     public static Integer calculate(Card card) {
+        if(!isAceCard(card)) {
+            throw new IllegalArgumentException("Ace 카드는 전체 점수가 필요합니다.");
+        }
         return card.cardNumber().getScore();
     }
 
     public static Integer calculate(Card card, Integer sum) {
-        validateAceCard(card);
+        if(isAceCard(card)) {
+            throw new IllegalArgumentException("Ace 카드가 아닙니다.");
+        }
 
         if(sum >= 11) {
             return CardNumber.ACE.getScore();
@@ -16,9 +21,7 @@ public class Scorer {
         return CardNumber.ACE.getScore() + 10;
     }
 
-    private static void validateAceCard(Card card) {
-        if(!card.cardNumber().equals(CardNumber.ACE)) {
-            throw new IllegalArgumentException("Ace 카드가 아닙니다.");
-        }
+    private static boolean isAceCard(Card card) {
+        return card.cardNumber().equals(CardNumber.ACE);
     }
 }
