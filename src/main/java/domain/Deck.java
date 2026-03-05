@@ -20,18 +20,16 @@ public class Deck {
         return new Deck(cards);
     }
 
+    public static Deck createParticipantDeck(Deck deck) {
+        return new Deck(deck.drawCard(INIT_DECK_SIZE));
+    }
+
     private static void createAllCards(List<Card> cards) {
         for (CardShape shape : CardShape.values()) {
             for (CardContents content : CardContents.values()) {
                 cards.add(new Card(shape, content));
             }
         }
-    }
-
-    public Deck giveInitialDeck() {
-        return new Deck(
-                this.drawCard(INIT_DECK_SIZE)
-        );
     }
 
     public List<Card> drawCard(int count) {
@@ -46,4 +44,5 @@ public class Deck {
         }
         return selectedCards;
     }
+
 }
