@@ -1,5 +1,8 @@
 package domain;
 
+import domain.model.Card;
+import domain.model.CardRank;
+import domain.model.CardShape;
 import org.junit.jupiter.api.Test;
 import repository.CardRepository;
 import util.NumberGenerator;
