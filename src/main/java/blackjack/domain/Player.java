@@ -12,6 +12,10 @@ public class Player {
         this.nickname = nickname;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
     private void validateNicknameLength(final String nickname) {
         if (nickname.length() > NICKNAME_MAXIMUM_LENGTH || nickname.length() < NICKNAME_MINIMUM_LENGTH) {
             throw new IllegalArgumentException("닉네임은 4~10자 이어야 합니다.");
