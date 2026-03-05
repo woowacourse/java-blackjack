@@ -14,13 +14,17 @@ public class Deck {
     public static List<Card> generate() {
         List<Card> cards = new ArrayList<>();
         for (Shape shape : Shape.values()) {
-            for (CardValue value : CardValue.values()) {
-                Card card = new Card(value, shape);
-                cards.add(card);
-            }
+            matching(cards, shape);
         }
 
         return cards;
+    }
+
+    private static void matching(List<Card> cards, Shape shape) {
+        for (CardValue value : CardValue.values()) {
+            Card card = new Card(value, shape);
+            cards.add(card);
+        }
     }
 
 }
