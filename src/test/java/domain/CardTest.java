@@ -10,18 +10,18 @@ import org.junit.jupiter.params.provider.MethodSource;
 class CardTest {
 
     @ParameterizedTest
-    @MethodSource("royalStrings")
-    @DisplayName("J,Q,K면 카드의 가치가 10어야한다.")
-    void royal_test(String cardStr) {
-        Card card = new Card(CardRank.QUEEN, CardMark.SPADE);
+    @MethodSource("cardRanks")
+    @DisplayName("카드 가치를 숫자로 변환해야 한다.")
+    void 카드_가치_변환(CardRank cardRank) {
+        Card card = new Card(cardRank, CardMark.CLOVER);
 
-        int expected = 10;
+        int expected = cardRank.score();
         int actual = card.score();
 
         assertEquals(expected, actual);
     }
 
-    static Stream<String> royalStrings() {
-        return Stream.of("J", "Q", "K");
+    static Stream<CardRank> cardRanks() {
+        return Stream.of(CardRank.values());
     }
 }
