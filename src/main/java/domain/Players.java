@@ -1,7 +1,10 @@
 package domain;
 
+import java.util.List;
+
 public class Players {
 
-    public
+    private List<Player> playerList;
+
 
 }

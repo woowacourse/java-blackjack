@@ -1,4 +1,4 @@
-package Enum;
+package constant;
 
 public enum Suit {
     HEART("하트"),

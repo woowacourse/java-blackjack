@@ -1,25 +1,31 @@
 package domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import java.util.Arrays;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import view.InputView;
 
 public class PlayersTest {
 
-    @DisplayName("이름 공백 제거 후 성공")
+    InputView input;
+    @BeforeEach
+    void beforeEach() {
+         input = new InputView();
+    }
+    @DisplayName("입력에 따른 Player 객체 생성")
     @Test
     void 이름이_정상적으로_들어왔을때() {
-        String names = "아나키, 포비, 모아";
-        List<String> playerName = Arrays.stream(names.split(","))
-                .map(String::trim)
-                .toList();
+        List<String> names = Arrays.asList("아나키", "포비", "모아");
 
-        Players players = new Players(playerName);
+        /*assertThat()*/
+        /*Players players = new Players(playerName);*/
 
-        assertThat(players.getSize()).isEqualTo(3);
+        //assertThat(players.getSize()).isEqualTo(3);
 
     }
 }

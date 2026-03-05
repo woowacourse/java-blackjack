@@ -1,4 +1,4 @@
-package Enum;
+package constant;
 
 public enum Rank {
     ACE(1),
