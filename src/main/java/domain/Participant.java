@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public abstract class Participant {
     private final Name name;
-    private final Cards cards;
+    protected final Cards cards;
 
     public Participant(Name name) {
         this.name = name;
@@ -15,4 +15,11 @@ public abstract class Participant {
     public void receiveCard(Card card) {
         cards.addCard(card);
     }
+
+    public abstract boolean canReceiveCard();
+
+    public String getName() {
+        return name.toString();
+    }
+
 }

@@ -1,6 +1,7 @@
 package controller;
 
 import domain.*;
+import view.InputView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,23 @@ public class BlackJackGameController {
         Card card2 = deck.distributeCard();
         dealer.receiveCard(card2);
 
+        for (Player player : players) {
+            while (player.canReceiveCard()) {
+                if (!isContinue(InputView.askContinue(player.getName()))) {
+                    break;
+                }
+                Card card = deck.distributeCard();
+                player.receiveCard(card);
+            }
+        }
+    }
+
+    private boolean isContinue(String response) {
+        if (response.equals("y")) {
+            return true;
+        }
+
+        return false;
     }
 
     private List<Player> initPlayer() {
@@ -47,7 +65,7 @@ public class BlackJackGameController {
     }
 
     private List<String> getPlayerNames() {
-       return null;
+        return null;
     }
 
 }

@@ -19,7 +19,7 @@ public class Cards {
         cards.add(card);
     }
 
-    public boolean canReceiveCard() {
+    public boolean canReceiveCard(int burstThreshold) {
         int sum = calculateScore();
 
         while (changeAvailableAceCount != 0 && isBurst(sum)) {
@@ -27,7 +27,7 @@ public class Cards {
             changeAvailableAceCount -= 1;
         }
 
-        if (isBurst(sum) || sum == 21) {
+        if (isBurst(sum) || sum == burstThreshold) {
             return false;
         }
 

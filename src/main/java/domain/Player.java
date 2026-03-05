@@ -3,14 +3,13 @@ package domain;
 import java.util.ArrayList;
 
 public class Player extends Participant {
+    private static final int burstThreshold = 21;
 
     public Player(Name name){
         super(name);
     }
 
-    //판정 로직 메서드 추가.
-
-//    public Player(Name name, Cards cards){
-//    }
-
+    public boolean canReceiveCard() {
+        return cards.canReceiveCard(burstThreshold);
+    }
 }

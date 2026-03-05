@@ -35,7 +35,7 @@ class CardsTest {
         realCards.addCard(card1);
         realCards.addCard(card2);
 
-        assertEquals(true, realCards.canReceiveCard());
+        assertEquals(true, realCards.canReceiveCard(21));
     }
 
     @Test
@@ -54,7 +54,7 @@ class CardsTest {
         realCards.addCard(card3);
         realCards.addCard(card4);
 
-        assertEquals(false, realCards.canReceiveCard());
+        assertEquals(false, realCards.canReceiveCard(21));
     }
 
     @Test
@@ -71,6 +71,6 @@ class CardsTest {
         realCards.addCard(card2);
         realCards.addCard(card3);
 
-        assertEquals(false, realCards.canReceiveCard());
+        assertEquals(false, realCards.canReceiveCard(21));
     }
 }
