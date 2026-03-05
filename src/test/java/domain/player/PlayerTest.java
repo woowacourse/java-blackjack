@@ -1,7 +1,5 @@
 package domain.player;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import domain.card.Card;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
