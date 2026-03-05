@@ -11,8 +11,8 @@ public class Card {
         this.pattern=pattern;
     }
 
-    public String getCardCode(){
-        return rank.getCode();
+    public Integer getCardScore(){
+        return rank.getValue();
     }
 
     public String getCardShape(){
