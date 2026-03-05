@@ -15,4 +15,15 @@ public class DealerTest {
                 .doesNotThrowAnyException();
     }
 
+    @Test
+    @DisplayName("한 장씩 카드를 꺼내는 테스트")
+    void 한_장씩_카드를_꺼내는_테스트() {
+        // given
+        Dealer dealer = new Dealer(new Deck());
+
+        // when & then
+        assertThatCode(dealer::bringCard)
+                .doesNotThrowAnyException();
+    }
+
 }
