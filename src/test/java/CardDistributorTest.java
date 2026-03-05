@@ -30,4 +30,18 @@ public class CardDistributorTest {
             drawn.add(card);
         }
     }
+
+    @Test
+    void distribute_one_card_to_player() {
+        Random mockRandom = mock(Random.class);
+        CardDistributor cardDistributor = new CardDistributor(mockRandom);
+
+        when(mockRandom.nextInt(13)).thenReturn(0); // "2"
+        when(mockRandom.nextInt(4)).thenReturn(0); // "하트"
+
+        Player player = new Player("Player1");
+        cardDistributor.distributeCardTo(player);
+
+        assertThat(player.getCards()).containsExactly(new Card("2", "하트"));
+    }
 }
