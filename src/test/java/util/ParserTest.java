@@ -14,7 +14,7 @@ public class ParserTest {
 
         // when & then
         assertThatThrownBy(() ->
-                Parser.validateNonLiteralInput(participantsName))
+                Parser.validateEmptyInput(participantsName))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageStartingWith(ERROR_PREFIX);
     }
@@ -38,7 +38,7 @@ public class ParserTest {
 
         // when & then
         assertThatThrownBy(() ->
-                Parser.validateNonLiteralInput(participantsName))
+                Parser.validateInvalidSymbolInput(participantsName))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageStartingWith(ERROR_PREFIX);
     }
