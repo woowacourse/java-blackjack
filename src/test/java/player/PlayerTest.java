@@ -15,7 +15,7 @@ public class PlayerTest {
                         Card.of(CardEmblem.TWO, CardDenomination.SPADE), Card.of(CardEmblem.THREE, CardDenomination.HEART))
                 .build();
         Dealer dealer = Dealer.of(cardDeck);
-        Player player = Player.from();
+        Player player = Player.from("test1");
 
         dealer.handOutCardToPlayer(player, 1);
         Card card = Card.of(CardEmblem.EIGHT, CardDenomination.CLOVER);
@@ -29,11 +29,27 @@ public class PlayerTest {
                 .build();
 
         Dealer dealer = Dealer.of(cardDeck);
-        Player player = Player.from();
+        Player player = Player.from("test1");
 
         Assertions.assertThatThrownBy(() -> {
             dealer.handOutCardToPlayer(player, 1);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
+    @Test
+    void 플레이어를_생성한다() {
+        String name = "test1";
+        Player player = Player.from(name);
+
+        Assertions.assertThat(player.toDisplay()).isEqualTo(name);
+    }
+
+    @Test
+    void 이름이_5자가_넘으면_예외가_발생한다() {
+        String overFiveLengthName = "testtest";
+
+        Assertions.assertThatThrownBy(() -> {
+            Player.from(overFiveLengthName);
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
 }

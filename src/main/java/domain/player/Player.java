@@ -5,14 +5,16 @@ import domain.card.CardBundle;
 
 public class Player {
 
+    private PlayerName name;
     private CardBundle cardBundle;
 
-    private Player() {
+    private Player(String name) {
         this.cardBundle = CardBundle.empty();
+        this.name = PlayerName.from(name);
     }
 
-    public static Player from() {
-        return new Player();
+    public static Player from(String name) {
+        return new Player(name);
     }
 
     public boolean hasCard(Card targetCard) {
@@ -30,5 +32,9 @@ public class Player {
 //    public void addCard(Card newCard) {
 //        cardBundle.addUp(newCard);
 //    }
+
+    public String toDisplay() {
+        return name.name();
+    }
 
 }
