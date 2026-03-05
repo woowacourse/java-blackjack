@@ -1,7 +1,9 @@
 package service;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import domain.Card;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Nested;
@@ -102,5 +104,53 @@ class BlackjackServiceTest {
         }
 
 
+    }
+
+    @Nested
+    class DrawCardTest {
+
+        @Nested
+        class Success {
+
+            @Test
+            void 카드를_뽑으면_null이_아닌_카드를_반환해야_한다() {
+
+                // when
+                Card actual = blackjackService.drawCard();
+
+                // then
+                assertThat(actual).isNotNull();
+            }
+
+            @Test
+            void 카드가_소진되기_전까지는_카드를_반환해야_한다() {
+
+                // given
+                Card actual = null;
+
+                // when
+                for (int i = 0; i < 312; i++) {
+                    actual = blackjackService.drawCard();
+                }
+
+                // then
+                assertThat(actual).isNotNull();
+            }
+
+            @Test
+            void 카드가_모두_소진되면_null을_반환해야_한다() {
+
+                // given
+                for (int i = 0; i < 312; i++) {
+                    blackjackService.drawCard();
+                }
+
+                // when
+                Card actual = blackjackService.drawCard();
+
+                // then
+                assertThat(actual).isNull();
+            }
+        }
     }
 }
