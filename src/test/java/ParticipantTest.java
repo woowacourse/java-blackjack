@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Stream;
 import model.Card;
 import model.Participant;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -38,10 +39,11 @@ public class ParticipantTest {
             participant.draw(secondCard);
 
             // when
-            List<Card> opened = participant.open(1);
+//            List<Card> opened = participant.open(1);
+            List<String> opened = participant.open(1);
 
             // then
-            assertThat(opened.getFirst()).isEqualTo(firstCard);
+            assertThat(opened.getFirst()).isEqualTo("1스페이드");
         }
 
         @Test
@@ -54,7 +56,7 @@ public class ParticipantTest {
             participant.draw(secondCard);
 
             // when
-            List<Card> opened = participant.open(2);
+            List<String> opened = participant.open(2);
 
             // then
             assertThat(opened).hasSize(2);
@@ -70,7 +72,7 @@ public class ParticipantTest {
             participant.draw(secondCard);
 
             // when
-            List<Card> opened = participant.open(1);
+            List<String> opened = participant.open(1);
 
             // then
             assertThat(opened).hasSize(2);

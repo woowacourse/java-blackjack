@@ -14,7 +14,16 @@ public class Card {
         return new Card(Suits.findByName(suits), CardNumber.findByValue(cardNumber));
     }
 
+    public static Card of(String suits, String cardName) {
+        return new Card(Suits.findByName(suits), CardNumber.findByName(cardName));
+    }
+
     public CardNumber getCardNumber() {
         return cardNumber;
+    }
+
+    @Override
+    public String toString() {
+        return cardNumber.getName() +  suits.name;
     }
 }

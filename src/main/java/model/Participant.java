@@ -28,6 +28,10 @@ public class Participant {
         return new Participant(input, isDealer);
     }
 
+    public void setDealer(boolean dealer) {
+        isDealer = dealer;
+    }
+
     public String getName() {
         return name;
     }
@@ -37,12 +41,14 @@ public class Participant {
         return List.copyOf(hands);
     }
 
-    public List<Card> open(int round) {
+    public List<String> open(int round) {
         if (isDealer && round == 1) {
-            return List.of(hands.getFirst());
+            return List.of(hands.getFirst().toString());
         }
 
-        return List.copyOf(hands);
+        return hands.stream()
+                .map(Card::toString)
+                .toList();
     }
 
     public int calculateScore() {
