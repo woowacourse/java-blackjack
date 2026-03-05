@@ -7,12 +7,14 @@ public class CardStatus {
 
     private final List<Card> cards;
     private int totalScore;
-    private boolean blackjack;
+    private boolean isBlackjack;
+    private boolean isBust;
 
     public CardStatus() {
         this.cards = new ArrayList<>();
         this.totalScore = 0;
-        this.blackjack = false;
+        this.isBlackjack = false;
+        this.isBust = false;
     }
 
     public List<Card> getCards() {
