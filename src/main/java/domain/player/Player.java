@@ -2,7 +2,6 @@ package domain.player;
 
 import domain.card.HandCard;
 import domain.deck.CardDeck;
-import dto.CardInfos;
 
 public abstract class Player {
     protected final HandCard handCard;
@@ -15,12 +14,15 @@ public abstract class Player {
         handCard.addCard(cardDeck.deal());
     }
 
-    public CardInfos showAllCards() {
-        return new CardInfos(handCard.getCardInfos());
-    }
-
     public int score() {
         return handCard.cardCalculator();
+    }
+
+    public int adjustBustScore(int score) {
+        if (score > 21) {
+            return 0;
+        }
+        return score;
     }
 }
 

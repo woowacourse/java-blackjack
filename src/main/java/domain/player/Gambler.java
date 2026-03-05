@@ -1,6 +1,7 @@
 package domain.player;
 
 import domain.MatchResult;
+import dto.GamblerCardInfo;
 import expcetion.BlackjackException;
 import expcetion.ExceptionMessage;
 
@@ -37,16 +38,31 @@ public class Gambler extends Player {
     }
 
     public MatchResult getResult(int dealerScore) {
-        int score = score();
-        if(score > dealerScore)
+        int gambler = adjustBustScore(score());
+        int dealer = adjustBustScore(dealerScore);
+
+        if(gambler > dealer)
             return MatchResult.WIN;
 
-        if(score < dealerScore)
+        if(gambler < dealer)
             return MatchResult.LOSE;
         return MatchResult.DRAW;
     }
 
+
     public String showResult(MatchResult result) {
         return String.format(RESULT_FORMAT,name, result.getName());
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public GamblerCardInfo getCardInfo(){
+        return new GamblerCardInfo(name, handCard.getCardInfos(), score());
+    }
+
+    public boolean isBust(){
+        return score() > 21;
     }
 }
