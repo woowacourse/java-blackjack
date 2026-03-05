@@ -42,4 +42,11 @@ public class Cards {
         return sum;
     }
 
+    public boolean decideBurst(int sum) {
+        if (sum > 21) {
+            return true;
+        }
+        return false;
+    }
+
 }
