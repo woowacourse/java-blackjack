@@ -9,8 +9,8 @@ class RefereeTest {
     @Test
     void 딜러와_플레이어의_승패를_비교한다() {
         // given
-        int participantScore = 20;
-        int dealerScore = 15;
+        int participantScore = 25;
+        int dealerScore = 25;
 
         Referee referee = new Referee();
 

@@ -62,7 +62,7 @@ public class BlackjackGame {
             OutputView.showDealerMessage();
             Card receivedCard = deck.drawCard();
             dealer.receiveCard(receivedCard);
-            if (dealer.isBust()) {
+            if (dealer.isBust() && dealer.getScore() >= 17) {
                 dealer.changeState();
             }
         }
