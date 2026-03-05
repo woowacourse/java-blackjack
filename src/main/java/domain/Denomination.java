@@ -29,7 +29,7 @@ public enum Denomination {
         this.score = score;
     }
 
-    static List<Denomination> all() {
+    public static List<Denomination> all() {
         return List.of(values());
     }
 

@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 public enum Suit {
 
     SPADE("스페이드"),
@@ -11,5 +13,9 @@ public enum Suit {
 
     Suit(String name) {
         this.name = name;
+    }
+
+    public static List<Suit> all() {
+        return List.of(values());
     }
 }
