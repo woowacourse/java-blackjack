@@ -61,7 +61,6 @@ public class OutputView {
     private static void printPlayersCurrentDeck(List<PlayerResult> players) {
         for(PlayerResult playerResult : players) {
             printPlayerCurrentDeck(playerResult);
-            printNewLine();
         }
     }
 
@@ -75,7 +74,6 @@ public class OutputView {
         for(Entry<MatchStatus, Integer> matchStatus : dealerWinning.getDealerWinning().entrySet()) {
             printStatusResult(matchStatus.getKey(), matchStatus.getValue());
         }
-        printNewLine();
     }
 
 
