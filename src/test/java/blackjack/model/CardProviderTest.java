@@ -35,35 +35,4 @@ class CardProviderTest {
         assertThat(player.getCardStatus().getCards().size()).isEqualTo(1);
     }
 
-
-    @Test
-    @DisplayName("플레이어의 카드 합계까 21 이상인 경우 true 반환")
-    void test_isGreaterThanTwentyOne_return_true() {
-        Player player = new Player("pobi");
-        CardCalculator cardCalculator = new CardCalculator();
-        CardProvider cardProvider = new CardProvider();
-
-        player.addCard(Card.A_DIA);
-        player.addCard(Card.J_DIA);
-        player.addCard(Card.Q_CLOVER);
-
-        boolean result = cardProvider.isGreaterThanTwentyOne(player, cardCalculator);
-
-        assertThat(result).isTrue();
-    }
-
-    @Test
-    @DisplayName("플레이어의 카드 합계까 21 미만인 경우 false 반환")
-    void test_isGreaterThanTwentyOne_return_false() {
-        Player player = new Player("pobi");
-        CardCalculator cardCalculator = new CardCalculator();
-        CardProvider cardProvider = new CardProvider();
-
-        player.addCard(Card.J_DIA);
-        player.addCard(Card.Q_CLOVER);
-
-        boolean result = cardProvider.isGreaterThanTwentyOne(player, cardCalculator);
-
-        assertThat(result).isFalse();
-    }
 }

@@ -9,6 +9,7 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 
+
 public class BlackjackController {
 
     private final CardProvider cardProvider;
@@ -32,9 +33,8 @@ public class BlackjackController {
     }
 
     public void hit(List<Player> players, Dealer dealer) {
-
         for (Player player : players) {
-            while (InputView.readCardAdd(player).equals("y") && checkAddCard(player, cardCalculator)) {
+            while (InputView.readCardAdd(player).equals("y") && checkAddCard(player)) {
                 cardProvider.provideOneCard(player);
                 OutputView.printPlayerCards(player);
             }
@@ -46,16 +46,20 @@ public class BlackjackController {
         }
     }
 
-    private void checkBlackjack(List<Player> players, Dealer dealer) {
+    void checkBlackjack(List<Player> players, Dealer dealer) {
         for (Player player : players) {
             if (cardCalculator.totalScore(player.getCardStatus().getCards()) == 21) {
                 player.markBlackjack();
             }
         }
+
+        if (cardCalculator.totalScore(dealer.getCardStatus().getCards()) == 21) {
+            dealer.markBlackjack();
+        }
     }
 
 
-    private boolean checkAddCard(Player player, CardCalculator cardCalculator) {
+    boolean checkAddCard(Player player) {
         if (cardCalculator.totalScore(player.getCardStatus().getCards()) >= 21) {
             OutputView.printCantAddCard();
             return false;
