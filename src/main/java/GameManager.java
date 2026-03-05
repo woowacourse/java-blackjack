@@ -51,20 +51,20 @@ public class GameManager {
         return players.getPlayers();
     }
 
-    public List<GameScoreResultDto> getScoreResults(){
+    public List<GameScoreResultDto> getScoreResults() {
         List<GameScoreResultDto> results = new ArrayList<>();
         // dealer
         results.add(new GameScoreResultDto(
                 dealer.getName(),
                 dealer.getHandToString(),
                 scoreCalculator.calculateScore(dealer.getHand())
-                ));
+        ));
         //players
         for (Player player : players.getPlayers()) {
             results.add(new GameScoreResultDto(
                     player.getName(),
                     player.getHandToString(),
-                    scoreCalculator.calculateScore(dealer.getHand())
+                    scoreCalculator.calculateScore(player.getHand())
             ));
         }
 
@@ -102,5 +102,31 @@ public class GameManager {
 
     public boolean isDealerTurn() {
         return calculateScore(dealer.getHand()) <= 16;
+    }
+
+    public List<GameFinalResultDto> getFinalResult() {
+        List<GameFinalResultDto> results = new ArrayList<>();
+        // 딜러 추가
+        results.add(new GameFinalResultDto(dealer.getName()));
+
+        // 플레이어 추가
+        for (Player player : players.getPlayers()) {
+            int playerScore = calculateScore(player.getHand());
+            int dealerScore = calculateScore(dealer.getHand());
+
+            if (playerScore > dealerScore) {
+                results.add(new GameFinalResultDto(player.getName(), Result.WIN));
+            }
+
+            if (playerScore == dealerScore) {
+                results.add(new GameFinalResultDto(player.getName(), Result.DRAW));
+            }
+
+            if (playerScore < dealerScore) {
+                results.add(new GameFinalResultDto(player.getName(), Result.LOSE));
+            }
+        }
+
+        return results;
     }
 }

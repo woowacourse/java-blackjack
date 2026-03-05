@@ -36,9 +36,15 @@ public class GameController {
             }
         }
 
+        // 딜러 턴 실행
         while (manager.isDealerTurn()) {
             manager.drawDealerCard();
         }
 
+        // 점수 결과 출력
+        System.out.println(manager.getScoreResults());
+
+        // 최종 승패 출력
+        System.out.println(manager.getFinalResult());
     }
 }

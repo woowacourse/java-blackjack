@@ -34,4 +34,13 @@ public class GameScoreResultDto {
     public void setResult(int result) {
         this.result = result;
     }
+
+    @Override
+    public String toString() {
+        return "GameScoreResultDto{" +
+                "playerName='" + playerName + '\'' +
+                ", hand=" + hand +
+                ", result=" + result +
+                '}';
+    }
 }
