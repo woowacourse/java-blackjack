@@ -26,6 +26,11 @@ public class Card {
     }
 
     @Override
+    public String toString() {
+        return cardNumber.getNumber() + cardShape.getShape();
+    }
+
+    @Override
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) {
             return false;

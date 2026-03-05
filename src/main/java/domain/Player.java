@@ -5,6 +5,11 @@ import java.util.List;
 
 public class Player {
     private List<Card> holdCards;
+
+    public String getName() {
+        return name;
+    }
+
     private final String name;
 
     public Player(String name) {
@@ -28,6 +33,10 @@ public class Player {
             return results + 10;
         }
         return results;
+    }
+
+    public List<Card> getHoldCards(){
+        return List.copyOf(holdCards);
     }
 
     public boolean isBust(int playerTotalScore) {
