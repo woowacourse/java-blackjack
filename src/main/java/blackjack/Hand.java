@@ -13,4 +13,12 @@ public class Hand {
     public int getCount() {
         return cards.size();
     }
+
+    public int getTotalPoint() {
+        int totalPoint = 0;
+        for(Card card : cards) {
+            totalPoint += card.getCardPoint();
+        }
+        return totalPoint;
+    }
 }
