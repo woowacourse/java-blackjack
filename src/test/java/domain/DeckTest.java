@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import common.ErrorMessage;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -13,19 +14,27 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class DeckTest {
-
     Deck deck;
+    CardCreationStrategy fixedCardCreationStrategy = new CardCreationStrategy() {
+        @Override
+        public List<Card> create() {
+            Card spadeJ = new Card(CardShape.스페이드, CardContents.J);
+            Card clover5 = new Card(CardShape.클로버, CardContents.FIVE);
+
+            return List.of(spadeJ, clover5);
+        }
+    };
 
     @BeforeEach
     void init() {
-        deck = Deck.createDeck();
+        deck = Deck.createDeck(fixedCardCreationStrategy); //TODO : 전략 넣기
     }
 
     @Test
     @DisplayName("Deck를 생성할 때 오류 발생 안함")
     void deck_create_success() {
         Assertions.assertDoesNotThrow(
-                Deck::createDeck
+                () -> Deck.createDeck(fixedCardCreationStrategy)
         );
     }
 
