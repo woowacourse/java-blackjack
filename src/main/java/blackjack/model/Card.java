@@ -12,6 +12,11 @@ public class Card {
 
     // 카드의 점수를 반환한다.
     public int score() {
-        return rank.getScore();
+        return rank.getDefaultScore();
+    }
+
+    // 에이스인지 판별
+    public boolean isAce() {
+        return rank == Rank.ACE;
     }
 }

@@ -20,4 +20,15 @@ class CardTest {
         assertThat(score).isEqualTo(10);
     }
 
+    @Test
+    @DisplayName("에이스 판별 테스트")
+    void isAceTest() {
+        // given
+        Card card1 = new Card(Rank.ACE, Suit.CLOVER);
+        Card card2 = new Card(Rank.K, Suit.CLOVER);
+
+        // when & then
+        assertThat(card1.isAce()).isTrue();
+        assertThat(card2.isAce()).isFalse();
+    }
 }

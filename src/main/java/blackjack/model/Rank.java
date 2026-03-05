@@ -22,7 +22,7 @@ public enum Rank {
         this.defaultScore = defaultScore;
     }
 
-    public int getScore() {
+    public int getDefaultScore() {
         return defaultScore;
     }
 }
