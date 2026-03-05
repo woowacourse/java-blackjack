@@ -20,4 +20,11 @@ public class Card {
     public CardShape getCardShape() {
         return cardShape;
     }
+
+    public boolean isSameCard(Card card) {
+        if (card.cardRank == this.cardRank && card.cardShape == this.cardShape) {
+            return true;
+        }
+        return false;
+    }
 }
