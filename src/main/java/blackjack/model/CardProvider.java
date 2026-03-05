@@ -34,8 +34,4 @@ public class CardProvider {
     public void provideOneCard(User user) {
         user.addCard(deck.poll());
     }
-
-    public boolean isGreaterThanTwentyOne(Player player, CardCalculator cardCalculator) {
-        return cardCalculator.totalScore(player.getCardStatus().getCards()) >= 21;
-    }
 }

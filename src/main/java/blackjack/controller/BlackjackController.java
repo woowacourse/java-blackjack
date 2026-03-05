@@ -46,7 +46,7 @@ public class BlackjackController {
     }
 
     private boolean checkAddCard(Player player, CardCalculator cardCalculator) {
-        if (cardProvider.isGreaterThanTwentyOne(player, cardCalculator)) {
+        if (cardCalculator.totalScore(player.getCardStatus().getCards()) >= 21) {
             OutputView.printCantAddCard();
             return false;
         }
