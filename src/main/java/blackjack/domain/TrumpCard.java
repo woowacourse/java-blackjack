@@ -18,13 +18,20 @@ public class TrumpCard {
 
     private void validate(Suit suit, Rank rank) {
         validateSuitOrRankIsNull(suit, rank);
-
     }
 
     private void validateSuitOrRankIsNull(Suit suit, Rank rank) {
         if (suit == null || rank == null) {
             throw new IllegalArgumentException("Rank와 Suit 중 하나라도 null이 올 수 없습니다.");
         }
+    }
+
+    public int score() {
+        return rank.getScore();
+    }
+
+    public boolean isAce() {
+        return rank == Rank.ACE;
     }
 
     @Override
