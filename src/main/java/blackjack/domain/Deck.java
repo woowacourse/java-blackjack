@@ -12,7 +12,7 @@ public class Deck {
         for (Shape shape : Shape.values()) {
             matching(cards, shape);
         }
-        
+
         this.cards = cards;
     }
 
@@ -21,6 +21,10 @@ public class Deck {
             Card card = new Card(value, shape);
             cards.add(card);
         }
+    }
+
+    public Card bringTopCard() {
+        return cards.removeFirst();
     }
 
 }

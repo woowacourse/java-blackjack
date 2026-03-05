@@ -22,7 +22,7 @@ public class DeckTest {
         Deck deck = new Deck();
 
         // when & then
-        assertThatCode(() -> deck.bringTopCard())
+        assertThatCode(deck::bringTopCard)
                 .doesNotThrowAnyException();
     }
 }
