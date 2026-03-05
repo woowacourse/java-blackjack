@@ -14,12 +14,16 @@ public class CardDeck {
         Collections.shuffle(this.cards);
     }
 
-    public List<Card> getCards() {
-        return new ArrayList<>(cards);
-    }
-
     public void shuffle() {
         Collections.shuffle(this.cards);
+    }
+
+    public Card deal() {
+        return cards.removeFirst();
+    }
+
+    public List<Card> getCards(){
+        return Collections.unmodifiableList(cards);
     }
 }
 
