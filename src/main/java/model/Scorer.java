@@ -4,14 +4,14 @@ import model.dto.Card;
 
 public class Scorer {
     public static Integer calculate(Card card) {
-        if(!isAceCard(card)) {
+        if(isAceCard(card)) {
             throw new IllegalArgumentException("Ace 카드는 전체 점수가 필요합니다.");
         }
         return card.cardNumber().getScore();
     }
 
     public static Integer calculate(Card card, Integer sum) {
-        if(isAceCard(card)) {
+        if(!isAceCard(card)) {
             throw new IllegalArgumentException("Ace 카드가 아닙니다.");
         }
 
