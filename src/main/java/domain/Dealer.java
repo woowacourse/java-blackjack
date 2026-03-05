@@ -6,4 +6,13 @@ public class Dealer extends Participant {
     public Dealer(Hand hand) {
         super(DEALER_NAME, hand);
     }
+
+    @Override
+    public void shouldReceive(Deck deck) {
+        int score = super.score();
+
+        if (score <= 16) {
+            super.receive(deck);
+        }
+    }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Hand {
     public static final int BLACK_JACK = 21;
-    private List<Card> cards = new ArrayList<>();
+    private List<Card> cards;
 
     public Hand(List<Card> cards) {
         this.cards = cards;
@@ -37,9 +37,17 @@ public class Hand {
         return false;
     }
 
+    public int size(){
+        return cards.size();
+    }
+
     public int total() {
         return cards.stream()
                 .mapToInt(Card::score)
                 .sum();
+    }
+
+    public void add(Card card){
+        cards.add(card);
     }
 }
