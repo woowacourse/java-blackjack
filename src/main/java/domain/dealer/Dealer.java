@@ -1,4 +1,8 @@
-package domain.card;
+package domain.dealer;
+
+import domain.card.Card;
+import domain.card.CardBundle;
+import domain.card.CardDeck;
 
 import java.util.List;
 import java.util.stream.Stream;
