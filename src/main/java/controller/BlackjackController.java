@@ -22,16 +22,19 @@ public class BlackjackController {
     }
 
     public void run() {
-        List<String> participantsNames = readParticipants();
+        readParticipants();
+        blackjackService.makeDeck();
+        blackjackService.dealCards();
     }
 
-    public List<String> readParticipants() {
+    public void readParticipants() {
         while(true) {
             try {
                 outputView.printMessage(Message.INPUT_PARTICIPANTS_MESSAGE);
                 String participantsName = inputView.readParticipantsName();
                 List<String> parsedParticipantsName = parser.parseParticipantsName(participantsName);
                 blackjackService.saveParticipants(parsedParticipantsName);
+                return;
             } catch (IllegalArgumentException e) {
                 outputView.printErrorMessage(e.getMessage());
             }

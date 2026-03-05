@@ -10,12 +10,31 @@ public class Participants {
 
     public Participants(List<String> parsedParticipantsName) {
         validateParticipantsNumbers(parsedParticipantsName);
+        saveUsers(parsedParticipantsName);
+        saveDealer();
+    }
+
+    private void saveDealer() {
+        dealer = new Dealer();
+    }
+
+    private void saveUsers(List<String> parsedParticipantsName) {
+        parsedParticipantsName.forEach(name -> {
+            participants.add(new User(name));
+        });
     }
 
     static void validateParticipantsNumbers(List<String> parsedParticipantsName) {
         if (parsedParticipantsName.size() > MAXIMUM_NUMBER_OF_PARTICIPANTS) {
             throw new IllegalArgumentException("[ERROR] 최대 참가 인원은 16명 이하여야 합니다.");
         }
+    }
+
+    public void dealCards(Deck deck) {
+        for (User user : participants) {
+            user.receiveCard(deck.dealCard());
+        }
+        dealer.receiveCard(deck.dealCard());
     }
 }
 
