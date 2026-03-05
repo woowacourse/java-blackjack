@@ -31,10 +31,16 @@ public class GameManager {
         return scoreCalculator.calculateScore(hand);
     }
 
-    public List<String> drawCard(Player player) {
+    public List<String> drawPlayerCard(Player player) {
         player.addCard(deck.draw());
         judgeBust(calculateScore(player.getHand()), player);
         return player.getHandToString();
+    }
+
+    public List<String> drawDealerCard() {
+        dealer.addCard(deck.draw());
+        judgeBust(calculateScore(dealer.getHand()), dealer);
+        return dealer.getHandToString();
     }
 
     public void addPlayer(String name) {

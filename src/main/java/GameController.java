@@ -31,11 +31,14 @@ public class GameController {
                     break;
                 }
 
-                List<String> playerHand = manager.drawCard(player);
+                List<String> playerHand = manager.drawPlayerCard(player);
                 System.out.println("playerHand = " + playerHand);
             }
         }
 
+        while (manager.isDealerTurn()) {
+            manager.drawDealerCard();
+        }
 
     }
 }
