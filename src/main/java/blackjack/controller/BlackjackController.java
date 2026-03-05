@@ -25,6 +25,8 @@ public class BlackjackController {
 
         gameService.settingCards(users, dealer);
         printGameSettingResult(users, dealer);
+
+        getMoreCards(users, dealer);
     }
 
     private void printGameSettingResult(List<User> users, Dealer dealer) {
@@ -39,5 +41,23 @@ public class BlackjackController {
         return InputParser.createUser(userName);
     }
 
+    private void getMoreCards(List<User> users, Dealer dealer) {
+        for (User user : users) {
+            int count = 0;
+            while (true) {
+                String yesOrNo = inputView.readMoreCard(user.getName());
+                if (yesOrNo.equals("n")) {
+                    if (count == 0) {
+                        OutputView.printSettingCardsResult(user.getName(), user.getCardsName());
+                    }
+                    break;
+                }
+                gameService.getMoreCard(user, dealer);
+
+                OutputView.printSettingCardsResult(user.getName(), user.getCardsName());
+                count++;
+            }
+        }
+    }
 
 }

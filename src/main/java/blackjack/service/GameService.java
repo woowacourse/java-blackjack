@@ -16,4 +16,8 @@ public class GameService {
         }
     }
 
+    public void getMoreCard(User user, Dealer dealer) {
+        user.bring(dealer.bringCard());
+    }
+
 }
