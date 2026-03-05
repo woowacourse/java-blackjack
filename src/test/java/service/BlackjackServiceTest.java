@@ -30,14 +30,28 @@ class BlackjackServiceTest {
 
             static Stream<Arguments> successCases() {
                 return Stream.of(
-                    Arguments.of(List.of("jacob")),
-                    Arguments.of(List.of("aa aa"))
+                    Arguments.of(List.of("jacob", "seoye")),
+                    Arguments.of(List.of("aa aa", "성 열"))
                 );
             }
         }
 
         @Nested
         class Fail {
+
+            @Test
+            void 게임_참가_인원은_이름이_중복_되어선_안된다() {
+
+                // given
+                List<String> input = List.of("jacob", "jacob");
+
+                // when & then
+                assertThatThrownBy(() -> {
+                    blackjackService.createPlayers(input);
+                })
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageContaining("[ERROR] 게임 참가자의 이름은 중복 되어선 안됩니다.");
+            }
 
             @Test
             void 게임_참가_인원은_2_이상_8_이하가_아니라면_예외를_발생_시켜야_한다() {
@@ -57,7 +71,7 @@ class BlackjackServiceTest {
             void 입력값에_공백만_입력되면_예외를_발생_시켜야_한다() {
 
                 // given
-                List<String> input = List.of("");
+                List<String> input = List.of("ab", "", "bc");
 
                 // when & then
                 assertThatThrownBy(() -> {
@@ -81,8 +95,8 @@ class BlackjackServiceTest {
 
             static Stream<Arguments> provideCases() {
                 return Stream.of(
-                    Arguments.of(List.of("j")),
-                    Arguments.of(List.of("aa aaa"))
+                    Arguments.of(List.of("j", "ja")),
+                    Arguments.of(List.of("aa aaa", "bb bbb"))
                 );
             }
         }
