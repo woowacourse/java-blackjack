@@ -28,7 +28,8 @@ public class Player {
         }
     }
 
-    // HandDto 생성 및 반환 -> dto 생성은 어디서?
+    public String getName() {
+        return name;
+    }
 
-    //
 }
