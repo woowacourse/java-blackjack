@@ -29,4 +29,8 @@ public class Player {
     public GameState getGameState() {
         return gameState;
     }
+
+    boolean isBust() {
+        return getScore() > 21;
+    }
 }
