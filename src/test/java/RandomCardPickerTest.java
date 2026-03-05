@@ -6,11 +6,11 @@ import java.util.Random;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 
-public class CardDistributorTest {
+public class RandomCardPickerTest {
     @Test
     void draw_random_card() {
         Random mockRandom = mock(Random.class);
-        CardDistributor cardDistributor = new CardDistributor(mockRandom);
+        RandomCardPicker cardDistributor = new RandomCardPicker(mockRandom);
 
         when(mockRandom.nextInt(13)).thenReturn(0); // "2"
         when(mockRandom.nextInt(4)).thenReturn(0); // "하트"
@@ -20,7 +20,7 @@ public class CardDistributorTest {
 
     @Test
     void same_card_is_not_drawn_twice() {
-        CardDistributor cardDistributor = new CardDistributor(new Random());
+        RandomCardPicker cardDistributor = new RandomCardPicker(new Random());
 
         Set<Card> drawn = new HashSet<>();
 
@@ -29,19 +29,5 @@ public class CardDistributorTest {
             assertThat(drawn).doesNotContain(card);
             drawn.add(card);
         }
-    }
-
-    @Test
-    void distribute_one_card_to_player() {
-        Random mockRandom = mock(Random.class);
-        CardDistributor cardDistributor = new CardDistributor(mockRandom);
-
-        when(mockRandom.nextInt(13)).thenReturn(0); // "2"
-        when(mockRandom.nextInt(4)).thenReturn(0); // "하트"
-
-        Player player = new Player("Player1");
-        cardDistributor.distributeCardTo(player);
-
-        assertThat(player.getCards()).containsExactly(new Card("2", "하트"));
     }
 }

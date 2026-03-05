@@ -2,11 +2,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class CardDistributor {
+public class RandomCardPicker {
     private final Random random;
     private List<Card> notDrawnCards;
 
-    public CardDistributor(Random random) {
+    public RandomCardPicker(Random random) {
         this.random = random;
         this.notDrawnCards = initializeNotDrawnCards();
     }
