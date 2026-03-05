@@ -1,0 +1,23 @@
+package domain;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Deck {
+    private final List<Card> cards;
+
+    public Deck() {
+        this.cards = generateDeck();
+    }
+
+    private List<Card> generateDeck() {
+        List<Card> cards = new ArrayList<>();
+
+        for (Shape shape : Shape.values()) {
+            for (Number number : Number.values()) {
+                cards.add(new Card(shape, number));
+            }
+        }
+        return cards;
+    }
+}
