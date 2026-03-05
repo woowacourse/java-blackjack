@@ -91,6 +91,6 @@ public class GameManager {
     }
 
     public boolean isBlackjack(Player player) {
-        return false;
+        return calculateScore(player.getHand()) == 21;
     }
 }
