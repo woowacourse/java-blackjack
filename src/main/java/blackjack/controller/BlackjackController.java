@@ -41,21 +41,24 @@ public class BlackjackController {
         return InputParser.createUser(userName);
     }
 
+    // TODO : 코드 품질 개선 필요
     private void getMoreCards(List<User> users, Dealer dealer) {
         for (User user : users) {
             int count = 0;
             while (true) {
                 String yesOrNo = inputView.readMoreCard(user.getName());
-                if (yesOrNo.equals("n")) {
-                    if (count == 0) {
-                        OutputView.printSettingCardsResult(user.getName(), user.getCardsName());
-                    }
-                    break;
-                }
-                gameService.getMoreCard(user, dealer);
+                if (yesOrNo.equals("y")) {
+                    gameService.getMoreCard(user, dealer);
 
-                OutputView.printSettingCardsResult(user.getName(), user.getCardsName());
-                count++;
+                    OutputView.printSettingCardsResult(user.getName(), user.getCardsName());
+                    count++;
+
+                    continue;
+                }
+                if (count == 0) {
+                    OutputView.printSettingCardsResult(user.getName(), user.getCardsName());
+                }
+                break;
             }
         }
     }
