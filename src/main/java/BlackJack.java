@@ -27,6 +27,6 @@ public class BlackJack {
 
     private List<Gambler> getGamblers(){
         List<String> gamblerNames = PlayNameParser.splitNames(InputView.readLine());
-        return gamblerNames.stream().map(Gambler::new);
+        return gamblerNames.stream().map(Gambler::new).toList();
     }
 }
