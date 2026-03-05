@@ -8,4 +8,12 @@ public class Card {
         this.cardShape = cardShape;
         this.cardRank = cardRank;
     }
+
+    public CardRank getCardRank() {
+        return cardRank;
+    }
+
+    public CardShape getCardShape() {
+        return cardShape;
+    }
 }

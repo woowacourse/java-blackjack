@@ -17,4 +17,8 @@ public class Dealer extends Player {
     public void add(Card card) {
         cards.add(card);
     }
+
+    public Card getFirstCard(){
+        return cards.getFirst();
+    }
 }

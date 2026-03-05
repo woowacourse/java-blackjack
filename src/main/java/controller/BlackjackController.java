@@ -30,6 +30,8 @@ public class BlackjackController {
 
         OutputView.displayCardDistribution(names);
         dealer.add(cards.pop());
+        dealer.add(cards.pop());
+
         for (String name : names) {
             Player player = new Player(name);
             player.add(cards.pop());
@@ -37,6 +39,14 @@ public class BlackjackController {
             playerList.add(player);
         }
 
+        List<CardContentDto> firstCardContents = new ArrayList<>();
+
+        firstCardContents.add(new CardContentDto(dealer.getName(),List.of(dealer.getFirstCard())));
+        for (Player player : playerList) {
+            firstCardContents.add(new CardContentDto(player.getName(), player.getCards()));
+        }
+
+        OutputView.displayCardContent(firstCardContents);
         /**
          * TODO: 카드 출력하기
          * 딜러카드: 3다이아몬드

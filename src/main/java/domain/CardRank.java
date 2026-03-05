@@ -24,4 +24,11 @@ public enum CardRank {
         this.number = number;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getNumber() {
+        return number;
+    }
 }
