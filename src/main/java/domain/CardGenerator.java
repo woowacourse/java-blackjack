@@ -1,5 +1,7 @@
 package domain;
 
+import domain.enums.Rank;
+import domain.enums.Suit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;

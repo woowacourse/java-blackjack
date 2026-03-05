@@ -1,4 +1,4 @@
-package domain;
+package domain.enums;
 
 public enum Rank {
     TWO("2", 2),

@@ -2,6 +2,9 @@ package domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import domain.enums.Rank;
+import domain.enums.Result;
+import domain.enums.Suit;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;

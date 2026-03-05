@@ -1,5 +1,7 @@
 package domain;
 
+import domain.enums.Rank;
+import domain.enums.Suit;
 import java.util.Objects;
 
 public class Card {
