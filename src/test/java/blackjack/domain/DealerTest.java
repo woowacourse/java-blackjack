@@ -11,7 +11,7 @@ public class DealerTest {
     @DisplayName("딜러 생성 테스트")
     void 딜러_생성_테스트() {
         // when & then
-        assertThatCode(Dealer::new)
+        assertThatCode(() -> new Dealer(new Deck()))
                 .doesNotThrowAnyException();
     }
 
