@@ -25,11 +25,15 @@ public enum Grade {
         this.name = name;
     }
 
+    public boolean isAce() {
+        return this == ACE;
+    }
+
     public int getValue() {
         return value;
     }
 
-    public boolean isAce() {
-        return this == ACE;
+    public String getName() {
+        return name;
     }
 }

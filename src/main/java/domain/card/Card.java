@@ -10,12 +10,16 @@ public class Card {
         this.grade = grade;
     }
 
-    public int getCardValue() {
-        return grade.getValue();
-    }
-
     public boolean isAce() {
         return grade.isAce();
+    }
+
+    public String getCardName() {
+        return grade.getName() + emblem.getName();
+    }
+
+    public int getCardValue() {
+        return grade.getValue();
     }
 
 }

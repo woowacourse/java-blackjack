@@ -1,14 +1,15 @@
 package domain;
 
 import domain.card.Card;
+import java.util.List;
 
-public class Player {
+public class Participant {
 
     private final Name name;
     private final Hand hand;
     private GameState gameState;
 
-    public Player(Name name, Hand hand) {
+    public Participant(Name name, Hand hand) {
         this.name = name;
         this.hand = hand;
         this.gameState = GameState.HIT;
@@ -20,6 +21,10 @@ public class Player {
 
     public String getName() {
         return name.getValue();
+    }
+
+    public List<Card> getCards() {
+        return hand.getCards();
     }
 
     public int getScore() {

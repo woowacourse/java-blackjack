@@ -7,7 +7,7 @@ import domain.card.Emblem;
 import domain.card.Grade;
 import org.junit.jupiter.api.Test;
 
-public class PlayerTest {
+public class ParticipantTest {
 
     @Test
     void 카드의_합이_21이초과되면_버스트() {
@@ -17,11 +17,11 @@ public class PlayerTest {
         hand.receiveCard(new Card(Emblem.CLOVER, Grade.TEN));
         hand.receiveCard(new Card(Emblem.CLOVER, Grade.TEN));
 
-        Player player = new Player(new Name("test"), hand);
+        Participant participant = new Participant(new Name("test"), hand);
         boolean expect = true;
 
         // when
-        boolean result = player.isBust();
+        boolean result = participant.isBust();
 
         // then
         assertThat(result).isEqualTo(expect);
@@ -34,11 +34,11 @@ public class PlayerTest {
         hand.receiveCard(new Card(Emblem.CLOVER, Grade.TEN));
         hand.receiveCard(new Card(Emblem.CLOVER, Grade.TEN));
 
-        Player player = new Player(new Name("test"), hand);
+        Participant participant = new Participant(new Name("test"), hand);
         boolean expect = false;
 
         // when
-        boolean result = player.isBust();
+        boolean result = participant.isBust();
 
         // then
         assertThat(result).isEqualTo(expect);
@@ -47,12 +47,12 @@ public class PlayerTest {
     @Test
     void 플레이어의_게임_진행_상태를_변경한다() {
         // given
-        Player player = new Player(new Name("test"), new Hand());
+        Participant participant = new Participant(new Name("test"), new Hand());
         GameState expectedState = GameState.STAND;
         // when
-        player.changeState();
+        participant.changeState();
 
         // then
-        assertThat(player.getGameState()).isEqualTo(expectedState);
+        assertThat(participant.getGameState()).isEqualTo(expectedState);
     }
 }
