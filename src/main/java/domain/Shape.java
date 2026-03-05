@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Arrays;
+
 public enum Shape {
     HEART("하트"),
     SPADE("스페이드"),
@@ -10,6 +12,13 @@ public enum Shape {
 
     private Shape(String shapeKoreanName) {
         this.shapeKoreanName = shapeKoreanName;
+    }
+
+    public static Shape from(String shapeKoreanName){
+        return Arrays.stream(values())
+                .filter(shape -> shape.shapeKoreanName.equals(shapeKoreanName))
+                .findFirst()
+                .orElseThrow( () -> new IllegalArgumentException("ERROR"));
     }
 
     public String getShape() {

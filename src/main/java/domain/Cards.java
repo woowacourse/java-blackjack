@@ -14,4 +14,12 @@ public class Cards {
         cards.add(card);
     }
 
+    public int calculateScore(){
+        int sum = 0;
+        for(Card card : cards){
+            sum += card.getScore();
+        }
+        return sum;
+    }
+
 }

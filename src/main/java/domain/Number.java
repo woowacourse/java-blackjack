@@ -1,5 +1,8 @@
 package domain;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 public enum Number {
     ACE(1),
     TWO(2),
@@ -19,6 +22,13 @@ public enum Number {
 
     private Number(int value) {
         this.value = value;
+    }
+
+    public static Number from(int value){
+        return Arrays.stream(values())
+                .filter(number -> number.value == value)
+                .findFirst()
+                .orElseThrow(()->new IllegalArgumentException("ERROR"));
     }
 
     public int getValue() {

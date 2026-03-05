@@ -23,4 +23,14 @@ class InputViewTest {
             InputView.askPlayerNames();
         });
     }
+
+    @Test
+    @DisplayName("입력은 y와 n만 허용한다.")
+    void yes_or_no(){
+        command("dongkey");
+        String player = "JeongKong";
+        assertThrows(IllegalArgumentException.class, () -> {
+            InputView.askContinue(player);
+        });
+    }
 }
