@@ -1,18 +1,18 @@
 package blackjack.domain;
 
-public class PlayerName {
+public class Name {
     private static final int MAX_LENGTH = 10;
     private static final String NAME_PATTERN = "^[a-zA-Z가-힣]+(\\s[a-zA-Z가-힣]+)*$";
 
     private final String name;
 
-    private PlayerName(String name) {
+    private Name(String name) {
         validate(name);
         this.name = name;
     }
 
-    public static PlayerName of(String name) {
-        return new PlayerName(name);
+    public static Name of(String name) {
+        return new Name(name);
     }
 
     private void validate(String name) {
