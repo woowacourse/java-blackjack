@@ -1,6 +1,7 @@
 package controller;
 
 import domain.Cards;
+import domain.Dealer;
 import domain.Player;
 import domain.Players;
 import utils.generator.CardGenerator;
@@ -13,6 +14,7 @@ import java.util.function.Supplier;
 
 public class BlackjackController {
     private static final int MAX_RETRY = 10;
+    public static final String DEALER_NAME = "딜러";
     private final InputView inputView;
 
     public BlackjackController() {
@@ -24,8 +26,10 @@ public class BlackjackController {
         cards.shuffle();
         List<String> names = inputNames();
         List<Player> playerList = new ArrayList<>();
+        Dealer dealer = new Dealer(DEALER_NAME);
 
         OutputView.displayCardDistribution(names);
+        dealer.add(cards.pop());
         for (String name : names) {
             Player player = new Player(name);
             player.add(cards.pop());

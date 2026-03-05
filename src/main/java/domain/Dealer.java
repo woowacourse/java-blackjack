@@ -13,4 +13,8 @@ public class Dealer extends Player {
     public void shareCard(Player player) {
 
     }
+
+    public void add(Card card) {
+        cards.add(card);
+    }
 }
