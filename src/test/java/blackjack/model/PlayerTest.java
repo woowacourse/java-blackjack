@@ -8,12 +8,14 @@ import org.junit.jupiter.api.Test;
 
 class PlayerTest {
 
+    PickStrategy mockStrategy = cards -> new Card(Rank.TEN, Suit.CLOVER);
+
     @Test
     @DisplayName("카드 덱에서 카드를 뽑아서 핸즈에 추가한다.")
     void pickACard() {
         // given
         Player player = Player.of("player1");
-        CardDeck cardDeck = CardDeck.init();
+        CardDeck cardDeck = CardDeck.of(mockStrategy);
 
         // when & then
         assertThatCode(() -> player.pickACard(cardDeck))
@@ -24,13 +26,13 @@ class PlayerTest {
     @DisplayName("플레이어의 총 점수가 21 초과이면 true를 반환한다.")
     void isBust() {
         // given
-        CardDeck cardDeck = CardDeck.init();
+        CardDeck cardDeck = CardDeck.of(mockStrategy);
 
         Player player = Player.of("player1");
 
-        for (int i = 0; i < 21; i++) {
-            player.pickACard(cardDeck);
-        }
+        player.pickACard(cardDeck);
+        player.pickACard(cardDeck);
+        player.pickACard(cardDeck);
 
         // when & then
         assertThat(player.isBust()).isTrue();
