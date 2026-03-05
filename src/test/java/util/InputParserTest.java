@@ -48,4 +48,20 @@ class InputParserTest {
         assertThat(names.get(0)).isEqualTo("pobi");
         assertThat(names.get(1)).isEqualTo("jason");
     }
+
+    @Test
+    void 입력이_빈_경우_예외를_발생한다() {
+        String input = "";
+
+        assertThatThrownBy(() -> inputParser.parseName(input))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 입력이_공백인_경우_예외를_발생한다() {
+        String input = "  ";
+
+        assertThatThrownBy(() -> inputParser.parseName(input))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
