@@ -5,13 +5,16 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import strategy.RandomStrategy;
 
 class PlayerTest {
     static Hand playingHand = new Hand(
+            new RandomStrategy(),
             List.of(
                     new Card(CardRank.QUEEN, CardMark.SPADE),
                     new Card(CardRank.TWO, CardMark.HEART)));
     static Hand stopHand = new Hand(
+            new RandomStrategy(),
             List.of(
                     new Card(CardRank.QUEEN, CardMark.SPADE),
                     new Card(CardRank.EIGHT, CardMark.HEART),

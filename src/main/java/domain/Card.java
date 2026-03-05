@@ -18,4 +18,7 @@ public class Card {
         return rank.score();
     }
 
+    public CardRank rank() {
+        return rank;
+    }
 }

@@ -2,6 +2,8 @@ package domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import strategy.AceDrawStrategy;
+import strategy.RandomStrategy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -13,12 +15,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class ParticipantTest {
 
-    static Hand emptyHand = new Hand(new ArrayList<>());
+    static Hand emptyHand = new Hand(new RandomStrategy(),new ArrayList<>());
     static Hand playingHand = new Hand(
-            List.of(
-                    new Card(CardRank.QUEEN, CardMark.SPADE),
+            new RandomStrategy(),
+            List.of(new Card(CardRank.QUEEN, CardMark.SPADE),
                     new Card(CardRank.EIGHT, CardMark.HEART)));
     static Hand bustedHand = new Hand(
+            new RandomStrategy(),
             List.of(new Card(CardRank.QUEEN, CardMark.SPADE),
                     new Card(CardRank.EIGHT, CardMark.HEART),
                     new Card(CardRank.QUEEN, CardMark.CLOVER)));
@@ -61,6 +64,23 @@ class ParticipantTest {
     void 플레이어_버스트_아닌_상태_확인() {
         Participant participant = new Player("pobi", playingHand);
 
+        assertFalse(participant.isBusted());
+    }
+
+    @Test
+    @DisplayName("A카드 드로우 시 버스트 상태라면 1로 처리한다.")
+    void A카드_1처리_확인() {
+        Hand customHand = new Hand(
+                new AceDrawStrategy(),
+                List.of(new Card(CardRank.QUEEN, CardMark.SPADE),
+                        new Card(CardRank.EIGHT, CardMark.HEART)));
+
+        Participant participant = new Player("pobi", customHand);
+        participant.draw();
+        int expected = 19;
+        int actual = participant.scoreSum();
+
+        assertEquals(expected, actual);
         assertFalse(participant.isBusted());
     }
 
