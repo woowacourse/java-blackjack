@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import java.util.Objects;
+
 public class TrumpCard {
     private final Suit suit;
     private final Rank rank;
@@ -23,5 +25,22 @@ public class TrumpCard {
         if (suit == null || rank == null) {
             throw new IllegalArgumentException("Rank와 Suit 중 하나라도 null이 올 수 없습니다.");
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        TrumpCard trumpCard = (TrumpCard) o;
+        return suit == trumpCard.suit && rank == trumpCard.rank;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(suit, rank);
     }
 }
