@@ -3,13 +3,16 @@ package util;
 import domain.Dealer;
 import domain.Outcome;
 import domain.Player;
-import domain.Players;
+import dto.DealerPlayerDTO;
+import dto.DealerPlayersDTO;
 
-public class checkWinner {
-    public static void decideWinner(Dealer dealer, Players players) {
+public class CheckWinner {
+    public static void decideWinner(DealerPlayersDTO gameContext) {
+        Dealer dealer = gameContext.dealer();
         setDealerResultScore(dealer);
+        var players = gameContext.players();
         for (int i = 0; i < players.getSize(); i++) {
-            compareWithDealer(dealer, players.getPlayer(i));
+            compareWithDealer(new DealerPlayerDTO(dealer, players.getPlayer(i)));
         }
     }
 
@@ -20,17 +23,19 @@ public class checkWinner {
         }
     }
 
-    private static void compareWithDealer(Dealer dealer, Player player) {
+    private static void compareWithDealer(DealerPlayerDTO context) {
+        Dealer dealer = context.dealer();
+        Player player = context.player();
         setPlayerResultScore(player);
         if (dealer.getResultScore() == player.getResultScore()) {
-            applyOutcome(dealer, player, Outcome.무, Outcome.무);
+            applyOutcome(context, Outcome.무, Outcome.무);
             return;
         }
         if (dealer.getResultScore() > player.getResultScore()) {
-            applyOutcome(dealer, player, Outcome.승, Outcome.패);
+            applyOutcome(context, Outcome.승, Outcome.패);
             return;
         }
-        applyOutcome(dealer, player, Outcome.패, Outcome.승);
+        applyOutcome(context, Outcome.패, Outcome.승);
     }
 
     private static void setPlayerResultScore(Player player) {
@@ -40,7 +45,9 @@ public class checkWinner {
         }
     }
 
-    private static void applyOutcome(Dealer dealer, Player player, Outcome dealerOutcome, Outcome playerOutcome) {
+    private static void applyOutcome(DealerPlayerDTO context, Outcome dealerOutcome, Outcome playerOutcome) {
+        Dealer dealer = context.dealer();
+        Player player = context.player();
         dealer.addResult(dealerOutcome);
         player.setOutcome(playerOutcome);
     }
