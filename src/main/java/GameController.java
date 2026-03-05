@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class GameController {
 
     private GameManager manager;
@@ -8,15 +10,16 @@ public class GameController {
 
     public void run() {
 
-        // 플레이어 등록
-        Players players = new Players();
-        players.add(new Player("pobi"));
-        players.add(new Player("cary"));
-
-        // 카드 뿌리기
-        Dealer dealer = new Dealer();
+        List<String> playerName = List.of("pobi", "cary");
+        // 카드를 2장씩 세팅
         manager.startGame();
 
+
+
+
+
+
+        /*
         for (Player player : players.getPlayers()) {
             while (!player.isBust()) {
                 int score = manager.calculateScore(player.getHand());
@@ -31,6 +34,7 @@ public class GameController {
         for (Player player : players.getPlayers()) {
             System.out.println("player = " + player);
         }
+        */
 
 
     }

@@ -17,15 +17,36 @@ class GameManagerTest {
         manager.startGame();
         List<GameScoreResultDto> scoreResults = manager.getScoreResults();
 
-        List<Player> records = manager.getPlayerSequence();
-        Dealer dealer = new Dealer();
-
         assertThat(scoreResults.get(0).getHand().size()).isEqualTo(2);
         assertThat(scoreResults.get(0).getPlayerName()).isEqualTo("딜러");
         assertThat(scoreResults.get(1).getHand().size()).isEqualTo(2);
         assertThat(scoreResults.get(1).getPlayerName()).isEqualTo("pobi");
         assertThat(scoreResults.get(2).getHand().size()).isEqualTo(2);
         assertThat(scoreResults.get(2).getPlayerName()).isEqualTo("cary");
+    }
+
+    @Test
+    void 딜러의_카드는_한_장만_공개한다() {
+        GameManager manager = new GameManager();
+
+        manager.addPlayer("pobi");
+
+        manager.startGame();
+        List<GameInitialInfoDto> initialInfo = manager.getInitialInfo();
+
+        assertThat(initialInfo.getFirst().getHand().size()).isEqualTo(1);
+    }
+
+    @Test
+    void 플레이어의_카드는_두_장_공개한다() {
+        GameManager manager = new GameManager();
+
+        manager.addPlayer("pobi");
+
+        manager.startGame();
+        List<GameInitialInfoDto> initialInfo = manager.getInitialInfo();
+
+        assertThat(initialInfo.get(1).getHand().size()).isEqualTo(2);
     }
 
     @Test

@@ -62,4 +62,8 @@ public class GameManager {
 
         return results;
     }
+
+    public List<GameInitialInfoDto> getInitialInfo() {
+        return null;
+    }
 }
