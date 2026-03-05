@@ -40,4 +40,13 @@ public class Hand {
     public boolean isBust() {
         return getTotalPoint() > 21;
     }
+
+    public boolean isOver17(){
+        return getTotalPoint() >=17;
+    }
+
+
+
+
+
 }
