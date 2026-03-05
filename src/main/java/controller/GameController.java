@@ -1,13 +1,8 @@
 package controller;
 
-import domain.Card;
-import domain.Dealer;
-import domain.Deck;
-import domain.Player;
+import domain.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import view.InputView;
 import view.OutputView;
@@ -48,6 +43,29 @@ public class GameController {
         }
 
         outputView.printFinalScore(dealer, players);
+
+        Map<String, GameResult> playerFinalResults = new HashMap<>();
+
+        int dealerWinningCount = 0;
+        int dealerLosingCount = 0;
+
+        for (Player player : players) {
+            GameResult gameResult = player.compareScore(dealer.calculateTotalScore());
+            playerFinalResults.put(player.getName(), gameResult);
+
+            if(gameResult == GameResult.WIN) {
+                dealerLosingCount += 1;
+            }
+            if(gameResult == GameResult.LOSE) {
+                dealerWinningCount += 1;
+            }
+        }
+
+        for (String s : playerFinalResults.keySet()) {
+            GameResult gameResult = playerFinalResults.get(s);
+
+            System.out.println(gameResult.getValue());
+        }
     }
 
     private void printGameStart(List<String> playerNames, Dealer dealer, List<Player> players) {

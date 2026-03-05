@@ -1,8 +1,4 @@
-import domain.Card;
-import domain.CardNumber;
-import domain.CardShape;
-import domain.Deck;
-import domain.Player;
+import domain.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -100,4 +96,42 @@ public class PlayerTest {
         Assertions.assertThat(card).isInstanceOf(Card.class);
         Assertions.assertThat(card).isNotIn(deck.getCards());
     }
+
+    @Test
+    @DisplayName("플레이어가 버스트가 아니라면 딜러보다 21에 가까워야 승리한다.")
+    void normalNumberTest() {
+        List<Card> cards = new ArrayList<>(List.of(new Card(CardNumber.FOUR, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
+        Player player = new Player("woni", cards);
+        Assertions.assertThat(player.compareScore(14)).isEqualTo(GameResult.WIN);
+    }
+
+    @Test
+    @DisplayName("플레이어가 버스트라면 딜러가 버스트가 아닐경우 패배한다.")
+    void bustTest() {
+        List<Card> cards = new ArrayList<>(List.of(new Card(CardNumber.FOUR, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
+        Player player = new Player("woni", cards);
+        player.addCard(new Card(CardNumber.TEN, CardShape.SPADE));
+        player.addCard(new Card(CardNumber.TEN, CardShape.HEART));
+        Assertions.assertThat(player.compareScore(14)).isEqualTo(GameResult.LOSE);
+    }
+
+    @Test
+    @DisplayName("만약 플레이어와 딜러 모두 버스트라면 무승부이다.")
+    void drawBustTest(){
+        List<Card> cards = new ArrayList<>(List.of(new Card(CardNumber.FOUR, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
+        Player player = new Player("woni", cards);
+        player.addCard(new Card(CardNumber.TEN, CardShape.SPADE));
+        player.addCard(new Card(CardNumber.TEN, CardShape.HEART));
+        Assertions.assertThat(player.compareScore(22)).isEqualTo(GameResult.DRAW);
+    }
+
+    @Test
+    @DisplayName("만약 플레이어와 딜러 모두 무승부이다.")
+    void drawNumberTest(){
+        List<Card> cards = new ArrayList<>(List.of(new Card(CardNumber.SIX, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
+        Player player = new Player("woni", cards);
+        Assertions.assertThat(player.compareScore(17)).isEqualTo(GameResult.DRAW);
+    }
+
+
 }

@@ -42,4 +42,24 @@ public class Player {
     public boolean isBust() {
         return calculateTotalScore() > 21;
     }
+
+    public GameResult compareScore(int dealerScore) {
+        if(isBust() && dealerScore > 21) {
+            return GameResult.DRAW;
+        }
+        if(isBust() && dealerScore <= 21) {
+            return GameResult.LOSE;
+        }
+
+        if(!isBust() && dealerScore > 21) {
+            return GameResult.WIN;
+        }
+        if(calculateTotalScore() > dealerScore) {
+            return GameResult.WIN;
+        }
+        if(calculateTotalScore() == dealerScore) {
+            return GameResult.DRAW;
+        }
+        return GameResult.LOSE;
+    }
 }
