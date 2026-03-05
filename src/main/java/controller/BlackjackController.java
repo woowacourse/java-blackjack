@@ -7,18 +7,18 @@ import view.InputView;
 
 public class BlackjackController {
     private final InputView inputView;
-    static final int MAX_RETRY = 10;
+    private static final int MAX_RETRY = 10;
 
     public BlackjackController() {
         this.inputView = new InputView();
     }
 
     public void run() {
-        List<String> names = inputNamse();
+        List<String> names = inputNames();
 
     }
 
-    public List<String> inputNamse() {
+    private List<String> inputNames() {
         return doRetry(
                 inputView::readNames,
                 "[ERROR] 유효하지 입력입니다. 다시 입력해 주세요."
@@ -40,8 +40,6 @@ public class BlackjackController {
             }
         }
     }
-
-
 }
 
 

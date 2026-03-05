@@ -5,6 +5,4 @@ public class Application {
         BlackjackController blackjackController = new BlackjackController();
         blackjackController.run();
     }
-
-
 }
