@@ -4,6 +4,7 @@ import domain.Dealer;
 import domain.Deck;
 import domain.Player;
 import domain.card.Card;
+import dto.BlackJackHandDto;
 
 public class BlackJackTurnService {
 
@@ -24,5 +25,9 @@ public class BlackJackTurnService {
 
     public boolean isPlayerPossible(Player player, String input){
         return player.getHand().getSum() < 21 && input.equals("y");
+    }
+
+    public BlackJackHandDto createHandDto(Player player) {
+        return BlackJackHandDto.from(player);
     }
 }

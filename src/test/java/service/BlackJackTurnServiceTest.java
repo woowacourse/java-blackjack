@@ -6,11 +6,15 @@ import domain.Player;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
+import dto.BlackJackHandDto;
+import dto.BlackJackInitStatusDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -110,5 +114,16 @@ class BlackJackTurnServiceTest {
             // when, then
             assertFalse(blackJackTurnService.isPlayerPossible(player, "n"));
         }
+    }
+
+    @Test
+    void 손패_Dto를_생성하는_경우() {
+        //given
+        Player player = new Player("봉구스");
+
+        // when
+        BlackJackHandDto blackJackHandDto = blackJackTurnService.createHandDto(player);
+        // then
+        assertNotNull(blackJackHandDto);
     }
 }
