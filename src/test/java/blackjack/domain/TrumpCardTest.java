@@ -33,4 +33,11 @@ class TrumpCardTest {
         TrumpCard trumpCard = TrumpCard.of(Suit.of("하트"), Rank.of("3"));
         assertThat(trumpCard).isNotNull();
     }
+
+    @Test
+    void 카드가_에이스라면_true를_반환한다() {
+        TrumpCard trumpCard = TrumpCard.of(Suit.of("하트"), Rank.of("A"));
+        boolean isAce = trumpCard.isAce();
+        assertThat(isAce).isTrue();
+    }
 }
