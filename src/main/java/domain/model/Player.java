@@ -3,7 +3,6 @@ package domain.model;
 public class Player implements Person {
 
     private final String name;
-    // TODO: 덱(카드 여러개) 필드 추가
     private Deck deck;
 
     private Player(String name, Deck deck) {
@@ -28,9 +27,14 @@ public class Player implements Person {
         this.deck = deck;
     }
 
+    // 추가 카드 부여
+    public void appendCard(Card card) {
+        deck.append(card);
+    }
+
     @Override
     public int getDeckSum() {
-        return 0;
+        return deck.getSum();
     }
 
     @Override

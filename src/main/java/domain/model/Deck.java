@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Deck {
 
+    private DeckStatus deckStatus;
     private List<Card> cards;
 
     private Deck(List<Card> deck) {
@@ -14,8 +15,17 @@ public class Deck {
         return new Deck(cards);
     }
 
+    public int getSum() {
+        return cards.stream()
+                .mapToInt(Card::getValue)
+                .sum();
+    }
+
     public void append(Card card) {
-        this.cards.add(card);
+        if (deckStatus.equals(DeckStatus.ALIVE)) {
+            this.cards.add(card);
+        }
+        checkStatus();
     }
 
     public int getSize() {
@@ -28,5 +38,11 @@ public class Deck {
 
     public Card getLastCard() {
         return cards.getLast();
+    }
+
+    private void checkStatus() {
+        if (getSum() > 21) {
+            deckStatus = DeckStatus.BURST;
+        }
     }
 }

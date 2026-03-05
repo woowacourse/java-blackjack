@@ -1,8 +1,8 @@
 package domain.model;
 
 public class Card {
-    private final CardRank cardRank;
-    private final CardShape cardShape;
+    private CardRank cardRank;
+    private CardShape cardShape;
 
     private Card(CardRank cardRank, CardShape cardShape) {
         this.cardRank = cardRank;
@@ -30,9 +30,5 @@ public class Card {
 
     public int getValue() {
         return cardRank.getValue();
-    }
-
-    public boolean isAce() {
-        return cardRank == CardRank.ACE;
     }
 }
