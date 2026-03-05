@@ -4,34 +4,34 @@ import domain.model.Card;
 import domain.model.CardRank;
 import domain.model.CardShape;
 import repository.CardRepository;
-
-import static constant.ErrorMessage.EXCEEDED_MAX_TRY;
+import util.NumberGenerator;
 
 public class CardFactory {
 
     private final CardRepository cardRepository;
-    private final CardNumberGenerator cardNumberGenerator;
+    private final NumberGenerator randomRankNumberGenerator;
+    private final NumberGenerator randomShapeNumberGenerator;
+    // TODO: 인스턴스 변수 2개까지 줄이기
 
-    private final int MAX_TRY = 5;
-
-    public CardFactory(CardRepository cardRepository, CardNumberGenerator cardNumberGenerator) {
+    public CardFactory(CardRepository cardRepository, NumberGenerator randomRankNumberGenerator, NumberGenerator randomShapeNumberGenerator) {
         this.cardRepository = cardRepository;
-        this.cardNumberGenerator = cardNumberGenerator;
+        this.randomRankNumberGenerator = randomRankNumberGenerator;
+        this.randomShapeNumberGenerator = randomShapeNumberGenerator;
     }
 
+    // 카드 생성 후 저장
     public Card createCard() {
-        Card card = getCard();
+        CardRank rank = CardRank.getRank(randomRankNumberGenerator.generate());
+        CardShape shape = CardShape.getShape(randomShapeNumberGenerator.generate());
+
+        Card card = getCard(rank, shape);
         return cardRepository.save(card);
     }
 
-    private Card getCard() {
-        for (int i = 0; i < MAX_TRY; i++) {
-            CardRank rank = cardNumberGenerator.generateRank();
-            CardShape shape = cardNumberGenerator.generateShape();
-            if (!cardRepository.isExistByShapeAndRank(rank, shape)) {
-                return Card.of(rank, shape);
-            }
+    private Card getCard(CardRank rank, CardShape shape) {
+        while (!cardRepository.isExistByShapeAndRank(rank, shape)) {
+            return Card.of(rank, shape);
         }
-        throw new IllegalArgumentException(EXCEEDED_MAX_TRY.getMessage());
+        return null;
     }
 }

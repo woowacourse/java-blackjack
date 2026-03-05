@@ -1,53 +1,37 @@
 package config;
 
 import controller.BlackJackController;
-import domain.service.*;
+import domain.service.BlackJackService;
+import domain.service.CardDistributor;
+import domain.service.CardFactory;
 import repository.CardRepository;
 import repository.DealerRepository;
-import repository.PlayerRepository;
-import util.*;
-import view.InputView;
-import view.OutputView;
-import view.View;
+import util.NumberGenerator;
+import util.RandomRankNumberGenerator;
+import util.RandomShapeNumberGenerator;
 
 public class DIConfig {
 
-    private PlayerRepository playerRepository = new PlayerRepository();
     private CardRepository cardRepository = new CardRepository();
     private DealerRepository dealerRepository = new DealerRepository();
 
     public BlackJackController blackJackController() {
-        return new BlackJackController(
-                blackJackService(),
-                view()
-        );
-    }
-
-    public PersonService personService() {
-        return new PersonService(
-                playerRepository(),
-                dealerRepository()
-        );
+        return new BlackJackController(blackJackService());
     }
 
     // service
+
     public BlackJackService blackJackService() {
         return new BlackJackService(
-                personService(),
-                cardDistributor(),
-                judgementService()
+                cardRepository(),
+                cardDistributor()
         );
     }
 
-    public JudgementService judgementService() {
-        return new JudgementService(
-                personService()
-        );
-    }
 
     public CardDistributor cardDistributor() {
         return new CardDistributor(
-                personService(),
+                dealerRepository(),
                 cardFactory()
         );
     }
@@ -55,21 +39,12 @@ public class DIConfig {
     public CardFactory cardFactory() {
         return new CardFactory(
                 cardRepository(),
-                cardNumberGenerator()
-        );
-    }
-
-    public CardNumberGenerator cardNumberGenerator() {
-        return new CardNumberGenerator(
                 randomRankNumberGenerator(),
                 randomShapeNumberGenerator()
         );
     }
 
     // repository
-    public PlayerRepository playerRepository() {
-        return playerRepository;
-    }
 
     public CardRepository cardRepository() {
         return cardRepository;
@@ -86,21 +61,5 @@ public class DIConfig {
 
     public NumberGenerator randomShapeNumberGenerator() {
         return new RandomShapeNumberGenerator();
-    }
-
-    // view
-    public View view() {
-        return new View(
-                inputView(),
-                outputView()
-        );
-    }
-
-    public InputView inputView() {
-        return new InputView();
-    }
-
-    public OutputView outputView() {
-        return new OutputView();
     }
 }

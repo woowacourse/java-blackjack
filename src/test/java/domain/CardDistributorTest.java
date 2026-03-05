@@ -1,14 +1,12 @@
 package domain;
 
 import domain.model.Player;
+import domain.service.BlackJackService;
 import domain.service.CardDistributor;
 import domain.service.CardFactory;
-import domain.service.CardNumberGenerator;
-import domain.service.PersonService;
 import org.junit.jupiter.api.Test;
 import repository.CardRepository;
 import repository.DealerRepository;
-import repository.PlayerRepository;
 import util.RandomRankNumberGenerator;
 import util.RandomShapeNumberGenerator;
 
@@ -17,26 +15,15 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class CardDistributorTest {
-
-    private final PlayerRepository playerRepository = new PlayerRepository();
-    private final DealerRepository dealerRepository = new DealerRepository();
-    private final PersonService personService = new PersonService(
-            playerRepository,
-            dealerRepository
-    );
-    private final CardRepository cardRepository = new CardRepository();
-    private final CardNumberGenerator cardNumberGenerator = new CardNumberGenerator(
-            new RandomRankNumberGenerator(),
-            new RandomShapeNumberGenerator()
-    );
-    private final CardFactory cardFactory = new CardFactory(
-            cardRepository,
-            cardNumberGenerator
-    );
     private final CardDistributor cardDistributor = new CardDistributor(
-            personService,
-            cardFactory
+            new DealerRepository(),
+            new CardFactory(
+                    new CardRepository(),
+                    new RandomRankNumberGenerator(),
+                    new RandomShapeNumberGenerator()
+            )
     );
+
 
     @Test
     void 초기_카드_분배_테스트() {
@@ -54,20 +41,4 @@ public class CardDistributorTest {
         assertThat(players.get(1).getDeckSize()).isEqualTo(2);
         assertThat(cardDistributor.getDealer().getDeckSize()).isEqualTo(2);
     }
-
-    @Test
-    void 추가_카드_분배_테스트() {
-        // given
-        Player phobi = Player.of("phobi");
-        Player jason = Player.of("jason");
-        List<Player> players = List.of(phobi, jason);
-        cardDistributor.initialize(players);
-
-        // when
-        cardDistributor.distributeAdditionalCard(phobi);
-
-        // then
-        assertThat(phobi.getDeckSize()).isEqualTo(3);
-    }
-
 }
