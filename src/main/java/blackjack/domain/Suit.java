@@ -24,5 +24,9 @@ public enum Suit {
         return Optional.ofNullable(SUIT_MAP.get(koreanName))
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드 이름입니다."));
     }
+
+    public String getKoreanName() {
+        return koreanName;
+    }
 }
 

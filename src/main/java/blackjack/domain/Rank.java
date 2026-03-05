@@ -36,4 +36,12 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드 이름입니다."))
                 ;
     }
+
+    public String getRankName() {
+        return rankName;
+    }
+
+    public int getScore() {
+        return score;
+    }
 }
