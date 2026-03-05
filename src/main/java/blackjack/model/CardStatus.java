@@ -26,7 +26,7 @@ public class CardStatus {
     }
 
     public boolean isBlackjack() {
-        return blackjack;
+        return isBlackjack;
     }
 
     public void addCard(Card card) {
