@@ -4,9 +4,11 @@ import domain.Card;
 import domain.Dealer;
 import domain.Deck;
 import domain.Player;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import view.InputView;
 import view.OutputView;
 
@@ -39,6 +41,14 @@ public class GameController {
         for (Player player : players) {
             processRound(player, deck);
         }
+
+
+        while (dealer.isReceiveCard()) {
+            dealer.addCard(deck.peekCard());
+            outputView.printDealerReceiveCard();
+        }
+
+
     }
 
     private void printGameStart(List<String> playerNames, Dealer dealer, List<Player> players) {
