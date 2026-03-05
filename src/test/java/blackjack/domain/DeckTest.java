@@ -14,4 +14,15 @@ public class DeckTest {
         assertThatCode(Deck::new)
                 .doesNotThrowAnyException();
     }
+
+    @Test
+    @DisplayName("카드 꺼내기 테스트")
+    void 카드_꺼내기_테스트() {
+        // given
+        Deck deck = new Deck();
+
+        // when & then
+        assertThatCode(() -> deck.bringTopCard())
+                .doesNotThrowAnyException();
+    }
 }
