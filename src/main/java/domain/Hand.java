@@ -1,6 +1,5 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -8,12 +7,18 @@ public class Hand {
 
     private final List<Card> cards;
 
-    public Hand() {
-        this.cards = new ArrayList<>();
+    public Hand(List<Card> cards) {
+        this.cards = cards;
     }
 
     void drawCard() {
         cards.add(createCard());
+    }
+
+    int scoreSum() {
+        return cards.stream()
+                .mapToInt(Card::score)
+                .sum();
     }
 
     private Card createCard() {
