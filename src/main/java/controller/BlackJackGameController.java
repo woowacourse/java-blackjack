@@ -47,7 +47,7 @@ public class BlackJackGameController {
     }
 
     private List<String> getPlayerNames() {
-        // return InputView.~~ (List<String> 반환)
+       return null;
     }
 
 }
