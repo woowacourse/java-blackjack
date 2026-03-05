@@ -18,4 +18,8 @@ public class Card {
     public String getCardPointName() {
         return cardPoint.getName();
     }
+
+    public boolean isAce() {
+        return cardPoint.equals(CardPoint.ACE);
+    }
 }
