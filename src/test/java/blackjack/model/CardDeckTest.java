@@ -9,18 +9,20 @@ import org.junit.jupiter.api.Test;
 
 class CardDeckTest {
 
+    PickStrategy mockStrategy = cards -> new Card(Rank.ACE, Suit.CLOVER);
+
     @Test
     @DisplayName("카드 덱을 생성한다.")
-    void initCardDeck() {
+    void ofCardDeck() {
         // when & then
-        assertThatCode(CardDeck::init).doesNotThrowAnyException();
+        assertThatCode(() -> CardDeck.of(mockStrategy)).doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("카드를 한 장 드로우 한다.")
     void drawTest() {
         // given
-        CardDeck cardDeck = CardDeck.init();
+        CardDeck cardDeck = CardDeck.of(mockStrategy);
 
         // when
         Card draw = cardDeck.draw();
@@ -33,7 +35,7 @@ class CardDeckTest {
     @DisplayName("카드 덱에 더 이상 카드가 없는 경우, 드로우 시도하면 예외가 발생한다.")
     void drawExceptionTest() {
         // given
-        CardDeck cardDeck = CardDeck.init();
+        CardDeck cardDeck = CardDeck.of(new RandomPickStrategy());
         for (int i = 0; i < 52; i++) {
             cardDeck.draw();
         }

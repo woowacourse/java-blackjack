@@ -32,4 +32,19 @@ public class Dealer {
     public boolean isBust() {
         return hands.isTotalScoreOver(BLACKJACK_SCORE);
     }
+
+    // 플레이어와 딜러의 숫자를 비교한다.
+    public boolean isWin(Player player) {
+        // 플레이어가 버스트되면 무조건 딜러 승
+        if(player.isBust()) {
+            return true;
+        }
+
+        // 플레이어가 버스트 되지 않고, 딜러가 버스트 되면 플레이어 승
+        if(this.isBust()) {
+            return false;
+        }
+
+        return hands.isTotalScoreOver(player.getHandsTotalScore());
+    }
 }

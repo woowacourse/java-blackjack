@@ -24,4 +24,8 @@ public class Player {
     public boolean isBust() {
         return hands.isTotalScoreOver(BLACKJACK_SCORE);
     }
+
+    public int getHandsTotalScore() {
+        return hands.calculateTotalScore();
+    }
 }
