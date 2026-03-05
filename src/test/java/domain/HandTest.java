@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class HandTest {
@@ -16,7 +17,7 @@ class HandTest {
     @Test
     @DisplayName("카드가 한 장 손 패에 추가되어야 한다.")
     void 카드_한_장_뽑기() {
-        Hand hand = new Hand();
+        Hand hand = new Hand(new ArrayList<>());
         hand.drawCard();
 
         int expected = 1;
@@ -25,12 +26,23 @@ class HandTest {
         assertEquals(expected, actual);
     }
 
-    // 손 패 카드
-//    private static Stream<List<Card>> randomCards() {
-//        return Stream.of(
-//                List.of(new Card(CardRank.QUEEN, CardMark.SPADE)),
-//                List.of(new Card(CardRank.QUEEN, CardMark.SPADE), new Card(CardRank.ACE, CardMark.HEART)),
-//                List.of(new Card(CardRank.TWO, CardMark.SPADE), new Card(CardRank.ACE, CardMark.HEART), new Card(CardRank.QUEEN, CardMark.CLOVER))
-//        );
-//    }
+    @ParameterizedTest
+    @MethodSource("randomCards")
+    @DisplayName("손패 카드의 합을 반환해야 한다.")
+    void 손패_합_반환(List<Card> cards, int sum) {
+        Hand hand = new Hand(cards);
+
+        int expected = sum;
+        int actual = hand.scoreSum();
+
+        assertEquals(expected, actual);
+    }
+
+    private static Stream<Arguments> randomCards() {
+        return Stream.of(
+                Arguments.arguments(List.of(new Card(CardRank.QUEEN, CardMark.SPADE)), 10),
+                Arguments.arguments(List.of(new Card(CardRank.QUEEN, CardMark.SPADE), new Card(CardRank.EIGHT, CardMark.HEART)), 18),
+                Arguments.arguments(List.of(new Card(CardRank.QUEEN, CardMark.SPADE), new Card(CardRank.EIGHT, CardMark.HEART), new Card(CardRank.QUEEN, CardMark.CLOVER)), 28)
+        );
+    }
 }
