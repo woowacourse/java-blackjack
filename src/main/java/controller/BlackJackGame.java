@@ -3,10 +3,11 @@ package controller;
 import domain.Dealer;
 import domain.Player;
 import domain.Players;
+import dto.DealerPlayersDTO;
 import java.util.stream.IntStream;
 import message.IOMessage;
+import util.CheckWinner;
 import util.NameParser;
-import util.checkWinner;
 import view.InputView;
 import view.ResultView;
 
@@ -22,13 +23,16 @@ public class BlackJackGame {
     public void run() {
         Dealer dealer = new Dealer();
         Players players = NameParser.makeNameList(inputView.getParticipant());
-        startAndPrint(dealer, players);
+        DealerPlayersDTO gameContext = new DealerPlayersDTO(dealer, players);
+        startAndPrint(gameContext);
         drawPlayersTurn(players);
         drawDealerTurn(dealer);
-        printResult(players, dealer);
+        printResult(gameContext);
     }
 
-    private void startGame(Dealer dealer, Players players) {
+    private void startGame(DealerPlayersDTO gameContext) {
+        Dealer dealer = gameContext.dealer();
+        Players players = gameContext.players();
         IntStream.range(0, 2).forEach(i -> dealer.drawCard());
 
         IntStream.range(0, players.getSize())
@@ -37,10 +41,10 @@ public class BlackJackGame {
                         .forEach(i -> player.drawCard()));
     }
 
-    private void startAndPrint(Dealer dealer, Players players) {
-        startGame(dealer, players);
+    private void startAndPrint(DealerPlayersDTO gameContext) {
+        startGame(gameContext);
         System.out.printf("%n");
-        resultView.printGameStart(players, dealer);
+        resultView.printGameStart(gameContext);
         System.out.printf("%n");
     }
 
@@ -88,12 +92,13 @@ public class BlackJackGame {
         System.out.printf("%n");
     }
 
-    private void printResult(Players players, Dealer dealer) {
-        resultView.printResult(players, dealer);
+    private void printResult(DealerPlayersDTO gameContext) {
+        Dealer dealer = gameContext.dealer();
+        resultView.printResult(gameContext);
         if (dealer.checkBust()) {
             System.out.println("딜러는 버스트!");
         }
-        checkWinner.decideWinner(dealer, players);
-        resultView.printWinner(players, dealer);
+        CheckWinner.decideWinner(gameContext);
+        resultView.printWinner(gameContext);
     }
 }
