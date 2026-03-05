@@ -18,6 +18,19 @@ public class InputView {
         return Parser.splitBy(input,",");
     }
 
+    public boolean readAdditionalCard(String name) {
+        System.out.println(name+"는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        String input = readInput(List.of(
+                Validator::validateNotBlank,
+                Validator::validateChoice
+        ));
+        if (input.equals("y")){
+            return true;
+        }
+        return false;
+
+    }
+
     private String readInput(List<Validator> validators) {
         try{
             String input = new Scanner(System.in).nextLine();
