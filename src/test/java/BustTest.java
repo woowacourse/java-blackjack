@@ -11,7 +11,7 @@ public class BustTest {
         player.receiveOneCard(new Card("Q", "스페이드"));
         player.receiveOneCard(new Card("10", "클로버"));
 
-        assertThat(player.isBust().isEqualTo(true));
+        assertThat(player.isBust()).isEqualTo(true);
     }
 
     @Test
@@ -21,17 +21,17 @@ public class BustTest {
         dealer.receiveOneCard(new Card("Q", "스페이드"));
         dealer.receiveOneCard(new Card("10", "클로버"));
 
-        assertThat(dealer.isBust().isEqualTo(true));
+        assertThat(dealer.isBust()).isEqualTo(true);
     }
 
     @Test
     void player_not_busts_when_sum_21_or_less() {
-        Player player = new Player();
+        Player player = new Player("Alice");
         player.receiveOneCard(new Card("A", "하트"));
         player.receiveOneCard(new Card("Q", "스페이드"));
         player.receiveOneCard(new Card("10", "클로버"));
 
-        assertThat(player.isBust().isEqualTo(false));
+        assertThat(player.isBust()).isEqualTo(false);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class BustTest {
         dealer.receiveOneCard(new Card("Q", "스페이드"));
         dealer.receiveOneCard(new Card("10", "클로버"));
 
-        assertThat(dealer.isBust().isEqualTo(false));
+        assertThat(dealer.isBust()).isEqualTo(false);
     }
 
 
