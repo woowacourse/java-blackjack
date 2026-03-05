@@ -2,7 +2,6 @@ package blackjack.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,6 +19,18 @@ class HandsTest {
         // when && then
         assertThatCode(() -> hands.addACard(card))
                 .doesNotThrowAnyException();
+    }
 
+    @Test
+    @DisplayName("현재 핸즈가 가지고 있는 카드들의 총점을 계산한다.")
+    void calculateTotalScore() {
+        // given
+        Hands hands = Hands.empty();
+
+        hands.addACard(new Card(Rank.J, Suit.CLOVER));
+        hands.addACard(new Card(Rank.K, Suit.DIAMOND));
+
+        // when & then
+        assertThat(hands.calculateTotalScore()).isEqualTo(20);
     }
 }

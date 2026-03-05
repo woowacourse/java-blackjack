@@ -23,4 +23,11 @@ public class Hands {
 
         cards.add(card);
     }
+
+    //핸즈가 가진 카드들의 점수를 계산한다.
+    public int calculateTotalScore() {
+        return this.cards.stream()
+                .mapToInt(Card::score)
+                .sum();
+    }
 }
