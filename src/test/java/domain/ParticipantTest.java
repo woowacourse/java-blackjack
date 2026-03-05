@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class ParticipantTest {
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "[{index}] 참여자: {0}")
     @MethodSource("participantsAndNames")
     @DisplayName("참여자는 이름을 반환할 수 있어야 한다.")
     void 참여자_이름_반환(String expected, Participant participant) {
