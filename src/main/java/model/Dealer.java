@@ -1,15 +1,14 @@
 package model;
 
-import java.util.List;
 import model.dto.Card;
 import model.dto.PlayerResult;
 
 public class Dealer {
 
-    private final Player dealer;
+    private final Participant dealer;
 
     public Dealer() {
-        this.dealer = new Player("딜러");
+        this.dealer = new Participant(new PlayerName("딜러"));
     }
 
     public PlayerResult getResult() {

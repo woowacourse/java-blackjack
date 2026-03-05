@@ -1,37 +1,28 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
 import model.dto.Card;
 import model.dto.PlayerResult;
 
 public class Player {
 
-    private final String CARD_DUPLICATE_ERROR = "덱에 중복된 카드가 있습니다.";
+    private final Participant player;
 
-    private final PlayerName name;
-    private Integer score = 0;
-    private final List<Card> deck = new ArrayList<>();
-
-    public Player(String name) {
-        this.name = new PlayerName(name);
+    public Player(PlayerName name) {
+        validate(name);
+        this.player = new Participant(name);
     }
 
-    public PlayerResult getResult() {
-        return new PlayerResult(name.get(), List.copyOf(deck), score);
-    }
-
-    public void addCard(Card card) {
-        validateCardDuplicate(card);
-        deck.add(card);
-        //점수 갱신 (메서드는 분리)
-    }
-
-    private void validateCardDuplicate(Card card) {
-        if(deck.contains(card)) {
-            throw new IllegalArgumentException(CARD_DUPLICATE_ERROR);
+    private void validate(PlayerName name) {
+        if(name.get().equals("딜러")) {
+            throw new IllegalArgumentException("플레이어는 '딜러'라는 이름을 가질 수 없습니다.");
         }
     }
 
+    public PlayerResult getResult() {
+        return player.getResult();
+    }
 
+    public void addCard(Card card) {
+        player.addCard(card);
+    }
 }
