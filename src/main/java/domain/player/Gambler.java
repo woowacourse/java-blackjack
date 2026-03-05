@@ -1,5 +1,6 @@
 package domain.player;
 
+import domain.MatchResult;
 import expcetion.BlackjackException;
 import expcetion.ExceptionMessage;
 
@@ -9,8 +10,7 @@ public class Gambler extends Player {
     private static final int GAMBLER_NAME_MAX_LENGTH = 10;
     private static final int GAMBLER_NAME_MIN_LENGTH = 2;
     private static final String RESULT_FORMAT = "%s:%s";
-    private static final String WIN = "승";
-    private static final String LOSE = "패";
+    private static final String MATCH_NUMBER_PATTERN = ".*\\d.*";
 
     public Gambler(String name) {
         super();
@@ -25,7 +25,7 @@ public class Gambler extends Player {
     }
 
     private void validateContainsNumber(String name) {
-        if (name.matches(".*\\d.*")) {
+        if (name.matches(MATCH_NUMBER_PATTERN)) {
             throw new BlackjackException(ExceptionMessage.INPUT_ERROR);
         }
     }
@@ -36,14 +36,17 @@ public class Gambler extends Player {
         }
     }
 
-    public boolean isWinner(int dealerScore) {
-        return score() > dealerScore;
+    public MatchResult getResult(int dealerScore) {
+        int score = score();
+        if(score > dealerScore)
+            return MatchResult.WIN;
+
+        if(score < dealerScore)
+            return MatchResult.LOSE;
+        return MatchResult.DRAW;
     }
 
-    public String getResult(boolean isWinner) {
-        if(isWinner)
-            return String.format(RESULT_FORMAT, name, WIN);
-
-        return String.format(RESULT_FORMAT, name, LOSE);
+    public String showResult(MatchResult result) {
+        return String.format(RESULT_FORMAT,name, result.getName());
     }
 }

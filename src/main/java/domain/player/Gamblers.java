@@ -1,5 +1,6 @@
 package domain.player;
 
+import domain.MatchResult;
 import domain.deck.CardDeck;
 import dto.BlackjackResult;
 import expcetion.BlackjackException;
@@ -52,14 +53,17 @@ public class Gamblers {
 
     public BlackjackResult getResult(int dealerScore) {
         int winCount = 0;
+        int lossCount = 0;
         List<String> logs = new ArrayList<>();
         for(Gambler gambler : gamblers) {
-            boolean isWinner = gambler.isWinner(dealerScore);
-            if(isWinner) winCount++;
-            logs.add(gambler.getResult(isWinner));
-        }
+            MatchResult result =  gambler.getResult(dealerScore);
+            if(result == MatchResult.WIN) winCount++;
+            if(result == MatchResult.LOSE) lossCount++;
 
-        return new BlackjackResult(winCount, gamblers.size() - winCount , logs);
+            logs.add(gambler.showResult(result));
+         }
+
+        return new BlackjackResult(winCount, lossCount, gamblers.size() - winCount - lossCount ,logs);
     }
 
 }

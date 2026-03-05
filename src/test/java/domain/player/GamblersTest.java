@@ -50,6 +50,7 @@ class GamblersTest {
         //then
         assertThat(result.winCount()).isEqualTo(1);
         assertThat(result.lossCount()).isEqualTo(1);
+        assertThat(result.drawCount()).isEqualTo(0);
         assertThat(result.logs().get(0)).isEqualTo("tobi:승");
         assertThat(result.logs().get(1)).isEqualTo("quda:패");
     }
