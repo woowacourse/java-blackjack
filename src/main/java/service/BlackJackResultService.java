@@ -7,8 +7,8 @@ import dto.FinalResultDto;
 import dto.ScoreResultDto;
 
 import java.util.List;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class BlackJackResultService {
 
@@ -17,14 +17,19 @@ public class BlackJackResultService {
     }
 
     public FinalResultDto createFinalResultDto(Dealer dealer, List<Player> players) {
-        SortedMap<String, WinningStatus> playerResults = createPlayerResults(dealer, players);
+        Map<String, WinningStatus> playerResults = createPlayerResults(dealer, players);
         return FinalResultDto.from(playerResults);
     }
 
     // todo : stream 리팩토링
-    private SortedMap<String, WinningStatus> createPlayerResults(Dealer dealer, List<Player> players) {
-        SortedMap<String, WinningStatus> map = new TreeMap<>();
+    private Map<String, WinningStatus> createPlayerResults(Dealer dealer, List<Player> players) {
+        Map<String, WinningStatus> map = new LinkedHashMap<>();
         for(Player player : players){
+            if(player.isBurst()){
+                map.put(player.getName(), WinningStatus.LOSE);
+                continue;
+            }
+
             if(dealer.getHand().getSum() > player.getHand().getSum()){
                 map.put(player.getName(), WinningStatus.LOSE);
             }

@@ -6,7 +6,7 @@ import java.util.*;
 
 public record FinalResultDto(List<String> finalResults) {
 
-    public static FinalResultDto from(SortedMap<String, WinningStatus> playerResults) {
+    public static FinalResultDto from(Map<String, WinningStatus> playerResults) {
         long dealerWinCount = playerResults.values().stream()
                 .filter(v -> v == WinningStatus.WIN)
                 .count();
