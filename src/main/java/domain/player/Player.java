@@ -18,4 +18,10 @@ public class Player {
     public int getCardSize() {
         return cards.size();
     }
+
+    public boolean isBust() {
+        return cards.stream()
+                .mapToInt(Card::getValue)
+                .sum() > 21;
+    }
 }
