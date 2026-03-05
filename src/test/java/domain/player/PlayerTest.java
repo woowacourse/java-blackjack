@@ -46,6 +46,23 @@ class PlayerTest {
 
 
     // 합산
+    @Test
+    @DisplayName("카드 값 합산")
+    void 카드_값_합산_테스트() {
+        // given
+        Card card1 = new Card("2", "하트");
+        Card card2 = new Card("K", "다이아몬드");
+        Card card3 = new Card("K", "클로버");
 
+        Player player = new Player("coco");
+
+        // when
+        player.addCard(card1);
+        player.addCard(card2);
+        player.addCard(card3);
+
+        // then
+        Assertions.assertThat(player.getTotalValue()).isEqualTo(22);
+    }
 
 }
