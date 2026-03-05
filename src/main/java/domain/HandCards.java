@@ -1,5 +1,11 @@
 package domain;
 
+import static domain.CardRank.ACE;
+import static domain.CardRank.JACK;
+import static domain.CardRank.KING;
+import static domain.CardRank.QUEEN;
+import static domain.CardRank.TEN;
+
 import java.util.List;
 
 public class HandCards {
@@ -15,5 +21,15 @@ public class HandCards {
 
     public List<Card> getHandCards() {
         return List.copyOf(handCards);
+    }
+
+    public boolean isBlackjack() {
+        List<CardRank> cardRanks = handCards.stream()
+                .map(Card::getCardRank)
+                .toList();
+
+        return cardRanks.contains(ACE) &&
+                (cardRanks.contains(TEN) || cardRanks.contains(JACK)
+                        || cardRanks.contains(QUEEN) || cardRanks.contains(KING));
     }
 }
