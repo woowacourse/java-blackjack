@@ -18,4 +18,12 @@ public class HandTest {
         hand.addCard(new Card(CardPoint.ACE, CardPattern.DIAMOND));
         assertThat(hand.getCount()).isEqualTo(1);
     }
+
+    @Test
+    void 총_점수_계산() {
+        Hand hand = new Hand();
+        hand.addCard(new Card(CardPoint.TWO, CardPattern.DIAMOND));
+        hand.addCard(new Card(CardPoint.QUEEN, CardPattern.DIAMOND));
+        assertThat(hand.getTotalPoint()).isEqualTo(12);
+    }
 }
