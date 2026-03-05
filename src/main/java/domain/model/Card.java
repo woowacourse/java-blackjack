@@ -10,6 +10,9 @@ public class Card {
     }
 
     public static Card of(CardRank cardRank, CardShape cardShape) {
+
+
+
         return new Card(cardRank, cardShape);
     }
 
