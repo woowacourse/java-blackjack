@@ -7,17 +7,13 @@ public class Deck {
 
     private final List<Card> cards;
 
-    private Deck(List<Card> cards) {
-        this.cards = cards;
-    }
-
-    public static List<Card> generate() {
+    public Deck() {
         List<Card> cards = new ArrayList<>();
         for (Shape shape : Shape.values()) {
             matching(cards, shape);
         }
-
-        return cards;
+        
+        this.cards = cards;
     }
 
     private static void matching(List<Card> cards, Shape shape) {

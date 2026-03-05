@@ -11,7 +11,7 @@ public class DeckTest {
     @DisplayName("덱 생성 테스트")
     void 덱_생성_테스트() {
         // when & then
-        assertThatCode(() -> Deck.generate())
+        assertThatCode(Deck::new)
                 .doesNotThrowAnyException();
     }
 }
