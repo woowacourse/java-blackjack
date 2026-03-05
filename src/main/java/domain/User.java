@@ -12,4 +12,12 @@ public class User {
     public void receiveCard(Card card) {
         hand.saveCard(card);
     }
+
+    public String getName() {
+        return username;
+    }
+
+    public String getCardsDisplay() {
+        return hand.getCardsDisplay();
+    }
 }

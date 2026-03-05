@@ -10,4 +10,8 @@ public class Dealer {
     public void receiveCard(Card card) {
         hand.saveCard(card);
     }
+
+    public String getCardsDisplay() {
+        return hand.getCardsDisplay();
+    }
 }

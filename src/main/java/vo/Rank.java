@@ -24,4 +24,7 @@ public enum Rank {
         this.rankScore = rankScore;
     }
 
+    public String getRankName() {
+        return rankName;
+    }
 }

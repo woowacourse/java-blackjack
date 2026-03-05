@@ -25,6 +25,13 @@ public class BlackjackController {
         readParticipants();
         blackjackService.makeDeck();
         blackjackService.dealCards();
+        printDealResult();
+    }
+
+    private void printDealResult() {
+        outputView.printMessage(blackjackService.makeUserNameFormat());
+        outputView.printMessage(blackjackService.makeDealerCardsDisplay());
+        blackjackService.getUserCardsDisplays().forEach(outputView::printMessage);
     }
 
     public void readParticipants() {

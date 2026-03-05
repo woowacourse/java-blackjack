@@ -11,4 +11,8 @@ public class Card {
         this.suit = suit;
         this.rank = rank;
     }
+
+    public String getDisplayName() {
+        return rank.getRankName() + suit.getSuitName();
+    }
 }
