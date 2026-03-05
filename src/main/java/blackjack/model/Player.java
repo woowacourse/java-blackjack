@@ -1,6 +1,6 @@
 package blackjack.model;
 
-public class Player {
+public class Player extends Participant {
     private final Name name;
 
     public Player(String name) {
@@ -9,5 +9,10 @@ public class Player {
 
     public String getName() {
         return name.getName();
+    }
+
+    @Override
+    public boolean canReceive(int score) {
+        return score < 21;
     }
 }
