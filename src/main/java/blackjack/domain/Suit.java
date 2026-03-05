@@ -13,7 +13,12 @@ public enum Suit {
     }
 
     public static Suit of(String name) {
-        return SPADE;
+        for (Suit suit : Suit.values()) {
+            if (suit.name.equals(name)) {
+                return suit;
+            }
+        }
+        throw new IllegalArgumentException("존재하지 않는 카드 이름입니다.");
     }
 }
 
