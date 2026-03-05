@@ -3,8 +3,6 @@ package domain;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -36,10 +34,10 @@ public class GameTest {
             //given
             Game game = new Game(names);
             //when
-            Set<Player> players = game.getPlayers();
-            Set<String> playerNames = players.stream()
+            List<Player> players = game.getPlayers();
+            List<String> playerNames = players.stream()
                     .map(Player::getName)
-                    .collect(Collectors.toSet());
+                    .toList();
             //then
             assertThat(playerNames).contains("피즈");
             assertThat(playerNames).contains("스타크");
@@ -51,7 +49,7 @@ public class GameTest {
             //given
             //when
             game.startGame();
-            Set<Player> players = game.getPlayers();
+            List<Player> players = game.getPlayers();
             Dealer dealer = game.getDealer();
             //then
             for (Player player : players) {

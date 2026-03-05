@@ -1,13 +1,12 @@
 package domain;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Game {
 
-    private final Set<Player> players = new HashSet<>();
+    private final List<Player> players = new ArrayList<>();
     private final Dealer dealer = new Dealer();
     private final Deck deck = new Deck();
 
@@ -16,7 +15,7 @@ public class Game {
 
         players.addAll(names.stream()
                 .map(Player::new)
-                .collect(Collectors.toSet()));
+                .toList());
     }
 
     private void validatePlayers(List<String> names) {
@@ -37,8 +36,8 @@ public class Game {
         }
     }
 
-    public Set<Player> getPlayers() {
-        return Set.copyOf(players);
+    public List<Player> getPlayers() {
+        return List.copyOf(players);
     }
 
     public Dealer getDealer() {
@@ -47,28 +46,17 @@ public class Game {
 
     public void startGame() {
         players.forEach(this::initializeCard);
-        initializeCard();
+        initializeCard(dealer);
     }
 
-    private void initializeCard(Player player) {
+    private void initializeCard(Participant participant) {
         for (int i = 0; i < 2; i++) {
-            distributeCard(player);
+            distributeCard(participant);
         }
     }
 
-    private void initializeCard() {
-        for (int i = 0; i < 2; i++) {
-            distributeCard();
-        }
-    }
-
-    private void distributeCard(Player player) {
-        Card card = deck.drawCard();
-        player.addCard(card);
-    }
-
-    private void distributeCard() {
+    private void distributeCard(Participant participant) {
         Card firstCard = deck.drawCard();
-        dealer.addCard(firstCard);
+        participant.addCard(firstCard);
     }
 }
