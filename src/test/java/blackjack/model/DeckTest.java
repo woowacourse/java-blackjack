@@ -32,4 +32,15 @@ class DeckTest {
         // then
         assertThat(newDeck.size()).isEqualTo(52);
     }
+
+    @Test
+    @DisplayName("덱에서 카드 한 장을 분배하고 삭제한다.")
+    void giveCardTest() {
+        // given
+        Deck deck = new Deck();
+        // when
+        deck.giveCard();
+        // then
+        assertThat(deck.getSize()).isEqualTo(51);
+    }
 }
