@@ -9,6 +9,6 @@ public class InputView {
     }
 
     public void printDrawRequest(String name) {
-        System.out.println(DRAW_REQUEST_TEXT);
+        System.out.println(name + DRAW_REQUEST_TEXT);
     }
 }
