@@ -11,14 +11,16 @@ public class OutputView {
         System.out.println(formatedNames);
     }
 
-    public static void printCardByPlayer(List<Participant> players) {
-        players.forEach(player -> {
-            List<String> cards = player.getCards()
-                    .stream()
-                    .map(OutputView::convert)
-                    .toList();
-            System.out.println(player.getName() + "카드: " + String.join(", ", cards));
-        });
+    public static void printCardByPlayers(List<Participant> players) {
+        players.forEach(OutputView::printCardByPlayer);
+    }
+
+    public static void printCardByPlayer(Participant player) {
+        List<String> cards = player.getCards()
+                .stream()
+                .map(OutputView::convert)
+                .toList();
+        System.out.println(player.getName() + "카드: " + String.join(", ", cards));
     }
 
     public static void printCardByDealer(Participant dealer) {

@@ -12,11 +12,12 @@ public class BlackjackController {
     public void run() {
         List<String> names = InputView.readPlayerNames();
         OutputView.printCardOpen(names);
+        CardGenerator cardGenerator = new CardGenerator();
 
         // 딜러 카드 2장 뽑기
         Participant dealer = new Participant("딜러");
         for (int i = 0; i < 2; i++) {
-            Card card = CardGenerator.generateCard();
+            Card card = cardGenerator.generateCard();
             dealer.addCard(card);
         }
 
@@ -26,12 +27,25 @@ public class BlackjackController {
 
         players.forEach(player -> {
             for (int i = 0; i < 2; i++) {
-                Card card = CardGenerator.generateCard();
+                Card card = cardGenerator.generateCard();
                 player.addCard(card);
             }
         });
 
         OutputView.printCardByDealer(dealer);
-        OutputView.printCardByPlayer(players);
+        OutputView.printCardByPlayers(players);
+
+        players.forEach(player -> {
+            while(true) {
+                String input = InputView.readMoreCard(player);
+                Continuation command = Continuation.from(input);
+                if(command.isStop()) break;
+
+                Card card = cardGenerator.generateCard();
+                player.addCard(card);
+                OutputView.printCardByPlayer(player);
+            }
+        });
+
     }
 }

@@ -1,17 +1,27 @@
 package model;
 
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 public class CardGenerator {
 
-    public static Card generateCard() {
-        Random random = new Random();
-        int index = random.nextInt(4);
-        int number = random.nextInt(13) + 1;
+    private final Set<Card> usedCards = new HashSet<>();
 
-        CardShape shape = CardShape.from(index);
-        CardValue value = CardValue.from(number);
+    public Card generateCard() {
+        while(true) {
+            Random random = new Random();
+            int index = random.nextInt(4);
+            int number = random.nextInt(13) + 1;
 
-        return new Card(shape, value);
+            CardShape shape = CardShape.from(index);
+            CardValue value = CardValue.from(number);
+            Card card = new Card(shape, value);
+
+            if(!usedCards.contains(card)) {
+                usedCards.add(card);
+                return card;
+            }
+        }
     }
 }
