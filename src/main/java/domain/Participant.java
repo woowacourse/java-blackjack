@@ -22,4 +22,7 @@ public abstract class Participant {
         return name.toString();
     }
 
+    public int getScore() {
+        return cards.calculateScore();
+    }
 }

@@ -4,7 +4,9 @@ import domain.*;
 import view.InputView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackJackGameController {
 
@@ -37,6 +39,23 @@ public class BlackJackGameController {
                 player.receiveCard(card);
             }
         }
+
+        while (dealer.canReceiveCard()) {
+            if (!dealer.canReceiveCard()) {
+                break;
+            }
+            Card card = deck.distributeCard();
+            dealer.receiveCard(card);
+        }
+
+        Map<Participant, Integer> participantScores = new HashMap<>();
+        participantScores.put(dealer, dealer.getScore());
+
+        for(Player player : players) {
+            participantScores.put(player, player.getScore());
+        }
+
+        Map<String, Boolean> gameResult = Result.calculateResult(participantScores);
     }
 
     private boolean isContinue(String response) {
