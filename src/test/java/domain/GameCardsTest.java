@@ -33,7 +33,7 @@ class GameCardsTest {
         GameCards cards = new GameCards(1);
 
         // when
-        boolean flag = cards.containCard(string);
+        boolean flag = cards.containsCard(string);
 
         // then
         assertThat(flag).isEqualTo(true);
