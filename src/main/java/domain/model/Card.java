@@ -27,4 +27,8 @@ public class Card {
         }
         return false;
     }
+
+    public int getValue() {
+        return cardRank.getValue();
+    }
 }
