@@ -1,10 +1,13 @@
 package view;
 
+import domain.GameResult;
+import domain.GameStatistics;
 import domain.Participant;
 import domain.Participants;
 import domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
 
@@ -52,6 +55,21 @@ public class OutputView {
         for (Participant participant : participants.getPlayers()) {
             List<String> playerCardNames = createCardNames(participant);
             System.out.println(getCardNames(participant, playerCardNames) + " - 결과: " + participant.getScore());
+        }
+    }
+
+    public static void showGameResult(GameStatistics statistics) {
+        System.out.println("## 최종 승패");
+        System.out.print("딜러: ");
+        for (Map.Entry<GameResult, Integer> entry : statistics.getDealerResult().entrySet()) {
+            System.out.print(entry.getValue() + entry.getKey().getDescription() + " ");
+        }
+        System.out.println();
+
+        //TODO: 이름 출력 시 입력순 정렬 필요
+        Map<Participant, GameResult> playerResult = statistics.getPlayerResult();
+        for (Participant participant : playerResult.keySet()) {
+            System.out.println(participant.getName() + ": " + playerResult.get(participant).getDescription());
         }
     }
 }

@@ -1,9 +1,11 @@
 import domain.GameCommand;
 import domain.GameState;
+import domain.GameStatistics;
 import domain.Hand;
 import domain.Name;
 import domain.Participant;
 import domain.Participants;
+import domain.Referee;
 import domain.card.Card;
 import domain.card.Deck;
 import java.util.List;
@@ -68,6 +70,11 @@ public class BlackjackGame {
         }
         // 딜러&플레이 카드 목록 및 결과 출력
         OutputView.showResult(dealer, participants);
+
+        //승패 출력
+        Referee referee = new Referee();
+        GameStatistics statistics = referee.judge(dealer, participants);
+        OutputView.showGameResult(statistics);
 
     }
 }

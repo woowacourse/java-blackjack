@@ -1,6 +1,7 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import domain.card.Card;
 import domain.card.Emblem;
@@ -27,6 +28,11 @@ class RefereeTest {
         GameStatistics statistics = referee.judge(dealer, players);
 
         // then
-        assertThat(statistics.findGameResultByPlayer(player)).isEqualTo(GameResult.WIN);
+        assertAll(
+                () -> assertThat(statistics.findGameResultBy(player)).isEqualTo(GameResult.WIN),
+                () -> assertThat(statistics.getDealerResult().get(GameResult.WIN)).isEqualTo(0),
+                () -> assertThat(statistics.getDealerResult().get(GameResult.LOSE)).isEqualTo(1),
+                () -> assertThat(statistics.getDealerResult().get(GameResult.DRAW)).isEqualTo(0)
+        );
     }
 }
