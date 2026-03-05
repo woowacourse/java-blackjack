@@ -1,7 +1,7 @@
 package domain;
 
 public enum CardContents {
-    A("A", 0), //TODO : score 어떻게 초기 설정
+    A("A", Integer.MAX_VALUE),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
