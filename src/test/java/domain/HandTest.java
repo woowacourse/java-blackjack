@@ -38,6 +38,18 @@ class HandTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    @DisplayName("손패의 카드 정보들을 반환해야 한다.")
+    void 손패_카드들_정보_반환() {
+        List<Card> cards = List.of(new Card(CardRank.QUEEN, CardMark.SPADE), new Card(CardRank.EIGHT, CardMark.HEART));
+        Hand hand = new Hand(cards);
+
+        List<String> expected = List.of("Q스페이드", "8하트");
+        List<String> actual = hand.cardInfos();
+
+        assertEquals(expected, actual);
+    }
+
     private static Stream<Arguments> randomCards() {
         return Stream.of(
                 Arguments.arguments(List.of(new Card(CardRank.QUEEN, CardMark.SPADE)), 10),
