@@ -23,4 +23,23 @@ public class Cards {
         Collections.shuffle(cards);
     }
 
+    public int getTotalSum() {
+        int aceNum = 0;
+        int sum = 0;
+
+        for (Card card : cards) {
+            if (card.getRank().isAce()) {
+                aceNum += 1;
+                continue;
+            }
+            sum += card.getRank().getValue();
+        }
+
+        for (int i = aceNum; i > 0; i--) {
+            sum += Rank.decideAceValue(sum, i);
+        }
+
+        return sum;
+    }
+
 }
