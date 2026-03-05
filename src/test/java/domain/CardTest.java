@@ -1,9 +1,11 @@
 package domain;
 
 import org.junit.jupiter.api.Test;
+import repository.CardRepository;
 import util.NumberGenerator;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.fail;
 
 public class CardTest {
 
@@ -61,5 +63,31 @@ public class CardTest {
         assertThat(card.getCardShape()).isEqualTo(CardShape.HEART);
         assertThat(card.getCardRank()).isEqualTo(CardRank.TWO);
 
+    }
+
+    @Test
+    void 생성된_카드_중복_검사_성공_테스트() {
+        // given
+        CardRepository cardRepository = new CardRepository();
+        cardRepository.save(Card.of(CardRank.ACE, CardShape.HEART));
+
+        // when
+        Card card = Card.of(CardRank.TWO, CardShape.HEART);
+
+        // then
+        assertThat(cardRepository.isExist(card)).isEqualTo(false);
+    }
+
+    @Test
+    void 생성된_카드_중복_검사_실패_테스트() {
+        // given
+        CardRepository cardRepository = new CardRepository();
+        cardRepository.save(Card.of(CardRank.ACE, CardShape.HEART));
+
+        // when
+        Card card = Card.of(CardRank.ACE, CardShape.HEART);
+
+        // then
+        assertThat(cardRepository.isExist(card)).isEqualTo(true);
     }
 }

@@ -1,8 +1,6 @@
 package repository;
 
-import domain.model.Card;
-import domain.model.CardRank;
-import domain.model.CardShape;
+import domain.Card;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,15 +16,5 @@ public class CardRepository {
 
     public boolean isExist(Card card) {
         return cards.stream().anyMatch(value -> value.isSameCard(card));
-    }
-
-    public boolean isExistByShapeAndRank(CardRank cardRank, CardShape cardShape) {
-        for (Card card : cards) {
-            // TODO: depth2 -> depth1으로 리팩토링
-            if (card.getCardRank() == cardRank && card.getCardShape() == cardShape) {
-                return true;
-            }
-        }
-        return false;
     }
 }
