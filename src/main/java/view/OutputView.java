@@ -3,6 +3,7 @@ package view;
 import domain.Participant;
 import domain.Participants;
 import domain.card.Card;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OutputView {
@@ -15,6 +16,13 @@ public class OutputView {
         System.out.println(NEW_LINE + "딜러와 "
                 + String.join(DELIMITER, String.join(DELIMITER, participants.getPlayerNames())
                 + "에게 2장을 나누었습니다."));
+    }
+
+    public static void showDealerCardName(Participant dealer) {
+        List<String> cardNames = createCardNames(dealer);
+        List<String> dealerCard = new ArrayList<>(cardNames);
+        dealerCard.removeFirst();
+        System.out.println(getCardNames(dealer, dealerCard));
     }
 
     public static void showCardName(Participant participant) {

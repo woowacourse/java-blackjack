@@ -34,7 +34,7 @@ public class BlackjackGame {
         }
 
         OutputView.showIntroMessage(participants);
-        OutputView.showCardName(dealer);
+        OutputView.showDealerCardName(dealer);
 
         for (Participant participant : participants.getPlayers()) {
             OutputView.showCardName(participant);
