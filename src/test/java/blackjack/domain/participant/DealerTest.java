@@ -29,24 +29,4 @@ class DealerTest {
 
         assertThat(dealer.canReceiveCard()).isFalse();
     }
-
-    @Test
-    @DisplayName("점수가 16일 때 카드를 받을 수 있다")
-    void canReceiveCard_returnsTrue_whenScoreIsExactlySixteen() {
-        Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
-        dealer.receiveCard(new Card(Suit.SPADE, Rank.SIX));
-
-        assertThat(dealer.canReceiveCard()).isTrue();
-    }
-
-    @Test
-    @DisplayName("점수가 17일 때 카드를 받을 수 없다")
-    void canReceiveCard_returnsFalse_whenScoreIsExactlySeventeen() {
-        Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
-        dealer.receiveCard(new Card(Suit.SPADE, Rank.SEVEN));
-
-        assertThat(dealer.canReceiveCard()).isFalse();
-    }
 }

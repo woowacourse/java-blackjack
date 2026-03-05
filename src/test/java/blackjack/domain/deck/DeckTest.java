@@ -3,8 +3,6 @@ package blackjack.domain.deck;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.deck.Deck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,16 +14,6 @@ class DeckTest {
         Deck deck = new Deck();
 
         assertThat(deck.size()).isEqualTo(52);
-    }
-
-    @Test
-    @DisplayName("카드를 드로우하면 카드 한 장을 반환한다")
-    void draw_returnsOneCard() {
-        Deck deck = new Deck();
-
-        Card drawn = deck.draw();
-
-        assertThat(drawn).isInstanceOf(Card.class);
     }
 
     @Test
@@ -52,15 +40,15 @@ class DeckTest {
     }
 
     @Test
-    @DisplayName("마지막 한 장이 남았을 때 드로우에 성공한다")
-    void draw_succeeds_whenOnlyOneCardRemains() {
+    @DisplayName("마지막 한 장이 남았을 때 드로우하면 덱이 비어있다")
+    void draw_makesDeckEmpty_whenOnlyOneCardRemains() {
         Deck deck = new Deck();
         for (int i = 0; i < 51; i++) {
             deck.draw();
         }
 
-        Card lastCard = deck.draw();
+        deck.draw();
 
-        assertThat(lastCard).isInstanceOf(Card.class);
+        assertThat(deck.size()).isEqualTo(0);
     }
 }
