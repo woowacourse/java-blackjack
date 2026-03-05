@@ -19,6 +19,7 @@ public class OutputView {
         System.out.printf("%n딜러와 %s에게 2장을 나누었습니다.%n", playerNames);
         System.out.printf("딜러카드: %s%n", dealer.getCards().get(0).getDisplayName());
         players.getPlayers().forEach(this::printPlayerCards);
+        System.out.println();
     }
 
     public void printPlayerCards(final Player player) {
