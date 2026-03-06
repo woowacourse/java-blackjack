@@ -39,8 +39,20 @@ public class TestBlackJackService {
     }
 
     @ParameterizedTest
+    @CsvSource({"21, false", "22, true"})
+    public void 버스트_판정_정상_작동(Integer score, boolean result) {
+        BlackJackService blackJackService = new BlackJackService(new BlackJackDeck());
+
+        Player player = new Player(new PlayerName("player"));
+        player.addScore(score);
+
+        assertThat(blackJackService.isBust(player)).isEqualTo(result);
+    }
+
+
+    @ParameterizedTest
     @CsvSource({"22,24,무","10,10,무","22,1,승","10,11,승","1,22,패","21,10,패"})
-    public void 블랙잭_참가자_승_패_판정_정상_작동(Integer dealerScore, Integer playerScore, String result) {
+    public void 블랙잭_참가자_딜러_승_패_판정_정상_작동(Integer dealerScore, Integer playerScore, String result) {
         //given
         BlackJackDeck cards = new BlackJackDeck();
         BlackJackService blackJackService = new BlackJackService(cards);
@@ -62,15 +74,15 @@ public class TestBlackJackService {
         assertThat(gameResult.playersWinning().getPlayersWinnings().getFirst().matchStatus().getStatus()).isEqualTo(result);
 
         if(result.equals("승")) {
-            assertThat(dealerWinning.get(MatchStatus.WIN)).isEqualTo(1);
-            assertThat(dealerWinning.get(MatchStatus.LOSE)).isEqualTo(0);
+            assertThat(dealerWinning.get(MatchStatus.WIN)).isEqualTo(0);
+            assertThat(dealerWinning.get(MatchStatus.LOSE)).isEqualTo(1);
             assertThat(dealerWinning.get(MatchStatus.DRAW)).isEqualTo(0);
             return;
         }
 
         if(result.equals("패")) {
-            assertThat(dealerWinning.get(MatchStatus.WIN)).isEqualTo(0);
-            assertThat(dealerWinning.get(MatchStatus.LOSE)).isEqualTo(1);
+            assertThat(dealerWinning.get(MatchStatus.WIN)).isEqualTo(1);
+            assertThat(dealerWinning.get(MatchStatus.LOSE)).isEqualTo(0);
             assertThat(dealerWinning.get(MatchStatus.DRAW)).isEqualTo(0);
             return;
         }
