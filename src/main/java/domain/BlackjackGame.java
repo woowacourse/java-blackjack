@@ -40,9 +40,13 @@ public class BlackjackGame {
         showGamerHandResult(dealer, players);
 
         //최종 결과 통계 출력
+        showGameResultAnalysis(players, dealer);
+
+    }
+
+    private void showGameResultAnalysis(Players players, Dealer dealer) {
         ResultAnalysisDto analysis = analyzeBlackjackResult(players, dealer);
         view.printFinalResultMessage(analysis);
-
     }
 
     private void showGamerHandResult(Dealer dealer, Players players) {
