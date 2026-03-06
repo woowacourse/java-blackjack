@@ -4,6 +4,7 @@ import domain.*;
 
 import java.util.*;
 
+import domain.card.Card;
 import util.InputParser;
 import view.InputView;
 import view.OutputView;
@@ -19,48 +20,58 @@ public class GameController {
     }
 
     public void run() {
-        List<String> playerNames = getPlayerNames();
+        // 시나리오
+        // 1. 딜러와 플레이어를 생성한다.
+        List<Player> players = participateGame(getInputPlayers());
+        Dealer dealer = new Dealer();
 
-        Deck deck = new Deck();
-        Dealer dealer = new Dealer(deck.firstHandCards());
+        // 2. 딜러가 플레이어에게 카드 2장씩 나누어준다. 이때 딜러도 받아야한다.
+        // 딜러가 카드를 나눠준다.? 자연스러운 형태긴 하다.
+        for (Player player : players) {
+            List<Card> firstHandCards = dealer.handOutFirstHandCards();
+            player.receiveFirstHandCards(firstHandCards);
+        }
+        dealer.receiveFirstHandCards(dealer.handOutFirstHandCards());
+        printGameStart(players, dealer);
 
-        List<Player> players = getPlayers(playerNames, deck);
-        printGameStart(playerNames, dealer, players);
-        receiveMoreCard(players, deck, dealer);
-
+        // 3. 각 플레이어는 버스트가 되지 않는 한 계속 뽑을 수 있다.
+        // 이때 히트 옵션을 계속 수행해야하며, 손패의 점수를 출력해야한다.
+        receiveMoreCard(players, dealer);
         outputView.printFinalScore(dealer, players);
 
+        // 4. 딜러는 16이하인 경우 계속 뽑는다.
+
+        // 5. 승패를 계산한다.
         Map<String, GameResult> playerFinalResults = getPlayerFinalResults(players, dealer);
         outputView.printPlayerFinalResults(playerFinalResults);
     }
 
-    private List<String> getPlayerNames() {
-        String rawPlayerNames = inputView.readPlayerName();
+    private List<String> getInputPlayers() {
+        String rawPlayerNames = inputView.readPlayerNames();
         return InputParser.parsePlayerNames(rawPlayerNames);
     }
 
-    private List<Player> getPlayers(List<String> playerNames, Deck deck) {
-        List<Player> players = new ArrayList<>();
-        for (String playerName : playerNames) {
-            Player player = new Player(playerName, deck.firstHandCards());
-            players.add(player);
-        }
-        return players;
+    private List<Player> participateGame(List<String> playerNames) {
+        return playerNames
+                .stream()
+                .map(Player::new)
+                .toList();
     }
 
-    private void printGameStart(List<String> playerNames, Dealer dealer, List<Player> players) {
-        outputView.printStartCardMessage(playerNames);
+    private void printGameStart(List<Player> players, Dealer dealer) {
+        List<String> playersNames = players.stream().map(Player::getName).toList();
+        outputView.printStartCardMessage(playersNames);
         outputView.printDealerStartCard(dealer.getHandCards().getFirst());
         outputView.printStartCard(players);
     }
 
-    private void receiveMoreCard(List<Player> players, Deck deck, Dealer dealer) {
+    private void receiveMoreCard(List<Player> players, Dealer dealer) {
         for (Player player : players) {
-            processRound(player, deck);
+            processRound(player, dealer);
         }
 
         while (dealer.isReceiveCard()) {
-            dealer.addCard(deck.drawCard());
+            dealer.receiveMoreCard(dealer.handOutMoreCard());
             outputView.printDealerReceiveCard();
         }
     }
@@ -85,10 +96,10 @@ public class GameController {
         return playerFinalResults;
     }
 
-    private void processRound(Player player, Deck deck) {
+    private void processRound(Player player, Dealer dealer) {
         String hitOption = inputView.readHitOption(player.getName());
         if (hitOption.equals("y")) {
-            player.addCard(deck.drawCard());
+            player.receiveMoreCard(dealer.handOutMoreCard());
         }
         outputView.printCurrentHoldCard(player);
 
@@ -97,7 +108,7 @@ public class GameController {
             if (hitOption.equals("n")) {
                 break;
             }
-            player.addCard(deck.drawCard());
+            player.receiveMoreCard(dealer.handOutMoreCard());
             outputView.printCurrentHoldCard(player);
         }
     }

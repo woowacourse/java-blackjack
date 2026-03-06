@@ -16,7 +16,6 @@ public class OutputView {
         System.out.println("딜러와 " + String.join(", ", playerNames) + "에게 2장을 나누었습니다.");
     }
 
-
     public void printStartCard(List<Player> players) {
         for (Player player : players) {
             printCurrentHoldCard(player);

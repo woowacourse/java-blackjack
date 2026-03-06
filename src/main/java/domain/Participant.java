@@ -3,13 +3,18 @@ package domain;
 import domain.card.Card;
 import domain.card.CardNumber;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Participant {
-    private final List<Card> handCards;
+    private List<Card> handCards;
 
-    public Participant(List<Card> handCards) {
-        this.handCards = handCards;
+    public Participant() {
+        this.handCards = new ArrayList<>();
+    }
+
+    public void receiveFirstHandCards(List<Card> firstHandCards) {
+        handCards = firstHandCards;
     }
 
     public void addCard(Card card) {
@@ -36,5 +41,9 @@ public abstract class Participant {
 
     public boolean isBust() {
         return calculateScore() > 21;
+    }
+
+    public void receiveMoreCard(Card card) {
+        handCards.add(card);
     }
 }

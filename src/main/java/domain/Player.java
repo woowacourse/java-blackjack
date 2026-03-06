@@ -7,14 +7,16 @@ import java.util.List;
 public class Player extends Participant {
     private final String name;
 
-    public Player(String name, List<Card> holdCards) {
-        super(holdCards);
+    public Player(String name) {
+        super();
         this.name = name;
     }
 
     public String getName() {
         return name;
     }
+
+
 
     public GameResult compareScore(int dealerScore) {
         if (isBust() && dealerScore > 21) {
@@ -38,4 +40,6 @@ public class Player extends Participant {
         }
         return GameResult.LOSE;
     }
+
+
 }
