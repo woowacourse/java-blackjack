@@ -47,3 +47,18 @@
 - [ ] 플레이어가 버스트이고, 딜러가 버스트이면 딜러가 승리한다.
 
 <hr>
+
+## 도메인 용어 정의
+
+Deal - 게임 시작 직수, 처음 카드를 두장 나눠주는 행위.
+Hit - 카드 합이 21이하여서, 카드를 한 장 더 뽑는 행위
+CardDenomination - 카드 숫자
+CardEmblem - 카드 문양(엠블렘)
+Card - 카드 한 장
+Player - 게임 플레이어
+Dealer - 게임 딜러
+CardDeck - 딜러가 가지는 카드 덱
+CardBundle - 게임 참가자가 가지는 카드 묶음.
+ResultAnalyzer - 게임 통계 분석기
+HandResult - 손패 결과
+GameResult - 게임 결과 (승, 패, 무)
