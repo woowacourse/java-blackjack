@@ -47,4 +47,19 @@ public class UserTest {
         assertThat(user.getCards().size()).isEqualTo(before + 1);
     }
 
+    @Test
+    @DisplayName("가지고있는 카드의 합을 계산하는 기능 테스트")
+    void 가지고있는_카드의_합을_계산하는_기능_테스트() {
+        // given
+        User user = new User("밀란");
+        user.bring(new Card(CardValue.A, Shape.DIAMOND));
+        user.bring(new Card(CardValue.FIVE, Shape.DIAMOND));
+
+        // when
+        int sum = user.calculateCardsValue();
+
+        // then
+        assertThat(6).isEqualTo(sum);
+    }
+
 }
