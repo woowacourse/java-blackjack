@@ -14,6 +14,10 @@ public class Players {
         this.players = players;
     }
 
+    public List<Player> getPlayers() {
+        return players;
+    }
+
     private void validatePlayerCount(List<Player> players) {
         if (players.size() > 5) {
             throw new IllegalArgumentException();
