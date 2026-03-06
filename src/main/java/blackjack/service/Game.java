@@ -25,25 +25,30 @@ public class Game {
     public GameResult judgeTotalGameResult(List<Player> players, Dealer dealer) {
         Map<ScoreCompareResult, Integer> dealerResult = new HashMap<>();
         Map<Player, ScoreCompareResult> playerResults = new HashMap<>();
+
         for (Player player : players) {
-            if (compareScore(player, dealer).equals(ScoreCompareResult.PLAYER_WIN)) {
-                dealerResult.put(ScoreCompareResult.DEALER_LOSS,
-                        dealerResult.getOrDefault(ScoreCompareResult.DEALER_LOSS, 0) + 1);
-                playerResults.put(player, ScoreCompareResult.PLAYER_WIN);
-            }
-            if (compareScore(player, dealer).equals(ScoreCompareResult.DEALER_WIN)) {
-                dealerResult.put(ScoreCompareResult.DEALER_WIN,
-                        dealerResult.getOrDefault(ScoreCompareResult.DEALER_WIN, 0) + 1);
-                playerResults.put(player, ScoreCompareResult.PLAYER_LOSS);
-            }
-            if (compareScore(player, dealer).equals(ScoreCompareResult.PUSH)) {
-                dealerResult.put(ScoreCompareResult.PUSH,
-                        dealerResult.getOrDefault(ScoreCompareResult.PUSH, 0) + 1);
-                playerResults.put(player, ScoreCompareResult.PUSH);
-            }
+            ScoreCompareResult result = compareScore(player, dealer);
+            playerResults.put(player, toPlayerResult(result));
+            dealerResult.merge(toDealerKey(result), 1, Integer::sum);
         }
+
         return new GameResult(dealerResult, playerResults);
     }
+
+    private ScoreCompareResult toPlayerResult(ScoreCompareResult result) {
+        if (result == ScoreCompareResult.DEALER_WIN) {
+            return ScoreCompareResult.PLAYER_LOSS;
+        }
+        return result;
+    }
+
+    private ScoreCompareResult toDealerKey(ScoreCompareResult result) {
+        if (result == ScoreCompareResult.PLAYER_WIN) {
+            return ScoreCompareResult.DEALER_LOSS;
+        }
+        return result;
+    }
+
 
     public ScoreCompareResult compareScore(Player player, Dealer dealer) {
         boolean isPlayerBust = player.isBust();
