@@ -15,8 +15,8 @@ public class GameFinalResultDto {
         return name;
     }
 
-    public Result getResult() {
-        return result;
+    public String getResult() {
+        return result.getName();
     }
 
     @Override
