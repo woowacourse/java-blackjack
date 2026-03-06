@@ -65,7 +65,7 @@ public class BlackJackController {
 
     private void drawPlayerTurn(Player player) {
         while(true) {
-           if(!inputController.getCondition(player.getResult().name().get())) {
+           if(!inputController.getCondition(player.getResult().name().value())) {
                break;
            }
 

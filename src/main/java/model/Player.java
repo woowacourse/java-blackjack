@@ -11,7 +11,7 @@ public class Player extends Participant {
     }
 
     private void validate(PlayerName name) {
-        if(name.get().equals("딜러")) {
+        if(name.value().equals("딜러")) {
             throw new IllegalArgumentException(ErrorMessage.NO_PLAYER_NAME_DEALER.getMessage());
         }
     }

@@ -3,6 +3,7 @@ package model;
 
 import java.util.List;
 import model.dto.Card;
+import model.dto.PlayerName;
 import model.dto.PlayerResult;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +20,7 @@ public class TestParticipant {
         //then
         //결과가 나온다. (초기 점수는 0점)
         PlayerResult result = participant.getResult();
-        assertThat(result.name().get())
+        assertThat(result.name().value())
                 .isEqualTo("jason");
         assertThat(result.deck().isEmpty())
                 .isTrue();
