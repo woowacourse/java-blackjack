@@ -34,13 +34,13 @@ public class Dealer {
         }
     }
 
-    public void handOutCardToPlayer(Player player, int tryCount) {
+    public CardBundle handOutCardToPlayer(Player player, int tryCount) {
         CardBundle cardBundle = handOutCard(tryCount);
-        player.addCardBundle(cardBundle);
+        return player.addCardBundle(cardBundle);
     }
 
-    public void drawMySelf(int tryCount) {
-        cardBundle.addUp(handOutCard(tryCount));
+    public CardBundle drawMySelf(int tryCount) {
+        return cardBundle.addUp(handOutCard(tryCount));
     }
 
     public Card drawCard() {

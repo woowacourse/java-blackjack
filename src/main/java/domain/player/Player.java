@@ -28,8 +28,8 @@ public class Player {
         this.cardBundle = cardBundle;
     }
 
-    public void addCardBundle(CardBundle newCardBundle) {
-        cardBundle.addUp(newCardBundle);
+    public CardBundle addCardBundle(CardBundle newCardBundle) {
+        return cardBundle.addUp(newCardBundle);
     }
 
 //    public void addCard(Card newCard) {

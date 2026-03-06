@@ -32,4 +32,7 @@ public class Card {
         return denomination.getDisplayName() + emblem.displayName();
     }
 
+    public int getScore() {
+        return denomination.getScore();
+    }
 }

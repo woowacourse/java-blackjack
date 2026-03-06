@@ -7,6 +7,8 @@ import domain.player.PlayerName;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 public class PlayerTest {
 
     @Test
@@ -53,4 +55,21 @@ public class PlayerTest {
             Player.from(PlayerName.from(overFiveLengthName));
         }).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    void 플레이어가_가진_카드의_합계를_계산한다() {
+        Card clover = Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER);
+        Card spade = Card.of(CardDenomination.NINE, CardEmblem.SPADE);
+        CardDeck cardDeck = new CardDeckBuilder()
+                .cards(clover, spade)
+                .build();
+        CardBundle origin = CardBundle.of(List.of(clover, spade));
+        Dealer dealer = Dealer.of(cardDeck);
+        Player player = Player.from(PlayerName.from("test"));
+
+        CardBundle result = dealer.handOutCardToPlayer(player, 2);
+
+        Assertions.assertThat(result.getTotalScore()).isEqualTo(origin.getTotalScore());
+    }
+
 }

@@ -20,10 +20,11 @@ public class CardBundle {
         return new CardBundle(new ArrayList<>());
     }
 
-    public void addUp(CardBundle newCardBundle) {
+    public CardBundle addUp(CardBundle newCardBundle) {
         for (Card card : newCardBundle.cardBundle) {
             addUp(card);
         }
+        return this;
     }
 
     // TODO Method Name Refactor
@@ -52,6 +53,12 @@ public class CardBundle {
         return cardBundle.stream()
                 .map(Card::toDisplay)
                 .toList();
+    }
+
+    public int getTotalScore() {
+        return cardBundle.stream()
+                .mapToInt(Card::getScore) // Card 객체를 점수(int)로 변환
+                .sum();                   // 합계 계산
     }
 
 }
