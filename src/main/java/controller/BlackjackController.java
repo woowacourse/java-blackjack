@@ -26,10 +26,16 @@ public class BlackjackController {
 
     public void run() {
         readParticipants();
+        shuffleCards();
+        dealExtraCards();
+    }
+    private void shuffleCards() {
         blackjackService.makeDeck();
         blackjackService.dealCards();
         printDealResult();
-        printExtraCardRequest();
+    }
+
+    private void dealExtraCards() {
         readExtraCardCommand();
     }
 
@@ -37,13 +43,6 @@ public class BlackjackController {
         outputView.printMessage(blackjackService.makeUserNameFormat());
         outputView.printMessage(blackjackService.makeDealerCardsDisplay());
         blackjackService.getUserCardsDisplays().forEach(outputView::printMessage);
-    }
-
-    private void printExtraCardRequest() {
-        List<String> requestCases = blackjackService.makeExtraCardRequsts();
-        for (String requestCase : requestCases) {
-            outputView.printMessage(requestCase);
-        }
     }
 
     public void readParticipants() {
@@ -62,15 +61,24 @@ public class BlackjackController {
     }
 
     public void readExtraCardCommand() {
-        while (true) {
-            printExtraCardRequest();
-            try {
-                String answer = inputView.readYesOrNo();
-                validator.validateAnswer(answer);
+        List<String> getUsersRequestMessages = extraCardRequest();
 
-            } catch (IllegalArgumentException e) {
-                outputView.printErrorMessage(e.getMessage());
+        for(String getUsersRequestMessage : getUsersRequestMessages) {
+            while(true) {
+                try {
+                    outputView.printMessage(getUsersRequestMessage);
+                    String answer = inputView.readYesOrNo();
+                    validator.validateAnswer(answer);
+                    blackjackService.processPlayerDecision(answer);
+                    return;
+                } catch (IllegalArgumentException e) {
+                    outputView.printErrorMessage(e.getMessage());
+                }
             }
         }
+    }
+
+    private List<String> extraCardRequest() {
+        return blackjackService.makeExtraCardRequsts();
     }
 }
