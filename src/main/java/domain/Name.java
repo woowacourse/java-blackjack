@@ -1,12 +1,14 @@
 package domain;
 
+import static exception.ErrorMessage.PLAYER_NAME_LENGTH_ERROR;
+
 public class Name {
 
     private final String name;
 
     public Name(String name) {
         if (name.length() < 2 || name.length() > 10) {
-            throw new IllegalArgumentException("플레이어의 이름은 2글자 이상 10글자 이하여야 합니다.");
+            throw new IllegalArgumentException(PLAYER_NAME_LENGTH_ERROR.getMessage());
         }
         this.name = name;
     }

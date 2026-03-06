@@ -1,6 +1,7 @@
 package domain;
 
 import static constant.BlackjackConstant.DEALER_NAME;
+import static exception.ErrorMessage.DEALER_NOT_FOUND_ERROR;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class Participants {
             }
         }
 
-        throw new IllegalStateException("딜러가 존재하지 않습니다.");
+        throw new IllegalStateException(DEALER_NOT_FOUND_ERROR.getMessage());
     }
 
     public List<Participant> getPlayers() {
