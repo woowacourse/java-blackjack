@@ -67,4 +67,8 @@ public class Dealer {
         return NAME + OutputMessage.CARD_TEXT.getMessage() + getCardsInfo().getFirst();
     }
 
+    public boolean shouldHit(){
+        return calculateScore() < 16;
+    }
+
 }
