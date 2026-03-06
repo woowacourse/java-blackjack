@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import service.BlackJackService;
 
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -31,25 +30,25 @@ public class BlackJackServiceTest {
 
     @Test
     void 딜러의_총합이_플레이어의_총합보다_낮으면_플레이어가_승리한다() {
-        BlackJackService blackJackService = new BlackJackService();
-        Map<String, ResultInfo> result = blackJackService.calculateResult(dealer, players);
-        ResultInfo info = result.get(winPlayer.getName());
+        BlackJackService blackJackService = new BlackJackService(new Result());
+        Result result = blackJackService.calculateResult(dealer, players);
+        ResultInfo info = result.getGameResult().get(winPlayer.getName());
         assertThat(info).isEqualTo(ResultInfo.WIN);
     }
 
     @Test
     void 딜러의_총합이_플레이어의_총합보다_높으면_플레이어가_패배한다() {
-        BlackJackService blackJackService = new BlackJackService();
-        Map<String, ResultInfo> result = blackJackService.calculateResult(dealer, players);
-        ResultInfo info = result.get(defeatPlayer.getName());
+        BlackJackService blackJackService = new BlackJackService(new Result());
+        Result result = blackJackService.calculateResult(dealer, players);
+        ResultInfo info = result.getGameResult().get(defeatPlayer.getName());
         assertThat(info).isEqualTo(ResultInfo.DEFEAT);
     }
 
     @Test
     void 딜러의_총합과_플레이어의_총합이_같으면_비긴다() {
-        BlackJackService blackJackService = new BlackJackService();
-        Map<String, ResultInfo> result = blackJackService.calculateResult(dealer, players);
-        ResultInfo info = result.get(drawPlayer.getName());
+        BlackJackService blackJackService = new BlackJackService(new Result());
+        Result result = blackJackService.calculateResult(dealer, players);
+        ResultInfo info = result.getGameResult().get(drawPlayer.getName());
         assertThat(info).isEqualTo(ResultInfo.DRAW);
     }
 }
