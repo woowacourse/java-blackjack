@@ -12,7 +12,12 @@ public class PlayerParser {
         validateRawPlayerNames(rawPlayerNames);
 
         List<String> splitedPlayerNames = splitByDelimiter(rawPlayerNames);
-
+        List<Name> names = splitedPlayerNames.stream()
+                .map(Name::from)
+                .toList();
+        // TODO
+//        List<Player> playerList = ;
+//        Players players = Players.of(playerList);
         return new Players(new ArrayList<>());
     }
 
