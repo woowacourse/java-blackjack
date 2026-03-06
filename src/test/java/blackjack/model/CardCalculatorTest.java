@@ -14,7 +14,7 @@ class CardCalculatorTest {
         int totalScore = 10;
         CardCalculator cardCalculator = new CardCalculator();
 
-        int result = cardCalculator.getTotalScore(aceCards, totalScore);
+        int result = cardCalculator.addAceScore(aceCards, totalScore);
 
         Assertions.assertThat(result).isEqualTo(totalScore + 11);
     }
@@ -26,7 +26,7 @@ class CardCalculatorTest {
         int totalScore = 11;
         CardCalculator cardCalculator = new CardCalculator();
 
-        int result = cardCalculator.getTotalScore(aceCards, totalScore);
+        int result = cardCalculator.addAceScore(aceCards, totalScore);
 
         Assertions.assertThat(result).isEqualTo(totalScore + 1);
     }

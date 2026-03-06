@@ -33,7 +33,6 @@ public class BlackjackController {
         Dealer dealer = new Dealer();
 
         cardProvider.provideInitCards(players, dealer);
-        checkBlackjack(players, dealer);
         OutputView.printInitCards(players, dealer);
 
         hit(players, dealer);
@@ -43,7 +42,11 @@ public class BlackjackController {
 
         List<GameSummary> gameSummaries = new ArrayList<>();
         for (User user : users) {
-            GameSummary gameSummary = new GameSummary(user, cardCalculator.totalScore(user.getCardStatus().getCards()));
+            int totalScore = cardCalculator.totalScore(user.getCardStatus().getCards());
+            boolean bust = cardCalculator.calculateBust(totalScore);
+            boolean blackjack = cardCalculator.calculateBlackjack(user.getCardStatus().getCards());
+
+            GameSummary gameSummary = new GameSummary(user, totalScore, bust, blackjack);
             gameSummaries.add(gameSummary);
             OutputView.printCardStatus(gameSummary);
         }
@@ -66,19 +69,6 @@ public class BlackjackController {
             cardProvider.provideOneCard(dealer);
         }
     }
-
-    void checkBlackjack(List<Player> players, Dealer dealer) {
-        for (Player player : players) {
-            if (cardCalculator.totalScore(player.getCardStatus().getCards()) == 21) {
-                player.markBlackjack();
-            }
-        }
-
-        if (cardCalculator.totalScore(dealer.getCardStatus().getCards()) == 21) {
-            dealer.markBlackjack();
-        }
-    }
-
 
     boolean checkAddCard(Player player) {
         if (cardCalculator.totalScore(player.getCardStatus().getCards()) >= 21) {

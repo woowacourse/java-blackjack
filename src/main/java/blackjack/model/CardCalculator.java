@@ -6,6 +6,11 @@ import java.util.stream.Collectors;
 
 public class CardCalculator {
 
+    public boolean calculateBlackjack(List<Card> cards) {
+        List<Card> initCards = cards.subList(0, 2);
+        return totalScore(initCards) == 21;
+    }
+
     public int totalScore(List<Card> cards) {
         Map<Boolean, List<Card>> partitioned = cards.stream()
                 .collect(Collectors.partitioningBy(card ->
@@ -21,10 +26,14 @@ public class CardCalculator {
                 .mapToInt(Card::getNumber)
                 .sum();
 
-        return getTotalScore(aceCards, totalScoreNonAce);
+        return addAceScore(aceCards, totalScoreNonAce);
     }
 
-    int getTotalScore(List<Card> aceCards, int totalScore) {
+    public boolean calculateBust(int totalScore) {
+        return totalScore > 21;
+    }
+
+    int addAceScore(List<Card> aceCards, int totalScore) {
         for (int i = 0; i < aceCards.size(); i++) {
             if (totalScore + 11 > 21) {
                 totalScore += 1;
