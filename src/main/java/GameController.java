@@ -55,7 +55,9 @@ public class GameController {
         if(gameService.isHit(sum)) {
             dealer.receiveCard(gameService.deal());
             outputView.printDealerHit();
+            return;
         }
+        outputView.printDealerStand();
     }
 
     private void showCardResult(List<User> users) {
