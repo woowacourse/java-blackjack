@@ -6,7 +6,7 @@ import blackjack.view.OutputView;
 public class BlackjackApplication {
 
     public static void main(final String[] args) {
-        final BlackjackController controller = new BlackjackController(new InputView(), new OutputView());
-        controller.run();
+        BlackjackGame game = new BlackjackGame(new InputView(), new OutputView());
+        game.start();
     }
 }

@@ -9,25 +9,34 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 
-public class BlackjackController {
+public class BlackjackGame {
 
     private final InputView inputView;
     private final OutputView outputView;
 
-    public BlackjackController(final InputView inputView, final OutputView outputView) {
+    private Deck deck;
+    private Dealer dealer;
+    private Players players;
+
+    public BlackjackGame(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
 
-    public void run() {
-        final Deck deck = new Deck();
-        final Players players = createPlayers();
-        final Dealer dealer = new Dealer();
+    public void start() {
+        setupGame();
         dealInitialCards(deck, players, dealer);
         outputView.printInitialDeal(players, dealer);
         processPlayersTurn(deck, players);
         processDealerTurn(deck, dealer);
         printResults(players, dealer);
+    }
+
+
+    private void setupGame() {
+        deck = new Deck();
+        dealer = new Dealer();
+        players = createPlayers();
     }
 
     private Players createPlayers() {
