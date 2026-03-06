@@ -1,32 +1,25 @@
 package model;
 
-import constant.ErrorMessage;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import model.dto.Card;
 
 public class Cards {
-    private final List<Card> cards = new ArrayList<>();
+    private final List<Card> cards;
 
     public Cards() {
-        initCards();
-        Collections.shuffle(cards);
+        this.cards = new ArrayList<>();
     }
 
-    public Card draw() {
-        if(cards.isEmpty()) {
-            throw new IllegalArgumentException(ErrorMessage.NO_CARD_IN_DECK.getMessage());
-        }
-        return cards.removeFirst();
+    public Cards(List<Card> cards) {
+        this.cards = cards;
     }
 
-    private void initCards() {
-        Arrays.stream(Shape.values()).forEach(shape -> {
-            Arrays.stream(CardNumber.values()).forEach(number -> {
-                cards.add(new Card(shape, number));
-            });
-        });
+    public void add(Card card) {
+        cards.add(card);
+    }
+
+    public List<Card> get() {
+        return List.copyOf(cards);
     }
 }
