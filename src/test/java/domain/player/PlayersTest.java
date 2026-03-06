@@ -26,4 +26,5 @@ class PlayersTest {
         List<PlayerHandDto> playersHand = players.getPlayersHand();
         Assertions.assertThat(playersHand.getFirst()).isEqualTo(PlayerHandDto.of(songsong));
     }
+
 }
