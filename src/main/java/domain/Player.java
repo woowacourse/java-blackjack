@@ -21,4 +21,8 @@ public class Player {
         }
         return target < sum;
     }
+
+    public String getName() {
+        return name;
+    }
 }
