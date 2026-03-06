@@ -3,6 +3,7 @@ package domain;
 import java.util.List;
 
 public class Member {
+    private static final int BUST_CONDITION = 21;
 
     private final String name;
     private final Hand hand;
@@ -34,7 +35,10 @@ public class Member {
         hand.appendCard(card);
     }
 
-    public Member decideWinner(Member member) {
+    public Member isWinner(Member member) {
+        if (member.hand.calculateTotalValue() > BUST_CONDITION) return this;
+        if (this.hand.calculateTotalValue() > BUST_CONDITION) return member;
+
         if (this.hand.calculateTotalValue() > member.hand.calculateTotalValue()) {
             return this;
         }

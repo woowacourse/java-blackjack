@@ -1,7 +1,9 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 public class Members {
@@ -26,7 +28,7 @@ public class Members {
         return member.currentCards();
     }
 
-    public int checkBust(String memberName) {
+    public int checkValue(String memberName) {
         Member member = findByName(memberName);
         return member.currentValue();
     }
@@ -36,5 +38,40 @@ public class Members {
                 .filter(member -> member.name().equals(memberName))
                 .findAny()
                 .orElseThrow(NoSuchElementException::new);
+    }
+
+    public List<String> getAllPlayerName() {
+        return members.stream()
+                .map(Member::name)
+                .toList();
+    }
+
+    public List<Boolean> judgeDealerGameResult(String name) {
+        Member dealer = findByName(name);
+        List<Member> players = members.stream()
+                .filter(member -> !member.name().equals(name))
+                .toList();
+
+        List<Boolean> gameResult = new ArrayList<>();
+        for (Member player : players) {
+            gameResult.add(dealer.isWinner(player).name().equals(name));
+        }
+        return gameResult;
+    }
+
+    public Map<String, Boolean> judgePlayerGameResult(String dealerName) {
+        Member dealer = findByName(dealerName);
+        List<Member> players = members.stream()
+                .filter(member -> !member.name().equals(dealerName))
+                .toList();
+
+        Map<String, Boolean> gameResult = new HashMap<>();
+        for (Member player : players) {
+            String playerName = player.name();
+            gameResult.put(playerName,
+                    player.isWinner(dealer).name().equals(playerName));
+        }
+
+        return gameResult;
     }
 }
