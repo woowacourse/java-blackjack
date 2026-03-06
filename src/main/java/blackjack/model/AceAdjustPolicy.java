@@ -13,10 +13,12 @@ public class AceAdjustPolicy {
     }
 
     public int adjust(int sum, List<Card> cards) {
-        boolean containAce = cards.stream().anyMatch(x -> x.rank() == Rank.ACE);
+        boolean containAce = cards.stream().anyMatch(card -> card.rank() == Rank.ACE);
+
         if (!bustPolicy.isBust(sum + ADJUST_VALUE) && containAce) {
             return sum + ADJUST_VALUE;
         }
+
         return sum;
     }
 }
