@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import java.util.List;
+
 public class Player {
     private final Name name;
     private final Hand hand;
@@ -28,5 +30,13 @@ public class Player {
 
     public String name() {
         return name.getName();
+    }
+
+    public boolean canHit() {
+        return score() <= 21;
+    }
+
+    public List<TrumpCard> getCards() {
+        return hand.getCards();
     }
 }
