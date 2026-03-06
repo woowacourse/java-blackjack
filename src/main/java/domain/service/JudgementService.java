@@ -26,6 +26,7 @@ public class JudgementService {
         List<Player> players = playerRepository.findAll();
         Dealer dealer = dealerRepository.getDealer();
         dealer.calculateFinalSum();
+
         List<PlayerResultDto> playerResultDtos = new ArrayList<>();
         for (Player player : players) {
             player.calculateFinalSum();

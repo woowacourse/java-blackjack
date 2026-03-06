@@ -10,16 +10,19 @@ public class Deck {
     private DeckStatus deckStatus = DeckStatus.ALIVE;
     private List<Card> cards;
 
-    private Deck(List<Card> cards, int sum) {
+    private Deck(List<Card> cards, int sum, DeckStatus deckStatus) {
         this.cards = cards;
         this.sum = sum;
+        this.deckStatus = deckStatus;
     }
 
     public static Deck of(List<Card> cards) {
         int cardSum = cards.stream()
                 .mapToInt(Card::getValue)
                 .sum();
-        return new Deck(cards, cardSum);
+
+        DeckStatus deckStatus1 = judgeDeckStatus(cardSum);
+        return new Deck(cards, cardSum, deckStatus1);
     }
 
     public int getSum() {
@@ -68,9 +71,16 @@ public class Deck {
         return cards.getLast();
     }
 
-    private void checkStatus() {
+    public void checkStatus() {
         if (sum > BURST_CRITERIA) {
             deckStatus = DeckStatus.BURST;
         }
+    }
+
+    private static DeckStatus judgeDeckStatus(int sum) {
+        if (sum > BURST_CRITERIA) {
+            return DeckStatus.BURST;
+        }
+        return DeckStatus.ALIVE;
     }
 }
