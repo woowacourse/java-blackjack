@@ -15,6 +15,8 @@ import model.dto.ParticipantWinning;
 import model.dto.PlayerWinning;
 
 public class BlackJackService {
+    private static final Integer BUST_NUMBER = 21;
+
     private final BlackJackDeck cards;
 
     public BlackJackService(BlackJackDeck cards) {
@@ -37,7 +39,7 @@ public class BlackJackService {
     public boolean isBust(Participant participant) {
         Integer score = participant.getResult().score();
 
-        return score > 21;
+        return score > BUST_NUMBER;
     }
 
     public void updateFinalScore(Participant participant) {
