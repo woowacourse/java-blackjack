@@ -9,7 +9,7 @@ public class Player extends Participant {
     }
 
     @Override
-    protected boolean isPlaying() {
+    protected boolean isPlayable() {
         return hand.scoreSum() <= PLAYING_VALUE;
     }
 }

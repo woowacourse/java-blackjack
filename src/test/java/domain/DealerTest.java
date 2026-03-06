@@ -23,7 +23,7 @@ class DealerTest {
     void 딜러_카드_뽑기_가능_테스트() {
         Dealer dealer = new Dealer("딜러", playingHand);
 
-        assertTrue(dealer.isPlaying());
+        assertTrue(dealer.isPlayable());
     }
 
     @Test
@@ -31,7 +31,7 @@ class DealerTest {
     void 딜러_카드_뽑기_불가능_테스트() {
         Dealer dealer = new Dealer("딜러", stopHand);
 
-        assertFalse(dealer.isPlaying());
+        assertFalse(dealer.isPlayable());
     }
 
 }

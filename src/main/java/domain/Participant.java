@@ -16,7 +16,7 @@ public abstract class Participant {
         return hand.isBusted();
     }
 
-    protected abstract boolean isPlaying();
+    protected abstract boolean isPlayable();
 
     public String name() {
         return name;

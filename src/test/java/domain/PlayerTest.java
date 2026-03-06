@@ -25,7 +25,7 @@ class PlayerTest {
     void 플레이어_카드_뽑기_가능_테스트() {
         Player player = new Player("pobi", playingHand);
 
-        assertTrue(player.isPlaying());
+        assertTrue(player.isPlayable());
     }
 
     @Test
@@ -33,7 +33,7 @@ class PlayerTest {
     void 플레이어_카드_뽑기_불가능_테스트() {
         Player player = new Player("pobi", stopHand);
 
-        assertFalse(player.isPlaying());
+        assertFalse(player.isPlayable());
     }
 
 }
