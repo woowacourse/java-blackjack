@@ -20,7 +20,7 @@ public class Players {
 
     public void dealCardBundle(Dealer dealer) {
         for (Player player : players) {
-            dealer.handOutCardToPlayer(player, 2);
+            dealer.dealCardToPlayer(player);
         }
     }
 

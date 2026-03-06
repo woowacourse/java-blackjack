@@ -68,20 +68,20 @@ public class BlackjackGame {
         view.printAllParticipantsHand(getPlayerHandInformation(players));
     }
 
-    private void drawPlayerCard(Player p, Dealer dealer) {
-        while(!p.isBusted()) {
-            Answer answer = view.askDrawCard(p.toDisplayMyName());
+    private void drawPlayerCard(Player player, Dealer dealer) {
+        while(!player.isBusted()) {
+            Answer answer = view.askDrawCard(player.toDisplayMyName());
             if(answer.isNo()) {
                 return;
             }
 
-            dealer.handOutCardToPlayer(p, 1);
-            view.printParticipantHand(PlayerHandDto.of(p));
+            dealer.hitCardToPlayer(player);
+            view.printParticipantHand(PlayerHandDto.of(player));
         }
     }
 
     private void dealInitialCard(Dealer dealer, Players players) {
-        dealer.drawMySelf(2);
+        dealer.dealMyself();
         players.dealCardBundle(dealer);
     }
 

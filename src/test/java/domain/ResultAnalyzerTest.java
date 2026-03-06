@@ -33,7 +33,7 @@ class ResultAnalyzerTest {
         Player playerScore7 = Player.from(PlayerName.from("p7"));
         Player playerScore11 = Player.from(PlayerName.from("p11"));
         Players players = Players.from(List.of(playerScore7, playerScore11));
-        players.giveMeFirstCardBundle(dealerScore4);
+        players.dealCardBundle(dealerScore4);
 
         ResultAnalyzer resultAnalyzer = ResultAnalyzer.getInstance();
         ResultAnalysisDto analysis = resultAnalyzer.analyze(players, dealerScore4);

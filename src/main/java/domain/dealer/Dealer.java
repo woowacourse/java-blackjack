@@ -11,6 +11,8 @@ import java.util.stream.Stream;
 public class Dealer {
 
     private static final int ADDITIONAL_DRAW_CONDITION = 16;
+    private static final int INITIAL_DEAL_COUNT = 2;
+    private static final int HIT_COUNT = 1;
 
     private CardDeck cardDeck;
     private CardBundle cardBundle;
@@ -22,6 +24,19 @@ public class Dealer {
 
     public static Dealer of(CardDeck cardDeck) {
         return new Dealer(cardDeck);
+    }
+
+    public CardBundle dealCardToPlayer(Player player) {
+        return handOutCardToPlayer(player, INITIAL_DEAL_COUNT);
+    }
+
+    public CardBundle hitCardToPlayer(Player player) {
+        return handOutCardToPlayer(player, HIT_COUNT);
+    }
+
+    private CardBundle handOutCardToPlayer(Player player, int tryCount) {
+        CardBundle cardBundle = handOutCard(tryCount);
+        return player.addCardBundle(cardBundle);
     }
 
     // TODO Method Name Refactor
@@ -36,11 +51,6 @@ public class Dealer {
         }
     }
 
-    public CardBundle handOutCardToPlayer(Player player, int tryCount) {
-        CardBundle cardBundle = handOutCard(tryCount);
-        return player.addCardBundle(cardBundle);
-    }
-
     public boolean hitIfRequired() {
         if (canHit()) {
             drawMySelf(1);
@@ -51,6 +61,10 @@ public class Dealer {
 
     private boolean canHit() {
         return cardBundle.getBasicScore() <= 16;
+    }
+
+    public CardBundle dealMyself() {
+        return cardBundle.addUp(handOutCard(INITIAL_DEAL_COUNT));
     }
 
     public CardBundle drawMySelf(int tryCount) {

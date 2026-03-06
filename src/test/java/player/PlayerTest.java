@@ -20,7 +20,7 @@ public class PlayerTest {
         Dealer dealer = Dealer.of(cardDeck);
         Player player = Player.from(PlayerName.from("test"));
 
-        dealer.handOutCardToPlayer(player, 1);
+        dealer.hitCardToPlayer(player);
         Card card = Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER);
 
         Assertions.assertThat(player.hasCard(card)).isTrue();
@@ -35,7 +35,7 @@ public class PlayerTest {
         Player player = Player.from(PlayerName.from("test"));
 
         Assertions.assertThatThrownBy(() -> {
-            dealer.handOutCardToPlayer(player, 1);
+            dealer.hitCardToPlayer(player);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -67,7 +67,7 @@ public class PlayerTest {
         Dealer dealer = Dealer.of(cardDeck);
         Player player = Player.from(PlayerName.from("test"));
 
-        CardBundle result = dealer.handOutCardToPlayer(player, 2);
+        CardBundle result = dealer.dealCardToPlayer(player);
 
         Assertions.assertThat(result.getBasicScore()).isEqualTo(origin.getBasicScore());
     }
@@ -84,7 +84,8 @@ public class PlayerTest {
         Dealer dealer = Dealer.of(cardDeck);
         Player player = Player.from(PlayerName.from("test"));
 
-        CardBundle result = dealer.handOutCardToPlayer(player, 3);
+        dealer.dealCardToPlayer(player);
+        CardBundle result = dealer.hitCardToPlayer(player);
 
         Assertions.assertThat(player.isBusted()).isTrue();
     }
