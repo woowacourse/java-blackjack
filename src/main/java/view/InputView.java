@@ -21,20 +21,18 @@ public class InputView {
         System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = scanner.nextLine();
 
+        validateIsBlank(input);
+        input = input.trim();
+
+        if (!input.matches("[y|n]")) {
+            throw new IllegalArgumentException("y 또는 n만 입력 가능합니다.");
+        }
+        return input.equals("y");
+    }
+
+    private static void validateIsBlank(String input) {
         if (input == null || input.isBlank()) {
             throw new IllegalArgumentException("빈 값을 입력할 수 없습니다.");
         }
-
-        input = input.trim();
-
-        if (input.equals("y")) {
-            return true;
-        }
-
-        if (input.equals("n")) {
-            return false;
-        }
-
-        throw new IllegalArgumentException("y 또는 n만 입력 가능합니다.");
     }
 }

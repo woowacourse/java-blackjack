@@ -16,7 +16,6 @@ public class BlackjackService {
     }
 
     public List<Card> drawCard(CardDeck cardDeck, int drawCount) {
-
         List<Card> cards = new ArrayList<>();
 
         for (int i = 0; i < drawCount; i++) {
@@ -29,9 +28,7 @@ public class BlackjackService {
     }
 
     public List<FinalResult> getFinalResults(Participant dealer, List<Participant> players) {
-
         List<FinalResult> finalResults = new ArrayList<>();
-
         int dealerScore = dealer.getScore();
 
         int dealerWinCount = 0;
@@ -40,32 +37,37 @@ public class BlackjackService {
         for (Participant player : players) {
             int playerScore = player.getScore();
 
-            // 딜러 승
-            if (player.isBust()
-                    || (!dealer.isBust() && dealerScore > playerScore)
-                    || (dealer.isBlackjack() && !player.isBlackjack())) {
+            if (isDealerWin(dealer, player, dealerScore, playerScore)) { // 딜러 승
                 dealerWinCount++;
                 finalResults.add(new FinalResult(player.getName(), 0, 0, 1, false));
                 continue;
             }
 
-            // 무승부
-            if (!dealer.isBust()
-                    && (dealerScore == playerScore)
-                    && ((player.isBlackjack() && dealer.isBlackjack())
-                    || (!player.isBlackjack() && !dealer.isBlackjack()))) {
+            if (isDealerDraw(dealer, player, dealerScore, playerScore)) { // 무승부
                 dealerDrawCount++;
                 finalResults.add(new FinalResult(player.getName(), 0, 1, 0, false));
                 continue;
             }
 
-            // 딜러 패배
-            dealerLoseCount++;
+            dealerLoseCount++; // 딜러 패배
             finalResults.add(new FinalResult(player.getName(), 1, 0, 0, false));
         }
         finalResults.add(
                 new FinalResult(dealer.getName(), dealerWinCount, dealerDrawCount, dealerLoseCount, true));
         return finalResults;
+    }
+
+    private static boolean isDealerWin(Participant dealer, Participant player, int dealerScore, int playerScore) {
+        return player.isBust()
+                || (!dealer.isBust() && dealerScore > playerScore)
+                || (dealer.isBlackjack() && !player.isBlackjack());
+    }
+
+    private static boolean isDealerDraw(Participant dealer, Participant player, int dealerScore, int playerScore) {
+        return !dealer.isBust()
+                && (dealerScore == playerScore)
+                && ((player.isBlackjack() && dealer.isBlackjack())
+                || (!player.isBlackjack() && !dealer.isBlackjack()));
     }
 
 }

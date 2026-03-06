@@ -10,7 +10,6 @@ public class InputParser {
         String[] split = strPlayers.split(",", -1);
 
         List<String> players = new ArrayList<>();
-
         for (String name : split) {
             name = name.trim();
 

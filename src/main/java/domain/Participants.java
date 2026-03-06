@@ -25,7 +25,6 @@ public class Participants {
     }
 
     public List<Participant> getPlayers() {
-
         List<Participant> participants = new ArrayList<>();
         for (Participant participant : this.participants) {
             if (!participant.isDealer()) {

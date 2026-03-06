@@ -52,14 +52,12 @@ public class HandCards {
     }
 
     public int getScore() {
-        // 21 이하 중에 최대 점수
-        int notBustMaxScore = 0;
+        int notBustMaxScore = 0; // 21 이하 중에 최대 점수
         for (int score : scores) {
             notBustMaxScore = getNotBustMaxScore(score, notBustMaxScore);
         }
 
-        // 없다면, 제일 작은거
-        if (notBustMaxScore != 0) {
+        if (notBustMaxScore != 0) { // 없다면, 제일 작은거
             return notBustMaxScore;
         }
 

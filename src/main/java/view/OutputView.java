@@ -16,21 +16,31 @@ public class OutputView {
         Participant dealer = participants.getDealer();
         List<Participant> players = participants.getPlayers();
 
-        System.out.printf("\n%s와 ", dealer.getName());
+        printInitHandCardInfo(dealer, players);
+        printDealerInitHandCard(dealer);
+        printPlayerInitHandCard(players);
+    }
+
+    private static void printInitHandCardInfo(Participant dealer, List<Participant> players) {
         StringBuilder playerNames = new StringBuilder();
+        System.out.printf("\n%s와 ", dealer.getName());
         for (Participant player : players) {
             playerNames.append(player.getName() + ", ");
         }
         playerNames.delete(playerNames.length() - 2, playerNames.length());
         System.out.printf("%s에게 %d장을 나누었습니다.\n", playerNames, INIT_DRAW_COUNT);
+    }
 
-        System.out.printf("%s카드: %s\n", dealer.getName(), dealer.getHandCards().getFirst().getCardDescription());
-
+    private static void printPlayerInitHandCard(List<Participant> players) {
         for (Participant player : players) {
             printParticipantHandCard(player);
             System.out.println();
         }
         System.out.println();
+    }
+
+    private static void printDealerInitHandCard(Participant dealer) {
+        System.out.printf("%s카드: %s\n", dealer.getName(), dealer.getHandCards().getFirst().getCardDescription());
     }
 
     private static void printParticipantHandCard(Participant player) {
@@ -42,7 +52,6 @@ public class OutputView {
             cardDescriptions.append(handCard.getCardDescription() + ", ");
         }
         cardDescriptions.delete(cardDescriptions.length() - 2, cardDescriptions.length());
-
         System.out.print(cardDescriptions);
     }
 
@@ -60,15 +69,21 @@ public class OutputView {
         Participant dealer = participants.getDealer();
         List<Participant> players = participants.getPlayers();
 
-        printParticipantHandCard(dealer);
-        printScore(dealer);
-
-        for (Participant player : players) {
-            printParticipantHandCard(player);
-            printScore(player);
-        }
+        printDealerCardResult(dealer);
+        printPlayerCardResult(players);
 
         System.out.println();
+    }
+
+    private static void printDealerCardResult(Participant dealer) {
+        printParticipantHandCard(dealer);
+        printScore(dealer);
+    }
+
+    private static void printPlayerCardResult(List<Participant> players) {
+        for (Participant player : players) {
+            printDealerCardResult(player);
+        }
     }
 
     private static void printScore(Participant dealer) {
@@ -82,6 +97,11 @@ public class OutputView {
     public void printFinalResults(List<FinalResult> finalResults) {
         System.out.println("\n## 최종 승패");
 
+        printDealerFinalResult(finalResults);
+        printPlayerFinalResult(finalResults);
+    }
+
+    private static void printDealerFinalResult(List<FinalResult> finalResults) {
         for (FinalResult finalResult : finalResults) {
             if (finalResult.isDealer()) {
                 System.out.printf("%s: ", finalResult.name());
@@ -90,14 +110,14 @@ public class OutputView {
                 break;
             }
         }
+    }
 
+    private static void printPlayerFinalResult(List<FinalResult> finalResults) {
         for (FinalResult finalResult : finalResults) {
             if (!finalResult.isDealer()) {
                 System.out.printf("%s: ", finalResult.name());
-
                 printPlayerResultDetail(finalResult);
             }
-
         }
     }
 
