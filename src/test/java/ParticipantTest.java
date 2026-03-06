@@ -15,6 +15,31 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class ParticipantTest {
 
     @Test
+    void 플레이어_정상_생성_테스트() {
+        // given
+        String input = "pobi";
+
+        // when
+        Participant participant = Participant.of(input);
+
+        // then
+        assertThat(participant.getName()).isEqualTo(input);
+    }
+
+    @Test
+    void 딜러_정상_생성_테스트() {
+        // given
+        String input = "딜러";
+        boolean isDealer = Boolean.TRUE;
+
+        // when
+        Participant participant = Participant.of(input, isDealer);
+
+        // then
+        assertThat(participant.getName()).isEqualTo(input);
+    }
+
+    @Test
     void 참여자는_받은_카드를_자신의_카드_패에_추가한다() {
         //given
         Participant participant = Participant.of("pobi");
