@@ -30,7 +30,7 @@ public class Deck {
         if (cards.isEmpty()) {
             throw new IllegalStateException(EMPTY_DECK_MESSAGE);
         }
-        return cards.remove(0);
+        return cards.removeFirst();
     }
 
     public int size() {

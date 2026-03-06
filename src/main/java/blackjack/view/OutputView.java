@@ -21,8 +21,10 @@ public class OutputView {
     private static final String FINAL_RESULTS_HEADER = "\n## 최종 승패";
     private static final String DEALER_RESULT_PREFIX = "딜러: ";
     private static final String PLAYER_RESULT_FORMAT = "%s: %s%n";
+
     private static final String DELIMITER = ", ";
     private static final String RESULT_LABEL_SUFFIX = " ";
+
     private static final String WIN = "승";
     private static final String DRAW = "무";
     private static final String LOSE = "패";
