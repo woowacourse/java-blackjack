@@ -1,8 +1,6 @@
 package view;
 
-import dto.CardDto;
-import dto.InitialDto;
-import dto.PlayerDeckDto;
+import dto.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,12 +25,31 @@ public class OutputView {
         stringBuilder.append("딜러카드: ").append(initialDto.dealerCard().toString()).append("\n");
         for (PlayerDeckDto playerDeckDto : initialDto.playerDeckDtos()) {
             stringBuilder.append(playerDeckDto.playerName()).append(": ");
-            String cardDtoStrings = playerDeckDto.cardDtos().stream()
-                    .map(CardDto::toString)
-                    .collect(Collectors.joining(", "));
+            String cardDtoStrings = getCardDtoStrings(playerDeckDto.cardDtos());
             stringBuilder.append(cardDtoStrings);
             stringBuilder.append("\n");
         }
         System.out.println(stringBuilder);
+    }
+
+    public void playerResultMessage(List<PlayerResultDto> playerResultDto, DealerResultDto dealerResultDto) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("딜러카드: ");
+        String dealerDtoStrings = getCardDtoStrings(dealerResultDto.cardDtos());
+        stringBuilder.append(dealerDtoStrings);
+        stringBuilder.append(" - 결과: ").append(dealerResultDto.sum()).append("\n");
+
+        for (PlayerResultDto playerResult : playerResultDto) {
+            stringBuilder.append(playerResult.playerName()).append("카드: ");
+            String cardDtoStrings = getCardDtoStrings(playerResult.cardDtos());
+            stringBuilder.append(cardDtoStrings);
+            stringBuilder.append(" - 결과: ").append(playerResult.sum()).append("\n");
+        }
+    }
+
+    private String getCardDtoStrings(List<CardDto> cardDtos) {
+        return cardDtos.stream()
+                .map(CardDto::toString)
+                .collect(Collectors.joining(", "));
     }
 }

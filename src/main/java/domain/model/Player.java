@@ -14,6 +14,10 @@ public class Player implements Person {
         return new Player(name, null);
     }
 
+    public void calculateFinalSum() {
+        deck.calculateFinalSum();
+    }
+
     public String getName() {
         return name;
     }
@@ -41,4 +45,6 @@ public class Player implements Person {
     public int getDeckSize() {
         return deck.getSize();
     }
+
+
 }
