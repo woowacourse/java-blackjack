@@ -1,10 +1,10 @@
 package blackjack.controller;
 
-import blackjack.model.CardDeck;
-import blackjack.model.Dealer;
-import blackjack.model.PickStrategy;
-import blackjack.model.Player;
-import blackjack.model.TotalResult;
+import blackjack.model.cardDeck.CardDeck;
+import blackjack.model.participant.Dealer;
+import blackjack.model.cardDeck.PickStrategy;
+import blackjack.model.participant.Player;
+import blackjack.model.result.TotalResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;

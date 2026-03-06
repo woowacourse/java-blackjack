@@ -1,5 +1,8 @@
-package blackjack.model;
+package blackjack.model.cardDeck;
 
+import blackjack.model.card.Card;
+import blackjack.model.card.Rank;
+import blackjack.model.card.Suit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

@@ -1,8 +1,8 @@
 package blackjack;
 
 import blackjack.controller.BlackjackController;
-import blackjack.model.PickStrategy;
-import blackjack.model.RandomPickStrategy;
+import blackjack.model.cardDeck.PickStrategy;
+import blackjack.model.cardDeck.RandomPickStrategy;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 

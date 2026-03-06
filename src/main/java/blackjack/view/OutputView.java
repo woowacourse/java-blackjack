@@ -1,8 +1,8 @@
 package blackjack.view;
 
-import blackjack.model.Card;
-import blackjack.model.Player;
-import blackjack.model.TotalResult;
+import blackjack.model.card.Card;
+import blackjack.model.participant.Player;
+import blackjack.model.result.TotalResult;
 import java.util.List;
 
 public class OutputView {

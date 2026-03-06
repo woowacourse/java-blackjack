@@ -1,6 +1,9 @@
-package blackjack.model;
+package blackjack.model.participant;
 
-public class Player extends Participant{
+import blackjack.model.cardDeck.CardDeck;
+import blackjack.model.Hands;
+
+public class Player extends Participant {
 
     private Player(String name, Hands hands) {
         super(name, hands);
