@@ -49,7 +49,7 @@ public class Player {
         return cardScore;
     }
 
-    private boolean isBustWithAce(int cardScore) {
+    public boolean isBustWithAce(int cardScore) {
         return cardScore > 21;
     }
 
