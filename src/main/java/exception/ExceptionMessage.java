@@ -6,6 +6,7 @@ public enum ExceptionMessage {
     INVALID_NAME_RANGE("잘못된 이름 범위 입니다."),
     INVALID_NAME_FORMAT("잘못된 이름 형식 입니다."),
     COMMAND_NOT_FOUND("존재하지 않는 명령어 입니다."),
+    DUPLICATED_PARTICIPANT_NAME("중복된 참여자 이름 입니다."),
     ;
 
     private final String message;

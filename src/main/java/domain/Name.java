@@ -12,7 +12,6 @@ public class Name {
 
     private String value;
 
-    //TODO: 중복된 이름 예외 처리 필요
     public Name(String value) {
         validate(value);
         this.value = value;
