@@ -22,6 +22,14 @@ public class Deck {
         return sum;
     }
 
+    public DeckStatus getDeckStatus() {
+        return deckStatus;
+    }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
+    }
+
     public void calculateSum() {
         sum = cards.stream()
                 .mapToInt(Card::getValue)
@@ -54,10 +62,6 @@ public class Deck {
 
     public int getSize() {
         return cards.size();
-    }
-
-    public List<Card> getCards() {
-        return List.copyOf(cards);
     }
 
     public Card getLastCard() {
