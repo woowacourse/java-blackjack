@@ -25,4 +25,12 @@ public class GameTable {
         return gameStatuses;
     }
 
+    public void recordResult() {
+    }
+
+    public void playCurrentPlayer() {
+    }
+
+    public void currentPlayerStatus() {
+    }
 }

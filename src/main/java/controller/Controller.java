@@ -59,4 +59,32 @@ public class Controller {
     private void gamePhase() {
 
     }
+
+    private void playerExecute() {
+        String select = InputView.readSelect();
+        initProcess(select);
+
+        if (select.equals("y")) {
+            playLoop();
+        }
+
+        gameTable.recordResult();
+    }
+
+    private void playLoop() {
+        String select = InputView.readSelect();
+        while (select.equals("y")) {
+            gameTable.playCurrentPlayer();
+            gameTable.currentPlayerStatus();
+            select = InputView.readSelect();
+        }
+    }
+
+    private void initProcess(String select) {
+        if (select.equals("y")) {
+            gameTable.playCurrentPlayer();
+        }
+
+        gameTable.currentPlayerStatus();
+    }
 }
