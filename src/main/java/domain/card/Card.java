@@ -1,10 +1,8 @@
 package domain.card;
 
-import java.util.Objects;
-
 public class Card {
-    private CardNumber cardNumber;
-    private CardShape cardShape;
+    private final CardNumber cardNumber;
+    private final CardShape cardShape;
 
     public Card(CardNumber cardNumber, CardShape cardShape) {
         this.cardNumber = cardNumber;
@@ -28,19 +26,5 @@ public class Card {
     @Override
     public String toString() {
         return cardNumber.getNumber() + cardShape.getShape();
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (object == null || getClass() != object.getClass()) {
-            return false;
-        }
-        Card card = (Card) object;
-        return cardNumber == card.cardNumber && cardShape == card.cardShape;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(cardNumber, cardShape);
     }
 }
