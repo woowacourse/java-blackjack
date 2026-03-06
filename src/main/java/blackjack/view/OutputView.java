@@ -12,25 +12,25 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public void printInitialDeal(final Players players, final Dealer dealer) {
+    public static void printInitialDeal(final Players players, final Dealer dealer) {
         final String playerNames = players.getPlayers().stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(", "));
         System.out.printf("%n딜러와 %s에게 2장을 나누었습니다.%n", playerNames);
         System.out.printf("딜러카드: %s%n", dealer.getCards().get(0).getDisplayName());
-        players.getPlayers().forEach(this::printPlayerCards);
+        players.getPlayers().forEach(OutputView::printPlayerCards);
         System.out.println();
     }
 
-    public void printPlayerCards(final Player player) {
+    public static void printPlayerCards(final Player player) {
         System.out.printf("%s카드: %s%n", player.getName(), formatCards(player.getCards()));
     }
 
-    public void printDealerHit() {
+    public static void printDealerHit() {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printFinalCards(final Players players, final Dealer dealer) {
+    public static void printFinalCards(final Players players, final Dealer dealer) {
         System.out.println();
         printParticipantFinalCards(dealer.getName(), dealer.getCards(), dealer.calculateScore().getValue());
         players.getPlayers().forEach(player ->
@@ -38,21 +38,21 @@ public class OutputView {
         );
     }
 
-    public void printFinalResults(final GameResults gameResults) {
+    public static void printFinalResults(final GameResults gameResults) {
         System.out.println("\n## 최종 승패");
         printDealerResult(gameResults.getDealerResults());
-        gameResults.getPlayerResults().forEach(this::printPlayerResult);
+        gameResults.getPlayerResults().forEach(OutputView::printPlayerResult);
     }
 
-    private void printParticipantFinalCards(final String name, final List<Card> cards, final int score) {
+    private static void printParticipantFinalCards(final String name, final List<Card> cards, final int score) {
         System.out.printf("%s카드: %s - 결과: %d%n", name, formatCards(cards), score);
     }
 
-    private void printDealerResult(final Map<GameResult, Integer> dealerResults) {
+    private static void printDealerResult(final Map<GameResult, Integer> dealerResults) {
         System.out.println("딜러: " + buildDealerResultText(dealerResults).trim());
     }
 
-    private String buildDealerResultText(final Map<GameResult, Integer> dealerResults) {
+    private static String buildDealerResultText(final Map<GameResult, Integer> dealerResults) {
         final StringBuilder stringBuilder = new StringBuilder();
         appendResultIfExists(stringBuilder, dealerResults, GameResult.WIN, "승 ");
         appendResultIfExists(stringBuilder, dealerResults, GameResult.DRAW, "무 ");
@@ -60,7 +60,7 @@ public class OutputView {
         return stringBuilder.toString();
     }
 
-    private void appendResultIfExists(
+    private static void appendResultIfExists(
             final StringBuilder stringBuilder,
             final Map<GameResult, Integer> dealerResults,
             final GameResult result,
@@ -71,11 +71,11 @@ public class OutputView {
         }
     }
 
-    private void printPlayerResult(final Player player, final GameResult result) {
+    private static void printPlayerResult(final Player player, final GameResult result) {
         System.out.printf("%s: %s%n", player.getName(), toDisplayText(result));
     }
 
-    private String toDisplayText(final GameResult result) {
+    private static String toDisplayText(final GameResult result) {
         if (result == GameResult.WIN) {
             return "승";
         }
@@ -85,7 +85,7 @@ public class OutputView {
         return "무";
     }
 
-    private String formatCards(final List<Card> cards) {
+    private static String formatCards(final List<Card> cards) {
         return cards.stream()
                 .map(Card::getDisplayName)
                 .collect(Collectors.joining(", "));

@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
+import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -17,7 +18,7 @@ class GameResultsTest {
     @Test
     @DisplayName("플레이어가 승리하면 딜러 결과에 패가 1개 집계된다")
     void calculate_dealerLoseCount_whenPlayerWins() {
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(new Deck());
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.SEVEN));
 
@@ -33,7 +34,7 @@ class GameResultsTest {
     @Test
     @DisplayName("플레이어가 패배하면 딜러 결과에 승이 1개 집계된다")
     void calculate_dealerWinCount_whenPlayerLoses() {
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(new Deck());
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.NINE));
 
@@ -49,7 +50,7 @@ class GameResultsTest {
     @Test
     @DisplayName("점수가 같으면 딜러 결과에 무승부가 1개 집계된다")
     void calculate_dealerDrawCount_whenScoresAreEqual() {
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(new Deck());
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.SEVEN));
 
