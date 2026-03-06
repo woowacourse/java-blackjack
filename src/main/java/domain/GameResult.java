@@ -20,19 +20,7 @@ public enum GameResult {
         return result;
     }
 
-    public static GameResult judge(int dealerScore, int playerScore) {
-        if (dealerScore > playerScore) {
-            return LOSS;
-        }
-
-        if (dealerScore == playerScore) {
-            return DRAW;
-        }
-
-        return WIN;
-    }
-
-    public static GameResult judgeV2(Dealer dealer, Player player) {
+    public static GameResult judge(Dealer dealer, Player player) {
         if (player.isBusted()) {
             return LOSS;
         }
