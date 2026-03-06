@@ -46,6 +46,6 @@
 - [x] 버스트인데 hit/stand 질문
 - [x] Ace, Jack, Queen, King 이름이 값(1,10)으로 출력되는 문제
 - [x] domain.GameManager 리팩터링
-- [ ] 패키지 정리
+- [x] 패키지 정리
 - [ ] 규칙 적용
 - [ ] 테스트 케이스 추가

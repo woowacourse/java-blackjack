@@ -142,18 +142,17 @@ public class GameManager {
         for (Player player : players.getPlayers()) {
             int playerScore = calculateScore(player.getHand());
             int dealerScore = calculateScore(dealer.getHand());
+            if (player.isBust() || playerScore < dealerScore) {
+                results.add(new GameFinalResultDto(player.getName(), Result.LOSE));
+                continue;
+            }
 
             if (playerScore > dealerScore) {
                 results.add(new GameFinalResultDto(player.getName(), Result.WIN));
+                continue;
             }
 
-            if (playerScore == dealerScore) {
-                results.add(new GameFinalResultDto(player.getName(), Result.DRAW));
-            }
-
-            if (playerScore < dealerScore) {
-                results.add(new GameFinalResultDto(player.getName(), Result.LOSE));
-            }
+            results.add(new GameFinalResultDto(player.getName(), Result.DRAW));
         }
     }
 }
