@@ -1,7 +1,6 @@
-package blackjack;
+package blackjack.domain;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 public class BlackJackGame {
     private final Players players;

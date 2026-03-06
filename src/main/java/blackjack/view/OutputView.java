@@ -1,12 +1,15 @@
-package blackjack;
+package blackjack.view;
 
+import blackjack.domain.Dealer;
+import blackjack.domain.GameResult;
+import blackjack.domain.Player;
+import blackjack.domain.Players;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class OutputView {
 
-    public void printInitDraw(Players players,Dealer dealer){
+    public void printInitDraw(Players players, Dealer dealer){
         System.out.printf("%n딜러와 %s에게 2장을 나누었습니다.%n",
                 String.join(", ", players.getNames()));
 

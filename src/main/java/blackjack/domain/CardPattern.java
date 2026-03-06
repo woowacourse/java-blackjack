@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.domain;
 
 public enum CardPattern {
     SPADE("스페이드"),

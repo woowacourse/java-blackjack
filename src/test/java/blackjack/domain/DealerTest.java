@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -13,7 +13,7 @@ public class DealerTest {
 
         Dealer dealer = new Dealer();
 
-        dealer.recieveCard(new Card(CardPoint.ACE,CardPattern.DIAMOND));
+        dealer.recieveCard(new Card(CardPoint.ACE, CardPattern.DIAMOND));
 
         assertThat(dealer.getCardCount()).isEqualTo(1);
 

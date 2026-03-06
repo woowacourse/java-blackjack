@@ -1,6 +1,4 @@
-package blackjack;
-
-import java.util.Arrays;
+package blackjack.domain;
 
 public enum CardPoint {
     TWO("2",2),

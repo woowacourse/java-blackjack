@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -13,7 +13,7 @@ public class CardTest {
     @Test
     void A클로버라는_카드가_생성된다(){
 
-        Card card = new Card(CardPoint.ACE,CardPattern.CLUB);
+        Card card = new Card(CardPoint.ACE, CardPattern.CLUB);
         assertNotNull(card);
 
         assertThat(card.getCardPointName()).isEqualTo("A");
