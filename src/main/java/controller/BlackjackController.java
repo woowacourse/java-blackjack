@@ -34,7 +34,7 @@ public class BlackjackController {
         Players players = addAdditionalCard(playerList, cards);
         blackjackService.determineAdditionalCardOfDealer(dealer, cards);
 
-        printFinalCards(players);
+        printFinalCards(dealer, players);
 
         // 최종 승패
         BlackjackResult blackjackResult = new BlackjackResult(dealer, players);
@@ -76,8 +76,9 @@ public class BlackjackController {
         }
     }
 
-    public void printFinalCards(Players players) {
+    public void printFinalCards(Dealer dealer, Players players) {
         List<FinalCardDto> finalCards = new ArrayList<>();
+        finalCards.add(dealer.toFinalCardDto());
         for (Player player : players) {
             finalCards.add(player.toFinalCardDto());
         }
