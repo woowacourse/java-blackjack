@@ -6,9 +6,11 @@ import domain.Hand;
 import domain.Participant;
 import domain.Player;
 import dto.GameStatus;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Queue;
 import strategy.RandomStrategy;
 import view.InputView;
 import view.OutputView;
@@ -57,26 +59,31 @@ public class Controller {
     }
 
     private void gamePhase() {
-
+        Queue<Participant> players = gameTable.getParticipants();
+        while (gameTable.isPlayerExist()) {
+            Participant participant = players.peek();
+            playerExecute(participant.name());
+        }
     }
 
-    private void playerExecute() {
-        String select = InputView.readSelect();
+    private void playerExecute(String name) {
+        String select = InputView.readSelect(name);
         initProcess(select);
 
         if (select.equals("y")) {
-            playLoop();
+            playLoop(name);
         }
 
         gameTable.recordResult();
     }
 
-    private void playLoop() {
-        String select = InputView.readSelect();
+    private void playLoop(String name) {
+        String select = InputView.readSelect(name);
         while (select.equals("y")) {
             gameTable.playCurrentPlayer();
-            gameTable.currentPlayerStatus();
-            select = InputView.readSelect();
+            GameStatus gameStatus = gameTable.currentPlayerStatus();
+            OutputView.printGameLog(gameStatus);
+            select = InputView.readSelect(name);
         }
     }
 
@@ -84,7 +91,7 @@ public class Controller {
         if (select.equals("y")) {
             gameTable.playCurrentPlayer();
         }
-
-        gameTable.currentPlayerStatus();
+        GameStatus gameStatus = gameTable.currentPlayerStatus();
+        OutputView.printGameLog(gameStatus);
     }
 }

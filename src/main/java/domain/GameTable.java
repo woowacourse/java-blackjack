@@ -52,6 +52,9 @@ public class GameTable {
     public void recordResult() {
         Participant current = participants.poll();
         scoreBoard.record(current.status());
+    }
 
+    public Queue<Participant> getParticipants() {
+        return participants;
     }
 }
