@@ -1,9 +1,14 @@
 package team.blackjack.view;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
-import team.blackjack.control.dto.DrawResult;
-import team.blackjack.control.dto.ScoreResult;
+import team.blackjack.controler.dto.DrawResult;
+import team.blackjack.controler.dto.GameResult;
+import team.blackjack.controler.dto.GameResult.DealerResult;
+import team.blackjack.controler.dto.GameResult.PlayerResult;
+import team.blackjack.controler.dto.ScoreResult;
+import team.blackjack.domain.Result;
 
 public class OutputView {
 
@@ -56,7 +61,21 @@ public class OutputView {
         }
     }
 
-     public static void printGameResult(String playerName, String result) {
-        println("%s: %s".formatted(playerName, result));
+     public static void printGameResult(GameResult result) {
+         final DealerResult dealerResult = result.dealerResult();
+         final Map<String, PlayerResult> playeredResultMap = result.playerResultMap();
+
+         println("## 최종 승패:");
+         println("");
+         println("딜러: %d승 %d패 %d무".formatted(
+                 dealerResult.countBy(Result.WIN),
+                 dealerResult.countBy(Result.LOSE),
+                 dealerResult.countBy(Result.DRAW))
+         );
+
+         playeredResultMap.entrySet().stream()
+                 .map(entry -> "%s: %s".formatted(entry.getKey(), entry.getValue().result().getName()))
+                 .forEach(OutputView::println);
+
     }
 }

@@ -1,12 +1,13 @@
 package team.blackjack.domain;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 public class Hand {
 
-    private final Set<Card> cards = new HashSet<>();
+    private final Set<Card> cards = new LinkedHashSet<>();
 
     public void addCard(Card card) {
         cards.add(card);
