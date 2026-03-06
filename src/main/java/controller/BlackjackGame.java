@@ -30,7 +30,7 @@ public class BlackjackGame {
     }
 
     private void playGame(Players players, Dealer dealer, Deck deck) {
-        initGame(players, dealer, deck);
+        initParticipantsHand(players, dealer, deck);
 
         for (Player player : players.getPlayers()) {
             playerTurn(player, deck);
@@ -41,7 +41,7 @@ public class BlackjackGame {
         showGameResult(players, dealer);
     }
 
-    private void initGame(Players players, Dealer dealer, Deck deck) {
+    private void initParticipantsHand(Players players, Dealer dealer, Deck deck) {
         for (Player player : players.getPlayers()) {
             Card card1 = deck.draw();
             Card card2 = deck.draw();
