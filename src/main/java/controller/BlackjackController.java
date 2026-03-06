@@ -37,7 +37,7 @@ public class BlackjackController {
         printFinalCards(players);
 
         // 최종 승패
-        BlackjackResult blackjackResult = new BlackjackResult(dealer, players);
+        BlackjackResult blackjackResult = BlackjackResult.from(dealer, players);
         OutputView.displayMatchResult(blackjackResult.toResultDto());
     }
 

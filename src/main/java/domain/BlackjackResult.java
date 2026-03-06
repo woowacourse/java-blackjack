@@ -6,24 +6,44 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BlackjackResult {
-    private final Map<String, Boolean> playerWinningMap = new HashMap<>();
+    private final Map<String, MatchCase> playerWinningMap = new HashMap<>();
+    private int winningCount = 0;
+    private int drawCount = 0;
+    private int loseCount = 0;
 
-    public BlackjackResult(Dealer dealer, Players players) {
+    private BlackjackResult(Dealer dealer, Players players) {
+        calculateMatchResult(dealer, players);
+    }
+
+    private void calculateMatchResult(Dealer dealer, Players players) {
         boolean dealerBurst = dealer.isBust();
         int dealerTotal = dealer.getFinalResult();
+
         for (Player player : players) {
-            if (player.isBust() || (!dealerBurst && player.getFinalResult() < dealerTotal)) {
-                add(player.getName(), false);
-            }
-            add(player.getName(), true);
+            determinePlayerResult(player, dealerBurst, dealerTotal);
         }
     }
 
-    public void add(String playerName, boolean isWinning) {
-        playerWinningMap.put(playerName, isWinning);
+    private void determinePlayerResult(Player player, boolean dealerBurst, int dealerTotal) {
+        if (player.isBust() || (!dealerBurst && player.getFinalResult() < dealerTotal)) {
+            addMatchResult(player.getName(), MatchCase.WIN);
+        }
+        addMatchResult(player.getName(), MatchCase.LOSE);
+    }
+
+    public static BlackjackResult from(Dealer dealer, Players players) {
+        return new BlackjackResult(dealer, players);
+    }
+
+    private void addMatchResult(String playerName, MatchCase matchCase) {
+        playerWinningMap.put(playerName, matchCase);
     }
 
     public BlackjackResultDto toResultDto() {
-        return new BlackjackResultDto(0, 0, this.playerWinningMap);
+        return new BlackjackResultDto(
+                this.winningCount,
+                this.loseCount,
+                Map.copyOf(this.playerWinningMap)
+        );
     }
 }
