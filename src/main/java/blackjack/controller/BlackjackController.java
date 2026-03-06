@@ -79,12 +79,10 @@ public class BlackjackController {
     }
 
     private boolean isAllUserBurst(List<Player> players) {
-        for (Player player : players) {
-            if (!player.isBurst()) {
-                return false;
-            }
-        }
-        return true;
+        int burstUserCount = (int) players.stream()
+                .filter(Player::isBurst)
+                .count();
+        return players.size() == burstUserCount;
     }
 
     private void printGameResult(List<Player> players, Dealer dealer) {
