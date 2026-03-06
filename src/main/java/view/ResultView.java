@@ -4,6 +4,7 @@ import domain.Dealer;
 import domain.Player;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.swing.JScrollBar;
 
 public class ResultView {
     public void printparticipantsCards(List<Player> players, Dealer dealer) {
@@ -34,4 +35,31 @@ public class ResultView {
             System.out.println(player.getName() + "카드: " + player + " - 결과: " + player.getTotalSum());
         }
     }
+
+
+    public void printFinalResult(List<Player> players, Dealer dealer){
+        int sum = dealer.getTotalSum();
+        StringBuilder sb = new StringBuilder();
+
+        int playerWinCount = 0;
+        for (Player player : players) {
+            boolean isWin = player.isPlayerWin(sum);
+            if(isWin){
+                playerWinCount+=1;
+            }
+        }
+        sb.append("딜러: " + (players.size()-playerWinCount) + "승 " + playerWinCount+ "패\n");
+
+        for (Player player : players) {
+            sb.append(player.getName() + ": ");
+            boolean isWin = player.isPlayerWin(sum);
+            if(isWin){
+                sb.append("승\n");
+                continue;
+            }
+            sb.append("패\n");
+        }
+        System.out.println(sb);
+    }
+
 }
