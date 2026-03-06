@@ -1,5 +1,6 @@
 package domain;
 
+import dto.GameResult;
 import dto.GameStatus;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -37,11 +38,12 @@ public class GameTable {
     }
 
     public boolean isPlayerExist() {
-        return !participants.isEmpty() || hasOnlyDealer();
+        return !participants.isEmpty() && !hasOnlyDealer();
     }
 
+
     private boolean hasOnlyDealer() {
-        return participants.stream().anyMatch(p -> !p.isPlayer());
+        return participants.stream().noneMatch(Participant::isPlayer);
     }
 
     public GameStatus currentPlayerStatus() {
@@ -56,5 +58,9 @@ public class GameTable {
 
     public Queue<Participant> getParticipants() {
         return participants;
+    }
+
+    public List<GameResult> result() {
+        return scoreBoard.results();
     }
 }

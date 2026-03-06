@@ -5,8 +5,8 @@ import domain.GameTable;
 import domain.Hand;
 import domain.Participant;
 import domain.Player;
+import dto.GameResult;
 import dto.GameStatus;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +21,17 @@ public class Controller {
 
     public void run() {
         setupPhase();
-        gamePhase();
+        playerGamePhase();
+
+        resultPhase();
+    }
+
+    private void resultPhase() {
+        List<GameStatus> gameStatuses = gameTable.gameStatus();
+        OutputView.participantsResults(gameStatuses);
+
+        List<GameResult> result = gameTable.result();
+        OutputView.gameResult(result);
     }
 
     private void setupPhase() {
@@ -58,10 +68,16 @@ public class Controller {
         }
     }
 
-    private void gamePhase() {
+    private void playerGamePhase() {
         Queue<Participant> players = gameTable.getParticipants();
         while (gameTable.isPlayerExist()) {
             Participant participant = players.peek();
+
+            if(!players.isEmpty() && !participant.isPlayer()) {
+                players.add(players.poll());
+                continue;
+            }
+
             playerExecute(participant.name());
         }
     }
