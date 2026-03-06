@@ -32,9 +32,9 @@ public class Cards {
     }
 
     public List<Card> drawInitialHand() {
-        return Stream.generate(this::draw)
+        return new ArrayList<>(Stream.generate(this::draw)
                 .limit(2)
-                .toList();
+                .toList());
     }
 
     public Card draw() {
