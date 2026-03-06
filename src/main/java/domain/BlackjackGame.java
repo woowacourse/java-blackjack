@@ -31,7 +31,7 @@ public class BlackjackGame {
         view.printParticipantHand(PlayerHandDto.of(dealer));
         view.printAllParticipantsHand(getPlayerHandInformation(players));
 
-        
+
     }
 
     private void dealInitialCard(Dealer dealer, Players players) {

@@ -72,4 +72,20 @@ public class PlayerTest {
         Assertions.assertThat(result.getTotalScore()).isEqualTo(origin.getTotalScore());
     }
 
+    @Test
+    void 플레이어가_가진_카드의_합계가_21을_넘으면_버스트_된다() {
+        Card king = Card.of(CardDenomination.KING, CardEmblem.CLOVER);
+        Card jack = Card.of(CardDenomination.JACK, CardEmblem.SPADE);
+        Card nine = Card.of(CardDenomination.NINE, CardEmblem.HEART);
+        List<Card> cards = List.of(king, jack, nine);
+        CardDeck cardDeck = new CardDeckBuilder()
+                .cards(cards)
+                .build();
+        Dealer dealer = Dealer.of(cardDeck);
+        Player player = Player.from(PlayerName.from("test"));
+
+        CardBundle result = dealer.handOutCardToPlayer(player, 3);
+
+        Assertions.assertThat(player.isBusted()).isTrue();
+    }
 }

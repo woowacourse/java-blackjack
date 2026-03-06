@@ -48,4 +48,8 @@ public class Player {
         return PlayerHandDto.of(this);
     }
 
+    public boolean isBusted() {
+        return cardBundle.getTotalScore() > 21;
+    }
+
 }
