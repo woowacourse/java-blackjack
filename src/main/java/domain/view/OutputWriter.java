@@ -45,8 +45,21 @@ public class OutputWriter {
         System.out.print(LINE_SEPARATOR);
     }
 
-    // TODO 결과 DTO 출력, 최종 승패 DTO 출력
+    public void printFinalResultTitleMessage() {
+        System.out.print(LINE_SEPARATOR);
+        System.out.printf(FINAL_RESULT_TITLE_MESSAGE);
+    }
 
+    public void printFinalResultOfPlayer(String playerName, String status) {
+        System.out.printf(FINAL_RESULT_PLAYER, playerName, status);
+        System.out.print(LINE_SEPARATOR);
+    }
+
+    public void printFinalResultOfDealer(String status) {
+        System.out.print(LINE_SEPARATOR);
+        System.out.printf(FINAL_RESULT_DEALER, status);
+        System.out.print(LINE_SEPARATOR);
+    }
 
     public void printFinalResultMessage(String gamerName, String playerCards, int resultScore) {
         System.out.printf(CARD_SUM_RESULT_MESSAGE, gamerName, playerCards, resultScore);

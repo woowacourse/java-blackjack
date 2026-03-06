@@ -49,6 +49,10 @@ public class BlackjackGame {
             view.printFinalResultMessage(PlayerResultDto.from(player));
         });
 
+        //최종 결과 통계 출력
+        ResultAnalysisDto analysis = analyzeBlackjackResult(players, dealer);
+        view.printFinalResultMessage(analysis);
+
     }
 
     private void drawPlayerCard(Player p, Dealer dealer) {
@@ -88,6 +92,15 @@ public class BlackjackGame {
         return players.stream()
                 .map(PlayerHandDto::of)
                 .toList();
+    }
+
+    private ResultAnalysisDto analyzeBlackjackResult(Players players, Dealer dealer) {
+        ResultAnalyzer analyzer = getAnalyzer();
+        return analyzer.analyze(players, dealer);
+    }
+
+    private ResultAnalyzer getAnalyzer() {
+        return ResultAnalyzer.getInstance();
     }
 
 }

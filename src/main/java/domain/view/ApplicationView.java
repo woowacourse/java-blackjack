@@ -58,6 +58,19 @@ public class ApplicationView {
         writer.printDealerAdditionalDrawCardMessage();
     }
 
+    public void printFinalResultMessage(ResultAnalysisDto resultAnalysis) {
+        writer.printFinalResultTitleMessage();
+        writer.printFinalResultOfDealer(resultAnalysis.getDealerResult());
+        printAllPlayersResult(resultAnalysis);
+    }
+
+    private void printAllPlayersResult(ResultAnalysisDto resultAnalysis) {
+        resultAnalysis.playerGameResults()
+                .forEach(player -> {
+                    writer.printFinalResultOfPlayer(player.playerName(), player.gameResult().displayName());
+                });
+    }
+
     public void printFinalResultMessage(PlayerResultDto playerResult) {
         PlayerHandDto playerHand = playerResult.playerHand();
         writer.printFinalResultMessage(playerHand.playerName(), playerHand.handOnCards(), playerResult.resultScore());
