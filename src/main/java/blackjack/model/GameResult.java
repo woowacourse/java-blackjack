@@ -11,14 +11,19 @@ public enum GameResult {
         this.status = status;
     }
 
-    public static GameResult getResult(int playerScore, int dealerScore) {
-        if (playerScore > dealerScore) {
-            return WIN;
-        }
-        if (playerScore == dealerScore) {
+    public static GameResult getResult(Player player, Dealer dealer) {
+        int playerScore = player.getScore();
+        int dealerScore = dealer.getScore();
+
+        if ((player.isBurst() && dealer.isBurst())) {
             return DRAW;
         }
-        return LOSE;
+
+        if (player.isBurst() || (!dealer.isBurst() && (playerScore < dealerScore))) {
+            return LOSE;
+        }
+
+        return WIN;
     }
 
     public String getStatus() {
