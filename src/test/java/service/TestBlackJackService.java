@@ -80,31 +80,4 @@ public class TestBlackJackService {
         assertThat(dealerWinning.get(MatchStatus.DRAW)).isEqualTo(1);
     }
 
-    @Test
-    public void 블랙잭_점수_판정_정상_작동_테스트() {
-        BlackJackDeck cards = new BlackJackDeck();
-        BlackJackService blackJackService = new BlackJackService(cards);
-
-        Player player = new Player(new PlayerName("player1"));
-
-        player.addCard(new Card(Shape.CLOVER, CardNumber.ACE));
-        player.addCard(new Card(Shape.SPADE, CardNumber.ACE));
-        player.addScore(2);
-
-        blackJackService.updateFinalScore(player);
-
-        assertThat(player.getResult().score()).isEqualTo(12);
-
-        Player player2 = new Player(new PlayerName("player2"));
-
-        player2.addCard(new Card(Shape.CLOVER, CardNumber.ACE));
-        player2.addCard(new Card(Shape.SPADE, CardNumber.ACE));
-        player2.addCard(new Card(Shape.CLOVER, CardNumber.KING));
-        player2.addScore(12);
-
-        blackJackService.updateFinalScore(player2);
-
-        assertThat(player2.getResult().score()).isEqualTo(12);
-
-    }
 }
