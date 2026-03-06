@@ -2,8 +2,8 @@ package blackjack.domain;
 
 public class Card {
 
-    private CardValue value;
-    private CardShape cardShape;
+    private final CardValue value;
+    private final CardShape cardShape;
 
     public Card(CardValue value, CardShape cardShape) {
         this.value = value;
