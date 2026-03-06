@@ -55,7 +55,7 @@ class GamblersTest {
         assertThat(result.winCount()).isEqualTo(1);
         assertThat(result.lossCount()).isEqualTo(1);
         assertThat(result.drawCount()).isEqualTo(0);
-        assertThat(result.gamblerResultLog().get(0)).isEqualTo(MatchResult.LOSE);
-        assertThat(result.gamblerResultLog().get(1)).isEqualTo(MatchResult.WIN);
+        assertThat(result.gamblerResultLog().get(0).matchResult()).isEqualTo(MatchResult.LOSE);
+        assertThat(result.gamblerResultLog().get(1).matchResult()).isEqualTo(MatchResult.WIN);
     }
 }
