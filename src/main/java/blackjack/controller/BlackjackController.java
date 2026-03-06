@@ -7,7 +7,9 @@ import blackjack.service.GameService;
 import blackjack.util.InputParser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
 
@@ -94,10 +96,17 @@ public class BlackjackController {
     }
 
     private void printWinningResult(List<User> users, Dealer dealer) {
+        Map<String, Boolean> result = new HashMap<>();
+        int dealerWinCount = 0;
         for (User user : users) {
             boolean isDealerWinning = gameService.isDealerWinning(user, dealer);
-            System.out.println(isDealerWinning);
+            result.put(user.getName(), !isDealerWinning);
+            if (isDealerWinning) {
+                dealerWinCount++;
+            }
         }
+
+        OutputView.printWinningResult(result, dealer.getName(), dealerWinCount);
     }
 
 }

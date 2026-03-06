@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import java.util.List;
+import java.util.Map;
 import java.util.StringJoiner;
 
 public class OutputView {
@@ -34,6 +35,19 @@ public class OutputView {
         }
 
         System.out.println(stringJoiner + " - 결과: " + cardsValue);
+    }
+
+    public static void printWinningResult(Map<String, Boolean> result, String dealerName, int dealerWinCount) {
+        System.out.println("## 최종 승패");
+        System.out.println(dealerName + ": " + dealerWinCount + "승 " + (result.size() - dealerWinCount) + "패");
+
+        for (String userName : result.keySet()) {
+            String flag = "패";
+            if (result.get(userName)) {
+                flag = "승";
+            }
+            System.out.println(userName + ": " + flag);
+        }
     }
 
 }
