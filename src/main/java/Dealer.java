@@ -22,4 +22,8 @@ public class Dealer {
     public int calculateTotalScore() {
         return drawnCards.sumScore();
     }
+
+    public boolean isDealerDone() {
+        return calculateTotalScore() >= 17;
+    }
 }
