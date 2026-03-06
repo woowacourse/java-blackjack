@@ -63,6 +63,10 @@ public class Player {
         return getName() + OutputMessage.CARD_TEXT.getMessage() + OutputMessage.format(getCardsInfo());
     }
 
+    public String getPlayerScoreResult() {
+        return getPlayerInfo() + OutputMessage.RESULT_TEXT.getMessage() + calculateScore();
+    }
+
     public String getName() {
         return name;
     }

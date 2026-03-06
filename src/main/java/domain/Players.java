@@ -32,6 +32,12 @@ public class Players {
                 .toList();
     }
 
+    public List<String> getPlayerScoreInfo() {
+        return players.stream()
+                .map(Player::getPlayerScoreResult)
+                .toList();
+    }
+
     public List<Player> getPlayers() {
         return List.copyOf(players);
     }
