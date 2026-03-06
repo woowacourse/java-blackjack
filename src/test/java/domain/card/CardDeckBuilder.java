@@ -12,6 +12,11 @@ public class CardDeckBuilder {
         return this;
     }
 
+    public CardDeckBuilder cards(List<Card> cards) {
+        this.cards = cards;
+        return this;
+    }
+
     public CardDeck build() {
         return CardDeck.from(TestCardGenerator.of(cards));
     }
