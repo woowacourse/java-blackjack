@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class Players implements Iterable<Player> {
+
     private static final String DELIMITER = ",";
     private static final int INCLUDE_EMPTY_ELEMENT = -1;
 
@@ -32,12 +33,6 @@ public class Players implements Iterable<Player> {
 
     public List<Player> getPlayers() {
         return players;
-    }
-
-    public List<String> getPlayerNames() {
-        return players.stream()
-                .map(Player::getName)
-                .toList();
     }
 
     @Override
