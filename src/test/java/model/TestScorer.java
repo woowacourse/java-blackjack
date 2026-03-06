@@ -5,18 +5,13 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import model.dto.Card;
 import model.dto.PlayerName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-import service.BlackJackService;
 
 public class TestScorer {
 
     @Test
     public void 일반_카드_변환_정상_작동() {
-        //given
         Card card = new Card(Shape.CLOVER,CardNumber.EIGHT);
 
-        //then
         assertThat(Scorer.calculate(card)).isEqualTo(card.cardNumber().getScore());
     }
 
@@ -42,7 +37,6 @@ public class TestScorer {
         Scorer.updateFinalScore(player2);
 
         assertThat(player2.getResult().score()).isEqualTo(12);
-
     }
 
 }
