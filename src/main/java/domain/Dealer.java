@@ -12,6 +12,10 @@ public class Dealer {
         hand.drawCard(card);
     }
 
+    public Card getOpenCard() {
+        return hand.getHand().getFirst();
+    }
+
     public Hand getHand() {
         return hand;
     }

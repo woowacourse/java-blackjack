@@ -17,4 +17,12 @@ public class Card {
     public boolean isAce() {
         return rank == Rank.ACE;
     }
+
+    public Rank getRank() {
+        return rank;
+    }
+
+    public Suit getSuit() {
+        return suit;
+    }
 }
