@@ -11,6 +11,7 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackJack {
+    private static final int INITIAL_CARD_COUNT = 2;
     private final CardDeck cardDeck;
 
     public BlackJack() {
@@ -35,58 +36,67 @@ public class BlackJack {
         return PlayNameParser.splitNames(InputView.readLine());
     }
 
-    private void initialDeal(Dealer dealer, Gamblers gamblers){
-        dealer.deal(cardDeck);
-        gamblers.dealAll(cardDeck);
-        dealer.deal(cardDeck);
-        gamblers.dealAll(cardDeck);
+    private void initialDeal(Dealer dealer, Gamblers gamblers) {
+        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
+            dealer.deal(cardDeck);
+            gamblers.dealAll(cardDeck);
+        }
     }
-    private void printInitialDealInfo(Dealer dealer, Gamblers gamblers){
+
+    private void printInitialDealInfo(Dealer dealer, Gamblers gamblers) {
         OutputView.printInitMessage(gamblers.getNames());
         OutputView.printDealerFirstCard(dealer.showFirstCard());
 
-        for(GamblerCardInfo gamblerCardInfo : gamblers.gamblerCardInfos())
+        for (GamblerCardInfo gamblerCardInfo : gamblers.gamblerCardInfos()) {
             OutputView.printPlayerCards(gamblerCardInfo);
+        }
     }
 
-    private void gamblersTurn(Gamblers gamblers){
-        for(Gambler gambler : gamblers.getGamblers()){
+    private void gamblersTurn(Gamblers gamblers) {
+        for (Gambler gambler : gamblers.getGamblers()) {
             gamblerTurn(gambler);
         }
     }
 
-    private void gamblerTurn(Gambler gambler){
-        while(true){
+    private void gamblerTurn(Gambler gambler) {
+        while (true) {
             OutputView.askHit(gambler.getName());
             boolean answer = AnswerParser.parse(InputView.readLine());
-            if(answer)
-                gambler.deal(cardDeck);
-            if(gambler.isBust() || !answer)
+            if (!answer) {
                 break;
+            }
 
+            gambler.deal(cardDeck);
+
+            if (gambler.isBust()) {
+                OutputView.printPlayerBust(gambler.getName());
+                break;
+            }
             OutputView.printPlayerCards(gambler.getCardInfo());
         }
     }
 
-    private void dealerTurn(Dealer dealer){
-        while(true){
+    private void dealerTurn(Dealer dealer) {
+        while (true) {
             boolean canStand = dealer.canStand();
-            if(canStand)
+            if (canStand) {
                 break;
+            }
 
             OutputView.printDealerHit();
             dealer.deal(cardDeck);
         }
     }
 
-    private void printFinalPlayerInfo(Dealer dealer, Gamblers gamblers){
+    private void printFinalPlayerInfo(Dealer dealer, Gamblers gamblers) {
         OutputView.printFinalDealer(dealer.getCardInfo(), dealer.score());
-        for(GamblerCardInfo gamblerCardInfo : gamblers.gamblerCardInfos())
+        for (GamblerCardInfo gamblerCardInfo : gamblers.gamblerCardInfos()) {
             OutputView.printFinalPlayer(gamblerCardInfo);
+        }
     }
 
-    private void printFinalResult(Dealer dealer, Gamblers gamblers){
+    private void printFinalResult(Dealer dealer, Gamblers gamblers) {
         OutputView.printFinalResultHeader();
-        OutputView.printResult(gamblers.getResult(dealer.score()));
+        OutputView.printResult(gamblers.getResult(dealer));
     }
 }

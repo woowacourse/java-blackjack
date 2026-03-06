@@ -6,12 +6,11 @@ import expcetion.BlackjackException;
 import expcetion.ExceptionMessage;
 
 public class Gambler extends Player {
-    private final String name;
-
     private static final int GAMBLER_NAME_MAX_LENGTH = 10;
     private static final int GAMBLER_NAME_MIN_LENGTH = 2;
     private static final String RESULT_FORMAT = "%s:%s";
     private static final String MATCH_NUMBER_PATTERN = ".*\\d.*";
+    private final String name;
 
     public Gambler(String name) {
         super();
@@ -37,32 +36,37 @@ public class Gambler extends Player {
         }
     }
 
-    public MatchResult getResult(int dealerScore) {
-        int gambler = adjustBustScore(score());
-        int dealer = adjustBustScore(dealerScore);
-
-        if(gambler > dealer)
+    public MatchResult getResult(Dealer dealer) {
+        int gamblerScore = normalize(score());
+        int dealerScore = normalize(dealer.score());
+        if (gamblerScore > dealerScore) {
             return MatchResult.WIN;
+        }
 
-        if(gambler < dealer)
+        if (gamblerScore < dealerScore) {
             return MatchResult.LOSE;
+        }
         return MatchResult.DRAW;
+    }
+
+    private int normalize(int score) {
+        if (score > BLACKJACK_MAX_LIMIT) {
+            return 0;
+        }
+        return score;
     }
 
 
     public String showResult(MatchResult result) {
-        return String.format(RESULT_FORMAT,name, result.getName());
+        return String.format(RESULT_FORMAT, name, result.getName());
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public GamblerCardInfo getCardInfo(){
+    public GamblerCardInfo getCardInfo() {
         return new GamblerCardInfo(name, handCard.getCardInfos(), score());
     }
 
-    public boolean isBust(){
-        return score() > 21;
-    }
 }

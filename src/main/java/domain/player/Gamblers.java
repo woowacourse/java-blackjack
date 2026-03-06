@@ -52,26 +52,28 @@ public class Gamblers {
          */
     }
 
-    public BlackjackResult getResult(int dealerScore) {
+    public BlackjackResult getResult(Dealer dealer) {
         int winCount = 0;
-        int lossCount = 0;
+        int loseCount = 0;
         List<String> logs = new ArrayList<>();
-        for(Gambler gambler : gamblers) {
-            MatchResult result =  gambler.getResult(dealerScore);
-            if(result == MatchResult.WIN) winCount++;
-            if(result == MatchResult.LOSE) lossCount++;
-
+        for (Gambler gambler : gamblers) {
+            MatchResult result = gambler.getResult(dealer);
+            if (result == MatchResult.WIN) {
+                loseCount++;
+            }
+            if (result == MatchResult.LOSE) {
+                winCount++;
+            }
             logs.add(gambler.showResult(result));
-         }
-
-        return new BlackjackResult(winCount, lossCount, gamblers.size() - winCount - lossCount ,logs);
+        }
+        return new BlackjackResult(winCount, loseCount, gamblers.size() - winCount - loseCount, logs);
     }
 
     public List<String> getNames() {
         return gamblers.stream().map(Gambler::getName).toList();
     }
 
-    public List<GamblerCardInfo> gamblerCardInfos(){
+    public List<GamblerCardInfo> gamblerCardInfos() {
         return gamblers.stream().map(Gambler::getCardInfo).toList();
     }
 }

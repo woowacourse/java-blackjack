@@ -8,6 +8,6 @@ public class PlayNameParser {
     }
 
     public static List<String> splitNames(String names) {
-        return Arrays.asList(names.split(","));
+        return Arrays.asList(names.replace(" ", "").split(","));
     }
 }

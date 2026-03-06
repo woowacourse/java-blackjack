@@ -4,6 +4,7 @@ import domain.card.HandCard;
 import domain.deck.CardDeck;
 
 public abstract class Player {
+    protected static final int BLACKJACK_MAX_LIMIT = 21;
     protected final HandCard handCard;
 
     protected Player() {
@@ -18,11 +19,8 @@ public abstract class Player {
         return handCard.cardCalculator();
     }
 
-    public int adjustBustScore(int score) {
-        if (score > 21) {
-            return 0;
-        }
-        return score;
+    public boolean isBust() {
+        return score() > BLACKJACK_MAX_LIMIT;
     }
 }
 

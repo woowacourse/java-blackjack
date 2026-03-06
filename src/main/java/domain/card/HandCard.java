@@ -20,6 +20,7 @@ public class HandCard {
         return aceCalculator(nonAceTotal, aceCnt);
     }
 
+    //이 메소드는 전체 점수를 리턴해서 이름이 맞지 않다. 아래 주석 메소드를 사용하는게 맞는가?
     private int aceCalculator(int nonAceTotal, int aceCnt) {
         int totalSum = nonAceTotal + (aceCnt * ACE_MAX_VALUE);
         int remainingAce = aceCnt;
