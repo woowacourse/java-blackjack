@@ -41,11 +41,6 @@ public class Player extends Participant {
     }
 
     @Override
-    public List<String> getCardNames() {
-        return hand.getCardNames(0);
-    }
-
-    @Override
     public String getNickname() {
         return nickname;
     }

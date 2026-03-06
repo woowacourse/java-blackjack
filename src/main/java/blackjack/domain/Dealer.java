@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class Dealer extends Participant {
+
     public static final int DEALER_HIT_THRESHOLD = 16;
 
     private final Trump trump;
@@ -38,14 +39,12 @@ public class Dealer extends Participant {
         }
     }
 
+    public List<String> getOpenCardNames() {
+        return hand.getCardNames(1);
+    }
+
     @Override
     public String getNickname() {
         return "딜러";
     }
-
-    @Override
-    public List<String> getCardNames() {
-        return hand.getCardNames(1);
-    }
-
 }

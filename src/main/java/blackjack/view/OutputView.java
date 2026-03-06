@@ -27,7 +27,7 @@ public class OutputView {
         System.out.printf("딜러와 %s에게 %s장을 나누었습니다.\n",
             String.join(", ", playerNicknames), START_NUMBER_OF_CARD);
 
-        System.out.printf("딜러카드: %s\n", String.join(", ", dealer.getCardNames()));
+        System.out.printf("딜러카드: %s\n", String.join(", ", dealer.getOpenCardNames()));
 
         players.forEach(OutputView::printCardStatus);
     }
