@@ -3,14 +3,13 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class Player {
 
-    private final String name;
+    private final PlayerName name;
     private final List<Card> cards;
 
-    public User(String name) {
-        validate(name);
-        this.name = name;
+    public Player(String name) {
+        this.name = new PlayerName(name);
         this.cards = new ArrayList<>();
     }
 
@@ -19,7 +18,7 @@ public class User {
     }
 
     public String getName() {
-        return name;
+        return name.name();
     }
 
     public List<Card> getCards() {
@@ -66,12 +65,6 @@ public class User {
             }
         }
         return false;
-    }
-
-    private void validate(String name) {
-        if (name.length() > 5) {
-            throw new IllegalArgumentException("유저 이름은 5자가 넘을 수 없습니다.");
-        }
     }
 
 }

@@ -1,6 +1,6 @@
 package blackjack.util;
 
-import blackjack.domain.User;
+import blackjack.domain.Player;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,15 +9,15 @@ public class InputParser {
     private InputParser() {
     }
 
-    public static List<User> createUser(String userName) {
+    public static List<Player> createUser(String userName) {
         String[] userNames = userName.split(",");
 
-        List<User> users = new ArrayList<>();
+        List<Player> players = new ArrayList<>();
         for (String name : userNames) {
-            users.add(new User(name));
+            players.add(new Player(name));
         }
 
-        return users;
+        return players;
     }
 
 }

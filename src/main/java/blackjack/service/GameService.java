@@ -1,38 +1,38 @@
 package blackjack.service;
 
 import blackjack.domain.Dealer;
-import blackjack.domain.User;
+import blackjack.domain.Player;
 import java.util.List;
 
 public class GameService {
 
-    public void settingCards(List<User> users, Dealer dealer) {
+    public void settingCards(List<Player> players, Dealer dealer) {
         dealer.shuffleCards();
         for (int i = 0; i < 2; i++) {
-            for (User user : users) {
-                user.bring(dealer.bringCard());
+            for (Player player : players) {
+                player.bring(dealer.bringCard());
             }
             dealer.bring(dealer.bringCard());
         }
     }
 
-    public void getMoreCard(User user, Dealer dealer) {
-        user.bring(dealer.bringCard());
+    public void getMoreCard(Player player, Dealer dealer) {
+        player.bring(dealer.bringCard());
     }
 
     public void getMoreCardForDealer(Dealer dealer) {
         dealer.bring(dealer.bringCard());
     }
 
-    public boolean isDealerWinning(User user, Dealer dealer) {
-        if (user.isBurst()) {
+    public boolean isDealerWinning(Player player, Dealer dealer) {
+        if (player.isBurst()) {
             return true;
         }
         if (dealer.isBurst()) {
             return false;
         }
 
-        return user.calculateCardsValue() < dealer.calculateCardsValue();
+        return player.calculateCardsValue() < dealer.calculateCardsValue();
     }
 
 }

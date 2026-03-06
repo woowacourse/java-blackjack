@@ -7,12 +7,12 @@ public class Dealer {
 
     private final Deck deck;
     private final List<Card> cards;
-    private final String name;
+    private final PlayerName name;
 
     public Dealer(Deck deck) {
         this.deck = deck;
         this.cards = new ArrayList<>();
-        this.name = "딜러";
+        this.name = new PlayerName("딜러");
     }
 
     public void bring(Card card) {
@@ -33,7 +33,7 @@ public class Dealer {
     }
 
     public String getName() {
-        return name;
+        return name.name();
     }
 
     public void shuffleCards() {
