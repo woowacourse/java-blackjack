@@ -1,5 +1,6 @@
 package domain;
 
+import dto.GameStatus;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,11 +10,19 @@ public class GameTable {
 
     public GameTable() {
         this.participants = new ArrayList<>();
-
     }
 
-    public void addPlayer(Participant player) {
-        participants.add(player);
+    public void addParticipant(Participant participant) {
+        participants.add(participant);
+    }
+
+    public List<GameStatus> gameStatus() {
+        List<GameStatus> gameStatuses = new ArrayList<>();
+        for (Participant participant : participants) {
+            gameStatuses.add(participant.status());
+        }
+
+        return gameStatuses;
     }
 
 }

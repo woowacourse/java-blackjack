@@ -1,5 +1,7 @@
 package domain;
 
+import dto.GameStatus;
+
 public abstract class Participant {
 
     private final String name;
@@ -26,5 +28,9 @@ public abstract class Participant {
 
     public int scoreSum() {
         return hand.scoreSum();
+    }
+
+    public GameStatus status() {
+        return new GameStatus(name, hand.cardInfos(), scoreSum());
     }
 }
