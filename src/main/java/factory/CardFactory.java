@@ -9,7 +9,6 @@ import java.util.List;
 
 public class CardFactory {
     public static List<Card> createDeck() {
-        // TODO: 리팩토링
         List<Card> cards = new ArrayList<>();
         for(Suit suit : Suit.values()) {
             for (Rank rank : Rank.values()) {
