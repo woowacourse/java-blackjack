@@ -15,7 +15,7 @@ public enum GameResult {
         int playerScore = player.getScore();
         int dealerScore = dealer.getScore();
 
-        if ((player.isBurst() && dealer.isBurst())) {
+        if ((player.isBurst() && dealer.isBurst()) || (playerScore == dealerScore)) {
             return DRAW;
         }
 
