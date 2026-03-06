@@ -1,6 +1,7 @@
 package service;
 
 import java.util.Objects;
+import model.BlackJackDeck;
 import model.CardNumber;
 import model.Cards;
 import model.Dealer;
@@ -17,9 +18,9 @@ import model.dto.PlayerResult;
 import model.dto.PlayerWinning;
 
 public class BlackJackService {
-    private final Cards cards;
+    private final BlackJackDeck cards;
 
-    public BlackJackService(Cards cards) {
+    public BlackJackService(BlackJackDeck cards) {
         this.cards = cards;
     }
 
