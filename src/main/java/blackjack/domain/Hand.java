@@ -52,4 +52,8 @@ public class Hand {
                 .filter(TrumpCard::isAce)
                 .count();
     }
+
+    public List<TrumpCard> getCards() {
+        return cards;
+    }
 }
