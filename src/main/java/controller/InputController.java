@@ -10,15 +10,11 @@ import model.Players;
 import view.InputView;
 
 public class InputController {
-    private final InputView inputView;
+
     private final Scanner scanner = new Scanner(System.in);
 
-    public InputController(InputView inputView) {
-        this.inputView = inputView;
-    }
-
     public Players getParticipantsName() {
-        inputView.printNameRequest();
+        InputView.printNameRequest();
         String nameInput = getInput();
         List<Player> players = Arrays.stream(nameInput.split(","))
                 .map((name) -> new Player(new PlayerName(name)))
@@ -28,7 +24,7 @@ public class InputController {
     }
 
     public boolean getCondition(String name) {
-        inputView.printDrawRequest(name);
+        InputView.printDrawRequest(name);
         return new Agreement(getInput()).get();
     }
 
