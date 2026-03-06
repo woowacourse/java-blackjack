@@ -29,7 +29,7 @@ public class OutputView {
     }
 
     public void printCurrentHoldCard(Player player) {
-        System.out.println(player.getName() + "카드: " + holdCardToString(player.getHoldCards()));
+        System.out.println(player.getName() + "카드: " + holdCardToString(player.getHandCards()));
     }
 
     public void printDealerReceiveCard() {
@@ -44,7 +44,7 @@ public class OutputView {
             dealerScore = "버스트";
         }
 
-        System.out.println("딜러카드: " + holdCardToString(dealer.getHoldCards()) + " - 결과: " + dealerScore);
+        System.out.println("딜러카드: " + holdCardToString(dealer.getHandCards()) + " - 결과: " + dealerScore);
 
         for (Player player : players) {
             String playerScore = String.valueOf(player.calculateTotalScore());
@@ -52,7 +52,7 @@ public class OutputView {
                 playerScore = "버스트";
             }
             System.out.println(
-                    player.getName() + "카드: " + holdCardToString(player.getHoldCards()) + " - 결과: " + playerScore);
+                    player.getName() + "카드: " + holdCardToString(player.getHandCards()) + " - 결과: " + playerScore);
         }
     }
 
