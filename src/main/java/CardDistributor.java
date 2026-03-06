@@ -15,4 +15,18 @@ public class CardDistributor {
         Card card = randomCardPicker.drawCard();
         dealer.receiveOneCard(card);
     }
+
+    public void distributeTwoCardsToPlayer(Player player) {
+        for (int i = 0; i < 2; i++) {
+            Card card = randomCardPicker.drawCard();
+            player.receiveOneCard(card);
+        }
+    }
+
+    public void distributeTwoCardsToDealer(Dealer dealer) {
+        for (int i = 0; i < 2; i++) {
+            Card card = randomCardPicker.drawCard();
+            dealer.receiveOneCard(card);
+        }
+    }
 }
