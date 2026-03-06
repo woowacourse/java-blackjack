@@ -37,7 +37,7 @@ public class Cards {
                 aceNum += 1;
                 continue;
             }
-            sum += card.getRank().getValue();
+            sum += card.getRank().getScoreValue();
         }
 
         for (int i = aceNum; i > 0; i--) {

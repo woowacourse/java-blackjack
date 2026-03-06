@@ -1,15 +1,21 @@
 package domain;
 
 public enum Rank {
-    ACE(1), TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7), EIGHT(8), NINE(9), TEN(10), J(10), Q(10), K(10);
-    private final int value;
+    ACE("A", 1), TWO("2", 2), THREE("3", 3), FOUR("4", 4), FIVE("5", 5), SIX("6", 6), SEVEN("7", 7), EIGHT("8", 8), NINE("9", 9), TEN("10", 10), J("J", 10), Q("Q", 10), K("K", 10);
+    private final String displayValue;
+    private final int scoreValue;
 
-    Rank(int value) {
-        this.value = value;
+    Rank(String displayValue, int scoreValue) {
+        this.displayValue = displayValue;
+        this.scoreValue = scoreValue;
     }
 
-    public int getValue() {
-        return value;
+    public int getScoreValue() {
+        return scoreValue;
+    }
+
+    public String getDisplayValue() {
+        return displayValue;
     }
 
     // ace를 제외한 합계가 15이다 -> 매개변수로 15를 주고, ace 넣을수있냐?
