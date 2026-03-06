@@ -1,19 +1,13 @@
 package controller;
 
-import view.InputView;
-import view.OutputView;
+import domain.GameTable;
 
 public class Controller {
 
-    private final InputView inputView;
-    private final OutputView outputView;
-
-    public Controller(InputView inputView, OutputView outputView) {
-        this.inputView = inputView;
-        this.outputView = outputView;
-    }
+    private GameTable gameTable;
 
     public void run() {
-
+        setupPhase();
+        gamePhase();
     }
 }

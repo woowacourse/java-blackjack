@@ -4,7 +4,7 @@ public class Player extends Participant {
 
     private static final int PLAYING_VALUE = 20;
 
-    protected Player(String name, Hand hand) {
+    public Player(String name, Hand hand) {
         super(name, hand);
     }
 

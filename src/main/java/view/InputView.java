@@ -2,19 +2,19 @@ package view;
 
 import java.util.Scanner;
 
-public class InputView {
+public final class InputView {
 
-    private final Scanner scanner = new Scanner(System.in);
+    private final static Scanner scanner = new Scanner(System.in);
 
-    public String readPlayers() {
+    public static String readPlayers() {
         return readLine(InfoMessage.PLAYER_INPUT);
     }
 
-    public String readSelect() {
+    public static String readSelect() {
         return readLine(InfoMessage.SELECT);
     }
 
-    private String readLine(InfoMessage info) {
+    private static String readLine(InfoMessage info) {
         System.out.println(info.message());
         return scanner.nextLine();
     }
