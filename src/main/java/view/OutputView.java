@@ -23,7 +23,7 @@ public class OutputView {
     private static final String DEALER_TEXT = "딜러:";
 
     public static void printInitDeck(List<PlayerResult> players, PlayerResult dealer) {
-        List<String> playerNames = players.stream().map(p -> p.name().value()).toList();
+        List<String> playerNames = players.stream().map(playerResult -> playerResult.name().value()).toList();
         printInitDeckDrawMessage(playerNames);
         printDealerInitDeck(dealer.deck().getFirst());
         printPlayersCurrentDeck(players);
