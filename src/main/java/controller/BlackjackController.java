@@ -28,8 +28,17 @@ public class BlackjackController {
         readParticipants();
         shuffleCards();
         readExtraCardCommand();
-
+        dealDealerCard();
     }
+
+    private void dealDealerCard() {
+        calculateDealerScore();
+    }
+
+    private void calculateDealerScore() {
+        blackjackService.calculateDealerScore();
+    }
+
     private void shuffleCards() {
         blackjackService.makeDeck();
         blackjackService.dealCards();

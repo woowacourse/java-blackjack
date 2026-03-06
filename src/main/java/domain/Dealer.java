@@ -4,7 +4,7 @@ public class Dealer {
     private Hand hand;
 
     public Dealer() {
-        hand = new Hand();
+        this.hand = new Hand();
     }
 
     public void receiveCard(Card card) {
@@ -13,5 +13,9 @@ public class Dealer {
 
     public String getCardsDisplay() {
         return hand.getCardsDisplay();
+    }
+
+    public void calculateScore() {
+        hand.calculateHandScore();
     }
 }

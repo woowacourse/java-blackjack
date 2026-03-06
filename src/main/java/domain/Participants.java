@@ -71,6 +71,10 @@ public class Participants {
     public void calculateScore(int index) {
         participants.get(index).calculateScore();
     }
+
+    public void caculateDealerscore() {
+        dealer.calculateScore();
+    }
 }
 
 

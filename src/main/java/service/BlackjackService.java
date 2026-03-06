@@ -44,4 +44,8 @@ public class BlackjackService {
         participants.calculateScore(index);
         return participants.makeOneUserCardDelegator(index);
     }
+
+    public void calculateDealerScore() {
+        participants.caculateDealerscore();
+    }
 }
