@@ -2,6 +2,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import org.junit.jupiter.api.Test;
 
@@ -68,4 +70,45 @@ public class GameTest {
         assertThat(game.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.PUSH);
     }
 
+    @Test
+    void judge_total_winner_result() {
+        Player pobi = createPlayer("pobi", "2:하트", "8:스페이드", "A:클로버");
+        Player jason = createPlayer("jason", "7:클로버", "K:스페이드");
+        Player brown = createPlayer("brown", "10:하트", "10:클로버");
+        Dealer dealer = createDealer("3:다이아몬드", "9:클로버", "8:다이아몬드");
+
+        Game game = new Game(null);
+        GameResult expected = new GameResult(
+                Map.of(
+                        ScoreCompareResult.PLAYER_WIN, 1,
+                        ScoreCompareResult.DEALER_WIN, 1,
+                        ScoreCompareResult.PUSH, 1),
+                Map.of(
+                        pobi, ScoreCompareResult.PLAYER_WIN,
+                        jason, ScoreCompareResult.DEALER_WIN,
+                        brown, ScoreCompareResult.PUSH)
+        );
+
+        GameResult actual = game.judgeTotalWinnerResult(List.of(pobi, jason, brown), dealer);
+
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+    }
+
+    private Player createPlayer(String name, String... cards) {
+        Player player = new Player(name);
+        for (String card : cards) {
+            String[] parts = card.split(":");
+            player.receiveOneCard(new Card(parts[0], parts[1]));
+        }
+        return player;
+    }
+
+    private Dealer createDealer(String... cards) {
+        Dealer dealer = new Dealer();
+        for (String card : cards) {
+            String[] parts = card.split(":");
+            dealer.receiveOneCard(new Card(parts[0], parts[1]));
+        }
+        return dealer;
+    }
 }
