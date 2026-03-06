@@ -12,7 +12,6 @@ public class OutputView {
 //    jason카드: 7클로버, K스페이드
 
     public void outputInitialMessage(InitialDto initialDto) {
-
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("딜러와 ");
         List<String> playerNames = initialDto.playerDeckDtos().stream()
@@ -32,19 +31,20 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    public void playerResultMessage(List<PlayerResultDto> playerResultDto, DealerResultDto dealerResultDto) {
+    public void playerResultMessage(ResultDto resultDto) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("딜러카드: ");
-        String dealerDtoStrings = getCardDtoStrings(dealerResultDto.cardDtos());
+        String dealerDtoStrings = getCardDtoStrings(resultDto.dealerResultDto().cardDtos());
         stringBuilder.append(dealerDtoStrings);
-        stringBuilder.append(" - 결과: ").append(dealerResultDto.sum()).append("\n");
+        stringBuilder.append(" - 결과: ").append(resultDto.dealerResultDto().sum()).append("\n");
 
-        for (PlayerResultDto playerResult : playerResultDto) {
+        for (PlayerResultDto playerResult : resultDto.playerResultDtos()) {
             stringBuilder.append(playerResult.playerName()).append("카드: ");
             String cardDtoStrings = getCardDtoStrings(playerResult.cardDtos());
             stringBuilder.append(cardDtoStrings);
             stringBuilder.append(" - 결과: ").append(playerResult.sum()).append("\n");
         }
+        System.out.println(stringBuilder);
     }
 
     private String getCardDtoStrings(List<CardDto> cardDtos) {

@@ -2,7 +2,6 @@ package domain.model;
 
 public class Dealer implements Person {
 
-    // TODO: 딜러에 대한 정보 추가 필요
     private Deck deck;
 
     private Dealer(Deck deck) {
@@ -13,8 +12,20 @@ public class Dealer implements Person {
         return new Dealer(deck);
     }
 
+    public void calculateFinalSum() {
+        deck.calculateFinalSum();
+    }
+
     public Deck getDeck() {
         return deck;
+    }
+
+    public boolean isBurst() {
+        return deck.getDeckStatus() == DeckStatus.BURST;
+    }
+
+    public boolean isAlice() {
+        return deck.getDeckStatus() == DeckStatus.ALIVE;
     }
 
     @Override

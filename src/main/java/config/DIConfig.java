@@ -4,6 +4,7 @@ import controller.BlackJackController;
 import domain.service.BlackJackService;
 import domain.service.CardDistributor;
 import domain.service.CardFactory;
+import domain.service.JudgementService;
 import repository.CardRepository;
 import repository.DealerRepository;
 import repository.PlayerRepository;
@@ -32,10 +33,17 @@ public class DIConfig {
         return new BlackJackService(
                 playerRepository(),
                 cardRepository(),
-                cardDistributor()
+                cardDistributor(),
+                judgementService()
         );
     }
 
+    public JudgementService judgementService() {
+        return new JudgementService(
+                playerRepository(),
+                dealerRepository()
+        );
+    }
 
     public CardDistributor cardDistributor() {
         return new CardDistributor(
