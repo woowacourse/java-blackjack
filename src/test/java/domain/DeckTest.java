@@ -33,6 +33,4 @@ public class DeckTest {
         Assertions.assertThat(card).isInstanceOf(Card.class);
         Assertions.assertThat(card).isNotIn(deck.getCards());
     }
-
-
 }

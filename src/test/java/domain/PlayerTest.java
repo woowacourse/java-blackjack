@@ -13,62 +13,85 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PlayerTest {
+
     @Test
     @DisplayName("숫자에 대한 카드 점수를 계산한다.")
     void calculateNumberTotalScoreTest() {
-        List<Card> cards1 = List.of(new Card(CardNumber.EIGHT, CardShape.CLUB),
+        // Given
+        List<Card> firstHands1 = List.of(new Card(CardNumber.EIGHT, CardShape.CLUB),
                 new Card(CardNumber.FOUR, CardShape.CLUB));
-        Player player1 = new Player("pobi", cards1);
+        Player player1 = new Player("pobi");
+        player1.receiveFirstHandCards(firstHands1);
 
-        int totalScore1 = player1.calculateScore();
+        // When
+        int score1 = player1.calculateScore();
 
-        List<Card> cards2 = List.of(new Card(CardNumber.EIGHT, CardShape.CLUB), new Card(CardNumber.TWO, CardShape.CLUB));
-        Player player2 = new Player("woni", cards2);
+        // Then
+        Assertions.assertThat(score1).isEqualTo(12);
 
-        int totalScore2 = player2.calculateScore();
+        // Given
+        List<Card> firstHands2 = List.of(new Card(CardNumber.EIGHT, CardShape.CLUB), new Card(CardNumber.TWO, CardShape.CLUB));
+        Player player2 = new Player("woni");
+        player2.receiveFirstHandCards(firstHands2);
 
-        Assertions.assertThat(totalScore1).isEqualTo(12);
-        Assertions.assertThat(totalScore2).isEqualTo(10);
+        // When
+        int score2 = player2.calculateScore();
+
+        // Then
+        Assertions.assertThat(score2).isEqualTo(10);
     }
 
     @Test
     @DisplayName("알파벳에 대한 카드 점수를 계산한다. (ex - J, Q, K)")
     void calculateAlphabetTotalScoreTest() {
-        List<Card> cards = List.of(new Card(CardNumber.JACK, CardShape.CLUB), new Card(CardNumber.FOUR, CardShape.CLUB));
+        // Given
+        List<Card> firstHands = List.of(new Card(CardNumber.JACK, CardShape.CLUB), new Card(CardNumber.FOUR, CardShape.CLUB));
+        Player player = new Player("woni");
+        player.receiveFirstHandCards(firstHands);
 
-        Player player = new Player("pobi", cards);
+        // When
+        int score = player.calculateScore();
 
-        int totalScore = player.calculateScore();
-
-        Assertions.assertThat(totalScore).isEqualTo(14);
+        // Then
+        Assertions.assertThat(score).isEqualTo(14);
     }
 
     @Test
     @DisplayName("Ace에 대한 점수를 처리한다.")
     void judgeAceTest() {
-        List<Card> cards1 = new ArrayList<>(List.of(new Card(CardNumber.JACK, CardShape.CLUB), new Card(CardNumber.FOUR, CardShape.CLUB)));
-        Player player1 = new Player("pobi", cards1);
+        // Given
+        List<Card> firstHands1 = new ArrayList<>(List.of(new Card(CardNumber.JACK, CardShape.CLUB), new Card(CardNumber.FOUR, CardShape.CLUB)));
+        Player player1 = new Player("pobi");
+        player1.receiveFirstHandCards(firstHands1);
         player1.addCard(new Card(CardNumber.ACE, CardShape.CLUB));
+
+        // When
         int player1TotalScore = player1.calculateScore();
 
-        List<Card> cards2 = new ArrayList<>(List.of(new Card(CardNumber.FOUR, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
-        Player player2 = new Player("woni", cards2);
-        int player2TotalScore = player2.calculateScore();
-
+        // Then
         Assertions.assertThat(player1TotalScore).isEqualTo(15);
+
+        List<Card> firstHands2 = new ArrayList<>(List.of(new Card(CardNumber.FOUR, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
+        Player player2 = new Player("woni");
+        player2.receiveFirstHandCards(firstHands2);
+
+        int player2TotalScore = player2.calculateScore();
         Assertions.assertThat(player2TotalScore).isEqualTo(15);
     }
 
     @Test
     @DisplayName("여러 장의 Ace에 대한 점수를 처리한다.")
     void judgeManyAceTest() {
-        List<Card> cards1 = new ArrayList<>(List.of(new Card(CardNumber.EIGHT, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
-        Player player1 = new Player("pobi", cards1);
+        List<Card> firstHands1 = new ArrayList<>(List.of(new Card(CardNumber.EIGHT, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
+        Player player1 = new Player("pobi");
+        player1.receiveFirstHandCards(firstHands1);
+
         player1.addCard(new Card(CardNumber.ACE, CardShape.SPADE));
         int player1TotalScore = player1.calculateScore();
 
-        List<Card> cards2 = new ArrayList<>(List.of(new Card(CardNumber.FOUR, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
-        Player player2 = new Player("woni", cards2);
+        List<Card> firstHands2 = new ArrayList<>(List.of(new Card(CardNumber.FOUR, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
+        Player player2 = new Player("woni");
+        player2.receiveFirstHandCards(firstHands2);
 
         player2.addCard(new Card(CardNumber.ACE, CardShape.SPADE));
         player2.addCard(new Card(CardNumber.ACE, CardShape.HEART));
@@ -81,8 +104,9 @@ public class PlayerTest {
     @Test
     @DisplayName("21을 초과하면 버스트이다.")
     void judgeBustTest() {
-        List<Card> cards = new ArrayList<>(List.of(new Card(CardNumber.JACK, CardShape.CLUB), new Card(CardNumber.FOUR, CardShape.CLUB)));
-        Player player = new Player("pobi", cards);
+        List<Card> firstHands = new ArrayList<>(List.of(new Card(CardNumber.JACK, CardShape.CLUB), new Card(CardNumber.FOUR, CardShape.CLUB)));
+        Player player = new Player("pobi");
+        player.receiveFirstHandCards(firstHands);
 
         player.addCard(new Card(CardNumber.EIGHT, CardShape.CLUB));
         boolean isBust = player.isBust();
@@ -105,7 +129,8 @@ public class PlayerTest {
     @DisplayName("플레이어가 버스트가 아니라면 딜러보다 21에 가까워야 승리한다.")
     void normalNumberTest() {
         List<Card> cards = new ArrayList<>(List.of(new Card(CardNumber.FOUR, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
-        Player player = new Player("woni", cards);
+        Player player = new Player("woni");
+        player.receiveFirstHandCards(cards);
         Assertions.assertThat(player.compareScore(14)).isEqualTo(GameResult.WIN);
     }
 
@@ -113,7 +138,8 @@ public class PlayerTest {
     @DisplayName("플레이어가 버스트라면 딜러가 버스트가 아닐경우 패배한다.")
     void bustTest() {
         List<Card> cards = new ArrayList<>(List.of(new Card(CardNumber.FOUR, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
-        Player player = new Player("woni", cards);
+        Player player = new Player("woni");
+        player.receiveFirstHandCards(cards);
         player.addCard(new Card(CardNumber.TEN, CardShape.SPADE));
         player.addCard(new Card(CardNumber.TEN, CardShape.HEART));
         Assertions.assertThat(player.compareScore(14)).isEqualTo(GameResult.LOSE);
@@ -123,7 +149,8 @@ public class PlayerTest {
     @DisplayName("만약 플레이어와 딜러 모두 버스트라면 무승부이다.")
     void drawBustTest(){
         List<Card> cards = new ArrayList<>(List.of(new Card(CardNumber.FOUR, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
-        Player player = new Player("woni", cards);
+        Player player = new Player("woni");
+        player.receiveFirstHandCards(cards);
         player.addCard(new Card(CardNumber.TEN, CardShape.SPADE));
         player.addCard(new Card(CardNumber.TEN, CardShape.HEART));
         Assertions.assertThat(player.compareScore(22)).isEqualTo(GameResult.DRAW);
@@ -133,9 +160,8 @@ public class PlayerTest {
     @DisplayName("만약 플레이어와 딜러 모두 무승부이다.")
     void drawNumberTest(){
         List<Card> cards = new ArrayList<>(List.of(new Card(CardNumber.SIX, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
-        Player player = new Player("woni", cards);
+        Player player = new Player("woni");
+        player.receiveFirstHandCards(cards);
         Assertions.assertThat(player.compareScore(17)).isEqualTo(GameResult.DRAW);
     }
-
-
 }
