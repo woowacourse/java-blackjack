@@ -55,4 +55,8 @@ public class Card {
     public int hashCode() {
         return Objects.hash(rank, shape);
     }
+
+    public String getShape() {
+        return shape;
+    }
 }

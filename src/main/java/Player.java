@@ -8,6 +8,10 @@ public class Player {
         this.drawnCards = new Cards();
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void receiveOneCard(Card card) {
         drawnCards.addCard(card);
     }

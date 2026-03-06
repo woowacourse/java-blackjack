@@ -30,6 +30,15 @@ public class Cards {
         cards.add(card);
     }
 
+    public List<String> getCardNames() {
+        List<String> cardNames = new ArrayList<>();
+        for (Card card : cards) {
+            String cardName = card.getRank() + card.getShape();
+            cardNames.add(cardName);
+        }
+        return cardNames;
+    }
+
     private int countAces() {
         int count = 0;
         for (Card card : cards) {
