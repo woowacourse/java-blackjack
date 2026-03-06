@@ -34,4 +34,11 @@ public class ResultAnalyzer {
         return ResultAnalysisDto.from(playerGameResults);
     }
 
+    public ResultAnalysisDto analyzeV2(Players players, Dealer dealer) {
+        List<PlayerGameResult> playerGameResults = players.stream()
+                .map(player -> PlayerGameResult.of(player, GameResult.judgeV2(dealer, player)))
+                .toList();
+        return ResultAnalysisDto.from(playerGameResults);
+    }
+
 }

@@ -1,5 +1,8 @@
 package domain;
 
+import domain.dealer.Dealer;
+import domain.player.Player;
+
 public enum GameResult {
 
     WIN("승"),
@@ -18,6 +21,30 @@ public enum GameResult {
     }
 
     public static GameResult judge(int dealerScore, int playerScore) {
+        if (dealerScore > playerScore) {
+            return LOSS;
+        }
+
+        if (dealerScore == playerScore) {
+            return DRAW;
+        }
+
+        return WIN;
+    }
+
+    public static GameResult judgeV2(Dealer dealer, Player player) {
+        if (player.isBusted()) {
+            return LOSS;
+        }
+
+        if (dealer.isBusted()) {
+            return WIN;
+        }
+
+        return compareScore(dealer.getResultScore(), player.getResultScore());
+    }
+
+    public static GameResult compareScore(int dealerScore, int playerScore) {
         if (dealerScore > playerScore) {
             return LOSS;
         }
