@@ -80,13 +80,19 @@ public class OutputView {
         return playerCards;
     }
 
-    public void showDealerResult(int winCount, int drawCount, int loseCount) {
+    public void showDealerResult(Map<MatchResult, Integer> dealerResult) {
+        StringBuilder result = new StringBuilder();
+
         System.out.println("\n## 최종 승패");
 
-        System.out.printf("딜러: %d승 %d무 %d패\n"
-                , winCount
-                , drawCount
-                , loseCount);
+        result.append("딜러: ");
+        for (Map.Entry<MatchResult, Integer> results : dealerResult.entrySet()) {
+            if (results.getValue() != 0) {
+                result.append(String.format("%d%s ", results.getValue(), results.getKey().getValue()));
+            }
+        }
+
+        System.out.println(result);
     }
 
     public void showPlayerGameResult(Map<String, MatchResult> playerResults) {
