@@ -38,6 +38,11 @@ public class BlackjackController {
     }
 
     private void printGameSettingResult(List<Player> players, Dealer dealer) {
+        List<String> playersName = players.stream()
+                .map(Player::getName)
+                .toList();
+
+        OutputView.printGameSettingMessage(dealer.getName(), playersName);
         OutputView.printSettingCardsResult(dealer.getName(), dealer.getCardsName().subList(0, 1));
         for (Player player : players) {
             OutputView.printSettingCardsResult(player.getName(), player.getCardsName());
@@ -79,12 +84,10 @@ public class BlackjackController {
     }
 
     private boolean isAllUserBurst(List<Player> players) {
-        for (Player player : players) {
-            if (!player.isBurst()) {
-                return false;
-            }
-        }
-        return true;
+        int burstUserCount = (int) players.stream()
+                .filter(Player::isBurst)
+                .count();
+        return players.size() == burstUserCount;
     }
 
     private void printGameResult(List<Player> players, Dealer dealer) {
