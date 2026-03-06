@@ -14,6 +14,6 @@ public class Card {
     }
 
     public String getCardInfo() {
-        return number.getValue() + shape.getShape();
+        return number.getDisplayName() + shape.getShape();
     }
 }

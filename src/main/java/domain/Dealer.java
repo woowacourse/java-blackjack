@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.ArrayList;
-
 public class Dealer extends Participant{
     private static final int burstThreshold = 17;
 

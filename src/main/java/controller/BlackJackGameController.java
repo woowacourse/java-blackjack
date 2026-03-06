@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static view.OutputView.printCards;
+
 public class BlackJackGameController {
 
     public BlackJackGameController() {
@@ -30,28 +32,26 @@ public class BlackJackGameController {
         dealer.receiveCard(card1);
         Card card2 = deck.distributeCard();
         dealer.receiveCard(card2);
-        OutputView.printCards(dealer.getParticipantCardsDto());
+        printCards(dealer.getParticipantCardsDto());
 
         for (Player player : players) {
             Card p_card1 = deck.distributeCard();
             player.receiveCard(p_card1);
             Card p_card2 = deck.distributeCard();
             player.receiveCard(p_card2);
-            OutputView.printCards(player.getParticipantCardsDto());
+            printCards(player.getParticipantCardsDto());
 
         }
-
-        // OutputView 출력
 
         for (Player player : players) {
             while (player.canReceiveCard()) {
                 if (!isContinue(InputView.askContinue(player.getName()))) {
-                    OutputView.printCards(player.getParticipantCardsDto());
+                    printCards(player.getParticipantCardsDto());
                     break;
                 }
                 Card card = deck.distributeCard();
                 player.receiveCard(card);
-                OutputView.printCards(player.getParticipantCardsDto());
+                printCards(player.getParticipantCardsDto());
             }
         }
 
@@ -72,6 +72,18 @@ public class BlackJackGameController {
         }
 
         Map<String, Boolean> gameResult = Result.calculateResult(participantScores);
+
+        OutputView.printCards(dealer.getParticipantCardsDto());
+
+        // printCards 최종 결과 출력 확인하기
+        for (Player player : players) {
+            String beforeResult = OutputView.printFinalCards(player.getParticipantCardsDto());
+            String result = " - 결과: ";
+            int score = player.getScore();
+            System.out.println(beforeResult + result + score);
+        }
+
+        OutputView.printGameResult(gameResult);
     }
 
     private boolean isContinue(String response) {
