@@ -1,4 +1,4 @@
-package domain;
+package controller;
 
 import domain.analyzer.ResultAnalyzer;
 import domain.analyzer.dto.ResultAnalysisDto;

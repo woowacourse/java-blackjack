@@ -1,4 +1,4 @@
-package domain;
+package domain.analyzer;
 
 import domain.dealer.Dealer;
 import domain.player.Player;

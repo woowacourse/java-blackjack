@@ -1,5 +1,4 @@
-package domain;
-
+import controller.BlackjackGame;
 import domain.card.CardGenerator;
 import domain.card.GameCardGenerator;
 import domain.view.ApplicationView;

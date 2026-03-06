@@ -1,6 +1,5 @@
 package domain.analyzer;
 
-import domain.GameResult;
 import domain.analyzer.dto.PlayerGameResult;
 import domain.analyzer.dto.ResultAnalysisDto;
 import domain.dealer.Dealer;
