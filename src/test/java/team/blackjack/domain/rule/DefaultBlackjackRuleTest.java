@@ -1,5 +1,6 @@
 package team.blackjack.domain.rule;
 
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import team.blackjack.domain.rule.DefaultBlackjackRule;
@@ -69,5 +70,23 @@ class DefaultBlackjackRuleTest {
         boolean isDealerMustDraw = defaultBlackjackRule.isDealerMustDraw(dealerScore);
 
         Assertions.assertEquals(false, isDealerMustDraw);
+    }
+
+
+    @Test
+    void 숫자10과_6이후에_ACE가_2개_오는_경우_각각_1로_정상_해석되는지_테스트() {
+        List<Card> cards = List.of(Card.KING_OF_CLUBS, Card.SIX_OF_HEARTS, Card.ACE_OF_SPADES, Card.ACE_OF_HEARTS);
+
+        int score = DefaultBlackjackRule.calculateBestScore(cards);
+
+        Assertions.assertEquals(18, score);
+    }
+
+    @Test
+    void Ace가_1장있는_경우_최적의_합_정상_계산_테스트() {
+        List<Card> cards = List.of(Card.FIVE_OF_CLUBS, Card.FIVE_OF_DIAMONDS, Card.ACE_OF_SPADES);
+        int score = DefaultBlackjackRule.calculateBestScore(cards);
+
+        Assertions.assertEquals(21, score);
     }
 }
