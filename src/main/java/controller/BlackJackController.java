@@ -64,19 +64,24 @@ public class BlackJackController {
     }
 
     private void drawPlayerTurn(Player player) {
-        while(true) {
-           if(!inputController.getCondition(player.getResult().name().value())) {
-               break;
-           }
+        boolean flag = true;
+        do {
+            flag = done(player);
+        } while (flag);
+    }
 
-           blackJackService.draw(player);
-
-           if(blackJackService.isBust(player)) {
-               break;
-           }
-
-           OutputView.printPlayerCurrentDeck(player.getResult());
+    private boolean done(Player player) {
+        if(!inputController.getCondition(player.getResult().name().value())) {
+            return false;
         }
+
+        blackJackService.draw(player);
+
+        if(blackJackService.isBust(player)) {
+            return false;
+        }
+
+        return true;
     }
 
     private void drawDealer(Dealer dealer) {
