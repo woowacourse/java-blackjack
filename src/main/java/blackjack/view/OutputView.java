@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.model.Card;
 import blackjack.model.TotalResult;
 import java.util.List;
 
@@ -14,15 +15,42 @@ public class OutputView {
         System.out.println("딜러와 " + joinedName + "에게 2장을 나누었습니다.");
     }
 
-    public void printDealerCards(List<String> cardNames) {
+    public void printDealerCards(List<Card> cards) {
+        List<String> cardNames = cards.stream()
+                .map(Card::toString)
+                .toList();
+
         String joinedCardNames = String.join(", ", cardNames);
         System.out.println("딜러카드: " + joinedCardNames);
     }
 
-    public void printPlayersCards(String name, List<String> cardNames) {
+    public void printDealerCardsWithScore(List<Card> cards, int score) {
+        List<String> cardNames = cards.stream()
+                .map(Card::toString)
+                .toList();
+
+        String joinedCardNames = String.join(", ", cardNames);
+        System.out.println("딜러카드: " + joinedCardNames + " - 결과: " + score);
+    }
+
+    public void printPlayersCards(String name, List<Card> cards) {
+        List<String> cardNames = cards.stream()
+                .map(Card::toString)
+                .toList();
+
         String joinedCardNames = String.join(", ", cardNames);
         System.out.println(name + "카드: " + joinedCardNames);
     }
+
+    public void printPlayersCardsWithScore(String name, List<Card> cards, int score) {
+        List<String> cardNames = cards.stream()
+                .map(Card::toString)
+                .toList();
+
+        String joinedCardNames = String.join(", ", cardNames);
+        System.out.println(name + "카드: " + joinedCardNames + " - 결과: " + score);
+    }
+
 
     public void printMoreCardInputPrompt(String name) {
         System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
@@ -47,7 +75,8 @@ public class OutputView {
     }
 
     private void printAllPlayerResult(TotalResult totalResult) {
-
+        List<String> playerResults = totalResult.playerResults();
+        System.out.println(String.join("\n", playerResults));
     }
 
 }

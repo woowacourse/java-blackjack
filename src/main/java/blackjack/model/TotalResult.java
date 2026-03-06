@@ -1,5 +1,7 @@
 package blackjack.model;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TotalResult {
@@ -14,6 +16,17 @@ public class TotalResult {
         this.results = results;
     }
 
+    public static TotalResult of(List<Player> players, Dealer dealer) {
+        Map<Player, Result> results = new HashMap<>();
+
+        for (Player player : players) {
+            Result result = dealer.compare(player);
+            results.put(player, result);
+        }
+
+       return new TotalResult(results);
+    }
+
     public String getDealerResult() {
         return String.format(
                 "%d승 %d무 %d패",
@@ -25,5 +38,11 @@ public class TotalResult {
         return results.values().stream()
                 .filter(result -> result == target)
                 .count();
+    }
+
+    public List<String> playerResults() {
+        return results.entrySet().stream()
+                .map(entry -> String.format("%s: %s", entry.getKey().getName(), entry.getValue()))
+                .toList();
     }
 }

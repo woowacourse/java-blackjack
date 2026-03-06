@@ -47,7 +47,14 @@ public class Hands {
     }
 
     // 첫 번째 카드 반환
-    public Card getFirstCard() {
-        return this.cards.getFirst();
+    public List<Card> getCards(int count) {
+        return List.copyOf(this.cards.stream()
+                .limit(count)
+                .toList());
+    }
+
+    // 모든 카드 반환
+    public List<Card> getAllCard() {
+        return List.copyOf(cards);
     }
 }

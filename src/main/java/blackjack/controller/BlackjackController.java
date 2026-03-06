@@ -4,6 +4,7 @@ import blackjack.model.CardDeck;
 import blackjack.model.Dealer;
 import blackjack.model.PickStrategy;
 import blackjack.model.Player;
+import blackjack.model.TotalResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -40,32 +41,49 @@ public class BlackjackController {
 
         outputView.printCardDistributionCompleted(names);
 
-//        // 딜러 1장 공개, 플레이어 2장 공개
-//        outputView.printDealerCards(dealer.getFirstCard());
-//        outputView.printPlayersCards();
-//
-//        // 각 플레이어 히트/스탠드 진행
-//        for () {
-//            do {
-//                outputView.printMoreCardInputPrompt();
-//            } while (inputView.inputMoreCard());
-//        }
-//
-//        // 딜러 카드 16초과할 때까지 추가
-//        while () {
-//            outputView.printDealerPicksCard();
-//        }
-//        outputView.printDealerDoesNotPickCard();
-//
-//        // 딜러 카드 및 결과 공개
-//        outputView.printDealerCards();
-//
-//        // 플레이어 카드 및 결과 공개
-//        for () {
-//            outputView.printPlayersCards();
-//        }
-//
-//        // 최종 승패 출력
-//        outputView.printResult();
+        // 딜러 1장 공개, 플레이어 2장 공개
+        outputView.printDealerCards(dealer.getCards(1));
+        players.forEach(player -> outputView.printPlayersCards(player.getName(), player.getCards(2)));
+
+        // 각 플레이어 히트/스탠드 진행
+        for (Player player : players) {
+            outputView.printMoreCardInputPrompt(player.getName());
+            boolean isContinued = inputView.inputMoreCard();
+
+            while(isContinued) {
+                player.pickACard(cardDeck);
+                outputView.printPlayersCards(player.getName(), player.getAllCard());
+                outputView.printMoreCardInputPrompt(player.getName());
+                isContinued = inputView.inputMoreCard();
+            }
+        }
+
+        // 딜러 카드 16초과할 때까지 추가
+        while (dealer.canPick()) {
+            dealer.pickCard(cardDeck);
+            outputView.printDealerPicksCard();
+        }
+        outputView.printDealerDoesNotPickCard();
+
+        // 딜러 카드 및 결과 공개
+        outputView.printDealerCardsWithScore(
+                dealer.getAllCard(),
+                dealer.getCurrentTotalScore()
+        );
+
+        // 플레이어 카드 및 결과 공개
+        for (Player player : players) {
+            outputView.printPlayersCardsWithScore(
+                    player.getName(),
+                    player.getAllCard(),
+                    player.getCurrentTotalScore()
+            );
+        }
+
+        // 결과 계산
+        TotalResult totalResult = TotalResult.of(players, dealer);
+
+        // 최종 승패 출력
+        outputView.printResult(totalResult);
     }
 }
