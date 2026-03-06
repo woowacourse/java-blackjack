@@ -1,24 +1,27 @@
 package domain;
 
 import domain.card.Card;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Participant {
     private String name;
     private Hand hand;
 
-    public Participant(String name, Hand hand) {
+    public Participant(String name) {
         this.name = name;
-        this.hand = hand;
+        this.hand = new Hand();
     }
 
-    public void receiveInitialCards(Deck deck) {
-        for (int i = 0; i < 2; i++) {
-            receive(deck);
+    public void receiveInitialCards(List<Card> cards) {
+        if (cards.size() != 2) {
+            throw new IllegalArgumentException();
         }
+
+        cards.forEach(card -> receive(card));
     }
 
-    public void receive(Deck deck) {
-        Card card = deck.draw();
+    public void receive(Card card) {
         hand.add(card);
     }
 
@@ -30,5 +33,9 @@ public abstract class Participant {
         return hand.score();
     }
 
-    public abstract void shouldReceive(Deck deck);
+    public String name() {
+        return name;
+    }
+
+    public abstract boolean canDraw();
 }

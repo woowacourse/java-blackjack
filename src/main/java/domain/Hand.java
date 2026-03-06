@@ -9,6 +9,10 @@ public class Hand {
     public static final int BLACK_JACK = 21;
     private List<Card> cards;
 
+    public Hand(){
+        this.cards = new ArrayList<>();
+    }
+
     public Hand(List<Card> cards) {
         this.cards = cards;
     }
@@ -18,30 +22,28 @@ public class Hand {
     }
 
     public int score() {
-        int total = total();
+        int total = calculateRawTotal();
+        int aceCount = countAce();
 
-        if (hasAce()) {
-            while (total > BLACK_JACK) {
-                total -= 10;
-            }
+        while (total > BLACK_JACK && aceCount > 0) {
+            total -= 10;
+            aceCount--;
         }
 
         return total;
     }
 
-    private boolean hasAce() {
-        for (Card card : cards) {
-            return card.isAce();
-        }
-
-        return false;
+    private int countAce() {
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
     }
 
     public int size(){
         return cards.size();
     }
 
-    public int total() {
+    public int calculateRawTotal() {
         return cards.stream()
                 .mapToInt(Card::score)
                 .sum();

@@ -5,6 +5,7 @@ import domain.card.Rank;
 import domain.card.Suit;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -41,12 +42,37 @@ class HandTest {
     }
 
     @Test
-    void 에이스가_존재하고_합계가_21초과하는_경우_유리하게_계산한다() {
-        List<Card> cards = List.of(new Card(Rank.ACE, Suit.HEART), new Card(Rank.ACE, Suit.CLOVER));
+    void 에이스가_여러장_존재하고_합계가_21초과하는_경우_유리하게_계산한다() {
+        List<Card> cards = createCards(Rank.ACE, Rank.ACE);
         Hand hand = new Hand(cards);
 
         int score = hand.score();
 
         assertThat(score).isEqualTo(12);
+    }
+
+    @Test
+    void 에이스가_한장_존재하고_합계가_21초과하는_경우_유리하게_계산한다() {
+        // 10 + 11 + 10 + 5 -> 36 -> 10을 감소시킴
+        // 36점 -> 26점
+        List<Card> cards = createCards(Rank.TEN, Rank.ACE, Rank.TEN, Rank.FIVE);
+        Hand hand = new Hand(cards);
+
+        int score = hand.score();
+
+        assertThat(score).isEqualTo(26);
+    }
+
+
+
+    private List<Card> createCards(Rank... ranks) {
+        List<Card> cards = new ArrayList<>();
+
+        for (Rank rank : ranks) {
+            Card card = new Card(rank, Suit.HEART);
+            cards.add(card);
+        }
+
+        return cards;
     }
 }

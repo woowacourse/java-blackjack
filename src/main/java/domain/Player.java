@@ -2,12 +2,12 @@ package domain;
 
 public class Player extends Participant {
 
-    public Player(String name, Hand hand) {
-        super(name, hand);
+    public Player(String name) {
+        super(name);
     }
 
     @Override
-    public void shouldReceive(Deck deck) {
-
+    public boolean canDraw() {
+        return false;
     }
 }

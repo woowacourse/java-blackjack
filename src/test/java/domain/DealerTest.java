@@ -12,7 +12,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {
-    Hand dealerHand;
     Participant dealer;
 
     @BeforeEach
@@ -20,18 +19,13 @@ class DealerTest {
         List<Card> testCards = new ArrayList<>();
         testCards.add(new Card(Rank.EIGHT, Suit.HEART));
         testCards.add(new Card(Rank.EIGHT, Suit.CLOVER));
-        dealerHand = new Hand(testCards);
-        dealer = new Dealer(dealerHand);
+        dealer = new Dealer();
     }
 
     @Test
     void 딜러는_카드의_합이_16_이하인_경우_카드를_한_장_받는다(){
-        List<Card> cards = Deck.prepareCards();
-        Deck deck = new Deck(cards);
+        boolean canDraw = dealer.canDraw();
 
-        dealer.shouldReceive(deck);
-        int handSize = dealer.handSize();
-
-        assertThat(handSize).isEqualTo(3);
+        assertThat(canDraw).isTrue();
     }
 }
