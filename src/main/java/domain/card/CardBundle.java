@@ -15,7 +15,7 @@ public class CardBundle {
         this.cardBundle = cardBundle;
     }
 
-    public static CardBundle of(List<Card> cardBundle) {
+    public static CardBundle from(List<Card> cardBundle) {
         return new CardBundle(cardBundle);
     }
 

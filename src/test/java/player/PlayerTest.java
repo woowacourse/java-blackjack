@@ -63,7 +63,7 @@ public class PlayerTest {
         CardDeck cardDeck = new CardDeckBuilder()
                 .cards(clover, spade)
                 .build();
-        CardBundle origin = CardBundle.of(List.of(clover, spade));
+        CardBundle origin = CardBundle.from(List.of(clover, spade));
         Dealer dealer = Dealer.of(cardDeck);
         Player player = Player.from(PlayerName.from("test"));
 

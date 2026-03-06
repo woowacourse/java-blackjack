@@ -45,7 +45,7 @@ public class Dealer {
             List<Card> cardList = Stream.generate(this::drawCard)
                     .limit(tryCount)
                     .toList();
-            return CardBundle.of(cardList);
+            return CardBundle.from(cardList);
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("딜러가 카드를 나눠줄 수 없습니다.");
         }

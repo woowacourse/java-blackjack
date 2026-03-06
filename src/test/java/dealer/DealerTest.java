@@ -21,7 +21,7 @@ public class DealerTest {
         CardBundle cardBundle = dealer.handOutCard(2);
 
         Assertions.assertThat(cardBundle)
-                .isEqualTo(CardBundle.of(List.of(
+                .isEqualTo(CardBundle.from(List.of(
                         Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER),
                         Card.of(CardDenomination.NINE, CardEmblem.SPADE)))
                 );
@@ -37,7 +37,7 @@ public class DealerTest {
         CardBundle cardBundle = dealer.handOutCard(1);
 
         Assertions.assertThat(cardBundle)
-                .isEqualTo(CardBundle.of(List.of(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER))
+                .isEqualTo(CardBundle.from(List.of(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER))
                 ));
     }
 
@@ -67,7 +67,7 @@ public class DealerTest {
         Dealer dealer = Dealer.of(cardDeck);
         dealer.drawMySelf(2);
 
-        CardBundle cardBundle = CardBundle.of(cards);
+        CardBundle cardBundle = CardBundle.from(cards);
         Assertions.assertThat(dealer.disPlayMyCardBundle())
                 .isEqualTo(cardBundle.toDisplay());
     }
