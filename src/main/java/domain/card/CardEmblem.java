@@ -23,4 +23,8 @@ public enum CardEmblem {
         this.value = value;
     }
 
+    public String value() {
+        return String.valueOf(value);
+    }
+
 }

@@ -14,4 +14,8 @@ public enum CardDenomination {
         this.denomination = denomination;
     }
 
+    public String denomination() {
+        return denomination;
+    }
+
 }
