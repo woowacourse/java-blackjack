@@ -7,7 +7,6 @@ import dto.CardInfo;
 import dto.GamblerResultLog;
 import expcetion.BlackjackException;
 import expcetion.ExceptionMessage;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,7 +26,7 @@ public class Gamblers {
     private void validateNonDuplicate(List<String> names) {
         Set<String> namesSet = new HashSet<>(names);
         if (namesSet.size() != names.size()) {
-            throw new BlackjackException(ExceptionMessage.INPUT_ERROR);
+            throw new BlackjackException(ExceptionMessage.NAME_DUPLICATE_ERROR);
         }
     }
 

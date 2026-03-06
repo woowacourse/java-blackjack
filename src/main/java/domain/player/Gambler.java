@@ -22,13 +22,13 @@ public class Gambler extends Player {
 
     private static void validateContainsNumber(String name) {
         if (name.matches(MATCH_NUMBER_PATTERN)) {
-            throw new BlackjackException(ExceptionMessage.INPUT_ERROR);
+            throw new BlackjackException(ExceptionMessage.NAME_NOT_INTEGER_ERROR);
         }
     }
 
     private static void validateLength(String name) {
         if (name.length() > GAMBLER_NAME_MAX_LENGTH || name.length() < GAMBLER_NAME_MIN_LENGTH) {
-            throw new BlackjackException(ExceptionMessage.INPUT_ERROR);
+            throw new BlackjackException(ExceptionMessage.NAME_LENGTH_ERROR);
         }
     }
 

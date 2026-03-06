@@ -3,14 +3,10 @@ package domain.player;
 import domain.card.HandCard;
 import domain.deck.CardDeck;
 import dto.CardInfo;
-import expcetion.BlackjackException;
-import expcetion.ExceptionMessage;
 
 public abstract class Player {
     protected final String name;
     protected final HandCard handCard;
-
-    protected static final int BLACKJACK_MAX_LIMIT = 21;
 
     protected Player(String name) {
         this.name = name;
@@ -30,7 +26,7 @@ public abstract class Player {
     }
 
     public boolean isBust() {
-        return score() > BLACKJACK_MAX_LIMIT;
+        return handCard.isBust();
     }
 
     public CardInfo getCardInfo() {

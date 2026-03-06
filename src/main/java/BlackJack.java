@@ -3,7 +3,6 @@ import domain.deck.Deck;
 import domain.player.Dealer;
 import domain.player.Gambler;
 import domain.player.Gamblers;
-import dto.CardInfo;
 import java.util.List;
 import parser.AnswerParser;
 import parser.PlayNameParser;

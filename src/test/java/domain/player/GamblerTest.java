@@ -30,12 +30,12 @@ class GamblerTest {
     @DisplayName("이름은 두글자 이상 열글자 미만으로 한다.")
     void 이름이_열글자를_넘을_시(){
         //given
-        String max_range_name = "tobiisverygoob";
-        String min_range_name = "h";
+        String maxRangeName = "tobiisverygoob";
+        String minRangeName = "h";
         //when & then
-        assertThatThrownBy(()-> new Gambler(max_range_name))
+        assertThatThrownBy(()-> new Gambler(maxRangeName))
                 .isInstanceOf(BlackjackException.class);
-        assertThatThrownBy(()-> new Gambler(min_range_name))
+        assertThatThrownBy(()-> new Gambler(minRangeName))
                 .isInstanceOf(BlackjackException.class);
     }
     @Test

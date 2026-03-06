@@ -19,18 +19,17 @@ public class HandCard {
                 .filter(e -> e != 1)
                 .mapToInt(Integer::intValue)
                 .sum();
-        int aceCnt = (int) cards.stream()
+        int aceCount = (int) cards.stream()
                 .map(Card::getRankScore)
                 .filter(e -> e == 1)
                 .count();
 
-        return nonAceTotal + aceCalculator(nonAceTotal, aceCnt);
+        return nonAceTotal + aceCalculator(nonAceTotal, aceCount);
     }
 
-    private int aceCalculator(int nonAceTotal, int aceCnt){
-        return Math.min(aceCnt, Math.max(0, (BLACKJACK_MAX_LIMIT - nonAceTotal) / (ACE_MAX_VALUE - ACE_MIN_VALUE)));
+    private int aceCalculator(int nonAceTotal, int aceCount) {
+        return Math.min(aceCount, Math.max(0, (BLACKJACK_MAX_LIMIT - nonAceTotal) / (ACE_MAX_VALUE - ACE_MIN_VALUE)));
     }
-
 
     public void addCard(Card card) {
         cards.add(card);
@@ -45,5 +44,9 @@ public class HandCard {
     public String getFirstCardInfo() {
         return cards.getFirst()
                 .getCardInfo();
+    }
+
+    public boolean isBust(){
+        return cardCalculator() > BLACKJACK_MAX_LIMIT;
     }
 }

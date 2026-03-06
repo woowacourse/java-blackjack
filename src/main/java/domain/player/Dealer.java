@@ -9,11 +9,7 @@ public class Dealer extends Player {
     }
 
     public boolean canStand() {
-        int score = score();
-        if (isBust()) {
-            return true;
-        }
-        return score >= DEALER_STOP_SCORE;
+        return isBust() || score() >= DEALER_STOP_SCORE;
     }
 
     public String showFirstCard() {
