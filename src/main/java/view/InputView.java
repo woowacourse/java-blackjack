@@ -29,7 +29,7 @@ public class InputView {
         if (!input.matches("[y|n]")) {
             throw new IllegalArgumentException(INVALID_HIT_STAND_INPUT_ERROR.getMessage());
         }
-        return input.equals("y");
+        return "y".equals(input);
     }
 
     private static void validateIsBlank(String input) {
