@@ -1,8 +1,6 @@
 package domain.player;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Participants {
     private final Dealer dealer;
@@ -21,3 +19,4 @@ public class Participants {
         return gamblers;
     }
 }
+

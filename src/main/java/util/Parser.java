@@ -4,13 +4,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Parser {
-    private String delimeter;
-    public Parser(String delimeter) {
-        this.delimeter = delimeter;
-    }
 
-    public List<String> parse(String inputNames) {
-        return Arrays.stream(inputNames.split(delimeter))
+    private Parser() {}
+
+    public static List<String> parse(String input, String delimiter) {
+        return Arrays.stream(input.split(delimiter))
                 .map(String::trim)
                 .toList();
     }
