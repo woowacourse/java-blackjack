@@ -78,7 +78,7 @@ public class PlayerTest {
                 new Card(Suit.DIAMOND, Denomination.TEN),
                 new Card(Suit.SPADE, Denomination.SIX),
                 new Card(Suit.DIAMOND, Denomination.KING)));
-            Player player = new Player(playerHand, Status.STAY, "pobi");
+            Player player = new Player(playerHand, Status.BURST, "pobi");
             GameResult expected = GameResult.DRAW;
 
             GameResult actual = player.calculateGameResult(dealer);
@@ -93,12 +93,12 @@ public class PlayerTest {
             Hand dealerHand = new Hand(List.of(
                 new Card(Suit.DIAMOND, Denomination.TEN),
                 new Card(Suit.SPADE, Denomination.TEN)));
-            Dealer dealer = new Dealer(dealerHand, Status.BURST, trump);
+            Dealer dealer = new Dealer(dealerHand, Status.STAY, trump);
             Hand playerHand = new Hand(List.of(
                 new Card(Suit.DIAMOND, Denomination.TEN),
                 new Card(Suit.SPADE, Denomination.SIX),
                 new Card(Suit.DIAMOND, Denomination.KING)));
-            Player player = new Player(playerHand, Status.STAY, "pobi");
+            Player player = new Player(playerHand, Status.BURST, "pobi");
             GameResult expected = GameResult.LOSE;
 
             GameResult actual = player.calculateGameResult(dealer);
@@ -113,7 +113,7 @@ public class PlayerTest {
             Hand dealerHand = new Hand(List.of(
                 new Card(Suit.DIAMOND, Denomination.TEN),
                 new Card(Suit.SPADE, Denomination.SEVEN)));
-            Dealer dealer = new Dealer(dealerHand, Status.BURST, trump);
+            Dealer dealer = new Dealer(dealerHand, Status.STAY, trump);
             Hand playerHand = new Hand(List.of(
                 new Card(Suit.DIAMOND, Denomination.TEN),
                 new Card(Suit.SPADE, Denomination.TEN)));
@@ -132,7 +132,7 @@ public class PlayerTest {
             Hand dealerHand = new Hand(List.of(
                 new Card(Suit.DIAMOND, Denomination.TEN),
                 new Card(Suit.SPADE, Denomination.SEVEN)));
-            Dealer dealer = new Dealer(dealerHand, Status.BURST, trump);
+            Dealer dealer = new Dealer(dealerHand, Status.STAY, trump);
             Hand playerHand = new Hand(List.of(
                 new Card(Suit.DIAMOND, Denomination.TEN),
                 new Card(Suit.SPADE, Denomination.SEVEN)));
@@ -151,7 +151,7 @@ public class PlayerTest {
             Hand dealerHand = new Hand(List.of(
                 new Card(Suit.DIAMOND, Denomination.TEN),
                 new Card(Suit.SPADE, Denomination.SEVEN)));
-            Dealer dealer = new Dealer(dealerHand, Status.BURST, trump);
+            Dealer dealer = new Dealer(dealerHand, Status.STAY, trump);
             Hand playerHand = new Hand(List.of(
                 new Card(Suit.DIAMOND, Denomination.TEN),
                 new Card(Suit.SPADE, Denomination.SIX)));

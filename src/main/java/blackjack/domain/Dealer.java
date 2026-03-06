@@ -8,7 +8,7 @@ public class Dealer extends Participant {
 
     private final Trump trump;
 
-    public Dealer(final Hand hand,final Status status, final Trump trump) {
+    public Dealer(final Hand hand, final Status status, final Trump trump) {
         super(hand, status);
         this.trump = trump;
     }

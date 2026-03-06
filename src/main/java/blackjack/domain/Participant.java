@@ -16,12 +16,20 @@ public abstract class Participant {
         return hand.calculateScore();
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
     public void addCard(Card card) {
         hand.add(card);
     }
 
     public boolean isHit() {
         return status == Status.HIT;
+    }
+
+    public boolean isBurst() {
+        return status == Status.BURST;
     }
 
     public void stay() {

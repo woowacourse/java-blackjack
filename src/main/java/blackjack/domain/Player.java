@@ -15,12 +15,29 @@ public class Player extends Participant {
         this.nickname = nickname;
     }
 
-
-
     private void validateNicknameLength(final String nickname) {
         if (nickname.length() > NICKNAME_MAXIMUM_LENGTH || nickname.length() < NICKNAME_MINIMUM_LENGTH) {
             throw new IllegalArgumentException("닉네임은 4~10자 이어야 합니다.");
         }
+    }
+
+    public GameResult calculateGameResult(Dealer dealer) {
+        if (dealer.isBurst() && !isBurst()) {
+            return GameResult.WIN;
+        }
+        if (dealer.isBurst() && isBurst()) {
+            return GameResult.DRAW;
+        }
+        if (!dealer.isBurst() && isBurst()) {
+            return GameResult.LOSE;
+        }
+        if (dealer.getScore() < getScore()) {
+            return GameResult.WIN;
+        }
+        if (dealer.getScore() == getScore()) {
+            return GameResult.DRAW;
+        }
+        return GameResult.LOSE;
     }
 
     @Override
