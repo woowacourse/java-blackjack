@@ -48,6 +48,8 @@
 - join : player 추가
 - CardResult playRound()
 - List<Card> draw(memberName, Card)
+
+### Service
 - holdingPlayerCards()
 ```
 딜러카드: 3다이아몬드, 9클로버, 8다이아몬드 - 결과: 20
@@ -61,8 +63,6 @@ jason카드: 7클로버, K스페이드 - 결과: 17
   pobi: 승
   jason: 패
  ```
-
-### Service
 
 ### Controller
 - inputView로 입력받는 멤버 추가 (join 호출)
