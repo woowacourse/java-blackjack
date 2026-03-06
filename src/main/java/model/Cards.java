@@ -20,6 +20,6 @@ public class Cards {
     }
 
     public List<Card> get() {
-        return List.copyOf(cards);
+        return new ArrayList<>(cards);
     }
 }
