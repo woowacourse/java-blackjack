@@ -1,10 +1,10 @@
 package view;
 
+import dto.AgreementRequestDto;
 import dto.NameRequestDto;
 import java.util.Scanner;
 
 public class InputView {
-
     private static Scanner sc = new Scanner(System.in);
 
     public static NameRequestDto askGamblerNames() {
@@ -12,8 +12,8 @@ public class InputView {
         return new NameRequestDto(sc.nextLine());
     }
 
-    public static String askHitOrStand(String name) {
+    public static AgreementRequestDto askHitOrStand(String name) {
         System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        return sc.nextLine();
+        return new AgreementRequestDto(sc.nextLine());
     }
 }
