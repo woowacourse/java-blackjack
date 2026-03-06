@@ -23,6 +23,7 @@ public class BlackjackController {
 
         // 2장씩 카드 분배
         distributeInitialCards(players, dealer);
+        OutputView.printInitialCardsDistribution(playerNames);
 
         //출력 텟트
         Map<String, List<String>> playerCards = new HashMap<>();

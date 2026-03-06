@@ -8,9 +8,11 @@ public class OutputView {
         for (String playerName : playerCards.keySet()) {
             printDrawnCards(playerName, playerCards.get(playerName));
         }
+        System.out.println();
     }
 
     public static void printInitialCardsDistribution(List<String> playerNames) {
+        System.out.println();
         System.out.println("딜러와 " + String.join(", ", playerNames) + "에게 2장씩 나누었습니다.");
     }
 
@@ -23,11 +25,13 @@ public class OutputView {
     }
 
     public static void printDealerCardDrawnResult(int cardCount) {
+        System.out.println();
         System.out.println("딜러는 " + cardCount + "장의 카드를 더 뽑았습니다.");
     }
 
     public static void printFinalCardScores(Map<String, List<String>> playerCards, List<String> dealerCards,
                                             Map<String, Integer> playerScores, int dealerScore) {
+        System.out.println();
         printFinalDrawnCards("딜러", dealerCards);
         System.out.printf(" - 결과: %d\n", dealerScore);
         for (String playerName : playerCards.keySet()) {
@@ -39,6 +43,7 @@ public class OutputView {
     public static void printFinalResult(
             Map<ScoreCompareResult, Integer> dealerResult,
             Map<String, ScoreCompareResult> playerResults) {
+        System.out.println();
         System.out.println("## 최종 승패");
         int wins = dealerResult.getOrDefault(ScoreCompareResult.DEALER_WIN, 0);
         int losses = dealerResult.getOrDefault(ScoreCompareResult.DEALER_LOSS, 0);
