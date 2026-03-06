@@ -6,17 +6,17 @@ import org.junit.jupiter.api.Test;
 
 class AgreementRequestDtoTest {
     @Test
-    @DisplayName("이름 입력 문자열이 null이면 에러 발생 검증")
-    void name_is_not_null() {
+    @DisplayName("y/n 입력 문자열이 null이면 에러 발생 검증")
+    void agreement_is_not_null() {
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new NameRequestDto(null));
+                () -> new AgreementRequestDto(null));
 
     }
 
     @Test
-    @DisplayName("이름 입력 문자열이 빈 문자열(\"\")이면 에러 발생 검증")
-    void name_is_not_blank() {
+    @DisplayName("y/n 입력 문자열이 빈 문자열(\"\")이면 에러 발생 검증")
+    void agreement_is_not_blank() {
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new NameRequestDto(""));
+                () -> new AgreementRequestDto(""));
     }
 }
