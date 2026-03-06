@@ -32,20 +32,24 @@ public class BlackjackGame {
 
         dealInitialCard(dealer, players);
         showGamerHands(players, dealer);
-
+        
         tryHitPlayers(players, dealer);
         tryHitDealer(dealer);
 
         // 딜러 + Player의 카드 상황 및 총합 출력
-        view.printFinalResultMessage(PlayerResultDto.from(dealer));
-        players.stream().forEach(player -> {
-            view.printFinalResultMessage(PlayerResultDto.from(player));
-        });
+        showGamerHandResult(dealer, players);
 
         //최종 결과 통계 출력
         ResultAnalysisDto analysis = analyzeBlackjackResult(players, dealer);
         view.printFinalResultMessage(analysis);
 
+    }
+
+    private void showGamerHandResult(Dealer dealer, Players players) {
+        view.printFinalResultMessage(PlayerResultDto.from(dealer));
+        players.stream().forEach(player -> {
+            view.printFinalResultMessage(PlayerResultDto.from(player));
+        });
     }
 
     private void tryHitDealer(Dealer dealer) {
