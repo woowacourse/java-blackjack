@@ -12,7 +12,6 @@ public class Dealer {
 
     private static final String CANNOT_HAND_OUT_CARDS_ERROR = "딜러가 카드를 나눠줄 수 없습니다.";
     private static final String DEALER_NAME = "딜러"; // NOTE Player와 추상화를 위해서는 수정 필요
-    private static final int BUSTED_CONDITION = 21;
     private static final int ADDITIONAL_DRAW_CONDITION = 16;
     private static final int INITIAL_DEAL_COUNT = 2;
     private static final int HIT_COUNT = 1;
@@ -91,7 +90,7 @@ public class Dealer {
     }
 
     public boolean isBusted() {
-        return cardBundle.getBasicScore() > BUSTED_CONDITION;
+        return cardBundle.isBusted();
     }
 
 }
