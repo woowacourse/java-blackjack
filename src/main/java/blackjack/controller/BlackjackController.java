@@ -5,6 +5,7 @@ import blackjack.domain.Dealer;
 import blackjack.domain.Hand;
 import blackjack.domain.Participants;
 import blackjack.domain.Player;
+import blackjack.domain.Players;
 import blackjack.domain.Status;
 import blackjack.domain.Trump;
 import blackjack.dto.FinalResultDto;
@@ -19,21 +20,21 @@ public class BlackjackController {
 
     public void run() {
         Hand hand = new Hand(new ArrayList<>());
-        List<Player> players = RetryExecutor.retry(this::readNicknames);
+        Players players = RetryExecutor.retry(this::readPlayers);
         Dealer dealer = new Dealer(hand, Status.HIT, new Trump());
         Participants participants = new Participants(players, dealer);
-        dealer.pitch(players);
-        OutputView.printStartMessage(players, dealer);
+        dealer.pitch(players.all());
+        OutputView.printStartMessage(players.all(), dealer);
 
-        players.forEach(player -> handlePlayerAction(player, dealer));
+        players.all().forEach(player -> handlePlayerAction(player, dealer));
         handleDealerAction(dealer);
 
         printResult(participants, players, dealer);
     }
 
-    private void printResult(Participants participants, List<Player> players, Dealer dealer) {
+    private void printResult(Participants participants, Players players, Dealer dealer) {
         OutputView.printFinalStatus(participants);
-        FinalResultDto finalResultDto = FinalResultDto.of(players, dealer);
+        FinalResultDto finalResultDto = FinalResultDto.of(players.all(), dealer);
         OutputView.printFinalResult(finalResultDto);
     }
 
@@ -56,13 +57,14 @@ public class BlackjackController {
         }
     }
 
-    private List<Player> readNicknames() {
+    private Players readPlayers() {
         String rawNicknames = InputView.readNicknames();
         List<String> nicknames = Parser.parseNickname(rawNicknames);
-        return nicknames.stream()
+        List<Player> players = nicknames.stream()
             .map(nickname ->
                 new Player(new Hand(new ArrayList<>()), Status.HIT, nickname))
             .toList();
+        return new Players(players);
     }
 
     private Answer readAnswer(final String nickname) {
