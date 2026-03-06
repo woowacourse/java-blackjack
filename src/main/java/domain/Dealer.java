@@ -18,4 +18,8 @@ public class Dealer {
     public void calculateScore() {
         hand.calculateHandScore();
     }
+
+    public Boolean determineDealerDealMore() {
+        return hand.determineDealerDealMore();
+    }
 }

@@ -75,6 +75,15 @@ public class Participants {
     public void caculateDealerscore() {
         dealer.calculateScore();
     }
+
+    public Boolean determineDealerDealMore() {
+        return dealer.determineDealerDealMore();
+    }
+
+    public void dealCardToDealer(Card card) {
+        dealer.receiveCard(card);
+        dealer.calculateScore();
+    }
 }
 
 

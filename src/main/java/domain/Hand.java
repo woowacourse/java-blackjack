@@ -29,6 +29,7 @@ public class Hand {
     }
 
     public void calculateHandScore() {
+        this.handTotalScore = 0;
         for (Card card : cards) {
             handTotalScore += card.getCardScore();
         }
@@ -36,5 +37,12 @@ public class Hand {
         if (hasAce && handTotalScore > 21) {
             handTotalScore -= 10;
         }
+    }
+
+    public Boolean determineDealerDealMore() {
+        if (handTotalScore <= 16) {
+            return true;
+        }
+        return false;
     }
 }

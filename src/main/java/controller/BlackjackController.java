@@ -33,11 +33,18 @@ public class BlackjackController {
 
     private void dealDealerCard() {
         calculateDealerScore();
+        determineDealToDealer();
+    }
+
+    private void determineDealToDealer() {
+        blackjackService.determineDealToDealer();
     }
 
     private void calculateDealerScore() {
         blackjackService.calculateDealerScore();
     }
+
+
 
     private void shuffleCards() {
         blackjackService.makeDeck();

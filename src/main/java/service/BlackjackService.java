@@ -48,4 +48,10 @@ public class BlackjackService {
     public void calculateDealerScore() {
         participants.caculateDealerscore();
     }
+
+    public void determineDealToDealer() {
+        if (participants.determineDealerDealMore()) {
+            participants.dealCardToDealer(deck.dealCard());
+        }
+    }
 }
