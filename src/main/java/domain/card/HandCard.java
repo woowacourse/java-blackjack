@@ -14,27 +14,23 @@ public class HandCard {
     }
 
     public int cardCalculator() {
-        int nonAceTotal = cards.stream().map(Card::getRankScore).filter(e -> e != 1).mapToInt(Integer::intValue).sum();
-        int aceCnt = (int) cards.stream().map(Card::getRankScore).filter(e -> e == 1).count();
+        int nonAceTotal = cards.stream()
+                .map(Card::getRankScore)
+                .filter(e -> e != 1)
+                .mapToInt(Integer::intValue)
+                .sum();
+        int aceCnt = (int) cards.stream()
+                .map(Card::getRankScore)
+                .filter(e -> e == 1)
+                .count();
 
-        return aceCalculator(nonAceTotal, aceCnt);
+        return nonAceTotal + aceCalculator(nonAceTotal, aceCnt);
     }
 
-    //이 메소드는 전체 점수를 리턴해서 이름이 맞지 않다. 아래 주석 메소드를 사용하는게 맞는가?
-    private int aceCalculator(int nonAceTotal, int aceCnt) {
-        int totalSum = nonAceTotal + (aceCnt * ACE_MAX_VALUE);
-        int remainingAce = aceCnt;
-        while (totalSum > BLACKJACK_MAX_LIMIT && remainingAce > 0) {
-            totalSum -= (ACE_MAX_VALUE - ACE_MIN_VALUE);
-            remainingAce--;
-        }
-        return totalSum;
+    private int aceCalculator(int nonAceTotal, int aceCnt){
+        return Math.min(aceCnt, Math.max(0, (BLACKJACK_MAX_LIMIT - nonAceTotal) / (ACE_MAX_VALUE - ACE_MIN_VALUE)));
     }
-    /*
-    private int aceCalculator(int sum, int ace_cnt){
-        return Math.min(ace_cnt, Math.max(0, (BLACKJACK_MAX_LIMIT - sum) / (ACE_MAX_VALUE - ACE_MIN_VALUE)));
-    }
-     */
+
 
     public void addCard(Card card) {
         cards.add(card);
