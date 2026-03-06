@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    private final Hand emptyHand = new Hand(new AceAdjustPolicy(new BustPolicyImpl()));
+    private final AceAdjustPolicy aceAdjustPolicy = new AceAdjustPolicy(new BustPolicyImpl());
 
     @Nested
     @DisplayName("카드를 더 뽑아야 하는지 판단한다")
@@ -17,7 +17,7 @@ class DealerTest {
         void 카드를_더_뽑아야_한다면_true를_반환한다() {
             // given
             DealerDrawPolicy alwaysDrawPolicy = (score) -> true;
-            Dealer dealer = new Dealer(emptyHand, alwaysDrawPolicy);
+            Dealer dealer = new Dealer(aceAdjustPolicy, alwaysDrawPolicy);
 
             // when
             boolean shouldDraw = dealer.shouldDraw();
@@ -30,7 +30,7 @@ class DealerTest {
         void 카드를_더_뽑지_말아야_한다면_false를_반환한다() {
             // given
             DealerDrawPolicy neverDrawPolicy = (score) -> false;
-            Dealer dealer = new Dealer(emptyHand, neverDrawPolicy);
+            Dealer dealer = new Dealer(aceAdjustPolicy, neverDrawPolicy);
 
             // when
             boolean shouldDraw = dealer.shouldDraw();

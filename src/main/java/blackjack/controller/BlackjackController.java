@@ -14,7 +14,6 @@ import blackjack.model.CardsGenerator;
 import blackjack.model.Dealer;
 import blackjack.model.DealerDrawPolicy;
 import blackjack.model.Deck;
-import blackjack.model.Hand;
 import blackjack.model.Player;
 import blackjack.model.Players;
 import blackjack.model.ResultJudgement;
@@ -55,7 +54,7 @@ public class BlackjackController {
 
     public void run() {
         Players players = readPlayers();
-        Dealer dealer = new Dealer(createEmptyHand(), dealerDrawPolicy);
+        Dealer dealer = new Dealer(aceAdjustPolicy, dealerDrawPolicy);
         Deck deck = Deck.shuffled(cardsGenerator);
 
         initialDeal(players, dealer, deck);
@@ -68,10 +67,6 @@ public class BlackjackController {
         String rawPlayerNames = inputView.readPlayerNames();
 
         return Players.from(rawPlayerNames, aceAdjustPolicy);
-    }
-
-    private Hand createEmptyHand() {
-        return new Hand(aceAdjustPolicy);
     }
 
     private void initialDeal(Players players, Dealer dealer, Deck deck) {
