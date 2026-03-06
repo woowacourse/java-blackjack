@@ -15,6 +15,10 @@ public enum GameResult {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     private static List<GameResult> all() {
         return List.of(values());
     }

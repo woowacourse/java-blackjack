@@ -5,7 +5,10 @@ import static blackjack.domain.Dealer.DEALER_HIT_THRESHOLD;
 import blackjack.domain.Dealer;
 import blackjack.domain.Participant;
 import blackjack.domain.Player;
+import blackjack.dto.FinalResultDto;
+import java.io.FilterOutputStream;
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
 
@@ -44,6 +47,15 @@ public class OutputView {
             System.out.println(participantHandFormat(participant) + delimiter +
                 participantScoreResultFormat(participant))
         );
+    }
+
+    public static void printFinalResult(FinalResultDto dto) {
+        System.out.println("## 최종 승패");
+        System.out.printf("딜러: %d승 %d무 %d패\n",
+            dto.dealerWinCount(), dto.dealerDrawCount(), dto.dealerLoseCount());
+        dto.playerGameResultMap()
+            .forEach((key, value) ->
+                System.out.printf("%s: %s\n", key, value.getName()));
     }
 
     private static String participantHandFormat(final Participant participant) {

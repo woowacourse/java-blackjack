@@ -7,6 +7,7 @@ import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import blackjack.domain.Status;
 import blackjack.domain.Trump;
+import blackjack.dto.FinalResultDto;
 import blackjack.utils.Parser;
 import blackjack.utils.RetryExecutor;
 import blackjack.view.InputView;
@@ -45,6 +46,8 @@ public class BlackjackController {
         dealer.handleBurst();
 
         OutputView.printFinalStatus(participants);
+        FinalResultDto finalResultDto = FinalResultDto.of(players, dealer);
+        OutputView.printFinalResult(finalResultDto);
     }
 
     private List<Player> readNicknames() {
