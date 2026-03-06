@@ -1,5 +1,6 @@
 package domain.player;
 
+import domain.card.GameCards;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,7 +11,7 @@ public class Gamblers {
 
     public Gamblers(List<String> names) {
         this.gamblers = names.stream()
-                .map(name -> new Player(name))
+                .map(Player::new)
                 .collect(Collectors.toList());
     }
 
@@ -21,5 +22,11 @@ public class Gamblers {
 
     public List<Player> getGamblersInfo() {
         return Collections.unmodifiableList(gamblers);
+    }
+
+    public void receiveCards(GameCards gameCards) {
+        for (Player player : gamblers) {
+            player.addCard(gameCards.drawCard());
+        }
     }
 }

@@ -8,17 +8,27 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class GameCards {
+
     private List<Card> cards;
 
     public GameCards(int amount) {
-       this.cards = Arrays.stream(CardKind.values())
+        this.cards = Arrays.stream(CardKind.values())
                 .flatMap(cardKind -> Arrays.stream(CardValue.values())
                         .flatMap(cardValue ->
-                            IntStream.range(0, amount)
-                                    .mapToObj(card -> new Card(cardValue.getValue(),
-                                                    cardKind.getKind()))
-                                ))
+                                IntStream.range(0, amount)
+                                        .mapToObj(card -> new Card(cardValue.getValue(),
+                                                cardKind.getKind()))
+                        ))
                 .collect(Collectors.toCollection(LinkedList::new));
+        shuffle();
+    }
+
+    public void shuffle() {
+        Collections.shuffle(cards);
+    }
+
+    public Card drawCard() {
+        return cards.removeFirst();
     }
 
     public boolean containsCard(String string) {
@@ -29,13 +39,5 @@ public class GameCards {
 
     public int getSize() {
         return cards.size();
-    }
-
-    public void shuffle() {
-        Collections.shuffle(cards);
-    }
-
-    public Card drawCard() {
-        return cards.removeFirst();
     }
 }

@@ -1,7 +1,5 @@
 package domain.player;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import domain.card.Card;
 import java.util.Arrays;
 import java.util.List;
