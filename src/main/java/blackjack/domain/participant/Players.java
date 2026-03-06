@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Players {
 
