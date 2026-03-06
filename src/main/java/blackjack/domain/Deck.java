@@ -5,9 +5,21 @@ import java.util.List;
 
 public class Deck {
     private static final int CARDS_COUNT = 52;
+
     private final List<TrumpCard> cards;
 
     public static Deck of(List<TrumpCard> cards) {
+        return new Deck(cards);
+    }
+
+    public static Deck create(ShuffleStrategy strategy) {
+        List<TrumpCard> cards = new ArrayList<>();
+        for (Suit suit : Suit.values()) {
+            for (Rank rank : Rank.values()) {
+                cards.add(TrumpCard.of(suit, rank));
+            }
+        }
+        strategy.shuffle(cards);
         return new Deck(cards);
     }
 
@@ -36,6 +48,10 @@ public class Deck {
             throw new IllegalArgumentException("카드는 중복되면 안됩니다.");
         }
     }
+
+//    public List<TrumpCard> drawSecondTimes() {
+//        return new ArrayList<>();
+//    }
 
     public TrumpCard draw() {
         if (cards.isEmpty()) {
