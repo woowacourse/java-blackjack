@@ -22,6 +22,9 @@ public class OutputView {
         System.out.printf("%s카드: %s%n", player.getName(),player.getCardNames());
     }
 
+    public void printDealerDraw(){
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
 
 
 }

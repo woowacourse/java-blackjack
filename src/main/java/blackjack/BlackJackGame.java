@@ -13,8 +13,8 @@ public class BlackJackGame {
 
     public void initDraw() {
         for(int i = 0; i < 2; i++) {
-            players.recieveCard(deck);
-            dealer.recieveCard(deck);
+            players.recieveCard(deck.draw());
+            dealer.recieveCard(deck.draw());
         }
     }
 

@@ -22,6 +22,13 @@ public class BlackJackController {
         playerTurn(players, deck);
 
         // 딜러 턴
+        while (true) {
+            boolean isOver17 = dealer.isOver17();
+            if(isOver17) break;
+            outputView.printDealerDraw();
+            dealer.recieveCard(deck.draw());
+        }
+
 
 
 
@@ -47,4 +54,8 @@ public class BlackJackController {
             }
         }
     }
+
+
+
+
 }

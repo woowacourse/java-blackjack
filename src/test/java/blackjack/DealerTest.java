@@ -13,7 +13,7 @@ public class DealerTest {
 
         Dealer dealer = new Dealer();
 
-        dealer.recieveCard(deck);
+        dealer.recieveCard(new Card(CardPoint.ACE,CardPattern.DIAMOND));
 
         assertThat(dealer.getCardCount()).isEqualTo(1);
 

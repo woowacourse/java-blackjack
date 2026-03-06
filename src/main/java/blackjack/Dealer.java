@@ -8,9 +8,9 @@ public class Dealer {
     public Dealer() {
     }
 
-    public void recieveCard(Deck deck){
+    public void recieveCard(Card card){
         if(!hand.isOver17()){
-            hand.addCard(deck.draw());
+            hand.addCard(card);
         }
     }
 
@@ -20,6 +20,10 @@ public class Dealer {
 
     public String getFirstCardNames(){
         return hand.getFirstCardName();
+    }
+
+    public boolean isOver17(){
+        return hand.isOver17();
     }
 
 }
