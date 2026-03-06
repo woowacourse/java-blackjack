@@ -55,7 +55,7 @@ public class DealerTest {
 
     @Test
     @DisplayName("딜러에서 addCard 호출은 오류가 발생")
-    void call_addCard_in_Delaer_throw_error() {
+    void call_addCard_in_Dealer_throw_error() {
         CardCreationStrategy dealerCardCreationStrategy = () -> {
             Card spadeJ = new Card(CardShape.스페이드, CardContents.J);
             return new ArrayList<>(List.of(spadeJ));
@@ -63,12 +63,12 @@ public class DealerTest {
 
         Deck dealerDeck = Deck.createDeck(dealerCardCreationStrategy);
         Dealer dealer = new Dealer(dealerDeck);
-        String excpectExceptionMessage = "해당 객체[class domain.Dealer]에서는 지원하지 않는 메서드입니다 ";
+        String expectExceptionMessage = "해당 객체[class domain.Dealer]에서는 지원하지 않는 메서드입니다 ";
 
         Assertions.assertThatThrownBy(
                         () -> dealer.addCard(new Card(CardShape.하트, CardContents.EIGHT))
                 ).isInstanceOf(UnsupportedOperationException.class)
-                .hasMessage(excpectExceptionMessage)
+                .hasMessage(expectExceptionMessage)
         ;
     }
 }
