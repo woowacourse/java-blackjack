@@ -1,5 +1,6 @@
 package view;
 
+import dto.CardInfoResponseDto;
 import dto.InitialCardInfoResponseDto;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,14 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printGameResult() {
-
+    public void printGameResult(CardInfoResponseDto responseDto) {
+        int index = 0;
+        for(Entry<String, List<String>> participant : responseDto.participantsInfo().entrySet()) {
+            System.out.println(participant.getKey() + "카드: " +
+                    String.join(", ", participant.getValue())
+                    + " - 결과: " + responseDto.score().get(index)
+            );
+            index++;
+        }
     }
 }
