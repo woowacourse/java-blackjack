@@ -5,16 +5,19 @@ import model.dto.Card;
 import model.dto.PlayerResult;
 
 public class Scorer {
+    private static final Integer ADDITIONAL_ACE_SCORE = 10;
+    private static final Integer MAX_ACE_SCORE = 11;
+
     public static Integer calculate(Card card) {
         return card.cardNumber().getScore();
     }
 
     public static void updateFinalScore(Participant participant) {
-        Boolean hasAce = hasAceCard(participant.getResult());
+        boolean hasAce = hasAceCard(participant.getResult());
         Integer score = participant.getResult().score();
 
-        if(hasAce && score <= 11) {
-            participant.addScore(10);
+        if(hasAce && score <= MAX_ACE_SCORE) {
+            participant.addScore(ADDITIONAL_ACE_SCORE);
         }
     }
 
@@ -22,7 +25,7 @@ public class Scorer {
         List<Card> cards = playerResult.deck();
 
         return !cards.stream()
-                .filter((c) -> c.cardNumber().equals(CardNumber.ACE))
+                .filter((card) -> card.cardNumber().equals(CardNumber.ACE))
                 .toList()
                 .isEmpty();
     }
