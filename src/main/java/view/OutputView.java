@@ -1,6 +1,10 @@
 package view;
 
 import domain.*;
+import domain.card.Card;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
 
 import java.util.Map;
 
