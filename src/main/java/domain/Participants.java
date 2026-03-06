@@ -46,14 +46,26 @@ public class Participants {
 
     public List<String> getUserCardsDisplays() {
         return participants.stream()
-                .map(user -> user.getName() + "카드: " + user.getCardsDisplay())
+                .map(this::makeOneUserCard)
                 .collect(Collectors.toList());
+    }
+
+    public String makeOneUserCardDelegator(int userIndex) {
+        return makeOneUserCard(participants.get(userIndex));
+    }
+
+    private String makeOneUserCard(User user) {
+        return user.getName() + "카드: " + user.getCardsDisplay();
     }
 
     public List<String> askGetExtraCard() {
         return participants.stream()
                 .map(User::formatAskGetExtraCard)
                 .collect(Collectors.toList());
+    }
+
+    public void dealCard(Deck deck, int index) {
+        participants.get(index).receiveCard(deck.dealCard());
     }
 }
 

@@ -63,18 +63,26 @@ public class BlackjackController {
     public void readExtraCardCommand() {
         List<String> getUsersRequestMessages = extraCardRequest();
 
-        for(String getUsersRequestMessage : getUsersRequestMessages) {
-            while(true) {
+        for(int index = 0; index < getUsersRequestMessages.size(); index++) {
+            boolean flag = true;
+            while(flag) {
                 try {
-                    outputView.printMessage(getUsersRequestMessage);
+                    outputView.printMessage(getUsersRequestMessages.get(index));
                     String answer = inputView.readYesOrNo();
                     validator.validateAnswer(answer);
-                    blackjackService.processPlayerDecision(answer);
-                    return;
+                    determinePlayerContinue(answer, index);
+                    flag = false;
                 } catch (IllegalArgumentException e) {
                     outputView.printErrorMessage(e.getMessage());
                 }
             }
+        }
+    }
+
+    private void determinePlayerContinue(String answer, int index) {
+        if (answer.equalsIgnoreCase("y")) {
+            String cardDrawMessage = blackjackService.processPlayerDecision(index);
+            outputView.printMessage(cardDrawMessage);
         }
     }
 

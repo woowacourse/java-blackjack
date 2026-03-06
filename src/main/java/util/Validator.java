@@ -13,7 +13,7 @@ public class Validator {
     }
 
     static void validateYesOrNo(String answer) {
-        if (!answer.equalsIgnoreCase("y") || !answer.equalsIgnoreCase("n")) {
+        if (!(answer.equalsIgnoreCase("y") || answer.equalsIgnoreCase("n"))) {
             throw new IllegalArgumentException("[ERROR] 'y' 또는 'n'만 입력해 주세요.");
         }
     }
