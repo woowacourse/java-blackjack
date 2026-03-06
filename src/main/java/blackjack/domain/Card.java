@@ -2,7 +2,6 @@ package blackjack.domain;
 
 public class Card {
 
-
     private final CardPoint cardPoint;
     private final CardPattern cardPattern;
 
@@ -23,8 +22,8 @@ public class Card {
         return cardPoint.equals(CardPoint.ACE);
     }
 
-    public String getName(){
-        return  cardPoint.getName()+cardPattern.getName();
+    public String getName() {
+        return cardPoint.getName() + cardPattern.getName();
     }
 
 }

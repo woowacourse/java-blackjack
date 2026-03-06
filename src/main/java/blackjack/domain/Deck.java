@@ -9,12 +9,12 @@ public class Deck {
     private final List<Card> deck;
 
     public Deck() {
-        this.deck =createDeck();
+        this.deck = createDeck();
     }
 
     private List<Card> createDeck() {
         List<Card> deck = new ArrayList<>();
-        for(CardPattern cardPattern : CardPattern.values()){
+        for (CardPattern cardPattern : CardPattern.values()) {
             for (CardPoint cardPoint : CardPoint.values()) {
                 deck.add(new Card(cardPoint, cardPattern));
             }
@@ -23,14 +23,12 @@ public class Deck {
         return deck;
     }
 
-
-    public int getCount(){
+    public int getCount() {
         return deck.size();
     }
 
-    public Card draw(){
+    public Card draw() {
         return deck.removeLast();
     }
-
 
 }

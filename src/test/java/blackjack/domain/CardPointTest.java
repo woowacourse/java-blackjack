@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -8,9 +7,8 @@ import org.junit.jupiter.api.Test;
 
 public class CardPointTest {
 
-
     @Test
-    void 각_카드는_점수를_가진다(){
+    void 각_카드는_점수를_가진다() {
 
         assertAll(
                 () -> assertEquals(2, CardPoint.TWO.getPoint()),
@@ -31,7 +29,7 @@ public class CardPointTest {
     }
 
     @Test
-    void 각_카드는_고유한_이름을_가진다(){
+    void 각_카드는_고유한_이름을_가진다() {
 
         assertAll(
                 () -> assertEquals("2", CardPoint.TWO.getName()),
@@ -50,8 +48,5 @@ public class CardPointTest {
         );
 
     }
-
-
-
-
+    
 }

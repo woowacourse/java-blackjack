@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 
 public class DealerTest {
 
-    Deck deck = new Deck();
-
     @Test
     void 딜러가_카드를_받는다() {
 
@@ -18,9 +16,5 @@ public class DealerTest {
         assertThat(dealer.getCardCount()).isEqualTo(1);
 
     }
-
-
-
-
 
 }

@@ -20,11 +20,11 @@ public class Hand {
 
     public int getTotalPoint() {
         int totalPoint = 0;
-        for(Card card : cards) {
+        for (Card card : cards) {
             totalPoint += card.getCardPoint();
         }
         int aceCount = getAceCount();
-        while(aceCount > 0 && totalPoint > BLACKJACK_POINT) {
+        while (aceCount > 0 && totalPoint > BLACKJACK_POINT) {
             totalPoint -= ACE_OFFSET_POINT;
             aceCount--;
         }
@@ -34,8 +34,8 @@ public class Hand {
 
     private int getAceCount() {
         int aceCount = 0;
-        for(Card card : cards) {
-            if(card.isAce()) {
+        for (Card card : cards) {
+            if (card.isAce()) {
                 aceCount += 1;
             }
         }
@@ -46,23 +46,22 @@ public class Hand {
         return getTotalPoint() > BLACKJACK_POINT;
     }
 
-    public boolean isOver17(){
-        return getTotalPoint() >=DEALER_STAND_POINT;
+    public boolean isOver17() {
+        return getTotalPoint() >= DEALER_STAND_POINT;
     }
 
-    public String getFirstCardName(){
+    public String getFirstCardName() {
         return cards.getFirst().getName();
     }
 
-    public String getCardNames(){
+    public String getCardNames() {
 
         List<String> names = new ArrayList<>();
-        for(Card card:cards){
+        for (Card card : cards) {
             names.add(card.getName());
         }
 
         return String.join(", ", names);
     }
-
 
 }
