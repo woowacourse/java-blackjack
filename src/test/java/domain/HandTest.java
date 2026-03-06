@@ -6,6 +6,7 @@ import blackjack.domain.Card;
 import blackjack.domain.Denomination;
 import blackjack.domain.Hand;
 import blackjack.domain.Suit;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,7 @@ public class HandTest {
             new Card(Suit.DIAMOND, Denomination.JACK),
             new Card(Suit.DIAMOND, Denomination.TEN)
         );
-        Hand hand = new Hand();
+        Hand hand = new Hand(new ArrayList<>());
         cards.forEach(hand::add);
 
         int expected = 20;
@@ -35,7 +36,7 @@ public class HandTest {
             new Card(Suit.DIAMOND, Denomination.JACK),
             new Card(Suit.DIAMOND, Denomination.TEN),
             new Card(Suit.DIAMOND, Denomination.FIVE));
-        Hand hand = new Hand();
+        Hand hand = new Hand(new ArrayList<>());
         cards.forEach(hand::add);
         boolean expected = true;
 
@@ -51,7 +52,7 @@ public class HandTest {
             new Card(Suit.DIAMOND, Denomination.JACK),
             new Card(Suit.DIAMOND, Denomination.NINE),
             new Card(Suit.DIAMOND, Denomination.TWO));
-        Hand hand = new Hand();
+        Hand hand = new Hand(new ArrayList<>());
         cards.forEach(hand::add);
         boolean expected = false;
 
@@ -66,7 +67,7 @@ public class HandTest {
         List<Card> cards = List.of(
             new Card(Suit.DIAMOND, Denomination.NINE),
             new Card(Suit.DIAMOND, Denomination.ACE));
-        Hand hand = new Hand();
+        Hand hand = new Hand(new ArrayList<>());
         cards.forEach(hand::add);
         int expected = 20;
 
@@ -81,7 +82,7 @@ public class HandTest {
         List<Card> cards = List.of(
             new Card(Suit.DIAMOND, Denomination.ACE),
             new Card(Suit.DIAMOND, Denomination.ACE));
-        Hand hand = new Hand();
+        Hand hand = new Hand(new ArrayList<>());
         cards.forEach(hand::add);
         int expected = 12;
 
