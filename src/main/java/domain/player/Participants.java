@@ -13,11 +13,11 @@ public class Participants {
         this.gamblers = new Gamblers(names);
     }
 
-    public Map<String, List<String>> getFirstParticipantsInfo() {
-        Map<String, List<String>> participantsInfo = new HashMap<>();
-        participantsInfo.put(dealer.getName(), List.of(dealer.getFirstCardStatus()));
-        participantsInfo.putAll(gamblers.getGamblersInfo());
+    public Dealer getDealer() {
+        return dealer;
+    }
 
-        return participantsInfo;
+    public Gamblers getGamblers() {
+        return gamblers;
     }
 }

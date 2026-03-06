@@ -1,5 +1,6 @@
 package domain.player;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,9 +20,7 @@ public class Gamblers {
                 .anyMatch(player -> player.isEqualName(name));
     }
 
-    public Map<String, List<String>> getGamblersInfo() {
-        return gamblers.stream()
-                .collect(Collectors.toMap(Player::getName,
-                        Player::getCardStatus));
+    public List<Player> getGamblersInfo() {
+        return Collections.unmodifiableList(gamblers);
     }
 }
