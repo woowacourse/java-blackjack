@@ -43,7 +43,7 @@ public class BlackjackController {
 
         // 딜러 1장 공개, 플레이어 2장 공개
         outputView.printDealerCards(dealer.getOpenedCards());
-        players.forEach(player -> outputView.printPlayersCards(player.getName(), player.getHeadCards()));
+        players.forEach(player -> outputView.printPlayersCards(player.getName(), player.getOpenedCards()));
 
         // 각 플레이어 히트/스탠드 진행
         for (Player player : players) {
