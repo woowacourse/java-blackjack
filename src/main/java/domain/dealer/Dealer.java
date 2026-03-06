@@ -15,7 +15,7 @@ public class Dealer {
     private static final int INITIAL_DEAL_COUNT = 2;
     private static final int HIT_COUNT = 1;
 
-    private CardDeck cardDeck;
+    private final CardDeck cardDeck;
     private CardBundle cardBundle;
 
     private Dealer(CardDeck cardDeck) {
