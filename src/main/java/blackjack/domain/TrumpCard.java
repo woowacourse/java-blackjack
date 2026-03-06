@@ -26,8 +26,16 @@ public class TrumpCard {
         }
     }
 
+    public String koreanName() {
+        return suit.getKoreanName();
+    }
+
     public int score() {
         return rank.getScore();
+    }
+
+    public String rankName() {
+        return rank.getRankName();
     }
 
     public boolean isAce() {
