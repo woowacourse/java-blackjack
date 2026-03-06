@@ -4,7 +4,7 @@ import domain.Card;
 import domain.Deck;
 import domain.GameTable;
 import application.dto.RoundResult;
-import domain.dto.PlayerStatus;
+import domain.dto.MemberStatus;
 import java.util.List;
 
 public class BlackjackService {
@@ -25,7 +25,7 @@ public class BlackjackService {
         return new RoundResult(playerCards, isBust);
     }
 
-    public List<PlayerStatus> getPlayerStatuses() {
+    public List<MemberStatus> getPlayerStatuses() {
         return gameTable.checkPlayerStatuses();
     }
 
