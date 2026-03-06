@@ -2,20 +2,18 @@ package domain;
 
 import java.util.Optional;
 
-public class Dealer {
+public class Dealer extends Participant {
     private static final int MINIMUM_TOTAL_SCORE = 16;
-
-    private final Deck deck;
-    private final String name = "딜러";
+    private static final String DEALER_NAME = "딜러";
 
     public Dealer(Deck participantDeck) {
-        this.deck = participantDeck;
+        super(participantDeck, DEALER_NAME);
     }
 
     public Optional<Card> addCardWhenSumBelowMinimum(Deck totalDeck) {
-        if (deck.calculateCardScoreSum() <= MINIMUM_TOTAL_SCORE) {
+        if (super.calculateDeckSum() <= MINIMUM_TOTAL_SCORE) {
             Card newCard = totalDeck.drawCard();
-            deck.addCard(newCard);
+            super.addCard(newCard);
             return Optional.of(newCard);
         }
         return Optional.empty();
