@@ -3,17 +3,19 @@ package domain.player;
 import domain.card.Card;
 import domain.card.CardBundle;
 
+import java.util.List;
+
 public class Player {
 
     private PlayerName name;
     private CardBundle cardBundle;
 
-    private Player(String name) {
+    private Player(PlayerName name) {
         this.cardBundle = CardBundle.empty();
-        this.name = PlayerName.from(name);
+        this.name = name;
     }
 
-    public static Player from(String name) {
+    public static Player from(PlayerName name) {
         return new Player(name);
     }
 
@@ -33,7 +35,7 @@ public class Player {
 //        cardBundle.addUp(newCard);
 //    }
 
-    public String toDisplay() {
+    public String toDisplayMyName() {
         return name.name();
     }
 

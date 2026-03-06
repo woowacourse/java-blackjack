@@ -3,6 +3,7 @@ package player;
 import domain.card.*;
 import domain.dealer.Dealer;
 import domain.player.Player;
+import domain.player.PlayerName;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,7 @@ public class PlayerTest {
                         Card.of(CardEmblem.TWO, CardDenomination.SPADE), Card.of(CardEmblem.THREE, CardDenomination.HEART))
                 .build();
         Dealer dealer = Dealer.of(cardDeck);
-        Player player = Player.from("test1");
+        Player player = Player.from(PlayerName.from("test"));
 
         dealer.handOutCardToPlayer(player, 1);
         Card card = Card.of(CardEmblem.EIGHT, CardDenomination.CLOVER);
@@ -29,7 +30,7 @@ public class PlayerTest {
                 .build();
 
         Dealer dealer = Dealer.of(cardDeck);
-        Player player = Player.from("test1");
+        Player player = Player.from(PlayerName.from("test"));
 
         Assertions.assertThatThrownBy(() -> {
             dealer.handOutCardToPlayer(player, 1);
@@ -39,9 +40,9 @@ public class PlayerTest {
     @Test
     void 플레이어를_생성한다() {
         String name = "test1";
-        Player player = Player.from(name);
+        Player player = Player.from(PlayerName.from(name));
 
-        Assertions.assertThat(player.toDisplay()).isEqualTo(name);
+        Assertions.assertThat(player.toDisplayMyName()).isEqualTo(name);
     }
 
     @Test
@@ -49,7 +50,7 @@ public class PlayerTest {
         String overFiveLengthName = "testtest";
 
         Assertions.assertThatThrownBy(() -> {
-            Player.from(overFiveLengthName);
+            Player.from(PlayerName.from(overFiveLengthName));
         }).isInstanceOf(IllegalArgumentException.class);
     }
 }
