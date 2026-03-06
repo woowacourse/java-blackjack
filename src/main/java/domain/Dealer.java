@@ -16,6 +16,10 @@ public class Dealer {
         return result <= 16;
     }
 
+    public Card getFirstCard(){
+        return cards.peek();
+    }
+
     @Override
     public String toString() {
         return cards.toString();

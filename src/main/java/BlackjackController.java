@@ -28,7 +28,7 @@ public class BlackjackController {
         // 카드 보여주기
         List<Player> players = blackjackGame.getPlayers();
         Dealer dealer = blackjackGame.getDealer();
-        resultView.printparticipantsCards(players, dealer);
+        resultView.printParticipantsCards(players, dealer);
 
         for (Player player : players) {
             String result = null;

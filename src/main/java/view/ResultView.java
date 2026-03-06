@@ -4,21 +4,24 @@ import domain.Dealer;
 import domain.Player;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.swing.JScrollBar;
 
 public class ResultView {
-    public void printparticipantsCards(List<Player> players, Dealer dealer) {
+    public void printParticipantsCards(List<Player> players, Dealer dealer) {
         String collect = players.stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(", "));
 
         System.out.println("\n딜러와 " + collect + "에게 2장을 나누었습니다.");
 
-        System.out.println("딜러카드: " + dealer);
+        System.out.println("딜러카드: " + dealer.getFirstCard());
+        printPlayerCards(players);
+        System.out.println();
+    }
+
+    private static void printPlayerCards(List<Player> players) {
         for (Player player : players) {
             System.out.println(player.getName() + "카드: " + player);
         }
-        System.out.println();
     }
 
     public void printDealerHitStand(boolean value){

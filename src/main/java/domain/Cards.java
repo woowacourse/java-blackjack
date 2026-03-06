@@ -16,6 +16,10 @@ public class Cards {
         cards.add(card);
     }
 
+    public Card peek(){
+        return cards.getFirst();
+    }
+
     public int size() {
         return cards.size();
     }
