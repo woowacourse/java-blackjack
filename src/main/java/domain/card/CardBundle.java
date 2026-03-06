@@ -6,6 +6,9 @@ import java.util.Objects;
 
 public class CardBundle {
 
+    private static final int BUSTED_CONDITION = 21;
+    private static final int ACE_BONUS_SCORE = 10;
+
     private List<Card> cardBundle;
 
     private CardBundle(List<Card> cardBundle) {
@@ -55,10 +58,25 @@ public class CardBundle {
                 .toList();
     }
 
-    public int getTotalScore() {
+    public int getResultScore() {
+        int basicScore = getBasicScore();
+        boolean hasAce = hasAce();
+
+        if (hasAce && (basicScore + ACE_BONUS_SCORE <= BUSTED_CONDITION)) {
+            return basicScore + ACE_BONUS_SCORE;
+        }
+
+        return basicScore;
+    }
+
+    public int getBasicScore() { // 쌩으로 더했을 때, 에이스 기본 점수가 11점.
         return cardBundle.stream()
                 .mapToInt(Card::getScore) // Card 객체를 점수(int)로 변환
                 .sum();                   // 합계 계산
+    }
+
+    public boolean isBusted() {
+        return getBasicScore() > BUSTED_CONDITION;
     }
 
     public boolean hasAce() {

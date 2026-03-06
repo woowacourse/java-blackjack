@@ -1,8 +1,5 @@
 package domain.card;
 
-import domain.dealer.Dealer;
-import domain.player.Player;
-import domain.player.PlayerName;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -19,6 +16,30 @@ public class CardBundleTest {
         CardBundle cardBundle = CardBundle.of(cards);
 
         Assertions.assertThat(cardBundle.hasAce()).isTrue();
+    }
+
+    @Test
+    void 기본점수합을_계산한다() {
+        Card cloverAce = Card.of(CardDenomination.ACE, CardEmblem.CLOVER);
+        Card spadeJack = Card.of(CardDenomination.JACK, CardEmblem.SPADE);
+        List<Card> cards = List.of(cloverAce, spadeJack);
+        CardBundle cardBundle = CardBundle.of(cards);
+
+        int basicScore = cardBundle.getBasicScore(); // 11
+
+        Assertions.assertThat(basicScore).isEqualTo(11);
+    }
+
+    @Test
+    void 최종점수합을_계산한다() {
+        Card cloverAce = Card.of(CardDenomination.ACE, CardEmblem.CLOVER);
+        Card spadeJack = Card.of(CardDenomination.JACK, CardEmblem.SPADE);
+        List<Card> cards = List.of(cloverAce, spadeJack);
+        CardBundle cardBundle = CardBundle.of(cards);
+
+        int resultScore = cardBundle.getResultScore(); // 21
+
+        Assertions.assertThat(resultScore).isEqualTo(21);
     }
 
 }

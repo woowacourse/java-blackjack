@@ -56,6 +56,7 @@ public class Dealer {
     }
 
     public boolean isBusted() {
-        return cardBundle.getTotalScore() > 21;
+        return cardBundle.getBasicScore() > 21;
     }
+
 }

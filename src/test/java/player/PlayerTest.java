@@ -69,7 +69,7 @@ public class PlayerTest {
 
         CardBundle result = dealer.handOutCardToPlayer(player, 2);
 
-        Assertions.assertThat(result.getTotalScore()).isEqualTo(origin.getTotalScore());
+        Assertions.assertThat(result.getBasicScore()).isEqualTo(origin.getBasicScore());
     }
 
     @Test

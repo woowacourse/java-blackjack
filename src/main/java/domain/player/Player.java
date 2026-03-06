@@ -49,7 +49,7 @@ public class Player {
     }
 
     public boolean isBusted() {
-        return cardBundle.getTotalScore() > 21;
+        return cardBundle.isBusted();
     }
 
 }
