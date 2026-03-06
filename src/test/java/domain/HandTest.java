@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class HandTest {
     @Test
     void 참가자의_카드가_21을_초과했는지_계산한다() {
-        List<Card> cards = List.of(new Card(Rank.KING, Suit.HEART), new Card(Rank.QUEEN, Suit.HEART), new Card(Rank.JACK, Suit.HEART));
+        List<Card> cards = createCards(Rank.JACK, Rank.QUEEN, Rank.KING);
         Hand hand = new Hand(cards);
 
         boolean isBust = hand.isBust();
@@ -23,7 +23,7 @@ class HandTest {
 
     @Test
     void 카드들의_총_합을_계산한다() {
-        List<Card> cards = List.of(new Card(Rank.TWO, Suit.HEART), new Card(Rank.QUEEN, Suit.HEART));
+        List<Card> cards = createCards(Rank.TWO, Rank.QUEEN);
         Hand hand = new Hand(cards);
 
         int score = hand.score();
@@ -33,7 +33,7 @@ class HandTest {
 
     @Test
     void 에이스가_존재하고_합계가_21이하인_경우_유리하게_계산한다() {
-        List<Card> cards = List.of(new Card(Rank.ACE, Suit.HEART), new Card(Rank.QUEEN, Suit.HEART));
+        List<Card> cards = createCards(Rank.ACE, Rank.QUEEN);
         Hand hand = new Hand(cards);
 
         int score = hand.score();
@@ -53,8 +53,6 @@ class HandTest {
 
     @Test
     void 에이스가_한장_존재하고_합계가_21초과하는_경우_유리하게_계산한다() {
-        // 10 + 11 + 10 + 5 -> 36 -> 10을 감소시킴
-        // 36점 -> 26점
         List<Card> cards = createCards(Rank.TEN, Rank.ACE, Rank.TEN, Rank.FIVE);
         Hand hand = new Hand(cards);
 
@@ -62,8 +60,6 @@ class HandTest {
 
         assertThat(score).isEqualTo(26);
     }
-
-
 
     private List<Card> createCards(Rank... ranks) {
         List<Card> cards = new ArrayList<>();
