@@ -1,9 +1,9 @@
 package service;
 
-import domain.Dealer;
-import domain.Deck;
-import domain.Player;
-import domain.Players;
+import domain.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class BlackJackService {
 
@@ -29,5 +29,45 @@ public class BlackJackService {
                 player.hit(deck.drawCard());
             }
         }
+    }
+
+    public Map<String, MatchResult> calculateResults() {
+        Map<String, MatchResult> playerResults = new HashMap<>();
+
+        for (Player player : players.getPlayers()) {
+            if (player.getHand().isBust()) {
+                playerResults.put(player.getName(), MatchResult.LOSE);
+                continue;
+            }
+
+            if (dealer.getHand().isBust()) {
+                playerResults.put(player.getName(), MatchResult.WIN);
+                continue;
+            }
+
+            if (player.getHand().calculateSum() > dealer.getHand().calculateSum()) {
+                playerResults.put(player.getName(), MatchResult.WIN);
+                continue;
+            }
+
+            if (player.getHand().calculateSum() == dealer.getHand().calculateSum()) {
+                if (player.getHand().isBlackJack() && !dealer.getHand().isBlackJack()) {
+                    playerResults.put(player.getName(), MatchResult.WIN);
+                    continue;
+                }
+                if (!player.getHand().isBlackJack() && dealer.getHand().isBlackJack()) {
+                    playerResults.put(player.getName(), MatchResult.LOSE);
+                    continue;
+                }
+                if (!player.getHand().isBlackJack() && !dealer.getHand().isBlackJack()) {
+                    playerResults.put(player.getName(), MatchResult.DRAW);
+                    continue;
+                }
+            }
+
+            if (player.getHand().calculateSum() < dealer.getHand().calculateSum()) playerResults.put(player.getName(), MatchResult.LOSE);
+        }
+
+        return playerResults;
     }
 }

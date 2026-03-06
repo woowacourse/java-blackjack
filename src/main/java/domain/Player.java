@@ -35,4 +35,8 @@ public class Player {
             throw new IllegalArgumentException("플레이어 이름은 영문자만 포함되어야 합니다.");
         }
     }
+
+    public String getName() {
+        return name;
+    }
 }
