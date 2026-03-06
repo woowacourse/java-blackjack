@@ -60,9 +60,7 @@ public class CardBundle {
 
     public int getResultScore() {
         int basicScore = getBasicScore();
-        boolean hasAce = hasAce();
-
-        if (hasAce && (basicScore + ACE_BONUS_SCORE <= BUSTED_CONDITION)) {
+        if (hasAce() && (basicScore + ACE_BONUS_SCORE <= BUSTED_CONDITION)) {
             return basicScore + ACE_BONUS_SCORE;
         }
 
