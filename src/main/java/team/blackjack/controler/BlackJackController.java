@@ -1,11 +1,9 @@
 package team.blackjack.controler;
 
 import java.util.List;
-import java.util.Map;
-import team.blackjack.control.dto.DrawResult;
-import team.blackjack.control.dto.ScoreResult;
-import team.blackjack.domain.BlackjackGame;
-import team.blackjack.domain.Card;
+import team.blackjack.service.dto.DrawResult;
+import team.blackjack.service.dto.GameResult;
+import team.blackjack.service.dto.ScoreResult;
 import team.blackjack.domain.Player;
 import team.blackjack.domain.rule.DefaultBlackjackRule;
 import team.blackjack.service.BlackJackService;
@@ -20,16 +18,14 @@ public class BlackJackController {
     }
 
     public void run() {
-        OutputView.printPlayerNameRequest();
-        List<String> playerNames = InputView.readPlayerNames();
-
+        List<String> playerNames = readPlayerNames();
         blackJackService.initGame(playerNames);
-        final BlackjackGame blackjackGame = blackJackService.getBlackjackGame();
-
         blackJackService.drawInitialCards();
-        OutputView.printDrawResult(convert(blackjackGame));
 
-        readHitDecision(blackjackGame.getPlayers());
+        DrawResult drawResult = blackJackService.getHandResult();
+        OutputView.printDrawResult(drawResult);
+
+        readHitDecision(blackJackService.getPlayer());
 
         while (blackJackService.shouldDealerHit()) {
             OutputView.printDealerHitMessage();
@@ -43,6 +39,10 @@ public class BlackJackController {
         OutputView.printGameResult(gameResult);
     }
 
+    private List<String> readPlayerNames(){
+        OutputView.printPlayerNameRequest();
+        return InputView.readPlayerNames();
+    }
 
     private void readHitDecision(List<Player> players) {
         players.forEach(this::processHit);
@@ -59,15 +59,7 @@ public class BlackJackController {
             blackJackService.hitPlayer(player);
             OutputView.printPlayerCards(player.getName(), player.getHands().getFirst().getCardNames());
         }
-    }
 
-    private DrawResult convert(BlackjackGame game) {
-        final List<String> playerNames = game.getPlayers().stream()
-                .map(Player::getName)
-                .toList();
-        final List<Card> cards = game.getDealer().getHand().getCards();
-        final Map<String, List<String>> playerCards = game.getAllPlayerCards();
-
-        return new DrawResult(playerNames, cards.getFirst().getCardName(), playerCards);
+        OutputView.printBustMessage();
     }
 }
