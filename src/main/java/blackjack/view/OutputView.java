@@ -29,15 +29,33 @@ public class OutputView {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
+    // TODO: 중복 코드 (2026. 3. 6.)
     public void printScoreResult(Dealer dealer, Players players) {
+        printDealerResult(dealer);
+        for (Player player : players.getPlayers()) {
+            if (player.getScore() == 0) {
+                System.out.println(player.getName() + "카드: " +
+                        String.join(", ", player.getCards().stream().map(Card::getCard).toList()) +
+                        " - 결과: 버스트");
+                continue;
+            }
+
+            System.out.println(player.getName() + "카드: " +
+                    String.join(", ", player.getCards().stream().map(Card::getCard).toList()) +
+                    " - 결과: " + player.getScore());
+        }
+    }
+
+    private void printDealerResult(Dealer dealer) {
+        if (dealer.getScore() == 0) {
+            System.out.println("\n딜러카드: " +
+                    String.join(", ", dealer.getCards().stream().map(Card::getCard).toList()) +
+                    " - 결과: 버스트");
+            return;
+        }
         System.out.println("\n딜러카드: " +
                 String.join(", ", dealer.getCards().stream().map(Card::getCard).toList()) +
                 " - 결과: " + dealer.getScore());
-        for (Player player : players.getPlayers()) {
-            System.out.println(player.getName() + "카드: " +
-                    String.join(", ", player.getCards().stream().map(Card::getCard).toList())+
-                    " - 결과: " + player.getScore());
-        }
     }
 
     public void printGameResult(Map<Player, GameResult> gameResult) {
@@ -45,6 +63,7 @@ public class OutputView {
         int win = 0;
         int lose = 0;
         int draw = 0;
+
         for (GameResult result : gameResult.values()) {
             if (result.equals(GameResult.WIN)) {
                 lose++;
@@ -67,8 +86,13 @@ public class OutputView {
             System.out.print(draw + "무 ");
         }
         System.out.println();
+
         for (Player player : gameResult.keySet()) {
             System.out.println(player.getName() + ": " + gameResult.get(player).getStatus());
         }
+    }
+
+    public void printBurst(String name) {
+        System.out.println(name + "의 점수가 버스트 되었습니다.");
     }
 }
