@@ -1,5 +1,7 @@
 package blackjack.model;
 
+import java.util.List;
+
 public class Player {
 
     private static final int BLACKJACK_SCORE = 21;
@@ -26,6 +28,22 @@ public class Player {
     }
 
     public int getHandsTotalScore() {
+        return hands.calculateTotalScore();
+    }
+
+    public List<Card> getCards(int count) {
+        return hands.getCards(count);
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public List<Card> getAllCard() {
+        return hands.getAllCard();
+    }
+
+    public int getCurrentTotalScore() {
         return hands.calculateTotalScore();
     }
 }

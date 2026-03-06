@@ -73,7 +73,15 @@ public class Dealer {
         return hands;
     }
 
-    public Card getFirstCard() {
-        return hands.getFirstCard();
+    public List<Card> getCards(int count) {
+        return hands.getCards(count);
+    }
+
+    public List<Card> getAllCard() {
+        return hands.getAllCard();
+    }
+
+    public int getCurrentTotalScore() {
+        return hands.calculateTotalScore();
     }
 }
