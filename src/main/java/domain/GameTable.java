@@ -1,7 +1,10 @@
 package domain;
 
+import domain.dto.GameResult;
 import domain.dto.MemberStatus;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GameTable {
 
@@ -43,5 +46,19 @@ public class GameTable {
                     int totalValue = members.checkValue(name);
                     return new MemberStatus(name, cards, totalValue);
                 }).toList();
+    }
+
+    public List<GameResult> checkGameResult() {
+        List<GameResult> gameResults = new ArrayList<>();
+        gameResults.add(new GameResult(DEALER_NAME,
+                members.judgeDealerGameResult(DEALER_NAME)));
+
+        Map<String, Boolean> playerResults = members.judgePlayerGameResult(DEALER_NAME);
+
+        for (String playerName : playerResults.keySet()) {
+            gameResults.add(new GameResult(playerName,
+                    List.of(playerResults.get(playerName))));
+        }
+        return gameResults;
     }
 }
