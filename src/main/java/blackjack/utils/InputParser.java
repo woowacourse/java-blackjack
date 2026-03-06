@@ -1,3 +1,5 @@
+package blackjack.utils;
+
 import java.util.List;
 
 public class InputParser {

@@ -1,3 +1,9 @@
+package blackjack.service;
+
+import blackjack.domain.Dealer;
+import blackjack.domain.GameResult;
+import blackjack.domain.Player;
+import blackjack.domain.ScoreCompareResult;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

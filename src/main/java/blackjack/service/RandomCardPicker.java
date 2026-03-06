@@ -1,3 +1,6 @@
+package blackjack.service;
+
+import blackjack.domain.Card;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

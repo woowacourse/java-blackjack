@@ -1,10 +1,12 @@
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
+import blackjack.domain.Card;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
+import blackjack.service.RandomCardPicker;
 
 public class RandomCardPickerTest {
     @Test

@@ -1,3 +1,9 @@
+package blackjack.service;
+
+import blackjack.domain.Card;
+import blackjack.domain.Dealer;
+import blackjack.domain.Player;
+
 public class CardDistributor {
 
     private final RandomCardPicker randomCardPicker;

@@ -1,3 +1,5 @@
+package blackjack.domain;
+
 import java.util.Objects;
 
 public class Card {

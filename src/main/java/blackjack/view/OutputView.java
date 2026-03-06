@@ -1,3 +1,6 @@
+package blackjack.view;
+
+import blackjack.domain.ScoreCompareResult;
 import java.util.List;
 import java.util.Map;
 
