@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,7 +13,7 @@ public class Hand {
 
     public Hand(DrawStrategy drawStrategy, List<Card> cards) {
         this.drawStrategy = drawStrategy;
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
     void drawCard() {
