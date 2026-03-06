@@ -85,7 +85,7 @@ public class PlayerTest {
         Player player = Player.from(PlayerName.from("test"));
 
         dealer.dealCardToPlayer(player);
-        CardBundle result = dealer.hitCardToPlayer(player);
+        dealer.hitCardToPlayer(player);
 
         Assertions.assertThat(player.isBusted()).isTrue();
     }
