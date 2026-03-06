@@ -7,7 +7,6 @@ public class OutputView {
         printDrawnCards("딜러", dealerCards);
         for (String playerName : playerCards.keySet()) {
             printDrawnCards(playerName, playerCards.get(playerName));
-            System.out.println();
         }
     }
 
@@ -16,6 +15,10 @@ public class OutputView {
     }
 
     public static void printDrawnCards(String playerName, List<String> cardNames) {
+        System.out.println(playerName + "카드: " + String.join(", ", cardNames));
+    }
+
+    private static void printFinalDrawnCards(String playerName, List<String> cardNames) {
         System.out.print(playerName + "카드: " + String.join(", ", cardNames));
     }
 
@@ -25,10 +28,10 @@ public class OutputView {
 
     public static void printFinalCardScores(Map<String, List<String>> playerCards, List<String> dealerCards,
                                             Map<String, Integer> playerScores, int dealerScore) {
-        printDrawnCards("딜러", dealerCards);
+        printFinalDrawnCards("딜러", dealerCards);
         System.out.printf(" - 결과: %d\n", dealerScore);
         for (String playerName : playerCards.keySet()) {
-            printDrawnCards(playerName, playerCards.get(playerName));
+            printFinalDrawnCards(playerName, playerCards.get(playerName));
             System.out.printf(" - 결과: %d\n", playerScores.get(playerName));
         }
     }

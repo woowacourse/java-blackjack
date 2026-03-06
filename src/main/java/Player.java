@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Player {
     private final String name;
 
@@ -18,6 +20,10 @@ public class Player {
 
     public Cards getDrawnCards() {
         return drawnCards;
+    }
+
+    public List<String> getCardNames() {
+        return drawnCards.getCardNames();
     }
 
     public boolean isBust() {
