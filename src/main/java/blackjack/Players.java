@@ -12,9 +12,9 @@ public class Players {
         }
     }
 
-    public void recieveCard(Card card) {
+    public void recieveCard(Deck deck) {
         for(Player player:players) {
-            player.recieveCard(card);
+            player.recieveCard(deck.draw());
         }
     }
 
