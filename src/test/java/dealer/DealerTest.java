@@ -3,6 +3,7 @@ package dealer;
 import domain.card.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import domain.dealer.Dealer;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class DealerTest {
                 .cards(Card.of(CardEmblem.EIGHT, CardDenomination.CLOVER), Card.of(CardEmblem.NINE, CardDenomination.SPADE))
                 .build();
 
-        domain.dealer.Dealer dealer = domain.dealer.Dealer.of(cardDeck);
+        Dealer dealer = Dealer.of(cardDeck);
         CardBundle cardBundle = dealer.handOutCard(2);
 
         Assertions.assertThat(cardBundle)
@@ -32,7 +33,7 @@ public class DealerTest {
                 .cards(Card.of(CardEmblem.EIGHT, CardDenomination.CLOVER), Card.of(CardEmblem.NINE, CardDenomination.SPADE))
                 .build();
 
-        domain.dealer.Dealer dealer = domain.dealer.Dealer.of(cardDeck);
+        Dealer dealer = Dealer.of(cardDeck);
         CardBundle cardBundle = dealer.handOutCard(1);
 
         Assertions.assertThat(cardBundle)
@@ -46,7 +47,7 @@ public class DealerTest {
                 .cards(Card.of(CardEmblem.EIGHT, CardDenomination.CLOVER))
                 .build();
 
-        domain.dealer.Dealer dealer = domain.dealer.Dealer.of(cardDeck);
+        Dealer dealer = Dealer.of(cardDeck);
 
         Assertions.assertThatThrownBy(() -> {
             CardBundle cardBundle = dealer.handOutCard(2);
