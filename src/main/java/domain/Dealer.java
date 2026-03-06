@@ -4,12 +4,12 @@ import java.util.Optional;
 
 public class Dealer {
     private static final int MINIMUM_TOTAL_SCORE = 16;
-    
+
     private final Deck deck;
     private final String name = "딜러";
 
-    public Dealer(Deck deck) {
-        this.deck = deck;
+    public Dealer(Deck participantDeck) {
+        this.deck = participantDeck;
     }
 
     public Optional<Card> addCardWhenSumBelowMinimum(Deck totalDeck) {
