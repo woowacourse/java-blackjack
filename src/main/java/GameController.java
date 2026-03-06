@@ -24,6 +24,7 @@ public class GameController {
         processUserTurns(users);
         processDealerTurn();
         showCardResult(users);
+        showGameRecord(users);
     }
 
     private List<User> setUpUsers(){
@@ -62,5 +63,10 @@ public class GameController {
 
     private void showCardResult(List<User> users) {
         outputView.printCardResult(users, dealer);
+    }
+
+    private void showGameRecord(List<User> users){
+        gameService.determineResult(users, dealer);
+        outputView.printGameRecord(users, dealer);
     }
 }
