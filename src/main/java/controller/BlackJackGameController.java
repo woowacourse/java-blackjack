@@ -73,14 +73,11 @@ public class BlackJackGameController {
 
         Map<String, Boolean> gameResult = Result.calculateResult(participantScores);
 
-        OutputView.printCards(dealer.getParticipantCardsDto());
+        OutputView.printFinalCards(dealer.getParticipantCardsDto());
 
         // printCards 최종 결과 출력 확인하기
         for (Player player : players) {
-            String beforeResult = OutputView.printFinalCards(player.getParticipantCardsDto());
-            String result = " - 결과: ";
-            int score = player.getScore();
-            System.out.println(beforeResult + result + score);
+            OutputView.printFinalCards(player.getParticipantCardsDto());
         }
 
         OutputView.printGameResult(gameResult);

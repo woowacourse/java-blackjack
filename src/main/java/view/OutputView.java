@@ -14,17 +14,20 @@ public class OutputView {
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", playersNamesMessage);
     }
 
-
-    // 중복코드 분리해야해요.
-    public static String printCards(ParticipantCardsDto participantCardsDto) {
-        String cardsInfoMessage = String.join(",", participantCardsDto.cardsInfo());
-        System.out.printf("%s: %s%n", participantCardsDto.name(), cardsInfoMessage);
-        return participantCardsDto.name() + cardsInfoMessage;
+    public static void printCards(ParticipantCardsDto participantCardsDto) {
+        if (participantCardsDto.name().equals("딜러")) {
+            String dealerCard = participantCardsDto.cardsInfo().getFirst();
+            System.out.printf("%s: %s%n", participantCardsDto.name(), dealerCard);
+        }
+        if (!participantCardsDto.name().equals("딜러")) {
+            String cardsInfoMessage = String.join(",", participantCardsDto.cardsInfo());
+            System.out.printf("%s: %s%n", participantCardsDto.name(), cardsInfoMessage);
+        }
     }
 
-    public static String printFinalCards(ParticipantCardsDto participantCardsDto) {
+    public static void printFinalCards(ParticipantCardsDto participantCardsDto) {
         String cardsInfoMessage = String.join(",", participantCardsDto.cardsInfo());
-        return participantCardsDto.name() + ": " + cardsInfoMessage;
+        System.out.println(participantCardsDto.name() + ": " + cardsInfoMessage + " - 결과: " + participantCardsDto.totalScore());
     }
 
     public static void printDealerMessage() {

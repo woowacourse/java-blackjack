@@ -28,9 +28,9 @@ public abstract class Participant {
         return cards.calculateScore();
     }
 
-    //public abstract ParticipantCardsDto getParticipantCardsDto();
+
 
     public ParticipantCardsDto getParticipantCardsDto() {
-        return new ParticipantCardsDto(name.getName(), cards.getCardsInfo());
+        return new ParticipantCardsDto(name.getName(), cards.getCardsInfo(), getScore());
     }
 }
