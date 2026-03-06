@@ -10,31 +10,35 @@ public class BlackJackJudge {
         HashMap<Player, GameResult> result = new LinkedHashMap<>();
 
         for (Player player : players.getPlayers()) {
-            if(player.isBust()){
-                result.put(player, GameResult.LOSE);
-                continue;
-            }
-
-            if (dealer.isBust()) {
-                result.put(player, GameResult.WIN);
-                continue;
-            }
-
-            int playerTotalPoint = player.getTotalPoint();
-            int dealerTotalPoint=dealer.getTotalPoint();
-            if(playerTotalPoint >dealerTotalPoint){
-                result.put(player, GameResult.WIN);
-                continue;
-            }
-
-            if(playerTotalPoint <dealerTotalPoint){
-                result.put(player, GameResult.LOSE);
-                continue;
-            }
-            result.put(player, GameResult.TIE);
+            result.put(player, judgeGameResult(player, dealer));
         }
 
-
         return result;
+    }
+    
+    private GameResult judgeGameResult(Player player, Dealer dealer) {
+        if(player.isBust()){
+            return GameResult.LOSE;
+        }
+
+        if (dealer.isBust()) {
+            return GameResult.WIN;
+        }
+
+        return judgeNearestBlackJackPoint(player, dealer);
+    }
+
+    private static GameResult judgeNearestBlackJackPoint(Player player, Dealer dealer) {
+        int playerTotalPoint = player.getTotalPoint();
+        int dealerTotalPoint= dealer.getTotalPoint();
+
+        if(playerTotalPoint >dealerTotalPoint){
+            return GameResult.WIN;
+        }
+
+        if(playerTotalPoint <dealerTotalPoint){
+            return GameResult.LOSE;
+        }
+        return GameResult.TIE;
     }
 }
