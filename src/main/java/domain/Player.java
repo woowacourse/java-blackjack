@@ -19,7 +19,17 @@ public class Player {
         for (Card card : cards) {
             total += card.getCardRank().getNumber();
         }
+
         return total;
+    }
+
+    public int calculateAceScore(Cards cards) {
+        if (!cards.isAceExist()) {
+            return 0;
+        }
+
+        int aceScore = 10;
+        return aceScore;
     }
 
     public void add(Card card) {
