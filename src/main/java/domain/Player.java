@@ -2,8 +2,8 @@ package domain;
 
 public class Player {
 
-    private final String name;
-    private final Hand hand;
+    protected final String name;
+    protected final Hand hand;
 
     public Player(String name) {
         validate(name);
@@ -32,4 +32,19 @@ public class Player {
         return name;
     }
 
+    public Hand getHand() {
+        return hand;
+    }
+
+    public void addCard(Card card) {
+        hand.addCard(card);
+    }
+
+    public boolean isBust() {
+        return hand.calculateScore() > 21;
+    }
+
+    public int calculateScore() {
+        return hand.calculateScore();
+    }
 }
