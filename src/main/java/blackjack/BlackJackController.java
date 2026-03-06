@@ -7,6 +7,19 @@ public class BlackJackController {
 
     public void run() {
         List<String> names = inputView.readNames();
-        System.out.println(names);
+
+        Players players = new Players(names);
+        Dealer dealer = new Dealer();
+        Deck deck = new Deck();
+
+        BlackJackGame blackJackGame = new BlackJackGame(players, dealer, deck);
+
+        blackJackGame.initDraw();
+        
+
+
+
+
+
     }
 }

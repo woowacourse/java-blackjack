@@ -10,9 +10,9 @@ public class Player {
     }
 
 
-    public void recieveCard(Deck deck){
+    public void recieveCard(Card card){
         if(!hand.isBust()){
-            hand.addCard(deck.draw());
+            hand.addCard(card);
         }
     }
 
