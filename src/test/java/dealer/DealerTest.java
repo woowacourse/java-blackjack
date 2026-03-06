@@ -54,4 +54,38 @@ public class DealerTest {
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
+    @Test
+    void 딜러가_스스로_카드_2장을_뽑는다() {
+        Card clover8 = Card.of(CardEmblem.EIGHT, CardDenomination.CLOVER);
+        Card clover9 = Card.of(CardEmblem.NINE, CardDenomination.CLOVER);
+        List<Card> cards = List.of(clover8, clover9);
+
+        CardDeck cardDeck = new CardDeckBuilder()
+                .cards(cards)
+                .build();
+
+        Dealer dealer = Dealer.of(cardDeck);
+        dealer.drawMySelf(2);
+
+        CardBundle cardBundle = CardBundle.of(cards);
+        Assertions.assertThat(dealer.disPlayMyCardBundle())
+                .isEqualTo(cardBundle.toDisplay());
+    }
+
+    @Test
+    void 덱에_카드가_없는_경우_카드를_뽑을_수_없다() {
+        Card clover8 = Card.of(CardEmblem.EIGHT, CardDenomination.CLOVER);
+        List<Card> cards = List.of(clover8);
+
+        CardDeck cardDeck = new CardDeckBuilder()
+                .cards(cards)
+                .build();
+
+        Dealer dealer = Dealer.of(cardDeck);
+
+        Assertions.assertThatThrownBy(() -> {
+            dealer.drawMySelf(2);
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
+
 }

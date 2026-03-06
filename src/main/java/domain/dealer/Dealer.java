@@ -11,9 +11,10 @@ import java.util.stream.Stream;
 public class Dealer {
 
     private CardDeck cardDeck;
-    // TODO CardBundle 추가
+    private CardBundle cardBundle;
 
     private Dealer(CardDeck cardDeck) {
+        this.cardBundle = CardBundle.empty();
         this.cardDeck = cardDeck;
     }
 
@@ -38,8 +39,20 @@ public class Dealer {
         player.addCardBundle(cardBundle);
     }
 
-    private Card drawCard() {
+    public void drawMySelf(int tryCount) {
+        cardBundle.addUp(handOutCard(tryCount));
+    }
+
+    public Card drawCard() {
         return cardDeck.giveCard();
+    }
+
+    public String toDisplayMyName() {
+        return "딜러";
+    }
+
+    public List<String> disPlayMyCardBundle() {
+        return cardBundle.toDisplay();
     }
 
 }
