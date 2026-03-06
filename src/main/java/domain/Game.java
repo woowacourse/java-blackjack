@@ -71,37 +71,11 @@ public class Game {
 
     public void settlementOfResults() {
         int dealerScore = dealer.calculateScore();
+        boolean dealerBurst = dealer.isBurst();
+
         for (Player player : players) {
-            addResult(player, dealerScore);
+            Result playerResult = player.calculateResult(dealerScore, dealerBurst);
+            dealer.addResult(playerResult);
         }
-    }
-
-    private void addResult(Player player, int dealerScore) {
-        int playerScore = player.calculateScore();
-
-        if (player.isBurst() || (playerScore < dealerScore && !dealer.isBurst())) {
-            addPlayerLose(player);
-            return;
-        }
-        if (playerScore == dealerScore) {
-            addPlayerDraw(player);
-            return;
-        }
-        addPlayerWin(player);
-    }
-
-    private void addPlayerWin(Player player) {
-        player.addResult(Result.WIN);
-        dealer.addResult(Result.LOSE);
-    }
-
-    private void addPlayerDraw(Player player) {
-        player.addResult(Result.DRAW);
-        dealer.addResult(Result.DRAW);
-    }
-
-    private void addPlayerLose(Player player) {
-        player.addResult(Result.LOSE);
-        dealer.addResult(Result.WIN);
     }
 }

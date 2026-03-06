@@ -1,22 +1,12 @@
 package domain;
 
 import domain.enums.Rank;
-import domain.enums.Result;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class Participant {
+public abstract class Participant {
 
     private final List<Card> cards = new ArrayList<>();
-    private final Map<Result, Integer> result = new HashMap<>();
-
-    public Participant() {
-        Arrays.stream(Result.values())
-                .forEach(result -> this.result.put(result, 0));
-    }
 
     public List<Card> getCards() {
         return List.copyOf(cards);
@@ -61,13 +51,5 @@ public class Participant {
 
     public boolean checkScoreUnderCriterion() {
         return calculateScore() <= 21;
-    }
-
-    public void addResult(Result result) {
-        this.result.put(result, this.result.getOrDefault(result, 0) + 1);
-    }
-
-    public Map<Result, Integer> getResult() {
-        return Map.copyOf(result);
     }
 }

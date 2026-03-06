@@ -112,7 +112,7 @@ public class GameTest {
 
             onePlayerGame.settlementOfResults();
 
-            assertThat(firstPlayer.getResult().get(Result.LOSE)).isEqualTo(1);
+            assertThat(firstPlayer.getResult()).isEqualTo(Result.LOSE);
             assertThat(dealer.getResult().get(Result.WIN)).isEqualTo(1);
         }
 
@@ -133,7 +133,7 @@ public class GameTest {
 
             onePlayerGame.settlementOfResults();
 
-            assertThat(firstPlayer.getResult().get(Result.WIN)).isEqualTo(1);
+            assertThat(firstPlayer.getResult()).isEqualTo(Result.WIN);
             assertThat(dealer.getResult().get(Result.LOSE)).isEqualTo(1);
         }
 
@@ -154,7 +154,7 @@ public class GameTest {
 
             onePlayerGame.settlementOfResults();
 
-            assertThat(firstPlayer.getResult().get(Result.WIN)).isEqualTo(1);
+            assertThat(firstPlayer.getResult()).isEqualTo(Result.WIN);
             assertThat(dealer.getResult().get(Result.LOSE)).isEqualTo(1);
         }
 
@@ -174,7 +174,7 @@ public class GameTest {
 
             onePlayerGame.settlementOfResults();
 
-            assertThat(firstPlayer.getResult().get(Result.LOSE)).isEqualTo(1);
+            assertThat(firstPlayer.getResult()).isEqualTo(Result.LOSE);
             assertThat(dealer.getResult().get(Result.WIN)).isEqualTo(1);
         }
 
@@ -194,7 +194,7 @@ public class GameTest {
 
             onePlayerGame.settlementOfResults();
 
-            assertThat(firstPlayer.getResult().get(Result.DRAW)).isEqualTo(1);
+            assertThat(firstPlayer.getResult()).isEqualTo(Result.DRAW);
             assertThat(dealer.getResult().get(Result.DRAW)).isEqualTo(1);
         }
     }

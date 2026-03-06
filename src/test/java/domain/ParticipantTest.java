@@ -29,7 +29,7 @@ public class ParticipantTest {
     @ParameterizedTest
     @MethodSource("safeScoreCards")
     public void 카드_점수_합계를_정상적으로_계산한다(List<Card> cards, int expectedValue) {
-        Participant participant = new Participant();
+        Participant participant = new Dealer();
         cards.forEach(participant::addCard);
         int score = participant.calculateScore();
 
@@ -39,7 +39,7 @@ public class ParticipantTest {
     @DisplayName("카드 점수 합계가 21을 초과하면 버스트를 판정한다.")
     @Test
     public void 카드_점수_합계가_21을_넘으면_버스트를_판정한다() {
-        Participant participant = new Participant();
+        Participant participant = new Dealer();
         List<Card> burstCards = List.of(new Card(Rank.JACK, Suit.CLOVER), new Card(Rank.QUEEN, Suit.CLOVER), new Card(Rank.TWO, Suit.CLOVER));
         burstCards.forEach(participant::addCard);
 
