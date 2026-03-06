@@ -19,6 +19,11 @@ public class ScoreCalculator {
         return score;
     }
 
+    public int getReceivedOneCardScore(Participant participant) {
+        int updatedScore = getCardScore(participant.getCards());
+        return updatedScore - participant.getScore();
+    }
+
     private int aceTranslate(int score, long aceCount) {
         while (score <= 11 && aceCount > 0) {
             score += 10;
