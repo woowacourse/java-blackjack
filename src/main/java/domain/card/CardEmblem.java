@@ -2,29 +2,20 @@ package domain.card;
 
 public enum CardEmblem {
 
-    ACE(1),
-    TWO(2),
-    THREE(3),
-    FOUR(4),
-    FIVE(5),
-    SIX(6),
-    SEVEN(7),
-    EIGHT(8),
-    NINE(9),
-    TEN(10),
-    KING(10),
-    QUEEN(10),
-    JACK(10)
+    DIAMOND("다이아몬드"),
+    SPADE("스페이드"),
+    HEART("하트"),
+    CLOVER("클로버")
     ;
 
-    private final int value;
+    private final String emblem;
 
-    CardEmblem(int value) {
-        this.value = value;
+    CardEmblem(String emblem) {
+        this.emblem = emblem;
     }
 
-    public String value() {
-        return String.valueOf(value);
+    public String displayName() {
+        return emblem;
     }
 
 }

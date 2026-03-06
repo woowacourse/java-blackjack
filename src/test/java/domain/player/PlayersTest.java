@@ -14,8 +14,8 @@ class PlayersTest {
     void 게임_시작시_플레이어들에게_카드를_두장씩_나누어준다() {
         Player songsong = Player.from(PlayerName.from("송송"));
         Players players = Players.from(List.of(songsong));
-        Card clover8 = Card.of(CardEmblem.EIGHT, CardDenomination.CLOVER);
-        Card clover9 = Card.of(CardEmblem.NINE, CardDenomination.CLOVER);
+        Card clover8 = Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER);
+        Card clover9 = Card.of(CardDenomination.NINE, CardEmblem.CLOVER);
 
         CardDeck cardDeck = new CardDeckBuilder()
                 .cards(clover8, clover9)

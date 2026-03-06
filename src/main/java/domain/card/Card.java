@@ -4,32 +4,32 @@ import java.util.Objects;
 
 public class Card {
 
-    private final CardEmblem emblem;
     private final CardDenomination denomination;
+    private final CardEmblem emblem;
 
-    private Card(CardEmblem emblem, CardDenomination denomination) {
-        this.emblem = emblem;
+    private Card(CardDenomination denomination, CardEmblem emblem) {
         this.denomination = denomination;
+        this.emblem = emblem;
     }
 
-    public static Card of(CardEmblem emblem, CardDenomination denomination) {
-        return new Card(emblem, denomination);
+    public static Card of(CardDenomination denomination, CardEmblem emblem) {
+        return new Card(denomination, emblem);
     }
 
     @Override
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) return false;
         Card card = (Card) object;
-        return emblem == card.emblem && denomination == card.denomination;
+        return denomination == card.denomination && emblem == card.emblem;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(emblem, denomination);
+        return Objects.hash(denomination, emblem);
     }
 
     public String toDisplay() {
-        return emblem.value() + denomination.denomination();
+        return denomination.getDisplayName() + emblem.displayName();
     }
 
 }

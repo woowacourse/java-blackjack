@@ -8,11 +8,11 @@ public class CardDeckTest {
     @Test
     void 카드덱에서_카드를_뽑는다() {
         CardDeck cardDeck = new CardDeckBuilder()
-                .cards(Card.of(CardEmblem.EIGHT, CardDenomination.CLOVER), Card.of(CardEmblem.NINE, CardDenomination.SPADE))
+                .cards(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER), Card.of(CardDenomination.NINE, CardEmblem.SPADE))
                 .build();
         Card card = cardDeck.giveCard();
 
-        Assertions.assertThat(card).isEqualTo(Card.of(CardEmblem.EIGHT, CardDenomination.CLOVER));
+        Assertions.assertThat(card).isEqualTo(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER));
     }
 
     @Test

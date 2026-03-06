@@ -7,14 +7,14 @@ public class CardTest {
 
     @Test
     void 카드를_생성한다() {
-        CardEmblem emblem = CardEmblem.TWO;
-        CardDenomination denomination = CardDenomination.DIAMOND;
+        CardDenomination emblem = CardDenomination.TWO;
+        CardEmblem denomination = CardEmblem.DIAMOND;
 
         Card twoDiamond = Card.of(emblem, denomination);
 
         Assertions.assertEquals(
                 twoDiamond,
-                Card.of(CardEmblem.TWO, CardDenomination.DIAMOND)
+                Card.of(CardDenomination.TWO, CardEmblem.DIAMOND)
         );
     }
 

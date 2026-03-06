@@ -12,14 +12,14 @@ public class PlayerTest {
     @Test
     void 플레이어가_카드를_1장_받는다() {
         CardDeck cardDeck = new CardDeckBuilder()
-                .cards(Card.of(CardEmblem.EIGHT, CardDenomination.CLOVER), Card.of(CardEmblem.NINE, CardDenomination.SPADE),
-                        Card.of(CardEmblem.TWO, CardDenomination.SPADE), Card.of(CardEmblem.THREE, CardDenomination.HEART))
+                .cards(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER), Card.of(CardDenomination.NINE, CardEmblem.SPADE),
+                        Card.of(CardDenomination.TWO, CardEmblem.SPADE), Card.of(CardDenomination.THREE, CardEmblem.HEART))
                 .build();
         Dealer dealer = Dealer.of(cardDeck);
         Player player = Player.from(PlayerName.from("test"));
 
         dealer.handOutCardToPlayer(player, 1);
-        Card card = Card.of(CardEmblem.EIGHT, CardDenomination.CLOVER);
+        Card card = Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER);
 
         Assertions.assertThat(player.hasCard(card)).isTrue();
     }

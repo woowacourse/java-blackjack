@@ -8,8 +8,8 @@ public class GameCardGenerator implements CardGenerator{
     @Override
     public List<Card> generate() {
         List<Card> blackjackGameCards = new ArrayList<>();
-        for (CardEmblem emblem : CardEmblem.values()) {
-            for (CardDenomination denomination : CardDenomination.values()) {
+        for (CardDenomination emblem : CardDenomination.values()) {
+            for (CardEmblem denomination : CardEmblem.values()) {
                 Card card = Card.of(emblem, denomination);
                 blackjackGameCards.add(card);
             }
