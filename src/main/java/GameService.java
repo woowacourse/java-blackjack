@@ -21,13 +21,16 @@ public class GameService {
 
     public int calculateScore(List<Card> cards) {
         int score = 0;
+        int aceCount = 0;
         for (Card card: cards) {
-            if (card.isAce()) {
-                score += calculateOptimalAceScore(score);
-            }
-            else {
+            if (!card.isAce()) {
                 score += card.getValue();
+                continue;
             }
+            aceCount++;
+        }
+        for(int i = 0; i< aceCount; i++){
+            score += calculateOptimalAceScore(score);
         }
         return score;
     }
