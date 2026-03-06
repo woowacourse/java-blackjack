@@ -17,7 +17,7 @@ public record BlackJackInitStatusDto(List<String> initStatus) {
                         .map(Player::getName)
                         .toList()));
 
-        initStatus.add(getHandOutputString("딜러", dealer.getHand()));
+        initStatus.add("딜러카드: " + getDealerHandString(dealer.getHand()));
         for(Player player : players){
             initStatus.add(getHandOutputString(player.getName(),player.getHand()));
         }
@@ -36,5 +36,9 @@ public record BlackJackInitStatusDto(List<String> initStatus) {
         return hand.getCards().stream()
                 .map(Card::getCardName)
                 .collect(Collectors.joining(", "));
+    }
+
+    private String getDealerHandString(Hand hand) {
+        return hand.getCards().getFirst().getCardName();
     }
 }
