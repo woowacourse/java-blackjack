@@ -7,7 +7,7 @@ import dto.ScoreResultDto;
 
 public class OutputView {
 
-    private static final String DEALER_HIT_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String DEALER_HIT_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n";
     private static final String FINAL_RESULT_HEADER = "## 최종 승패";
 
     public static void printInitMessage(BlackJackInitStatusDto blackJackInitStatusDto){
@@ -27,6 +27,7 @@ public class OutputView {
     }
 
     public static void printScoreResult(ScoreResultDto scoreResultDto){
+        System.out.println();
         for(String line : scoreResultDto.scoreResults()){
             System.out.println(line);
         }
