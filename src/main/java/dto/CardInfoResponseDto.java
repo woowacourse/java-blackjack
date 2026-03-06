@@ -1,6 +1,6 @@
 package dto;
 
-import domain.player.Participants;
+import domain.game.Game;
 import domain.player.Player;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,21 +10,21 @@ import java.util.stream.Collectors;
 
 public record CardInfoResponseDto(Map<String, List<String>> participantsInfo, List<Integer> score) {
 
-    public CardInfoResponseDto(Participants participants) {
-        this(createParticipantsInfo(participants), createParticipantsScoreInfo(participants));
+    public CardInfoResponseDto(Game game) {
+        this(createParticipantsInfo(game), createParticipantsScoreInfo(game));
     }
 
-    private static Map<String, List<String>> createParticipantsInfo(Participants participants) {
+    private static Map<String, List<String>> createParticipantsInfo(Game game) {
         Map<String, List<String>> participantsInfo = new HashMap<>();
 
         // 딜러 정보
         participantsInfo.put(
-                participants.getDealer().getName(),
-                participants.getDealer().getCardStatus()
+                game.getDealer().getName(),
+                game.getDealer().getCardStatus()
         );
 
         // 플레이어 정보
-        List<Player> gamblersInfo = participants.getGamblers().getGamblersInfo();
+        List<Player> gamblersInfo = game.getGamblers().getGamblersInfo();
 
         participantsInfo.putAll(
                 gamblersInfo.stream()
@@ -34,14 +34,14 @@ public record CardInfoResponseDto(Map<String, List<String>> participantsInfo, Li
         return participantsInfo;
     }
 
-    private static List<Integer> createParticipantsScoreInfo(Participants participants) {
+    private static List<Integer> createParticipantsScoreInfo(Game game) {
         // 딜러의 점수 가져오기
         List<Integer> score = new ArrayList<>();
-        score.add(participants.getDealer().getTotalValue());
+        score.add(game.getDealer().getTotalValue());
 
         // 플레이어의 점수
         score.addAll(
-                participants.getGamblers().getGamblersInfo().stream()
+                game.getGamblers().getGamblersInfo().stream()
                 .map(Player::getTotalValue)
                 .toList());
 

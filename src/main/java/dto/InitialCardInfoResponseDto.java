@@ -1,6 +1,6 @@
 package dto;
 
-import domain.player.Participants;
+import domain.game.Game;
 import domain.player.Player;
 import java.util.HashMap;
 import java.util.List;
@@ -9,21 +9,21 @@ import java.util.stream.Collectors;
 
 public record InitialCardInfoResponseDto(Map<String, List<String>> initialParticipantsInfo) {
 
-    public InitialCardInfoResponseDto(Participants participants) {
-        this(createInitialParticipantsInfo(participants));
+    public InitialCardInfoResponseDto(Game game) {
+        this(createInitialParticipantsInfo(game));
     }
 
-    private static Map<String, List<String>> createInitialParticipantsInfo(Participants participants) {
+    private static Map<String, List<String>> createInitialParticipantsInfo(Game game) {
         Map<String, List<String>> initialParticipantsInfo = new HashMap<>();
 
         // 딜러 정보
         initialParticipantsInfo.put(
-                participants.getDealer().getName(),
-                List.of(participants.getDealer().getFirstCardStatus())
+                game.getDealer().getName(),
+                List.of(game.getDealer().getFirstCardStatus())
         );
 
         // 플레이어 정보
-        List<Player> gamblersInfo = participants.getGamblers().getGamblersInfo();
+        List<Player> gamblersInfo = game.getGamblers().getGamblersInfo();
 
         initialParticipantsInfo.putAll(
                 gamblersInfo.stream()

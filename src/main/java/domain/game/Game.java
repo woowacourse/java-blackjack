@@ -1,12 +1,14 @@
-package domain.player;
+package domain.game;
 
+import domain.player.Dealer;
+import domain.player.Gamblers;
 import java.util.List;
 
-public class Participants {
+public class Game {
     private final Dealer dealer;
     private final Gamblers gamblers;
 
-    public Participants(List<String> names, int amount) {
+    public Game(List<String> names, int amount) {
         this.dealer = new Dealer("딜러", amount);
         this.gamblers = new Gamblers(names);
     }
@@ -18,5 +20,7 @@ public class Participants {
     public Gamblers getGamblers() {
         return gamblers;
     }
+
+
 }
 

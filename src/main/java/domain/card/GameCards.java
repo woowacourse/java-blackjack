@@ -11,7 +11,6 @@ public class GameCards {
     private List<Card> cards;
 
     public GameCards(int amount) {
-
        this.cards = Arrays.stream(CardKind.values())
                 .flatMap(cardKind -> Arrays.stream(CardValue.values())
                         .flatMap(cardValue ->
@@ -36,7 +35,7 @@ public class GameCards {
         Collections.shuffle(cards);
     }
 
-    public Card     drawCard() {
+    public Card drawCard() {
         return cards.removeFirst();
     }
 }
