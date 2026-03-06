@@ -23,46 +23,50 @@ public class OutputWriter {
     }
 
     public void printDealInitialCardMessage(String names) {
-        System.out.print(LINE_SEPARATOR);
+        printLineSeparator();
         System.out.printf(DEAL_INITIAL_CARD_MESSAGE, names);
-        System.out.print(LINE_SEPARATOR);
-        System.out.print(LINE_SEPARATOR);
+        printLineSeparator();
+        printLineSeparator();
     }
 
     public void printAllParticipantsHand(String playerName, String playerCards) {
         System.out.printf(PLAYER_HAND_MESSAGE, playerName, playerCards);
-        System.out.print(LINE_SEPARATOR);
+        printLineSeparator();
     }
 
     public void printDrawCardGuideMessage(String playerName) {
         System.out.printf(ASK_DRAW_CARD_GUIDE_MESSAGE, playerName);
-        System.out.print(LINE_SEPARATOR);
+        printLineSeparator();
     }
 
     public void printDealerAdditionalDrawCardMessage() {
-        System.out.print(LINE_SEPARATOR);
+        printLineSeparator();
         System.out.println(DEALER_ADDITIONAL_DRAW_MESSAGE);
-        System.out.print(LINE_SEPARATOR);
+        printLineSeparator();
     }
 
     public void printFinalResultTitleMessage() {
-        System.out.print(LINE_SEPARATOR);
+        printLineSeparator();
         System.out.printf(FINAL_RESULT_TITLE_MESSAGE);
     }
 
     public void printFinalResultOfPlayer(String playerName, String status) {
         System.out.printf(FINAL_RESULT_PLAYER, playerName, status);
-        System.out.print(LINE_SEPARATOR);
+        printLineSeparator();
     }
 
     public void printFinalResultOfDealer(String status) {
-        System.out.print(LINE_SEPARATOR);
+        printLineSeparator();
         System.out.printf(FINAL_RESULT_DEALER, status);
-        System.out.print(LINE_SEPARATOR);
+        printLineSeparator();
     }
 
     public void printFinalResultMessage(String gamerName, String playerCards, int resultScore) {
         System.out.printf(CARD_SUM_RESULT_MESSAGE, gamerName, playerCards, resultScore);
+        printLineSeparator();
+    }
+
+    private void printLineSeparator() {
         System.out.print(LINE_SEPARATOR);
     }
 
