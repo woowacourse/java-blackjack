@@ -23,7 +23,9 @@ public abstract class Participant {
     }
 
     public void draw() {
-        hand.drawCard();
+        if(isPlayable()) {
+            hand.drawCard();
+        }
     }
 
     public int scoreSum() {
@@ -32,5 +34,9 @@ public abstract class Participant {
 
     public GameStatus status() {
         return new GameStatus(name, hand.cardInfos(), scoreSum());
+    }
+
+    public boolean isPlayer() {
+        return this.getClass() == Player.class;
     }
 }

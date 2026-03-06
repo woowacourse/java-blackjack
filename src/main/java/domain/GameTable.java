@@ -2,14 +2,18 @@ package domain;
 
 import dto.GameStatus;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class GameTable {
 
-    private final List<Participant> participants;
+    private final ScoreBoard scoreBoard;
+    private final Queue<Participant> participants;
 
     public GameTable() {
-        this.participants = new ArrayList<>();
+        this.scoreBoard = new ScoreBoard();
+        this.participants = new LinkedList<>();
     }
 
     public void addParticipant(Participant participant) {
@@ -25,12 +29,29 @@ public class GameTable {
         return gameStatuses;
     }
 
-    public void recordResult() {
-    }
-
     public void playCurrentPlayer() {
+        if(isPlayerExist()) {
+            Participant current = participants.peek();
+            current.draw();
+        }
     }
 
-    public void currentPlayerStatus() {
+    public boolean isPlayerExist() {
+        return !participants.isEmpty() || hasOnlyDealer();
+    }
+
+    private boolean hasOnlyDealer() {
+        return participants.stream().anyMatch(p -> !p.isPlayer());
+    }
+
+    public GameStatus currentPlayerStatus() {
+        Participant current = participants.peek();
+        return current.status();
+    }
+
+    public void recordResult() {
+        Participant current = participants.poll();
+        scoreBoard.record(current.status());
+
     }
 }
