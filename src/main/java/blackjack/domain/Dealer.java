@@ -6,6 +6,7 @@ import java.util.stream.IntStream;
 public class Dealer extends Participant {
 
     public static final int DEALER_HIT_THRESHOLD = 16;
+    public static final String DEALER_NICKNAME = "딜러";
 
     private final Trump trump;
 
@@ -25,7 +26,8 @@ public class Dealer extends Participant {
     }
 
     public void pitch(final List<Player> players) {
-        IntStream.range(0, 2)
+        final int distributeCount = 2;
+        IntStream.range(0, distributeCount)
             .forEach(round -> {
                 players.forEach(this::giveCard);
                 giveCard();
@@ -40,11 +42,12 @@ public class Dealer extends Participant {
     }
 
     public List<String> getOpenCardNames() {
-        return hand.getCardNames(1);
+        final int holeIndex = 1;
+        return hand.getCardNames(holeIndex);
     }
 
     @Override
     public String getNickname() {
-        return "딜러";
+        return DEALER_NICKNAME;
     }
 }

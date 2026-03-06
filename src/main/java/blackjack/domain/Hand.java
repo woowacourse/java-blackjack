@@ -33,8 +33,9 @@ public class Hand {
     public int handleAce(int totalScore) {
         long aceCount = countAce();
         int updatedScore = totalScore;
+        int aceScoreDifference = 10;
         while (aceCount > 0 && updatedScore > BURST_THRESHOLD) {
-            updatedScore -= 10;
+            updatedScore -= aceScoreDifference;
             aceCount--;
         }
 
