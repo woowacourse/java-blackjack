@@ -40,11 +40,28 @@ public class User {
         for (Card card : cards) {
             sum += card.getValue();
         }
-        return sum;
+
+        return applyBestAceValue(sum);
     }
 
     public boolean isBurst() {
         return calculateCardsValue() > 21;
+    }
+
+    private int applyBestAceValue(int sum) {
+        if (hasAce() && (sum + 10) <= 21) {
+            return sum + 10;
+        }
+        return sum;
+    }
+
+    private boolean hasAce() {
+        for (Card card : cards) {
+            if (card.isAce()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void validate(String name) {
