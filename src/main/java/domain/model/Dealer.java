@@ -30,11 +30,16 @@ public class Dealer implements Person {
 
     @Override
     public int getDeckSum() {
-        return 0;
+        return deck.getSum();
     }
 
     @Override
     public int getDeckSize() {
         return deck.getSize();
+    }
+
+    @Override
+    public void appendCard(Card card) {
+        deck.append(card);
     }
 }

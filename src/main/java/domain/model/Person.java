@@ -6,4 +6,6 @@ public interface Person {
     int getDeckSum();
 
     int getDeckSize();
+
+    void appendCard(Card card);
 }

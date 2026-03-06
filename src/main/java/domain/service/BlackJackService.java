@@ -1,31 +1,30 @@
 package domain.service;
 
+import domain.model.Dealer;
 import domain.model.Player;
-import dto.CardDto;
-import dto.InitialDto;
-import dto.PlayerDeckDto;
-import dto.ResultDto;
-import repository.CardRepository;
+import dto.*;
+import repository.DealerRepository;
 import repository.PlayerRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static constant.BlackJackConstant.DEALER_APPEND_CRITERIA;
+
 public class BlackJackService {
 
     private final PlayerRepository playerRepository;
-    private final CardRepository cardRepository;
+    private final DealerRepository dealerRepository;
     private final CardDistributor cardDistributor;
     private final JudgementService judgementService;
 
     public BlackJackService(
-            PlayerRepository playerRepository,
-            CardRepository cardRepository,
+            PlayerRepository playerRepository, DealerRepository dealerRepository,
             CardDistributor cardDistributor,
             JudgementService judgementService
     ) {
         this.playerRepository = playerRepository;
-        this.cardRepository = cardRepository;
+        this.dealerRepository = dealerRepository;
         this.cardDistributor = cardDistributor;
         this.judgementService = judgementService;
     }
@@ -38,6 +37,7 @@ public class BlackJackService {
                 .toList();
         cardDistributor.initialize(players);
 
+        // TODO: 출력 리팩토링 -> 객체 넘기기
         CardDto dealerCard = CardDto.of(cardDistributor.getDealer().getDeck().getLastCard());
         List<PlayerDeckDto> playerDeckDtos = new ArrayList<>();
         for (Player player : players) {
@@ -49,7 +49,27 @@ public class BlackJackService {
         return new InitialDto(dealerCard, playerDeckDtos);
     }
 
+    // 플레이어 추가 카드
+    public PlayerResultDto additionalCard(Player player) {
+        cardDistributor.distributeAdditionalCard(player);
+        return PlayerResultDto.of(player);
+    }
+
     public ResultDto judgement() {
         return judgementService.getGameResult();
+    }
+
+    public List<Player> getAllPlayers() {
+        return playerRepository.findAll();
+    }
+
+    public boolean isDealerCanAppend() {
+        Dealer dealer = dealerRepository.getDealer();
+        return dealer.getDeckSum() <= DEALER_APPEND_CRITERIA;
+    }
+
+    public void additionalDealerCard() {
+        Dealer dealer = dealerRepository.getDealer();
+        cardDistributor.distributeAdditionalCard(dealer);
     }
 }

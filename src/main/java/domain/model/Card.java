@@ -31,4 +31,8 @@ public class Card {
     public int getValue() {
         return cardRank.getValue();
     }
+
+    public boolean isAce() {
+        return cardRank == CardRank.ACE;
+    }
 }

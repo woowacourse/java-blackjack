@@ -10,12 +10,16 @@ public class Deck {
     private DeckStatus deckStatus = DeckStatus.ALIVE;
     private List<Card> cards;
 
-    private Deck(List<Card> deck) {
-        this.cards = deck;
+    private Deck(List<Card> cards, int sum) {
+        this.cards = cards;
+        this.sum = sum;
     }
 
     public static Deck of(List<Card> cards) {
-        return new Deck(cards);
+        int cardSum = cards.stream()
+                .mapToInt(Card::getValue)
+                .sum();
+        return new Deck(cards, cardSum);
     }
 
     public int getSum() {
@@ -38,26 +42,22 @@ public class Deck {
 
     // 최종 점수 계산 메서드
     public void calculateFinalSum() {
-
         // 카드를 순회하며 A가 있는지 확인
-
-
-        // A가 있으면 11로 계산해서 21이 넘는지 확인
-
-
-        // 만약 넘으면 1로
-
-
-        // 넘지 않으면 11로 처리
-
+        boolean hasAce = cards.stream().anyMatch(Card::isAce);
+        if (hasAce && sum <= 11) {
+            // A가 있으면 11로 계산해서 21이 넘는지 확인
+            // 넘지 않으면 11로 처리
+            sum += 10;
+        }
+        // 만약 넘으면 sum은 그대로
     }
 
     public void append(Card card) {
-        if (deckStatus.equals(DeckStatus.ALIVE)) {
+        if (deckStatus == DeckStatus.ALIVE) {
             this.cards.add(card);
             calculateSum();
+            checkStatus();
         }
-        checkStatus();
     }
 
     public int getSize() {

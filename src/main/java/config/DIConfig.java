@@ -32,7 +32,7 @@ public class DIConfig {
     public BlackJackService blackJackService() {
         return new BlackJackService(
                 playerRepository(),
-                cardRepository(),
+                dealerRepository(),
                 cardDistributor(),
                 judgementService()
         );

@@ -33,7 +33,7 @@ public class OutputView {
 
     public void playerResultMessage(ResultDto resultDto) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("딜러카드: ");
+        stringBuilder.append("\n").append("딜러카드: ");
         String dealerDtoStrings = getCardDtoStrings(resultDto.dealerResultDto().cardDtos());
         stringBuilder.append(dealerDtoStrings);
         stringBuilder.append(" - 결과: ").append(resultDto.dealerResultDto().sum()).append("\n");
@@ -44,6 +44,21 @@ public class OutputView {
             stringBuilder.append(cardDtoStrings);
             stringBuilder.append(" - 결과: ").append(playerResult.sum()).append("\n");
         }
+
+        stringBuilder.append("\n").append("## 최종 승패").append("\n");
+        stringBuilder.append("딜러: ").append(resultDto.dealerWinCount()).append("승 ");
+        stringBuilder.append(resultDto.dealerLossCount()).append("패").append("\n");
+        for (PlayerResultDto playerResultDto : resultDto.playerResultDtos()) {
+            stringBuilder.append(playerResultDto.playerName()).append(": ").append(playerResultDto.isWin()).append("\n");
+        }
+        System.out.println(stringBuilder);
+    }
+
+    //pobi카드: 2하트, 8스페이드, A클로버
+    public void outputPlayerDeckDtos(PlayerResultDto playerResultDto) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(playerResultDto.playerName()).append("카드: ");
+        stringBuilder.append(getCardDtoStrings(playerResultDto.cardDtos())).append("\n");
         System.out.println(stringBuilder);
     }
 
@@ -51,5 +66,9 @@ public class OutputView {
         return cardDtos.stream()
                 .map(CardDto::toString)
                 .collect(Collectors.joining(", "));
+    }
+
+    public void outputDealerAdditionCardMessage() {
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 }
