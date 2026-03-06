@@ -36,12 +36,8 @@ public class BlackjackGame {
         tryHitPlayers(players, dealer);
         tryHitDealer(dealer);
 
-        // 딜러 + Player의 카드 상황 및 총합 출력
         showGamerHandResult(dealer, players);
-
-        //최종 결과 통계 출력
         showGameResultAnalysis(players, dealer);
-
     }
 
     private void showGameResultAnalysis(Players players, Dealer dealer) {
