@@ -4,7 +4,7 @@ public class OutputWriter {
 
     private final String LINE_SEPARATOR = System.lineSeparator();
     private final String INPUT_NAME_GUIDE_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
-    private final String FIRST_HAND_OUT_CARD_RESULT_MESSAGE = "딜러와 %s에게 2장을 나누었습니다.";
+    private final String DEAL_INITIAL_CARD_MESSAGE = "딜러와 %s에게 2장을 나누었습니다.";
     private final String ASK_DRAW_CARD_GUIDE_MESSAGE = "%s는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private final String DEALER_ADDITIONAL_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private final String FINAL_RESULT_TITLE_MESSAGE = "## 최종 승패";
@@ -20,8 +20,8 @@ public class OutputWriter {
         System.out.println(ERROR_MESSAGE_PREFIX + errorMessage);
     }
 
-    public void printFirstHandOutResult(String names) {
-        System.out.printf(FIRST_HAND_OUT_CARD_RESULT_MESSAGE, names);
+    public void printDealInitialCardMessage(String names) {
+        System.out.printf(DEAL_INITIAL_CARD_MESSAGE, names);
         System.out.print(LINE_SEPARATOR);
     }
 

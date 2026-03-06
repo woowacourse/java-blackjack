@@ -30,7 +30,7 @@ public class ApplicationView {
 
     public void printFirstHandOutResult(List<String> playerNames) {
         String formattedNames = String.join(",", playerNames);
-        writer.printFirstHandOutResult(formattedNames);
+        writer.printDealInitialCardMessage(formattedNames);
     }
 
     public void printAllParticipantsHand(List<PlayerHandDto> playerHands) {
