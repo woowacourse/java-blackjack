@@ -18,7 +18,7 @@ public class Player {
         this.name = name;
     }
 
-    public int calculateScore() {
+    protected int calculateScore() {
         int total = 0;
         for (Card card : cards) {
             total += card.getCardRank().getNumber();
@@ -27,12 +27,12 @@ public class Player {
         return total;
     }
 
-    public int calculateAceScore() {
+    private int calculateAceScore() {
         if (!isAceExist() || calculateScore() > 11) {
             return ACE_ADDITION_NONE_SCORE;
         }
 
-        return 10;
+        return ACE_ADDITIONAL_SCORE;
     }
 
     public int getFinalResult() {

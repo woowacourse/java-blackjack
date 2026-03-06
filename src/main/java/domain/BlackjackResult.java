@@ -70,6 +70,7 @@ public class BlackjackResult {
     public BlackjackResultDto toResultDto() {
         return new BlackjackResultDto(
                 this.winningCount,
+                this.drawCount,
                 this.loseCount,
                 Map.copyOf(this.playerWinningMap)
         );

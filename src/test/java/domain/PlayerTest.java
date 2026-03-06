@@ -1,10 +1,12 @@
 package domain;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class PlayerTest {
     private Player player;
@@ -88,5 +90,24 @@ class PlayerTest {
 
         boolean result = player.isBust();
         assertThat(result).isEqualTo(false);
+    }
+
+    @DisplayName("K, Q, J는 10으로 계산")
+    @Test
+    void KQJ_10으로_계산() {
+        Player player1 = createPlayerFromCards(List.of(
+                 new Card(CardShape.HEART, CardRank.KING),
+                new Card(CardShape.HEART, CardRank.QUEEN),
+                new Card(CardShape.HEART, CardRank.JACK)
+                ));
+        assertThat(player1.getFinalResult()).isEqualTo(30);
+    }
+
+    private Player createPlayerFromCards(List<Card> cards) {
+        Player player = new Player("aaaa");
+        for (Card card : cards) {
+            player.add(card);
+        }
+        return player;
     }
 }
