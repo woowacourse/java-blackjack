@@ -11,13 +11,14 @@ import model.Players;
 import view.InputView;
 
 public class InputController {
+    private static final String NAME_SPLIT_REGEX = ",";
 
     private final Scanner scanner = new Scanner(System.in);
 
     public Players getParticipantsName() {
         InputView.printNameRequest();
         String nameInput = getInput();
-        List<Player> players = Arrays.stream(nameInput.split(","))
+        List<Player> players = Arrays.stream(nameInput.split(NAME_SPLIT_REGEX))
                 .map((name) -> new Player(new PlayerName(name)))
                 .toList();
 
