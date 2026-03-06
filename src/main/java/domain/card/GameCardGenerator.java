@@ -1,6 +1,7 @@
 package domain.card;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -8,16 +9,19 @@ public class GameCardGenerator implements CardGenerator {
 
     @Override
     public List<Card> generate() {
-        List<Card> blackjackGameCards = new ArrayList<>();
-        for (CardDenomination emblem : CardDenomination.values()) {
-            for (CardEmblem denomination : CardEmblem.values()) {
-                Card card = Card.of(emblem, denomination);
-                blackjackGameCards.add(card);
-            }
-        }
+        List<Card> cards = generateAllCards();
+        shuffle(cards);
+        return cards;
+    }
 
-        shuffle(blackjackGameCards);
-        return blackjackGameCards;
+    private static List<Card> generateAllCards() {
+        List<Card> cards = new ArrayList<>();
+        Arrays.stream(CardDenomination.values()).forEach(denomination ->
+                Arrays.stream(CardEmblem.values()).forEach(emblem ->
+                        cards.add(Card.of(denomination, emblem))
+                )
+        );
+        return cards;
     }
 
     private void shuffle(List<Card> blackjackGameCards) {
