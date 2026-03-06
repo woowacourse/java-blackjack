@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test;
 
 class HandTest {
 
-    private static final int ADJUST_VALUE = 10;
+    static final int ADJUST_VALUE = 10;
 
-    private final Card card = new Card(Rank.ACE, Suit.CLUB);
-    private final AceAdjustPolicy aceAdjustPolicy = new AceAdjustPolicy(ADJUST_VALUE, new BustPolicyImpl());
+    final Card card = new Card(Rank.ACE, Suit.CLUB);
+    final AceAdjustPolicy aceAdjustPolicy = new AceAdjustPolicy(ADJUST_VALUE, new BustPolicyImpl());
 
     @Nested
     @DisplayName("1장 이상의 카드를 받아서 손패에 추가한다.")

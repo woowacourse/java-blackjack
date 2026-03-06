@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 
 class ResultJudgementTest {
 
-    private static final int LOWER_SCORE = 10;
-    private static final int DEFAULT_SCORE = 15;
-    private static final int HIGHER_SCORE = 20;
-    private static final int BUST_SCORE = 30;
+    static final int LOWER_SCORE = 10;
+    static final int DEFAULT_SCORE = 15;
+    static final int HIGHER_SCORE = 20;
+    static final int BUST_SCORE = 30;
 
-    private final BustPolicy bustPolicy = score -> score > 20;
-    private final ResultJudgement resultJudgement = new ResultJudgement(bustPolicy);
+    final BustPolicy bustPolicy = score -> score > 20;
+    final ResultJudgement resultJudgement = new ResultJudgement(bustPolicy);
 
     @Test
     void 둘_다_버스트가_아니면서_플레이어가_점수가_더_높다면_플레이어가_승리한다() {

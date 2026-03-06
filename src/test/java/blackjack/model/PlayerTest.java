@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 
 class PlayerTest {
 
-    private static final int ADJUST_VALUE = 10;
-    private final Hand hand = new Hand(new AceAdjustPolicy(ADJUST_VALUE, new BustPolicyImpl()));
+    static final int ADJUST_VALUE = 10;
+    final Hand hand = new Hand(new AceAdjustPolicy(ADJUST_VALUE, new BustPolicyImpl()));
 
     @Test
     @DisplayName("본인의 이름을 반환한다.")

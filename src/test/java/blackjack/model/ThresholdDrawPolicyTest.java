@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class ThresholdDrawPolicyTest {
 
-    private static final int THRESHOLD = 17;
+    static final int THRESHOLD = 17;
 
     @ParameterizedTest
     @ValueSource(ints = {17, 100, 500, Integer.MAX_VALUE})

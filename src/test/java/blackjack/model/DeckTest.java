@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 
 class DeckTest {
 
-    private final CardsGenerator generator = new ShuffledCardsGenerator();
-    private final CardsGenerator emptyCardsGenerator = List::of;
+    final CardsGenerator generator = new ShuffledCardsGenerator();
+    final CardsGenerator emptyCardsGenerator = List::of;
 
     @Test
     @DisplayName("CardsGenerator를 통해 인스턴스를 생성한다.")

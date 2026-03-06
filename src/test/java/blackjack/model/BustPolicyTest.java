@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class BustPolicyTest {
 
-    private final BustPolicyImpl bustPolicy = new BustPolicyImpl();
+    final BustPolicyImpl bustPolicy = new BustPolicyImpl();
 
     @ParameterizedTest
     @ValueSource(ints = {22, 30, 50, Integer.MAX_VALUE})
