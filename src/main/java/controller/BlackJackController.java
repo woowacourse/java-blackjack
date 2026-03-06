@@ -11,6 +11,9 @@ import service.BlackJackService;
 import view.OutputView;
 
 public class BlackJackController {
+    private static final Integer INITIAL_DRAW_QUANTITY = 2;
+    private static final Integer MIN_DEALER_DRAW_SCORE = 16;
+
     private final InputController inputController;
     private final BlackJackService blackJackService;
 
@@ -37,9 +40,7 @@ public class BlackJackController {
     }
 
     private void initDraw(Dealer dealer, Players players) {
-        //딜러 두번
         initParticipantDraw(dealer);
-        //플레이어 전체 두번
         List<PlayerResult> playersResult = new ArrayList<>();
 
         for(Player player : players.getPlayers()) {
@@ -51,7 +52,7 @@ public class BlackJackController {
     }
 
     private void initParticipantDraw(Participant participant) {
-        for(int i  = 0; i < 2; i++) {
+        for(int i  = 0; i < INITIAL_DRAW_QUANTITY; i++) {
             blackJackService.draw(participant);
         }
     }
@@ -82,7 +83,7 @@ public class BlackJackController {
         //오리지널 룰에 의해 A는 높은 숫자로 미리 계산된다.
         blackJackService.updateFinalScore(dealer);
 
-        while (dealer.getResult().score() <= 16) {
+        while (dealer.getResult().score() <= MIN_DEALER_DRAW_SCORE) {
             blackJackService.draw(dealer);
             OutputView.printDealerCardDrawMessage();
         }
