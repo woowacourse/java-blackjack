@@ -1,9 +1,5 @@
 package domain.enums;
 
-import domain.Dealer;
-import domain.Participant;
-import domain.Player;
-
 public enum Result {
 
     WIN("승"),
@@ -15,19 +11,6 @@ public enum Result {
 
     Result(String description) {
         this.description = description;
-    }
-
-    public static Result calculateResult(Player player, Dealer dealer) {
-        int playerScore = player.calculateScore();
-        int dealerScore = dealer.calculateScore();
-
-        if (player.isBurst() || (playerScore < dealerScore && !dealer.isBurst())) {
-            return LOSE;
-        }
-        if (playerScore == dealerScore) {
-            return DRAW;
-        }
-        return WIN;
     }
 
     public static Result getOpposite(Result result) {

@@ -1,55 +1,24 @@
 package domain;
 
-import domain.enums.Rank;
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Participant {
 
-    private final List<Card> cards = new ArrayList<>();
-
-    public List<Card> getCards() {
-        return List.copyOf(cards);
-    }
+    protected final CardBoard cardBoard = new CardBoard();
 
     public void addCard(Card card) {
-        this.cards.add(card);
+        cardBoard.add(card);
     }
 
-    public int calculateScore() {
-        int score = cards.stream()
-                .filter(card -> !card.getRank().equals(Rank.ACE))
-                .mapToInt(Card::getRankScore)
-                .sum();
-
-        boolean aceExist = cards.stream()
-                .anyMatch(card -> card.getRank().equals(Rank.ACE));
-
-        if (aceExist) {
-            return (score + calculateAceScore(21 - score));
-        }
-
-        return score;
+    public void addCards(List<Card> cards) {
+        cardBoard.addAll(cards);
     }
 
-    private int calculateAceScore(int remainScore) {
-        int minAceScore = cards.stream()
-                .filter(card -> card.getRank().equals(Rank.ACE))
-                .mapToInt(Card::getRankScore)
-                .sum();
-
-        if (remainScore < minAceScore + 10) {
-            return minAceScore;
-        }
-
-        return minAceScore + 10;
-    }
-
-    public boolean isBurst() {
-        return calculateScore() > 21;
+    public int getScore() {
+        return cardBoard.calculateScore();
     }
 
     public boolean checkScoreUnderCriterion() {
-        return calculateScore() <= 21;
+        return cardBoard.calculateScore() <= 21;
     }
 }

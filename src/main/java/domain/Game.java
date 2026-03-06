@@ -1,81 +1,64 @@
 package domain;
 
 import domain.enums.Result;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class Game {
 
-    private final List<Player> players = new ArrayList<>();
-    private final Dealer dealer = new Dealer();
+    private final Players players;
+    private final Dealer dealer;
     private final Deck deck;
 
-    public Game(List<String> names, Deck deck) {
-        validatePlayers(names);
-
-        players.addAll(names.stream()
-                .map(Player::new)
-                .toList());
-
+    public Game(Players players, Dealer dealer, Deck deck) {
+        this.players = players;
+        this.dealer = dealer;
         this.deck = deck;
-    }
-
-    private void validatePlayers(List<String> names) {
-        validateDuplicatedName(names);
-        validatePlayerNumber(names);
-    }
-
-    private void validatePlayerNumber(List<String> names) {
-        if (names.isEmpty() || names.size() > 7) {
-            throw new IllegalArgumentException("[ERROR] 플레이어는 1명 이상 7명 이하여야 합니다.");
-        }
-    }
-
-    private void validateDuplicatedName(List<String> names) {
-        Set<String> distinctNames = Set.copyOf(names);
-        if (distinctNames.size() != names.size()) {
-            throw new IllegalArgumentException("[ERROR] 플레이어 이름은 중복될 수 없습니다.");
-        }
-    }
-
-    public List<Player> getPlayers() {
-        return List.copyOf(players);
     }
 
     public Dealer getDealer() {
         return dealer;
     }
 
-    public void startGame() {
-        players.forEach(this::initializeCard);
-        initializeCard(dealer);
+    public List<String> getAllPlayersNames() {
+        return players.getAllPlayersName();
     }
 
-    private void initializeCard(Participant participant) {
-        for (int i = 0; i < 2; i++) {
-            distributeCard(participant);
+    public void initializeGame() {
+        players.initializeCard(deck.drawCard(), deck.drawCard());
+        dealer.addCards(List.of(deck.drawCard(), deck.drawCard()));
+    }
+
+    public void distributeCard(String name) {
+        players.distributeCard(name, deck.drawCard());
+    }
+
+    public void distributeCard() {
+        dealer.addCard(deck.drawCard());
+    }
+
+    public void playerHit(String name, boolean isHit) {
+        if (players.checkScoreUnderCriterion(name) && isHit) {
+            distributeCard(name);
         }
     }
 
-    private void distributeCard(Participant participant) {
-        Card firstCard = deck.drawCard();
-        participant.addCard(firstCard);
-    }
-
-    public void playerHit(Participant participant, boolean isHit) {
-        if (participant.checkScoreUnderCriterion() && isHit) {
-            distributeCard(participant);
+    public void dealerHit() {
+        if (dealer.checkScoreUnderCriterion()) {
+            distributeCard();
         }
     }
 
     public void settlementOfResults() {
-        int dealerScore = dealer.calculateScore();
-        boolean dealerBurst = dealer.isBurst();
+        int dealerScore = dealer.cardBoard.calculateScore();
+        boolean dealerBurst = dealer.cardBoard.isBurst();
+        List<Result> playerResults = players.decideAllResults(dealerScore, dealerBurst);
 
-        for (Player player : players) {
-            Result playerResult = player.calculateResult(dealerScore, dealerBurst);
-            dealer.addResult(playerResult);
-        }
+        dealer.addResults(playerResults);
+    }
+
+    public Result getPlayerResult(String name) {
+        int dealerScore = dealer.cardBoard.calculateScore();
+        boolean dealerBurst = dealer.cardBoard.isBurst();
+        return players.getPlayerResult(name, dealerScore, dealerBurst);
     }
 }

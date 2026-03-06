@@ -3,6 +3,7 @@ package domain;
 import domain.enums.Result;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Dealer extends Participant {
@@ -16,12 +17,16 @@ public class Dealer extends Participant {
 
     @Override
     public boolean checkScoreUnderCriterion() {
-        return calculateScore() < 17;
+        return cardBoard.calculateScore() < 17;
     }
 
-    public void addResult(Result playerResult) {
-        Result dealerResult = Result.getOpposite(playerResult);
-        this.results.put(dealerResult, this.results.get(dealerResult) + 1);
+    public void addResults(List<Result> playerResults) {
+        playerResults.forEach(
+                result -> {
+                    Result dealerResult = Result.getOpposite(result);
+                    results.put(dealerResult, results.get(dealerResult) + 1);
+                }
+        );
     }
 
     public Map<Result, Integer> getResult() {
