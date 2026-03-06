@@ -2,11 +2,8 @@ package blackjack.model;
 
 public class Player extends Participant{
 
-    private final String name;
-
     private Player(String name, Hands hands) {
-        super(hands);
-        this.name = name;
+        super(name, hands);
     }
 
     public static Player of(String name) {

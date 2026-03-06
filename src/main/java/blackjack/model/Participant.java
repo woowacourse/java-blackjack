@@ -5,13 +5,16 @@ import java.util.List;
 public abstract class Participant {
 
     private static final int BLACKJACK_SCORE = 21;
+
+    protected final String name;
     protected final Hands hands;
 
-    public Participant(Hands hands) {
+    public Participant(String name, Hands hands) {
         if (hands == null) {
             throw new IllegalArgumentException("hands가 null입니다.");
         }
 
+        this.name = name;
         this.hands = hands;
     }
 
@@ -36,5 +39,9 @@ public abstract class Participant {
 
     public void pickAdditionalCard(CardDeck cardDeck) {
         hands.addCard(cardDeck.pick());
+    }
+
+    public String getName() {
+        return this.name;
     }
 }

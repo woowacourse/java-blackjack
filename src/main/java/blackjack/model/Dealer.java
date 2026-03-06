@@ -1,12 +1,12 @@
 package blackjack.model;
 
-import java.util.List;
+public class Dealer extends Participant {
 
-public class Dealer extends Participant{
+    private static final String DEALER_NAME = "딜러";
     private static final int PICK_THRESHOLD = 16;
 
     private Dealer(Hands hands) {
-        super(hands);
+        super(DEALER_NAME, hands);
     }
 
     public static Dealer create() {
