@@ -9,9 +9,9 @@ public class BlackjackGame {
     private final Dealer dealer;
     private final Deck deck;
 
-    public BlackjackGame(List<Player> players, Dealer dealer) {
-        this.players = players;
-        this.dealer = dealer;
+    public BlackjackGame() {
+        this.players = new ArrayList<>();
+        this.dealer = new Dealer();
         this.deck = new Deck();
     }
 
@@ -26,5 +26,37 @@ public class BlackjackGame {
             return true;
         }
         return false;
+    }
+
+    public void giveHand() {
+        for (Player player : players) {
+            for(int i = 0; i < 2; i++) {
+                Card card = deck.pull();
+                player.add(card);
+            }
+        }
+
+        for(int i = 0; i < 2; i++) {
+            Card card = deck.pull();
+            dealer.add(card);
+        }
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public void addPlayerCard(Player player) {
+        Card card = deck.pull();
+        player.add(card);
+    }
+
+    public void addDealerCard() {
+        Card card = deck.pull();
+        dealer.add(card);
     }
 }

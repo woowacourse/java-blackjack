@@ -11,11 +11,15 @@ public class Deck {
                 cards.add(new Card(suit, rank));
             }
         }
-
         cards.shuffle();
     }
 
     public Card pull(){
         return cards.pull();
+    }
+
+    @Override
+    public String toString() {
+        return cards.toString();
     }
 }
