@@ -8,14 +8,18 @@ import java.util.List;
 
 public class Player {
     private final String name;
-    protected final List<Card> cards =  new ArrayList<>();
+    protected final List<Card> cards = new ArrayList<>();
 
     public Player(String name) {
         this.name = name;
     }
 
     public int calculateScore() {
-        return 0;
+        int total = 0;
+        for (Card card : cards) {
+            total += card.getCardRank().getNumber();
+        }
+        return total;
     }
 
     public void add(Card card) {
