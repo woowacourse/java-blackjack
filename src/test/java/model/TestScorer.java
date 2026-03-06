@@ -3,9 +3,11 @@ package model;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import model.dto.Card;
+import model.dto.PlayerName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import service.BlackJackService;
 
 public class TestScorer {
 
@@ -18,13 +20,28 @@ public class TestScorer {
         assertThat(Scorer.calculate(card)).isEqualTo(card.cardNumber().getScore());
     }
 
-    @ParameterizedTest
-    @CsvSource({"11, 1", "10, 11"})
-    public void A_카드_변환_정상_작동(int input, int result) {
-        Card card = new Card(Shape.CLOVER,CardNumber.ACE);
+    @Test
+    public void 블랙잭_점수_판정_정상_작동_테스트() {
+        Player player = new Player(new PlayerName("player1"));
 
-        //then
-        assertThat(Scorer.calculate(card, input)).isEqualTo(result);
+        player.addCard(new Card(Shape.CLOVER, CardNumber.ACE));
+        player.addCard(new Card(Shape.SPADE, CardNumber.ACE));
+        player.addScore(2);
+
+        Scorer.updateFinalScore(player);
+
+        assertThat(player.getResult().score()).isEqualTo(12);
+
+        Player player2 = new Player(new PlayerName("player2"));
+
+        player2.addCard(new Card(Shape.CLOVER, CardNumber.ACE));
+        player2.addCard(new Card(Shape.SPADE, CardNumber.ACE));
+        player2.addCard(new Card(Shape.CLOVER, CardNumber.KING));
+        player2.addScore(12);
+
+        Scorer.updateFinalScore(player2);
+
+        assertThat(player2.getResult().score()).isEqualTo(12);
 
     }
 
