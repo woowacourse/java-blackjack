@@ -37,7 +37,7 @@ public class PlayerTest {
     void 유저가_카드_한_장을_가져오는_테스트() {
         // given
         Player player = new Player("밀란");
-        Card card = new Card(CardValue.A, CardShape.DIAMOND);
+        Card card = new Card(CardValue.ACE, CardShape.DIAMOND);
 
         // when
         int before = player.getCards().size();
@@ -83,7 +83,7 @@ public class PlayerTest {
     void ACE의_값이_1이_유리할_때_테스트() {
         // given
         Player player = new Player("밀란");
-        player.bring(new Card(CardValue.A, CardShape.DIAMOND));
+        player.bring(new Card(CardValue.ACE, CardShape.DIAMOND));
         player.bring(new Card(CardValue.TEN, CardShape.DIAMOND));
         player.bring(new Card(CardValue.THREE, CardShape.DIAMOND));
 
@@ -99,7 +99,7 @@ public class PlayerTest {
     void ACE의_값이_11이_유리할_때_테스트() {
         // given
         Player player = new Player("밀란");
-        player.bring(new Card(CardValue.A, CardShape.DIAMOND));
+        player.bring(new Card(CardValue.ACE, CardShape.DIAMOND));
         player.bring(new Card(CardValue.TEN, CardShape.DIAMOND));
 
         // when
@@ -130,7 +130,7 @@ public class PlayerTest {
     void 카드_합_Blackjack_판단_테스트() {
         // given
         Player player = new Player("밀란");
-        player.bring(new Card(CardValue.A, CardShape.CLOVER));
+        player.bring(new Card(CardValue.ACE, CardShape.CLOVER));
         player.bring(new Card(CardValue.TEN, CardShape.DIAMOND));
 
         // when

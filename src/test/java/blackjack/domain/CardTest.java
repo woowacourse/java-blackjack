@@ -11,7 +11,7 @@ public class CardTest {
     @DisplayName("카드_생성_테스트")
     void 카드_생성_테스트() {
         // given
-        CardValue value = CardValue.A;
+        CardValue value = CardValue.ACE;
         CardShape cardShape = CardShape.DIAMOND;
 
         // when & then

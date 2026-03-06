@@ -11,7 +11,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return value == CardValue.A;
+        return value == CardValue.ACE;
     }
 
     public String getName() {
