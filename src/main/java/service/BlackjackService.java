@@ -3,6 +3,7 @@ package service;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.BlackjackController;
 import domain.Cards;
 import domain.Dealer;
 import domain.Player;
@@ -29,6 +30,12 @@ public class BlackjackService {
             playerList.add(player);
         }
         return playerList;
+    }
+
+    public Dealer createDealer(Cards cards) {
+        Dealer dealer = new Dealer(BlackjackController.DEALER_NAME);
+        giveInitialedCard(cards, dealer);
+        return dealer;
     }
 
     public void determineAdditionalCardOfDealer(Dealer dealer, Cards cards) {

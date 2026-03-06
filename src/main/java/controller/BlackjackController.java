@@ -26,7 +26,8 @@ public class BlackjackController {
         Cards cards = blackjackService.generateCards();
         List<String> names = inputNames();
 
-        Dealer dealer = createDealer(names, cards);
+        Dealer dealer = blackjackService.createDealer(cards);
+        OutputView.displayCardDistribution(names);
         List<Player> playerList = blackjackService.createPlayers(names, cards);
 
         List<CardContentDto> firstCardContents = getCardContentDtos(dealer, playerList);
@@ -63,12 +64,7 @@ public class BlackjackController {
         return players;
     }
 
-    public Dealer createDealer(List<String> names, Cards cards) {
-        Dealer dealer = new Dealer(BlackjackController.DEALER_NAME);
-        OutputView.displayCardDistribution(names);
-        blackjackService.giveInitialedCard(cards, dealer);
-        return dealer;
-    }
+
 
 
     private void handCardWithRetry(Player player, boolean hasCard, Cards cards, String name) {
