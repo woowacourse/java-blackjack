@@ -44,7 +44,9 @@ public class BlackjackController {
             handCardWithRetry(player, hasCard, cards, name);
         }
 
-        blackjackService.determineAdditionalCard(dealer, cards);
+        blackjackService.determineAdditionalCardOfDealer(dealer, cards);
+
+
     }
 
     public Dealer createDealer(List<String> names, Cards cards) {

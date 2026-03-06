@@ -31,8 +31,8 @@ public class BlackjackService {
         return playerList;
     }
 
-    public void determineAdditionalCard(Dealer dealer, Cards cards) {
-        if (dealer.needAdditionalCard()) {
+    public void determineAdditionalCardOfDealer(Dealer dealer, Cards cards) {
+        while (dealer.needAdditionalCard()) {
             dealer.add(cards.pop());
             OutputView.displayDealerCard();
         }
