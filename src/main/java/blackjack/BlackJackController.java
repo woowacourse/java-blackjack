@@ -8,20 +8,27 @@ public class BlackJackController {
 
     public void run() {
         List<String> names = inputView.readNames();
-
         Players players = new Players(names);
         Dealer dealer = new Dealer();
         Deck deck = new Deck();
 
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer, deck);
-
         blackJackGame.initDraw();
 
         // 출력
         outputView.printInitDraw(players,dealer);
 
         // 플레이어 턴
-        for(Player player:players.getPlayers()) {
+        playerTurn(players, deck);
+
+        // 딜러 턴
+
+
+
+    }
+
+    private void playerTurn(Players players, Deck deck) {
+        for(Player player: players.getPlayers()) {
             while(true) {
                 // 버스트인지 확인
                 boolean isBust = player.isBust();
@@ -39,11 +46,5 @@ public class BlackJackController {
                 }
             }
         }
-
-
-        // 딜러 턴
-
-
-
     }
 }
