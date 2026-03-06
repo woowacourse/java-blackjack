@@ -16,15 +16,15 @@ public class BlackjackConfig {
 
     private static final int ADJUST_VALUE = 10;
 
-    InputView inputView = new InputView();
-    OutputView outputView = new OutputView();
-    BustPolicy bustPolicy = new BustPolicyImpl();
-    AceAdjustPolicy aceAdjustPolicy = new AceAdjustPolicy(ADJUST_VALUE, bustPolicy);
-    DealerDrawPolicy dealerDrawPolicy = new ThresholdDrawPolicy(17);
-    CardsGenerator cardsGenerator = new ShuffledCardsGenerator();
-    ResultJudgement resultJudgement = new ResultJudgement(bustPolicy);
+    private final InputView inputView = new InputView();
+    private final OutputView outputView = new OutputView();
+    private final BustPolicy bustPolicy = new BustPolicyImpl();
+    private final AceAdjustPolicy aceAdjustPolicy = new AceAdjustPolicy(ADJUST_VALUE, bustPolicy);
+    private final DealerDrawPolicy dealerDrawPolicy = new ThresholdDrawPolicy(17);
+    private final CardsGenerator cardsGenerator = new ShuffledCardsGenerator();
+    private final ResultJudgement resultJudgement = new ResultJudgement(bustPolicy);
 
-    BlackjackController controller = new BlackjackController(
+    private final BlackjackController controller = new BlackjackController(
             inputView,
             outputView,
             aceAdjustPolicy,
