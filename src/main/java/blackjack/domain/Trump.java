@@ -17,8 +17,8 @@ public class Trump {
         List<Suit> suits = Suit.all();
         List<Denomination> denominations = Denomination.all();
         List<Card> shuffledDeck = suits.stream()
-            .flatMap(item1 -> denominations.stream()
-                .map(item2 -> new Card(item1, item2)))
+            .flatMap(suit -> denominations.stream()
+                .map(denomination -> new Card(suit, denomination)))
             .collect(Collectors.toCollection(ArrayList::new));
         Collections.shuffle(shuffledDeck);
 
