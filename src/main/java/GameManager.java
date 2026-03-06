@@ -54,12 +54,22 @@ public class GameManager {
     public List<GameScoreResultDto> getScoreResults() {
         List<GameScoreResultDto> results = new ArrayList<>();
         // dealer
+        aggregateDealerResult(results);
+        //players
+        aggregatePlayerResult(results);
+
+        return results;
+    }
+
+    private void aggregateDealerResult(List<GameScoreResultDto> results) {
         results.add(new GameScoreResultDto(
                 dealer.getName(),
                 dealer.getHandToString(),
                 scoreCalculator.calculateScore(dealer.getHand())
         ));
-        //players
+    }
+
+    private void aggregatePlayerResult(List<GameScoreResultDto> results) {
         for (Player player : players.getPlayers()) {
             results.add(new GameScoreResultDto(
                     player.getName(),
@@ -67,8 +77,6 @@ public class GameManager {
                     scoreCalculator.calculateScore(player.getHand())
             ));
         }
-
-        return results;
     }
 
     public List<GameInitialInfoDto> getInitialInfo() {
@@ -79,12 +87,14 @@ public class GameManager {
         dealerOpenCard.add(dealer.getHandToString().getFirst());
 
         // dealer
-        results.add(new GameInitialInfoDto(
-                dealer.getName(),
-                2,
-                dealerOpenCard
-        ));
+        addDealerInfo(results, dealerOpenCard);
         //players
+        addPlayersInfo(results);
+
+        return results;
+    }
+
+    private void addPlayersInfo(List<GameInitialInfoDto> results) {
         for (Player player : players.getPlayers()) {
             results.add(new GameInitialInfoDto(
                     player.getName(),
@@ -92,8 +102,14 @@ public class GameManager {
                     player.getHandToString()
             ));
         }
+    }
 
-        return results;
+    private void addDealerInfo(List<GameInitialInfoDto> results, List<String> dealerOpenCard) {
+        results.add(new GameInitialInfoDto(
+                dealer.getName(),
+                2,
+                dealerOpenCard
+        ));
     }
 
     public boolean isBlackjack(Player player) {
@@ -110,6 +126,12 @@ public class GameManager {
         results.add(new GameFinalResultDto(dealer.getName()));
 
         // 플레이어 추가
+        determineWinLose(results);
+
+        return results;
+    }
+
+    private void determineWinLose(List<GameFinalResultDto> results) {
         for (Player player : players.getPlayers()) {
             int playerScore = calculateScore(player.getHand());
             int dealerScore = calculateScore(dealer.getHand());
@@ -126,7 +148,5 @@ public class GameManager {
                 results.add(new GameFinalResultDto(player.getName(), Result.LOSE));
             }
         }
-
-        return results;
     }
 }
