@@ -1,21 +1,17 @@
 package blackjack.domain;
 
-public class Dealer {
+public class Dealer extends Participant{
 
-    static private final String name="딜러";
-    private final Hand hand = new Hand();
 
     public Dealer() {
+        super("딜러",new Hand());
     }
 
+    @Override
     public void recieveCard(Card card){
         if(!hand.isOver17()){
             hand.addCard(card);
         }
-    }
-
-    public int getCardCount(){
-        return hand.getCount();
     }
 
     public String getFirstCardNames(){
@@ -26,17 +22,7 @@ public class Dealer {
         return hand.isOver17();
     }
 
-    public String getCardNames(){
-        return hand.getCardNames();
-    }
 
-    public int getTotalPoint(){
-        return hand.getTotalPoint();
-    }
-
-    public boolean isBust(){
-        return hand.isBust();
-    }
 
 
 
