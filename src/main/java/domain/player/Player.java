@@ -24,10 +24,6 @@ public class Player {
         return cardBundle.checkExist(targetCard);
     }
 
-    public void setUpCardBundle(CardBundle cardBundle) {
-        this.cardBundle = cardBundle;
-    }
-
     public CardBundle addCardBundle(CardBundle newCardBundle) {
         return cardBundle.addUp(newCardBundle);
     }
