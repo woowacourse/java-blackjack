@@ -36,49 +36,64 @@ public class BlackJackService {
         Map<String, MatchResult> playerResults = new LinkedHashMap<>();
 
         for (Player player : players.getPlayers()) {
-            if (player.getHand().isBust()) {
-                playerResults.put(player.getName(), MatchResult.LOSE);
-                continue;
-            }
-
-            if (dealer.getHand().isBust()) {
-                playerResults.put(player.getName(), MatchResult.WIN);
-                continue;
-            }
-
-            if (player.getHand().calculateSum() > dealer.getHand().calculateSum()) {
-                playerResults.put(player.getName(), MatchResult.WIN);
-                continue;
-            }
-
-            if (player.getHand().calculateSum() == dealer.getHand().calculateSum()) {
-                if (player.getHand().isBlackJack() && !dealer.getHand().isBlackJack()) {
-                    playerResults.put(player.getName(), MatchResult.WIN);
-                    continue;
-                }
-                if (!player.getHand().isBlackJack() && dealer.getHand().isBlackJack()) {
-                    playerResults.put(player.getName(), MatchResult.LOSE);
-                    continue;
-                }
-                if (!player.getHand().isBlackJack() && !dealer.getHand().isBlackJack()) {
-                    playerResults.put(player.getName(), MatchResult.DRAW);
-                    continue;
-                }
-            }
-
-            if (player.getHand().calculateSum() < dealer.getHand().calculateSum()) playerResults.put(player.getName(), MatchResult.LOSE);
+            if (handleBust(player, playerResults)) continue;
+            compareScore(player, playerResults);
         }
 
         return playerResults;
+    }
+
+    private boolean handleBust(Player player, Map<String, MatchResult> playerResults) {
+        if (player.getHand().isBust()) {
+            playerResults.put(player.getName(), MatchResult.LOSE);
+            return true;
+        }
+
+        if (dealer.getHand().isBust()) {
+            playerResults.put(player.getName(), MatchResult.WIN);
+            return true;
+        }
+
+        return false;
+    }
+
+    private void compareScore(Player player, Map<String, MatchResult> playerResults) {
+        if (player.getHand().calculateSum() > dealer.getHand().calculateSum()) {
+            playerResults.put(player.getName(), MatchResult.WIN);
+            return;
+        }
+
+        if (handleDraw(player, playerResults)) return;
+
+        if (player.getHand().calculateSum() < dealer.getHand().calculateSum()) {
+            playerResults.put(player.getName(), MatchResult.LOSE);
+        }
+    }
+
+    private boolean handleDraw(Player player, Map<String, MatchResult> playerResults) {
+        if (player.getHand().calculateSum() == dealer.getHand().calculateSum()) {
+            if (player.getHand().isBlackJack() && !dealer.getHand().isBlackJack()) {
+                playerResults.put(player.getName(), MatchResult.WIN);
+                return true;
+            }
+            if (!player.getHand().isBlackJack() && dealer.getHand().isBlackJack()) {
+                playerResults.put(player.getName(), MatchResult.LOSE);
+                return true;
+            }
+            if (!player.getHand().isBlackJack() && !dealer.getHand().isBlackJack()) {
+                playerResults.put(player.getName(), MatchResult.DRAW);
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public Map<MatchResult, Integer> calculateDealerResult(Map<String, MatchResult> playerResults) {
         Map<MatchResult, Integer> dealerResult = new EnumMap<>(MatchResult.class);
 
         for (MatchResult matchResult : playerResults.values()) {
-            if (matchResult == MatchResult.WIN) dealerResult.put(MatchResult.LOSE, dealerResult.getOrDefault(MatchResult.LOSE, 0) + 1);
-            else if (matchResult == MatchResult.DRAW) dealerResult.put(MatchResult.DRAW, dealerResult.getOrDefault(MatchResult.DRAW, 0) + 1);
-            else if (matchResult == MatchResult.LOSE) dealerResult.put(MatchResult.WIN, dealerResult.getOrDefault(MatchResult.WIN, 0) + 1);
+            dealerResult.put(matchResult.exchange(), dealerResult.getOrDefault(matchResult.exchange(), 0) + 1);
         }
 
         return dealerResult;
