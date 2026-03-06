@@ -15,10 +15,11 @@ public class InputView {
         return printAndGet(INPUT_PLAYER_NAME);
     }
 
-    public String readNeedToHit(String name) {
+    public boolean readNeedToHit(String name) {
         String yesOrNo = printAndGet(NEEDS_TO_HIT.formatted(name));
         validateInputFormat(yesOrNo);
-        return yesOrNo;
+
+        return yesOrNo.equals(YES);
     }
 
     private String printAndGet(String needsToHit) {

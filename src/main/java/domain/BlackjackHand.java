@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Collections;
 import java.util.List;
 import util.ErrorMessage;
 
@@ -54,5 +55,9 @@ public class BlackjackHand {
     private boolean hasAce(List<Card> hands) {
         return hands.stream()
                 .anyMatch(Card::isAce);
+    }
+
+    public List<Card> getHands() {
+        return Collections.unmodifiableList(hands);
     }
 }

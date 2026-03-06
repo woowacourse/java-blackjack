@@ -28,4 +28,8 @@ public class Player {
     public void addHand(Card card){
         blackjackHand.add(card);
     }
+
+    public String getName() {
+        return name;
+    }
 }
