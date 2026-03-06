@@ -25,4 +25,15 @@ public class OutputView {
         System.out.println();
     }
 
+    public static void printCardsResult(String userName, List<String> cards, int cardsValue) {
+        System.out.print(userName + "카드: ");
+
+        StringJoiner stringJoiner = new StringJoiner(", ");
+        for (String card : cards) {
+            stringJoiner.add(card);
+        }
+
+        System.out.println(stringJoiner + " - 결과: " + cardsValue);
+    }
+
 }
