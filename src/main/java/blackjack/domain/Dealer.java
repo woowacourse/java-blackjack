@@ -48,4 +48,8 @@ public class Dealer {
         return sum;
     }
 
+    public boolean isBurst() {
+        return calculateCardsValue() > 21;
+    }
+
 }
