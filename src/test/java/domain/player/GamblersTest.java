@@ -3,6 +3,7 @@ package domain.player;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.MatchResult;
 import domain.StubDeck;
 import domain.card.Card;
 import domain.card.CardRank;
@@ -54,7 +55,7 @@ class GamblersTest {
         assertThat(result.winCount()).isEqualTo(1);
         assertThat(result.lossCount()).isEqualTo(1);
         assertThat(result.drawCount()).isEqualTo(0);
-        assertThat(result.logs().get(0)).isEqualTo("tobi:패");
-        assertThat(result.logs().get(1)).isEqualTo("quda:승");
+        assertThat(result.gamblerResultLog().get(0)).isEqualTo(MatchResult.LOSE);
+        assertThat(result.gamblerResultLog().get(1)).isEqualTo(MatchResult.WIN);
     }
 }

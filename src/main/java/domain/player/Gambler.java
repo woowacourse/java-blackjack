@@ -1,7 +1,6 @@
 package domain.player;
 
 import domain.MatchResult;
-import dto.CardInfo;
 import expcetion.BlackjackException;
 import expcetion.ExceptionMessage;
 
