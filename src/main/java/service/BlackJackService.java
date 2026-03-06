@@ -3,6 +3,7 @@ package service;
 import domain.*;
 
 public class BlackJackService {
+    private static final Integer BLACKJACK_LIMIT_NUMBER = 21;
     private final Result result;
 
     public BlackJackService(Result result) {
@@ -20,6 +21,7 @@ public class BlackJackService {
     private ResultInfo calculateWinDefeatDraw(Dealer dealer, Player player) {
         Integer dealerTotalScore = dealer.getTotalCardScore();
         Integer playerTotalScore = player.getTotalCardScore();
+        if (playerTotalScore > BLACKJACK_LIMIT_NUMBER) return ResultInfo.DEFEAT;
         if (dealerTotalScore < playerTotalScore) return ResultInfo.WIN;
         if (dealerTotalScore > playerTotalScore) return ResultInfo.DEFEAT;
         return ResultInfo.DRAW;
