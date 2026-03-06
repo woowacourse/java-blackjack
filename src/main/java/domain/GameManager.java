@@ -1,3 +1,10 @@
+package domain;
+
+import domain.constant.Result;
+import domain.dto.GameFinalResultDto;
+import domain.dto.GameInitialInfoDto;
+import domain.dto.GameScoreResultDto;
+
 import java.util.ArrayList;
 import java.util.List;
 

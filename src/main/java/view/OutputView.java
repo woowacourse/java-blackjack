@@ -1,3 +1,10 @@
+package view;
+
+import domain.constant.Result;
+import domain.dto.GameFinalResultDto;
+import domain.dto.GameInitialInfoDto;
+import domain.dto.GameScoreResultDto;
+
 import java.text.MessageFormat;
 import java.util.EnumMap;
 import java.util.List;

@@ -1,3 +1,5 @@
+package domain.constant;
+
 public enum Suit {
     SPADE("스페이드"),
     HEART("하트"),

@@ -1,3 +1,9 @@
+package domain;
+
+import domain.constant.Rank;
+import domain.constant.Suit;
+import domain.dto.GameInitialInfoDto;
+import domain.dto.GameScoreResultDto;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

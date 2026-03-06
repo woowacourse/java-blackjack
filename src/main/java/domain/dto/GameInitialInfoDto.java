@@ -1,3 +1,5 @@
+package domain.dto;
+
 import java.util.List;
 
 public class GameInitialInfoDto {
@@ -16,23 +18,11 @@ public class GameInitialInfoDto {
         return playerName;
     }
 
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
-
     public int getInitialHandSize() {
         return initialHandSize;
     }
 
-    public void setInitialHandSize(int initialHandSize) {
-        this.initialHandSize = initialHandSize;
-    }
-
     public List<String> getHand() {
         return hand;
-    }
-
-    public void setHand(List<String> hand) {
-        this.hand = hand;
     }
 }

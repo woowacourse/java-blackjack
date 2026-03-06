@@ -1,3 +1,5 @@
+package domain.constant;
+
 public enum Rank {
     ACE(1, "A"),
     TWO(2, "2"),

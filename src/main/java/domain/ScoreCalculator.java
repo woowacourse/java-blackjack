@@ -1,7 +1,8 @@
+package domain;
+
 import java.util.List;
 
 public class ScoreCalculator {
-
 
     public static final int BLACKJACK_SCORE = 21;
     public static final int ACE_BONUS_SCORE = 10;

@@ -1,3 +1,7 @@
+package domain;
+
+import domain.constant.Rank;
+import domain.constant.Suit;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

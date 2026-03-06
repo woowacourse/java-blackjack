@@ -1,3 +1,5 @@
+package domain.dto;
+
 import java.util.List;
 
 public class GameScoreResultDto {
@@ -37,7 +39,7 @@ public class GameScoreResultDto {
 
     @Override
     public String toString() {
-        return "GameScoreResultDto{" +
+        return "domain.dto.GameScoreResultDto{" +
                 "playerName='" + playerName + '\'' +
                 ", hand=" + hand +
                 ", result=" + result +

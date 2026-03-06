@@ -1,3 +1,5 @@
+package domain;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +38,7 @@ public class Player {
 
     @Override
     public String toString() {
-        return "Player{" +
+        return "domain.Player{" +
                 "name='" + name + '\'' +
                 ", hand=" + hand +
                 ", isBust=" + isBust +

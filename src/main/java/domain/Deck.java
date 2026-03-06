@@ -1,3 +1,8 @@
+package domain;
+
+import domain.constant.Rank;
+import domain.constant.Suit;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

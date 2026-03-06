@@ -1,3 +1,7 @@
+package domain.dto;
+
+import domain.constant.Result;
+
 public class GameFinalResultDto {
     String name;
     Result result;
@@ -21,7 +25,7 @@ public class GameFinalResultDto {
 
     @Override
     public String toString() {
-        return "GameFinalResultDto{" +
+        return "domain.dto.GameFinalResultDto{" +
                 "name='" + name + '\'' +
                 ", result=" + result +
                 '}';
