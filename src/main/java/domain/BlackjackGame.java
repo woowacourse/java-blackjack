@@ -30,10 +30,7 @@ public class BlackjackGame {
         Players players = enterPlayers();
 
         dealInitialCard(dealer, players);
-
-        view.printFirstHandOutResult(players.displayNames());
-        view.printParticipantHand(PlayerHandDto.of(dealer));
-        view.printAllParticipantsHand(getPlayerHandInformation(players));
+        showGamerHands(players, dealer);
 
         players.stream().forEach(player -> {
             drawPlayerCard(player, dealer);
@@ -53,6 +50,12 @@ public class BlackjackGame {
         ResultAnalysisDto analysis = analyzeBlackjackResult(players, dealer);
         view.printFinalResultMessage(analysis);
 
+    }
+
+    private void showGamerHands(Players players, Dealer dealer) {
+        view.printFirstHandOutResult(players.displayNames());
+        view.printParticipantHand(PlayerHandDto.of(dealer));
+        view.printAllParticipantsHand(getPlayerHandInformation(players));
     }
 
     private void drawPlayerCard(Player p, Dealer dealer) {
