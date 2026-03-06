@@ -80,16 +80,16 @@ public class GameTest {
         Game game = new Game(null);
         GameResult expected = new GameResult(
                 Map.of(
-                        ScoreCompareResult.PLAYER_WIN, 1,
                         ScoreCompareResult.DEALER_WIN, 1,
+                        ScoreCompareResult.DEALER_LOSS, 1,
                         ScoreCompareResult.PUSH, 1),
                 Map.of(
                         pobi, ScoreCompareResult.PLAYER_WIN,
-                        jason, ScoreCompareResult.DEALER_WIN,
+                        jason, ScoreCompareResult.PLAYER_LOSS,
                         brown, ScoreCompareResult.PUSH)
         );
 
-        GameResult actual = game.judgeTotalWinnerResult(List.of(pobi, jason, brown), dealer);
+        GameResult actual = game.judgeTotalGameResult(List.of(pobi, jason, brown), dealer);
 
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
     }
