@@ -56,6 +56,6 @@ public class GameController {
     }
 
     private boolean isPlayerTurn(Player player) {
-        return !(player.isBust() && manager.isBlackjack(player));
+        return !(player.isBust() || manager.isBlackjack(player));
     }
 }
