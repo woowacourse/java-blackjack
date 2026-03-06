@@ -18,4 +18,8 @@ public class Dealer {
     public boolean isBust() {
         return drawnCards.sumScore() > 21;
     }
+
+    public int calculateTotalScore() {
+        return drawnCards.sumScore();
+    }
 }
