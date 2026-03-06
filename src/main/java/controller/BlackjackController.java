@@ -46,35 +46,14 @@ public class BlackjackController {
         printResult(participants, dealer, players); // 최종 결과 출력
     }
 
-    private void printResult(Participants participants, Participant dealer, List<Participant> players) {
-        // 결과 출력 - 패 공개
-        List<CardResult> cardResults = participants.getCardResults();
-        outputView.printCardResults(participants);
-
-        // 최종 승패
-        List<FinalResult> finalResults = blackjackService.getFinalResults(dealer, players);
-        outputView.printFinalResults(finalResults);
-    }
-
-    private Participant drawDealerAdditionalCard(Participants participants, CardDeck cardDeck) {
-        Participant dealer = participants.getDealer();
-        while (dealer.getScore() <= DEALER_DRAW_BOUND) {
-            outputView.printDealerAdditionalDraw();
-
-            List<Card> drawnCards = blackjackService.drawCard(cardDeck, HIT_DRAW_COUNT);
-
-            addHandCard(dealer, drawnCards);
+    private List<Participant> addParticipants() {
+        List<Name> playerNames = inputView.readPlayers(); // 플레이어 입력받기
+        List<Participant> participantList = new ArrayList<>();
+        for (Name name : playerNames) {
+            participantList.add(
+                    new Participant(name, new HandCards(new ArrayList<>()), false));
         }
-        return dealer;
-    }
-
-    private List<Participant> doHitAndStand(Participants participants, CardDeck cardDeck) {
-        List<Participant> players = participants.getPlayers();
-        for (Participant player : players) {
-            hitAndStand(player, cardDeck);
-        }
-        outputView.printWhiteLine();
-        return players;
+        return participantList;
     }
 
     private void drawInitCard(List<Participant> participantList, CardDeck cardDeck, Participants participants) {
@@ -85,14 +64,19 @@ public class BlackjackController {
         outputView.printInitHandCard(participants); // 뽑은 카드 정보 출력
     }
 
-    private List<Participant> addParticipants() {
-        List<Name> playerNames = inputView.readPlayers(); // 플레이어 입력받기
-        List<Participant> participantList = new ArrayList<>();
-        for (Name name : playerNames) {
-            participantList.add(
-                    new Participant(name, new HandCards(new ArrayList<>()), false));
+    private static void addHandCard(Participant participant, List<Card> drawnCards) {
+        for (Card drawedCard : drawnCards) {
+            participant.addHandCard(drawedCard);
         }
-        return participantList;
+    }
+
+    private List<Participant> doHitAndStand(Participants participants, CardDeck cardDeck) {
+        List<Participant> players = participants.getPlayers();
+        for (Participant player : players) {
+            hitAndStand(player, cardDeck);
+        }
+        outputView.printWhiteLine();
+        return players;
     }
 
     private void hitAndStand(Participant player, CardDeck cardDeck) {
@@ -117,9 +101,25 @@ public class BlackjackController {
         return isHit;
     }
 
-    private static void addHandCard(Participant participant, List<Card> drawnCards) {
-        for (Card drawedCard : drawnCards) {
-            participant.addHandCard(drawedCard);
+    private Participant drawDealerAdditionalCard(Participants participants, CardDeck cardDeck) {
+        Participant dealer = participants.getDealer();
+        while (dealer.getScore() <= DEALER_DRAW_BOUND) {
+            outputView.printDealerAdditionalDraw();
+
+            List<Card> drawnCards = blackjackService.drawCard(cardDeck, HIT_DRAW_COUNT);
+
+            addHandCard(dealer, drawnCards);
         }
+        return dealer;
+    }
+
+    private void printResult(Participants participants, Participant dealer, List<Participant> players) {
+        // 결과 출력 - 패 공개
+        List<CardResult> cardResults = participants.getCardResults();
+        outputView.printCardResults(participants);
+
+        // 최종 승패
+        List<FinalResult> finalResults = blackjackService.getFinalResults(dealer, players);
+        outputView.printFinalResults(finalResults);
     }
 }

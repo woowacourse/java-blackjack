@@ -54,6 +54,7 @@ public class OutputView {
         cardDescriptions.delete(cardDescriptions.length() - 2, cardDescriptions.length());
         System.out.print(cardDescriptions);
     }
+    
 
     public void printCurrentHandCard(Participant participant) {
         printParticipantHandCard(participant);
@@ -88,10 +89,6 @@ public class OutputView {
 
     private static void printScore(Participant dealer) {
         System.out.printf(" - 결과: %d\n", dealer.getScore());
-    }
-
-    public void printWhiteLine() {
-        System.out.println();
     }
 
     public void printFinalResults(List<FinalResult> finalResults) {
@@ -144,5 +141,9 @@ public class OutputView {
         if (finalResult.lose() != 0) {
             System.out.println("패");
         }
+    }
+
+    public void printWhiteLine() {
+        System.out.println();
     }
 }

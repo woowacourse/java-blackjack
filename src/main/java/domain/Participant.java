@@ -17,16 +17,21 @@ public class Participant {
         handCards.addCard(card);
     }
 
-    public int getScore() {
-        return handCards.getScore();
+    public boolean isDealer() {
+        return isDealer;
+    }
+
+    public boolean isBust() {
+        return handCards.isBust();
     }
 
     public boolean isBlackjack() {
         return handCards.isBlackjack();
     }
 
-    public boolean isBust() {
-        return handCards.isBust();
+
+    public int getScore() {
+        return handCards.getScore();
     }
 
     public String getName() {
@@ -35,9 +40,5 @@ public class Participant {
 
     public List<Card> getHandCards() {
         return handCards.getHandCards();
-    }
-
-    public boolean isDealer() {
-        return isDealer;
     }
 }

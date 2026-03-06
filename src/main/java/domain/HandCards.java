@@ -47,9 +47,21 @@ public class HandCards {
         }
     }
 
+
     public boolean isBust() {
         return getScore() > BUST_BOUND;
     }
+
+    public boolean isBlackjack() {
+        List<CardRank> cardRanks = handCards.stream()
+                .map(Card::getCardRank)
+                .toList();
+
+        return cardRanks.contains(ACE) &&
+                (cardRanks.contains(TEN) || cardRanks.contains(JACK)
+                        || cardRanks.contains(QUEEN) || cardRanks.contains(KING));
+    }
+
 
     public int getScore() {
         int notBustMaxScore = 0; // 21 이하 중에 최대 점수
@@ -73,15 +85,5 @@ public class HandCards {
 
     public List<Card> getHandCards() {
         return List.copyOf(handCards);
-    }
-
-    public boolean isBlackjack() {
-        List<CardRank> cardRanks = handCards.stream()
-                .map(Card::getCardRank)
-                .toList();
-
-        return cardRanks.contains(ACE) &&
-                (cardRanks.contains(TEN) || cardRanks.contains(JACK)
-                        || cardRanks.contains(QUEEN) || cardRanks.contains(KING));
     }
 }

@@ -31,6 +31,7 @@ public class InputView {
         }
         return "y".equals(input);
     }
+    
 
     private static void validateIsBlank(String input) {
         if (input == null || input.isBlank()) {
