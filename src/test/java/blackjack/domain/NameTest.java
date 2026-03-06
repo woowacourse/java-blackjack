@@ -60,4 +60,12 @@ class NameTest {
 
         assertThat(playerName).isNotNull();
     }
+
+    @Test
+    void 이름을_반환한다() {
+        String name = "홍길동";
+        Name playerName = Name.of(name);
+
+        assertThat(playerName.getName()).isEqualTo("홍길동");
+    }
 }
