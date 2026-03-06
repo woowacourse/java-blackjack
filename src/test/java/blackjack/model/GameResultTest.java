@@ -48,7 +48,7 @@ class GameResultTest {
     }
 
     @Test
-    @DisplayName("딜러의 카드 합보다 플레이어의 카드 합이 같으면 무 판정")
+    @DisplayName("딜러의 카드합과 플레이어의 카드 합이 같으면 무 판정")
     void drawTest() {
         // given
         Dealer dealer = new Dealer();
