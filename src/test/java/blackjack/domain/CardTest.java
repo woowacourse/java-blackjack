@@ -12,10 +12,10 @@ public class CardTest {
     void 카드_생성_테스트() {
         // given
         CardValue value = CardValue.A;
-        Shape shape = Shape.DIAMOND;
+        CardShape cardShape = CardShape.DIAMOND;
 
         // when & then
-        assertThatCode(() -> new Card(value, shape))
+        assertThatCode(() -> new Card(value, cardShape))
                 .doesNotThrowAnyException();
     }
 

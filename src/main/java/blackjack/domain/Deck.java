@@ -10,16 +10,16 @@ public class Deck {
 
     public Deck() {
         List<Card> cards = new ArrayList<>();
-        for (Shape shape : Shape.values()) {
-            matching(cards, shape);
+        for (CardShape cardShape : CardShape.values()) {
+            matching(cards, cardShape);
         }
 
         this.cards = cards;
     }
 
-    private static void matching(List<Card> cards, Shape shape) {
+    private static void matching(List<Card> cards, CardShape cardShape) {
         for (CardValue value : CardValue.values()) {
-            Card card = new Card(value, shape);
+            Card card = new Card(value, cardShape);
             cards.add(card);
         }
     }

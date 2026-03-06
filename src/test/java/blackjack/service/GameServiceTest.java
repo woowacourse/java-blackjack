@@ -3,11 +3,11 @@ package blackjack.service;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.Card;
+import blackjack.domain.CardShape;
 import blackjack.domain.CardValue;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.Player;
-import blackjack.domain.Shape;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,8 +36,8 @@ class GameServiceTest {
         GameService gameService = new GameService();
         Player player = new Player("흑곰");
         Dealer dealer = new Dealer(new Deck());
-        player.bring(new Card(CardValue.SEVEN, Shape.DIAMOND));
-        dealer.bring(new Card(CardValue.EIGHT, Shape.DIAMOND));
+        player.bring(new Card(CardValue.SEVEN, CardShape.DIAMOND));
+        dealer.bring(new Card(CardValue.EIGHT, CardShape.DIAMOND));
 
         // when
         boolean isDealerWinning = gameService.isDealerWinning(player, dealer);
