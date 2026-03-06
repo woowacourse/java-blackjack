@@ -17,11 +17,14 @@ public class CardDeck {
     }
 
     public Card giveCard() {
+        validateDeckIsEmpty();
+        return deck.poll();
+    }
+
+    private void validateDeckIsEmpty() {
         if (deck.isEmpty()) {
             throw new IllegalArgumentException();
         }
-
-        return deck.poll();
     }
 
 }
