@@ -10,6 +10,7 @@ import expcetion.ExceptionMessage;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class Gamblers {
@@ -67,4 +68,9 @@ public class Gamblers {
                 .map(Gambler::getCardInfo)
                 .toList();
     }
+
+    public void forEach(Consumer<Gambler> consumer) {
+        gamblers.forEach(consumer);
+    }
+
 }

@@ -22,7 +22,7 @@ public abstract class Player {
     }
 
     public int score() {
-        return handCard.cardCalculator();
+        return handCard.score();
     }
 
     public boolean isBust() {
@@ -30,7 +30,7 @@ public abstract class Player {
     }
 
     public CardInfo getCardInfo() {
-        return new CardInfo(name, handCard.getCardInfos(), score());
+        return new CardInfo(name, handCard.printCardInfos(), score());
     }
 
 }

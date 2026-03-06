@@ -50,19 +50,14 @@ public class BlackJack {
     }
 
     private void gamblersTurn(Gamblers gamblers) {
-        for (Gambler gambler : gamblers.getGamblers()) {
-            gamblerTurn(gambler);
-        }
+        gamblers.forEach(this::gamblerTurn);
     }
 
     private void gamblerTurn(Gambler gambler) {
         while (true) {
-            OutputView.askHit(gambler.getName());
-            boolean answer = AnswerParser.parse(InputView.readLine());
-            if (!answer) {
+            if (!askHit(gambler.getName())) {
                 break;
             }
-
             gambler.deal(cardDeck);
 
             if (gambler.isBust()) {
@@ -71,6 +66,11 @@ public class BlackJack {
             }
             OutputView.printPlayerCards(gambler.getCardInfo());
         }
+    }
+
+    private boolean askHit(String name){
+        OutputView.askHit(name);
+        return AnswerParser.parse(InputView.readLine());
     }
 
     private void dealerTurn(Dealer dealer) {

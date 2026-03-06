@@ -13,7 +13,7 @@ public class HandCard {
         this.cards = new ArrayList<>();
     }
 
-    public int cardCalculator() {
+    public int score() {
         int nonAceTotal = cards.stream()
                 .map(Card::getRankScore)
                 .filter(e -> e != 1)
@@ -35,18 +35,18 @@ public class HandCard {
         cards.add(card);
     }
 
-    public List<String> getCardInfos() {
+    public List<String> printCardInfos() {
         return cards.stream()
                 .map(Card::getCardInfo)
                 .toList();
     }
 
-    public String getFirstCardInfo() {
+    public String printFirstCardInfo() {
         return cards.getFirst()
                 .getCardInfo();
     }
 
     public boolean isBust(){
-        return cardCalculator() > BLACKJACK_MAX_LIMIT;
+        return score() > BLACKJACK_MAX_LIMIT;
     }
 }
