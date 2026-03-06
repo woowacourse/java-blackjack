@@ -39,6 +39,17 @@ public class GameController {
                 user.receiveCard(gameService.deal());
                 outputView.printHand(user);
             }
+            if (!hitAtLeastOnce) {
+                outputView.printHand(user);
+            }
+        }
+    }
+
+    private void processDealerTurn(Dealer dealer) {
+        int sum = dealer.getHand().stream().mapToInt(Card::getValue).sum();
+        if(gameService.isHit(sum)) {
+            dealer.receiveCard(gameService.deal());
+            outputView.printDealerHit();
         }
     }
 }
