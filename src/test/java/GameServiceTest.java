@@ -116,13 +116,12 @@ class GameServiceTest {
         drawUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_NINE));
 
         gameService.determineResult(users, dealer);
-        int totalUserWinRounds = users.stream().filter(user -> user.getGameResult() == GameResult.WIN)
+        long totalUserWinRounds = users.stream().filter(user -> user.getGameResult() == GameResult.WIN)
                         .count();
-        int totalUserLoseRounds = users.stream().filter(user -> user.getGameResult() == GameResult.LOSE)
+        long totalUserLoseRounds = users.stream().filter(user -> user.getGameResult() == GameResult.LOSE)
                         .count();
-        int totalUserDrawRounds = users.stream().filter(user -> user.getGameResult() == GameResult.DRAW)
+        long totalUserDrawRounds = users.stream().filter(user -> user.getGameResult() == GameResult.DRAW)
                 .count();
-
 
         assertThat(dealer.getWinRounds()).isEqualTo(totalUserLoseRounds);
         assertThat(dealer.getLoseRounds()).isEqualTo(totalUserWinRounds);

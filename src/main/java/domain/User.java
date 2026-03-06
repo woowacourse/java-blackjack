@@ -31,4 +31,12 @@ public class User {
     public List<Card> getHand() {
         return hand;
     }
+
+    public void setGameResult(GameResult gameResult) {
+        this.gameResult = gameResult;
+    }
+
+    public GameResult getGameResult() {
+        return gameResult;
+    }
 }
