@@ -1,25 +1,22 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Deck {
-    private final List<Card> cards;
+    private final Deque<Card> cards;
 
     public Deck() {
         cards = initialize();
     }
 
-    private List<Card> initialize() {
+    private Deque<Card> initialize() {
         List<Card> cards = Arrays.stream(CardShape.values())
                 .flatMap(shape -> Arrays.stream(CardNumber.values())
                         .map(number -> new Card(number, shape)))
                 .collect(Collectors.toCollection(ArrayList::new));
         Collections.shuffle(cards);
-        return cards;
+        return new ArrayDeque<>(cards);
     }
 
     public List<Card> getCards() {
@@ -35,8 +32,6 @@ public class Deck {
     }
 
     public Card drawCard() {
-        Card lastCard = cards.getLast();
-        cards.remove(lastCard);
-        return lastCard;
+        return cards.pop();
     }
 }
