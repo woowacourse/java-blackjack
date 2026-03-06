@@ -60,4 +60,21 @@ class HandCardsTest {
                 )
         );
     }
+
+    @Test
+    @DisplayName("플레이어가 가지고 있는 카드 점수를 반환한다.")
+    public void 카드_점수_반환_성공() throws Exception {
+        // given
+        HandCards handCards = new HandCards(new ArrayList<>());
+        handCards.addCard(new Card(CardSuit.SPADE, CardRank.ACE));
+        handCards.addCard(new Card(CardSuit.SPADE, CardRank.TWO));
+        handCards.addCard(new Card(CardSuit.SPADE, CardRank.ACE));
+        handCards.addCard(new Card(CardSuit.SPADE, CardRank.EIGHT));
+
+        // when
+        int score = handCards.getScore();
+
+        // then
+        assertThat(score).isEqualTo(12);
+    }
 }

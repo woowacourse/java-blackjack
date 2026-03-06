@@ -24,4 +24,8 @@ public class Card {
     public int hashCode() {
         return Objects.hash(cardSuit, cardRank);
     }
+
+    public CardRank getCardRank() {
+        return cardRank;
+    }
 }
