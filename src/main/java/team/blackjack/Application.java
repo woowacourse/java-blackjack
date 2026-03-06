@@ -1,7 +1,7 @@
 package team.blackjack;
 
 import team.blackjack.config.AppConfig;
-import team.blackjack.control.BlackJackController;
+import team.blackjack.controler.BlackJackController;
 
 public class Application {
     public static void main(String[] args) {

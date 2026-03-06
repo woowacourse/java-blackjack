@@ -23,4 +23,66 @@ public class DefaultBlackjackRule {
     public static boolean canUseAceAsEleven(int currentSum) {
         return currentSum <= 10;
     }
+
+    // 딜러와 플레이어의 승패를 결정하는 메서드
+    public static Result judgeResult(int myScore, int targetScore) {
+        if(myScore > BLACKJACK){
+            return Result.LOSE;
+        }
+        if(myScore > targetScore){
+            return Result.WIN;
+        }
+        if(myScore < targetScore){
+            return Result.LOSE;
+        }
+        return Result.DRAW;
+    }
+
+    /**
+     * 모든 카드를 발급한 이후에, 최종 점수 계산시에 사용하는 함수
+     */
+    public static int calculateBestScore(List<Card> cards) {
+        if (existAceInCards(cards)) {
+            final Map<Boolean, List<Card>> result = cards.stream()
+                    .collect(Collectors.partitioningBy(Card::isAce));
+
+            final List<Card> aceCards = result.get(true);
+            final List<Card> nonAceCards = result.get(false);
+            return calculateBestSumWithAce(nonAceCards, aceCards);
+        }
+        return calculateBestSumWithoutAce(cards);
+    }
+
+    private static int calculateBestSumWithAce(List<Card> cardsWithoutAces, List<Card> aceCards) {
+        int currentSum = calculateBestSumWithoutAce(cardsWithoutAces);
+
+        for (Card card : aceCards) {
+            currentSum += aceScore(card, currentSum);
+        }
+
+        return currentSum;
+    }
+
+    private static int aceScore(Card card, int currentSum) {
+        if (DefaultBlackjackRule.canUseAceAsEleven(currentSum)) {
+            return card.getScore().getLast();
+        }
+
+        return card.getScore().getFirst();
+    }
+
+    private static int calculateBestSumWithoutAce(List<Card> cards) {
+        return cards.stream()
+                .mapToInt(card -> card.getScore().getFirst())
+                .sum();
+    }
+
+    private static boolean existAceInCards(List<Card> cards) {
+        for (Card card : cards) {
+            if (card.isAce()) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

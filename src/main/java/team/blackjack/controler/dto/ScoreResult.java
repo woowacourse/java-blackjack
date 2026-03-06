@@ -1,4 +1,4 @@
-package team.blackjack.control.dto;
+package team.blackjack.controler.dto;
 
 import java.util.List;
 import java.util.Map;

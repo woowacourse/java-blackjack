@@ -1,15 +1,21 @@
 package team.blackjack.service;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import team.blackjack.control.dto.ScoreResult;
+import team.blackjack.controler.dto.GameResult;
+import team.blackjack.controler.dto.GameResult.DealerResult;
+import team.blackjack.controler.dto.GameResult.PlayerResult;
+import team.blackjack.controler.dto.ScoreResult;
 import team.blackjack.domain.BlackjackGame;
 import team.blackjack.domain.Card;
 import team.blackjack.domain.Dealer;
 import team.blackjack.domain.Deck;
 import team.blackjack.domain.Hand;
 import team.blackjack.domain.Player;
+import team.blackjack.domain.Result;
 import team.blackjack.domain.rule.DefaultBlackjackRule;
 
 public class BlackJackService {
@@ -51,25 +57,20 @@ public class BlackJackService {
         return this.blackjackGame;
     }
 
-    public void draw(BlackjackGame blackjackGame, Player player) {
-        final Deck deck = blackjackGame.getDeck();
-        final Card drawedCard = deck.draw();
-        player.getHands().getFirst().addCard(drawedCard);
+    public void hitPlayer(Player player) {
+        player.hit(blackjackGame.getDeck().draw());
     }
 
     public boolean shouldDealerHit() {
-        final Dealer dealer = blackjackGame.getDealer();
-        final Hand hand = dealer.getHand();
-        final int score = calculateSum(hand.getCards());
+        final int score = blackjackGame.getDealer().getScore();
 
         return DefaultBlackjackRule.isDealerMustDraw(score);
     }
 
-    public int hitDealer() {
-        Dealer dealer = blackjackGame.getDealer();
-        Hand hand = dealer.getHand();
-        hand.addCard(dealer.draw(blackjackGame.getDeck()));
-        return calculateSum(hand.getCards());
+    public void hitDealer() {
+        final Dealer dealer = blackjackGame.getDealer();
+
+        dealer.hit(blackjackGame.getDeck().draw());
     }
 
     public ScoreResult calculateAllParticipantScore() {
@@ -86,8 +87,8 @@ public class BlackJackService {
         final Map<String, Integer> playerScores = blackjackGame.getPlayers().stream()
                 .collect(Collectors.toMap(
                         Player::getName,
-                        player -> calculateSum(player.getHands().getFirst().getCards())
-                ));
+                        Player::getScore)
+                );
 
         final Dealer dealer = blackjackGame.getDealer();
         final int dealerScore = calculateSum(dealer.getHand().getCards());
@@ -138,12 +139,34 @@ public class BlackJackService {
                 .sum();
     }
 
-    private boolean existAceInCards(List<Card> cards) {
-        for (Card card : cards) {
-            if (card.isAce()) {
-                return true;
-            }
+    public GameResult getGameResult() {
+        final Map<String, PlayerResult> playerResults = calculatePlayersResultMap(getDealerScore());
+        final DealerResult dealerResult = calculateDealerResult(playerResults);
+
+        return new GameResult(dealerResult, playerResults);
+    }
+
+    private int getDealerScore(){
+        return blackjackGame.getDealer().getScore();
+    }
+
+    private Map<String, PlayerResult> calculatePlayersResultMap(int dealerScore) {
+        return blackjackGame.getPlayers().stream()
+                .collect(Collectors.toMap(
+                        Player::getName,
+                        player -> new PlayerResult(DefaultBlackjackRule.judgeResult(player.getScore(), dealerScore)),
+                        (existing, replacement) -> existing,
+                        LinkedHashMap::new
+                ));
+    }
+
+    private DealerResult calculateDealerResult(Map<String, PlayerResult> playerResults) {
+        final List<Result> dealerResults = new ArrayList<>();
+
+        for (PlayerResult playerResult : playerResults.values()) {
+            dealerResults.add(playerResult.result().reverse());
         }
-        return false;
+
+        return new DealerResult(dealerResults);
     }
 }
