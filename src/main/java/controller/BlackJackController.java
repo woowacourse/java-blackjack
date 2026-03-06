@@ -29,7 +29,6 @@ public class BlackJackController {
         this.blackJackResultService = blackJackResultService;
     }
 
-    // todo: 리팩토링
     public void run() {
         List<String> names = InputView.askPlayerNames();
 
@@ -37,6 +36,19 @@ public class BlackJackController {
         List<Player> players = blackJackInitService.createPlayers(names, deck);
         Dealer dealer = blackJackInitService.createDealer(deck);
 
+        playGame(deck, dealer, players);
+        printResult(dealer, players);
+    }
+
+    private void printResult(Dealer dealer, List<Player> players){
+        ScoreResultDto scoreResultDto = blackJackResultService.createScoreResultDto(dealer, players);
+        OutputView.printScoreResult(scoreResultDto);
+
+        FinalResultDto finalResultDto = blackJackResultService.createFinalResultDto(dealer, players);
+        OutputView.printFinalResult(finalResultDto);
+    }
+
+    private void playGame(Deck deck, Dealer dealer, List<Player> players){
         BlackJackInitStatusDto blackJackInitStatusDto = blackJackInitService.createInitStatusDto(dealer, players);
         OutputView.printInitMessage(blackJackInitStatusDto);
 
@@ -44,12 +56,6 @@ public class BlackJackController {
             drawPlayerCard(player, deck);
         }
         drawDealerCard(dealer, deck);
-
-        ScoreResultDto scoreResultDto = blackJackResultService.createScoreResultDto(dealer, players);
-        OutputView.printScoreResult(scoreResultDto);
-
-        FinalResultDto finalResultDto = blackJackResultService.createFinalResultDto(dealer, players);
-        OutputView.printFinalResult(finalResultDto);
     }
 
     // todo: depth 2 해결
@@ -65,12 +71,10 @@ public class BlackJackController {
             blackJackTurnService.playerHit(player, deck);
             BlackJackHandDto blackJackHandDto = blackJackTurnService.createHandDto(player);
             OutputView.printHandOutput(blackJackHandDto);
-
             // 합이 21 넘어가면 바로 입력받기 종료
-            if (!blackJackTurnService.canPlayerHit(player, "y")) {
+            if (!blackJackTurnService.isPlayerUnder21(player)) {
                 break;
             }
-
             YesNoInput = InputView.askPlayerCommand(player.getName());
         }
     }
