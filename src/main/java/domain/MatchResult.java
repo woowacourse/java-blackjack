@@ -15,4 +15,10 @@ public enum MatchResult {
     public String getValue() {
         return value;
     }
+
+    public MatchResult exchange() {
+        if (this == MatchResult.WIN) return MatchResult.LOSE;
+        if (this == MatchResult.LOSE) return MatchResult.WIN;
+        return MatchResult.DRAW;
+    }
 }
