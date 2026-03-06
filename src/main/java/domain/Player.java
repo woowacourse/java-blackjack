@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.List;
-
 public class Player {
     private final String name;
     private final HandCards handCards;
@@ -17,7 +15,15 @@ public class Player {
         handCards.addCard(card);
     }
 
-    public List<Card> getHandCards() {
-        return handCards.getHandCards();
+    public int getScore() {
+        return handCards.getScore();
+    }
+
+    public boolean isBust() {
+        return handCards.isBust();
+    }
+
+    public String getName() {
+        return name;
     }
 }
