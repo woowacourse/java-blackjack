@@ -40,4 +40,16 @@ class TrumpCardTest {
         boolean isAce = trumpCard.isAce();
         assertThat(isAce).isTrue();
     }
+
+    @Test
+    void 카드의_한글_이름을_반환한다() {
+        TrumpCard trumpCard = TrumpCard.of(Suit.of("하트"), Rank.of("A"));
+        assertThat(trumpCard.koreanName()).isEqualTo("하트");
+    }
+
+    @Test
+    void 카드의_랭크_이름을_반환한다() {
+        TrumpCard trumpCard = TrumpCard.of(Suit.of("하트"), Rank.of("A"));
+        assertThat(trumpCard.rankName()).isEqualTo("A");
+    }
 }
