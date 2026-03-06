@@ -33,6 +33,10 @@ public class Hand {
         return sum;
     }
 
+    public boolean isBlackJack() {
+        return hand.size() == 2 && calculateSum() == 21;
+    }
+
     public List<Card> getHand() {
         return hand;
     }

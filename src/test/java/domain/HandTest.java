@@ -51,4 +51,40 @@ class HandTest {
         }
         Assertions.assertTrue(hand.isBust());
     }
+
+    @Test
+    @DisplayName("Hand의 패가 블랙잭인지 판단한다.")
+    void 블랙잭_판단() {
+        List<Card> cards = List.of(new Card(Rank.ACE, Suit.DIAMOND), new Card(Rank.KING, Suit.HEART));
+        Hand hand = new Hand();
+        for (Card card : cards) {
+            hand.drawCard(card);
+        }
+
+        Assertions.assertTrue(hand.isBlackJack());
+    }
+
+    @Test
+    @DisplayName("3장 이상의 패로 점수 21을 만든 경우 블랙잭이 아니라고 판단한다.")
+    void 블랙잭_3장_판단() {
+        List<Card> cards = List.of(new Card(Rank.ACE, Suit.DIAMOND), new Card(Rank.EIGHT, Suit.HEART), new Card(Rank.TWO, Suit.DIAMOND));
+        Hand hand = new Hand();
+        for (Card card : cards) {
+            hand.drawCard(card);
+        }
+
+        Assertions.assertFalse(hand.isBlackJack());
+    }
+
+    @Test
+    @DisplayName("Ace가 Hand에 있지만 점수가 21이 되지 않는 경우 블랙잭이 아니라고 판단한다.")
+    void 블랙잭_점수_판단() {
+        List<Card> cards = List.of(new Card(Rank.ACE, Suit.DIAMOND), new Card(Rank.EIGHT, Suit.HEART));
+        Hand hand = new Hand();
+        for (Card card : cards) {
+            hand.drawCard(card);
+        }
+
+        Assertions.assertFalse(hand.isBlackJack());
+    }
 }
