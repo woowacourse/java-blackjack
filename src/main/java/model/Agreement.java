@@ -1,5 +1,7 @@
 package model;
 
+import constant.ErrorMessage;
+
 public class Agreement {
     private final boolean value;
 
@@ -19,13 +21,13 @@ public class Agreement {
 
     private void validateEmptyValue(String value) {
         if(value.isBlank()) {
-            throw new IllegalArgumentException("빈 값을 입력하셨습니다.");
+            throw new IllegalArgumentException(ErrorMessage.INPUT_IS_BLANK.getMessage());
         }
     }
 
     private void validatePossibleValue(String value) {
         if(!value.equals("y") && !value.equals("n")) {
-            throw new IllegalArgumentException("유효한 형식의 입력으로 넣어주세요(y 또는 n)");
+            throw new IllegalArgumentException(ErrorMessage.INVALID_CONDITION_INPUT.getMessage());
         }
     }
 }

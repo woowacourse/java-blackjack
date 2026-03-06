@@ -1,5 +1,8 @@
 package model;
 
+import constant.ErrorMessage;
+import model.dto.PlayerName;
+
 public class Player extends Participant {
 
     public Player(PlayerName name) {
@@ -9,7 +12,7 @@ public class Player extends Participant {
 
     private void validate(PlayerName name) {
         if(name.get().equals("딜러")) {
-            throw new IllegalArgumentException("플레이어는 '딜러'라는 이름을 가질 수 없습니다.");
+            throw new IllegalArgumentException(ErrorMessage.NO_PLAYER_NAME_DEALER.getMessage());
         }
     }
 

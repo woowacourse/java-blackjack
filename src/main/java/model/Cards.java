@@ -1,5 +1,6 @@
 package model;
 
+import constant.ErrorMessage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -16,7 +17,7 @@ public class Cards {
 
     public Card draw() {
         if(cards.isEmpty()) {
-            throw new IllegalArgumentException("카드 뭉치에 더 이상 남아있는 카드가 없습니다.");
+            throw new IllegalArgumentException(ErrorMessage.NO_CARD_IN_DECK.getMessage());
         }
         return cards.removeFirst();
     }

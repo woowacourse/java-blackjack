@@ -1,5 +1,6 @@
 package model;
 
+import constant.ErrorMessage;
 import java.util.List;
 
 public class Players {
@@ -13,7 +14,7 @@ public class Players {
 
     private void validate(List<Player> players) {
         if(players.stream().distinct().toList().size() != players.size()) {
-            throw new IllegalArgumentException("중복된 이름이 있습니다.");
+            throw new IllegalArgumentException(ErrorMessage.DUPLICATED_NAME.getMessage());
         }
     }
 

@@ -1,11 +1,12 @@
 package controller;
 
+import constant.ErrorMessage;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import model.Agreement;
 import model.Player;
-import model.PlayerName;
+import model.dto.PlayerName;
 import model.Players;
 import view.InputView;
 
@@ -29,6 +30,11 @@ public class InputController {
     }
 
     private String getInput() {
-        return scanner.nextLine();
+        String input = scanner.nextLine();
+
+        if(input.isBlank()) {
+            throw new IllegalArgumentException(ErrorMessage.INPUT_IS_BLANK.getMessage());
+        }
+        return input;
     }
 }
