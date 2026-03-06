@@ -3,10 +3,10 @@ import domain.Card;
 import domain.Dealer;
 import domain.GameResult;
 import domain.User;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import service.GameService;
 
 import java.util.List;
 
@@ -24,18 +24,14 @@ class GameServiceTest {
     @Test
     @DisplayName("일반 카드들의 합산 점수를 계산한다")
     void calculateBasicScore() {
-        //given, when
         int score = gameService.calculateScore(List.of(Card.CLUB_FIVE,Card.CLUB_NINE,Card.CLUB_THREE));
-        //then
         assertThat(score).isEqualTo(17);
     }
 
     @Test
     @DisplayName("페이스 카드가 포함된 점수를 계산한다")
     void calculate_ace_as_eleven() {
-        // given, when
         int score = gameService.calculateScore(List.of(Card.CLUB_ACE, Card.CLUB_JACK, Card.CLUB_QUEEN, Card.CLUB_KING));
-        //then
         assertThat(score).isEqualTo(31);
     }
 

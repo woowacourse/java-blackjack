@@ -1,3 +1,5 @@
+package view;
+
 import domain.Card;
 import domain.Dealer;
 import domain.User;
@@ -48,11 +50,6 @@ public class OutputView {
         }
     }
 
-    /**
-     * 딜러: 1승 1패
-     * pobi: 승
-     * jason: 패
-     */
     public void printGameRecord(List<User> users, Dealer dealer) {
         System.out.println('\n' + "## 최종 승패");
         StringJoiner sj = new StringJoiner(" ");
@@ -62,7 +59,7 @@ public class OutputView {
         if (dealer.getDrawRounds() > 0) sj.add(dealer.getDrawRounds() + "무");
 
         if (sj.length() > 0) {
-            System.out.println("딜러: " + sj.toString());
+            System.out.println("딜러: " + sj);
             for(User user : users) {
                 System.out.println(user.getName()+": " + user.getGameResult().getName());
             }

@@ -26,4 +26,3 @@ public class CardDeck {
         return Collections.unmodifiableList(cards);
     }
 }
-

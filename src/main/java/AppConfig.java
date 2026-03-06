@@ -1,3 +1,7 @@
+import controller.GameController;
+import service.GameService;
+import view.InputView;
+import view.OutputView;
 
 public class AppConfig {
 

@@ -1,3 +1,5 @@
+package util;
+
 import domain.User;
 
 import java.util.Arrays;
