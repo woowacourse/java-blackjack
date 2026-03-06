@@ -19,9 +19,10 @@ public class Hand {
         for(Card card : cards) {
             totalPoint += card.getCardPoint();
         }
-
-        while(getAceCount() > 0 && totalPoint > 21) {
+        int aceCount = getAceCount();
+        while(aceCount > 0 && totalPoint > 21) {
             totalPoint -= 10;
+            aceCount--;
         }
 
         return totalPoint;
