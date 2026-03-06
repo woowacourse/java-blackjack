@@ -12,6 +12,8 @@ public class InputParser {
                 throw new IllegalArgumentException("[ERROR] 플레이어 이름은 공백이 될 수 없습니다.");
             }
         }
-        return List.of(names);
+        return List.of(names).stream()
+                .map(String::trim)
+                .toList();
     }
 }
