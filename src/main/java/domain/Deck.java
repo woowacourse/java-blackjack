@@ -14,4 +14,8 @@ public class Deck {
 
         cards.shuffle();
     }
+
+    public Card pull(){
+        return cards.pull();
+    }
 }

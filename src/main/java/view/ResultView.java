@@ -18,6 +18,15 @@ public class ResultView {
             System.out.println(player.getName() + "카드: " + player);
 
         }
-
     }
+
+    public void printDealerHitStand(boolean value){
+        if(value){
+            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+            return;
+        }
+        System.out.println("딜러는 17이상이라 카드를 받지 않았습니다.");
+    }
+
+
 }

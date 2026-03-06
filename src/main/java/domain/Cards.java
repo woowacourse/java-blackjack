@@ -50,6 +50,10 @@ public class Cards {
         return false;
     }
 
+    public Card pull(){
+        return cards.removeFirst();
+    }
+
     @Override
     public String toString() {
         return cards.stream()

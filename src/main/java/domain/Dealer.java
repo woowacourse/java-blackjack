@@ -11,6 +11,11 @@ public class Dealer {
         cards.add(card);
     }
 
+    public boolean shouldGetMoreCard(){
+        int result = cards.getTotalSum();
+        return result <= 16;
+    }
+
     @Override
     public String toString() {
         return cards.toString();
