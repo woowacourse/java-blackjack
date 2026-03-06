@@ -7,14 +7,16 @@ import blackjack.dto.PlayerScoreDto;
 import blackjack.dto.ResultDto;
 import blackjack.model.BlackjackResult;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
+    private static final String DELIMITER = ", ";
+
     public void printInitialDeal(List<CardDto> dealerCards, List<PlayerDto> players) {
-        List<String> playerNames = players.stream()
+        String joinedPlayerNames = players.stream()
                 .map(PlayerDto::playerName)
-                .toList();
-        String joinedPlayerNames = String.join(", ", playerNames);
+                .collect(Collectors.joining(DELIMITER));
         System.out.println("딜러와 " + joinedPlayerNames + "에게 2장을 나누었습니다.");
 
         printDealerCards(dealerCards);
@@ -26,7 +28,7 @@ public class OutputView {
 
     public void printPlayerCards(String playerName, List<CardDto> cards) {
         List<String> cardOutputs = parseCardsToOutputs(cards);
-        String joinedCards = String.join(", ", cardOutputs);
+        String joinedCards = String.join(DELIMITER, cardOutputs);
 
         System.out.println(playerName + "카드: " + joinedCards);
     }
@@ -55,7 +57,7 @@ public class OutputView {
 
     private void printPlayerScore(String playerName, List<CardDto> cards, int score) {
         List<String> cardOutputs = parseCardsToOutputs(cards);
-        String joinedCards = String.join(", ", cardOutputs);
+        String joinedCards = String.join(DELIMITER, cardOutputs);
 
         System.out.println(playerName + "카드: " + joinedCards + " - 결과: " + score);
     }
@@ -70,7 +72,8 @@ public class OutputView {
                 .filter(resultDto -> resultDto.result() == BlackjackResult.LOSE)
                 .count();
         int playerCount = resultDtos.size();
-        System.out.println("딜러: " + dealerWinCount + "승 " + dealerLoseCount + "패 " + (playerCount - dealerLoseCount - dealerWinCount) + "무");
+        System.out.println("딜러: " + dealerWinCount + "승 " + dealerLoseCount + "패 " + (playerCount - dealerLoseCount
+                - dealerWinCount) + "무");
 
         resultDtos.forEach(this::printResult);
     }
