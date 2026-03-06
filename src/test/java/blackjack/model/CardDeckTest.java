@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 class CardDeckTest {
 
-    PickStrategy mockStrategy = cards -> new Card(Rank.ACE, Suit.CLOVER);
+    PickStrategy mockStrategy = cards -> Card.opened(Rank.ACE, Suit.CLOVER);
 
     @Test
     @DisplayName("카드 덱을 생성한다.")

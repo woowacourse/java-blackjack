@@ -1,8 +1,6 @@
 package blackjack.model;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Dealer {
     private static final int PICK_THRESHOLD = 16;
@@ -22,9 +20,13 @@ public class Dealer {
         return new Dealer(Hands.empty());
     }
 
-    //카드 덱에서 카드를 한 장 뽑아서 핸즈에 추가한다.
-    public void pickCard(CardDeck cardDeck) {
-        hands.addCards(cardDeck.draw(1));
+    // 딜러가 초기 2장의 카드를 받는다.
+    public void pickInitCards(CardDeck cardDeck) {
+        hands.addCard(cardDeck.pick());
+
+        Card secondPickedCard = cardDeck.pick();
+        secondPickedCard.flip();
+        hands.addCard(secondPickedCard);
     }
 
     // 16점을 초과하면 false를 반환한다.
@@ -35,12 +37,6 @@ public class Dealer {
     //핸즈의 총 점수가 21 초과이면 true를 반환한다.
     public boolean isBust() {
         return hands.isTotalScoreOver(BLACKJACK_SCORE);
-    }
-
-    // 전체 결과 비교
-    public TotalResult computeResult(List<Player> players) {
-        Map<Player, Result> playerResults = new HashMap<>();
-        return null;
     }
 
     // 플레이어와 딜러의 숫자를 비교한다.
@@ -69,19 +65,21 @@ public class Dealer {
         return Result.DRAW;
     }
 
-    public Hands getHands() {
-        return hands;
+    // 패에서 앞 면인 카드만 가져온다.
+    public List<Card> getOpenedCards() {
+        return hands.getOpenedCards();
     }
 
-    public List<Card> getCards(int count) {
-        return hands.getCards(count);
-    }
-
+    // 모든 카드를 가져온다.
     public List<Card> getAllCard() {
         return hands.getAllCard();
     }
 
     public int getCurrentTotalScore() {
         return hands.calculateTotalScore();
+    }
+
+    public void pickAdditionalCard(CardDeck cardDeck) {
+        hands.addCard(cardDeck.pick());
     }
 }
