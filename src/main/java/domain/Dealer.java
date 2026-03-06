@@ -30,7 +30,7 @@ public class Dealer {
         return DEALER_NAME;
     }
 
-    public List<Card> getHand() {
-        return hand.getHand();
+    public Hand getHand() {
+        return hand;
     }
 }

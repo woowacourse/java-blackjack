@@ -27,7 +27,7 @@ public class Hand {
         return hand.size();
     }
 
-    public List<Card> getHand() {
+    public List<Card> getNowHand() {
         return Collections.unmodifiableList(hand);
     }
 

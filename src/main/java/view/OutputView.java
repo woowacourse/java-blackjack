@@ -2,7 +2,6 @@ package view;
 
 import domain.*;
 
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -37,17 +36,13 @@ public class OutputView {
         for (Player player : players.getPlayers()) {
             holdingCardMessage(player);
             System.out.println();
-//            System.out.println(player + "카드: " +
-//                    player.getHand().stream()
-//                            .map(card -> card.getCardScore() + card.getCardShape())
-//                            .collect(Collectors.joining(", ")));
         }
     }
 
     public static void scoreStatisticsMessage(Dealer dealer, Players players) {
         System.out.print(dealer.getName() + "카드: ");
         System.out.println(
-                dealer.getHand().stream()
+                dealer.getHand().getNowHand().stream()
                         .map(card -> card.getCardScore() + card.getCardShape())
                         .collect(Collectors.joining(", "))
         );
@@ -72,7 +67,7 @@ public class OutputView {
 
     public static void holdingCardMessage(Player player) {
         System.out.print(player + "카드: " +
-                player.getHand().stream()
+                player.getHand().getNowHand().stream()
                         .map(card -> card.getCardScore() + card.getCardShape())
                         .collect(Collectors.joining(", ")));
     }

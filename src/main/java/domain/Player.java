@@ -27,7 +27,7 @@ public class Player {
         return name;
     }
 
-    public List<Card> getHand() {
-        return hand.getHand();
+    public Hand getHand() {
+        return hand;
     }
 }
