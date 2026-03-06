@@ -1,6 +1,6 @@
 package domain;
 
-import domain.model.Player;
+import domain.model.*;
 import domain.service.CardDistributor;
 import domain.service.CardFactory;
 import org.junit.jupiter.api.Test;
@@ -49,12 +49,18 @@ public class PlayerTest {
     @Test
     void 플레이어_덱_합산_테스트() {
         // given
-        Player phobi = Player.of("phobi");
-        Player jason = Player.of("jason");
-        List<Player> players = List.of(phobi, jason);
-        cardDistributor.initialize(players);
+        Player player = Player.of("phobi");
+        List<Card> cards1 = List.of(
+                Card.of(CardRank.TWO, CardShape.HEART),
+                Card.of(CardRank.THREE, CardShape.CLUB),
+                Card.of(CardRank.FOUR, CardShape.DIAMOND)
+        );
+        Deck deck1 = Deck.of(cards1);
 
         // when
-        cardDistributor.distributeAdditionalCard(phobi);
+        player.assignDeck(deck1);
+
+        // then
+        assertThat(player.getDeckSum()).isEqualTo(9);
     }
 }
