@@ -1,7 +1,9 @@
 package service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 
+import constant.BlackjackConstant;
 import domain.Card;
 import domain.CardDeck;
 import domain.CardRank;
@@ -50,13 +52,21 @@ class BlackjackServiceTest {
         Participants participants = initParticipants();
 
         // when
-        DealerFinalResult dealerFinalResult = blackjackService.getDealerFinalResult(participants.getDealer(),
+        List<FinalResult> finalResults = blackjackService.getFinalResults(participants.getDealer(),
                 participants.getPlayers());
 
         // then
-        assertThat(dealerFinalResult.win()).isEqualTo(1);
-        assertThat(dealerFinalResult.draw()).isEqualTo(0);
-        assertThat(dealerFinalResult.lose()).isEqualTo(1);
+        assertThat(finalResults).extracting(
+                FinalResult::name,
+                FinalResult::win,
+                FinalResult::draw,
+                FinalResult::lose,
+                FinalResult::isDealer
+        ).containsExactlyInAnyOrder(
+                tuple(BlackjackConstant.DEALER_NAME, 1, 0, 1, true),
+                tuple("포비", 1, 0, 0, false),
+                tuple("제이슨", 0, 0, 1, false)
+        );
     }
 
     private static Participants initParticipants() {

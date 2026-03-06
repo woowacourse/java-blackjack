@@ -28,28 +28,44 @@ public class BlackjackService {
         return cards;
     }
 
-    public DealerFinalResult getDealerFinalResult(Participant dealer, List<Participant> players) {
+    public List<FinalResult> getFinalResults(Participant dealer, List<Participant> players) {
+
+        List<FinalResult> finalResults = new ArrayList<>();
 
         int dealerScore = dealer.getScore();
 
-        int winCount = 0;
-        int drawCount = 0;
-        int loseCount = 0;
+        int dealerWinCount = 0;
+        int dealerDrawCount = 0;
+        int dealerLoseCount = 0;
         for (Participant player : players) {
             int playerScore = player.getScore();
-            if (player.isBust() || (!dealer.isBust() && dealerScore > playerScore)) {
-                winCount++;
+
+            // 딜러 승
+            if (player.isBust()
+                    || (!dealer.isBust() && dealerScore > playerScore)
+                    || (dealer.isBlackjack() && !player.isBlackjack())) {
+                dealerWinCount++;
+                finalResults.add(new FinalResult(player.getName(), 0, 0, 1, false));
                 continue;
             }
 
-            if (!dealer.isBust() && dealerScore == playerScore) {
-                drawCount++;
+            // 무승부
+            if (!dealer.isBust()
+                    && (dealerScore == playerScore)
+                    && ((player.isBlackjack() && dealer.isBlackjack())
+                    || (!player.isBlackjack() && !dealer.isBlackjack()))) {
+                dealerDrawCount++;
+                finalResults.add(new FinalResult(player.getName(), 0, 1, 0, false));
                 continue;
             }
 
-            loseCount++;
+            // 딜러 패배
+            dealerLoseCount++;
+            finalResults.add(new FinalResult(player.getName(), 1, 0, 0, false));
         }
-
-        return new DealerFinalResult(winCount, drawCount, loseCount);
+        finalResults.add(
+                new FinalResult(dealer.getName(), dealerWinCount, dealerDrawCount, dealerLoseCount, true));
+        return finalResults;
     }
+
 }
