@@ -21,6 +21,7 @@ public class BlackJackService {
     private ResultInfo calculateWinDefeatDraw(Dealer dealer, Player player) {
         Integer dealerTotalScore = dealer.getTotalCardScore();
         Integer playerTotalScore = player.getTotalCardScore();
+        if(dealerTotalScore>BLACKJACK_LIMIT_NUMBER) return ResultInfo.WIN;
         if (playerTotalScore > BLACKJACK_LIMIT_NUMBER) return ResultInfo.DEFEAT;
         if (dealerTotalScore < playerTotalScore) return ResultInfo.WIN;
         if (dealerTotalScore > playerTotalScore) return ResultInfo.DEFEAT;
