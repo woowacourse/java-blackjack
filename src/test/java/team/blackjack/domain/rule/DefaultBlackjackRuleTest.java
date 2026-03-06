@@ -3,7 +3,7 @@ package team.blackjack.domain.rule;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import team.blackjack.domain.rule.DefaultBlackjackRule;
+import team.blackjack.domain.Card;
 
 class DefaultBlackjackRuleTest {
     private static final DefaultBlackjackRule defaultBlackjackRule = new DefaultBlackjackRule();

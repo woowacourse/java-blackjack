@@ -12,7 +12,6 @@ public class Deck {
         this.cards = Arrays.stream(Card.values())
                 .collect(Collectors.toList());
 
-        // 카드 섞기
         Collections.shuffle(this.cards);
     }
 

@@ -3,11 +3,11 @@ package team.blackjack.view;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import team.blackjack.controler.dto.DrawResult;
-import team.blackjack.controler.dto.GameResult;
-import team.blackjack.controler.dto.GameResult.DealerResult;
-import team.blackjack.controler.dto.GameResult.PlayerResult;
-import team.blackjack.controler.dto.ScoreResult;
+import team.blackjack.service.dto.DrawResult;
+import team.blackjack.service.dto.GameResult;
+import team.blackjack.service.dto.GameResult.DealerResult;
+import team.blackjack.service.dto.GameResult.PlayerResult;
+import team.blackjack.service.dto.ScoreResult;
 import team.blackjack.domain.Result;
 
 public class OutputView {
@@ -53,8 +53,6 @@ public class OutputView {
     public static void printParticipantScoreResult(ScoreResult scoreResult) {
         println("딜러의 최종 카드: %s - 결과: %d".formatted(String.join(", ", scoreResult.dealerCard()), scoreResult.dealerScore()));
         for (String playerName : scoreResult.playerNames()) {
-            //pobi카드: 2하트, 8스페이드, A클로버 - 결과: 21
-
             println("%s의 카드: %s - 결과: %d".formatted(playerName,
                     String.join(", ", scoreResult.playerCards().get(playerName)),
                     scoreResult.playerScores().get(playerName)));
@@ -77,5 +75,9 @@ public class OutputView {
                  .map(entry -> "%s: %s".formatted(entry.getKey(), entry.getValue().result().getName()))
                  .forEach(OutputView::println);
 
+    }
+
+    public static void printBustMessage() {
+        println("버스트 되었습니다. 더 이상 카드를 받을 수 없습니다.");
     }
 }

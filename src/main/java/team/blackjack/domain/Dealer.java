@@ -1,5 +1,7 @@
 package team.blackjack.domain;
 
+import team.blackjack.domain.rule.DefaultBlackjackRule;
+
 public class Dealer {
 
     private final Hand hand;
@@ -14,5 +16,13 @@ public class Dealer {
 
     public Hand getHand() {
         return this.hand;
+    }
+
+    public int getScore(){
+        return DefaultBlackjackRule.calculateBestScore(this.getHand().getCards());
+    }
+
+    public void hit(Card card) {
+        this.hand.addCard(card);
     }
 }
