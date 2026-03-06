@@ -14,18 +14,22 @@ public class Deck {
         this.cards = cards;
     }
 
-    public static List<Card> prepareCards() {
+    public static List<Card> createDeck() {
         List<Card> cards = new ArrayList<>();
 
         for (Rank rank : Rank.values()) {
-            for (Suit suit : Suit.values()) {
-                Card card = new Card(rank, suit);
-                cards.add(card);
-            }
+            createBySuit(rank, cards);
         }
         Collections.shuffle(cards);
 
         return cards;
+    }
+
+    private static void createBySuit(Rank rank, List<Card> cards) {
+        for (Suit suit : Suit.values()) {
+            Card card = new Card(rank, suit);
+            cards.add(card);
+        }
     }
 
     public int size(){

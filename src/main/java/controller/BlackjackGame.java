@@ -23,7 +23,7 @@ public class BlackjackGame {
         Players players = new Players(parsedName);
         Dealer dealer = new Dealer();
 
-        List<Card> cards = Deck.prepareCards();
+        List<Card> cards = Deck.createDeck();
         Deck deck = new Deck(cards);
 
         playGame(players, dealer, deck);
