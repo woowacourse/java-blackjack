@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Dealer {
     private Cards drawnCards;
@@ -13,6 +14,14 @@ public class Dealer {
 
     public Cards getDrawnCards() {
         return drawnCards;
+    }
+
+    public List<String> getCardNames() {
+        return drawnCards.getCardNames();
+    }
+
+    public int getAdditionalDrawnCardCount() {
+        return drawnCards.getCardNames().size() - 2;
     }
 
     public boolean isBust() {
