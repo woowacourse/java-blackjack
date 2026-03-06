@@ -17,6 +17,6 @@ public class Players  implements Iterable<Player> {
     }
 
     public boolean isAllPlayerBurst() {
-        return players.stream().allMatch((player) -> player.isBust());
+        return players.stream().allMatch(Player::isBust);
     }
 }

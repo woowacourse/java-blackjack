@@ -1,11 +1,11 @@
 package view;
 
 import constant.GameConstant;
-import domain.BlackjackResult;
+import domain.Card;
+import domain.MatchCase;
 import domain.dto.BlackjackResultDto;
 import domain.dto.CardContentDto;
 import domain.dto.FinalCardDto;
-import domain.Card;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,15 +55,11 @@ public final class OutputView {
     }
 
     public static void displayMatchResult(BlackjackResultDto resultDto) {
-        System.out.printf("## 최종 승패\n딜러: %d승 %d패\n",resultDto.winCount(),resultDto.loseCount());
-        Map<String, Boolean> result = resultDto.matchResultMap();
-        for (String playerName : result.keySet()){
-            String korResult = "패";
-            if (result.get(playerName)){
-                korResult="승";
-            }
-            System.out.printf("%s: %s\n",playerName,korResult);
+        System.out.printf("## 최종 승패\n딜러: %d승 %d패\n", resultDto.winCount(), resultDto.loseCount());
+        Map<String, MatchCase> resultMap = resultDto.matchResultMap();
+        for (String playerName : resultMap.keySet()) {
+            String korResult = resultMap.get(playerName).getKorResult();
+            System.out.printf("%s: %s\n", playerName, korResult);
         }
-
     }
 }

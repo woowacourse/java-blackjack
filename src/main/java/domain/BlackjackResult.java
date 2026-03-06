@@ -15,6 +15,14 @@ public class BlackjackResult {
         calculateMatchResult(dealer, players);
     }
 
+    private static boolean isPlayerLose(Player player, boolean dealerBurst, int dealerTotal) {
+        return player.isBust() || (!dealerBurst && player.getFinalResult() < dealerTotal);
+    }
+
+    public static BlackjackResult from(Dealer dealer, Players players) {
+        return new BlackjackResult(dealer, players);
+    }
+
     private void calculateMatchResult(Dealer dealer, Players players) {
         boolean dealerBurst = dealer.isBust();
         int dealerTotal = dealer.getFinalResult();
@@ -24,19 +32,39 @@ public class BlackjackResult {
         }
     }
 
-    private void determinePlayerResult(Player player, boolean dealerBurst, int dealerTotal) {
-        if (player.isBust() || (!dealerBurst && player.getFinalResult() < dealerTotal)) {
-            addMatchResult(player.getName(), MatchCase.WIN);
+    private void determinePlayerResult(Player player, boolean dealerBust, int dealerTotal) {
+        if (isPlayerLose(player, dealerBust, dealerTotal)) {
+            addMatchResult(player.getName(), MatchCase.LOSE);
+            return;
         }
-        addMatchResult(player.getName(), MatchCase.LOSE);
+        if (isPlayerScoreEqualsDealer(player, dealerBust, dealerTotal)) {
+            addMatchResult(player.getName(), MatchCase.DRAW);
+            return;
+        }
+        addMatchResult(player.getName(), MatchCase.WIN);
     }
 
-    public static BlackjackResult from(Dealer dealer, Players players) {
-        return new BlackjackResult(dealer, players);
+    private boolean isPlayerScoreEqualsDealer(Player player, boolean dealerBust, int dealerTotal) {
+        return !(player.isBust() || dealerBust) && (player.calculateScore() == dealerTotal);
     }
 
     private void addMatchResult(String playerName, MatchCase matchCase) {
         playerWinningMap.put(playerName, matchCase);
+        increaseMatchResult(matchCase);
+    }
+
+    private void increaseMatchResult(MatchCase matchCase) {
+        if (matchCase == MatchCase.WIN) {
+            loseCount++;
+            return;
+        }
+
+        if (matchCase == MatchCase.DRAW) {
+            drawCount++;
+            return;
+        }
+
+        winningCount++;
     }
 
     public BlackjackResultDto toResultDto() {
