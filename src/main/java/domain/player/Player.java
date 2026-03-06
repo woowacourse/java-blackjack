@@ -32,9 +32,9 @@ public class Player {
         return cardBundle.addUp(newCardBundle);
     }
 
-//    public void addCard(Card newCard) {
-//        cardBundle.addUp(newCard);
-//    }
+    public int getResultScore() {
+        return cardBundle.getResultScore();
+    }
 
     public String toDisplayMyName() {
         return name.name();

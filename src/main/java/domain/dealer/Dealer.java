@@ -61,6 +61,10 @@ public class Dealer {
         return cardDeck.giveCard();
     }
 
+    public int getResultScore() {
+        return cardBundle.getResultScore();
+    }
+
     public String toDisplayMyName() {
         return "딜러";
     }
