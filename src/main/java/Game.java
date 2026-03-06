@@ -1,3 +1,7 @@
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class Game {
 
     private final CardDistributor cardDistributor;
@@ -10,6 +14,29 @@ public class Game {
         while (!dealer.isDealerDone()) {
             cardDistributor.distributeCardToDealer(dealer);
         }
+    }
+
+    public GameResult judgeTotalGameResult(List<Player> players, Dealer dealer) {
+        Map<ScoreCompareResult, Integer> dealerResult = new HashMap<>();
+        Map<Player, ScoreCompareResult> playerResults = new HashMap<>();
+        for (Player player : players) {
+            if (compareScore(player, dealer).equals(ScoreCompareResult.PLAYER_WIN)) {
+                dealerResult.put(ScoreCompareResult.DEALER_LOSS,
+                        dealerResult.getOrDefault(ScoreCompareResult.DEALER_LOSS, 0) + 1);
+                playerResults.put(player, ScoreCompareResult.PLAYER_WIN);
+            }
+            if (compareScore(player, dealer).equals(ScoreCompareResult.DEALER_WIN)) {
+                dealerResult.put(ScoreCompareResult.DEALER_WIN,
+                        dealerResult.getOrDefault(ScoreCompareResult.DEALER_WIN, 0) + 1);
+                playerResults.put(player, ScoreCompareResult.PLAYER_LOSS);
+            }
+            if (compareScore(player, dealer).equals(ScoreCompareResult.PUSH)) {
+                dealerResult.put(ScoreCompareResult.PUSH,
+                        dealerResult.getOrDefault(ScoreCompareResult.PUSH, 0) + 1);
+                playerResults.put(player, ScoreCompareResult.PUSH);
+            }
+        }
+        return new GameResult(dealerResult, playerResults);
     }
 
     public ScoreCompareResult compareScore(Player player, Dealer dealer) {
