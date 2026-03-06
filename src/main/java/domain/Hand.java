@@ -45,4 +45,9 @@ public class Hand {
         }
         return false;
     }
+
+    public String getFinalDisplay() {
+        String finalDisplay = " - 결과: " + handTotalScore;
+        return finalDisplay;
+    }
 }

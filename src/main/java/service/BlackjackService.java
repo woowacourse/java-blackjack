@@ -39,6 +39,8 @@ public class BlackjackService {
         return participants.getUserCardsDisplays();
     }
 
+
+
     public String processPlayerDecision(int index) {
         participants.dealCard(deck, index);
         participants.calculateScore(index);
@@ -49,9 +51,23 @@ public class BlackjackService {
         participants.caculateDealerscore();
     }
 
-    public void determineDealToDealer() {
+    public String determineDealToDealer() {
         if (participants.determineDealerDealMore()) {
             participants.dealCardToDealer(deck.dealCard());
+            return Message.DEALER_CARD_RECEIVE_ANNOUNCE;
         }
+        return "";
+    }
+
+    public String makeDealerFinalResultDisplay() {
+        return makeDealerCardsDisplay() + participants.getDealerFinalDisplay();
+    }
+
+    public List<String> makeUserFinalResultDisplay() {
+        return participants.addScoreToUserHand();
+    }
+
+    public void calculateScore(int index) {
+        participants.calculateScore(index);
     }
 }

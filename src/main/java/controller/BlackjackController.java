@@ -29,22 +29,27 @@ public class BlackjackController {
         shuffleCards();
         readExtraCardCommand();
         dealDealerCard();
+        printFinalResult();
+    }
+
+    private void printFinalResult() {
+        outputView.printMessage(blackjackService.makeDealerFinalResultDisplay());
+        blackjackService.makeUserFinalResultDisplay().forEach(outputView::printMessage);
     }
 
     private void dealDealerCard() {
         calculateDealerScore();
-        determineDealToDealer();
+        String dealerReceivedCard = determineDealToDealer();
+        outputView.printMessage(dealerReceivedCard);
     }
 
-    private void determineDealToDealer() {
-        blackjackService.determineDealToDealer();
+    private String determineDealToDealer() {
+        return blackjackService.determineDealToDealer();
     }
 
     private void calculateDealerScore() {
         blackjackService.calculateDealerScore();
     }
-
-
 
     private void shuffleCards() {
         blackjackService.makeDeck();
@@ -96,6 +101,9 @@ public class BlackjackController {
         if (answer.equalsIgnoreCase("y")) {
             String cardDrawMessage = blackjackService.processPlayerDecision(index);
             outputView.printMessage(cardDrawMessage);
+        }
+        if (answer.equalsIgnoreCase("n")) {
+            blackjackService.calculateScore(index);
         }
     }
 

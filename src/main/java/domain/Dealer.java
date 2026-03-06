@@ -22,4 +22,8 @@ public class Dealer {
     public Boolean determineDealerDealMore() {
         return hand.determineDealerDealMore();
     }
+
+    public String getDealerFinalDisplay() {
+        return hand.getFinalDisplay();
+    }
 }

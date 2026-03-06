@@ -30,4 +30,8 @@ public class User {
     public void calculateScore() {
         hand.calculateHandScore();
     }
+
+    public String getUserFinalDisplay() {
+        return hand.getFinalDisplay();
+    }
 }

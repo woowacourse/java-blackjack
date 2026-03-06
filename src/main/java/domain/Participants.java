@@ -84,6 +84,19 @@ public class Participants {
         dealer.receiveCard(card);
         dealer.calculateScore();
     }
+
+    public String getDealerFinalDisplay() {
+        return dealer.getDealerFinalDisplay();
+    }
+
+    public List<String> addScoreToUserHand() {
+        List<String> userDisplays = new ArrayList<>();
+        for (User user : participants) {
+            String userFinalDisplay = makeOneUserCard(user) + user.getUserFinalDisplay();
+            userDisplays.add(userFinalDisplay);
+        }
+        return userDisplays;
+    }
 }
 
 
