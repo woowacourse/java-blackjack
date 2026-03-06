@@ -8,9 +8,7 @@ public class Deck {
 
     public Deck() {
         for (Suit suit : Suit.values()) {
-            for (Rank rank : Rank.values()) {
-                cards.add(new Card(rank, suit));
-            }
+            generateRank(suit);
         }
 
         Collections.shuffle(cards);
@@ -22,6 +20,12 @@ public class Deck {
         }
 
         throw new IllegalArgumentException("더 이상 카드가 존재하지 않습니다.");
+    }
+
+    private void generateRank(Suit suit) {
+        for (Rank rank : Rank.values()) {
+            cards.add(new Card(rank, suit));
+        }
     }
 
     private boolean isAvailable() {

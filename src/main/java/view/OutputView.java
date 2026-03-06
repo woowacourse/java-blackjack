@@ -72,18 +72,16 @@ public class OutputView {
     }
 
     public void showDealerResult(Map<MatchResult, Integer> dealerResult) {
-        StringBuilder result = new StringBuilder();
+        StringBuilder dealerStatistics = new StringBuilder();
 
         System.out.println("\n## 최종 승패");
 
-        result.append("딜러: ");
+        dealerStatistics.append("딜러: ");
         for (Map.Entry<MatchResult, Integer> results : dealerResult.entrySet()) {
-            if (results.getValue() != 0) {
-                result.append(String.format("%d%s ", results.getValue(), results.getKey().getValue()));
-            }
+            printDealerStatistics(results, dealerStatistics);
         }
 
-        System.out.println(result);
+        System.out.println(dealerStatistics);
     }
 
     public void showPlayerGameResult(Map<String, MatchResult> playerResults) {
@@ -109,5 +107,11 @@ public class OutputView {
 
         playerCards.delete(playerCards.length() - 2, playerCards.length());
         return playerCards;
+    }
+
+    private static void printDealerStatistics(Map.Entry<MatchResult, Integer> results, StringBuilder result) {
+        if (results.getValue() != 0) {
+            result.append(String.format("%d%s ", results.getValue(), results.getKey().getValue()));
+        }
     }
 }

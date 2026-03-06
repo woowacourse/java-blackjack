@@ -27,7 +27,6 @@ public class BlackJackController {
         Players players = readUntilValidPlayers();
 
         BlackJackService blackJackService = new BlackJackService(deck, dealer, players);
-        blackJackService.initHand();
         outputView.showInitialHands(dealer, players);
 
         playRound(deck, dealer, players);
@@ -48,9 +47,7 @@ public class BlackJackController {
 
     private void playPlayerTurn(Deck deck, Player player) {
         while (!player.getHand().isBust()) {
-            if (!inputView.readPlayerToHitUntilValid(player.getName())) {
-                break;
-            }
+            if (!inputView.readPlayerToHitUntilValid(player.getName())) break;
 
             player.hit(deck.drawCard());
             outputView.showHand(player);

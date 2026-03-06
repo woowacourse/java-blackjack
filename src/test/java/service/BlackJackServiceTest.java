@@ -23,14 +23,13 @@ class BlackJackServiceTest {
     void 게임_시작시_2장_카드() {
         Dealer dealer = new Dealer();
         Players players = new Players(List.of("pobi", "james"));
-        BlackJackService blackJackService = new BlackJackService(new Deck(), dealer, players);
 
         Assertions.assertEquals(dealer.getHand().getHand().size(), 0);
         for (Player player : players.getPlayers()) {
             Assertions.assertEquals(player.getHand().getHand().size(), 0);
         }
 
-        blackJackService.initHand();
+        BlackJackService blackJackService = new BlackJackService(new Deck(), dealer, players);
 
         Assertions.assertEquals(dealer.getHand().getHand().size(), 2);
         for (Player player : players.getPlayers()) {

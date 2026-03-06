@@ -25,9 +25,7 @@ public class Hand {
 
         for (Card card : hand) {
             sum += card.getScore();
-            if (card.isAce()) {
-                aceCount++;
-            }
+            aceCount = countAce(card, aceCount);
         }
 
         sum = handleAce(sum, aceCount);
@@ -41,6 +39,13 @@ public class Hand {
 
     public List<Card> getHand() {
         return hand;
+    }
+
+    private int countAce(Card card, int aceCount) {
+        if (card.isAce()) {
+            aceCount++;
+        }
+        return aceCount;
     }
 
     private int handleAce(int sum, int aceCount) {

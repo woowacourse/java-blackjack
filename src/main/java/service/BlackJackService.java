@@ -22,18 +22,7 @@ public class BlackJackService {
         this.deck = deck;
         this.dealer = dealer;
         this.players = players;
-    }
-
-    public void initHand() {
-        for (int i = 0; i < INIT_HAND_SIZE; i++) {
-            dealer.hit(deck.drawCard());
-        }
-
-        for (Player player : players.getPlayers()) {
-            for (int i = 0; i < INIT_HAND_SIZE; i++) {
-                player.hit(deck.drawCard());
-            }
-        }
+        initHand();
     }
 
     public Map<String, MatchResult> calculateResults() {
@@ -55,6 +44,22 @@ public class BlackJackService {
         }
 
         return dealerResult;
+    }
+
+    private void initHand() {
+        for (int i = 0; i < INIT_HAND_SIZE; i++) {
+            dealer.hit(deck.drawCard());
+        }
+
+        for (Player player : players.getPlayers()) {
+            initPlayerHand(player);
+        }
+    }
+
+    private void initPlayerHand(Player player) {
+        for (int i = 0; i < INIT_HAND_SIZE; i++) {
+            player.hit(deck.drawCard());
+        }
     }
 
     private boolean handleBust(Player player, Map<String, MatchResult> playerResults) {
@@ -86,20 +91,25 @@ public class BlackJackService {
 
     private boolean handleDraw(Player player, Map<String, MatchResult> playerResults) {
         if (player.getHand().calculateSum() == dealer.getHand().calculateSum()) {
-            if (player.getHand().isBlackJack() && !dealer.getHand().isBlackJack()) {
-                playerResults.put(player.getName(), MatchResult.WIN);
-                return true;
-            }
-            if (!player.getHand().isBlackJack() && dealer.getHand().isBlackJack()) {
-                playerResults.put(player.getName(), MatchResult.LOSE);
-                return true;
-            }
-            if (!player.getHand().isBlackJack() && !dealer.getHand().isBlackJack()) {
-                playerResults.put(player.getName(), MatchResult.DRAW);
-                return true;
-            }
+            if (handleBlackJack(player, playerResults)) return true;
         }
 
+        return false;
+    }
+
+    private boolean handleBlackJack(Player player, Map<String, MatchResult> playerResults) {
+        if (player.getHand().isBlackJack() && !dealer.getHand().isBlackJack()) {
+            playerResults.put(player.getName(), MatchResult.WIN);
+            return true;
+        }
+        if (!player.getHand().isBlackJack() && dealer.getHand().isBlackJack()) {
+            playerResults.put(player.getName(), MatchResult.LOSE);
+            return true;
+        }
+        if (!player.getHand().isBlackJack() && !dealer.getHand().isBlackJack()) {
+            playerResults.put(player.getName(), MatchResult.DRAW);
+            return true;
+        }
         return false;
     }
 }
