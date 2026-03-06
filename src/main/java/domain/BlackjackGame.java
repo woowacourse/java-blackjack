@@ -1,6 +1,5 @@
 package domain;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,4 +20,5 @@ public class BlackjackGame {
     public void registPlayer(Player player){
         players.add(player);
     }
+
 }

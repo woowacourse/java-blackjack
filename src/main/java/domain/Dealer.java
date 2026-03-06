@@ -6,4 +6,13 @@ public class Dealer {
     public Dealer() {
         this.cards = new Cards();
     }
+
+    public void add(Card card){
+        cards.add(card);
+    }
+
+    @Override
+    public String toString() {
+        return cards.toString();
+    }
 }

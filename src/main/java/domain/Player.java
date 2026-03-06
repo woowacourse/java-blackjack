@@ -14,7 +14,6 @@ public class Player {
     }
 
     public boolean isPlayerWin(int target){
-        // 버스트판정 확인??
         int sum = cards.getTotalSum();
         if(cards.decideBurst(sum)){
             return false;
@@ -24,5 +23,10 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return cards.toString();
     }
 }

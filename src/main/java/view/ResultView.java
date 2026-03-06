@@ -9,8 +9,15 @@ public class ResultView {
     public void printparticipantsCards(List<Player> players, Dealer dealer) {
         String collect = players.stream()
                 .map(Player::getName)
-                .collect(Collectors.joining(","));
+                .collect(Collectors.joining(", "));
 
         System.out.println("딜러와 " + collect + "에게 2장을 나누었습니다.");
+
+        System.out.println("딜러카드: " + dealer);
+        for (Player player : players) {
+            System.out.println(player.getName() + "카드: " + player);
+
+        }
+
     }
 }

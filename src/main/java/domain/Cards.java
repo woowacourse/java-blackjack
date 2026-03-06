@@ -3,6 +3,7 @@ package domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Cards {
     private List<Card> cards;
@@ -49,4 +50,10 @@ public class Cards {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return cards.stream()
+                .map(card -> card.toString())
+                .collect(Collectors.joining(", "));
+    }
 }
