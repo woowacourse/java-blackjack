@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Gamblers {
     private final List<Gambler> gamblers;
@@ -18,8 +19,9 @@ public class Gamblers {
     public Gamblers(List<String> names) {
         validateNonDuplicate(names);
 
-        gamblers = new ArrayList<>();
-        init(names);
+        gamblers = names.stream()
+                .map(Gambler::new)
+                .collect(Collectors.toList());
     }
 
     private void validateNonDuplicate(List<String> names) {
@@ -27,10 +29,6 @@ public class Gamblers {
         if (namesSet.size() != names.size()) {
             throw new BlackjackException(ExceptionMessage.INPUT_ERROR);
         }
-    }
-
-    private void init(List<String> names) {
-        names.stream().map(Gambler::new).forEach(gamblers::add);
     }
 
     public List<Gambler> getGamblers() {
@@ -60,10 +58,14 @@ public class Gamblers {
     }
 
     public List<String> getNames() {
-        return gamblers.stream().map(Gambler::getName).toList();
+        return gamblers.stream()
+                .map(Gambler::getName)
+                .toList();
     }
 
     public List<CardInfo> gamblerCardInfos() {
-        return gamblers.stream().map(Gambler::getCardInfo).toList();
+        return gamblers.stream()
+                .map(Gambler::getCardInfo)
+                .toList();
     }
 }

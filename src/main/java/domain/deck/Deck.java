@@ -15,17 +15,19 @@ public class Deck implements CardDeck {
     private int index;
 
     public Deck() {
-        this.cards = new ArrayList<>();
+        this.cards = createCards();
         this.index = 0;
-        init();
     }
 
-    private void init() {
+    private List<Card> createCards() {
+        List<Card> cards = new ArrayList<>();
+
         for (CardSuit cardSuit : CardSuit.values()) {
             Arrays.stream(CardRank.values()).forEach(c -> cards.add(new Card(c, cardSuit)));
         }
 
         Collections.shuffle(cards);
+        return cards;
     }
 
     public void shuffle() {

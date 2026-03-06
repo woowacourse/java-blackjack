@@ -37,10 +37,13 @@ public class HandCard {
     }
 
     public List<String> getCardInfos() {
-        return cards.stream().map(Card::getCardInfo).toList();
+        return cards.stream()
+                .map(Card::getCardInfo)
+                .toList();
     }
 
     public String getFirstCardInfo() {
-        return cards.getFirst().getCardInfo();
+        return cards.getFirst()
+                .getCardInfo();
     }
 }
