@@ -13,6 +13,7 @@ import domain.player.dto.PlayerHandDto;
 import domain.player.dto.PlayerResultDto;
 import domain.view.ApplicationView;
 
+import javax.swing.*;
 import java.util.List;
 
 public class BlackjackGame {
@@ -31,10 +32,7 @@ public class BlackjackGame {
 
         dealInitialCard(dealer, players);
         showGamerHands(players, dealer);
-
-        players.stream().forEach(player -> {
-            drawPlayerCard(player, dealer);
-        });
+        tryHitPlayers(players, dealer);
 
         if (dealer.hitIfRequired()) {
             view.printDealerAdditionalDrawCardMessage();
@@ -50,6 +48,11 @@ public class BlackjackGame {
         ResultAnalysisDto analysis = analyzeBlackjackResult(players, dealer);
         view.printFinalResultMessage(analysis);
 
+    }
+
+    private void tryHitPlayers(Players players, Dealer dealer) {
+        players.stream()
+                .forEach(player -> drawPlayerCard(player, dealer));
     }
 
     private void showGamerHands(Players players, Dealer dealer) {
