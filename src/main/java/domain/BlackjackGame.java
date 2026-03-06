@@ -10,7 +10,7 @@ public class BlackjackGame {
 
     public BlackjackGame() {
         this.players = new ArrayList<>();
-        this.dealer = new Dealer();
+        this.dealer = new Dealer("dealer");
         this.deck = new Deck();
     }
 

@@ -2,6 +2,7 @@ package view;
 
 import domain.Dealer;
 import domain.Player;
+import domain.Result;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,8 +25,8 @@ public class ResultView {
         }
     }
 
-    public void printDealerHitStand(boolean value){
-        if(value){
+    public void printDealerHitStand(boolean value) {
+        if (value) {
             System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
             return;
         }
@@ -41,29 +42,42 @@ public class ResultView {
     }
 
 
-    public void printFinalResult(List<Player> players, Dealer dealer){
-        int sum = dealer.getTotalSum();
+    public void printFinalResult(List<Player> players, Dealer dealer) {
         StringBuilder sb = new StringBuilder();
         sb.append('\n');
         sb.append("## 최종 승패\n");
 
         int playerWinCount = 0;
+        int playerLoseCount = 0;
+        int playerDrawCount = 0;
+
         for (Player player : players) {
-            boolean isWin = player.isPlayerWin(sum);
-            if(isWin){
-                playerWinCount+=1;
+            Result result = Result.judge(player.getTotalSum(), dealer.getTotalSum());
+            if (result == Result.WIN) {
+                playerWinCount += 1;
             }
+            if (result == Result.LOSE) {
+                playerLoseCount += 1;
+            }
+            if (result == Result.DRAW) {
+                playerDrawCount += 1;
+            }
+
         }
-        sb.append("딜러: " + (players.size()-playerWinCount) + "승 " + playerWinCount+ "패\n");
+        sb.append("딜러: " + playerLoseCount + "승 " + playerWinCount + "패 " + playerDrawCount + "무\n");
 
         for (Player player : players) {
             sb.append(player.getName() + ": ");
-            boolean isWin = player.isPlayerWin(sum);
-            if(isWin){
+            Result result = Result.judge(player.getTotalSum(), dealer.getTotalSum());
+            if (result == Result.WIN) {
                 sb.append("승\n");
                 continue;
             }
-            sb.append("패\n");
+            if (result == Result.LOSE) {
+                sb.append("패\n");
+                continue;
+            }
+            sb.append("무\n");
         }
         System.out.println(sb);
     }
