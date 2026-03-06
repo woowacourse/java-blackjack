@@ -18,4 +18,8 @@ public class Dealer {
         return hand.getCount();
     }
 
+    public String getFirstCardNames(){
+        return hand.getFirstCardName();
+    }
+
 }

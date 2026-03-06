@@ -4,6 +4,7 @@ import java.util.List;
 
 public class BlackJackController {
     InputView inputView = new InputView();
+    OutputView outputView = new OutputView();
 
     public void run() {
         List<String> names = inputView.readNames();
@@ -15,7 +16,9 @@ public class BlackJackController {
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer, deck);
 
         blackJackGame.initDraw();
-        
+
+        // 출력
+        outputView.printInitDraw(players,dealer);
 
 
 

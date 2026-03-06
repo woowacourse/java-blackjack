@@ -45,8 +45,19 @@ public class Hand {
         return getTotalPoint() >=17;
     }
 
+    public String getFirstCardName(){
+        return cards.getFirst().getName();
+    }
 
+    public String getCardNames(){
 
+        List<String> names = new ArrayList<>();
+        for(Card card:cards){
+            names.add(card.getName());
+        }
+
+        return String.join(", ", names);
+    }
 
 
 }

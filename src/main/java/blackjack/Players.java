@@ -17,4 +17,16 @@ public class Players {
             player.recieveCard(deck.draw());
         }
     }
+
+    public List<String> getNames(){
+        List<String> names = new ArrayList<>();
+        for(Player player:players) {
+            names.add(player.getName());
+        }
+        return names;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 }

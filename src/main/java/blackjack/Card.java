@@ -22,4 +22,9 @@ public class Card {
     public boolean isAce() {
         return cardPoint.equals(CardPoint.ACE);
     }
+
+    public String getName(){
+        return  cardPoint.getName()+cardPattern.getName();
+    }
+
 }

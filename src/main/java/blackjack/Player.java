@@ -20,5 +20,12 @@ public class Player {
         return hand.getCount();
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getCardNames(){
+        return hand.getCardNames();
+    }
 
 }
