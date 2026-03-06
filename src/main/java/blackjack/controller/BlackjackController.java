@@ -3,7 +3,7 @@ package blackjack.controller;
 import blackjack.domain.Answer;
 import blackjack.domain.Dealer;
 import blackjack.domain.Hand;
-import blackjack.domain.Participant;
+import blackjack.domain.Participants;
 import blackjack.domain.Player;
 import blackjack.domain.Status;
 import blackjack.domain.Trump;
@@ -18,29 +18,33 @@ import java.util.List;
 public class BlackjackController {
 
     public void run() {
-        Trump trump = new Trump();
         Hand hand = new Hand(new ArrayList<>());
         List<Player> players = RetryExecutor.retry(this::readNicknames);
-        Dealer dealer = new Dealer(hand, Status.HIT, trump);
-        List<Participant> participants = new ArrayList<>(List.of(dealer));
-        participants.addAll(players);
+        Dealer dealer = new Dealer(hand, Status.HIT, new Trump());
+        Participants participants = new Participants(players, dealer);
         dealer.pitch(players);
         OutputView.printStartMessage(players, dealer);
 
         players.forEach(player -> handlePlayerAction(player, dealer));
+        handleDealerAction(dealer);
 
+        printResult(participants, players, dealer);
+    }
+
+    private void printResult(Participants participants, List<Player> players, Dealer dealer) {
+        OutputView.printFinalStatus(participants);
+        FinalResultDto finalResultDto = FinalResultDto.of(players, dealer);
+        OutputView.printFinalResult(finalResultDto);
+    }
+
+    private void handleDealerAction(Dealer dealer) {
         dealer.decideHit();
         while(dealer.isHit()) {
             dealer.giveCard();
             dealer.decideHit();
             OutputView.printDealerHitMessage();
         }
-
         dealer.handleBurst();
-
-        OutputView.printFinalStatus(participants);
-        FinalResultDto finalResultDto = FinalResultDto.of(players, dealer);
-        OutputView.printFinalResult(finalResultDto);
     }
 
     private void handlePlayerAction(Player player, Dealer dealer) {

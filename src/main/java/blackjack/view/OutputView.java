@@ -4,6 +4,7 @@ import static blackjack.domain.Dealer.DEALER_HIT_THRESHOLD;
 
 import blackjack.domain.Dealer;
 import blackjack.domain.Participant;
+import blackjack.domain.Participants;
 import blackjack.domain.Player;
 import blackjack.dto.FinalResultDto;
 import java.io.FilterOutputStream;
@@ -41,9 +42,9 @@ public class OutputView {
         System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.\n", DEALER_HIT_THRESHOLD);
     }
 
-    public static void printFinalStatus(final List<Participant> participants) {
+    public static void printFinalStatus(final Participants participants) {
         final String delimiter = " - ";
-        participants.forEach(participant ->
+        participants.all().forEach(participant ->
             System.out.println(participantHandFormat(participant) + delimiter +
                 participantScoreResultFormat(participant))
         );
