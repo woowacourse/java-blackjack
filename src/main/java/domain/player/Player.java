@@ -7,37 +7,32 @@ import java.util.List;
 public class Player {
 
     private final Name name;
-    private final Score score;
 
-    private final List<Card> cards = new ArrayList<>();
+    private CardStatus cardStatus;
 
     public Player(String name) {
         this.name = new Name(name);
-        this.score = new Score();
-    }
-
-    public void addCard(Card card) {
-        cards.add(card);
-    }
-
-    public int getCardSize() {
-        return cards.size();
-    }
-
-    public boolean isBust() {
-        return cards.stream()
-                .mapToInt(Card::getValue)
-                .sum() > 21;
-    }
-
-    public int getTotalValue() {
-        return cards.stream()
-                .mapToInt(Card::getValue)
-                .sum();
+        this.cardStatus = new CardStatus();
     }
 
     public boolean isEqualName(String name) {
-        if(this.name.equals(name)) return true;
+        if(this.name.isEqualName(name)) return true;
         return false;
+    }
+
+    public void addCard(Card card) {
+        cardStatus.addCard(card);
+    }
+
+    public int getCardSize() {
+        return cardStatus.getCardsSize();
+    }
+
+    public boolean isBust() {
+        return cardStatus.isBust();
+    }
+
+    public int getTotalValue() {
+        return cardStatus.getTotalValue();
     }
 }

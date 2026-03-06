@@ -10,4 +10,8 @@ public class Name {
     public String getName() {
         return name;
     }
+
+    public boolean isEqualName(String name) {
+        return this.name.equals(name);
+    }
 }
