@@ -18,17 +18,12 @@ public enum CardNumber {
     Q(10, "Q"),
     K(10, "K");
 
-    private static final int ONE = 1;
     private int number;
     private String court;
 
     CardNumber(int number, String court) {
         this.number = number;
         this.court = court;
-    }
-
-    public void softHand() {
-        this.number = ONE;
     }
 
     public static CardNumber matchCardNumber(String value) {
