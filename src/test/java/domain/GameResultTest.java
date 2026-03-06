@@ -10,8 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class GameResultTest {
     @Test
     void 플레이어의_게임_결과를_반환하다(){
-        Player player = new Player("pobi");
-        Players players = new Players(List.of(player));
+        Players players = new Players(List.of("pobi"));
         Dealer dealer = new Dealer();
         GameResult gameResult = new GameResult(players, dealer);
 
@@ -22,8 +21,7 @@ class GameResultTest {
 
     @Test
     void 딜러의_게임_결과를_반환하다(){
-        Player player = new Player("pobi");
-        Players players = new Players(List.of(player));
+        Players players = new Players(List.of("pobi"));
         Dealer dealer = new Dealer();
 
         GameResult gameResult = new GameResult(players, dealer);

@@ -38,5 +38,9 @@ public abstract class Participant {
         return name;
     }
 
+    public List<Card> getAllCards() {
+        return hand.getAllCards();
+    }
+
     public abstract boolean canDraw();
 }

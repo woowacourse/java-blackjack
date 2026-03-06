@@ -52,4 +52,8 @@ public class Hand {
     public void add(Card card){
         cards.add(card);
     }
+
+    public List<Card> getAllCards() {
+        return List.copyOf(cards);
+    }
 }

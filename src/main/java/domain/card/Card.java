@@ -13,6 +13,10 @@ public class Card {
         return rank.equals(Rank.ACE);
     }
 
+    public String name() {
+        return rank.getTitle() + suit.getSymbol();
+    }
+
     public int score() {
         return rank.getValue();
     }

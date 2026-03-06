@@ -1,12 +1,13 @@
 package domain;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static java.util.Collections.frequency;
 
 public class GameResult {
-    Map<Player, WinningStatus> playerWinningStatus = new HashMap<>();
+    Map<Player, WinningStatus> playerWinningStatus = new LinkedHashMap<>();
 
     public GameResult(Players players, Dealer dealer) {
         for (Player player : players.getPlayers()) {
@@ -15,13 +16,13 @@ public class GameResult {
     }
 
     public Map<String, String> getPlayersStatistics() {
-        Map<String, String> result = new HashMap<>();
+        Map<String, String> result = new LinkedHashMap<>();
 
         for (Player player : playerWinningStatus.keySet()) {
             String name = player.name();
             WinningStatus winningStatus = playerWinningStatus.get(player);
 
-            result.put(name, winningStatus.name());
+            result.put(name, winningStatus.getSymbol());
         }
         return result;
     }
@@ -35,7 +36,7 @@ public class GameResult {
     }
 
     private Map<String, String> formatStatistics(int winCount, int tieCount, int loseCount) {
-        Map<String, String> dealerStatistics = new HashMap<>();
+        Map<String, String> dealerStatistics = new LinkedHashMap<>();
         StringBuilder stringBuilder = new StringBuilder();
 
         if (winCount > 0) {

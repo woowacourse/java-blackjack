@@ -34,4 +34,8 @@ public enum WinningStatus {
         }
         return TIE;
     }
+
+    public String getSymbol() {
+        return symbol;
+    }
 }

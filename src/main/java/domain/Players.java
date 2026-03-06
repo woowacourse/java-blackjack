@@ -8,10 +8,21 @@ import java.util.stream.Collectors;
 public class Players {
     List<Player> players = new ArrayList<>();
 
-    public Players(List<Player> players) {
+    public Players(List<String> names) {
+        for (String name : names) {
+            Player player = new Player(name);
+            players.add(player);
+        }
+
         validatePlayerCount(players);
         validateDuplicatedName(players);
-        this.players = players;
+    }
+
+
+    public List<String> getPlayerNames() {
+        return players.stream()
+                .map(player -> player.name())
+                .collect(Collectors.toList());
     }
 
     public List<Player> getPlayers() {
