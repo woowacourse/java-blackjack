@@ -23,17 +23,25 @@ public class OutputView {
 
         System.out.printf("%s카드: %s\n", dealer.getName(), dealer.getHandCards().getFirst().getCardDescription());
         for (Participant player : players) {
-            System.out.printf("%s카드: ", player.getName());
-
-            StringBuilder cardDescriptions = new StringBuilder();
-            List<Card> handCards = player.getHandCards();
-            for (Card handCard : handCards) {
-                cardDescriptions.append(handCard.getCardDescription() + ", ");
-            }
-            cardDescriptions.delete(cardDescriptions.length() - 2, cardDescriptions.length());
-
-            System.out.println(cardDescriptions);
+            printParticipantHandCard(player);
         }
         System.out.println();
+    }
+
+    private static void printParticipantHandCard(Participant player) {
+        System.out.printf("%s카드: ", player.getName());
+
+        StringBuilder cardDescriptions = new StringBuilder();
+        List<Card> handCards = player.getHandCards();
+        for (Card handCard : handCards) {
+            cardDescriptions.append(handCard.getCardDescription() + ", ");
+        }
+        cardDescriptions.delete(cardDescriptions.length() - 2, cardDescriptions.length());
+
+        System.out.println(cardDescriptions);
+    }
+
+    public void printCurrentHandCard(Participant participant) {
+        printParticipantHandCard(participant);
     }
 }
