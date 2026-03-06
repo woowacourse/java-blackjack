@@ -15,7 +15,7 @@ public class DealerTest {
 
     @Test
     @DisplayName("처음 출력할 때 1장만 나오게 함")
-    void 딜러는_처음_출력_때_1장만_나오게_함(){
+    void 딜러는_처음_출력_때_1장만_나오게_함() {
         //given
         Card five = new Card(CardRank.FIVE, CardSuit.CLOVER); // 5
         Card ten = new Card(CardRank.TEN, CardSuit.CLOVER); // 10
@@ -34,7 +34,7 @@ public class DealerTest {
 
     @Test
     @DisplayName("딜러는 16이하 강제 히트")
-    void 딜러는_16이하_강제_히트(){
+    void 딜러는_16이하_강제_히트() {
         //given
         Card jack = new Card(CardRank.JACK, CardSuit.CLOVER); // 10
         Card five = new Card(CardRank.FIVE, CardSuit.CLOVER); // 5

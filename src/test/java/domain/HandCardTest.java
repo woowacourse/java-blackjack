@@ -6,9 +6,6 @@ import domain.card.Card;
 import domain.card.CardRank;
 import domain.card.CardSuit;
 import domain.card.HandCard;
-import domain.deck.CardDeck;
-import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +13,7 @@ public class HandCardTest {
 
     @Test
     @DisplayName("손에 있는 카드 계산")
-    void 보유카드_정상_계산(){
+    void 보유카드_정상_계산() {
         //given
         Card aceClover = new Card(CardRank.ACE, CardSuit.CLOVER); // A
         Card aceHeart = new Card(CardRank.ACE, CardSuit.HEART); // A
