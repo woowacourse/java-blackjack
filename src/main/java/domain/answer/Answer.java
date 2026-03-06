@@ -30,4 +30,8 @@ public enum Answer {
         return this.equals(Answer.NO);
     }
 
+    public boolean isYes() {
+        return this.equals(Answer.YES);
+    }
+
 }

@@ -69,15 +69,15 @@ public class BlackjackGame {
     }
 
     private void drawPlayerCard(Player player, Dealer dealer) {
-        while(!player.isBusted()) {
-            Answer answer = view.askDrawCard(player.toDisplayMyName());
-            if(answer.isNo()) {
-                return;
-            }
-
+        while(!player.isBusted() && isPlayerWantCard(player)) {
             dealer.hitCardToPlayer(player);
             view.printParticipantHand(PlayerHandDto.of(player));
         }
+    }
+
+    private boolean isPlayerWantCard(Player player) {
+        Answer answer = view.askDrawCard(player.toDisplayMyName());
+        return answer.isYes();
     }
 
     private void dealInitialCard(Dealer dealer, Players players) {
