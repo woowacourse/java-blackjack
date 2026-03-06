@@ -14,14 +14,11 @@ public class BlackjackGame {
     private Dealer dealer;
     private Players players;
 
-    public BlackjackGame() {
-    }
-
     public void start() {
         setupGame();
-        dealer.dealInitialCardsTo(players);
+        dealer.dealInitialCards(players);
         printInitialDeal();
-        dealer.process(players);
+        dealer.processGame(players);
         printResults();
     }
 

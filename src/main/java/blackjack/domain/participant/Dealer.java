@@ -17,32 +17,37 @@ public class Dealer extends Participant {
         this.deck = deck;
     }
 
-    public void dealInitialCardsTo(Players players) {
+    public void dealInitialCards(Players players) {
+        dealCardsTo(players);
+        dealCardToDealer();
+    }
+
+    private void dealCardsTo(Players players) {
         for (int i = 0; i < 2; i++) {
-            dealRound(players);
+            players.getPlayers()
+                    .forEach(player -> player.receiveCard(deck.draw()));
         }
     }
 
-    private void dealRound(Players players) {
-        players.getPlayers()
-                .forEach(player -> player.receiveCard(deck.draw()));
+    private void dealCardToDealer() {
         receiveCard(deck.draw());
     }
 
-    public void process(Players players) {
+    public void processGame(Players players) {
         processPlayersTurn(players);
         processDealerTurn();
     }
 
     private void processPlayersTurn(Players players) {
-        players.getPlayers().forEach(player -> processPlayerTurn(player));
+        players.getPlayers().forEach(this::processPlayerTurn);
     }
 
     private void processPlayerTurn(final Player player) {
         boolean hasHit = false;
         while (player.canReceiveCard()) {
-            final boolean hit = askHitAndProcess(player);
-            hasHit = hasHit || hit;
+            if (askHitAndProcess(player)) {
+                hasHit = true;
+            }
         }
         printCardsIfNeverHit(player, hasHit);
     }
