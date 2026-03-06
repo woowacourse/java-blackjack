@@ -8,6 +8,7 @@ import domain.Card;
 import domain.Participant;
 import domain.Participants;
 import java.util.List;
+import service.FinalResult;
 
 public class OutputView {
 
@@ -76,5 +77,45 @@ public class OutputView {
 
     public void printWhiteLine() {
         System.out.println();
+    }
+
+    public void printFinalResults(List<FinalResult> finalResults) {
+        System.out.println("\n## 최종 승패");
+
+        for (FinalResult finalResult : finalResults) {
+            if (finalResult.isDealer()) {
+                System.out.printf("%s: ", finalResult.name());
+
+                if (finalResult.win() != 0) {
+                    System.out.printf("%d승 ", finalResult.win());
+                }
+                if (finalResult.draw() != 0) {
+                    System.out.printf("%d무 ", finalResult.draw());
+                }
+                if (finalResult.lose() != 0) {
+                    System.out.printf("%d패", finalResult.lose());
+                }
+
+                System.out.println();
+                break;
+            }
+        }
+
+        for (FinalResult finalResult : finalResults) {
+            if (!finalResult.isDealer()) {
+                System.out.printf("%s: ", finalResult.name());
+
+                if (finalResult.win() != 0) {
+                    System.out.println("승");
+                }
+                if (finalResult.draw() != 0) {
+                    System.out.println("무");
+                }
+                if (finalResult.lose() != 0) {
+                    System.out.println("패");
+                }
+            }
+
+        }
     }
 }
