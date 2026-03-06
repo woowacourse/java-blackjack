@@ -13,7 +13,7 @@ public class CardBundleTest {
     private Card spadeJack;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         cloverAce = Card.of(CardDenomination.ACE, CardEmblem.CLOVER);
         spadeJack = Card.of(CardDenomination.JACK, CardEmblem.SPADE);
 
