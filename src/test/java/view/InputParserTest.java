@@ -3,6 +3,7 @@ package view;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.Name;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,10 +17,10 @@ class InputParserTest {
         String strPlayerNames = "pobi, jason";
 
         // when
-        List<String> parsedResult = InputParser.parsePlayers(strPlayerNames);
+        List<Name> parsedResult = InputParser.parsePlayers(strPlayerNames);
 
         // then
-        assertThat(parsedResult).hasSize(2).containsExactlyInAnyOrder("pobi", "jason");
+        assertThat(parsedResult).hasSize(2).extracting(Name::getName).containsExactlyInAnyOrder("pobi", "jason");
     }
 
     @Test
@@ -29,8 +30,7 @@ class InputParserTest {
         String longPlayerNames = "p, abcdefghijk";
 
         // when
-        assertThatThrownBy(() -> InputParser.parsePlayers(longPlayerNames))
-                .isInstanceOf(IllegalArgumentException.class)
+        assertThatThrownBy(() -> InputParser.parsePlayers(longPlayerNames)).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("플레이어의 이름은 2글자 이상 10글자 이하여야 합니다.");
     }
 }

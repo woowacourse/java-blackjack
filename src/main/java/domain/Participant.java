@@ -3,11 +3,11 @@ package domain;
 import java.util.List;
 
 public class Participant {
-    private final String name;
+    private final Name name;
     private final HandCards handCards;
     private final boolean isDealer;
 
-    public Participant(String name, HandCards handCards, boolean isDealer) {
+    public Participant(Name name, HandCards handCards, boolean isDealer) {
         this.name = name;
         this.handCards = handCards;
         this.isDealer = isDealer;
@@ -30,7 +30,7 @@ public class Participant {
     }
 
     public String getName() {
-        return name;
+        return name.getName();
     }
 
     public List<Card> getHandCards() {

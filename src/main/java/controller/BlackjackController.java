@@ -9,6 +9,7 @@ import domain.Card;
 import domain.CardDeck;
 import domain.CardResult;
 import domain.HandCards;
+import domain.Name;
 import domain.Participant;
 import domain.Participants;
 import java.util.ArrayList;
@@ -85,9 +86,9 @@ public class BlackjackController {
     }
 
     private List<Participant> addParticipants() {
-        List<String> strPlayers = inputView.readPlayers(); // 플레이어 입력받기
+        List<Name> playerNames = inputView.readPlayers(); // 플레이어 입력받기
         List<Participant> participantList = new ArrayList<>();
-        for (String name : strPlayers) {
+        for (Name name : playerNames) {
             participantList.add(
                     new Participant(name, new HandCards(new ArrayList<>()), false));
         }

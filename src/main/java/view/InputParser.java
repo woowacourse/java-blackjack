@@ -1,25 +1,22 @@
 package view;
 
+import domain.Name;
 import java.util.ArrayList;
 import java.util.List;
 
 public class InputParser {
 
-    public static List<String> parsePlayers(String strPlayers) {
+    public static List<Name> parsePlayers(String strPlayers) {
 
         String[] split = strPlayers.split(",", -1);
 
-        List<String> players = new ArrayList<>();
+        List<Name> playerNames = new ArrayList<>();
         for (String name : split) {
             name = name.trim();
 
-            if (name.length() < 2 || name.length() > 10) {
-                throw new IllegalArgumentException("플레이어의 이름은 2글자 이상 10글자 이하여야 합니다.");
-            }
-
-            players.add(name);
+            playerNames.add(new Name(name));
         }
 
-        return players;
+        return playerNames;
     }
 }

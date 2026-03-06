@@ -10,7 +10,7 @@ public class Participants {
     private final List<Participant> participants;
 
     public Participants(List<Participant> participants) {
-        participants.add(new Participant(DEALER_NAME, new HandCards(new ArrayList<>()), true));
+        participants.add(new Participant(new Name(DEALER_NAME), new HandCards(new ArrayList<>()), true));
         this.participants = participants;
     }
 
