@@ -6,9 +6,13 @@ import domain.card.Card;
 import domain.card.Deck;
 import domain.card.Emblem;
 import domain.card.Grade;
+import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class HandTest {
 
@@ -38,34 +42,28 @@ class HandTest {
         assertThat(score).isEqualTo(result);
     }
 
-    // TODO : 테스트 코드 리팩터링 생각하기.
-    @Test
-    void ACE가_여러_장_일때_합을_계산한다1() {
+    @ParameterizedTest
+    @MethodSource("handCalculateTestCases")
+    void 손패에_있는_카드의_합을_계산한다(List<Grade> grades, int expected) {
         // given
         Hand hand = new Hand();
+        for (Grade grade : grades) {
+            hand.receiveCard(new Card(Emblem.CLOVER, grade));
+        }
 
-        hand.receiveCard(new Card(Emblem.CLOVER, Grade.ACE));
-        hand.receiveCard(new Card(Emblem.CLOVER, Grade.ACE));
-        hand.receiveCard(new Card(Emblem.CLOVER, Grade.TEN));
-        hand.receiveCard(new Card(Emblem.CLOVER, Grade.NINE));
         // when
         int score = hand.calculate();
+
         // then
-        assertThat(score).isEqualTo(21);
+        assertThat(score).isEqualTo(expected);
     }
 
-    @Test
-    void ACE가_여러_장_일때_합을_계산한다2() {
-        // given
-        Hand hand = new Hand();
-
-        hand.receiveCard(new Card(Emblem.CLOVER, Grade.JACK));
-        hand.receiveCard(new Card(Emblem.CLOVER, Grade.FIVE));
-        hand.receiveCard(new Card(Emblem.CLOVER, Grade.ACE));
-        hand.receiveCard(new Card(Emblem.CLOVER, Grade.FOUR));
-        // when
-        int score = hand.calculate();
-        // then
-        assertThat(score).isEqualTo(20);
+    static Stream<Arguments> handCalculateTestCases() {
+        return Stream.of(
+                Arguments.of(List.of(Grade.FIVE, Grade.TWO), 7),
+                Arguments.of(List.of(Grade.ACE, Grade.FOUR), 15),
+                Arguments.of(List.of(Grade.ACE, Grade.ACE, Grade.TEN, Grade.NINE), 21),
+                Arguments.of(List.of(Grade.JACK, Grade.FIVE, Grade.ACE, Grade.FOUR), 20)
+        );
     }
 }
