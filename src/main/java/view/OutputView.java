@@ -1,14 +1,19 @@
 package view;
 
+import domain.Player;
 import dto.BlackjackResultDto;
 import dto.DealerResultDto;
 import dto.HandDto;
 import dto.PlayerResultDto;
+import dto.PlayersDto;
 import java.util.List;
 
 public class OutputView {
 
-    public void printPlayers(List<String> names) {
+    public void printPlayers(PlayersDto playersDto) {
+        List<String> names = playersDto.players().stream()
+            .map(Player::getName)
+            .toList();
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.\n", String.join(", ", names));
     }
 
@@ -39,7 +44,7 @@ public class OutputView {
     public void printBlackjackStatistics(DealerResultDto dealerResultDto,
         List<PlayerResultDto> playerResultDtoList) {
         System.out.println("## 최종 승패");
-        System.out.printf("딜러:%s%s%s", printWin(dealerResultDto.win()),
+        System.out.printf("딜러:%s%s%s\n", printWin(dealerResultDto.win()),
             printDraw(dealerResultDto.draw()), printLose(dealerResultDto.lose()));
         for (PlayerResultDto playerResultDto : playerResultDtoList) {
             System.out.printf("%s: %s\n", playerResultDto.name(),
