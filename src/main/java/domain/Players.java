@@ -15,14 +15,8 @@ public class Players  implements Iterable<Player> {
     public Iterator<Player> iterator() {
         return players.iterator();
     }
-//
-//    public Map<String, Boolean> createPlayerResult(int dealerTotal, boolean isDealerBurst) {
-//        BlackjackResult blackjackResult = new BlackjackResult;
-//        for (Player player : players) {
-//            boolean isWinning = false;
-//            // TODO : 딜러와 플레이어 비교해서 결과 판정
-//            blackjackResult.add(player.getName(),isWinning);
-//        }
-//
-//    }
+
+    public boolean isAllPlayerBurst() {
+        return players.stream().allMatch((player) -> player.isBust());
+    }
 }

@@ -32,7 +32,11 @@ public class BlackjackController {
         List<CardContentDto> firstCardContents = getCardContentDtos(dealer, playerList);
         OutputView.displayCardContent(firstCardContents);
         Players players = addAdditionalCard(playerList, cards);
-        blackjackService.determineAdditionalCardOfDealer(dealer, cards);
+
+        // TODO: player 전부 다 burst 이면 딜러 승리 처리 (dto 알맞게)
+        if (!players.isAllPlayerBurst()){
+            blackjackService.determineAdditionalCardOfDealer(dealer, cards);
+        }
 
         printFinalCards(dealer, players);
 
