@@ -1,8 +1,8 @@
+import java.util.List;
+
+import domain.Card;
 import domain.Dealer;
 import domain.User;
-
-
-import java.util.List;
 
 public class GameController {
 
@@ -22,6 +22,8 @@ public class GameController {
         List<User> users = setUpUsers();
         initDeal(users);
         processUserTurns(users);
+        processDealerTurn();
+        showCardResult(users);
     }
 
     private List<User> setUpUsers(){
@@ -31,11 +33,14 @@ public class GameController {
 
     private void initDeal(List<User> users){
         gameService.initDeal(users, dealer);
+        outputView.printInitialDeal(users, dealer);
     }
 
     private void processUserTurns(List<User> users) {
         for (User user : users) {
+            boolean hitAtLeastOnce = false;
             while (inputView.readWillHit(user.getName())) {
+                hitAtLeastOnce = true;
                 user.receiveCard(gameService.deal());
                 outputView.printHand(user);
             }
@@ -45,11 +50,15 @@ public class GameController {
         }
     }
 
-    private void processDealerTurn(Dealer dealer) {
+    private void processDealerTurn() {
         int sum = dealer.getHand().stream().mapToInt(Card::getValue).sum();
         if(gameService.isHit(sum)) {
             dealer.receiveCard(gameService.deal());
             outputView.printDealerHit();
         }
+    }
+
+    private void showCardResult(List<User> users) {
+        outputView.printCardResult(users, dealer);
     }
 }
