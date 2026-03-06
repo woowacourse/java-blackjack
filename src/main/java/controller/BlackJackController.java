@@ -58,19 +58,16 @@ public class BlackJackController {
 
     private void drawPlayersTurn(Players players) {
         for(Player player : players.getPlayers()) {
-            drawPlayerTurn(player);
+            drawPlayerTurns(player);
         }
         OutputView.printNewLine();
     }
 
-    private void drawPlayerTurn(Player player) {
-        boolean flag = true;
-        do {
-            flag = done(player);
-        } while (flag);
+    private void drawPlayerTurns(Player player) {
+        while(drawPlayerTurn(player));
     }
 
-    private boolean done(Player player) {
+    private boolean drawPlayerTurn(Player player) {
         if(!inputController.getCondition(player.getResult().name().value())) {
             return false;
         }
