@@ -3,6 +3,7 @@ package domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class Deck {
     private final List<Card> cards;
@@ -25,5 +26,9 @@ public class Deck {
 
     public void shuffle() {
         Collections.shuffle(this.cards);
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(this.cards);
     }
 }
