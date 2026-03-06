@@ -5,7 +5,9 @@ import java.util.List;
 
 public class GameTable {
 
+    private static final String DEALER_NAME = "딜러";
     private static final int BLACKJACK = 21;
+    private static final int DEALER_DRAW_CONDITION = 16;
     private final Members members;
 
     public GameTable() {
@@ -23,6 +25,14 @@ public class GameTable {
     public List<Card> draw(String memberName, Card card) {
         members.provideCard(memberName, card);
         return members.findCardByName(memberName);
+    }
+
+    public boolean draw(Card card) {
+        if (members.checkValue(DEALER_NAME) <= DEALER_DRAW_CONDITION) {
+            members.provideCard(DEALER_NAME, card);
+            return true;
+        }
+        return false;
     }
 
     public List<MemberStatus> checkPlayerStatuses() {

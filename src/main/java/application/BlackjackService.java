@@ -25,6 +25,10 @@ public class BlackjackService {
         return new RoundResult(playerCards, isBust);
     }
 
+    public boolean checkDealerDrawable() {
+        return gameTable.draw(deck.draw());
+    }
+
     public List<MemberStatus> getPlayerStatuses() {
         return gameTable.checkPlayerStatuses();
     }
