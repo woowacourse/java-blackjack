@@ -31,6 +31,10 @@ public class BlackjackService {
         return String.format(Message.DEALER_CARDS_MESSAGE, participants.getDealerCardsDisplay());
     }
 
+    public List<String> makeExtraCardRequsts() {
+        return participants.askGetExtraCard();
+    }
+
     public List<String> getUserCardsDisplays() {
         return participants.getUserCardsDisplays();
     }

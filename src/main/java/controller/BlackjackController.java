@@ -26,12 +26,20 @@ public class BlackjackController {
         blackjackService.makeDeck();
         blackjackService.dealCards();
         printDealResult();
+        printExtraCardRequest();
     }
 
     private void printDealResult() {
         outputView.printMessage(blackjackService.makeUserNameFormat());
         outputView.printMessage(blackjackService.makeDealerCardsDisplay());
         blackjackService.getUserCardsDisplays().forEach(outputView::printMessage);
+    }
+
+    private void printExtraCardRequest() {
+        List<String> requestCases = blackjackService.makeExtraCardRequsts();
+        for (String requestCase : requestCases) {
+            outputView.printMessage(requestCase);
+        }
     }
 
     public void readParticipants() {

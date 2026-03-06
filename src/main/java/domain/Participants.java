@@ -49,6 +49,12 @@ public class Participants {
                 .map(user -> user.getName() + "카드: " + user.getCardsDisplay())
                 .collect(Collectors.toList());
     }
+
+    public List<String> askGetExtraCard() {
+        return participants.stream()
+                .map(User::formatAskGetExtraCard)
+                .collect(Collectors.toList());
+    }
 }
 
 

@@ -1,5 +1,7 @@
 package domain;
 
+import view.Message;
+
 public class User {
     private String username;
     private Hand hand;
@@ -19,5 +21,9 @@ public class User {
 
     public String getCardsDisplay() {
         return hand.getCardsDisplay();
+    }
+
+    public String formatAskGetExtraCard() {
+        return String.format(Message.REQUEST_GET_EXTRA_CARD, username);
     }
 }
