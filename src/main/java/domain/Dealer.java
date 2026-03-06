@@ -1,6 +1,9 @@
 package domain;
 
 import domain.card.Deck;
+import domain.participant.Hand;
+import domain.participant.Name;
+import domain.participant.Participant;
 
 public class Dealer {
 

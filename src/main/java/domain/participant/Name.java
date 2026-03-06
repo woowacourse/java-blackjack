@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import exception.ExceptionMessage;
 import java.util.regex.Matcher;

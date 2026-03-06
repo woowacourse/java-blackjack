@@ -1,10 +1,10 @@
 import domain.Dealer;
 import domain.GameCommand;
 import domain.GameStatistics;
-import domain.Participant;
 import domain.Participants;
 import domain.Referee;
 import domain.card.Deck;
+import domain.participant.Participant;
 import java.util.List;
 import view.InputView;
 import view.OutputView;

@@ -6,6 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import domain.card.Card;
 import domain.card.Emblem;
 import domain.card.Grade;
+import domain.participant.Hand;
+import domain.participant.Name;
+import domain.participant.Participant;
 import org.junit.jupiter.api.Test;
 
 class RefereeTest {

@@ -5,6 +5,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.Emblem;
 import domain.card.Grade;
+import domain.participant.GameState;
+import domain.participant.Hand;
+import domain.participant.Name;
+import domain.participant.Participant;
 import org.junit.jupiter.api.Test;
 
 public class ParticipantTest {

@@ -1,5 +1,7 @@
 package domain;
 
+import domain.participant.Participant;
+
 public class Referee {
 
     private final GameStatistics gameStatistics;
