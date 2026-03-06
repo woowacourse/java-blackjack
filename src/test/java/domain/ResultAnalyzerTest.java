@@ -29,7 +29,7 @@ class ResultAnalyzerTest {
                 .build();
         Dealer dealerScore4 = Dealer.of(cardDeck);
 
-        dealerScore4.drawMySelf(2);
+        dealerScore4.dealMyself();
         Player playerScore7 = Player.from(PlayerName.from("p7"));
         Player playerScore11 = Player.from(PlayerName.from("p11"));
         Players players = Players.from(List.of(playerScore7, playerScore11));

@@ -64,11 +64,12 @@ public class Dealer {
     }
 
     public CardBundle dealMyself() {
-        return cardBundle.addUp(handOutCard(INITIAL_DEAL_COUNT));
+        cardBundle = drawMySelf(INITIAL_DEAL_COUNT);
+        return cardBundle;
     }
 
-    public CardBundle drawMySelf(int tryCount) {
-        return cardBundle.addUp(handOutCard(tryCount));
+    private CardBundle drawMySelf(int tryCount) {
+        return cardBundle.add(handOutCard(tryCount));
     }
 
     public Card drawCard() {

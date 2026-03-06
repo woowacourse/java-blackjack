@@ -25,7 +25,8 @@ public class Player {
     }
 
     public CardBundle addCardBundle(CardBundle newCardBundle) {
-        return cardBundle.addUp(newCardBundle);
+        cardBundle = cardBundle.add(newCardBundle);
+        return cardBundle;
     }
 
     public int getResultScore() {

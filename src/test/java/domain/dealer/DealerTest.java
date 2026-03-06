@@ -65,7 +65,7 @@ public class DealerTest {
                 .build();
 
         Dealer dealer = Dealer.of(cardDeck);
-        dealer.drawMySelf(2);
+        dealer.dealMyself();
 
         CardBundle cardBundle = CardBundle.from(cards);
         Assertions.assertThat(dealer.disPlayMyCardBundle())
@@ -84,7 +84,7 @@ public class DealerTest {
         Dealer dealer = Dealer.of(cardDeck);
 
         Assertions.assertThatThrownBy(() -> {
-            dealer.drawMySelf(2);
+            dealer.dealMyself();
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -100,7 +100,7 @@ public class DealerTest {
                 .build();
 
         Dealer dealer = Dealer.of(cardDeck);
-        dealer.drawMySelf(2);
+        dealer.dealMyself();
 
         Assertions.assertThat(dealer.hitIfRequired()).isTrue();
     }

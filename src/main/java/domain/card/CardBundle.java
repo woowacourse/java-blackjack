@@ -9,10 +9,10 @@ public class CardBundle {
     private static final int BUSTED_CONDITION = 21;
     private static final int ACE_BONUS_SCORE = 10;
 
-    private List<Card> cardBundle;
+    private final List<Card> cardBundle;
 
     private CardBundle(List<Card> cardBundle) {
-        this.cardBundle = cardBundle;
+        this.cardBundle = new ArrayList<>(cardBundle);
     }
 
     public static CardBundle from(List<Card> cardBundle) {
@@ -23,16 +23,16 @@ public class CardBundle {
         return new CardBundle(new ArrayList<>());
     }
 
-    public CardBundle addUp(CardBundle newCardBundle) {
-        for (Card card : newCardBundle.cardBundle) {
-            addUp(card);
-        }
-        return this;
+    public CardBundle add(CardBundle newCardBundle) {
+        List<Card> combinedCards = new ArrayList<>(this.cardBundle);
+        combinedCards.addAll(newCardBundle.cardBundle);
+        return new CardBundle(combinedCards);
     }
 
-    // TODO Method Name Refactor
-    public void addUp(Card card) {
-        cardBundle.add(card);
+    public CardBundle add(final Card card) {
+        List<Card> newCards = new ArrayList<>(this.cardBundle);
+        newCards.add(card);
+        return new CardBundle(newCards);
     }
 
     @Override
