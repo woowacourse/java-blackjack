@@ -22,4 +22,48 @@ public class GameTest {
 
         assertThat(dealer.calculateTotalScore()).isEqualTo(17);
     }
+
+    @Test
+    void compare_score_when_player_win() {
+        Player player = new Player("player1");
+        Dealer dealer = new Dealer();
+
+        player.receiveOneCard(new Card("A", "하트"));
+        player.receiveOneCard(new Card("Q", "스페이드"));
+
+        dealer.receiveOneCard(new Card("10", "하트"));
+        dealer.receiveOneCard(new Card("7", "스페이드"));
+
+        Game game = new Game(null);
+        assertThat(game.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.PLAYER_WIN);
+    }
+
+    void compare_score_when_dealer_win() {
+        Player player = new Player("player1");
+        Dealer dealer = new Dealer();
+
+        player.receiveOneCard(new Card("A", "하트"));
+        player.receiveOneCard(new Card("4", "스페이드"));
+
+        dealer.receiveOneCard(new Card("10", "하트"));
+        dealer.receiveOneCard(new Card("9", "스페이드"));
+
+        Game game = new Game(null);
+        assertThat(game.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.DEALER_WIN);
+    }
+
+    void compare_score_when_push() {
+        Player player = new Player("player1");
+        Dealer dealer = new Dealer();
+
+        player.receiveOneCard(new Card("A", "하트"));
+        player.receiveOneCard(new Card("Q", "스페이드"));
+
+        dealer.receiveOneCard(new Card("10", "하트"));
+        dealer.receiveOneCard(new Card("A", "스페이드"));
+
+        Game game = new Game(null);
+        assertThat(game.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.PUSH);
+    }
+
 }
