@@ -16,7 +16,7 @@ public abstract class Participant {
         handCards.add(card);
     }
 
-    public int calculateTotalScore() {
+    public int calculateScore() {
         int cardScore = handCards.stream()
                 .map(Card::getScore)
                 .reduce(0, Integer::sum);
@@ -35,6 +35,6 @@ public abstract class Participant {
     }
 
     public boolean isBust() {
-        return calculateTotalScore() > 21;
+        return calculateScore() > 21;
     }
 }

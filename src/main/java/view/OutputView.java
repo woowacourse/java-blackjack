@@ -39,7 +39,7 @@ public class OutputView {
 
     public void printFinalScore(Dealer dealer, List<Player> players) {
         System.out.println();
-        String dealerScore = String.valueOf(dealer.calculateTotalScore());
+        String dealerScore = String.valueOf(dealer.calculateScore());
         if (dealer.isBust()) {
             dealerScore = "버스트";
         }
@@ -47,7 +47,7 @@ public class OutputView {
         System.out.println("딜러카드: " + holdCardToString(dealer.getHandCards()) + " - 결과: " + dealerScore);
 
         for (Player player : players) {
-            String playerScore = String.valueOf(player.calculateTotalScore());
+            String playerScore = String.valueOf(player.calculateScore());
             if (player.isBust()) {
                 playerScore = "버스트";
             }

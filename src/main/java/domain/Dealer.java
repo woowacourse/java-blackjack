@@ -10,6 +10,6 @@ public class Dealer extends Participant {
     }
 
     public boolean isReceiveCard() {
-        return calculateTotalScore() <= 16;
+        return calculateScore() <= 16;
     }
 }

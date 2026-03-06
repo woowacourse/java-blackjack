@@ -20,12 +20,12 @@ public class PlayerTest {
                 new Card(CardNumber.FOUR, CardShape.CLUB));
         Player player1 = new Player("pobi", cards1);
 
-        int totalScore1 = player1.calculateTotalScore();
+        int totalScore1 = player1.calculateScore();
 
         List<Card> cards2 = List.of(new Card(CardNumber.EIGHT, CardShape.CLUB), new Card(CardNumber.TWO, CardShape.CLUB));
         Player player2 = new Player("woni", cards2);
 
-        int totalScore2 = player2.calculateTotalScore();
+        int totalScore2 = player2.calculateScore();
 
         Assertions.assertThat(totalScore1).isEqualTo(12);
         Assertions.assertThat(totalScore2).isEqualTo(10);
@@ -38,7 +38,7 @@ public class PlayerTest {
 
         Player player = new Player("pobi", cards);
 
-        int totalScore = player.calculateTotalScore();
+        int totalScore = player.calculateScore();
 
         Assertions.assertThat(totalScore).isEqualTo(14);
     }
@@ -49,11 +49,11 @@ public class PlayerTest {
         List<Card> cards1 = new ArrayList<>(List.of(new Card(CardNumber.JACK, CardShape.CLUB), new Card(CardNumber.FOUR, CardShape.CLUB)));
         Player player1 = new Player("pobi", cards1);
         player1.addCard(new Card(CardNumber.ACE, CardShape.CLUB));
-        int player1TotalScore = player1.calculateTotalScore();
+        int player1TotalScore = player1.calculateScore();
 
         List<Card> cards2 = new ArrayList<>(List.of(new Card(CardNumber.FOUR, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
         Player player2 = new Player("woni", cards2);
-        int player2TotalScore = player2.calculateTotalScore();
+        int player2TotalScore = player2.calculateScore();
 
         Assertions.assertThat(player1TotalScore).isEqualTo(15);
         Assertions.assertThat(player2TotalScore).isEqualTo(15);
@@ -65,14 +65,14 @@ public class PlayerTest {
         List<Card> cards1 = new ArrayList<>(List.of(new Card(CardNumber.EIGHT, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
         Player player1 = new Player("pobi", cards1);
         player1.addCard(new Card(CardNumber.ACE, CardShape.SPADE));
-        int player1TotalScore = player1.calculateTotalScore();
+        int player1TotalScore = player1.calculateScore();
 
         List<Card> cards2 = new ArrayList<>(List.of(new Card(CardNumber.FOUR, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
         Player player2 = new Player("woni", cards2);
 
         player2.addCard(new Card(CardNumber.ACE, CardShape.SPADE));
         player2.addCard(new Card(CardNumber.ACE, CardShape.HEART));
-        int player2TotalScore = player2.calculateTotalScore();
+        int player2TotalScore = player2.calculateScore();
 
         Assertions.assertThat(player1TotalScore).isEqualTo(20);
         Assertions.assertThat(player2TotalScore).isEqualTo(17);

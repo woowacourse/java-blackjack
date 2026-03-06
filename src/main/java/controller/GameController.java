@@ -71,7 +71,7 @@ public class GameController {
         int dealerLosingCount = 0;
 
         for (Player player : players) {
-            GameResult gameResult = player.compareScore(dealer.calculateTotalScore());
+            GameResult gameResult = player.compareScore(dealer.calculateScore());
             playerFinalResults.put(player.getName(), gameResult);
 
             if (gameResult == GameResult.WIN) {

@@ -30,10 +30,10 @@ public class Player extends Participant {
     }
 
     private GameResult getGameResult(int dealerScore) {
-        if (calculateTotalScore() > dealerScore) {
+        if (calculateScore() > dealerScore) {
             return GameResult.WIN;
         }
-        if (calculateTotalScore() == dealerScore) {
+        if (calculateScore() == dealerScore) {
             return GameResult.DRAW;
         }
         return GameResult.LOSE;
