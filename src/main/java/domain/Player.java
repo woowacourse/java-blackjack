@@ -1,19 +1,25 @@
 package domain;
 
+import java.util.List;
 
-public class Player extends Participant{
-    private final Name name;
+public class Player {
+    private final String name;
+    private final Hand hand;
 
-    private Player(Name name, Hand hand) {
-        super(hand);
+    private Player(String name, Hand hand) {
         this.name = name;
+        this.hand = hand;
     }
 
-    public static Player of(Name name, Hand hand) {
+    public static Player of(String name, Hand hand) {
         return new Player(name, hand);
     }
 
-    public Name getName() {
+    public String getName() {
         return name;
+    }
+
+    public List<Card> getHand() {
+        return hand.getCards();
     }
 }
