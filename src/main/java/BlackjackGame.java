@@ -1,8 +1,6 @@
+import domain.Dealer;
 import domain.GameCommand;
-import domain.GameState;
 import domain.GameStatistics;
-import domain.Hand;
-import domain.Name;
 import domain.Participant;
 import domain.Participants;
 import domain.Referee;
@@ -15,47 +13,60 @@ public class BlackjackGame {
 
     public void run() {
         Deck deck = new Deck();
+        Participants participants = createParticipants(deck);
+        Dealer dealer = new Dealer(deck);
 
+        showCardNames(participants, dealer);
+        playTurn(participants, deck, dealer);
+        judge(dealer, participants);
+    }
+
+    private Participants createParticipants(Deck deck) {
         List<String> playerNames = InputView.readPlayerNames();
-        Participants participants = new Participants(playerNames, deck);
-        Participant dealer = initDealer(deck);
+        return new Participants(playerNames, deck);
+    }
 
+    private void showCardNames(Participants participants, Dealer dealer) {
         OutputView.showIntroMessage(participants);
         OutputView.showDealerCardName(dealer);
         OutputView.showPlayerCardName(participants);
+    }
 
-        for (Participant participant : participants.getParticipants()) {
-            while (participant.getGameState() == GameState.HIT) {
-                GameCommand gameCommand = GameCommand.from(
-                        InputView.readHitOrStand(participant.getName()));
-                if (gameCommand.isNo()) {
-                    participant.changeState();
-                    break;
-                }
-                participant.playTurn(deck);
-                OutputView.showCardName(participant);
+    private void playPlayerTurn(Participants participants, Deck deck) {
+        participants.getParticipants()
+                .forEach(participant -> determineGameState(deck, participant));
+    }
+
+    //TODO: depth 2
+    private void determineGameState(Deck deck, Participant participant) {
+        while (participant.isHit()) {
+            String input = InputView.readHitOrStand(participant.getName());
+            GameCommand gameCommand = GameCommand.from(input);
+            if (gameCommand.isNo()) {
+                participant.changeState();
+                break;
             }
+            participant.playTurn(deck);
+            OutputView.showCardName(participant);
         }
-        // 딜러도 16이하 시 카드 추
-        while (dealer.getGameState() == GameState.HIT) {
+    }
+
+    private void playDealerTurn(Dealer dealer, Deck deck) {
+        while (dealer.isHit()) {
             OutputView.showDealerMessage();
             dealer.playTurn(deck);
-            if (dealer.isBust() && dealer.getScore() >= 17) {
-                dealer.changeState();
-            }
         }
-        // 딜러&플레이 카드 목록 및 결과 출력
-        OutputView.showResult(dealer, participants);
+    }
 
-        //승패 출력
+    private void playTurn(Participants participants, Deck deck, Dealer dealer) {
+        playPlayerTurn(participants, deck);
+        playDealerTurn(dealer, deck);
+        OutputView.showResult(dealer, participants);
+    }
+
+    private void judge(Dealer dealer, Participants participants) {
         Referee referee = new Referee();
         GameStatistics statistics = referee.judge(dealer, participants);
         OutputView.showGameResult(statistics);
-    }
-
-    private static Participant initDealer(Deck deck) {
-        Participant dealer = new Participant(new Name("딜러"), new Hand());
-        dealer.initHand(deck);
-        return dealer;
     }
 }

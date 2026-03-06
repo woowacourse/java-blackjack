@@ -13,8 +13,11 @@ class RefereeTest {
     @Test
     void 딜러와_플레이어의_승패를_비교한다() {
         // given
+
         Hand dealerHand = new Hand();
-        Participant dealer = new Participant(new Name("dealer"), dealerHand);
+        Participant participant = new Participant(new Name("dealer"), dealerHand);
+        Dealer dealer = new Dealer(participant);
+
         Hand playerHand = new Hand();
         Participant player = new Participant(new Name("player"), playerHand);
 

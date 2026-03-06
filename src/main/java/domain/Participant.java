@@ -36,11 +36,16 @@ public class Participant {
         }
     }
 
+
     public void initHand(Deck deck) {
         for (int size = 0; size < INIT_CARD_SIZE; size++) {
             Card card = deck.drawCard();
             hand.receiveCard(card);
         }
+    }
+
+    public boolean isHit() {
+        return this.gameState == GameState.HIT;
     }
 
     public String getName() {

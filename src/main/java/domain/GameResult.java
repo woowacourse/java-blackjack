@@ -18,6 +18,7 @@ GameResult {
         return description;
     }
 
+    //TODO: 21 계싼
     public static GameResult judge(int standardScore, int myScore) {
         if ((standardScore < myScore && myScore <= 21)
                 || (standardScore > 21 && myScore <= 21)) {

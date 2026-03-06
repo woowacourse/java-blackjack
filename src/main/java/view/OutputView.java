@@ -1,5 +1,6 @@
 package view;
 
+import domain.Dealer;
 import domain.GameResult;
 import domain.GameStatistics;
 import domain.Participant;
@@ -20,11 +21,11 @@ public final class OutputView {
                 + "에게 2장을 나누었습니다."));
     }
 
-    public static void showDealerCardName(Participant dealer) {
-        List<String> cardNames = createCardNames(dealer);
+    public static void showDealerCardName(Dealer dealer) {
+        List<String> cardNames = createCardNames(dealer.getDealer());
         List<String> dealerCard = new ArrayList<>(cardNames);
         dealerCard.removeFirst();
-        System.out.println(getCardNames(dealer, dealerCard));
+        System.out.println(getCardNames(dealer.getDealer(), dealerCard));
     }
 
     public static void showPlayerCardName(Participants participants) {
@@ -51,10 +52,10 @@ public final class OutputView {
         System.out.println(NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void showResult(Participant dealer, Participants participants) {
+    public static void showResult(Dealer dealer, Participants participants) {
         System.out.println();
-        List<String> dealerCardNames = createCardNames(dealer);
-        System.out.println(getCardNames(dealer, dealerCardNames) + " - 결과: " + dealer.getScore());
+        List<String> dealerCardNames = createCardNames(dealer.getDealer());
+        System.out.println(getCardNames(dealer.getDealer(), dealerCardNames) + " - 결과: " + dealer.getScore());
 
         for (Participant participant : participants.getParticipants()) {
             List<String> playerCardNames = createCardNames(participant);
