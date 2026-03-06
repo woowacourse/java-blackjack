@@ -8,7 +8,9 @@ import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    private final AceAdjustPolicy aceAdjustPolicy = new AceAdjustPolicy(new BustPolicyImpl());
+    private static final int ADJUST_VALUE = 10;
+
+    private final AceAdjustPolicy aceAdjustPolicy = new AceAdjustPolicy(ADJUST_VALUE, new BustPolicyImpl());
 
     @Nested
     @DisplayName("카드를 더 뽑아야 하는지 판단한다")

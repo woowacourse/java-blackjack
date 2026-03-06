@@ -8,7 +8,9 @@ import org.junit.jupiter.api.Test;
 
 class PlayersTest {
 
-    private final AceAdjustPolicy aceAdjustPolicy = new AceAdjustPolicy(new BustPolicyImpl());
+    private static final int ADJUST_VALUE = 10;
+
+    private final AceAdjustPolicy aceAdjustPolicy = new AceAdjustPolicy(ADJUST_VALUE, new BustPolicyImpl());
 
     @Test
     void 구분자를_기준으로_전체_플레이어_리스트를_생성한다() {
