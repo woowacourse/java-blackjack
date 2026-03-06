@@ -14,6 +14,10 @@ public class Players {
         this.players = from(playerNames);
     }
 
+    public List<Player> getPlayers() {
+        return players;
+    }
+
     private List<Player> from(List<String> playerNames) {
         List<Player> players = new ArrayList<>();
 
@@ -35,9 +39,5 @@ public class Players {
         if (uniqNames.size() != players.size()) {
             throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
         }
-    }
-
-    public List<Player> getPlayers() {
-        return players;
     }
 }

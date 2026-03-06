@@ -47,6 +47,16 @@ public class BlackJackService {
         return playerResults;
     }
 
+    public Map<MatchResult, Integer> calculateDealerResult(Map<String, MatchResult> playerResults) {
+        Map<MatchResult, Integer> dealerResult = new EnumMap<>(MatchResult.class);
+
+        for (MatchResult matchResult : playerResults.values()) {
+            dealerResult.put(matchResult.reverse(), dealerResult.getOrDefault(matchResult.reverse(), 0) + 1);
+        }
+
+        return dealerResult;
+    }
+
     private boolean handleBust(Player player, Map<String, MatchResult> playerResults) {
         if (player.getHand().isBust()) {
             playerResults.put(player.getName(), MatchResult.LOSE);
@@ -91,15 +101,5 @@ public class BlackJackService {
         }
 
         return false;
-    }
-
-    public Map<MatchResult, Integer> calculateDealerResult(Map<String, MatchResult> playerResults) {
-        Map<MatchResult, Integer> dealerResult = new EnumMap<>(MatchResult.class);
-
-        for (MatchResult matchResult : playerResults.values()) {
-            dealerResult.put(matchResult.exchange(), dealerResult.getOrDefault(matchResult.exchange(), 0) + 1);
-        }
-
-        return dealerResult;
     }
 }

@@ -71,21 +71,6 @@ public class OutputView {
         }
     }
 
-    private StringBuilder printHand(Player player) {
-        StringBuilder playerCards = new StringBuilder();
-        playerCards.append(player.getName()).append("카드: ");
-
-        for (Card card : player.getHand().getHand()) {
-            playerCards
-                    .append(card.getRank().getName())
-                    .append(card.getSuit().getSuit())
-                    .append(", ");
-        }
-
-        playerCards.delete(playerCards.length() - 2, playerCards.length());
-        return playerCards;
-    }
-
     public void showDealerResult(Map<MatchResult, Integer> dealerResult) {
         StringBuilder result = new StringBuilder();
 
@@ -109,5 +94,20 @@ public class OutputView {
 
     public static void printErrorMessage(String message) {
         System.out.println(message);
+    }
+
+    private StringBuilder printHand(Player player) {
+        StringBuilder playerCards = new StringBuilder();
+        playerCards.append(player.getName()).append("카드: ");
+
+        for (Card card : player.getHand().getHand()) {
+            playerCards
+                    .append(card.getRank().getName())
+                    .append(card.getSuit().getSuit())
+                    .append(", ");
+        }
+
+        playerCards.delete(playerCards.length() - 2, playerCards.length());
+        return playerCards;
     }
 }

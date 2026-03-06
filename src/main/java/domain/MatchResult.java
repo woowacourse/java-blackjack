@@ -16,7 +16,7 @@ public enum MatchResult {
         return value;
     }
 
-    public MatchResult exchange() {
+    public MatchResult reverse() {
         if (this == MatchResult.WIN) return MatchResult.LOSE;
         if (this == MatchResult.LOSE) return MatchResult.WIN;
         return MatchResult.DRAW;
