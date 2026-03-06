@@ -3,7 +3,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Map;
 import model.BlackJack;
 import model.Card;
-import model.Participant;
+import model.participant.Participant;
 import model.Participants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

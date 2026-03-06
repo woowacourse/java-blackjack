@@ -1,7 +1,7 @@
 package controller;
 
 import model.BlackJack;
-import model.Participant;
+import model.participant.Participant;
 import model.Participants;
 import util.InputParser;
 import util.Randoms;
@@ -24,19 +24,16 @@ public class BlackJackController {
         String[] parsedName = InputParser.parseName(rawParticipants);
 
         Participants participants = Participants.of(parsedName);
-        participants.getDealer().setDealer(true);
         BlackJack blackJack = BlackJack.from(participants);
 
         blackJack.dealOut();
-        outputView.printDealOut(participants, blackJack.isFirstTurn());
+        outputView.printDealOut(participants);
         blackJack.setFirstTurn();
 
         for (Participant participant : participants) {
             if (participant.getName().equals("딜러")) {
                 continue;
             }
-
-            if (participant.calculateScore() == 21) continue;
 
             if (participant.calculateScore() == 21) {
                 continue;
@@ -46,17 +43,16 @@ public class BlackJackController {
             do {
                 input = inputView.readHitOrNot(participant.getName());
                 if (input.equals("n")) {
-                    outputView.printHands(participant, blackJack.isFirstTurn());
+                    outputView.printHands(participant);
                     break;
                 }
                 participant.draw(Randoms.pick());
                 if (participant.isBust()) {
-                    participant.open(blackJack.isFirstTurn());
                     outputView.printBustState(participant.getName(), participant.calculateScore());
-                    outputView.printHands(participant, blackJack.isFirstTurn());
+                    outputView.printHands(participant);
                     break;
                 }
-                outputView.printHands(participant, blackJack.isFirstTurn());
+                outputView.printHands(participant);
 
             } while (input.equals("y"));
         }
@@ -67,7 +63,7 @@ public class BlackJackController {
             outputView.printDealerDraw();
         }
 
-        outputView.printHandsAndScore(participants, blackJack.isFirstTurn());
+        outputView.printHandsAndScore(participants);
         outputView.printResult(blackJack.calculateDealerResult(), blackJack.calculatePlayerResult());
     }
 }

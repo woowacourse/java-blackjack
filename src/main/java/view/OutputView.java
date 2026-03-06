@@ -3,39 +3,34 @@ package view;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import model.BlackJack;
-import model.Participant;
+import model.participant.Participant;
 import model.Participants;
 
 public class OutputView {
 
     public static final String LINE_SEPARATOR = System.lineSeparator();
 
-    public void printDealOut(Participants participants, boolean isFirstTurn) {
+    public void printDealOut(Participants participants) {
         List<String> names = participants.getNames();
-        StringBuilder sb = new StringBuilder(); // name1, name2,
-        for (int i = 1; i < names.size(); i++) {
-            sb.append(names.get(i) + ", ");
-        }
         String joinedNames = String.join(", ", names.subList(1, names.size()));
         System.out.println(LINE_SEPARATOR + "딜러와 " + joinedNames + "에게 2장을 나누었습니다.");
 
         for (Participant participant : participants) {
-            String replaced = participant.open(isFirstTurn).toString().replaceAll("[]\\[]", "");
+            String replaced = participant.open().toString().replaceAll("[]\\[]", "");
             System.out.printf("%s카드: %s", participant.getName(), replaced + LINE_SEPARATOR);
         }
 
         System.out.println();
     }
 
-    public void printHands(Participant participant, boolean isFirstTurn) {
-        String replaced = participant.open(isFirstTurn).toString().replaceAll("[]\\[]", "");
+    public void printHands(Participant participant) {
+        String replaced = participant.open().toString().replaceAll("[]\\[]", "");
         System.out.printf("%s카드: %s", participant.getName(), replaced + LINE_SEPARATOR);
     }
 
-    public void printHandsAndScore(Participants participants, boolean isFirstTurn) {
+    public void printHandsAndScore(Participants participants) {
         for (Participant participant : participants) {
-            System.out.printf("%s카드: %s - 결과: %d%s", participant.getName(), participant.open(isFirstTurn), participant.calculateScore(), LINE_SEPARATOR);
+            System.out.printf("%s카드: %s - 결과: %d%s", participant.getName(), participant.open(), participant.calculateScore(), LINE_SEPARATOR);
         }
 
         System.out.println();

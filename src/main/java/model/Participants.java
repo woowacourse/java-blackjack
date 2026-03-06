@@ -1,18 +1,23 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import model.participant.Dealer;
+import model.participant.Participant;
+import model.participant.Player;
 
 public class Participants implements Iterable<Participant> {
     private List<Participant> values;
 
     private Participants(String[] values) {
-        this.values = Arrays.stream(values)
-                .map(Participant::of)
-                .toList();
+        List<Participant> list = new ArrayList<>();
+        list.add(Dealer.of(values[0]));
+        for (int i = 1; i < values.length; i++) {
+            list.add(Player.of(values[i]));
+        }
+        this.values = list;
     }
 
     public static Participants of(String[] splitValue) {
