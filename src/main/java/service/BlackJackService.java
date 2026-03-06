@@ -2,16 +2,17 @@ package service;
 
 import domain.*;
 
-import java.util.HashMap;
+import java.util.EnumMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BlackJackService {
 
     private final static int INIT_HAND_VALUE = 2;
 
-    private Deck deck;
-    private Dealer dealer;
-    private Players players;
+    private final Deck deck;
+    private final Dealer dealer;
+    private final Players players;
 
     public BlackJackService(Deck deck, Dealer dealer, Players players) {
         this.deck = deck;
@@ -32,7 +33,7 @@ public class BlackJackService {
     }
 
     public Map<String, MatchResult> calculateResults() {
-        Map<String, MatchResult> playerResults = new HashMap<>();
+        Map<String, MatchResult> playerResults = new LinkedHashMap<>();
 
         for (Player player : players.getPlayers()) {
             if (player.getHand().isBust()) {
@@ -69,5 +70,17 @@ public class BlackJackService {
         }
 
         return playerResults;
+    }
+
+    public Map<MatchResult, Integer> calculateDealerResult(Map<String, MatchResult> playerResults) {
+        Map<MatchResult, Integer> dealerResult = new EnumMap<>(MatchResult.class);
+
+        for (MatchResult matchResult : playerResults.values()) {
+            if (matchResult == MatchResult.WIN) dealerResult.put(MatchResult.LOSE, dealerResult.getOrDefault(MatchResult.LOSE, 0) + 1);
+            else if (matchResult == MatchResult.DRAW) dealerResult.put(MatchResult.DRAW, dealerResult.getOrDefault(MatchResult.DRAW, 0) + 1);
+            else if (matchResult == MatchResult.LOSE) dealerResult.put(MatchResult.WIN, dealerResult.getOrDefault(MatchResult.WIN, 0) + 1);
+        }
+
+        return dealerResult;
     }
 }
