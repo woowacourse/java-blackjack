@@ -1,45 +1,44 @@
 package domain.card;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 public class CardBundleTest {
 
+    private static final int ACE_BONUS_SCORE = 10;
+
+    private CardBundle cardBundle;
+    private Card cloverAce;
+    private Card spadeJack;
+
+    @BeforeEach
+    public void setUp() {
+        cloverAce = Card.of(CardDenomination.ACE, CardEmblem.CLOVER);
+        spadeJack = Card.of(CardDenomination.JACK, CardEmblem.SPADE);
+
+        this.cardBundle = new CardBundleBuilder()
+                .cards(cloverAce, spadeJack)
+                .build();
+    }
+
     @Test
     void 플레이어의_카드에_에이스가_있는지_확인한다() {
-        Card cloverAce = Card.of(CardDenomination.ACE, CardEmblem.CLOVER);
-        Card spade2 = Card.of(CardDenomination.TWO, CardEmblem.SPADE);
-        Card heart3 = Card.of(CardDenomination.THREE, CardEmblem.HEART);
-        List<Card> cards = List.of(cloverAce, spade2, heart3);
-        CardBundle cardBundle = CardBundle.of(cards);
-
         Assertions.assertThat(cardBundle.hasAce()).isTrue();
     }
 
     @Test
     void 기본점수합을_계산한다() {
-        Card cloverAce = Card.of(CardDenomination.ACE, CardEmblem.CLOVER);
-        Card spadeJack = Card.of(CardDenomination.JACK, CardEmblem.SPADE);
-        List<Card> cards = List.of(cloverAce, spadeJack);
-        CardBundle cardBundle = CardBundle.of(cards);
-
-        int basicScore = cardBundle.getBasicScore(); // 11
-
-        Assertions.assertThat(basicScore).isEqualTo(11);
+        int actualScore = cardBundle.getBasicScore();
+        int expectedScore = cloverAce.getScore() + spadeJack.getScore();
+        Assertions.assertThat(actualScore).isEqualTo(expectedScore);
     }
 
     @Test
     void 최종점수합을_계산한다() {
-        Card cloverAce = Card.of(CardDenomination.ACE, CardEmblem.CLOVER);
-        Card spadeJack = Card.of(CardDenomination.JACK, CardEmblem.SPADE);
-        List<Card> cards = List.of(cloverAce, spadeJack);
-        CardBundle cardBundle = CardBundle.of(cards);
-
-        int resultScore = cardBundle.getResultScore(); // 21
-
-        Assertions.assertThat(resultScore).isEqualTo(21);
+        int actualScore = cardBundle.getResultScore();
+        int expectedScore = cloverAce.getScore() + spadeJack.getScore() + ACE_BONUS_SCORE;
+        Assertions.assertThat(actualScore).isEqualTo(expectedScore);
     }
 
 }
