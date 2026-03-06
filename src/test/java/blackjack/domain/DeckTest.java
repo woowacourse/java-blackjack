@@ -79,4 +79,18 @@ class DeckTest {
         TrumpCard first = deck.draw();
         assertThat(first).isEqualTo(TrumpCard.of(Suit.CLOVER, Rank.KING));
     }
+
+    @Test
+    void 카드_2장을_한번에_지급한다() {
+        List<TrumpCard> cards = new ArrayList<>();
+        for (Suit suit : Suit.values()) {
+            for (Rank rank : Rank.values()) {
+                cards.add(TrumpCard.of(suit, rank));
+            }
+        }
+        Deck deck = Deck.of(cards);
+        List<TrumpCard> drawnCards = deck.drawSecondTimes();
+
+        assertThat(drawnCards).hasSize(2);
+    }
 }
