@@ -1,0 +1,63 @@
+package blackjack.domain;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+public class PlayersTest {
+    private List<Player> playerList;
+    private Deck deck;
+
+    @BeforeEach
+    void setUp() {
+        playerList = new ArrayList<>();
+        playerList.add(Player.of(Name.of("handa")));
+        playerList.add(Player.of(Name.of("dalsu")));
+
+        List<TrumpCard> cards = new ArrayList<>();
+        for (Suit suit : Suit.values()) {
+            for (Rank rank : Rank.values()) {
+                cards.add(TrumpCard.of(suit, rank));
+            }
+        }
+        deck = Deck.of(cards);
+    }
+
+    @Test
+    void 게임에_참가한_플레이어의_명수를_반환한다() {
+        Players players = Players.of(playerList);
+        assertThat(players.count()).isEqualTo(2);
+    }
+
+    @Test
+    void 게임이_시작되면_모든_플레이어가_카드를_받는다() {
+        Players players = Players.of(playerList);
+        Players newPlayers = players.receiveCards(deck);
+
+        List<Player> result = newPlayers.getPlayers();
+        assertThat(result.get(0).countCards()).isEqualTo(2);
+        assertThat(result.get(1).countCards()).isEqualTo(2);
+    }
+
+    @Test
+    void 특정_플레이어가_카드를_추가로_받는다() {
+        Players players = Players.of(playerList);
+        players = players.receiveCards(deck);
+
+        TrumpCard newCard = deck.draw();
+        Players updatedPlayers = players.hitPlayer(0, newCard);
+
+        List<Player> result = updatedPlayers.getPlayers();
+        assertThat(result.get(0).countCards()).isEqualTo(3);
+        assertThat(result.get(1).countCards()).isEqualTo(2);
+    }
+
+    @Test
+    void 특정_플레이어가_카드를_더_받을_수_있는지_확인한다() {
+        Players players = Players.of(playerList);
+        assertThat(players.canHit(0)).isTrue();
+    }
+}
