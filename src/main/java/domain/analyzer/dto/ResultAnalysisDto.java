@@ -1,0 +1,35 @@
+package domain.analyzer.dto;
+
+import domain.analyzer.GameResult;
+
+import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public record ResultAnalysisDto (
+        EnumMap<GameResult, Integer> dealerGameResult,
+        List<PlayerGameResult> playerGameResults
+) {
+    public static ResultAnalysisDto from(List<PlayerGameResult> playerGameResults) {
+        EnumMap<GameResult, Integer> dealerGameResult = new EnumMap<>(GameResult.class);
+        List<GameResult> list = playerGameResults.stream()
+                .map(PlayerGameResult::gameResult)
+                .map(GameResult::reverseResult)
+                .toList();
+
+        for (GameResult gameResult : list) {
+            dealerGameResult.put(gameResult, dealerGameResult.getOrDefault(gameResult, 0) + 1);
+        }
+
+        return new ResultAnalysisDto(dealerGameResult, playerGameResults);
+    }
+
+    public String getDealerResult() {
+        return Arrays.stream(GameResult.values())
+                .filter(dealerGameResult::containsKey) // 맵에 있는 결과만 필터링!
+                .map(result -> dealerGameResult.get(result) + result.displayName())
+                .collect(Collectors.joining(" "));
+    }
+
+}
