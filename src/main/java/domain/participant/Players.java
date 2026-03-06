@@ -2,7 +2,7 @@ package domain.participant;
 
 import java.util.*;
 
-import static domain.util.BlackJackConstant.MAX_PLAYER_SIZE;
+import static util.BlackJackConstant.MAX_PLAYER_SIZE;
 
 public class Players {
 

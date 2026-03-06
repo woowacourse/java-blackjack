@@ -3,7 +3,7 @@ package domain.card;
 import java.util.ArrayList;
 import java.util.List;
 
-import static domain.util.BlackJackConstant.*;
+import static util.BlackJackConstant.*;
 
 public class Hand {
 

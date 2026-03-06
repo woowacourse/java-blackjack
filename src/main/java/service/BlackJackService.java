@@ -10,7 +10,7 @@ import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static domain.util.BlackJackConstant.INIT_HAND_SIZE;
+import static util.BlackJackConstant.INIT_HAND_SIZE;
 
 public class BlackJackService {
 

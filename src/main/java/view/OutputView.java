@@ -8,7 +8,7 @@ import domain.participant.Players;
 
 import java.util.Map;
 
-import static domain.util.BlackJackConstant.INIT_HAND_SIZE;
+import static util.BlackJackConstant.INIT_HAND_SIZE;
 
 public class OutputView {
 

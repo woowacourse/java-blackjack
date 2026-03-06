@@ -2,7 +2,7 @@ package domain.participant;
 
 import java.util.regex.Pattern;
 
-import static domain.util.BlackJackConstant.MAX_NAME_LENGTH;
+import static util.BlackJackConstant.MAX_NAME_LENGTH;
 
 public class Player extends Participant {
 

@@ -2,7 +2,7 @@ package domain.participant;
 
 import domain.card.Card;
 
-import static domain.util.BlackJackConstant.DEALER_HIT_LIMIT;
+import static util.BlackJackConstant.DEALER_HIT_LIMIT;
 
 public class Dealer extends Participant {
 
