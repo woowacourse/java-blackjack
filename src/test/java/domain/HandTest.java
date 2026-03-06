@@ -17,8 +17,10 @@ public class HandTest {
     void 정상_테스트_1() {
         List<Card> cards = List.of(
             new Card(Suit.DIAMOND, Denomination.JACK),
-            new Card(Suit.DIAMOND, Denomination.TEN));
-        Hand hand = new Hand(cards);
+            new Card(Suit.DIAMOND, Denomination.TEN)
+        );
+        Hand hand = new Hand();
+        cards.forEach(hand::add);
 
         int expected = 20;
         int actual = hand.calculateScore();
@@ -33,7 +35,8 @@ public class HandTest {
             new Card(Suit.DIAMOND, Denomination.JACK),
             new Card(Suit.DIAMOND, Denomination.TEN),
             new Card(Suit.DIAMOND, Denomination.FIVE));
-        Hand hand = new Hand(cards);
+        Hand hand = new Hand();
+        cards.forEach(hand::add);
         boolean expected = true;
 
         boolean actual = hand.isBurst();
@@ -48,7 +51,8 @@ public class HandTest {
             new Card(Suit.DIAMOND, Denomination.JACK),
             new Card(Suit.DIAMOND, Denomination.NINE),
             new Card(Suit.DIAMOND, Denomination.TWO));
-        Hand hand = new Hand(cards);
+        Hand hand = new Hand();
+        cards.forEach(hand::add);
         boolean expected = false;
 
         boolean actual = hand.isBurst();
@@ -62,7 +66,8 @@ public class HandTest {
         List<Card> cards = List.of(
             new Card(Suit.DIAMOND, Denomination.NINE),
             new Card(Suit.DIAMOND, Denomination.ACE));
-        Hand hand = new Hand(cards);
+        Hand hand = new Hand();
+        cards.forEach(hand::add);
         int expected = 20;
 
         int actual = hand.calculateScore();
@@ -76,7 +81,8 @@ public class HandTest {
         List<Card> cards = List.of(
             new Card(Suit.DIAMOND, Denomination.ACE),
             new Card(Suit.DIAMOND, Denomination.ACE));
-        Hand hand = new Hand(cards);
+        Hand hand = new Hand();
+        cards.forEach(hand::add);
         int expected = 12;
 
         int actual = hand.calculateScore();

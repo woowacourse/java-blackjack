@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
@@ -7,8 +8,12 @@ public class Hand {
 
     private final List<Card> cards;
 
-    Hand(List<Card> cards) {
-        this.cards = cards;
+    public Hand() {
+        this.cards = new ArrayList<>();
+    }
+
+    public void add(Card card) {
+        cards.add(card);
     }
 
     public int calculateScore() {
@@ -35,8 +40,6 @@ public class Hand {
 
         return updatedScore;
     }
-
-
 
     public boolean isBurst() {
         return calculateScore() > BURST_THRESHOLD;
