@@ -1,18 +1,23 @@
 package domain;
 
-public class Dealer extends Participant{
-    private static final int DEALER_CARD_SUM_THRESHOLD = 16;
+import java.util.List;
+
+public class Dealer {
+    private final Hand hand;
 
     private Dealer(Hand hand) {
-        super(hand);
+        this.hand = hand;
     }
 
     public static Dealer from(Hand hand) {
         return new Dealer(hand);
     }
 
+    public List<Card> getHand() {
+        return hand.getCards();
+    }
 
     public boolean checkThreshold() {
-        return getHand().getScore().value() <= DEALER_CARD_SUM_THRESHOLD;
+        return hand.getScore().getValue() <= 16;
     }
 }
