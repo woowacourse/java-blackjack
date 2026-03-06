@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.model.Card;
+import blackjack.model.Player;
 import blackjack.model.TotalResult;
 import java.util.List;
 
@@ -10,7 +11,11 @@ public class OutputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
-    public void printCardDistributionCompleted(List<String> names) {
+    public void printCardDistributionCompleted(List<Player> players) {
+        List<String> names = players.stream()
+                .map(Player::getName)
+                .toList();
+
         String joinedName = String.join(", ", names);
         System.out.println("딜러와 " + joinedName + "에게 2장을 나누었습니다.");
     }
