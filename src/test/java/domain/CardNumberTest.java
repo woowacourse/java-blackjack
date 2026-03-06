@@ -20,7 +20,7 @@ class CardNumberTest {
     @DisplayName("A,J,Q,K가 아닌 문자는 IllegalArgumentException을 던진다.")
     @ParameterizedTest
     @ValueSource(strings = {"C", "B", "O"})
-    void courtTest_notContainsABJQK_IllegalArgumentException(String value) {
+    void courtTest_notContainsAJQK_IllegalArgumentException(String value) {
         Assertions.assertThatThrownBy(() -> CardNumber.matchCardNumber(value))
                 .isInstanceOf(IllegalArgumentException.class);
     }
@@ -33,7 +33,7 @@ class CardNumberTest {
             "Q, Q",
             "K, K"
     })
-    void courtTest_inputA_A(String value, CardNumber cardNumber) {
+    void courtTest_inputAJQK_A(String value, CardNumber cardNumber) {
         Assertions.assertThat(CardNumber.matchCardNumber(value))
                 .isEqualTo(cardNumber);
     }
