@@ -38,6 +38,11 @@ public class BlackjackController {
     }
 
     private void printGameSettingResult(List<Player> players, Dealer dealer) {
+        List<String> playersName = players.stream()
+                .map(Player::getName)
+                .toList();
+
+        OutputView.printGameSettingMessage(dealer.getName(), playersName);
         OutputView.printSettingCardsResult(dealer.getName(), dealer.getCardsName().subList(0, 1));
         for (Player player : players) {
             OutputView.printSettingCardsResult(player.getName(), player.getCardsName());

@@ -9,6 +9,16 @@ public class OutputView {
     private OutputView() {
     }
 
+    public static void printGameSettingMessage(String dealerName, List<String> playersName) {
+        System.out.println();
+        StringJoiner stringJoiner = new StringJoiner(", ");
+        for (String playerName : playersName) {
+            stringJoiner.add(playerName);
+        }
+
+        System.out.println(dealerName + "와 " + stringJoiner + "에게 2장을 나누었습니다.");
+    }
+
     public static void printSettingCardsResult(String userName, List<String> cards) {
         System.out.print(userName + "카드: ");
 
