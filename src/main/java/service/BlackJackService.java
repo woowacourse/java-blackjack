@@ -25,6 +25,10 @@ public class BlackJackService {
         this.cards = cards;
     }
 
+    public void shuffle() {
+        cards.shuffle();
+    }
+
     public void draw(Participant participant) {
         Card card = cards.draw();
 
