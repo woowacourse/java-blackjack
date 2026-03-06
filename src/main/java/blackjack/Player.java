@@ -32,4 +32,8 @@ public class Player {
         return hand.isBust();
     }
 
+    public int getTotalPoint(){
+        return hand.getTotalPoint();
+    }
+
 }

@@ -27,4 +27,17 @@ public class OutputView {
     }
 
 
+    public void printFinalCardResult(Dealer dealer, Players players) {
+
+        System.out.printf("딜러카드: %s - 결과: %d%n",
+                String.join(", ", dealer.getCardNames()), dealer.getTotalPoint() );
+        for (Player player : players.getPlayers()) {
+            System.out.printf("%s카드: %s - 결과: %d%n", player.getName(),player.getCardNames(),player.getTotalPoint());
+        }
+
+
+    }
+
+
+
 }

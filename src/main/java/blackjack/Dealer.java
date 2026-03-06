@@ -26,4 +26,14 @@ public class Dealer {
         return hand.isOver17();
     }
 
+    public String getCardNames(){
+        return hand.getCardNames();
+    }
+
+    public int getTotalPoint(){
+        return hand.getTotalPoint();
+    }
+
+
+
 }

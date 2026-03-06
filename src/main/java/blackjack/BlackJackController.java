@@ -22,16 +22,22 @@ public class BlackJackController {
         playerTurn(players, deck);
 
         // 딜러 턴
+        dealerTurn(dealer, deck);
+
+        //최종 결과 출력
+        outputView.printFinalCardResult(dealer,players);
+
+
+
+    }
+
+    private void dealerTurn(Dealer dealer, Deck deck) {
         while (true) {
             boolean isOver17 = dealer.isOver17();
             if(isOver17) break;
             outputView.printDealerDraw();
             dealer.recieveCard(deck.draw());
         }
-
-
-
-
     }
 
     private void playerTurn(Players players, Deck deck) {
