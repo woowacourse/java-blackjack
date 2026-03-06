@@ -4,7 +4,7 @@ import domain.MatchResult;
 import domain.deck.CardDeck;
 import dto.BlackjackResult;
 import dto.CardInfo;
-import dto.GamblerResultLog;
+import dto.MatchResultLog;
 import expcetion.BlackjackException;
 import expcetion.ExceptionMessage;
 import java.util.HashSet;
@@ -40,8 +40,8 @@ public class Gamblers {
     }
 
     public BlackjackResult getResult(int dealerScore) {
-        List<GamblerResultLog> logs = gamblers.stream()
-                .map(g -> new GamblerResultLog(g.getName(), g.getResult(dealerScore)))
+        List<MatchResultLog> logs = gamblers.stream()
+                .map(g -> new MatchResultLog(g.getName(), g.getResult(dealerScore)))
                 .toList();
 
         int winCount = count(logs, MatchResult.LOSE);
@@ -51,7 +51,7 @@ public class Gamblers {
         return new BlackjackResult(winCount, loseCount, drawCount, logs);
     }
 
-    private int count(List<GamblerResultLog> logs, MatchResult result) {
+    private int count(List<MatchResultLog> logs, MatchResult result) {
         return (int) logs.stream()
                 .filter(log -> log.matchResult() == result)
                 .count();

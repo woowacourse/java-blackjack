@@ -6,6 +6,6 @@ public record BlackjackResult(
         int winCount,
         int lossCount,
         int drawCount,
-        List<GamblerResultLog> gamblerResultLog
+        List<MatchResultLog> matchResultLog
 ) {
 }

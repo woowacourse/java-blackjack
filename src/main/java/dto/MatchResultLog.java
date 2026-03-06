@@ -2,7 +2,7 @@ package dto;
 
 import domain.MatchResult;
 
-public record GamblerResultLog(
+public record MatchResultLog(
         String name,
         MatchResult matchResult
 ) {
