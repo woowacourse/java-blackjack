@@ -1,7 +1,10 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import constant.Rank;
+import constant.Suit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -30,7 +33,7 @@ class PlayerTest {
                 String expected = "jacob";
                 Assertions.assertEquals(expected, actual);
             }
-            
+
         }
 
         @Nested
@@ -56,6 +59,70 @@ class PlayerTest {
                 assertThatThrownBy(() -> new Player(name))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("[ERROR] 게임 참가자의 이름은 공백이 될 수 없습니다.");
+            }
+        }
+    }
+
+    @Nested
+    class AddCardTest {
+
+        @Nested
+        class Success {
+
+            @Test
+            void 카드를_추가하면_손패에_카드가_저장되어야_한다() {
+
+                // given
+                Player player = new Player("jacob");
+                Card card = new Card(Rank.ACE, Suit.HEART);
+
+                // when
+                player.addCard(card);
+
+                // then
+                assertThat(player.getHand().getCardNames().size()).isEqualTo(1);
+            }
+        }
+    }
+
+    @Nested
+    class IsBustTest {
+
+        @Nested
+        class Success {
+
+            @Test
+            void 플레이어의_점수가_21_초과이면_버스트이다() {
+
+                // given
+                Player player = new Player("jacob");
+                Card card1 = new Card(Rank.TEN, Suit.HEART);
+                Card card2 = new Card(Rank.TEN, Suit.HEART);
+                Card card3 = new Card(Rank.TEN, Suit.HEART);
+
+                // when
+                player.addCard(card1);
+                player.addCard(card2);
+                player.addCard(card3);
+
+                // then
+                assertThat(player.isBust()).isTrue();
+            }
+
+            @Test
+            void 플레이어의_점수가_21_이하이면_버스트가_아니다() {
+
+                // given
+                Player player = new Player("jacob");
+                Card card1 = new Card(Rank.TEN, Suit.HEART);
+                Card card2 = new Card(Rank.ACE, Suit.HEART);
+
+                // when
+                player.addCard(card1);
+                player.addCard(card2);
+
+                // then
+                assertThat(player.isBust()).isFalse();
             }
         }
     }
