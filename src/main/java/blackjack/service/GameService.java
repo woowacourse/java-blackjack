@@ -24,4 +24,15 @@ public class GameService {
         dealer.bring(dealer.bringCard());
     }
 
+    public boolean isDealerWinning(User user, Dealer dealer) {
+        if (user.isBurst()) {
+            return true;
+        }
+        if (dealer.isBurst()) {
+            return false;
+        }
+
+        return user.calculateCardsValue() < dealer.calculateCardsValue();
+    }
+
 }

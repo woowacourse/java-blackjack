@@ -32,6 +32,8 @@ public class BlackjackController {
         }
 
         printGameResult(users, dealer);
+
+        printWinningResult(users, dealer);
     }
 
     private void printGameSettingResult(List<User> users, Dealer dealer) {
@@ -88,6 +90,13 @@ public class BlackjackController {
         OutputView.printCardsResult(dealer.getName(), dealer.getCardsName(), dealer.calculateCardsValue());
         for (User user : users) {
             OutputView.printCardsResult(user.getName(), user.getCardsName(), user.calculateCardsValue());
+        }
+    }
+
+    private void printWinningResult(List<User> users, Dealer dealer) {
+        for (User user : users) {
+            boolean isDealerWinning = gameService.isDealerWinning(user, dealer);
+            System.out.println(isDealerWinning);
         }
     }
 
