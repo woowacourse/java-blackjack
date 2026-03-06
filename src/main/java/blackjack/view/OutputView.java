@@ -15,6 +15,7 @@ public class OutputView {
                 .map(Player::getName)
                 .toList();
         StringBuilder sb = new StringBuilder();
+        sb.append("\n");
         sb.append("딜러와 ");
         sb.append(String.join(", ", names));
         sb.append("에게 2장을 나누었습니다.");
@@ -24,6 +25,7 @@ public class OutputView {
         for (Player player : players) {
             printPlayerCards(player);
         }
+        System.out.println();
     }
 
     private static void printDealerCard(Dealer dealer) {
@@ -43,7 +45,7 @@ public class OutputView {
     }
 
     public static void printDealerHit() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
     }
 
     public static void printCardStatus(GameSummary gameSummary) {
@@ -53,12 +55,13 @@ public class OutputView {
         sb.append(user.getName() + "카드: ");
         List<String> cardFormats = user.getCardStatus().getCards().stream().map(Card::getFormat).toList();
         sb.append(String.join(", ", cardFormats));
-        sb.append(" - 결과: " + gameSummary.totalScore()).append("\n");
+        sb.append(" - 결과: " + gameSummary.totalScore());
 
         System.out.println(sb);
     }
 
     public static void printGameResult(List<User> users) {
+        System.out.println();
         System.out.println("## 최종 승패");
 
         Dealer dealer = (Dealer) users.getFirst();
