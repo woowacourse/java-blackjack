@@ -22,7 +22,7 @@ class PlayersTest {
                 .build();
         Dealer dealer = Dealer.of(cardDeck);
 
-        players.giveMeFirstCardBundle(dealer);
+        players.dealCardBundle(dealer);
         List<PlayerHandDto> playersHand = players.getPlayersHand();
         Assertions.assertThat(playersHand.getFirst()).isEqualTo(PlayerHandDto.of(songsong));
     }

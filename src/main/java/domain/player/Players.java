@@ -18,7 +18,7 @@ public class Players {
         return new Players(players);
     }
 
-    public void giveMeFirstCardBundle(Dealer dealer) {
+    public void dealCardBundle(Dealer dealer) {
         for (Player player : players) {
             dealer.handOutCardToPlayer(player, 2);
         }

@@ -13,7 +13,6 @@ import domain.player.dto.PlayerHandDto;
 import domain.player.dto.PlayerResultDto;
 import domain.view.ApplicationView;
 
-import javax.swing.*;
 import java.util.List;
 
 public class BlackjackGame {
@@ -83,7 +82,7 @@ public class BlackjackGame {
 
     private void dealInitialCard(Dealer dealer, Players players) {
         dealer.drawMySelf(2);
-        players.giveMeFirstCardBundle(dealer);
+        players.dealCardBundle(dealer);
     }
 
     private Dealer enterDealer() {
