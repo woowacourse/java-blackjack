@@ -52,14 +52,14 @@ public class UserTest {
     void 가지고있는_카드의_합을_계산하는_기능_테스트() {
         // given
         User user = new User("밀란");
-        user.bring(new Card(CardValue.A, Shape.DIAMOND));
-        user.bring(new Card(CardValue.FIVE, Shape.DIAMOND));
+        user.bring(new Card(CardValue.FOUR, Shape.DIAMOND));
+        user.bring(new Card(CardValue.TWO, Shape.DIAMOND));
 
         // when
         int sum = user.calculateCardsValue();
 
         // then
-        assertThat(6).isEqualTo(sum);
+        assertThat(sum).isEqualTo(6);
     }
 
     @Test
@@ -76,6 +76,37 @@ public class UserTest {
 
         // then
         assertThat(isBurst).isTrue();
+    }
+
+    @Test
+    @DisplayName("ACE의 값이 1이 유리할 때 테스트")
+    void ACE의_값이_1이_유리할_때_테스트() {
+        // given
+        User user = new User("밀란");
+        user.bring(new Card(CardValue.A, Shape.DIAMOND));
+        user.bring(new Card(CardValue.TEN, Shape.DIAMOND));
+        user.bring(new Card(CardValue.THREE, Shape.DIAMOND));
+
+        // when
+        int sum = user.calculateCardsValue();
+
+        // then
+        assertThat(sum).isEqualTo(14);
+    }
+
+    @Test
+    @DisplayName("ACE의 값이 11이 유리할 때 테스트")
+    void ACE의_값이_11이_유리할_때_테스트() {
+        // given
+        User user = new User("밀란");
+        user.bring(new Card(CardValue.A, Shape.DIAMOND));
+        user.bring(new Card(CardValue.TEN, Shape.DIAMOND));
+
+        // when
+        int sum = user.calculateCardsValue();
+
+        // then
+        assertThat(sum).isEqualTo(21);
     }
 
 }
