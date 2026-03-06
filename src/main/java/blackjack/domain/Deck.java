@@ -1,7 +1,9 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Deck {
     private static final int CARDS_COUNT = 52;
@@ -13,12 +15,10 @@ public class Deck {
     }
 
     public static Deck create(ShuffleStrategy strategy) {
-        List<TrumpCard> cards = new ArrayList<>();
-        for (Suit suit : Suit.values()) {
-            for (Rank rank : Rank.values()) {
-                cards.add(TrumpCard.of(suit, rank));
-            }
-        }
+        List<TrumpCard> cards = Arrays.stream(Suit.values())
+                .flatMap(suit -> Arrays.stream(Rank.values())
+                        .map(rank -> TrumpCard.of(suit, rank)))
+                .collect(Collectors.toList());
         strategy.shuffle(cards);
         return new Deck(cards);
     }
