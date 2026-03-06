@@ -6,7 +6,6 @@ import domain.Name;
 import domain.Participant;
 import domain.Participants;
 import domain.Referee;
-import domain.card.Card;
 import domain.card.Deck;
 import java.util.List;
 import view.InputView;
@@ -15,55 +14,32 @@ import view.OutputView;
 public class BlackjackGame {
 
     public void run() {
-        List<String> playerNames = InputView.readPlayerNames();
-
         Deck deck = new Deck();
-        Participants participants = new Participants();
 
-        for (String playerName : playerNames) {
-            Participant participant = new Participant(new Name(playerName), new Hand());
-            participants.add(participant);
-            for (int i = 0; i < 2; i++) {
-                Card card = deck.drawCard();
-                participant.receiveCard(card);
-            }
-        }
-
-        Participant dealer = new Participant(new Name("딜러"), new Hand());
-        for (int i = 0; i < 2; i++) {
-            Card card = deck.drawCard();
-            dealer.receiveCard(card);
-        }
+        List<String> playerNames = InputView.readPlayerNames();
+        Participants participants = new Participants(playerNames, deck);
+        Participant dealer = initDealer(deck);
 
         OutputView.showIntroMessage(participants);
         OutputView.showDealerCardName(dealer);
+        OutputView.showPlayerCardName(participants);
 
-        for (Participant participant : participants.getPlayers()) {
-            OutputView.showCardName(participant);
-        }
-
-        for (Participant participant : participants.getPlayers()) {
+        for (Participant participant : participants.getParticipants()) {
             while (participant.getGameState() == GameState.HIT) {
                 GameCommand gameCommand = GameCommand.from(
                         InputView.readHitOrStand(participant.getName()));
-                if (!gameCommand.isYes()) {
+                if (gameCommand.isNo()) {
                     participant.changeState();
+                    break;
                 }
-                if (gameCommand.isYes()) {
-                    Card hitCard = deck.drawCard();
-                    participant.receiveCard(hitCard);
-                    if (participant.isBust()) {
-                        participant.changeState();
-                    }
-                }
+                participant.playTurn(deck);
                 OutputView.showCardName(participant);
             }
         }
         // 딜러도 16이하 시 카드 추
         while (dealer.getGameState() == GameState.HIT) {
             OutputView.showDealerMessage();
-            Card receivedCard = deck.drawCard();
-            dealer.receiveCard(receivedCard);
+            dealer.playTurn(deck);
             if (dealer.isBust() && dealer.getScore() >= 17) {
                 dealer.changeState();
             }
@@ -75,6 +51,11 @@ public class BlackjackGame {
         Referee referee = new Referee();
         GameStatistics statistics = referee.judge(dealer, participants);
         OutputView.showGameResult(statistics);
+    }
 
+    private static Participant initDealer(Deck deck) {
+        Participant dealer = new Participant(new Name("딜러"), new Hand());
+        dealer.initHand(deck);
+        return dealer;
     }
 }

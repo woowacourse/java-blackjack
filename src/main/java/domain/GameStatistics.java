@@ -1,7 +1,7 @@
 package domain;
 
 import java.util.EnumMap;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GameStatistics {
@@ -10,7 +10,7 @@ public class GameStatistics {
     private final Map<GameResult, Integer> dealerResult;
 
     public GameStatistics() {
-        this.playerResult = new HashMap<>();
+        this.playerResult = new LinkedHashMap<>();
         this.dealerResult = initialize();
     }
 

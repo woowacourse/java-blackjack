@@ -9,15 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class OutputView {
-
+public final class OutputView {
 
     private static final String DELIMITER = ", ";
     private static final String NEW_LINE = System.lineSeparator();
 
     public static void showIntroMessage(Participants participants) {
         System.out.println(NEW_LINE + "딜러와 "
-                + String.join(DELIMITER, String.join(DELIMITER, participants.getPlayerNames())
+                + String.join(DELIMITER, String.join(DELIMITER, participants.getParticipantNames())
                 + "에게 2장을 나누었습니다."));
     }
 
@@ -26,6 +25,11 @@ public class OutputView {
         List<String> dealerCard = new ArrayList<>(cardNames);
         dealerCard.removeFirst();
         System.out.println(getCardNames(dealer, dealerCard));
+    }
+
+    public static void showPlayerCardName(Participants participants) {
+        participants.getParticipants()
+                .forEach(OutputView::showCardName);
     }
 
     public static void showCardName(Participant participant) {
@@ -52,21 +56,20 @@ public class OutputView {
         List<String> dealerCardNames = createCardNames(dealer);
         System.out.println(getCardNames(dealer, dealerCardNames) + " - 결과: " + dealer.getScore());
 
-        for (Participant participant : participants.getPlayers()) {
+        for (Participant participant : participants.getParticipants()) {
             List<String> playerCardNames = createCardNames(participant);
             System.out.println(getCardNames(participant, playerCardNames) + " - 결과: " + participant.getScore());
         }
     }
 
     public static void showGameResult(GameStatistics statistics) {
-        System.out.println("## 최종 승패");
+        System.out.println(NEW_LINE + "## 최종 승패");
         System.out.print("딜러: ");
         for (Map.Entry<GameResult, Integer> entry : statistics.getDealerResult().entrySet()) {
             System.out.print(entry.getValue() + entry.getKey().getDescription() + " ");
         }
         System.out.println();
 
-        //TODO: 이름 출력 시 입력순 정렬 필요
         Map<Participant, GameResult> playerResult = statistics.getPlayerResult();
         for (Participant participant : playerResult.keySet()) {
             System.out.println(participant.getName() + ": " + playerResult.get(participant).getDescription());

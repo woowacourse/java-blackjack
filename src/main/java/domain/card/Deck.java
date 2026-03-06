@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Deck {
 
-    private Deque<Card> cards;
+    private final Deque<Card> cards;
 
     public Deck() {
         List<Card> cards = initialize();
@@ -19,7 +19,8 @@ public class Deck {
 
     private List<Card> initialize() {
         List<Card> cards = new ArrayList<>();
-        Arrays.stream(Emblem.values()).forEach(emblem -> createCard(emblem, cards));
+        Arrays.stream(Emblem.values())
+                .forEach(emblem -> createCard(emblem, cards));
         return cards;
     }
 

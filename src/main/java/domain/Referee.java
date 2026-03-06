@@ -9,7 +9,7 @@ public class Referee {
     }
 
     public GameStatistics judge(Participant dealer, Participants players) {
-        for (Participant player : players.getPlayers()) {
+        for (Participant player : players.getParticipants()) {
             GameResult playerResult = GameResult.judge(dealer.getScore(), player.getScore());
             gameStatistics.addPlayerResult(player, playerResult);
 
