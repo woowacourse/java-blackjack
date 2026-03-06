@@ -27,7 +27,9 @@ public class BlackjackController {
         printGameSettingResult(users, dealer);
 
         getMoreCards(users, dealer);
-        getMoreCardsForDealer(dealer);
+        if (!isAllUserBurst(users)) {
+            getMoreCardsForDealer(dealer);
+        }
 
         printGameResult(users, dealer);
     }
@@ -71,6 +73,15 @@ public class BlackjackController {
             OutputView.printGetMoreCardsForDealer(dealer.getName());
             gameService.getMoreCardForDealer(dealer);
         }
+    }
+
+    private boolean isAllUserBurst(List<User> users) {
+        for (User user : users) {
+            if (!user.isBurst()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void printGameResult(List<User> users, Dealer dealer) {
