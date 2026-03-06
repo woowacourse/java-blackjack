@@ -1,5 +1,6 @@
 package domain;
 
+import static constant.BlackjackConstant.BUST_BOUND;
 import static domain.CardRank.ACE;
 import static domain.CardRank.JACK;
 import static domain.CardRank.KING;
@@ -13,7 +14,6 @@ import java.util.Set;
 
 public class HandCards {
 
-    private static final int BUST_BOUND = 21;
     private final List<Card> handCards;
     private final Set<Integer> scores = new HashSet<>();
 
@@ -43,6 +43,10 @@ public class HandCards {
         scores.addAll(newScore);
     }
 
+    public boolean isBust() {
+        return getScore() > BUST_BOUND;
+    }
+
     public int getScore() {
         // 21 이하 중에 최대 점수
         int notBustMaxScore = 0;
@@ -60,10 +64,6 @@ public class HandCards {
         return Collections.min(scores);
     }
 
-    public boolean isBust(int total) {
-        return total > BUST_BOUND;
-    }
-
     public List<Card> getHandCards() {
         return List.copyOf(handCards);
     }
@@ -76,14 +76,5 @@ public class HandCards {
         return cardRanks.contains(ACE) &&
                 (cardRanks.contains(TEN) || cardRanks.contains(JACK)
                         || cardRanks.contains(QUEEN) || cardRanks.contains(KING));
-    }
-
-    private boolean hasAce() {
-        for (Card handCard : handCards) {
-            if (handCard.getCardRank().equals(ACE)) {
-                return true;
-            }
-        }
-        return false;
     }
 }
