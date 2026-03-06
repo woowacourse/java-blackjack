@@ -26,7 +26,7 @@ class PlayerTest {
         Player player = new Player("pobi");
         player.receiveCard(new Card(Suit.HEART, Rank.TEN));
         player.receiveCard(new Card(Suit.SPADE, Rank.TEN));
-        player.receiveCard(new Card(Suit.CLUB, Rank.TEN));
+        player.receiveCard(new Card(Suit.CLOVER, Rank.TEN));
 
         assertThat(player.canReceiveCard()).isFalse();
     }
