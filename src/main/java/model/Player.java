@@ -5,6 +5,7 @@ import java.util.Objects;
 import model.dto.PlayerName;
 
 public class Player extends Participant {
+    private static final String DEALER_NAME = "딜러";
 
     public Player(PlayerName name) {
         super(name);
@@ -12,7 +13,7 @@ public class Player extends Participant {
     }
 
     private void validate(PlayerName name) {
-        if(name.value().equals("딜러")) {
+        if(name.value().equals(DEALER_NAME)) {
             throw new IllegalArgumentException(ErrorMessage.NO_PLAYER_NAME_DEALER.getMessage());
         }
     }
