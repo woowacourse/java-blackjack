@@ -15,14 +15,16 @@ public class Deck {
     public List<Card> createDeck() {
         List<Card> cards = new ArrayList<>();
 
-        for (int i = 0; i < Figure.getSize(); i++) {
-            int index = i;
-            // TODO: 코드 가독성 올리기 (2026. 3. 5.)
-            cards.addAll(Arrays.stream(Number.values())
-                    .map(num -> new Card(Figure.values()[index], num))
-                    .toList());
+        for (Figure figure : Figure.values()) {
+            cards.addAll(matchNumbersWith(figure));
         }
         return cards;
+    }
+
+    private List<Card> matchNumbersWith(Figure figure) {
+        return Arrays.stream(Number.values())
+                .map(number -> new Card(figure, number))
+                .toList();
     }
 
     public void shuffle() {
