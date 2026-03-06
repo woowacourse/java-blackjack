@@ -15,6 +15,10 @@ public class Card {
         return rank.getValue();
     }
 
+    public String getCardCode() {
+        return rank.getCode();
+    }
+
     public String getCardShape(){
         return pattern.getShape();
     }

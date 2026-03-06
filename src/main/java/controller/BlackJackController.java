@@ -8,7 +8,6 @@ import view.OutputView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class BlackJackController {
     private final BlackJackService blackJackService;
@@ -39,7 +38,7 @@ public class BlackJackController {
                 OutputView.hitOrStandMessage(player);
                 String input = InputView.input();
                 if (input.equals("n")) {
-                    //카드계산
+                    OutputView.holdingCardMessage(player);
                     player.getTotalCardScore();
                     break;
                 }
