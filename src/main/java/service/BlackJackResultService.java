@@ -30,6 +30,11 @@ public class BlackJackResultService {
                 continue;
             }
 
+            if(dealer.isBurst()){
+                map.put(player.getName(), WinningStatus.WIN);
+                continue;
+            }
+
             if(dealer.getHand().getSum() > player.getHand().getSum()){
                 map.put(player.getName(), WinningStatus.LOSE);
             }

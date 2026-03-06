@@ -8,11 +8,11 @@ public record FinalResultDto(List<String> finalResults) {
 
     public static FinalResultDto from(Map<String, WinningStatus> playerResults) {
         long dealerWinCount = playerResults.values().stream()
-                .filter(v -> v == WinningStatus.WIN)
+                .filter(v -> v == WinningStatus.LOSE)
                 .count();
 
         long dealerLoseCount = playerResults.values().stream()
-                .filter(v -> v == WinningStatus.LOSE)
+                .filter(v -> v == WinningStatus.WIN)
                 .count();
 
         List<String> finalResults = new ArrayList<>();

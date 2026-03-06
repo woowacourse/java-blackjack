@@ -2,7 +2,6 @@ package service;
 
 import domain.Dealer;
 import domain.Player;
-import domain.WinningStatus;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
@@ -13,8 +12,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -46,7 +43,6 @@ class BlackJackResultServiceTest {
         assertNotNull(scoreResultDto);
     }
 
-    // 승무패 하나씩
     @Test
     void createFinalResultDto() {
         // given
@@ -61,5 +57,36 @@ class BlackJackResultServiceTest {
         assertEquals("봉구스: 패",finalResultDto.finalResults().get(1));
         assertEquals("시오: 무",finalResultDto.finalResults().get(2));
         assertEquals("영기: 승",finalResultDto.finalResults().get(3));
+    }
+
+    @Test
+    void 플레이어가_Burst로_패배하는_경우() {
+        // given
+        dealer.draw(new Card(Suit.HEARTS, Rank.JACK));
+        players.get(0).draw(new Card(Suit.CLUBS, Rank.KING));
+        players.get(0).draw(new Card(Suit.CLUBS, Rank.QUEEN));
+        players.get(0).draw(new Card(Suit.CLUBS, Rank.JACK));
+
+        FinalResultDto finalResultDto = blackJackResultService.createFinalResultDto(dealer, players);
+
+        // when, then
+        assertEquals("딜러: 3승 0패",finalResultDto.finalResults().get(0));
+        assertEquals("봉구스: 패",finalResultDto.finalResults().get(1));
+    }
+
+
+    @Test
+    void 딜러가_Burst로_패배하는_경우() {
+        // given
+        dealer.draw(new Card(Suit.HEARTS, Rank.JACK));
+        dealer.draw(new Card(Suit.HEARTS, Rank.KING));
+        dealer.draw(new Card(Suit.HEARTS, Rank.QUEEN));
+        players.get(0).draw(new Card(Suit.CLUBS, Rank.KING));
+
+        FinalResultDto finalResultDto = blackJackResultService.createFinalResultDto(dealer, players);
+
+        // when, then
+        assertEquals("딜러: 0승 3패",finalResultDto.finalResults().get(0));
+        assertEquals("봉구스: 승",finalResultDto.finalResults().get(1));
     }
 }
