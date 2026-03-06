@@ -4,11 +4,13 @@ import blackjack.domain.deck.Deck;
 import blackjack.domain.hand.Score;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.stream.IntStream;
 
 public class Dealer extends Participant {
 
     private static final String DEALER_NAME = "딜러";
     private static final int HIT_THRESHOLD = 16;
+    private static final int INITIAL_CARD_COUNT = 2;
 
     private Deck deck;
 
@@ -23,10 +25,9 @@ public class Dealer extends Participant {
     }
 
     private void dealCardsTo(Players players) {
-        for (int i = 0; i < 2; i++) {
-            players.getPlayers()
-                    .forEach(player -> player.receiveCard(deck.draw()));
-        }
+        IntStream.range(0, INITIAL_CARD_COUNT)
+                .forEach(i -> players.getPlayers()
+                        .forEach(player -> player.receiveCard(deck.draw())));
     }
 
     private void dealCardToDealer() {
