@@ -36,7 +36,7 @@ public class GameCards {
         Collections.shuffle(cards);
     }
 
-    public Card drawCard() {
+    public Card     drawCard() {
         return cards.removeFirst();
     }
 }

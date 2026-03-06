@@ -7,8 +7,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class NameRequestDtoTest {
-    // null 검증 isBlank()
-
     @Test
     @DisplayName("이름 입력 문자열이 null이면 에러 발생 검증")
     void name_is_not_null() {
