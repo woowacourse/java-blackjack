@@ -11,8 +11,7 @@ public class InputView {
         return Console.readLine();
     }
 
-    public String readAnswer(String nickname) {
-
+    public static String readAnswer(String nickname) {
         System.out.println(nickname + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         return Console.readLine();
     }

@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.Answer;
 import blackjack.domain.Dealer;
 import blackjack.domain.Hand;
 import blackjack.domain.Player;
@@ -19,6 +20,13 @@ public class BlackjackController {
         Dealer dealer = new Dealer(new Hand(), Status.HIT, trump);
         dealer.pitch(players);
         OutputView.printStartMessage(players, dealer);
+
+        while (true) {
+            players.forEach(player -> {
+                Answer answer =
+                    RetryExecutor.retry(this::readAnswer, player.getNickname());
+            });
+        }
     }
 
     private List<Player> readNicknames() {
@@ -30,5 +38,7 @@ public class BlackjackController {
             .toList();
     }
 
-
+    private Answer readAnswer(String nickname) {
+        return Answer.pick(InputView.readAnswer(nickname));
+    }
 }
