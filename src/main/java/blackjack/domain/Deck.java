@@ -49,9 +49,13 @@ public class Deck {
         }
     }
 
-//    public List<TrumpCard> drawSecondTimes() {
-//        return new ArrayList<>();
-//    }
+    public List<TrumpCard> drawSecondTimes() {
+        List<TrumpCard> cards = new ArrayList<>();
+
+        cards.add(draw());
+        cards.add(draw());
+        return cards;
+    }
 
     public TrumpCard draw() {
         if (cards.isEmpty()) {
