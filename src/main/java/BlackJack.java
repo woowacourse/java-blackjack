@@ -3,7 +3,7 @@ import domain.deck.Deck;
 import domain.player.Dealer;
 import domain.player.Gambler;
 import domain.player.Gamblers;
-import dto.GamblerCardInfo;
+import dto.CardInfo;
 import java.util.List;
 import parser.AnswerParser;
 import parser.PlayNameParser;
@@ -47,8 +47,8 @@ public class BlackJack {
         OutputView.printInitMessage(gamblers.getNames());
         OutputView.printDealerFirstCard(dealer.showFirstCard());
 
-        for (GamblerCardInfo gamblerCardInfo : gamblers.gamblerCardInfos()) {
-            OutputView.printPlayerCards(gamblerCardInfo);
+        for (CardInfo cardInfo : gamblers.gamblerCardInfos()) {
+            OutputView.printPlayerCards(cardInfo);
         }
     }
 
@@ -89,9 +89,9 @@ public class BlackJack {
     }
 
     private void printFinalPlayerInfo(Dealer dealer, Gamblers gamblers) {
-        OutputView.printFinalDealer(dealer.getCardInfo(), dealer.score());
-        for (GamblerCardInfo gamblerCardInfo : gamblers.gamblerCardInfos()) {
-            OutputView.printFinalPlayer(gamblerCardInfo);
+        OutputView.printFinalPlayer(dealer.getCardInfo());
+        for (CardInfo cardInfo : gamblers.gamblerCardInfos()) {
+            OutputView.printFinalPlayer(cardInfo);
         }
     }
 

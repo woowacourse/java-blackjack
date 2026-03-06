@@ -1,7 +1,7 @@
 package domain.player;
 
 import domain.MatchResult;
-import dto.GamblerCardInfo;
+import dto.CardInfo;
 import expcetion.BlackjackException;
 import expcetion.ExceptionMessage;
 
@@ -34,10 +34,6 @@ public class Gambler extends Player {
 
     public MatchResult getResult(int dealerScore) {
         return MatchResult.of(score(), dealerScore);
-    }
-
-    public GamblerCardInfo getCardInfo() {
-        return new GamblerCardInfo(name, handCard.getCardInfos(), score());
     }
 
 }

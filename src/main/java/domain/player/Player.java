@@ -2,6 +2,7 @@ package domain.player;
 
 import domain.card.HandCard;
 import domain.deck.CardDeck;
+import dto.CardInfo;
 
 public abstract class Player {
     protected static final int BLACKJACK_MAX_LIMIT = 21;
@@ -28,5 +29,10 @@ public abstract class Player {
     public boolean isBust() {
         return score() > BLACKJACK_MAX_LIMIT;
     }
+
+    public CardInfo getCardInfo() {
+        return new CardInfo(name, handCard.getCardInfos(), score());
+    }
+
 }
 

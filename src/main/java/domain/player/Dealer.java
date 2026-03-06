@@ -1,8 +1,5 @@
 package domain.player;
 
-import dto.DealerCardInfo;
-import java.lang.ref.PhantomReference;
-
 public class Dealer extends Player {
     private static final int DEALER_STOP_SCORE = 17;
     private static final String DEALER_NAME = "딜러";
@@ -23,7 +20,4 @@ public class Dealer extends Player {
         return handCard.getFirstCardInfo();
     }
 
-    public DealerCardInfo getCardInfo() {
-        return new DealerCardInfo(handCard.getCardInfos());
-    }
 }
