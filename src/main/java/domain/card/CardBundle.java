@@ -48,4 +48,10 @@ public class CardBundle {
                 anyMatch(c -> c.equals(targetCard));
     }
 
+    public List<String> toDisplay() {
+        return cardBundle.stream()
+                .map(Card::toDisplay)
+                .toList();
+    }
+
 }

@@ -2,6 +2,7 @@ package domain.player;
 
 import domain.card.Card;
 import domain.card.CardBundle;
+import domain.player.dto.PlayerHandDto;
 
 import java.util.List;
 
@@ -37,6 +38,14 @@ public class Player {
 
     public String toDisplayMyName() {
         return name.name();
+    }
+
+    public List<String> disPlayMyCardBundle() {
+        return cardBundle.toDisplay();
+    }
+
+    public PlayerHandDto getMyHands() {
+        return PlayerHandDto.of(this);
     }
 
 }

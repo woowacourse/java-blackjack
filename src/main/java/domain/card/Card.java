@@ -28,4 +28,8 @@ public class Card {
         return Objects.hash(emblem, denomination);
     }
 
+    public String toDisplay() {
+        return emblem.value() + denomination.denomination();
+    }
+
 }
