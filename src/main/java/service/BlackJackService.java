@@ -1,5 +1,6 @@
 package service;
 
+import java.util.List;
 import java.util.Objects;
 import model.BlackJackDeck;
 import model.CardNumber;
@@ -26,9 +27,8 @@ public class BlackJackService {
 
     public void draw(Participant participant) {
         Card card = cards.draw();
-        Integer currentScore = participant.getResult().score();
 
-        Integer score = getScore(card, currentScore);
+        Integer score = getScore(card);
 
         participant.addCard(card);
         participant.addScore(score);
@@ -40,6 +40,14 @@ public class BlackJackService {
         return score > 21;
     }
 
+    public void updateFinalScore(Participant participant) {
+        Boolean hasAce = hasAceCard(participant.getResult());
+        Integer score = participant.getResult().score();
+
+        if(hasAce && score <= 11) {
+            participant.addScore(10);
+        }
+    }
 
     public ParticipantWinning getGameResult(Players players, Dealer dealer) {
         PlayersWinning playersWinning = getPlayersResult(players, dealer);
@@ -68,10 +76,7 @@ public class BlackJackService {
         return dealerWinning;
     }
 
-    private Integer getScore(Card card, Integer score) {
-        if(card.cardNumber().equals(CardNumber.ACE)) {
-            return Scorer.calculate(card, score);
-        }
+    private Integer getScore(Card card) {
         return Scorer.calculate(card);
     }
 
@@ -87,6 +92,14 @@ public class BlackJackService {
         return matchStatus;
     }
 
+    private boolean hasAceCard(PlayerResult playerResult) {
+        List<Card> cards = playerResult.deck();
+
+        return !cards.stream()
+                .filter((c) -> c.cardNumber().equals(CardNumber.ACE))
+                .toList()
+                .isEmpty();
+    }
 
     private MatchStatus getPlayerResult(Player player, Dealer dealer) {
         if((isBust(dealer) && isBust(player)) || (Objects.equals(player.getResult().score(),

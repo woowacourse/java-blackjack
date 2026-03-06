@@ -65,6 +65,7 @@ public class BlackJackController {
 
     private void drawPlayerTurns(Player player) {
         while(drawPlayerTurn(player));
+        blackJackService.updateFinalScore(player);
     }
 
     private boolean drawPlayerTurn(Player player) {
@@ -74,18 +75,18 @@ public class BlackJackController {
 
         blackJackService.draw(player);
 
-        if(blackJackService.isBust(player)) {
-            return false;
-        }
-
-        return true;
+        return !blackJackService.isBust(player);
     }
 
     private void drawDealer(Dealer dealer) {
-        if(dealer.getResult().score() <= 16) {
+        //오리지널 룰에 의해 A는 높은 숫자로 미리 계산된다.
+        blackJackService.updateFinalScore(dealer);
+
+        while (dealer.getResult().score() <= 16) {
             blackJackService.draw(dealer);
             OutputView.printDealerCardDrawMessage();
         }
+
     }
 
     private void printPlayersScore(Dealer dealer, Players players) {
