@@ -30,4 +30,8 @@ public class Player {
     public List<Card> getCards() {
         return hand.getCards();
     }
+
+    public int getScore() {
+        return hand.calculateScore();
+    }
 }
