@@ -2,26 +2,19 @@ package domain;
 
 import java.util.regex.Pattern;
 
-public class Player {
+public class Player extends Participant {
 
     private static final String STRING_REGEX = "^[a-zA-Z]*$";
-
     private final String name;
-    private final Hand hand;
 
     public Player(String name) {
         validateNameLength(name);
         validateOnlyEnglish(name);
         this.name = name;
-        this.hand = new Hand();
     }
 
-    public void hit(Card card) {
-        hand.drawCard(card);
-    }
-
-    public Hand getHand() {
-        return hand;
+    public String getName() {
+        return name;
     }
 
     private void validateNameLength(String name) {
@@ -34,9 +27,5 @@ public class Player {
         if (!Pattern.matches(STRING_REGEX, name)) {
             throw new IllegalArgumentException("플레이어 이름은 영문자만 포함되어야 합니다.");
         }
-    }
-
-    public String getName() {
-        return name;
     }
 }

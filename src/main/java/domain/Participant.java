@@ -1,2 +1,18 @@
-package domain;public class Participant {
+package domain;
+
+public abstract class Participant {
+
+    protected final Hand hand;
+
+    protected Participant() {
+        this.hand = new Hand();
+    }
+
+    public void hit(Card card) {
+        hand.drawCard(card);
+    }
+
+    public Hand getHand() {
+        return hand;
+    }
 }
