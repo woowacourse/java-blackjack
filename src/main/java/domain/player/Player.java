@@ -6,12 +6,14 @@ import java.util.List;
 
 public class Player {
 
-    private final String name;
+    private final Name name;
+    private final Score score;
 
     private final List<Card> cards = new ArrayList<>();
 
     public Player(String name) {
-        this.name = name;
+        this.name = new Name(name);
+        this.score = new Score();
     }
 
     public void addCard(Card card) {
