@@ -1,6 +1,8 @@
 package domain;
 
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 
@@ -22,6 +24,7 @@ public class Deck {
         if (queue.isEmpty()) {
             throw new NoSuchElementException();
         }
+        Collections.shuffle((List<?>) queue);
         return queue.poll();
     }
 
