@@ -1,5 +1,6 @@
 package domain.card;
 
+import domain.ExceptionMessage;
 import domain.Rank;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -56,7 +57,14 @@ public class Cards {
     }
 
     public Card pull(){
+        validateIsEmpty();
         return cards.removeFirst();
+    }
+
+    private void validateIsEmpty(){
+        if(cards.isEmpty()){
+            throw new IllegalArgumentException(ExceptionMessage.EMPTY_CARDS.getMessage());
+        }
     }
 
     @Override

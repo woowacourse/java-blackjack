@@ -75,4 +75,10 @@ public class CardsTest {
 
         Assertions.assertEquals(cards.decideBurst(sum), false);
     }
+
+    @Test
+    void 뽑을_수_있는_카드가_존재하지_않으면_예외가_발생한다(){
+        Cards cards = new Cards();
+        org.assertj.core.api.Assertions.assertThatThrownBy(() -> cards.pull()).isInstanceOf(IllegalArgumentException.class);
+    }
 }
