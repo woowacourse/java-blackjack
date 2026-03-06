@@ -1,7 +1,6 @@
 package blackjack.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ShuffledCardsGenerator implements CardsGenerator {
@@ -10,14 +9,12 @@ public class ShuffledCardsGenerator implements CardsGenerator {
     public List<Card> create() {
         List<Card> cards = new ArrayList<>();
 
-        List<Rank> ranks = Arrays.asList(Rank.values());
-        List<Suit> suits = Arrays.asList(Suit.values());
-
-        for (Rank rank : ranks) {
-            for (Suit suit : suits) {
+        for (Rank rank : Rank.values()) {
+            for (Suit suit : Suit.values()) {
                 cards.add(new Card(rank, suit));
             }
         }
+
         return cards;
     }
 
