@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 
 public class Dealer {
 
+    private static final int BUSTED_CONDITION = 21;
     private static final int ADDITIONAL_DRAW_CONDITION = 16;
     private static final int INITIAL_DEAL_COUNT = 2;
     private static final int HIT_COUNT = 1;
@@ -53,14 +54,14 @@ public class Dealer {
 
     public boolean hitIfRequired() {
         if (canHit()) {
-            drawMySelf(1);
+            drawMySelf(HIT_COUNT);
             return true;
         }
         return false;
     }
 
     private boolean canHit() {
-        return cardBundle.getBasicScore() <= 16;
+        return cardBundle.getBasicScore() <= ADDITIONAL_DRAW_CONDITION;
     }
 
     public CardBundle dealMyself() {
@@ -89,7 +90,7 @@ public class Dealer {
     }
 
     public boolean isBusted() {
-        return cardBundle.getBasicScore() > 21;
+        return cardBundle.getBasicScore() > BUSTED_CONDITION;
     }
 
 }
