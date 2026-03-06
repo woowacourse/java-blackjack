@@ -5,7 +5,7 @@ import model.dto.Card;
 
 public class ParticipantHand {
 
-    private Integer score = 0;
+    private final Score score = new Score();
     private final Cards deck = new Cards();
 
     public void addDeck(Card card) {
@@ -14,11 +14,11 @@ public class ParticipantHand {
     }
 
     public void addScore(Integer score) {
-        this.score += score;
+        this.score.add(score);
     }
 
     public Integer getScore() {
-        return score;
+        return score.get();
     }
 
     public Cards getDeck() {
