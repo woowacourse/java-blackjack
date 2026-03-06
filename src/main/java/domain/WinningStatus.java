@@ -1,5 +1,8 @@
 package domain;
 
+import domain.participant.Dealer;
+import domain.participant.Player;
+
 public enum WinningStatus {
     WIN("승"),
     TIE("무"),

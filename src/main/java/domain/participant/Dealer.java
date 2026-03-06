@@ -1,9 +1,6 @@
-package domain;
+package domain.participant;
 
 import domain.card.Card;
-
-import java.util.List;
-import java.util.SequencedCollection;
 
 public class Dealer extends Participant {
     private static final String DEALER_NAME = "딜러";

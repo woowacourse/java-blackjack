@@ -1,16 +1,16 @@
-package domain;
+package domain.participant;
 
+import domain.Hand;
+import domain.Name;
 import domain.card.Card;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Participant {
-    private String name;
+    private Name name;
     private Hand hand;
 
     public Participant(String name) {
-        this.name = name;
+        this.name = new Name(name);
         this.hand = new Hand();
     }
 
@@ -35,7 +35,7 @@ public abstract class Participant {
     }
 
     public String name() {
-        return name;
+        return name.getName();
     }
 
     public List<Card> getAllCards() {

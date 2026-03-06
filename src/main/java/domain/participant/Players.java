@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +19,8 @@ public class Players {
     }
 
 
-    public List<String> getPlayerNames() {
-        return players.stream()
+    public List<String> getPlayerNames(){
+        return  players.stream()
                 .map(player -> player.name())
                 .collect(Collectors.toList());
     }
