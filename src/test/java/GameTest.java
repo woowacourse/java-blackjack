@@ -17,7 +17,7 @@ public class GameTest {
         // 2 하트, 2 스페이드, 2 클로버, 2 다이아몬드, 3 하트, 3 스페이드, 3 클로버, 3 다이아몬드, ...
         when(mockRandom.nextInt(52)).thenReturn(0);
 
-        Game game = new Game();
+        Game game = new Game(cardDistributor);
         game.dealerDrawsCardsUntilDone(dealer);
 
         assertThat(dealer.calculateTotalScore()).isEqualTo(17);
