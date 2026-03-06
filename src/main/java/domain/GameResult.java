@@ -8,6 +8,8 @@ GameResult {
     DRAW("무"),
     ;
 
+    public static final int BLACKJACK_SCORE = 21;
+
     private String description;
 
     GameResult(String description) {
@@ -18,14 +20,13 @@ GameResult {
         return description;
     }
 
-    //TODO: 21 계싼
     public static GameResult judge(int standardScore, int myScore) {
-        if ((standardScore < myScore && myScore <= 21)
-                || (standardScore > 21 && myScore <= 21)) {
+        if ((standardScore < myScore && myScore <= BLACKJACK_SCORE)
+                || (standardScore > BLACKJACK_SCORE && myScore <= BLACKJACK_SCORE)) {
             return WIN;
         }
-        if (standardScore > 21
-                || (myScore <= 21 && standardScore == myScore)) {
+        if (standardScore > BLACKJACK_SCORE
+                || (myScore <= BLACKJACK_SCORE && standardScore == myScore)) {
             return DRAW;
         }
         return LOSE;

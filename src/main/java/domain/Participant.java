@@ -1,5 +1,7 @@
 package domain;
 
+import static domain.GameResult.BLACKJACK_SCORE;
+
 import domain.card.Card;
 import domain.card.Deck;
 import java.util.List;
@@ -19,7 +21,7 @@ public class Participant {
     }
 
     public boolean isBust() {
-        return getScore() > 21;
+        return getScore() > BLACKJACK_SCORE;
     }
 
     public void changeState() {

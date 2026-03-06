@@ -1,13 +1,15 @@
 package domain;
 
+import static domain.GameResult.BLACKJACK_SCORE;
+
 import domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
 
-    private static final int BLACKJACK_SCORE = 21;
-    
+    private static final int ACE_SCORE_DIFFERENCE = 10;
+
     private List<Card> cards;
 
     public Hand() {
@@ -27,7 +29,7 @@ public class Hand {
         int aCount = calculateAceCount();
 
         while (isBustWithAce(aCount, score)) {
-            score -= 10;
+            score -= ACE_SCORE_DIFFERENCE;
             aCount--;
         }
         return score;

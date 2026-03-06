@@ -37,7 +37,6 @@ public class BlackjackGame {
                 .forEach(participant -> determineGameState(deck, participant));
     }
 
-    //TODO: depth 2
     private void determineGameState(Deck deck, Participant participant) {
         while (participant.isHit()) {
             String input = InputView.readHitOrStand(participant.getName());
