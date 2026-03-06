@@ -23,9 +23,4 @@ public class Cards {
     public int getLength() {
         return cards.size();
     }
-
-    public boolean isAceExist() {
-        return cards.stream()
-                .anyMatch(c -> c.getCardRank().equals(CardRank.ACE));
-    }
 }

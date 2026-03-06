@@ -23,13 +23,23 @@ public class Player {
         return total;
     }
 
-    public int calculateAceScore(Cards cards) {
-        if (!cards.isAceExist()) {
+    public int calculateAceScore() {
+        if (!isAceExist()) {
             return 0;
         }
 
         int aceScore = 10;
         return aceScore;
+    }
+
+
+
+    public int getFinalResult() {
+        return calculateScore() + calculateAceScore();
+    }
+
+    public boolean isBurst() {
+        return getFinalResult() > 21;
     }
 
     public void add(Card card) {
@@ -55,5 +65,10 @@ public class Player {
 
     public CardContentDto toCardContentDto() {
         return new CardContentDto(this.name, this.cards);
+    }
+
+    public boolean isAceExist() {
+        return cards.stream()
+                .anyMatch(c -> c.getCardRank().equals(CardRank.ACE));
     }
 }
