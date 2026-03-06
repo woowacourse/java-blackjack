@@ -1,6 +1,6 @@
 package blackjack.model;
 
-import blackjack.exception.ErrorCode;
+import blackjack.exception.ErrorMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -31,6 +31,6 @@ class NameTest {
         // given & when & then
         assertThatThrownBy(() -> new Name(name))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorCode.OUT_OF_NAME_LENGTH);
+                .hasMessage(ErrorMessage.OUT_OF_NAME_LENGTH.getMessage());
     }
 }

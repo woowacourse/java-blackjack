@@ -1,6 +1,6 @@
 package blackjack.model;
 
-import blackjack.exception.ErrorCode;
+import blackjack.exception.ErrorMessage;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,7 +22,7 @@ public class Players {
 
     private void validatePlayersNumber(List<Player> players) {
         if (players.size() < Players.PLAYERS_MIN_LENGTH || players.size() > PLAYERS_MAX_LENGTH) {
-            throw new IllegalArgumentException(ErrorCode.INVALID_PLAYERS);
+            throw new IllegalArgumentException(ErrorMessage.INVALID_PLAYERS.getMessage());
         }
     }
 }

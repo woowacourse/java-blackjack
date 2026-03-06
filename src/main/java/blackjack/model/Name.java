@@ -1,6 +1,6 @@
 package blackjack.model;
 
-import blackjack.exception.ErrorCode;
+import blackjack.exception.ErrorMessage;
 
 public class Name {
 
@@ -15,7 +15,7 @@ public class Name {
 
     private void validateNameLength(String name) {
         if (name.length() < NAME_MIN_LENGTH || name.length() > NAME_MAX_LENGTH) {
-            throw new IllegalArgumentException(ErrorCode.OUT_OF_NAME_LENGTH);
+            throw new IllegalArgumentException(ErrorMessage.OUT_OF_NAME_LENGTH.getMessage());
         }
     }
 

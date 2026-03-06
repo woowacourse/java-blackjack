@@ -1,11 +1,8 @@
 package blackjack.model;
 
-import blackjack.exception.ErrorCode;
-import org.assertj.core.api.Assertions;
+import blackjack.exception.ErrorMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 
@@ -39,7 +36,7 @@ class PlayersTest {
         // when & then
         assertThatThrownBy(() -> new Players(List.of(playerOne)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorCode.INVALID_PLAYERS);
+                .hasMessage(ErrorMessage.INVALID_PLAYERS.getMessage());
     }
 
 }
