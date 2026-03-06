@@ -1,5 +1,6 @@
 package domain;
 
+import common.ErrorMessage;
 import java.util.Optional;
 
 public class Dealer extends Participant {
@@ -17,5 +18,15 @@ public class Dealer extends Participant {
             return Optional.of(newCard);
         }
         return Optional.empty();
+    }
+
+    @Override
+    public int addCard(Card card) {
+        throw new UnsupportedOperationException(
+                String.format(
+                        ErrorMessage.UNSUPPORTED_OPERATION_MESSAGE.getMessage(),
+                        this.getClass()
+                )
+        );
     }
 }
