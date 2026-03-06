@@ -1,7 +1,9 @@
 package controller;
 
+import domain.model.Player;
 import domain.service.BlackJackService;
 import dto.InitialDto;
+import dto.PlayerResultDto;
 import dto.ResultDto;
 import util.InputValidator;
 import util.Parser;
@@ -29,10 +31,35 @@ public class BlackJackController {
         InitialDto initialDto = blackJackService.createPlayer(stringParser.splitToDelimiter(inputPlayerNames, ","));
         outputView.outputInitialMessage(initialDto);
 
-        // TODO : 카드 추가 분배
+        // 카드 추가 분배
+        blackJackService.getAllPlayers().forEach(this::getAdditionalCard);
+
+        // 딜려 추가 배부
+        getAdditionalDealerCard();
 
         // 결과 출력
         ResultDto judgement = blackJackService.judgement();
         outputView.playerResultMessage(judgement);
+    }
+
+    public void getAdditionalCard(Player player) {
+        if (player.isBurst()) return;
+
+        String isTrue = inputView.inputAdditionalCard(player.getName());
+        InputValidator.validateAdditionalCard(isTrue);
+        if (isTrue.equals("y")) {
+            PlayerResultDto playerResultDto = blackJackService.additionalCard(player);
+            outputView.outputPlayerDeckDtos(playerResultDto);
+            getAdditionalCard(player);
+        }
+    }
+
+    public void getAdditionalDealerCard() {
+        boolean dealerCanAppend = blackJackService.isDealerCanAppend();
+        if (dealerCanAppend) {
+            blackJackService.additionalDealerCard();
+            outputView.outputDealerAdditionCardMessage();
+            getAdditionalDealerCard();
+        }
     }
 }

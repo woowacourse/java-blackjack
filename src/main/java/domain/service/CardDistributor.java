@@ -40,9 +40,8 @@ public class CardDistributor {
         return Deck.of(cards);
     }
 
-    // 카드 추가 부여
-    public void distributeAdditionalCard(Player player) {
-        player.appendCard(cardFactory.createCard());
+    public void distributeAdditionalCard(Person person) {
+        person.appendCard(cardFactory.createCard());
     }
 
     public Dealer getDealer() {
