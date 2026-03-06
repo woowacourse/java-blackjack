@@ -18,4 +18,8 @@ public class Dealer extends Player {
     public boolean isTotalValue16OrLess() {
         return getTotalValue() <= 16;
     }
+
+    public String getFirstCardStatus() {
+        return this.cardStatus.getFirstCardInfo();
+    }
 }

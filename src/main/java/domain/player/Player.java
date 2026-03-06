@@ -1,12 +1,14 @@
 package domain.player;
 
 import domain.card.Card;
+import java.util.List;
+import java.util.Map;
 
 public class Player {
 
-    private final Name name;
+    protected final Name name;
 
-    private CardStatus cardStatus;
+    protected CardStatus cardStatus;
 
     public Player(String name) {
         this.name = new Name(name);
@@ -32,5 +34,13 @@ public class Player {
 
     public int getTotalValue() {
         return cardStatus.getTotalValue();
+    }
+
+    public String getName() {
+        return name.getName();
+    }
+
+    public List<String> getCardStatus() {
+        return cardStatus.getCardsInfo();
     }
 }

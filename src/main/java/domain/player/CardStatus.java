@@ -40,4 +40,8 @@ public class CardStatus {
                 .map(Card::getCardInfo)
                 .collect(Collectors.toList());
     }
+
+    public String getFirstCardInfo() {
+        return cards.get(0).getCardInfo();
+    }
 }

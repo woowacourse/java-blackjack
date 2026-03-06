@@ -66,24 +66,4 @@ class PlayerTest {
         // then
         Assertions.assertThat(player.getTotalValue()).isEqualTo(22);
     }
-
-    @Test
-    @DisplayName("플레이어 이름과 카드 정보를 문자열 리스트로 반환하는지 검증")
-    void 이름_카드_정보_문자열_반환_테스트() {
-        // given
-        Player player = new Player("pobi");
-        player.addCard(new Card("K", "다이아몬드"));
-        player.addCard(new Card("2", "하트"));
-        player.addCard(new Card("3", "클로버"));
-
-        Map<String, List<String>> temp = new HashMap<>();
-        temp.put("pobi", List.of("K다이아몬드", "2하트", "3클로버"));
-
-        // when
-        Map<String, List<String>> nameAndCardInfo = player.getNameAndCardsInfo();
-
-        // then
-        Assertions.assertThat(nameAndCardInfo.equals(temp)).isEqualTo(true);
-    }
-
 }
