@@ -26,4 +26,8 @@ public class User {
     public String formatAskGetExtraCard() {
         return String.format(Message.REQUEST_GET_EXTRA_CARD, username);
     }
+
+    public void calculateScore() {
+        hand.calculateHandScore();
+    }
 }

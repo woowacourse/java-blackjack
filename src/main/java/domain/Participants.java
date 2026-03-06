@@ -67,6 +67,10 @@ public class Participants {
     public void dealCard(Deck deck, int index) {
         participants.get(index).receiveCard(deck.dealCard());
     }
+
+    public void calculateScore(int index) {
+        participants.get(index).calculateScore();
+    }
 }
 
 

@@ -27,16 +27,13 @@ public class BlackjackController {
     public void run() {
         readParticipants();
         shuffleCards();
-        dealExtraCards();
+        readExtraCardCommand();
+
     }
     private void shuffleCards() {
         blackjackService.makeDeck();
         blackjackService.dealCards();
         printDealResult();
-    }
-
-    private void dealExtraCards() {
-        readExtraCardCommand();
     }
 
     private void printDealResult() {

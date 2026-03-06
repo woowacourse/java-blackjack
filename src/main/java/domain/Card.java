@@ -12,7 +12,15 @@ public class Card {
         this.rank = rank;
     }
 
+    public int getCardScore() {
+        return rank.getRankScore();
+    }
+
     public String getDisplayName() {
         return rank.getRankName() + suit.getSuitName();
+    }
+
+    public boolean isAceCard() {
+        return rank == Rank.ACE;
     }
 }

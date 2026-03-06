@@ -41,6 +41,7 @@ public class BlackjackService {
 
     public String processPlayerDecision(int index) {
         participants.dealCard(deck, index);
+        participants.calculateScore(index);
         return participants.makeOneUserCardDelegator(index);
     }
 }

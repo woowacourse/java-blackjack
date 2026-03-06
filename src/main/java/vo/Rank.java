@@ -18,10 +18,13 @@ public enum Rank {
     private final String rankName;
     private final Integer rankScore;
 
-
     Rank(String rankName, Integer rankScore) {
         this.rankName = rankName;
         this.rankScore = rankScore;
+    }
+
+    public int getRankScore() {
+        return rankScore;
     }
 
     public String getRankName() {
