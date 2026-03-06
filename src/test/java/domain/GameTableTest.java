@@ -23,9 +23,7 @@ class GameTableTest {
         gameTable.draw(pobi.name(), new Card("5", "하트"));
         gameTable.draw(pobi.name(), new Card("7", "하트"));
 
-        CurrentResult result = gameTable.checkCurrentResult("포비");
-
-        Assertions.assertTrue(result.isBust());
+        Assertions.assertTrue(gameTable.checkBust("포비"));
     }
 
     @DisplayName("카드의 총합이 21보다 작으면 CurrentResult의 isBust는 false이다.")
@@ -39,8 +37,6 @@ class GameTableTest {
         gameTable.draw(pobi.name(), new Card("5", "하트"));
         gameTable.draw(pobi.name(), new Card("5", "스페이드"));
 
-        CurrentResult result = gameTable.checkCurrentResult("포비");
-
-        Assertions.assertFalse(result.isBust());
+        Assertions.assertFalse(gameTable.checkBust("포비"));
     }
 }
