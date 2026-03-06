@@ -15,7 +15,7 @@ public class OutputView {
         Participant dealer = participants.getDealer();
         List<Participant> players = participants.getPlayers();
 
-        System.out.printf("%s와 ", dealer.getName());
+        System.out.printf("\n%s와 ", dealer.getName());
         StringBuilder playerNames = new StringBuilder();
         for (Participant player : players) {
             playerNames.append(player.getName() + ", ");
@@ -24,8 +24,10 @@ public class OutputView {
         System.out.printf("%s에게 %d장을 나누었습니다.\n", playerNames, INIT_DRAW_COUNT);
 
         System.out.printf("%s카드: %s\n", dealer.getName(), dealer.getHandCards().getFirst().getCardDescription());
+
         for (Participant player : players) {
             printParticipantHandCard(player);
+            System.out.println();
         }
         System.out.println();
     }
@@ -40,14 +42,39 @@ public class OutputView {
         }
         cardDescriptions.delete(cardDescriptions.length() - 2, cardDescriptions.length());
 
-        System.out.println(cardDescriptions);
+        System.out.print(cardDescriptions);
     }
 
     public void printCurrentHandCard(Participant participant) {
         printParticipantHandCard(participant);
+        System.out.println();
     }
 
     public void printDealerAdditionalDraw() {
         System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.\n", DEALER_NAME, DEALER_DRAW_BOUND);
+    }
+
+    public void printCardResults(Participants participants) {
+        System.out.println();
+        Participant dealer = participants.getDealer();
+        List<Participant> players = participants.getPlayers();
+
+        printParticipantHandCard(dealer);
+        printScore(dealer);
+
+        for (Participant player : players) {
+            printParticipantHandCard(player);
+            printScore(player);
+        }
+
+        System.out.println();
+    }
+
+    private static void printScore(Participant dealer) {
+        System.out.printf(" - 결과: %d\n", dealer.getScore());
+    }
+
+    public void printWhiteLine() {
+        System.out.println();
     }
 }
