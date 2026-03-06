@@ -1,7 +1,5 @@
 package model;
 
-import model.dto.Card;
-
 public enum CardNumber {
     ACE("A", 1),
     TWO("2", 2),
