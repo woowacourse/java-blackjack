@@ -2,9 +2,8 @@ package dto;
 
 public record NameRequestDto(String name) {
 
-    public NameRequestDto(String name) {
+    public NameRequestDto {
         validateNameIsNotNullAndIsNotBlank(name);
-        this.name = name;
     }
 
     private void validateNameIsNotNullAndIsNotBlank(String name) {
