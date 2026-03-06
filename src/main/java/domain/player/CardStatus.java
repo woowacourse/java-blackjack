@@ -3,6 +3,7 @@ package domain.player;
 import domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CardStatus {
 
@@ -32,5 +33,11 @@ public class CardStatus {
 
     public int getTotalValue() {
         return score.getScore();
+    }
+
+    public List<String> getCardsInfo() {
+        return cards.stream()
+                .map(Card::getCardInfo)
+                .collect(Collectors.toList());
     }
 }
