@@ -1,11 +1,13 @@
 package domain;
 
-public class Player {
+import java.util.List;
+
+public class Participant {
     private final String name;
     private final HandCards handCards;
     private final boolean isDealer;
 
-    public Player(String name, HandCards handCards, boolean isDealer) {
+    public Participant(String name, HandCards handCards, boolean isDealer) {
         this.name = name;
         this.handCards = handCards;
         this.isDealer = isDealer;
@@ -25,5 +27,13 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    public List<Card> getHandCards() {
+        return handCards.getHandCards();
+    }
+
+    public boolean isDealer() {
+        return isDealer;
     }
 }
