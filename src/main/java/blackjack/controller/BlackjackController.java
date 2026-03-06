@@ -10,14 +10,16 @@ import blackjack.utils.Parser;
 import blackjack.utils.RetryExecutor;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackController {
 
     public void run() {
         Trump trump = new Trump();
+        Hand hand = new Hand(new ArrayList<>());
         List<Player> players = RetryExecutor.retry(this::readNicknames);
-        Dealer dealer = new Dealer(new Hand(), Status.HIT, trump);
+        Dealer dealer = new Dealer(hand, Status.HIT, trump);
         dealer.pitch(players);
         OutputView.printStartMessage(players, dealer);
 
@@ -29,6 +31,17 @@ public class BlackjackController {
                 OutputView.printCardStatus(player);
             }
         });
+
+        dealer.decideHit();
+        while(dealer.isHit()) {
+            dealer.giveCard();
+            dealer.decideHit();
+            OutputView.printDealerHitMessage();
+        }
+
+
+
+        dealer.handleBurst();
     }
 
     private List<Player> readNicknames() {
@@ -36,7 +49,7 @@ public class BlackjackController {
         List<String> nicknames = Parser.parseNickname(rawNicknames);
         return nicknames.stream()
             .map(nickname ->
-                new Player(new Hand(), Status.HIT, nickname))
+                new Player(new Hand(new ArrayList<>()), Status.HIT, nickname))
             .toList();
     }
 

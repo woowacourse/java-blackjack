@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class Dealer extends Participant {
-
+    public static final int DEALER_HIT_THRESHOLD = 16;
 
     private final Trump trump;
 
@@ -31,8 +31,16 @@ public class Dealer extends Participant {
             });
     }
 
+    public void decideHit() {
+        int totalScore = hand.calculateScore();
+        if (totalScore > DEALER_HIT_THRESHOLD) {
+            stay();
+        }
+    }
+
     @Override
     public List<String> getCardNames() {
         return hand.getCardNames(1);
     }
+
 }

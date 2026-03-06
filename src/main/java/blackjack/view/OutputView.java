@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import static blackjack.domain.Dealer.DEALER_HIT_THRESHOLD;
+
 import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 import java.util.List;
@@ -32,4 +34,7 @@ public class OutputView {
     }
 
 
+    public static void printDealerHitMessage() {
+        System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.", DEALER_HIT_THRESHOLD);
+    }
 }
