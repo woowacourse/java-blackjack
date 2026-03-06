@@ -62,4 +62,20 @@ public class UserTest {
         assertThat(6).isEqualTo(sum);
     }
 
+    @Test
+    @DisplayName("가지고 있는 카드의 핪이 버스트인지 확인하는 테스트")
+    void 가지고_있는_카드의_핪이_버스트인지_확인하는_테스트() {
+        // given
+        User user = new User("밀란");
+        user.bring(new Card(CardValue.TEN, Shape.DIAMOND));
+        user.bring(new Card(CardValue.TEN, Shape.DIAMOND));
+        user.bring(new Card(CardValue.TEN, Shape.DIAMOND));
+
+        // when
+        boolean isBurst = user.isBurst();
+
+        // then
+        assertThat(isBurst).isTrue();
+    }
+
 }
