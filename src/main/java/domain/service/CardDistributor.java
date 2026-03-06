@@ -22,22 +22,9 @@ public class CardDistributor {
     }
 
     public void initialize(List<Player> players) {
-        // player와 Dealer에 생성된 카드 부여
-        // 카드 두개씩 생성하고 Deck 생성하고 Player와 Dealer에 부여
-        for (Player player : players) {
-            Deck deck = getDeck();
-            player.assignDeck(deck);
-        }
-
+        players.forEach(player -> player.assignDeck(getDeck()));
         Dealer dealer = Dealer.of(getDeck());
         dealerRepository.save(dealer);
-    }
-
-    private Deck getDeck() {
-        List<Card> cards = new ArrayList<>();
-        cards.add(cardFactory.createCard());
-        cards.add(cardFactory.createCard());
-        return Deck.of(cards);
     }
 
     public void distributeAdditionalCard(Person person) {
@@ -46,5 +33,12 @@ public class CardDistributor {
 
     public Dealer getDealer() {
         return dealerRepository.getDealer();
+    }
+
+    private Deck getDeck() {
+        List<Card> cards = new ArrayList<>();
+        cards.add(cardFactory.createCard());
+        cards.add(cardFactory.createCard());
+        return Deck.of(cards);
     }
 }
