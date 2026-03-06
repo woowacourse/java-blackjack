@@ -27,14 +27,7 @@ public class BlackjackController {
         dealer.pitch(players);
         OutputView.printStartMessage(players, dealer);
 
-        players.forEach(player -> {
-            while (player.isHit()) {
-                Answer answer =
-                    RetryExecutor.retry(this::readAnswer, player.getNickname());
-                handleAnswer(player, dealer, answer);
-                OutputView.printCardStatus(player);
-            }
-        });
+        players.forEach(player -> handlePlayerAction(player, dealer));
 
         dealer.decideHit();
         while(dealer.isHit()) {
@@ -48,6 +41,15 @@ public class BlackjackController {
         OutputView.printFinalStatus(participants);
         FinalResultDto finalResultDto = FinalResultDto.of(players, dealer);
         OutputView.printFinalResult(finalResultDto);
+    }
+
+    private void handlePlayerAction(Player player, Dealer dealer) {
+        while (player.isHit()) {
+            Answer answer =
+                RetryExecutor.retry(this::readAnswer, player.getNickname());
+            handleAnswer(player, dealer, answer);
+            OutputView.printCardStatus(player);
+        }
     }
 
     private List<Player> readNicknames() {
