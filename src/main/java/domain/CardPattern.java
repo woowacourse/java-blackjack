@@ -20,4 +20,8 @@ public enum CardPattern {
                 .findAny()
                 .orElseThrow(NoSuchElementException::new);
     }
+
+    public String getName() {
+        return name;
+    }
 }

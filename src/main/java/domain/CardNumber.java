@@ -5,7 +5,6 @@ import java.util.Arrays;
 
 public enum CardNumber {
     A(11, "A"),
-    ONE(1, "1"),
     TWO(2, "2"),
     THREE(3, "3"),
     FOUR(4, "4"),
@@ -19,6 +18,7 @@ public enum CardNumber {
     Q(10, "Q"),
     K(10, "K");
 
+    private static final int ONE = 1;
     private int number;
     private String court;
 
@@ -28,7 +28,7 @@ public enum CardNumber {
     }
 
     public void softHand() {
-        this.number = ONE.number;
+        this.number = ONE;
     }
 
     public static CardNumber matchCardNumber(String value) {
@@ -60,5 +60,9 @@ public enum CardNumber {
 
     public int getValue() {
         return number;
+    }
+
+    public String getCourt() {
+        return court;
     }
 }
