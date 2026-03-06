@@ -39,7 +39,7 @@ public abstract class Participant {
     }
 
     public void handleBurst() {
-        if (hand.isBurst() && status == Status.HIT) {
+        if (hand.isBurst()) {
             status = Status.BURST;
         }
     }
