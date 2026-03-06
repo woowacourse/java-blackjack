@@ -1,10 +1,7 @@
 package service;
 
-import java.util.List;
 import java.util.Objects;
 import model.BlackJackDeck;
-import model.CardNumber;
-import model.Cards;
 import model.Dealer;
 import model.DealerWinning;
 import model.MatchStatus;
@@ -15,7 +12,6 @@ import model.PlayersWinning;
 import model.Scorer;
 import model.dto.Card;
 import model.dto.ParticipantWinning;
-import model.dto.PlayerResult;
 import model.dto.PlayerWinning;
 
 public class BlackJackService {
