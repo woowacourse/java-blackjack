@@ -6,7 +6,7 @@ import domain.player.Gamblers;
 import dto.GamblerCardInfo;
 import java.util.List;
 import parser.AnswerParser;
-import parser.PlayNameParser;
+import parser.PlayerNameParser;
 import view.InputView;
 import view.OutputView;
 
@@ -20,7 +20,7 @@ public class BlackJack {
 
     public void start() {
         Dealer dealer = new Dealer();
-        Gamblers gamblers = new Gamblers(getNames());
+        Gamblers gamblers = new Gamblers(getPlayerNames());
         initialDeal(dealer, gamblers); //초기 2장 지급
         printInitialDealInfo(dealer, gamblers); //초기 상태 출력
 
@@ -31,9 +31,9 @@ public class BlackJack {
         printFinalResult(dealer, gamblers);
     }
 
-    private List<String> getNames() {
+    private List<String> getPlayerNames() {
         OutputView.printStartMessage();
-        return PlayNameParser.splitNames(InputView.readLine());
+        return PlayerNameParser.splitNames(InputView.readLine());
     }
 
     private void initialDeal(Dealer dealer, Gamblers gamblers) {

@@ -15,15 +15,15 @@ public class HandCard {
 
     public int cardCalculator() {
         int nonAceTotal = cards.stream().map(Card::getRankScore).filter(e -> e != 1).mapToInt(Integer::intValue).sum();
-        int aceCnt = (int) cards.stream().map(Card::getRankScore).filter(e -> e == 1).count();
+        int aceCount = (int) cards.stream().map(Card::getRankScore).filter(e -> e == 1).count();
 
-        return aceCalculator(nonAceTotal, aceCnt);
+        return aceCalculator(nonAceTotal, aceCount);
     }
 
     //이 메소드는 전체 점수를 리턴해서 이름이 맞지 않다. 아래 주석 메소드를 사용하는게 맞는가?
-    private int aceCalculator(int nonAceTotal, int aceCnt) {
-        int totalSum = nonAceTotal + (aceCnt * ACE_MAX_VALUE);
-        int remainingAce = aceCnt;
+    private int aceCalculator(int nonAceTotal, int aceCount) {
+        int totalSum = nonAceTotal + (aceCount * ACE_MAX_VALUE);
+        int remainingAce = aceCount;
         while (totalSum > BLACKJACK_MAX_LIMIT && remainingAce > 0) {
             totalSum -= (ACE_MAX_VALUE - ACE_MIN_VALUE);
             remainingAce--;
