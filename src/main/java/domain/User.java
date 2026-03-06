@@ -34,4 +34,8 @@ public class User {
     public String getUserFinalDisplay() {
         return hand.getFinalDisplay();
     }
+
+    public int getHand() {
+        return hand.getHandTotalScore();
+    }
 }

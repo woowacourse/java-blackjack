@@ -1,8 +1,12 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+import vo.GameResult;
 
 public class Participants {
     private static final Integer MAXIMUM_NUMBER_OF_PARTICIPANTS = 16;
@@ -96,6 +100,35 @@ public class Participants {
             userDisplays.add(userFinalDisplay);
         }
         return userDisplays;
+    }
+
+    public List<String> judgeWinner() {
+        EnumMap<GameResult, Integer> dealerScore = new EnumMap<>(GameResult.class);
+
+        for (GameResult result : GameResult.values()) {
+            dealerScore.put(result, 0);
+        }
+
+        Map<String, GameResult> userScore = new HashMap<String, GameResult>();
+
+        for (User user : participants) {
+            GameResult isDealerWin = dealer.judgeUserResult(user.getHand());
+            dealerScore.replace(isDealerWin, dealerScore.get(isDealerWin) + 1);
+
+            GameResult isUserWin = dealer.judgeUserWin(user.getHand());
+            userScore.put(user.getName(), isUserWin);
+        }
+
+        List<String> finalTotalDisplays = new ArrayList<>();
+        String dealerTotalFinalDisplay = "딜러: " + dealerScore.get(GameResult.WIN) + "승 " + dealerScore.get(GameResult.LOSE) + "패";
+        finalTotalDisplays.add(dealerTotalFinalDisplay);
+
+        for (User user : participants) {
+            String userTotalFinalDisplay = user.getName() + ": " + userScore.get(user.getName()).getName();
+            finalTotalDisplays.add(userTotalFinalDisplay);
+        }
+
+        return finalTotalDisplays;
     }
 }
 

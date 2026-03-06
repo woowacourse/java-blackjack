@@ -50,4 +50,8 @@ public class Hand {
         String finalDisplay = " - 결과: " + handTotalScore;
         return finalDisplay;
     }
+
+    public int getHandTotalScore() {
+        return handTotalScore;
+    }
 }

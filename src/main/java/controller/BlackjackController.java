@@ -30,6 +30,12 @@ public class BlackjackController {
         readExtraCardCommand();
         dealDealerCard();
         printFinalResult();
+        printWinningResult();
+    }
+
+    private void printWinningResult() {
+        outputView.printMessage(Message.FINAL_RESULT_ANNOUNCE);
+        blackjackService.evaluateGame().forEach(outputView::printMessage);
     }
 
     private void printFinalResult() {
@@ -75,7 +81,6 @@ public class BlackjackController {
                 outputView.printErrorMessage(e.getMessage());
             }
         }
-
     }
 
     public void readExtraCardCommand() {

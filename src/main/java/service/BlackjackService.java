@@ -39,8 +39,6 @@ public class BlackjackService {
         return participants.getUserCardsDisplays();
     }
 
-
-
     public String processPlayerDecision(int index) {
         participants.dealCard(deck, index);
         participants.calculateScore(index);
@@ -69,5 +67,9 @@ public class BlackjackService {
 
     public void calculateScore(int index) {
         participants.calculateScore(index);
+    }
+
+    public List<String> evaluateGame() {
+        return participants.judgeWinner();
     }
 }
