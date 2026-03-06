@@ -4,6 +4,7 @@ import java.util.List;
 import service.BlackjackService;
 import util.Parser;
 import util.ServiceLocator;
+import util.Validator;
 import view.InputView;
 import view.Message;
 import view.OutputView;
@@ -13,12 +14,14 @@ public class BlackjackController {
     private final InputView inputView;
     private final Parser parser;
     private final BlackjackService blackjackService;
+    private final Validator validator;
 
     public BlackjackController() {
         this.outputView = ServiceLocator.getOutputView();
         this.inputView = ServiceLocator.getInputView();
         this.parser = ServiceLocator.getParser();
         this.blackjackService = ServiceLocator.getBlackjackService();
+        this.validator = ServiceLocator.getValidator();
     }
 
     public void run() {
@@ -27,6 +30,7 @@ public class BlackjackController {
         blackjackService.dealCards();
         printDealResult();
         printExtraCardRequest();
+        readExtraCardCommand();
     }
 
     private void printDealResult() {
@@ -55,5 +59,18 @@ public class BlackjackController {
             }
         }
 
+    }
+
+    public void readExtraCardCommand() {
+        while (true) {
+            printExtraCardRequest();
+            try {
+                String answer = inputView.readYesOrNo();
+                validator.validateAnswer(answer);
+
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
     }
 }

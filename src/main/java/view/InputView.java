@@ -12,4 +12,8 @@ public class InputView {
     public String readParticipantsName() {
         return scanner.nextLine();
     }
+
+    public String readYesOrNo() {
+        return scanner.nextLine();
+    }
 }

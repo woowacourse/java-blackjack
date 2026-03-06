@@ -12,6 +12,7 @@ public class ServiceLocator {
         private static final InputView inputView = new InputView();
         private static final Parser parser = new Parser();
         private static final BlackjackService blackjackService = new BlackjackService();
+        private static final Validator validator = new Validator();
     }
 
     public static OutputView getOutputView() {
@@ -28,5 +29,9 @@ public class ServiceLocator {
 
     public static BlackjackService getBlackjackService() {
         return Holder.blackjackService;
+    }
+
+    public static Validator getValidator() {
+        return Holder.validator;
     }
 }
