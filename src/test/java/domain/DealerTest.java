@@ -20,7 +20,7 @@ class DealerTest {
 
     @DisplayName("딜러가 받은 카드의 점수 합이 16이하이면 추가로 받는다.")
     @Test
-    void 딜러_카드_추가_배부_필요_정상_테스트(){
+    void 딜러_카드_추가_배부_필요_정상_테스트() {
         Dealer dealer = createDealerFromCards(List.of(
                 new Card(CardShape.HEART, CardRank.THREE),
                 new Card(CardShape.HEART, CardRank.TWO)
@@ -31,7 +31,7 @@ class DealerTest {
 
     @DisplayName("딜러가 받은 카드의 점수 합이 17 이상이면 추가로 받지 않는다.")
     @Test
-    void 딜러_카드_추가_배부_불필요_정상_테스트(){
+    void 딜러_카드_추가_배부_불필요_정상_테스트() {
         Dealer dealer = createDealerFromCards(List.of(
                 new Card(CardShape.HEART, CardRank.TEN),
                 new Card(CardShape.HEART, CardRank.SEVEN)

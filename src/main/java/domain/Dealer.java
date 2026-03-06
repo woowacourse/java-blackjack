@@ -11,11 +11,11 @@ public class Dealer extends Player {
         super(name);
     }
 
-   public boolean needAdditionalCard() {
+    public boolean needAdditionalCard() {
         return this.calculateScore() <= GameConstant.ADDITIONAL_THRESHOLD;
-   }
+    }
 
-    public Card getFirstCard(){
+    public Card getFirstCard() {
         return cards.getFirst();
     }
 }

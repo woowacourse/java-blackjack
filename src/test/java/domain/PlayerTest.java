@@ -96,10 +96,10 @@ class PlayerTest {
     @Test
     void KQJ_10으로_계산() {
         Player player1 = createPlayerFromCards(List.of(
-                 new Card(CardShape.HEART, CardRank.KING),
+                new Card(CardShape.HEART, CardRank.KING),
                 new Card(CardShape.HEART, CardRank.QUEEN),
                 new Card(CardShape.HEART, CardRank.JACK)
-                ));
+        ));
         assertThat(player1.getFinalScore()).isEqualTo(30);
     }
 

@@ -34,7 +34,7 @@ public class BlackjackController {
         OutputView.displayCardContent(firstCardContents);
         Players players = addAdditionalCard(playerList, cards);
 
-        if (!players.isAllPlayerBurst()){
+        if (!players.isAllPlayerBurst()) {
             blackjackService.determineAdditionalCardOfDealer(dealer, cards);
         }
 
@@ -65,11 +65,9 @@ public class BlackjackController {
     }
 
 
-
-
     private void handCardWithRetry(Player player, boolean hasCard, Cards cards, String name) {
         while (hasCard) {
-            if (player.isBust()){
+            if (player.isBust()) {
                 break;
             }
             player.add(cards.pop());
