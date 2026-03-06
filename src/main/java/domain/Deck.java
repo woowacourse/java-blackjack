@@ -11,7 +11,7 @@ public class Deck {
         this.cards = cards;
     }
 
-    public static Deck createShuffleDeck() {
+    public static Deck create() {
         List<Card> cards = new ArrayList<>();
 
         for (Suit suit : Suit.values()) {
@@ -20,7 +20,10 @@ public class Deck {
             }
         }
 
-        Collections.shuffle(cards);
         return new Deck(cards);
+    }
+
+    public void shuffle() {
+        Collections.shuffle(this.cards);
     }
 }
