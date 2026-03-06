@@ -22,7 +22,16 @@ public class BlackJackService {
         this.deck = deck;
         this.dealer = dealer;
         this.players = players;
-        initHand();
+    }
+
+    public void initHand() {
+        for (int i = 0; i < INIT_HAND_SIZE; i++) {
+            dealer.hit(deck.drawCard());
+        }
+
+        for (Player player : players.getPlayers()) {
+            initPlayerHand(player);
+        }
     }
 
     public Map<String, MatchResult> calculateResults() {
@@ -44,16 +53,6 @@ public class BlackJackService {
         }
 
         return dealerResult;
-    }
-
-    private void initHand() {
-        for (int i = 0; i < INIT_HAND_SIZE; i++) {
-            dealer.hit(deck.drawCard());
-        }
-
-        for (Player player : players.getPlayers()) {
-            initPlayerHand(player);
-        }
     }
 
     private void initPlayerHand(Player player) {
@@ -91,7 +90,7 @@ public class BlackJackService {
 
     private boolean handleDraw(Player player, Map<String, MatchResult> playerResults) {
         if (player.getHand().calculateSum() == dealer.getHand().calculateSum()) {
-            if (handleBlackJack(player, playerResults)) return true;
+            return handleBlackJack(player, playerResults);
         }
 
         return false;

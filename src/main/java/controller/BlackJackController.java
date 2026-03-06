@@ -27,6 +27,7 @@ public class BlackJackController {
         Players players = readUntilValidPlayers();
 
         BlackJackService blackJackService = new BlackJackService(deck, dealer, players);
+        blackJackService.initHand();
         outputView.showInitialHands(dealer, players);
 
         playRound(deck, dealer, players);

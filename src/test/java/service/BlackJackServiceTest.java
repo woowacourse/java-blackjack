@@ -24,12 +24,14 @@ class BlackJackServiceTest {
         Dealer dealer = new Dealer();
         Players players = new Players(List.of("pobi", "james"));
 
+        BlackJackService blackJackService = new BlackJackService(new Deck(), dealer, players);
+
         Assertions.assertEquals(dealer.getHand().getHand().size(), 0);
         for (Player player : players.getPlayers()) {
             Assertions.assertEquals(player.getHand().getHand().size(), 0);
         }
 
-        BlackJackService blackJackService = new BlackJackService(new Deck(), dealer, players);
+        blackJackService.initHand();
 
         Assertions.assertEquals(dealer.getHand().getHand().size(), 2);
         for (Player player : players.getPlayers()) {
