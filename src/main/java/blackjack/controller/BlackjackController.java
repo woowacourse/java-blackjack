@@ -42,8 +42,9 @@ public class BlackjackController {
         outputView.printCardDistributionCompleted(names);
 
         // 딜러 1장 공개, 플레이어 2장 공개
-        outputView.printDealerCards(dealer.getOpenedCards());
-        players.forEach(player -> outputView.printPlayersCards(player.getName(), player.getOpenedCards()));
+        outputView.printParticipantCards(dealer.getName(), dealer.getOpenedCards());
+        players.forEach(player -> outputView.printParticipantCards(player.getName(), player.getOpenedCards()));
+
 
         // 각 플레이어 히트/스탠드 진행
         for (Player player : players) {
@@ -52,7 +53,7 @@ public class BlackjackController {
 
             while (isContinued) {
                 player.pickAdditionalCard(cardDeck);
-                outputView.printPlayersCards(player.getName(), player.getAllCard());
+                outputView.printParticipantCards(player.getName(), player.getAllCard());
                 outputView.printMoreCardInputPrompt(player.getName());
                 isContinued = inputView.inputMoreCard();
             }
@@ -66,14 +67,15 @@ public class BlackjackController {
         outputView.printDealerDoesNotPickCard();
 
         // 딜러 카드 및 결과 공개
-        outputView.printDealerCardsWithScore(
+        outputView.printParticipantCardsWithScore(
+                dealer.getName(),
                 dealer.getAllCard(),
                 dealer.getCurrentTotalScore()
         );
 
         // 플레이어 카드 및 결과 공개
         for (Player player : players) {
-            outputView.printPlayersCardsWithScore(
+            outputView.printParticipantCardsWithScore(
                     player.getName(),
                     player.getAllCard(),
                     player.getCurrentTotalScore()
