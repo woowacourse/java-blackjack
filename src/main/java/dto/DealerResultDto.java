@@ -15,6 +15,6 @@ public record DealerResultDto(
                 .map(CardDto::of)
                 .toList();
 
-        return new DealerResultDto(dealerCards, dealer.calculateFinalSum());
+        return new DealerResultDto(dealerCards, dealer.getDeckSum());
     }
 }

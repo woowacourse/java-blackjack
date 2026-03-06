@@ -1,7 +1,5 @@
 package domain.service;
 
-import domain.model.Card;
-import domain.model.Deck;
 import domain.model.Player;
 import dto.CardDto;
 import dto.InitialDto;
@@ -30,8 +28,10 @@ public class BlackJackService {
                 .map(Player::of)
                 .toList();
         cardDistributor.initialize(players);
-        CardDto dealerCard = CardDto.of(cardDistributor.getDealer().getDeck().getLastCard());
 
+
+
+        CardDto dealerCard = CardDto.of(cardDistributor.getDealer().getDeck().getLastCard());
         List<PlayerDeckDto> playerDeckDtos = new ArrayList<>();
         for (Player player : players) {
             List<CardDto> cardDtos = player.getDeck().getCards().stream()
