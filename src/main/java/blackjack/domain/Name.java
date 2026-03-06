@@ -42,4 +42,8 @@ public class Name {
     private boolean isInvalidFormat(String name) {
         return !name.matches(NAME_PATTERN);
     }
+
+    public String getName() {
+        return this.name;
+    }
 }
