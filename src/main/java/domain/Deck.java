@@ -24,11 +24,11 @@ public class Deck {
     }
 
     public List<Card> firstHandCards() {
-        List<Card> handOutCards = new ArrayList<>();
+        List<Card> firstHandCards = new ArrayList<>();
         for (int index = 0; index < 2; index++) {
-            handOutCards.add(drawCard());
+            firstHandCards.add(drawCard());
         }
-        return handOutCards;
+        return firstHandCards;
     }
 
     public Card drawCard() {
