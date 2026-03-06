@@ -34,13 +34,17 @@ public class HandCards {
             return;
         }
         for (Integer score : scores) {
-            for (int s : card.getCardRank().getScores()) {
-                newScore.add(score + s);
-            }
+            addScore(card, score, newScore);
         }
 
         scores.clear();
         scores.addAll(newScore);
+    }
+
+    private static void addScore(Card card, Integer score, HashSet<Integer> newScore) {
+        for (int s : card.getCardRank().getScores()) {
+            newScore.add(score + s);
+        }
     }
 
     public boolean isBust() {
@@ -51,9 +55,7 @@ public class HandCards {
         // 21 이하 중에 최대 점수
         int notBustMaxScore = 0;
         for (int score : scores) {
-            if (score <= BUST_BOUND && score > notBustMaxScore) {
-                notBustMaxScore = score;
-            }
+            notBustMaxScore = getNotBustMaxScore(score, notBustMaxScore);
         }
 
         // 없다면, 제일 작은거
@@ -62,6 +64,13 @@ public class HandCards {
         }
 
         return Collections.min(scores);
+    }
+
+    private static int getNotBustMaxScore(int score, int notBustMaxScore) {
+        if (score <= BUST_BOUND && score > notBustMaxScore) {
+            notBustMaxScore = score;
+        }
+        return notBustMaxScore;
     }
 
     public List<Card> getHandCards() {

@@ -86,17 +86,7 @@ public class OutputView {
             if (finalResult.isDealer()) {
                 System.out.printf("%s: ", finalResult.name());
 
-                if (finalResult.win() != 0) {
-                    System.out.printf("%d승 ", finalResult.win());
-                }
-                if (finalResult.draw() != 0) {
-                    System.out.printf("%d무 ", finalResult.draw());
-                }
-                if (finalResult.lose() != 0) {
-                    System.out.printf("%d패", finalResult.lose());
-                }
-
-                System.out.println();
+                printDealerResultDetail(finalResult);
                 break;
             }
         }
@@ -105,17 +95,34 @@ public class OutputView {
             if (!finalResult.isDealer()) {
                 System.out.printf("%s: ", finalResult.name());
 
-                if (finalResult.win() != 0) {
-                    System.out.println("승");
-                }
-                if (finalResult.draw() != 0) {
-                    System.out.println("무");
-                }
-                if (finalResult.lose() != 0) {
-                    System.out.println("패");
-                }
+                printPlayerResultDetail(finalResult);
             }
 
+        }
+    }
+
+    private static void printDealerResultDetail(FinalResult finalResult) {
+        if (finalResult.win() != 0) {
+            System.out.printf("%d승 ", finalResult.win());
+        }
+        if (finalResult.draw() != 0) {
+            System.out.printf("%d무 ", finalResult.draw());
+        }
+        if (finalResult.lose() != 0) {
+            System.out.printf("%d패", finalResult.lose());
+        }
+        System.out.println();
+    }
+
+    private static void printPlayerResultDetail(FinalResult finalResult) {
+        if (finalResult.win() != 0) {
+            System.out.println("승");
+        }
+        if (finalResult.draw() != 0) {
+            System.out.println("무");
+        }
+        if (finalResult.lose() != 0) {
+            System.out.println("패");
         }
     }
 }

@@ -13,11 +13,15 @@ public class CardDeck {
     public static CardDeck initCardDeck() {
         List<Card> cards = new ArrayList<>();
         for (CardSuit suit : CardSuit.values()) {
-            for (CardRank rank : CardRank.values()) {
-                cards.add(new Card(suit, rank));
-            }
+            addCard(suit, cards);
         }
         return new CardDeck(cards);
+    }
+
+    private static void addCard(CardSuit suit, List<Card> cards) {
+        for (CardRank rank : CardRank.values()) {
+            cards.add(new Card(suit, rank));
+        }
     }
 
     public List<Card> getCardDeck() {
