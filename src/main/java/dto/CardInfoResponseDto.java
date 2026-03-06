@@ -37,12 +37,12 @@ public record CardInfoResponseDto(Map<String, List<String>> participantsInfo, Li
     private static List<Integer> createParticipantsScoreInfo(Game game) {
         // 딜러의 점수 가져오기
         List<Integer> score = new ArrayList<>();
-        score.add(game.getDealer().getTotalValue());
+        score.add(game.getDealer().getTotalScore());
 
         // 플레이어의 점수
         score.addAll(
                 game.getGamblers().getGamblersInfo().stream()
-                .map(Player::getTotalValue)
+                .map(Player::getTotalScore)
                 .toList());
 
         return score;

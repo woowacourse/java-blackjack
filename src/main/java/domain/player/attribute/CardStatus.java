@@ -1,4 +1,4 @@
-package domain.player;
+package domain.player.attribute;
 
 import domain.card.Card;
 import java.util.ArrayList;

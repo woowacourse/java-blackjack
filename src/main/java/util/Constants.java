@@ -2,13 +2,17 @@ package util;
 
 public class Constants {
 
-    // 구분자 상수
     public static final String COMMA_DELIMITER = ",";
 
-    // 덱 세트 개수
     public static final int DEFAULT_CARD_SET = 1;
 
     public static final int DEFAULT_START_CARD_COUNT = 2;
+
+    public static final int ACE_SCORE = 11;
+
+    public static final int BLACK_JACK = 21;
+
+    public static final int DEALER_REFERENCE_POINT = 16;
 
     private Constants() {
     }

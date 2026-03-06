@@ -64,6 +64,6 @@ class PlayerTest {
         player.addCard(card3);
 
         // then
-        Assertions.assertThat(player.getTotalValue()).isEqualTo(22);
+        Assertions.assertThat(player.getTotalScore()).isEqualTo(22);
     }
 }

@@ -1,4 +1,4 @@
-package domain.player;
+package domain.player.attribute;
 
 public class Name {
     private final String name;

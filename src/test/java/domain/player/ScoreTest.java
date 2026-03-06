@@ -1,6 +1,7 @@
 package domain.player;
 
 import domain.card.Card;
+import domain.player.attribute.Score;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
