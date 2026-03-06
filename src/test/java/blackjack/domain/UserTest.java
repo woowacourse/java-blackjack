@@ -109,4 +109,35 @@ public class UserTest {
         assertThat(sum).isEqualTo(21);
     }
 
+    @Test
+    @DisplayName("카드 합 Burst 판단 테스트")
+    void 카드_합_Burst_판단_테스트() {
+        // given
+        User user = new User("밀란");
+        user.bring(new Card(CardValue.TEN, Shape.CLOVER));
+        user.bring(new Card(CardValue.TEN, Shape.DIAMOND));
+        user.bring(new Card(CardValue.TEN, Shape.HEART));
+
+        // when
+        boolean isBurst = user.isBurst();
+
+        // then
+        assertThat(isBurst).isTrue();
+    }
+
+    @Test
+    @DisplayName("카드 합 Blackjack 판단 테스트")
+    void 카드_합_Blackjack_판단_테스트() {
+        // given
+        User user = new User("밀란");
+        user.bring(new Card(CardValue.A, Shape.CLOVER));
+        user.bring(new Card(CardValue.TEN, Shape.DIAMOND));
+
+        // when
+        boolean isBlackjack = user.isBlackjack();
+
+        // then
+        assertThat(isBlackjack).isTrue();
+    }
+
 }
