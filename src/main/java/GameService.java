@@ -1,7 +1,4 @@
-import domain.Card;
-import domain.CardDeck;
-import domain.Dealer;
-import domain.User;
+import domain.*;
 
 import java.util.List;
 
@@ -66,5 +63,45 @@ public class GameService {
          return 1;
         }
         return 11;
+    }
+
+    public void determineResult(List<User> users, Dealer dealer) {
+        int dealerScore = calculateScore(dealer.getHand());
+        boolean dealerBurst = isBurst(dealerScore);
+
+        for (User user : users) {
+            int userScore = calculateScore(user.getHand());
+            user.setGameResult(judge(user, dealer, dealerBurst));
+        }
+    }
+
+    private GameResult judge(User user,  Dealer dealer, boolean dealerBurst) {
+        int userScore = calculateScore(user.getHand());
+        int dealerScore = calculateScore(dealer.getHand());
+        boolean userBurst = isBurst(userScore);
+
+        if (dealerBurst && userBurst) {
+            dealer.setRounds(GameResult.DRAW);
+            return GameResult.DRAW;
+        }
+        if (dealerBurst) {
+            dealer.setRounds(GameResult.LOSE);
+            return GameResult.WIN;
+        }
+        if (userBurst) {
+            dealer.setRounds(GameResult.WIN);
+            return GameResult.LOSE;
+        }
+
+        if (userScore > dealerScore) {
+            dealer.setRounds(GameResult.LOSE);
+            return GameResult.WIN;
+        }
+        if (userScore < dealerScore) {
+            dealer.setRounds(GameResult.WIN);
+            return GameResult.LOSE;
+        }
+        dealer.setRounds(GameResult.DRAW);
+        return GameResult.DRAW;
     }
 }

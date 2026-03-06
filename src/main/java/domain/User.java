@@ -21,4 +21,12 @@ public class User extends Participant{
     public void setGameResult(GameResult gameResult) {
         this.gameResult = gameResult;
     }
+
+    public void setGameResult(GameResult gameResult) {
+        this.gameResult = gameResult;
+    }
+
+    public GameResult getGameResult() {
+        return gameResult;
+    }
 }
