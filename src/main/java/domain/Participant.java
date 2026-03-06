@@ -21,6 +21,10 @@ public class Participant {
         return handCards.getScore();
     }
 
+    public boolean isBlackjack() {
+        return handCards.isBlackjack();
+    }
+
     public boolean isBust() {
         return handCards.isBust();
     }
