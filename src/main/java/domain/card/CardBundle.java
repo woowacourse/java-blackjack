@@ -67,10 +67,10 @@ public class CardBundle {
         return basicScore;
     }
 
-    public int getBasicScore() { // 쌩으로 더했을 때, 에이스 기본 점수가 11점.
+    public int getBasicScore() {
         return cardBundle.stream()
-                .mapToInt(Card::getScore) // Card 객체를 점수(int)로 변환
-                .sum();                   // 합계 계산
+                .mapToInt(Card::getScore)
+                .sum();
     }
 
     public boolean isBusted() {
