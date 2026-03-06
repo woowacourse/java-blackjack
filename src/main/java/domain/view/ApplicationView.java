@@ -28,6 +28,21 @@ public class ApplicationView {
         });
     }
 
+    public void printFirstHandOutResult(List<String> playerNames) {
+        String formattedNames = String.join(",", playerNames);
+        writer.printFirstHandOutResult(formattedNames);
+    }
+
+    public void printAllParticipantsHand(List<PlayerHandDto> playerHands) {
+        for (PlayerHandDto playerHand : playerHands) {
+            printParticipantHand(playerHand);
+        }
+    }
+
+    public void printParticipantHand(PlayerHandDto playerHand) {
+        writer.printAllParticipantsHand(playerHand.playerName(), joining(playerHand.handOnCards()));
+    }
+
     private <T> T retry(Supplier<T> task) {
         while (true) {
             try {
