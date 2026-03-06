@@ -32,11 +32,9 @@ public class BlackjackGame {
 
         dealInitialCard(dealer, players);
         showGamerHands(players, dealer);
-        tryHitPlayers(players, dealer);
 
-        if (dealer.hitIfRequired()) {
-            view.printDealerAdditionalDrawCardMessage();
-        }
+        tryHitPlayers(players, dealer);
+        tryHitDealer(dealer);
 
         // 딜러 + Player의 카드 상황 및 총합 출력
         view.printFinalResultMessage(PlayerResultDto.from(dealer));
@@ -48,6 +46,12 @@ public class BlackjackGame {
         ResultAnalysisDto analysis = analyzeBlackjackResult(players, dealer);
         view.printFinalResultMessage(analysis);
 
+    }
+
+    private void tryHitDealer(Dealer dealer) {
+        if (dealer.hitIfRequired()) {
+            view.printDealerAdditionalDrawCardMessage();
+        }
     }
 
     private void tryHitPlayers(Players players, Dealer dealer) {
