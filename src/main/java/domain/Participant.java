@@ -17,20 +17,20 @@ public abstract class Participant {
     }
 
     public int calculateTotalScore() {
-        int results = 0;
-        for (Card holdCard : handCards) {
-            results += holdCard.getScore();
-        }
+        int cardScore = handCards.stream()
+                .map(Card::getScore)
+                .reduce(0, Integer::sum);
 
         boolean isAceExist = handCards.stream()
                 .anyMatch(holdCard -> holdCard.getCardNumber() == CardNumber.ACE);
-        if (isAceExist && (results + 10) <= 21) {
-            return results + 10;
+
+        if (isAceExist && (cardScore + 10) <= 21) {
+            return cardScore + 10;
         }
-        return results;
+        return cardScore;
     }
 
-    public List<Card> getHandCards(){
+    public List<Card> getHandCards() {
         return List.copyOf(handCards);
     }
 
