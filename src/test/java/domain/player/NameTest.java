@@ -14,4 +14,18 @@ class NameTest {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> new Name("123456"));
     }
+
+    @Test
+    @DisplayName("이름 한 글자면 에러 발생 테스트")
+    void 이름_한_글자수_검증() {
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> new Name("a"));
+    }
+
+    @Test
+    @DisplayName("이름 10글자 초과면 에러 발생 테스트")
+    void 이름_열_글자수_검증() {
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> new Name("abcdefghijk"));
+    }
 }
