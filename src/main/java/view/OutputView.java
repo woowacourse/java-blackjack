@@ -1,6 +1,6 @@
 package view;
 
-import domain.Card;
+import domain.card.Card;
 
 import domain.Dealer;
 import domain.GameResult;

@@ -1,5 +1,8 @@
 package domain;
 
+import domain.card.Card;
+import domain.card.CardNumber;
+
 import java.util.List;
 
 public abstract class Participant {
