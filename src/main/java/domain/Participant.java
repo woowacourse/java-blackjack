@@ -1,5 +1,7 @@
 package domain;
 
+import dto.ParticipantCardsDto;
+
 import java.util.ArrayList;
 
 public abstract class Participant {
@@ -19,10 +21,16 @@ public abstract class Participant {
     public abstract boolean canReceiveCard();
 
     public String getName() {
-        return name.toString();
+        return name.getName();
     }
 
     public int getScore() {
         return cards.calculateScore();
+    }
+
+    //public abstract ParticipantCardsDto getParticipantCardsDto();
+
+    public ParticipantCardsDto getParticipantCardsDto() {
+        return new ParticipantCardsDto(name.getName(), cards.getCardsInfo());
     }
 }

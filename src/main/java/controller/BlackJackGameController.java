@@ -2,6 +2,7 @@ package controller;
 
 import domain.*;
 import view.InputView;
+import view.OutputView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,32 +16,47 @@ public class BlackJackGameController {
 
     public void run() {
         List<Player> players = initPlayer();
+        List<String> playersNames = players.stream()
+                .map(Participant::getName)
+                .toList();
+
+        OutputView.printGameInitialMessage(playersNames);
+
         Dealer dealer = initDealer();
         Deck deck = new Deck();
 
         // 초기 카드 분배 (2장)
-        for (Player player : players) {
-            Card card1 = deck.distributeCard();
-            player.receiveCard(card1);
-            Card card2 = deck.distributeCard();
-            player.receiveCard(card2);
-        }
         Card card1 = deck.distributeCard();
         dealer.receiveCard(card1);
         Card card2 = deck.distributeCard();
         dealer.receiveCard(card2);
+        OutputView.printCards(dealer.getParticipantCardsDto());
+
+        for (Player player : players) {
+            Card p_card1 = deck.distributeCard();
+            player.receiveCard(p_card1);
+            Card p_card2 = deck.distributeCard();
+            player.receiveCard(p_card2);
+            OutputView.printCards(player.getParticipantCardsDto());
+
+        }
+
+        // OutputView 출력
 
         for (Player player : players) {
             while (player.canReceiveCard()) {
                 if (!isContinue(InputView.askContinue(player.getName()))) {
+                    OutputView.printCards(player.getParticipantCardsDto());
                     break;
                 }
                 Card card = deck.distributeCard();
                 player.receiveCard(card);
+                OutputView.printCards(player.getParticipantCardsDto());
             }
         }
 
         while (dealer.canReceiveCard()) {
+            // TODO: 딜러 메시지 출력
             if (!dealer.canReceiveCard()) {
                 break;
             }
@@ -51,7 +67,7 @@ public class BlackJackGameController {
         Map<Participant, Integer> participantScores = new HashMap<>();
         participantScores.put(dealer, dealer.getScore());
 
-        for(Player player : players) {
+        for (Player player : players) {
             participantScores.put(player, player.getScore());
         }
 
@@ -84,7 +100,8 @@ public class BlackJackGameController {
     }
 
     private List<String> getPlayerNames() {
-        return null;
+        return InputView.askPlayerNames();
     }
+
 
 }

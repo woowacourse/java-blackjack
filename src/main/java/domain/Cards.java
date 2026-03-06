@@ -42,6 +42,13 @@ public class Cards {
         return sum;
     }
 
+    public List<String> getCardsInfo() {
+        return cards.stream()
+                .map(Card::getCardInfo)
+                .toList();
+    }
+
+
     private boolean isBurst(int score) {
         if (score > 21) {
             return true;
