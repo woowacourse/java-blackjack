@@ -23,10 +23,12 @@ public class OutputView {
 
         System.out.printf("딜러카드: %s\n", String.join(", ", dealer.getCardNames()));
 
-        players.forEach(player -> {
-            System.out.printf(player.getNickname() + "카드: ");
-            System.out.println(String.join(", ", player.getCardNames()));
-        });
+        players.forEach(OutputView::printCardStatus);
+    }
+
+    public static void printCardStatus(final Player player) {
+        System.out.printf(player.getNickname() + "카드: ");
+        System.out.println(String.join(", ", player.getCardNames()));
     }
 
 

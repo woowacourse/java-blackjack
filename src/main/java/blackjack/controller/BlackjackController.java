@@ -21,12 +21,14 @@ public class BlackjackController {
         dealer.pitch(players);
         OutputView.printStartMessage(players, dealer);
 
-        while (true) {
-            players.forEach(player -> {
+        players.forEach(player -> {
+            while (player.isHit()) {
                 Answer answer =
                     RetryExecutor.retry(this::readAnswer, player.getNickname());
-            });
-        }
+                handleAnswer(player, dealer, answer);
+                OutputView.printCardStatus(player);
+            }
+        });
     }
 
     private List<Player> readNicknames() {
@@ -38,7 +40,17 @@ public class BlackjackController {
             .toList();
     }
 
-    private Answer readAnswer(String nickname) {
+    private Answer readAnswer(final String nickname) {
         return Answer.pick(InputView.readAnswer(nickname));
+    }
+
+    private void handleAnswer(final Player player, final Dealer dealer, final Answer answer) {
+        if (answer == Answer.YES) { // HIT
+            dealer.giveCard(player);
+            player.handleBurst();
+        }
+        if (answer == Answer.NO) { // STAY
+            player.stay();
+        }
     }
 }

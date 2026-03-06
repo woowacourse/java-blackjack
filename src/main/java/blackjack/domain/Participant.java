@@ -16,15 +16,19 @@ public abstract class Participant {
         hand.add(card);
     }
 
+    public boolean isHit() {
+        return status == Status.HIT;
+    }
+
     public void stay() {
         if (status == Status.HIT) {
             status = Status.STAY;
         }
     }
 
-    public void burst() {
-        if (status == Status.HIT) {
-            status = Status.STAY;
+    public void handleBurst() {
+        if (hand.isBurst() && status == Status.HIT) {
+            status = Status.BURST;
         }
     }
 
