@@ -19,7 +19,7 @@ public record PlayerName(
         }
     }
 
-        private static void validateNameLength(String name) {
+    private static void validateNameLength(String name) {
         if(name.length() > 5) {
             throw new IllegalArgumentException(NAME_LENGTH_ERROR);
         }
