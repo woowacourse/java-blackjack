@@ -38,6 +38,7 @@ public class GameTest {
         assertThat(game.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.PLAYER_WIN);
     }
 
+    @Test
     void compare_score_when_dealer_win() {
         Player player = new Player("player1");
         Dealer dealer = new Dealer();
@@ -52,6 +53,7 @@ public class GameTest {
         assertThat(game.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.DEALER_WIN);
     }
 
+    @Test
     void compare_score_when_push() {
         Player player = new Player("player1");
         Dealer dealer = new Dealer();
