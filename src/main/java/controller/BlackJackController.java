@@ -24,6 +24,33 @@ public class BlackJackController {
         Players players = new Players(getPlayer());
         Dealer dealer = new Dealer(new Hand());
 
+        initGame(cardDeck, dealer, players);
+
+        for (Player player : players.getPlayers()) {
+            progressGame(cardDeck, player);
+        }
+
+        dealerHitOrStand(dealer, cardDeck);
+        OutputView.scoreStatisticsMessage(dealer, players);
+        result = blackJackService.calculateResult(dealer, players);
+        OutputView.gameResultMessage(result);
+    }
+
+    private List<Player> getPlayer() {
+        List<Player> players = new ArrayList<>();
+
+        OutputView.inputPlayerMessage();
+        String input = InputView.input();
+        Validator.validateInput(input);
+        List<String> names = Parser.separateBySeparator(input);
+
+        for (String name : names) {
+            players.add(new Player(name, new Hand()));
+        }
+        return players;
+    }
+
+    private void initGame(CardDeck cardDeck, Dealer dealer, Players players) {
         dealer.keepCard(cardDeck.drawCard());
         dealer.keepCard(cardDeck.drawCard());
 
@@ -33,50 +60,46 @@ public class BlackJackController {
         }
 
         OutputView.gameStartMessage(dealer, players);
+    }
 
-        for (Player player : players.getPlayers()) {
-            while (true) {
-                OutputView.hitOrStandMessage(player);
-                String input = InputView.input();
-                Validator.validateChoiceInput(input);
-                if (input.equals("n")) {
-                    OutputView.holdingCardMessage(player);
-                    player.getTotalCardScore();
-                    break;
-                }
-                player.keepCard(cardDeck.drawCard());
-                OutputView.holdingCardMessage(player);
-                if (player.getHand().isBust()) {
-                    player.getTotalCardScore();
-                    break;
-                }
-            }
+    private Boolean isHitRequested(Player player) {
+        OutputView.hitOrStandMessage(player);
+        String input = InputView.input();
+        Validator.validateChoiceInput(input);
+        return "y".equals(input);
+    }
+
+    private Boolean canPlayerDraw(Player player) {
+        if (player.getHand().isBust()) {
+            player.getTotalCardScore();
+            return false;
         }
+        return isHitRequested(player);
+    }
 
+    private void drawAndShowCard(CardDeck cardDeck, Player player) {
+        player.keepCard(cardDeck.drawCard());
+        OutputView.holdingCardMessage(player);
+    }
+
+    private void finalizePlayerTurn(Player player) {
+        OutputView.holdingCardMessage(player);
+        player.getTotalCardScore();
+    }
+
+    private void progressGame(CardDeck cardDeck, Player player) {
+        while (canPlayerDraw(player)) {
+            drawAndShowCard(cardDeck, player);
+        }
+        if(!player.getHand().isBust()){
+            finalizePlayerTurn(player);
+        }
+    }
+
+    private void dealerHitOrStand(Dealer dealer, CardDeck cardDeck) {
         if (dealer.dealerRule()) {
             OutputView.dealerHitMessage();
             dealer.keepCard(cardDeck.drawCard());
         }
-
-        OutputView.scoreStatisticsMessage(dealer, players);
-
-        result = blackJackService.calculateResult(dealer, players);
-
-        OutputView.gameResultMessage(result);
-
-    }
-
-    private List<Player> getPlayer() {
-        List<Player> players = new ArrayList<>();
-
-        OutputView.inputPlayerMessage();
-        String input = InputView.input();
-        Validator.validateInput(input);
-        List<String> names = Parser.separateBySeparator(input, ",");
-
-        for (String name : names) {
-            players.add(new Player(name, new Hand()));
-        }
-        return players;
     }
 }
