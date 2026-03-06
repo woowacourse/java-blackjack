@@ -32,4 +32,7 @@ public class Players {
                 .toList();
     }
 
+    public List<Player> getPlayers() {
+        return List.copyOf(players);
+    }
 }
