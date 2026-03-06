@@ -2,8 +2,8 @@ package domain;
 
 
 import constant.GameConstant;
-import controller.CardContentDto;
-import controller.FinalCardDto;
+import domain.dto.CardContentDto;
+import domain.dto.FinalCardDto;
 
 import java.util.ArrayList;
 import java.util.List;

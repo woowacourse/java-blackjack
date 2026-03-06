@@ -1,4 +1,4 @@
-package controller;
+package domain.dto;
 
 import java.util.List;
 

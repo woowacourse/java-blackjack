@@ -1,8 +1,9 @@
 package view;
 
 import constant.GameConstant;
-import controller.CardContentDto;
-import controller.FinalCardDto;
+import domain.dto.BlackjackResultDto;
+import domain.dto.CardContentDto;
+import domain.dto.FinalCardDto;
 import domain.Card;
 
 import java.util.ArrayList;
@@ -48,6 +49,10 @@ public final class OutputView {
 
             System.out.printf("%s카드: %s - 결과: %d\n", dto.name(), String.join(", ", cardContents), dto.total());
         }
+
+    }
+
+    public static void displayMatchResult(BlackjackResultDto resultDto) {
 
     }
 }

@@ -1,9 +1,8 @@
 package controller;
 
-import domain.Cards;
-import domain.Dealer;
-import domain.Player;
-import domain.Players;
+import domain.*;
+import domain.dto.CardContentDto;
+import domain.dto.FinalCardDto;
 import service.BlackjackService;
 import view.InputView;
 import view.OutputView;
@@ -37,6 +36,9 @@ public class BlackjackController {
 
         printFinalCards(players);
 
+        // 최종 승패
+        BlackjackResult blackjackResult = BlackjackResult.from(dealer, players);
+        OutputView.displayMatchResult(blackjackResult.toResultDto());
     }
 
     public List<CardContentDto> getCardContentDtos(Dealer dealer, List<Player> playerList) {
