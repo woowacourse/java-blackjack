@@ -27,27 +27,20 @@ public class BlackjackController {
     }
 
     public void start() {
-        // Deck 생성
         Deck deck = new Deck(CardsCreator.createLinkedCards());
-        // 플레이어 이름 받기
         List<String> playerNames = Parser.parse(inputView.readPlayerName());
         List<Player> players = createPlayers(playerNames, deck);
 
         Dealer dealer = createDealerAndPrintPlayers(deck, playerNames);
 
-        // 카드 나눠줌
-        // 각 플레이어 hand 출력
         printPlayersHand(dealer, players);
-        // 각 플레이어마다 더 받을지
-        // 플레이어 HIT할지
-        // HIT한 후의 Hands 출력
         chooseToFillPlayersHand(players, deck);
-        // 딜러 HIT 여부에 따라 hit
         fillDealerHand(dealer, deck, players);
-        // 모든 상태 출력
         printPlayerStatus(dealer, players);
-        // 최종 결과
-        // 승패 로직
+        showGameResultStatistics(dealer, players);
+    }
+
+    private void showGameResultStatistics(Dealer dealer, List<Player> players) {
         int dealerTotalScore = dealer.getHand().getTotalScore();
         List<StatisticsDto> statisticsDtos = getStatisticsDtos(players, dealerTotalScore);
         outputView.showResultStatistics(statisticsDtos, dealer.getName());
@@ -107,7 +100,7 @@ public class BlackjackController {
 
     private void fillDealerHand(Dealer dealer, Deck deck, List<Player> players) {
         while(dealer.needsToHit()
-                && players.stream().anyMatch(p -> Hand.isBurst(p.getHand().getTotalScore()))){
+                && players.stream().noneMatch(p -> Hand.isBurst(p.getHand().getTotalScore()))){
             Card card = deck.drawCard(randomValueGenerator.generate(deck.getSize()));
             dealer.addHand(card);
             DealerDto dealerDto = DealerDto.FromEntity(dealer);
@@ -117,7 +110,7 @@ public class BlackjackController {
 
     private void printPlayerStatus(Dealer dealer, List<Player> players) {
         PlayerCardsDto dealerCardsDto;
-        dealerCardsDto = PlayerCardsDto.dealerFromEntity(dealer);
+        dealerCardsDto = PlayerCardsDto.fromEntity(dealer);
         outputView.showCardsAndScore(dealerCardsDto, dealer.getHand().getTotalScore());
         for (Player player : players) {
             PlayerCardsDto playerCardsDto = PlayerCardsDto.fromEntity(player);

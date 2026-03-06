@@ -51,21 +51,21 @@ public class OutputView {
                 .map(StatisticsDto::result)
                 .toList();
         String message = "";
-        message += getResultMessage(statistics, Result.LOSE, message, Result.WIN);
-        message += getResultMessage(statistics, Result.DRAW, message, Result.DRAW);
-        getResultMessage(statistics, Result.WIN, message, Result.LOSE);
+        message += getResultMessage(statistics, Result.LOSE, Result.WIN);
+        message += getResultMessage(statistics, Result.DRAW, Result.DRAW);
+        getResultMessage(statistics, Result.WIN, Result.LOSE);
 
         return message;
     }
 
-    private static String getResultMessage(List<String> statistics, Result playerResult, String message, Result dealerResult) {
+    private static String getResultMessage(List<String> statistics, Result playerResult, Result dealerResult) {
         if (statistics.stream()
                 .anyMatch(s -> s.equals(playerResult.getDisplayName()))) {
-            message += statistics.stream()
+            return statistics.stream()
                     .filter(s -> s.equals(playerResult.getDisplayName()))
                     .count() + dealerResult.getDisplayName() + " ";
         }
-        return message;
+        return "";
     }
 
 
