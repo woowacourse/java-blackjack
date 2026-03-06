@@ -20,7 +20,6 @@ public class Participant {
         participantHand.addDeck(card);
     }
 
-    /*점수 갱신(int 점수 받기)*/
     public void addScore(Integer score) {
         participantHand.addScore(score);
     }
