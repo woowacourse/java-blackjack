@@ -2,18 +2,17 @@ package blackjack.domain;
 
 import java.util.List;
 
-public class Player {
+public class Player extends Participant {
     private static final int NICKNAME_MINIMUM_LENGTH = 4;
     private static final int NICKNAME_MAXIMUM_LENGTH = 10;
 
     private final String nickname;
 
-    private final Hand hand;
 
-    public Player(final String nickname) {
+    public Player(final Hand hand, final Status status, final String nickname) {
+        super(hand, status);
         validateNicknameLength(nickname);
         this.nickname = nickname;
-        this.hand = new Hand();
     }
 
     public String getNickname() {
@@ -26,10 +25,7 @@ public class Player {
         }
     }
 
-    public void addCard(Card card) {
-        hand.add(card);
-    }
-
+    @Override
     public List<String> getCardNames() {
         return hand.getCardNames(0);
     }
