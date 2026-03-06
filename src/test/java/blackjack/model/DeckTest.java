@@ -17,7 +17,7 @@ class DeckTest {
     @Test
     @DisplayName("CardsGenerator를 통해 인스턴스를 생성한다.")
     void createInstanceByCardsGenerator() {
-        assertThatCode(() -> Deck.from(generator))
+        assertThatCode(() -> Deck.shuffled(generator))
                 .doesNotThrowAnyException();
     }
 
@@ -28,7 +28,7 @@ class DeckTest {
         @DisplayName("남은 카드가 있다면 예외가 발생하지 않는다")
         void returnCard() {
             // given
-            Deck deck = Deck.from(generator);
+            Deck deck = Deck.shuffled(generator);
 
             // when & then
             assertThatCode(deck::draw)
@@ -39,7 +39,7 @@ class DeckTest {
         @DisplayName("null이 아닌 인스턴스를 반환한다")
         void returnNotNullCard() {
             // given
-            Deck deck = Deck.from(generator);
+            Deck deck = Deck.shuffled(generator);
 
             // when
             Card card = deck.draw();
@@ -52,7 +52,7 @@ class DeckTest {
         @DisplayName("남은 카드가 없다면 예외를 던진다")
         void throwExceptionIfCardsEmpty() {
             // given
-            Deck deck = Deck.from(emptyCardsGenerator);
+            Deck deck = Deck.shuffled(emptyCardsGenerator);
 
             // when & then
             assertThatThrownBy(deck::draw)
