@@ -1,5 +1,6 @@
 package domain;
 
+import domain.dto.PlayerStatus;
 import java.util.List;
 
 public class GameTable {
@@ -15,14 +16,22 @@ public class GameTable {
         members.join(member);
     }
 
-    public CurrentResult checkCurrentResult(String memberName) {
-        int totalValue = members.checkBust(memberName);
-        boolean isBust = totalValue > BLACKJACK;
-        return new CurrentResult(isBust, totalValue);
+    public boolean checkBust(String memberName) {
+        return members.checkValue(memberName) > BLACKJACK;
     }
 
     public List<Card> draw(String memberName, Card card) {
         members.provideCard(memberName, card);
         return members.findCardByName(memberName);
+    }
+
+    public List<PlayerStatus> checkPlayerStatuses() {
+        return members.getAllPlayerName()
+                .stream()
+                .map(name -> {
+                    List<Card> cards = members.findCardByName(name);
+                    int totalValue = members.checkValue(name);
+                    return new PlayerStatus(name, cards, totalValue);
+                }).toList();
     }
 }

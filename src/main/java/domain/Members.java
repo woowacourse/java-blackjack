@@ -26,7 +26,7 @@ public class Members {
         return member.currentCards();
     }
 
-    public int checkBust(String memberName) {
+    public int checkValue(String memberName) {
         Member member = findByName(memberName);
         return member.currentValue();
     }
@@ -36,5 +36,11 @@ public class Members {
                 .filter(member -> member.name().equals(memberName))
                 .findAny()
                 .orElseThrow(NoSuchElementException::new);
+    }
+
+    public List<String> getAllPlayerName() {
+        return members.stream()
+                .map(Member::name)
+                .toList();
     }
 }
