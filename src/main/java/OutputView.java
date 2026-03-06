@@ -1,5 +1,5 @@
 import java.text.MessageFormat;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -44,7 +44,8 @@ public class OutputView {
     public void printFinalResult(List<GameFinalResultDto> finalResult) {
         System.out.println("## 최종 승패");
         GameFinalResultDto firstPlayer = finalResult.removeFirst();
-        Map<Result, Integer> resultCounts = new HashMap<>();
+        Map<Result, Integer> resultCounts = new EnumMap<>(Result.class);
+
         countDealerResult(finalResult, resultCounts);
         printDealerResult(firstPlayer, resultCounts);
         printPlayerResult(finalResult);
@@ -52,8 +53,17 @@ public class OutputView {
 
     private void countDealerResult(List<GameFinalResultDto> finalResult, Map<Result, Integer> resultCounts) {
         for (GameFinalResultDto result : finalResult) {
-            Integer beforeCount = resultCounts.getOrDefault(result.result, 0);
-            resultCounts.put(result.result, ++beforeCount);
+            if (result.getResult() == Result.WIN) {
+                resultCounts.put(Result.LOSE, resultCounts.getOrDefault(Result.LOSE, 0) + 1);
+                continue;
+            }
+
+            if (result.getResult() == Result.LOSE) {
+                resultCounts.put(Result.WIN, resultCounts.getOrDefault(Result.WIN, 0) + 1);
+                continue;
+            }
+
+            resultCounts.put(result.getResult(), resultCounts.getOrDefault(result.getResult(), 0) + 1);
         }
     }
 
@@ -71,7 +81,7 @@ public class OutputView {
             System.out.println(MessageFormat.format(
                     FINAL_RESULT_MESSAGE,
                     result.getName(),
-                    result.getResult()
+                    result.getResult().getName()
             ));
         }
     }

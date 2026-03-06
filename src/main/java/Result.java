@@ -8,6 +8,6 @@ public enum Result {
     }
 
     public String getName() {
-        return name;
+        return name + " ";
     }
 }
