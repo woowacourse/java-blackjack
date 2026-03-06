@@ -1,23 +1,17 @@
 package service;
 
-import domain.Dealer;
-import domain.Player;
-import domain.Players;
-import domain.ResultInfo;
-
-import java.util.HashMap;
-import java.util.Map;
+import domain.*;
 
 public class BlackJackService {
-    private final Map<String, ResultInfo> result;
+    private final Result result;
 
-    public BlackJackService() {
-        this.result = new HashMap<>();
+    public BlackJackService(Result result) {
+        this.result = result;
     }
 
-    public Map<String, ResultInfo> calculateResult(Dealer dealer, Players players) {
+    public Result calculateResult(Dealer dealer, Players players) {
         for (Player player : players.getPlayers()) {
-            result.put(player.getName(), calculateWinDefeatDraw(dealer, player));
+            result.setEntry(player.getName(), calculateWinDefeatDraw(dealer, player));
         }
         return result;
     }
