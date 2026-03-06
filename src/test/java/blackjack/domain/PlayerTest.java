@@ -33,7 +33,7 @@ public class PlayerTest {
     @Test
     void 플레이어가_카드1장_받는다() {
         TrumpCard spaceAce = TrumpCard.of(Suit.SPADE, Rank.ACE);
-        Player newPlayer = player.receive(spaceAce);
+        Player newPlayer = player.receiveCard(spaceAce);
         assertThat(newPlayer.countCards()).isEqualTo(1);
     }
 
@@ -42,8 +42,8 @@ public class PlayerTest {
         TrumpCard spaceAce = TrumpCard.of(Suit.SPADE, Rank.ACE);
         TrumpCard heartKing = TrumpCard.of(Suit.HEART, Rank.KING);
 
-        Player newPlayer = player.receive(spaceAce);
-        newPlayer = newPlayer.receive(heartKing);
+        Player newPlayer = player.receiveCard(spaceAce);
+        newPlayer = newPlayer.receiveCard(heartKing);
         assertThat(newPlayer.countCards()).isEqualTo(2);
     }
 
@@ -52,8 +52,8 @@ public class PlayerTest {
         TrumpCard spaceAce = TrumpCard.of(Suit.SPADE, Rank.ACE);
         TrumpCard heartKing = TrumpCard.of(Suit.HEART, Rank.KING);
 
-        Player newPlayer = player.receive(spaceAce);
-        newPlayer = newPlayer.receive(heartKing);
+        Player newPlayer = player.receiveCard(spaceAce);
+        newPlayer = newPlayer.receiveCard(heartKing);
 
         assertThat(newPlayer.score()).isEqualTo(21);
     }
