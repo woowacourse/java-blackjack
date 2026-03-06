@@ -16,7 +16,7 @@ public class Application {
             blackjackController.run();
 
         } catch (Exception e) {
-            // 오류 메시지 출력
+            
         } finally {
 
         }

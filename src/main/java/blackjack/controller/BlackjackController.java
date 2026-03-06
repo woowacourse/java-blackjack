@@ -1,13 +1,17 @@
 package blackjack.controller;
 
+import static blackjack.util.ExceptionHandler.retryUntilSuccess;
+
 import blackjack.model.CardCalculator;
 import blackjack.model.CardProvider;
 import blackjack.model.Dealer;
+import blackjack.model.ErrorMessage;
 import blackjack.model.GameResultCalculator;
 import blackjack.model.GameSummary;
 import blackjack.model.Player;
 import blackjack.model.User;
 import blackjack.util.PlayerParser;
+import blackjack.util.Validator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
@@ -28,8 +32,10 @@ public class BlackjackController {
     }
 
     public void run() {
-        String input = InputView.readPlayerName();
-        List<Player> players = PlayerParser.parse(input);
+        List<Player> players = retryUntilSuccess(() -> {
+            String input = InputView.readPlayerName();
+            return PlayerParser.parse(input);
+        });
         Dealer dealer = new Dealer();
 
         cardProvider.provideInitCards(players, dealer);
@@ -58,7 +64,7 @@ public class BlackjackController {
 
     public void hit(List<Player> players, Dealer dealer) {
         for (Player player : players) {
-            while (InputView.readCardAdd(player).equals("y") && checkAddCard(player)) {
+            while (retryUntilSuccess(() -> checkY(player)) && checkAddCard(player)) {
                 cardProvider.provideOneCard(player);
                 OutputView.printPlayerCards(player);
             }
@@ -68,6 +74,13 @@ public class BlackjackController {
             OutputView.printDealerHit();
             cardProvider.provideOneCard(dealer);
         }
+    }
+
+    private static boolean checkY(Player player) {
+        String input = InputView.readCardAdd(player).trim();
+        Validator.validateEmpty(input, ErrorMessage.ERROR_EMPTY_INPUT.getErrorMessage());
+        Validator.validateRegrex("^[yYnN]$", input, ErrorMessage.ERROR_NOT_Y_N_INPUT.getErrorMessage());
+        return input.equals("y");
     }
 
     boolean checkAddCard(Player player) {

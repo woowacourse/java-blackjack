@@ -1,9 +1,11 @@
 package blackjack.util;
 
+import static blackjack.model.ErrorMessage.ERROR_EMPTY_INPUT;
+import static blackjack.model.ErrorMessage.ERROR_INVALID_PLAYER_NAME;
+
 import blackjack.model.Player;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class PlayerParser {
 
@@ -12,21 +14,11 @@ public class PlayerParser {
     public static List<Player> parse(String names) {
         return Arrays.stream(names.split(","))
                 .map(String::trim)
-                .peek(PlayerParser::validateRegrex)
-                .peek(PlayerParser::validateEmpty)
+                .peek((name) -> Validator.validateRegrex(regrex, name,
+                        ERROR_INVALID_PLAYER_NAME.getErrorMessage()))
+                .peek((name) -> Validator.validateEmpty(name, ERROR_EMPTY_INPUT.getErrorMessage()))
                 .map(Player::new)
                 .toList();
     }
 
-    private static void validateRegrex(String parsedName) {
-        if (!Pattern.matches(regrex, parsedName)) {
-            throw new IllegalArgumentException("플레이어의 이름은 영어 or 한글로만 이루어질 수 있습니다.");
-        }
-    }
-
-    private static void validateEmpty(String parsedName) {
-        if (parsedName.isEmpty()) {
-            throw new IllegalArgumentException("플레이어의 이름은 공백일 수 없습니다.");
-        }
-    }
 }
