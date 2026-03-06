@@ -3,6 +3,7 @@ package blackjack.domain;
 import java.util.HashMap;
 
 public class BlackJackGame {
+    private static final int INIT_DRAW_CARD_COUNT = 2;
     private final Players players;
     private final Dealer dealer;
     private final Deck deck;
@@ -14,7 +15,7 @@ public class BlackJackGame {
     }
 
     public void initDraw() {
-        for(int i = 0; i < 2; i++) {
+        for(int i = 0; i < INIT_DRAW_CARD_COUNT; i++) {
             players.recieveCard(deck);
             dealer.recieveCard(deck.draw());
         }
