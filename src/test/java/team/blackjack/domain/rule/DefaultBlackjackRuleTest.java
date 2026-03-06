@@ -4,6 +4,7 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import team.blackjack.domain.Card;
+import team.blackjack.domain.Result;
 
 class DefaultBlackjackRuleTest {
     private static final DefaultBlackjackRule defaultBlackjackRule = new DefaultBlackjackRule();
@@ -88,5 +89,35 @@ class DefaultBlackjackRuleTest {
         int score = DefaultBlackjackRule.calculateBestScore(cards);
 
         Assertions.assertEquals(21, score);
+    }
+
+    @Test
+    void 내_점수가_더_높으면_WIN() {
+        Assertions.assertEquals(Result.WIN, DefaultBlackjackRule.judgeResult(20, 18));
+    }
+
+    @Test
+    void 상대_점수가_더_높으면_LOSE() {
+        Assertions.assertEquals(Result.LOSE, DefaultBlackjackRule.judgeResult(18, 20));
+    }
+
+    @Test
+    void 동점이면_DRAW() {
+        Assertions.assertEquals(Result.DRAW, DefaultBlackjackRule.judgeResult(17, 17));
+    }
+
+    @Test
+    void 버스트_21초과면_LOSE() {
+        Assertions.assertEquals(Result.LOSE, DefaultBlackjackRule.judgeResult(22, 20));
+    }
+
+    @Test
+    void 합이_10이하면_Ace는_11() {
+        Assertions.assertTrue(DefaultBlackjackRule.canUseAceAsEleven(10));
+    }
+
+    @Test
+    void 합이_10초과면_Ace는_11() {
+        Assertions.assertFalse(DefaultBlackjackRule.canUseAceAsEleven(11));
     }
 }
