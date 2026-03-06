@@ -1,5 +1,7 @@
 package blackjack.controller;
 
+import static blackjack.model.Constant.DEALER_ADD_CARD_STAND;
+import static blackjack.model.Constant.TWENTY_ONE;
 import static blackjack.util.ExceptionHandler.retryUntilSuccess;
 
 import blackjack.model.CardCalculator;
@@ -19,6 +21,8 @@ import java.util.List;
 
 
 public class BlackjackController {
+
+    private static final String Y_N_REGREX = "^[yYnN]$";
 
     private final CardProvider cardProvider;
     private final CardCalculator cardCalculator;
@@ -84,7 +88,7 @@ public class BlackjackController {
             }
         }
 
-        while (cardCalculator.totalScore(dealer.cards()) < 17) {
+        while (cardCalculator.totalScore(dealer.cards()) < DEALER_ADD_CARD_STAND) {
             OutputView.printDealerHit();
             cardProvider.provideOneCard(dealer);
         }
@@ -93,12 +97,12 @@ public class BlackjackController {
     private static boolean checkY(Player player) {
         String input = InputView.readCardAdd(player).trim();
         Validator.validateEmpty(input, ErrorMessage.ERROR_EMPTY_INPUT.getErrorMessage());
-        Validator.validateRegrex("^[yYnN]$", input, ErrorMessage.ERROR_NOT_Y_N_INPUT.getErrorMessage());
+        Validator.validateRegrex(Y_N_REGREX, input, ErrorMessage.ERROR_NOT_Y_N_INPUT.getErrorMessage());
         return input.equals("y");
     }
 
     boolean checkAddCard(Player player) {
-        if (cardCalculator.totalScore(player.cards()) >= 21) {
+        if (cardCalculator.totalScore(player.cards()) >= TWENTY_ONE) {
             OutputView.printCantAddCard();
             return false;
         }

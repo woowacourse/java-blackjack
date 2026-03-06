@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import static blackjack.model.Constant.TWENTY_ONE;
+
 import blackjack.model.Card;
 import blackjack.model.Dealer;
 import blackjack.model.GameResult;
@@ -41,7 +43,7 @@ public class OutputView {
     }
 
     public static void printCantAddCard() {
-        System.out.println("카드의 합계가 21 이상입니다. 더이상 카드를 받을 수 없습니다.");
+        System.out.println("카드의 합계가 " + TWENTY_ONE + " 이상입니다. 더이상 카드를 받을 수 없습니다.");
     }
 
     public static void printDealerHit() {

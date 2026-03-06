@@ -1,5 +1,11 @@
 package blackjack.model;
 
+import static blackjack.model.Constant.ACE_SCORE_ELEVEN;
+import static blackjack.model.Constant.ACE_SCORE_ONE;
+import static blackjack.model.Constant.INIT_CARDS_END_IDX;
+import static blackjack.model.Constant.INIT_CARDS_START_IDX;
+import static blackjack.model.Constant.TWENTY_ONE;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -7,8 +13,8 @@ import java.util.stream.Collectors;
 public class CardCalculator {
 
     public boolean calculateBlackjack(List<Card> cards) {
-        List<Card> initCards = cards.subList(0, 2);
-        return totalScore(initCards) == 21;
+        List<Card> initCards = cards.subList(INIT_CARDS_START_IDX, INIT_CARDS_END_IDX);
+        return totalScore(initCards) == TWENTY_ONE;
     }
 
     public int totalScore(List<Card> cards) {
@@ -30,16 +36,16 @@ public class CardCalculator {
     }
 
     public boolean calculateBust(int totalScore) {
-        return totalScore > 21;
+        return totalScore > TWENTY_ONE;
     }
 
     int addAceScore(List<Card> aceCards, int totalScore) {
         for (int i = 0; i < aceCards.size(); i++) {
-            if (totalScore + 11 > 21) {
-                totalScore += 1;
+            if (totalScore + ACE_SCORE_ELEVEN > TWENTY_ONE) {
+                totalScore += ACE_SCORE_ONE;
                 continue;
             }
-            totalScore += 11;
+            totalScore += ACE_SCORE_ELEVEN;
         }
 
         return totalScore;

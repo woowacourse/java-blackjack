@@ -1,5 +1,8 @@
 package blackjack.model;
 
+import static blackjack.model.Constant.INIT_CARDS_END_IDX;
+import static blackjack.model.Constant.INIT_CARDS_START_IDX;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -23,7 +26,7 @@ public class CardProvider {
     }
 
     public void provideInitCards(List<Player> players, Dealer dealer) {
-        for (int i = 0; i < 2; i++) {
+        for (int i = INIT_CARDS_START_IDX; i < INIT_CARDS_END_IDX; i++) {
             for (Player player : players) {
                 player.addCard(deck.poll());
             }
