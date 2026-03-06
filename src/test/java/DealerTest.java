@@ -1,6 +1,6 @@
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.BlackjackHand;
+import domain.Hand;
 import domain.Dealer;
 import domain.Rank;
 import java.util.List;
@@ -13,16 +13,16 @@ import org.junit.jupiter.params.provider.MethodSource;
 class DealerTest {
     public static Stream<Arguments> needsToHit() {
         return Stream.of(
-                Arguments.of(new BlackjackHand(TestDefaults.getCardsByRanks(List.of(Rank.TEN, Rank.SIX))),true),
-                Arguments.of(new BlackjackHand(TestDefaults.getCardsByRanks(List.of(Rank.TEN,Rank.SEVEN))),false)
+                Arguments.of(new Hand(TestDefaults.getCardsByRanks(List.of(Rank.TEN, Rank.SIX))),true),
+                Arguments.of(new Hand(TestDefaults.getCardsByRanks(List.of(Rank.TEN,Rank.SEVEN))),false)
         );
     }
 
     @ParameterizedTest
     @MethodSource
     @DisplayName("16이하의 값이라면 딜러는 카드를 더 받는다.")
-    void needsToHit(BlackjackHand blackjackHand, boolean expected) {
-        Dealer dealer = new Dealer(blackjackHand);
+    void needsToHit(Hand hand, boolean expected) {
+        Dealer dealer = new Dealer(hand);
 
         assertThat(dealer.needsToHit()).isEqualTo(expected);
     }

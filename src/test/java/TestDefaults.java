@@ -1,8 +1,6 @@
-import domain.BlackjackHand;
-import domain.Card;
-import domain.Deck;
-import domain.Rank;
-import domain.Suit;
+import domain.*;
+import domain.Hand;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,17 +11,17 @@ public class TestDefaults {
     private static final Rank DEFAULT_RANK = Rank.ACE;
 
     private static final List<Card> DEFAULT_CARDS = createCards();
-    private static final BlackjackHand DEFAULT_BLACKJACK_HAND = createBlackjackHand();
+    private static final Hand DEFAULT_BLACKJACK_HAND = createBlackjackHand();
 
     public static Deck createDeck() {
         return new Deck(createCards());
     }
 
-    public static BlackjackHand createBlackjackHand() {
-        return new BlackjackHand(List.of(new Card(DEFAULT_RANK, FIRST_SUIT), new Card(DEFAULT_RANK, FIRST_SUIT)));
+    public static Hand createBlackjackHand() {
+        return new Hand(List.of(new Card(DEFAULT_RANK, FIRST_SUIT), new Card(DEFAULT_RANK, FIRST_SUIT)));
     }
 
-    public static BlackjackHand getBlackjackHand() {
+    public static Hand getBlackjackHand() {
         return DEFAULT_BLACKJACK_HAND;
     }
 

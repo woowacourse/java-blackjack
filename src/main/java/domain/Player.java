@@ -2,17 +2,19 @@ package domain;
 
 import util.ErrorMessage;
 
+import java.util.List;
+
 public class Player {
     private static final int MIN_NAME_SIZE = 2;
     private static final int MAX_NAME_SIZE = 7;
 
     private final String name;
-    private final BlackjackHand blackjackHand;
+    private final Hand hand;
 
-    public Player (String name, BlackjackHand blackjackHand) {
+    public Player (String name, Hand hand) {
         validateNameLength(name);
         this.name = name;
-        this.blackjackHand = blackjackHand;
+        this.hand = hand;
     }
 
     private void validateNameLength(String name) {
@@ -21,12 +23,16 @@ public class Player {
         }
     }
 
-    public BlackjackHand getBlackjackHand() {
-        return blackjackHand;
+    public Hand getHand() {
+        return hand;
+    }
+
+    public List<Card> getCards(){
+        return getHand().getCards();
     }
 
     public void addHand(Card card){
-        blackjackHand.add(card);
+        hand.add(card);
     }
 
     public String getName() {

@@ -1,6 +1,8 @@
 package controller;
 
 import domain.*;
+import dto.NamesDto;
+import dto.PlayerCardsDto;
 import util.CardsCreator;
 import util.Parser;
 import view.InputView;
@@ -9,7 +11,6 @@ import view.Result;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public class BlackjackController {
@@ -31,26 +32,30 @@ public class BlackjackController {
         List<Player> players = createPlayers(playerNames, deck, random);
         Dealer dealer = new Dealer(getBlackjackHand(deck, random));
 
-        outputView.drawCard(dealer.getName(), playerNames);
-        Participants participants = new Participants(players, dealer);
+        NamesDto namesDto = new NamesDto(dealer.getName(), playerNames);
+        outputView.drawCard(namesDto);
+
         // 카드 나눠줌
         // 각 플레이어 hands 출력
-        List<String> dealerCards = cardToString(participants.getDealer().getBlackjackHand().getHands());
-        outputView.showCard(participants.getDealer().getName(), dealerCards);
+        List<String> dealerCards = cardToString(dealer.getCards());
+        PlayerCardsDto dealerCardsDto = new PlayerCardsDto(dealer.getName(), dealerCards);
+        outputView.showCard(dealerCardsDto);
         for (Player player : players) {
-            List<Card> hands = player.getBlackjackHand().getHands();
-            outputView.showCard(player.getName(), cardToString(hands));
+            List<Card> hands = player.getCards();
+            PlayerCardsDto playerCardsDto = new PlayerCardsDto(player.getName(), cardToString(hands));
+            outputView.showCard(playerCardsDto);
         }
         // 각 플레이어마다 더 받을지
         // 플레이어 HIT할지
         // HIT한 후의 Hands 출력
         for (Player player : players) {
             String name = player.getName();
-            if (BlackjackHand.isBurst(player.getBlackjackHand().getTotalScore())
+            if (Hand.isBurst(player.getHand().getTotalScore())
                     || !inputView.readNeedToHit(name)) continue;
             Card card = deck.drawCard(getRandomIdx(deck, random));
             player.addHand(card);
-            outputView.showCard(name, cardToString(player.getBlackjackHand().getHands()));
+            PlayerCardsDto playerCardsDto = new PlayerCardsDto(name, cardToString(player.getHand().getCards()));
+            outputView.showCard(playerCardsDto);
         }
         // 딜러 HIT 여부에 따라 hit
         while(dealer.needsToHit()){
@@ -59,19 +64,21 @@ public class BlackjackController {
 
         }
         // 모든 상태 출력
-        dealerCards = cardToString(participants.getDealer().getBlackjackHand().getHands());
-        outputView.showCardsAndScore(participants.getDealer().getName(), dealerCards, dealer.getBlackjackHand().getTotalScore());
+        dealerCards = cardToString(dealer.getHand().getCards());
+        dealerCardsDto = new PlayerCardsDto(dealer.getName(), dealerCards);
+        outputView.showCardsAndScore(dealerCardsDto, dealer.getHand().getTotalScore());
         for (Player player : players) {
-            List<Card> hands = player.getBlackjackHand().getHands();
-            outputView.showCardsAndScore(player.getName(), cardToString(hands), player.getBlackjackHand().getTotalScore());
+            List<Card> hands = player.getHand().getCards();
+            PlayerCardsDto playerCardsDto = new PlayerCardsDto(player.getName(), cardToString(hands));
+            outputView.showCardsAndScore(playerCardsDto, player.getHand().getTotalScore());
         }
         // 최종 결과
         // 승패 로직
-        int dealerTotalScore = dealer.getBlackjackHand().getTotalScore();
+        int dealerTotalScore = dealer.getHand().getTotalScore();
 
 
         for (Player player : players) {
-            int totalScore = player.getBlackjackHand().getTotalScore();
+            int totalScore = player.getHand().getTotalScore();
             Result result;
             if (dealerTotalScore > totalScore) result = Result.WIN;
             else if (dealerTotalScore == totalScore) {
@@ -96,20 +103,20 @@ public class BlackjackController {
     private List<Player> createPlayers(List<String> playerNames, Deck deck, Random random) {
         List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
-            BlackjackHand blackjackHand = getBlackjackHand(deck, random);
+            Hand hand = getBlackjackHand(deck, random);
 
-            Player player = new Player(playerName, blackjackHand);
+            Player player = new Player(playerName, hand);
             players.add(player);
         }
         return players;
     }
 
 
-    private BlackjackHand getBlackjackHand(Deck deck, Random random) {
+    private Hand getBlackjackHand(Deck deck, Random random) {
         Card card1 = deck.drawCard(getRandomIdx(deck, random));
         Card card2 = deck.drawCard(getRandomIdx(deck, random));
 
-        return new BlackjackHand(List.of(card1, card2));
+        return new Hand(List.of(card1, card2));
     }
 
     private static int getRandomIdx(Deck deck, Random random) {

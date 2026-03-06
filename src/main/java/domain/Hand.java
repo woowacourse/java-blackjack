@@ -4,17 +4,17 @@ import java.util.Collections;
 import java.util.List;
 import util.ErrorMessage;
 
-public class BlackjackHand {
+public class Hand {
     public static final int ACE_PROFIT_VALUE = 10;
     private static final int BLACKJACK_MAX_SCORE = 21;
     private static final int MIN_SIZE = 2;
     private static final int MIN_TOTAL_SCORE = 2;
 
-    private List<Card> hands;
+    private final List<Card> cards;
 
-    public BlackjackHand(List<Card> cards) {
+    public Hand(List<Card> cards) {
         validateCardsSize(cards);
-        hands = cards;
+        this.cards = cards;
     }
 
     // 버스트 확인
@@ -32,12 +32,12 @@ public class BlackjackHand {
     }
 
     public int getTotalScore() {    // 테스트
-        int totalScore = hands.stream()
+        int totalScore = cards.stream()
                 .map(Card::getScore)
                 .reduce(Integer::sum)
                 .orElse(0);
 
-        if (totalScore <= BLACKJACK_MAX_SCORE - ACE_PROFIT_VALUE && hasAce(hands)) {
+        if (totalScore <= BLACKJACK_MAX_SCORE - ACE_PROFIT_VALUE && hasAce(cards)) {
             return totalScore + ACE_PROFIT_VALUE;
         }
 
@@ -45,11 +45,11 @@ public class BlackjackHand {
     }
 
     public int getHandsSize() {
-        return hands.size();
+        return cards.size();
     }
 
     public void add(Card card) {
-        hands.add(card);
+        cards.add(card);
     }
 
     private boolean hasAce(List<Card> hands) {
@@ -57,7 +57,7 @@ public class BlackjackHand {
                 .anyMatch(Card::isAce);
     }
 
-    public List<Card> getHands() {
-        return Collections.unmodifiableList(hands);
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }
