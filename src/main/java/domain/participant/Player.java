@@ -2,6 +2,8 @@ package domain.participant;
 
 import java.util.regex.Pattern;
 
+import static domain.util.BlackJackConstant.MAX_NAME_LENGTH;
+
 public class Player extends Participant {
 
     private static final String STRING_REGEX = "^[a-zA-Z]*$";
@@ -18,7 +20,7 @@ public class Player extends Participant {
     }
 
     private void validateNameLength(String name) {
-        if (name.isEmpty() || name.length() > 8) {
+        if (name.isEmpty() || name.length() > MAX_NAME_LENGTH) {
             throw new IllegalArgumentException("플레이어 이름은 1글자 이상 8글자 이하여야 합니다.");
         }
     }

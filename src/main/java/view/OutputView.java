@@ -8,6 +8,8 @@ import domain.participant.Players;
 
 import java.util.Map;
 
+import static domain.util.BlackJackConstant.INIT_HAND_SIZE;
+
 public class OutputView {
 
     public void showInitialHands(Dealer dealer, Players players) {
@@ -18,7 +20,7 @@ public class OutputView {
         }
 
         playerNames.delete(playerNames.length() - 2, playerNames.length());
-        System.out.printf("\n딜러와 %s에게 2장을 나누었습니다.\n", playerNames);
+        System.out.printf("\n딜러와 %s에게 %d장을 나누었습니다.\n", playerNames, INIT_HAND_SIZE);
 
         Card openCard = dealer.getOpenCard();
         System.out.printf("딜러카드: %s%s\n", openCard.getRank().getName(), openCard.getSuit().getSuit());

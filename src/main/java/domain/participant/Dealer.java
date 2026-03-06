@@ -2,6 +2,8 @@ package domain.participant;
 
 import domain.card.Card;
 
+import static domain.util.BlackJackConstant.DEALER_HIT_LIMIT;
+
 public class Dealer extends Participant {
 
     public Card getOpenCard() {
@@ -9,6 +11,6 @@ public class Dealer extends Participant {
     }
 
     public boolean shouldHit() {
-        return hand.calculateSum() <= 16;
+        return hand.calculateSum() <= DEALER_HIT_LIMIT;
     }
 }

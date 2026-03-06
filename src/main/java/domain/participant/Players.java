@@ -2,6 +2,8 @@ package domain.participant;
 
 import java.util.*;
 
+import static domain.util.BlackJackConstant.MAX_PLAYER_SIZE;
+
 public class Players {
 
     private final List<Player> players;
@@ -23,7 +25,7 @@ public class Players {
     }
 
     private void validateSize(List<String> players) {
-        if (players.size() > 5)
+        if (players.size() > MAX_PLAYER_SIZE)
             throw new IllegalArgumentException("플레이어 인원 수는 5명 이하여야 합니다.");
     }
 

@@ -10,9 +10,9 @@ import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class BlackJackService {
+import static domain.util.BlackJackConstant.INIT_HAND_SIZE;
 
-    private final static int INIT_HAND_VALUE = 2;
+public class BlackJackService {
 
     private final Deck deck;
     private final Dealer dealer;
@@ -25,12 +25,12 @@ public class BlackJackService {
     }
 
     public void initHand() {
-        for (int i = 0; i < INIT_HAND_VALUE; i++) {
+        for (int i = 0; i < INIT_HAND_SIZE; i++) {
             dealer.hit(deck.drawCard());
         }
 
         for (Player player : players.getPlayers()) {
-            for (int i = 0; i < INIT_HAND_VALUE; i++) {
+            for (int i = 0; i < INIT_HAND_SIZE; i++) {
                 player.hit(deck.drawCard());
             }
         }

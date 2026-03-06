@@ -3,9 +3,11 @@ package domain.card;
 import java.util.ArrayList;
 import java.util.List;
 
+import static domain.util.BlackJackConstant.*;
+
 public class Hand {
 
-    private List<Card> hand = new ArrayList<>();
+    private final List<Card> hand = new ArrayList<>();
 
     public Hand() {}
 
@@ -14,7 +16,7 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return calculateSum() > 21;
+        return calculateSum() > BLACKJACK_SCORE;
     }
 
     public int calculateSum() {
@@ -34,7 +36,7 @@ public class Hand {
     }
 
     public boolean isBlackJack() {
-        return hand.size() == 2 && calculateSum() == 21;
+        return hand.size() == INIT_HAND_SIZE && calculateSum() == BLACKJACK_SCORE;
     }
 
     public List<Card> getHand() {
@@ -42,9 +44,9 @@ public class Hand {
     }
 
     private int handleAce(int sum, int aceCount) {
-        while (sum > 21 && aceCount > 0) {
+        while (sum > BLACKJACK_SCORE && aceCount > 0) {
             aceCount--;
-            sum -= 10;
+            sum -= ACE_ADJUSTMENT_VALUE;
         }
         return sum;
     }
