@@ -79,7 +79,7 @@ public class PlayerTest {
                 new Card(Suit.SPADE, Denomination.SIX),
                 new Card(Suit.DIAMOND, Denomination.KING)));
             Player player = new Player(playerHand, Status.BURST, "pobi");
-            GameResult expected = GameResult.DRAW;
+            GameResult expected = GameResult.LOSE;
 
             GameResult actual = player.calculateGameResult(dealer);
 

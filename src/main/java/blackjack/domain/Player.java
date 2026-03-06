@@ -22,16 +22,10 @@ public class Player extends Participant {
     }
 
     public GameResult calculateGameResult(Dealer dealer) {
-        if (dealer.isBurst() && !isBurst()) {
-            return GameResult.WIN;
-        }
-        if (dealer.isBurst() && isBurst()) {
-            return GameResult.DRAW;
-        }
-        if (!dealer.isBurst() && isBurst()) {
+        if (isBurst()) {
             return GameResult.LOSE;
         }
-        if (dealer.getScore() < getScore()) {
+        if (dealer.isBurst() || dealer.getScore() < getScore()) {
             return GameResult.WIN;
         }
         if (dealer.getScore() == getScore()) {
