@@ -46,8 +46,8 @@ public class Gamblers {
                 .map(g -> new GamblerResultLog(g.getName(), g.getResult(dealerScore)))
                 .toList();
 
-        int winCount = count(logs, MatchResult.WIN);
-        int loseCount = count(logs, MatchResult.LOSE);
+        int winCount = count(logs, MatchResult.LOSE);
+        int loseCount = count(logs, MatchResult.WIN);
         int drawCount = logs.size() - winCount - loseCount;
 
         return new BlackjackResult(winCount, loseCount, drawCount, logs);
