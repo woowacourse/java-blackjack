@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -70,5 +71,12 @@ class DeckTest {
         TrumpCard draw = deck.draw();
 
         assertThat(draw).isNotNull();
+    }
+
+    @Test
+    void 게임을_시작하면_카드를_셔플한다() {
+        Deck deck = Deck.create(Collections::reverse);
+        TrumpCard first = deck.draw();
+        assertThat(first).isEqualTo(TrumpCard.of(Suit.CLOVER, Rank.KING));
     }
 }
