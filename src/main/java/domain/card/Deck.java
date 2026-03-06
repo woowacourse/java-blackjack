@@ -1,4 +1,7 @@
-package domain;
+package domain.card;
+
+import domain.Rank;
+import domain.Suit;
 
 public class Deck {
     private final Cards cards;

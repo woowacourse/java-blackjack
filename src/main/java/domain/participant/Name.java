@@ -1,4 +1,6 @@
-package domain;
+package domain.participant;
+
+import domain.ExceptionMessage;
 
 public class Name {
     private final String name;

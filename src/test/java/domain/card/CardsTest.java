@@ -1,7 +1,9 @@
-package domain;
+package domain.card;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import domain.Rank;
+import domain.Suit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

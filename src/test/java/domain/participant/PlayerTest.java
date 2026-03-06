@@ -1,7 +1,10 @@
-package domain;
+package domain.participant;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import domain.Rank;
+import domain.Suit;
+import domain.card.Card;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

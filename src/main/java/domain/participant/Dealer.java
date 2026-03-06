@@ -1,6 +1,8 @@
-package domain;
+package domain.participant;
 
-public class Dealer extends Participant{
+import domain.card.Card;
+
+public class Dealer extends Participant {
     public Dealer(String name) {
         super(name);
     }
