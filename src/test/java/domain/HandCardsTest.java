@@ -15,7 +15,7 @@ class HandCardsTest {
 
     @Test
     @DisplayName("패에 카드를 추가한다.")
-    public void 패에_카드_추가_성공() throws Exception {
+    public void 패에_카드_추가_성공() {
         // given
         Card card = new Card(CardSuit.SPADE, CardRank.ACE);
         HandCards handCards = new HandCards(new ArrayList<>());
@@ -30,7 +30,7 @@ class HandCardsTest {
     @ParameterizedTest
     @MethodSource("블랙잭_여부_판단_테스트케이스")
     @DisplayName("가진 패의 블랙잭 여부를 판단한다.")
-    public void 블랙잭_여부_판단(List<Card> cards, boolean result) throws Exception {
+    public void 블랙잭_여부_판단(List<Card> cards, boolean result) {
         // given
         HandCards handCards = new HandCards(cards);
 
@@ -63,7 +63,7 @@ class HandCardsTest {
 
     @Test
     @DisplayName("플레이어가 가지고 있는 카드 점수를 반환한다.")
-    public void 카드_점수_반환_성공() throws Exception {
+    public void 카드_점수_반환_성공() {
         // given
         HandCards handCards = new HandCards(new ArrayList<>());
         handCards.addCard(new Card(CardSuit.SPADE, CardRank.ACE));

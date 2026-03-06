@@ -12,7 +12,7 @@ class CardShufflerImplTest {
 
     @Test
     @DisplayName("0부터 size-1까지의 수 중 하나를 반환한다.")
-    public void 랜덤_수_반환_성공() throws Exception {
+    public void 랜덤_수_반환_성공() {
         // given
         int size = 52;
 

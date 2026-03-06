@@ -24,7 +24,7 @@ class BlackjackServiceTest {
 
     @Test
     @DisplayName("카드덱에서 지정한 수만큼의 카드를 뽑는다.")
-    public void 카드_뽑기_성공() throws Exception {
+    public void 카드_뽑기_성공() {
         // given
         CardDeck cardDeck = CardDeck.initCardDeck();
         int originCount = cardDeck.getDeckSize();
@@ -48,7 +48,7 @@ class BlackjackServiceTest {
 
     @Test
     @DisplayName("딜러와 플레이어들의 카드를 비교해서 딜러의 결과를 반환한다.")
-    public void 딜러_결과_계산_성공() throws Exception {
+    public void 딜러_결과_계산_성공() {
         // given
         Participants participants = initParticipants();
 
