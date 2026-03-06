@@ -61,4 +61,8 @@ public enum CardNumber {
     public int getValue() {
         return number;
     }
+
+    public String getCourt() {
+        return court;
+    }
 }
