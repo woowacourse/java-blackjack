@@ -12,6 +12,8 @@ import java.util.function.Supplier;
 
 public class ApplicationView {
 
+    private static final String PLAYER_NAME_DELIMITER = ",";
+
     public InputReader reader;
     public OutputWriter writer;
 
@@ -24,7 +26,7 @@ public class ApplicationView {
         return retry(() -> {
             writer.printInputNameGuideMessage();
             String names = reader.readInput();
-            return Arrays.stream(names.split(","))
+            return Arrays.stream(names.split(PLAYER_NAME_DELIMITER))
                     .map(String::trim)
                     .map(PlayerName::from)
                     .toList();
@@ -40,7 +42,7 @@ public class ApplicationView {
     }
 
     public void printFirstHandOutResult(List<String> playerNames) {
-        String formattedNames = String.join(",", playerNames);
+        String formattedNames = String.join(PLAYER_NAME_DELIMITER, playerNames);
         writer.printDealInitialCardMessage(formattedNames);
     }
 
@@ -75,7 +77,6 @@ public class ApplicationView {
         PlayerHandDto playerHand = playerResult.playerHand();
         writer.printFinalResultMessage(playerHand.playerName(), playerHand.handOnCards(), playerResult.resultScore());
     }
-
 
     private <T> T retry(Supplier<T> task) {
         while (true) {
