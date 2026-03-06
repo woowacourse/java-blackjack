@@ -10,6 +10,8 @@ import java.util.stream.Stream;
 
 public class Dealer {
 
+    private static final String CANNOT_HAND_OUT_CARDS_ERROR = "딜러가 카드를 나눠줄 수 없습니다.";
+    private static final String DEALER_NAME = "딜러"; // NOTE Player와 추상화를 위해서는 수정 필요
     private static final int BUSTED_CONDITION = 21;
     private static final int ADDITIONAL_DRAW_CONDITION = 16;
     private static final int INITIAL_DEAL_COUNT = 2;
@@ -40,7 +42,6 @@ public class Dealer {
         return player.addCardBundle(cardBundle);
     }
 
-    // TODO Method Name Refactor
     public CardBundle handOutCard(int tryCount) {
         try {
             List<Card> cardList = Stream.generate(this::drawCard)
@@ -48,7 +49,7 @@ public class Dealer {
                     .toList();
             return CardBundle.from(cardList);
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("딜러가 카드를 나눠줄 수 없습니다.");
+            throw new IllegalArgumentException(CANNOT_HAND_OUT_CARDS_ERROR);
         }
     }
 
@@ -82,7 +83,7 @@ public class Dealer {
     }
 
     public String toDisplayMyName() {
-        return "딜러";
+        return DEALER_NAME;
     }
 
     public List<String> disPlayMyCardBundle() {

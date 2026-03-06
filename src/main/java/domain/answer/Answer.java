@@ -8,10 +8,12 @@ public enum Answer {
     NO("n")
     ;
 
+    private static final String INVALID_INPUT_ERROR = "y 또는 n을 입력해주세요.";
+
     private final String answer;
 
-    private Answer(String ansewr) {
-        this.answer = ansewr;
+    Answer(String answer) {
+        this.answer = answer;
     }
 
     public String getAnswer() {
@@ -22,7 +24,7 @@ public enum Answer {
         return Arrays.stream(Answer.values())
                 .filter(v -> v.answer.equals(value))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("y 또는 n을 입력해주세요.")
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_INPUT_ERROR)
                 );
     }
 
