@@ -8,7 +8,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Hand {
 
     private final List<Card> cards;
-
     public Hand() {
         cards = new ArrayList<>();
     }
@@ -35,12 +34,12 @@ public class Hand {
     private int softHandAces(int aceAmount) {
         AtomicInteger sumWithoutAce = new AtomicInteger();
         cards.stream()
-                .filter(c -> c.number() != 11)
+                .filter(c -> c.number() != CardNumber.A.getValue())
                 .forEach(c -> sumWithoutAce.addAndGet(c.number()));
-        if (sumWithoutAce.get() > 10) {
+        if (sumWithoutAce.get() >= CardNumber.A.getValue()) {
             return sumWithoutAce.get() + aceAmount;
         }
-        return sumWithoutAce.get() + 11 + aceAmount - 1;
+        return sumWithoutAce.get() + CardNumber.A.getValue() + aceAmount - 1;
     }
     /**
      * ace가 있는 경우
@@ -54,7 +53,7 @@ public class Hand {
     private int aceAmount() {
         return Math.toIntExact(
                 cards.stream()
-                        .filter(card -> card.number() == 11)
+                        .filter(card -> card.number() == CardNumber.A.getValue())
                         .count()
         );
     }
