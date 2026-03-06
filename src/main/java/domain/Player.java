@@ -8,6 +8,10 @@ public class Player extends Participant {
 
     @Override
     public boolean canDraw() {
+        if (super.score() < 21) {
+            return true;
+        }
+
         return false;
     }
 }

@@ -15,8 +15,8 @@ public enum Rank {
     QUEEN("Q", 10),
     KING("K", 10);
 
-    private String title;
-    private int value;
+    private final String title;
+    private final int value;
 
     Rank(String title, int value) {
         this.title = title;
