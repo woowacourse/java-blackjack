@@ -7,18 +7,13 @@ import blackjack.model.GameResultCalculator;
 
 public class Application {
     public static void main(String[] args) {
-        try {
-            CardProvider cardProvider = new CardProvider();
-            CardCalculator cardCalculator = new CardCalculator();
-            GameResultCalculator gameResultCalculator = new GameResultCalculator();
-            BlackjackController blackjackController = new BlackjackController(cardProvider, cardCalculator,
-                    gameResultCalculator);
-            blackjackController.run();
 
-        } catch (Exception e) {
-            
-        } finally {
+        CardProvider cardProvider = new CardProvider();
+        CardCalculator cardCalculator = new CardCalculator();
+        GameResultCalculator gameResultCalculator = new GameResultCalculator();
+        BlackjackController blackjackController = new BlackjackController(cardProvider, cardCalculator,
+                gameResultCalculator);
+        blackjackController.run();
 
-        }
     }
 }

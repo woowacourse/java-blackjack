@@ -29,11 +29,11 @@ public class OutputView {
     }
 
     private static void printDealerCard(Dealer dealer) {
-        System.out.println("딜러카드: " + dealer.getCardStatus().getCards().getFirst().getFormat());
+        System.out.println("딜러카드: " + dealer.cards().getFirst().getFormat());
     }
 
     public static void printPlayerCards(Player player) {
-        List<String> formats = player.getCardStatus().getCards().stream()
+        List<String> formats = player.cards().stream()
                 .map(Card::getFormat)
                 .toList();
 
@@ -53,7 +53,7 @@ public class OutputView {
 
         StringBuilder sb = new StringBuilder();
         sb.append(user.getName() + "카드: ");
-        List<String> cardFormats = user.getCardStatus().getCards().stream().map(Card::getFormat).toList();
+        List<String> cardFormats = user.cards().stream().map(Card::getFormat).toList();
         sb.append(String.join(", ", cardFormats));
         sb.append(" - 결과: " + gameSummary.totalScore());
 

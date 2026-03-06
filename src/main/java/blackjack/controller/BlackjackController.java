@@ -38,28 +38,42 @@ public class BlackjackController {
         });
         Dealer dealer = new Dealer();
 
-        cardProvider.provideInitCards(players, dealer);
-        OutputView.printInitCards(players, dealer);
+        provideInitCardsPrint(players, dealer);
 
         hit(players, dealer);
 
         List<User> users = new ArrayList<>(players);
         users.addFirst(dealer);
 
+        List<GameSummary> gameSummaries = createGameSummaryAndPrint(users);
+
+        createGameResultAndPrint(gameSummaries, users);
+
+        InputView.closeScanner();
+    }
+
+    private void provideInitCardsPrint(List<Player> players, Dealer dealer) {
+        cardProvider.provideInitCards(players, dealer);
+        OutputView.printInitCards(players, dealer);
+    }
+
+    private void createGameResultAndPrint(List<GameSummary> gameSummaries, List<User> users) {
+        gameResultCalculator.calculate(gameSummaries);
+        OutputView.printGameResult(users);
+    }
+
+    private List<GameSummary> createGameSummaryAndPrint(List<User> users) {
         List<GameSummary> gameSummaries = new ArrayList<>();
         for (User user : users) {
-            int totalScore = cardCalculator.totalScore(user.getCardStatus().getCards());
+            int totalScore = cardCalculator.totalScore(user.cards());
             boolean bust = cardCalculator.calculateBust(totalScore);
-            boolean blackjack = cardCalculator.calculateBlackjack(user.getCardStatus().getCards());
+            boolean blackjack = cardCalculator.calculateBlackjack(user.cards());
 
             GameSummary gameSummary = new GameSummary(user, totalScore, bust, blackjack);
             gameSummaries.add(gameSummary);
             OutputView.printCardStatus(gameSummary);
         }
-
-        gameResultCalculator.calculate(gameSummaries);
-
-        OutputView.printGameResult(users);
+        return gameSummaries;
     }
 
     public void hit(List<Player> players, Dealer dealer) {
@@ -70,7 +84,7 @@ public class BlackjackController {
             }
         }
 
-        while (cardCalculator.totalScore(dealer.getCardStatus().getCards()) < 17) {
+        while (cardCalculator.totalScore(dealer.cards()) < 17) {
             OutputView.printDealerHit();
             cardProvider.provideOneCard(dealer);
         }
@@ -84,7 +98,7 @@ public class BlackjackController {
     }
 
     boolean checkAddCard(Player player) {
-        if (cardCalculator.totalScore(player.getCardStatus().getCards()) >= 21) {
+        if (cardCalculator.totalScore(player.cards()) >= 21) {
             OutputView.printCantAddCard();
             return false;
         }

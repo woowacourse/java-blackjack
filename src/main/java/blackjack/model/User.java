@@ -1,5 +1,7 @@
 package blackjack.model;
 
+import java.util.List;
+
 public class User {
 
     private final String name;
@@ -14,8 +16,8 @@ public class User {
         return name;
     }
 
-    public CardStatus getCardStatus() {
-        return cardStatus;
+    public List<Card> cards() {
+        return cardStatus.getCards();
     }
 
     public void addCard(Card card) {

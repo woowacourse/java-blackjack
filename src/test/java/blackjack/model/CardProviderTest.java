@@ -19,9 +19,9 @@ class CardProviderTest {
         cardProvider.provideInitCards(players, dealer);
 
         for (Player player : players) {
-            assertThat(player.getCardStatus().getCards().size()).isEqualTo(2);
+            assertThat(player.cards().size()).isEqualTo(2);
         }
-        assertThat(dealer.getCardStatus().getCards().size()).isEqualTo(2);
+        assertThat(dealer.cards().size()).isEqualTo(2);
     }
 
     @Test
@@ -32,7 +32,7 @@ class CardProviderTest {
 
         cardProvider.provideOneCard(player);
 
-        assertThat(player.getCardStatus().getCards().size()).isEqualTo(1);
+        assertThat(player.cards().size()).isEqualTo(1);
     }
 
 }
