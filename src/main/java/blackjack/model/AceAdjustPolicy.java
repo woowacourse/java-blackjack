@@ -11,7 +11,7 @@ public class AceAdjustPolicy {
 
     public int adjust(int sum, List<Card> cards) {
         boolean containAce = cards.stream().anyMatch(x -> x.rank() == Rank.ACE);
-        if (!bustPolicy.isBust(sum) && containAce) {
+        if (!bustPolicy.isBust(sum + 10) && containAce) {
             return sum + 10;
         }
         return sum;
