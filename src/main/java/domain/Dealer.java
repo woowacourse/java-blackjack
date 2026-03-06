@@ -39,10 +39,6 @@ public class Dealer extends Participant{
         gameResults.put(gameResult, gameResults.getOrDefault(gameResult,0) + 1);
     }
 
-    public Map<GameResult, Integer> getGameResults() {
-        return gameResults;
-    }
-
     public int getWinRounds() {
         return gameResults.getOrDefault(GameResult.WIN,0);
     }
