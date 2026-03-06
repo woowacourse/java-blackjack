@@ -2,7 +2,7 @@ package view;
 
 import java.util.List;
 import model.Card;
-import model.Participant;
+import model.Player;
 
 public class OutputView {
     public static void printCardOpen(List<String> names) {
@@ -11,31 +11,32 @@ public class OutputView {
         System.out.println(formatedNames);
     }
 
-    public static void printCardByPlayers(List<Participant> players) {
+    public static void printCardByPlayers(List<Player> players) {
         players.forEach(OutputView::printCardByPlayer);
     }
 
-    public static void printCardByPlayer(Participant player) {
+    public static void printCardByPlayer(Player player) {
         List<String> cards = player.getCards()
                 .stream()
                 .map(OutputView::convert)
                 .toList();
-        System.out.println(player.getName() + "카드: " + String.join(", ", cards));
+        if (player.getClass().equals(Player.class)) {
+            System.out.println(player.getName() + "카드: " + String.join(", ", cards));
+        } else {
+            Card firstCard = player.getCards().getFirst();
+            String card = convert(firstCard);
+            System.out.println(player.getName() + "카드: " + card);
+        }
     }
 
-    public static void printCardByDealer(Participant dealer) {
-        Card firstCard = dealer.getCards().getFirst();
-        String card = convert(firstCard);
-        System.out.println("딜러카드: " + card);
-    }
 
-    public static void printCardByParticipantsWithScore(Participant player, int sum) {
+    public static void printCardByPlayerWithScore(Player player, int sum) {
         List<String> cards = player.getCards()
                 .stream()
                 .map(OutputView::convert)
                 .toList();
         System.out.print(player.getName() + "카드: " + String.join(", ", cards));
-        System.out.println(" - 결과: "+sum);
+        System.out.println(" - 결과: " + sum);
     }
 
     private static String convert(Card card) {

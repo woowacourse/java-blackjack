@@ -14,4 +14,16 @@ public class CardsTest {
         // then: 생성된 덱은 52장이다.
         assertThat(cards.size()).isEqualTo(52);
     }
+
+    @Test
+    void 카드가_섞여있다() {
+        // given
+        Cards deck = Cards.createDeck();
+
+        // when
+        Cards shuffleDeck = deck.shuffle();
+
+        // then
+        assertThat(deck.compareTo(shuffleDeck)).isFalse();
+    }
 }
