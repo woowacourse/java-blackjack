@@ -1,9 +1,15 @@
 package domain.player;
 
 import dto.DealerCardInfo;
+import java.lang.ref.PhantomReference;
 
 public class Dealer extends Player {
     private static final int DEALER_STOP_SCORE = 17;
+    private static final String DEALER_NAME = "딜러";
+
+    public Dealer() {
+        super(DEALER_NAME);
+    }
 
     public boolean canStand() {
         int score = score();

@@ -5,10 +5,16 @@ import domain.deck.CardDeck;
 
 public abstract class Player {
     protected static final int BLACKJACK_MAX_LIMIT = 21;
+    protected final String name;
     protected final HandCard handCard;
 
-    protected Player() {
+    protected Player(String name) {
+        this.name = name;
         this.handCard = new HandCard();
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void deal(CardDeck cardDeck) {

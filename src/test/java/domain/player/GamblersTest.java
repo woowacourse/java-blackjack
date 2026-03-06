@@ -48,7 +48,7 @@ class GamblersTest {
         gamblers.dealAll(sd);
 
         //when
-        BlackjackResult result = gamblers.getResult(dealer);
+        BlackjackResult result = gamblers.getResult(dealer.score());
 
         //then
         assertThat(result.winCount()).isEqualTo(1);

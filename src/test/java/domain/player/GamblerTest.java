@@ -56,8 +56,8 @@ class GamblerTest {
         quda.deal(sd);
 
         //when
-        MatchResult tobiResult = tobi.getResult(dealer);
-        MatchResult qudaResult = quda.getResult(dealer);
+        MatchResult tobiResult = tobi.getResult(dealer.score());
+        MatchResult qudaResult = quda.getResult(dealer.score());
 
         //then
         assertThat(tobiResult).isEqualTo(MatchResult.LOSE);

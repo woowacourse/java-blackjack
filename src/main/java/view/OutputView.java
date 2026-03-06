@@ -3,6 +3,7 @@ package view;
 import dto.BlackjackResult;
 import dto.DealerCardInfo;
 import dto.GamblerCardInfo;
+import dto.GamblerResultLog;
 import java.util.List;
 
 public class OutputView {
@@ -55,8 +56,8 @@ public class OutputView {
 
     public static void printResult(BlackjackResult result) {
         System.out.println("딜러: " + result.winCount() + "승 " + result.lossCount() + "패 " + result.drawCount() + "무");
-        for (String gamblerResult : result.logs()) {
-            System.out.println(gamblerResult);
+        for (GamblerResultLog gamblerResult : result.gamblerResultLog()) {
+            System.out.println(gamblerResult.name() + ": "+gamblerResult.matchResult().getName());
         }
     }
 }

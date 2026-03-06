@@ -4,6 +4,7 @@ import domain.MatchResult;
 import domain.deck.CardDeck;
 import dto.BlackjackResult;
 import dto.GamblerCardInfo;
+import dto.GamblerResultLog;
 import expcetion.BlackjackException;
 import expcetion.ExceptionMessage;
 import java.util.ArrayList;
@@ -52,23 +53,29 @@ public class Gamblers {
          */
     }
 
-    public BlackjackResult getResult(Dealer dealer) {
+    public BlackjackResult getResult(int dealerScore) {
         int winCount = 0;
         int loseCount = 0;
-        List<String> logs = new ArrayList<>();
+        List<GamblerResultLog> logs = new ArrayList<>();
+
         for (Gambler gambler : gamblers) {
-            MatchResult result = gambler.getResult(dealer);
+            MatchResult result = gambler.getResult(dealerScore);
+
             if (result == MatchResult.WIN) {
-                loseCount++;
-            }
-            if (result == MatchResult.LOSE) {
                 winCount++;
             }
-            logs.add(gambler.showResult(result));
-        }
-        return new BlackjackResult(winCount, loseCount, gamblers.size() - winCount - loseCount, logs);
-    }
 
+            if (result == MatchResult.LOSE) {
+                loseCount++;
+            }
+
+            logs.add(new GamblerResultLog(gambler.getName(), result));
+        }
+
+        int drawCount = gamblers.size() - winCount - loseCount;
+
+        return new BlackjackResult(winCount, loseCount, drawCount, logs);
+    }
     public List<String> getNames() {
         return gamblers.stream().map(Gambler::getName).toList();
     }
