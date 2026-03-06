@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.domain.Dealer;
-import blackjack.domain.Deck;
 import blackjack.domain.Player;
 import blackjack.service.GameService;
 import blackjack.util.InputParser;
@@ -23,7 +22,7 @@ public class BlackjackController {
 
     public void run() {
         List<Player> players = readUsers();
-        Dealer dealer = new Dealer(new Deck());
+        Dealer dealer = new Dealer();
 
         gameService.settingCards(players, dealer);
         printGameSettingResult(players, dealer);

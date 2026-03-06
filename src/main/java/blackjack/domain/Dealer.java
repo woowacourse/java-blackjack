@@ -5,22 +5,16 @@ import java.util.List;
 
 public class Dealer {
 
-    private final Deck deck;
     private final List<Card> cards;
     private final PlayerName name;
 
-    public Dealer(Deck deck) {
-        this.deck = deck;
+    public Dealer() {
         this.cards = new ArrayList<>();
         this.name = new PlayerName("딜러");
     }
 
     public void bring(Card card) {
         cards.add(card);
-    }
-
-    public Card bringCard() {
-        return deck.bringTopCard();
     }
 
     public List<String> getCardsName() {
@@ -34,10 +28,6 @@ public class Dealer {
 
     public String getName() {
         return name.name();
-    }
-
-    public void shuffleCards() {
-        deck.shuffle();
     }
 
     public int calculateCardsValue() {

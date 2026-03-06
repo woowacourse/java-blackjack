@@ -18,9 +18,9 @@ class GameServiceTest {
     @DisplayName("게임 시작 세팅 테스트")
     void 게임_시작_세팅_테스트() {
         // given
-        GameService gameService = new GameService();
+        GameService gameService = new GameService(new Deck());
         Player player = new Player("흑곰");
-        Dealer dealer = new Dealer(new Deck());
+        Dealer dealer = new Dealer();
 
         // when
         gameService.settingCards(List.of(player), dealer);
@@ -33,9 +33,9 @@ class GameServiceTest {
     @DisplayName("승패 판단 테스트")
     void 승패_판단_테스트() {
         // given
-        GameService gameService = new GameService();
+        GameService gameService = new GameService(new Deck());
         Player player = new Player("흑곰");
-        Dealer dealer = new Dealer(new Deck());
+        Dealer dealer = new Dealer();
         player.bring(new Card(CardValue.SEVEN, CardShape.DIAMOND));
         dealer.bring(new Card(CardValue.EIGHT, CardShape.DIAMOND));
 
