@@ -1,5 +1,7 @@
 package view;
 
+import static constant.BlackjackConstant.DEALER_DRAW_BOUND;
+import static constant.BlackjackConstant.DEALER_NAME;
 import static constant.BlackjackConstant.INIT_DRAW_COUNT;
 
 import domain.Card;
@@ -43,5 +45,9 @@ public class OutputView {
 
     public void printCurrentHandCard(Participant participant) {
         printParticipantHandCard(participant);
+    }
+
+    public void printDealerAdditionalDraw() {
+        System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.\n", DEALER_NAME, DEALER_DRAW_BOUND);
     }
 }
