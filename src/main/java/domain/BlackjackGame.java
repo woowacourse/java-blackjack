@@ -64,4 +64,12 @@ public class BlackjackGame {
         Card card = deck.pull();
         dealer.add(card);
     }
+
+    public boolean dealerHitsStand() {
+        if(dealer.shouldGetMoreCard()){
+            addDealerCard();
+            return true;
+        }
+        return false;
+    }
 }
