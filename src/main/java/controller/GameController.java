@@ -1,5 +1,6 @@
 package controller;
 
+import domain.player.PlayerParser;
 import view.InputView;
 import view.OutputView;
 
@@ -14,5 +15,6 @@ public class GameController {
 
     public void run() {
         String rawPlayerName = inputView.readPlayerName();
+        PlayerParser.parseToPlayers(rawPlayerName);
     }
 }
