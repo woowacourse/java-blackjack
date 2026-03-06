@@ -24,11 +24,17 @@ public class HandCard {
                 .filter(e -> e == 1)
                 .count();
 
-        return nonAceTotal + aceCalculator(nonAceTotal, aceCount);
+        return cardCalculatorWithAce(nonAceTotal, aceCount);
     }
 
-    private int aceCalculator(int nonAceTotal, int aceCount) {
-        return Math.min(aceCount, Math.max(0, (BLACKJACK_MAX_LIMIT - nonAceTotal) / (ACE_MAX_VALUE - ACE_MIN_VALUE)));
+    private int cardCalculatorWithAce(int nonAceTotal, int aceCount) {
+        int totalSum = nonAceTotal + (aceCount * ACE_MAX_VALUE);
+        int remainingAce = aceCount;
+        while (totalSum > BLACKJACK_MAX_LIMIT && remainingAce > 0) {
+            totalSum -= (ACE_MAX_VALUE - ACE_MIN_VALUE);
+            remainingAce--;
+        }
+        return totalSum;
     }
 
     public void addCard(Card card) {

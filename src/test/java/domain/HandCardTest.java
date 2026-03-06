@@ -28,7 +28,7 @@ public class HandCardTest {
         handCard.addCard(four);
 
         //when
-        int result = handCard.cardCalculator();
+        int result = handCard.score();
 
         //then
         assertThat(result).isEqualTo(21);
