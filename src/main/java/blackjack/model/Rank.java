@@ -1,9 +1,5 @@
 package blackjack.model;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 public enum Rank {
     ACE(1, "A"),
     TWO(2, "2"),
@@ -27,10 +23,11 @@ public enum Rank {
         this.label = label;
     }
 
-    public static Rank random() {
-        List<Rank> ranks = Arrays.asList(values());
-        Collections.shuffle(ranks);
+    public int getValue() {
+        return value;
+    }
 
-        return ranks.getFirst();
+    public String getLabel() {
+        return label;
     }
 }
