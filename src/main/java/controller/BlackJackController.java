@@ -25,21 +25,16 @@ public class BlackJackController {
     }
 
     public void run() {
-        // 사용자 이름 입력 후 초기 카드 분배 출력
         String inputPlayerNames = inputView.inputPlayerNames();
         InputValidator.validatePlayerNames(inputPlayerNames);
         InitialDto initialDto = blackJackService.createPlayer(stringParser.splitToDelimiter(inputPlayerNames, ","));
         outputView.outputInitialMessage(initialDto);
 
-        // 카드 추가 분배
         blackJackService.getAllPlayers().forEach(this::getAdditionalCard);
-
-        // 딜려 추가 배부
         getAdditionalDealerCard();
 
-        // 결과 출력
-        ResultDto judgement = blackJackService.judgement();
-        outputView.playerResultMessage(judgement);
+        ResultDto resultDto = blackJackService.judgement();
+        outputView.playerResultMessage(resultDto);
     }
 
     public void getAdditionalCard(Player player) {
@@ -56,6 +51,7 @@ public class BlackJackController {
 
     public void getAdditionalDealerCard() {
         boolean dealerCanAppend = blackJackService.isDealerCanAppend();
+
         if (dealerCanAppend) {
             blackJackService.additionalDealerCard();
             outputView.outputDealerAdditionCardMessage();
