@@ -31,7 +31,7 @@ public class InputView {
     }
 
     private void validateInputFormat(String input) {
-        if (input.equals(YES) || input.equals(NO)) {
+        if (!input.equals(YES) && !input.equals(NO)) {
             throw new IllegalArgumentException(ErrorMessage.INPUT_WRONG.getMessage());
         }
     }

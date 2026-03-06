@@ -1,8 +1,10 @@
 package controller;
 
 import domain.*;
+import dto.DealerDto;
 import dto.NamesDto;
 import dto.PlayerCardsDto;
+import dto.StatisticsDto;
 import util.CardsCreator;
 import util.Parser;
 import view.InputView;
@@ -11,99 +13,122 @@ import view.Result;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class BlackjackController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final RandomValueGenerator randomValueGenerator;
 
-    public BlackjackController(InputView inputView, OutputView outputView) {
+    public BlackjackController(InputView inputView, OutputView outputView, RandomValueGenerator randomValueGenerator) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.randomValueGenerator = randomValueGenerator;
     }
 
-    void start() {
-        Random random = new Random();
+    public void start() {
         // Deck 생성
         Deck deck = new Deck(CardsCreator.createLinkedCards());
         // 플레이어 이름 받기
         List<String> playerNames = Parser.parse(inputView.readPlayerName());
-        List<Player> players = createPlayers(playerNames, deck, random);
-        Dealer dealer = new Dealer(getBlackjackHand(deck, random));
+        List<Player> players = createPlayers(playerNames, deck);
 
-        NamesDto namesDto = new NamesDto(dealer.getName(), playerNames);
-        outputView.drawCard(namesDto);
+        Dealer dealer = createDealerAndPrintPlayers(deck, playerNames);
 
         // 카드 나눠줌
-        // 각 플레이어 hands 출력
-        List<String> dealerCards = cardToString(dealer.getCards());
-        PlayerCardsDto dealerCardsDto = new PlayerCardsDto(dealer.getName(), dealerCards);
-        outputView.showCard(dealerCardsDto);
-        for (Player player : players) {
-            List<Card> hands = player.getCards();
-            PlayerCardsDto playerCardsDto = new PlayerCardsDto(player.getName(), cardToString(hands));
-            outputView.showCard(playerCardsDto);
-        }
+        // 각 플레이어 hand 출력
+        printPlayersHand(dealer, players);
         // 각 플레이어마다 더 받을지
         // 플레이어 HIT할지
         // HIT한 후의 Hands 출력
-        for (Player player : players) {
-            String name = player.getName();
-            if (Hand.isBurst(player.getHand().getTotalScore())
-                    || !inputView.readNeedToHit(name)) continue;
-            Card card = deck.drawCard(getRandomIdx(deck, random));
-            player.addHand(card);
-            PlayerCardsDto playerCardsDto = new PlayerCardsDto(name, cardToString(player.getHand().getCards()));
-            outputView.showCard(playerCardsDto);
-        }
+        chooseToFillPlayersHand(players, deck);
         // 딜러 HIT 여부에 따라 hit
-        while(dealer.needsToHit()){
-            Card card = deck.drawCard(getRandomIdx(deck, random));
-            dealer.addHand(card);
-
-        }
+        fillDealerHand(dealer, deck, players);
         // 모든 상태 출력
-        dealerCards = cardToString(dealer.getHand().getCards());
-        dealerCardsDto = new PlayerCardsDto(dealer.getName(), dealerCards);
-        outputView.showCardsAndScore(dealerCardsDto, dealer.getHand().getTotalScore());
-        for (Player player : players) {
-            List<Card> hands = player.getHand().getCards();
-            PlayerCardsDto playerCardsDto = new PlayerCardsDto(player.getName(), cardToString(hands));
-            outputView.showCardsAndScore(playerCardsDto, player.getHand().getTotalScore());
-        }
+        printPlayerStatus(dealer, players);
         // 최종 결과
         // 승패 로직
         int dealerTotalScore = dealer.getHand().getTotalScore();
+        List<StatisticsDto> statisticsDtos = getStatisticsDtos(players, dealerTotalScore);
+        outputView.showResultStatistics(statisticsDtos, dealer.getName());
+    }
 
-
+    private List<StatisticsDto> getStatisticsDtos(List<Player> players, int dealerTotalScore) {
+        List<StatisticsDto> statisticsDtos = new ArrayList<>();
         for (Player player : players) {
             int totalScore = player.getHand().getTotalScore();
             Result result;
-            if (dealerTotalScore > totalScore) result = Result.WIN;
-            else if (dealerTotalScore == totalScore) {
-                result = Result.DRAW;
-            } else result = Result.LOSE;
-            outputView.showResultStatistics(player.getName(), result.getDisplayName());
+            result = getResult(dealerTotalScore, totalScore);
+            StatisticsDto statisticsDto = new StatisticsDto(player.getName(), result.getDisplayName());
+            statisticsDtos.add(statisticsDto);
         }
-
-
-
-
+        return statisticsDtos;
     }
 
-
-    private List<String> cardToString(List<Card> hands) {
-        return hands.stream()
-                .map(card -> card.rank().getDisplayName() + card.suit().getDisplayName())
-                .toList();
-
+    private Result getResult(int dealerTotalScore, int totalScore) {
+        if(totalScore > Hand.BLACKJACK_MAX_SCORE) return Result.LOSE;
+        if (dealerTotalScore > totalScore) return Result.WIN;
+        if (dealerTotalScore == totalScore) {
+            return Result.DRAW;
+        }
+        return Result.LOSE;
     }
 
-    private List<Player> createPlayers(List<String> playerNames, Deck deck, Random random) {
+    private Dealer createDealerAndPrintPlayers(Deck deck, List<String> playerNames) {
+        Dealer dealer = new Dealer(getHand(deck));
+
+        NamesDto namesDto = new NamesDto(dealer.getName(), playerNames);
+        outputView.drawCard(namesDto);
+        return dealer;
+    }
+
+    private void printPlayersHand(Dealer dealer, List<Player> players) {
+        PlayerCardsDto dealerCardsDto = PlayerCardsDto.dealerFromEntity(dealer);
+        outputView.showCard(dealerCardsDto);
+        for (Player player : players) {
+            PlayerCardsDto playerCardsDto = PlayerCardsDto.fromEntity(player);
+            outputView.showCard(playerCardsDto);
+        }
+    }
+
+    private void chooseToFillPlayersHand(List<Player> players, Deck deck) {
+        for (Player player : players) {
+            String name = player.getName();
+
+            while (!Hand.isBurst(player.getHand().getTotalScore())
+                    && inputView.readNeedToHit(name)) {
+                Card card = deck.drawCard(randomValueGenerator.generate(deck.getSize()));
+                player.addHand(card);
+                PlayerCardsDto playerCardsDto = PlayerCardsDto.fromEntity(player);
+                outputView.showCard(playerCardsDto);
+            }
+        }
+    }
+
+    private void fillDealerHand(Dealer dealer, Deck deck, List<Player> players) {
+        while(dealer.needsToHit()
+                && players.stream().anyMatch(p -> Hand.isBurst(p.getHand().getTotalScore()))){
+            Card card = deck.drawCard(randomValueGenerator.generate(deck.getSize()));
+            dealer.addHand(card);
+            DealerDto dealerDto = DealerDto.FromEntity(dealer);
+            outputView.drawDealer(dealerDto);
+        }
+    }
+
+    private void printPlayerStatus(Dealer dealer, List<Player> players) {
+        PlayerCardsDto dealerCardsDto;
+        dealerCardsDto = PlayerCardsDto.dealerFromEntity(dealer);
+        outputView.showCardsAndScore(dealerCardsDto, dealer.getHand().getTotalScore());
+        for (Player player : players) {
+            PlayerCardsDto playerCardsDto = PlayerCardsDto.fromEntity(player);
+            outputView.showCardsAndScore(playerCardsDto, player.getHand().getTotalScore());
+        }
+    }
+
+    private List<Player> createPlayers(List<String> playerNames, Deck deck) {
         List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
-            Hand hand = getBlackjackHand(deck, random);
+            Hand hand = getHand(deck);
 
             Player player = new Player(playerName, hand);
             players.add(player);
@@ -112,14 +137,12 @@ public class BlackjackController {
     }
 
 
-    private Hand getBlackjackHand(Deck deck, Random random) {
-        Card card1 = deck.drawCard(getRandomIdx(deck, random));
-        Card card2 = deck.drawCard(getRandomIdx(deck, random));
-
-        return new Hand(List.of(card1, card2));
-    }
-
-    private static int getRandomIdx(Deck deck, Random random) {
-        return random.nextInt(deck.getSize());
+    private Hand getHand(Deck deck) {
+        Card card1 = deck.drawCard(randomValueGenerator.generate(deck.getSize()));
+        Card card2 = deck.drawCard(randomValueGenerator.generate(deck.getSize()));
+        List<Card> cards = new ArrayList<>();
+        cards.add(card1);
+        cards.add(card2);
+        return new Hand(cards);
     }
 }
