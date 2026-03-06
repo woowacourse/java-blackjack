@@ -11,7 +11,7 @@ public class Card {
         this.number = number;
     }
 
-    public String getCard() {
+    public String getCardName() {
         return number.getName() + figure.getName();
     }
 

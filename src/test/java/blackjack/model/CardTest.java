@@ -16,7 +16,7 @@ class CardTest {
         // when
         Card card = new Card(spade, five);
         // then
-        assertThat(card.getCard()).isEqualTo("5스페이드");
+        assertThat(card.getCardName()).isEqualTo("5스페이드");
     }
 
 }
