@@ -46,4 +46,9 @@ public enum Denomination {
     public int toScore() {
         return score;
     }
+
+    @Override
+    public String toString() {
+        return symbol;
+    }
 }

@@ -44,4 +44,10 @@ public class Hand {
     public boolean isBurst() {
         return calculateScore() > BURST_THRESHOLD;
     }
+
+    public List<String> getCardNames(int startInclusive) {
+        return cards.subList(startInclusive, cards.size()).stream()
+            .map(Card::toString)
+            .toList();
+    }
 }

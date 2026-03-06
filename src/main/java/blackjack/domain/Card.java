@@ -17,4 +17,9 @@ public class Card {
     public boolean isAce() {
         return denomination.isTypeOf(Denomination.ACE);
     }
+
+    @Override
+    public String toString() {
+        return denomination.toString() + suit.toString();
+    }
 }

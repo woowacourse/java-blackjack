@@ -1,6 +1,9 @@
 package blackjack.controller;
 
+import blackjack.domain.Dealer;
+import blackjack.domain.Hand;
 import blackjack.domain.Player;
+import blackjack.domain.Trump;
 import blackjack.utils.Parser;
 import blackjack.utils.RetryExecutor;
 import blackjack.view.InputView;
@@ -10,8 +13,12 @@ import java.util.List;
 public class BlackjackController {
 
     public void run() {
+        Trump trump = new Trump();
         List<Player> players = RetryExecutor.retry(this::readNicknames);
-        OutputView.printStartMessage(players);
+        Dealer dealer = new Dealer(new Hand(), trump);
+        dealer.pitch(players);
+        OutputView.printStartMessage(players, dealer);
+
     }
 
     private List<Player> readNicknames() {

@@ -1,10 +1,13 @@
 package blackjack.domain;
 
+import java.util.List;
+
 public class Player {
     private static final int NICKNAME_MINIMUM_LENGTH = 4;
     private static final int NICKNAME_MAXIMUM_LENGTH = 10;
 
     private final String nickname;
+
     private final Hand hand;
 
     public Player(final String nickname) {
@@ -27,5 +30,8 @@ public class Player {
         hand.add(card);
     }
 
+    public List<String> getCardNames() {
+        return hand.getCardNames(0);
+    }
 
 }

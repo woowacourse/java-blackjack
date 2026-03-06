@@ -18,4 +18,9 @@ public enum Suit {
     public static List<Suit> all() {
         return List.of(values());
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

@@ -30,4 +30,8 @@ public class Dealer {
                 giveCard();
             });
     }
+
+    public List<String> getOpenedCardNames() {
+        return hand.getCardNames(1);
+    }
 }
