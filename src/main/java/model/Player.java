@@ -1,6 +1,7 @@
 package model;
 
 import constant.ErrorMessage;
+import java.util.Objects;
 import model.dto.PlayerName;
 
 public class Player extends Participant {
@@ -22,6 +23,11 @@ public class Player extends Participant {
         if (o == null || getClass() != o.getClass()) return false;
         Player other = (Player) o;
         return this.getResult().name().equals(other.getResult().name());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getResult().name());
     }
 
 }
