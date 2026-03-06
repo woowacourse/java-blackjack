@@ -15,4 +15,24 @@ public class DealerTest {
 
         Assertions.assertEquals(dealer.getHand().getHand().size(), 1);
     }
+
+    @Test
+    @DisplayName("16이하 시, 무조건 hit")
+    void hit_16이하() {
+        Dealer dealer = new Dealer();
+        dealer.hit(new Card(Rank.ACE, Suit.DIAMOND));
+        dealer.hit(new Card(Rank.FIVE, Suit.CLOVER));
+
+        Assertions.assertTrue(dealer.shouldHit());
+    }
+
+    @Test
+    @DisplayName("17 이상 시, 무조건 stand")
+    void stand_17이상() {
+        Dealer dealer = new Dealer();
+        dealer.hit(new Card(Rank.SEVEN, Suit.DIAMOND));
+        dealer.hit(new Card(Rank.JACK, Suit.CLOVER));
+
+        Assertions.assertFalse(dealer.shouldHit());
+    }
 }

@@ -15,4 +15,8 @@ public class Dealer {
     public Hand getHand() {
         return hand;
     }
+
+    public boolean shouldHit() {
+        return hand.calculateSum() <= 16;
+    }
 }
