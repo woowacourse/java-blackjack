@@ -1,0 +1,84 @@
+package controller;
+
+import domain.Dealer;
+import domain.Deck;
+import domain.Player;
+import dto.BlackJackHandDto;
+import dto.BlackJackInitStatusDto;
+import dto.FinalResultDto;
+import dto.ScoreResultDto;
+import service.BlackJackInitService;
+import service.BlackJackResultService;
+import service.BlackJackTurnService;
+import view.InputView;
+import view.OutputView;
+
+import java.util.List;
+
+public class BlackJackController {
+    // todo: appConfig
+    private final BlackJackInitService blackJackInitService;
+    private final BlackJackTurnService blackJackTurnService;
+    private final BlackJackResultService blackJackResultService;
+
+    public BlackJackController(BlackJackInitService blackJackInitService,
+                               BlackJackTurnService blackJackTurnService,
+                               BlackJackResultService blackJackResultService){
+        this.blackJackInitService = blackJackInitService;
+        this.blackJackTurnService = blackJackTurnService;
+        this.blackJackResultService = blackJackResultService;
+    }
+
+    // todo: 리팩토링
+    public void run() {
+        List<String> names = InputView.askPlayerNames();
+
+        Deck deck = blackJackInitService.createDeck();
+        List<Player> players = blackJackInitService.createPlayers(names, deck);
+        Dealer dealer = blackJackInitService.createDealer(deck);
+
+        BlackJackInitStatusDto blackJackInitStatusDto = blackJackInitService.createInitStatusDto(dealer, players);
+        OutputView.printInitMessage(blackJackInitStatusDto);
+
+        for(Player player : players){
+            drawPlayerCard(player, deck);
+        }
+        drawDealerCard(dealer, deck);
+
+        ScoreResultDto scoreResultDto = blackJackResultService.createScoreResultDto(dealer, players);
+        OutputView.printScoreResult(scoreResultDto);
+
+        FinalResultDto finalResultDto = blackJackResultService.createFinalResultDto(dealer, players);
+        OutputView.printFinalResult(finalResultDto);
+    }
+
+    // todo: 리팩토링
+    private void drawPlayerCard(Player player, Deck deck) {
+        String YesNoInput = InputView.askPlayerCommand(player.getName());
+
+        if (!blackJackTurnService.isPlayerPossible(player, YesNoInput)) {
+            BlackJackHandDto blackJackHandDto = blackJackTurnService.createHandDto(player);
+            OutputView.printHandOutput(blackJackHandDto);
+        }
+
+        while (blackJackTurnService.isPlayerPossible(player, YesNoInput)) {
+            blackJackTurnService.playerHit(player, deck);
+            BlackJackHandDto blackJackHandDto = blackJackTurnService.createHandDto(player);
+            OutputView.printHandOutput(blackJackHandDto);
+
+            // 합이 21 넘어가면 바로 입력받기 종료
+            if (!blackJackTurnService.isPlayerPossible(player, "y")) {
+                break;
+            }
+
+            YesNoInput = InputView.askPlayerCommand(player.getName());
+        }
+    }
+
+    private void drawDealerCard(Dealer dealer, Deck deck){
+        while (blackJackTurnService.isDealerPossible(dealer)) {
+            blackJackTurnService.dealerHit(dealer, deck);
+            OutputView.printDealerHitMessage();
+        }
+    }
+}
