@@ -1,14 +1,17 @@
 package domain;
 
 
+import constant.GameConstant;
 import controller.CardContentDto;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
-    private final String name;
+    private static final int ACE_ADDITIONAL_SCORE = 10;
+    private static final int ACE_ADDITION_NONE_SCORE = 0;
     protected final List<Card> cards = new ArrayList<>();
+    private final String name;
 
     public Player(String name) {
         this.name = name;
@@ -24,29 +27,26 @@ public class Player {
     }
 
     public int calculateAceScore() {
-        if (!isAceExist()) {
-            return 0;
+        if (!isAceExist() || calculateScore() > 11) {
+            return ACE_ADDITION_NONE_SCORE;
         }
 
-        int aceScore = 10;
-        return aceScore;
+        return 10;
     }
-
-
 
     public int getFinalResult() {
         return calculateScore() + calculateAceScore();
     }
 
-    public boolean isBurst() {
-        return getFinalResult() > 21;
+    public boolean isBust() {
+        return getFinalResult() > GameConstant.GAME_OVER_THRESHOLD_SCORE;
     }
 
     public void add(Card card) {
         cards.add(card);
     }
 
-    public void addInitialedCard(Cards totalCards) {
+    public void addInitializedCard(Cards totalCards) {
         cards.add(totalCards.pop());
         cards.add(totalCards.pop());
     }

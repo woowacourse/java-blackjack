@@ -18,14 +18,14 @@ public class BlackjackService {
     }
 
     public void giveInitialedCard(Cards cards, Dealer dealer) {
-        dealer.addInitialedCard(cards);
+        dealer.addInitializedCard(cards);
     }
 
     public List<Player> createPlayers(List<String> names, Cards cards) {
         List<Player> playerList = new ArrayList<>();
         for (String name : names) {
             Player player = new Player(name);
-            player.addInitialedCard(cards);
+            player.addInitializedCard(cards);
             playerList.add(player);
         }
         return playerList;
