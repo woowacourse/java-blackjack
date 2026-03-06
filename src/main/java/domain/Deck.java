@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 public class Deck {
     private final List<Card> cards;
+
     public Deck() {
         cards = initialize();
     }
@@ -25,15 +26,15 @@ public class Deck {
         return List.copyOf(cards);
     }
 
-    public List<Card> handOutCards() {
+    public List<Card> firstHandCards() {
         List<Card> handOutCards = new ArrayList<>();
         for (int index = 0; index < 2; index++) {
-            handOutCards.add(peekCard());
+            handOutCards.add(drawCard());
         }
         return handOutCards;
     }
 
-    public Card peekCard() {
+    public Card drawCard() {
         Card lastCard = cards.getLast();
         cards.remove(lastCard);
         return lastCard;

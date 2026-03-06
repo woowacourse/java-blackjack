@@ -22,7 +22,7 @@ public class DeckTest {
     @DisplayName("초기 카드는 두 장씩 나누어준다.")
     void handOutCardsTest() {
         Deck deck = new Deck();
-        List<Card> cards = deck.handOutCards();
+        List<Card> cards = deck.firstHandCards();
 
         Assertions.assertThat(cards.size()).isEqualTo(2);
     }
@@ -31,7 +31,7 @@ public class DeckTest {
     @DisplayName("카드를 한 장 뽑는다.")
     void peekOneCardTest() {
         Deck deck = new Deck();
-        Card card = deck.peekCard();
+        Card card = deck.drawCard();
 
         Assertions.assertThat(deck.getCards().size()).isEqualTo(51);
         Assertions.assertThat(card).isInstanceOf(Card.class);

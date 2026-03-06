@@ -22,7 +22,7 @@ public class GameController {
         List<String> playerNames = getPlayerNames();
 
         Deck deck = new Deck();
-        Dealer dealer = new Dealer(deck.handOutCards());
+        Dealer dealer = new Dealer(deck.firstHandCards());
 
         List<Player> players = getPlayers(playerNames, deck);
         printGameStart(playerNames, dealer, players);
@@ -42,7 +42,7 @@ public class GameController {
     private List<Player> getPlayers(List<String> playerNames, Deck deck) {
         List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
-            Player player = new Player(playerName, deck.handOutCards());
+            Player player = new Player(playerName, deck.firstHandCards());
             players.add(player);
         }
         return players;
@@ -60,7 +60,7 @@ public class GameController {
         }
 
         while (dealer.isReceiveCard()) {
-            dealer.addCard(deck.peekCard());
+            dealer.addCard(deck.drawCard());
             outputView.printDealerReceiveCard();
         }
     }
@@ -88,7 +88,7 @@ public class GameController {
     private void processRound(Player player, Deck deck) {
         String hitOption = inputView.readHitOption(player.getName());
         if (hitOption.equals("y")) {
-            player.addCard(deck.peekCard());
+            player.addCard(deck.drawCard());
         }
         outputView.printCurrentHoldCard(player);
 
@@ -97,7 +97,7 @@ public class GameController {
             if (hitOption.equals("n")) {
                 break;
             }
-            player.addCard(deck.peekCard());
+            player.addCard(deck.drawCard());
             outputView.printCurrentHoldCard(player);
         }
     }

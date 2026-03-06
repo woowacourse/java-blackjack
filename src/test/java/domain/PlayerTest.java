@@ -43,12 +43,12 @@ public class PlayerTest {
     @Test
     @DisplayName("Ace에 대한 점수를 처리한다.")
     void judgeAceTest() {
-        List<Card> cards1 = new ArrayList(List.of(new Card(CardNumber.JACK, CardShape.CLUB), new Card(CardNumber.FOUR, CardShape.CLUB)));
+        List<Card> cards1 = new ArrayList<>(List.of(new Card(CardNumber.JACK, CardShape.CLUB), new Card(CardNumber.FOUR, CardShape.CLUB)));
         Player player1 = new Player("pobi", cards1);
         player1.addCard(new Card(CardNumber.ACE, CardShape.CLUB));
         int player1TotalScore = player1.calculateTotalScore();
 
-        List<Card> cards2 = new ArrayList(List.of(new Card(CardNumber.FOUR, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
+        List<Card> cards2 = new ArrayList<>(List.of(new Card(CardNumber.FOUR, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
         Player player2 = new Player("woni", cards2);
         int player2TotalScore = player2.calculateTotalScore();
 
@@ -91,7 +91,7 @@ public class PlayerTest {
     @DisplayName("카드를 한 장 받는다.")
     void receiveOneCardTest() {
         Deck deck = new Deck();
-        Card card = deck.peekCard();
+        Card card = deck.drawCard();
 
         Assertions.assertThat(deck.getCards().size()).isEqualTo(51);
         Assertions.assertThat(card).isInstanceOf(Card.class);
