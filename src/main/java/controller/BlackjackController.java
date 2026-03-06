@@ -32,9 +32,13 @@ public class BlackjackController {
         List<CardContentDto> firstCardContents = getCardContentDtos(dealer, playerList);
         OutputView.displayCardContent(firstCardContents);
         Players players = addAdditionalCard(playerList, cards);
-        blackjackService.determineAdditionalCardOfDealer(dealer, cards);
 
-        printFinalCards(players);
+        // TODO: player 전부 다 burst 이면 딜러 승리 처리 (dto 알맞게)
+        if (!players.isAllPlayerBurst()){
+            blackjackService.determineAdditionalCardOfDealer(dealer, cards);
+        }
+
+        printFinalCards(dealer, players);
 
         // 최종 승패
         BlackjackResult blackjackResult = BlackjackResult.from(dealer, players);
@@ -76,8 +80,9 @@ public class BlackjackController {
         }
     }
 
-    public void printFinalCards(Players players) {
+    public void printFinalCards(Dealer dealer, Players players) {
         List<FinalCardDto> finalCards = new ArrayList<>();
+        finalCards.add(dealer.toFinalCardDto());
         for (Player player : players) {
             finalCards.add(player.toFinalCardDto());
         }
