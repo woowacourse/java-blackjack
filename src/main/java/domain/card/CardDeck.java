@@ -8,8 +8,8 @@ public class CardDeck {
 
     private final Queue<Card> deck;
 
-    private CardDeck(List<Card> cardList) {
-        this.deck = new LinkedList<>(cardList);
+    private CardDeck(List<Card> cards) {
+        this.deck = new LinkedList<>(cards);
     }
 
     public static CardDeck from(CardGenerator cardGenerator) {
