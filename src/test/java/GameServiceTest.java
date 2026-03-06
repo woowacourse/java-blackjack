@@ -167,4 +167,32 @@ class GameServiceTest {
         assertThat(user1.getHand().size()).isEqualTo(2);
         assertThat(user2.getHand().size()).isEqualTo(2);
     }
+
+    @Test
+    @DisplayName("딜러의 최종 승패는 각 사용자들의 결과를 합쳐서 계산된다.")
+    public void calculate_dealer_final_result_by_sum_of_users_result(){
+        Dealer dealer = new Dealer();
+        User winUser = User.from("json");
+        User loseUser = User.from("poby");
+        User drawUser = User.from("draw");
+        List<User> users = List.of(winUser, loseUser);
+
+        dealer.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_NINE));
+        winUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_SEVEN));
+        loseUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_ACE));
+        drawUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_NINE));
+
+        gameService.determineResult(users, dealer);
+        int totalUserWinRounds = users.stream().filter(user -> user.getGameResult() == GameResult.WIN)
+                        .count();
+        int totalUserLoseRounds = users.stream().filter(user -> user.getGameResult() == GameResult.LOSE)
+                        .count();
+        int totalUserDrawRounds = users.stream().filter(user -> user.getGameResult() == GameResult.DRAW)
+                .count();
+
+
+        assertThat(dealer.getWinRounds()).isEqualTo(totalUserLoseRounds);
+        assertThat(dealer.getLoseRounds()).isEqualTo(totalUserWinRounds);
+        assertThat(dealer.getDrawRounds()).isEqualTo(totalUserDrawRounds);
+    }
 }
