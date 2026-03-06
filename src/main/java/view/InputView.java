@@ -17,13 +17,16 @@ public class InputView {
         System.out.println(START_MESSAGE);
         List<String> inputs = Arrays.asList(sc.nextLine().split(","));
 
-        // todo: 리팩토링 필요
         for(String input : inputs){
-            if(input == null || input.isBlank()){
-                throw new IllegalArgumentException(ErrorMessage.EMPTY_NAME.getMessage());
-            }
+            validateInput(input);
         }
         return inputs;
+    }
+
+    private static void validateInput(String input) {
+        if (input == null || input.isBlank()){
+            throw new IllegalArgumentException(ErrorMessage.EMPTY_NAME.getMessage());
+        }
     }
 
     public static String askPlayerCommand(String name){
