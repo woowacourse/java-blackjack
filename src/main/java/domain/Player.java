@@ -3,6 +3,7 @@ package domain;
 
 import constant.GameConstant;
 import controller.CardContentDto;
+import controller.FinalCardDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +66,10 @@ public class Player {
 
     public CardContentDto toCardContentDto() {
         return new CardContentDto(this.name, this.cards);
+    }
+
+    public FinalCardDto toFinalCardDto() {
+        return new FinalCardDto(this.name, this.cards, getFinalResult());
     }
 
     public boolean isAceExist() {

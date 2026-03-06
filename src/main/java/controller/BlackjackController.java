@@ -30,23 +30,32 @@ public class BlackjackController {
         Dealer dealer = createDealer(names, cards);
         List<Player> playerList = blackjackService.createPlayers(names, cards);
 
+        List<CardContentDto> firstCardContents = getCardContentDtos(dealer, playerList);
+        OutputView.displayCardContent(firstCardContents);
+        Players players = addAdditionalCard(playerList, cards);
+        blackjackService.determineAdditionalCardOfDealer(dealer, cards);
+
+        printFinalCards(players);
+
+    }
+
+    public List<CardContentDto> getCardContentDtos(Dealer dealer, List<Player> playerList) {
         List<CardContentDto> firstCardContents = new ArrayList<>();
         firstCardContents.add(new CardContentDto(dealer.getName(), List.of(dealer.getFirstCard())));
         for (Player player : playerList) {
             firstCardContents.add(new CardContentDto(player.getName(), player.getCards()));
         }
-        OutputView.displayCardContent(firstCardContents);
+        return firstCardContents;
+    }
 
+    public Players addAdditionalCard(List<Player> playerList, Cards cards) {
         Players players = new Players(playerList);
         for (Player player : players) {
             String name = player.getName();
             boolean hasCard = hasAdditionalCard(name);
             handCardWithRetry(player, hasCard, cards, name);
         }
-
-        blackjackService.determineAdditionalCardOfDealer(dealer, cards);
-
-
+        return players;
     }
 
     public Dealer createDealer(List<String> names, Cards cards) {
@@ -63,6 +72,14 @@ public class BlackjackController {
             OutputView.displayCardContent(List.of(player.toCardContentDto()));
             hasCard = hasAdditionalCard(name);
         }
+    }
+
+    public void printFinalCards(Players players) {
+        List<FinalCardDto> finalCards = new ArrayList<>();
+        for (Player player : players) {
+            finalCards.add(player.toFinalCardDto());
+        }
+        OutputView.displayFinalCard(finalCards);
     }
 
     private List<String> inputNames() {
