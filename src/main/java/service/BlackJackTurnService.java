@@ -23,6 +23,7 @@ public class BlackJackTurnService {
         return dealer.getHand().getSum() < 17;
     }
 
+    // todo: player.isBurst로 변경
     public boolean isPlayerPossible(Player player, String input){
         return player.getHand().getSum() < 21 && input.equals("y");
     }
