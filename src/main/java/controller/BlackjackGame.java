@@ -86,7 +86,7 @@ public class BlackjackGame {
     }
 
     private Dealer enterDealer() {
-        return Dealer.of(cardDeck);
+        return Dealer.from(cardDeck);
     }
 
     private Players enterPlayers() {

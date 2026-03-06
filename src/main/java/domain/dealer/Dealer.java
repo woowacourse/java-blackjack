@@ -25,7 +25,7 @@ public class Dealer {
         this.cardDeck = cardDeck;
     }
 
-    public static Dealer of(CardDeck cardDeck) {
+    public static Dealer from(CardDeck cardDeck) {
         return new Dealer(cardDeck);
     }
 

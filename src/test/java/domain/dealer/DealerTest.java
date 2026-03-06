@@ -3,7 +3,6 @@ package domain.dealer;
 import domain.card.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import domain.dealer.Dealer;
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ public class DealerTest {
                 .cards(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER), Card.of(CardDenomination.NINE, CardEmblem.SPADE))
                 .build();
 
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = Dealer.from(cardDeck);
         CardBundle cardBundle = dealer.handOutCard(2);
 
         Assertions.assertThat(cardBundle)
@@ -33,7 +32,7 @@ public class DealerTest {
                 .cards(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER), Card.of(CardDenomination.NINE, CardEmblem.SPADE))
                 .build();
 
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = Dealer.from(cardDeck);
         CardBundle cardBundle = dealer.handOutCard(1);
 
         Assertions.assertThat(cardBundle)
@@ -47,7 +46,7 @@ public class DealerTest {
                 .cards(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER))
                 .build();
 
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = Dealer.from(cardDeck);
 
         Assertions.assertThatThrownBy(() -> {
             CardBundle cardBundle = dealer.handOutCard(2);
@@ -64,7 +63,7 @@ public class DealerTest {
                 .cards(cards)
                 .build();
 
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = Dealer.from(cardDeck);
         dealer.dealMyself();
 
         CardBundle cardBundle = CardBundle.from(cards);
@@ -81,7 +80,7 @@ public class DealerTest {
                 .cards(cards)
                 .build();
 
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = Dealer.from(cardDeck);
 
         Assertions.assertThatThrownBy(() -> {
             dealer.dealMyself();
@@ -99,7 +98,7 @@ public class DealerTest {
                 .cards(cards)
                 .build();
 
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = Dealer.from(cardDeck);
         dealer.dealMyself();
 
         Assertions.assertThat(dealer.hitIfRequired()).isTrue();

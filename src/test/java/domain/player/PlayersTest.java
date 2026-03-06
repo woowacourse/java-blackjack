@@ -20,7 +20,7 @@ class PlayersTest {
         CardDeck cardDeck = new CardDeckBuilder()
                 .cards(clover8, clover9)
                 .build();
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = Dealer.from(cardDeck);
 
         players.dealCardBundle(dealer);
         List<PlayerHandDto> playersHand = players.getPlayersHand();

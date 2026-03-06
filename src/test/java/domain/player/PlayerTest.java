@@ -2,8 +2,6 @@ package domain.player;
 
 import domain.card.*;
 import domain.dealer.Dealer;
-import domain.player.Player;
-import domain.player.PlayerName;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +15,7 @@ public class PlayerTest {
                 .cards(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER), Card.of(CardDenomination.NINE, CardEmblem.SPADE),
                         Card.of(CardDenomination.TWO, CardEmblem.SPADE), Card.of(CardDenomination.THREE, CardEmblem.HEART))
                 .build();
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = Dealer.from(cardDeck);
         Player player = Player.from(PlayerName.from("test"));
 
         dealer.hitCardToPlayer(player);
@@ -31,7 +29,7 @@ public class PlayerTest {
         CardDeck cardDeck = new CardDeckBuilder()
                 .build();
 
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = Dealer.from(cardDeck);
         Player player = Player.from(PlayerName.from("test"));
 
         Assertions.assertThatThrownBy(() -> {
@@ -64,7 +62,7 @@ public class PlayerTest {
                 .cards(clover, spade)
                 .build();
         CardBundle origin = CardBundle.from(List.of(clover, spade));
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = Dealer.from(cardDeck);
         Player player = Player.from(PlayerName.from("test"));
 
         CardBundle result = dealer.dealCardToPlayer(player);
@@ -81,7 +79,7 @@ public class PlayerTest {
         CardDeck cardDeck = new CardDeckBuilder()
                 .cards(cards)
                 .build();
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = Dealer.from(cardDeck);
         Player player = Player.from(PlayerName.from("test"));
 
         dealer.dealCardToPlayer(player);

@@ -27,7 +27,7 @@ class ResultAnalyzerTest {
         CardDeck cardDeck = new CardDeckBuilder()
                 .cards(cards)
                 .build();
-        Dealer dealerScore4 = Dealer.of(cardDeck);
+        Dealer dealerScore4 = Dealer.from(cardDeck);
 
         dealerScore4.dealMyself();
         Player playerScore7 = Player.from(PlayerName.from("p7"));
