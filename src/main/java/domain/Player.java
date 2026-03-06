@@ -35,12 +35,12 @@ public class Player {
         return ACE_ADDITIONAL_SCORE;
     }
 
-    public int getFinalResult() {
+    public int getFinalScore() {
         return calculateScore() + calculateAceScore();
     }
 
     public boolean isBust() {
-        return getFinalResult() > GameConstant.GAME_OVER_THRESHOLD_SCORE;
+        return getFinalScore() > GameConstant.GAME_OVER_THRESHOLD_SCORE;
     }
 
     public void add(Card card) {
@@ -69,7 +69,7 @@ public class Player {
     }
 
     public FinalCardDto toFinalCardDto() {
-        return new FinalCardDto(this.name, this.cards, getFinalResult());
+        return new FinalCardDto(this.name, this.cards, getFinalScore());
     }
 
     public boolean isAceExist() {

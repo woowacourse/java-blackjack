@@ -34,7 +34,7 @@ class PlayerTest {
         player.add(new Card(CardShape.SPADE, CardRank.ACE));
         player.add(new Card(CardShape.SPADE, CardRank.TWO));
 
-        int result = player.getFinalResult();
+        int result = player.getFinalScore();
         assertThat(result).isEqualTo(13);
     }
 
@@ -45,7 +45,7 @@ class PlayerTest {
         player.add(new Card(CardShape.SPADE, CardRank.NINE));
         player.add(new Card(CardShape.SPADE, CardRank.TWO));
 
-        int result = player.getFinalResult();
+        int result = player.getFinalScore();
         assertThat(result).isEqualTo(12);
     }
 
@@ -56,7 +56,7 @@ class PlayerTest {
         player.add(new Card(CardShape.SPADE, CardRank.ACE));
         player.add(new Card(CardShape.SPADE, CardRank.NINE));
 
-        int result = player.getFinalResult();
+        int result = player.getFinalScore();
         assertThat(result).isEqualTo(21);
     }
 
@@ -67,7 +67,7 @@ class PlayerTest {
         player.add(new Card(CardShape.SPADE, CardRank.ACE));
         player.add(new Card(CardShape.SPADE, CardRank.TEN));
 
-        int result = player.getFinalResult();
+        int result = player.getFinalScore();
         assertThat(result).isEqualTo(12);
     }
 
@@ -100,7 +100,7 @@ class PlayerTest {
                 new Card(CardShape.HEART, CardRank.QUEEN),
                 new Card(CardShape.HEART, CardRank.JACK)
                 ));
-        assertThat(player1.getFinalResult()).isEqualTo(30);
+        assertThat(player1.getFinalScore()).isEqualTo(30);
     }
 
     private Player createPlayerFromCards(List<Card> cards) {

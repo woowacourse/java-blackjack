@@ -7,16 +7,16 @@ import java.util.Map;
 
 public class BlackjackResult {
     private final Map<String, MatchCase> playerWinningMap = new HashMap<>();
-    private int winningCount = 0;
+    private int dealerWinningCount = 0;
     private int drawCount = 0;
-    private int loseCount = 0;
+    private int dealerLoseCount = 0;
 
     private BlackjackResult(Dealer dealer, Players players) {
         calculateMatchResult(dealer, players);
     }
 
     private static boolean isPlayerLose(Player player, boolean dealerBurst, int dealerTotal) {
-        return player.isBust() || (!dealerBurst && player.getFinalResult() < dealerTotal);
+        return player.isBust() || (!dealerBurst && player.getFinalScore() < dealerTotal);
     }
 
     public static BlackjackResult from(Dealer dealer, Players players) {
@@ -25,7 +25,7 @@ public class BlackjackResult {
 
     private void calculateMatchResult(Dealer dealer, Players players) {
         boolean dealerBurst = dealer.isBust();
-        int dealerTotal = dealer.getFinalResult();
+        int dealerTotal = dealer.getFinalScore();
 
         for (Player player : players) {
             determinePlayerResult(player, dealerBurst, dealerTotal);
@@ -45,7 +45,7 @@ public class BlackjackResult {
     }
 
     private boolean isPlayerScoreEqualsDealer(Player player, boolean dealerBust, int dealerTotal) {
-        return !(player.isBust() || dealerBust) && (player.calculateScore() == dealerTotal);
+        return !(player.isBust() || dealerBust) && (player.getFinalScore() == dealerTotal);
     }
 
     private void addMatchResult(String playerName, MatchCase matchCase) {
@@ -55,7 +55,7 @@ public class BlackjackResult {
 
     private void increaseMatchResult(MatchCase matchCase) {
         if (matchCase == MatchCase.WIN) {
-            loseCount++;
+            dealerLoseCount++;
             return;
         }
 
@@ -64,14 +64,14 @@ public class BlackjackResult {
             return;
         }
 
-        winningCount++;
+        dealerWinningCount++;
     }
 
     public BlackjackResultDto toResultDto() {
         return new BlackjackResultDto(
-                this.winningCount,
+                this.dealerWinningCount,
                 this.drawCount,
-                this.loseCount,
+                this.dealerLoseCount,
                 Map.copyOf(this.playerWinningMap)
         );
     }
