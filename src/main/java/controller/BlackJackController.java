@@ -97,7 +97,7 @@ public class BlackJackController {
     }
 
     private void dealerHitOrStand(Dealer dealer, CardDeck cardDeck) {
-        if (dealer.dealerRule()) {
+        while(dealer.dealerRule()){
             OutputView.dealerHitMessage();
             dealer.keepCard(cardDeck.drawCard());
         }
