@@ -11,30 +11,27 @@ public enum CardValue {
     EIGHT(8),
     NINE(9),
     TEN(10),
-    JACK(11),
-    QUEEN(12),
-    KING(13);
+    JACK(10),
+    QUEEN(10),
+    KING(10);
 
-    private final int value;
+    private final int score;
 
-    CardValue(int value) {
-        this.value = value;
+    CardValue(int score) {
+        this.score = score;
     }
 
+    // TODO: 지워야 할 애
     public static CardValue from(int value) {
         for (CardValue cardValue : values()) {
-            if (cardValue.value == value) {
+            if (cardValue.score == value) {
                 return cardValue;
             }
         }
         throw new IllegalArgumentException("존재하지 않은 카드 번호입니다.");
     }
 
-    public int getValue() {
-        return this.value;
-    }
-
-    public boolean isAce() {
-        return this.value == 1;
+    public int getScore() {
+        return score;
     }
 }

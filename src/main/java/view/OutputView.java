@@ -40,7 +40,7 @@ public class OutputView {
     }
 
     private static String convert(Card card) {
-        int value = card.value().getValue();
+        int value = card.getScore();
         String convertedValue = switch (value) {
             case 1 -> "A";
             case 11 -> "J";
