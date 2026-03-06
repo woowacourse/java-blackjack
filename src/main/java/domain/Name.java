@@ -10,6 +10,4 @@ public class Name {
     public String getName() {
         return name;
     }
-
-    //TODO: 이름 검증 로직 등등....
 }

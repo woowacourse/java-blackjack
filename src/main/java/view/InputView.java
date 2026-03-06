@@ -1,6 +1,5 @@
 package view;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -12,23 +11,10 @@ public class InputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
 
         String input = sc.nextLine();
-        List<String> playerNames = Arrays.stream(input.split(","))
-                .map(String::trim)
-                .toList();
-
+        List<String> playerNames = getPlayerNames(input);
         validatePlayerNamesSize(playerNames);
 
         return playerNames;
-    }
-
-    private static void validatePlayerNamesSize(List<String> playerNames) {
-        if (playerNames.isEmpty()) {
-            throw new IllegalArgumentException("플레이어의 수는 1명 이상이어야 합니다.");
-        }
-
-        if (playerNames.size() > 8) {
-            throw new IllegalArgumentException("플레이어의 수는 8명을 초과할 수 없습니다.");
-        }
     }
 
     public static String askContinue(String player) {
@@ -37,6 +23,30 @@ public class InputView {
         String input = sc.nextLine();
         validateContinueResponse(input);
         return input;
+    }
+
+    private static List<String> getPlayerNames(String input) {
+        List<String> playerNames = Arrays.stream(input.split(","))
+                .map(String::trim)
+                .toList();
+        return playerNames;
+    }
+
+    private static void validatePlayerNamesSize(List<String> playerNames) {
+        validateMinimumPlayers(playerNames);
+        validateMaximumPlayers(playerNames);
+    }
+
+    private static void validateMaximumPlayers(List<String> playerNames) {
+        if (playerNames.size() > 8) {
+            throw new IllegalArgumentException("플레이어의 수는 8명을 초과할 수 없습니다.");
+        }
+    }
+
+    private static void validateMinimumPlayers(List<String> playerNames) {
+        if (playerNames.isEmpty()) {
+            throw new IllegalArgumentException("플레이어의 수는 1명 이상이어야 합니다.");
+        }
     }
 
     private static void validateContinueResponse(String input) {

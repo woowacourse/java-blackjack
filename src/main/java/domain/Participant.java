@@ -13,7 +13,6 @@ public abstract class Participant {
         cards = new Cards(new ArrayList<>());
     }
 
-    // TODO: 어머 결합도가 생겨버렸네? Cards를 의존합니다.
     public void receiveCard(Card card) {
         cards.addCard(card);
     }

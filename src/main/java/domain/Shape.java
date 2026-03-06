@@ -10,15 +10,15 @@ public enum Shape {
 
     private final String shapeKoreanName;
 
-    private Shape(String shapeKoreanName) {
+    Shape(String shapeKoreanName) {
         this.shapeKoreanName = shapeKoreanName;
     }
 
-    public static Shape from(String shapeKoreanName){
+    public static Shape from(String shapeKoreanName) {
         return Arrays.stream(values())
                 .filter(shape -> shape.shapeKoreanName.equals(shapeKoreanName))
                 .findFirst()
-                .orElseThrow( () -> new IllegalArgumentException("ERROR"));
+                .orElseThrow(() -> new IllegalArgumentException("ERROR"));
     }
 
     public String getShape() {

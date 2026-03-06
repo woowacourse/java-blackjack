@@ -1,7 +1,5 @@
 package view;
 
-import domain.Participant;
-import domain.Player;
 import dto.ParticipantCardsDto;
 
 import java.util.List;
@@ -15,14 +13,8 @@ public class OutputView {
     }
 
     public static void printCards(ParticipantCardsDto participantCardsDto) {
-        if (participantCardsDto.name().equals("딜러")) {
-            String dealerCard = participantCardsDto.cardsInfo().getFirst();
-            System.out.printf("%s: %s%n", participantCardsDto.name(), dealerCard);
-        }
-        if (!participantCardsDto.name().equals("딜러")) {
-            String cardsInfoMessage = String.join(",", participantCardsDto.cardsInfo());
-            System.out.printf("%s: %s%n", participantCardsDto.name(), cardsInfoMessage);
-        }
+        printInitialDealerCards(participantCardsDto);
+        printInitialPlayerCards(participantCardsDto);
     }
 
     public static void printFinalCards(ParticipantCardsDto participantCardsDto) {
@@ -53,5 +45,19 @@ public class OutputView {
         System.out.println("## 최종 승패");
         System.out.println("딜러: " + loseCount + "승" + " " + winCount + "패");
         System.out.printf(resultMessage.toString());
+    }
+
+    private static void printInitialPlayerCards(ParticipantCardsDto participantCardsDto) {
+        if (!participantCardsDto.name().equals("딜러")) {
+            String cardsInfoMessage = String.join(",", participantCardsDto.cardsInfo());
+            System.out.printf("%s: %s%n", participantCardsDto.name(), cardsInfoMessage);
+        }
+    }
+
+    private static void printInitialDealerCards(ParticipantCardsDto participantCardsDto) {
+        if (participantCardsDto.name().equals("딜러")) {
+            String dealerCard = participantCardsDto.cardsInfo().getFirst();
+            System.out.printf("%s: %s%n", participantCardsDto.name(), dealerCard);
+        }
     }
 }

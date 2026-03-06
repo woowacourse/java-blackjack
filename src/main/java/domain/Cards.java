@@ -27,14 +27,9 @@ public class Cards {
             changeAvailableAceCount -= 1;
         }
 
-        // 아래 2개 분기처리가 왜 같은 기능을 안하나요?
         if(changeAvailableAceCount == 0 && isBurst(sum)){
             return false;
         }
-
-//        if (isBurst(sum) || sum == burstThreshold) {
-//            return false;
-//        }
 
         if (isBurst(sum) || sum >= burstThreshold) {
             return false;
@@ -56,7 +51,6 @@ public class Cards {
                 .map(Card::getCardInfo)
                 .toList();
     }
-
 
     private boolean isBurst(int score) {
         if (score > 21) {

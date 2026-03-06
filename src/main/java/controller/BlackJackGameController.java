@@ -18,69 +18,110 @@ public class BlackJackGameController {
 
     public void run() {
         List<Player> players = initPlayer();
-        List<String> playersNames = players.stream()
-                .map(Participant::getName)
-                .toList();
-
-        OutputView.printGameInitialMessage(playersNames);
-
         Dealer dealer = initDealer();
         Deck deck = new Deck();
 
-        // 초기 카드 분배 (2장)
-        Card card1 = deck.distributeCard();
-        dealer.receiveCard(card1);
-        Card card2 = deck.distributeCard();
-        dealer.receiveCard(card2);
+        List<String> playersNames = getPlayerNames(players);
+        OutputView.printGameInitialMessage(playersNames);
+
+        distributeCardToDealer(dealer, deck);
+        distributeCardToPlayers(players, deck);
+
+        playGame(players, deck, dealer);
+
+        Map<String, Boolean> gameResult = getGameResult(dealer, players);
+
+        endGame(dealer, players, gameResult);
+    }
+
+    private static Map<String, Boolean> getGameResult(Dealer dealer, List<Player> players) {
+        Map<Participant, Integer> participantScores = getParticipantScores(dealer, players);
+        Map<String, Boolean> gameResult = Result.calculateResult(participantScores);
+        return gameResult;
+    }
+
+    private static void endGame(Dealer dealer, List<Player> players, Map<String, Boolean> gameResult) {
+        OutputView.printFinalCards(dealer.getParticipantCardsDto());
+        printFinalScores(players);
+        OutputView.printGameResult(gameResult);
+    }
+
+    private void playGame(List<Player> players, Deck deck, Dealer dealer) {
+        for (Player player : players) {
+            playGameWithPlayer(player, deck);
+        }
+
+        playGameWithDealer(dealer, deck);
+    }
+
+    private void distributeCardToDealer(Dealer dealer, Deck deck) {
+        distributeInitialCards(dealer, deck);
         printCards(dealer.getParticipantCardsDto());
+    }
 
+    private void distributeCardToPlayers(List<Player> players, Deck deck) {
         for (Player player : players) {
-            Card p_card1 = deck.distributeCard();
-            player.receiveCard(p_card1);
-            Card p_card2 = deck.distributeCard();
-            player.receiveCard(p_card2);
+            distributeInitialCards(player, deck);
             printCards(player.getParticipantCardsDto());
-
         }
+    }
 
+    private static void printFinalScores(List<Player> players) {
         for (Player player : players) {
-            while (player.canReceiveCard()) {
-                if (!isContinue(InputView.askContinue(player.getName()))) {
-                    printCards(player.getParticipantCardsDto());
-                    break;
-                }
-                Card card = deck.distributeCard();
-                player.receiveCard(card);
-                printCards(player.getParticipantCardsDto());
-            }
+            OutputView.printFinalCards(player.getParticipantCardsDto());
         }
+    }
 
-        while (dealer.canReceiveCard()) {
-            if (!dealer.canReceiveCard()) {
-                break;
-            }
-            Card card = deck.distributeCard();
-            dealer.receiveCard(card);
-            OutputView.printDealerMessage();
-        }
-
+    private static Map<Participant, Integer> getParticipantScores(Dealer dealer, List<Player> players) {
         Map<Participant, Integer> participantScores = new HashMap<>();
         participantScores.put(dealer, dealer.getScore());
 
         for (Player player : players) {
             participantScores.put(player, player.getScore());
         }
+        return participantScores;
+    }
 
-        Map<String, Boolean> gameResult = Result.calculateResult(participantScores);
-
-        OutputView.printFinalCards(dealer.getParticipantCardsDto());
-
-        // printCards 최종 결과 출력 확인하기
-        for (Player player : players) {
-            OutputView.printFinalCards(player.getParticipantCardsDto());
+    private void playGameWithDealer(Dealer dealer, Deck deck) {
+        while (dealer.canReceiveCard()) {
+            if (!dealer.canReceiveCard()) {
+                break;
+            }
+            distributeCard(dealer, deck);
+            OutputView.printDealerMessage();
         }
+    }
 
-        OutputView.printGameResult(gameResult);
+    private void playGameWithPlayer(Player player, Deck deck) {
+        while (player.canReceiveCard()) {
+            if (isContinueGame(player)) break;
+            distributeCard(player, deck);
+            printCards(player.getParticipantCardsDto());
+        }
+    }
+
+    private boolean isContinueGame(Player player) {
+        if (!isContinue(InputView.askContinue(player.getName()))) {
+            printCards(player.getParticipantCardsDto());
+            return true;
+        }
+        return false;
+    }
+
+    private void distributeInitialCards(Participant participant, Deck deck) {
+        distributeCard(participant, deck);
+        distributeCard(participant, deck);
+    }
+
+    private void distributeCard(Participant participant, Deck deck) {
+        Card card = deck.distributeCard();
+        participant.receiveCard(card);
+    }
+
+    private List<String> getPlayerNames(List<Player> players) {
+        return players.stream()
+                .map(Participant::getName)
+                .toList();
     }
 
     private boolean isContinue(String response) {
@@ -102,14 +143,14 @@ public class BlackJackGameController {
         return players;
     }
 
+    private List<String> getPlayerNames() {
+        return InputView.askPlayerNames();
+    }
+
     private Dealer initDealer() {
         Name name = new Name("딜러");
         Dealer dealer = new Dealer(name);
         return dealer;
-    }
-
-    private List<String> getPlayerNames() {
-        return InputView.askPlayerNames();
     }
 
 
