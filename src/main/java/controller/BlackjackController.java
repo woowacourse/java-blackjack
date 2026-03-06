@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.List;
-import model.Card;
 import model.CardDispenser;
 import model.CardGenerator;
 import model.Cards;
@@ -36,13 +35,10 @@ public class BlackjackController {
         // 카드를 더 받을건지 플레이어에게 물어보는
         players.forEach(player -> {
             boolean isFirst = true;
-            while (true) {
+            while (player.canHit()) {
                 String input = InputView.readMoreCard(player.getName());
                 Continuation command = Continuation.from(input);
                 if (command.isStop()) {
-                    if (isFirst) {
-                        OutputView.printCardByPlayer(player);
-                    }
                     break;
                 }
                 dispenser.dispense(player, 1);
@@ -52,24 +48,21 @@ public class BlackjackController {
                     OutputView.printCardByPlayer(player);
                 }
             }
+            if (isFirst) {
+                OutputView.printCardByPlayer(player);
+            }
         });
 
         // 딜러의 카드 더 받기 판정
-        int sum = dealer.calculateTotalScore();
-        // TODO: 네이밍 리팩토링
-        int base = 16;
-        while (sum <= base) {
-            OutputView.printToOpenNewCard(dealer.getName(), base);
-            Card card = cardGenerator.generateCard();
-            dealer.addCard(card);
-            sum = dealer.calculateTotalScore();
+        while (dealer.canHit()) {
+            OutputView.printToOpenNewCard(dealer.getName(), 16);
+            dispenser.dispense(dealer, 1);
         }
 
         OutputView.printBlank();
-        OutputView.printCardByPlayerWithScore(dealer, sum);
+        OutputView.printCardByPlayerWithScore(dealer);
         for (Player player : players) {
-            int playerSum = player.calculateTotalScore();
-            OutputView.printCardByPlayerWithScore(player, playerSum);
+            OutputView.printCardByPlayerWithScore(player);
         }
 
     }

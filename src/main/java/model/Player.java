@@ -37,4 +37,8 @@ public class Player {
     public List<Card> getCards() {
         return cards.getCard();
     }
+
+    public boolean canHit() {
+        return cards.calculateScore() < BUST_LIMIT;
+    }
 }

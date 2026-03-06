@@ -30,7 +30,8 @@ public class OutputView {
     }
 
 
-    public static void printCardByPlayerWithScore(Player player, int sum) {
+    public static void printCardByPlayerWithScore(Player player) {
+        int sum = player.calculateTotalScore();
         List<String> cards = player.getCards()
                 .stream()
                 .map(OutputView::convert)
