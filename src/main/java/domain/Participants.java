@@ -1,5 +1,7 @@
 package domain;
 
+import static constant.BlackjackConstant.DEALER_NAME;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +10,7 @@ public class Participants {
     private final List<Participant> participants;
 
     public Participants(List<Participant> participants) {
-        participants.add(new Participant("딜러", new HandCards(new ArrayList<>()), true));
+        participants.add(new Participant(DEALER_NAME, new HandCards(new ArrayList<>()), true));
         this.participants = participants;
     }
 
