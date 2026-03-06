@@ -1,5 +1,6 @@
 package blackjack;
 
+import blackjack.config.BlackjackConfig;
 import blackjack.controller.BlackjackController;
 import blackjack.model.AceAdjustPolicy;
 import blackjack.model.BustPolicy;
@@ -13,23 +14,8 @@ import blackjack.view.OutputView;
 public class BlackjackApplication {
 
     public static void main(String[] args) {
-        InputView inputView = new InputView();
-        OutputView outputView = new OutputView();
-        BustPolicy bustPolicy = new BustPolicyImpl();
-        AceAdjustPolicy aceAdjustPolicy = new AceAdjustPolicy(bustPolicy);
-        ThresholdDrawPolicy drawPolicy = new ThresholdDrawPolicy(17);
-        ShuffledCardsGenerator shuffledCardsGenerator = new ShuffledCardsGenerator();
-        ResultJudgement resultJudgement = new ResultJudgement(bustPolicy);
-
-        BlackjackController controller = new BlackjackController(
-                inputView,
-                outputView,
-                aceAdjustPolicy,
-                drawPolicy,
-                bustPolicy,
-                shuffledCardsGenerator,
-                resultJudgement
-        );
+        BlackjackConfig config = new BlackjackConfig();
+        BlackjackController controller = config.controller();
 
         controller.run();
     }
