@@ -54,26 +54,36 @@ public final class OutputView {
 
     public static void showResult(Dealer dealer, Participants participants) {
         System.out.println();
-        List<String> dealerCardNames = createCardNames(dealer.getDealer());
-        System.out.println(getCardNames(dealer.getDealer(), dealerCardNames) + " - 결과: " + dealer.getScore());
 
-        for (Participant participant : participants.getParticipants()) {
-            List<String> playerCardNames = createCardNames(participant);
-            System.out.println(getCardNames(participant, playerCardNames) + " - 결과: " + participant.getScore());
-        }
+        showCardAndScore(dealer.getDealer(), dealer.getScore());
+        participants.getParticipants()
+                .forEach(participant -> showCardAndScore(participant, participant.getScore()));
+    }
+
+    private static void showCardAndScore(Participant participant, int score) {
+        List<String> dealerCardNames = createCardNames(participant);
+        System.out.println(getCardNames(participant, dealerCardNames) + " - 결과: " + score);
     }
 
     public static void showGameResult(GameStatistics statistics) {
         System.out.println(NEW_LINE + "## 최종 승패");
+        showDealerResult(statistics);
+        System.out.println();
+
+        showPlayerResult(statistics);
+    }
+
+    private static void showDealerResult(GameStatistics statistics) {
         System.out.print("딜러: ");
         for (Map.Entry<GameResult, Integer> entry : statistics.getDealerResult().entrySet()) {
             System.out.print(entry.getValue() + entry.getKey().getDescription() + " ");
         }
-        System.out.println();
+    }
 
+    private static void showPlayerResult(GameStatistics statistics) {
         Map<Participant, GameResult> playerResult = statistics.getPlayerResult();
-        for (Participant participant : playerResult.keySet()) {
-            System.out.println(participant.getName() + ": " + playerResult.get(participant).getDescription());
+        for (Map.Entry<Participant, GameResult> entry : playerResult.entrySet()) {
+            System.out.println(entry.getKey().getName() + ": " + entry.getValue().getDescription());
         }
     }
 }
