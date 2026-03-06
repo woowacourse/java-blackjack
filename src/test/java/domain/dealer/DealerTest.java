@@ -1,4 +1,4 @@
-package dealer;
+package domain.dealer;
 
 import domain.card.*;
 import org.assertj.core.api.Assertions;
