@@ -39,4 +39,13 @@ public class Dealer {
     public void shuffleCards() {
         deck.shuffle();
     }
+
+    public int calculateCardsValue() {
+        int sum = 0;
+        for (Card card : cards) {
+            sum += card.getValue();
+        }
+        return sum;
+    }
+
 }

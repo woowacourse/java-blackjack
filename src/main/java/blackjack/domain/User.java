@@ -31,8 +31,16 @@ public class User {
         for (Card card : cards) {
             cardsName.add(card.getName());
         }
-        
+
         return cardsName;
+    }
+
+    public int calculateCardsValue() {
+        int sum = 0;
+        for (Card card : cards) {
+            sum += card.getValue();
+        }
+        return sum;
     }
 
     private void validate(String name) {

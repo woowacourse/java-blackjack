@@ -14,4 +14,8 @@ public class Card {
         return value.getName() + shape.getName();
     }
 
+    public int getValue() {
+        return value.getValue();
+    }
+
 }

@@ -28,4 +28,8 @@ public enum CardValue {
         return name;
     }
 
+    public int getValue() {
+        return value;
+    }
+
 }
