@@ -41,12 +41,7 @@ public class BlackJackService {
     }
 
     public void updateFinalScore(Participant participant) {
-        Boolean hasAce = hasAceCard(participant.getResult());
-        Integer score = participant.getResult().score();
-
-        if(hasAce && score <= 11) {
-            participant.addScore(10);
-        }
+        Scorer.updateFinalScore(participant);
     }
 
     public ParticipantWinning getGameResult(Players players, Dealer dealer) {
@@ -90,15 +85,6 @@ public class BlackJackService {
         }
 
         return matchStatus;
-    }
-
-    private boolean hasAceCard(PlayerResult playerResult) {
-        List<Card> cards = playerResult.deck();
-
-        return !cards.stream()
-                .filter((c) -> c.cardNumber().equals(CardNumber.ACE))
-                .toList()
-                .isEmpty();
     }
 
     private MatchStatus getPlayerResult(Player player, Dealer dealer) {
