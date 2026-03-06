@@ -26,4 +26,8 @@ public enum Answer {
                 );
     }
 
+    public boolean isNo() {
+        return this.equals(Answer.NO);
+    }
+
 }

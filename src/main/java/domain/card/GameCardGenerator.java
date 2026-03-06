@@ -1,9 +1,10 @@
 package domain.card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class GameCardGenerator implements CardGenerator{
+public class GameCardGenerator implements CardGenerator {
 
     @Override
     public List<Card> generate() {
@@ -14,8 +15,13 @@ public class GameCardGenerator implements CardGenerator{
                 blackjackGameCards.add(card);
             }
         }
-        // TODO 셔플 추가
+
+        shuffle(blackjackGameCards);
         return blackjackGameCards;
+    }
+
+    private void shuffle(List<Card> blackjackGameCards) {
+        Collections.shuffle(blackjackGameCards);
     }
 
 }

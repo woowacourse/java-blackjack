@@ -1,5 +1,6 @@
 package domain.view;
 
+import domain.answer.Answer;
 import domain.player.PlayerName;
 import domain.player.dto.PlayerHandDto;
 
@@ -25,6 +26,14 @@ public class ApplicationView {
                     .map(String::trim)
                     .map(PlayerName::from)
                     .toList();
+        });
+    }
+
+    public Answer askDrawCard(String playerName) {
+        return retry(() -> {
+            writer.printDrawCardGuideMessage(playerName);
+            String input = reader.readInput();
+            return Answer.from(input);
         });
     }
 

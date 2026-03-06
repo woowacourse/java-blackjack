@@ -1,5 +1,6 @@
 package domain;
 
+import domain.answer.Answer;
 import domain.card.CardDeck;
 import domain.card.CardGenerator;
 import domain.dealer.Dealer;
@@ -31,7 +32,21 @@ public class BlackjackGame {
         view.printParticipantHand(PlayerHandDto.of(dealer));
         view.printAllParticipantsHand(getPlayerHandInformation(players));
 
+        players.stream().forEach(p -> {
+            drawPlayerCard(p, dealer);
+        });
+    }
 
+    private void drawPlayerCard(Player p, Dealer dealer) {
+        while(p.isBusted()) {
+            Answer answer = view.askDrawCard(p.toDisplayMyName());
+            if(answer.isNo()) {
+                return;
+            }
+
+            dealer.handOutCardToPlayer(p, 1);
+            view.printParticipantHand(PlayerHandDto.of(p));
+        }
     }
 
     private void dealInitialCard(Dealer dealer, Players players) {
