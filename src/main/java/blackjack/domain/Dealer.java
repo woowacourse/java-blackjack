@@ -39,6 +39,11 @@ public class Dealer extends Participant {
     }
 
     @Override
+    public String getNickname() {
+        return "딜러";
+    }
+
+    @Override
     public List<String> getCardNames() {
         return hand.getCardNames(1);
     }

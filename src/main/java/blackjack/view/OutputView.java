@@ -3,6 +3,7 @@ package blackjack.view;
 import static blackjack.domain.Dealer.DEALER_HIT_THRESHOLD;
 
 import blackjack.domain.Dealer;
+import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import java.util.List;
 
@@ -28,13 +29,31 @@ public class OutputView {
         players.forEach(OutputView::printCardStatus);
     }
 
-    public static void printCardStatus(final Player player) {
-        System.out.printf(player.getNickname() + "카드: ");
-        System.out.println(String.join(", ", player.getCardNames()));
+    public static void printCardStatus(final Participant participant) {
+        System.out.println(participantHandFormat(participant));
     }
 
 
     public static void printDealerHitMessage() {
-        System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.", DEALER_HIT_THRESHOLD);
+        System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.\n", DEALER_HIT_THRESHOLD);
+    }
+
+    public static void printFinalStatus(final List<Participant> participants) {
+        final String delimiter = " - ";
+        participants.forEach(participant ->
+            System.out.println(participantHandFormat(participant) + delimiter +
+                participantScoreResultFormat(participant))
+        );
+    }
+
+    private static String participantHandFormat(final Participant participant) {
+        return String.format("%s카드: %s",
+            participant.getNickname(),
+            String.join(", ", participant.getCardNames())
+        );
+    }
+
+    private static String participantScoreResultFormat(final Participant participant) {
+        return String.format("결과: %d", participant.getScore());
     }
 }

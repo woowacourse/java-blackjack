@@ -15,9 +15,7 @@ public class Player extends Participant {
         this.nickname = nickname;
     }
 
-    public String getNickname() {
-        return nickname;
-    }
+
 
     private void validateNicknameLength(final String nickname) {
         if (nickname.length() > NICKNAME_MAXIMUM_LENGTH || nickname.length() < NICKNAME_MINIMUM_LENGTH) {
@@ -28,6 +26,11 @@ public class Player extends Participant {
     @Override
     public List<String> getCardNames() {
         return hand.getCardNames(0);
+    }
+
+    @Override
+    public String getNickname() {
+        return nickname;
     }
 
 }

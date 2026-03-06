@@ -3,6 +3,7 @@ package blackjack.controller;
 import blackjack.domain.Answer;
 import blackjack.domain.Dealer;
 import blackjack.domain.Hand;
+import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import blackjack.domain.Status;
 import blackjack.domain.Trump;
@@ -20,6 +21,8 @@ public class BlackjackController {
         Hand hand = new Hand(new ArrayList<>());
         List<Player> players = RetryExecutor.retry(this::readNicknames);
         Dealer dealer = new Dealer(hand, Status.HIT, trump);
+        List<Participant> participants = new ArrayList<>(List.of(dealer));
+        participants.addAll(players);
         dealer.pitch(players);
         OutputView.printStartMessage(players, dealer);
 
@@ -39,9 +42,9 @@ public class BlackjackController {
             OutputView.printDealerHitMessage();
         }
 
-
-
         dealer.handleBurst();
+
+        OutputView.printFinalStatus(participants);
     }
 
     private List<Player> readNicknames() {

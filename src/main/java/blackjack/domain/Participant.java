@@ -12,6 +12,10 @@ public abstract class Participant {
         this.status = status;
     }
 
+    public int getScore() {
+        return hand.calculateScore();
+    }
+
     public void addCard(Card card) {
         hand.add(card);
     }
@@ -33,4 +37,5 @@ public abstract class Participant {
     }
 
     public abstract List<String> getCardNames();
+    public abstract String getNickname() ;
 }
