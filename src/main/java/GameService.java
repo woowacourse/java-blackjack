@@ -22,17 +22,14 @@ public class GameService {
         }
     }
 
-    public int calculateScore(List<String> cards) {
+    public int calculateScore(List<Card> cards) {
         int score = 0;
-        for (String card: cards) {
-            if (card.equals("J") || card.equals("Q") || card.equals("K")) {
-                score += 10;
-            }
-            else if (card.equals("A")) {
+        for (Card card: cards) {
+            if (card.isAce()) {
                 score += calculateOptimalAceScore(score);
             }
             else {
-                score += Integer.parseInt(card);
+                score += card.getValue();
             }
         }
         return score;
