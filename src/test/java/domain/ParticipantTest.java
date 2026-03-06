@@ -81,7 +81,7 @@ class ParticipantTest {
         int actual = participant.scoreSum();
 
         assertEquals(expected, actual);
-        assertTrue(participant.isBusted());
+        assertFalse(participant.isBusted());
     }
 
     private static Stream<Arguments> participantsAndNames() {

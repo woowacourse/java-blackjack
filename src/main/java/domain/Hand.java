@@ -33,14 +33,22 @@ public class Hand {
     }
 
     int scoreSum() {
-        int total = getSum();
-        if(isBusted()) {
+        int total = rawScoreSum();
+        if(isOvercome()) {
             total -= aceCount() * 10;
         }
         return total;
     }
 
-    private int getSum() {
+    boolean isBusted() {
+        int score = rawScoreSum();
+        if(aceCount() > 0) {
+            score -= aceCount() * 10;
+        }
+        return score > BUST_NUMBER;
+    }
+
+    private int rawScoreSum() {
         return cards.stream().mapToInt(Card::score).sum();
     }
 
@@ -50,7 +58,7 @@ public class Hand {
                 .count();
     }
 
-    public boolean isBusted() {
-        return getSum() >= BUST_NUMBER;
+    private boolean isOvercome() {
+        return rawScoreSum() > BUST_NUMBER;
     }
 }
