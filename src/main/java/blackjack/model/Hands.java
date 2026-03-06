@@ -15,24 +15,20 @@ public class Hands {
         return new Hands(new ArrayList<>());
     }
 
-    //카드를 한 장 추가한다.
-    public void addCards(List<Card> other) {
-        if (other == null || other.isEmpty()) {
-            throw new IllegalArgumentException("card가 null입니다.");
-        }
-
-        this.cards.addAll(other);
+    // 카드를 한 장 추가한다.
+    public void addCard(Card card) {
+        cards.add(card);
     }
 
     // 핸즈가 가진 카드들의 점수를 계산한다.
     // 에이스 개수가 1개 이상이면서 베이스 스코어가 10점 이하이면 10을 추가로 더해준다
     public int calculateTotalScore() {
         int baseScore = this.cards.stream()
-                .mapToInt(card -> card.rank().getDefaultScore())
+                .mapToInt(Card::getDefaultScore)
                 .sum();
 
         boolean hasAce = cards.stream()
-                .anyMatch(card -> card.rank() == Rank.ACE);
+                .anyMatch(Card::isAce);
 
         if (hasAce && baseScore <= 11) {
             baseScore += 10;
@@ -46,15 +42,15 @@ public class Hands {
         return calculateTotalScore() > score;
     }
 
-    // 첫 번째 카드 반환
-    public List<Card> getCards(int count) {
-        return List.copyOf(this.cards.stream()
-                .limit(count)
-                .toList());
-    }
-
     // 모든 카드 반환
     public List<Card> getAllCard() {
         return List.copyOf(cards);
+    }
+
+    // 앞 면인 카드만 반환한다.
+    public List<Card> getOpenedCards() {
+        return List.copyOf(this.cards.stream()
+                .filter(Card::isOpened)
+                .toList());
     }
 }

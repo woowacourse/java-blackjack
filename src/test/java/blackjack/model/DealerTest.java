@@ -8,8 +8,7 @@ import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    PickStrategy mustPickTwo = cards -> new Card(Rank.TWO, Suit.CLOVER);
-    PickStrategy mustPickTen = cards -> new Card(Rank.TEN, Suit.CLOVER);
+    PickStrategy mustPickTen = cards -> Card.opened(Rank.TEN, Suit.CLOVER);
 
     @Test
     @DisplayName("카드 덱에서 카드를 뽑아서 핸즈에 추가한다.")
@@ -19,7 +18,7 @@ class DealerTest {
         CardDeck cardDeck = CardDeck.of(mustPickTen);
 
         // when & then
-        assertThatCode(() -> dealer.pickCard(cardDeck))
+        assertThatCode(() -> dealer.pickAdditionalCard(cardDeck))
                 .doesNotThrowAnyException();
     }
 
@@ -30,9 +29,11 @@ class DealerTest {
         Dealer dealer = Dealer.create();
         CardDeck cardDeck = CardDeck.of(mustPickTen);
 
+        dealer.pickAdditionalCard(cardDeck);
+        System.out.println(dealer.getAllCard());
+        dealer.pickAdditionalCard(cardDeck);
 
-        dealer.pickCard(cardDeck);
-        dealer.pickCard(cardDeck);
+        System.out.println(dealer.getAllCard());
 
         // when & then
         assertThat(dealer.canPick()).isFalse();
@@ -46,9 +47,9 @@ class DealerTest {
 
         Dealer dealer = Dealer.create();
 
-        dealer.pickCard(cardDeck);
-        dealer.pickCard(cardDeck);
-        dealer.pickCard(cardDeck);
+        dealer.pickAdditionalCard(cardDeck);
+        dealer.pickAdditionalCard(cardDeck);
+        dealer.pickAdditionalCard(cardDeck);
 
         // when & then
         assertThat(dealer.isBust()).isTrue();

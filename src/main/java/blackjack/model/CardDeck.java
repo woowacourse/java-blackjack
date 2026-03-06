@@ -24,7 +24,7 @@ public class CardDeck {
 
         Arrays.stream(Suit.values())
                 .forEach(suit -> Arrays.stream(Rank.values())
-                        .forEach(rank -> cards.add(new Card(rank, suit))));
+                        .forEach(rank -> cards.add(Card.opened(rank, suit))));
 
         if (cards.size() != CARD_DECK_SIZE) {
             throw new IllegalStateException("덱이 잘 못 생성됐습니다.");
@@ -45,5 +45,13 @@ public class CardDeck {
         }
 
         return draw;
+    }
+
+    public Card pick() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("카드 덱에 카드의 개수가 부족합니다.");
+        }
+
+        return pickStrategy.pick(cards);
     }
 }

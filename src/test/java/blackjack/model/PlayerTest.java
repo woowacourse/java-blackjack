@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 class PlayerTest {
 
-    PickStrategy mockStrategy = cards -> new Card(Rank.TEN, Suit.CLOVER);
+    PickStrategy mockStrategy = cards -> Card.opened(Rank.TEN, Suit.CLOVER);
 
     @Test
     @DisplayName("카드 덱에서 카드를 뽑아서 핸즈에 추가한다.")
@@ -18,7 +18,7 @@ class PlayerTest {
         CardDeck cardDeck = CardDeck.of(mockStrategy);
 
         // when & then
-        assertThatCode(() -> player.pickACard(cardDeck))
+        assertThatCode(() -> player.pickInitCards(cardDeck))
                 .doesNotThrowAnyException();
     }
 
@@ -30,9 +30,8 @@ class PlayerTest {
 
         Player player = Player.of("player1");
 
-        player.pickACard(cardDeck);
-        player.pickACard(cardDeck);
-        player.pickACard(cardDeck);
+        player.pickInitCards(cardDeck);
+        player.pickAdditionalCard(cardDeck);
 
         // when & then
         assertThat(player.isBust()).isTrue();

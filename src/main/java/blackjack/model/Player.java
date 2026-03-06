@@ -14,12 +14,13 @@ public class Player {
         this.hands = hands;
     }
 
-    public static Player of (String name) {
+    public static Player of(String name) {
         return new Player(name, Hands.empty());
     }
 
-    public void pickACard(CardDeck cardDeck) {
-        hands.addCards(cardDeck.draw(1));
+    public void pickInitCards(CardDeck cardDeck) {
+        hands.addCard(cardDeck.pick());
+        hands.addCard(cardDeck.pick());
     }
 
     //핸즈의 총 점수가 21 초과이면 true를 반환한다.
@@ -29,10 +30,6 @@ public class Player {
 
     public int getHandsTotalScore() {
         return hands.calculateTotalScore();
-    }
-
-    public List<Card> getCards(int count) {
-        return hands.getCards(count);
     }
 
     public String getName() {
@@ -45,5 +42,13 @@ public class Player {
 
     public int getCurrentTotalScore() {
         return hands.calculateTotalScore();
+    }
+
+    public List<Card> getHeadCards() {
+        return hands.getOpenedCards();
+    }
+
+    public void pickAdditionalCard(CardDeck cardDeck) {
+        hands.addCard(cardDeck.pick());
     }
 }
