@@ -7,7 +7,7 @@ public class OutputView {
 
     public static void divideCards(List<String> participants) {
         String players = String.join(", ", participants);
-        System.out.printf("딜러와 %s에게 2장을 나누었습니다.", players);
+        System.out.printf("딜러와 %s에게 2장을 나누었습니다." + System.lineSeparator(), players);
     }
 
     public static void initCardStatus(List<GameStatus> gameStatuses) {

@@ -7,7 +7,9 @@ public final class InputView {
     private final static Scanner scanner = new Scanner(System.in);
 
     public static String readPlayers() {
-        return readLine(InfoMessage.PLAYER_INPUT);
+        String names = readLine(InfoMessage.PLAYER_INPUT);
+        System.out.println();
+        return names;
     }
 
     public static String readSelect() {
