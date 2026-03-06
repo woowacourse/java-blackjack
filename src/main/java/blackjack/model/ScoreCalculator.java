@@ -24,6 +24,10 @@ public class ScoreCalculator {
         return updatedScore - participant.getScore();
     }
 
+    public boolean isBurst(int score) {
+        return score > 21;
+    }
+
     private int aceTranslate(int score, long aceCount) {
         while (score <= 11 && aceCount > 0) {
             score += 10;

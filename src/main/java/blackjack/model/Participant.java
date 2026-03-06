@@ -21,8 +21,8 @@ public abstract class Participant {
         this.score += score;
     }
 
-    public int getSize() {
-        return cards.size();
+    public void burstScore() {
+        this.score -= score;
     }
 
     public int getScore() {
