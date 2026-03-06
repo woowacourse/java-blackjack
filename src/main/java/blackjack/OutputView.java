@@ -1,6 +1,8 @@
 package blackjack;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
 
@@ -23,19 +25,36 @@ public class OutputView {
     }
 
     public void printDealerDraw(){
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
 
     public void printFinalCardResult(Dealer dealer, Players players) {
 
-        System.out.printf("딜러카드: %s - 결과: %d%n",
+        System.out.printf("%n딜러카드: %s - 결과: %d%n",
                 String.join(", ", dealer.getCardNames()), dealer.getTotalPoint() );
         for (Player player : players.getPlayers()) {
             System.out.printf("%s카드: %s - 결과: %d%n", player.getName(),player.getCardNames(),player.getTotalPoint());
         }
 
 
+    }
+
+    public void printFinalGameResult(HashMap<Player, GameResult> result){
+        System.out.println("\n## 최종 승패");
+
+        int winCount = 0;
+        int tieCount = 0;
+        int loseCount = 0;
+        for(Map.Entry<Player, GameResult> entry : result.entrySet()) {
+            if(entry.getValue() == GameResult.WIN) loseCount++;
+            if(entry.getValue() == GameResult.LOSE) winCount++;
+            if(entry.getValue() == GameResult.TIE) tieCount++;
+        }
+        System.out.printf("딜러: %d승 %d무 %d패%n", winCount, tieCount, loseCount);
+        for(Map.Entry<Player, GameResult> entry : result.entrySet()) {
+            System.out.printf("%s: %s%n", entry.getKey().getName(), entry.getValue().getName());
+        }
     }
 
 

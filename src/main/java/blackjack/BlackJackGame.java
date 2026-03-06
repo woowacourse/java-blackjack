@@ -1,5 +1,8 @@
 package blackjack;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+
 public class BlackJackGame {
     private final Players players;
     private final Dealer dealer;
@@ -13,9 +16,14 @@ public class BlackJackGame {
 
     public void initDraw() {
         for(int i = 0; i < 2; i++) {
-            players.recieveCard(deck.draw());
+            players.recieveCard(deck);
             dealer.recieveCard(deck.draw());
         }
+    }
+
+    public HashMap<Player, GameResult> judgeGameResult(){
+        BlackJackJudge blackJackJudge = new BlackJackJudge();
+        return blackJackJudge.judge( players, dealer);
     }
 
 }

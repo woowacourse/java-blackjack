@@ -34,6 +34,10 @@ public class Dealer {
         return hand.getTotalPoint();
     }
 
+    public boolean isBust(){
+        return hand.isBust();
+    }
+
 
 
 }

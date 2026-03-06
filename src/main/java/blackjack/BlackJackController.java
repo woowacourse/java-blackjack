@@ -1,5 +1,6 @@
 package blackjack;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class BlackJackController {
@@ -27,6 +28,9 @@ public class BlackJackController {
         //최종 결과 출력
         outputView.printFinalCardResult(dealer,players);
 
+        //  최종 승패 출력
+        HashMap<Player, GameResult> result = blackJackGame.judgeGameResult();
+        outputView.printFinalGameResult(result);
 
 
     }
