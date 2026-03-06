@@ -27,7 +27,7 @@ class PlayersTest {
     void 플레이어_이름이_중복되면_에러를_던진다() {
         // given
         String duplicatedRawPlayerNames = "pobi,pobi";
-        
+
         // when
         assertThatThrownBy(() -> Players.from(duplicatedRawPlayerNames, aceAdjustPolicy))
                 .isInstanceOf(IllegalArgumentException.class);
