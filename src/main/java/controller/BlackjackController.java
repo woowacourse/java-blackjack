@@ -5,7 +5,6 @@ import domain.Dealer;
 import domain.Player;
 import domain.Players;
 import service.BlackjackService;
-import utils.generator.CardGenerator;
 import view.InputView;
 import view.OutputView;
 
@@ -37,7 +36,7 @@ public class BlackjackController {
             firstCardContents.add(new CardContentDto(player.getName(), player.getCards()));
         }
         OutputView.displayCardContent(firstCardContents);
-        
+
         Players players = new Players(playerList);
         for (Player player : players) {
             String name = player.getName();
@@ -54,8 +53,6 @@ public class BlackjackController {
         blackjackService.giveInitialedCard(cards, dealer);
         return dealer;
     }
-
-
 
 
     private void handCardWithRetry(Player player, boolean hasCard, Cards cards, String name) {

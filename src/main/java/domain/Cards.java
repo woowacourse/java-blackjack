@@ -1,7 +1,6 @@
 package domain;
 
 import java.util.Collections;
-import java.util.Deque;
 import java.util.List;
 
 public class Cards {
