@@ -7,6 +7,7 @@ public class User {
 
     private final String name;
     private final List<Card> hand = new ArrayList<>();
+    private GameResult gameResult;
 
     private User(String name) {
         this.name = name;
