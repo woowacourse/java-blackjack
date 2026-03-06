@@ -19,4 +19,10 @@ public class OutputView {
         System.out.println(stringJoiner);
     }
 
+    // TODO: 16점 고정 상수 제거
+    public static void printGetMoreCardsForDealer(String dealerName) {
+        System.out.println(dealerName + "는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println();
+    }
+
 }

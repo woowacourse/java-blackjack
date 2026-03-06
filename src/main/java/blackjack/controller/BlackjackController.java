@@ -27,6 +27,7 @@ public class BlackjackController {
         printGameSettingResult(users, dealer);
 
         getMoreCards(users, dealer);
+        getMoreCardsForDealer(dealer);
     }
 
     private void printGameSettingResult(List<User> users, Dealer dealer) {
@@ -60,6 +61,13 @@ public class BlackjackController {
                 }
                 break;
             }
+        }
+    }
+
+    private void getMoreCardsForDealer(Dealer dealer) {
+        while (dealer.calculateCardsValue() < 17) {
+            OutputView.printGetMoreCardsForDealer(dealer.getName());
+            gameService.getMoreCardForDealer(dealer);
         }
     }
 
