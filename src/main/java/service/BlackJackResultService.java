@@ -6,9 +6,10 @@ import domain.WinningStatus;
 import dto.FinalResultDto;
 import dto.ScoreResultDto;
 
-import java.util.List;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackJackResultService {
 
@@ -21,32 +22,29 @@ public class BlackJackResultService {
         return FinalResultDto.from(playerResults);
     }
 
-    // todo : stream 리팩토링
     private Map<String, WinningStatus> createPlayerResults(Dealer dealer, List<Player> players) {
-        Map<String, WinningStatus> map = new LinkedHashMap<>();
-        for(Player player : players){
-            if(player.isBurst()){
-                map.put(player.getName(), WinningStatus.LOSE);
-                continue;
-            }
-
-            if(dealer.isBurst()){
-                map.put(player.getName(), WinningStatus.WIN);
-                continue;
-            }
-
-            if(dealer.getHand().getSum() > player.getHand().getSum()){
-                map.put(player.getName(), WinningStatus.LOSE);
-            }
-            if(dealer.getHand().getSum() == player.getHand().getSum()){
-                map.put(player.getName(), WinningStatus.DRAW);
-            }
-            if(dealer.getHand().getSum() < player.getHand().getSum()){
-                map.put(player.getName(), WinningStatus.WIN);
-            }
-        }
-        return map;
+        return players.stream()
+                .collect(Collectors.toMap(
+                        Player::getName,
+                        player -> calculateWinningStatus(dealer, player),
+                        (x, y) -> y, LinkedHashMap::new)
+                );
     }
 
+    private WinningStatus calculateWinningStatus(Dealer dealer, Player player) {
+        if (player.isBurst()) {
+            return WinningStatus.LOSE;
+        }
+        if (dealer.isBurst()) {
+            return WinningStatus.WIN;
+        }
+        if (dealer.getHand().getSum() > player.getHand().getSum()) {
+            return WinningStatus.LOSE;
+        }
+        if (dealer.getHand().getSum() == player.getHand().getSum()) {
+            return WinningStatus.DRAW;
+        }
+        return WinningStatus.WIN;
+    }
 }
 
