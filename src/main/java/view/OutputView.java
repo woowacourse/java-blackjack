@@ -41,6 +41,10 @@ public class OutputView {
 //    }
 //
 
+    public static void printGameLog(GameStatus gameStatuses) {
+        System.out.printf(getGameLog(gameStatuses) + System.lineSeparator());
+    }
+
     private static String getGameLog(GameStatus gameStatuses) {
         return String.format("%s카드: %s", gameStatuses.name(), String.join(", ", gameStatuses.cards()));
     }

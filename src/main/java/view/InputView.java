@@ -12,8 +12,10 @@ public final class InputView {
         return names;
     }
 
-    public static String readSelect() {
-        return readLine(InfoMessage.SELECT);
+    public static String readSelect(String name) {
+        String formatter = InfoMessage.SELECT.message();
+        System.out.printf(formatter + System.lineSeparator(), name);
+        return scanner.nextLine();
     }
 
     private static String readLine(InfoMessage info) {
