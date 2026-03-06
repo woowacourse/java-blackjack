@@ -28,4 +28,8 @@ public enum CardRank {
     public List<Integer> getScores() {
         return scores;
     }
+
+    public String getDescription() {
+        return description;
+    }
 }

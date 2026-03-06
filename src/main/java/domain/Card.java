@@ -11,6 +11,10 @@ public class Card {
         this.cardRank = cardRank;
     }
 
+    public String getCardDescription() {
+        return cardRank.getDescription() + cardSuit.getDescription();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {
