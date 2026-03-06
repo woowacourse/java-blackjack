@@ -13,9 +13,8 @@ public class DeckTest {
     @DisplayName("초기에 생성할 때, 완전한 카드 덱을 구성한다.")
     void createCardsTest() {
         Deck deck = new Deck();
-        Set<Card> cardSet = new HashSet<>(deck.getCards());
-
-        Assertions.assertThat(cardSet.size()).isEqualTo(52);
+        long cardSize = deck.getCards().stream().distinct().count();
+        Assertions.assertThat(cardSize).isEqualTo(52);
     }
 
     @Test
@@ -23,7 +22,6 @@ public class DeckTest {
     void handOutCardsTest() {
         Deck deck = new Deck();
         List<Card> cards = deck.firstHandCards();
-
         Assertions.assertThat(cards.size()).isEqualTo(2);
     }
 
@@ -32,7 +30,6 @@ public class DeckTest {
     void peekOneCardTest() {
         Deck deck = new Deck();
         Card card = deck.drawCard();
-
         Assertions.assertThat(deck.getCards().size()).isEqualTo(51);
         Assertions.assertThat(card).isInstanceOf(Card.class);
         Assertions.assertThat(card).isNotIn(deck.getCards());
