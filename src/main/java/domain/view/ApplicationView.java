@@ -1,8 +1,10 @@
 package domain.view;
 
+import domain.analyzer.dto.ResultAnalysisDto;
 import domain.answer.Answer;
 import domain.player.PlayerName;
 import domain.player.dto.PlayerHandDto;
+import domain.player.dto.PlayerResultDto;
 
 import java.util.Arrays;
 import java.util.List;
@@ -49,12 +51,18 @@ public class ApplicationView {
     }
 
     public void printParticipantHand(PlayerHandDto playerHand) {
-        writer.printAllParticipantsHand(playerHand.playerName(), joining(playerHand.handOnCards()));
+        writer.printAllParticipantsHand(playerHand.playerName(), playerHand.handOnCards());
     }
 
     public void printDealerAdditionalDrawCardMessage() {
         writer.printDealerAdditionalDrawCardMessage();
     }
+
+    public void printFinalResultMessage(PlayerResultDto playerResult) {
+        PlayerHandDto playerHand = playerResult.playerHand();
+        writer.printFinalResultMessage(playerHand.playerName(), playerHand.handOnCards(), playerResult.resultScore());
+    }
+
 
     private <T> T retry(Supplier<T> task) {
         while (true) {
@@ -64,10 +72,6 @@ public class ApplicationView {
                 writer.printErrorMessage(e.getMessage());
             }
         }
-    }
-
-    private String joining(List<String> strings) {
-        return String.join(", ", strings);
     }
 
 }
