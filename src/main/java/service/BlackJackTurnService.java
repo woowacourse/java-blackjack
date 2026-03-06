@@ -18,14 +18,16 @@ public class BlackJackTurnService {
         dealer.draw(card);
     }
 
-    // todo: 이름 리팩토링
-    public boolean isDealerPossible(Dealer dealer){
+    public boolean canDealerHit(Dealer dealer){
         return dealer.getHand().getSum() < 17;
     }
 
-    // todo: player.isBurst로 변경
-    public boolean isPlayerPossible(Player player, String input){
-        return player.getHand().getSum() < 21 && input.equals("y");
+    public boolean canPlayerHit(Player player, String input){
+        return isPlayerUnder21(player) && input.equals("y");
+    }
+
+    public boolean isPlayerUnder21(Player player){
+        return player.getHand().getSum() < 21;
     }
 
     public BlackJackHandDto createHandDto(Player player) {

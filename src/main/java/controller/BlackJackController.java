@@ -16,7 +16,7 @@ import view.OutputView;
 import java.util.List;
 
 public class BlackJackController {
-    // todo: appConfig
+
     private final BlackJackInitService blackJackInitService;
     private final BlackJackTurnService blackJackTurnService;
     private final BlackJackResultService blackJackResultService;
@@ -52,22 +52,22 @@ public class BlackJackController {
         OutputView.printFinalResult(finalResultDto);
     }
 
-    // todo: 리팩토링
+    // todo: depth 2 해결
     private void drawPlayerCard(Player player, Deck deck) {
         String YesNoInput = InputView.askPlayerCommand(player.getName());
 
-        if (!blackJackTurnService.isPlayerPossible(player, YesNoInput)) {
+        if (!blackJackTurnService.canPlayerHit(player, YesNoInput)) {
             BlackJackHandDto blackJackHandDto = blackJackTurnService.createHandDto(player);
             OutputView.printHandOutput(blackJackHandDto);
         }
 
-        while (blackJackTurnService.isPlayerPossible(player, YesNoInput)) {
+        while (blackJackTurnService.canPlayerHit(player, YesNoInput)) {
             blackJackTurnService.playerHit(player, deck);
             BlackJackHandDto blackJackHandDto = blackJackTurnService.createHandDto(player);
             OutputView.printHandOutput(blackJackHandDto);
 
             // 합이 21 넘어가면 바로 입력받기 종료
-            if (!blackJackTurnService.isPlayerPossible(player, "y")) {
+            if (!blackJackTurnService.canPlayerHit(player, "y")) {
                 break;
             }
 
@@ -76,7 +76,7 @@ public class BlackJackController {
     }
 
     private void drawDealerCard(Dealer dealer, Deck deck){
-        while (blackJackTurnService.isDealerPossible(dealer)) {
+        while (blackJackTurnService.canDealerHit(dealer)) {
             blackJackTurnService.dealerHit(dealer, deck);
             OutputView.printDealerHitMessage();
         }

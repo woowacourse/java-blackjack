@@ -6,15 +6,9 @@ import domain.Player;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
-import dto.BlackJackHandDto;
-import dto.BlackJackInitStatusDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -61,7 +55,7 @@ class BlackJackTurnServiceTest {
         dealer.draw(new Card(Suit.HEARTS, Rank.NUM5));
 
         // when, then
-        assertTrue(blackJackTurnService.isDealerPossible(dealer));
+        assertTrue(blackJackTurnService.canDealerHit(dealer));
     }
 
     @Test
@@ -73,7 +67,7 @@ class BlackJackTurnServiceTest {
         dealer.draw(new Card(Suit.HEARTS, Rank.KING));
 
         // when, then
-        assertFalse(blackJackTurnService.isDealerPossible(dealer));
+        assertFalse(blackJackTurnService.canDealerHit(dealer));
     }
 
     @Test
@@ -85,7 +79,7 @@ class BlackJackTurnServiceTest {
         player.draw(new Card(Suit.HEARTS, Rank.NUM5));
 
         // when, then
-        assertTrue(blackJackTurnService.isPlayerPossible(player, "y"));
+        assertTrue(blackJackTurnService.canPlayerHit(player, "y"));
     }
 
     @Nested
@@ -100,7 +94,7 @@ class BlackJackTurnServiceTest {
             player.draw(new Card(Suit.HEARTS, Rank.KING));
 
             // when, then
-            assertFalse(blackJackTurnService.isPlayerPossible(player, "y"));
+            assertFalse(blackJackTurnService.canPlayerHit(player, "y"));
         }
 
         @Test
@@ -112,18 +106,32 @@ class BlackJackTurnServiceTest {
             player.draw(new Card(Suit.HEARTS, Rank.NUM5));
 
             // when, then
-            assertFalse(blackJackTurnService.isPlayerPossible(player, "n"));
+            assertFalse(blackJackTurnService.canPlayerHit(player, "n"));
         }
     }
 
-    @Test
-    void 손패_Dto를_생성하는_경우() {
-        //given
-        Player player = new Player("봉구스");
 
-        // when
-        BlackJackHandDto blackJackHandDto = blackJackTurnService.createHandDto(player);
-        // then
-        assertNotNull(blackJackHandDto);
+    @Test
+    void 손패의_합이_21보다_작은_경우() {
+        // given
+        Player player = new Player("시오");
+
+        player.draw(new Card(Suit.HEARTS, Rank.JACK));
+
+        // when, then
+        assertTrue(blackJackTurnService.isPlayerUnder21(player));
+    }
+
+    @Test
+    void 손패의_합이_21보다_큰_경우() {
+        // given
+        Player player = new Player("시오");
+
+        player.draw(new Card(Suit.HEARTS, Rank.JACK));
+        player.draw(new Card(Suit.HEARTS, Rank.QUEEN));
+        player.draw(new Card(Suit.HEARTS, Rank.KING));
+
+        // when, then
+        assertFalse(blackJackTurnService.isPlayerUnder21(player));
     }
 }
