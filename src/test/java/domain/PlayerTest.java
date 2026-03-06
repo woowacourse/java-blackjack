@@ -81,4 +81,17 @@ class PlayerTest {
         assertThat(cardSize).isEqualTo(expect);
     }
 
+    @Test
+    @DisplayName("플레이어 카드 1장 추가 테스트")
+    void 카드_1장_추가_테스트() {
+        Cards cards = Cards.of();
+        Player player = Player.of(cards.drawInitialHand(), "pobi");
+
+        player.addCard(cards.draw());
+        int cardSize = player.getCardsInfo().size();
+
+        int expect = 3;
+        assertThat(cardSize).isEqualTo(expect);
+    }
+
 }
