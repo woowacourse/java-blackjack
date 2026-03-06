@@ -5,10 +5,13 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import java.util.List;
 import java.util.Map;
 import model.BlackJackDeck;
+import model.CardNumber;
 import model.Cards;
 import model.Dealer;
 import model.MatchStatus;
 import model.Player;
+import model.Shape;
+import model.dto.Card;
 import model.dto.PlayerName;
 import model.Players;
 import model.dto.ParticipantWinning;
@@ -75,5 +78,33 @@ public class TestBlackJackService {
         assertThat(dealerWinning.get(MatchStatus.WIN)).isEqualTo(0);
         assertThat(dealerWinning.get(MatchStatus.LOSE)).isEqualTo(0);
         assertThat(dealerWinning.get(MatchStatus.DRAW)).isEqualTo(1);
+    }
+
+    @Test
+    public void 블랙잭_점수_판정_정상_작동_테스트() {
+        BlackJackDeck cards = new BlackJackDeck();
+        BlackJackService blackJackService = new BlackJackService(cards);
+
+        Player player = new Player(new PlayerName("player1"));
+
+        player.addCard(new Card(Shape.CLOVER, CardNumber.ACE));
+        player.addCard(new Card(Shape.SPADE, CardNumber.ACE));
+        player.addScore(2);
+
+        blackJackService.updateFinalScore(player);
+
+        assertThat(player.getResult().score()).isEqualTo(12);
+
+        Player player2 = new Player(new PlayerName("player2"));
+
+        player2.addCard(new Card(Shape.CLOVER, CardNumber.ACE));
+        player2.addCard(new Card(Shape.SPADE, CardNumber.ACE));
+        player2.addCard(new Card(Shape.CLOVER, CardNumber.KING));
+        player2.addScore(12);
+
+        blackJackService.updateFinalScore(player2);
+
+        assertThat(player2.getResult().score()).isEqualTo(12);
+
     }
 }
