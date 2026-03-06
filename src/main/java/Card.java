@@ -28,6 +28,6 @@ public class Card {
 
     @Override
     public String toString() {
-        return "" + rank.getValue() + suit.getName();
+        return rank.getName() + suit.getName();
     }
 }
