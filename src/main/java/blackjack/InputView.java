@@ -13,4 +13,9 @@ public class InputView {
         String[] inputs = input.split(",");
         return Arrays.stream(inputs).toList();
     }
+
+    public boolean readHitAnswer(String name) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
+        return sc.nextLine().equals("y");
+    }
 }

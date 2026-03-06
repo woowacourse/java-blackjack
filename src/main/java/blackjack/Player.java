@@ -28,4 +28,8 @@ public class Player {
         return hand.getCardNames();
     }
 
+    public boolean isBust() {
+        return hand.isBust();
+    }
+
 }

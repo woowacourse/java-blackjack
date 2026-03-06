@@ -18,6 +18,10 @@ public class OutputView {
 
     }
 
+    public void printCard(Player player) {
+        System.out.printf("%s카드: %s%n", player.getName(),player.getCardNames());
+    }
+
 
 
 }
