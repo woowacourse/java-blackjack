@@ -2,11 +2,12 @@ package controller;
 
 import domain.*;
 import service.BlackJackService;
+import util.Parser;
+import util.Validator;
 import view.InputView;
 import view.OutputView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class BlackJackController {
@@ -37,6 +38,7 @@ public class BlackJackController {
             while (true) {
                 OutputView.hitOrStandMessage(player);
                 String input = InputView.input();
+                Validator.validateChoiceInput(input);
                 if (input.equals("n")) {
                     OutputView.holdingCardMessage(player);
                     player.getTotalCardScore();
@@ -69,7 +71,8 @@ public class BlackJackController {
 
         OutputView.inputPlayerMessage();
         String input = InputView.input();
-        List<String> names = Arrays.asList(input.split(","));
+        Validator.validateInput(input);
+        List<String> names = Parser.separateBySeparator(input, ",");
 
         for (String name : names) {
             players.add(new Player(name, new Hand()));
