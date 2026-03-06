@@ -20,12 +20,12 @@ public class BlackJackDeck {
     }
 
     public Card draw() {
-        if(cards.get().isEmpty()) {
+        List<Card> currentCards = cards.get();
+        if(currentCards.isEmpty()) {
             throw new IllegalArgumentException(ErrorMessage.NO_CARD_IN_DECK.getMessage());
         }
-        List<Card> currentCards = cards.get();
-        Card drawedCard = currentCards.removeFirst();
 
+        Card drawedCard = currentCards.removeFirst();
         this.cards = new Cards(currentCards);
 
         return drawedCard;
