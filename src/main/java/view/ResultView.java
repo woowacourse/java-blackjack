@@ -16,7 +16,6 @@ public class ResultView {
         System.out.println("딜러카드: " + dealer);
         for (Player player : players) {
             System.out.println(player.getName() + "카드: " + player);
-
         }
     }
 
@@ -28,5 +27,11 @@ public class ResultView {
         System.out.println("딜러는 17이상이라 카드를 받지 않았습니다.");
     }
 
+    public void printResult(List<Player> players, Dealer dealer) {
+        System.out.println("딜러카드: " + dealer + " - 결과: " + dealer.getTotalSum());
 
+        for (Player player : players) {
+            System.out.println(player.getName() + "카드: " + player + " - 결과: " + player.getTotalSum());
+        }
+    }
 }

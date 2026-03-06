@@ -20,4 +20,8 @@ public class Dealer {
     public String toString() {
         return cards.toString();
     }
+
+    public int getTotalSum() {
+        return cards.getTotalSum();
+    }
 }

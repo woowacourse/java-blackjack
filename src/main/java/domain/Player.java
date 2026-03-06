@@ -29,4 +29,8 @@ public class Player {
     public String toString() {
         return cards.toString();
     }
+
+    public int getTotalSum() {
+        return cards.getTotalSum();
+    }
 }

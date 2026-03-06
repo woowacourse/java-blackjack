@@ -26,5 +26,4 @@ public class BlackjackGame {
         }
         return false;
     }
-
 }
