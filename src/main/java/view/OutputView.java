@@ -12,6 +12,8 @@ import model.dto.PlayerResult;
 import model.dto.PlayerWinning;
 
 public class OutputView {
+    private static final String JOIN_DELIMITER = ", ";
+    private static final String RESULT_DELIMITER = ": ";
 
     private static final String CARD_TEXT = "카드: ";
     private static final String DEALER_DRAW_ONE_CARD_TEXT = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
@@ -32,7 +34,7 @@ public class OutputView {
 
     public static void printPlayerCurrentDeck(PlayerResult playerResult) {
         List<String> cardString = playerResult.deck().stream().map(Card::getString).toList();
-        System.out.println(playerResult.name().value() + CARD_TEXT + String.join(", ", cardString));
+        System.out.println(playerResult.name().value() + CARD_TEXT + String.join(JOIN_DELIMITER, cardString));
     }
 
     public static void printDealerCardDrawMessage() {
@@ -60,7 +62,7 @@ public class OutputView {
 
 
     private static void printInitDeckDrawMessage(List<String> players) {
-        System.out.println(DEALER_INIT_DECK_TEXT + String.join(", ", players) + INIT_DECK_TEXT);
+        System.out.println(DEALER_INIT_DECK_TEXT + String.join(JOIN_DELIMITER, players) + INIT_DECK_TEXT);
     }
 
     private static void printDealerInitDeck(Card card) {
@@ -75,7 +77,7 @@ public class OutputView {
 
     private static void printPlayerScore(PlayerResult playerResult) {
         List<String> cardString = playerResult.deck().stream().map(Card::getString).toList();
-        System.out.println(playerResult.name().value() + CARD_TEXT + String.join(", ", cardString) + SCORE_TEXT + playerResult.score());
+        System.out.println(playerResult.name().value() + CARD_TEXT + String.join(JOIN_DELIMITER, cardString) + SCORE_TEXT + playerResult.score());
     }
 
     private static void printDealerResult(DealerWinning dealerWinning) {
@@ -101,10 +103,7 @@ public class OutputView {
     }
 
     private static void printPlayerResult(PlayerWinning playerWinning) {
-        System.out.println(playerWinning.name().value() + ": " + playerWinning.matchStatus().getStatus());
+        System.out.println(playerWinning.name().value() + RESULT_DELIMITER + playerWinning.matchStatus().getStatus());
     }
-
-
-
 
 }
