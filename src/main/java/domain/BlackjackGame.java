@@ -2,7 +2,6 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import view.ResultView;
 
 public class BlackjackGame {
     private final List<Player> players;
@@ -15,8 +14,14 @@ public class BlackjackGame {
         this.deck = new Deck();
     }
 
-    public void registPlayer(Player player){
-        players.add(player);
+    public void registPlayers(List<String> names){
+        for (String name : names) {
+            registPlayer(name);
+        }
+    }
+
+    private void registPlayer(String name){
+        players.add(new Player(name));
     }
 
     public boolean decideDealerHitStand(){

@@ -2,7 +2,6 @@ import domain.BlackjackGame;
 import domain.Dealer;
 import domain.Player;
 import java.util.List;
-import javax.xml.transform.Result;
 import view.InputView;
 import view.ResultView;
 
@@ -20,10 +19,7 @@ public class BlackjackController {
     public void run(){
         List<String> names = inputView.readPlayerNames();
 
-        for (String name : names) {
-            Player player = new Player(name);
-            blackjackGame.registPlayer(player);
-        }
+        blackjackGame.registPlayers(names);
 
         // 카드 나눠주기
         blackjackGame.giveHand();
