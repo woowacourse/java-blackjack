@@ -12,9 +12,15 @@ import view.OutputView;
 import java.util.List;
 
 public class BlackjackGame {
-    InputView inputView = new InputView();
-    InputParser inputParser = new InputParser();
-    OutputView outputView = new OutputView();
+    private final InputView inputView;
+    private final InputParser inputParser;
+    private final OutputView outputView;
+
+    public BlackjackGame(InputView inputView, InputParser inputParser, OutputView outputView) {
+        this.inputView = inputView;
+        this.inputParser = inputParser;
+        this.outputView = outputView;
+    }
 
     public void run() {
         String names = inputView.getNames();
@@ -65,11 +71,12 @@ public class BlackjackGame {
 
     private void playerTurn(Player player, Deck deck) {
         while (player.canDraw()) {
-            if (inputView.getChoice(player.name()).equals("y")) {
-                player.receive(deck.draw());
-                outputView.printParticipantCards(player);
+            if (inputView.getChoice(player.name()).equals("n")) {
+                break;
             }
-            break;
+
+            player.receive(deck.draw());
+            outputView.printParticipantCards(player);
         }
     }
 
@@ -82,8 +89,7 @@ public class BlackjackGame {
 
         GameResult gameResult = new GameResult(players, dealer);
         outputView.printWinOrLoseMessage();
-        outputView.printWinOrLose(gameResult.getDealerStatistics());
-        outputView.printWinOrLose(gameResult.getPlayersStatistics());
+        outputView.printDealerResult(gameResult.getDealerResult());
+        outputView.printPlayersResult(gameResult.getPlayersResult());
     }
-
 }

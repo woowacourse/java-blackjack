@@ -8,7 +8,7 @@ import java.util.*;
 
 
 public class Deck {
-    private List<Card> cards;
+    private final List<Card> cards;
 
     public Deck(List<Card> cards) {
         this.cards = cards;

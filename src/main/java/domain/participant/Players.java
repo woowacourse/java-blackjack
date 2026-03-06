@@ -6,7 +6,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Players {
-    List<Player> players = new ArrayList<>();
+    public static final int PLAYER_THRESHOLD = 5;
+
+    private final List<Player> players = new ArrayList<>();
 
     public Players(List<String> names) {
         for (String name : names) {
@@ -30,7 +32,7 @@ public class Players {
     }
 
     private void validatePlayerCount(List<Player> players) {
-        if (players.size() > 5) {
+        if (players.size() > PLAYER_THRESHOLD) {
             throw new IllegalArgumentException();
         }
     }

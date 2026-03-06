@@ -1,8 +1,8 @@
 package domain.card;
 
 public class Card {
-    Rank rank;
-    Suit suit;
+    private final Rank rank;
+    private final Suit suit;
 
     public Card(Rank rank, Suit suit) {
         this.rank = rank;

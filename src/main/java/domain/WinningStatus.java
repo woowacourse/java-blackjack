@@ -8,6 +8,8 @@ public enum WinningStatus {
     TIE("무"),
     LOSE("패");
 
+    public static final int BLACK_JACK = 21;
+
     private final String symbol;
 
     WinningStatus(String symbol) {
@@ -18,11 +20,11 @@ public enum WinningStatus {
         int playerScore = player.score();
         int dealerScore = dealer.score();
 
-        if (playerScore > 21) {
+        if (playerScore > BLACK_JACK) {
             return LOSE;
         }
 
-        if (dealerScore > 21) {
+        if (dealerScore > BLACK_JACK) {
             return WIN;
         }
         return compareScore(playerScore, dealerScore);

@@ -5,12 +5,30 @@ import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
+import dto.DealerResultInfo;
+import dto.PlayerResultInfo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
+
+    public static final String DEALER_ONE_MORE_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String FINAL_WIN_OR_LOSE_MESSAGE = "## 최종 승패";
+
+    private static final String COMMA = ", ";
+    private static final String COLON = ": ";
+    private static final String RESULT = " - 결과: ";
+
+    private static final String DISTRIBUTION_PREFIX = "딜러와 ";
+    private static final String DISTRIBUTION_SUFFIX = "에게 2장을 나누었습니다.";
+    private static final String DEALER_CARD_PREFIX = "딜러카드: ";
+    private static final String CARD_PREFIX = "카드: ";
+    private static final String DEALER_RESULT = "딜러: ";
+    private static final String WIN = "승 ";
+    private static final String TIE = "무 ";
+    private static final String LOSE = "패 ";
+
     public void printInitialDistribution(Players players, Dealer dealer) {
         printDistributionMessage(players);
         printDealerInitialCard(dealer);
@@ -22,31 +40,23 @@ public class OutputView {
     }
 
     public void printDealerReceiveMessage() {
-        System.out.println("딜러는 16이하의 한장의 카드를 더 받았습니다.");
+        System.out.println(DEALER_ONE_MORE_CARD_MESSAGE);
     }
 
     public void printFinalResult(Participant participant) {
         String cardFormat = formatParticipantCards(participant);
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(cardFormat).append(" - 결과: ").append(participant.score());
+        stringBuilder.append(cardFormat).append(RESULT).append(participant.score());
 
         System.out.println(stringBuilder);
-    }
-
-    public void printWinOrLose(Map<String, String> outcome) {
-        for (String s : outcome.keySet()) {
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append(s).append(": ").append(outcome.get(s));
-            System.out.println(stringBuilder);
-        }
     }
 
     private void printDistributionMessage(Players players) {
         List<String> playerNames = players.getPlayerNames();
         StringBuilder stringBuilder = new StringBuilder();
 
-        String names = String.join(", ", playerNames);
-        stringBuilder.append("딜러와 ").append(names).append("에게 2장을 나누었습니다.");
+        String names = String.join(COMMA, playerNames);
+        stringBuilder.append(DISTRIBUTION_PREFIX).append(names).append(DISTRIBUTION_SUFFIX);
 
         System.out.println(stringBuilder);
     }
@@ -55,7 +65,7 @@ public class OutputView {
         Card firstCard = dealer.getFirstCard();
         String dealerCard = firstCard.name();
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("딜러카드: ").append(dealerCard);
+        stringBuilder.append(DEALER_CARD_PREFIX).append(dealerCard);
 
         System.out.println(stringBuilder);
     }
@@ -73,14 +83,36 @@ public class OutputView {
             cards.add(card.name());
         }
 
-        String cardsOnHand = String.join(", ", cards);
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(participant.name() + "카드: " + cardsOnHand);
+        String joinedCards = String.join(COMMA, cards);
+        stringBuilder.append(participant.name()).append(CARD_PREFIX).append(joinedCards);
 
         return stringBuilder.toString();
     }
 
     public void printWinOrLoseMessage() {
-        System.out.println("## 최종 승패");
+        System.out.println(FINAL_WIN_OR_LOSE_MESSAGE);
+    }
+
+    public void printDealerResult(DealerResultInfo dealerResult) {
+        StringBuilder stringBuilder = new StringBuilder(DEALER_RESULT);
+
+        if (dealerResult.winCount() > 0) {
+            stringBuilder.append(dealerResult.winCount()).append(WIN);
+        }
+        if (dealerResult.tieCount() > 0) {
+            stringBuilder.append(dealerResult.tieCount()).append(TIE);
+        }
+        if (dealerResult.loseCount() > 0) {
+            stringBuilder.append(dealerResult.loseCount()).append(LOSE);
+        }
+
+        System.out.println(stringBuilder.toString().trim());
+    }
+
+    public void printPlayersResult(List<PlayerResultInfo> playersResult) {
+        for (PlayerResultInfo playerResult : playersResult) {
+            System.out.println(playerResult.name() + COLON + playerResult.winningStatus().getSymbol());
+        }
     }
 }

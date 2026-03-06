@@ -7,7 +7,8 @@ import java.util.List;
 
 public class Hand {
     public static final int BLACK_JACK = 21;
-    private List<Card> cards;
+
+    private final List<Card> cards;
 
     public Hand(){
         this.cards = new ArrayList<>();

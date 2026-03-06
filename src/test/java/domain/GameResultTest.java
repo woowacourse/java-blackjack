@@ -2,10 +2,11 @@ package domain;
 
 import domain.participant.Dealer;
 import domain.participant.Players;
+import dto.DealerResultInfo;
+import dto.PlayerResultInfo;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,9 +17,11 @@ class GameResultTest {
         Dealer dealer = new Dealer();
         GameResult gameResult = new GameResult(players, dealer);
 
-        Map<String, String> playersStatistics = gameResult.getPlayersStatistics();
+        List<PlayerResultInfo> playersResult = gameResult.getPlayersResult();
 
-        assertThat(playersStatistics.get("pobi")).isEqualTo(WinningStatus.TIE.name());
+        assertThat(playersResult).hasSize(1);
+        assertThat(playersResult.get(0).name()).isEqualTo("pobi");
+        assertThat(playersResult.get(0).winningStatus()).isEqualTo(WinningStatus.TIE);
     }
 
     @Test
@@ -28,8 +31,10 @@ class GameResultTest {
 
         GameResult gameResult = new GameResult(players, dealer);
 
-        Map<String, String> dealerStatistics = gameResult.getDealerStatistics();
+        DealerResultInfo dealerResult = gameResult.getDealerResult();
 
-        assertThat(dealerStatistics.get("딜러")).isEqualTo("1무 ");
+        assertThat(dealerResult.winCount()).isEqualTo(0);
+        assertThat(dealerResult.tieCount()).isEqualTo(1);
+        assertThat(dealerResult.loseCount()).isEqualTo(0);
     }
 }

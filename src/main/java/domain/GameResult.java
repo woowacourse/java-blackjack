@@ -3,14 +3,19 @@ package domain;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
+import dto.DealerResultInfo;
+import dto.PlayerResultInfo;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.util.Collections.frequency;
 
 public class GameResult {
-    Map<Player, WinningStatus> playerWinningStatus = new LinkedHashMap<>();
+    private final Map<Player, WinningStatus> playerWinningStatus = new LinkedHashMap<>();
 
     public GameResult(Players players, Dealer dealer) {
         for (Player player : players.getPlayers()) {
@@ -18,41 +23,24 @@ public class GameResult {
         }
     }
 
-    public Map<String, String> getPlayersStatistics() {
-        Map<String, String> result = new LinkedHashMap<>();
+    public List<PlayerResultInfo> getPlayersResult() {
+        List<PlayerResultInfo> result = new ArrayList<>();
 
-        for (Player player : playerWinningStatus.keySet()) {
-            String name = player.name();
-            WinningStatus winningStatus = playerWinningStatus.get(player);
+        for (Map.Entry<Player, WinningStatus> entry : playerWinningStatus.entrySet()) {
+            String name = entry.getKey().name();
+            WinningStatus status = entry.getValue();
 
-            result.put(name, winningStatus.getSymbol());
+            result.add(new PlayerResultInfo(name, status));
         }
+
         return result;
     }
 
-    public  Map<String, String> getDealerStatistics() {
-        int loseCount = frequency(playerWinningStatus.values(), WinningStatus.WIN);
-        int tieCount = frequency(playerWinningStatus.values(), WinningStatus.TIE);
+    public DealerResultInfo getDealerResult() {
         int winCount = frequency(playerWinningStatus.values(), WinningStatus.LOSE);
+        int tieCount = frequency(playerWinningStatus.values(), WinningStatus.TIE);
+        int loseCount = frequency(playerWinningStatus.values(), WinningStatus.WIN);
 
-        return formatStatistics(winCount, tieCount, loseCount);
-    }
-
-    private Map<String, String> formatStatistics(int winCount, int tieCount, int loseCount) {
-        Map<String, String> dealerStatistics = new LinkedHashMap<>();
-        StringBuilder stringBuilder = new StringBuilder();
-
-        if (winCount > 0) {
-            stringBuilder.append(winCount).append("승 ");
-        }
-        if (tieCount > 0) {
-            stringBuilder.append(tieCount).append("무 ");
-        }
-        if (loseCount > 0) {
-            stringBuilder.append(loseCount).append("패 ");
-        }
-
-        dealerStatistics.put("딜러", stringBuilder.toString());
-        return dealerStatistics;
+        return new DealerResultInfo(winCount, tieCount, loseCount);
     }
 }

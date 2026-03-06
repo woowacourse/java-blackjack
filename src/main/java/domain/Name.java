@@ -1,7 +1,8 @@
 package domain;
 
 public class Name {
-    private String name;
+    public static final int NAME_LENGTH_THRESHOLD = 5;
+    private final String name;
 
     public Name(String name) {
         validateNameLength(name);
@@ -9,7 +10,7 @@ public class Name {
     }
 
     private void validateNameLength(String name) {
-        if (name.length() > 5) {
+        if (name.length() > NAME_LENGTH_THRESHOLD) {
             throw new IllegalArgumentException();
         }
     }

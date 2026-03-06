@@ -1,8 +1,15 @@
 import controller.BlackjackGame;
+import util.InputParser;
+import view.InputView;
+import view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
-        BlackjackGame blackjackGame = new BlackjackGame();
+        InputView inputView = new InputView();
+        InputParser inputParser = new InputParser();
+        OutputView outputView = new OutputView();
+
+        BlackjackGame blackjackGame = new BlackjackGame(inputView, inputParser, outputView);
         blackjackGame.run();
     }
 }
