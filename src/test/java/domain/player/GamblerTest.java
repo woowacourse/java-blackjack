@@ -1,9 +1,17 @@
 package domain.player;
 
+import static org.assertj.core.api.Assertions.as;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
+import domain.MatchResult;
+import domain.StubDeck;
+import domain.card.Card;
+import domain.card.CardRank;
+import domain.card.CardSuit;
 import expcetion.BlackjackException;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -29,5 +37,30 @@ class GamblerTest {
                 .isInstanceOf(BlackjackException.class);
         assertThatThrownBy(()-> new Gambler(min_range_name))
                 .isInstanceOf(BlackjackException.class);
+    }
+    @Test
+    @DisplayName("승리 정상 판정")
+    void 승리_정상_판정(){
+        //given
+        Dealer dealer = new Dealer();
+        Gambler tobi = new Gambler("tobi");
+        Gambler quda = new Gambler("quda");
+
+        Card jack = new Card(CardRank.JACK, CardSuit.CLOVER); // 딜러
+        Card eight = new Card(CardRank.EIGHT, CardSuit.DIAMOND); // tobi
+        Card ten = new Card(CardRank.TEN, CardSuit.CLOVER); // quda
+
+        StubDeck sd = new StubDeck(List.of(jack,eight,ten));
+        dealer.deal(sd);
+        tobi.deal(sd);
+        quda.deal(sd);
+
+        //when
+        MatchResult tobiResult = tobi.getResult(dealer);
+        MatchResult qudaResult = quda.getResult(dealer);
+
+        //then
+        assertThat(tobiResult).isEqualTo(MatchResult.LOSE);
+        assertThat(qudaResult).isEqualTo(MatchResult.DRAW);
     }
 }
