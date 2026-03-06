@@ -3,11 +3,14 @@ package model;
 import constant.ErrorMessage;
 
 public class Agreement {
+    private static final String TRUE_TEXT = "y";
+    private static final String FALSE_TEXT = "n";
+
     private final boolean value;
 
     public Agreement(String value) {
         validate(value);
-        this.value = value.equals("y");
+        this.value = value.equals(TRUE_TEXT);
     }
 
     public boolean get() {
@@ -26,7 +29,7 @@ public class Agreement {
     }
 
     private void validatePossibleValue(String value) {
-        if(!value.equals("y") && !value.equals("n")) {
+        if(!value.equals(TRUE_TEXT) && !value.equals(FALSE_TEXT)) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_CONDITION_INPUT.getMessage());
         }
     }
