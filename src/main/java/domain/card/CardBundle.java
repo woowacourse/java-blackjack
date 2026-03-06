@@ -61,4 +61,9 @@ public class CardBundle {
                 .sum();                   // 합계 계산
     }
 
+    public boolean hasAce() {
+        return cardBundle.stream()
+                .anyMatch(Card::isAce);
+    }
+
 }

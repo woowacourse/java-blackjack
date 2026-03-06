@@ -88,4 +88,5 @@ public class PlayerTest {
 
         Assertions.assertThat(player.isBusted()).isTrue();
     }
+
 }

@@ -35,4 +35,9 @@ public class Card {
     public int getScore() {
         return denomination.getScore();
     }
+
+    public boolean isAce() {
+        return denomination.isAce();
+    }
+
 }
