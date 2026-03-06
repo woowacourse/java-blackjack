@@ -15,7 +15,7 @@ public class Hand {
     }
 
     public int getSum() {
-        int sum = getSumFirst();
+        int sum = getInitSum();
         long aceCount = countAce();
 
         while (aceCount > 0 && sum > 21) {
@@ -26,8 +26,7 @@ public class Hand {
         return sum;
     }
 
-    // todo : 메서드명 변경
-    private int getSumFirst() {
+    private int getInitSum() {
         return cards.stream()
                 .mapToInt(c -> c.rank().getScore())
                 .sum();
@@ -42,6 +41,7 @@ public class Hand {
     public boolean isBurst() {
         return getSum() > 21;
     }
+
 
     public void addCard(Card card) {
         cards.add(card);
