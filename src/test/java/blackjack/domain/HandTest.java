@@ -49,4 +49,17 @@ class HandTest {
 
         assertThat(score).isEqualTo(21);
     }
+
+    @Test
+    void 현재_보유한_카드_목록을_반환한다() {
+        Hand hand = Hand.init();
+        TrumpCard spadeKing = TrumpCard.of(Suit.SPADE, Rank.KING);
+        TrumpCard heartFive = TrumpCard.of(Suit.HEART, Rank.FIVE);
+
+        hand = hand.receive(spadeKing);
+        hand = hand.receive(heartFive);
+
+        assertThat(hand.getCards()).hasSize(2);
+        assertThat(hand.getCards()).containsExactly(spadeKing, heartFive);
+    }
 }
