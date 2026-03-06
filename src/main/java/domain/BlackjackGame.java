@@ -35,10 +35,15 @@ public class BlackjackGame {
         players.stream().forEach(p -> {
             drawPlayerCard(p, dealer);
         });
+
+        if (dealer.hitIfRequired()) {
+            view.printDealerAdditionalDrawCardMessage();
+        }
+
     }
 
     private void drawPlayerCard(Player p, Dealer dealer) {
-        while(p.isBusted()) {
+        while(!p.isBusted()) {
             Answer answer = view.askDrawCard(p.toDisplayMyName());
             if(answer.isNo()) {
                 return;

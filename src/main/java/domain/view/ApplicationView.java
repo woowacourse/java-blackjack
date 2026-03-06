@@ -52,6 +52,10 @@ public class ApplicationView {
         writer.printAllParticipantsHand(playerHand.playerName(), joining(playerHand.handOnCards()));
     }
 
+    public void printDealerAdditionalDrawCardMessage() {
+        writer.printDealerAdditionalDrawCardMessage();
+    }
+
     private <T> T retry(Supplier<T> task) {
         while (true) {
             try {

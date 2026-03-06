@@ -10,6 +10,8 @@ import java.util.stream.Stream;
 
 public class Dealer {
 
+    private static final int ADDITIONAL_DRAW_CONDITION = 16;
+
     private CardDeck cardDeck;
     private CardBundle cardBundle;
 
@@ -37,6 +39,18 @@ public class Dealer {
     public CardBundle handOutCardToPlayer(Player player, int tryCount) {
         CardBundle cardBundle = handOutCard(tryCount);
         return player.addCardBundle(cardBundle);
+    }
+
+    public boolean hitIfRequired() {
+        if (canHit()) {
+            drawMySelf(1);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean canHit() {
+        return cardBundle.getBasicScore() <= 16;
     }
 
     public CardBundle drawMySelf(int tryCount) {
