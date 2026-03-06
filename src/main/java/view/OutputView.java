@@ -17,4 +17,9 @@ public class OutputView {
         String cardsInfoMessage = String.join(",", participantCardsDto.cardsInfo());
         System.out.printf("%s: %s%n", participantCardsDto.name(), cardsInfoMessage);
     }
+
+    public static void printDealerMessage(){
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
 }

@@ -56,12 +56,12 @@ public class BlackJackGameController {
         }
 
         while (dealer.canReceiveCard()) {
-            // TODO: 딜러 메시지 출력
             if (!dealer.canReceiveCard()) {
                 break;
             }
             Card card = deck.distributeCard();
             dealer.receiveCard(card);
+            OutputView.printDealerMessage();
         }
 
         Map<Participant, Integer> participantScores = new HashMap<>();
