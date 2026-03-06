@@ -1,6 +1,9 @@
 # java-blackjack
 
-블랙잭 미션 저장소
+## 페어
+
+@koreaioi   
+@bin1225   
 
 ## 기능 요구사항
 
