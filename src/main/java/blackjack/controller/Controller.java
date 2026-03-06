@@ -6,7 +6,6 @@ import blackjack.util.NameSplitter;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +25,6 @@ public class Controller {
     public void run() {
         Deck deck = new Deck();
         Dealer dealer = new Dealer();
-        ScoreCalculator scoreCalculator = new ScoreCalculator();
 
         Players players = getPlayers();
         List<Player> participants = players.getPlayers();
@@ -35,8 +33,8 @@ public class Controller {
         initializeDealToParticipants(dealer, players, deck);
         outputView.printFirstCardStatus(dealer, players);
 
-        turnToPlayers(participants, scoreCalculator, deck);
-        turnToDealer(dealer, scoreCalculator, deck);
+        turnToPlayers(participants, deck);
+        turnToDealer(dealer, deck);
         outputView.printScoreResult(dealer, players);
 
         outputView.printGameResult(getPlayerGameResult(participants, dealer));
@@ -45,35 +43,34 @@ public class Controller {
     private static Map<Player, GameResult> getPlayerGameResult(List<Player> participants, Dealer dealer) {
         Map<Player, GameResult> gameResult = new LinkedHashMap<>();
         for (Player player : participants) {
-            gameResult.put(player ,GameResult.getResult(player.getScore(), dealer.getScore()));
+            gameResult.put(player ,GameResult.getResult(player, dealer));
         }
         return gameResult;
     }
 
-    private void turnToDealer(Dealer dealer, ScoreCalculator scoreCalculator, Deck deck) {
-        calculateParticipantCardScore(scoreCalculator, dealer);
+    private void turnToDealer(Dealer dealer, Deck deck) {
+        dealer.updateScore();
 
         while (dealer.canReceive(dealer.getScore())) {
             outputView.printDealerReceiveCard();
             receiveCardToParticipant(dealer, deck, ONE_REPEAT);
-            dealer.addScore(scoreCalculator.getReceivedOneCardScore(dealer));
-            if (scoreCalculator.isBurst(dealer.getScore())) {
+            dealer.updateScore();
+            if (dealer.isBurst()) {
                 outputView.printBurst("딜러");
-                dealer.burstScore();
                 return;
             }
         }
     }
 
-    private void turnToPlayers(List<Player> participants, ScoreCalculator scoreCalculator, Deck deck) {
+    private void turnToPlayers(List<Player> participants, Deck deck) {
         for (Player player : participants) {
-            turnToOnePlayer(scoreCalculator, deck, player);
+            turnToOnePlayer(deck, player);
         }
     }
 
     // TODO: 10줄 초과, depth 2 초과 (2026. 3. 6.)
-    private void turnToOnePlayer(ScoreCalculator scoreCalculator, Deck deck, Player player) {
-        calculateParticipantCardScore(scoreCalculator, player);
+    private void turnToOnePlayer(Deck deck, Player player) {
+        player.updateScore();
 
         while (player.canReceive(player.getScore())) {
             String receiveCard = inputView.getReceiveCard(player);
@@ -84,18 +81,13 @@ public class Controller {
                 throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT.getMessage());
             }
             receiveCardToParticipant(player, deck, ONE_REPEAT);
-            player.addScore(scoreCalculator.getReceivedOneCardScore(player));
-            if (scoreCalculator.isBurst(player.getScore())) {
+            player.updateScore();
+            if (player.isBurst()) {
                 outputView.printBurst(player.getName());
-                player.burstScore();
                 return;
             }
             outputView.printPlayerCardStatus(player, player.getCards());
         }
-    }
-
-    private static void calculateParticipantCardScore(ScoreCalculator scoreCalculator, Participant participant) {
-        participant.addScore(scoreCalculator.getCardScore(participant.getCards()));
     }
 
     private Players getPlayers() {
