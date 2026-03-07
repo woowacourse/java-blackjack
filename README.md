@@ -214,11 +214,13 @@
   - [x] 구분자 저장 및 포장용 샹수 `DELIMITER`
   - [x] 구분자 기준 공백 제거해 플레이어 이름 파싱 `parsePlayerNames()`
 
+- [x] 뷰
+  - [x] InputView
+  - [x] OutputView
+    - 출력 상황별로 분리, printLine 호출
+
 
 - [ ] 진행기
-    - [ ] IO
-        - [ ] InputView
-        - [ ] OutputView
     - [ ] 플레이어 닉네임 입력
     - [ ] 딜러 생성
     - [ ] 플레이어 생성
