@@ -1,0 +1,21 @@
+package blackjack.domain;
+
+public class Player extends Participant {
+    
+    public Player(String name) {
+        super(name, new Hand());
+
+    }
+
+    @Override
+    public void recieveCard(Card card) {
+        if (!hand.isBust()) {
+            hand.addCard(card);
+        }
+    }
+
+    public String getName() {
+        return super.getName();
+    }
+
+}
