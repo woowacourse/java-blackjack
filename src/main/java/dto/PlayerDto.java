@@ -7,6 +7,6 @@ public record PlayerDto(
         PlayerResultDto playerResultDto
 ) {
     public static PlayerDto from(Player player) {
-        return new PlayerDto(player.getName(), PlayerResultDto.from(player));
+        return new PlayerDto(player.getName().getName(), PlayerResultDto.from(player));
     }
 }
