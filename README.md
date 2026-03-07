@@ -47,7 +47,7 @@
 - Deck(52개의 Card) - 52장의 카드 
 - Gambler(이름, HandCard)
 - Dealer(HandCard)
-- BlackJack()
+- domain.BlackJack()
 
 
 #### 카드 계산

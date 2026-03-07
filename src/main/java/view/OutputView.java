@@ -1,8 +1,8 @@
 package view;
 
 import dto.BlackjackResult;
-import dto.PlayerCardInfo;
 import dto.MatchResultLog;
+import dto.PlayerCardInfo;
 import java.util.List;
 
 public class OutputView {

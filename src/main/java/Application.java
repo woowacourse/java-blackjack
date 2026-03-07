@@ -1,6 +1,8 @@
+import config.AppConfig;
+
 public class Application {
     public static void main(String[] args) {
-        BlackJack blackJack = new BlackJack();
-        blackJack.start();
+        AppConfig appConfig = new AppConfig();
+        appConfig.blackJack().start();
     }
 }

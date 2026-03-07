@@ -3,7 +3,6 @@ package domain.player;
 import domain.MatchResult;
 import domain.deck.CardDeck;
 import dto.BlackjackResult;
-import dto.PlayerCardInfo;
 import dto.MatchResultLog;
 import expcetion.BlackjackException;
 import expcetion.ExceptionMessage;
@@ -53,8 +52,13 @@ public class Gamblers {
                 .count();
     }
 
+    public List<String> getNames() {
+        return gamblers.stream()
+                .map(Gambler::getName)
+                .toList();
+    }
 
-    public List<Gambler> getGamblers(){
+    public List<Gambler> getGamblers() {
         return List.copyOf(gamblers);
     }
 

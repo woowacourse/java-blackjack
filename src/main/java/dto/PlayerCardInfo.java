@@ -8,7 +8,7 @@ public record PlayerCardInfo(
         List<String> card,
         int score
 ) {
-    public static PlayerCardInfo from(Player player){
+    public static PlayerCardInfo from(Player player) {
         return new PlayerCardInfo(player.getName(), player.getCardInfo(), player.score());
     }
 }
