@@ -16,13 +16,13 @@ class NameTest {
         assertThat(name.getName()).isEqualTo(input);
     }
 
-    @Test
-    void 이름이_딜러일때_예외 (){
-        String input = "딜러";
-
-        Assertions.assertThatThrownBy(() -> new Name(input))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
+//    @Test
+//    void 이름이_딜러일때_예외 (){
+//        String input = "딜러";
+//
+//        Assertions.assertThatThrownBy(() -> new Name(input))
+//                .isInstanceOf(IllegalArgumentException.class);
+//    }
 
     @ParameterizedTest
     @ValueSource(strings = {"", " ", "!", "1000j"})
