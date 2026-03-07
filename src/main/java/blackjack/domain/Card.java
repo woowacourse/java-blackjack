@@ -2,7 +2,6 @@ package blackjack.domain;
 
 public class Card {
 
-    private static final String ACE_RANK_NAME = "A";
     private final Rank rank;
     private final Suit suit;
 
@@ -16,7 +15,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return ACE_RANK_NAME.equals(rank.getRankName());
+        return this.rank == Rank.ACE;
     }
 
     public String getDisplayName() {
