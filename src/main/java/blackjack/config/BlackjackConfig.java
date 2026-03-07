@@ -15,12 +15,13 @@ import blackjack.view.OutputView;
 public class BlackjackConfig {
 
     private static final int ADJUST_VALUE = 10;
+    private static final int DEALER_DRAW_THRESHOLD = 17;
 
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
     private final BustPolicy bustPolicy = new BustPolicyImpl();
     private final AceAdjustPolicy aceAdjustPolicy = new AceAdjustPolicy(ADJUST_VALUE, bustPolicy);
-    private final DealerDrawPolicy dealerDrawPolicy = new ThresholdDrawPolicy(17);
+    private final DealerDrawPolicy dealerDrawPolicy = new ThresholdDrawPolicy(DEALER_DRAW_THRESHOLD);
     private final CardsGenerator cardsGenerator = new UniqueCardsGenerator();
     private final ResultJudgement resultJudgement = new ResultJudgement(bustPolicy);
 
