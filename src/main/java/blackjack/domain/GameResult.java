@@ -1,9 +1,5 @@
 package blackjack.domain;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-
 public enum GameResult {
 
     WIN("승"),
@@ -20,9 +16,16 @@ public enum GameResult {
         return name;
     }
 
-    public static GameResult pick(String name) {
-        return Arrays.stream(values())
-            .filter(gameResult -> Objects.equals(name, gameResult.name))
-            .findFirst().orElse(DRAW);
+    public static GameResult calculate(Player player, Dealer dealer) {
+        if (player.isBurst()) {
+            return GameResult.LOSE;
+        }
+        if (dealer.isBurst() || dealer.getScore() < player.getScore()) {
+            return GameResult.WIN;
+        }
+        if (dealer.getScore() == player.getScore()) {
+            return GameResult.DRAW;
+        }
+        return GameResult.LOSE;
     }
 }

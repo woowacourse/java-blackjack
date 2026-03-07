@@ -21,19 +21,6 @@ public class Player extends Participant {
         }
     }
 
-    public GameResult calculateGameResult(Dealer dealer) {
-        if (isBurst()) {
-            return GameResult.LOSE;
-        }
-        if (dealer.isBurst() || dealer.getScore() < getScore()) {
-            return GameResult.WIN;
-        }
-        if (dealer.getScore() == getScore()) {
-            return GameResult.DRAW;
-        }
-        return GameResult.LOSE;
-    }
-
     @Override
     public String getNickname() {
         return nickname;

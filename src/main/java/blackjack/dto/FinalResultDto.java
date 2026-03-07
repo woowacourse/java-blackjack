@@ -14,7 +14,7 @@ public record FinalResultDto(
     public static FinalResultDto of(List<Player> players, Dealer dealer) {
         Map<String, GameResult> playerGameResultMap = new LinkedHashMap<>();
         players.forEach(player ->
-            playerGameResultMap.put(player.getNickname(), player.calculateGameResult(dealer)));
+            playerGameResultMap.put(player.getNickname(), GameResult.calculate(player, dealer)));
 
         return new FinalResultDto(playerGameResultMap);
     }
