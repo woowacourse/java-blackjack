@@ -30,6 +30,21 @@ public class PlayerGroups {
         return status;
     }
 
+    // 이번 라운드의, 해당 플레이어 반환
+    public Player getCurrentPlayer() {
+        return players.get(playIndex);
+    }
+
+    // 현재 플레이어의 카드 덱 반환
+    public List<String> getCurrentPlayerCards() {
+        return players.get(playIndex).getCards();
+    }
+
+    // 현재 플레이어의 카드 합산 점수 반환
+    public int getCurrentPlayerCardSum() {
+        return players.get(playIndex).getCardSum();
+    }
+
     public int getPlayerGroupSize() {
         return players.size();
     }

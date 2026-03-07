@@ -30,4 +30,9 @@ public class ResultView {
         }
         System.out.println();
     }
+
+    // 플레이어 한 명의 결과 출력
+    public static void printPlayerCards(String name, List<String> playCardList) {
+        System.out.println(name + "카드: " + String.join(", ", playCardList));
+    }
 }

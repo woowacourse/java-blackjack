@@ -14,6 +14,11 @@ public class Card {
         return number.getValue();
     }
 
+    // ACE인지 아닌지 반환
+    public boolean isAce(){
+        return number==TrumpNumber.ACE;
+    }
+
     @Override
     public String toString() {
         return ""+ number + suit;

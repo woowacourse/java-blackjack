@@ -17,6 +17,10 @@ public class Player {
         handCards.addCard(card);
     }
 
+    public int getCardSum(){
+        return handCards.calculateCards();
+    }
+
     public String getName() {
         return name.getName();
     }
