@@ -4,14 +4,18 @@ import expcetion.BlackjackException;
 import expcetion.ExceptionMessage;
 
 public class AnswerParser {
+
+    private static final String YES = "y";
+    private static final String NO = "n";
+
     private AnswerParser() {
     }
 
     public static boolean parse(String input) {
-        if (input.equals("y")) {
+        if (YES.equals(input)) {
             return true;
         }
-        if (input.equals("n")) {
+        if (NO.equals(input)) {
             return false;
         }
 
