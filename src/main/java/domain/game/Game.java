@@ -2,9 +2,13 @@ package domain.game;
 
 import static util.Constants.DEFAULT_START_CARD_COUNT;
 
+import domain.card.Card;
 import domain.card.GameCards;
 import domain.player.Dealer;
+import domain.player.Gambler;
 import domain.player.Gamblers;
+import domain.player.Participant;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,20 +32,11 @@ public class Game {
         }
     }
 
-    public String getDealerName() {
-        return dealer.getName();
-    }
-
-    public String getDealerInitialInfo() {
-        return dealer.getFirstHand();
-    }
-
-    public List<String> getDealerHandInfo() {
-        return dealer.getHandInfo();
-    }
-
-    public Map<String, List<String>> getGamblersHandInfo() {
-        return gamblers.getHandsInfo();
+    public Map<String, List<String>> getParticipantsHandInfo() {
+        Map<String, List<String>> info = new HashMap<>();
+        info.put(dealer.getName(), List.of(dealer.getFirstHand()));
+        info.putAll(gamblers.getHandsInfo());
+        return info;
     }
 
     public int getDealerHandSize() {
@@ -50,6 +45,14 @@ public class Game {
 
     public List<Integer> getGamblersHandSize() {
         return gamblers.getHandSize();
+    }
+
+    public List<Gambler> getGamblersList() {
+        return gamblers.getGamblers();
+    }
+
+    public Card pickCard() {
+        return gameCards.drawCard();
     }
 }
 

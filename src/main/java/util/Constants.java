@@ -18,6 +18,10 @@ public class Constants {
 
     public static final String DEALER_NAME = "딜러";
 
+    public static final String HIT = "y";
+
+    public static final String STAND = "n";
+
     private Constants() {
     }
 }

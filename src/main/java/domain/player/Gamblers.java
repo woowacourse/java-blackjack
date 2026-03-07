@@ -36,4 +36,8 @@ public class Gamblers {
                 .map(Gambler::getCardSize)
                 .toList();
     }
+
+    public List<Gambler> getGamblers() {
+        return gamblers;
+    }
 }
