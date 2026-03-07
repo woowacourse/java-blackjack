@@ -26,13 +26,17 @@ public abstract class Participant {
                 .map(Card::getBaseScore)
                 .reduce(0, Integer::sum);
 
-        boolean isAceExist = handCards.stream()
-                .anyMatch(holdCard -> holdCard.getCardNumber() == CardNumber.ACE);
+        return processAceCard(baseCardScore);
+    }
 
-        if (isAceExist && (baseCardScore) <= 11) {
-            return baseCardScore + 10;
+    private int processAceCard(int baseCardScore) {
+        int score = baseCardScore;
+        boolean isAceExist = handCards.stream()
+                .anyMatch(handCard -> handCard.getCardNumber() == CardNumber.ACE);
+        if (isAceExist && (baseCardScore + 10) <= 21) {
+            score += 10;
         }
-        return baseCardScore;
+        return score;
     }
 
     public List<Card> getHandCards() {
