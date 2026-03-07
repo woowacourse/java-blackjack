@@ -1,9 +1,5 @@
 package domain;
 
-import domain.card.Card;
-
-import java.util.List;
-
 public class Player extends Participant {
     private final String name;
 
@@ -15,8 +11,6 @@ public class Player extends Participant {
     public String getName() {
         return name;
     }
-
-
 
     public GameResult compareScore(int dealerScore) {
         if (isBust() && dealerScore > 21) {
