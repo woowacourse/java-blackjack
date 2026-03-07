@@ -1,5 +1,5 @@
-import domain.Card;
-import domain.CardDeck;
+import domain.card.Card;
+import domain.card.CardDeck;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
@@ -14,7 +14,7 @@ public class CardDeckTest {
         //given
         CardDeck cardDeck = new CardDeck();
         //when
-        Integer size = cardDeck.getDeckSize();
+        int size = cardDeck.getDeckSize();
         //then
         assertThat(size).isEqualTo(52);
     }

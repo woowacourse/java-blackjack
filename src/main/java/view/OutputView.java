@@ -1,6 +1,10 @@
 package view;
 
-import domain.*;
+import domain.game_result.Result;
+import domain.game_result.ResultInfo;
+import domain.participants.Dealer;
+import domain.participants.Player;
+import domain.participants.Players;
 
 import java.util.Map;
 import java.util.stream.Collectors;

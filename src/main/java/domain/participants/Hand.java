@@ -1,12 +1,15 @@
-package domain;
+package domain.participants;
+
+import domain.card.Card;
+import domain.card.Rank;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Hand {
-    private static final Integer ACE_MIN_VALUE=1;
-    private static final Integer BLACKJACK_LIMIT_VALUE=21;
+    private static final int ACE_MIN_VALUE = 1;
+    private static final int BLACKJACK_LIMIT_VALUE = 21;
 
     private final List<Card> hand;
 
@@ -23,7 +26,7 @@ public class Hand {
         return calculateTotalScore() > 21;
     }
 
-    public Integer getHandSize() {
+    public int getHandSize() {
         return hand.size();
     }
 
@@ -31,23 +34,23 @@ public class Hand {
         return Collections.unmodifiableList(hand);
     }
 
-    public Integer calculateTotalScore() {
-        Integer sum = hand.stream()
-                .filter(card-> card.getRank() != Rank.ACE)
-                .mapToInt(card -> card.getCardScore())
+    public int calculateTotalScore() {
+        int sum = hand.stream()
+                .filter(card -> card.getRank() != Rank.ACE)
+                .mapToInt(Card::getCardScore)
                 .sum();
 
-        Integer aCount = (int) hand.stream()
+        int aCount = (int) hand.stream()
                 .filter(card -> card.getRank() == Rank.ACE)
                 .count();
 
         return aceCalculate(sum, aCount);
     }
 
-    private Integer aceCalculate(Integer sum, Integer aCount){
-        Integer totalSum = sum + (aCount * Rank.ACE.getValue());
-        while(aCount > 0 && totalSum > BLACKJACK_LIMIT_VALUE){
-            totalSum -= (Rank.ACE.getValue()- ACE_MIN_VALUE);
+    private int aceCalculate(int sum, int aCount) {
+        int totalSum = sum + (aCount * Rank.ACE.getValue());
+        while (aCount > 0 && totalSum > BLACKJACK_LIMIT_VALUE) {
+            totalSum -= (Rank.ACE.getValue() - ACE_MIN_VALUE);
             aCount--;
         }
         return totalSum;

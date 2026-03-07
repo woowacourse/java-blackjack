@@ -1,6 +1,11 @@
 package controller;
 
-import domain.*;
+import domain.card.CardDeck;
+import domain.game_result.Result;
+import domain.participants.Dealer;
+import domain.participants.Hand;
+import domain.participants.Player;
+import domain.participants.Players;
 import service.BlackJackService;
 import util.Parser;
 import util.Validator;
@@ -11,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlackJackController {
+    private static final String HIT_COMMAND = "y";
     private final BlackJackService blackJackService;
     private Result result;
 
@@ -62,14 +68,14 @@ public class BlackJackController {
         OutputView.gameStartMessage(dealer, players);
     }
 
-    private Boolean isHitRequested(Player player) {
+    private boolean isHitRequested(Player player) {
         OutputView.hitOrStandMessage(player);
         String input = InputView.input();
         Validator.validateChoiceInput(input);
-        return "y".equals(input);
+        return HIT_COMMAND.equals(input);
     }
 
-    private Boolean canPlayerDraw(Player player) {
+    private boolean canPlayerDraw(Player player) {
         if (player.getHand().isBust()) {
             player.getTotalCardScore();
             return false;
@@ -91,13 +97,13 @@ public class BlackJackController {
         while (canPlayerDraw(player)) {
             drawAndShowCard(cardDeck, player);
         }
-        if(!player.getHand().isBust()){
+        if (!player.getHand().isBust()) {
             finalizePlayerTurn(player);
         }
     }
 
     private void dealerHitOrStand(Dealer dealer, CardDeck cardDeck) {
-        while(dealer.dealerRule()){
+        while (dealer.dealerRule()) {
             OutputView.dealerHitMessage();
             dealer.keepCard(cardDeck.drawCard());
         }

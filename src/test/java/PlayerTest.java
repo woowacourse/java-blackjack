@@ -1,4 +1,8 @@
-import domain.*;
+import domain.card.Card;
+import domain.card.Pattern;
+import domain.card.Rank;
+import domain.participants.Hand;
+import domain.participants.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,16 +17,16 @@ public class PlayerTest {
     @BeforeEach
     void init() {
         dummyHand = new Hand();
-        name="제발";
+        name = "제발";
     }
 
     @Test
     @DisplayName("히트")
     void 플레이어는_카드를_뽑아_핸드에_저장한다() {
         Player player = new Player(name, dummyHand);
-        Integer beforeSize = player.handSize();
+        int beforeSize = player.handSize();
         player.keepCard(new Card(Rank.EIGHT, Pattern.CLOVER));
-        Integer afterSize = player.handSize();
+        int afterSize = player.handSize();
 
         assertThat(beforeSize + 1).isEqualTo(afterSize);
     }
@@ -30,13 +34,14 @@ public class PlayerTest {
     @Test
     @DisplayName("스탠드")
     void 플레이어는_카드를_뽑지_않고_카드_총합을_계산한다() {
-        Player player=new Player(name, dummyHand);
-        Card card1=new Card(Rank.FOUR, Pattern.CLOVER);
-        Card card2=new Card(Rank.SIX, Pattern.CLOVER);
-        player.keepCard(card1); player.keepCard(card2);
+        Player player = new Player(name, dummyHand);
+        Card card1 = new Card(Rank.FOUR, Pattern.CLOVER);
+        Card card2 = new Card(Rank.SIX, Pattern.CLOVER);
+        player.keepCard(card1);
+        player.keepCard(card2);
 
-        Integer expectedScore=card1.getCardScore()+card2.getCardScore();
-        Integer playerScore= player.getTotalCardScore();
+        int expectedScore = card1.getCardScore() + card2.getCardScore();
+        int playerScore = player.getTotalCardScore();
 
         assertThat(playerScore).isEqualTo(expectedScore);
     }

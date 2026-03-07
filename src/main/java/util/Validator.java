@@ -3,6 +3,8 @@ package util;
 public class Validator {
     private static final String INVALID_INPUT_ERROR_MESSAGE = "[ERROR] 올바르지 않은 입력입니다!";
     private static final String NOT_Y_AND_N_ERROR_MESSAGE = "[ERROR] y나 n이 아닙니다!";
+    private static final String HIT_COMMAND = "y";
+    private static final String STAND_COMMAND = "n";
 
     public static void validateInput(String input) {
         if (input != null && input.isBlank()) {
@@ -16,7 +18,7 @@ public class Validator {
     }
 
     private static void isNotYAndN(String input) {
-        if (!input.equals("y") && !input.equals("n")) {
+        if (!input.equals(HIT_COMMAND) && !input.equals(STAND_COMMAND)) {
             throw new IllegalArgumentException(NOT_Y_AND_N_ERROR_MESSAGE);
         }
     }

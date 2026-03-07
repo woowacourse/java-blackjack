@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import java.util.Collections;
 import java.util.List;
@@ -32,7 +32,7 @@ public class CardDeck {
         Collections.shuffle(deck);
     }
 
-    public Integer getDeckSize() {
+    public int getDeckSize() {
         return deck.size();
     }
 

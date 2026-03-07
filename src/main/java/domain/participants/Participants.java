@@ -1,4 +1,6 @@
-package domain;
+package domain.participants;
+
+import domain.card.Card;
 
 public class Participants {
     private final String name;
@@ -9,15 +11,15 @@ public class Participants {
         this.hand = hand;
     }
 
-    public void keepCard(Card card){
+    public void keepCard(Card card) {
         hand.addCard(card);
     }
 
-    public Integer handSize(){
+    public int handSize() {
         return hand.getHandSize();
     }
 
-    public Integer getTotalCardScore(){
+    public int getTotalCardScore() {
         return hand.calculateTotalScore();
     }
 

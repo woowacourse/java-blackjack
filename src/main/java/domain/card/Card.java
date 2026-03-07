@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import java.util.Objects;
 
@@ -6,12 +6,12 @@ public class Card {
     private final Rank rank;
     private final Pattern pattern;
 
-    public Card(Rank rank, Pattern pattern){
-        this.rank=rank;
-        this.pattern=pattern;
+    public Card(Rank rank, Pattern pattern) {
+        this.rank = rank;
+        this.pattern = pattern;
     }
 
-    public Integer getCardScore(){
+    public int getCardScore() {
         return rank.getValue();
     }
 
@@ -19,7 +19,7 @@ public class Card {
         return rank.getCode();
     }
 
-    public String getCardShape(){
+    public String getCardShape() {
         return pattern.getShape();
     }
 

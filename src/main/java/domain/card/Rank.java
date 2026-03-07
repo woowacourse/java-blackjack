@@ -1,6 +1,4 @@
-package domain;
-
-import java.util.Arrays;
+package domain.card;
 
 public enum Rank {
     ACE("A", 11),
@@ -18,9 +16,9 @@ public enum Rank {
     KING("K", 10);
 
     private final String code;
-    private final Integer value;
+    private final int value;
 
-    Rank(String code, Integer value) {
+    Rank(String code, int value) {
         this.code = code;
         this.value = value;
     }
@@ -29,15 +27,7 @@ public enum Rank {
         return code;
     }
 
-    public Integer getValue() {
+    public int getValue() {
         return value;
-    }
-
-    public static Rank from(String code) {
-        return Arrays.stream(values())
-                .filter(rank -> rank.code.equals(code))
-                .findFirst()
-                .orElseThrow();
-
     }
 }

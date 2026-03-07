@@ -1,7 +1,7 @@
-import domain.Card;
-import domain.Hand;
-import domain.Pattern;
-import domain.Rank;
+import domain.card.Card;
+import domain.participants.Hand;
+import domain.card.Pattern;
+import domain.card.Rank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,16 +22,15 @@ public class HandTest {
 
     @Test
     void 핸드는_카드를_받을_수_있다() {
-//        Hand hand = new Hand();
-        Integer size = dummyHand.getHandSize();
+        int size = dummyHand.getHandSize();
         dummyHand.addCard(new Card(Rank.FOUR, Pattern.DIAMOND));
         assertThat(dummyHand.getHandSize()).isEqualTo(size + 1);
     }
 
     @Test
     void 에이스를_제외한_핸드의_총합을_계산할_수_있다() {
-        Integer expectedScore = card1.getCardScore() + card2.getCardScore();
-        Integer totalScore = dummyHand.calculateTotalScore();
+        int expectedScore = card1.getCardScore() + card2.getCardScore();
+        int totalScore = dummyHand.calculateTotalScore();
 
         assertThat(totalScore).isEqualTo(expectedScore);
     }
@@ -41,8 +40,8 @@ public class HandTest {
         Card card = new Card(Rank.ACE, Pattern.DIAMOND);
         dummyHand.addCard(card);
 
-        Integer expectedScore = card1.getCardScore() + card2.getCardScore() + card.getCardScore(); //18
-        Integer totalScore = dummyHand.calculateTotalScore();
+        int expectedScore = card1.getCardScore() + card2.getCardScore() + card.getCardScore(); //18
+        int totalScore = dummyHand.calculateTotalScore();
 
         assertThat(totalScore).isEqualTo(expectedScore);
     }
@@ -54,8 +53,8 @@ public class HandTest {
         dummyHand.addCard(card3);
         dummyHand.addCard(card4);
 
-        Integer expectedScore = 1 + card1.getCardScore() + card2.getCardScore() + card4.getCardScore(); //18
-        Integer totalScore = dummyHand.calculateTotalScore();
+        int expectedScore = 1 + card1.getCardScore() + card2.getCardScore() + card4.getCardScore(); //18
+        int totalScore = dummyHand.calculateTotalScore();
 
         assertThat(totalScore).isEqualTo(expectedScore);
     }
@@ -65,7 +64,8 @@ public class HandTest {
         //버스트면 true
         Card card3 = new Card(Rank.JACK, Pattern.DIAMOND);
         Card card4 = new Card(Rank.JACK, Pattern.CLOVER);
-        dummyHand.addCard(card3); dummyHand.addCard(card4);
+        dummyHand.addCard(card3);
+        dummyHand.addCard(card4);
         assertThat(dummyHand.isBust()).isTrue();
     }
 }

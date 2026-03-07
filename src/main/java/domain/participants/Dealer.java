@@ -1,4 +1,4 @@
-package domain;
+package domain.participants;
 
 public class Dealer extends Participants {
     private static final String DEALER_NAME = "딜러";
@@ -7,7 +7,7 @@ public class Dealer extends Participants {
         super(DEALER_NAME, hand);
     }
 
-    public Boolean dealerRule() {
+    public boolean dealerRule() {
         return getTotalCardScore() < 17;
     }
 }
