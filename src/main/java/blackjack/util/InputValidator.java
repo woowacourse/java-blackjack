@@ -1,4 +1,4 @@
-package blackjack.view;
+package blackjack.util;
 
 import java.util.HashSet;
 import java.util.List;
