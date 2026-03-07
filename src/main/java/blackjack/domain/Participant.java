@@ -16,11 +16,7 @@ public abstract class Participant {
         return hand.calculateScore();
     }
 
-    public Status getStatus() {
-        return status;
-    }
-
-    public void addCard(Card card) {
+    public void addCard(final Card card) {
         hand.add(card);
     }
 

@@ -8,7 +8,7 @@ public class Participants {
     private final Players players;
     private final Dealer dealer;
 
-    public Participants(Players players, Dealer dealer) {
+    public Participants(final Players players, final Dealer dealer) {
         this.players = players;
         this.dealer = dealer;
     }

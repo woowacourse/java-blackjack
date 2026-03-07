@@ -16,7 +16,7 @@ public class Trump {
     }
 
     private List<Card> generateShuffledDeck() {
-        List<Card> shuffledDeck =
+        final List<Card> shuffledDeck =
             Lists.cartesianProduct(List.of(Suit.values()), List.of(Denomination.values()))
             .stream()
             .map(pair -> new Card(pair.getLeft(), pair.getRight()))

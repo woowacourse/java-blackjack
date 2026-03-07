@@ -25,7 +25,7 @@ public enum Denomination {
     private final int score;
 
 
-    Denomination(String symbol, int score) {
+    Denomination(final String symbol, final int score) {
         this.symbol = symbol;
         this.score = score;
     }

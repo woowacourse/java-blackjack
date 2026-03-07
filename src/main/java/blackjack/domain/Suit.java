@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import java.util.List;
-
 public enum Suit {
 
     SPADE("스페이드"),
@@ -11,7 +9,7 @@ public enum Suit {
 
     private final String name;
 
-    Suit(String name) {
+    Suit(final String name) {
         this.name = name;
     }
 

@@ -10,12 +10,12 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<Player> players) {
+    public Players(final List<Player> players) {
         validatePlayers(players);
         this.players = players;
     }
 
-    private void validatePlayers(List<Player> players) {
+    private void validatePlayers(final List<Player> players) {
         if (players.size() < PLAYERS_MINIMUM_SIZE || players.size() > PLAYERS_MAXIMUM_SIZE) {
             throw new IllegalArgumentException(String.format("플레이어 인원 수는 %d명 이상 %d명 이하여야 합니다.",
                 PLAYERS_MINIMUM_SIZE, PLAYERS_MAXIMUM_SIZE));

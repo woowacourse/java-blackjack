@@ -19,10 +19,10 @@ import java.util.List;
 public class BlackjackController {
 
     public void run() {
-        Hand hand = new Hand(new ArrayList<>());
-        Players players = RetryExecutor.retry(this::readPlayers);
-        Dealer dealer = new Dealer(hand, Status.HIT, new Trump());
-        Participants participants = new Participants(players, dealer);
+        final Hand hand = new Hand(new ArrayList<>());
+        final Players players = RetryExecutor.retry(this::readPlayers);
+        final Dealer dealer = new Dealer(hand, Status.HIT, new Trump());
+        final Participants participants = new Participants(players, dealer);
         dealer.pitch(players.all());
         OutputView.printStartMessage(players.all(), dealer);
 
@@ -32,13 +32,13 @@ public class BlackjackController {
         printResult(participants, players, dealer);
     }
 
-    private void printResult(Participants participants, Players players, Dealer dealer) {
+    private void printResult(final Participants participants, final Players players, final Dealer dealer) {
         OutputView.printFinalStatus(participants);
-        FinalResultDto finalResultDto = FinalResultDto.of(players.all(), dealer);
+        final FinalResultDto finalResultDto = FinalResultDto.of(players.all(), dealer);
         OutputView.printFinalResult(finalResultDto);
     }
 
-    private void handleDealerAction(Dealer dealer) {
+    private void handleDealerAction(final Dealer dealer) {
         dealer.decideHit();
         while(dealer.isHit()) {
             dealer.giveCardMyself();
@@ -48,9 +48,9 @@ public class BlackjackController {
         dealer.handleBurst();
     }
 
-    private void handlePlayerAction(Player player, Dealer dealer) {
+    private void handlePlayerAction(final Player player, final Dealer dealer) {
         while (player.isHit()) {
-            Answer answer =
+            final Answer answer =
                 RetryExecutor.retry(this::readAnswer, player.getNickname());
             handleAnswer(player, dealer, answer);
             OutputView.printCardStatus(player);
@@ -58,9 +58,9 @@ public class BlackjackController {
     }
 
     private Players readPlayers() {
-        String rawNicknames = InputView.readNicknames();
-        List<String> nicknames = Parser.parseNickname(rawNicknames);
-        List<Player> players = nicknames.stream()
+        final String rawNicknames = InputView.readNicknames();
+        final List<String> nicknames = Parser.parseNickname(rawNicknames);
+        final List<Player> players = nicknames.stream()
             .map(nickname ->
                 new Player(new Hand(new ArrayList<>()), Status.HIT, nickname))
             .toList();

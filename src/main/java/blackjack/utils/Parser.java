@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Parser {
 
-    public static List<String> parseNickname(String string) {
+    public static List<String> parseNickname(final String string) {
         final String delimiter = ",";
 
         return List.of(string.split(delimiter));

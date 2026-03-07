@@ -49,7 +49,7 @@ public class OutputView {
         );
     }
 
-    public static void printFinalResult(FinalResultDto dto) {
+    public static void printFinalResult(final FinalResultDto dto) {
         System.out.println("## 최종 승패");
         System.out.printf("딜러: %d승 %d무 %d패\n",
             dto.countByGameResult(GameResult.LOSE),

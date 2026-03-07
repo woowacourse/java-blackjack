@@ -8,7 +8,7 @@ public enum GameResult {
 
     private final String name;
 
-    GameResult(String name) {
+    GameResult(final String name) {
         this.name = name;
     }
 
@@ -16,7 +16,7 @@ public enum GameResult {
         return name;
     }
 
-    public static GameResult calculate(Player player, Dealer dealer) {
+    public static GameResult calculate(final Player player, final Dealer dealer) {
         if (player.isBurst()) {
             return GameResult.LOSE;
         }

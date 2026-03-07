@@ -11,15 +11,15 @@ public record FinalResultDto(
     Map<String, GameResult> playerGameResultMap
 ) {
 
-    public static FinalResultDto of(List<Player> players, Dealer dealer) {
-        Map<String, GameResult> playerGameResultMap = new LinkedHashMap<>();
+    public static FinalResultDto of(final List<Player> players, final Dealer dealer) {
+        final Map<String, GameResult> playerGameResultMap = new LinkedHashMap<>();
         players.forEach(player ->
             playerGameResultMap.put(player.getNickname(), GameResult.calculate(player, dealer)));
 
         return new FinalResultDto(playerGameResultMap);
     }
 
-    public long countByGameResult(GameResult criteriaGameResult) {
+    public long countByGameResult(final GameResult criteriaGameResult) {
         return playerGameResultMap.values()
             .stream()
             .filter(gameResult -> gameResult == criteriaGameResult)

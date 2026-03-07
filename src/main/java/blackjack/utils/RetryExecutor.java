@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 
 public class RetryExecutor {
 
-    public static <T> T retry(Supplier<T> supplier) {
+    public static <T> T retry(final Supplier<T> supplier) {
         try {
             return supplier.get();
         } catch (IllegalArgumentException e) {
@@ -15,7 +15,7 @@ public class RetryExecutor {
         }
     }
 
-    public static <T, R> R retry(Function<T, R> function, T t) {
+    public static <T, R> R retry(final Function<T, R> function, final T t) {
         try {
             return function.apply(t);
         } catch (IllegalArgumentException e) {
