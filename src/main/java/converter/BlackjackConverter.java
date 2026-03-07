@@ -39,13 +39,11 @@ public class BlackjackConverter {
     public List<HandDto> convertHandDtoList(PlayersDto playersDto) {
         Dealer dealer = playersDto.dealer();
         List<Player> players = playersDto.players();
-
         List<HandDto> handDtoList = new ArrayList<>();
         handDtoList.add(convertHandDtoForDealer(dealer));
         for (Player player : players) {
             handDtoList.add(convertHandDto(player));
         }
-
         return Collections.unmodifiableList(handDtoList);
     }
 }
