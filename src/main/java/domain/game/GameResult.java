@@ -13,10 +13,10 @@ public enum GameResult {
     }
 
     public static GameResult determine(int dealerScore, int gamblerScore) {
-        if(dealerScore > gamblerScore) {
+        if(dealerScore < gamblerScore) {
             return WIN;
         }
-        if(dealerScore < gamblerScore) {
+        if(dealerScore > gamblerScore) {
             return LOSE;
         }
         return DRAW;

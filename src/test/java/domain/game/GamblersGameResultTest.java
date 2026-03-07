@@ -14,16 +14,16 @@ class GamblersGameResultTest {
         // given
         Map<String, Integer> gamblers = new HashMap<>();
         gamblers.put("pobi",10);
-        gamblers.put("coco", 6);
-        gamblers.put("kaiya", 8);
+        gamblers.put("coco", 21);
+        gamblers.put("kaiya", 20);
 
 
         // when
         GamblersGameResult gameResult = new GamblersGameResult(20, gamblers);
 
         // then
-        Assertions.assertThat(gameResult.getMatchResult("pobi")).isEqualTo(GameResult.WIN);
-        Assertions.assertThat(gameResult.getMatchResult("coco")).isEqualTo(GameResult.LOSE);
+        Assertions.assertThat(gameResult.getMatchResult("pobi")).isEqualTo(GameResult.LOSE);
+        Assertions.assertThat(gameResult.getMatchResult("coco")).isEqualTo(GameResult.WIN);
         Assertions.assertThat(gameResult.getMatchResult("kaiya")).isEqualTo(GameResult.DRAW);
     }
 }
