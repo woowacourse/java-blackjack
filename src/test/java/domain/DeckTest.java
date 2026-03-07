@@ -12,7 +12,6 @@ public class DeckTest {
     @Test
     void 카드를_52장_생성한다() {
         Deck deck = new Deck();
-        deck.init();
 
         int deckSize = deck.size();
 
@@ -22,7 +21,6 @@ public class DeckTest {
     @Test
     void 카드는_숫자순에서_무늬순으로_생성된다() {
         Deck deck = new Deck();
-        deck.init();
         int deckSize = deck.size();
 
         List<Card> result = new ArrayList<>();
@@ -43,7 +41,6 @@ public class DeckTest {
     @Test
     void 카드_셔플_테스트() {
         Deck deck1 = new Deck();
-        deck1.init();
         deck1.shuffle();
         int deckSize = deck1.size();
 
@@ -54,8 +51,6 @@ public class DeckTest {
         }
 
         Deck deck2 = new Deck();
-        deck2.init();
-
         List<Card> result2 = new ArrayList<>();
         for (int i = 0; i < deckSize; i++) {
             Card card = deck2.draw();

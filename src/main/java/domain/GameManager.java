@@ -15,7 +15,6 @@ public class GameManager {
     private Dealer dealer = new Dealer();
 
     public GameManager() {
-        deck.init();
         deck.shuffle();
     }
 

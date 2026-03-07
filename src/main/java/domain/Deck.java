@@ -10,12 +10,8 @@ import java.util.List;
 public class Deck {
     List<Card> cards = new ArrayList<>();
 
-    public void init() {
-        for (Suit suit : Suit.values()) {
-            for (Rank rank : Rank.values()) {
-                cards.add(new Card(rank, suit));
-            }
-        }
+    public Deck() {
+        init();
     }
 
     public int size() {
@@ -28,5 +24,13 @@ public class Deck {
 
     public void shuffle() {
         Collections.shuffle(cards);
+    }
+
+    private void init() {
+        for (Suit suit : Suit.values()) {
+            for (Rank rank : Rank.values()) {
+                cards.add(new Card(rank, suit));
+            }
+        }
     }
 }
