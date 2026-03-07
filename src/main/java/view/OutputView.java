@@ -1,8 +1,10 @@
 package view;
 
+import dto.DealerFinalResultDto;
 import dto.DealerResultDto;
 import dto.PlayerDto;
 import dto.PlayersDto;
+import dto.TotalFinalResultsDto;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,5 +68,14 @@ public class OutputView {
         System.out.printf("%n%s카드: %s - 결과: %d", playerDto.name(),
                 getCardStatusFormat(playerDto.playerResultDto().cards()),
                 playerDto.playerResultDto().score());
+    }
+
+    public static void printTotalResult(DealerFinalResultDto dealerFinalResultDto,
+                                        TotalFinalResultsDto totalFinalResultsDto) {
+        System.out.println("\n\n## 최종 승패");
+        System.out.print(dealerFinalResultDto.result());
+        for (String finalResult : totalFinalResultsDto.totalResults()) {
+            System.out.print(finalResult);
+        }
     }
 }
