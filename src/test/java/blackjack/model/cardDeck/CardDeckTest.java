@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.cardDeck;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -6,8 +6,6 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
 import blackjack.model.card.Suit;
-import blackjack.model.cardDeck.CardDeck;
-import blackjack.model.cardDeck.PickStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
