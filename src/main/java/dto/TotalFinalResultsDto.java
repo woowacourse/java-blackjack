@@ -6,13 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record TotalFinalResultsDto(
-        List<FinalResultDto> totalResults
+        List<String> totalResults
 ) {
     public static TotalFinalResultsDto from(TotalFinalResult totalFinalResult) {
         List<FinalResult> finalResults = totalFinalResult.getTotalResult();
-        List<FinalResultDto> totalResults = new ArrayList<>();
+        List<String> totalResults = new ArrayList<>();
         for (FinalResult finalResult : finalResults) {
-            totalResults.add(FinalResultDto.from(finalResult));
+            totalResults.add(String.format("%s: %s%n",
+                    finalResult.getName().getName(),
+                    finalResult.getResultType().getType()));
         }
 
         return new TotalFinalResultsDto(totalResults);

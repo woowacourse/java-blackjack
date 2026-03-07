@@ -11,6 +11,7 @@ public enum CardShape {
     CardShape(String name) {
         this.name=name;
     }
+
     public String getName(){
         return name;
     }
