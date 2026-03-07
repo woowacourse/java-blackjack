@@ -7,6 +7,7 @@ public class HandCard {
     private static final int BLACKJACK_MAX_LIMIT = 21;
     private static final int ACE_MAX_VALUE = 11;
     private static final int ACE_MIN_VALUE = 1;
+
     private final List<Card> cards;
 
     public HandCard() {
@@ -15,13 +16,12 @@ public class HandCard {
 
     public int score() {
         int nonAceTotal = cards.stream()
-                .map(Card::getRankScore)
-                .filter(e -> e != 1)
-                .mapToInt(Integer::intValue)
+                .filter(card -> !card.isAce())
+                .mapToInt(Card::getRankScore)
                 .sum();
+
         int aceCount = (int) cards.stream()
-                .map(Card::getRankScore)
-                .filter(e -> e == 1)
+                .filter(Card::isAce)
                 .count();
 
         return cardCalculatorWithAce(nonAceTotal, aceCount);
@@ -52,7 +52,7 @@ public class HandCard {
                 .getCardInfo();
     }
 
-    public boolean isBust(){
+    public boolean isBust() {
         return score() > BLACKJACK_MAX_LIMIT;
     }
 }

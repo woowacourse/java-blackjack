@@ -1,7 +1,6 @@
 package domain.card;
 
 public enum CardRank {
-
     ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
@@ -31,4 +30,9 @@ public enum CardRank {
     public int getScore() {
         return score;
     }
+
+    public boolean isAce() {
+        return this == ACE;
+    }
+
 }

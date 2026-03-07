@@ -63,7 +63,7 @@ public class Gamblers {
                 .toList();
     }
 
-    public List<CardInfo> gamblerCardInfos() {
+    public List<CardInfo> gamblerCardInfo() {
         return gamblers.stream()
                 .map(Gambler::getCardInfo)
                 .toList();

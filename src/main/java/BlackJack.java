@@ -46,7 +46,7 @@ public class BlackJack {
         OutputView.printInitMessage(gamblers.getNames());
         OutputView.printDealerFirstCard(dealer.showFirstCard());
 
-        gamblers.gamblerCardInfos()
+        gamblers.gamblerCardInfo()
                 .forEach(OutputView::printPlayerCards);
     }
 
@@ -69,7 +69,7 @@ public class BlackJack {
         }
     }
 
-    private boolean askHit(String name){
+    private boolean askHit(String name) {
         OutputView.askHit(name);
         return AnswerParser.parse(InputView.readLine());
     }
@@ -88,7 +88,7 @@ public class BlackJack {
 
     private void printFinalPlayerInfo(Dealer dealer, Gamblers gamblers) {
         OutputView.printFinalPlayer(dealer.getCardInfo());
-        gamblers.gamblerCardInfos()
+        gamblers.gamblerCardInfo()
                 .forEach(OutputView::printFinalPlayer);
     }
 
