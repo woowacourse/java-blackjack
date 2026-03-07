@@ -40,6 +40,14 @@ public class Participant {
         return hand.getInfo();
     }
 
+    public ParticipantGameInfo getParticipantGameInfo() {
+        return new ParticipantGameInfo(
+                name.getName(),
+                hand.getInfo(),
+                hand.calculateScore()
+        );
+    }
+
     public boolean isEqualName(String name) {
         if(this.name.isEqualName(name)) return true;
         return false;

@@ -1,5 +1,7 @@
 package domain.player;
 
+import static util.Constants.DEALER_REFERENCE_POINT;
+
 public class Dealer extends Participant {
 
     public Dealer(String name) {
@@ -7,7 +9,7 @@ public class Dealer extends Participant {
     }
 
     public boolean isTotalScore16OrLess() {
-        return getTotalScore() <= 16;
+        return getTotalScore() <= DEALER_REFERENCE_POINT;
     }
 
     public String getFirstHand() {

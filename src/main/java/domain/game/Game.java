@@ -7,7 +7,8 @@ import domain.card.GameCards;
 import domain.player.Dealer;
 import domain.player.Gambler;
 import domain.player.Gamblers;
-import domain.player.Participant;
+import domain.player.ParticipantGameInfo;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,11 +33,41 @@ public class Game {
         }
     }
 
-    public Map<String, List<String>> getParticipantsHandInfo() {
+    public Map<String, List<String>> getInitialParticipantsHandInfo() {
         Map<String, List<String>> info = new HashMap<>();
         info.put(dealer.getName(), List.of(dealer.getFirstHand()));
         info.putAll(gamblers.getHandsInfo());
         return info;
+    }
+
+    public Map<String, List<String>> getParticipantsHandInfo() {
+        Map<String, List<String>> info = new HashMap<>();
+        info.put(dealer.getName(), dealer.getHandInfo());
+        info.putAll(gamblers.getHandsInfo());
+        return info;
+    }
+
+    public boolean shouldDealerDraw() {
+        return dealer.isTotalScore16OrLess();
+    }
+
+    public void addDealerCard() {
+        dealer.addCard(pickCard());
+    }
+
+    public Card pickCard() {
+        return gameCards.drawCard();
+    }
+
+    public List<Gambler> getGamblersList() {
+        return gamblers.getGamblers();
+    }
+
+    public List<ParticipantGameInfo> getParticipantGameInfos() {
+        List<ParticipantGameInfo> gameInfo = new ArrayList<>();
+        gameInfo.add(dealer.getParticipantGameInfo());
+        gameInfo.addAll(gamblers.getParticipantGameInfos());
+        return gameInfo;
     }
 
     public int getDealerHandSize() {
@@ -45,14 +76,6 @@ public class Game {
 
     public List<Integer> getGamblersHandSize() {
         return gamblers.getHandSize();
-    }
-
-    public List<Gambler> getGamblersList() {
-        return gamblers.getGamblers();
-    }
-
-    public Card pickCard() {
-        return gameCards.drawCard();
     }
 }
 

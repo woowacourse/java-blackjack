@@ -8,8 +8,9 @@ import static util.Constants.STAND;
 import domain.game.Game;
 import domain.player.Gambler;
 import dto.AgreementRequestDto;
-import dto.CardInfoResponseDto;
-import dto.ParticipantCardsResponseDto;
+import dto.ParticipantHandResponseDto;
+import dto.ParticipantsGameInfoDto;
+import dto.ParticipantsHandResponseDto;
 import java.util.List;
 import util.Parser;
 import view.InputView;
@@ -27,7 +28,12 @@ public class BlackJackController {
     public void run() {
         List<String> names = inputGamblersInfo();
         Game game = initializeGame(names);
-        List<Gambler> gamblers = playGame(game);
+
+        playGame(game);
+        checkDealerHand(game);
+
+        printParticipantsResult(game);
+        //승패 계산
     }
 
     private List<String> inputGamblersInfo() {
@@ -40,17 +46,18 @@ public class BlackJackController {
 
         outputView.printInitialDeal(names);
         game.initializeGame();
-        outputView.printInitialInfo(new CardInfoResponseDto(game.getParticipantsHandInfo()));
+        outputView.printParticipantsInfo(
+                new ParticipantsHandResponseDto(game.getInitialParticipantsHandInfo())
+        );
 
         return game;
     }
 
-    private List<Gambler> playGame(Game game) {
+    private void playGame(Game game) {
         List<Gambler> gamblers = game.getGamblersList();
         for(Gambler gambler : gamblers) {
             playTurn(game, gambler);
         }
-        return gamblers;
     }
 
     private void playTurn(Game game, Gambler gambler) {
@@ -63,6 +70,20 @@ public class BlackJackController {
                 break;
             }
         }
-        outputView.printPaticipantInfo(new ParticipantCardsResponseDto(gambler.getName(), gambler.getHandInfo()));
+        outputView.printParticipantInfo(
+                new ParticipantHandResponseDto(gambler.getName(), gambler.getHandInfo()));
+    }
+
+    private void checkDealerHand(Game game) {
+        if (game.shouldDealerDraw()) {
+            outputView.printDealerCardIsUnder16();
+            game.addDealerCard();
+        }
+    }
+
+    private void printParticipantsResult(Game game) {
+        outputView.printParticipantsGameInfo(new ParticipantsGameInfoDto(
+                game.getParticipantGameInfos()
+        ));
     }
 }

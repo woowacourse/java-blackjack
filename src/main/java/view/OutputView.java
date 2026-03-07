@@ -1,7 +1,9 @@
 package view;
 
-import dto.CardInfoResponseDto;
-import dto.ParticipantCardsResponseDto;
+import domain.player.ParticipantGameInfo;
+import dto.ParticipantHandResponseDto;
+import dto.ParticipantsGameInfoDto;
+import dto.ParticipantsHandResponseDto;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -13,7 +15,7 @@ public class OutputView {
         + "에게 2장을 나누었습니다.");
     }
 
-    public void printInitialInfo(CardInfoResponseDto responseDto) {
+    public void printParticipantsInfo(ParticipantsHandResponseDto responseDto) {
         for(Entry<String, List<String>> gamblers : responseDto.gamblersInfo().entrySet()) {
             System.out.println(gamblers.getKey() + "카드: " +
                     String.join(", ", gamblers.getValue()));
@@ -24,19 +26,15 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printPaticipantInfo(ParticipantCardsResponseDto responseDto) {
+    public void printParticipantInfo(ParticipantHandResponseDto responseDto) {
         System.out.println(responseDto.name() + "카드: " +
                 String.join(", ", responseDto.cards()));
     }
-//
-//    public void printGameResult(CardInfoResponseDto responseDto) {
-//        int index = 0;
-//        for(Entry<String, List<String>> participant : responseDto.participantsInfo().entrySet()) {
-//            System.out.println(participant.getKey() + "카드: " +
-//                    String.join(", ", participant.getValue())
-//                    + " - 결과: " + responseDto.score().get(index)
-//            );
-//            index++;
-//        }
-//    }
+
+    public void printParticipantsGameInfo(ParticipantsGameInfoDto responseDto) {
+        for (ParticipantGameInfo participant : responseDto.participants()) {
+            System.out.println(participant.name() + "카드: " +
+                    String.join(", ", participant.cards()) + "- 결과: " + participant.score());
+        }
+    }
 }

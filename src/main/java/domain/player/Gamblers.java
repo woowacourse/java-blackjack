@@ -31,6 +31,12 @@ public class Gamblers {
         }
     }
 
+    public List<ParticipantGameInfo> getParticipantGameInfos() {
+        return gamblers.stream()
+                .map(Gambler::getParticipantGameInfo)
+                .toList();
+    }
+
     public List<Integer> getHandSize() {
         return gamblers.stream()
                 .map(Gambler::getCardSize)
