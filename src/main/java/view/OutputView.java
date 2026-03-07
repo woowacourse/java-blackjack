@@ -1,39 +1,70 @@
 package view;
 
-import domain.Card;
-import domain.Dealer;
-import domain.Player;
-import domain.Players;
+import dto.DealerResultDto;
+import dto.PlayerDto;
+import dto.PlayersDto;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    public static void printHandOutMessage(Players players){
-        String playersName = players.getPlayers().stream()
-                .map(Player::getName)
+    public static void printHandOutMessage(PlayersDto playersDto) {
+        String playersName = playersDto.playersDto().stream()
+                .map(PlayerDto::name)
                 .collect(Collectors.joining(","));
 
-        System.out.println("딜러와 "+ playersName + "에게 2장을 나누었습니다.");
+        System.out.print("\n딜러와 " + playersName + "에게 2장을 나누었습니다.");
     }
 
-    public static void printCardStatus(Players players, Dealer dealer) {
-        System.out.printf("딜러카드: %s%n", getDealerCardStatus(dealer));
-        for(Player player : players.getPlayers()) {
-            System.out.printf("%s카드: %s%n", player.getName(), getPlayerCardStatus(player));
+    // 딜러카드 출력
+    public static void printDealerCardStatus(DealerResultDto dealerResultDto) {
+        System.out.printf("%n딜러카드: %s%n", getDealerCardStatus(dealerResultDto));
+    }
+
+    //플레이어 카드 출력
+    public static void printPlayerCardStatus(PlayerDto playerDto) {
+        System.out.printf("%s카드: %s%n", playerDto.name(), getCardStatusFormat(playerDto.playerResultDto().cards()));
+    }
+
+    public static void printCardStatus(PlayersDto playersDto, DealerResultDto dealerResultDto) {
+        printDealerCardStatus(dealerResultDto);
+        for (PlayerDto playerDto : playersDto.playersDto()) {
+            printPlayerCardStatus(playerDto);
+        }
+        System.out.print(System.lineSeparator());
+    }
+
+    private static String getDealerCardStatus(DealerResultDto dealerResultDto) {
+        return dealerResultDto.cards().getFirst();
+    }
+
+    private static String getCardStatusFormat(List<String> cards) {
+        return String.join(", ", cards);
+    }
+
+    public static void printAddDealerCardMessage() {
+        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public static void printCardResult(DealerResultDto dealerResultDto, PlayersDto playersDto) {
+        printDealerCardResult(dealerResultDto);
+        printPlayersCardResult(playersDto);
+    }
+
+    private static void printDealerCardResult(DealerResultDto dealerResultDto) {
+        System.out.printf("%n딜러카드: %s - 결과: %d", getCardStatusFormat(dealerResultDto.cards()),
+                dealerResultDto.score());
+    }
+
+    private static void printPlayersCardResult(PlayersDto playersDto) {
+        for (PlayerDto playerDto : playersDto.playersDto()) {
+            printPlayerCardResult(playerDto);
         }
     }
 
-    private static String getDealerCardStatus(Dealer dealer) {
-        Card firstCard = dealer.getHand().getFirst();
-        return getCardStatus(firstCard);
-    }
-
-    private static String getPlayerCardStatus(Player player) {
-        return player.getHand().stream()
-                .map(OutputView::getCardStatus)
-                .collect(Collectors.joining(", "));
-    }
-
-    private static String getCardStatus(Card card) {
-        return card.getCardNumber().getSymbol() + card.getCardShape().getName();
+    // TODO 버스트 나면 버스트로 표시?
+    private static void printPlayerCardResult(PlayerDto playerDto) {
+        System.out.printf("%n%s카드: %s - 결과: %d", playerDto.name(),
+                getCardStatusFormat(playerDto.playerResultDto().cards()),
+                playerDto.playerResultDto().score());
     }
 }
