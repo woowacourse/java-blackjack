@@ -16,8 +16,11 @@ public class Player extends Participant {
     }
 
     private void validateNicknameLength(final String nickname) {
-        if (nickname.length() > NICKNAME_MAXIMUM_LENGTH || nickname.length() < NICKNAME_MINIMUM_LENGTH) {
-            throw new IllegalArgumentException("닉네임은 4~10자 이어야 합니다.");
+        if (nickname.length() < NICKNAME_MINIMUM_LENGTH) {
+            throw new IllegalArgumentException("닉네임은 4자 이상이어야 합니다.");
+        }
+        if (nickname.length() > NICKNAME_MAXIMUM_LENGTH) {
+            throw new IllegalArgumentException("닉네임은 10자 이하여야 합니다.");
         }
     }
 
