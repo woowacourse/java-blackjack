@@ -1,5 +1,6 @@
 package domain;
 
+import common.ErrorMessage;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -30,6 +31,10 @@ public class Participants {
     }
 
     private static List<Player> createPlayer(List<String> playerNames, Deck totalDeck) {
+        if (playerNames.size() > 5) {
+            throw new IllegalArgumentException(ErrorMessage.MAX_PLAYER_ERROR.getMessage());
+        }
+
         List<Player> players = new ArrayList<>();
 
         playerNames.forEach(
