@@ -12,13 +12,11 @@ public abstract class Participant {
         this.cards = new Cards();
     }
 
-    public void add(Card card){
+    public void add(Card card) {
         cards.add(card);
     }
 
     public int getTotalSum() {
         return cards.getTotalSum();
     }
-
 }
-
