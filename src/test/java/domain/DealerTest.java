@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
 public class DealerTest {
 
     @Test
-    @DisplayName("딜러 pitch 테스트")
+    @DisplayName("딜러 피치 테스트")
     void 딜러_피치_테스트() {
         Trump trump = new Trump();
         Dealer dealer = new Dealer(new Hand(new ArrayList<>()), Status.HIT, trump);

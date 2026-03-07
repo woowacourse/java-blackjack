@@ -15,7 +15,7 @@ public class HandTest {
 
     @Test
     @DisplayName("점수 합계 테스트")
-    void 정상_테스트_1() {
+    void 점수_합계_테스트() {
         List<Card> cards = List.of(
             new Card(Suit.DIAMOND, Denomination.JACK),
             new Card(Suit.DIAMOND, Denomination.TEN)
@@ -31,7 +31,7 @@ public class HandTest {
 
     @Test
     @DisplayName("버스트 판정 테스트: 점수 합계가 21 초과인 경우")
-    void 정상_테스트_2() {
+    void 버스트_판정_테스트_점수_합계가_21_초과인_경우() {
         List<Card> cards = List.of(
             new Card(Suit.DIAMOND, Denomination.JACK),
             new Card(Suit.DIAMOND, Denomination.TEN),
@@ -47,7 +47,7 @@ public class HandTest {
 
     @Test
     @DisplayName("버스트 판정 테스트: 점수 합계가 21 이하인 경우")
-    void 정상_테스트_3() {
+    void 버스트_판정_테스트_점수_합계가_21_이하인_경우() {
         List<Card> cards = List.of(
             new Card(Suit.DIAMOND, Denomination.JACK),
             new Card(Suit.DIAMOND, Denomination.NINE),
@@ -63,7 +63,7 @@ public class HandTest {
 
     @Test
     @DisplayName("ACE 처리 테스트: 버스트가 되지 않은 경우")
-    void 정상_테스트_4() {
+    void ACE_처리_테스트_버스트가_되지_않은_경우() {
         List<Card> cards = List.of(
             new Card(Suit.DIAMOND, Denomination.NINE),
             new Card(Suit.DIAMOND, Denomination.ACE));
@@ -78,7 +78,7 @@ public class HandTest {
 
     @Test
     @DisplayName("ACE 처리 테스트: 버스트가 된 경우")
-    void 정상_테스트_5() {
+    void ACE_처리_테스트_버스트가_된_경우() {
         List<Card> cards = List.of(
             new Card(Suit.DIAMOND, Denomination.ACE),
             new Card(Suit.DIAMOND, Denomination.ACE));

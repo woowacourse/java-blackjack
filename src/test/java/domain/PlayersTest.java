@@ -31,7 +31,7 @@ public class PlayersTest {
 
         @Test
         @DisplayName("플레이어 인원 수가 1명 미만인 경우")
-        void 예외_테스트1() {
+        void 플레이어_인원_수가_1명_미만인_경우() {
             List<Player> playerList = List.of();
 
             assertThrows(IllegalArgumentException.class, () -> new Players(playerList));
@@ -39,7 +39,7 @@ public class PlayersTest {
         
         @Test
         @DisplayName("플레이어 인원 수가 7명 초과인 경우")
-        void 예외_테스트2() {
+        void 플레이어_인원_수가_7명_초과인_경우() {
             List<Player> playerList = List.of(
                 new Player(new Hand(new ArrayList<>()), Status.HIT, "pobi"),
                 new Player(new Hand(new ArrayList<>()), Status.HIT, "jason"),
