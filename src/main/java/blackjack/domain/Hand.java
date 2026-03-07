@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
@@ -21,7 +20,7 @@ public class Hand {
             .mapToInt(Card::toScore)
             .sum();
 
-        return handleAce(totalScore);
+        return adjustTotalScoreByAce(totalScore);
     }
 
     public long countAce() {
@@ -30,7 +29,7 @@ public class Hand {
             .count();
     }
 
-    public int handleAce(int totalScore) {
+    public int adjustTotalScoreByAce(int totalScore) {
         long aceCount = countAce();
         int updatedScore = totalScore;
         int aceScoreDifference = 10;
