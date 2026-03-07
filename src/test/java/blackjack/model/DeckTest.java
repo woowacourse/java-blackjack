@@ -26,11 +26,9 @@ class DeckTest {
         Deck deck = new Deck();
         // when
         List<Card> cards = deck.getCards();
-        cards.add(new Card(Figure.CLOVER, Number.ACE));
-
-        HashSet<Card> newDeck = new HashSet<>(cards);
+        HashSet<Card> distinctCards = new HashSet<>(cards);
         // then
-        assertThat(newDeck.size()).isEqualTo(52);
+        assertThat(distinctCards.size()).isEqualTo(52);
     }
 
     @Test
