@@ -3,6 +3,7 @@ package blackjack.view;
 import static blackjack.domain.Dealer.DEALER_HIT_THRESHOLD;
 
 import blackjack.domain.Dealer;
+import blackjack.domain.GameResult;
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
 import blackjack.domain.Player;
@@ -53,7 +54,9 @@ public class OutputView {
     public static void printFinalResult(FinalResultDto dto) {
         System.out.println("## 최종 승패");
         System.out.printf("딜러: %d승 %d무 %d패\n",
-            dto.dealerWinCount(), dto.dealerDrawCount(), dto.dealerLoseCount());
+            dto.countByGameResult(GameResult.LOSE),
+            dto.countByGameResult(GameResult.DRAW),
+            dto.countByGameResult(GameResult.WIN));
         dto.playerGameResultMap()
             .forEach((key, value) ->
                 System.out.printf("%s: %s\n", key, value.getName()));
