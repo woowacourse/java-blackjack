@@ -35,8 +35,8 @@ public class PlayerTest {
     @Test
     void 플레이어가_카드1장_받는다() {
         TrumpCard spaceAce = TrumpCard.of(Suit.SPADE, Rank.ACE);
-        Player newPlayer = player.receiveCard(spaceAce);
-        assertThat(newPlayer.countCards()).isEqualTo(1);
+        player.receiveCard(spaceAce);
+        assertThat(player.countCards()).isEqualTo(1);
     }
 
     @Test
@@ -44,9 +44,9 @@ public class PlayerTest {
         TrumpCard spaceAce = TrumpCard.of(Suit.SPADE, Rank.ACE);
         TrumpCard heartKing = TrumpCard.of(Suit.HEART, Rank.KING);
 
-        Player newPlayer = player.receiveCard(spaceAce);
-        newPlayer = newPlayer.receiveCard(heartKing);
-        assertThat(newPlayer.countCards()).isEqualTo(2);
+        player.receiveCard(spaceAce);
+        player.receiveCard(heartKing);
+        assertThat(player.countCards()).isEqualTo(2);
     }
 
     @Test
@@ -54,10 +54,10 @@ public class PlayerTest {
         TrumpCard spaceAce = TrumpCard.of(Suit.SPADE, Rank.ACE);
         TrumpCard heartKing = TrumpCard.of(Suit.HEART, Rank.KING);
 
-        Player newPlayer = player.receiveCard(spaceAce);
-        newPlayer = newPlayer.receiveCard(heartKing);
+        player.receiveCard(spaceAce);
+        player.receiveCard(heartKing);
 
-        assertThat(newPlayer.score()).isEqualTo(21);
+        assertThat(player.score()).isEqualTo(21);
     }
 
     @Test
@@ -66,16 +66,16 @@ public class PlayerTest {
         cards.add(TrumpCard.of(Suit.SPADE, Rank.ACE));
         cards.add(TrumpCard.of(Suit.HEART, Rank.KING));
 
-        Player newPlayer = player.receiveCards(cards);
-        assertThat(newPlayer.countCards()).isEqualTo(2);
+        player.receiveCards(cards);
+        assertThat(player.countCards()).isEqualTo(2);
     }
 
     @Test
     void 플레이어가_21이하면_카드를_더_받을_수_있다() {
         TrumpCard spadeKing = TrumpCard.of(Suit.SPADE, Rank.KING);
-        Player newPlayer = player.receiveCard(spadeKing);
+        player.receiveCard(spadeKing);
 
-        assertThat(newPlayer.canHit()).isTrue();
+        assertThat(player.canHit()).isTrue();
     }
 
     @Test
@@ -84,11 +84,11 @@ public class PlayerTest {
         TrumpCard heartQueen = TrumpCard.of(Suit.HEART, Rank.QUEEN);
         TrumpCard diamondFive = TrumpCard.of(Suit.DIAMOND, Rank.FIVE);
 
-        Player newPlayer = player.receiveCard(spadeKing);
-        newPlayer = newPlayer.receiveCard(heartQueen);
-        newPlayer = newPlayer.receiveCard(diamondFive);
+        player.receiveCard(spadeKing);
+        player.receiveCard(heartQueen);
+        player.receiveCard(diamondFive);
 
-        assertThat(newPlayer.canHit()).isFalse();
+        assertThat(player.canHit()).isFalse();
     }
 
     @Test
@@ -96,10 +96,10 @@ public class PlayerTest {
         TrumpCard spadeAce = TrumpCard.of(Suit.SPADE, Rank.ACE);
         TrumpCard heartKing = TrumpCard.of(Suit.HEART, Rank.KING);
 
-        Player newPlayer = player.receiveCard(spadeAce);
-        newPlayer = newPlayer.receiveCard(heartKing);
+        player.receiveCard(spadeAce);
+        player.receiveCard(heartKing);
 
-        assertThat(newPlayer.getCards()).hasSize(2);
-        assertThat(newPlayer.getCards()).containsExactly(spadeAce, heartKing);
+        assertThat(player.getCards()).hasSize(2);
+        assertThat(player.getCards()).containsExactly(spadeAce, heartKing);
     }
 }

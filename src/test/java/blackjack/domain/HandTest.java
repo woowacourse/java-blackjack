@@ -16,7 +16,7 @@ class HandTest {
     void 카드를_받으면_카드가_늘어난다() {
         Hand hand = Hand.init();
         TrumpCard newCard = TrumpCard.of(Suit.SPADE, Rank.ACE);
-        hand = hand.receive(newCard);
+        hand.receive(newCard);
         assertThat(hand.countCards()).isEqualTo(1);
     }
 
@@ -26,8 +26,8 @@ class HandTest {
         TrumpCard spadeKing = TrumpCard.of(Suit.SPADE, Rank.KING);
         TrumpCard heartFive = TrumpCard.of(Suit.HEART, Rank.FIVE);
 
-        hand = hand.receive(spadeKing);
-        hand = hand.receive(heartFive);
+        hand.receive(spadeKing);
+        hand.receive(heartFive);
 
         int score = hand.calculateScore();
 
@@ -41,9 +41,9 @@ class HandTest {
         TrumpCard heartAce = TrumpCard.of(Suit.HEART, Rank.ACE);
         TrumpCard diamondNine = TrumpCard.of(Suit.DIAMOND, Rank.NINE);
 
-        hand = hand.receive(heartAce);
-        hand = hand.receive(heartAce);
-        hand = hand.receive(diamondNine);
+        hand.receive(heartAce);
+        hand.receive(heartAce);
+        hand.receive(diamondNine);
 
         int score = hand.calculateScore();
 
@@ -56,8 +56,8 @@ class HandTest {
         TrumpCard spadeKing = TrumpCard.of(Suit.SPADE, Rank.KING);
         TrumpCard heartFive = TrumpCard.of(Suit.HEART, Rank.FIVE);
 
-        hand = hand.receive(spadeKing);
-        hand = hand.receive(heartFive);
+        hand.receive(spadeKing);
+        hand.receive(heartFive);
 
         assertThat(hand.getCards()).hasSize(2);
         assertThat(hand.getCards()).containsExactly(spadeKing, heartFive);

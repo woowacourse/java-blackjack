@@ -23,8 +23,8 @@ class DealerTest {
     @Test
     void 딜러가_카드_1장을_받는다() {
         TrumpCard spadeAce = TrumpCard.of(Suit.SPADE, Rank.ACE);
-        Dealer newDealer = dealer.receive(spadeAce);
-        assertThat(newDealer.getCards()).hasSize(1);
+        dealer.receive(spadeAce);
+        assertThat(dealer.getCards()).hasSize(1);
     }
 
     @Test
@@ -33,8 +33,8 @@ class DealerTest {
         cards.add(TrumpCard.of(Suit.SPADE, Rank.ACE));
         cards.add(TrumpCard.of(Suit.HEART, Rank.KING));
 
-        Dealer newDealer = dealer.receiveCards(cards);
-        assertThat(newDealer.getCards()).hasSize(2);
+        dealer.receiveCards(cards);
+        assertThat(dealer.getCards()).hasSize(2);
     }
 
     @Test
@@ -42,10 +42,10 @@ class DealerTest {
         TrumpCard spadeKing = TrumpCard.of(Suit.SPADE, Rank.KING);
         TrumpCard heartFive = TrumpCard.of(Suit.HEART, Rank.FIVE);
 
-        Dealer newDealer = dealer.receive(spadeKing);
-        newDealer = newDealer.receive(heartFive);
+        dealer.receive(spadeKing);
+        dealer.receive(heartFive);
 
-        assertThat(newDealer.score()).isEqualTo(15);
+        assertThat(dealer.score()).isEqualTo(15);
     }
 
     @Test
@@ -53,10 +53,10 @@ class DealerTest {
         TrumpCard spadeKing = TrumpCard.of(Suit.SPADE, Rank.KING);
         TrumpCard heartFive = TrumpCard.of(Suit.HEART, Rank.FIVE);
 
-        Dealer newDealer = dealer.receive(spadeKing);
-        newDealer = newDealer.receive(heartFive);
+        dealer.receive(spadeKing);
+        dealer.receive(heartFive);
 
-        assertThat(newDealer.shouldHit()).isTrue();
+        assertThat(dealer.shouldHit()).isTrue();
     }
 
     @Test
@@ -64,10 +64,10 @@ class DealerTest {
         TrumpCard spadeKing = TrumpCard.of(Suit.SPADE, Rank.KING);
         TrumpCard heartSeven = TrumpCard.of(Suit.HEART, Rank.SEVEN);
 
-        Dealer newDealer = dealer.receive(spadeKing);
-        newDealer = newDealer.receive(heartSeven);
+        dealer.receive(spadeKing);
+        dealer.receive(heartSeven);
 
-        assertThat(newDealer.shouldHit()).isFalse();
+        assertThat(dealer.shouldHit()).isFalse();
     }
 
     @Test
@@ -75,9 +75,9 @@ class DealerTest {
         TrumpCard spadeKing = TrumpCard.of(Suit.SPADE, Rank.KING);
         TrumpCard heartFive = TrumpCard.of(Suit.HEART, Rank.FIVE);
 
-        Dealer newDealer = dealer.receive(spadeKing);
-        newDealer = newDealer.receive(heartFive);
+        dealer.receive(spadeKing);
+        dealer.receive(heartFive);
 
-        assertThat(newDealer.getOpenCard()).isEqualTo(spadeKing);
+        assertThat(dealer.getOpenCard()).isEqualTo(spadeKing);
     }
 }
