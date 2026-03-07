@@ -2,7 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.ParticipantResult;
+import blackjack.dto.ParticipantResult;
 import blackjack.domain.participant.Player;
 import blackjack.dto.DrawResult;
 import blackjack.dto.WinningResult;

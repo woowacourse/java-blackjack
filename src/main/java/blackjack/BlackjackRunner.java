@@ -4,7 +4,7 @@ import blackjack.domain.Participants;
 import blackjack.domain.Players;
 import blackjack.domain.PlayingCards;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.ParticipantResult;
+import blackjack.dto.ParticipantResult;
 import blackjack.dto.DrawResult;
 import blackjack.dto.WinningResult;
 import blackjack.util.PlayerNameParser;

@@ -1,4 +1,6 @@
-package blackjack.domain.participant;
+package blackjack.dto;
+
+import blackjack.domain.participant.Participant;
 
 public record ParticipantResult(
     String nickname,
