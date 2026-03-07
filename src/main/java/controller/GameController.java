@@ -5,6 +5,8 @@ import domain.*;
 import java.util.*;
 
 import domain.card.Card;
+import util.HitOption;
+import util.InputHitOptionParser;
 import util.InputNameParser;
 import view.InputView;
 import view.OutputView;
@@ -97,19 +99,26 @@ public class GameController {
     }
 
     private void processRound(Player player, Dealer dealer) {
-        String hitOption = inputView.readHitOption(player.getName());
-        if (hitOption.equals("y")) {
+
+        HitOption hitOption = inputHitOption(player);
+
+        if (hitOption == HitOption.YES) {
             player.receiveMoreCard(dealer.handOutMoreCard());
         }
         outputView.printCurrentHoldCard(player);
 
-        while (hitOption.equals("y") && !player.isBust()) {
-            hitOption = inputView.readHitOption(player.getName());
-            if (hitOption.equals("n")) {
+        while (hitOption == HitOption.YES && !player.isBust()) {
+            hitOption = inputHitOption(player);
+            if (hitOption == HitOption.NO) {
                 break;
             }
             player.receiveMoreCard(dealer.handOutMoreCard());
             outputView.printCurrentHoldCard(player);
         }
+    }
+
+    private HitOption inputHitOption(Player player) {
+        String rawHitOption = inputView.readHitOption(player.getName());
+        return InputHitOptionParser.parseHitOption(rawHitOption);
     }
 }
