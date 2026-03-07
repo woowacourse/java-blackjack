@@ -1,28 +1,26 @@
 package team.blackjack.controller;
 
 import java.util.List;
-import team.blackjack.config.AppConfig;
-import team.blackjack.domain.rule.BlackjackRule;
 import team.blackjack.service.dto.DrawResult;
 import team.blackjack.service.dto.GameResult;
 import team.blackjack.service.dto.ScoreResult;
 import team.blackjack.domain.Player;
+import team.blackjack.domain.rule.DefaultBlackjackRule;
 import team.blackjack.service.BlackJackService;
 import team.blackjack.view.InputView;
 import team.blackjack.view.OutputView;
 
 public class BlackJackController {
-    private final BlackjackRule blackjackRule;
     private final BlackJackService blackJackService;
 
     public BlackJackController(BlackJackService blackJackService) {
-        this.blackjackRule = AppConfig.getInstance().blackjackRule();
         this.blackJackService = blackJackService;
     }
 
     public void run() {
         List<String> playerNames = readPlayerNames();
-        initializeBlackjackGame(playerNames);
+        blackJackService.initGame(playerNames);
+        blackJackService.drawInitialCards();
 
         DrawResult drawResult = blackJackService.getHandResult();
         OutputView.printDrawResult(drawResult);
@@ -31,7 +29,7 @@ public class BlackJackController {
 
         while (blackJackService.shouldDealerHit()) {
             OutputView.printDealerHitMessage();
-            blackJackService.dealerHit();
+            blackJackService.hitDealer();
         }
 
         ScoreResult scoreResult = blackJackService.calculateAllParticipantScore();
@@ -41,14 +39,9 @@ public class BlackJackController {
         OutputView.printGameResult(gameResult);
     }
 
-    private List<String> readPlayerNames() {
+    private List<String> readPlayerNames(){
         OutputView.printPlayerNameRequest();
         return InputView.readPlayerNames();
-    }
-
-    private void initializeBlackjackGame(List<String> playerNames) {
-        blackJackService.initGame(playerNames);
-        blackJackService.dealInitialCards();
     }
 
     private void readHitDecision(List<Player> players) {
@@ -56,14 +49,14 @@ public class BlackJackController {
     }
 
     private void processHit(Player player) {
-        while (!blackjackRule.isBust(player.getScore())) {
+        while (!DefaultBlackjackRule.isBust(player.getScore())) {
             OutputView.printAskDrawCard(player.getName());
 
             if (!InputView.readHitDecision()) {
                 return;
             }
 
-            blackJackService.playerHit(player);
+            blackJackService.hitPlayer(player);
             OutputView.printPlayerCards(player.getName(), player.getHands().getFirst().getCardNames());
         }
 
