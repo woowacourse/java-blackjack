@@ -22,5 +22,4 @@ class GameResultTest {
     void 게임_최종_결과_검증_무승부() {
         Assertions.assertThat(GameResult.determine(20, 20)).isEqualTo(GameResult.DRAW);
     }
-
 }

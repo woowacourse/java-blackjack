@@ -5,9 +5,11 @@ import static util.Constants.DEALER_NAME;
 import static util.Constants.HIT;
 import static util.Constants.STAND;
 
+import domain.game.GamblersGameResult;
 import domain.game.Game;
 import domain.player.Gambler;
 import dto.AgreementRequestDto;
+import dto.DealerResultDto;
 import dto.ParticipantHandResponseDto;
 import dto.ParticipantsGameInfoDto;
 import dto.ParticipantsHandResponseDto;
@@ -33,8 +35,16 @@ public class BlackJackController {
         checkDealerHand(game);
 
         printParticipantsResult(game);
-        //승패 계산
 
+        //승패 계산
+        GamblersGameResult result = game.getResult();
+        outputView.printDealerResult(
+                new DealerResultDto(result.countDealerWin(),
+                        result.countDealerLose(),
+                        result.countDealerDraw()));
+        outputView.printGamblerResult(
+                result.getResultInfo()
+        );
     }
 
     private List<String> inputGamblersInfo() {

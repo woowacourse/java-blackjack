@@ -19,4 +19,33 @@ public class GamblersGameResult {
     public GameResult getMatchResult(String name) {
         return gamblersResult.get(name);
     }
+
+    public int countDealerWin() {
+        return (int) gamblersResult.values()
+                .stream()
+                .filter(result -> result == GameResult.LOSE)
+                .count();
+    }
+
+    public int countDealerLose() {
+        return (int) gamblersResult.values()
+                .stream()
+                .filter(result -> result == GameResult.WIN)
+                .count();
+    }
+
+    public int countDealerDraw() {
+        return (int) gamblersResult
+                .values()
+                .stream()
+                .filter(result -> result == GameResult.DRAW)
+                .count();
+    }
+
+    public Map<String, String> getResultInfo() {
+        return gamblersResult.entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey,
+                        entry -> entry.getValue().getGameResult()));
+    }
 }

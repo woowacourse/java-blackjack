@@ -70,5 +70,9 @@ public class Game {
     public List<Integer> getGamblersHandSize() {
         return gamblers.getHandSize();
     }
+
+    public GamblersGameResult getResult(){
+        return new GamblersGameResult(dealer.getTotalScore(), gamblers.getParticipantTotalScore());
+    }
 }
 
