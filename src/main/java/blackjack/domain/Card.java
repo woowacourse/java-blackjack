@@ -10,16 +10,15 @@ public class Card {
         this.denomination = denomination;
     }
 
+    public String getName() {
+        return denomination.getSymbol() + suit.getName();
+    }
+
     public int toScore() {
         return denomination.toScore();
     }
 
     public boolean isAce() {
         return denomination == Denomination.ACE;
-    }
-
-    @Override
-    public String toString() {
-        return denomination.toString() + suit.toString();
     }
 }

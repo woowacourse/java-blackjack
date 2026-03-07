@@ -15,12 +15,11 @@ public enum Suit {
         this.name = name;
     }
 
-    public static List<Suit> all() {
-        return List.of(values());
+    public String getName() {
+        return name;
     }
 
-    @Override
-    public String toString() {
-        return name;
+    public static List<Suit> all() {
+        return List.of(values());
     }
 }

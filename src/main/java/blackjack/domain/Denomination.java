@@ -29,6 +29,10 @@ public enum Denomination {
         this.score = score;
     }
 
+    public String getSymbol() {
+        return symbol;
+    }
+
     public static List<Denomination> all() {
         return List.of(values());
     }
@@ -41,10 +45,5 @@ public enum Denomination {
 
     public int toScore() {
         return score;
-    }
-
-    @Override
-    public String toString() {
-        return symbol;
     }
 }

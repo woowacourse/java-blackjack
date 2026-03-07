@@ -48,7 +48,7 @@ public class Hand {
 
     public List<String> getCardNames(int startInclusive) {
         return cards.subList(startInclusive, cards.size()).stream()
-            .map(Card::toString)
+            .map(Card::getName)
             .toList();
     }
 }
