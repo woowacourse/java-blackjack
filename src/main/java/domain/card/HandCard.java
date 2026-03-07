@@ -29,13 +29,13 @@ public class HandCard {
     }
 
     private int cardCalculatorWithAce(int nonAceTotal, int aceCount) {
-        int totalSum = nonAceTotal + (aceCount * ACE_MAX_VALUE);
+        int total = nonAceTotal + (aceCount * ACE_MAX_VALUE);
         int remainingAce = aceCount;
-        while (totalSum > BLACKJACK_MAX_LIMIT && remainingAce > 0) {
-            totalSum -= (ACE_MAX_VALUE - ACE_MIN_VALUE);
+        while (total > BLACKJACK_MAX_LIMIT && remainingAce > 0) {
+            total -= (ACE_MAX_VALUE - ACE_MIN_VALUE);
             remainingAce--;
         }
-        return totalSum;
+        return total;
     }
 
     public void addCard(Card card) {
