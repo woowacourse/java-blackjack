@@ -48,16 +48,20 @@ class GameResultTest {
     }
 
     @Test
-    @DisplayName("딜러의 카드 합보다 플레이어의 카드 합이 같으면 무 판정")
+    @DisplayName("딜러의 카드 합과 플레이어의 카드 합이 같으면 무 판정")
     void drawTest() {
         // given
         Dealer dealer = new Dealer();
         Player player = new Player("luke");
-        Card card = new Card(Figure.SPADE, Number.THREE);
-        Card card2 = new Card(Figure.CLOVER, Number.THREE);
+        Card card = new Card(Figure.SPADE, Number.JACK);
+        Card card2 = new Card(Figure.SPADE, Number.ACE);
+        Card card3 = new Card(Figure.SPADE, Number.KING);
+        Card card4 = new Card(Figure.DIAMOND, Number.ACE);
 
         player.receiveCard(card);
-        dealer.receiveCard(card2);
+        player.receiveCard(card2);
+        dealer.receiveCard(card3);
+        dealer.receiveCard(card4);
 
         player.updateScore();
         dealer.updateScore();
@@ -116,7 +120,7 @@ class GameResultTest {
     }
 
     @Test
-    @DisplayName("딜러와 플레이어 모두 버스티인 경우 무 판정")
+    @DisplayName("딜러와 플레이어 모두 버스트인 경우 무 판정")
     void isDrawWhenBothIsBurstTest() {
         // given
         Dealer dealer = new Dealer();
