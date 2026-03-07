@@ -2,7 +2,7 @@ package domain.card;
 
 import java.util.Arrays;
 
-public enum CardValue {
+public enum CardScore {
     ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
@@ -17,11 +17,11 @@ public enum CardValue {
     QUEEN("Q", 10),
     JACK("J", 10);
 
-    private final String value;
+    private final String score;
     private final int number;
 
-    CardValue(String value, int number) {
-        this.value = value;
+    CardScore(String score, int number) {
+        this.score = score;
         this.number = number;
     }
 
@@ -29,13 +29,13 @@ public enum CardValue {
         return this.number;
     }
 
-    public String getValue() {
-        return this.value;
+    public String getScore() {
+        return this.score;
     }
 
-    public static CardValue of(final String value){
+    public static CardScore of(final String score){
         return Arrays.stream(values())
-                .filter(val -> val.value.equals(value))
+                .filter(val -> val.score.equals(score))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("생성할 수 없는 value 입니다."));
     }

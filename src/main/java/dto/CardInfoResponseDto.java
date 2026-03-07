@@ -1,7 +1,7 @@
 package dto;
 
 import domain.game.Game;
-import domain.player.Player;
+import domain.player.Gambler;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,11 +24,11 @@ public record CardInfoResponseDto(Map<String, List<String>> participantsInfo, Li
         );
 
         // 플레이어 정보
-        List<Player> gamblersInfo = game.getGamblers().getGamblersInfo();
+        List<Gambler> gamblersInfo = game.getGamblers().getGamblersInfo();
 
         participantsInfo.putAll(
                 gamblersInfo.stream()
-                        .collect(Collectors.toMap(Player::getName, Player::getCardStatus))
+                        .collect(Collectors.toMap(Gambler::getName, Gambler::getCardStatus))
         );
 
         return participantsInfo;
@@ -42,7 +42,7 @@ public record CardInfoResponseDto(Map<String, List<String>> participantsInfo, Li
         // 플레이어의 점수
         score.addAll(
                 game.getGamblers().getGamblersInfo().stream()
-                .map(Player::getTotalScore)
+                .map(Gambler::getTotalScore)
                 .toList());
 
         return score;

@@ -6,7 +6,7 @@ public class Dealer extends Participant {
         super(name);
     }
 
-    public boolean isTotalValue16OrLess() {
+    public boolean isTotalScore16OrLess() {
         return getTotalScore() <= 16;
     }
 

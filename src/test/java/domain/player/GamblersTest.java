@@ -18,7 +18,7 @@ class GamblersTest {
 
         // then
         boolean allContainName = names.stream()
-                .allMatch(name -> gamblers.containGambler(name) == true);
+                .allMatch(name -> gamblers.containGambler(name));
 
         Assertions.assertThat(allContainName).isEqualTo(true);
     }

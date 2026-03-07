@@ -20,12 +20,12 @@ public class Participant {
         cardStatus.addCard(card);
     }
 
-    public boolean isBust() {
-        return cardStatus.isBust();
+    public int getTotalScore() {
+        return cardStatus.getTotalScore();
     }
 
-    public int getTotalScore() {
-        return cardStatus.getTotalValue();
+    public boolean isBust() {
+        return cardStatus.isBust();
     }
 
     public String getName() {

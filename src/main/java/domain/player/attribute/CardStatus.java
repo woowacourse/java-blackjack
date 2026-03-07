@@ -18,7 +18,7 @@ public class CardStatus {
 
     public void addCard(Card card) {
         this.cards.add(card);
-        this.score.addValue(card);
+        this.score.addScore(card);
     }
 
     public int getCardsSize() {
@@ -27,11 +27,11 @@ public class CardStatus {
 
     public boolean isBust() {
         return cards.stream()
-                .mapToInt(Card::getValue)
+                .mapToInt(Card::getScore)
                 .sum() > 21;
     }
 
-    public int getTotalValue() {
+    public int getTotalScore() {
         return score.getScore();
     }
 

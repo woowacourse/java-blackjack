@@ -1,29 +1,24 @@
 package domain.player;
 
 import domain.card.Card;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PlayerTest {
+class GamblerTest {
 
     @Test
     @DisplayName("카드 정상적으로 받기 테스트")
     void 카드_정상적으로_받기_테스트() {
         // given
         Card card = new Card("2", "하트");
-        Player player = new Player("coco");
+        Gambler gambler = new Gambler("coco");
 
         // when
-        player.addCard(card);
+        gambler.addCard(card);
 
         // then
-        Assertions.assertThat(player.getCardSize()).isEqualTo(1);
+        Assertions.assertThat(gambler.getCardSize()).isEqualTo(1);
     }
 
 
@@ -36,15 +31,15 @@ class PlayerTest {
         Card card2 = new Card("K", "다이아몬드");
         Card card3 = new Card("K", "클로버");
 
-        Player player = new Player("coco");
+        Gambler gambler = new Gambler("coco");
 
         // when
-        player.addCard(card1);
-        player.addCard(card2);
-        player.addCard(card3);
+        gambler.addCard(card1);
+        gambler.addCard(card2);
+        gambler.addCard(card3);
 
         // then
-        Assertions.assertThat(player.isBust()).isEqualTo(true);
+        Assertions.assertThat(gambler.isBust()).isEqualTo(true);
     }
 
     // 합산
@@ -56,14 +51,14 @@ class PlayerTest {
         Card card2 = new Card("K", "다이아몬드");
         Card card3 = new Card("K", "클로버");
 
-        Player player = new Player("coco");
+        Gambler gambler = new Gambler("coco");
 
         // when
-        player.addCard(card1);
-        player.addCard(card2);
-        player.addCard(card3);
+        gambler.addCard(card1);
+        gambler.addCard(card2);
+        gambler.addCard(card3);
 
         // then
-        Assertions.assertThat(player.getTotalScore()).isEqualTo(22);
+        Assertions.assertThat(gambler.getTotalScore()).isEqualTo(22);
     }
 }

@@ -13,10 +13,10 @@ public class GameCards {
 
     public GameCards(int amount) {
         this.cards = Arrays.stream(CardKind.values())
-                .flatMap(cardKind -> Arrays.stream(CardValue.values())
-                        .flatMap(cardValue ->
+                .flatMap(cardKind -> Arrays.stream(CardScore.values())
+                        .flatMap(cardScore ->
                                 IntStream.range(0, amount)
-                                        .mapToObj(card -> new Card(cardValue.getValue(),
+                                        .mapToObj(card -> new Card(cardScore.getScore(),
                                                 cardKind.getKind()))
                         ))
                 .collect(Collectors.toCollection(LinkedList::new));

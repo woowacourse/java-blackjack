@@ -1,7 +1,7 @@
 package dto;
 
 import domain.game.Game;
-import domain.player.Player;
+import domain.player.Gambler;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,11 +23,11 @@ public record InitialCardInfoResponseDto(Map<String, List<String>> initialPartic
         );
 
         // 플레이어 정보
-        List<Player> gamblersInfo = game.getGamblers().getGamblersInfo();
+        List<Gambler> gamblersInfo = game.getGamblers().getGamblersInfo();
 
         initialParticipantsInfo.putAll(
                 gamblersInfo.stream()
-                        .collect(Collectors.toMap(Player::getName, Player::getCardStatus))
+                        .collect(Collectors.toMap(Gambler::getName, Gambler::getCardStatus))
         );
 
         return initialParticipantsInfo;

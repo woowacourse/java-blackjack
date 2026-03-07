@@ -8,17 +8,17 @@ public class Score {
 
     private int score = 0;
 
-    public void addValue(Card card){
+    public void addScore(Card card){
         if (card.isAce()) {
             calculateAceCard(card);
             return;
         }
-        score += card.getValue();
+        score += card.getScore();
     }
 
     private void calculateAceCard(Card card) {
         if (score + ACE_SCORE > DEALER_REFERENCE_POINT) {
-            score += card.getValue();
+            score += card.getScore();
             return;
         }
         score += ACE_SCORE;

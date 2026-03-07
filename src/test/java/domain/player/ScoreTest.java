@@ -16,7 +16,7 @@ class ScoreTest {
         Card card = new Card("A", "하트");
 
         // when
-        score.addValue(card);
+        score.addScore(card);
 
         // then
         Assertions.assertThat(score.getScore()).isEqualTo(11);
@@ -31,11 +31,11 @@ class ScoreTest {
         Card card2 = new Card("J", "하트");
         Card card3 = new Card("A", "하트");
 
-        score.addValue(card1);
-        score.addValue(card2);
+        score.addScore(card1);
+        score.addScore(card2);
 
         // when
-        score.addValue(card3);
+        score.addScore(card3);
 
         // then
         Assertions.assertThat(score.getScore()).isEqualTo(21);

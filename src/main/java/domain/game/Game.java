@@ -1,5 +1,6 @@
 package domain.game;
 
+import static util.Constants.DEALER_NAME;
 import static util.Constants.DEFAULT_START_CARD_COUNT;
 
 import domain.card.GameCards;
@@ -14,7 +15,7 @@ public class Game {
     private final GameCards gameCards;
 
     public Game(List<String> names, int amount) {
-        this.dealer = new Dealer("딜러");
+        this.dealer = new Dealer(DEALER_NAME);
         this.gamblers = new Gamblers(names);
         this.gameCards = new GameCards(amount);
     }

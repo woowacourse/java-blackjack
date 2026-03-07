@@ -16,10 +16,10 @@ class CardTest {
         Card card = new Card("2", "하트");
 
         //when
-        int value = card.getValue();
+        int score = card.getScore();
 
         //then
-        assertThat(value).isEqualTo(2);
+        assertThat(score).isEqualTo(2);
     }
 
     @Test
@@ -29,10 +29,10 @@ class CardTest {
         Card card = new Card("K", "하트");
 
         //when
-        int value = card.getValue();
+        int score = card.getScore();
 
         //then
-        assertThat(value).isEqualTo(10);
+        assertThat(score).isEqualTo(10);
     }
 
     @Test
@@ -42,15 +42,15 @@ class CardTest {
         Card card = new Card("A", "하트");
 
         //when
-        int value = card.getValue();
+        int score = card.getScore();
 
         //then
-        assertThat(value).isEqualTo(1);
+        assertThat(score).isEqualTo(1);
     }
 
     @Test
     @DisplayName("카드 value가 정상 입력되지 않았을 때 에러 반환")
-    void 카드_value_테스트() {
+    void 카드_score_테스트() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> {
                     new Card("14", "하트");
@@ -68,7 +68,7 @@ class CardTest {
 
     @Test
     @DisplayName("카드 value와 kind 동시 반환")
-    void 카드_value_kind_반환_테스트() {
+    void 카드_score_kind_반환_테스트() {
         // given
         Card card = new Card("K", "하트");
 

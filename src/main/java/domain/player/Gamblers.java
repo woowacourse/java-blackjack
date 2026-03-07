@@ -7,26 +7,26 @@ import java.util.stream.Collectors;
 
 public class Gamblers {
 
-    private List<Player> gamblers;
+    private List<Gambler> gamblers;
 
     public Gamblers(List<String> names) {
         this.gamblers = names.stream()
-                .map(Player::new)
+                .map(Gambler::new)
                 .collect(Collectors.toList());
     }
 
     public boolean containGambler(String name) {
         return gamblers.stream()
-                .anyMatch(player -> player.isEqualName(name));
+                .anyMatch(gambler -> gambler.isEqualName(name));
     }
 
-    public List<Player> getGamblersInfo() {
+    public List<Gambler> getGamblersInfo() {
         return Collections.unmodifiableList(gamblers);
     }
 
     public void receiveCards(GameCards gameCards) {
-        for (Player player : gamblers) {
-            player.addCard(gameCards.drawCard());
+        for (Gambler gambler : gamblers) {
+            gambler.addCard(gameCards.drawCard());
         }
     }
 }

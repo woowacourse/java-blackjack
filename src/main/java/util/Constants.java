@@ -14,6 +14,8 @@ public class Constants {
 
     public static final int DEALER_REFERENCE_POINT = 16;
 
+    public static final String DEALER_NAME = "딜러";
+
     private Constants() {
     }
 }

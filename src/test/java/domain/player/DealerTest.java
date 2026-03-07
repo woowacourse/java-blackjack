@@ -16,6 +16,6 @@ class DealerTest {
         dealer.addCard(new Card("A", "하트"));
 
         //then
-        Assertions.assertThat(dealer.isTotalValue16OrLess()).isEqualTo(true);
+        Assertions.assertThat(dealer.isTotalScore16OrLess()).isEqualTo(true);
     }
 }
