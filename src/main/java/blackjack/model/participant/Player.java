@@ -13,14 +13,9 @@ public class Player extends Participant {
         return new Player(name, Hands.empty());
     }
 
-    public String getName() {
-        return this.name;
-    }
-
     @Override
     public void pickInitCards(CardDeck cardDeck) {
         hands.addCard(cardDeck.pick());
         hands.addCard(cardDeck.pick());
     }
-
 }
