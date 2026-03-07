@@ -2,7 +2,7 @@ package domain.player;
 
 import domain.card.HandCard;
 import domain.deck.CardDeck;
-import dto.CardInfo;
+import java.util.List;
 
 public abstract class Player {
     protected final String name;
@@ -29,8 +29,8 @@ public abstract class Player {
         return handCard.isBust();
     }
 
-    public CardInfo getCardInfo() {
-        return new CardInfo(name, handCard.printCardInfos(), score());
+    public List<String> getCardInfo() {
+        return handCard.cardInfos();
     }
 
 }

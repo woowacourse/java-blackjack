@@ -1,7 +1,7 @@
 package view;
 
 import dto.BlackjackResult;
-import dto.CardInfo;
+import dto.PlayerCardInfo;
 import dto.MatchResultLog;
 import java.util.List;
 
@@ -23,8 +23,8 @@ public class OutputView {
         System.out.println("딜러카드: " + card);
     }
 
-    public static void printPlayerCards(CardInfo cardInfo) {
-        System.out.println(cardInfo.name() + " " + String.join(", ", cardInfo.card()));
+    public static void printPlayerCards(PlayerCardInfo playerCardInfo) {
+        System.out.println(playerCardInfo.name() + " " + String.join(", ", playerCardInfo.card()));
     }
 
     public static void printPlayerBust(String name) {
@@ -39,9 +39,9 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printFinalPlayer(CardInfo cardInfo) {
-        System.out.println(cardInfo.name() + "카드: " +
-                String.join(", ", cardInfo.card()) + " - 결과: " + cardInfo.score());
+    public static void printFinalPlayer(PlayerCardInfo playerCardInfo) {
+        System.out.println(playerCardInfo.name() + "카드: " +
+                String.join(", ", playerCardInfo.card()) + " - 결과: " + playerCardInfo.score());
     }
 
     public static void printFinalResultHeader() {

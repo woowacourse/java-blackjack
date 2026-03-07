@@ -13,7 +13,7 @@ public class Dealer extends Player {
     }
 
     public String showFirstCard() {
-        return handCard.printFirstCardInfo();
+        return handCard.firstCardInfo();
     }
 
 }

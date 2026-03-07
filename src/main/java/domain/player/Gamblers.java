@@ -3,7 +3,7 @@ package domain.player;
 import domain.MatchResult;
 import domain.deck.CardDeck;
 import dto.BlackjackResult;
-import dto.CardInfo;
+import dto.PlayerCardInfo;
 import dto.MatchResultLog;
 import expcetion.BlackjackException;
 import expcetion.ExceptionMessage;
@@ -31,10 +31,6 @@ public class Gamblers {
         }
     }
 
-    public List<Gambler> getGamblers() {
-        return gamblers;
-    }
-
     public void dealAll(CardDeck cardDeck) {
         gamblers.forEach(gambler -> gambler.deal(cardDeck));
     }
@@ -44,11 +40,11 @@ public class Gamblers {
                 .map(g -> new MatchResultLog(g.getName(), g.getResult(dealerScore)))
                 .toList();
 
-        int winCount = count(logs, MatchResult.LOSE);
-        int loseCount = count(logs, MatchResult.WIN);
-        int drawCount = logs.size() - winCount - loseCount;
+        int dealerWinCount = count(logs, MatchResult.LOSE);
+        int dealerLoseCount = count(logs, MatchResult.WIN);
+        int drawCount = logs.size() - dealerWinCount - dealerLoseCount;
 
-        return new BlackjackResult(winCount, loseCount, drawCount, logs);
+        return new BlackjackResult(dealerWinCount, dealerLoseCount, drawCount, logs);
     }
 
     private int count(List<MatchResultLog> logs, MatchResult result) {
@@ -57,16 +53,9 @@ public class Gamblers {
                 .count();
     }
 
-    public List<String> getNames() {
-        return gamblers.stream()
-                .map(Gambler::getName)
-                .toList();
-    }
 
-    public List<CardInfo> gamblerCardInfo() {
-        return gamblers.stream()
-                .map(Gambler::getCardInfo)
-                .toList();
+    public List<Gambler> getGamblers(){
+        return List.copyOf(gamblers);
     }
 
     public void forEach(Consumer<Gambler> consumer) {

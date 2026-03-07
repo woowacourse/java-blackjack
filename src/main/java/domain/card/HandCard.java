@@ -41,15 +41,14 @@ public class HandCard {
         cards.add(card);
     }
 
-    public List<String> printCardInfos() {
+    public List<String> cardInfos() {
         return cards.stream()
                 .map(Card::getCardInfo)
                 .toList();
     }
 
-    public String printFirstCardInfo() {
-        return cards.getFirst()
-                .getCardInfo();
+    public String firstCardInfo() {
+        return cards.getFirst().getCardInfo();
     }
 
     public boolean isBust() {

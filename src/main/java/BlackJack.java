@@ -3,6 +3,7 @@ import domain.deck.Deck;
 import domain.player.Dealer;
 import domain.player.Gambler;
 import domain.player.Gamblers;
+import dto.PlayerCardInfo;
 import java.util.List;
 import parser.AnswerParser;
 import parser.PlayNameParser;
@@ -19,7 +20,7 @@ public class BlackJack {
 
     public void start() {
         Dealer dealer = new Dealer();
-        Gamblers gamblers = new Gamblers(getNames());
+        Gamblers gamblers = new Gamblers(getPlayerNames());
         initialDeal(dealer, gamblers);
         printInitialDealInfo(dealer, gamblers);
 
@@ -30,7 +31,7 @@ public class BlackJack {
         printFinalResult(dealer, gamblers);
     }
 
-    private List<String> getNames() {
+    private List<String> getPlayerNames() {
         OutputView.printStartMessage();
         return PlayNameParser.splitNames(InputView.readLine());
     }
@@ -43,10 +44,14 @@ public class BlackJack {
     }
 
     private void printInitialDealInfo(Dealer dealer, Gamblers gamblers) {
-        OutputView.printInitMessage(gamblers.getNames());
+        List<String> playerNames = gamblers.getGamblers().stream()
+                .map(Gambler::getName)
+                .toList();
+        OutputView.printInitMessage(playerNames);
         OutputView.printDealerFirstCard(dealer.showFirstCard());
 
-        gamblers.gamblerCardInfo()
+        gamblers.getGamblers().stream()
+                .map(PlayerCardInfo::from)
                 .forEach(OutputView::printPlayerCards);
     }
 
@@ -65,7 +70,7 @@ public class BlackJack {
                 OutputView.printPlayerBust(gambler.getName());
                 break;
             }
-            OutputView.printPlayerCards(gambler.getCardInfo());
+            OutputView.printPlayerCards(PlayerCardInfo.from(gambler));
         }
     }
 
@@ -87,8 +92,9 @@ public class BlackJack {
     }
 
     private void printFinalPlayerInfo(Dealer dealer, Gamblers gamblers) {
-        OutputView.printFinalPlayer(dealer.getCardInfo());
-        gamblers.gamblerCardInfo()
+        OutputView.printFinalPlayer(PlayerCardInfo.from(dealer));
+        gamblers.getGamblers().stream()
+                .map(PlayerCardInfo::from)
                 .forEach(OutputView::printFinalPlayer);
     }
 
@@ -96,4 +102,6 @@ public class BlackJack {
         OutputView.printFinalResultHeader();
         OutputView.printResult(gamblers.getResult(dealer.score()));
     }
+
+
 }
