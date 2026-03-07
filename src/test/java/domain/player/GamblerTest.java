@@ -61,4 +61,5 @@ class GamblerTest {
         // then
         Assertions.assertThat(gambler.getTotalScore()).isEqualTo(22);
     }
+
 }

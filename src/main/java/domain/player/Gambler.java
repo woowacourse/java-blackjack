@@ -6,4 +6,5 @@ public class Gambler extends Participant{
     }
 
     // player마다 다른 전략(확장)
+
 }
