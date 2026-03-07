@@ -31,6 +31,11 @@ public class ScoreBoard {
         return resultList;
     }
 
+    private void resultSort() {
+        GameStatus lastState = games.removeLast();
+        games.addFirst(lastState);
+    }
+
     private boolean isWin(GameStatus playerGameStatus, int dealerScore) {
         return playerGameStatus.scoreSum() > dealerScore;
     }
@@ -44,6 +49,7 @@ public class ScoreBoard {
     }
 
     public List<GameStatus> gameStatuses() {
+        resultSort();
         return List.copyOf(games);
     }
 }
