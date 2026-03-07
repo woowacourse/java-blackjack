@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 class DeckTest {
 
-    final CardsGenerator generator = new ShuffledCardsGenerator();
+    final CardsGenerator generator = new UniqueCardsGenerator();
     final CardsGenerator emptyCardsGenerator = List::of;
 
     @Test

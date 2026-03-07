@@ -7,7 +7,7 @@ import blackjack.model.BustPolicyImpl;
 import blackjack.model.CardsGenerator;
 import blackjack.model.DealerDrawPolicy;
 import blackjack.model.ResultJudgement;
-import blackjack.model.ShuffledCardsGenerator;
+import blackjack.model.UniqueCardsGenerator;
 import blackjack.model.ThresholdDrawPolicy;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -21,7 +21,7 @@ public class BlackjackConfig {
     private final BustPolicy bustPolicy = new BustPolicyImpl();
     private final AceAdjustPolicy aceAdjustPolicy = new AceAdjustPolicy(ADJUST_VALUE, bustPolicy);
     private final DealerDrawPolicy dealerDrawPolicy = new ThresholdDrawPolicy(17);
-    private final CardsGenerator cardsGenerator = new ShuffledCardsGenerator();
+    private final CardsGenerator cardsGenerator = new UniqueCardsGenerator();
     private final ResultJudgement resultJudgement = new ResultJudgement(bustPolicy);
 
     private final BlackjackController controller = new BlackjackController(

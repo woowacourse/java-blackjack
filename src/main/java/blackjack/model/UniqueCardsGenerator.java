@@ -3,7 +3,7 @@ package blackjack.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShuffledCardsGenerator implements CardsGenerator {
+public class UniqueCardsGenerator implements CardsGenerator {
 
     @Override
     public List<Card> create() {
