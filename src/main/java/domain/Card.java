@@ -27,16 +27,14 @@ public class Card {
     public int hashCode() {
         return Objects.hash(rank, suit);
     }
-    
+
     public int calculateScore() {
         if (rank.equals(Rank.J) || rank.equals(Rank.Q) || rank.equals(Rank.K)) {
-            return 10;
+            return 10; // TODO: 상수?
         }
-
         if (rank.equals(Rank.ACE)) {
-            return 11;
+            return 11; // TODO: 상수?
         }
-
         return Integer.parseInt(rank.getRank());
     }
 
