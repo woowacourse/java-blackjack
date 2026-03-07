@@ -17,18 +17,24 @@ public class ScoreBoard {
         games.add(status);
     }
 
-    public List<GameResult> results() {
-        List<GameResult> resultList = new ArrayList<>();
+    public List<GameResult> playerResults() {;
         int dealerScore = getDealerScore();
-        games.stream().filter(gameStatus -> !gameStatus.name().equals("딜러")).forEach(gameStatus -> {
-            if (isWin(gameStatus, dealerScore)) {
-                resultList.add(new GameResult(gameStatus.name(), "승"));
-                return;
-            }
-            resultList.add(new GameResult(gameStatus.name(), "패"));
-        });
 
-        return resultList;
+        return games.stream()
+                .filter(this::isPlayer)
+                .map(gameStatus -> getGameResult(gameStatus, dealerScore))
+                .toList();
+    }
+
+    private boolean isPlayer(GameStatus gameStatus) {
+        return !gameStatus.name().equals("딜러");
+    }
+
+    private GameResult getGameResult(GameStatus gameStatus, int dealerScore) {
+        if (isWin(gameStatus, dealerScore)) {
+            return new GameResult(gameStatus.name(), "승");
+        }
+        return new GameResult(gameStatus.name(), "패");
     }
 
     private void resultSort() {
@@ -40,13 +46,12 @@ public class ScoreBoard {
         if (playerGameStatus.scoreSum() > 21) {
             return false;
         }
-
         return playerGameStatus.scoreSum() > dealerScore;
     }
 
     private int getDealerScore() {
         return games.stream()
-                .filter(gameStatus -> gameStatus.name().equals("딜러"))
+                .filter(gameStatus -> isPlayer(gameStatus))
                 .findFirst()
                 .map(GameStatus::scoreSum)
                 .orElse(0);

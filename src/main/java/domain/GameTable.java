@@ -68,7 +68,7 @@ public class GameTable {
     }
 
     public List<GameResult> result() {
-        return scoreBoard.results();
+        return scoreBoard.playerResults();
     }
 
     public String currentPlayerName() {

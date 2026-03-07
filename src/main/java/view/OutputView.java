@@ -30,10 +30,6 @@ public class OutputView {
         System.out.println();
     }
 
-    /**
-     * 최종 승패
-     * 추후 비즈니스로직 완성 후 결정
-     */
     public static void gameResult(List<GameResult> gameResults) {
         System.out.println("## 최종 승패");
 
