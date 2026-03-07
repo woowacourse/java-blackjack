@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.utils.Lists;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -15,9 +16,10 @@ public class Trump {
     }
 
     private List<Card> generateShuffledDeck() {
-        List<Card> shuffledDeck = Arrays.stream(Suit.values())
-            .flatMap(suit -> Arrays.stream(Denomination.values())
-                .map(denomination -> new Card(suit, denomination)))
+        List<Card> shuffledDeck =
+            Lists.cartesianProduct(List.of(Suit.values()), List.of(Denomination.values()))
+            .stream()
+            .map(pair -> new Card(pair.getLeft(), pair.getRight()))
             .collect(Collectors.toCollection(ArrayList::new));
         Collections.shuffle(shuffledDeck);
 
