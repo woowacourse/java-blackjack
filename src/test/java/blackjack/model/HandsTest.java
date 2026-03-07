@@ -1,7 +1,6 @@
 package blackjack.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
@@ -11,17 +10,26 @@ import org.junit.jupiter.api.Test;
 
 class HandsTest {
 
+    @Test
+    @DisplayName("빈 핸즈를 반환한다.")
+    void empty() {
+        assertThat(
+                Hands.empty()
+                        .getAllCard()
+        ).isEmpty();
+    }
 
     @Test
     @DisplayName("인자로 넘겨받은 카드를 핸즈에 추가한다.")
-    void addCards() {
+    void addCard() {
         // given
         Hands hands = Hands.empty();
-        Card card = Card.opened(Rank.ACE, Suit.CLOVER);
 
-        // when && then
-        assertThatCode(() -> hands.addCard(card))
-                .doesNotThrowAnyException();
+        //when
+        hands.addCard(Card.opened(Rank.TEN, Suit.CLOVER));
+
+        // then
+        assertThat(hands.getAllCard().size()).isEqualTo(1);
     }
 
     @Test
@@ -77,5 +85,21 @@ class HandsTest {
         hands.addCard(Card.opened(Rank.ACE, Suit.CLOVER));
 
         assertThat(hands.isTotalScoreOver(16)).isTrue();
+    }
+
+    @Test
+    @DisplayName("핸즈에서 오픈된 카드들만 반환한다")
+    void getOpenedCards() {
+        // given
+        Hands hands = Hands.empty();
+        hands.addCard(Card.opened(Rank.SIX, Suit.CLOVER));
+
+        Card closed = Card.opened(Rank.ACE, Suit.CLOVER);
+        closed.flip();
+
+        hands.addCard(closed);
+
+        // when & then
+        assertThat(hands.getOpenedCards().size()).isEqualTo(1);
     }
 }

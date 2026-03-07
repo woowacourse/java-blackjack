@@ -8,7 +8,7 @@ public class Hands {
 
     private final List<Card> cards;
 
-    public Hands(List<Card> cards) {
+    private Hands(List<Card> cards) {
         this.cards = cards;
     }
 
