@@ -23,7 +23,7 @@ class GameResultTest {
         dealer.updateScore();
 
         // when & then
-        assertThat(GameResult.getResult(player, dealer).getStatus())
+        assertThat(GameResult.calculateScore(player, dealer).getStatus())
                 .isEqualTo("승");
     }
 
@@ -43,7 +43,7 @@ class GameResultTest {
         dealer.updateScore();
 
         // when & then
-        assertThat(GameResult.getResult(player, dealer).getStatus())
+        assertThat(GameResult.calculateScore(player, dealer).getStatus())
                 .isEqualTo("패");
     }
 
@@ -67,7 +67,7 @@ class GameResultTest {
         dealer.updateScore();
 
         // when & then
-        assertThat(GameResult.getResult(player, dealer).getStatus())
+        assertThat(GameResult.calculateScore(player, dealer).getStatus())
                 .isEqualTo("무");
     }
 
@@ -91,7 +91,7 @@ class GameResultTest {
         dealer.updateScore();
 
         // when & then
-        assertThat(GameResult.getResult(player, dealer).getStatus())
+        assertThat(GameResult.calculateScore(player, dealer).getStatus())
                 .isEqualTo("승");
     }
 
@@ -115,7 +115,7 @@ class GameResultTest {
         dealer.updateScore();
 
         // when & then
-        assertThat(GameResult.getResult(player, dealer).getStatus())
+        assertThat(GameResult.calculateScore(player, dealer).getStatus())
                 .isEqualTo("패");
     }
 
@@ -143,7 +143,7 @@ class GameResultTest {
         dealer.updateScore();
 
         // when & then
-        assertThat(GameResult.getResult(player, dealer).getStatus())
+        assertThat(GameResult.calculateScore(player, dealer).getStatus())
                 .isEqualTo("무");
     }
 }

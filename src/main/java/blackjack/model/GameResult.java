@@ -11,7 +11,7 @@ public enum GameResult {
         this.status = status;
     }
 
-    public static GameResult getResult(Player player, Dealer dealer) {
+    public static GameResult calculateScore(Player player, Dealer dealer) {
         int playerScore = player.getScore();
         int dealerScore = dealer.getScore();
 

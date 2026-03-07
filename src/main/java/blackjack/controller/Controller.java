@@ -43,7 +43,7 @@ public class Controller {
     private static Map<Player, GameResult> getPlayerGameResult(List<Player> participants, Dealer dealer) {
         Map<Player, GameResult> gameResult = new LinkedHashMap<>();
         for (Player player : participants) {
-            gameResult.put(player ,GameResult.getResult(player, dealer));
+            gameResult.put(player ,GameResult.calculateScore(player, dealer));
         }
         return gameResult;
     }
