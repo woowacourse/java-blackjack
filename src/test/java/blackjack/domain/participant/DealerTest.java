@@ -1,0 +1,59 @@
+package blackjack.domain.participant;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import blackjack.domain.Card;
+import blackjack.domain.PlayingCards;
+import blackjack.domain.Rank;
+import blackjack.domain.Suit;
+import java.util.List;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+class DealerTest {
+    
+    @DisplayName("딜러가 정상적으로 생성된다.")
+    @Test
+    void createDealer() {
+        Dealer dealer = Dealer.from();
+        
+        assertThat(dealer.getNickname()).isEqualTo("딜러");
+        assertThat(dealer.isDealer()).isTrue();
+    }
+    
+    @DisplayName("딜러는 총합이 16점 이하일 때만 카드를 받을 수 있다.")
+    @Test
+    void isDealerDraw() {
+        Dealer dealer = Dealer.from();
+        PlayingCards cards16 = PlayingCards.from(List.of(
+                new Card(Rank.TEN, Suit.SPADE),
+                new Card(Rank.SIX, Suit.HEART)
+        ));
+        
+        dealer.receiveCard(cards16);
+        assertThat(dealer.isDealerDraw()).isTrue();
+        
+        Dealer dealer2 = Dealer.from();
+        PlayingCards cards17 = PlayingCards.from(List.of(
+                new Card(Rank.TEN, Suit.SPADE),
+                new Card(Rank.SEVEN, Suit.HEART)
+        ));
+        
+        dealer2.receiveCard(cards17);
+        assertThat(dealer2.isDealerDraw()).isFalse();
+    }
+    
+    @DisplayName("딜러의 첫 번째 카드 이름을 반환한다.")
+    @Test
+    void getFirstCard() {
+        Dealer dealer = Dealer.from();
+        PlayingCards cards = PlayingCards.from(List.of(
+                new Card(Rank.ACE, Suit.SPADE),
+                new Card(Rank.TEN, Suit.HEART)
+        ));
+        
+        dealer.receiveCard(cards);
+        
+        assertThat(dealer.getFirstCard()).isEqualTo("A스페이드");
+    }
+}

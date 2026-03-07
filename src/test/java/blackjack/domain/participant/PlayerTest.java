@@ -15,20 +15,19 @@ class PlayerTest {
     @DisplayName("플레이어가 정상적으로 생성된다.")
     @Test
     void createPlayer() {
-        Player player = new Player("포비", Role.PLAYER);
-        assertThat(player.getNickname()).isEqualTo("포비");
+        Player player = new Player("pobi", Role.PLAYER);
+        
+        assertThat(player.getNickname()).isEqualTo("pobi");
         assertThat(player.isDealer()).isFalse();
     }
     
     @DisplayName("플레이어가 카드를 더 받을 수 있는지 확인한다.")
     @Test
     void isDrawable() {
-        Player player = new Player("포비", Role.PLAYER);
+        Player player = new Player("pobi", Role.PLAYER);
         
-        // 초기 상태는 받을 수 있음 (0점)
         assertThat(player.isDrawable()).isTrue();
         
-        // 21점 이상이면 더 받을 수 없음 (버스트 상태)
         PlayingCards bustedCards = PlayingCards.from(List.of(
                 new Card(Rank.TEN, Suit.SPADE),
                 new Card(Rank.TEN, Suit.HEART),
@@ -42,7 +41,7 @@ class PlayerTest {
     @DisplayName("플레이어가 명시적으로 stop()을 호출하면 점수와 상관없이 카드를 받을 수 없다.")
     @Test
     void stopDrawing() {
-        Player player = new Player("포비", Role.PLAYER);
+        Player player = new Player("pobi", Role.PLAYER);
         
         player.stop();
         
