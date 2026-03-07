@@ -32,5 +32,4 @@ public class CardTest {
         Assertions.assertThat(number == 1|| number == 11).isEqualTo(true);
     }
 
-
 }
