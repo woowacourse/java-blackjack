@@ -10,7 +10,7 @@ public class Hand {
 
     private static final int ACE_SCORE_DIFFERENCE = 10;
 
-    private List<Card> cards;
+    private final List<Card> cards;
 
     public Hand() {
         this.cards = new ArrayList<>();
@@ -25,14 +25,14 @@ public class Hand {
     }
 
     public int calculate() {
-        int score = calculateCardScore();
-        int aCount = calculateAceCount();
+        int cardScore = calculateCardScore();
+        int aceCount = calculateAceCount();
 
-        while (isBustWithAce(aCount, score)) {
-            score -= ACE_SCORE_DIFFERENCE;
-            aCount--;
+        while (isBustWithAce(aceCount, cardScore)) {
+            cardScore -= ACE_SCORE_DIFFERENCE;
+            aceCount--;
         }
-        return score;
+        return cardScore;
     }
 
     private int calculateCardScore() {
