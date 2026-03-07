@@ -78,6 +78,15 @@ public class GameService {
         playerGroups.nextPlayer();
     }
 
+    // 딜러 히트
+    public boolean isDealerHit(){
+        if (playerGroups.getDealer().getCardSum() < 17) {
+            playerGroups.getDealer().addCard(cardDeck.getCard());
+            return true;
+        }
+        return false;
+    }
+
     public int getPlayerGroupSize() {
         return playerGroups.getPlayerGroupSize();
     }

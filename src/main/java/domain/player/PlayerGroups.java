@@ -45,6 +45,11 @@ public class PlayerGroups {
         return players.get(playIndex).getCardSum();
     }
 
+    // 딜러 반환
+    public Player getDealer() {
+        return players.get(0);
+    }
+
     public int getPlayerGroupSize() {
         return players.size();
     }
@@ -61,7 +66,6 @@ public class PlayerGroups {
     public Player nextPlayer() {
         return players.get(playIndex++);
     }
-
 
     private void validatePlayerNum(List<Player> players){
         if (players.size() > 5) {

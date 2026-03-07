@@ -27,6 +27,11 @@ public class GameController {
             askPlayerHit();
         }
 
+        // 딜러 문구 출력
+        if (gameService.isDealerHit()) {
+            ResultView.printDealerOneMoreCard();
+        }
+
     }
 
     private void askPlayerHit() {
