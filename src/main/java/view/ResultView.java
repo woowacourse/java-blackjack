@@ -1,5 +1,7 @@
 package view;
 
+import domain.player.WinStatus;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -49,5 +51,40 @@ public class ResultView {
             System.out.println(playerName + "카드: " + String.join(", ", cards) + " - 결과: " + score);
         }
         System.out.println();
+    }
+
+    public static void printResult(Map<String, WinStatus> playerResult) {
+        System.out.println("## 최종 승패");
+        printDealerResult(playerResult);
+        printPlayerResult(playerResult);
+
+    }
+
+    private static void printDealerResult(Map<String, WinStatus> playerResult) {
+        int dealerWin = 0;
+        int dealerLose = 0;
+        int dealerDraw = 0;
+
+        for (WinStatus status : playerResult.values()) {
+            if(status == WinStatus.WIN) {
+                dealerLose++;
+            }
+
+            if (status == WinStatus.LOSE) {
+                dealerWin++;
+            }
+
+            if (status == WinStatus.DRAW) {
+                dealerDraw++;
+            }
+        }
+
+        System.out.println("딜러: " + dealerWin + "승 " + dealerLose + "패 " + dealerDraw + "무");
+    }
+
+    private static void printPlayerResult(Map<String, WinStatus> playerResult) {
+        for (String name : playerResult.keySet()) {
+            System.out.println(name + ": " + playerResult.get(name).getStatus());
+        }
     }
 }

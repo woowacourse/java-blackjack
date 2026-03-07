@@ -21,6 +21,23 @@ public class Player {
         return handCards.calculateCards();
     }
 
+    public boolean isBust() {
+        return handCards.calculateCards() > 21;
+    }
+
+    public WinStatus isWin(int score) {
+        int myScore = handCards.calculateCards();
+        if (myScore > score) {
+            return WinStatus.WIN;
+        }
+
+        if (myScore < score) {
+            return WinStatus.LOSE;
+        }
+
+        return WinStatus.DRAW;
+    }
+
     public String getName() {
         return name.getName();
     }

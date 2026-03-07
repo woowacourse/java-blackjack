@@ -37,6 +37,9 @@ public class GameController {
         Map<String, Integer> playersTotalScore = gameService.getPlayersTotalScore();
         ResultView.printCardSumResult(playersEndStatus, playersTotalScore);
 
+        // 최종 결과
+        ResultView.printResult(gameService.result());
+
     }
 
     private void askPlayerHit() {

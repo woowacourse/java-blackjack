@@ -3,6 +3,7 @@ package service;
 import domain.card.CardDeck;
 import domain.player.Player;
 import domain.player.PlayerGroups;
+import domain.player.WinStatus;
 import domain.vo.Name;
 
 import java.util.ArrayList;
@@ -89,6 +90,10 @@ public class GameService {
 
     public Map<String, Integer> getPlayersTotalScore() {
         return playerGroups.playersTotalScore();
+    }
+
+    public Map<String, WinStatus> result() {
+        return playerGroups.getGameResult();
     }
 
     public int getPlayerGroupSize() {
