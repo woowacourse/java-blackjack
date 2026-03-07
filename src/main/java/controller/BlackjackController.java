@@ -1,5 +1,6 @@
 package controller;
 
+import constant.PolicyConstant;
 import domain.Player;
 import dto.BlackjackResultDto;
 import dto.DealerResultDto;
@@ -55,13 +56,13 @@ public class BlackjackController {
     }
 
     private PlayersDto inputPlayers() {
-        List<String> input = Parser.parseInput(inputView.inputPlayers(), ","); // TODO: 상수?
+        List<String> input = Parser.parseInput(inputView.inputPlayers(), PolicyConstant.DELIMITER);
         return blackjackService.createPlayers(input);
     }
 
     private void inputHitOrStand(Player player) {
         String hitOrStand = inputView.inputHitOrStand(player.getName());
-        blackjackService.validateHitOrStand(hitOrStand); // 이 검증이 서비스의 역할인가? 그건 잘 모르겠어. Validator?
+        blackjackService.validateHitOrStand(hitOrStand);
         if (blackjackService.isNo(hitOrStand)) {
             outputView.printlnHand(blackjackService.generateHandDto(player));
             return;

@@ -3,6 +3,7 @@ package service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import constant.PolicyConstant;
 import constant.Rank;
 import constant.Result;
 import constant.Suit;
@@ -201,7 +202,7 @@ class BlackjackServiceTest {
             void 딜러의_카드_숫자가_17_미만_이라면_카드를_뽑는다() {
 
                 // given
-                Dealer dealer = new Dealer("딜러");
+                Dealer dealer = new Dealer(PolicyConstant.DEALER_NAME);
                 addCards(dealer, Rank.TEN, Rank.SIX);
 
                 // when
@@ -216,7 +217,7 @@ class BlackjackServiceTest {
             void 딜러의_카드_숫자가_17_이상_이라면_카드를_뽑지_않는다() {
 
                 // given
-                Dealer dealer = new Dealer("딜러");
+                Dealer dealer = new Dealer(PolicyConstant.DEALER_NAME);
                 addCards(dealer, Rank.TEN, Rank.SEVEN);
 
                 // when
@@ -239,7 +240,7 @@ class BlackjackServiceTest {
             void 딜러가_버스트면_버스트가_아닌_참가자는_승이고_버스트인_참가자는_패다() {
 
                 // given
-                Dealer dealer = new Dealer("딜러");
+                Dealer dealer = new Dealer(PolicyConstant.DEALER_NAME);
                 addCards(dealer, Rank.TEN, Rank.Q, Rank.TWO);
 
                 Player player1 = new Player("aa");
@@ -265,7 +266,7 @@ class BlackjackServiceTest {
             void 딜러가_버스트가_아니면_점수_비교_규칙대로_승무패를_계산해야_한다() {
 
                 // given
-                Dealer dealer = new Dealer("딜러");
+                Dealer dealer = new Dealer(PolicyConstant.DEALER_NAME);
                 addCards(dealer, Rank.TEN, Rank.SEVEN);
 
                 Player player1 = new Player("aa");
@@ -306,7 +307,7 @@ class BlackjackServiceTest {
             void 딜러_승무패_집계는_참가자_결과를_기준으로_계산해야_한다() {
 
                 // given
-                Dealer dealer = new Dealer("딜러");
+                Dealer dealer = new Dealer(PolicyConstant.DEALER_NAME);
                 addCards(dealer, Rank.TEN, Rank.SEVEN);
 
                 Player player1 = new Player("aa");
@@ -351,7 +352,7 @@ class BlackjackServiceTest {
             void 딜러_승무패_집계는_참가자_결과를_기준으로_계산해야_한다() {
 
                 // given
-                Dealer dealer = new Dealer("딜러");
+                Dealer dealer = new Dealer(PolicyConstant.DEALER_NAME);
                 addCards(dealer, Rank.TEN, Rank.SEVEN);
 
                 Player player1 = new Player("aa");
@@ -376,7 +377,7 @@ class BlackjackServiceTest {
                 // then
                 assertThat(actual).hasSize(5);
 
-                assertThat(actual.get(0).handDto().name()).isEqualTo("딜러");
+                assertThat(actual.get(0).handDto().name()).isEqualTo(PolicyConstant.DEALER_NAME);
                 assertThat(actual.get(0).score()).isEqualTo(17);
                 assertThat(actual.get(0).handDto().hand()).hasSize(2);
 

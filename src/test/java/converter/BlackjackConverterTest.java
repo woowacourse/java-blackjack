@@ -3,6 +3,7 @@ package converter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import constant.PolicyConstant;
 import constant.Rank;
 import constant.Result;
 import constant.Suit;
@@ -35,7 +36,7 @@ class BlackjackConverterTest {
                     new Player("jacob"),
                     new Player("seoye")
                 );
-                Dealer dealer = new Dealer("딜러");
+                Dealer dealer = new Dealer(PolicyConstant.DEALER_NAME);
 
                 // when
                 PlayersDto actual = blackjackConverter.convertPlayersDto(players, dealer);
@@ -59,7 +60,7 @@ class BlackjackConverterTest {
                     new Player("jacob"),
                     new Player("seoye")
                 );
-                Dealer dealer = new Dealer("딜러");
+                Dealer dealer = new Dealer(PolicyConstant.DEALER_NAME);
                 PlayersDto actual = blackjackConverter.convertPlayersDto(players, dealer);
 
                 // when & then
@@ -79,7 +80,7 @@ class BlackjackConverterTest {
             void 딜러의_첫번째_카드만_HandDto로_변환해야_한다() {
 
                 // given
-                Dealer dealer = new Dealer("딜러");
+                Dealer dealer = new Dealer(PolicyConstant.DEALER_NAME);
                 Card firstCard = new Card(Rank.TEN, Suit.HEART);
                 Card secondCard = new Card(Rank.ACE, Suit.SPADE);
                 dealer.addCard(firstCard);
@@ -89,7 +90,7 @@ class BlackjackConverterTest {
                 HandDto actual = blackjackConverter.convertHandDtoForDealer(dealer);
 
                 // then
-                assertThat(actual.name()).isEqualTo("딜러");
+                assertThat(actual.name()).isEqualTo(PolicyConstant.DEALER_NAME);
                 assertThat(actual.hand())
                     .hasSize(1)
                     .containsExactly(firstCard.getName());
@@ -182,7 +183,7 @@ class BlackjackConverterTest {
             void 딜러와_참가자들의_손패를_순서대로_HandDto_목록으로_변환해야_한다() {
 
                 // given
-                Dealer dealer = new Dealer("딜러");
+                Dealer dealer = new Dealer(PolicyConstant.DEALER_NAME);
                 Card dealerFirstCard = new Card(Rank.ACE, Suit.HEART);
                 Card dealerSecondCard = new Card(Rank.K, Suit.SPADE);
                 dealer.addCard(dealerFirstCard);
@@ -208,7 +209,7 @@ class BlackjackConverterTest {
                 // then
                 assertThat(actual).hasSize(3);
 
-                assertThat(actual.get(0).name()).isEqualTo("딜러");
+                assertThat(actual.get(0).name()).isEqualTo(PolicyConstant.DEALER_NAME);
                 assertThat(actual.get(0).hand())
                     .hasSize(1)
                     .containsExactly(dealerFirstCard.getName());
@@ -230,7 +231,7 @@ class BlackjackConverterTest {
             void 변환된_HandDto_목록은_수정할_수_없어야_한다() {
 
                 // given
-                Dealer dealer = new Dealer("딜러"); // TODO: 상수?
+                Dealer dealer = new Dealer(PolicyConstant.DEALER_NAME);
                 dealer.addCard(new Card(Rank.ACE, Suit.HEART));
                 dealer.addCard(new Card(Rank.K, Suit.SPADE));
 

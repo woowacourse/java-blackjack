@@ -1,5 +1,6 @@
 package view;
 
+import constant.PolicyConstant;
 import constant.Result;
 import domain.Player;
 import dto.BlackjackResultDto;
@@ -23,7 +24,7 @@ public class OutputView {
         List<String> names = playersDto.players().stream()
             .map(Player::getName)
             .toList();
-        System.out.printf(PRINT_PLAYERS_MESSAGE, String.join(", ", names)); // TODO: 상수?
+        System.out.printf(PRINT_PLAYERS_MESSAGE, String.join(PolicyConstant.DELIMITER + " ", names));
     }
 
     public void printHandList(List<HandDto> handDtoList) {
@@ -34,7 +35,8 @@ public class OutputView {
     }
 
     public void printHand(HandDto handDto) {
-        System.out.printf(PRINT_HAND_MESSAGE, handDto.name(), String.join(", ", handDto.hand())); // TODO: 상수?
+        System.out.printf(PRINT_HAND_MESSAGE, handDto.name(),
+            String.join(PolicyConstant.DELIMITER + " ", handDto.hand()));
     }
 
     public void printlnHand(HandDto handDto) {

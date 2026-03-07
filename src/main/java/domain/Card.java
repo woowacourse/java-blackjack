@@ -1,5 +1,6 @@
 package domain;
 
+import constant.PolicyConstant;
 import constant.Rank;
 import constant.Suit;
 import java.util.Objects;
@@ -30,10 +31,10 @@ public class Card {
 
     public int calculateScore() {
         if (rank.equals(Rank.J) || rank.equals(Rank.Q) || rank.equals(Rank.K)) {
-            return 10; // TODO: 상수?
+            return PolicyConstant.JQK;
         }
         if (rank.equals(Rank.ACE)) {
-            return 11; // TODO: 상수?
+            return PolicyConstant.ACE;
         }
         return Integer.parseInt(rank.getRank());
     }

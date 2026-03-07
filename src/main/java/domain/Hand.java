@@ -1,5 +1,6 @@
 package domain;
 
+import constant.PolicyConstant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class Hand {
     }
 
     private int calculateScoreWithBestAce(int score, int aceCount) {
-        while (score > 21 && aceCount > 0) { // TODO: 상수?
+        while (score > PolicyConstant.BLACKJACK_SCORE && aceCount > 0) {
             score -= 10;
             aceCount--;
         }

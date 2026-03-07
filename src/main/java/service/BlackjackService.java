@@ -1,5 +1,7 @@
 package service;
 
+import constant.HitOrStand;
+import constant.PolicyConstant;
 import constant.Result;
 import converter.BlackjackConverter;
 import domain.Card;
@@ -28,7 +30,7 @@ public class BlackjackService {
         for (String name : names) {
             players.add(new Player(name));
         }
-        return blackjackConverter.convertPlayersDto(players, new Dealer("딜러")); // TODO: 상수?
+        return blackjackConverter.convertPlayersDto(players, new Dealer(PolicyConstant.DEALER_NAME));
     }
 
     private void validatePlayerNames(List<String> names) {
@@ -43,7 +45,8 @@ public class BlackjackService {
     }
 
     private void validatePlayerCount(int playerCount) {
-        if (!(2 <= playerCount && playerCount <= 8)) { // TODO: 상수?
+        if (!(PolicyConstant.PLAYER_MIN_COUNT <= playerCount
+            && playerCount <= PolicyConstant.PLAYER_MAX_COUNT)) {
             throw new IllegalArgumentException(ErrorMessage.PLAYER_COUNT_OUT_OF_RANGE.getMessage());
         }
     }
@@ -65,7 +68,7 @@ public class BlackjackService {
     }
 
     public boolean drawDealerCard(Dealer dealer) {
-        if (dealer.calculateScore() <= 16) { // TODO: 상수?
+        if (dealer.calculateScore() <= PolicyConstant.DEALER_HIT_MAX_SCORE) {
             dealer.addCard(drawCard());
             return true;
         }
@@ -147,13 +150,14 @@ public class BlackjackService {
     }
 
     public void validateHitOrStand(String hitOrStand) {
-        if (!hitOrStand.strip().equals("y") && !hitOrStand.strip().equals("n")) { // TODO: 상수?
+        if (!hitOrStand.strip().equals(HitOrStand.HIT.getHitOrStand()) && !hitOrStand.strip()
+            .equals(HitOrStand.STAND.getHitOrStand())) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_YES_NO_INPUT.getMessage());
         }
     }
 
     public boolean shouldRepeat(Player player, String hitOrStand) {
-        return hitOrStand.strip().equals("y") && !player.isBust(); // TODO: 상수?
+        return hitOrStand.strip().equals(HitOrStand.HIT.getHitOrStand()) && !player.isBust();
     }
 
     public void updatePlayer(Player player) {
@@ -161,7 +165,7 @@ public class BlackjackService {
     }
 
     public boolean isNo(String hitOrStand) {
-        return hitOrStand.equals("n"); // TODO: 상수?
+        return hitOrStand.equals(HitOrStand.STAND.getHitOrStand());
     }
 
     public List<HandDto> generaterHandDtoList(PlayersDto playersDto) {

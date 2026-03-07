@@ -1,5 +1,6 @@
 package domain;
 
+import constant.PolicyConstant;
 import exception.ErrorMessage;
 
 public class Player {
@@ -19,7 +20,8 @@ public class Player {
     }
 
     private void validatePlayerNameLength(String name) {
-        if (!(2 <= name.length() && name.length() <= 5)) { // TODO: 상수?
+        if (!(PolicyConstant.PLAYER_NAME_MIN_LENGTH <= name.length()
+            && name.length() <= PolicyConstant.PLAYER_NAME_MAX_LENGTH)) {
             throw new IllegalArgumentException(ErrorMessage.PLAYER_NAME_LENGTH_OUT_OF_RANGE.getMessage());
         }
     }
@@ -43,7 +45,7 @@ public class Player {
     }
 
     public boolean isBust() {
-        return hand.calculateScore() > 21; // TODO: 상수?
+        return hand.calculateScore() > PolicyConstant.BLACKJACK_SCORE;
     }
 
     public int calculateScore() {

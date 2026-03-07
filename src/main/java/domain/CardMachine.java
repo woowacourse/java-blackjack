@@ -1,5 +1,6 @@
 package domain;
 
+import constant.PolicyConstant;
 import constant.Rank;
 import constant.Suit;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class CardMachine {
             return null;
         }
         Card newCard = pickRandomCard();
-        while (decks.getOrDefault(newCard, 0) >= 6) { // TODO: 상수?
+        while (decks.getOrDefault(newCard, 0) >= PolicyConstant.DECK_COUNT) {
             newCard = pickRandomCard();
         }
         decks.put(newCard, decks.getOrDefault(newCard, 0) + 1);
@@ -29,12 +30,12 @@ public class CardMachine {
     }
 
     private boolean isDrawFinished() {
-        return decks.size() >= 52 && validateCardCount(); // TODO: 상수?
+        return decks.size() >= PolicyConstant.DECK_SIZE && validateCardCount();
     }
 
     private boolean validateCardCount() {
         return decks.values().stream()
-            .allMatch(count -> count >= 6); // TODO: 상수?
+            .allMatch(count -> count >= PolicyConstant.DECK_COUNT);
     }
 
     private Card pickRandomCard() {
