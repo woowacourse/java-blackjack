@@ -17,10 +17,10 @@ public class BlackJackController {
     }
 
     public void run() {
-        List<String> names = inputGambersInfo();
+        List<String> names = inputGamblersInfo();
     }
     
-    private List<String> inputGambersInfo() {
+    private List<String> inputGamblersInfo() {
         String name = inputView.askGamblerNames().name();
         return Parser.parse(name, COMMA_DELIMITER);
     }

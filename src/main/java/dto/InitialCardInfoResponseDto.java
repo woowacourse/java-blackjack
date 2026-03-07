@@ -19,7 +19,7 @@ public record InitialCardInfoResponseDto(Map<String, List<String>> initialPartic
         // 딜러 정보
         initialParticipantsInfo.put(
                 game.getDealer().getName(),
-                List.of(game.getDealer().getFirstCardStatus())
+                List.of(game.getDealer().getFirstHand())
         );
 
         // 플레이어 정보
@@ -27,7 +27,7 @@ public record InitialCardInfoResponseDto(Map<String, List<String>> initialPartic
 
         initialParticipantsInfo.putAll(
                 gamblersInfo.stream()
-                        .collect(Collectors.toMap(Gambler::getName, Gambler::getCardStatus))
+                        .collect(Collectors.toMap(Gambler::getName, Gambler::getHand))
         );
 
         return initialParticipantsInfo;

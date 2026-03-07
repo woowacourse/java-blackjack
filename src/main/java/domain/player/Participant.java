@@ -1,7 +1,7 @@
 package domain.player;
 
 import domain.card.Card;
-import domain.player.attribute.CardStatus;
+import domain.player.attribute.Hand;
 import domain.player.attribute.Name;
 import java.util.List;
 
@@ -9,23 +9,23 @@ public class Participant {
 
     protected final Name name;
 
-    protected CardStatus cardStatus;
+    protected Hand hand;
 
     public Participant(String name) {
         this.name = new Name(name);
-        this.cardStatus = new CardStatus();
+        this.hand = new Hand();
     }
 
     public void addCard(Card card) {
-        cardStatus.addCard(card);
+        hand.addCard(card);
     }
 
     public int getTotalScore() {
-        return cardStatus.getTotalScore();
+        return hand.calculateScore();
     }
 
     public boolean isBust() {
-        return cardStatus.isBust();
+        return hand.isBust();
     }
 
     public String getName() {
@@ -33,11 +33,11 @@ public class Participant {
     }
 
     public int getCardSize() {
-        return cardStatus.getCardsSize();
+        return hand.getCardsSize();
     }
 
-    public List<String> getCardStatus() {
-        return cardStatus.getCardsInfo();
+    public List<String> getHand() {
+        return hand.getCardsInfo();
     }
 
     public boolean isEqualName(String name) {

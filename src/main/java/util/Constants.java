@@ -8,7 +8,9 @@ public class Constants {
 
     public static final int DEFAULT_START_CARD_COUNT = 2;
 
-    public static final int ACE_SCORE = 11;
+    public static final int ACE_HIGH_SCORE = 11;
+
+    public static final int ACE_LOW_SCORE = 1;
 
     public static final int BLACK_JACK = 21;
 

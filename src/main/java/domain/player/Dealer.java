@@ -10,7 +10,7 @@ public class Dealer extends Participant {
         return getTotalScore() <= 16;
     }
 
-    public String getFirstCardStatus() {
-        return this.cardStatus.getFirstCardInfo();
+    public String getFirstHand() {
+        return hand.getFirstCardInfo();
     }
 }

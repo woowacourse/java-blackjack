@@ -20,7 +20,7 @@ public record CardInfoResponseDto(Map<String, List<String>> participantsInfo, Li
         // 딜러 정보
         participantsInfo.put(
                 game.getDealer().getName(),
-                game.getDealer().getCardStatus()
+                game.getDealer().getHand()
         );
 
         // 플레이어 정보
@@ -28,7 +28,7 @@ public record CardInfoResponseDto(Map<String, List<String>> participantsInfo, Li
 
         participantsInfo.putAll(
                 gamblersInfo.stream()
-                        .collect(Collectors.toMap(Gambler::getName, Gambler::getCardStatus))
+                        .collect(Collectors.toMap(Gambler::getName, Gambler::getHand))
         );
 
         return participantsInfo;
