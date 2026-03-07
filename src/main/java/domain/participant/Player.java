@@ -5,8 +5,8 @@ public class Player extends Participant {
         super(name);
     }
 
-    public String getName() {
-        return name.toString();
+    public Name getName() {
+        return name;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package view;
 
 import domain.ExceptionMessage;
+import domain.participant.Name;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,8 +14,7 @@ public class InputView {
         return List.of(split);
     }
 
-    // 밍구) 여기 Name name 으로 수정해야 하는지?
-    public String readHitStand(String name){
+    public String readHitStand(Name name){
         System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         Scanner scanner = new Scanner(System.in);
 
