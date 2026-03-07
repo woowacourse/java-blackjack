@@ -1,8 +1,6 @@
 package domain;
 
 public class Name {
-    private static final int NAME_LIMIT_LENGTH = 20;
-
     private final String name;
 
     private Name(String name) {
@@ -20,7 +18,7 @@ public class Name {
     }
 
     private static void validateLength(String name) {
-        if (name.trim().length() > NAME_LIMIT_LENGTH) {
+        if (name.trim().length() > 20) {
             throw new IllegalArgumentException("이름은 20자 이하로 입력해주세요.");
         }
     }
