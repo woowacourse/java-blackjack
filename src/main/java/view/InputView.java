@@ -4,6 +4,7 @@ import static view.reader.Console.readLine;
 
 import java.util.Arrays;
 import java.util.List;
+import model.Player;
 
 public class InputView {
 
@@ -16,7 +17,8 @@ public class InputView {
                 .toList();
     }
 
-    public static String readMoreCard(String name) {
+    public static String readMoreCard(Player player) {
+        String name = player.getName();
         System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         return readLine();
     }

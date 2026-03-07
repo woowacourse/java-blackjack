@@ -7,14 +7,19 @@ import model.GameStatus;
 import model.Player;
 
 public class OutputView {
-    public static void printCardOpen(List<String> names) {
+    public static void printCardOpen(List<Player> players) {
+        List<String> names = players.stream()
+                .map(Player::getName)
+                .toList();
         String format = "딜러와 %s에게 2장을 나누었습니다.";
         String formatedNames = String.format(format, String.join(", ", names));
+        System.out.println();
         System.out.println(formatedNames);
     }
 
     public static void printCardByPlayers(List<Player> players) {
         players.forEach(OutputView::printCardByPlayer);
+        System.out.println();
     }
 
     public static void printCardByPlayer(Player player) {
@@ -54,9 +59,10 @@ public class OutputView {
         return convertedValue + card.shape().getShape();
     }
 
-    public static void printToOpenNewCard(String name, int base) {
+    public static void printToOpenDealerNewCard(String name) {
         System.out.println();
-        System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.", name, base);
+        System.out.printf("%s는 16 이하라 한장의 카드를 더 받았습니다.", name);
+        System.out.println();
     }
 
     // TODO 리팩토링 대상
@@ -72,16 +78,19 @@ public class OutputView {
     public static void printDealerResult(int winCount, int loseCount, int drawCount) {
         System.out.print("딜러: ");
         StringBuilder result = new StringBuilder();
-        if (winCount > 0)
+        if (winCount > 0) {
             result.append(winCount).append("승 ");
-        if (drawCount > 0)
+        }
+        if (drawCount > 0) {
             result.append(drawCount).append("무 ");
-        if (loseCount > 0)
+        }
+        if (loseCount > 0) {
             result.append(loseCount).append("패");
+        }
         System.out.println(result.toString().trim());
     }
 
-    public static void printResultByPlayers (Map<String, GameStatus> result){
+    public static void printResultByPlayers(Map<String, GameStatus> result) {
         result.forEach((name, status) -> System.out.printf("%s: %s%n", name, status.getName()));
     }
 }
