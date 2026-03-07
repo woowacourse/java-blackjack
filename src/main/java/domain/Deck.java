@@ -2,9 +2,9 @@ package domain;
 
 import domain.constant.Rank;
 import domain.constant.Suit;
+import domain.shuffle.Shuffle;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Deck {
@@ -25,8 +25,8 @@ public class Deck {
         return cards.removeFirst();
     }
 
-    public void shuffle() {
-        Collections.shuffle(cards);
+    public void shuffle(Shuffle shuffle) {
+        shuffle.shuffle(cards);
     }
 
     private void init() {

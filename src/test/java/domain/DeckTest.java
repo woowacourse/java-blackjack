@@ -2,9 +2,11 @@ package domain;
 
 import domain.constant.Rank;
 import domain.constant.Suit;
+import domain.shuffle.RandomShuffle;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,26 +29,15 @@ public class DeckTest {
     }
 
     @Test
-    void 카드_셔플_테스트() {
-        Deck deck1 = new Deck();
-        deck1.shuffle();
-        int deckSize = deck1.size();
+    void 카드를_섞으면_순서가_바뀐다() {
+        Deck deck = new Deck();
+        List<Card> initialCards = getRemainingCards(new Deck());
 
-        List<Card> result1 = new ArrayList<>();
-        for (int i = 0; i < deckSize; i++) {
-            Card card = deck1.draw();
-            result1.add(card);
-        }
+        deck.shuffle(Collections::reverse);
+        List<Card> shuffledCards = getRemainingCards(deck);
 
-        Deck deck2 = new Deck();
-        List<Card> result2 = new ArrayList<>();
-        for (int i = 0; i < deckSize; i++) {
-            Card card = deck2.draw();
-            result2.add(card);
-        }
-
-        assertThat(result1.size()).isEqualTo(result2.size());
-        assertThat(result1).containsExactlyInAnyOrderElementsOf(result2);
+        assertThat(shuffledCards).containsExactlyInAnyOrderElementsOf(initialCards);
+        assertThat(shuffledCards).isNotEqualTo(initialCards);
     }
 
     @Test

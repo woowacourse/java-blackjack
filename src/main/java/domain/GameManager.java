@@ -4,6 +4,7 @@ import domain.constant.Result;
 import domain.dto.GameFinalResultDto;
 import domain.dto.GameInitialInfoDto;
 import domain.dto.GameScoreResultDto;
+import domain.shuffle.RandomShuffle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ public class GameManager {
     private Dealer dealer = new Dealer();
 
     public GameManager() {
-        deck.shuffle();
+        deck.shuffle(new RandomShuffle());
     }
 
     public void startGame() {
