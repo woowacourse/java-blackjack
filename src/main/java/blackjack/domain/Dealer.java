@@ -3,6 +3,8 @@ package blackjack.domain;
 import java.util.List;
 
 public class Dealer {
+    private static final int DEALER_HIT_THRESHOLD = 16;
+
     private final Hand hand;
 
     private Dealer(Hand hand) {
@@ -35,7 +37,7 @@ public class Dealer {
     }
 
     public boolean shouldHit() {
-        return score() <= 16;
+        return score() <= DEALER_HIT_THRESHOLD;
     }
 
     public TrumpCard getOpenCard() {
