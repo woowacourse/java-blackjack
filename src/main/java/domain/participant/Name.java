@@ -10,7 +10,7 @@ public class Name {
     private static final int MAXIMUM_RANGE = 7;
     private static final Pattern FORMAT = Pattern.compile("^[a-zA-Zㄱ-힣]*$");
 
-    private String value;
+    private final String value;
 
     public Name(String value) {
         validate(value);

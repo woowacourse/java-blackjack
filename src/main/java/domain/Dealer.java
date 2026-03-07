@@ -5,18 +5,12 @@ import domain.participant.Hand;
 import domain.participant.Name;
 import domain.participant.Participant;
 
-public class Dealer {
+public record Dealer(Participant dealer) {
 
     private static final int STAND_SCORE = 17;
 
-    private final Participant dealer;
-
-    public Dealer(Participant dealer) {
-        this.dealer = dealer;
-    }
-
     public Dealer(Deck deck) {
-        this.dealer = new Participant(new Name("딜러"), new Hand());
+        this(new Participant(new Name("딜러"), new Hand()));
         dealer.initHand(deck);
     }
 
