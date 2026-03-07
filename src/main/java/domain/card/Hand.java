@@ -51,18 +51,18 @@ public class Hand {
     }
 
     public Card getFirstCard() {
-        if (!cards.isEmpty()) {
-            return cards.getFirst();
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("손 패가 존재하지 않습니다.");
         }
 
-        throw new IllegalArgumentException("손 패가 존재하지 않습니다.");
+        return cards.getFirst();
     }
 
     public List<Card> getCards() {
-        if (!cards.isEmpty()) {
-            return List.copyOf(cards);
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("손 패가 존재하지 않습니다.");
         }
 
-        throw new IllegalArgumentException("손 패가 존재하지 않습니다.");
+        return List.copyOf(cards);
     }
 }
