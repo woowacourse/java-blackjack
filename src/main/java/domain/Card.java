@@ -32,4 +32,9 @@ public class Card {
     public int hashCode() {
         return Objects.hash(cardShape, cardContents);
     }
+
+    @Override
+    public String toString() {
+        return cardContents.getNumber() + cardShape.name();
+    }
 }

@@ -3,7 +3,6 @@ package domain;
 import common.ErrorMessage;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Deck {
     private static final int BUST_CRITERIA = 21;
@@ -70,19 +69,5 @@ public class Deck {
             sum += card.getCardContents().getScore();
         }
         return sum;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Deck deck = (Deck) o;
-        return Objects.equals(cards, deck.cards);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(cards);
     }
 }

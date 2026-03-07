@@ -38,33 +38,23 @@ class ParticipantsTest {
         //given
         List<String> testPlayerNames = List.of("pobi");
 
-        CardCreationStrategy dealerCardStrategy = () -> {
-            return new ArrayList<>(
-                    List.of(
-                            new Card(CardShape.스페이드, CardContents.A),
-                            new Card(CardShape.스페이드, CardContents.TWO)
-                    )
-            );
-        };
-        CardCreationStrategy pobiCardStrategy = () -> {
-            return new ArrayList<>(
-                    List.of(
-                            new Card(CardShape.스페이드, CardContents.THREE),
-                            new Card(CardShape.스페이드, CardContents.FOUR)
-                    )
-            );
-        };
-        Deck expectDealerCardDeck = Deck.createDeck(dealerCardStrategy);
-        Deck expectPobiCardDeck = Deck.createDeck(pobiCardStrategy);
+        List<Card> expectDealerCards = List.of(
+                new Card(CardShape.스페이드, CardContents.A),
+                new Card(CardShape.스페이드, CardContents.TWO)
+        );
+
+        List<Card> expectPobiCards = List.of(
+                new Card(CardShape.스페이드, CardContents.THREE),
+                new Card(CardShape.스페이드, CardContents.FOUR)
+        );
 
         //when
         Participants participants = Participants.of(testPlayerNames, totalDeck);
-        Map<String, Deck> result = participants.getDecksPerUser();
+        Map<String, List<Card>> result = participants.getDecksPerUser();
 
         //then
-
-        assertEquals(expectDealerCardDeck, result.get("딜러"));
-        assertEquals(expectPobiCardDeck, result.get("pobi"));
+        assertEquals(expectDealerCards, result.get("딜러"));
+        assertEquals(expectPobiCards, result.get("pobi"));
     }
 
     private List<Card> createSampleCards() {

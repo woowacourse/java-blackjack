@@ -1,8 +1,13 @@
 package view;
 
+import domain.Card;
+import domain.Participant;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
+    private static final String DEALER = "딜러";
     private static final String NAME_PROMPT = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String INITIAL_CARD_SHARE = "딜러와 %s에게 2장을 나누었습니다.\n";
     private static final String HIT_OR_STAND_PROMPT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n";
@@ -12,8 +17,48 @@ public class OutputView {
         System.out.println(NAME_PROMPT);
     }
 
-    public void printInitialCardShare(List<String> names) {
-        System.out.printf(INITIAL_CARD_SHARE, String.join(", ", names));
+    public void printInitialCardShare(List<String> playerNames) {
+        System.out.printf(INITIAL_CARD_SHARE, String.join(", ", playerNames));
+    }
+
+    public void printInitialCardShareDetail(Map<String, List<Card>> results) {
+        List<String> playersNames = extractPlayersNames(results);
+
+        StringBuilder initialCardShareDetail = new StringBuilder();
+
+        List<Card> dealerCards = results.remove(DEALER);
+        initialCardShareDetail.append(consistCardInfo(DEALER, dealerCards));
+
+        playersNames.forEach(
+                name -> {
+                    List<Card> cards = results.get(name);
+                    initialCardShareDetail.append(consistCardInfo(name, cards));
+                }
+        );
+        System.out.println(initialCardShareDetail);
+    }
+
+    private String consistCardInfo(String name, List<Card> cards) {
+        List<String> cardInfos = new ArrayList<>();
+        for (Card card : cards) {
+            cardInfos.add(card.toString());
+        }
+        return String.format("%s: %s\n", name, String.join(", ", cardInfos));
+    }
+
+    private List<String> extractPlayersNames(Map<String, List<Card>> results) {
+        List<String> names = new java.util.ArrayList<>(results.keySet().stream().toList());
+        names.remove(DEALER);
+        return names;
+    }
+
+    private String extractAndBuildPlayersName(List<Participant> participants) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 1; i < participants.size(); i++) {
+            sb.append(participants.get(i).getName()).append(",");
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        return sb.toString();
     }
 
     public void printHitOrStandPrompt(String name) {
@@ -22,6 +67,10 @@ public class OutputView {
 
     public void printAdditionalCardForDealerDescription() {
         System.out.println(ADDITIONAL_CARD_FOR_DEALER_DESCRIPTION);
+    }
+
+    public void printErrorMessage(Exception e) {
+        System.out.println(e.getMessage());
     }
 }
 

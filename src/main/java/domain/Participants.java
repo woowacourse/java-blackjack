@@ -46,10 +46,13 @@ public class Participants {
         return players;
     }
 
-    public Map<String, Deck> getDecksPerUser() {
-        Map<String, Deck> decksPerUser = new LinkedHashMap<>();
+    public Map<String, List<Card>> getDecksPerUser() {
+        Map<String, List<Card>> decksPerUser = new LinkedHashMap<>();
         for (Participant participant : participants) {
-            decksPerUser.put(participant.getName(), participant.getDeck());
+            decksPerUser.put(
+                    participant.getName(),
+                    participant.getDeck().getCards()
+            );
         }
         return decksPerUser;
     }

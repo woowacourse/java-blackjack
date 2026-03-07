@@ -23,6 +23,18 @@ public class CardTest {
         Assertions.assertThat(result).isEqualTo(testCardContents);
     }
 
+    @Test
+    @DisplayName("카드 정보 출력 양식")
+    void card_toString() {
+        //given
+        CardContents testCardContents = CardContents.J;
+        Card testCard = new Card(CardShape.스페이드, testCardContents);
+        String expect = "J스페이드";
+
+        //when & then
+        Assertions.assertThat(testCard.toString()).isEqualTo(expect);
+    }
+
     @Nested
     class isAceTest {
         @Test
