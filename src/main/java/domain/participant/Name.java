@@ -13,14 +13,15 @@ public class Name {
         this.name = name;
     }
 
-    public void validate(String name){
-        if(name.isBlank()){
+    private void validate(String name) {
+        if (name.isBlank()) {
             throw new IllegalArgumentException(ExceptionMessage.BLANK_NAME_NOT_ALLOWED.getMessage());
         }
-        if(name.length() < NAME_MIN_LENGTH || name.length() > NAME_MAX_LENGTH){
+        if (name.length() < NAME_MIN_LENGTH || name.length() > NAME_MAX_LENGTH) {
             throw new IllegalArgumentException(ExceptionMessage.NAME_OUT_OF_RANGE.getMessage());
         }
     }
+
     @Override
     public String toString() {
         return name;
