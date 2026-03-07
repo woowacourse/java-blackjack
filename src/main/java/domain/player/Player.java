@@ -1,5 +1,6 @@
 package domain.player;
 
+import domain.card.Card;
 import domain.vo.Name;
 
 public class Player {
@@ -8,6 +9,10 @@ public class Player {
 
     public Player(Name name) {
         this.name = name;
+    }
+
+    public void addCard(Card card) {
+        handCards.addCard(card);
     }
 
     public String getName() {

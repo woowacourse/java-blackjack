@@ -14,6 +14,7 @@ public class GameController {
 
     public void run() {
         List<String> names = InputView.askName();
-
+        gameService.joinPlayers(names);
+        gameService.initAllPlayerCard();
     }
 }

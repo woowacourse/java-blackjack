@@ -1,5 +1,6 @@
 package service;
 
+import domain.card.CardDeck;
 import domain.player.Player;
 import domain.player.PlayerGroups;
 import domain.vo.Name;
@@ -9,6 +10,7 @@ import java.util.List;
 
 public class GameService {
     private PlayerGroups playerGroups;
+    private CardDeck cardDeck = new CardDeck();
 
     public void joinPlayers(List<String> playerNames) {
         List<Player> players = new ArrayList<>();
@@ -21,6 +23,19 @@ public class GameService {
         }
 
         playerGroups = new PlayerGroups(players);
+    }
+
+    public void initAllPlayerCard() {
+        for (int i = 0; i < 2; i++) {
+            giveAllPlayerCard();
+        }
+    }
+
+    private void giveAllPlayerCard() {
+        while (playerGroups.hasNextPlayer()) {
+            playerGroups.drawCard(cardDeck.getCard());
+            playerGroups.nextPlayer();
+        }
     }
 
     public int getPlayerGroupSize() {
