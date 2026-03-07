@@ -1,6 +1,5 @@
 package domain.card;
 
-import static domain.Constant.BLACKJACK_MAX_NUMBER;
 import static domain.Constant.DELIMITER;
 
 import domain.ExceptionMessage;
@@ -11,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Cards {
-    private List<Card> cards;
+    private final List<Card> cards;
 
     public Cards() {
         this.cards = new ArrayList<Card>();
@@ -21,7 +20,18 @@ public class Cards {
         cards.add(card);
     }
 
-    public Card peek(){
+    public Card pull() {
+        validateIsEmpty();
+        return cards.removeFirst();
+    }
+
+    private void validateIsEmpty() {
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException(ExceptionMessage.EMPTY_CARDS.getMessage());
+        }
+    }
+
+    public Card peek() {
         return cards.getFirst();
     }
 
@@ -34,40 +44,29 @@ public class Cards {
     }
 
     public int getTotalSum() {
-        int aceNum = 0;
-        int sum = 0;
-
-        for (Card card : cards) {
-            if (card.getRank().isAce()) {
-                aceNum += 1;
-                continue;
-            }
-            sum += card.getRank().getScoreValue();
-        }
+        int aceNum = getAceAmount();
+        int sum = getSumWithoutAce();
 
         for (int i = aceNum; i > 0; i--) {
             sum += Rank.decideAceValue(sum, i);
         }
-
         return sum;
     }
 
-    public boolean decideBurst(int sum) {
-        if (sum > BLACKJACK_MAX_NUMBER) {
-            return true;
+    private int getAceAmount() {
+        int aceAmount = 0;
+        for (Card card : cards) {
+            aceAmount += card.getOneIfAce(card);
         }
-        return false;
+        return aceAmount;
     }
 
-    public Card pull(){
-        validateIsEmpty();
-        return cards.removeFirst();
-    }
-
-    private void validateIsEmpty(){
-        if(cards.isEmpty()){
-            throw new IllegalArgumentException(ExceptionMessage.EMPTY_CARDS.getMessage());
+    private int getSumWithoutAce() {
+        int sum = 0;
+        for (Card card : cards) {
+            sum += card.getRankValueIfNotAce(card);
         }
+        return sum;
     }
 
     @Override
