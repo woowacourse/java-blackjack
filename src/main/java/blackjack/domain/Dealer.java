@@ -15,12 +15,12 @@ public class Dealer extends Participant {
         this.trump = trump;
     }
 
-    public void giveCard(final Player player) {
+    public void giveCardTo(final Player player) {
         final Card card = trump.draw();
         player.addCard(card);
     }
 
-    public void giveCard() {
+    public void giveCardMyself() {
         final Card card = trump.draw();
         addCard(card);
     }
@@ -29,8 +29,8 @@ public class Dealer extends Participant {
         final int distributeCount = 2;
         IntStream.range(0, distributeCount)
             .forEach(round -> {
-                players.forEach(this::giveCard);
-                giveCard();
+                players.forEach(this::giveCardTo);
+                giveCardMyself();
             });
     }
 

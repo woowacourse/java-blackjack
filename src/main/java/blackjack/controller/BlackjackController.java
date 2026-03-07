@@ -41,7 +41,7 @@ public class BlackjackController {
     private void handleDealerAction(Dealer dealer) {
         dealer.decideHit();
         while(dealer.isHit()) {
-            dealer.giveCard();
+            dealer.giveCardMyself();
             dealer.decideHit();
             OutputView.printDealerHitMessage();
         }
@@ -73,7 +73,7 @@ public class BlackjackController {
 
     private void handleAnswer(final Player player, final Dealer dealer, final Answer answer) {
         if (answer == Answer.YES) { // HIT
-            dealer.giveCard(player);
+            dealer.giveCardTo(player);
             player.handleBurst();
         }
         if (answer == Answer.NO) { // STAY
