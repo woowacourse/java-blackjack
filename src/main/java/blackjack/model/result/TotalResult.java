@@ -26,13 +26,13 @@ public class TotalResult {
             results.put(player, result);
         }
 
-       return new TotalResult(results);
+        return new TotalResult(results);
     }
 
     public String getDealerResult() {
         return String.format(
                 "%d승 %d무 %d패",
-                countOf(Result.WIN), countOf(Result.DRAW), countOf(Result.LOSE)
+                countOf(Result.LOSE), countOf(Result.DRAW), countOf(Result.WIN)
         );
     }
 
@@ -42,9 +42,9 @@ public class TotalResult {
                 .count();
     }
 
-    public List<String> playerResults() {
+    public List<String> getPlayerResults() {
         return results.entrySet().stream()
-                .map(entry -> String.format("%s: %s", entry.getKey().getName(), entry.getValue()))
+                .map(entry -> String.format("%s: %s", entry.getKey().getName(), entry.getValue().getDisplayName()))
                 .toList();
     }
 }

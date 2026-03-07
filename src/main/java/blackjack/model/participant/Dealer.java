@@ -37,22 +37,22 @@ public class Dealer extends Participant {
     public Result compare(Player player) {
         // 플레이어가 버스트되면 무조건 딜러 승
         if (player.isBust()) {
-            return Result.WIN;
+            return Result.LOSE;
         }
 
         // 플레이어가 버스트 되지 않고, 딜러가 버스트 되면 플레이어 승
         if (this.isBust()) {
-            return Result.LOSE;
+            return Result.WIN;
         }
 
         // 딜러의 점수가 더 높으면 승
         if (this.hands.isTotalScoreOver(player.getCurrentTotalScore())) {
-            return Result.WIN;
+            return Result.LOSE;
         }
 
         // 플레이어 점수가 더 높으면 패
         if (player.getCurrentTotalScore() > this.hands.calculateTotalScore()) {
-            return Result.LOSE;
+            return Result.WIN;
         }
 
         // 무승부

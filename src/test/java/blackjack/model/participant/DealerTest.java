@@ -67,7 +67,7 @@ class DealerTest {
         player1.pickAdditionalCard(cardDeckForMustPickFive);
         player1.pickAdditionalCard(cardDeckForMustPickFive);
 
-        Player player2 = Player.of("player1");
+        Player player2 = Player.of("player2");
 
         CardDeck cardDeckForMustPickAce = CardDeck.of(mustPickAce);
         player2.pickAdditionalCard(cardDeckForMustPickTen);
@@ -79,8 +79,8 @@ class DealerTest {
         player3.pickAdditionalCard(cardDeckForMustPickTen);
 
         // when & then
-        assertThat(dealer.compare(player1)).isEqualTo(Result.WIN);
-        assertThat(dealer.compare(player2)).isEqualTo(Result.LOSE);
+        assertThat(dealer.compare(player1)).isEqualTo(Result.LOSE);
+        assertThat(dealer.compare(player2)).isEqualTo(Result.WIN);
         assertThat(dealer.compare(player3)).isEqualTo(Result.DRAW);
     }
 }

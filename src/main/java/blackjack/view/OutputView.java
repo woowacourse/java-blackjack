@@ -61,7 +61,7 @@ public class OutputView {
     }
 
     private void printAllPlayerResult(TotalResult totalResult) {
-        List<String> playerResults = totalResult.playerResults();
+        List<String> playerResults = totalResult.getPlayerResults();
         System.out.println(String.join("\n", playerResults));
     }
 }
