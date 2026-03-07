@@ -20,23 +20,21 @@ public class CardMachine {
         if (isDrawFinished()) {
             return null;
         }
-
         Card newCard = pickRandomCard();
-        while (decks.getOrDefault(newCard, 0) >= 6) {
+        while (decks.getOrDefault(newCard, 0) >= 6) { // TODO: 상수?
             newCard = pickRandomCard();
         }
         decks.put(newCard, decks.getOrDefault(newCard, 0) + 1);
-
         return newCard;
     }
 
     private boolean isDrawFinished() {
-        return decks.size() >= 52 && validateCardCount();
+        return decks.size() >= 52 && validateCardCount(); // TODO: 상수?
     }
 
     private boolean validateCardCount() {
         return decks.values().stream()
-            .allMatch(count -> count >= 6);
+            .allMatch(count -> count >= 6); // TODO: 상수?
     }
 
     private Card pickRandomCard() {
