@@ -75,10 +75,10 @@ public class OutputView {
         System.out.println("딜러: " + dealerWinCount + "승 " + dealerLoseCount + "패 " + (playerCount - dealerLoseCount
                 - dealerWinCount) + "무");
 
-        resultDtos.forEach(this::printResult);
+        resultDtos.forEach(this::printPlayerResult);
     }
 
-    public void printResult(ResultDto resultDto) {
+    private void printPlayerResult(ResultDto resultDto) {
         System.out.println(resultDto.playerName() + ": " + resultDto.result().getLabel());
     }
 
