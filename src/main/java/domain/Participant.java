@@ -11,6 +11,14 @@ public abstract class Participant {
         this.name = name;
     }
 
+    public Deck getDeck() {
+        return deck;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     public boolean isBust() {
         return deck.isBust();
     }
