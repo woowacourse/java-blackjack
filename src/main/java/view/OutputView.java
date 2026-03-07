@@ -1,10 +1,10 @@
 package view;
 
 import domain.Card;
-import domain.Participant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class OutputView {
     private static final String DEALER = "딜러";
@@ -22,19 +22,17 @@ public class OutputView {
     }
 
     public void printInitialCardShareDetail(Map<String, List<Card>> results) {
-        List<String> playersNames = extractPlayersNames(results);
-
         StringBuilder initialCardShareDetail = new StringBuilder();
 
         List<Card> dealerCards = results.remove(DEALER);
         initialCardShareDetail.append(consistCardInfo(DEALER, dealerCards));
 
-        playersNames.forEach(
-                name -> {
-                    List<Card> cards = results.get(name);
-                    initialCardShareDetail.append(consistCardInfo(name, cards));
-                }
-        );
+        for (Entry<String, List<Card>> playersCardInfo : results.entrySet()) {
+            String playerName = playersCardInfo.getKey();
+            List<Card> playerCards = playersCardInfo.getValue();
+            initialCardShareDetail.append(consistCardInfo(playerName, playerCards));
+        }
+
         System.out.println(initialCardShareDetail);
     }
 
@@ -44,21 +42,6 @@ public class OutputView {
             cardInfos.add(card.toString());
         }
         return String.format("%s: %s\n", name, String.join(", ", cardInfos));
-    }
-
-    private List<String> extractPlayersNames(Map<String, List<Card>> results) {
-        List<String> names = new java.util.ArrayList<>(results.keySet().stream().toList());
-        names.remove(DEALER);
-        return names;
-    }
-
-    private String extractAndBuildPlayersName(List<Participant> participants) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 1; i < participants.size(); i++) {
-            sb.append(participants.get(i).getName()).append(",");
-        }
-        sb.deleteCharAt(sb.length() - 1);
-        return sb.toString();
     }
 
     public void printHitOrStandPrompt(String name) {

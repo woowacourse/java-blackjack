@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ParticipantsTest {
+class PlayersTest {
 
     Deck totalDeck;
 
@@ -28,7 +28,7 @@ class ParticipantsTest {
 
         //when, then
         assertDoesNotThrow(
-                () -> Participants.of(testPlayerNames, totalDeck)
+                () -> Players.of(testPlayerNames, totalDeck)
         );
     }
 
@@ -37,23 +37,16 @@ class ParticipantsTest {
     void getDecksPerUser_success() {
         //given
         List<String> testPlayerNames = List.of("pobi");
-
-        List<Card> expectDealerCards = List.of(
+        List<Card> expectPobiCards = List.of(
                 new Card(CardShape.스페이드, CardContents.A),
                 new Card(CardShape.스페이드, CardContents.TWO)
         );
 
-        List<Card> expectPobiCards = List.of(
-                new Card(CardShape.스페이드, CardContents.THREE),
-                new Card(CardShape.스페이드, CardContents.FOUR)
-        );
-
         //when
-        Participants participants = Participants.of(testPlayerNames, totalDeck);
-        Map<String, List<Card>> result = participants.getDecksPerUser();
+        Players players = Players.of(testPlayerNames, totalDeck);
+        Map<String, List<Card>> result = players.getDecksPerPlayer();
 
         //then
-        assertEquals(expectDealerCards, result.get("딜러"));
         assertEquals(expectPobiCards, result.get("pobi"));
     }
 

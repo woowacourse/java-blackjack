@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.List;
 import java.util.Optional;
 
 public class Dealer extends Participant {
@@ -16,5 +17,9 @@ public class Dealer extends Participant {
             return super.addCard(totalDeck);
         }
         return Optional.empty();
+    }
+
+    public List<Card> getCards() {
+        return getDeck().getCards();
     }
 }
