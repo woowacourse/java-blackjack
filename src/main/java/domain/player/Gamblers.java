@@ -25,6 +25,11 @@ public class Gamblers {
                 .collect(Collectors.toMap(Gambler::getName, Gambler::getHandInfo));
     }
 
+    public Map<String, Integer> getParticipantTotalScore() {
+        return gamblers.stream()
+                .collect(Collectors.toMap(Gambler::getName, Gambler::getTotalScore));
+    }
+
     public void receiveCards(GameCards gameCards) {
         for (Gambler gambler : gamblers) {
             gambler.addCard(gameCards.drawCard());

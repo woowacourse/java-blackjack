@@ -40,13 +40,6 @@ public class Game {
         return info;
     }
 
-    public Map<String, List<String>> getParticipantsHandInfo() {
-        Map<String, List<String>> info = new HashMap<>();
-        info.put(dealer.getName(), dealer.getHandInfo());
-        info.putAll(gamblers.getHandsInfo());
-        return info;
-    }
-
     public boolean shouldDealerDraw() {
         return dealer.isTotalScore16OrLess();
     }
