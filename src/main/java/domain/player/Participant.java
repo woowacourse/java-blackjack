@@ -36,8 +36,8 @@ public class Participant {
         return hand.getCardsSize();
     }
 
-    public List<String> getHand() {
-        return hand.getCardsInfo();
+    public List<String> getHandInfo() {
+        return hand.getInfo();
     }
 
     public boolean isEqualName(String name) {

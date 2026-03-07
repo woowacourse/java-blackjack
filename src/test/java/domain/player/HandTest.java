@@ -19,7 +19,7 @@ class HandTest {
         hand.addCard(new Card("3", "클로버"));
 
         // when
-        List<String> cardsInfo = hand.getCardsInfo();
+        List<String> cardsInfo = hand.getInfo();
 
         // then
         Assertions.assertThat(cardsInfo.containsAll(Arrays.asList("K다이아몬드", "2하트", "3클로버")));

@@ -33,7 +33,7 @@ public class GameCards {
 
     public boolean containsCard(String string) {
         return cards.stream()
-                .map(card -> card.getCardInfo())
+                .map(card -> card.getInfo())
                 .anyMatch(s -> s.equals(string));
     }
 

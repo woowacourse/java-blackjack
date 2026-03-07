@@ -73,7 +73,7 @@ class CardTest {
         Card card = new Card("K", "하트");
 
         // when
-        String cardInfo = card.getCardInfo();
+        String cardInfo = card.getInfo();
 
         // then
         assertThat(cardInfo).isEqualTo("K하트");

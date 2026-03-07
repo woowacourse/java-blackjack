@@ -41,14 +41,14 @@ public class Hand {
         return sum;
     }
 
-    public List<String> getCardsInfo() {
+    public List<String> getInfo() {
         return cards.stream()
-                .map(Card::getCardInfo)
+                .map(Card::getInfo)
                 .collect(Collectors.toList());
     }
 
     public String getFirstCardInfo() {
-        return cards.get(0).getCardInfo();
+        return cards.get(0).getInfo();
     }
 
     private int calculateBaseScore() {

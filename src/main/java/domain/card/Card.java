@@ -13,7 +13,7 @@ public class Card {
         return score.getNumber();
     }
 
-    public String getCardInfo() {
+    public String getInfo() {
         return score.getScore() + kind.getKind();
     }
 

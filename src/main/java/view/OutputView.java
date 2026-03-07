@@ -14,10 +14,12 @@ public class OutputView {
         + "에게 2장을 나누었습니다.");
     }
 
-    public void printInitialParticipantsInfo(InitialCardInfoResponseDto responseDto) {
-        for(Entry<String, List<String>> participant : responseDto.initialParticipantsInfo().entrySet()) {
-            System.out.println(participant.getKey() + "카드: " +
-                    String.join(", ", participant.getValue()));
+    public void printInitialInfo(InitialCardInfoResponseDto responseDto) {
+        System.out.println(responseDto.dealerName() + "카드: " + responseDto.dealerHandInfo());
+
+        for(Entry<String, List<String>> gamblers : responseDto.gamblersInfo().entrySet()) {
+            System.out.println(gamblers.getKey() + "카드: " +
+                    String.join(", ", gamblers.getValue()));
         }
     }
 
