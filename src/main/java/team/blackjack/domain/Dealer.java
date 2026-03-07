@@ -2,8 +2,7 @@ package team.blackjack.domain;
 
 import team.blackjack.domain.rule.DefaultBlackjackRule;
 
-public class Dealer {
-
+public class Dealer implements Participant {
     private final Hand hand;
 
     public Dealer() {
@@ -18,10 +17,11 @@ public class Dealer {
         return this.hand;
     }
 
-    public int getScore(){
+    public int getScore() {
         return DefaultBlackjackRule.calculateBestScore(this.getHand().getCards());
     }
 
+    @Override
     public void hit(Card card) {
         this.hand.addCard(card);
     }

@@ -11,15 +11,18 @@ public class Deck {
     public Deck() {
         this.cards = Arrays.stream(Card.values())
                 .collect(Collectors.toList());
-
-        Collections.shuffle(this.cards);
     }
 
     public Card draw() {
+        shuffle();
         try {
             return cards.getFirst();
         } finally {
             cards.removeFirst();
         }
+    }
+
+    private void shuffle(){
+        Collections.shuffle(this.cards);
     }
 }
