@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class Gamblers {
 
-    private final List<Gambler> gamblers;
+    private final List<domain.player.Gambler> gamblers;
 
     public Gamblers(List<String> names) {
         validateNonDuplicate(names);
@@ -59,11 +59,11 @@ public class Gamblers {
                 .toList();
     }
 
-    public List<Gambler> getGamblers() {
+    public List<domain.player.Gambler> getGamblers() {
         return List.copyOf(gamblers);
     }
 
-    public void forEach(Consumer<Gambler> consumer) {
+    public void forEach(Consumer<domain.player.Gambler> consumer) {
         gamblers.forEach(consumer);
     }
 

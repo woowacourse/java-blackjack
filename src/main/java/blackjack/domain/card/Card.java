@@ -2,10 +2,10 @@ package domain.card;
 
 public class Card {
 
-    private final CardRank rank;
-    private final CardSuit suit;
+    private final domain.card.CardRank rank;
+    private final domain.card.CardSuit suit;
 
-    public Card(CardRank rank, CardSuit suit) {
+    public Card(domain.card.CardRank rank, domain.card.CardSuit suit) {
         this.rank = rank;
         this.suit = suit;
     }

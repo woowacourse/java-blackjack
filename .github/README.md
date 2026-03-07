@@ -47,7 +47,7 @@ HandCard(Cards) - 사람 손의 카드
 domain.Deck(52개의 Card) - 52장의 카드 
 Player(이름, HandCard)
 Dealer(HandCard)
-domain.BlackJack()
+BlackJack()
 
 
 

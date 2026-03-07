@@ -1,6 +1,6 @@
-package config;
+package blackjack.config;
 
-import domain.BlackJack;
+import blackjack.BlackJack;
 import domain.deck.CardDeck;
 import domain.deck.Deck;
 

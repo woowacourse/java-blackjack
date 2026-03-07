@@ -4,7 +4,7 @@ import domain.MatchResult;
 import expcetion.BlackjackException;
 import expcetion.ExceptionMessage;
 
-public class Gambler extends Player {
+public class Gambler extends domain.player.Player {
 
     private static final int GAMBLER_NAME_MAX_LENGTH = 10;
     private static final int GAMBLER_NAME_MIN_LENGTH = 2;

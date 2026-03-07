@@ -9,7 +9,7 @@ public class HandCard {
     private static final int ACE_MAX_VALUE = 11;
     private static final int ACE_MIN_VALUE = 1;
 
-    private final List<Card> cards;
+    private final List<domain.card.Card> cards;
 
     public HandCard() {
         this.cards = new ArrayList<>();
@@ -38,7 +38,7 @@ public class HandCard {
         return totalSum;
     }
 
-    public void addCard(Card card) {
+    public void addCard(domain.card.Card card) {
         cards.add(card);
     }
 

@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class Deck implements CardDeck {
+public class Deck implements domain.deck.CardDeck {
 
     private final List<Card> cards;
     private int index;
