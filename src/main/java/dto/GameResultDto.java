@@ -1,6 +1,6 @@
-package blackjack.dto;
+package dto;
 
-import blackjack.domain.MatchResult;
+import domain.MatchResult;
 
 import java.util.Map;
 
