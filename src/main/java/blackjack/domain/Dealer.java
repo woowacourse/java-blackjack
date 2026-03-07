@@ -27,11 +27,11 @@ public class Dealer extends Participant {
 
     public void pitch(final List<Player> players) {
         final int distributeCount = 2;
-        IntStream.range(0, distributeCount)
-            .forEach(round -> {
-                players.forEach(this::giveCardTo);
-                giveCardMyself();
-            });
+
+        for (int i = 0; i < distributeCount; i++) {
+            players.forEach(this::giveCardTo);
+            giveCardMyself();
+        }
     }
 
     public void decideHit() {
