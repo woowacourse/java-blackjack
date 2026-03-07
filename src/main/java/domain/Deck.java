@@ -19,6 +19,9 @@ public class Deck {
     }
 
     public Card draw() {
+        if (size() == 0) {
+            throw new IllegalArgumentException("남아있는 카드가 없습니다.");
+        }
         return cards.removeFirst();
     }
 
