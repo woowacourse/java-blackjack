@@ -13,10 +13,9 @@ public class Cards {
 
     private Cards() {
         this.cards = generateCards();
-        shuffle();
     }
 
-    private void shuffle() {
+    public void shuffle() {
         Collections.shuffle(this.cards);
     }
 
