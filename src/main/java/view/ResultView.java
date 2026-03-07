@@ -5,6 +5,7 @@ import static domain.Constant.DEFAULT_HAND_NUMBER;
 import static domain.Constant.DELIMITER;
 
 import domain.participant.Dealer;
+import domain.participant.Name;
 import domain.participant.Player;
 import domain.Result;
 import java.util.List;
@@ -14,25 +15,25 @@ public class ResultView {
     public void printParticipantsCards(List<Player> players, Dealer dealer) {
         String collect = players.stream()
                 .map(Player::getName)
+                .map(Name::toString)
                 .collect(Collectors.joining(DELIMITER));
 
         System.out.println("\n딜러와 " + collect + "에게 " + DEFAULT_HAND_NUMBER + "장을 나누었습니다.");
 
         // 밍구) 이것도 printDealerCards 메서드로 뺄건지?
         System.out.println("딜러카드: " + dealer.getFirstCard());
-        printPlayerCards(players);
+        printParticipantsCard(players);
 
         System.out.println();
     }
 
-    private static void printPlayerCards(List<Player> players) {
+    private void printParticipantsCard(List<Player> players) {
         for (Player player : players) {
-            System.out.println(player.getName() + "카드: " + player);
+            printCards(player);
         }
     }
 
-    // 밍구) 중복된 것 같음
-    public void printPlayerCards(Player player) {
+    public void printCards(Player player) {
         System.out.println(player.getName() + "카드: " + player);
     }
 
@@ -41,7 +42,7 @@ public class ResultView {
             System.out.println("\n딜러는 " + DEALER_HIT_STAND_BOUNDARY + "이하라 한장의 카드를 더 받았습니다.");
             return;
         }
-        System.out.println("\n딜러는 17이상이라 카드를 받지 않았습니다.");
+        System.out.println("\n딜러는 " + (DEALER_HIT_STAND_BOUNDARY + 1) + "이상이라 카드를 받지 않았습니다.");
     }
 
     public void printResult(List<Player> players, Dealer dealer) {
@@ -51,7 +52,6 @@ public class ResultView {
             System.out.println(player.getName() + "카드: " + player + " - 결과: " + player.getTotalSum());
         }
     }
-
 
     public void printFinalResult(List<Player> players, Dealer dealer) {
         StringBuilder sb = new StringBuilder();
@@ -92,6 +92,4 @@ public class ResultView {
         }
         System.out.println(sb);
     }
-
-
 }
