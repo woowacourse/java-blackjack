@@ -79,7 +79,7 @@ public class OutputView {
     }
 
     public void printResult(ResultDto resultDto) {
-        System.out.println(resultDto.name() + ": " + resultDto.result().getLabel());
+        System.out.println(resultDto.playerName() + ": " + resultDto.result().getLabel());
     }
 
     private List<String> parseCardsToOutputs(List<CardDto> cards) {
