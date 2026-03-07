@@ -1,5 +1,6 @@
 package domain;
 
+import static domain.Constant.DEALER_HIT_STAND_BOUNDARY;
 import static domain.Constant.DEFAULT_HAND_NUMBER;
 
 import domain.card.Card;
@@ -58,7 +59,7 @@ public class BlackjackGame {
     }
 
     public boolean dealerHitsStand() {
-        if (dealer.shouldGetMoreCard()) {
+        if (dealer.decideHitStand(DEALER_HIT_STAND_BOUNDARY)) {
             giveCard(dealer);
             return true;
         }
