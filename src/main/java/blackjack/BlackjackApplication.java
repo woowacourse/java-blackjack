@@ -6,7 +6,7 @@ import blackjack.model.BustPolicy;
 import blackjack.model.BustPolicyImpl;
 import blackjack.model.ResultJudgement;
 import blackjack.model.ShuffledCardsGenerator;
-import blackjack.model.ThresholdDrawPolicy;
+import blackjack.model.ThresholdHitPolicy;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -17,7 +17,7 @@ public class BlackjackApplication {
         OutputView outputView = new OutputView();
         BustPolicy bustPolicy = new BustPolicyImpl();
         AceAdjustPolicy aceAdjustPolicy = new AceAdjustPolicy(bustPolicy);
-        ThresholdDrawPolicy drawPolicy = new ThresholdDrawPolicy(17);
+        ThresholdHitPolicy drawPolicy = new ThresholdHitPolicy(17);
         ShuffledCardsGenerator shuffledCardsGenerator = new ShuffledCardsGenerator();
         ResultJudgement resultJudgement = new ResultJudgement(bustPolicy);
 

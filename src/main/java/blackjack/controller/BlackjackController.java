@@ -12,7 +12,7 @@ import blackjack.model.BustPolicy;
 import blackjack.model.Card;
 import blackjack.model.CardsGenerator;
 import blackjack.model.Dealer;
-import blackjack.model.DealerDrawPolicy;
+import blackjack.model.DealerHitPolicy;
 import blackjack.model.Deck;
 import blackjack.model.Hand;
 import blackjack.model.Player;
@@ -29,7 +29,7 @@ public class BlackjackController {
     private final OutputView outputView;
 
     private final AceAdjustPolicy aceAdjustPolicy;
-    private final DealerDrawPolicy dealerDrawPolicy;
+    private final DealerHitPolicy dealerHitPolicy;
     private final BustPolicy bustPolicy;
 
     private final CardsGenerator cardsGenerator;
@@ -39,7 +39,7 @@ public class BlackjackController {
             InputView inputView,
             OutputView outputView,
             AceAdjustPolicy aceAdjustPolicy,
-            DealerDrawPolicy dealerDrawPolicy,
+            DealerHitPolicy dealerHitPolicy,
             BustPolicy bustPolicy,
             CardsGenerator cardsGenerator,
             ResultJudgement resultJudgement
@@ -47,7 +47,7 @@ public class BlackjackController {
         this.inputView = inputView;
         this.outputView = outputView;
         this.aceAdjustPolicy = aceAdjustPolicy;
-        this.dealerDrawPolicy = dealerDrawPolicy;
+        this.dealerHitPolicy = dealerHitPolicy;
         this.bustPolicy = bustPolicy;
         this.cardsGenerator = cardsGenerator;
         this.resultJudgement = resultJudgement;
@@ -55,7 +55,7 @@ public class BlackjackController {
 
     public void run() {
         Players players = readPlayers();
-        Dealer dealer = new Dealer(createEmptyHand(), dealerDrawPolicy);
+        Dealer dealer = new Dealer(createEmptyHand(), dealerHitPolicy);
         Deck deck = Deck.shuffled(cardsGenerator);
 
         initialDeal(players, dealer, deck);
@@ -86,9 +86,9 @@ public class BlackjackController {
 
     private void deal(Players players, Dealer dealer, Deck deck) {
         for (Player player : players) {
-            player.addCard(deck.draw());
+            player.hit(deck.draw());
         }
-        dealer.addCard(deck.draw());
+        dealer.hit(deck.draw());
     }
 
     private void hit(Players players, Dealer dealer, Deck deck) {
@@ -100,7 +100,7 @@ public class BlackjackController {
 
     private void playerHit(Player player, Deck deck) {
         while (!bustPolicy.isBust(player.getScore()) && askHit(player.getName()) == Answer.YES) {
-            player.addCard(deck.draw());
+            player.hit(deck.draw());
             outputView.printPlayerCards(player.getName(), cardsToDtos(player.getCards()));
         }
     }
@@ -112,8 +112,8 @@ public class BlackjackController {
     }
 
     private void dealerHit(Dealer dealer, Deck deck) {
-        if (dealer.shouldDraw()) {
-            dealer.addCard(deck.draw());
+        if (dealer.shouldHit()) {
+            dealer.hit(deck.draw());
             outputView.printDealerHit();
         }
     }

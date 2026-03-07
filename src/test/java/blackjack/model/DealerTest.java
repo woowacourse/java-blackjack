@@ -16,11 +16,11 @@ class DealerTest {
         @Test
         void 카드를_더_뽑아야_한다면_true를_반환한다() {
             // given
-            DealerDrawPolicy alwaysDrawPolicy = (score) -> true;
+            DealerHitPolicy alwaysDrawPolicy = (score) -> true;
             Dealer dealer = new Dealer(emptyHand, alwaysDrawPolicy);
 
             // when
-            boolean shouldDraw = dealer.shouldDraw();
+            boolean shouldDraw = dealer.shouldHit();
 
             // then
             assertThat(shouldDraw).isTrue();
@@ -29,11 +29,11 @@ class DealerTest {
         @Test
         void 카드를_더_뽑지_말아야_한다면_false를_반환한다() {
             // given
-            DealerDrawPolicy neverDrawPolicy = (score) -> false;
+            DealerHitPolicy neverDrawPolicy = (score) -> false;
             Dealer dealer = new Dealer(emptyHand, neverDrawPolicy);
 
             // when
-            boolean shouldDraw = dealer.shouldDraw();
+            boolean shouldDraw = dealer.shouldHit();
 
             // then
             assertThat(shouldDraw).isFalse();

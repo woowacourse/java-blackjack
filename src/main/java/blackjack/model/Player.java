@@ -23,7 +23,7 @@ public class Player {
         return name;
     }
 
-    public void addCard(Card card) {
+    public void hit(Card card) {
         hand.addCard(card);
     }
 

@@ -1,15 +1,15 @@
 package blackjack.model;
 
-public class ThresholdDrawPolicy implements DealerDrawPolicy {
+public class ThresholdHitPolicy implements DealerHitPolicy {
 
     private final int threshold;
 
-    public ThresholdDrawPolicy(int threshold) {
+    public ThresholdHitPolicy(int threshold) {
         this.threshold = threshold;
     }
 
     @Override
-    public boolean shouldDraw(int score) {
+    public boolean shouldHit(int score) {
         return score < threshold;
     }
 }

@@ -5,18 +5,18 @@ import java.util.List;
 public class Dealer {
 
     private final Hand hand;
-    private final DealerDrawPolicy drawPolicy;
+    private final DealerHitPolicy hitPolicy;
 
-    public Dealer(Hand hand, DealerDrawPolicy drawPolicy) {
+    public Dealer(Hand hand, DealerHitPolicy hitPolicy) {
         this.hand = hand;
-        this.drawPolicy = drawPolicy;
+        this.hitPolicy = hitPolicy;
     }
 
-    public boolean shouldDraw() {
-        return drawPolicy.shouldDraw(hand.calculateScore());
+    public boolean shouldHit() {
+        return hitPolicy.shouldHit(hand.calculateScore());
     }
 
-    public void addCard(Card card) {
+    public void hit(Card card) {
         hand.addCard(card);
     }
 
