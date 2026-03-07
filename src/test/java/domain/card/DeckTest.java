@@ -1,5 +1,10 @@
-package domain;
+package domain.card;
 
+import static message.ErrorMessage.*;
+
+import domain.enums.Rank;
+import domain.enums.Suit;
+import java.util.List;
 import java.util.Set;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -16,6 +21,17 @@ public class DeckTest {
 
         Assertions.assertThat(distinctCards.size()).isEqualTo(deck.getCards().size());
         Assertions.assertThat(distinctCards.size()).isEqualTo(52);
+    }
+
+    @DisplayName("중복된 카드가 들어있을 경우 예외가 발생한다.")
+    @Test
+    void 중복_카드_예외_발생_한다() {
+        List<Card> cards = CardGenerator.generateCards();
+        cards.add(new Card(Rank.ACE, Suit.SPADE));
+
+        Assertions.assertThatThrownBy(() -> new Deck(cards))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(DECK_CAN_NOT_DUPLICATED.getMessage());
     }
 }
 
