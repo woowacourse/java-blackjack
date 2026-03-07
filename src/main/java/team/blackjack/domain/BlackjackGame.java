@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BlackjackGame {
+    private static final int INITIAL_CARD_COUNT = 2;
     private final Dealer dealer;
     private final List<Player> players;
     private final Deck deck;
@@ -25,6 +26,12 @@ public class BlackjackGame {
 
     public Deck getDeck() {
         return deck;
+    }
+
+    public void dealInitialCardsTo(Participant participant) {
+        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
+            participant.hit(deck.draw());
+        }
     }
 
     public Map<String, List<String>> getAllPlayerCards() {

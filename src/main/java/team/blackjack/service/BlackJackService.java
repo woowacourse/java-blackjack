@@ -25,19 +25,16 @@ public class BlackJackService {
         blackjackGame = new BlackjackGame(playerNames);
     }
 
-    public void drawInitialCards() {
-        final Deck deck = blackjackGame.getDeck();
-        final Dealer dealer = blackjackGame.getDealer();
-
-        // 플레이어 카드 초기화
+    /**
+     * 각 게임(라운드)에 앞서 기본 카드를 발급하는 로직
+     */
+    public void dealInitialCards() {
         for (Player player : blackjackGame.getPlayers()) {
-            player.hit(dealer.draw(deck));
-            player.hit(dealer.draw(deck));
+            blackjackGame.dealInitialCardsTo(player);
         }
 
-        // 딜러 카드 초기화
-        dealer.hit(dealer.draw(deck));
-        dealer.hit(dealer.draw(deck));
+        final Dealer dealer = blackjackGame.getDealer();
+        blackjackGame.dealInitialCardsTo(dealer);
     }
 
     public List<Player> getPlayer() {

@@ -31,7 +31,7 @@ class BlackJackServiceTest {
     @Test
     void 게임초기화_후_각_플레이어와_딜러가_카드_2장씩_가진다() {
         blackJackService.initGame(List.of("pobi"));
-        blackJackService.drawInitialCards();
+        blackJackService.dealInitialCards();
 
         List<Player> players = blackJackService.getPlayer();
         assertThat(players.getFirst().getHands().getFirst().getCards()).hasSize(2);
@@ -44,7 +44,7 @@ class BlackJackServiceTest {
     @Test
     void 플레이어가_hit_하는_경우_카드가_한_장_추가된다() {
         blackJackService.initGame(List.of("pobi"));
-        blackJackService.drawInitialCards();
+        blackJackService.dealInitialCards();
 
         Player pobi = blackJackService.getPlayer().getFirst();
         int sizeBefore = pobi.getHands().getFirst().getCards().size();
@@ -57,7 +57,7 @@ class BlackJackServiceTest {
     @Test
     void 딜러와_모든_플레이어_점수와_카드정보를_계산한다() {
         blackJackService.initGame(List.of("pobi", "jason"));
-        blackJackService.drawInitialCards();
+        blackJackService.dealInitialCards();
 
         var scoreResult = blackJackService.calculateAllParticipantScore();
 
@@ -71,7 +71,7 @@ class BlackJackServiceTest {
     @Test
     void 딜러가_hit하는_경우_카드가_추가된다() {
         blackJackService.initGame(List.of("pobi"));
-        blackJackService.drawInitialCards();
+        blackJackService.dealInitialCards();
 
         int dealerCardsBefore = blackJackService.calculateAllParticipantScore().dealerCard().size();
         blackJackService.hitDealer();

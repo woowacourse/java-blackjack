@@ -19,8 +19,7 @@ public class BlackJackController {
 
     public void run() {
         List<String> playerNames = readPlayerNames();
-        blackJackService.initGame(playerNames);
-        blackJackService.drawInitialCards();
+        initializeBlackjackGame(playerNames);
 
         DrawResult drawResult = blackJackService.getHandResult();
         OutputView.printDrawResult(drawResult);
@@ -39,13 +38,14 @@ public class BlackJackController {
         OutputView.printGameResult(gameResult);
     }
 
-    private List<String> readPlayerNames(){
+    private List<String> readPlayerNames() {
         OutputView.printPlayerNameRequest();
         return InputView.readPlayerNames();
     }
 
-    private void initializeBlackjackGame(){
-
+    private void initializeBlackjackGame(List<String> playerNames) {
+        blackJackService.initGame(playerNames);
+        blackJackService.dealInitialCards();
     }
 
     private void readHitDecision(List<Player> players) {
