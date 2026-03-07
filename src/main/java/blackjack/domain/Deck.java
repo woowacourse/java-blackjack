@@ -10,6 +10,11 @@ public class Deck {
 
     private final List<TrumpCard> cards;
 
+    private Deck(List<TrumpCard> cards) {
+        validate(cards);
+        this.cards = new ArrayList<>(cards);
+    }
+
     public static Deck of(List<TrumpCard> cards) {
         return new Deck(cards);
     }
@@ -21,11 +26,6 @@ public class Deck {
                 .collect(Collectors.toList());
         strategy.shuffle(cards);
         return new Deck(cards);
-    }
-
-    private Deck(List<TrumpCard> cards) {
-        validate(cards);
-        this.cards = new ArrayList<>(cards);
     }
 
     private void validate(List<TrumpCard> cards) {

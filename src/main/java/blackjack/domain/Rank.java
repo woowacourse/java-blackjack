@@ -33,8 +33,7 @@ public enum Rank {
 
     public static Rank of(String rankName) {
         return Optional.ofNullable(RANK_MAP.get(rankName))
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드 이름입니다."))
-                ;
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드 이름입니다."));
     }
 
     public String getRankName() {
