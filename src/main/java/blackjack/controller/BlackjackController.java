@@ -1,11 +1,9 @@
 package blackjack.controller;
 
 import blackjack.dto.CardDto;
-import blackjack.dto.DealerScoreDto;
-import blackjack.dto.PlayerDto;
-import blackjack.dto.PlayerScoreDto;
+import blackjack.dto.ParticipantInitialDealDto;
+import blackjack.dto.ParticipantScoreDto;
 import blackjack.dto.ResultDto;
-import blackjack.model.ScoreCalculator;
 import blackjack.model.Answer;
 import blackjack.model.BlackjackResult;
 import blackjack.model.BustPolicy;
@@ -14,16 +12,17 @@ import blackjack.model.CardsGenerator;
 import blackjack.model.Dealer;
 import blackjack.model.DealerHitPolicy;
 import blackjack.model.Deck;
-import blackjack.model.Hand;
-import blackjack.model.Player;
-import blackjack.model.Players;
+import blackjack.model.Participant;
+import blackjack.model.Participants;
 import blackjack.model.ResultJudgement;
+import blackjack.model.ScoreCalculator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackController {
+
+    private static final int INITIAL_DEAL_COUNT = 2;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -36,13 +35,13 @@ public class BlackjackController {
     private final ResultJudgement resultJudgement;
 
     public BlackjackController(
-            InputView inputView,
-            OutputView outputView,
-            ScoreCalculator scoreCalculator,
-            DealerHitPolicy dealerHitPolicy,
-            BustPolicy bustPolicy,
-            CardsGenerator cardsGenerator,
-            ResultJudgement resultJudgement
+        InputView inputView,
+        OutputView outputView,
+        ScoreCalculator scoreCalculator,
+        DealerHitPolicy dealerHitPolicy,
+        BustPolicy bustPolicy,
+        CardsGenerator cardsGenerator,
+        ResultJudgement resultJudgement
     ) {
         this.inputView = inputView;
         this.outputView = outputView;
@@ -54,52 +53,44 @@ public class BlackjackController {
     }
 
     public void run() {
-        Players players = readPlayers();
-        Dealer dealer = new Dealer(createEmptyHand());
+        Participants participants = readPlayers();
         Deck deck = Deck.shuffled(cardsGenerator);
 
-        initialDeal(players, dealer, deck);
-        hit(players, dealer, deck);
-        printScore(players, dealer);
-        printResult(players, dealer);
+        initialDeal(participants, deck);
+        hitPlayers(participants.getPlayers(), deck);
+        hitDealer(participants.getDealer(), deck);
+
+        printScore(participants, scoreCalculator);
+        printResult(participants);
     }
 
-    private Players readPlayers() {
+    private Participants readPlayers() {
         String rawPlayerNames = inputView.readPlayerNames();
-
-        return Players.from(rawPlayerNames, scoreCalculator);
+        return Participants.from(rawPlayerNames);
     }
 
-    private Hand createEmptyHand() {
-        return new Hand(scoreCalculator);
-    }
-
-    private void initialDeal(Players players, Dealer dealer, Deck deck) {
-        deal(players, dealer, deck);
-        deal(players, dealer, deck);
-
-        outputView.printInitialDeal(
-                cardsToDtos(dealer.getCards()),
-                playersToDots(players)
-        );
-    }
-
-    private void deal(Players players, Dealer dealer, Deck deck) {
-        for (Player player : players) {
-            player.hit(deck.draw());
+    private void initialDeal(Participants participants, Deck deck) {
+        for (int i = 0; i < INITIAL_DEAL_COUNT; i++) {
+            deal(participants, deck);
         }
-        dealer.hit(deck.draw());
+        outputView.printInitialDeal(participantsToDots(participants));
     }
 
-    private void hit(Players players, Dealer dealer, Deck deck) {
-        for (Player player : players) {
-            playerHit(player, deck);
+    private void deal(Participants participants, Deck deck) {
+        for (Participant participant : participants) {
+            participant.hit(deck.draw());
         }
-        dealerHit(dealer, deck);
     }
 
-    private void playerHit(Player player, Deck deck) {
-        while (!bustPolicy.isBust(player.getScore()) && askHit(player.getName()) == Answer.YES) {
+    private void hitPlayers(List<Participant> players, Deck deck) {
+        for (Participant player : players) {
+            hitPlayer(player, deck);
+        }
+    }
+
+    private void hitPlayer(Participant player, Deck deck) {
+        while (!bustPolicy.isBust(scoreCalculator.calculate(player.getCards()))
+            && askHit(player.getName()) == Answer.YES) {
             player.hit(deck.draw());
             outputView.printPlayerCards(player.getName(), cardsToDtos(player.getCards()));
         }
@@ -107,45 +98,40 @@ public class BlackjackController {
 
     private Answer askHit(String playerName) {
         String answer = inputView.askHit(playerName);
-
         return Answer.from(answer);
     }
 
-    private void dealerHit(Dealer dealer, Deck deck) {
-        if (dealer.shouldHit(dealerHitPolicy)) {
+    private void hitDealer(Dealer dealer, Deck deck) {
+        if (dealer.shouldHit(dealerHitPolicy, scoreCalculator)) {
             dealer.hit(deck.draw());
             outputView.printDealerHit();
         }
     }
 
-    private void printScore(Players players, Dealer dealer) {
-        DealerScoreDto dealerDto = DealerScoreDto.from(dealer);
-        List<PlayerScoreDto> playerDtos = players.stream()
-                .map(PlayerScoreDto::from)
-                .toList();
-
-        outputView.printScore(dealerDto, playerDtos);
+    private void printScore(Participants participants, ScoreCalculator scoreCalculator) {
+        List<ParticipantScoreDto> participantScoreDtos = participants.stream()
+            .map(participant -> ParticipantScoreDto.from(participant, scoreCalculator))
+            .toList();
+        outputView.printScore(participantScoreDtos);
     }
 
-    private void printResult(Players players, Dealer dealer) {
-        List<ResultDto> resultDtos = new ArrayList<>();
-        for (Player player : players) {
-            BlackjackResult result = resultJudgement.judge(player.getScore(), dealer.getScore());
-            resultDtos.add(new ResultDto(player.getName(), result));
-        }
-
+    private void printResult(Participants participants) {
+        List<ResultDto> resultDtos = participants.getPlayers().stream()
+            .map(player -> {
+                    BlackjackResult result = resultJudgement.judge(
+                        scoreCalculator.calculate(player.getCards()),
+                        scoreCalculator.calculate(participants.getDealer().getCards()));
+                    return new ResultDto(player.getName(), result);
+                }
+            ).toList();
         outputView.printResult(resultDtos);
     }
 
     private List<CardDto> cardsToDtos(List<Card> cards) {
-        return cards.stream()
-                .map(CardDto::from)
-                .toList();
+        return cards.stream().map(CardDto::from).toList();
     }
 
-    private List<PlayerDto> playersToDots(Players players) {
-        return players.stream()
-                .map(PlayerDto::from)
-                .toList();
+    private List<ParticipantInitialDealDto> participantsToDots(Participants participants) {
+        return participants.stream().map(ParticipantInitialDealDto::from).toList();
     }
 }

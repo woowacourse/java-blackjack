@@ -6,18 +6,16 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-class PlayersTest {
-
-    private final ScoreCalculator scoreCalculator = new ScoreCalculator();
+class ParticipantsTest {
 
     @Test
     void 구분자를_기준으로_전체_플레이어_리스트를_생성한다() {
         // given
         String rawPlayerNames = "pobi,jason";
         // when
-        Players players = Players.from(rawPlayerNames, scoreCalculator);
+        Participants participants = Participants.from(rawPlayerNames);
         // then
-        List<String> actualPlayerNames = players.getPlayers().stream().map(Player::getName).toList();
+        List<String> actualPlayerNames = participants.getPlayers().stream().map(Participant::getName).toList();
         assertThat(actualPlayerNames).contains("pobi", "jason");
     }
 
@@ -26,7 +24,7 @@ class PlayersTest {
         // given
         String duplicatedRawPlayerNames = "pobi,pobi";
         // when
-        assertThatThrownBy(() -> Players.from(duplicatedRawPlayerNames, scoreCalculator))
+        assertThatThrownBy(() -> Participants.from(duplicatedRawPlayerNames))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

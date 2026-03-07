@@ -14,8 +14,8 @@ public enum Answer {
 
     public static Answer from(String label) {
         return Arrays.stream(values())
-                .filter(answer -> answer.label.equals(label))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("부적절한 응답입니다."));
+            .filter(answer -> answer.label.equals(label))
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException("부적절한 응답입니다."));
     }
 }

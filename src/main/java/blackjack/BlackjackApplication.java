@@ -1,12 +1,12 @@
 package blackjack;
 
 import blackjack.controller.BlackjackController;
-import blackjack.model.ScoreCalculator;
 import blackjack.model.BustPolicy;
 import blackjack.model.BustPolicyImpl;
-import blackjack.model.ResultJudgement;
-import blackjack.model.ShuffledCardsGenerator;
 import blackjack.model.DealerThresholdHitPolicy;
+import blackjack.model.ResultJudgement;
+import blackjack.model.ScoreCalculator;
+import blackjack.model.ShuffledCardsGenerator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -22,13 +22,13 @@ public class BlackjackApplication {
         ResultJudgement resultJudgement = new ResultJudgement(bustPolicy);
 
         BlackjackController controller = new BlackjackController(
-                inputView,
-                outputView,
+            inputView,
+            outputView,
             scoreCalculator,
-                dealerThresholdHitPolicy,
-                bustPolicy,
-                shuffledCardsGenerator,
-                resultJudgement
+            dealerThresholdHitPolicy,
+            bustPolicy,
+            shuffledCardsGenerator,
+            resultJudgement
         );
 
         controller.run();

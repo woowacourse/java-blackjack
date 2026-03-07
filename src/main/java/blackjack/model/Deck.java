@@ -17,7 +17,6 @@ public class Deck {
     public static Deck shuffled(CardsGenerator cardsGenerator) {
         List<Card> cards = cardsGenerator.create();
         Collections.shuffle(cards);
-
         return new Deck(cards);
     }
 
@@ -25,7 +24,6 @@ public class Deck {
         if (cards.isEmpty()) {
             throw new IllegalStateException("덱이 비어 있습니다.");
         }
-
         return cards.poll();
     }
 }

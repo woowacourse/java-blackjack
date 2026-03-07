@@ -1,0 +1,54 @@
+package blackjack.model;
+
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Stream;
+
+public class Participants implements Iterable<Participant> {
+    private static final String DELIMITER = ",";
+    private static final String DEALER_NAME = "딜러";
+    private static final int INCLUDE_EMPTY_ELEMENT = -1;
+
+    private final Participant dealer;
+    private final List<Participant> players;
+
+    public Participants(List<Participant> players) {
+        this.dealer = new Dealer(DEALER_NAME, new Hand());
+        this.players = players;
+    }
+
+    public static Participants from(String rawPlayerNames) {
+        List<String> playerNames = Arrays.asList(rawPlayerNames.split(DELIMITER, INCLUDE_EMPTY_ELEMENT));
+        validateDuplicatedNames(playerNames);
+        List<Participant> players = new java.util.ArrayList<>(playerNames.stream()
+            .map(playerName -> (Participant) new Player(playerName, new Hand())).toList());
+        return new Participants(players);
+    }
+
+    private static void validateDuplicatedNames(List<String> playerNames) {
+        if (playerNames.contains(DEALER_NAME)) {
+            throw new IllegalArgumentException("참가자의 이름은 딜러의 이름과 동일할 수 없습니다.");
+        }
+        if (playerNames.stream().distinct().count() != playerNames.size()) {
+            throw new IllegalArgumentException("참가자의 이름은 중복될 수 없습니다.");
+        }
+    }
+
+    public List<Participant> getPlayers() {
+        return List.copyOf(players);
+    }
+
+    public Dealer getDealer() {
+        return (Dealer) dealer;
+    }
+
+    public Stream<Participant> stream() {
+        return Stream.concat(java.util.stream.Stream.of(dealer), players.stream());
+    }
+
+    @Override
+    public Iterator<Participant> iterator() {
+        return stream().iterator();
+    }
+}

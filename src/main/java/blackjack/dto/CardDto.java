@@ -5,8 +5,8 @@ import blackjack.model.Rank;
 import blackjack.model.Suit;
 
 public record CardDto(
-        Rank rank,
-        Suit suit
+    Rank rank,
+    Suit suit
 ) {
     public static CardDto from(Card card) {
         return new CardDto(card.rank(), card.suit());

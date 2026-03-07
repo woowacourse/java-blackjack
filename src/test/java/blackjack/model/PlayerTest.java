@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 class PlayerTest {
 
-    private final Hand hand = new Hand(new ScoreCalculator());
+    private final Hand hand = new Hand();
 
     @Test
     @DisplayName("본인의 이름을 반환한다.")

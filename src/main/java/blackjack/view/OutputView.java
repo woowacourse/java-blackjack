@@ -1,9 +1,8 @@
 package blackjack.view;
 
 import blackjack.dto.CardDto;
-import blackjack.dto.DealerScoreDto;
-import blackjack.dto.PlayerDto;
-import blackjack.dto.PlayerScoreDto;
+import blackjack.dto.ParticipantInitialDealDto;
+import blackjack.dto.ParticipantScoreDto;
 import blackjack.dto.ResultDto;
 import blackjack.model.BlackjackResult;
 import blackjack.model.Score;
@@ -11,16 +10,16 @@ import java.util.List;
 
 public class OutputView {
 
-    public void printInitialDeal(List<CardDto> dealerCards, List<PlayerDto> players) {
-        List<String> playerNames = players.stream()
-                .map(PlayerDto::playerName)
-                .toList();
+    public void printInitialDeal(List<ParticipantInitialDealDto> participantInitialDealDtos) {
+        List<String> playerNames = participantInitialDealDtos.stream()
+            .map(ParticipantInitialDealDto::participantName)
+            .filter(name -> !name.equals("딜러"))
+            .toList();
         String joinedPlayerNames = String.join(", ", playerNames);
         System.out.println("딜러와 " + joinedPlayerNames + "에게 2장을 나누었습니다.");
 
-        printDealerCards(dealerCards);
-        for (PlayerDto player : players) {
-            printPlayerCards(player.playerName(), player.cards());
+        for (ParticipantInitialDealDto participantInitialDealDto : participantInitialDealDtos) {
+            printPlayerCards(participantInitialDealDto.participantName(), participantInitialDealDto.cards());
         }
         System.out.println();
     }
@@ -38,20 +37,11 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printScore(DealerScoreDto dealer, List<PlayerScoreDto> players) {
-        printDealerScore(dealer);
-        for (PlayerScoreDto player : players) {
-            printPlayerScore(player.playerName(), player.cards(), player.score());
+    public void printScore(List<ParticipantScoreDto> players) {
+        for (ParticipantScoreDto player : players) {
+            printPlayerScore(player.name(), player.cards(), player.score());
         }
         System.out.println();
-    }
-
-    private void printDealerCards(List<CardDto> cards) {
-        printPlayerCards("딜러", List.of(cards.getFirst()));
-    }
-
-    private void printDealerScore(DealerScoreDto dealer) {
-        printPlayerScore("딜러", dealer.cards(), dealer.score());
     }
 
     private void printPlayerScore(String playerName, List<CardDto> cards, Score score) {
@@ -65,13 +55,15 @@ public class OutputView {
         System.out.println("## 최종 승패");
 
         long dealerLoseCount = resultDtos.stream()
-                .filter(resultDto -> resultDto.result() == BlackjackResult.WIN)
-                .count();
+            .filter(resultDto -> resultDto.result() == BlackjackResult.WIN)
+            .count();
         long dealerWinCount = resultDtos.stream()
-                .filter(resultDto -> resultDto.result() == BlackjackResult.LOSE)
-                .count();
+            .filter(resultDto -> resultDto.result() == BlackjackResult.LOSE)
+            .count();
         int playerCount = resultDtos.size();
-        System.out.println("딜러: " + dealerWinCount + "승 " + dealerLoseCount + "패 " + (playerCount - dealerLoseCount - dealerWinCount) + "무");
+        System.out.println(
+            "딜러: " + dealerWinCount + "승 " + dealerLoseCount + "패 " +
+                (playerCount - dealerLoseCount - dealerWinCount) + "무");
 
         resultDtos.forEach(this::printResult);
     }
@@ -82,14 +74,13 @@ public class OutputView {
 
     private List<String> parseCardsToOutputs(List<CardDto> cards) {
         return cards.stream()
-                .map(this::parseCardToOutput)
-                .toList();
+            .map(this::parseCardToOutput)
+            .toList();
     }
 
     private String parseCardToOutput(CardDto card) {
         String rank = card.rank().getLabel();
         String suit = card.suit().getKorean();
-
         return rank + suit;
     }
 }

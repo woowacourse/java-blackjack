@@ -8,7 +8,8 @@ import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    private final Hand emptyHand = new Hand(new ScoreCalculator());
+    private final ScoreCalculator scoreCalculator = new ScoreCalculator();
+    private final Hand emptyHand = new Hand();
 
     @Nested
     @DisplayName("카드를 더 뽑아야 하는지 판단한다")
@@ -17,9 +18,9 @@ class DealerTest {
         void 카드를_더_뽑아야_한다면_true를_반환한다() {
             // given
             DealerHitPolicy alwaysHitPolicy = (score) -> true;
-            Dealer dealer = new Dealer(emptyHand);
+            Dealer dealer = new Dealer("딜러", emptyHand);
             // when
-            boolean shouldDraw = dealer.shouldHit(alwaysHitPolicy);
+            boolean shouldDraw = dealer.shouldHit(alwaysHitPolicy, scoreCalculator);
             // then
             assertThat(shouldDraw).isTrue();
         }
@@ -28,9 +29,9 @@ class DealerTest {
         void 카드를_더_뽑지_말아야_한다면_false를_반환한다() {
             // given
             DealerHitPolicy neverHitPolicy = (score) -> false;
-            Dealer dealer = new Dealer(emptyHand);
+            Dealer dealer = new Dealer("딜러", emptyHand);
             // when
-            boolean shouldDraw = dealer.shouldHit(neverHitPolicy);
+            boolean shouldDraw = dealer.shouldHit(neverHitPolicy, scoreCalculator);
             // then
             assertThat(shouldDraw).isFalse();
         }

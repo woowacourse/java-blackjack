@@ -2,27 +2,18 @@ package blackjack.model;
 
 import java.util.List;
 
-public class Dealer {
+public class Dealer extends Participant {
 
-    private final Hand hand;
-
-    public Dealer(Hand hand) {
-        this.hand = hand;
+    public Dealer(String name, Hand hand) {
+        super(name, hand);
     }
 
-    public boolean shouldHit(DealerHitPolicy dealerHitPolicy) {
-        return dealerHitPolicy.shouldHit(hand.calculateScore());
+    @Override
+    public List<Card> getVisibleCards() {
+        return List.of(getCards().getFirst());
     }
 
-    public void hit(Card card) {
-        hand.addCard(card);
-    }
-
-    public List<Card> getCards() {
-        return hand.getCards();
-    }
-
-    public Score getScore() {
-        return hand.calculateScore();
+    public boolean shouldHit(DealerHitPolicy dealerHitPolicy, ScoreCalculator scoreCalculator) {
+        return dealerHitPolicy.shouldHit(scoreCalculator.calculate(getCards()));
     }
 }
