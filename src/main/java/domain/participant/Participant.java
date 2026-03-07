@@ -1,5 +1,9 @@
-package domain;
+package domain.participant;
 
+import static constant.GameRule.BLACKJACK_CRITERION;
+
+import domain.card.Card;
+import domain.card.CardBoard;
 import java.util.List;
 
 public abstract class Participant {
@@ -19,6 +23,6 @@ public abstract class Participant {
     }
 
     public boolean checkScoreUnderCriterion() {
-        return cardBoard.calculateScore() <= 21;
+        return cardBoard.calculateScore() <= BLACKJACK_CRITERION;
     }
 }

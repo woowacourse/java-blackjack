@@ -1,5 +1,7 @@
-package domain;
+package domain.participant;
 
+import static message.ErrorMessage.PLAYER_NAME_DUPLICATED;
+import static message.ErrorMessage.PLAYER_NUMBER_OUT_OF_RANGE;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
@@ -40,7 +42,7 @@ class PlayersTest {
 
             assertThatThrownBy(() -> new Players(duplicatedNames))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("[ERROR] 플레이어 이름은 중복될 수 없습니다.");
+                    .hasMessage(PLAYER_NAME_DUPLICATED.getMessage());
         }
 
         private static Stream<Arguments> playerNumberOutOfRange() {
@@ -56,7 +58,7 @@ class PlayersTest {
         void 게임_참여_플레이어가_1명에서_7명_사이가_아닐_경우_예외가_발생한다(List<String> names) {
             assertThatThrownBy(() -> new Players(names))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("[ERROR] 플레이어는 1명 이상 7명 이하여야 합니다.");
+                    .hasMessage(PLAYER_NUMBER_OUT_OF_RANGE.getMessage());
         }
     }
 }

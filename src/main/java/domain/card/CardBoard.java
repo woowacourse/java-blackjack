@@ -36,7 +36,7 @@ public class CardBoard {
                 .anyMatch(card -> card.getRank().equals(Rank.ACE));
 
         if (aceExist) {
-            return (score + calculateAceScore(21 - score));
+            return (score + calculateAceScore(BLACKJACK_CRITERION - score));
         }
 
         return score;
@@ -48,14 +48,14 @@ public class CardBoard {
                 .mapToInt(Card::getRankScore)
                 .sum();
 
-        if (remainScore < minAceScore + 10) {
+        if (remainScore < minAceScore + ACE_BONUS_SCORE) {
             return minAceScore;
         }
 
-        return minAceScore + 10;
+        return minAceScore + ACE_BONUS_SCORE;
     }
 
     public boolean isBurst() {
-        return calculateScore() > 21;
+        return calculateScore() > BLACKJACK_CRITERION;
     }
 }
