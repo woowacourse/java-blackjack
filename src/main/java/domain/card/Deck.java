@@ -12,14 +12,14 @@ public class Deck {
         cards.shuffle();
     }
 
+    public Card pull() {
+        return cards.pull();
+    }
+
     private void init() {
         for (Suit suit : Suit.values()) {
             addAllCardBySuit(suit);
         }
-    }
-
-    public Card pull() {
-        return cards.pull();
     }
 
     private void addAllCardBySuit(Suit suit) {
