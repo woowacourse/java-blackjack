@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import meesage.OutputMessage;
 
 public class BlackjackResult {
 
@@ -45,15 +46,16 @@ public class BlackjackResult {
             Player player = playerWinOrLoseEntry.getKey();
             String winningResult = playerWinOrLoseEntry.getValue().getMessage();
 
-            results.add(player.getName() + ": " + winningResult);
+            results.add(
+                    String.format(OutputMessage.PLAYER_RESULT_FORMAT.getMessage(), player.getName(), winningResult));
         }
 
         return results;
     }
 
     public String getDealerResult() {
-        return "딜러: " + countPlayerResult(WinOrLose.LOSE) + "승 " + countPlayerResult(WinOrLose.DRAW) + "무 "
-                + countPlayerResult(WinOrLose.WIN) + "패";
+        return OutputMessage.DEALER_RESULT_FORMAT.format(countPlayerResult(WinOrLose.LOSE),
+                countPlayerResult(WinOrLose.DRAW), countPlayerResult(WinOrLose.WIN));
     }
 
     private int countPlayerResult(WinOrLose winOrLose) {

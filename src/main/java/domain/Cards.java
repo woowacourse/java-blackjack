@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 public class Cards {
 
-    private List<Card> cards;
+    private final List<Card> cards;
 
     private Cards() {
         this.cards = generateCards();
@@ -32,7 +32,7 @@ public class Cards {
 
     public List<Card> drawInitialHand() {
         return new ArrayList<>(Stream.generate(this::draw)
-                .limit(2)
+                .limit(Policy.FIRST_DRAW_SIZE)
                 .toList());
     }
 

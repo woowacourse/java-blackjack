@@ -14,7 +14,7 @@ public class InputParserTest {
     @DisplayName("사용자 입력 값 구분자(',') 분리 검증")
     class SplitByDelimiter {
 
-        public static final String DELIMITER = ",";
+        private static final String DELIMITER = ",";
 
         @Test
         @DisplayName("사용자 이름 입력 값이 구분자를 통해 정상 분리")

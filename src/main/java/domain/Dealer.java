@@ -5,9 +5,7 @@ import meesage.OutputMessage;
 
 public class Dealer {
 
-    private static final String NAME = "딜러";
-
-    private List<Card> cards;
+    private final List<Card> cards;
 
     private Dealer(List<Card> cards) {
         this.cards = cards;
@@ -44,21 +42,25 @@ public class Dealer {
 
     private int adjustForAce(int cardScore) {
         if (isBust(cardScore)) {
-            cardScore -= 10;
+            cardScore -= Policy.ACE_HIGH_LOW_DIFF;
         }
         return cardScore;
     }
 
     public boolean isBust(int cardScore) {
-        return cardScore > 21;
+        return cardScore > Policy.BUST_THRESHOLD;
     }
 
     public int getScoreOrZeroIfBust() {
         int score = calculateScore();
         if (isBust(score)) {
-            return 0;
+            return Policy.BUST_SCORE;
         }
         return score;
+    }
+
+    public String getDealerInfo() {
+        return OutputMessage.DEALER_CARD_INFO.format(OutputMessage.DELIMITER.join(getCardsInfo()));
     }
 
     public List<String> getCardsInfo() {
@@ -67,20 +69,16 @@ public class Dealer {
                 .toList();
     }
 
-    public String getDealerInfo() {
-        return NAME + OutputMessage.CARD_TEXT.getMessage() + OutputMessage.format(getCardsInfo());
-    }
-
     public String getDealerInitialInfo() {
-        return NAME + OutputMessage.CARD_TEXT.getMessage() + getCardsInfo().getFirst();
+        return OutputMessage.DEALER_CARD_INFO.format(getCardsInfo().getFirst());
     }
 
     public String getDealerScoreInfo() {
-        return getDealerInfo() + OutputMessage.RESULT_TEXT.getMessage() + calculateScore();
+        return OutputMessage.RESULT_TEXT.format(getDealerInfo(), calculateScore());
     }
 
-    public boolean shouldHit(){
-        return calculateScore() < 16;
+    public boolean shouldHit() {
+        return calculateScore() < Policy.DEALER_HIT_THRESHOLD;
     }
 
 }

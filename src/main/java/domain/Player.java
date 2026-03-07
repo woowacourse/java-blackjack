@@ -5,7 +5,7 @@ import meesage.OutputMessage;
 
 public class Player {
 
-    private List<Card> cards;
+    private final List<Card> cards;
     private final String name;
 
     private Player(List<Card> cards, String name) {
@@ -44,19 +44,19 @@ public class Player {
 
     private int adjustForAce(int cardScore) {
         if (isBust(cardScore)) {
-            cardScore -= 10;
+            cardScore -= Policy.ACE_HIGH_LOW_DIFF;
         }
         return cardScore;
     }
 
     public boolean isBust(int cardScore) {
-        return cardScore > 21;
+        return cardScore > Policy.BUST_THRESHOLD;
     }
 
     public int getScoreOrZeroIfBust() {
         int score = calculateScore();
         if (isBust(score)) {
-            return 0;
+            return Policy.BUST_SCORE;
         }
         return score;
     }
@@ -68,11 +68,11 @@ public class Player {
     }
 
     public String getPlayerInfo() {
-        return getName() + OutputMessage.CARD_TEXT.getMessage() + OutputMessage.format(getCardsInfo());
+        return OutputMessage.PLAYER_CARD_INFO.format(getName(), OutputMessage.DELIMITER.join(getCardsInfo()));
     }
 
     public String getPlayerScoreResult() {
-        return getPlayerInfo() + OutputMessage.RESULT_TEXT.getMessage() + calculateScore();
+        return OutputMessage.RESULT_TEXT.format(getPlayerInfo(), calculateScore());
     }
 
     public String getName() {

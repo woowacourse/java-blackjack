@@ -5,6 +5,7 @@ import domain.Cards;
 import domain.Dealer;
 import domain.Player;
 import domain.Players;
+import domain.Policy;
 import java.util.List;
 import meesage.InputMessage;
 import meesage.OutputMessage;
@@ -53,7 +54,7 @@ public class BlackjackController {
     private void printInitialCards(Players players, Dealer dealer) {
         outputView.separatorLine();
         outputView.printfList(OutputMessage.DEAL_INITIAL_CARDS.getMessage(),
-                OutputMessage.format(players.getUserNames()));
+                OutputMessage.DELIMITER.join(players.getUserNames()));
         outputView.separatorLine();
         outputView.println(dealer.getDealerInitialInfo());
         outputView.printList(players.getPlayerInfo());
@@ -73,8 +74,8 @@ public class BlackjackController {
     }
 
     private void askAddCard(Player player, Cards deck) {
-        String answer = "y";
-        while (!player.isBust(player.calculateScore()) && answer.equals("y")) {
+        String answer = InputMessage.USER_INPUT_YES.getMessage();
+        while (!player.isBust(player.calculateScore()) && answer.equals(InputMessage.USER_INPUT_YES.getMessage())) {
             outputView.printfList(InputMessage.ASK_ADD_CARD.getMessage(), player.getName());
             outputView.separatorLine();
             answer = inputView.askUserInput();
@@ -84,21 +85,22 @@ public class BlackjackController {
     }
 
     private void printInitialHandIfAnswerNo(Player player, String answer) {
-        if (answer.equals("n")) {
-            if (player.getCardsInfo().size() == 2) {
+        if (answer.equals(InputMessage.USER_INPUT_NO.getMessage())) {
+            if (player.getCardsInfo().size() == Policy.FIRST_DRAW_SIZE) {
                 outputView.println(player.getPlayerInfo());
             }
         }
     }
 
     private void printInitialHandIfAnswerYes(Player player, Cards deck, String answer) {
-        if (answer.equals("y")) {
+        if (answer.equals(InputMessage.USER_INPUT_YES.getMessage())) {
             player.addCard(deck.draw());
             outputView.println(player.getPlayerInfo());
         }
     }
 
     private void addDealerCard(Dealer dealer, Cards deck) {
+        outputView.separatorLine();
         while (dealer.shouldHit()) {
             outputView.println(OutputMessage.DEALER_DRAW_CARD.getMessage());
             dealer.addCard(deck.draw());
