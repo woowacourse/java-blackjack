@@ -145,7 +145,7 @@ class HandTest {
 
 
         // when - then
-        assertThrows(IllegalArgumentException.class, hand::getFirstCard);
+        assertThrows(IllegalStateException.class, hand::getFirstCard);
     }
 
     @Test
@@ -156,6 +156,6 @@ class HandTest {
 
 
         // when - then
-        assertThrows(IllegalArgumentException.class, hand::getCards);
+        assertThrows(IllegalStateException.class, hand::getCards);
     }
 }

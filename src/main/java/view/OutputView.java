@@ -2,6 +2,8 @@ package view;
 
 import domain.MatchResult;
 import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Suit;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;

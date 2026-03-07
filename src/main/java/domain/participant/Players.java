@@ -29,7 +29,7 @@ public class Players {
         Map<String, MatchResult> playersResult = new HashMap<>();
 
         for (Player player : players) {
-            player.compareWithDealer(dealer, playersResult);
+            player.calculateMatchResultWithDealer(dealer, playersResult);
         }
 
         return playersResult;

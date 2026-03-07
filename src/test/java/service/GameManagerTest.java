@@ -30,9 +30,9 @@ class GameManagerTest {
         GameManager gameManager = new GameManager(dealer, players);
 
 
-        assertThrows(IllegalArgumentException.class, () -> dealer.getHand().getCards().size());
+        assertThrows(IllegalStateException.class, () -> dealer.getHand().getCards().size());
         for (Player player : players.getPlayers()) {
-            assertThrows(IllegalArgumentException.class, () -> player.getHand().getCards().size());
+            assertThrows(IllegalStateException.class, () -> player.getHand().getCards().size());
         }
 
         // when

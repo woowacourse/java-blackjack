@@ -13,7 +13,7 @@ public class Player extends Participant {
         this.name = name;
     }
 
-    public void compareWithDealer(Dealer dealer, Map<String, MatchResult> playersResult) {
+    public void calculateMatchResultWithDealer(Dealer dealer, Map<String, MatchResult> playersResult) {
         if (isBustResult(dealer, playersResult)) return;
         if (isHigherScoreThanDealer(dealer, playersResult)) return;
         if (isDrawResult(dealer, playersResult)) return;
