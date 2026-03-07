@@ -36,20 +36,7 @@ public class CardDeck {
         return new CardDeck(cards, pickStrategy);
     }
 
-    // 카드를 덱에서 count 개수만큼 드로우 한다.
-    public List<Card> draw(int count) {
-        if (cards.size() < count) {
-            throw new IllegalStateException("카드 덱에 카드의 개수가 부족합니다.");
-        }
-
-        List<Card> draw = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            draw.add(pickStrategy.pick(cards));
-        }
-
-        return draw;
-    }
-
+    // 카드 덱에서 1장 가져온다.
     public Card pick() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("카드 덱에 카드의 개수가 부족합니다.");
