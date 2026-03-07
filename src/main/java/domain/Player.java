@@ -15,8 +15,8 @@ public class Player {
         return new Player(name, hand);
     }
 
-    public String getName() {
-        return name.getName();
+    public Name getName() {
+        return name;
     }
 
     public List<Card> getHandCards() {
