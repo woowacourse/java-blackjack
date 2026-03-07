@@ -34,12 +34,6 @@ public class OutputView {
         System.out.printf(DEALER_CARD + LINE_SEPARATOR, dealerCard.rank().getRank() + dealerCard.suit().getSuit());
     }
 
-    private void printDealerCard(List<CardDto> dealerCard) {
-        String card = collectCards(dealerCard);
-
-        System.out.printf(DEALER_CARD + LINE_SEPARATOR, card);
-    }
-
     public void printPlayerCard(String name, List<CardDto> playerCard) {
         String card = collectCards(playerCard);
 
