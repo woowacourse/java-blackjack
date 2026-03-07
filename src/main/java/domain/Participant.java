@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Optional;
+
 public abstract class Participant {
     private final Deck deck;
     private final String name;
@@ -17,7 +19,9 @@ public abstract class Participant {
         return deck.calculateCardScoreSum();
     }
 
-    public int addCard(Card card) {
-        return this.deck.addCard(card);
+    public Optional<Card> addCard(Deck totalDeck) {
+        Card newCard = totalDeck.drawCard();
+        this.deck.addCard(newCard);
+        return Optional.of(newCard);
     }
 }

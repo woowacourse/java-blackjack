@@ -1,6 +1,5 @@
 package domain;
 
-import common.ErrorMessage;
 import java.util.Optional;
 
 public class Dealer extends Participant {
@@ -11,22 +10,11 @@ public class Dealer extends Participant {
         super(participantDeck, DEALER_NAME);
     }
 
-    public Optional<Card> addCardWhenSumBelowMinimum(Deck totalDeck) {
+    @Override
+    public Optional<Card> addCard(Deck totalDeck) {
         if (super.calculateDeckSum() <= MINIMUM_TOTAL_SCORE) {
-            Card newCard = totalDeck.drawCard();
-            super.addCard(newCard);
-            return Optional.of(newCard);
+            return super.addCard(totalDeck);
         }
         return Optional.empty();
-    }
-
-    @Override
-    public int addCard(Card card) {
-        throw new UnsupportedOperationException(
-                String.format(
-                        ErrorMessage.UNSUPPORTED_OPERATION_MESSAGE.getMessage(),
-                        this.getClass()
-                )
-        );
     }
 }

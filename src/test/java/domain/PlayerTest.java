@@ -34,14 +34,14 @@ class PlayerTest {
     @DisplayName("플레이어가 카드를 한 장 더 받는다")
     void addCardWhenSumBelowMinimum() {
         //given
+        Card expectResultCard = new Card(CardShape.스페이드, CardContents.A);
         CardCreationStrategy playerCardCreationStrategy = () -> {
             Card spadeJ = new Card(CardShape.스페이드, CardContents.J);
             return new ArrayList<>(List.of(spadeJ));
         };
         CardCreationStrategy totalCardCreationStrategy = () -> {
-            Card spadeA = new Card(CardShape.스페이드, CardContents.A);
             Card heartA = new Card(CardShape.하트, CardContents.TWO);
-            return new ArrayList<>(List.of(spadeA, heartA));
+            return new ArrayList<>(List.of(expectResultCard, heartA));
         };
         Deck playerDeck = Deck.createDeck(playerCardCreationStrategy);
         String testPlayerName = "pobi";
@@ -49,9 +49,9 @@ class PlayerTest {
         Player player = new Player(playerDeck, testPlayerName);
 
         //when
-        int result = player.addCard(totalDeck.drawCard());
+        Card resultCard = player.addCard(totalDeck).get();
 
         //then
-        Assertions.assertThat(result).isEqualTo(2);
+        Assertions.assertThat(resultCard).isEqualTo(expectResultCard);
     }
 }
