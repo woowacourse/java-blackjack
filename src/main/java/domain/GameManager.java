@@ -7,12 +7,13 @@ import domain.dto.GameScoreResultDto;
 import domain.shuffle.RandomShuffle;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class GameManager {
     private Deck deck = new Deck();
     private ScoreCalculator scoreCalculator = new ScoreCalculator();
-    private Players players = new Players();
+    private List<Player> players = new ArrayList<>();
     private Dealer dealer = new Dealer();
 
     public GameManager() {
@@ -21,7 +22,7 @@ public class GameManager {
 
     public void startGame() {
         for (int i = 0; i < 2; i++) {
-            for (Player player : players.getPlayers()) {
+            for (Player player : players) {
                 player.addCard(deck.draw());
             }
             dealer.addCard(deck.draw());
@@ -55,7 +56,7 @@ public class GameManager {
     }
 
     public List<Player> getPlayerSequence() {
-        return players.getPlayers();
+        return Collections.unmodifiableList(players);
     }
 
     public List<GameScoreResultDto> getScoreResults() {
@@ -77,7 +78,7 @@ public class GameManager {
     }
 
     private void aggregatePlayerResult(List<GameScoreResultDto> results) {
-        for (Player player : players.getPlayers()) {
+        for (Player player : players) {
             results.add(new GameScoreResultDto(
                     player.getName(),
                     player.getHandToString(),
@@ -102,7 +103,7 @@ public class GameManager {
     }
 
     private void addPlayersInfo(List<GameInitialInfoDto> results) {
-        for (Player player : players.getPlayers()) {
+        for (Player player : players) {
             results.add(new GameInitialInfoDto(
                     player.getName(),
                     2,
@@ -139,7 +140,7 @@ public class GameManager {
     }
 
     private void determineWinLose(List<GameFinalResultDto> results) {
-        for (Player player : players.getPlayers()) {
+        for (Player player : players) {
             int playerScore = calculateScore(player.getHand());
             int dealerScore = calculateScore(dealer.getHand());
             if (player.isBust() || playerScore < dealerScore) {
