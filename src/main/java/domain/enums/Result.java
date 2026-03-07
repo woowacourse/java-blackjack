@@ -4,8 +4,7 @@ public enum Result {
 
     WIN("승"),
     LOSE("패"),
-    DRAW("무"),
-    UNDECIDED("미정");
+    DRAW("무");
 
     private final String description;
 
@@ -23,5 +22,9 @@ public enum Result {
         }
 
         return DRAW;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

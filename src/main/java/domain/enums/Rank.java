@@ -26,4 +26,8 @@ public enum Rank {
     public int getScore() {
         return score;
     }
+
+    public String getRank() {
+        return rank;
+    }
 }
