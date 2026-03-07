@@ -12,32 +12,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class DeckTest {
 
     @Test
-    void 덱은_52장의_카드로_구성된다() {
+    void 덱의_초기_카드는_52장이며_무늬순_숫자순으로_정렬되어있다() {
         Deck deck = new Deck();
 
-        int result = deck.size();
+        // 덱 초기 카드 수 테스트
+        assertThat(deck.size()).isEqualTo(52);
 
-        assertThat(result).isEqualTo(52);
-    }
+        // 덱 초기 카드 정렬 테스트
+        List<Card> actualCards = getRemainingCards(deck);
+        List<Card> expectedCards = createExpectedCards();
 
-    @Test
-    void 덱의_초기_카드는_무늬순_숫자순으로_정렬되어있다() {
-        Deck deck = new Deck();
-
-        List<Card> result = new ArrayList<>();
-        int deckSize = deck.size();
-        for (int i = 0; i < deckSize; i++) {
-            result.add(deck.draw());
-        }
-
-        List<Card> expectedDeck = new ArrayList<>();
-        for (Suit suit : Suit.values()) {
-            for (Rank rank : Rank.values()) {
-                expectedDeck.add(new Card(rank, suit));
-            }
-        }
-
-        assertThat(result).containsExactlyElementsOf(expectedDeck);
+        assertThat(actualCards).containsExactlyElementsOf(expectedCards);
     }
 
     @Test
@@ -61,5 +46,24 @@ public class DeckTest {
 
         assertThat(result1.size()).isEqualTo(result2.size());
         assertThat(result1).containsExactlyInAnyOrderElementsOf(result2);
+    }
+
+    private List<Card> getRemainingCards(Deck deck) {
+        List<Card> result = new ArrayList<>();
+        int deckSize = deck.size();
+        for (int i = 0; i < deckSize; i++) {
+            result.add(deck.draw());
+        }
+        return result;
+    }
+
+    private List<Card> createExpectedCards() {
+        List<Card> expectedDeck = new ArrayList<>();
+        for (Suit suit : Suit.values()) {
+            for (Rank rank : Rank.values()) {
+                expectedDeck.add(new Card(rank, suit));
+            }
+        }
+        return expectedDeck;
     }
 }
