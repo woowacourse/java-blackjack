@@ -95,21 +95,27 @@ public class Controller {
         gameTable.recordResult();
     }
 
-    private void playLoop(String name) {
-        String select = Constants.POSITIVE;
-        while (select.equals(Constants.POSITIVE) && gameTable.isCurrentPlayerPlayable()) {
-            select = InputView.readSelect(name);
-            gameTable.playCurrentPlayer();
-            GameStatus gameStatus = gameTable.currentPlayerStatus();
-            OutputView.printGameLog(gameStatus);
-        }
-    }
-
     private void initProcess(String select) {
         if (select.equals(Constants.POSITIVE)) {
             gameTable.playCurrentPlayer();
         }
         GameStatus gameStatus = gameTable.currentPlayerStatus();
         OutputView.printGameLog(gameStatus);
+    }
+
+    private void playLoop(String name) {
+        String select = Constants.POSITIVE;
+        while (select.equals(Constants.POSITIVE) && gameTable.isCurrentPlayerPlayable()) {
+            select = InputView.readSelect(name);
+            play(select);
+        }
+    }
+
+    private void play(String select) {
+        if (select.equals(Constants.POSITIVE)) {
+            gameTable.playCurrentPlayer();
+            GameStatus gameStatus = gameTable.currentPlayerStatus();
+            OutputView.printGameLog(gameStatus);
+        }
     }
 }

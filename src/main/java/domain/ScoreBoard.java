@@ -19,7 +19,6 @@ public class ScoreBoard {
     }
 
     public List<GameResult> playerResults() {
-        ;
         int dealerScore = getDealerScore();
 
         return games.stream()

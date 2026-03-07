@@ -33,7 +33,7 @@ public class OutputView {
             System.out.println(
                     OutputMessage.PARTICIPANTS_RESULT.description(getGameLog(gameStatus), gameStatus.scoreSum()));
         }
-        System.out.println();
+        printTaskDivider();
     }
 
     public static void gameResult(List<GameResult> gameResults) {
