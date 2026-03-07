@@ -11,6 +11,7 @@ import dto.DealerResultDto;
 import dto.HandDto;
 import dto.PlayerResultDto;
 import dto.PlayersDto;
+import exception.ErrorMessage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -27,7 +28,7 @@ public class BlackjackService {
         for (String name : names) {
             players.add(new Player(name));
         }
-        return blackjackConverter.convertPlayersDto(players, new Dealer("딜러"));
+        return blackjackConverter.convertPlayersDto(players, new Dealer("딜러")); // TODO: 상수?
     }
 
     private void validatePlayerNames(List<String> names) {
@@ -37,13 +38,13 @@ public class BlackjackService {
 
     private void validatePlayerCount(List<String> names) {
         if (new HashSet<>(names).size() != names.size()) {
-            throw new IllegalArgumentException("[ERROR] 게임 참가자의 이름은 중복 되어선 안됩니다.");
+            throw new IllegalArgumentException(ErrorMessage.PLAYER_DUPLICATED.getMessage());
         }
     }
 
     private void validatePlayerCount(int playerCount) {
-        if (!(2 <= playerCount && playerCount <= 8)) {
-            throw new IllegalArgumentException("[ERROR] 게임 참가자의 수는 2~8명 사이여야 합니다.");
+        if (!(2 <= playerCount && playerCount <= 8)) { // TODO: 상수?
+            throw new IllegalArgumentException(ErrorMessage.PLAYER_COUNT_OUT_OF_RANGE.getMessage());
         }
     }
 
@@ -64,7 +65,7 @@ public class BlackjackService {
     }
 
     public boolean drawDealerCard(Dealer dealer) {
-        if (dealer.calculateScore() <= 16) {
+        if (dealer.calculateScore() <= 16) { // TODO: 상수?
             dealer.addCard(drawCard());
             return true;
         }
@@ -85,28 +86,30 @@ public class BlackjackService {
 
     public DealerResultDto calculateDealerResult(PlayersDto playersDto) {
         List<PlayerResultDto> playerResultDtoList = calculatePlayerResults(playersDto);
-        int win = 0;
-        int draw = 0;
-        int lose = 0;
-
+        int win = 0, draw = 0, lose = 0;
         for (PlayerResultDto playerResultDto : playerResultDtoList) {
-            switch (playerResultDto.result()) {
-                case LOSE -> win++;
-                case DRAW -> draw++;
-                case WIN -> lose++;
-            }
+            Result result = playerResultDto.result();
+            win += judgeResult(result, Result.LOSE);
+            draw += judgeResult(result, Result.DRAW);
+            lose += judgeResult(result, Result.WIN);
         }
         return new DealerResultDto(win, draw, lose);
     }
 
+    private int judgeResult(Result result, Result playerResult) {
+        if (result.equals(playerResult)) {
+            return 1;
+        }
+        return 0;
+    }
+
     private Result calculatePlayerResult(Dealer dealer, Player player) {
-        if (dealer.isBust()) {
-            if (player.isBust()) {
-                return Result.LOSE;
-            }
+        if (dealer.isBust() && player.isBust()) {
+            return Result.LOSE;
+        }
+        if (dealer.isBust() && !player.isBust()) {
             return Result.WIN;
         }
-
         if (player.isBust()) {
             return Result.LOSE;
         }
@@ -129,30 +132,28 @@ public class BlackjackService {
 
     public List<BlackjackResultDto> generateBlackjackResultDto(PlayersDto playersDto) {
         List<BlackjackResultDto> blackjackResultDtoList = new ArrayList<>();
-
-        Dealer dealer = playersDto.dealer();
-        HandDto dealerHandDto = blackjackConverter.convertHandDto(dealer);
-        int dealerScore = calculateScore(dealer);
-
-        blackjackResultDtoList.add(
-            blackjackConverter.convertBlackjackResultDto(dealerHandDto, dealerScore));
+        addResult(playersDto.dealer(), blackjackResultDtoList);
         for (Player player : playersDto.players()) {
-            HandDto playerHandDto = blackjackConverter.convertHandDto(player);
-            int playerScore = calculateScore(player);
-            blackjackResultDtoList.add(
-                blackjackConverter.convertBlackjackResultDto(playerHandDto, playerScore));
+            addResult(player, blackjackResultDtoList);
         }
         return Collections.unmodifiableList(blackjackResultDtoList);
     }
 
+    private void addResult(Player player, List<BlackjackResultDto> blackjackResultDtoList) {
+        HandDto handDto = blackjackConverter.convertHandDto(player);
+        int score = calculateScore(player);
+        blackjackResultDtoList.add(
+            blackjackConverter.convertBlackjackResultDto(handDto, score));
+    }
+
     public void validateHitOrStand(String hitOrStand) {
-        if (!hitOrStand.strip().equals("y") && !hitOrStand.strip().equals("n")) {
-            throw new IllegalArgumentException("[ERROR] \"y\" 또는 \"n\"을 입력해야 합니다.");
+        if (!hitOrStand.strip().equals("y") && !hitOrStand.strip().equals("n")) { // TODO: 상수?
+            throw new IllegalArgumentException(ErrorMessage.INVALID_YES_NO_INPUT.getMessage());
         }
     }
 
     public boolean shouldRepeat(Player player, String hitOrStand) {
-        return hitOrStand.strip().equals("y") && !player.isBust();
+        return hitOrStand.strip().equals("y") && !player.isBust(); // TODO: 상수?
     }
 
     public void updatePlayer(Player player) {
@@ -160,7 +161,7 @@ public class BlackjackService {
     }
 
     public boolean isNo(String hitOrStand) {
-        return hitOrStand.equals("n");
+        return hitOrStand.equals("n"); // TODO: 상수?
     }
 
     public List<HandDto> generaterHandDtoList(PlayersDto playersDto) {
