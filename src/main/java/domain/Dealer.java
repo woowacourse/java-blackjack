@@ -43,14 +43,22 @@ public class Dealer {
     }
 
     private int adjustForAce(int cardScore) {
-        if (isBustWithAce(cardScore)) {
+        if (isBust(cardScore)) {
             cardScore -= 10;
         }
         return cardScore;
     }
 
-    private boolean isBustWithAce(int cardScore) {
+    public boolean isBust(int cardScore) {
         return cardScore > 21;
+    }
+
+    public int getScoreOrZeroIfBust() {
+        int score = calculateScore();
+        if (isBust(score)) {
+            return 0;
+        }
+        return score;
     }
 
     public List<String> getCardsInfo() {
