@@ -6,7 +6,7 @@ import java.util.stream.IntStream;
 public class Dealer extends Participant {
 
     public static final int DEALER_HIT_THRESHOLD = 16;
-    public static final String DEALER_NICKNAME = "딜러";
+    private static final String DEALER_NICKNAME = "딜러";
 
     private final Trump trump;
 
