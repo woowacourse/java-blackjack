@@ -105,7 +105,28 @@ public class PlayingCards {
         }
         return scoreSum;
     }
-
+    
+    public int calculateTotalScoreForResult() {
+        int scoreSum = calculateScoreSum();
+        boolean busted = isBusted(scoreSum);
+        if (busted) {
+            int aceCount = countAce();
+            return bustedScore(scoreSum, aceCount);
+        }
+        return scoreSum;
+    }
+    
+    private int bustedScore(int scoreSum, int aceCount) {
+        int totalScore = scoreSum;
+        if (aceCount > 0) {
+            totalScore = calculateWithAce(scoreSum, aceCount);
+        }
+        if (totalScore <= BUSTED_SCORE) {
+            return totalScore;
+        }
+        return 0;
+    }
+    
     public String getStatusByDisplayName() {
         return cards.stream().map(Card::getDisplayName).collect(Collectors.joining(", "));
     }

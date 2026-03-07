@@ -56,7 +56,7 @@ public class Participants {
     }
 
     public List<WinningResult> getWinningResult() {
-        int dealerScore = dealer.getTotalScore();
+        int dealerScore = dealer.getTotalScoreForResult();
         if (dealerScore > BUSTED_SCORE) {
             dealerScore = 0;
         }

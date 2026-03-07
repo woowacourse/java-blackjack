@@ -86,7 +86,7 @@ public class Players {
     public List<WinningResult> getPlayerWinningResults(int dealerScore) {
         List<WinningResult> winningResults = new ArrayList<>();
         for (Player player : players) {
-            int playerScore = player.getTotalScore();
+            int playerScore = player.getTotalScoreForResult();
             int win = Integer.compare(playerScore, dealerScore);
             int lose = Integer.compare(dealerScore, playerScore);
             winningResults.add(new WinningResult(player.getNickname(), win, lose));
