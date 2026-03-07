@@ -6,7 +6,8 @@ import java.util.stream.Stream;
 
 public class Lists {
 
-    public static <T, U> List<Pair<T, U>> cartesianProduct(final List<T> list1, final List<U> list2) {
+    public static <T, U> List<Pair<T, U>> cartesianProduct(final List<T> list1,
+        final List<U> list2) {
         return list1.stream()
             .flatMap(t -> pairWithAll(t, list2))
             .toList();

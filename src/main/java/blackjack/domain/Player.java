@@ -1,8 +1,7 @@
 package blackjack.domain;
 
-import java.util.List;
-
 public class Player extends Participant {
+
     private static final int NICKNAME_MINIMUM_LENGTH = 4;
     private static final int NICKNAME_MAXIMUM_LENGTH = 10;
 

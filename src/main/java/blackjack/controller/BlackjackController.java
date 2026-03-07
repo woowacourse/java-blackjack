@@ -32,7 +32,8 @@ public class BlackjackController {
         printResult(participants, players, dealer);
     }
 
-    private void printResult(final Participants participants, final Players players, final Dealer dealer) {
+    private void printResult(final Participants participants, final Players players,
+        final Dealer dealer) {
         OutputView.printFinalStatus(participants);
         final FinalResultDto finalResultDto = FinalResultDto.of(players.all(), dealer);
         OutputView.printFinalResult(finalResultDto);
@@ -40,7 +41,7 @@ public class BlackjackController {
 
     private void handleDealerAction(final Dealer dealer) {
         dealer.decideHit();
-        while(dealer.isHit()) {
+        while (dealer.isHit()) {
             dealer.giveCardMyself();
             dealer.decideHit();
             OutputView.printDealerHitMessage();
@@ -50,8 +51,7 @@ public class BlackjackController {
 
     private void handlePlayerAction(final Player player, final Dealer dealer) {
         while (player.isHit()) {
-            final Answer answer =
-                RetryExecutor.retry(this::readAnswer, player.getNickname());
+            final Answer answer = RetryExecutor.retry(this::readAnswer, player.getNickname());
             handleAnswer(player, dealer, answer);
             OutputView.printCardStatus(player);
         }
@@ -61,8 +61,7 @@ public class BlackjackController {
         final String rawNicknames = InputView.readNicknames();
         final List<String> nicknames = Parser.parseNickname(rawNicknames);
         final List<Player> players = nicknames.stream()
-            .map(nickname ->
-                new Player(new Hand(new ArrayList<>()), Status.HIT, nickname))
+            .map(nickname -> new Player(new Hand(new ArrayList<>()), Status.HIT, nickname))
             .toList();
         return new Players(players);
     }
