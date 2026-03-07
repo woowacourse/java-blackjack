@@ -15,11 +15,11 @@ public class Card {
     }
 
     public String getCardName() {
-        return grade.getName() + emblem.getName();
+        return grade.getSymbol() + emblem.getName();
     }
 
     public int getCardValue() {
-        return grade.getValue();
+        return grade.getScore();
     }
 
 }

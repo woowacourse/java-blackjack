@@ -17,23 +17,23 @@ public enum Grade {
     ACE(11, "A"),
     ;
 
-    private final int value;
-    private final String name;
+    private final int score;
+    private final String symbol;
 
     Grade(int value, String name) {
-        this.value = value;
-        this.name = name;
+        this.score = value;
+        this.symbol = name;
     }
 
     public boolean isAce() {
         return this == ACE;
     }
 
-    public int getValue() {
-        return value;
+    public int getScore() {
+        return score;
     }
 
-    public String getName() {
-        return name;
+    public String getSymbol() {
+        return symbol;
     }
 }
