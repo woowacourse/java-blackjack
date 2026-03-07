@@ -16,14 +16,14 @@ public class Name {
 
     private static void validateName(String name) {
         validateKorEng(name);
-        validateNotDealer(name);
+        // validateNotDealer(name);
     }
 
-    private static void validateNotDealer(String name){
-        if (name.equals("딜러")) {
-            throw new IllegalArgumentException("[ERROR] 딜러는 플레이어 이름으로 사용할 수 없습니다.");
-        }
-    }
+//    private static void validateNotDealer(String name){
+//        if (name.equals("딜러")) {
+//            throw new IllegalArgumentException("[ERROR] 딜러는 플레이어 이름으로 사용할 수 없습니다.");
+//        }
+//    }
 
     private static void validateKorEng(String name) {
         Pattern namePattern = Pattern.compile("^[a-zA-Z가-힣]+$");
