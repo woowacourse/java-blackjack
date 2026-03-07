@@ -3,23 +3,35 @@ package domain;
 import java.util.List;
 
 public class Player {
-    private final String name;
+    private final Name name;
     private final Hand hand;
 
-    private Player(String name, Hand hand) {
+    private Player(Name name, Hand hand) {
         this.name = name;
         this.hand = hand;
     }
 
-    public static Player of(String name, Hand hand) {
+    public static Player of(Name name, Hand hand) {
         return new Player(name, hand);
     }
 
     public String getName() {
-        return name;
+        return name.getName();
     }
 
-    public List<Card> getHand() {
+    public List<Card> getHandCards() {
         return hand.getCards();
+    }
+
+    public Hand getHand() {
+        return hand;
+    }
+
+    public void addHandCard(Card card) {
+        hand.addCard(card);
+    }
+
+    public boolean isBust() {
+        return hand.getScore().isBust();
     }
 }
