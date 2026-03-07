@@ -8,7 +8,7 @@ public class OutputView {
 
     public static void divideCards(List<String> participants) {
         String players = String.join(", ", participants);
-        System.out.printf("딜러와 %s에게 2장을 나누었습니다." + System.lineSeparator(), players);
+        System.out.printf(OutputMessage.DIVIDE.description() + System.lineSeparator(), players);
     }
 
     public static void initCardStatus(List<GameStatus> gameStatuses) {
@@ -20,22 +20,22 @@ public class OutputView {
     }
 
     public static void dealerStay() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(OutputMessage.DEALER_DRAW.description());
     }
 
     public static void participantsResults(List<GameStatus> gameStatuses) {
         for (GameStatus gameStatus : gameStatuses) {
-            System.out.printf("%s - 결과: %d"+System.lineSeparator(), getGameLog(gameStatus), gameStatus.scoreSum());
+            System.out.printf(OutputMessage.PARTICIPANTS_RESULT.description()+System.lineSeparator(), getGameLog(gameStatus), gameStatus.scoreSum());
         }
         System.out.println();
     }
 
     public static void gameResult(List<GameResult> gameResults) {
-        System.out.println("## 최종 승패");
+        System.out.println(OutputMessage.RESULT_HEADER.description());
 
         long playersWin = gameResults.stream().filter(cond -> cond.winningCondition().equals("승")).count();
-        System.out.printf("딜러: %d승 %d패" + System.lineSeparator(), gameResults.size() - playersWin, playersWin);
-        gameResults.forEach(c -> System.out.printf("%s: %s", c.name(), c.winningCondition() + System.lineSeparator()));
+        System.out.printf(OutputMessage.DEALER_WINNING_CONDITION.description() + System.lineSeparator(), gameResults.size() - playersWin, playersWin);
+        gameResults.forEach(c -> System.out.printf(OutputMessage.PLAYER_WINNING_CONDITION.description(), c.name(), c.winningCondition() + System.lineSeparator()));
     }
 
 
@@ -48,13 +48,13 @@ public class OutputView {
     }
 
     private static String getGameLog(GameStatus gameStatuses) {
-        return String.format("%s카드: %s", gameStatuses.name(), String.join(", ", gameStatuses.cards()));
+        return String.format(OutputMessage.GAME_LOG.description(), gameStatuses.name(), String.join(", ", gameStatuses.cards()));
     }
 
     private static String getInitGameLog(GameStatus gameStatuses) {
         if(gameStatuses.name().equals("딜러")) {
-            return String.format("%s카드: %s", gameStatuses.name(), gameStatuses.cards().get(0));
+            return String.format(OutputMessage.GAME_LOG.description(), gameStatuses.name(), gameStatuses.cards().getFirst());
         }
-        return String.format("%s카드: %s", gameStatuses.name(), String.join(", ", gameStatuses.cards()));
+        return String.format(OutputMessage.GAME_LOG.description(), gameStatuses.name(), String.join(", ", gameStatuses.cards()));
     }
 }
