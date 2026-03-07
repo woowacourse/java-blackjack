@@ -10,8 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Participants {
-
-    private static final int BUSTED_SCORE = 21;
+    
     private final Players players;
     private final Dealer dealer;
 
@@ -57,8 +56,8 @@ public class Participants {
 
     public List<WinningResult> getWinningResult() {
         int dealerScore = dealer.getTotalScoreForResult();
-        if (dealerScore > BUSTED_SCORE) {
-            dealerScore = 0;
+        if (dealerScore == 0) {
+            dealerScore = 1;
         }
         return getPlayerWinningResult(dealerScore);
     }
