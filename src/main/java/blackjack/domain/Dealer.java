@@ -40,4 +40,8 @@ public class Dealer {
     public TrumpCard getOpenCard() {
         return hand.getCards().getFirst();
     }
+
+    public boolean isBust() {
+        return score() > 21;
+    }
 }

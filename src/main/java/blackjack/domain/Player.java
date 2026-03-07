@@ -41,6 +41,10 @@ public class Player {
         return score() <= 21;
     }
 
+    public boolean isBust() {
+        return score() > 21;
+    }
+
     public List<TrumpCard> getCards() {
         return hand.getCards();
     }

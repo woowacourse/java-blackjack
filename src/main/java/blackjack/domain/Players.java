@@ -35,4 +35,8 @@ public class Players {
     public void hitPlayer(int index, TrumpCard card) {
         players.get(index).receiveCard(card);
     }
+
+    public Player playerAt(int index){
+        return players.get(index);
+    }
 }
