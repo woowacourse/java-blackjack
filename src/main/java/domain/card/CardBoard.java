@@ -1,0 +1,61 @@
+package domain.card;
+
+import static constant.GameRule.ACE_BONUS_SCORE;
+import static constant.GameRule.BLACKJACK_CRITERION;
+
+import domain.enums.Rank;
+import dto.CardDto;
+import java.util.ArrayList;
+import java.util.List;
+
+public class CardBoard {
+    private final List<Card> cards = new ArrayList<>();
+
+    public List<CardDto> createDto() {
+        return cards.stream()
+                .map(card -> new CardDto(card.getRank(), card.getSuit()))
+                .toList();
+    }
+
+    public void add(Card card) {
+        this.cards.add(card);
+    }
+
+    public void addAll(List<Card> cards) {
+        this.cards.addAll(cards);
+    }
+
+    public int calculateScore() {
+
+        int score = cards.stream()
+                .filter(card -> !card.getRank().equals(Rank.ACE))
+                .mapToInt(Card::getRankScore)
+                .sum();
+
+        boolean aceExist = cards.stream()
+                .anyMatch(card -> card.getRank().equals(Rank.ACE));
+
+        if (aceExist) {
+            return (score + calculateAceScore(BLACKJACK_CRITERION - score));
+        }
+
+        return score;
+    }
+
+    private int calculateAceScore(int remainScore) {
+        int minAceScore = cards.stream()
+                .filter(card -> card.getRank().equals(Rank.ACE))
+                .mapToInt(Card::getRankScore)
+                .sum();
+
+        if (remainScore < minAceScore + ACE_BONUS_SCORE) {
+            return minAceScore;
+        }
+
+        return minAceScore + ACE_BONUS_SCORE;
+    }
+
+    public boolean isBust() {
+        return calculateScore() > BLACKJACK_CRITERION;
+    }
+}
