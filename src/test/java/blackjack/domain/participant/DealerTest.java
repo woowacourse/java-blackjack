@@ -21,7 +21,7 @@ class DealerTest {
         assertThat(dealer.isDealer()).isTrue();
     }
     
-    @DisplayName("딜러는 총합이 16점 이하일 때만 카드를 받을 수 있다.")
+    @DisplayName("딜러는 총합이 16점 이하일 때 카드를 받는다.")
     @Test
     void isDealerDraw() {
         Dealer dealer = Dealer.from();
@@ -32,15 +32,19 @@ class DealerTest {
         
         dealer.receiveCard(cards16);
         assertThat(dealer.isDealerDraw()).isTrue();
-        
-        Dealer dealer2 = Dealer.from();
+    }
+    
+    @DisplayName("딜러는 총합이 16점 초과일 때 카드를 받지 않는다.")
+    @Test
+    void isDealerNotDraw() {
+        Dealer dealer = Dealer.from();
         PlayingCards cards17 = PlayingCards.from(List.of(
                 new Card(Rank.TEN, Suit.SPADE),
                 new Card(Rank.SEVEN, Suit.HEART)
         ));
         
-        dealer2.receiveCard(cards17);
-        assertThat(dealer2.isDealerDraw()).isFalse();
+        dealer.receiveCard(cards17);
+        assertThat(dealer.isDealerDraw()).isFalse();
     }
     
     @DisplayName("딜러의 첫 번째 카드 이름을 반환한다.")
