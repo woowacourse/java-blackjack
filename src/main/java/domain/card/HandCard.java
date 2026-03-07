@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HandCard {
+
     private static final int BLACKJACK_MAX_LIMIT = 21;
     private static final int ACE_MAX_VALUE = 11;
     private static final int ACE_MIN_VALUE = 1;
@@ -17,7 +18,7 @@ public class HandCard {
     public int score() {
         int nonAceTotal = cards.stream()
                 .filter(card -> !card.isAce())
-                .mapToInt(Card::getRankScore)
+                .mapToInt(Card::getScore)
                 .sum();
 
         int aceCount = (int) cards.stream()

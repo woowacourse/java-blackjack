@@ -5,6 +5,7 @@ import domain.deck.CardDeck;
 import domain.deck.Deck;
 
 public class AppConfig {
+
     private final CardDeck cardDeck;
     private final BlackJack blackJack;
 
@@ -13,7 +14,7 @@ public class AppConfig {
         this.blackJack = new BlackJack(cardDeck);
     }
 
-    public BlackJack blackJack(){
+    public BlackJack blackJack() {
         return blackJack;
     }
 }

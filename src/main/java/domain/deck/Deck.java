@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck implements CardDeck {
+
     private final List<Card> cards;
     private int index;
 

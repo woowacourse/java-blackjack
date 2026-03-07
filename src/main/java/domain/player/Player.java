@@ -5,6 +5,7 @@ import domain.deck.CardDeck;
 import java.util.List;
 
 public abstract class Player {
+
     protected final String name;
     protected final HandCard handCard;
 

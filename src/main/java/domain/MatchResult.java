@@ -24,7 +24,6 @@ public enum MatchResult {
         if (gScore < dScore) {
             return LOSE;
         }
-
         return DRAW;
     }
 

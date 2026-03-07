@@ -1,6 +1,7 @@
 package domain.card;
 
 public class Card {
+
     private final CardRank rank;
     private final CardSuit suit;
 
@@ -9,12 +10,12 @@ public class Card {
         this.suit = suit;
     }
 
-    public int getRankScore() {
+    public int getScore() {
         return rank.getScore();
     }
 
     public String getCardInfo() {
-        return rank.getName() + suit.getSuit();
+        return rank.getRank() + suit.getSuit();
     }
 
     public boolean isAce() {

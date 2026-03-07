@@ -13,6 +13,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class Gamblers {
+
     private final List<Gambler> gamblers;
 
     public Gamblers(List<String> names) {

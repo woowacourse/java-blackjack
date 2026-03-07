@@ -26,7 +26,7 @@ public class DealerTest {
         dealer.deal(sd);
 
         //when
-        String startPrintResult = dealer.showFirstCard();
+        String startPrintResult = dealer.firstCard();
 
         //then
         assertThat(startPrintResult).isEqualTo("5클로버");

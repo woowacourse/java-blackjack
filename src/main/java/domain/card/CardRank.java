@@ -15,16 +15,16 @@ public enum CardRank {
     QUEEN("Q", 10),
     KING("K", 10);
 
-    private final String name;
+    private final String rank;
     private final int score;
 
-    CardRank(String name, int score) {
-        this.name = name;
+    CardRank(String rank, int score) {
+        this.rank = rank;
         this.score = score;
     }
 
-    public String getName() {
-        return name;
+    public String getRank() {
+        return rank;
     }
 
     public int getScore() {

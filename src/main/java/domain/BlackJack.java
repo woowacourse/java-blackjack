@@ -14,6 +14,7 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackJack {
+
     private static final int INITIAL_CARD_COUNT = 2;
 
     private final CardDeck cardDeck;
@@ -64,7 +65,6 @@ public class BlackJack {
 
     private void gamblerTurn(Gambler gambler) {
         while (askHit(gambler.getName())) {
-
             gambler.deal(cardDeck);
 
             if (gambler.isBust()) {
