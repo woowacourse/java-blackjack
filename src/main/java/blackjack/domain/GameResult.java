@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,12 +20,8 @@ public enum GameResult {
         return name;
     }
 
-    private static List<GameResult> all() {
-        return List.of(values());
-    }
-
     public static GameResult pick(String name) {
-        return all().stream()
+        return Arrays.stream(values())
             .filter(gameResult -> Objects.equals(name, gameResult.name))
             .findFirst().orElse(DRAW);
     }

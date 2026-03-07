@@ -18,8 +18,4 @@ public enum Suit {
     public String getName() {
         return name;
     }
-
-    public static List<Suit> all() {
-        return List.of(values());
-    }
 }
