@@ -17,7 +17,7 @@ public class Result {
         return Collections.unmodifiableMap(gameResult);
     }
 
-    public void setEntry(String name, ResultInfo info) {
+    public void setPlayerResult(String name, ResultInfo info) {
         gameResult.put(name, info);
     }
 

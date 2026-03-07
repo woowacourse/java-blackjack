@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Stack;
 
 public class CardDeck {
+    private static final String CONSUME_ALL_CARD_DECK_ERROR_MESSAGE = "[ERROR] 카드를 다 뽑았습니다.";
+    private static final String DUPLICATED_CARD_ERROR_MESSAGE = "[ERROR] 중복된 항목이 존재합니다.";
+    private static final String EMPTY_LIST_ERROR_MESSAGE = "[ERROR] 리스트가 비어있습니다.";
     private final Stack<Card> deck;
 
     public CardDeck() {
@@ -38,21 +41,21 @@ public class CardDeck {
 
     public Card drawCard() {
         if (deck.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 카드를 다 뽑았습니다.");
+            throw new IllegalArgumentException(CONSUME_ALL_CARD_DECK_ERROR_MESSAGE);
         }
         return deck.pop();
     }
 
-    public List<Card> getCardDeck(){
+    public List<Card> getCardDeck() {
         return Collections.unmodifiableList(deck);
     }
 
     private void validate(Stack<Card> items) {
         if (items == null || items.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 리스트가 비어있습니다.");
+            throw new IllegalArgumentException(EMPTY_LIST_ERROR_MESSAGE);
         }
         if (hasDuplicates(items)) {
-            throw new IllegalArgumentException("[ERROR] 중복된 항목이 존재합니다.");
+            throw new IllegalArgumentException(DUPLICATED_CARD_ERROR_MESSAGE);
         }
     }
 

@@ -16,7 +16,7 @@ public class BlackJackService {
 
     public Result calculateResult(Dealer dealer, Players players) {
         for (Player player : players.getPlayers()) {
-            result.setEntry(player.getName(), calculateWinDefeatDraw(dealer, player));
+            result.setPlayerResult(player.getName(), calculateWinDefeatDraw(dealer, player));
         }
         return result;
     }
