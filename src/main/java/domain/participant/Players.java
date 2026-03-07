@@ -1,7 +1,7 @@
-package blackjack.domain.participant;
+package domain.participant;
 
-import blackjack.domain.MatchResult;
-import blackjack.domain.card.Deck;
+import domain.MatchResult;
+import domain.card.Deck;
 
 import java.util.*;
 

@@ -1,7 +1,7 @@
-package blackjack.domain.participant;
+package domain.participant;
 
-import blackjack.domain.MatchResult;
-import blackjack.domain.card.Card;
+import domain.MatchResult;
+import domain.card.Card;
 
 import java.util.EnumMap;
 import java.util.Map;

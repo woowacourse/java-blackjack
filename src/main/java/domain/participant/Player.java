@@ -1,6 +1,6 @@
-package blackjack.domain.participant;
+package domain.participant;
 
-import blackjack.domain.MatchResult;
+import domain.MatchResult;
 
 import java.util.Map;
 

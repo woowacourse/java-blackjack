@@ -1,7 +1,7 @@
-package blackjack.domain.participant;
+package domain.participant;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Hand;
+import domain.card.Card;
+import domain.card.Hand;
 
 public abstract class Participant {
 
