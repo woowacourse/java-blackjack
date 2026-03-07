@@ -16,4 +16,8 @@ public class Players {
     public List<Player> getPlayers() {
         return List.copyOf(players);
     }
+
+    public boolean isAllBust() {
+        return players.stream().allMatch(Player::isBust);
+    }
 }
