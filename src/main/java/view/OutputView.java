@@ -12,10 +12,10 @@ import java.util.Map.Entry;
 public class OutputView {
 
     public void printInitialDeal(List<String> names) {
+        System.out.println();
         System.out.println("딜러와 "
         + String.join(", ", names)
         + "에게 2장을 나누었습니다.");
-        System.out.println();
     }
 
     public void printParticipantsInfo(ParticipantsHandResponseDto responseDto) {
@@ -27,33 +27,35 @@ public class OutputView {
     }
 
     public void printDealerCardIsUnder16() {
+        System.out.println();
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
     }
 
     public void printParticipantInfo(ParticipantHandResponseDto responseDto) {
         System.out.println(responseDto.name() + "카드: " +
                 String.join(", ", responseDto.cards()));
-        System.out.println();
     }
 
     public void printParticipantsGameInfo(ParticipantsGameInfoDto responseDto) {
+        System.out.println();
         for (ParticipantGameInfo participant : responseDto.participants()) {
             System.out.println(participant.name() + "카드: " +
-                    String.join(", ", participant.cards()) + "- 결과: " + participant.score());
+                    String.join(", ", participant.cards()) + " - 결과: " + participant.score());
         }
         System.out.println();
     }
 
     public void printDealerResult(DealerResultDto resultDto) {
         System.out.println("## 최종 승패");
+        System.out.print("딜러: ");
         if (resultDto.dealerWinCount() > 0) {
-            System.out.println(resultDto.dealerWinCount() + "승 ");
+            System.out.print(resultDto.dealerWinCount() + "승 ");
         }
         if (resultDto.dealerLoseCount() > 0) {
-            System.out.println(resultDto.dealerLoseCount() + "패 ");
+            System.out.print(resultDto.dealerLoseCount() + "패 ");
         }
         if (resultDto.dealerDrawCount() > 0) {
-            System.out.println(resultDto.dealerLoseCount() + "무 ");
+            System.out.print(resultDto.dealerLoseCount() + "무 ");
         }
         System.out.println();
     }

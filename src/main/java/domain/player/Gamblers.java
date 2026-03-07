@@ -1,6 +1,7 @@
 package domain.player;
 
 import domain.card.GameCards;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,7 +23,11 @@ public class Gamblers {
 
     public Map<String, List<String>> getHandsInfo() {
         return gamblers.stream()
-                .collect(Collectors.toMap(Gambler::getName, Gambler::getHandInfo));
+                .collect(Collectors.toMap(Gambler::getName,
+                        Gambler::getHandInfo,
+                        (a, b) -> a,
+                        LinkedHashMap::new
+                ));
     }
 
     public Map<String, Integer> getParticipantTotalScore() {

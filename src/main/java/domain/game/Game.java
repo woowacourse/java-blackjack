@@ -9,10 +9,9 @@ import domain.player.Gambler;
 import domain.player.Gamblers;
 import domain.player.ParticipantGameInfo;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 
 public class Game {
 
@@ -34,7 +33,7 @@ public class Game {
     }
 
     public Map<String, List<String>> getInitialParticipantsHandInfo() {
-        Map<String, List<String>> info = new HashMap<>();
+        Map<String, List<String>> info = new LinkedHashMap<>();
         info.put(dealer.getName(), List.of(dealer.getFirstHand()));
         info.putAll(gamblers.getHandsInfo());
         return info;

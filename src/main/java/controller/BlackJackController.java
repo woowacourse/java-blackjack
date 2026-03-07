@@ -7,6 +7,7 @@ import static util.Constants.STAND;
 
 import domain.game.GamblersGameResult;
 import domain.game.Game;
+import domain.game.GameResult;
 import domain.player.Gambler;
 import dto.AgreementRequestDto;
 import dto.DealerResultDto;
@@ -36,17 +37,18 @@ public class BlackJackController {
 
         printParticipantsResult(game);
 
-        //승패 계산
-        GamblersGameResult result = game.getResult();
-        outputView.printDealerResult(
-                new DealerResultDto(result.countDealerWin(),
-                        result.countDealerLose(),
-                        result.countDealerDraw()));
-        outputView.printGamblerResult(
-                result.getResultInfo()
-        );
+        determineFinalGameResult(game.getResult());
     }
 
+    private void determineFinalGameResult(GamblersGameResult gamblersGameResult) {
+        outputView.printDealerResult(
+                new DealerResultDto(gamblersGameResult.countDealerWin(),
+                        gamblersGameResult.countDealerLose(),
+                        gamblersGameResult.countDealerDraw()));
+        outputView.printGamblerResult(
+                gamblersGameResult.getResultInfo()
+        );
+    }
     private List<String> inputGamblersInfo() {
         String name = inputView.askGamblerNames().name();
         return Parser.parse(name, COMMA_DELIMITER);
@@ -74,15 +76,15 @@ public class BlackJackController {
     private void playTurn(Game game, Gambler gambler) {
         while(!gambler.isBust()) {
             AgreementRequestDto agreementRequestDto = inputView.askHitOrStand(gambler.getName());
-            if (agreementRequestDto.agreement() == HIT) {
+            if (agreementRequestDto.agreement().equals(HIT)) {
                 gambler.addCard(game.pickCard());
+                outputView.printParticipantInfo(
+                        new ParticipantHandResponseDto(gambler.getName(), gambler.getHandInfo()));
             }
-            if (agreementRequestDto.agreement() == STAND) {
+            if (agreementRequestDto.agreement().equals(STAND)) {
                 break;
             }
         }
-        outputView.printParticipantInfo(
-                new ParticipantHandResponseDto(gambler.getName(), gambler.getHandInfo()));
     }
 
     private void checkDealerHand(Game game) {

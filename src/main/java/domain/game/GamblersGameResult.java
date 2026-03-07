@@ -1,5 +1,6 @@
 package domain.game;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -13,7 +14,8 @@ public class GamblersGameResult {
                 .collect(Collectors.toMap(Map.Entry::getKey,
                         entry -> GameResult.determine(
                                 dealerScore,
-                                entry.getValue())));
+                                entry.getValue()),
+                                (a, b) -> a, LinkedHashMap::new));
     }
 
     public GameResult getMatchResult(String name) {
@@ -46,6 +48,8 @@ public class GamblersGameResult {
         return gamblersResult.entrySet()
                 .stream()
                 .collect(Collectors.toMap(Map.Entry::getKey,
-                        entry -> entry.getValue().getGameResult()));
+                        entry -> entry.getValue().getGameResult(),
+                        (a, b) -> a, LinkedHashMap::new
+                ));
     }
 }
