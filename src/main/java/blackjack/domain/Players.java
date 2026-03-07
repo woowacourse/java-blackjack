@@ -14,13 +14,10 @@ public class Players {
         return new Players(players);
     }
 
-    public Players receiveCards(Deck deck) {
-        List<Player> newPlayers = new ArrayList<>();
+    public void receiveCards(Deck deck) {
         for (Player player : players) {
-            Player updatedPlayer = player.receiveCards(deck.drawSecondTimes());
-            newPlayers.add(updatedPlayer);
+            player.receiveCards(deck.drawSecondTimes());
         }
-        return new Players(newPlayers);
     }
 
     public int count() {
@@ -35,11 +32,7 @@ public class Players {
         return players;
     }
 
-    public Players hitPlayer(int index, TrumpCard card) {
-        List<Player> newPlayers = new ArrayList<>(players);
-        Player targetPlayer = players.get(index);
-        Player updatedPlayer = targetPlayer.receiveCard(card);
-        newPlayers.set(index, updatedPlayer);
-        return new Players(newPlayers);
+    public void hitPlayer(int index, TrumpCard card) {
+        players.get(index).receiveCard(card);
     }
 }

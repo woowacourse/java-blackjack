@@ -15,17 +15,14 @@ public class Dealer {
         return new Dealer(Hand.init());
     }
 
-    public Dealer receiveCards(List<TrumpCard> trumpCards) {
-        Hand newHand = this.hand;
-        for (TrumpCard card : trumpCards) {
-            newHand = newHand.receive(card);
+    public void receiveCards(List<TrumpCard> cards) {
+        for (TrumpCard card : cards) {
+            hand.receive(card);
         }
-        return new Dealer(newHand);
     }
 
-    public Dealer receive(TrumpCard card) {
-        Hand newHand = this.hand.receive(card);
-        return new Dealer(newHand);
+    public void receive(TrumpCard card) {
+        hand.receive(card);
     }
 
     public int score() {

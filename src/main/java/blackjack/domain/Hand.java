@@ -10,17 +10,15 @@ public class Hand {
     private final List<TrumpCard> cards;
 
     private Hand(List<TrumpCard> cards) {
-        this.cards = List.copyOf(cards);
+        this.cards = new ArrayList<>();
     }
 
     public static Hand init() {
         return new Hand(List.of());
     }
 
-    public Hand receive(TrumpCard card) {
-        List<TrumpCard> newCards = new ArrayList<>(cards);
-        newCards.add(card);
-        return new Hand(newCards);
+    public void receive(TrumpCard card) {
+        cards.add(card);
     }
 
     public int countCards() {

@@ -15,17 +15,14 @@ public class Player {
         return new Player(name, Hand.init());
     }
 
-    public Player receiveCards(List<TrumpCard> cards) {
-        Hand newHand = this.hand;
+    public void receiveCards(List<TrumpCard> cards) {
         for (TrumpCard card : cards) {
-            newHand = newHand.receive(card);
+            hand.receive(card);
         }
-        return new Player(name, newHand);
     }
 
-    public Player receiveCard(TrumpCard card) {
-        Hand newHand = this.hand.receive(card);
-        return new Player(name, newHand);
+    public void receiveCard(TrumpCard card) {
+        hand.receive(card);
     }
 
     public int countCards() {
