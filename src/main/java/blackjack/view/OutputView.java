@@ -8,9 +8,7 @@ import blackjack.domain.Participant;
 import blackjack.domain.Participants;
 import blackjack.domain.Player;
 import blackjack.dto.FinalResultDto;
-import java.io.FilterOutputStream;
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
 
@@ -65,7 +63,7 @@ public class OutputView {
     private static String participantHandFormat(final Participant participant) {
         return String.format("%s카드: %s",
             participant.getNickname(),
-            String.join(", ", participant.getCardNames())
+            String.join(", ", participant.getAllCardNames())
         );
     }
 

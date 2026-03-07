@@ -44,8 +44,9 @@ public abstract class Participant {
         }
     }
 
-    public List<String> getCardNames() {
-        return hand.getCardNames(0);
+    public List<String> getAllCardNames() {
+        final int startIndex = 0;
+        return hand.getCardNames(startIndex);
     }
 
     public abstract String getNickname();
