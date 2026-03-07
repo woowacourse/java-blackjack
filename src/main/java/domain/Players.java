@@ -1,23 +1,23 @@
 package domain;
 
 import domain.card.Deck;
-import domain.participant.Hand;
 import domain.participant.Name;
 import domain.participant.Participant;
+import domain.participant.Player;
 import exception.ExceptionMessage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Participants {
+public class Players {
 
-    private final List<Participant> participants;
+    private final List<Player> players;
 
-    public Participants() {
-        this.participants = new ArrayList<>();
+    public Players() {
+        this.players = new ArrayList<>();
     }
 
-    public Participants(List<String> playerNames, Deck deck) {
-        this.participants = new ArrayList<>();
+    public Players(List<String> playerNames, Deck deck) {
+        this.players = new ArrayList<>();
         validateUnique(playerNames);
         playerNames.forEach(playerName -> addParticipant(deck, playerName));
     }
@@ -35,21 +35,20 @@ public class Participants {
     }
 
     private void addParticipant(Deck deck, String playerName) {
-        Participant participant = new Participant(new Name(playerName), new Hand());
-        participants.add(participant);
-        participant.initHand(deck);
+        Player player = new Player(new Name(playerName), deck.dealInitialCards());
+        players.add(player);
     }
 
-    public void add(Participant participant) {
-        participants.add(participant);
+    public void add(Player player) {
+        players.add(player);
     }
 
-    public List<Participant> getParticipants() {
-        return participants;
+    public List<Player> getPlayers() {
+        return players;
     }
 
     public List<String> getParticipantNames() {
-        return participants.stream()
+        return players.stream()
                 .map(Participant::getName)
                 .toList();
     }

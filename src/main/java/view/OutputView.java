@@ -1,10 +1,10 @@
 package view;
 
-import domain.Dealer;
 import domain.GameResult;
 import domain.GameStatistics;
-import domain.Participants;
+import domain.Players;
 import domain.card.Card;
+import domain.participant.Dealer;
 import domain.participant.Participant;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,21 +15,21 @@ public final class OutputView {
     private static final String DELIMITER = ", ";
     private static final String NEW_LINE = System.lineSeparator();
 
-    public static void showIntroMessage(Participants participants) {
+    public static void showIntroMessage(Players players) {
         System.out.println(NEW_LINE + "딜러와 "
-                + String.join(DELIMITER, String.join(DELIMITER, participants.getParticipantNames())
+                + String.join(DELIMITER, String.join(DELIMITER, players.getParticipantNames())
                 + "에게 2장을 나누었습니다."));
     }
 
     public static void showDealerCardName(Dealer dealer) {
-        List<String> cardNames = createCardNames(dealer.getDealer());
+        List<String> cardNames = createCardNames(dealer);
         List<String> dealerCard = new ArrayList<>(cardNames);
         dealerCard.removeFirst();
-        System.out.println(getCardNames(dealer.getDealer(), dealerCard));
+        System.out.println(getCardNames(dealer, dealerCard));
     }
 
-    public static void showPlayerCardName(Participants participants) {
-        participants.getParticipants()
+    public static void showPlayerCardName(Players players) {
+        players.getPlayers()
                 .forEach(OutputView::showCardName);
     }
 
@@ -52,11 +52,11 @@ public final class OutputView {
         System.out.println(NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void showResult(Dealer dealer, Participants participants) {
+    public static void showResult(Dealer dealer, Players players) {
         System.out.println();
 
-        showCardAndScore(dealer.getDealer(), dealer.getScore());
-        participants.getParticipants()
+        showCardAndScore(dealer, dealer.getScore());
+        players.getPlayers()
                 .forEach(participant -> showCardAndScore(participant, participant.getScore()));
     }
 

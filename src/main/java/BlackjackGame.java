@@ -1,10 +1,10 @@
-import domain.Dealer;
 import domain.GameCommand;
 import domain.GameStatistics;
-import domain.Participants;
+import domain.Players;
 import domain.Referee;
 import domain.card.Deck;
-import domain.participant.Participant;
+import domain.participant.Dealer;
+import domain.participant.Player;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -13,40 +13,46 @@ public class BlackjackGame {
 
     public void run() {
         Deck deck = new Deck();
-        Participants participants = createParticipants(deck);
-        Dealer dealer = new Dealer(deck);
+        Players players = createPlayers(deck);
+        Dealer dealer = new Dealer(deck.dealInitialCards());
 
-        showCardNames(participants, dealer);
-        playTurn(participants, deck, dealer);
-        judge(dealer, participants);
+        showCardNames(players, dealer);
+        playTurn(players, deck, dealer);
+        judge(dealer, players);
     }
 
-    private Participants createParticipants(Deck deck) {
+    private Players createPlayers(Deck deck) {
         List<String> playerNames = InputView.readPlayerNames();
-        return new Participants(playerNames, deck);
+        return new Players(playerNames, deck);
     }
 
-    private void showCardNames(Participants participants, Dealer dealer) {
-        OutputView.showIntroMessage(participants);
+    private void showCardNames(Players players, Dealer dealer) {
+        OutputView.showIntroMessage(players);
         OutputView.showDealerCardName(dealer);
-        OutputView.showPlayerCardName(participants);
+        OutputView.showPlayerCardName(players);
     }
 
-    private void playPlayerTurn(Participants participants, Deck deck) {
-        participants.getParticipants()
-                .forEach(participant -> determineGameState(deck, participant));
+    private void playTurn(Players players, Deck deck, Dealer dealer) {
+        playPlayerTurn(players, deck);
+        playDealerTurn(dealer, deck);
+        OutputView.showResult(dealer, players);
     }
 
-    private void determineGameState(Deck deck, Participant participant) {
-        while (participant.isHit()) {
-            String input = InputView.readHitOrStand(participant.getName());
+    private void playPlayerTurn(Players players, Deck deck) {
+        players.getPlayers()
+                .forEach(player -> determineGameState(deck, player));
+    }
+
+    private void determineGameState(Deck deck, Player player) {
+        while (player.isHit()) {
+            String input = InputView.readHitOrStand(player.getName());
             GameCommand gameCommand = GameCommand.from(input);
             if (gameCommand.isNo()) {
-                participant.changeState();
+                player.changeState();
                 break;
             }
-            participant.playTurn(deck);
-            OutputView.showCardName(participant);
+            player.playTurn(deck);
+            OutputView.showCardName(player);
         }
     }
 
@@ -57,15 +63,9 @@ public class BlackjackGame {
         }
     }
 
-    private void playTurn(Participants participants, Deck deck, Dealer dealer) {
-        playPlayerTurn(participants, deck);
-        playDealerTurn(dealer, deck);
-        OutputView.showResult(dealer, participants);
-    }
-
-    private void judge(Dealer dealer, Participants participants) {
+    private void judge(Dealer dealer, Players players) {
         Referee referee = new Referee();
-        GameStatistics statistics = referee.judge(dealer, participants);
+        GameStatistics statistics = referee.judge(dealer, players);
         OutputView.showGameResult(statistics);
     }
 }

@@ -8,8 +8,6 @@ import java.util.List;
 
 public class Participant {
 
-    private static final int INIT_CARD_SIZE = 2;
-
     private final Name name;
     private final Hand hand;
     private GameState gameState;
@@ -35,14 +33,6 @@ public class Participant {
         hand.receiveCard(hitCard);
         if (isBust()) {
             changeState();
-        }
-    }
-
-
-    public void initHand(Deck deck) {
-        for (int size = 0; size < INIT_CARD_SIZE; size++) {
-            Card card = deck.drawCard();
-            hand.receiveCard(card);
         }
     }
 

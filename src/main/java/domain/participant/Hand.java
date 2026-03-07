@@ -12,8 +12,8 @@ public class Hand {
 
     private List<Card> cards;
 
-    public Hand() {
-        this.cards = new ArrayList<>();
+    public Hand(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
     }
 
     public void receiveCard(Card card) {

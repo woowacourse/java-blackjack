@@ -1,5 +1,6 @@
 package domain;
 
+import domain.participant.Dealer;
 import domain.participant.Participant;
 
 public class Referee {
@@ -10,8 +11,8 @@ public class Referee {
         this.gameStatistics = new GameStatistics();
     }
 
-    public GameStatistics judge(Dealer dealer, Participants players) {
-        for (Participant player : players.getParticipants()) {
+    public GameStatistics judge(Dealer dealer, Players players) {
+        for (Participant player : players.getPlayers()) {
             judgePlayerResult(dealer, player);
             judgeDealerResult(dealer, player);
         }
