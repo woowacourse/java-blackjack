@@ -13,11 +13,19 @@ public class Dealer {
         return new Dealer(hand);
     }
 
-    public List<Card> getHand() {
+    public List<Card> getHandCards() {
         return hand.getCards();
+    }
+
+    public Hand getHand() {
+        return hand;
     }
 
     public boolean checkThreshold() {
         return hand.getScore().getValue() <= 16;
+    }
+
+    public void addHandCard(Card card) {
+        hand.addCard(card);
     }
 }
