@@ -49,7 +49,7 @@ class BlackJackServiceTest {
         Player pobi = blackJackService.getPlayer().getFirst();
         int sizeBefore = pobi.getHands().getFirst().getCards().size();
 
-        blackJackService.hitPlayer(pobi);
+        blackJackService.playerHit(pobi);
 
         assertThat(pobi.getHands().getFirst().getCards()).hasSize(sizeBefore + 1);
     }

@@ -60,7 +60,7 @@ public class BlackJackController {
                 return;
             }
 
-            blackJackService.hitPlayer(player);
+            blackJackService.playerHit(player);
             OutputView.printPlayerCards(player.getName(), player.getHands().getFirst().getCardNames());
         }
 

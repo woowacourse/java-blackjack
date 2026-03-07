@@ -33,4 +33,22 @@ class BlackjackGameTest {
 
         assertThat(dealer.getHand().getCards().size()).isEqualTo(2);
     }
+
+    @Test
+    void 플레이어에게_카드_한장을_발급한다() {
+        Player player = new Player("pobi");
+
+        blackjackGame.dealCardTo(player);
+
+        assertThat(player.getHands().getFirst().getCards().size()).isEqualTo(1);
+    }
+
+    @Test
+    void 딜러에게_카드_한장을_발급한다() {
+        Dealer dealer = new Dealer();
+
+        blackjackGame.dealCardTo(dealer);
+
+        assertThat(dealer.getHand().getCards().size()).isEqualTo(1);
+    }
 }

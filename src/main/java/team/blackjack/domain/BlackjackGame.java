@@ -34,6 +34,10 @@ public class BlackjackGame {
         }
     }
 
+    public void dealCardTo(Participant participant){
+        participant.hit(deck.draw());
+    }
+
     public Map<String, List<String>> getAllPlayerCards() {
         final HashMap<String, List<String>> result = new HashMap<>();
         for (Player player : players) {

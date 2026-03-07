@@ -13,7 +13,6 @@ import team.blackjack.service.dto.GameResult.PlayerResult;
 import team.blackjack.service.dto.ScoreResult;
 import team.blackjack.domain.BlackjackGame;
 import team.blackjack.domain.Dealer;
-import team.blackjack.domain.Deck;
 import team.blackjack.domain.Player;
 import team.blackjack.domain.Result;
 import team.blackjack.domain.rule.DefaultBlackjackRule;
@@ -41,8 +40,8 @@ public class BlackJackService {
         return this.blackjackGame.getPlayers();
     }
 
-    public void hitPlayer(Player player) {
-        player.hit(blackjackGame.getDeck().draw());
+    public void playerHit(Player player) {
+        blackjackGame.dealCardTo(player);
     }
 
     public boolean shouldDealerHit() {
