@@ -56,7 +56,7 @@ public class Cards {
     private int getAceAmount() {
         int aceAmount = 0;
         for (Card card : cards) {
-            aceAmount += card.getOneIfAce(card);
+            aceAmount += card.getOneIfAce();
         }
         return aceAmount;
     }
@@ -64,7 +64,7 @@ public class Cards {
     private int getSumWithoutAce() {
         int sum = 0;
         for (Card card : cards) {
-            sum += card.getRankValueIfNotAce(card);
+            sum += card.getRankValueIfNotAce();
         }
         return sum;
     }
