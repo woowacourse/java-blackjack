@@ -10,7 +10,6 @@ import dto.GameStatus;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Queue;
 import strategy.RandomStrategy;
 import view.InputView;
 import view.OutputView;
@@ -22,8 +21,15 @@ public class Controller {
     public void run() {
         setupPhase();
         playerGamePhase();
-
+        dealerGamePhase();
         resultPhase();
+    }
+
+    private void setupPhase() {
+        gameTable = new GameTable();
+        dealerSetup();
+        playerSetup();
+        displayInitCard();
     }
 
     private void resultPhase() {
@@ -34,11 +40,19 @@ public class Controller {
         OutputView.gameResult(result);
     }
 
-    private void setupPhase() {
-        gameTable = new GameTable();
-        dealerSetup();
-        playerSetup();
-        displayInitCard();
+    private void playerGamePhase() {
+        while (gameTable.isPlayerExist()) {
+            playerExecute(gameTable.currentPlayerName());
+        }
+        OutputView.printTaskDivider();
+    }
+
+    private void dealerGamePhase() {
+        while (gameTable.isDealerPlayable()) {
+            gameTable.playDealer();
+            OutputView.dealerStay();
+        }
+        OutputView.printTaskDivider();
     }
 
     private void displayInitCard() {
@@ -68,12 +82,6 @@ public class Controller {
         }
     }
 
-    private void playerGamePhase() {
-        while (gameTable.isPlayerExist()) {
-            playerExecute(gameTable.currentPlayerName());
-        }
-    }
-
     private void playerExecute(String name) {
         String select = InputView.readSelect(name);
         initProcess(select);
@@ -87,7 +95,7 @@ public class Controller {
 
     private void playLoop(String name) {
         String select = "y";
-        while (select.equals("y") && gameTable.isPlayable()) {
+        while (select.equals("y") && gameTable.isCurrentPlayerPlayable()) {
             select = InputView.readSelect(name);
             gameTable.playCurrentPlayer();
             GameStatus gameStatus = gameTable.currentPlayerStatus();

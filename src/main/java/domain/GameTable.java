@@ -36,6 +36,14 @@ public class GameTable {
         }
     }
 
+    public void playDealer() {
+        dealer().draw();
+    }
+
+    private Participant dealer() {
+        return participants.stream().filter(p -> !p.isPlayer()).findFirst().orElse(null);
+    }
+
     public GameStatus currentPlayerStatus() {
         return currentParticipant().status();
     }
@@ -67,8 +75,12 @@ public class GameTable {
         return currentPlayer().name();
     }
 
-    public boolean isPlayable() {
+    public boolean isCurrentPlayerPlayable() {
         return currentPlayer().isPlayable();
+    }
+
+    public boolean isDealerPlayable() {
+        return currentParticipant().isPlayable();
     }
 
     private boolean hasOnlyDealer() {
