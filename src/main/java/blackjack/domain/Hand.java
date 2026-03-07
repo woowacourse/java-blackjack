@@ -14,7 +14,7 @@ public class Hand {
     }
 
     public static Hand init() {
-        return new Hand(new ArrayList<>());
+        return new Hand(List.of());
     }
 
     public Hand receive(TrumpCard card) {

@@ -26,11 +26,9 @@ public class Dealer {
         return new Dealer(newHand);
     }
 
-
     public int score() {
         return hand.calculateScore();
     }
-
 
     public List<TrumpCard> getCards() {
         return hand.getCards();
