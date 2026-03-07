@@ -12,10 +12,10 @@ public class ResultTest {
         List<Integer> expectedDealerScoreBoard = List.of(1, 2, 1);
         Result result = new Result();
 
-        result.setEntry("user1", ResultInfo.WIN);
-        result.setEntry("user2", ResultInfo.DRAW);
-        result.setEntry("user3", ResultInfo.DRAW);
-        result.setEntry("user4", ResultInfo.DEFEAT);
+        result.setPlayerResult("user1", ResultInfo.WIN);
+        result.setPlayerResult("user2", ResultInfo.DRAW);
+        result.setPlayerResult("user3", ResultInfo.DRAW);
+        result.setPlayerResult("user4", ResultInfo.DEFEAT);
 
         List<Integer> dealerScoreBoard = result.dealerResult();
 
