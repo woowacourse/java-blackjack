@@ -5,7 +5,7 @@ import domain.*;
 import java.util.*;
 
 import domain.card.Card;
-import util.InputParser;
+import util.InputNameParser;
 import view.InputView;
 import view.OutputView;
 
@@ -48,7 +48,7 @@ public class GameController {
 
     private List<String> getInputPlayers() {
         String rawPlayerNames = inputView.readPlayerNames();
-        return InputParser.parsePlayerNames(rawPlayerNames);
+        return InputNameParser.parsePlayerNames(rawPlayerNames);
     }
 
     private List<Player> participateGame(List<String> playerNames) {

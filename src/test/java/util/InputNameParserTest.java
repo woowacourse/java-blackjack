@@ -10,12 +10,12 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class InputParserTest {
+class InputNameParserTest {
     @ParameterizedTest(name = "{0}의 변환결과는 {1}이다")
     @DisplayName("정상적인 입력에 대한 테스트 케이스에 대해서는 정상적으로 동작한다.")
     @MethodSource("inputNameProvider")
     void testNameParseCase(String input, List<String> expected) {
-        assertThat(InputParser.parsePlayerNames(input)).isEqualTo(expected);
+        assertThat(InputNameParser.parsePlayerNames(input)).isEqualTo(expected);
 
     }
 
