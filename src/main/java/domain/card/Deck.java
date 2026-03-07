@@ -8,17 +8,24 @@ public class Deck {
 
     public Deck() {
         this.cards = new Cards();
-
-        for (Suit suit : Suit.values()) {
-            for (Rank rank : Rank.values()) {
-                cards.add(new Card(suit, rank));
-            }
-        }
+        init();
         cards.shuffle();
     }
 
-    public Card pull(){
+    private void init() {
+        for (Suit suit : Suit.values()) {
+            addAllCardBySuit(suit);
+        }
+    }
+
+    public Card pull() {
         return cards.pull();
+    }
+
+    private void addAllCardBySuit(Suit suit) {
+        for (Rank rank : Rank.values()) {
+            cards.add(new Card(suit, rank));
+        }
     }
 
     @Override
