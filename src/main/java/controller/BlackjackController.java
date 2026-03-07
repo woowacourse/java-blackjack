@@ -18,23 +18,34 @@ public class BlackjackController {
     private final BlackjackService blackjackService = new BlackjackService();
 
     public void start() {
-        PlayersDto playersDto = inputPlayers();
-        playersDto = blackjackService.dealInitialCards(playersDto);
-        outputView.printPlayers(playersDto);
-        outputView.printHandList(blackjackService.generaterHandDtoList(playersDto));
+        PlayersDto playersDto = initializeGame();
         inputHitOrStandOnPlayer(playersDto);
-
         boolean dealerPick = blackjackService.drawDealerCard(playersDto.dealer());
         if (dealerPick) {
             outputView.printDealerHit();
         }
+        printBlackjackResult(playersDto);
+        printBlackjackStatistics(playersDto);
+    }
 
-        List<BlackjackResultDto> blackjackResult = getBlackjackResult(playersDto);
-        outputView.printBlackjackResult(blackjackResult);
+    private void printBlackjackStatistics(PlayersDto playersDto) {
         DealerResultDto dealerResultDto = blackjackService.calculateDealerResult(playersDto);
         List<PlayerResultDto> playerResultDtoList = blackjackService.calculatePlayerResults(
             playersDto);
         outputView.printBlackjackStatistics(dealerResultDto, playerResultDtoList);
+    }
+
+    private void printBlackjackResult(PlayersDto playersDto) {
+        List<BlackjackResultDto> blackjackResult = getBlackjackResult(playersDto);
+        outputView.printBlackjackResult(blackjackResult);
+    }
+
+    private PlayersDto initializeGame() {
+        PlayersDto playersDto = inputPlayers();
+        playersDto = blackjackService.dealInitialCards(playersDto);
+        outputView.printPlayers(playersDto);
+        outputView.printHandList(blackjackService.generaterHandDtoList(playersDto));
+        return playersDto;
     }
 
     private void inputHitOrStandOnPlayer(PlayersDto playersDto) {
@@ -44,7 +55,7 @@ public class BlackjackController {
     }
 
     private PlayersDto inputPlayers() {
-        List<String> input = Parser.parseInput(inputView.inputPlayers(), ",");
+        List<String> input = Parser.parseInput(inputView.inputPlayers(), ","); // TODO: 상수?
         return blackjackService.createPlayers(input);
     }
 
@@ -52,8 +63,7 @@ public class BlackjackController {
         String hitOrStand = inputView.inputHitOrStand(player.getName());
         blackjackService.validateHitOrStand(hitOrStand); // 이 검증이 서비스의 역할인가? 그건 잘 모르겠어. Validator?
         if (blackjackService.isNo(hitOrStand)) {
-            outputView.printHand(blackjackService.generateHandDto(player));
-            System.out.println();
+            outputView.printlnHand(blackjackService.generateHandDto(player));
             return;
         }
 
@@ -63,8 +73,7 @@ public class BlackjackController {
     private void drawCardOnPlayer(Player player, String hitOrStand) {
         while (blackjackService.shouldRepeat(player, hitOrStand)) {
             blackjackService.updatePlayer(player);
-            outputView.printHand(blackjackService.generateHandDto(player));
-            System.out.println();
+            outputView.printlnHand(blackjackService.generateHandDto(player));
             hitOrStand = inputView.inputHitOrStand(player.getName());
             blackjackService.validateHitOrStand(hitOrStand);
         }
@@ -73,6 +82,4 @@ public class BlackjackController {
     public List<BlackjackResultDto> getBlackjackResult(PlayersDto playersDto) {
         return blackjackService.generateBlackjackResultDto(playersDto);
     }
-
-
 }
