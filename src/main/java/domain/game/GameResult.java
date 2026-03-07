@@ -1,5 +1,4 @@
 package domain.game;
 
-public class GameResult {
-
+public enum GameResult {
 }
