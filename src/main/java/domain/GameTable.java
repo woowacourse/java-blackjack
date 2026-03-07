@@ -21,13 +21,17 @@ public class GameTable {
         participants.add(participant);
     }
 
-    public List<GameStatus> gameStatus() {
+    public List<GameStatus> initGameStatus() {
         List<GameStatus> gameStatuses = new ArrayList<>();
         for (Participant participant : participants) {
             gameStatuses.add(participant.status());
         }
 
         return gameStatuses;
+    }
+
+    public List<GameStatus> endedGameStatus() {
+        return scoreBoard.gameStatuses();
     }
 
     public void playCurrentPlayer() {

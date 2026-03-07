@@ -32,14 +32,6 @@ public class Controller {
         displayInitCard();
     }
 
-    private void resultPhase() {
-        List<GameStatus> gameStatuses = gameTable.gameStatus();
-        OutputView.participantsResults(gameStatuses);
-
-        List<GameResult> result = gameTable.result();
-        OutputView.gameResult(result);
-    }
-
     private void playerGamePhase() {
         while (gameTable.isPlayerExist()) {
             playerExecute(gameTable.currentPlayerName());
@@ -52,11 +44,20 @@ public class Controller {
             gameTable.playDealer();
             OutputView.dealerStay();
         }
+        gameTable.recordResult();
         OutputView.printTaskDivider();
     }
 
+    private void resultPhase() {
+        List<GameStatus> gameStatuses = gameTable.endedGameStatus();
+        OutputView.participantsResults(gameStatuses);
+
+        List<GameResult> result = gameTable.result();
+        OutputView.gameResult(result);
+    }
+
     private void displayInitCard() {
-        List<GameStatus> gameStatuses = gameTable.gameStatus();
+        List<GameStatus> gameStatuses = gameTable.initGameStatus();
         OutputView.initCardStatus(gameStatuses);
     }
 

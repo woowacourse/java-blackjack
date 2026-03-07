@@ -42,4 +42,8 @@ public class ScoreBoard {
                 .map(GameStatus::scoreSum)
                 .orElse(0);
     }
+
+    public List<GameStatus> gameStatuses() {
+        return List.copyOf(games);
+    }
 }
