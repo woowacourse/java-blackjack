@@ -37,6 +37,10 @@ public class ScoreBoard {
     }
 
     private boolean isWin(GameStatus playerGameStatus, int dealerScore) {
+        if (playerGameStatus.scoreSum() > 21) {
+            return false;
+        }
+
         return playerGameStatus.scoreSum() > dealerScore;
     }
 

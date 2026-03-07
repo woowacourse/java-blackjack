@@ -36,7 +36,6 @@ public class Controller {
         while (gameTable.isPlayerExist()) {
             playerExecute(gameTable.currentPlayerName());
         }
-        OutputView.printTaskDivider();
     }
 
     private void dealerGamePhase() {
