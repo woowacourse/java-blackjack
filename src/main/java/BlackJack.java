@@ -3,6 +3,7 @@ import domain.deck.Deck;
 import domain.player.Dealer;
 import domain.player.Gambler;
 import domain.player.Gamblers;
+import domain.player.Player;
 import dto.PlayerCardInfo;
 import java.util.List;
 import parser.AnswerParser;
@@ -12,6 +13,7 @@ import view.OutputView;
 
 public class BlackJack {
     private static final int INITIAL_CARD_COUNT = 2;
+
     private final CardDeck cardDeck;
 
     public BlackJack() {
@@ -48,11 +50,12 @@ public class BlackJack {
                 .map(Gambler::getName)
                 .toList();
         OutputView.printInitMessage(playerNames);
-        OutputView.printDealerFirstCard(dealer.showFirstCard());
+        OutputView.printDealerFirstCard(dealer.firstCard());
 
-        gamblers.getGamblers().stream()
-                .map(PlayerCardInfo::from)
-                .forEach(OutputView::printPlayerCards);
+        gamblers.forEach(this::printPlayerCardInfo);
+    }
+    private void printPlayerCardInfo(Player player){
+        OutputView.printPlayerCards(PlayerCardInfo.from(player));
     }
 
     private void gamblersTurn(Gamblers gamblers) {
@@ -92,10 +95,12 @@ public class BlackJack {
     }
 
     private void printFinalPlayerInfo(Dealer dealer, Gamblers gamblers) {
-        OutputView.printFinalPlayer(PlayerCardInfo.from(dealer));
-        gamblers.getGamblers().stream()
-                .map(PlayerCardInfo::from)
-                .forEach(OutputView::printFinalPlayer);
+        printFinalPlayerCardInfo(dealer);
+        gamblers.forEach(this::printFinalPlayerCardInfo);
+    }
+
+    private void printFinalPlayerCardInfo(Player player){
+        OutputView.printFinalPlayer(PlayerCardInfo.from(player));
     }
 
     private void printFinalResult(Dealer dealer, Gamblers gamblers) {

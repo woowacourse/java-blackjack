@@ -12,7 +12,7 @@ public class Dealer extends Player {
         return isBust() || score() >= DEALER_STOP_SCORE;
     }
 
-    public String showFirstCard() {
+    public String firstCard() {
         return handCard.firstCardInfo();
     }
 
