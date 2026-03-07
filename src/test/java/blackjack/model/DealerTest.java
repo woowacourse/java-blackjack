@@ -12,7 +12,7 @@ class DealerTest {
         // given
         Dealer dealer = new Dealer();
         // when & then
-        assertThat(dealer.canReceive(15)).isTrue();
+        assertThat(dealer.canReceive(16)).isTrue();
     }
 
     @Test
