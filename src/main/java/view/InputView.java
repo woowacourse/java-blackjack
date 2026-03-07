@@ -14,4 +14,18 @@ public class InputView {
         return InputParser.splitComma(sc.nextLine());
     }
 
+    // 히트 여부 입력받기
+    public static boolean askHit(String name) {
+        System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        String answer = sc.nextLine();
+        if(answer.equals("y")) {
+            return true;
+        }
+
+        if(answer.equals("n")) {
+            return false;
+        }
+
+        throw new IllegalArgumentException("[ERROR] y와 n만 입력가능합니다.");
+    }
 }
