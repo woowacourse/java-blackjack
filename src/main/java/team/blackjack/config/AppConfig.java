@@ -1,6 +1,6 @@
 package team.blackjack.config;
 
-import team.blackjack.controler.BlackJackController;
+import team.blackjack.controller.BlackJackController;
 import team.blackjack.service.BlackJackService;
 
 public class AppConfig {
