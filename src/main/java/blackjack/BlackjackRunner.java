@@ -64,9 +64,6 @@ public class BlackjackRunner {
         outputView.printWinner(winningResults);
     }
 
-    private void printWinner(ParticipantResult participantResult) {
-    }
-
     private PlayingCards gameStart(Participants participants, PlayingCards deck) {
         return participants.distributeCards(deck);
     }
@@ -112,6 +109,6 @@ public class BlackjackRunner {
         if (!(isDraw || isNotDraw)) {
             throw new IllegalArgumentException("유효한 커맨드(예는 y, 아니오는 n)를 입력해 주세요.");
         }
-        return inputView.readLine().equals("y");
+        return userCommand.equals("y");
     }
 }
