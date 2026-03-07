@@ -24,20 +24,8 @@ public class Hand {
         return cards.stream().map(Card::info).collect(Collectors.toList());
     }
 
-    private Card createCard() {
-        return drawStrategy.draw();
-    }
-
     List<Card> cards() {
         return List.copyOf(cards);
-    }
-
-    int scoreSum() {
-        int total = rawScoreSum();
-        if(isOvercome()) {
-            total -= aceCount() * 10;
-        }
-        return total;
     }
 
     boolean isBusted() {
@@ -48,6 +36,14 @@ public class Hand {
         return score > BUST_NUMBER;
     }
 
+    int scoreSum() {
+        int total = rawScoreSum();
+        if(isOvercome()) {
+            total -= aceCount() * 10;
+        }
+        return total;
+    }
+
     private int rawScoreSum() {
         return cards.stream().mapToInt(Card::score).sum();
     }
@@ -56,6 +52,10 @@ public class Hand {
         return (int) cards.stream()
                 .filter(c -> c.rank() == CardRank.ACE)
                 .count();
+    }
+
+    private Card createCard() {
+        return drawStrategy.draw();
     }
 
     private boolean isOvercome() {

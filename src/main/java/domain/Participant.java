@@ -12,15 +12,7 @@ public abstract class Participant {
         this.hand = hand;
     }
 
-    public boolean isBusted() {
-        return hand.isBusted();
-    }
-
     protected abstract boolean isPlayable();
-
-    public String name() {
-        return name;
-    }
 
     public void draw() {
         if(isPlayable()) {
@@ -28,8 +20,16 @@ public abstract class Participant {
         }
     }
 
+    public boolean isBusted() {
+        return hand.isBusted();
+    }
+
     public int scoreSum() {
         return hand.scoreSum();
+    }
+
+    public String name() {
+        return name;
     }
 
     public GameStatus status() {
