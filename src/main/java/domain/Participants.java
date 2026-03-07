@@ -1,7 +1,10 @@
 package domain;
 
 import static constant.BlackjackConstant.DEALER_NAME;
+import static constant.BlackjackConstant.MAXIMUM_PLAYER_BOUND;
+import static constant.BlackjackConstant.MINIMUM_PLAYER_BOUND;
 import static exception.ErrorMessage.DEALER_NOT_FOUND_ERROR;
+import static exception.ErrorMessage.PLAYER_COUNT_OUT_OF_RANGE;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +14,7 @@ public class Participants {
     private final List<Participant> participants;
 
     public Participants(List<Participant> participants) {
+        validatePlayerCounts(participants);
         participants.add(new Participant(new Name(DEALER_NAME), new HandCards(new ArrayList<>()), true));
         this.participants = participants;
     }
@@ -42,5 +46,11 @@ public class Participants {
             cardResults.add(new CardResult(participant.getName(), participant.getHandCards(), participant.getScore()));
         }
         return cardResults;
+    }
+
+    private static void validatePlayerCounts(List<Participant> participants) {
+        if (participants.size() < MINIMUM_PLAYER_BOUND || participants.size() > MAXIMUM_PLAYER_BOUND) {
+            throw new IllegalStateException(PLAYER_COUNT_OUT_OF_RANGE.getMessage());
+        }
     }
 }
