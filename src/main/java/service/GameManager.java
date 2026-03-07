@@ -1,10 +1,10 @@
-package blackjack.service;
+package service;
 
-import blackjack.domain.MatchResult;
-import blackjack.dto.GameResultDto;
-import blackjack.domain.card.Deck;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Players;
+import domain.MatchResult;
+import domain.card.Deck;
+import domain.participant.Dealer;
+import domain.participant.Players;
+import dto.GameResultDto;
 
 import java.util.Map;
 
