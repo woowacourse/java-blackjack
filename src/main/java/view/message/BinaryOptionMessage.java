@@ -1,4 +1,4 @@
-package blackjack.view.message;
+package view.message;
 
 import java.util.regex.Pattern;
 

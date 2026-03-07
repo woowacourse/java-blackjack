@@ -1,6 +1,6 @@
-package blackjack.view.message;
+package view.message;
 
-import blackjack.domain.card.Suit;
+import domain.card.Suit;
 
 public enum SuitMessage {
 

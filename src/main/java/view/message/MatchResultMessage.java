@@ -1,6 +1,6 @@
-package blackjack.view.message;
+package view.message;
 
-import blackjack.domain.MatchResult;
+import domain.MatchResult;
 
 public enum MatchResultMessage {
 

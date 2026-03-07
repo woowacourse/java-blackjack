@@ -1,6 +1,6 @@
-package blackjack.view.message;
+package view.message;
 
-import blackjack.domain.card.Rank;
+import domain.card.Rank;
 
 public enum RankMessage {
 
