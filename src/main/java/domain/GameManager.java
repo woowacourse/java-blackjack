@@ -44,10 +44,9 @@ public class GameManager {
         return player.getHandToString();
     }
 
-    public List<String> drawDealerCard() {
+    public void drawDealerCard() {
         dealer.addCard(deck.draw());
         judgeBust(calculateScore(dealer.getHand()), dealer);
-        return dealer.getHandToString();
     }
 
     public void addPlayer(String name) {
