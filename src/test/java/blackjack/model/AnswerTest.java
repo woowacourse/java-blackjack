@@ -11,6 +11,6 @@ class AnswerTest {
     @ValueSource(strings = {"Y", "N", "h", " ", ""})
     void 부적절한_라벨이라면_예외를_던진다(String illegalLabel) {
         assertThatThrownBy(() -> Answer.from(illegalLabel))
-                .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -5,7 +5,7 @@ import blackjack.dto.DealerScoreDto;
 import blackjack.dto.PlayerDto;
 import blackjack.dto.PlayerScoreDto;
 import blackjack.dto.ResultDto;
-import blackjack.model.AceAdjustPolicy;
+import blackjack.model.ScoreCalculator;
 import blackjack.model.Answer;
 import blackjack.model.BlackjackResult;
 import blackjack.model.BustPolicy;
@@ -28,7 +28,7 @@ public class BlackjackController {
     private final InputView inputView;
     private final OutputView outputView;
 
-    private final AceAdjustPolicy aceAdjustPolicy;
+    private final ScoreCalculator scoreCalculator;
     private final DealerHitPolicy dealerHitPolicy;
     private final BustPolicy bustPolicy;
 
@@ -38,7 +38,7 @@ public class BlackjackController {
     public BlackjackController(
             InputView inputView,
             OutputView outputView,
-            AceAdjustPolicy aceAdjustPolicy,
+            ScoreCalculator scoreCalculator,
             DealerHitPolicy dealerHitPolicy,
             BustPolicy bustPolicy,
             CardsGenerator cardsGenerator,
@@ -46,7 +46,7 @@ public class BlackjackController {
     ) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.aceAdjustPolicy = aceAdjustPolicy;
+        this.scoreCalculator = scoreCalculator;
         this.dealerHitPolicy = dealerHitPolicy;
         this.bustPolicy = bustPolicy;
         this.cardsGenerator = cardsGenerator;
@@ -67,11 +67,11 @@ public class BlackjackController {
     private Players readPlayers() {
         String rawPlayerNames = inputView.readPlayerNames();
 
-        return Players.from(rawPlayerNames, aceAdjustPolicy);
+        return Players.from(rawPlayerNames, scoreCalculator);
     }
 
     private Hand createEmptyHand() {
-        return new Hand(aceAdjustPolicy);
+        return new Hand(scoreCalculator);
     }
 
     private void initialDeal(Players players, Dealer dealer, Deck deck) {

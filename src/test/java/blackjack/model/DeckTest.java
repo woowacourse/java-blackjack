@@ -15,10 +15,9 @@ class DeckTest {
     private final CardsGenerator emptyCardsGenerator = List::of;
 
     @Test
-    @DisplayName("CardsGenerator를 통해 인스턴스를 생성한다.")
-    void createInstanceByCardsGenerator() {
+    void CardsGenerator를_통해_덱_인스턴스를_생성한다() {
         assertThatCode(() -> Deck.shuffled(generator))
-                .doesNotThrowAnyException();
+            .doesNotThrowAnyException();
     }
 
     @Nested
@@ -26,37 +25,31 @@ class DeckTest {
     class ReturnCard {
         @Test
         @DisplayName("남은 카드가 있다면 예외가 발생하지 않는다")
-        void returnCard() {
+        void 남은_카드가_있다면_예외가_발생하지_않는다() {
             // given
             Deck deck = Deck.shuffled(generator);
-
             // when & then
             assertThatCode(deck::draw)
-                    .doesNotThrowAnyException();
+                .doesNotThrowAnyException();
         }
 
         @Test
-        @DisplayName("null이 아닌 인스턴스를 반환한다")
-        void returnNotNullCard() {
+        void null이_아닌_인스턴스를_반환한다() {
             // given
             Deck deck = Deck.shuffled(generator);
-
             // when
             Card card = deck.draw();
-
             // then
             assertThat(card).isNotNull();
         }
 
         @Test
-        @DisplayName("남은 카드가 없다면 예외를 던진다")
-        void throwExceptionIfCardsEmpty() {
+        void 남은_카드가_없다면_예외를_던진다() {
             // given
             Deck deck = Deck.shuffled(emptyCardsGenerator);
-
             // when & then
             assertThatThrownBy(deck::draw)
-                    .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(IllegalStateException.class);
         }
     }
 }

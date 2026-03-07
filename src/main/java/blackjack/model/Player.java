@@ -31,7 +31,7 @@ public class Player {
         return hand.getCards();
     }
 
-    public int getScore() {
+    public Score getScore() {
         return hand.calculateScore();
     }
 }

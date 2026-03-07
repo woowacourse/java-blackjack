@@ -9,22 +9,19 @@ import org.junit.jupiter.api.Test;
 
 class HandTest {
 
-    private final Card card = new Card(Rank.ACE, Suit.CLUB);
-    private final AceAdjustPolicy aceAdjustPolicy = new AceAdjustPolicy(new BustPolicyImpl());
+    private final Card card = new Card(Rank.ACE, Suit.CLOVER);
+    private final ScoreCalculator scoreCalculator = new ScoreCalculator();
 
     @Nested
     @DisplayName("1장 이상의 카드를 받아서 손패에 추가한다.")
     class AddCards {
         @Test
-        @DisplayName("한장의 카드를 받아서 손패에 추가한다.")
-        void addOneCard() {
+        void 한장의_카드를_받아서_손패에_추가한다() {
             // given
-            Hand hand = new Hand(aceAdjustPolicy);
+            Hand hand = new Hand(scoreCalculator);
             List<Card> existCards = hand.getCards();
-
             // when
             hand.addCard(card);
-
             // then
             List<Card> addedCards = hand.getCards();
             assertThat(addedCards.size()).isEqualTo(existCards.size() + 1);
@@ -32,24 +29,21 @@ class HandTest {
     }
 
     @Test
-    @DisplayName("카드 점수의 합을 계산한다")
-    void calculateTotalScore() {
+    void 카드_점수의_합을_계산한다() {
         // given
-        Hand hand = new Hand(aceAdjustPolicy);
+        Hand hand = new Hand(scoreCalculator);
         List<Card> cards = List.of(
-                new Card(Rank.TWO, Suit.CLUB),
-                new Card(Rank.THREE, Suit.CLUB)
+                new Card(Rank.TWO, Suit.CLOVER),
+                new Card(Rank.THREE, Suit.CLOVER)
         );
         hand.addCards(cards);
 
         int expectedScore = cards.stream()
                 .mapToInt(Card::getValue)
                 .sum();
-
         // when
-        int actualScore = hand.calculateScore();
-
+        Score actualScore = hand.calculateScore();
         // then
-        assertThat(actualScore).isEqualTo(expectedScore);
+        assertThat(actualScore.value()).isEqualTo(expectedScore);
     }
 }

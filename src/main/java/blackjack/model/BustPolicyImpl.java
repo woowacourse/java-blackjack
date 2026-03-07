@@ -2,10 +2,14 @@ package blackjack.model;
 
 public class BustPolicyImpl implements BustPolicy {
 
-    private static final int THRESHOLD = 21;
+    private final int bustThreshold;
+
+    public BustPolicyImpl(int bustThreshold) {
+        this.bustThreshold = bustThreshold;
+    }
 
     @Override
-    public boolean isBust(int score) {
-        return score > THRESHOLD;
+    public boolean isBust(Score score) {
+        return score.value() > bustThreshold;
     }
 }

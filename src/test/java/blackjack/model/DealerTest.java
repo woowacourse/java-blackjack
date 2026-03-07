@@ -8,20 +8,18 @@ import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    private final Hand emptyHand = new Hand(new AceAdjustPolicy(new BustPolicyImpl()));
+    private final Hand emptyHand = new Hand(new ScoreCalculator());
 
     @Nested
     @DisplayName("카드를 더 뽑아야 하는지 판단한다")
-    class JudgeShouldDraw {
+    class JudgeShouldHit {
         @Test
         void 카드를_더_뽑아야_한다면_true를_반환한다() {
             // given
-            DealerHitPolicy alwaysDrawPolicy = (score) -> true;
-            Dealer dealer = new Dealer(emptyHand, alwaysDrawPolicy);
-
+            DealerHitPolicy alwaysHitPolicy = (score) -> true;
+            Dealer dealer = new Dealer(emptyHand, alwaysHitPolicy);
             // when
             boolean shouldDraw = dealer.shouldHit();
-
             // then
             assertThat(shouldDraw).isTrue();
         }
@@ -29,12 +27,10 @@ class DealerTest {
         @Test
         void 카드를_더_뽑지_말아야_한다면_false를_반환한다() {
             // given
-            DealerHitPolicy neverDrawPolicy = (score) -> false;
-            Dealer dealer = new Dealer(emptyHand, neverDrawPolicy);
-
+            DealerHitPolicy neverHitPolicy = (score) -> false;
+            Dealer dealer = new Dealer(emptyHand, neverHitPolicy);
             // when
             boolean shouldDraw = dealer.shouldHit();
-
             // then
             assertThat(shouldDraw).isFalse();
         }

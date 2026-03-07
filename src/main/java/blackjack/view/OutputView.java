@@ -6,6 +6,7 @@ import blackjack.dto.PlayerDto;
 import blackjack.dto.PlayerScoreDto;
 import blackjack.dto.ResultDto;
 import blackjack.model.BlackjackResult;
+import blackjack.model.Score;
 import java.util.List;
 
 public class OutputView {
@@ -53,11 +54,11 @@ public class OutputView {
         printPlayerScore("딜러", dealer.cards(), dealer.score());
     }
 
-    private void printPlayerScore(String playerName, List<CardDto> cards, int score) {
+    private void printPlayerScore(String playerName, List<CardDto> cards, Score score) {
         List<String> cardOutputs = parseCardsToOutputs(cards);
         String joinedCards = String.join(", ", cardOutputs);
 
-        System.out.println(playerName + "카드: " + joinedCards + " - 결과: " + score);
+        System.out.println(playerName + "카드: " + joinedCards + " - 결과: " + score.value());
     }
 
     public void printResult(List<ResultDto> resultDtos) {

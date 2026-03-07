@@ -8,7 +8,7 @@ public class ResultJudgement {
         this.bustPolicy = bustPolicy;
     }
 
-    public BlackjackResult judge(int playerScore, int dealerScore) {
+    public BlackjackResult judge(Score playerScore, Score dealerScore) {
         if (bustPolicy.isBust(playerScore)) {
             return BlackjackResult.LOSE;
         }
@@ -17,11 +17,11 @@ public class ResultJudgement {
             return BlackjackResult.WIN;
         }
 
-        if (playerScore > dealerScore) {
+        if (playerScore.value() > dealerScore.value()) {
             return BlackjackResult.WIN;
         }
 
-        if (playerScore == dealerScore) {
+        if (playerScore.value() == dealerScore.value()) {
             return BlackjackResult.PUSH;
         }
 

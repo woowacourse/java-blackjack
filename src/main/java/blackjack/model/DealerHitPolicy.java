@@ -1,5 +1,5 @@
 package blackjack.model;
 
 public interface DealerHitPolicy {
-    boolean shouldHit(int score);
+    boolean shouldHit(Score score);
 }

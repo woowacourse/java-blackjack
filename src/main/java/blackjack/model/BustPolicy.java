@@ -1,5 +1,5 @@
 package blackjack.model;
 
 public interface BustPolicy {
-    boolean isBust(int score);
+    boolean isBust(Score score);
 }

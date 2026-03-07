@@ -15,12 +15,12 @@ public class Players implements Iterable<Player> {
         this.players = players;
     }
 
-    public static Players from(String rawPlayerNames, AceAdjustPolicy aceAdjustPolicy) {
+    public static Players from(String rawPlayerNames, ScoreCalculator scoreCalculator) {
         List<String> playerNames = Arrays.asList(rawPlayerNames.split(DELIMITER, INCLUDE_EMPTY_ELEMENT));
         validateDuplicatedNames(playerNames);
 
         List<Player> players = playerNames.stream()
-                .map(name -> new Player(name, new Hand(aceAdjustPolicy))).toList();
+                .map(name -> new Player(name, new Hand(scoreCalculator))).toList();
         return new Players(players);
     }
 
