@@ -48,6 +48,37 @@ public class DeckTest {
         assertThat(result1).containsExactlyInAnyOrderElementsOf(result2);
     }
 
+    @Test
+    void 초기_덱에서_카드를_뽑으면_첫_번째_카드인_A스페이드가_나온다() {
+        Deck deck = new Deck();
+
+        Card drawCard = deck.draw();
+
+        assertThat(drawCard).isEqualTo(new Card(Rank.ACE, Suit.SPADE));
+    }
+
+    @Test
+    void 덱에서_카드를_뽑으면_덱에_남아있는_카드의_숫자가_한_장_줄어든다() {
+        Deck deck = new Deck();
+        int beforeSize = deck.size();
+
+        deck.draw();
+        int afterSize = deck.size();
+        int result = beforeSize - afterSize;
+
+        assertThat(result).isEqualTo(1);
+    }
+    
+    @Test
+    void 덱에서_카드를_뽑으면_뽑은_카드는_덱에서_사라진다() {
+        Deck deck = new Deck();
+
+        Card drawnCard = deck.draw();
+        List<Card> remainingCards = getRemainingCards(deck);
+
+        assertThat(remainingCards).doesNotContain(drawnCard);
+    }
+
     private List<Card> getRemainingCards(Deck deck) {
         List<Card> result = new ArrayList<>();
         int deckSize = deck.size();
