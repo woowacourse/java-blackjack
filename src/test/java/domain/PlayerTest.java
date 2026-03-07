@@ -5,6 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import constant.Rank;
 import constant.Suit;
+import exception.ErrorMessage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -46,7 +47,7 @@ class PlayerTest {
                 // when & then
                 assertThatThrownBy(() -> new Player(name))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("[ERROR] 게임 참가자의 이름은 2~5글자 사이여야 합니다.");
+                    .hasMessageContaining(ErrorMessage.PLAYER_NAME_LENGTH_OUT_OF_RANGE.getMessage());
             }
 
             @Test
@@ -58,7 +59,7 @@ class PlayerTest {
                 // when & then
                 assertThatThrownBy(() -> new Player(name))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("[ERROR] 게임 참가자의 이름은 공백이 될 수 없습니다.");
+                    .hasMessageContaining(ErrorMessage.PLAYER_NAME_BLANK.getMessage());
             }
         }
     }
