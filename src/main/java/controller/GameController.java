@@ -76,9 +76,15 @@ public class GameController {
         return Dealer.from(new Hand(initCards()));
     }
 
-    // 플레이어 전체 카드 추가 TODO 카드 버스트 전까지 계속 받을지 확인
+    // 플레이어 전체 카드 추가
     private void addPlayersCard(Players players) {
         for (Player player : players.getPlayers()) {
+            checkBustPlayer(player);
+        }
+    }
+
+    private void checkBustPlayer(Player player) {
+        while (!player.isBust()) {
             addPlayerCard(player);
         }
     }
