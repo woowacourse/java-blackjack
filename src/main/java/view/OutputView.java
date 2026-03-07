@@ -1,117 +1,83 @@
-package view;
+package blackjack.view;
 
-import domain.*;
-import domain.card.Card;
-import domain.participant.Dealer;
-import domain.participant.Player;
-import domain.participant.Players;
+import blackjack.dto.GameResultDto;
+import blackjack.domain.MatchResult;
+import blackjack.domain.card.Card;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
+import blackjack.view.message.MatchResultMessage;
+import blackjack.view.message.RankMessage;
+import blackjack.view.message.SuitMessage;
 
+import java.util.List;
 import java.util.Map;
-
-import static util.BlackJackConstant.INIT_HAND_SIZE;
 
 public class OutputView {
 
     public void showInitialHands(Dealer dealer, Players players) {
-        StringBuilder playerNames = new StringBuilder();
+        String playerNames = players.getPlayers().stream()
+                .map(Player::getName)
+                .collect(java.util.stream.Collectors.joining(", "));
+
+        System.out.printf("\n딜러와 %s에게 2장을 나누었습니다.\n", playerNames);
+
+        Card firstCard = dealer.getFirstCard();
+        System.out.printf("딜러카드: %s%s\n", RankMessage.of(firstCard.getRank()), SuitMessage.of(firstCard.getSuit()));
 
         for (Player player : players.getPlayers()) {
-            playerNames.append(player.getName()).append(", ");
-        }
-
-        playerNames.delete(playerNames.length() - 2, playerNames.length());
-        System.out.printf("\n딜러와 %s에게 %d장을 나누었습니다.\n", playerNames, INIT_HAND_SIZE);
-
-        Card openCard = dealer.getOpenCard();
-        System.out.printf("딜러카드: %s%s\n", openCard.getRank().getName(), openCard.getSuit().getSuit());
-
-        for (Player player : players.getPlayers()) {
-            System.out.println(printHand(player));
+            showPlayerHand(player);
         }
 
         System.out.println();
     }
 
-    public void showHand(Player player) {
-        System.out.println(printHand(player));
+    public void showPlayerHand(Player player) {
+        System.out.printf("%s카드: %s\n", player.getName(), formatCards(player.getHand().getCards()));
     }
 
-    public void showDealerPlayMessage(boolean isPlayToHit) {
-        System.out.println();
-
-        if (isPlayToHit) {
-            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-            return;
-        }
-
-        System.out.println("딜러는 17이상이므로 카드를 받지 않았습니다.");
+    public void showDealerHitMessage() {
+        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void showHandsResult(Dealer dealer, Players players) {
-        StringBuilder dealerCards = new StringBuilder();
-        dealerCards.append("\n딜러카드: ");
+    public void showDealerStandMessage() {
+        System.out.println("\n딜러는 17이상이므로 카드를 받지 않았습니다.");
+    }
 
-        for (Card card : dealer.getHand().getHand()) {
-            dealerCards
-                    .append(card.getRank().getName())
-                    .append(card.getSuit().getSuit())
-                    .append(", ");
-        }
+    public void showDealerHand(Dealer dealer) {
+        System.out.printf("딜러카드: %s\n", formatCards(dealer.getHand().getCards()));
+    }
 
-        dealerCards
-                .delete(dealerCards.length() - 2, dealerCards.length())
-                .append(" - 결과: ")
-                .append(dealer.getHand().calculateSum());
-        System.out.println(dealerCards);
+    public void showHandResults(Dealer dealer, Players players) {
+        System.out.printf("\n딜러카드: %s - 결과: %d\n", formatCards(dealer.getHand().getCards()), dealer.getScore());
 
         for (Player player : players.getPlayers()) {
-            System.out.println(printHand(player)
-                    .append(" - 결과: ")
-                    .append(player.getHand().calculateSum()));
+            System.out.printf("%s카드: %s - 결과: %d\n", player.getName(), formatCards(player.getHand().getCards()), player.getScore());
         }
     }
 
-    public void showDealerResult(Map<MatchResult, Integer> dealerResult) {
-        StringBuilder dealerStatistics = new StringBuilder();
-
+    public void showGameResult(GameResultDto gameResultDto) {
         System.out.println("\n## 최종 승패");
 
-        dealerStatistics.append("딜러: ");
-        for (Map.Entry<MatchResult, Integer> results : dealerResult.entrySet()) {
-            printDealerStatistics(results, dealerStatistics);
-        }
+        String dealerResult = gameResultDto.getDealerResult().entrySet().stream()
+                .filter(entry -> entry.getValue() > 0)
+                .map(entry -> entry.getValue() + MatchResultMessage.of(entry.getKey()))
+                .collect(java.util.stream.Collectors.joining(" "));
 
-        System.out.println(dealerStatistics);
+        System.out.printf("딜러: %s\n", dealerResult);
+
+        for (Map.Entry<String, MatchResult> playersResult : gameResultDto.getPlayerResult().entrySet()) {
+            System.out.printf("%s: %s\n", playersResult.getKey(), MatchResultMessage.of(playersResult.getValue()));
+        }
     }
 
-    public void showPlayerGameResult(Map<String, MatchResult> playerResults) {
-        for (Map.Entry<String, MatchResult> results : playerResults.entrySet()) {
-            System.out.printf("%s: %s\n", results.getKey(), results.getValue().getValue());
-        }
+    private String formatCards(List<Card> cards) {
+        return cards.stream()
+                .map(card -> RankMessage.of(card.getRank()) + SuitMessage.of(card.getSuit()))
+                .collect(java.util.stream.Collectors.joining(", "));
     }
 
     public static void printErrorMessage(String message) {
         System.out.println(message);
-    }
-
-    private StringBuilder printHand(Player player) {
-        StringBuilder playerCards = new StringBuilder();
-        playerCards.append(player.getName()).append("카드: ");
-
-        for (Card card : player.getHand().getHand()) {
-            playerCards
-                    .append(card.getRank().getName())
-                    .append(card.getSuit().getSuit())
-                    .append(", ");
-        }
-
-        playerCards.delete(playerCards.length() - 2, playerCards.length());
-        return playerCards;
-    }
-
-    private static void printDealerStatistics(Map.Entry<MatchResult, Integer> results, StringBuilder result) {
-        if (results.getValue() != 0) {
-            result.append(String.format("%d%s ", results.getValue(), results.getKey().getValue()));
-        }
     }
 }

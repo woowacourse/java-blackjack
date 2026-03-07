@@ -1,6 +1,8 @@
-package domain.card;
+package blackjack.domain.card;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Deck {
 
@@ -15,7 +17,7 @@ public class Deck {
     }
 
     public Card drawCard() {
-        if (isAvailable()) {
+        if (!cards.isEmpty()) {
             return cards.removeFirst();
         }
 
@@ -26,9 +28,5 @@ public class Deck {
         for (Rank rank : Rank.values()) {
             cards.add(new Card(rank, suit));
         }
-    }
-
-    private boolean isAvailable() {
-        return !cards.isEmpty();
     }
 }

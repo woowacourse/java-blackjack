@@ -1,15 +1,12 @@
-package controller;
+package blackjack.controller;
 
-import domain.*;
-import domain.card.Deck;
-import domain.participant.Dealer;
-import domain.participant.Player;
-import domain.participant.Players;
-import service.BlackJackService;
-import view.InputView;
-import view.OutputView;
-
-import java.util.Map;
+import blackjack.service.GameManager;
+import blackjack.domain.card.Deck;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
 
 public class BlackJackController {
 
@@ -21,24 +18,21 @@ public class BlackJackController {
         this.outputView = outputView;
     }
 
-    public void play() {
+    public void playGame() {
         Deck deck = new Deck();
         Dealer dealer = new Dealer();
         Players players = readUntilValidPlayers();
 
-        BlackJackService blackJackService = new BlackJackService(deck, dealer, players);
-        blackJackService.initHand();
+        GameManager gameManager = new GameManager(dealer, players);
+        gameManager.initHands(deck);
         outputView.showInitialHands(dealer, players);
 
-        playRound(deck, dealer, players);
-        outputView.showHandsResult(dealer, players);
-
-        Map<String, MatchResult> playerResults = blackJackService.calculateResults();
-        outputView.showDealerResult(blackJackService.calculateDealerResult(playerResults));
-        outputView.showPlayerGameResult(playerResults);
+        playBlackJack(deck, dealer, players);
+        outputView.showHandResults(dealer, players);
+        outputView.showGameResult(gameManager.calculateResults());
     }
 
-    private void playRound(Deck deck, Dealer dealer, Players players) {
+    private void playBlackJack(Deck deck, Dealer dealer, Players players) {
         for (Player player : players.getPlayers()) {
             playPlayerTurn(deck, player);
         }
@@ -47,19 +41,24 @@ public class BlackJackController {
     }
 
     private void playPlayerTurn(Deck deck, Player player) {
-        while (!player.getHand().isBust()) {
-            if (!inputView.readPlayerToHitUntilValid(player.getName())) break;
+        while (!player.isBust()) {
+            if (!inputView.readPlayerToHitUntilValid(player.getName())) {
+                break;
+            }
 
-            player.hit(deck.drawCard());
-            outputView.showHand(player);
+            player.receive(deck.drawCard());
+            outputView.showPlayerHand(player);
         }
     }
 
     private void playDealerTurn(Deck deck, Dealer dealer) {
         while (dealer.shouldHit()) {
-            outputView.showDealerPlayMessage(dealer.shouldHit());
-            dealer.hit(deck.drawCard());
+            outputView.showDealerHitMessage();
+            dealer.receive(deck.drawCard());
+            outputView.showDealerHand(dealer);
         }
+
+        outputView.showDealerStandMessage();
     }
 
     private Players readUntilValidPlayers() {

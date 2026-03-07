@@ -1,9 +1,9 @@
-package domain.participant;
+package blackjack.domain.participant;
 
-import domain.card.Card;
-import domain.card.Hand;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Hand;
 
-public class Participant {
+public abstract class Participant {
 
     protected final Hand hand;
 
@@ -11,8 +11,20 @@ public class Participant {
         this.hand = new Hand();
     }
 
-    public void hit(Card card) {
+    public void receive(Card card) {
         hand.drawCard(card);
+    }
+
+    public boolean isBust() {
+        return hand.isBust();
+    }
+
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
+    }
+
+    public int getScore() {
+        return hand.calculateScore();
     }
 
     public Hand getHand() {

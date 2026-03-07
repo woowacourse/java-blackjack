@@ -1,4 +1,4 @@
-package domain.card;
+package blackjack.domain.card;
 
 public class Card {
 
@@ -10,12 +10,8 @@ public class Card {
         this.suit = suit;
     }
 
-    public int getScore() {
-        return rank.getScore();
-    }
-
     public boolean isAce() {
-        return rank == Rank.ACE;
+        return rank.isAce();
     }
 
     public Rank getRank() {

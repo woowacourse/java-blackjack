@@ -1,16 +1,15 @@
-package domain;
+package blackjack.domain.card;
 
-import domain.card.Card;
-import domain.card.Hand;
-import domain.card.Rank;
-import domain.card.Suit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 class HandTest {
+
 
     @Test
     @DisplayName("Ace 없는 Hand에 대해서 점수를 합산한다.")
@@ -23,7 +22,7 @@ class HandTest {
         }
 
         // when - then
-        Assertions.assertEquals(hand.calculateSum(), 12);
+        Assertions.assertEquals(hand.calculateScore(), 12);
     }
 
     @Test
@@ -37,7 +36,7 @@ class HandTest {
         }
 
         // when - then
-        Assertions.assertEquals(hand.calculateSum(), 21);
+        Assertions.assertEquals(hand.calculateScore(), 21);
     }
 
     @Test
@@ -51,7 +50,7 @@ class HandTest {
         }
 
         // when - then
-        Assertions.assertEquals(hand.calculateSum(), 12);
+        Assertions.assertEquals(hand.calculateScore(), 12);
     }
 
     @Test
@@ -108,5 +107,61 @@ class HandTest {
 
         // when - then
         Assertions.assertFalse(hand.isBlackJack());
+    }
+
+    @Test
+    @DisplayName("Hand에 있는 첫 카드를 반환한다.")
+    void 첫_카드_반환() {
+        // given
+        Card firstCard = new Card(Rank.ACE, Suit.DIAMOND);
+        Card secondCard = new Card(Rank.EIGHT, Suit.HEART);
+
+        List<Card> cards = List.of(firstCard, secondCard);
+        Hand hand = new Hand();
+        for (Card card : cards) {
+            hand.drawCard(card);
+        }
+
+        // when - then
+        Assertions.assertEquals(hand.getFirstCard(), firstCard);
+    }
+
+    @Test
+    @DisplayName("Hand에 있는 전체 카드를 반환한다.")
+    void 전체_카드_반환() {
+        // given
+        Card firstCard = new Card(Rank.ACE, Suit.DIAMOND);
+        Card secondCard = new Card(Rank.EIGHT, Suit.HEART);
+
+        List<Card> cards = List.of(firstCard, secondCard);
+        Hand hand = new Hand();
+        for (Card card : cards) {
+            hand.drawCard(card);
+        }
+
+        // when - then
+        Assertions.assertEquals(hand.getCards().size(), 2);
+    }
+
+        @Test
+    @DisplayName("Hand에 카드가 없을 때 첫 카드를 확인하려고 하면 예외를 발생한다.")
+    void NULL_예외_처리_첫_카드() {
+        // given
+        Hand hand = new Hand();
+
+
+        // when - then
+        assertThrows(IllegalArgumentException.class, hand::getFirstCard);
+    }
+
+    @Test
+    @DisplayName("Hand에 카드가 없을 때 전체 카드를 확인하려고 하면 예외를 발생한다.")
+    void NULL_예외_처리_카드_전체() {
+        // given
+        Hand hand = new Hand();
+
+
+        // when - then
+        assertThrows(IllegalArgumentException.class, hand::getCards);
     }
 }

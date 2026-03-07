@@ -1,33 +1,81 @@
-package domain.participant;
+package blackjack.domain.participant;
 
-import java.util.regex.Pattern;
+import blackjack.domain.MatchResult;
 
-import static util.BlackJackConstant.MAX_NAME_LENGTH;
+import java.util.Map;
 
 public class Player extends Participant {
 
-    private static final String STRING_REGEX = "^[a-zA-Z]*$";
     private final String name;
 
     public Player(String name) {
         validateNameLength(name);
-        validateOnlyEnglish(name);
         this.name = name;
+    }
+
+    public void compareWithDealer(Dealer dealer, Map<String, MatchResult> playersResult) {
+        if (isBustResult(dealer, playersResult)) return;
+        if (isHigherScoreThanDealer(dealer, playersResult)) return;
+        if (isDrawResult(dealer, playersResult)) return;
+
+        playersResult.put(getName(), MatchResult.LOSE);
+    }
+
+    private boolean isBustResult(Dealer dealer, Map<String, MatchResult> playersResult) {
+        if (hand.isBust()) {
+            playersResult.put(name, MatchResult.LOSE);
+            return true;
+        }
+
+        if (dealer.isBust()) {
+            playersResult.put(name, MatchResult.WIN);
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean isHigherScoreThanDealer(Dealer dealer, Map<String, MatchResult> playersResult) {
+        if (hand.calculateScore() > dealer.getScore()) {
+            playersResult.put(name, MatchResult.WIN);
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean isDrawResult(Dealer dealer, Map<String, MatchResult> playersResult) {
+        if (hand.calculateScore() == dealer.getScore()) {
+            return isDrawWithBlackJack(dealer, playersResult);
+        }
+
+        return false;
+    }
+
+    private boolean isDrawWithBlackJack(Dealer dealer, Map<String, MatchResult> playersResult) {
+        if (hand.isBlackJack() && !dealer.isBlackJack()) {
+            playersResult.put(name, MatchResult.WIN);
+            return true;
+        }
+        if (!hand.isBlackJack() && dealer.isBlackJack()) {
+            playersResult.put(name, MatchResult.LOSE);
+            return true;
+        }
+        if (!hand.isBlackJack() && !dealer.isBlackJack()) {
+            playersResult.put(name, MatchResult.DRAW);
+            return true;
+        }
+
+        return false;
+    }
+
+    private void validateNameLength(String name) {
+        if (name.isEmpty() || name.length() > 8) {
+            throw new IllegalArgumentException("플레이어 이름은 1자 이상 8자 이하여야 합니다.");
+        }
     }
 
     public String getName() {
         return name;
-    }
-
-    private void validateNameLength(String name) {
-        if (name.isEmpty() || name.length() > MAX_NAME_LENGTH) {
-            throw new IllegalArgumentException("플레이어 이름은 1글자 이상 8글자 이하여야 합니다.");
-        }
-    }
-
-    private void validateOnlyEnglish(String name) {
-        if (!Pattern.matches(STRING_REGEX, name)) {
-            throw new IllegalArgumentException("플레이어 이름은 영문자만 포함되어야 합니다.");
-        }
     }
 }

@@ -1,14 +1,14 @@
-package domain;
+package blackjack.domain.participant;
 
-import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Suit;
-import domain.participant.Player;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Rank;
+import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class PlayerTest {
+
+class PlayerTest {
 
     @Test
     @DisplayName("플레이어 이름은 1글자 이상 8글자 이하여야 한다.")
@@ -41,25 +41,15 @@ public class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어 이름은 특수 문자를 허용하지 않는다.")
-    void 이름_특수_문자_실패() {
-        // given
-        String name = "&*&@$";
-
-        // when - then
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new Player(name));
-    }
-
-    @Test
     @DisplayName("hit 처리 시, 1장을 뽑는다.")
     void Hand에_1장_추가() {
         // given
         Player player = new Player("pobi");
 
         // when
-        player.hit(new Card(Rank.ACE, Suit.DIAMOND));
+        player.receive(new Card(Rank.ACE, Suit.DIAMOND));
 
         // then
-        Assertions.assertEquals(player.getHand().getHand().size(), 1);
+        Assertions.assertEquals(player.getHand().getCards().size(), 1);
     }
 }

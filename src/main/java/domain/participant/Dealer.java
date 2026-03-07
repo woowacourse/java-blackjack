@@ -1,16 +1,36 @@
-package domain.participant;
+package blackjack.domain.participant;
 
-import domain.card.Card;
+import blackjack.domain.MatchResult;
+import blackjack.domain.card.Card;
 
-import static util.BlackJackConstant.DEALER_HIT_LIMIT;
+import java.util.EnumMap;
+import java.util.Map;
 
 public class Dealer extends Participant {
 
-    public boolean shouldHit() {
-        return hand.calculateSum() <= DEALER_HIT_LIMIT;
+    private final static int HIT_THRESHOLD = 17;
+
+    public Dealer() {
     }
 
-    public Card getOpenCard() {
-        return hand.getHand().getFirst();
+    public Map<MatchResult, Integer> calculateResult(Map<String, MatchResult> playersResult) {
+        Map<MatchResult, Integer> dealerResult = new EnumMap<>(MatchResult.class);
+
+        for (Map.Entry<String, MatchResult> playerResult : playersResult.entrySet()) {
+            MatchResult dealerMatchResult = MatchResult.reverse(playerResult.getValue());
+            int resultCount = dealerResult.getOrDefault(dealerMatchResult, 0);
+
+            dealerResult.put(dealerMatchResult, resultCount + 1);
+        }
+
+        return dealerResult;
+    }
+
+    public boolean shouldHit() {
+        return hand.calculateScore() < HIT_THRESHOLD;
+    }
+
+    public Card getFirstCard() {
+        return hand.getFirstCard();
     }
 }

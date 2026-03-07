@@ -1,14 +1,14 @@
-package view;
+package blackjack.view;
+
+import blackjack.view.message.BinaryOptionMessage;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class InputView {
 
     private static final String COMMA_DELIMITER = ",";
-    private static final String BINARY_REGEX = "[yn]";
 
     private final Scanner sc = new Scanner(System.in);
 
@@ -21,7 +21,7 @@ public class InputView {
         while (true) {
             try {
                 System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", name);
-                return validateBinaryOption(userInput());
+                return BinaryOptionMessage.isYes(userInput());
             } catch (IllegalArgumentException e) {
                 OutputView.printErrorMessage("잘못된 입력입니다. 다시 입력해주세요.");
             }
@@ -30,14 +30,6 @@ public class InputView {
 
     private List<String> splitPlayerNames(String playerNames) {
         return Arrays.stream(playerNames.split(COMMA_DELIMITER)).toList();
-    }
-
-    private boolean validateBinaryOption(String userInput) {
-        if (!Pattern.matches(BINARY_REGEX, userInput)) {
-            throw new IllegalArgumentException("잘못된 입력입니다. 다시 입력해주세요.");
-        }
-
-        return userInput.equals("y");
     }
 
     private String userInput() {

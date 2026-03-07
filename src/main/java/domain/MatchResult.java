@@ -1,24 +1,15 @@
-package domain;
+package blackjack.domain;
 
 public enum MatchResult {
 
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    WIN,
+    DRAW,
+    LOSE;
 
-    private final String value;
+    public static MatchResult reverse(MatchResult matchResult) {
+        if (matchResult == WIN) return LOSE;
+        if (matchResult == LOSE) return WIN;
 
-    MatchResult(String value) {
-        this.value = value;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public MatchResult reverse() {
-        if (this == MatchResult.WIN) return MatchResult.LOSE;
-        if (this == MatchResult.LOSE) return MatchResult.WIN;
-        return MatchResult.DRAW;
+        return DRAW;
     }
 }
