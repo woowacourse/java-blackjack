@@ -25,7 +25,6 @@ public enum MatchResult {
             return LOSE;
         }
         return DRAW;
-
     }
 
     private static int normalize(int score) {

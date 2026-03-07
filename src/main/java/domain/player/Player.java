@@ -6,16 +6,16 @@ import java.util.List;
 
 public abstract class Player {
 
-    protected final String name;
+    protected final Name name;
     protected final HandCard handCard;
 
-    protected Player(String name) {
+    protected Player(Name name) {
         this.name = name;
         this.handCard = new HandCard();
     }
 
     public String getName() {
-        return name;
+        return name.getName();
     }
 
     public void deal(CardDeck cardDeck) {

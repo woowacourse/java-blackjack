@@ -36,15 +36,15 @@ public class Gamblers {
     }
 
     public BlackjackResult getResult(int dealerScore) {
-        List<MatchResultLog> logs = gamblers.stream()
+        List<MatchResultLog> matchResultLogs = gamblers.stream()
                 .map(g -> new MatchResultLog(g.getName(), g.getResult(dealerScore)))
                 .toList();
 
-        int dealerWinCount = count(logs, MatchResult.LOSE);
-        int dealerLoseCount = count(logs, MatchResult.WIN);
-        int drawCount = logs.size() - dealerWinCount - dealerLoseCount;
+        int dealerWinCount = count(matchResultLogs, MatchResult.LOSE);
+        int dealerLoseCount = count(matchResultLogs, MatchResult.WIN);
+        int drawCount = matchResultLogs.size() - dealerWinCount - dealerLoseCount;
 
-        return new BlackjackResult(dealerWinCount, dealerLoseCount, drawCount, logs);
+        return new BlackjackResult(dealerWinCount, dealerLoseCount, drawCount, matchResultLogs);
     }
 
     private int count(List<MatchResultLog> logs, MatchResult result) {
@@ -58,7 +58,6 @@ public class Gamblers {
                 .map(Gambler::getName)
                 .toList();
     }
-
 
     public void forEach(Consumer<Gambler> consumer) {
         gamblers.forEach(consumer);

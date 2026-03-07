@@ -31,7 +31,6 @@ public class StandardDeck implements CardDeck {
         return cards;
     }
 
-
     @Override
     public Card deal() {
         if (index >= cards.size()) {
