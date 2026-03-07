@@ -28,14 +28,14 @@ public class Hand {
     }
 
     private int calculateScoreWithBestAce(int score, int aceCount) {
-        while (score > 21 && aceCount > 0) {
+        while (score > 21 && aceCount > 0) { // TODO: 상수?
             score -= 10;
             aceCount--;
         }
 
         return score;
     }
-    
+
     public List<String> getCardNames() {
         return cards.stream()
             .map(Card::getName)
