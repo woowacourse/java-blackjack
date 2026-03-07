@@ -45,7 +45,7 @@ public class ResultView {
         System.out.println("\n딜러는 " + (DEALER_HIT_STAND_BOUNDARY + 1) + "이상이라 카드를 받지 않았습니다.");
     }
 
-    public void printResult(List<Player> players, Dealer dealer) {
+    public void printCardsWithResult(List<Player> players, Dealer dealer) {
         System.out.println("\n딜러카드: " + dealer + " - 결과: " + dealer.getTotalSum());
 
         for (Player player : players) {
@@ -53,7 +53,7 @@ public class ResultView {
         }
     }
 
-    public void printFinalResult(List<Player> players, Dealer dealer) {
+    public void printResultStatistics(List<Player> players, Dealer dealer) {
         StringBuilder sb = new StringBuilder();
         sb.append('\n');
         sb.append("## 최종 승패\n");

@@ -31,18 +31,15 @@ public class BlackjackController {
         for (Player player : players) {
             String result = null;
             while((result = inputView.readHitStand(player.getName())).equals("y")){
-                blackjackGame.addPlayerCard(player);
-                resultView.printPlayerCards(player);
+                blackjackGame.giveCard(player);
+                resultView.printCards(player);
             }
         }
 
         resultView.printDealerHitStand(blackjackGame.dealerHitsStand());
 
-        // 밍구) 메서드 명 수정
-        resultView.printResult(players, dealer);
+        resultView.printCardsWithResult(players, dealer);
 
-        // 밍구) 메서드 명 수정
-        resultView.printFinalResult(players, dealer);
+        resultView.printResultStatistics(players, dealer);
     }
-
 }

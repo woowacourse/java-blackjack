@@ -5,6 +5,7 @@ import static domain.Constant.DEFAULT_HAND_NUMBER;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.participant.Dealer;
+import domain.participant.Participant;
 import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,39 +21,6 @@ public class BlackjackGame {
         this.deck = new Deck();
     }
 
-    public void registPlayers(List<String> names){
-        for (String name : names) {
-            registPlayer(name);
-        }
-    }
-
-    private void registPlayer(String name){
-        players.add(new Player(name));
-    }
-
-    public boolean decideDealerHitStand(){
-        if(dealer.shouldGetMoreCard()){
-            Card card = deck.pull();
-            dealer.add(card);
-            return true;
-        }
-        return false;
-    }
-
-    public void giveHand() {
-        for (Player player : players) {
-            for(int i = 0; i < DEFAULT_HAND_NUMBER; i++) {
-                Card card = deck.pull();
-                player.add(card);
-            }
-        }
-
-        for(int i = 0; i < DEFAULT_HAND_NUMBER; i++) {
-            Card card = deck.pull();
-            dealer.add(card);
-        }
-    }
-
     public List<Player> getPlayers() {
         return players;
     }
@@ -61,19 +29,37 @@ public class BlackjackGame {
         return dealer;
     }
 
-    public void addPlayerCard(Player player) {
-        Card card = deck.pull();
-        player.add(card);
+    public void registPlayers(List<String> names) {
+        for (String name : names) {
+            registPlayer(name);
+        }
     }
 
-    public void addDealerCard() {
+    private void registPlayer(String name) {
+        players.add(new Player(name));
+    }
+
+    public void giveHand() {
+        for (Player player : players) {
+            giveCards(player, DEFAULT_HAND_NUMBER);
+        }
+        giveCards(dealer, DEFAULT_HAND_NUMBER);
+    }
+
+    public void giveCards(Participant participant, int quantity) {
+        for (int i = 0; i < quantity; i++) {
+            giveCard(participant);
+        }
+    }
+
+    public void giveCard(Participant participant) {
         Card card = deck.pull();
-        dealer.add(card);
+        participant.add(card);
     }
 
     public boolean dealerHitsStand() {
-        if(dealer.shouldGetMoreCard()){
-            addDealerCard();
+        if (dealer.shouldGetMoreCard()) {
+            giveCard(dealer);
             return true;
         }
         return false;

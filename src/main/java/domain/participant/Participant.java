@@ -3,7 +3,7 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.Cards;
 
-public class Participant {
+public abstract class Participant {
     protected final Name name;
     protected final Cards cards;
 
