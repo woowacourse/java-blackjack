@@ -1,24 +1,12 @@
 package domain;
 
-public class Card {
+public record Card(CardRank rank, CardMark mark) {
 
-    private final CardRank rank;
-    private final CardMark mark;
-
-    public Card(CardRank rank, CardMark mark) {
-        this.rank = rank;
-        this.mark = mark;
-    }
-
-    public String info() {
+    String info() {
         return rank.label() + mark.description();
     }
 
-    public int score() {
+    int score() {
         return rank.score();
-    }
-
-    public CardRank rank() {
-        return rank;
     }
 }

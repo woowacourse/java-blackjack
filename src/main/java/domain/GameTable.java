@@ -9,12 +9,12 @@ import java.util.Queue;
 
 public class GameTable {
 
-    private final ScoreBoard scoreBoard;
     private final Queue<Participant> participants;
+    private final ScoreBoard scoreBoard;
 
     public GameTable() {
-        this.scoreBoard = new ScoreBoard();
         this.participants = new LinkedList<>();
+        this.scoreBoard = new ScoreBoard();
     }
 
     public void addParticipant(Participant participant) {
@@ -42,10 +42,6 @@ public class GameTable {
 
     public void playDealer() {
         dealer().draw();
-    }
-
-    private Participant dealer() {
-        return participants.stream().filter(p -> !p.isPlayer()).findFirst().orElse(null);
     }
 
     public GameStatus currentPlayerStatus() {
@@ -85,6 +81,10 @@ public class GameTable {
 
     public boolean isDealerPlayable() {
         return currentParticipant().isPlayable();
+    }
+
+    private Participant dealer() {
+        return participants.stream().filter(p -> !p.isPlayer()).findFirst().orElse(null);
     }
 
     private boolean hasOnlyDealer() {

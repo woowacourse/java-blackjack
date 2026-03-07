@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 public class Hand {
 
     private static final int BUST_NUMBER = 21;
+    private static final int ACE_WEIGHT = 10;
 
     private final DrawStrategy drawStrategy;
     private final List<Card> cards;
@@ -31,7 +32,7 @@ public class Hand {
     boolean isBusted() {
         int score = rawScoreSum();
         if(aceCount() > 0) {
-            score -= aceCount() * 10;
+            score -= aceCount() * ACE_WEIGHT;
         }
         return score > BUST_NUMBER;
     }
@@ -39,7 +40,7 @@ public class Hand {
     int scoreSum() {
         int total = rawScoreSum();
         if(isOvercome()) {
-            total -= aceCount() * 10;
+            total -= aceCount() * ACE_WEIGHT;
         }
         return total;
     }
