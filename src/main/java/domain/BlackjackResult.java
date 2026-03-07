@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BlackjackResult {
-    private final Map<String, MatchCase> playerWinningMap = new HashMap<>();
+    private final Map<String, MatchCase> playerResultMap = new HashMap<>();
     private int dealerWinningCount = 0;
     private int drawCount = 0;
     private int dealerLoseCount = 0;
@@ -49,7 +49,7 @@ public class BlackjackResult {
     }
 
     private void addMatchResult(String playerName, MatchCase matchCase) {
-        playerWinningMap.put(playerName, matchCase);
+        playerResultMap.put(playerName, matchCase);
         increaseMatchResult(matchCase);
     }
 
@@ -72,7 +72,7 @@ public class BlackjackResult {
                 this.dealerWinningCount,
                 this.drawCount,
                 this.dealerLoseCount,
-                Map.copyOf(this.playerWinningMap)
+                Map.copyOf(this.playerResultMap)
         );
     }
 }

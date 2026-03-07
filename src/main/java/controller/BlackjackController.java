@@ -30,22 +30,22 @@ public class BlackjackController {
         OutputView.displayCardDistribution(names);
         List<Player> playerList = blackjackService.createPlayers(names, cards);
 
-        List<CardContentDto> firstCardContents = getCardContentDtos(dealer, playerList);
+        List<CardContentDto> firstCardContents = collectInitialCardContents(dealer, playerList);
         OutputView.displayCardContent(firstCardContents);
-        Players players = addAdditionalCard(playerList, cards);
+        Players players = processPlayersTurn(playerList, cards);
 
-        if (!players.isAllPlayerBurst()) {
+        if (!players.areAllBust()) {
             blackjackService.determineAdditionalCardOfDealer(dealer, cards);
         }
 
-        printFinalCards(dealer, players);
+        displayFinalCards(dealer, players);
 
         // 최종 승패
         BlackjackResult blackjackResult = BlackjackResult.from(dealer, players);
         OutputView.displayMatchResult(blackjackResult.toResultDto());
     }
 
-    public List<CardContentDto> getCardContentDtos(Dealer dealer, List<Player> playerList) {
+    public List<CardContentDto> collectInitialCardContents(Dealer dealer, List<Player> playerList) {
         List<CardContentDto> firstCardContents = new ArrayList<>();
         firstCardContents.add(new CardContentDto(dealer.getName(), List.of(dealer.getFirstCard())));
         for (Player player : playerList) {
@@ -54,29 +54,29 @@ public class BlackjackController {
         return firstCardContents;
     }
 
-    public Players addAdditionalCard(List<Player> playerList, Cards cards) {
+    public Players processPlayersTurn(List<Player> playerList, Cards deck) {
         Players players = new Players(playerList);
         for (Player player : players) {
             String name = player.getName();
-            boolean hasCard = hasAdditionalCard(name);
-            handCardWithRetry(player, hasCard, cards, name);
+            boolean wantsCard = wantsAdditionalCard(name);
+            dealAdditionalCards(player, wantsCard, deck, name);
         }
         return players;
     }
 
 
-    private void handCardWithRetry(Player player, boolean hasCard, Cards cards, String name) {
-        while (hasCard) {
+    private void dealAdditionalCards(Player player, boolean wantsCard, Cards deck, String name) {
+        while (wantsCard) {
             if (player.isBust()) {
                 break;
             }
-            player.add(cards.pop());
+            player.add(deck.pop());
             OutputView.displayCardContent(List.of(player.toCardContentDto()));
-            hasCard = hasAdditionalCard(name);
+            wantsCard = wantsAdditionalCard(name);
         }
     }
 
-    public void printFinalCards(Dealer dealer, Players players) {
+    public void displayFinalCards(Dealer dealer, Players players) {
         List<FinalCardDto> finalCards = new ArrayList<>();
         finalCards.add(dealer.toFinalCardDto());
         for (Player player : players) {
@@ -91,7 +91,7 @@ public class BlackjackController {
         );
     }
 
-    private boolean hasAdditionalCard(String name) {
+    private boolean wantsAdditionalCard(String name) {
         return doRetry(() -> inputView.readAdditionalCard(name));
     }
 

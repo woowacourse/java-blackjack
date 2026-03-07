@@ -21,14 +21,14 @@ public class Player {
     protected int calculateScore() {
         int total = 0;
         for (Card card : cards) {
-            total += card.getCardRank().getNumber();
+            total += card.getCardRank().getValue();
         }
 
         return total;
     }
 
     private int calculateAceScore() {
-        if (!isAceExist() || calculateScore() > 11) {
+        if (!hasAce() || calculateScore() > 11) {
             return ACE_ADDITION_NONE_SCORE;
         }
 
@@ -47,9 +47,9 @@ public class Player {
         cards.add(card);
     }
 
-    public void addInitializedCard(Cards totalCards) {
-        cards.add(totalCards.pop());
-        cards.add(totalCards.pop());
+    public void receiveInitialCards(Cards deck) {
+        cards.add(deck.pop());
+        cards.add(deck.pop());
     }
 
     public String getName() {
@@ -72,7 +72,7 @@ public class Player {
         return new FinalCardDto(this.name, this.cards, getFinalScore());
     }
 
-    public boolean isAceExist() {
+    public boolean hasAce() {
         return cards.stream()
                 .anyMatch(c -> c.getCardRank().equals(CardRank.ACE));
     }

@@ -28,7 +28,7 @@ public enum CardRank {
         return name;
     }
 
-    public int getNumber() {
+    public int getValue() {
         return number;
     }
 }

@@ -25,7 +25,7 @@ class BlackjackServiceTest {
     void 처음_전쳬_카드_개수_테스트() {
         Cards cards = blackjackService.generateCards();
 
-        assertThat(cards.getLength()).isEqualTo(52);
+        assertThat(cards.getSize()).isEqualTo(52);
     }
 
     @DisplayName("처음에 카드 2장씩 베부 정상 테스트")

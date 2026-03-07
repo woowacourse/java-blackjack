@@ -18,23 +18,23 @@ public class BlackjackService {
         return cards;
     }
 
-    public void giveInitialedCard(Cards cards, Dealer dealer) {
-        dealer.addInitializedCard(cards);
+    public void giveInitialCards(Cards deck, Dealer dealer) {
+        dealer.receiveInitialCards(deck);
     }
 
-    public List<Player> createPlayers(List<String> names, Cards cards) {
+    public List<Player> createPlayers(List<String> names, Cards deck) {
         List<Player> playerList = new ArrayList<>();
         for (String name : names) {
             Player player = new Player(name);
-            player.addInitializedCard(cards);
+            player.receiveInitialCards(deck);
             playerList.add(player);
         }
         return playerList;
     }
 
-    public Dealer createDealer(Cards cards) {
+    public Dealer createDealer(Cards deck) {
         Dealer dealer = new Dealer(BlackjackController.DEALER_NAME);
-        giveInitialedCard(cards, dealer);
+        giveInitialCards(deck, dealer);
         return dealer;
     }
 
