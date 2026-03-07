@@ -1,4 +1,4 @@
-package blackjack.domain.participant;
+package domain.participant;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

@@ -1,10 +1,9 @@
-package blackjack.domain.participant;
+package domain.participant;
 
-import blackjack.domain.MatchResult;
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Rank;
-import blackjack.domain.card.Suit;
-
+import domain.MatchResult;
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Suit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

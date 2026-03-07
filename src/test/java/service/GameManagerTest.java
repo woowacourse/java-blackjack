@@ -1,19 +1,18 @@
-package blackjack.service;
+package service;
 
-import blackjack.domain.MatchResult;
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Deck;
-import blackjack.domain.card.Rank;
-import blackjack.domain.card.Suit;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
-import blackjack.dto.GameResultDto;
+import domain.MatchResult;
+import domain.card.Card;
+import domain.card.Deck;
+import domain.card.Rank;
+import domain.card.Suit;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
+import dto.GameResultDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
