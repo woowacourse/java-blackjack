@@ -1,5 +1,7 @@
 package application;
 
+import static constant.Word.*;
+
 import domain.Card;
 import domain.Deck;
 import domain.GameTable;
@@ -13,7 +15,6 @@ import java.util.stream.Stream;
 
 public class BlackjackService {
 
-    private static final String DEALER_NAME = "딜러";
     private final GameTable gameTable;
     private final Deck deck;
 
@@ -24,11 +25,11 @@ public class BlackjackService {
     }
 
     public void joinPlayerToGame(List<String> players) {
-        gameTable.joinMember(new Member(DEALER_NAME, Role.DEALER));
+        gameTable.joinMember(new Member(DEALER.format(), Role.DEALER));
 
         players.forEach(name -> gameTable.joinMember(new Member(name, Role.PLAYER)));
 
-        List<String> allParticipants = Stream.concat(Stream.of(DEALER_NAME), players.stream()).toList();
+        List<String> allParticipants = Stream.concat(Stream.of(DEALER.format()), players.stream()).toList();
 
         allParticipants.forEach(name -> {
             for (int i = 0; i < 2; i++) {
@@ -49,12 +50,11 @@ public class BlackjackService {
         return gameTable.draw(deck.draw());
     }
 
-    public List<MemberStatus> getPlayerStatuses() {
-        return gameTable.checkPlayerStatuses();
+    public List<MemberStatus> getMemberStatuses() {
+        return gameTable.checkMemberStatuses();
     }
 
     public List<GameResult> getGameResults() {
         return gameTable.checkGameResult();
     }
-
 }

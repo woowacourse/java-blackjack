@@ -1,5 +1,7 @@
 package domain;
 
+import static constant.Word.*;
+
 import domain.dto.GameResult;
 import domain.dto.MemberStatus;
 import java.util.ArrayList;
@@ -8,7 +10,6 @@ import java.util.Map;
 
 public class GameTable {
 
-    private static final String DEALER_NAME = "딜러";
     private static final int BLACKJACK = 21;
     private static final int DEALER_DRAW_CONDITION = 16;
     private final Members members;
@@ -31,14 +32,14 @@ public class GameTable {
     }
 
     public boolean draw(Card card) {
-        if (members.checkValue(DEALER_NAME) <= DEALER_DRAW_CONDITION) {
-            members.provideCard(DEALER_NAME, card);
+        if (members.checkValue(DEALER.format()) <= DEALER_DRAW_CONDITION) {
+            members.provideCard(DEALER.format(), card);
             return true;
         }
         return false;
     }
 
-    public List<MemberStatus> checkPlayerStatuses() {
+    public List<MemberStatus> checkMemberStatuses() {
         return members.getAllPlayerName()
                 .stream()
                 .map(name -> {
@@ -50,10 +51,10 @@ public class GameTable {
 
     public List<GameResult> checkGameResult() {
         List<GameResult> gameResults = new ArrayList<>();
-        gameResults.add(new GameResult(DEALER_NAME,
-                members.judgeDealerGameResult(DEALER_NAME)));
+        gameResults.add(new GameResult(DEALER.format(),
+                members.judgeDealerGameResult(DEALER.format())));
 
-        Map<String, Boolean> playerResults = members.judgePlayerGameResult(DEALER_NAME);
+        Map<String, Boolean> playerResults = members.judgePlayerGameResult(DEALER.format());
 
         for (String playerName : playerResults.keySet()) {
             gameResults.add(new GameResult(playerName,
