@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Card {
 
     private final CardPattern pattern;
-    private CardNumber number;
+    private final CardNumber number;
 
     public Card(String number, String pattern) {
         this.number = CardNumber.matchCardNumber(number);
