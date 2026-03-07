@@ -13,6 +13,7 @@ import dto.BlackjackResultDto;
 import dto.DealerResultDto;
 import dto.PlayerResultDto;
 import dto.PlayersDto;
+import exception.ErrorMessage;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Nested;
@@ -62,7 +63,7 @@ class BlackjackServiceTest {
                     blackjackService.createPlayers(input);
                 })
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("[ERROR] 게임 참가자의 이름은 중복 되어선 안됩니다.");
+                    .hasMessageContaining(ErrorMessage.PLAYER_DUPLICATED.getMessage());
             }
 
             @Test
@@ -76,7 +77,7 @@ class BlackjackServiceTest {
                     blackjackService.createPlayers(input);
                 })
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("[ERROR] 게임 참가자의 수는 2~8명 사이여야 합니다.");
+                    .hasMessageContaining(ErrorMessage.PLAYER_COUNT_OUT_OF_RANGE.getMessage());
             }
 
             @Test
@@ -90,7 +91,7 @@ class BlackjackServiceTest {
                     blackjackService.createPlayers(input);
                 })
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("[ERROR] 게임 참가자의 이름은 공백이 될 수 없습니다.");
+                    .hasMessageContaining(ErrorMessage.PLAYER_NAME_BLANK.getMessage());
             }
 
             @ParameterizedTest
@@ -102,7 +103,7 @@ class BlackjackServiceTest {
                     blackjackService.createPlayers(input);
                 })
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("[ERROR] 게임 참가자의 이름은 2~5글자 사이여야 합니다.");
+                    .hasMessageContaining(ErrorMessage.PLAYER_NAME_LENGTH_OUT_OF_RANGE.getMessage());
             }
 
             static Stream<Arguments> provideCases() {
@@ -425,7 +426,7 @@ class BlackjackServiceTest {
                 // when & then
                 assertThatThrownBy(() -> blackjackService.validateHitOrStand(input))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("[ERROR] \"y\" 또는 \"n\"을 입력해야 합니다.");
+                    .hasMessageContaining(ErrorMessage.INVALID_YES_NO_INPUT.getMessage());
             }
         }
     }
