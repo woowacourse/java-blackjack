@@ -1,7 +1,8 @@
-package domain;
+package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
 import domain.enums.Rank;
 import domain.enums.Suit;
 import java.util.List;
