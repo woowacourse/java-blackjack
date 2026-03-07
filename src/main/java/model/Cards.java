@@ -54,7 +54,10 @@ public class Cards {
     }
 
     public Card pickCard() {
-        return cards.removeFirst();
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException("카드가 존재하지 않습니다.");
+        }
+        return cards.removeLast();
     }
 
     public int calculateScore() {

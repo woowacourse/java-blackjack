@@ -16,16 +16,14 @@ public class PlayerResultTest {
             GameStatus status
     ) {
         // given
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(Cards.createDeck());
         dealerCards.forEach(dealer::addCard);
 
         Player player = new Player("pobi");
         playerCards.forEach(player::addCard);
 
-        PlayerResult playerResult = PlayerResult.initResult();
-
         // when
-        playerResult.judgeByPlayer(dealer, player);
+        PlayerResult playerResult = PlayerResult.judgeByPlayer(dealer, List.of(player));
 
         // then
         assertThat(playerResult.countByStatus(status)).isEqualTo(1);

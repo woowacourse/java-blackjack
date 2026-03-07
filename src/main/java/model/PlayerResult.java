@@ -6,6 +6,7 @@ import static model.GameStatus.WIN;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PlayerResult {
@@ -20,14 +21,19 @@ public class PlayerResult {
         return new PlayerResult(new HashMap<>());
     }
 
-    public void judgeByPlayer(Dealer dealer, Player player) {
-        int playerScore = player.calculateTotalScore();
-        int dealerScore = dealer.calculateTotalScore();
+    public static PlayerResult judgeByPlayer(Dealer dealer, List<Player> players) {
+        Map<String, GameStatus> result = new HashMap<>();
 
-        result.put(player.getName(), decide(playerScore, dealerScore));
+        int dealerScore = dealer.calculateTotalScore();
+        players.forEach(player -> {
+            int playerScore = player.calculateTotalScore();
+            result.put(player.getName(), decide(playerScore, dealerScore));
+        });
+
+        return new PlayerResult(result);
     }
 
-    private GameStatus decide(int playerScore, int dealerScore) {
+    private static GameStatus decide(int playerScore, int dealerScore) {
         if (playerScore > 21) {
             return LOSE;
         }

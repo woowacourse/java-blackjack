@@ -3,18 +3,21 @@ package view;
 import java.util.List;
 import java.util.Map;
 import model.Card;
+import model.Dealer;
 import model.GameStatus;
 import model.Player;
 
 public class OutputView {
+
+    private OutputView() {
+    }
+
     public static void printCardOpen(List<Player> players) {
         List<String> names = players.stream()
                 .map(Player::getName)
                 .toList();
-        String format = "딜러와 %s에게 2장을 나누었습니다.";
-        String formatedNames = String.format(format, String.join(", ", names));
         System.out.println();
-        System.out.println(formatedNames);
+        System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", String.join(", ", names));
     }
 
     public static void printCardByPlayers(List<Player> players) {
@@ -22,18 +25,18 @@ public class OutputView {
         System.out.println();
     }
 
+    public static void printCardByDealer(Dealer dealer) {
+        Card firstCard = dealer.getCards().getFirst();
+        String card = convert(firstCard);
+        System.out.println(dealer.getName() + "카드: " + card);
+    }
+
     public static void printCardByPlayer(Player player) {
         List<String> cards = player.getCards()
                 .stream()
                 .map(OutputView::convert)
                 .toList();
-        if (player.getClass().equals(Player.class)) {
-            System.out.println(player.getName() + "카드: " + String.join(", ", cards));
-        } else {
-            Card firstCard = player.getCards().getFirst();
-            String card = convert(firstCard);
-            System.out.println(player.getName() + "카드: " + card);
-        }
+        System.out.printf("%s카드: %s%n", player.getName(), String.join(", ", cards));
     }
 
 
@@ -43,29 +46,18 @@ public class OutputView {
                 .stream()
                 .map(OutputView::convert)
                 .toList();
-        System.out.print(player.getName() + "카드: " + String.join(", ", cards));
-        System.out.println(" - 결과: " + sum);
+        System.out.printf("%s카드: %s - 결과: %d%n", player.getName(), String.join(", ", cards), sum);
     }
 
     private static String convert(Card card) {
-        int value = card.getScore();
-        String convertedValue = switch (value) {
-            case 1 -> "A";
-            case 11 -> "J";
-            case 12 -> "Q";
-            case 13 -> "K";
-            default -> String.valueOf(value);
-        };
-        return convertedValue + card.shape().getShape();
+        return card.value().getSymbol() + card.shape().getShape();
     }
 
     public static void printToOpenDealerNewCard(String name) {
         System.out.println();
-        System.out.printf("%s는 16 이하라 한장의 카드를 더 받았습니다.", name);
-        System.out.println();
+        System.out.printf("%s는 16 이하라 한장의 카드를 더 받았습니다.%n", name);
     }
 
-    // TODO 리팩토링 대상
     public static void printBlank() {
         System.out.println();
     }
