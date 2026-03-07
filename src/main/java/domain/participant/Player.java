@@ -5,10 +5,6 @@ public class Player extends Participant {
         super(name);
     }
 
-    public Name getName() {
-        return name;
-    }
-
     @Override
     public String toString() {
         return cards.toString();

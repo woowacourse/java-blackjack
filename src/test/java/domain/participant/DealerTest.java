@@ -7,6 +7,6 @@ import org.junit.jupiter.api.Test;
 public class DealerTest {
     @Test
     void 정상적으로_생성되어야_한다(){
-        assertDoesNotThrow(() -> new Dealer("dealer"));
+        assertDoesNotThrow(() -> new Dealer("딜러"));
     }
 }
