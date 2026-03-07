@@ -10,9 +10,9 @@ import java.util.List;
 
 public class GameController {
 
-    private GameManager manager;
-    private InputView inputView;
-    private OutputView outputView;
+    private final GameManager manager;
+    private final InputView inputView;
+    private final OutputView outputView;
 
     public GameController(GameManager manager, InputView inputView, OutputView outputView) {
         this.manager = manager;

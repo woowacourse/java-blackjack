@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameManager {
-    private Deck deck = new Deck();
-    private ScoreCalculator scoreCalculator = new ScoreCalculator();
-    private Players players = new Players();
-    private Dealer dealer = new Dealer();
+    private final Deck deck = new Deck();
+    private final ScoreCalculator scoreCalculator = new ScoreCalculator();
+    private final Players players = new Players();
+    private final Dealer dealer = new Dealer();
 
     public GameManager() {
         deck.init();

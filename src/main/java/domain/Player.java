@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
-    private String name;
-    private List<Card> hand = new ArrayList<>();
+    private final String name;
+    private final List<Card> hand = new ArrayList<>();
     private boolean isBust = false;
 
     public Player(String name) {
@@ -29,7 +29,9 @@ public class Player {
     }
 
     public List<String> getHandToString() {
-        return hand.stream().map(Card::toString).toList();
+        return hand.stream()
+                .map(Card::toString)
+                .toList();
     }
 
     public void setBust() {
