@@ -80,11 +80,6 @@ class GameManagerTest {
     }
 
     @Test
-    void 게임을_시작하면_카드를_2장씩_나눠준다() {
-        GameManager manager = new GameManager();
-    }
-
-    @Test
     void 합계가_21점이면_블랙잭이다() {
         GameManager manager = new GameManager();
         Player player = new Player("pobi");
