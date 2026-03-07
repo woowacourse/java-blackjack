@@ -1,5 +1,6 @@
 package domain;
 
+import common.Constants;
 import dto.GameResult;
 import dto.GameStatus;
 import java.util.ArrayList;
@@ -17,7 +18,8 @@ public class ScoreBoard {
         games.add(status);
     }
 
-    public List<GameResult> playerResults() {;
+    public List<GameResult> playerResults() {
+        ;
         int dealerScore = getDealerScore();
 
         return games.stream()
@@ -27,14 +29,14 @@ public class ScoreBoard {
     }
 
     private boolean isPlayer(GameStatus gameStatus) {
-        return !gameStatus.name().equals("딜러");
+        return !gameStatus.name().equals(Constants.DEALER_NAME);
     }
 
     private GameResult getGameResult(GameStatus gameStatus, int dealerScore) {
         if (isWin(gameStatus, dealerScore)) {
-            return new GameResult(gameStatus.name(), "승");
+            return new GameResult(gameStatus.name(), Constants.WIN);
         }
-        return new GameResult(gameStatus.name(), "패");
+        return new GameResult(gameStatus.name(), Constants.LOSE);
     }
 
     private void resultSort() {
@@ -43,7 +45,7 @@ public class ScoreBoard {
     }
 
     private boolean isWin(GameStatus playerGameStatus, int dealerScore) {
-        if (playerGameStatus.scoreSum() > 21) {
+        if (playerGameStatus.scoreSum() > Constants.BUST_NUMBER) {
             return false;
         }
         return playerGameStatus.scoreSum() > dealerScore;
@@ -51,10 +53,10 @@ public class ScoreBoard {
 
     private int getDealerScore() {
         return games.stream()
-                .filter(gameStatus -> isPlayer(gameStatus))
+                .filter(this::isPlayer)
                 .findFirst()
                 .map(GameStatus::scoreSum)
-                .orElse(0);
+                .orElse(Constants.DEFAULT_HAND_SCORE);
     }
 
     public List<GameStatus> gameStatuses() {

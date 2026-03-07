@@ -33,5 +33,4 @@ class DealerTest {
 
         assertFalse(dealer.isPlayable());
     }
-
 }

@@ -21,7 +21,6 @@ class CardTest {
         assertEquals(expected, actual);
     }
 
-
     @ParameterizedTest
     @MethodSource("cardInfo")
     @DisplayName("카드 정보가 정상적으로 반환되어야 한다.")

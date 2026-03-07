@@ -1,5 +1,6 @@
 package view;
 
+import common.Constants;
 import dto.GameResult;
 import dto.GameStatus;
 import java.util.List;
@@ -7,8 +8,8 @@ import java.util.List;
 public class OutputView {
 
     public static void divideCards(List<String> participants) {
-        String players = String.join(", ", participants);
-        System.out.printf(OutputMessage.DIVIDE.description() + System.lineSeparator(), players);
+        String players = String.join(Constants.CARD_JOINER, participants);
+        System.out.println(OutputMessage.DIVIDE.description(players));
     }
 
     public static void initCardStatus(List<GameStatus> gameStatuses) {
@@ -19,13 +20,18 @@ public class OutputView {
         System.out.println();
     }
 
+    public static void printGameLog(GameStatus gameStatuses) {
+        System.out.println(getGameLog(gameStatuses));
+    }
+
     public static void dealerStay() {
         System.out.println(OutputMessage.DEALER_DRAW.description());
     }
 
     public static void participantsResults(List<GameStatus> gameStatuses) {
         for (GameStatus gameStatus : gameStatuses) {
-            System.out.printf(OutputMessage.PARTICIPANTS_RESULT.description()+System.lineSeparator(), getGameLog(gameStatus), gameStatus.scoreSum());
+            System.out.println(
+                    OutputMessage.PARTICIPANTS_RESULT.description(getGameLog(gameStatus), gameStatus.scoreSum()));
         }
         System.out.println();
     }
@@ -33,28 +39,38 @@ public class OutputView {
     public static void gameResult(List<GameResult> gameResults) {
         System.out.println(OutputMessage.RESULT_HEADER.description());
 
-        long playersWin = gameResults.stream().filter(cond -> cond.winningCondition().equals("승")).count();
-        System.out.printf(OutputMessage.DEALER_WINNING_CONDITION.description() + System.lineSeparator(), gameResults.size() - playersWin, playersWin);
-        gameResults.forEach(c -> System.out.printf(OutputMessage.PLAYER_WINNING_CONDITION.description(), c.name(), c.winningCondition() + System.lineSeparator()));
+        statisticDealer(gameResults);
+        playersWinningLog(gameResults);
     }
 
+    private static void playersWinningLog(List<GameResult> gameResults) {
+        gameResults.forEach(c -> System.out.println(
+                OutputMessage.PLAYER_WINNING_CONDITION.description(c.name(), c.winningCondition())));
+    }
 
-    public static void printGameLog(GameStatus gameStatuses) {
-        System.out.printf(getGameLog(gameStatuses) + System.lineSeparator());
+    private static void statisticDealer(List<GameResult> gameResults) {
+        long playersWin = gameResults.stream().filter(cond -> cond.winningCondition().equals(Constants.WIN)).count();
+        System.out.println(
+                OutputMessage.DEALER_WINNING_CONDITION.description(gameResults.size() - playersWin, playersWin));
     }
 
     public static void printTaskDivider() {
         System.out.println();
     }
 
-    private static String getGameLog(GameStatus gameStatuses) {
-        return String.format(OutputMessage.GAME_LOG.description(), gameStatuses.name(), String.join(", ", gameStatuses.cards()));
+    private static String getInitGameLog(GameStatus gameStatuses) {
+        if (gameStatuses.name().equals(Constants.DEALER_NAME)) {
+            return String.format(OutputMessage.GAME_LOG.description(), gameStatuses.name(),
+                    gameStatuses.cards().getFirst());
+        }
+        return String.format(getGameLog(gameStatuses));
     }
 
-    private static String getInitGameLog(GameStatus gameStatuses) {
-        if(gameStatuses.name().equals("딜러")) {
-            return String.format(OutputMessage.GAME_LOG.description(), gameStatuses.name(), gameStatuses.cards().getFirst());
-        }
-        return String.format(OutputMessage.GAME_LOG.description(), gameStatuses.name(), String.join(", ", gameStatuses.cards()));
+    private static String getGameLog(GameStatus gameStatuses) {
+        return OutputMessage.GAME_LOG.description(gameStatuses.name(), handInfo(gameStatuses));
+    }
+
+    private static String handInfo(GameStatus gameStatuses) {
+        return String.join(Constants.CARD_JOINER, gameStatuses.cards());
     }
 }

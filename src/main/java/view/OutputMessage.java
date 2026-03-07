@@ -21,4 +21,8 @@ public enum OutputMessage {
     public String description() {
         return description;
     }
+
+    public String description(Object... args) {
+        return String.format(description, args);
+    }
 }

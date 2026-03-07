@@ -1,5 +1,6 @@
 package controller;
 
+import common.Constants;
 import domain.Dealer;
 import domain.GameTable;
 import domain.Hand;
@@ -36,6 +37,7 @@ public class Controller {
         while (gameTable.isPlayerExist()) {
             playerExecute(gameTable.currentPlayerName());
         }
+        OutputView.printTaskDivider();
     }
 
     private void dealerGamePhase() {
@@ -62,7 +64,7 @@ public class Controller {
 
     private void dealerSetup() {
         Hand hand = new Hand(new RandomStrategy(), new ArrayList<>());
-        Participant dealer = new Dealer("딜러", hand);
+        Participant dealer = new Dealer(Constants.DEALER_NAME, hand);
         dealer.draw();
         dealer.draw();
         gameTable.addParticipant(dealer);
@@ -70,7 +72,7 @@ public class Controller {
 
     private void playerSetup() {
         String playerNames = InputView.readPlayers();
-        List<String> names = Arrays.stream(playerNames.split(",")).toList();
+        List<String> names = Arrays.stream(playerNames.split(Constants.DELIMITER)).toList();
         OutputView.divideCards(names);
 
         for (String name : names) {
@@ -86,7 +88,7 @@ public class Controller {
         String select = InputView.readSelect(name);
         initProcess(select);
 
-        if (select.equals("y")) {
+        if (select.equals(Constants.POSITIVE)) {
             playLoop(name);
         }
 
@@ -94,8 +96,8 @@ public class Controller {
     }
 
     private void playLoop(String name) {
-        String select = "y";
-        while (select.equals("y") && gameTable.isCurrentPlayerPlayable()) {
+        String select = Constants.POSITIVE;
+        while (select.equals(Constants.POSITIVE) && gameTable.isCurrentPlayerPlayable()) {
             select = InputView.readSelect(name);
             gameTable.playCurrentPlayer();
             GameStatus gameStatus = gameTable.currentPlayerStatus();
@@ -104,7 +106,7 @@ public class Controller {
     }
 
     private void initProcess(String select) {
-        if (select.equals("y")) {
+        if (select.equals(Constants.POSITIVE)) {
             gameTable.playCurrentPlayer();
         }
         GameStatus gameStatus = gameTable.currentPlayerStatus();

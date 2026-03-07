@@ -15,7 +15,7 @@ public abstract class Participant {
     protected abstract boolean isPlayable();
 
     public void draw() {
-        if(isPlayable()) {
+        if (isPlayable()) {
             hand.drawCard();
         }
     }

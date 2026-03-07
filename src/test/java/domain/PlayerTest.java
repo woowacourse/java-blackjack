@@ -35,5 +35,4 @@ class PlayerTest {
 
         assertFalse(player.isPlayable());
     }
-
 }
