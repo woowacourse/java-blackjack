@@ -7,9 +7,9 @@ public class PolicyConstant {
     public static int DEALER_HIT_MAX_SCORE = 16;
 
     public static int PLAYER_MIN_COUNT = 2;
-    public static int PLAYER_MAX_COUNT = 5;
+    public static int PLAYER_MAX_COUNT = 8;
     public static int PLAYER_NAME_MIN_LENGTH = 2;
-    public static int PLAYER_NAME_MAX_LENGTH = 8;
+    public static int PLAYER_NAME_MAX_LENGTH = 5;
 
     public static final int JQK = 10;
     public static final int ACE = 11;
