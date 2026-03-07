@@ -14,17 +14,18 @@ public enum MatchResult {
     }
 
     public static MatchResult of(int gamblerScore, int dealerScore) {
-        int gScore = normalize(gamblerScore);
-        int dScore = normalize(dealerScore);
+        int normalizeGamblerScore = normalize(gamblerScore);
+        int normalizeDealerScore = normalize(dealerScore);
 
-        if (gScore > dScore) {
+        if (normalizeGamblerScore > normalizeDealerScore) {
             return WIN;
         }
 
-        if (gScore < dScore) {
+        if (normalizeGamblerScore < normalizeDealerScore) {
             return LOSE;
         }
         return DRAW;
+
     }
 
     private static int normalize(int score) {

@@ -10,12 +10,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class Deck implements domain.deck.CardDeck {
+public class StandardDeck implements CardDeck {
 
     private final List<Card> cards;
     private int index;
 
-    public Deck() {
+    public StandardDeck() {
         this.cards = createCards();
         this.index = 0;
     }
@@ -31,10 +31,6 @@ public class Deck implements domain.deck.CardDeck {
         return cards;
     }
 
-    public void shuffle() {
-        Collections.shuffle(cards);
-        index = 0;
-    }
 
     @Override
     public Card deal() {
