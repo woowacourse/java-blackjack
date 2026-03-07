@@ -39,6 +39,6 @@ public class Player {
     }
 
     public boolean canHit() {
-        return cards.calculateScore() < BUST_LIMIT;
+        return calculateTotalScore() < BUST_LIMIT;
     }
 }

@@ -2,10 +2,11 @@ package controller;
 
 import java.util.List;
 import model.CardDispenser;
-import model.CardGenerator;
 import model.Cards;
 import model.Dealer;
+import model.GameStatus;
 import model.Player;
+import model.PlayerResult;
 import view.InputView;
 import view.OutputView;
 
@@ -14,7 +15,6 @@ public class BlackjackController {
     public void run() {
         List<String> names = InputView.readPlayerNames();
         OutputView.printCardOpen(names);
-        CardGenerator cardGenerator = new CardGenerator();
 
         Cards deck = Cards.createDeck();
         CardDispenser dispenser = new CardDispenser(deck);
@@ -65,5 +65,15 @@ public class BlackjackController {
             OutputView.printCardByPlayerWithScore(player);
         }
 
+        PlayerResult playerResult = PlayerResult.initResult();
+        players.forEach(player -> playerResult.judgeByPlayer(dealer, player));
+
+        int winCount = playerResult.countByStatus(GameStatus.LOSE);
+        int loseCount = playerResult.countByStatus(GameStatus.WIN);
+        int drawCount = playerResult.countByStatus(GameStatus.DRAW);
+
+        OutputView.printFinalResultHeader();
+        OutputView.printDealerResult(winCount, loseCount, drawCount);
+        OutputView.printResultByPlayers(playerResult.getResult());
     }
 }

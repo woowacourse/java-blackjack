@@ -1,7 +1,9 @@
 package view;
 
 import java.util.List;
+import java.util.Map;
 import model.Card;
+import model.GameStatus;
 import model.Player;
 
 public class OutputView {
@@ -60,5 +62,26 @@ public class OutputView {
     // TODO 리팩토링 대상
     public static void printBlank() {
         System.out.println();
+    }
+
+    public static void printFinalResultHeader() {
+        System.out.println();
+        System.out.println("##최종 승패");
+    }
+
+    public static void printDealerResult(int winCount, int loseCount, int drawCount) {
+        System.out.print("딜러: ");
+        StringBuilder result = new StringBuilder();
+        if (winCount > 0)
+            result.append(winCount).append("승 ");
+        if (drawCount > 0)
+            result.append(drawCount).append("무 ");
+        if (loseCount > 0)
+            result.append(loseCount).append("패");
+        System.out.println(result.toString().trim());
+    }
+
+    public static void printResultByPlayers (Map<String, GameStatus> result){
+        result.forEach((name, status) -> System.out.printf("%s: %s%n", name, status.getName()));
     }
 }
