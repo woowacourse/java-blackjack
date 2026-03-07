@@ -9,8 +9,7 @@ import org.junit.jupiter.api.Test;
 class UniqueCardsGeneratorTest {
 
     @Test
-    @DisplayName("모든 경우의 수의 중복이 없는 카드들이 생성한다")
-    void 덱을_생성하면_모든_경우의_수의_중복이_없는_카드들이_생성한다() {
+    void 모든_경우의_수의_중복이_없는_카드들이_생성한다() {
         // given
         CardsGenerator generator = new UniqueCardsGenerator();
 

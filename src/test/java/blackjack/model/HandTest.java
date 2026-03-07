@@ -18,8 +18,7 @@ class HandTest {
     @DisplayName("1장 이상의 카드를 받아서 손패에 추가한다.")
     class AddCards {
         @Test
-        @DisplayName("한장의 카드를 받아서 손패에 추가한다.")
-        void addOneCard() {
+        void 한장의_카드를_받아서_손패에_추가한다() {
             // given
             Hand hand = new Hand(aceAdjustPolicy);
             List<Card> existCards = hand.getCards();
@@ -34,8 +33,7 @@ class HandTest {
     }
 
     @Test
-    @DisplayName("카드 점수의 합을 계산한다")
-    void calculateTotalScore() {
+    void 카드_점수의_합을_계산한다() {
         // given
         Hand hand = new Hand(aceAdjustPolicy);
         List<Card> cards = List.of(

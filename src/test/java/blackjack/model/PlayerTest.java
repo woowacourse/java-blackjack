@@ -12,8 +12,7 @@ class PlayerTest {
     final Hand hand = new Hand(new AceAdjustPolicy(ADJUST_VALUE, new BustPolicyImpl()));
 
     @Test
-    @DisplayName("본인의 이름을 반환한다.")
-    void returnName() {
+    void 본인의_이름을_반환한다() {
         // given
         String playerName = "Player Name";
 
