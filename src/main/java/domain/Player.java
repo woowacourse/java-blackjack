@@ -1,5 +1,7 @@
 package domain;
 
+import exception.ErrorMessage;
+
 public class Player {
 
     protected final String name;
@@ -17,14 +19,14 @@ public class Player {
     }
 
     private void validatePlayerNameLength(String name) {
-        if (!(2 <= name.length() && name.length() <= 5)) {
-            throw new IllegalArgumentException("[ERROR] 게임 참가자의 이름은 2~5글자 사이여야 합니다.");
+        if (!(2 <= name.length() && name.length() <= 5)) { // TODO: 상수?
+            throw new IllegalArgumentException(ErrorMessage.PLAYER_NAME_LENGTH_OUT_OF_RANGE.getMessage());
         }
     }
 
     private void validateNotBlank(String name) {
         if (name.isBlank()) {
-            throw new IllegalArgumentException("[ERROR] 게임 참가자의 이름은 공백이 될 수 없습니다.");
+            throw new IllegalArgumentException(ErrorMessage.PLAYER_NAME_BLANK.getMessage());
         }
     }
 
@@ -41,7 +43,7 @@ public class Player {
     }
 
     public boolean isBust() {
-        return hand.calculateScore() > 21;
+        return hand.calculateScore() > 21; // TODO: 상수?
     }
 
     public int calculateScore() {
