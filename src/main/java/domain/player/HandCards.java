@@ -15,4 +15,15 @@ public class HandCards {
     public void addCard(Card card) {
         cards.add(card);
     }
+
+    // 손에 쥔 카드 출력
+    public List<String> cardsToString() {
+        List<String> cardList = new ArrayList<>();
+
+        for (Card card : cards) {
+            cardList.add(card.toString());
+        }
+
+        return cardList;
+    }
 }

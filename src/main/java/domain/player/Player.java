@@ -3,6 +3,8 @@ package domain.player;
 import domain.card.Card;
 import domain.vo.Name;
 
+import java.util.List;
+
 public class Player {
     private Name name;
     private HandCards handCards = new HandCards();
@@ -19,4 +21,7 @@ public class Player {
         return name.getName();
     }
 
+    public List<String> getCards() {
+        return handCards.cardsToString();
+    }
 }

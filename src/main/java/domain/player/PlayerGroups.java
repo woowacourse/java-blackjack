@@ -3,7 +3,9 @@ package domain.player;
 import domain.card.Card;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PlayerGroups {
     private List<Player> players;
@@ -16,6 +18,16 @@ public class PlayerGroups {
 
     public void drawCard(Card card){
         players.get(playIndex).addCard(card);
+    }
+
+    public Map<String, List<String>> playersStatus() {
+        Map<String, List<String>> status = new LinkedHashMap<>();
+
+        for (Player player : players) {
+            status.put(player.getName(), player.getCards());
+        }
+
+        return status;
     }
 
     public int getPlayerGroupSize() {

@@ -7,6 +7,7 @@ import domain.vo.Name;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GameService {
     private PlayerGroups playerGroups;
@@ -36,6 +37,11 @@ public class GameService {
             playerGroups.drawCard(cardDeck.getCard());
             playerGroups.nextPlayer();
         }
+    }
+
+    // 플레이어들 정보 전달
+    public Map<String, List<String>> getPlayersStatus() {
+        return playerGroups.playersStatus();
     }
 
     public int getPlayerGroupSize() {
