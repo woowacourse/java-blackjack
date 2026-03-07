@@ -106,6 +106,12 @@ public class BlackjackRunner {
 
     private boolean isDraw(String nickname) {
         outputView.hitOrStand(nickname);
+        String userCommand = inputView.readLine();
+        boolean isDraw = userCommand.equals("y");
+        boolean isNotDraw = userCommand.equals("n");
+        if (!(isDraw || isNotDraw)) {
+            throw new IllegalArgumentException("유효한 커맨드(예는 y, 아니오는 n)를 입력해 주세요.");
+        }
         return inputView.readLine().equals("y");
     }
 }
