@@ -15,7 +15,7 @@ public class Card {
     }
 
     public boolean isAce() {
-        return denomination.isTypeOf(Denomination.ACE);
+        return denomination == Denomination.ACE;
     }
 
     @Override

@@ -39,10 +39,6 @@ public enum Denomination {
             .findFirst().orElseThrow(() -> new IllegalArgumentException("올바른 카드가 아닙니다."));
     }
 
-    public boolean isTypeOf(Denomination denomination) {
-        return Objects.equals(this.symbol, denomination.symbol);
-    }
-
     public int toScore() {
         return score;
     }
