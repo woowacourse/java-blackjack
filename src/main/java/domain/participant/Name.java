@@ -10,7 +10,7 @@ public class Name {
 
     public Name(String name) {
         validate(name);
-        this.name = name;
+        this.name = name.strip();
     }
 
     private void validate(String name) {
