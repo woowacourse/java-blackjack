@@ -230,7 +230,7 @@ class BlackjackConverterTest {
             void 변환된_HandDto_목록은_수정할_수_없어야_한다() {
 
                 // given
-                Dealer dealer = new Dealer("딜러");
+                Dealer dealer = new Dealer("딜러"); // TODO: 상수?
                 dealer.addCard(new Card(Rank.ACE, Suit.HEART));
                 dealer.addCard(new Card(Rank.K, Suit.SPADE));
 
