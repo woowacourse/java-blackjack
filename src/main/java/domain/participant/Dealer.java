@@ -1,5 +1,7 @@
 package domain.participant;
 
+import static domain.Constant.DEALER_HIT_STAND_BOUNDARY;
+
 import domain.card.Card;
 
 public class Dealer extends Participant {
@@ -9,7 +11,7 @@ public class Dealer extends Participant {
 
     public boolean shouldGetMoreCard(){
         int result = cards.getTotalSum();
-        return result <= 16;
+        return result <= DEALER_HIT_STAND_BOUNDARY;
     }
 
     public Card getFirstCard(){

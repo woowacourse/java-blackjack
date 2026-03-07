@@ -23,6 +23,7 @@ public class BlackjackController {
 
         blackjackGame.giveHand();
 
+        // 밍구) 이 부분 조금 걸림.. 컨트롤러가 생성하는 게 맞는가
         List<Player> players = blackjackGame.getPlayers();
         Dealer dealer = blackjackGame.getDealer();
         resultView.printParticipantsCards(players, dealer);
@@ -37,8 +38,10 @@ public class BlackjackController {
 
         resultView.printDealerHitStand(blackjackGame.dealerHitsStand());
 
+        // 밍구) 메서드 명 수정
         resultView.printResult(players, dealer);
 
+        // 밍구) 메서드 명 수정
         resultView.printFinalResult(players, dealer);
     }
 

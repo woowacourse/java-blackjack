@@ -1,5 +1,7 @@
 package domain;
 
+import static domain.Constant.BLACKJACK_MAX_NUMBER;
+
 public enum Result {
     WIN, DRAW, LOSE;
     public static Result judge(int playerSum, int dealerSum) {
@@ -13,10 +15,10 @@ public enum Result {
     }
 
     private static boolean isPlayerWin(int playerSum, int dealerSum) {
-        return playerSum < 22 && playerSum > dealerSum;
+        return playerSum <= BLACKJACK_MAX_NUMBER && playerSum > dealerSum;
     }
 
     private static boolean isPlayerLose(int playerSum, int dealerSum) {
-        return (playerSum < dealerSum && dealerSum < 22) || (playerSum > 21 && dealerSum < 22);
+        return (playerSum < dealerSum && dealerSum <= BLACKJACK_MAX_NUMBER) || (playerSum > BLACKJACK_MAX_NUMBER && dealerSum <= BLACKJACK_MAX_NUMBER);
     }
 }

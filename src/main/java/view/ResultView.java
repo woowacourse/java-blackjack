@@ -1,5 +1,9 @@
 package view;
 
+import static domain.Constant.DEALER_HIT_STAND_BOUNDARY;
+import static domain.Constant.DEFAULT_HAND_NUMBER;
+import static domain.Constant.DELIMITER;
+
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.Result;
@@ -10,12 +14,14 @@ public class ResultView {
     public void printParticipantsCards(List<Player> players, Dealer dealer) {
         String collect = players.stream()
                 .map(Player::getName)
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining(DELIMITER));
 
-        System.out.println("\n딜러와 " + collect + "에게 2장을 나누었습니다.");
+        System.out.println("\n딜러와 " + collect + "에게 " + DEFAULT_HAND_NUMBER + "장을 나누었습니다.");
 
+        // 밍구) 이것도 printDealerCards 메서드로 뺄건지?
         System.out.println("딜러카드: " + dealer.getFirstCard());
         printPlayerCards(players);
+
         System.out.println();
     }
 
@@ -25,9 +31,14 @@ public class ResultView {
         }
     }
 
+    // 밍구) 중복된 것 같음
+    public void printPlayerCards(Player player) {
+        System.out.println(player.getName() + "카드: " + player);
+    }
+
     public void printDealerHitStand(boolean value) {
         if (value) {
-            System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
+            System.out.println("\n딜러는 " + DEALER_HIT_STAND_BOUNDARY + "이하라 한장의 카드를 더 받았습니다.");
             return;
         }
         System.out.println("\n딜러는 17이상이라 카드를 받지 않았습니다.");
@@ -82,7 +93,5 @@ public class ResultView {
         System.out.println(sb);
     }
 
-    public void printPlayerCards(Player player) {
-        System.out.println(player.getName() + "카드: " + player);
-    }
+
 }

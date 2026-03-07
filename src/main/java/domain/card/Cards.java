@@ -1,5 +1,8 @@
 package domain.card;
 
+import static domain.Constant.BLACKJACK_MAX_NUMBER;
+import static domain.Constant.DELIMITER;
+
 import domain.ExceptionMessage;
 import domain.Rank;
 import java.util.ArrayList;
@@ -50,7 +53,7 @@ public class Cards {
     }
 
     public boolean decideBurst(int sum) {
-        if (sum > 21) {
+        if (sum > BLACKJACK_MAX_NUMBER) {
             return true;
         }
         return false;
@@ -71,6 +74,6 @@ public class Cards {
     public String toString() {
         return cards.stream()
                 .map(card -> card.toString())
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining(DELIMITER));
     }
 }

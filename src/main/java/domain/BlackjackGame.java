@@ -1,5 +1,7 @@
 package domain;
 
+import static domain.Constant.DEFAULT_HAND_NUMBER;
+
 import domain.card.Card;
 import domain.card.Deck;
 import domain.participant.Dealer;
@@ -39,13 +41,13 @@ public class BlackjackGame {
 
     public void giveHand() {
         for (Player player : players) {
-            for(int i = 0; i < 2; i++) {
+            for(int i = 0; i < DEFAULT_HAND_NUMBER; i++) {
                 Card card = deck.pull();
                 player.add(card);
             }
         }
 
-        for(int i = 0; i < 2; i++) {
+        for(int i = 0; i < DEFAULT_HAND_NUMBER; i++) {
             Card card = deck.pull();
             dealer.add(card);
         }

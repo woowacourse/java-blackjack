@@ -1,5 +1,6 @@
 package domain.card;
 
+import static domain.Constant.BLACKJACK_MAX_NUMBER;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import domain.Rank;
@@ -38,7 +39,7 @@ public class CardsTest {
         cards.add(card2);
 
         //then
-        Assertions.assertEquals(cards.getTotalSum(), 21);
+        Assertions.assertEquals(cards.getTotalSum(), BLACKJACK_MAX_NUMBER);
     }
 
     @Test
