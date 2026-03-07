@@ -14,10 +14,10 @@ public class GameResultCalculator {
     }
 
     private static ResultType getResultType(Score playerScore, Score dealerScore) {
-        if (playerScore.isBust() || (playerScore.value() < dealerScore.value() && !dealerScore.isBust())) {
+        if (playerScore.isBust() || (playerScore.getValue() < dealerScore.getValue() && !dealerScore.isBust())) {
             return ResultType.LOSE;
         }
-        if (dealerScore.isBust() || playerScore.value() > dealerScore.value()) {
+        if (dealerScore.isBust() || playerScore.getValue() > dealerScore.getValue()) {
             return ResultType.WIN;
         }
         return ResultType.DRAW;
