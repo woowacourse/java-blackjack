@@ -4,11 +4,12 @@ import static domain.Constant.BLACKJACK_MAX_NUMBER;
 
 public enum Result {
     WIN, DRAW, LOSE;
+
     public static Result judge(int playerSum, int dealerSum) {
-        if(isPlayerWin(playerSum, dealerSum)){
+        if (isPlayerWin(playerSum, dealerSum)) {
             return WIN;
         }
-        if(isPlayerLose(playerSum, dealerSum)){
+        if (isPlayerLose(playerSum, dealerSum)) {
             return LOSE;
         }
         return DRAW;
@@ -19,6 +20,7 @@ public enum Result {
     }
 
     private static boolean isPlayerLose(int playerSum, int dealerSum) {
-        return (playerSum < dealerSum && dealerSum <= BLACKJACK_MAX_NUMBER) || (playerSum > BLACKJACK_MAX_NUMBER && dealerSum <= BLACKJACK_MAX_NUMBER);
+        return (playerSum < dealerSum && dealerSum <= BLACKJACK_MAX_NUMBER) || (playerSum > BLACKJACK_MAX_NUMBER
+                && dealerSum <= BLACKJACK_MAX_NUMBER);
     }
 }
