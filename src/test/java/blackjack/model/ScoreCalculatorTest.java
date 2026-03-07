@@ -21,7 +21,6 @@ class ScoreCalculatorTest {
         // when
         Score adjustedScore = scoreCalculator.calculate(cards);
         // then
-        assertThat(adjustedScore).isEqualTo(sum + 10);
+        assertThat(adjustedScore.value()).isEqualTo(sum + 10);
     }
-
 }

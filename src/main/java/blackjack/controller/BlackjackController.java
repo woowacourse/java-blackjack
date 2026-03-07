@@ -55,7 +55,7 @@ public class BlackjackController {
 
     public void run() {
         Players players = readPlayers();
-        Dealer dealer = new Dealer(createEmptyHand(), dealerHitPolicy);
+        Dealer dealer = new Dealer(createEmptyHand());
         Deck deck = Deck.shuffled(cardsGenerator);
 
         initialDeal(players, dealer, deck);
@@ -112,7 +112,7 @@ public class BlackjackController {
     }
 
     private void dealerHit(Dealer dealer, Deck deck) {
-        if (dealer.shouldHit()) {
+        if (dealer.shouldHit(dealerHitPolicy)) {
             dealer.hit(deck.draw());
             outputView.printDealerHit();
         }

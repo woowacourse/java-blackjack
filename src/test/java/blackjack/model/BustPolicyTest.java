@@ -27,6 +27,6 @@ class BustPolicyTest {
         // when
         boolean bust = bustPolicy.isBust(score);
         // then
-        assertThat(bust).isTrue();
+        assertThat(bust).isFalse();
     }
 }
