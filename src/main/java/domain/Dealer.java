@@ -75,7 +75,7 @@ public class Dealer {
         return NAME + OutputMessage.CARD_TEXT.getMessage() + getCardsInfo().getFirst();
     }
 
-    public String getDealerScoreResult() {
+    public String getDealerScoreInfo() {
         return getDealerInfo() + OutputMessage.RESULT_TEXT.getMessage() + calculateScore();
     }
 
