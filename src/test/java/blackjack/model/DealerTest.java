@@ -1,7 +1,6 @@
 package blackjack.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
@@ -10,23 +9,32 @@ import blackjack.model.cardDeck.CardDeck;
 import blackjack.model.cardDeck.PickStrategy;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
+import blackjack.model.result.Result;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
     PickStrategy mustPickTen = cards -> Card.opened(Rank.TEN, Suit.CLOVER);
+    PickStrategy mustPickFive = cards -> Card.opened(Rank.FIVE, Suit.CLOVER);
+    PickStrategy mustPickAce = cards -> Card.opened(Rank.ACE, Suit.CLOVER);
 
     @Test
-    @DisplayName("카드 덱에서 카드를 뽑아서 핸즈에 추가한다.")
-    void pickCard() {
+    @DisplayName("딜러가 뽑은 두 장의 카드 중 한 장만 오픈돼 있다.")
+    void pickInitCards() {
         // given
         Dealer dealer = Dealer.create();
         CardDeck cardDeck = CardDeck.of(mustPickTen);
 
-        // when & then
-        assertThatCode(() -> dealer.pickAdditionalCard(cardDeck))
-                .doesNotThrowAnyException();
+        // when
+        dealer.pickInitCards(cardDeck);
+
+        //then
+        List<Card> cards = dealer.getOpenedCards();
+
+        assertThat(cards.size()).isEqualTo(1);
+        assertThat(cards.getFirst().getDefaultScore()).isEqualTo(10);
     }
 
     @Test
@@ -47,30 +55,34 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러의 총 점수가 21 초과이면 true를 반환한다.")
-    void isBust() {
+    @DisplayName("딜러랑 플레이어 핸드 비교 결과 테스트")
+    void compare() {
         // given
-        CardDeck cardDeck = CardDeck.of(mustPickTen);
-
         Dealer dealer = Dealer.create();
 
-        dealer.pickAdditionalCard(cardDeck);
-        dealer.pickAdditionalCard(cardDeck);
-        dealer.pickAdditionalCard(cardDeck);
+        CardDeck cardDeckForMustPickTen = CardDeck.of(mustPickTen);
+        dealer.pickInitCards(cardDeckForMustPickTen);
+
+        Player player1 = Player.of("player1");
+
+        CardDeck cardDeckForMustPickFive = CardDeck.of(mustPickFive);
+        player1.pickAdditionalCard(cardDeckForMustPickFive);
+        player1.pickAdditionalCard(cardDeckForMustPickFive);
+
+        Player player2 = Player.of("player1");
+
+        CardDeck cardDeckForMustPickAce = CardDeck.of(mustPickAce);
+        player2.pickAdditionalCard(cardDeckForMustPickTen);
+        player2.pickAdditionalCard(cardDeckForMustPickAce);
+
+        Player player3 = Player.of("player3");
+
+        player3.pickAdditionalCard(cardDeckForMustPickTen);
+        player3.pickAdditionalCard(cardDeckForMustPickTen);
 
         // when & then
-        assertThat(dealer.isBust()).isTrue();
-    }
-
-    @Test
-    @DisplayName("딜러랑 플레이어 핸드 비교 결과 테스트")
-    void dealerResultTest() {
-        // given
-        Dealer dealer = Dealer.create();
-        Player player = Player.of("player1");
-
-        // when
-
-        // then
+        assertThat(dealer.compare(player1)).isEqualTo(Result.WIN);
+        assertThat(dealer.compare(player2)).isEqualTo(Result.LOSE);
+        assertThat(dealer.compare(player3)).isEqualTo(Result.DRAW);
     }
 }
