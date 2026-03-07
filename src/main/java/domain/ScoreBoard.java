@@ -19,23 +19,29 @@ public class ScoreBoard {
     }
 
     public List<GameResult> playerResults() {
-        int dealerScore = getDealerScore();
+        List<GameResult> resultList = new ArrayList<>();
+        games.forEach(gameStatus -> addPlayerResult(gameStatus, resultList));
 
-        return games.stream()
-                .filter(this::isPlayer)
-                .map(gameStatus -> getGameResult(gameStatus, dealerScore))
-                .toList();
+        return resultList;
     }
 
-    private boolean isPlayer(GameStatus gameStatus) {
-        return !gameStatus.name().equals(Constants.DEALER_NAME);
-    }
-
-    private GameResult getGameResult(GameStatus gameStatus, int dealerScore) {
-        if (isWin(gameStatus, dealerScore)) {
-            return new GameResult(gameStatus.name(), Constants.WIN);
+    private void addPlayerResult(GameStatus gameStatus, List<GameResult> resultList) {
+        if (!gameStatus.name().equals(Constants.DEALER_NAME)) {
+            addResults(gameStatus, resultList);
         }
-        return new GameResult(gameStatus.name(), Constants.LOSE);
+    }
+
+    private void addResults(GameStatus gameStatus, List<GameResult> resultList) {
+        int dealerScore = getDealerScore();
+        if (isWin(gameStatus, dealerScore)) {
+            resultList.add(new GameResult(gameStatus.name(), Constants.WIN));
+            return;
+        }
+        resultList.add(new GameResult(gameStatus.name(), Constants.LOSE));
+    }
+
+    private boolean isDealer(GameStatus gameStatus) {
+        return gameStatus.name().equals(Constants.DEALER_NAME);
     }
 
     private void resultSort() {
@@ -47,12 +53,17 @@ public class ScoreBoard {
         if (playerGameStatus.scoreSum() > Constants.BUST_NUMBER) {
             return false;
         }
+
+        if (dealerScore > Constants.BUST_NUMBER) {
+            return true;
+        }
+
         return playerGameStatus.scoreSum() > dealerScore;
     }
 
     private int getDealerScore() {
         return games.stream()
-                .filter(this::isPlayer)
+                .filter(this::isDealer)
                 .findFirst()
                 .map(GameStatus::scoreSum)
                 .orElse(Constants.DEFAULT_HAND_SCORE);
