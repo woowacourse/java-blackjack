@@ -14,7 +14,7 @@ public class ValidatorTest {
 
         // when & then
         assertThatThrownBy(() ->
-                Validator.validateEmptyInput(answer))
+                Validator.validateEmptyAnswerInput(answer))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageStartingWith(ERROR_PREFIX);
     }

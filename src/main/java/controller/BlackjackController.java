@@ -74,6 +74,7 @@ public class BlackjackController {
             try {
                 outputView.printMessage(Message.INPUT_PARTICIPANTS_MESSAGE);
                 String participantsName = inputView.readParticipantsName();
+                validator.validateParticipantsName(participantsName);
                 List<String> parsedParticipantsName = parser.parseParticipantsName(participantsName);
                 blackjackService.saveParticipants(parsedParticipantsName);
                 return;

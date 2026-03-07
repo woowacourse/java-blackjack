@@ -1,12 +1,41 @@
 package util;
 
+import java.util.regex.Pattern;
+
 public class Validator {
+    private static final Pattern CONTAINS_DIGIT = Pattern.compile(".*\\d.*");
+    private static final Pattern VALID_INPUT = Pattern.compile("^[a-zA-Z가-힣,]+$");
+
+    public void validateParticipantsName(String participantsName) {
+        validateEmptyNameInput(participantsName);
+        validateNonLiteralInput(participantsName);
+        validateInvalidSymbolInput(participantsName);
+    }
+
+    static void validateEmptyNameInput(String participantsName) {
+        if (participantsName.trim().isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 참가자 이름은 비어 있을 수 없습니다.");
+        }
+    }
+
+    static void validateNonLiteralInput(String participantsName) {
+        if (CONTAINS_DIGIT.matcher(participantsName).matches()) {
+            throw new IllegalArgumentException("[ERROR] 참가자 이름에는 숫자를 포함할 수 없습니다.");
+        }
+    }
+
+    static void validateInvalidSymbolInput(String participantsName) {
+        if (!VALID_INPUT.matcher(participantsName).matches()) {
+            throw new IllegalArgumentException("[ERROR] 참가자 이름에는 쉼표를 제외한 특수문자를 사용할 수 없습니다.");
+        }
+    }
+
     public void validateAnswer(String answer) {
-        validateEmptyInput(answer);
+        validateEmptyAnswerInput(answer);
         validateYesOrNo(answer);
     }
 
-    static void validateEmptyInput(String answer) {
+    static void validateEmptyAnswerInput(String answer) {
         if (answer.trim().isEmpty()) {
             throw new IllegalArgumentException("[ERROR] 카드 수령 여부(y/n)는 비어 있을 수 없습니다.");
         }
