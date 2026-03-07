@@ -16,30 +16,35 @@ public class BlackjackController {
         this.blackjackGame = blackjackGame;
     }
 
-    public void run(){
-        List<String> names = inputView.readPlayerNames();
-
-        blackjackGame.registPlayers(names);
-
+    public void run() {
+        readAndRegistPlayers();
         blackjackGame.giveHand();
 
-        // 밍구) 이 부분 조금 걸림.. 컨트롤러가 생성하는 게 맞는가
         List<Player> players = blackjackGame.getPlayers();
         Dealer dealer = blackjackGame.getDealer();
         resultView.printParticipantsCards(players, dealer);
 
-        for (Player player : players) {
-            String result = null;
-            while((result = inputView.readHitStand(player.getName())).equals("y")){
-                blackjackGame.giveCard(player);
-                resultView.printCards(player);
-            }
-        }
-
+        playerHitStand(players);
         resultView.printDealerHitStand(blackjackGame.dealerHitsStand());
-
         resultView.printCardsWithResult(players, dealer);
-
         resultView.printResultStatistics(players, dealer);
+    }
+
+    private void readAndRegistPlayers() {
+        List<String> names = inputView.readPlayerNames();
+        blackjackGame.registPlayers(names);
+    }
+
+    private void playerHitStand(List<Player> players) {
+        for (Player player : players) {
+            hitStand(player);
+        }
+    }
+
+    private void hitStand(Player player) {
+        while (inputView.readHitStand(player.getName()).equals("y")) {
+            blackjackGame.giveCard(player);
+            resultView.printCards(player);
+        }
     }
 }
