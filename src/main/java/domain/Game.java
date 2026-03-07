@@ -1,64 +1,89 @@
 package domain;
 
+import domain.card.Deck;
 import domain.enums.Result;
+import domain.participant.Dealer;
+import domain.participant.Players;
+import dto.CardDto;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Game {
 
     private final Players players;
     private final Dealer dealer;
-    private final Deck deck;
 
-    public Game(Players players, Dealer dealer, Deck deck) {
+    public Game(Players players, Dealer dealer) {
         this.players = players;
         this.dealer = dealer;
-        this.deck = deck;
     }
 
-    public Dealer getDealer() {
-        return dealer;
+    public List<CardDto> getDealerCard() {
+        return dealer.getDealerCards();
     }
 
-    public List<String> getAllPlayersNames() {
-        return players.getAllPlayersName();
+    public Map<String, List<CardDto>> getAllPlayerCard() {
+        Map<String, List<CardDto>> playerCards = new LinkedHashMap<>();
+        for (String name : players.getAllPlayersName()) {
+            playerCards.put(name, players.getPlayerCards(name));
+        }
+
+        return playerCards;
     }
 
-    public void initializeGame() {
-        players.initializeCard(deck.drawCard(), deck.drawCard());
+    public List<CardDto> getPlayerCard(String name) {
+        return players.getPlayerCards(name);
+    }
+
+    public void initializeGame(Deck deck) {
+        players.initializeCard(deck);
         dealer.addCards(List.of(deck.drawCard(), deck.drawCard()));
     }
 
-    public void distributeCard(String name) {
+    public void distributeCard(String name, Deck deck) {
         players.distributeCard(name, deck.drawCard());
     }
 
-    public void distributeCard() {
+    public void distributeCard(Deck deck) {
         dealer.addCard(deck.drawCard());
     }
 
-    public void playerHit(String name, boolean isHit) {
-        if (players.checkScoreUnderCriterion(name) && isHit) {
-            distributeCard(name);
+    public boolean isPlayerBust(String name) {
+        return !players.checkScoreUnderCriterion(name);
+    }
+
+    public boolean isDealerBust() {
+        return !dealer.checkScoreUnderCriterion();
+    }
+
+    public void playerHit(String name, Deck deck, boolean wantHit) {
+        if (wantHit) {
+            distributeCard(name, deck);
         }
     }
 
-    public void dealerHit() {
-        if (dealer.checkScoreUnderCriterion()) {
-            distributeCard();
-        }
+    public void dealerHit(Deck deck) {
+        distributeCard(deck);
     }
 
-    public void settlementOfResults() {
-        int dealerScore = dealer.cardBoard.calculateScore();
-        boolean dealerBurst = dealer.cardBoard.isBurst();
-        List<Result> playerResults = players.decideAllResults(dealerScore, dealerBurst);
-
-        dealer.addResults(playerResults);
+    public Map<Result, Integer> getDealerResult() {
+        int dealerScore = dealer.calculateScore();
+        boolean dealerBurst = dealer.isBurst();
+        return dealer.calculateResults(players.decideAllResults(dealerScore, dealerBurst));
     }
 
     public Result getPlayerResult(String name) {
-        int dealerScore = dealer.cardBoard.calculateScore();
-        boolean dealerBurst = dealer.cardBoard.isBurst();
+        int dealerScore = dealer.calculateScore();
+        boolean dealerBurst = dealer.isBurst();
         return players.getPlayerResult(name, dealerScore, dealerBurst);
+    }
+
+    public int getPlayerScore(String name) {
+        return players.getPlayerScore(name);
+    }
+
+    public int getDealerScore() {
+        return dealer.calculateScore();
     }
 }

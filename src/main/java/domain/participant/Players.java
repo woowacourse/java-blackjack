@@ -1,6 +1,18 @@
-package domain;
+package domain.participant;
 
+import static constant.GameRule.MAX_NAME_LENGTH;
+import static constant.GameRule.MAX_PLAYER_NUMBER;
+import static constant.GameRule.MIN_NAME_LENGTH;
+import static constant.GameRule.MIN_PLAYER_NUMBER;
+import static message.ErrorMessage.PLAYER_NAME_DUPLICATED;
+import static message.ErrorMessage.PLAYER_NAME_OUT_OF_RANGE;
+import static message.ErrorMessage.PLAYER_NOT_FOUND;
+import static message.ErrorMessage.PLAYER_NUMBER_OUT_OF_RANGE;
+
+import domain.card.Card;
+import domain.card.Deck;
 import domain.enums.Result;
+import dto.CardDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -28,27 +40,27 @@ public class Players {
     }
 
     private void validateNameLength(String name) {
-        if (name.isBlank() || name.length() > 5) {
-            throw new IllegalArgumentException("[ERROR] 플레이어 이름은 1-5글자 사이어야 합니다.");
+        if (name.length() < MIN_NAME_LENGTH || name.length() > MAX_NAME_LENGTH) {
+            throw new IllegalArgumentException(PLAYER_NAME_OUT_OF_RANGE.getMessage());
         }
     }
 
     private void validateDuplicatedName(List<String> names) {
         Set<String> distinctNames = Set.copyOf(names);
         if (distinctNames.size() != names.size()) {
-            throw new IllegalArgumentException("[ERROR] 플레이어 이름은 중복될 수 없습니다.");
+            throw new IllegalArgumentException(PLAYER_NAME_DUPLICATED.getMessage());
         }
     }
 
     private void validatePlayerNumber(List<String> names) {
-        if (names.isEmpty() || names.size() > 7) {
-            throw new IllegalArgumentException("[ERROR] 플레이어는 1명 이상 7명 이하여야 합니다.");
+        if (names.size() < MIN_PLAYER_NUMBER || names.size() > MAX_PLAYER_NUMBER) {
+            throw new IllegalArgumentException(PLAYER_NUMBER_OUT_OF_RANGE.getMessage());
         }
     }
 
-    public void initializeCard(Card firstCard, Card secondCard) {
+    public void initializeCard(Deck deck) {
         players.forEach(player -> {
-            player.addCards(List.of(firstCard, secondCard));
+            player.addCards(List.of(deck.drawCard(), deck.drawCard()));
         });
     }
 
@@ -61,7 +73,7 @@ public class Players {
         return players.stream()
                 .filter(player -> player.getName().equals(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("플레이어를 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(PLAYER_NOT_FOUND.getMessage()));
     }
 
     public List<Result> decideAllResults(int dealerScore, boolean dealerBurst) {
@@ -78,13 +90,18 @@ public class Players {
         return foundPlayer.checkScoreUnderCriterion();
     }
 
-    public List<Card> getPlayerCards(String name) {
+    public List<CardDto> getPlayerCards(String name) {
         Player foundPlayer = findPlayerByName(name);
-        return foundPlayer.cardBoard.getCards();
+        return foundPlayer.cardBoard.createDto();
     }
 
     public Result getPlayerResult(String name, int dealerScore, boolean dealerBurst) {
         Player foundPlayer = findPlayerByName(name);
         return foundPlayer.calculateResult(dealerScore, dealerBurst);
+    }
+
+    public int getPlayerScore(String name) {
+        Player foundPlayer = findPlayerByName(name);
+        return foundPlayer.getScore();
     }
 }

@@ -1,16 +1,14 @@
-package domain;
+package domain.participant;
 
 import domain.enums.Result;
 
 public class Player extends Participant {
 
     private final String name;
-    private Result result;
 
     public Player(String name) {
         super();
         this.name = name;
-        result = Result.UNDECIDED;
     }
 
     public String getName() {
@@ -21,15 +19,11 @@ public class Player extends Participant {
         int playerScore = cardBoard.calculateScore();
 
         if (cardBoard.isBurst() || (playerScore < dealerScore && !dealerBurst)) {
-            return result = Result.LOSE;
+            return Result.LOSE;
         }
         if (playerScore == dealerScore) {
-            return result = Result.DRAW;
+            return Result.DRAW;
         }
-        return result = Result.WIN;
-    }
-
-    public Result getResult() {
-        return result;
+        return Result.WIN;
     }
 }
