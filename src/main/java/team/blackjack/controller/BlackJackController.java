@@ -44,6 +44,10 @@ public class BlackJackController {
         return InputView.readPlayerNames();
     }
 
+    private void initializeBlackjackGame(){
+
+    }
+
     private void readHitDecision(List<Player> players) {
         players.forEach(this::processHit);
     }
