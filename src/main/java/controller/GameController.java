@@ -3,17 +3,20 @@ package controller;
 import domain.Card;
 import domain.Dealer;
 import domain.Deck;
+import domain.GameResultCalculator;
 import domain.Hand;
 import domain.Name;
 import domain.Player;
 import domain.Players;
+import domain.TotalFinalResult;
+import dto.DealerFinalResultDto;
 import dto.DealerResultDto;
 import dto.PlayerDto;
 import dto.PlayersDto;
+import dto.TotalFinalResultsDto;
 import java.util.ArrayList;
-import view.InputView;
-
 import java.util.List;
+import view.InputView;
 import view.OutputView;
 
 public class GameController {
@@ -45,6 +48,7 @@ public class GameController {
         printCardResults(DealerResultDto.from(dealer), PlayersDto.from(players));
 
         // 최종 승패 출력
+        printFinalResults(players, dealer);
     }
 
     // 플레이어들 초기화
@@ -84,17 +88,15 @@ public class GameController {
     }
 
     private void checkBustPlayer(Player player) {
-        while (!player.isBust()) {
+        while (!player.isBust() && InputView.checkAddCard(player.getName().getName())) {
             addPlayerCard(player);
         }
     }
 
     // 각 플레이어별 카드추가
     private void addPlayerCard(Player player) {
-        if (InputView.checkAddCard(player.getName())) {
-            player.addHandCard(deck.draw());
-            OutputView.printPlayerCardStatus(PlayerDto.from(player));
-        }
+        player.addHandCard(deck.draw());
+        OutputView.printPlayerCardStatus(PlayerDto.from(player));
     }
 
     // 딜러 카드 추가하기 (반복)
@@ -114,5 +116,13 @@ public class GameController {
 
     private void printCardResults(DealerResultDto dealerResultDto, PlayersDto playersDto) {
         OutputView.printCardResult(dealerResultDto, playersDto);
+    }
+
+    private void printFinalResults(Players players, Dealer dealer) {
+        TotalFinalResult totalFinalResult = GameResultCalculator.checkGameResult(players, dealer);
+        DealerFinalResultDto dealerFinalResultDto = DealerFinalResultDto.from(totalFinalResult);
+        TotalFinalResultsDto totalFinalResultsDto = TotalFinalResultsDto.from(totalFinalResult);
+
+        OutputView.printTotalResult(dealerFinalResultDto, totalFinalResultsDto);
     }
 }
