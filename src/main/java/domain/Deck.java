@@ -17,11 +17,11 @@ public class Deck {
         return new Deck(cards);
     }
 
-    public static Deck createParticipantDeck(Deck deck) {
+    public static Deck createParticipantDeck(Deck totaldeck) {
         List<Card> cards = new ArrayList<>(
                 List.of(
-                        deck.drawCard(),
-                        deck.drawCard()
+                        totaldeck.drawCard(),
+                        totaldeck.drawCard()
                 )
         );
         return new Deck(cards);
@@ -59,7 +59,7 @@ public class Deck {
 
         return sum;
     }
-    
+
     private int addCardScoreExceptAce(Card card, int sum) {
         if (!card.isAce()) {
             sum += card.getCardContents().getScore();
