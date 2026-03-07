@@ -16,6 +16,10 @@ public class Card {
         return number.getValue();
     }
 
+    public String cardName() {
+        return number.getCourt()+pattern.getName();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Card card)) {
