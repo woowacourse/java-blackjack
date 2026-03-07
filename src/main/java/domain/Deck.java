@@ -18,13 +18,13 @@ public class Deck {
         for (CardPattern cardPattern : CardPattern.values()) {
             makeCard(cardPattern.getName());
         }
+        Collections.shuffle((List<?>) queue);
     }
 
     public Card draw() {
         if (queue.isEmpty()) {
             throw new NoSuchElementException();
         }
-        Collections.shuffle((List<?>) queue);
         return queue.poll();
     }
 
