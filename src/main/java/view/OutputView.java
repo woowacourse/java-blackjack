@@ -1,14 +1,14 @@
-package blackjack.view;
+package view;
 
-import blackjack.dto.GameResultDto;
-import blackjack.domain.MatchResult;
-import blackjack.domain.card.Card;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
-import blackjack.view.message.MatchResultMessage;
-import blackjack.view.message.RankMessage;
-import blackjack.view.message.SuitMessage;
+import domain.MatchResult;
+import domain.card.Card;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
+import dto.GameResultDto;
+import view.message.MatchResultMessage;
+import view.message.RankMessage;
+import view.message.SuitMessage;
 
 import java.util.List;
 import java.util.Map;

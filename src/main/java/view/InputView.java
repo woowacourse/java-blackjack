@@ -1,6 +1,6 @@
-package blackjack.view;
+package view;
 
-import blackjack.view.message.BinaryOptionMessage;
+import view.message.BinaryOptionMessage;
 
 import java.util.Arrays;
 import java.util.List;
