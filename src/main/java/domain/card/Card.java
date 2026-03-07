@@ -16,23 +16,23 @@ public class Card {
         return rank;
     }
 
-    public boolean isAce(){
+    public boolean isAce() {
         return rank.isAce();
     }
 
-    public int getRankValue(){
+    public int getRankValue() {
         return rank.getScoreValue();
     }
 
     public int getOneIfAce(Card card) {
-        if(card.isAce()){
+        if (card.isAce()) {
             return 1;
         }
         return 0;
     }
 
     public int getRankValueIfNotAce(Card card) {
-        if(!card.isAce()){
+        if (!card.isAce()) {
             return card.getRankValue();
         }
         return 0;
