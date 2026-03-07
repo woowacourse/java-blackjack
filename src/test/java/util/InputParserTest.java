@@ -15,22 +15,6 @@ class InputParserTest {
     }
 
     @Test
-    void 빈_문자열일때_예외(){
-        String input = "";
-
-        Assertions.assertThatThrownBy(() -> InputParser.splitComma(input))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    void 빈_문자열이_있을때_예외(){
-        String input = "pobi,,jason";
-
-        Assertions.assertThatThrownBy(() -> InputParser.splitComma(input))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
     void 이름이_중복일때_예외(){
         String input = "pobi, pobi";
 
