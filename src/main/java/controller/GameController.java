@@ -23,21 +23,20 @@ public class GameController {
 
     public void run() {
         // 시나리오
-        // 1. 딜러와 플레이어를 생성한다.
-        List<Player> players = participateGame(getInputPlayers());
+        List<Player> players = participateGame(getInputPlayers()); // TODO: 추후 일급 컬랙션으로 변경 고려
         Dealer dealer = new Dealer();
 
-        // 2. 딜러가 플레이어에게 카드 2장씩 나누어준다. 이때 딜러도 받아야한다.
-        // 딜러가 카드를 나눠준다.? 자연스러운 형태긴 하다.
         for (Player player : players) {
             List<Card> firstHandCards = dealer.handOutFirstHandCards();
             player.receiveFirstHandCards(firstHandCards);
         }
+
         dealer.receiveFirstHandCards(dealer.handOutFirstHandCards());
         printGameStart(players, dealer);
 
         // 3. 각 플레이어는 버스트가 되지 않는 한 계속 뽑을 수 있다.
         // 이때 히트 옵션을 계속 수행해야하며, 손패의 점수를 출력해야한다.
+
         receiveMoreCard(players, dealer);
         outputView.printFinalScore(dealer, players);
 
@@ -90,6 +89,7 @@ public class GameController {
             if (gameResult == GameResult.WIN) {
                 dealerLosingCount += 1;
             }
+
             if (gameResult == GameResult.LOSE) {
                 dealerWinningCount += 1;
             }
@@ -99,20 +99,12 @@ public class GameController {
     }
 
     private void processRound(Player player, Dealer dealer) {
-
-        HitOption hitOption = inputHitOption(player);
-
-        if (hitOption == HitOption.YES) {
-            player.receiveMoreCard(dealer.handOutMoreCard());
-        }
-        outputView.printCurrentHoldCard(player);
-
+        HitOption hitOption = HitOption.YES;
         while (hitOption == HitOption.YES && !player.isBust()) {
             hitOption = inputHitOption(player);
-            if (hitOption == HitOption.NO) {
-                break;
+            if (hitOption == HitOption.YES) {
+                player.receiveMoreCard(dealer.handOutMoreCard());
             }
-            player.receiveMoreCard(dealer.handOutMoreCard());
             outputView.printCurrentHoldCard(player);
         }
     }
