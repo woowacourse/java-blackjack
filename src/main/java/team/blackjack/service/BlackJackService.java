@@ -22,12 +22,7 @@ public class BlackJackService {
     private BlackjackGame blackjackGame;
 
     public void initGame(List<String> playerNames) {
-        final Dealer dealer = new Dealer();
-        final List<Player> players = playerNames.stream()
-                .map(Player::new)
-                .toList();
-
-        blackjackGame = new BlackjackGame(dealer, players);
+        blackjackGame = new BlackjackGame(playerNames);
     }
 
     public void drawInitialCards() {

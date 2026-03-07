@@ -9,13 +9,13 @@ public class BlackjackGame {
     private final List<Player> players;
     private final Deck deck;
 
-    public BlackjackGame(Dealer dealer, List<Player> players) {
-        this.dealer = dealer;
-        this.players = players;
+    public BlackjackGame(List<String> playerNames) {
+        this.dealer = new Dealer();
+        this.players = createPlayers(playerNames);
         this.deck = new Deck();
     }
 
-     public Dealer getDealer() {
+    public Dealer getDealer() {
         return dealer;
     }
 
@@ -23,7 +23,11 @@ public class BlackjackGame {
         return players;
     }
 
-    public Map<String, List<String>> getAllPlayerCards(){
+    public Deck getDeck() {
+        return deck;
+    }
+
+    public Map<String, List<String>> getAllPlayerCards() {
         final HashMap<String, List<String>> result = new HashMap<>();
         for (Player player : players) {
             result.put(player.getName(), getPlayerCardInAllHand(player));
@@ -40,7 +44,9 @@ public class BlackjackGame {
                 .toList();
     }
 
-    public Deck getDeck() {
-        return deck;
+    private List<Player> createPlayers(List<String> playerNames) {
+        return playerNames.stream()
+                .map(Player::new)
+                .toList();
     }
 }
