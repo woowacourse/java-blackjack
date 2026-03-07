@@ -11,6 +11,7 @@ public class Gamblers {
     private List<Gambler> gamblers;
 
     public Gamblers(List<String> names) {
+        validateDuplicateNames(names);
         this.gamblers = names.stream()
                 .map(Gambler::new)
                 .collect(Collectors.toList());
@@ -55,5 +56,13 @@ public class Gamblers {
 
     public List<Gambler> getGamblers() {
         return gamblers;
+    }
+
+    public void validateDuplicateNames(List<String> names) {
+        List<String> distinctNamesCount = names.stream().
+                distinct().collect(Collectors.toList());
+        if(distinctNamesCount.size() != names.size()) {
+            throw new IllegalArgumentException("중복된 이름이 입력됩니다.");
+        }
     }
 }
