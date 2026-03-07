@@ -32,6 +32,11 @@ public class GameController {
             ResultView.printDealerOneMoreCard();
         }
 
+        // 카드 결과 계산
+        Map<String, List<String>> playersEndStatus = gameService.getPlayersStatus();
+        Map<String, Integer> playersTotalScore = gameService.getPlayersTotalScore();
+        ResultView.printCardSumResult(playersEndStatus, playersTotalScore);
+
     }
 
     private void askPlayerHit() {

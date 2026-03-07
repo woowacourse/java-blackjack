@@ -50,6 +50,16 @@ public class PlayerGroups {
         return players.get(0);
     }
 
+    public Map<String, Integer> playersTotalScore() {
+        Map<String, Integer> scores = new LinkedHashMap<>();
+
+        for (Player player : players) {
+            scores.put(player.getName(), player.getCardSum());
+        }
+
+        return scores;
+    }
+
     public int getPlayerGroupSize() {
         return players.size();
     }

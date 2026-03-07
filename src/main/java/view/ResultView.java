@@ -39,4 +39,15 @@ public class ResultView {
     public static void printDealerOneMoreCard() {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
+
+    // 카드 합산 결과
+    public static void printCardSumResult(Map<String, List<String>> playerCardList, Map<String, Integer> playerTotalScore) {
+        System.out.println();
+        for (String playerName : playerCardList.keySet()) {
+            List<String> cards = playerCardList.get(playerName);
+            Integer score = playerTotalScore.get(playerName);
+            System.out.println(playerName + "카드: " + String.join(", ", cards) + " - 결과: " + score);
+        }
+        System.out.println();
+    }
 }

@@ -87,6 +87,10 @@ public class GameService {
         return false;
     }
 
+    public Map<String, Integer> getPlayersTotalScore() {
+        return playerGroups.playersTotalScore();
+    }
+
     public int getPlayerGroupSize() {
         return playerGroups.getPlayerGroupSize();
     }
