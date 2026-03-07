@@ -1,12 +1,12 @@
-package blackjack.controller;
+package controller;
 
-import blackjack.service.GameManager;
-import blackjack.domain.card.Deck;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
-import blackjack.view.InputView;
-import blackjack.view.OutputView;
+import domain.card.Deck;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
+import service.GameManager;
+import view.InputView;
+import view.OutputView;
 
 public class BlackJackController {
 

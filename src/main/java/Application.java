@@ -1,8 +1,6 @@
-package blackjack;
-
-import blackjack.controller.BlackJackController;
-import blackjack.view.InputView;
-import blackjack.view.OutputView;
+import controller.BlackJackController;
+import view.InputView;
+import view.OutputView;
 
 public class Application {
 
