@@ -21,8 +21,13 @@ import java.util.List;
 
 public class BlackjackService {
 
-    private final BlackjackConverter blackjackConverter = new BlackjackConverter();
-    private final CardMachine cardMachine = new CardMachine();
+    private final BlackjackConverter blackjackConverter;
+    private final CardMachine cardMachine;
+
+    public BlackjackService(BlackjackConverter blackjackConverter) {
+        this.blackjackConverter = blackjackConverter;
+        this.cardMachine = new CardMachine();
+    }
 
     public PlayersDto createPlayers(List<String> names) {
         validatePlayerNames(names);

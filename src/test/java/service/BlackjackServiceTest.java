@@ -3,6 +3,7 @@ package service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import config.AppConfig;
 import constant.PolicyConstant;
 import constant.Rank;
 import constant.Result;
@@ -26,7 +27,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class BlackjackServiceTest {
 
-    private final BlackjackService blackjackService = new BlackjackService();
+    private final AppConfig appConfig = new AppConfig();
+    private final BlackjackService blackjackService = appConfig.blackjackService();
 
     @Nested
     class CreatePlayersTest {

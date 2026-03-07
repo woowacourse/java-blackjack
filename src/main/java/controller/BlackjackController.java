@@ -14,9 +14,15 @@ import view.OutputView;
 
 public class BlackjackController {
 
-    private final InputView inputView = new InputView();
-    private final OutputView outputView = new OutputView();
-    private final BlackjackService blackjackService = new BlackjackService();
+    private final InputView inputView;
+    private final OutputView outputView;
+    private final BlackjackService blackjackService;
+
+    public BlackjackController(InputView inputView, OutputView outputView, BlackjackService blackjackService) {
+        this.inputView = inputView;
+        this.outputView = outputView;
+        this.blackjackService = blackjackService;
+    }
 
     public void start() {
         PlayersDto playersDto = initializeGame();

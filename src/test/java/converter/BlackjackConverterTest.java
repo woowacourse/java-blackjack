@@ -3,6 +3,7 @@ package converter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import config.AppConfig;
 import constant.PolicyConstant;
 import constant.Rank;
 import constant.Result;
@@ -20,7 +21,8 @@ import org.junit.jupiter.api.Test;
 
 class BlackjackConverterTest {
 
-    private final BlackjackConverter blackjackConverter = new BlackjackConverter();
+    private final AppConfig appConfig = new AppConfig();
+    private final BlackjackConverter blackjackConverter = appConfig.blackjackConverter();
 
     @Nested
     class ConvertPlayersDtoTest {
