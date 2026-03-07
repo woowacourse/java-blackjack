@@ -1,4 +1,4 @@
-package blackjack.domain;
+package domain;
 
 public enum MatchResult {
 
