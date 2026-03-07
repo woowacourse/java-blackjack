@@ -8,6 +8,7 @@ import java.util.*;
 
 
 public class Deck {
+    public static final int INITIAL_CARDS_COUNT = 2;
     private final List<Card> cards;
 
     public Deck(List<Card> cards) {
@@ -38,5 +39,15 @@ public class Deck {
 
     public Card draw() {
         return cards.removeFirst();
+    }
+
+    public List<Card> drawInitialCards() {
+        List<Card> cards = new ArrayList<>();
+
+        for (int i = 0; i < INITIAL_CARDS_COUNT; i++) {
+            cards.add(draw());
+        }
+
+        return cards;
     }
 }

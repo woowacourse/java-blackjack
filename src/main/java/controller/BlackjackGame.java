@@ -3,8 +3,10 @@ package controller;
 import domain.*;
 import domain.card.Card;
 import domain.participant.Dealer;
+import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
+import java.util.ArrayList;
 import util.InputParser;
 import view.InputView;
 import view.OutputView;
@@ -48,22 +50,15 @@ public class BlackjackGame {
     }
 
     private void initParticipantsHand(Players players, Dealer dealer, Deck deck) {
-        for (Player player : players.getPlayers()) {
-            Card card1 = deck.draw();
-            Card card2 = deck.draw();
-
-            player.receiveInitialCards(List.of(card1, card2));
-        }
-
-        Card card1 = deck.draw();
-        Card card2 = deck.draw();
-        dealer.receiveInitialCards(List.of(card1, card2));
+        List<Participant> participants = new ArrayList<>(players.getPlayers());
+        participants.add(dealer);
+        participants.forEach(participant -> participant.receiveInitialCards(deck.drawInitialCards()));
 
         outputView.printInitialDistribution(players, dealer);
     }
 
     private void dealerTurn(Dealer dealer, Deck deck) {
-        if (dealer.canDraw()) {
+        while (dealer.canDraw()) {
             dealer.receive(deck.draw());
             outputView.printDealerReceiveMessage();
         }
@@ -81,15 +76,11 @@ public class BlackjackGame {
     }
 
     private void showGameResult(Players players, Dealer dealer) {
-        outputView.printFinalResult(dealer);
-
-        for (Player player : players.getPlayers()) {
-            outputView.printFinalResult(player);
-        }
+        List<Participant> participants = new ArrayList<>(players.getPlayers());
+        participants.add(dealer);
+        participants.forEach(outputView::printFinalResult);
 
         GameResult gameResult = new GameResult(players, dealer);
-        outputView.printWinOrLoseMessage();
-        outputView.printDealerResult(gameResult.getDealerResult());
-        outputView.printPlayersResult(gameResult.getPlayersResult());
+        outputView.printGameResult(gameResult);
     }
 }

@@ -32,7 +32,7 @@ class ParticipantTest {
     void 참가자들은_시작_시_카드_두장을_받는다() {
         List<Card> cards = Deck.createDeck();
         Deck deck = new Deck(cards);
-        pobi.receiveInitialCards(List.of(deck.draw(), deck.draw()));
+        pobi.receiveInitialCards(deck.drawInitialCards());
 
         assertThat(pobi.handSize()).isEqualTo(startSize + 2);
     }
