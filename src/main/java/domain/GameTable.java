@@ -31,24 +31,27 @@ public class GameTable {
     }
 
     public void playCurrentPlayer() {
-        if(isPlayerExist()) {
-            Participant current = participants.peek();
-            current.draw();
+        if (isPlayerExist()) {
+            currentPlayer().draw();
         }
+    }
+
+    public GameStatus currentPlayerStatus() {
+        return currentParticipant().status();
+    }
+
+    public Participant currentPlayer() {
+        Participant participant = participants.peek();
+
+        if (!participants.isEmpty() && !participant.isPlayer()) {
+            participants.add(participants.poll());
+        }
+
+        return participants.peek();
     }
 
     public boolean isPlayerExist() {
         return !participants.isEmpty() && !hasOnlyDealer();
-    }
-
-
-    private boolean hasOnlyDealer() {
-        return participants.stream().noneMatch(Participant::isPlayer);
-    }
-
-    public GameStatus currentPlayerStatus() {
-        Participant current = participants.peek();
-        return current.status();
     }
 
     public void recordResult() {
@@ -56,11 +59,23 @@ public class GameTable {
         scoreBoard.record(current.status());
     }
 
-    public Queue<Participant> getParticipants() {
-        return participants;
-    }
-
     public List<GameResult> result() {
         return scoreBoard.results();
+    }
+
+    public String currentPlayerName() {
+        return currentPlayer().name();
+    }
+
+    public boolean isPlayable() {
+        return currentPlayer().isPlayable();
+    }
+
+    private boolean hasOnlyDealer() {
+        return participants.stream().noneMatch(Participant::isPlayer);
+    }
+
+    private Participant currentParticipant() {
+        return participants.peek();
     }
 }

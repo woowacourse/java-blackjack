@@ -69,16 +69,8 @@ public class Controller {
     }
 
     private void playerGamePhase() {
-        Queue<Participant> players = gameTable.getParticipants();
         while (gameTable.isPlayerExist()) {
-            Participant participant = players.peek();
-
-            if(!players.isEmpty() && !participant.isPlayer()) {
-                players.add(players.poll());
-                continue;
-            }
-
-            playerExecute(participant.name());
+            playerExecute(gameTable.currentPlayerName());
         }
     }
 
@@ -94,12 +86,12 @@ public class Controller {
     }
 
     private void playLoop(String name) {
-        String select = InputView.readSelect(name);
-        while (select.equals("y")) {
+        String select = "y";
+        while (select.equals("y") && gameTable.isPlayable()) {
+            select = InputView.readSelect(name);
             gameTable.playCurrentPlayer();
             GameStatus gameStatus = gameTable.currentPlayerStatus();
             OutputView.printGameLog(gameStatus);
-            select = InputView.readSelect(name);
         }
     }
 
