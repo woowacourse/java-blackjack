@@ -13,14 +13,8 @@ public class Card {
         return cardNumber;
     }
 
-    public int getScore() {
-        if (cardNumber == CardNumber.ACE) {
-            return 1;
-        }
-        if (cardNumber == CardNumber.JACK || cardNumber == CardNumber.QUEEN || cardNumber == CardNumber.KING) {
-            return 10;
-        }
-        return Integer.parseInt(cardNumber.getNumber());
+    public int getBaseScore() {
+        return cardNumber.getScore();
     }
 
     @Override
