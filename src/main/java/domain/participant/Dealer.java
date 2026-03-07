@@ -35,6 +35,6 @@ public class Dealer extends Participant {
     }
 
     public boolean isBurst() {
-        return cardBoard.isBurst();
+        return cardBoard.isBust();
     }
 }

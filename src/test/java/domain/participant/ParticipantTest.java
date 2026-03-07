@@ -18,11 +18,15 @@ public class ParticipantTest {
     private static Stream<Arguments> safeScoreCards() {
         return Stream.of(
                 Arguments.of(List.of(new Card(Rank.FIVE, Suit.CLOVER), new Card(Rank.SIX, Suit.CLOVER)), 11),
-                Arguments.of(List.of(new Card(Rank.JACK, Suit.CLOVER), new Card(Rank.QUEEN, Suit.CLOVER), new Card(Rank.TWO, Suit.CLOVER)), 22),
-                Arguments.of(List.of(new Card(Rank.JACK, Suit.CLOVER), new Card(Rank.QUEEN, Suit.CLOVER), new Card(Rank.ACE, Suit.CLOVER), new Card(Rank.ACE, Suit.DIAMOND)), 22),
-                Arguments.of(List.of(new Card(Rank.ACE, Suit.CLOVER), new Card(Rank.ACE, Suit.DIAMOND), new Card(Rank.SEVEN, Suit.CLOVER)), 19),
+                Arguments.of(List.of(new Card(Rank.JACK, Suit.CLOVER), new Card(Rank.QUEEN, Suit.CLOVER),
+                        new Card(Rank.TWO, Suit.CLOVER)), 22),
+                Arguments.of(List.of(new Card(Rank.JACK, Suit.CLOVER), new Card(Rank.QUEEN, Suit.CLOVER),
+                        new Card(Rank.ACE, Suit.CLOVER), new Card(Rank.ACE, Suit.DIAMOND)), 22),
                 Arguments.of(List.of(new Card(Rank.ACE, Suit.CLOVER), new Card(Rank.ACE, Suit.DIAMOND),
-                        new Card(Rank.ACE, Suit.SPADE), new Card(Rank.ACE, Suit.HEART), new Card(Rank.JACK, Suit.CLOVER)), 14)
+                        new Card(Rank.SEVEN, Suit.CLOVER)), 19),
+                Arguments.of(List.of(new Card(Rank.ACE, Suit.CLOVER), new Card(Rank.ACE, Suit.DIAMOND),
+                        new Card(Rank.ACE, Suit.SPADE), new Card(Rank.ACE, Suit.HEART),
+                        new Card(Rank.JACK, Suit.CLOVER)), 14)
         );
     }
 
@@ -41,9 +45,10 @@ public class ParticipantTest {
     @Test
     public void 카드_점수_합계가_21을_넘으면_버스트를_판정한다() {
         Participant participant = new Player("stark");
-        List<Card> burstCards = List.of(new Card(Rank.JACK, Suit.CLOVER), new Card(Rank.QUEEN, Suit.CLOVER), new Card(Rank.TWO, Suit.CLOVER));
+        List<Card> burstCards = List.of(new Card(Rank.JACK, Suit.CLOVER), new Card(Rank.QUEEN, Suit.CLOVER),
+                new Card(Rank.TWO, Suit.CLOVER));
         burstCards.forEach(participant::addCard);
 
-        assertThat(participant.cardBoard.isBurst()).isTrue();
+        assertThat(participant.cardBoard.isBust()).isTrue();
     }
 }

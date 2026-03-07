@@ -18,7 +18,7 @@ public class Player extends Participant {
     public Result calculateResult(int dealerScore, boolean dealerBurst) {
         int playerScore = cardBoard.calculateScore();
 
-        if (cardBoard.isBurst() || (playerScore < dealerScore && !dealerBurst)) {
+        if (cardBoard.isBust() || (playerScore < dealerScore && !dealerBurst)) {
             return Result.LOSE;
         }
         if (playerScore == dealerScore) {

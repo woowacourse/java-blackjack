@@ -55,7 +55,7 @@ public class CardBoard {
         return minAceScore + ACE_BONUS_SCORE;
     }
 
-    public boolean isBurst() {
+    public boolean isBust() {
         return calculateScore() > BLACKJACK_CRITERION;
     }
 }
