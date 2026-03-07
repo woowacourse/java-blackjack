@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import domain.enums.Rank;
 import domain.enums.Suit;
@@ -29,6 +29,10 @@ public class Card {
 
     public Rank getRank() {
         return rank;
+    }
+
+    public Suit getSuit() {
+        return suit;
     }
 
     public int getRankScore() {
