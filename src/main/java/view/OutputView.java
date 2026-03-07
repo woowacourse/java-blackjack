@@ -12,9 +12,9 @@ import java.util.List;
 
 public class OutputView {
 
-    private static final String PRINT_PLAYERS_MESSAGE = "딜러와 %s에게 2장을 나누었습니다.\n";
+    private static final String PRINT_PLAYERS_MESSAGE = "\n딜러와 %s에게 2장을 나누었습니다.\n";
     private static final String PRINT_HAND_MESSAGE = "%s카드: %s";
-    private static final String PRINT_DEALER_HIT = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String PRINT_DEALER_HIT = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String PRINT_BLACKJACK_RESULT_MESSAGE = " - 결과: %d\n";
     private static final String PRINT_BLACKJACK_STATISTICS_HEADER_MESSAGE = "## 최종 승패";
     private static final String PRINT_BLACKJACK_STATISTICS_DEALER_MESSAGE = "딜러:%s%s%s\n";
@@ -49,6 +49,7 @@ public class OutputView {
     }
 
     public void printBlackjackResult(List<BlackjackResultDto> blackjackResultDtoList) {
+        System.out.println();
         for (BlackjackResultDto resultDto : blackjackResultDtoList) {
             printHand(resultDto.handDto());
             System.out.printf(PRINT_BLACKJACK_RESULT_MESSAGE, resultDto.score());
