@@ -24,6 +24,10 @@ public class DeckTest {
     void drawTest_deckIsEmpty_ThrowException() {
         Deck deck = new Deck();
 
+        for (int i = 0; i < 52; i++) {
+            deck.draw();
+        }
+
         assertThatThrownBy(deck::draw)
                 .isInstanceOf(DeckIsEmptyException.class);
     }

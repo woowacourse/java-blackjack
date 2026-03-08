@@ -14,14 +14,16 @@ public class Deck {
     private final Queue<Card> queue;
 
     public Deck() {
-        queue = new LinkedList<>();
+        queue = init();
     }
 
-    public void init() {
+    public LinkedList<Card> init() {
+        List<Card> cards = new LinkedList<>();
         for (CardPattern cardPattern : CardPattern.values()) {
-            makeCard(cardPattern.getName());
+            makeCard(cards, cardPattern.getName());
         }
-        Collections.shuffle((List<?>) queue);
+        Collections.shuffle(cards);
+        return new LinkedList<>(cards);
     }
 
     public Card draw() {
@@ -31,9 +33,9 @@ public class Deck {
         return queue.poll();
     }
 
-    private void makeCard(String cardPattern) {
+    private void makeCard(List<Card> cards, String cardPattern) {
         for (CardNumber cardNumber : CardNumber.values()) {
-            queue.add(new Card(cardNumber.getCourt(), cardPattern));
+            cards.add(new Card(cardNumber.getCourt(), cardPattern));
         }
     }
 }
