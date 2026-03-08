@@ -1,6 +1,5 @@
 package domain;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,20 +8,23 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class DealerTest {
-    private Dealer dealer;
+    @DisplayName("딜러가 받은 카드의 점수 합이 16 미만이면 추가로 받는다.")
+    @Test
+    void 딜러_카드_16미만_추가_배부_필요() {
+        Dealer dealer = createDealerFromCards(List.of(
+                new Card(CardShape.HEART, CardRank.NINE),
+                new Card(CardShape.HEART, CardRank.SIX)
+        ));
 
-    @BeforeEach
-    void setUp() {
-        Dealer dealer = new Dealer("딜러");
-        this.dealer = dealer;
+        assertThat(dealer.needAdditionalCard()).isEqualTo(true);
     }
 
-    @DisplayName("딜러가 받은 카드의 점수 합이 16이하이면 추가로 받는다.")
+    @DisplayName("딜러가 받은 카드의 점수 합이 16이면 추가로 받는다.")
     @Test
-    void 딜러_카드_추가_배부_필요_정상_테스트() {
+    void 딜러_카드_16이면_추가_배부_필요() {
         Dealer dealer = createDealerFromCards(List.of(
-                new Card(CardShape.HEART, CardRank.THREE),
-                new Card(CardShape.HEART, CardRank.TWO)
+                new Card(CardShape.HEART, CardRank.QUEEN),
+                new Card(CardShape.HEART, CardRank.SIX)
         ));
 
         assertThat(dealer.needAdditionalCard()).isEqualTo(true);
