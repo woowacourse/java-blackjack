@@ -3,6 +3,7 @@ package controller;
 import java.util.List;
 import java.util.Map;
 import model.BlackJack;
+import model.participant.Dealer;
 import model.participant.Participant;
 import model.Participants;
 import util.InputParser;
@@ -29,7 +30,7 @@ public class BlackJackController {
         outputView.printDealOut(dealOutResult);
 
         for (Participant participant : participants) {
-            if (participant.getName().equals("딜러")) {
+            if (participant instanceof Dealer) {
                 continue;
             }
 
