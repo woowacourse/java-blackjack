@@ -1,15 +1,13 @@
 package domain;
 
-
 import constant.GameConstant;
-import domain.dto.PlayerCardDto;
 import domain.dto.FinalCardDto;
-
+import domain.dto.PlayerCardDto;
 
 public class Player {
     private static final int ACE_BONUS_SCORE = 10;
     private static final int ACE_NO_BONUS = 0;
-    protected final Cards cards = new Cards();
+    protected final Hand hand = new Hand();
     private final String name;
 
     public Player(String name) {
@@ -18,7 +16,7 @@ public class Player {
 
     protected int calculateScore() {
         int total = 0;
-        for (Card card : cards) {
+        for (Card card : hand) {
             total += card.getCardRank().getValue();
         }
 
@@ -26,7 +24,7 @@ public class Player {
     }
 
     private int calculateAceScore() {
-        if (!cards.hasAce() || calculateScore() > 11) {
+        if (!hand.hasAce() || calculateScore() > 11) {
             return ACE_NO_BONUS;
         }
 
@@ -42,12 +40,12 @@ public class Player {
     }
 
     public void add(Card card) {
-        cards.add(card);
+        hand.add(card);
     }
 
-    public void receiveInitialCards(Cards deck) {
-        cards.add(deck.pop());
-        cards.add(deck.pop());
+    public void receiveInitialCards(Deck deck) {
+        hand.add(deck.pop());
+        hand.add(deck.pop());
     }
 
     public String getName() {
@@ -55,14 +53,14 @@ public class Player {
     }
 
     public int getCardCount() {
-        return cards.getSize();
+        return hand.getSize();
     }
 
     public PlayerCardDto toPlayerCardDto() {
-        return new PlayerCardDto(this.name, this.cards.toCardDtos());
+        return new PlayerCardDto(this.name, this.hand.toCardDtos());
     }
 
     public FinalCardDto toFinalCardDto() {
-        return new FinalCardDto(this.name, this.cards.toCardDtos(), getFinalScore());
+        return new FinalCardDto(this.name, this.hand.toCardDtos(), getFinalScore());
     }
 }

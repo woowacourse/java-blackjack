@@ -12,10 +12,10 @@ public class Dealer extends Player {
     }
 
     public boolean needAdditionalCard() {
-        return this.calculateScore() <= GameConstant.DEALER_HIT_THRESHOLD;
+        return calculateScore() <= GameConstant.DEALER_HIT_THRESHOLD;
     }
 
     public PlayerCardDto toOpeningCardDto() {
-        return new PlayerCardDto(this.getName(), List.of(cards.getFirst().toCardDto()));
+        return new PlayerCardDto(this.getName(), List.of(hand.getFirst().toCardDto()));
     }
 }

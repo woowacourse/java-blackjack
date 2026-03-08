@@ -24,7 +24,7 @@ public class BlackjackController {
     }
 
     public void run() {
-        Cards cards = blackjackService.generateCards();
+        Deck cards = blackjackService.generateCards();
         List<String> names = inputNames();
 
         Dealer dealer = blackjackService.createDealer(cards);
@@ -58,7 +58,7 @@ public class BlackjackController {
         return initialCardContents;
     }
 
-    public Players processPlayersTurn(List<Player> playerList, Cards deck) {
+    public Players processPlayersTurn(List<Player> playerList, Deck deck) {
         Players players = new Players(playerList);
         for (Player player : players) {
             String name = player.getName();
@@ -69,7 +69,7 @@ public class BlackjackController {
     }
 
 
-    private void dealAdditionalCards(Player player, boolean wantsCard, Cards deck, String name) {
+    private void dealAdditionalCards(Player player, boolean wantsCard, Deck deck, String name) {
         while (wantsCard) {
             if (player.isBust()) {
                 break;
