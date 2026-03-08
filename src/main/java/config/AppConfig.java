@@ -1,6 +1,7 @@
 package config;
 
 import controller.BlackJackController;
+import domain.BlackJackFactory;
 import domain.DrawStrategy;
 import domain.strategy.RandomStrategy;
 import repository.GameTableRepository;
@@ -12,7 +13,7 @@ public class AppConfig {
     public BlackJackController blackJackController() {
         GameTableRepository gameTableRepository = new GameTableRepository();
 
-        BlackJackCommandService commandService = new BlackJackCommandService(gameTableRepository, drawStrategy());
+        BlackJackCommandService commandService = new BlackJackCommandService(gameTableRepository, blackJackFactory());
         BlackJackQueryService queryService = new BlackJackQueryService(gameTableRepository);
 
         return new BlackJackController(commandService, queryService);
@@ -20,5 +21,9 @@ public class AppConfig {
 
     private DrawStrategy drawStrategy() {
         return new RandomStrategy();
+    }
+
+    private BlackJackFactory blackJackFactory() {
+        return BlackJackFactory.basedOn(drawStrategy());
     }
 }

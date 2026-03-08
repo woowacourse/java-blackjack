@@ -9,13 +9,13 @@ class Participants {
     private final Dealer dealer;
     private final Players players;
 
-    Participants(Dealer dealer) {
-        this.dealer = dealer;
-        this.players = new Players();
+    Participants(List<String> names, DrawStrategy drawStrategy) {
+        this.dealer = Dealer.of("딜러", drawStrategy);
+        this.players = Players.from(names, drawStrategy);
     }
 
-    void addPlayer(String name) {
-        players.add(name);
+    void addPlayer(String name, DrawStrategy drawStrategy) {
+        players.add(name, drawStrategy);
     }
 
     List<String> allPlayerNames() {
@@ -30,18 +30,18 @@ class Participants {
         return players.currentPlayerCardInfos();
     }
 
-    void allParticipantsDrawInitialCards(DrawStrategy drawStrategy) {
-        dealerDrawInitialCards(drawStrategy);
-        playersDrawInitialCards(drawStrategy);
+    void allParticipantsDrawInitialCards() {
+        dealerDrawInitialCards();
+        playersDrawInitialCards();
     }
 
-    private void playersDrawInitialCards(DrawStrategy drawStrategy) {
-        players.drawInitialCards(drawStrategy);
+    private void playersDrawInitialCards() {
+        players.drawInitialCards();
     }
 
-    void dealerDrawInitialCards(DrawStrategy drawStrategy) {
+    void dealerDrawInitialCards() {
         for (int i = 0; i < BlackJackRule.INITIAL_CARD_COUNT.value(); i++) {
-            dealer.draw(drawStrategy);
+            dealer.draw();
         }
     }
 
@@ -53,8 +53,8 @@ class Participants {
         return players.currentPlayerName();
     }
 
-    public void currentPlayerDrawCard(DrawStrategy drawStrategy) {
-        players.currentPlayerDrawCard(drawStrategy);
+    public void currentPlayerDrawCard() {
+        players.currentPlayerDrawCard();
     }
 
     public boolean isCurrentPlayerPlayable() {

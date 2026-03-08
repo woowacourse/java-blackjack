@@ -21,8 +21,8 @@ class HandTest {
     @Test
     @DisplayName("카드가 한 장 손 패에 추가되어야 한다.")
     void 카드_한_장_뽑기() {
-        Hand hand = new Hand(new ArrayList<>());
-        hand.drawCard(new RandomStrategy());
+        Hand hand = new Hand(new RandomStrategy(), new ArrayList<>());
+        hand.drawCard();
 
         int expected = 1;
         int actual = hand.cards().size();
@@ -34,19 +34,18 @@ class HandTest {
     @MethodSource("randomCards")
     @DisplayName("손패 카드의 합을 반환해야 한다.")
     void 손패_합_반환(List<Card> cards, int sum) {
-        Hand hand = new Hand(cards);
+        Hand hand = new Hand(new RandomStrategy(), cards);
 
-        int expected = sum;
         int actual = hand.scoreSum();
 
-        assertEquals(expected, actual);
+        assertEquals(sum, actual);
     }
 
     @Test
     @DisplayName("손패의 카드 정보들을 반환해야 한다.")
     void 손패_카드들_정보_반환() {
         List<Card> cards = List.of(new Card(CardRank.QUEEN, CardMark.SPADE), new Card(CardRank.EIGHT, CardMark.HEART));
-        Hand hand = new Hand(cards);
+        Hand hand = new Hand(new RandomStrategy(), cards);
 
         List<CardInfo> expected = List.of(new CardInfo("Q", "스페이드"), new CardInfo("8", "하트"));
         List<CardInfo> actual = hand.cardInfos();

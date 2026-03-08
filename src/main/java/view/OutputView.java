@@ -7,7 +7,7 @@ import java.util.List;
 
 public final class OutputView {
 
-    private static final String JOINER = ",";
+    private static final String JOINER = ", ";
 
     private OutputView () {
 

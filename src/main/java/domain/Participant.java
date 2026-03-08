@@ -23,9 +23,9 @@ public abstract class Participant {
 
     protected abstract boolean isPlayable();
 
-    public void draw(DrawStrategy drawStrategy) {
+    public void draw() {
         if (isPlayable()) {
-            hand.drawCard(drawStrategy);
+            hand.drawCard();
         }
     }
 

@@ -9,8 +9,8 @@ public class Player extends Participant {
         requireNonDealer(name);
     }
 
-    static Player of(String name) {
-        return new Player(name, Hand.empty());
+    static Player of(String name, DrawStrategy drawStrategy) {
+        return new Player(name, Hand.based(drawStrategy));
     }
 
     @Override

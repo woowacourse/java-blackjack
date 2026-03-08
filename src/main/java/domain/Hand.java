@@ -1,6 +1,5 @@
 package domain;
 
-import common.Constants;
 import domain.constant.BlackJackRule;
 import domain.vo.Card;
 import domain.vo.CardInfo;
@@ -9,23 +8,19 @@ import java.util.List;
 
 public class Hand {
 
-//    private final DrawStrategy drawStrategy;
+    private final DrawStrategy drawStrategy;
     private final List<Card> cards;
 
-    Hand(List<Card> cards) {
+    Hand(DrawStrategy drawStrategy, List<Card> cards) {
+        this.drawStrategy = drawStrategy;
         this.cards = new ArrayList<>(cards);
     }
-//
-//    Hand(DrawStrategy drawStrategy, List<Card> cards) {
-//        this.drawStrategy = drawStrategy;
-//        this.cards = new ArrayList<>(cards);
-//    }
 
-    static Hand empty () {
-        return new Hand(new ArrayList<>());
+    static Hand based(DrawStrategy drawStrategy) {
+        return new Hand(drawStrategy, new ArrayList<>());
     }
 
-    void drawCard(DrawStrategy drawStrategy) {
+    void drawCard() {
         cards.add(drawStrategy.draw());
     }
 

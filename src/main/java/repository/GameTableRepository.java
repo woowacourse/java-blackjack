@@ -1,5 +1,6 @@
 package repository;
 
+import domain.DrawStrategy;
 import domain.GameTable;
 import domain.vo.NameAndCardInfos;
 import java.util.List;
@@ -12,8 +13,8 @@ public class GameTableRepository {
         this.gameTable = gameTable;
     }
 
-    public void addPlayer(String name) {
-        gameTable.addPlayer(name);
+    public void addPlayer(String name, DrawStrategy drawStrategy) {
+        gameTable.addPlayer(name, drawStrategy);
     }
 
     public NameAndCardInfos getDealerCards() {
@@ -50,5 +51,9 @@ public class GameTableRepository {
 
     public boolean hasWaitingPlayers() {
         return gameTable.hasWaitingPlayers();
+    }
+
+    public void recordCurrentGameResult() {
+//        gameTable.recordCurrentGameResult();
     }
 }

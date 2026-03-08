@@ -1,22 +1,22 @@
 package domain;
 
-import domain.strategy.RandomStrategy;
 import domain.vo.NameAndCardInfos;
 import java.util.List;
 
 public class GameTable {
 
     private final Participants participants;
-    private final DrawStrategy drawStrategy;
 
-    public GameTable() {
-        Dealer dealer = Dealer.of("딜러");
-        this.participants = new Participants(dealer);
-        this.drawStrategy = new RandomStrategy();
+    private GameTable(List<String> playerNames, DrawStrategy drawStrategy) {
+        this.participants = new Participants(playerNames, drawStrategy);
     }
 
-    public void addPlayer(String name) {
-        participants.addPlayer(name);
+    public static GameTable setupGame(List<String> playerNames, DrawStrategy drawStrategy) {
+        return new GameTable(playerNames, drawStrategy);
+    }
+
+    public void addPlayer(String name, DrawStrategy drawStrategy) {
+        participants.addPlayer(name, drawStrategy);
     }
 
     public List<String> allPlayerNames() {
@@ -24,7 +24,7 @@ public class GameTable {
     }
 
     public void allParticipantsDrawInitialCards() {
-        participants.allParticipantsDrawInitialCards(drawStrategy);
+        participants.allParticipantsDrawInitialCards();
     }
 
     public NameAndCardInfos dealerCardsInfo() {
@@ -44,7 +44,7 @@ public class GameTable {
     }
 
     public void currentPlayerDrawCard() {
-        participants.currentPlayerDrawCard(drawStrategy);
+        participants.currentPlayerDrawCard();
     }
 
     public boolean isCurrentPlayerPlayable() {

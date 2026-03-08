@@ -9,12 +9,22 @@ class Players {
 
     private final Deque<Player> players;
 
-    Players() {
-        this.players = new ArrayDeque<>();
+    private Players(List<Player> players) {
+        this.players = new ArrayDeque<>(players);
     }
 
-    void add(String name) {
-        players.add(Player.of(name));
+    static Players from(List<String> names, DrawStrategy drawStrategy) {
+        return new Players(playersFrom(names, drawStrategy));
+    }
+
+    private static List<Player> playersFrom(List<String> names, DrawStrategy drawStrategy) {
+        return names.stream()
+                .map(name -> Player.of(name, drawStrategy))
+                .toList();
+    }
+
+    void add(String name, DrawStrategy drawStrategy) {
+        players.add(Player.of(name, drawStrategy));
     }
 
     List<String> names() {
@@ -23,13 +33,13 @@ class Players {
                 .toList();
     }
 
-    void drawInitialCards(DrawStrategy drawStrategy) {
-        players.forEach(player -> drawInitialCards(player, drawStrategy));
+    void drawInitialCards() {
+        players.forEach(this::drawInitialCards);
     }
 
-    private void drawInitialCards(Player player, DrawStrategy drawStrategy) {
-        player.draw(drawStrategy);
-        player.draw(drawStrategy);
+    private void drawInitialCards(Player player) {
+        player.draw();
+        player.draw();
     }
 
     NameAndCardInfos currentPlayerCardInfos() {
@@ -50,8 +60,8 @@ class Players {
         return currentPlayer().name();
     }
 
-    void currentPlayerDrawCard(DrawStrategy drawStrategy) {
-        currentPlayer().draw(drawStrategy);
+    void currentPlayerDrawCard() {
+        currentPlayer().draw();
     }
 
     boolean isCurrentPlayerPlayable() {

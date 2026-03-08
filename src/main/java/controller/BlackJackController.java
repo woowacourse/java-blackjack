@@ -28,23 +28,17 @@ public class BlackJackController {
 
     private void setupPhase() {
         setupGameTable();
-        setupPlayers();
-
         OutputView.printTaskDivider();
 
         distributeInitialCards();
         displayInitialCards();
-
         OutputView.printTaskDivider();
     }
 
-    private void setupGameTable() {
-        commandService.setupGameTable();
-    }
 
-    private void setupPlayers() {
+    private void setupGameTable() {
         PlayerNamesRequest request = InputView.readPlayers();
-        commandService.setupPlayers(request.names());
+        commandService.setupGameTable(request.names());
     }
 
     private void distributeInitialCards() {
@@ -64,10 +58,8 @@ public class BlackJackController {
     }
 
     private void playerGameProcess() {
-        NameResponse currentPlayer = queryService.currentPlayerName();
-        SelectRequest select = InputView.readSelect(currentPlayer);
-
-        firstPlayerGameProcess(select.isPositive());
+        SelectRequest select = playerSelect();
+        firstPlayerGameProcess(select);
 
         if(select.isPositive()) {
             playerGameLoop();
@@ -75,8 +67,12 @@ public class BlackJackController {
         commandService.recordCurrentGameResult();
     }
 
-    private void firstPlayerGameProcess(boolean isPositive) {
-        if (isPositive) {
+    private SelectRequest playerSelect() {
+        return InputView.readSelect(queryService.currentPlayerName());
+    }
+
+    private void firstPlayerGameProcess(SelectRequest select) {
+        if (select.isPositive()) {
             commandService.currentPlayerDrawCard();
         }
         OutputView.playerCardInfos(queryService.currentPlayerCards());
@@ -85,9 +81,7 @@ public class BlackJackController {
     private void playerGameLoop() {
         boolean wantMoreCard = true;
         while (wantMoreCard && queryService.isCurrentPlayerPlayable()) {
-            SelectRequest selected = InputView.readSelect(queryService.currentPlayerName());
-            wantMoreCard = selected.isPositive();
-
+            wantMoreCard = playerSelect().isPositive();
             playerGameLoopProcess(wantMoreCard);
         }
     }
