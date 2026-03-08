@@ -1,6 +1,8 @@
 package team.blackjack.config;
 
 import team.blackjack.controller.BlackJackController;
+import team.blackjack.domain.rule.BlackjackRule;
+import team.blackjack.domain.rule.DefaultBlackjackRule;
 import team.blackjack.service.BlackJackService;
 
 public class AppConfig {
@@ -19,5 +21,9 @@ public class AppConfig {
 
     public BlackJackController blackJackController() {
         return new BlackJackController(blackJackService());
+    }
+
+    public BlackjackRule blackjackRule() {
+        return new DefaultBlackjackRule();
     }
 }

@@ -1,5 +1,6 @@
 package team.blackjack.domain;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -61,7 +62,7 @@ class HandTest {
                 new Card(Suit.HEARTS, Rank.SIX),
                 new Card(Suit.HEARTS, Rank.FOUR),
                 new Card(Suit.HEARTS, Rank.ACE)
-                );
+        );
 
         for (Card card : cards) {
             hand.addCard(card);
@@ -103,7 +104,7 @@ class HandTest {
     }
 
     @Test
-    void ACE가_2장_들어오는_경우_ACE는_각각_1과_11로_계산된다(){
+    void ACE가_2장_들어오는_경우_ACE는_각각_1과_11로_계산된다() {
         Hand hand = new Hand();
         List<Card> cards = List.of(
                 new Card(Suit.HEARTS, Rank.ACE),
@@ -118,7 +119,7 @@ class HandTest {
     }
 
     @Test
-    void ACE가_2장과_숫자9가_들어오는_경우_ACE는_각각_1과_11로_계산된다(){
+    void ACE가_2장과_숫자9가_들어오는_경우_ACE는_각각_1과_11로_계산된다() {
         Hand hand = new Hand();
         List<Card> cards = List.of(
                 new Card(Suit.HEARTS, Rank.NINE),

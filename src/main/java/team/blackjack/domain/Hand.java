@@ -3,11 +3,16 @@ package team.blackjack.domain;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import team.blackjack.domain.rule.DefaultBlackjackRule;
+import team.blackjack.config.AppConfig;
+import team.blackjack.domain.rule.BlackjackRule;
 
 public class Hand {
-
+    private final BlackjackRule blackjackRule;
     private final Set<Card> cards = new LinkedHashSet<>();
+
+    public Hand() {
+        this.blackjackRule = AppConfig.getInstance().blackjackRule();
+    }
 
     public void addCard(Card card) {
         cards.add(card);
@@ -23,7 +28,7 @@ public class Hand {
                 .toList();
     }
 
-    public int getScore(){
-        return DefaultBlackjackRule.calculateBestScore(this.getCards());
+    public int getScore() {
+        return blackjackRule.calculateBestScore(this.getCards());
     }
 }
