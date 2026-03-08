@@ -13,4 +13,9 @@ public class Dealer extends Participant {
     public boolean isDealerDraw() {
         return hand.isDealerDraw();
     }
+    
+    @Override
+    public boolean isDealer() {
+        return true;
+    }
 }

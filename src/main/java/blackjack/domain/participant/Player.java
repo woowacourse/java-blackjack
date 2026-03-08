@@ -21,4 +21,9 @@ public class Player extends Participant {
         }
         return hand.calculateTotalScore() < BUSTED_SCORE;
     }
+    
+    @Override
+    public boolean isDealer() {
+        return false;
+    }
 }
