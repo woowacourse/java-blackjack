@@ -20,8 +20,7 @@ import static blackjack.view.InputView.readPlayNames;
 public class BlackjackController {
     public void run(){
         List<String> names = inputName();
-        RandomShuffleStrategy shuffleStrategy = new RandomShuffleStrategy();
-        BlackjackGame blackjackGame = BlackjackGame.create(names, shuffleStrategy);
+        BlackjackGame blackjackGame = BlackjackGame.create(names, new RandomShuffleStrategy());
 
         DealResult dealResult = deal(blackjackGame);
         OutputView.printDealResult(dealResult);
