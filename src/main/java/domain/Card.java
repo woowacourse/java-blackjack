@@ -15,6 +15,10 @@ public class Card {
         this.suit = suit;
     }
 
+    public boolean isAceCard() {
+        return rank == Rank.ACE;
+    }
+
     public int getScore() {
         return rank.getScore();
     }

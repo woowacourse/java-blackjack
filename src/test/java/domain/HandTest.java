@@ -29,4 +29,27 @@ public class HandTest {
 
         assertThat(totalScore).isEqualTo(18);
     }
+
+    @Test
+    void ACE가_핸드에_있고_기본점수합계에_10점을_더해도_21점을_넘지_않으면_ACE_1장을_11점으로_계산한다() {
+        Hand hand = new Hand();
+        hand.addCard(new Card(ACE, SPADE));
+        hand.addCard(new Card(SEVEN, SPADE));
+
+        int totalScore = hand.calculateScore();
+
+        assertThat(totalScore).isEqualTo(18);
+    }
+
+    @Test
+    void ACE가_핸드에_있고_기본점수합계에_10점을_더해서_21점을_넘으면_ACE는_1점으로_계산한다() {
+        Hand hand = new Hand();
+        hand.addCard(new Card(ACE, SPADE));
+        hand.addCard(new Card(ACE, HEART));
+        hand.addCard(new Card(JACK, SPADE));
+
+        int totalScore = hand.calculateScore();
+
+        assertThat(totalScore).isEqualTo(12);
+    }
 }
