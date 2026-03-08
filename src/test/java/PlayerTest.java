@@ -1,7 +1,7 @@
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.hitstategy.UntilBurstHitStrategy;
 import domain.participants.Player;
-import domain.stategy.UntilBurstHitStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,7 +11,7 @@ import util.ErrorMessage;
 class PlayerTest {
     @Nested
     @DisplayName("constructor(): ")
-    class Constructor{
+    class Constructor {
 
         @ParameterizedTest
         @DisplayName("이름이 2~7자가 아닐경우 예외를 반환한다.")

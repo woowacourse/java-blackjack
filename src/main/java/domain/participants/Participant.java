@@ -2,10 +2,9 @@ package domain.participants;
 
 import domain.card.Card;
 import domain.card.Hand;
-import domain.Score.Score;
-import util.ErrorMessage;
-import java.util.Collections;
+import domain.score.Score;
 import java.util.List;
+import util.ErrorMessage;
 
 public abstract class Participant {
     private static final int MIN_NAME_SIZE = 2;
@@ -31,7 +30,7 @@ public abstract class Participant {
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(hand.getCards());
+        return hand.getCards();
     }
 
     public String getName() {
@@ -40,9 +39,5 @@ public abstract class Participant {
 
     public Score getScore() {
         return hand.getScore();
-    }
-
-    protected Hand getHand() {
-        return hand;
     }
 }

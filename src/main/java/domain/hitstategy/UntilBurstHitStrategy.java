@@ -1,6 +1,6 @@
-package domain.stategy;
+package domain.hitstategy;
 
-import domain.Score.Score;
+import domain.score.Score;
 
 public class UntilBurstHitStrategy implements HitStrategy {
     @Override

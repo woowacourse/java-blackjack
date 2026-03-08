@@ -1,6 +1,6 @@
 package domain.card;
 
-import domain.Score.Score;
+import domain.score.Score;
 import java.util.Collections;
 import java.util.List;
 import util.ErrorMessage;
@@ -15,13 +15,13 @@ public class Hand {
         this.cards = cards;
     }
 
-    private void validateCardsSize(List<Card> cards) { //테스트 작성
+    private void validateCardsSize(List<Card> cards) {
         if (cards.size() != MIN_SIZE) {
             throw new IllegalArgumentException(ErrorMessage.HANDS_CARDS_SIZE.getMessage());
         }
     }
 
-    public Score getScore() {    // 테스트
+    public Score getScore() {
         int totalScore = cards.stream()
                 .map(Card::getScore)
                 .reduce(Integer::sum)

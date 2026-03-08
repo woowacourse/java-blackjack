@@ -1,4 +1,4 @@
-package domain.Score;
+package domain.score;
 
 public class Score {
     private static final int BURST_SCORE = 21;
@@ -17,11 +17,11 @@ public class Score {
         return value > BURST_SCORE;
     }
 
-    public Result getResult(int value) {
-        if (isBurst()) {
+    public Result getResult(Score otherScore) {
+        if (isBurst() || getValue() < otherScore.getValue()) {
             return Result.LOSE;
         }
-        if (getValue() == value) {
+        if (getValue() == otherScore.getValue()) {
             return Result.DRAW;
         }
         return Result.WIN;

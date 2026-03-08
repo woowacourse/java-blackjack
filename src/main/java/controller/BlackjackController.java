@@ -4,22 +4,22 @@ import domain.RandomValueGenerator;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.card.Hand;
+import domain.hitstategy.CasinoDealerHitStrategy;
+import domain.hitstategy.UntilBurstHitStrategy;
 import domain.participants.Dealer;
 import domain.participants.Player;
-import domain.stategy.CasinoDealerHitStrategy;
-import domain.stategy.UntilBurstHitStrategy;
-import dto.DealerDto;
+import domain.score.Result;
+import domain.score.Score;
+import dto.DealerDrawDto;
 import dto.NamesDto;
 import dto.PlayerCardsDto;
 import dto.StatisticsDto;
+import java.util.ArrayList;
+import java.util.List;
 import util.CardsCreator;
 import util.Parser;
 import view.InputView;
 import view.OutputView;
-import domain.Score.Result;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BlackjackController {
 
@@ -35,29 +35,28 @@ public class BlackjackController {
 
     public void start() {
         Deck deck = new Deck(CardsCreator.createLinkedCards(), randomValueGenerator);
-        Dealer dealer = new Dealer(getHand(deck), new CasinoDealerHitStrategy());
+        Dealer dealer = new Dealer(drawHand(deck), new CasinoDealerHitStrategy());
         List<String> playerNames = Parser.parse(inputView.readPlayerName());
         List<Player> players = createPlayers(playerNames, deck);
 
         printPlayers(dealer, playerNames);
-
         printParticipantHand(dealer, players);
         chooseToFillPlayersHand(players, deck);
-        fillDealerHand(dealer, deck, players);
+        fillDealerHand(dealer, deck, players);  //전부 버스트나면 안뽑게해야 하나?
         printPlayerStatus(dealer, players);
         showGameResultStatistics(dealer, players);
     }
 
     private void showGameResultStatistics(Dealer dealer, List<Player> players) {
-        int dealerTotalScore = dealer.getScore().getValue();
-        List<StatisticsDto> statisticsDtos = getStatisticsDtos(players, dealerTotalScore);
+        Score dealerScore = dealer.getScore();
+        List<StatisticsDto> statisticsDtos = getStatisticsDtos(players, dealerScore);
         outputView.showResultStatistics(statisticsDtos, dealer.getName());
     }
 
-    private List<StatisticsDto> getStatisticsDtos(List<Player> players, int dealerTotalScore) {
+    private List<StatisticsDto> getStatisticsDtos(List<Player> players, Score dealerScore) {
         List<StatisticsDto> statisticsDtos = new ArrayList<>();
         for (Player player : players) {
-            Result result = player.getScore().getResult(dealerTotalScore);
+            Result result = player.getScore().getResult(dealerScore);
             StatisticsDto statisticsDto = new StatisticsDto(player.getName(), result.getDisplayName());
             statisticsDtos.add(statisticsDto);
         }
@@ -91,12 +90,12 @@ public class BlackjackController {
     }
 
     private void fillDealerHand(Dealer dealer, Deck deck, List<Player> players) {
-        while (dealer.needsToHit()
+        while (dealer.needsToHit(players.stream().map(Player::getScore).toList())
                 && players.stream().noneMatch(p -> p.getScore().isBurst())) {
             Card card = deck.drawCard();
             dealer.addCard(card);
-            DealerDto dealerDto = new DealerDto(dealer.getName(), CasinoDealerHitStrategy.BOUNDARY);
-            outputView.drawDealer(dealerDto);
+            DealerDrawDto dealerDrawDto = new DealerDrawDto(dealer.getName(), CasinoDealerHitStrategy.BOUNDARY);
+            outputView.drawDealer(dealerDrawDto);
         }
     }
 
@@ -113,7 +112,7 @@ public class BlackjackController {
     private List<Player> createPlayers(List<String> playerNames, Deck deck) {
         List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
-            Hand hand = getHand(deck);
+            Hand hand = drawHand(deck);
 
             Player player = new Player(playerName, hand, new UntilBurstHitStrategy());
             players.add(player);
@@ -122,7 +121,7 @@ public class BlackjackController {
     }
 
 
-    private Hand getHand(Deck deck) {
+    private Hand drawHand(Deck deck) {
         Card card1 = deck.drawCard();
         Card card2 = deck.drawCard();
         List<Card> cards = new ArrayList<>();

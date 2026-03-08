@@ -1,8 +1,8 @@
-package domain.stategy;
+package domain.hitstategy;
 
-import domain.Score.Score;
+import domain.score.Score;
 
-public class CasinoDealerHitStrategy implements HitStrategy{
+public class CasinoDealerHitStrategy implements HitStrategy {
     public static final int BOUNDARY = 16;
 
     @Override

@@ -1,21 +1,13 @@
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.InstanceOfAssertFactories.stream;
 
-import domain.Score.Score;
-import domain.card.Hand;
-import domain.card.Card;
-import domain.card.Rank;
-import java.util.List;
+import domain.score.Score;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import util.ErrorMessage;
 
 class ScoreTest {
 
@@ -25,10 +17,10 @@ class ScoreTest {
         public static Stream<Arguments> getValue() {
             return Stream.of(
                     // ACE 미포함 총합을 반환한다.
-                    Arguments.of(0, false,0),
+                    Arguments.of(0, false, 0),
                     Arguments.of(11, false, 11),
-                    Arguments.of(21, false,21),
-                    Arguments.of(22, false,22),
+                    Arguments.of(21, false, 21),
+                    Arguments.of(22, false, 22),
                     // ACE가 포함되고, 총합이 11 이하일 경우 - 총합에 10을 더하여 반환해야한다.
                     Arguments.of(11, true, 21),
                     Arguments.of(12, true, 12),

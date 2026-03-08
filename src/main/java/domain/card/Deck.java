@@ -3,7 +3,6 @@ package domain.card;
 import domain.RandomValueGenerator;
 import java.util.HashSet;
 import java.util.List;
-
 import util.ErrorMessage;
 
 public class Deck {
@@ -42,13 +41,11 @@ public class Deck {
         return card;
     }
 
-    private int getSize() {
-        return cards.size();
-    }
-
     public boolean contains(Card card) {
         return cards.contains(card);
     }
-
-
+    
+    private int getSize() {
+        return cards.size();
+    }
 }

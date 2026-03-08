@@ -1,7 +1,9 @@
 package domain.participants;
 
 import domain.card.Hand;
-import domain.stategy.HitStrategy;
+import domain.hitstategy.HitStrategy;
+import domain.score.Score;
+import java.util.List;
 
 //추상 클래스
 public class Dealer extends Participant {
@@ -10,11 +12,16 @@ public class Dealer extends Participant {
     private final HitStrategy hitStrategy;
 
     public Dealer(Hand hand, HitStrategy hitStrategy) {
-        super(NAME,hand);
+        super(NAME, hand);
         this.hitStrategy = hitStrategy;
     }
 
-    public boolean needsToHit() {
-        return hitStrategy.needToHit(getScore());
+    public boolean needsToHit(List<Score> playerScores) {
+        return hitStrategy.needToHit(getScore()) && existsNotBurstPlayer(playerScores);
+    }
+
+    private boolean existsNotBurstPlayer(List<Score> scores) {
+        return scores.stream()
+                .anyMatch(score -> !score.isBurst());
     }
 }

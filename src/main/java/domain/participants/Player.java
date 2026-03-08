@@ -1,7 +1,7 @@
 package domain.participants;
 
 import domain.card.Hand;
-import domain.stategy.HitStrategy;
+import domain.hitstategy.HitStrategy;
 
 public class Player extends Participant {
     private final HitStrategy hitStrategy;
@@ -10,7 +10,8 @@ public class Player extends Participant {
         super(name, hand);
         this.hitStrategy = hitStrategy;
     }
-    public boolean needToHit(){
+
+    public boolean needToHit() {
         return hitStrategy.needToHit(getScore());
     }
 }

@@ -1,7 +1,7 @@
 package view;
 
-import domain.Score.Result;
-import dto.DealerDto;
+import domain.score.Result;
+import dto.DealerDrawDto;
 import dto.NamesDto;
 import dto.PlayerCardsDto;
 import dto.StatisticsDto;
@@ -45,8 +45,8 @@ public class OutputView {
                 , totalScore));
     }
 
-    public void drawDealer(DealerDto dealerDto) {
-        System.out.printf(DRAW_DEALER + "%n", dealerDto.dealerName(), dealerDto.boundary());
+    public void drawDealer(DealerDrawDto dealerDrawDto) {
+        System.out.printf(DRAW_DEALER + "%n", dealerDrawDto.dealerName(), dealerDrawDto.boundary());
     }
 
     public void showResultStatistics(List<StatisticsDto> statisticsDtos, String dealerName) {
