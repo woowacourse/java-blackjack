@@ -1,18 +1,9 @@
 package domain;
 
-public class Score {
+public record Score(int value) {
     private static final int BUST_LIMIT_SCORE = 21;
-    private final int value;
 
-    public Score(int value) {
-        this.value = value;
-    }
-
-    public boolean isBust(){
+    public boolean isBust() {
         return value > BUST_LIMIT_SCORE;
-    }
-
-    public int getValue() {
-        return value;
     }
 }
