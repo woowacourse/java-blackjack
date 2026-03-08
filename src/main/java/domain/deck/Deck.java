@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Deck {
+    private final Shuffle shuffle;
     List<Card> cards = new ArrayList<>();
 
-    public Deck() {
+    public Deck(Shuffle shuffle) {
+        this.shuffle = shuffle;
         init();
     }
 
@@ -25,7 +27,7 @@ public class Deck {
         return cards.removeFirst();
     }
 
-    public void shuffle(Shuffle shuffle) {
+    public void shuffle() {
         shuffle.shuffle(cards);
     }
 

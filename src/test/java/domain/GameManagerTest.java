@@ -1,6 +1,7 @@
 package domain;
 
 import domain.deck.Deck;
+import domain.deck.RandomShuffle;
 import domain.dto.GameScoreResultDto;
 import domain.participant.Dealer;
 import domain.participant.Player;
@@ -15,7 +16,7 @@ class GameManagerTest {
 
     @Test
     void 게임을_시작하면_등록된_플레이어와_딜러_순서대로_카드를_2장씩_나눠준다() {
-        GameManager manager = new GameManager(new Deck(), new Dealer());
+        GameManager manager = new GameManager(new Deck(new RandomShuffle()), new Dealer());
         manager.registerPlayer("pobi");
         manager.registerPlayer("cary");
 
@@ -85,7 +86,7 @@ class GameManagerTest {
 
     @Test
     void 딜러가_16점_이하인지_확인한다() {
-        GameManager manager = new GameManager(new Deck(), new Dealer());
+        GameManager manager = new GameManager(new Deck(new RandomShuffle()), new Dealer());
         manager.startGame();
         List<GameScoreResultDto> scoreResults = manager.getScoreResults();
 
@@ -112,7 +113,7 @@ class GameManagerTest {
 
     @Test
     void 딜러_카드_드로우_테스트() {
-        GameManager manager = new GameManager(new Deck(), new Dealer());
+        GameManager manager = new GameManager(new Deck(new RandomShuffle()), new Dealer());
         int beforeScore = manager.getScoreResults().stream()
                 .filter(result -> result.getPlayerName().equals("딜러"))
                 .mapToInt(GameScoreResultDto::getScore)

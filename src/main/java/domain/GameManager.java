@@ -26,7 +26,7 @@ public class GameManager {
     }
 
     public void startGame() {
-        deck.shuffle(new RandomShuffle());
+        deck.shuffle();
         drawInitialCards();
     }
 

@@ -19,7 +19,7 @@ public class DeckTest {
 
     @BeforeEach
     void beforeEach() {
-        this.deck = new Deck();
+        this.deck = new Deck(new RandomShuffle());
     }
 
     @Test
@@ -62,9 +62,9 @@ public class DeckTest {
 
     @Test
     void 카드를_섞으면_순서가_바뀐다() {
-        List<Card> initialCards = getRemainingCards(new Deck());
+        List<Card> initialCards = getRemainingCards(new Deck(Collections::reverse));
 
-        deck.shuffle(Collections::reverse);
+        deck.shuffle();
         List<Card> shuffledCards = getRemainingCards(deck);
 
         assertThat(shuffledCards).containsExactlyInAnyOrderElementsOf(initialCards);
