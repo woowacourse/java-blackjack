@@ -37,10 +37,7 @@ public class GameTable {
     }
 
     public boolean dealerDrawable() {
-        if (members.checkDealerValue() <= DEALER_DRAW_CONDITION) {
-            return true;
-        }
-        return false;
+        return members.checkDealerValue() <= DEALER_DRAW_CONDITION;
     }
 
     public boolean checkBust(String memberName) {
