@@ -105,10 +105,6 @@ public class Participants {
         return drawResult.drewDeck();
     }
     
-    public List<String> getAllPlayerNickname() {
-        return players.getAllPlayerNickname();
-    }
-    
     public ParticipantResult getDrawPlayerResult() {
         return new ParticipantResult(players.findDrawablePlayer());
     }

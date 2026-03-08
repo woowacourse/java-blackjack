@@ -34,14 +34,6 @@ public class Players {
         }
     }
     
-    public List<String> getAllPlayerNickname() {
-        List<String> result = new ArrayList<>();
-        for (Player player : players) {
-            result.add(player.getNickname());
-        }
-        return result;
-    }
-    
     public List<Player> getAllPlayers() {
         return players;
     }

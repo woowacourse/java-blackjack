@@ -16,7 +16,6 @@ class PlayersTest {
         Players players = Players.makePlayers(List.of("pobi", "jason"));
         
         assertThat(players.getAllPlayers()).hasSize(2);
-        assertThat(players.getAllPlayerNickname()).containsExactly("pobi", "jason");
     }
     
     @DisplayName("이름이 공백일 경우 예외가 발생한다.")
@@ -24,7 +23,7 @@ class PlayersTest {
     void validateEmptyName() {
         assertThatThrownBy(() -> Players.makePlayers(List.of("pobi", "")))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이름은 공백이 될 수 없습니다.");
+                .hasMessage("플레이어 이름은 공백이 될 수 없습니다.");
     }
     
     @DisplayName("카드를 받을 수 있는 플레이어를 순서대로 찾는다.")

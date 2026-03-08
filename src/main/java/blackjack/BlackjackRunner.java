@@ -44,7 +44,7 @@ public class BlackjackRunner {
     }
     
     private void printInitialSetup(Participants participants) {
-        outputView.printInitialSetUp(participants);
+        outputView.printInitialSetUp(participants.getWinningResult());
     }
     
     private Participants makeParticipants() {

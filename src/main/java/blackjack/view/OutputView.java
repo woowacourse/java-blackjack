@@ -5,6 +5,7 @@ import blackjack.domain.participant.ParticipantResult;
 import blackjack.dto.PlayerResult;
 import blackjack.dto.WinningResult;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OutputView {
     
@@ -16,8 +17,11 @@ public class OutputView {
         printLine("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
     
-    public void printInitialSetUp(Participants participants) {
-        String playersNickname = String.join(", ", participants.getAllPlayerNickname());
+    public void printInitialSetUp(WinningResult winningResult) {
+        String playersNickname = winningResult.playerResults()
+                .stream()
+                .map(PlayerResult::nickname)
+                .collect(Collectors.joining(", "));
         printNewLine();
         String message = String.format("딜러와 %s에게 2장을 나누었습니다.", playersNickname);
         printLine(message);
