@@ -6,7 +6,7 @@ public class Player extends Participant{
 
     private Player(Name name, Hand hand) {
         super(hand);
-        this.name=name;
+        this.name = name;
     }
 
     public static Player of(Name name, Hand hand) {
@@ -16,5 +16,4 @@ public class Player extends Participant{
     public Name getName() {
         return name;
     }
-
 }

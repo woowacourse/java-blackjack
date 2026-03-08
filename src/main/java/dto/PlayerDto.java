@@ -4,9 +4,9 @@ import domain.Player;
 
 public record PlayerDto(
         String name,
-        PlayerResultDto playerResultDto
+        ResultDto resultDto
 ) {
     public static PlayerDto from(Player player) {
-        return new PlayerDto(player.getName().getName(), PlayerResultDto.from(player));
+        return new PlayerDto(player.getName().getName(), ResultDto.from(player));
     }
 }

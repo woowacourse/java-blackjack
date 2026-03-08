@@ -24,5 +24,4 @@ public abstract class Participant {
     public boolean isBust(){
         return hand.getScore().isBust();
     }
-
 }
