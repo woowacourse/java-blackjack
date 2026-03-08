@@ -44,16 +44,13 @@ public class BlackJackService {
         blackjackGame.dealCardTo(player);
     }
 
-    public boolean shouldDealerHit() {
-        final int score = blackjackGame.getDealer().getScore();
-
-        return DefaultBlackjackRule.isDealerMustDraw(score);
+    public void dealerHit() {
+        final Dealer dealer = blackjackGame.getDealer();
+        blackjackGame.dealCardTo(dealer);
     }
 
-    public void hitDealer() {
-        final Dealer dealer = blackjackGame.getDealer();
-
-        dealer.hit(blackjackGame.getDeck().draw());
+    public boolean shouldDealerHit() {
+        return blackjackGame.getDealer().shouldHit();
     }
 
     public ScoreResult calculateAllParticipantScore() {
@@ -102,7 +99,7 @@ public class BlackJackService {
         return new GameResult(dealerResult, playerResults);
     }
 
-    private int getDealerScore(){
+    private int getDealerScore() {
         return blackjackGame.getDealer().getScore();
     }
 

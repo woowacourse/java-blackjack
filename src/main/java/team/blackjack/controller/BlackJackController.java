@@ -28,7 +28,7 @@ public class BlackJackController {
 
         while (blackJackService.shouldDealerHit()) {
             OutputView.printDealerHitMessage();
-            blackJackService.hitDealer();
+            blackJackService.dealerHit();
         }
 
         ScoreResult scoreResult = blackJackService.calculateAllParticipantScore();
