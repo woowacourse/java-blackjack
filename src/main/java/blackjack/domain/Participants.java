@@ -57,9 +57,6 @@ public class Participants {
     
     public WinningResult getWinningResult() {
         int dealerScore = dealer.getTotalScoreForResult();
-        if (dealerScore == 0) {
-            dealerScore = 1;
-        }
         return getWinningResult(dealerScore);
     }
     

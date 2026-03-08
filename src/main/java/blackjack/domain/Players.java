@@ -80,6 +80,9 @@ public class Players {
         if (dealerScore < playerScore) {
             return GameResult.WIN;
         }
+//        if (dealerScore == playerScore) {
+//            return GameResult.DRAW;
+//        }
         return GameResult.LOSE;
     }
 }
