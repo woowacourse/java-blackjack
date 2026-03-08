@@ -1,6 +1,7 @@
 package domain;
 
 import common.Constants;
+import domain.vo.CardInfo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,7 +23,7 @@ public class Hand {
         cards.add(drawStrategy.draw());
     }
 
-    List<String> cardInfos() {
+    List<CardInfo> cardInfos() {
         return cards.stream().map(Card::info).collect(Collectors.toList());
     }
 
@@ -47,12 +48,14 @@ public class Hand {
     }
 
     private int rawScoreSum() {
-        return cards.stream().mapToInt(Card::score).sum();
+        return cards.stream()
+                .mapToInt(Card::score)
+                .sum();
     }
 
     private int aceCount() {
         return (int) cards.stream()
-                .filter(c -> c.rank() == CardRank.ACE)
+                .filter(Card::isAce)
                 .count();
     }
 

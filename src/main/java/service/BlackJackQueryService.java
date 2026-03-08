@@ -9,4 +9,11 @@ public class BlackJackQueryService {
     public BlackJackQueryService(GameTableRepository gameTableRepository) {
         this.gameTableRepository = gameTableRepository;
     }
+
+    public void dealerCards() {
+        gameTableRepository.getDealerCards();
+    }
+
+    public void playerCards() {
+    }
 }

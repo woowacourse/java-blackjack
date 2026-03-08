@@ -24,16 +24,21 @@ public class BlackJackController {
 
     private void setupPhase() {
         setupGameTable();
-        getSetupPlayers();
+        setupPlayers();
     }
 
     private void setupGameTable() {
         commandService.setupGameTable();
     }
 
-    private void getSetupPlayers() {
+    private void setupPlayers() {
         PlayerNamesRequest request = InputView.readPlayers();
         commandService.setupPlayers(request.names());
+    }
+
+    private void displayInitialCards() {
+        queryService.dealerCards();
+        queryService.playerCards();
     }
 
     private void dealerGamePhase() {

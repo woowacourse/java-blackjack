@@ -14,4 +14,7 @@ public class GameTableRepository {
     public void addPlayer(String name) {
         gameTable.addPlayer(name);
     }
+
+    public void getDealerCards() {
+    }
 }

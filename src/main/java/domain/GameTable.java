@@ -28,15 +28,15 @@ public class GameTable {
         participants.add(Player.of(name));
     }
 
-
-    public List<GameStatus> initGameStatus() {
-        List<GameStatus> gameStatuses = new ArrayList<>();
-        for (Participant participant : participants) {
-            gameStatuses.add(participant.status());
-        }
-
-        return gameStatuses;
-    }
+//
+//    public List<GameStatus> initGameStatus() {
+//        List<GameStatus> gameStatuses = new ArrayList<>();
+//        for (Participant participant : participants) {
+//            gameStatuses.add(participant.status());
+//        }
+//
+//        return gameStatuses;
+//    }
 
     public List<GameStatus> endedGameStatus() {
         return scoreBoard.gameStatuses();
@@ -51,10 +51,10 @@ public class GameTable {
     public void playDealer() {
         dealer().draw(drawStrategy);
     }
-
-    public GameStatus currentPlayerStatus() {
-        return currentParticipant().status();
-    }
+//
+//    public GameStatus currentPlayerStatus() {
+//        return currentParticipant().status();
+//    }
 
     public Participant currentPlayer() {
         Participant participant = participants.peek();
@@ -70,10 +70,10 @@ public class GameTable {
         return !participants.isEmpty() && !hasOnlyDealer();
     }
 
-    public void recordResult() {
-        Participant current = participants.poll();
-        scoreBoard.record(current.status());
-    }
+//    public void recordResult() {
+//        Participant current = participants.poll();
+//        scoreBoard.record(current.status());
+//    }
 
     public List<GameResult> result() {
         return scoreBoard.playerResults();

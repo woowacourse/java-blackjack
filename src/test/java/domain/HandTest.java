@@ -3,6 +3,7 @@ package domain;
 import static org.junit.jupiter.api.Assertions.*;
 
 import domain.strategy.RandomStrategy;
+import domain.vo.CardInfo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -44,8 +45,8 @@ class HandTest {
         List<Card> cards = List.of(new Card(CardRank.QUEEN, CardMark.SPADE), new Card(CardRank.EIGHT, CardMark.HEART));
         Hand hand = new Hand(cards);
 
-        List<String> expected = List.of("Q스페이드", "8하트");
-        List<String> actual = hand.cardInfos();
+        List<CardInfo> expected = List.of(new CardInfo("Q", "스페이드"), new CardInfo("8", "하트"));
+        List<CardInfo> actual = hand.cardInfos();
 
         assertEquals(expected, actual);
     }

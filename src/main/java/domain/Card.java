@@ -1,9 +1,15 @@
 package domain;
 
+import domain.vo.CardInfo;
+
 public record Card(CardRank rank, CardMark mark) {
 
-    String info() {
-        return rank.label() + mark.description();
+    boolean isAce() {
+        return rank == CardRank.ACE;
+    }
+
+    CardInfo info () {
+        return new CardInfo(rank.label(), mark.description());
     }
 
     int score() {

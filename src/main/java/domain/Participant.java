@@ -1,6 +1,7 @@
 package domain;
 
 import dto.GameStatus;
+import domain.vo.NameAndCardInfos;
 
 public abstract class Participant {
 
@@ -24,6 +25,10 @@ public abstract class Participant {
         }
     }
 
+//    NameAndCardInfos nameAndCardInfos() {
+//
+//    }
+
     public boolean isBusted() {
         return hand.isBusted();
     }
@@ -36,9 +41,9 @@ public abstract class Participant {
         return name;
     }
 
-    public GameStatus status() {
-        return new GameStatus(name, hand.cardInfos(), scoreSum());
-    }
+//    public GameStatus status() {
+//        return new GameStatus(name, hand.cardInfos(), scoreSum());
+//    }
 
     public boolean isPlayer() {
         return this.getClass() == Player.class;
