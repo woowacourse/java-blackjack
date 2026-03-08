@@ -1,6 +1,8 @@
 package blackjack.model;
 
 public class Player extends Participant {
+    private static final int MAX_CARD_SUM = 21;
+
     private final Name name;
 
     public Player(String name) {
@@ -13,6 +15,6 @@ public class Player extends Participant {
 
     @Override
     public boolean canReceive(int score) {
-        return score < 21;
+        return score < MAX_CARD_SUM;
     }
 }
