@@ -21,8 +21,8 @@ public enum CardNumber {
     private static final int LOWER_BOUND = 1;
     private static final int UPPER_BOUND = 10;
 
-    private int number;
-    private String court;
+    private final int number;
+    private final String court;
 
     CardNumber(int number, String court) {
         this.number = number;
@@ -38,7 +38,7 @@ public enum CardNumber {
     }
 
     public boolean isAce() {
-        return this.number == ACE.number;
+        return this == ACE;
     }
 
     private static void validate(String value) {
