@@ -12,16 +12,16 @@ class BlackjackResultTest {
     void 딜러_카드합계_VS_플레이어_카드합계() {
         int dealerScore = 20;
         int playerScore = 19;
-        WinOrLose playerResult = WinOrLose.DRAW;
+        GameResult playerResult = GameResult.DRAW;
 
         if (playerScore > dealerScore) {
-            playerResult = WinOrLose.WIN;
+            playerResult = GameResult.WIN;
         }
         if (playerScore < dealerScore) {
-            playerResult = WinOrLose.LOSE;
+            playerResult = GameResult.LOSE;
         }
 
-        WinOrLose expect = WinOrLose.LOSE;
+        GameResult expect = GameResult.LOSE;
         assertThat(playerResult).isEqualTo(expect);
     }
 }

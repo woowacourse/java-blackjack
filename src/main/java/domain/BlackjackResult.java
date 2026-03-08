@@ -9,7 +9,7 @@ import meesage.OutputMessage;
 
 public class BlackjackResult {
 
-    private final Map<Player, WinOrLose> playerResult = new LinkedHashMap<>();
+    private final Map<Player, GameResult> playerResult = new LinkedHashMap<>();
 
     private BlackjackResult(Dealer dealer, Players players) {
         compareResult(dealer, players);
@@ -28,21 +28,21 @@ public class BlackjackResult {
         }
     }
 
-    private WinOrLose getJudgeResult(int playerScore, int dealerScore) {
+    private GameResult getJudgeResult(int playerScore, int dealerScore) {
         if (playerScore > dealerScore) {
-            return WinOrLose.WIN;
+            return GameResult.WIN;
         }
         if (playerScore < dealerScore) {
-            return WinOrLose.LOSE;
+            return GameResult.LOSE;
         }
-        return WinOrLose.DRAW;
+        return GameResult.DRAW;
 
     }
 
     public List<String> getPlayersResult() {
         List<String> results = new ArrayList<>();
 
-        for (Entry<Player, WinOrLose> playerWinOrLoseEntry : playerResult.entrySet()) {
+        for (Entry<Player, GameResult> playerWinOrLoseEntry : playerResult.entrySet()) {
             Player player = playerWinOrLoseEntry.getKey();
             String winningResult = playerWinOrLoseEntry.getValue().getMessage();
 
@@ -54,14 +54,14 @@ public class BlackjackResult {
     }
 
     public String getDealerResult() {
-        return OutputMessage.DEALER_RESULT_FORMAT.format(countPlayerResult(WinOrLose.LOSE),
-                countPlayerResult(WinOrLose.DRAW), countPlayerResult(WinOrLose.WIN));
+        return OutputMessage.DEALER_RESULT_FORMAT.format(countPlayerResult(GameResult.LOSE),
+                countPlayerResult(GameResult.DRAW), countPlayerResult(GameResult.WIN));
     }
 
-    private int countPlayerResult(WinOrLose winOrLose) {
+    private int countPlayerResult(GameResult gameResult) {
         return (int) playerResult.values()
                 .stream()
-                .filter(value -> value == winOrLose)
+                .filter(value -> value == gameResult)
                 .count();
     }
 
