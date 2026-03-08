@@ -26,14 +26,18 @@ public class GameTable {
 
     public List<Card> drawByName(String memberName, Card card) {
         if (members.isDealer(memberName)) {
-            return drawDealer(card);
+            drawDealer(card);
+            return members.dealerFirstCard();
         }
         return drawPlayer(memberName, card);
     }
 
-    public boolean drawByDealer(Card card) {
+    public void drawDealer(Card card) {
+        members.provideCardToDealer(card);
+    }
+
+    public boolean dealerDrawable() {
         if (members.checkDealerValue() <= DEALER_DRAW_CONDITION) {
-            members.provideCardToDealer(card);
             return true;
         }
         return false;
@@ -66,10 +70,5 @@ public class GameTable {
     private List<Card> drawPlayer(String memberName, Card card) {
         members.provideCardToPlayer(memberName, card);
         return members.findCardByName(memberName);
-    }
-
-    private List<Card> drawDealer(Card card) {
-        members.provideCardToDealer(card);
-        return members.dealerFirstCard();
     }
 }

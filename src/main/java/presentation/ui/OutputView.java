@@ -2,7 +2,7 @@ package presentation.ui;
 
 import static constant.Word.*;
 
-import application.dto.GameResult;
+import domain.dto.GameResult;
 import domain.RoundResult;
 import domain.card.Card;
 import domain.dto.MemberStatus;
