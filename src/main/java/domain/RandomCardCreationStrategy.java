@@ -14,12 +14,19 @@ public class RandomCardCreationStrategy implements CardCreationStrategy {
 
     private List<Card> createAllCards() {
         List<Card> cards = new ArrayList<>();
-        for (CardShape shape : CardShape.values()) {
-            for (CardContents content : CardContents.values()) {
-                cards.add(new Card(shape, content));
-            }
-        }
-
+        createAllCardsPerShape(cards);
         return cards;
+    }
+
+    private void createAllCardsPerShape(List<Card> cards) {
+        for (CardShape shape : CardShape.values()) {
+            createSpecificShapeCards(shape, cards);
+        }
+    }
+
+    private void createSpecificShapeCards(CardShape shape, List<Card> cards) {
+        for (CardContents content : CardContents.values()) {
+            cards.add(new Card(shape, content));
+        }
     }
 }
