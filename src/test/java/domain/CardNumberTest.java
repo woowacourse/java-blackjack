@@ -29,10 +29,10 @@ class CardNumberTest {
     @DisplayName("입력이 A, J, Q, K인 경우 CardNumber는 A를 반환한다.")
     @ParameterizedTest
     @CsvSource({
-            "A, A",
-            "J, J",
-            "Q, Q",
-            "K, K"
+            "A, ACE",
+            "J, JACK",
+            "Q, QUEEN",
+            "K, KING"
     })
     void courtTest_inputAJQK_A(String value, CardNumber cardNumber) {
         Assertions.assertThat(CardNumber.matchCardNumber(value))

@@ -34,14 +34,14 @@ public class Hand {
 
     private int softHandAces(int aceAmount) {
         int sumWithoutAces = cards.stream()
-                .filter(c -> c.number() != CardNumber.A.getValue())
+                .filter(c -> c.number() != CardNumber.ACE.getValue())
                 .mapToInt(Card::number)
                 .sum();
 
-        if (sumWithoutAces >= CardNumber.A.getValue()) {
+        if (sumWithoutAces >= CardNumber.ACE.getValue()) {
             return sumWithoutAces + aceAmount;
         }
-        return sumWithoutAces + CardNumber.A.getValue() + aceAmount - 1;
+        return sumWithoutAces + CardNumber.ACE.getValue() + aceAmount - 1;
     }
     /**
      * ace가 있는 경우
@@ -55,7 +55,7 @@ public class Hand {
     private int aceAmount() {
         return Math.toIntExact(
                 cards.stream()
-                        .filter(card -> card.number() == CardNumber.A.getValue())
+                        .filter(card -> card.number() == CardNumber.ACE.getValue())
                         .count()
         );
     }
