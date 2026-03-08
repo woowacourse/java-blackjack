@@ -29,10 +29,64 @@ public class Players {
         Map<String, MatchResult> playersResult = new HashMap<>();
 
         for (Player player : players) {
-            player.calculateMatchResultWithDealer(dealer, playersResult);
+            if (isBustResult(dealer, player, playersResult)) continue;
+            if (isHigherScoreThanDealer(dealer, player, playersResult)) continue;
+            if (isDrawResult(dealer, player, playersResult)) continue;
+
+            playersResult.put(player.getName(), MatchResult.LOSE);
         }
 
         return playersResult;
+    }
+
+    private boolean isBustResult(Dealer dealer, Player player, Map<String, MatchResult> playersResult) {
+        if (player.isBust()) {
+            playersResult.put(player.getName(), MatchResult.LOSE);
+            return true;
+        }
+
+        if (dealer.isBust()) {
+            playersResult.put(player.getName(), MatchResult.WIN);
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean isHigherScoreThanDealer(Dealer dealer, Player player, Map<String, MatchResult> playersResult) {
+        if (player.isHigherThan(dealer)) {
+            playersResult.put(player.getName(), MatchResult.WIN);
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean isDrawResult(Dealer dealer, Player player, Map<String, MatchResult> playersResult) {
+        if (player.isTie(dealer)) {
+            return isDrawWithBlackJack(dealer, player, playersResult);
+        }
+
+        return false;
+    }
+
+    private boolean isDrawWithBlackJack(Dealer dealer, Player player, Map<String, MatchResult> playersResult) {
+        if (player.isBlackJack() && !dealer.isBlackJack()) {
+            playersResult.put(player.getName(), MatchResult.WIN);
+            return true;
+        }
+
+        if (!player.isBlackJack() && dealer.isBlackJack()) {
+            playersResult.put(player.getName(), MatchResult.LOSE);
+            return true;
+        }
+
+        if (!player.isBlackJack() && !dealer.isBlackJack()) {
+            playersResult.put(player.getName(), MatchResult.DRAW);
+            return true;
+        }
+
+        return false;
     }
 
     private List<Player> from(List<String> playerNames) {
