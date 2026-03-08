@@ -1,10 +1,7 @@
 package domain;
 
-import domain.constant.Rank;
-import domain.constant.Suit;
 import domain.dto.GameInitialInfoDto;
 import domain.dto.GameScoreResultDto;
-import org.assertj.core.api.ListAssert;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -85,26 +82,6 @@ class GameManagerTest {
     }
 
     @Test
-    void 합계가_21점이면_블랙잭이다() {
-        GameManager manager = new GameManager();
-        Player player = new Player("pobi");
-        player.addCard(new Card(Rank.ACE, Suit.SPADE));
-        player.addCard(new Card(Rank.KING, Suit.SPADE));
-
-        assertThat(manager.isBlackjack(player)).isTrue();
-    }
-
-    @Test
-    void 합계가_21점이_아니면_블랙잭이_아니다() {
-        GameManager manager = new GameManager();
-        Player player = new Player("pobi");
-        player.addCard(new Card(Rank.TEN, Suit.SPADE));
-        player.addCard(new Card(Rank.KING, Suit.SPADE));
-
-        assertThat(manager.isBlackjack(player)).isFalse();
-    }
-
-    @Test
     void 딜러가_16점_이하인지_확인한다() {
         GameManager manager = new GameManager();
         manager.startGame();
@@ -112,47 +89,22 @@ class GameManagerTest {
 
         boolean expected = false;
         if (scoreResults.getFirst().getResult() <= 16) {
-            expected = manager.isDealerTurn();
+            expected = manager.canReceiveCard();
         }
 
-        assertThat(manager.isDealerTurn()).isEqualTo(expected);
-    }
-
-    @Test
-    void 점수가_21점을_초과하면_버스트이다() {
-        GameManager manager = new GameManager();
-        Player player = new Player("pobi");
-        player.addCard(new Card(Rank.FOUR, Suit.SPADE));
-        player.addCard(new Card(Rank.TEN, Suit.SPADE));
-        player.addCard(new Card(Rank.JACK, Suit.SPADE));
-
-        manager.judgeBust(manager.calculateScore(player.getHand()), player);
-
-        assertThat(player.isBust()).isTrue();
-    }
-
-    @Test
-    void 점수가_21점_이하면_버스트가_아니다() {
-        GameManager manager = new GameManager();
-        Player player = new Player("pobi");
-        player.addCard(new Card(Rank.ACE, Suit.SPADE));
-        player.addCard(new Card(Rank.TEN, Suit.SPADE));
-
-        manager.judgeBust(manager.calculateScore(player.getHand()), player);
-
-        assertThat(player.isBust()).isFalse();
+        assertThat(manager.canReceiveCard()).isEqualTo(expected);
     }
 
     @Test
     void 플레이어_카드_드로우_테스트() {
         GameManager manager = new GameManager();
-        Player player = new Player("pobi");
-        int beforeScore = manager.calculateScore(player.getHand());
+        Player player = new Player("pobi", new Hand());
+        int beforeScore = manager.calculateScore(player);
 
         manager.drawPlayerCard(player);
-        int afterScore = manager.calculateScore(player.getHand());
+        int afterScore = manager.calculateScore(player);
 
-        assertThat(player.getHand()).hasSize(1);
+        assertThat(player.showHand()).hasSize(1);
         assertThat(afterScore).isNotEqualTo(beforeScore);
     }
 

@@ -30,7 +30,7 @@ public class GameController {
     }
 
     private void playDealerTurn() {
-        while (manager.isDealerTurn()) {
+        while (manager.canReceiveCard()) {
             manager.drawDealerCard();
             outputView.printDealerTurn();
         }
@@ -38,7 +38,7 @@ public class GameController {
 
     private void playPlayerTurn() {
         for (Player player : manager.getPlayerSequence()) {
-            while (isPlayerTurn(player) && isStand(player)) {
+            while (manager.canReceiveCard(player) && isStand(player)) {
                 List<String> playerHand = manager.drawPlayerCard(player);
                 outputView.printHand(playerHand, player.getName());
             }
@@ -61,9 +61,5 @@ public class GameController {
 
     private boolean isStand(Player player) {
         return !inputView.readCommand(player.getName()).equals("n");
-    }
-
-    private boolean isPlayerTurn(Player player) {
-        return !(player.isBust() || manager.isBlackjack(player));
     }
 }

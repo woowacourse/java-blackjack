@@ -29,30 +29,22 @@ public class GameManager {
         }
     }
 
-    public void judgeBust(int score, Player currentPlayer) {
-        if (scoreCalculator.isBust(score)) {
-            currentPlayer.setBust();
-        }
-    }
-
-    public int calculateScore(List<Card> hand) {
-        return scoreCalculator.calculateScore(hand);
+    public int calculateScore(Player player) {
+        return player.getScore();
     }
 
     public List<String> drawPlayerCard(Player player) {
         player.addCard(deck.draw());
-        judgeBust(calculateScore(player.getHand()), player);
-        return player.getHandToString();
+        return player.showHand();
     }
 
     public List<String> drawDealerCard() {
         dealer.addCard(deck.draw());
-        judgeBust(calculateScore(dealer.getHand()), dealer);
-        return dealer.getHandToString();
+        return dealer.showHand();
     }
 
     public void addPlayer(String name) {
-        players.add(new Player(name));
+        players.add(new Player(name, new Hand()));
     }
 
     public List<Player> getPlayerSequence() {
@@ -72,8 +64,8 @@ public class GameManager {
     private void aggregateDealerResult(List<GameScoreResultDto> results) {
         results.add(new GameScoreResultDto(
                 dealer.getName(),
-                dealer.getHandToString(),
-                scoreCalculator.calculateScore(dealer.getHand())
+                dealer.showHand(),
+                dealer.getScore()
         ));
     }
 
@@ -81,8 +73,8 @@ public class GameManager {
         for (Player player : players) {
             results.add(new GameScoreResultDto(
                     player.getName(),
-                    player.getHandToString(),
-                    scoreCalculator.calculateScore(player.getHand())
+                    player.showHand(),
+                    player.getScore()
             ));
         }
     }
@@ -92,7 +84,7 @@ public class GameManager {
 
         // 딜러 첫 카드 공개
         List<String> dealerOpenCard = new ArrayList<>();
-        dealerOpenCard.add(dealer.getHandToString().getFirst());
+        dealerOpenCard.add(dealer.showHand().getFirst());
 
         // dealer
         addDealerInfo(results, dealerOpenCard);
@@ -107,7 +99,7 @@ public class GameManager {
             results.add(new GameInitialInfoDto(
                     player.getName(),
                     2,
-                    player.getHandToString()
+                    player.showHand()
             ));
         }
     }
@@ -120,12 +112,12 @@ public class GameManager {
         ));
     }
 
-    public boolean isBlackjack(Player player) {
-        return calculateScore(player.getHand()) == 21;
+    public boolean canReceiveCard(Player player) {
+        return player.canReceiveCard();
     }
 
-    public boolean isDealerTurn() {
-        return calculateScore(dealer.getHand()) <= 16;
+    public boolean canReceiveCard() {
+        return dealer.canReceiveCard();
     }
 
     public List<GameFinalResultDto> getFinalResult() {
@@ -141,8 +133,8 @@ public class GameManager {
 
     private void determineWinLose(List<GameFinalResultDto> results) {
         for (Player player : players) {
-            int playerScore = calculateScore(player.getHand());
-            int dealerScore = calculateScore(dealer.getHand());
+            int playerScore = player.getScore();
+            int dealerScore = dealer.getScore();
             if (player.isBust() || playerScore < dealerScore) {
                 results.add(new GameFinalResultDto(player.getName(), Result.LOSE));
                 continue;

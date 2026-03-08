@@ -1,46 +1,37 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
     private String name;
-    private List<Card> hand = new ArrayList<>();
-    private boolean isBust = false;
+    private Hand hand;
 
-    public Player(String name) {
+    public Player(String name, Hand hand) {
         this.name = name;
-    }
-
-    public boolean isBust() {
-        return isBust;
+        this.hand = hand;
     }
 
     public void addCard(Card card) {
-        hand.add(card);
+        hand.addCard(card);
+    }
+
+    public boolean isBust() {
+        return hand.isBust();
+    }
+
+    public boolean canReceiveCard() {
+        return hand.canHit();
     }
 
     public String getName() {
         return name;
     }
 
-    public List<Card> getHand() {
-        return List.copyOf(hand);
+    public int getScore() {
+        return hand.calculateScore();
     }
 
-    public List<String> getHandToString() {
-        return hand.stream().map(Card::toString).toList();
+    public List<String> showHand() {
+        return hand.showHand();
     }
-
-    public void setBust() {
-        isBust = true;
-    }
-
-    @Override
-    public String toString() {
-        return "domain.Player{" +
-                "name='" + name + '\'' +
-                ", hand=" + hand +
-                ", isBust=" + isBust +
-                '}';
-    }}
+}
