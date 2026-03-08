@@ -16,4 +16,9 @@ public class Hand {
                 .map(Card::getName)
                 .toList();
     }
+
+    public int calculateScore() {
+        int totalScore = cards.stream().mapToInt(Card::getScore).sum();
+        return totalScore;
+    }
 }

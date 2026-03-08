@@ -18,4 +18,15 @@ public class HandTest {
         assertThat(hand.showHand())
                 .containsExactly("A스페이드", "Q하트");
     }
+
+    @Test
+    void ACE를_제외한_카드들의_기본점수를_합산한다() {
+        Hand hand = new Hand();
+        hand.addCard(new Card(EIGHT, SPADE));
+        hand.addCard(new Card(QUEEN, SPADE));
+
+        int totalScore = hand.calculateScore();
+
+        assertThat(totalScore).isEqualTo(18);
+    }
 }
