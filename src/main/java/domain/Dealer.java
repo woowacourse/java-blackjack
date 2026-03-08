@@ -8,6 +8,10 @@ public class Dealer extends Participant {
         super(name, hand);
     }
 
+    static Dealer of(String name) {
+        return new Dealer(name, Hand.empty());
+    }
+
     @Override
     protected boolean isPlayable() {
         return hand.scoreSum() <= Constants.DEALER_PLAYING_THRESHOLD;

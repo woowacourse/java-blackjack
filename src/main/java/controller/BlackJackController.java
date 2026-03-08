@@ -1,9 +1,12 @@
 package controller;
 
+import static view.OutputView.initDealerCardInfos;
+
 import dto.PlayerNamesRequest;
 import service.BlackJackCommandService;
 import service.BlackJackQueryService;
 import view.InputView;
+import view.OutputView;
 
 public class BlackJackController {
 
@@ -25,6 +28,11 @@ public class BlackJackController {
     private void setupPhase() {
         setupGameTable();
         setupPlayers();
+
+        OutputView.printTaskDivider();
+
+        distributeInitialCards();
+        displayInitialCards();
     }
 
     private void setupGameTable() {
@@ -36,9 +44,14 @@ public class BlackJackController {
         commandService.setupPlayers(request.names());
     }
 
+    private void distributeInitialCards() {
+        OutputView.distributeCards(queryService.allPlayerNames());
+        commandService.distributeInitialCards();
+    }
+
     private void displayInitialCards() {
-        queryService.dealerCards();
-        queryService.playerCards();
+        OutputView.initDealerCardInfos(queryService.dealerCards());
+        OutputView.initAllPlayerCardInfos(queryService.playerCards());
     }
 
     private void dealerGamePhase() {

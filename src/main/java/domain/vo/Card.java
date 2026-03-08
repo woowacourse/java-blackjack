@@ -1,18 +1,19 @@
-package domain;
+package domain.vo;
 
-import domain.vo.CardInfo;
+import domain.constant.CardMark;
+import domain.constant.CardRank;
 
 public record Card(CardRank rank, CardMark mark) {
 
-    boolean isAce() {
+    public boolean isAce() {
         return rank == CardRank.ACE;
     }
 
-    CardInfo info () {
+    public CardInfo info () {
         return new CardInfo(rank.label(), mark.description());
     }
 
-    int score() {
+    public int score() {
         return rank.score();
     }
 }

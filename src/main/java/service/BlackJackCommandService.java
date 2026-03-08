@@ -24,4 +24,8 @@ public class BlackJackCommandService {
     public void setupPlayers(List<String> names) {
         names.forEach(gameTableRepository::addPlayer);
     }
+
+    public void distributeInitialCards() {
+        gameTableRepository.distributeInitialCards();
+    }
 }

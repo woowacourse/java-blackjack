@@ -1,7 +1,8 @@
 package domain;
 
-import dto.GameStatus;
+import domain.vo.CardInfo;
 import domain.vo.NameAndCardInfos;
+import java.util.List;
 
 public abstract class Participant {
 
@@ -13,9 +14,12 @@ public abstract class Participant {
         this.hand = hand;
     }
 
-    private static Participant player(String name) {
-        return Player.of(name);
-    }
+//    static Participant of(String name) {
+//        if(name.equals("딜러")) {
+//            return Dealer.of(name);
+//        }
+//        return Player.of(name);
+//    }
 
     protected abstract boolean isPlayable();
 
@@ -25,9 +29,9 @@ public abstract class Participant {
         }
     }
 
-//    NameAndCardInfos nameAndCardInfos() {
-//
-//    }
+    List<CardInfo> cardInfos() {
+        return hand.cardInfos();
+    }
 
     public boolean isBusted() {
         return hand.isBusted();
@@ -41,6 +45,9 @@ public abstract class Participant {
         return name;
     }
 
+    NameAndCardInfos infos() {
+        return new NameAndCardInfos(name, cardInfos());
+    }
 //    public GameStatus status() {
 //        return new GameStatus(name, hand.cardInfos(), scoreSum());
 //    }

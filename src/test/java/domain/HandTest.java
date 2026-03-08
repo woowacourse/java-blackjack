@@ -2,7 +2,10 @@ package domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import domain.constant.CardMark;
+import domain.constant.CardRank;
 import domain.strategy.RandomStrategy;
+import domain.vo.Card;
 import domain.vo.CardInfo;
 import java.util.ArrayList;
 import java.util.List;

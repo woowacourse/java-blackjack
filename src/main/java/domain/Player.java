@@ -13,14 +13,14 @@ public class Player extends Participant {
         return new Player(name, Hand.empty());
     }
 
+    @Override
+    protected boolean isPlayable() {
+        return hand.scoreSum() <= Constants.PLAYER_PLAYING_THRESHOLD;
+    }
+
     private void requireNonDealer(String name) {
         if(name.equals("딜러")) {
             throw new IllegalArgumentException("플레이어는 \"딜러\"라는 이름을 사용할 수 없다.");
         }
-    }
-
-    @Override
-    protected boolean isPlayable() {
-        return hand.scoreSum() <= Constants.PLAYER_PLAYING_THRESHOLD;
     }
 }

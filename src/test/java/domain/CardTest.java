@@ -2,6 +2,9 @@ package domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import domain.constant.CardMark;
+import domain.constant.CardRank;
+import domain.vo.Card;
 import domain.vo.CardInfo;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;

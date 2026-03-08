@@ -1,6 +1,7 @@
 package domain;
 
 import common.Constants;
+import domain.vo.Card;
 import domain.vo.CardInfo;
 import java.util.ArrayList;
 import java.util.List;

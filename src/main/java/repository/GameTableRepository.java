@@ -1,7 +1,8 @@
 package repository;
 
 import domain.GameTable;
-import domain.Participant;
+import domain.vo.NameAndCardInfos;
+import java.util.List;
 
 public class GameTableRepository {
 
@@ -15,6 +16,19 @@ public class GameTableRepository {
         gameTable.addPlayer(name);
     }
 
-    public void getDealerCards() {
+    public NameAndCardInfos getDealerCards() {
+        return gameTable.dealerCardsInfo();
+    }
+
+    public List<NameAndCardInfos> getAllPlayersCards() {
+        return gameTable.allPlayerCardInfos();
+    }
+
+    public List<String> getAllPlayerNames() {
+        return gameTable.allPlayerNames();
+    }
+
+    public void distributeInitialCards() {
+        gameTable.allParticipantsDrawInitialCards();
     }
 }

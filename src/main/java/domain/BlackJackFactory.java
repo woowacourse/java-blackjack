@@ -15,13 +15,7 @@ public class BlackJackFactory {
     }
 
     public GameTable openGame() {
-        GameTable gameTable = new GameTable();
-        Dealer dealer = dealer();
-        dealer.draw(drawStrategy);
-        dealer.draw(drawStrategy);
-        gameTable.addParticipant(dealer);
-
-        return gameTable;
+        return new GameTable();
     }
 
     private Dealer dealer () {

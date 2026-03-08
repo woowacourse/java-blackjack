@@ -1,5 +1,10 @@
 package service;
 
+import domain.vo.NameAndCardInfos;
+import dto.AllPlayersNameAndCardsResponse;
+import dto.NameAndCardsResponse;
+import dto.PlayerNamesResponse;
+import java.util.List;
 import repository.GameTableRepository;
 
 public class BlackJackQueryService {
@@ -10,10 +15,18 @@ public class BlackJackQueryService {
         this.gameTableRepository = gameTableRepository;
     }
 
-    public void dealerCards() {
-        gameTableRepository.getDealerCards();
+    public PlayerNamesResponse allPlayerNames() {
+        List<String> allPlayerNames = gameTableRepository.getAllPlayerNames();
+        return new PlayerNamesResponse(allPlayerNames);
     }
 
-    public void playerCards() {
+    public NameAndCardsResponse dealerCards() {
+        NameAndCardInfos dealerCards = gameTableRepository.getDealerCards();
+        return NameAndCardsResponse.from(dealerCards);
+    }
+
+    public AllPlayersNameAndCardsResponse playerCards() {
+        List<NameAndCardInfos> playerCardInfos = gameTableRepository.getAllPlayersCards();
+        return AllPlayersNameAndCardsResponse.from(playerCardInfos);
     }
 }

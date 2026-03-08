@@ -1,15 +1,44 @@
 package view;
 
 import common.Constants;
+import dto.AllPlayersNameAndCardsResponse;
 import dto.GameResult;
 import dto.GameStatus;
+import dto.NameAndCardsResponse;
+import dto.PlayerNamesResponse;
 import java.util.List;
 
 public class OutputView {
 
-    public static void divideCards(List<String> participants) {
-        String players = String.join(Constants.CARD_JOINER, participants);
-        System.out.println(OutputMessage.DIVIDE.description(players));
+//    public static void divideCards(List<String> participants) {
+//        String players = String.join(Constants.CARD_JOINER, participants);
+//        System.out.println(OutputMessage.DIVIDE.description(players));
+//    }
+
+    public static void distributeCards(PlayerNamesResponse response) {
+        String players = String.join(Constants.JOINER, response.names());
+
+        System.out.println(OutputMessage.DISTRIBUTE.description(players));
+    }
+
+    public static void initDealerCardInfos(NameAndCardsResponse response){
+        String cards = response.cardInfos().getFirst();
+        System.out.println(OutputMessage.NAME_AND_CARDS.description(response.name(), cards));
+    }
+
+    public static void initAllPlayerCardInfos(AllPlayersNameAndCardsResponse response){
+        List<NameAndCardsResponse> infos = response.allInfos();
+        infos.forEach(OutputView::initPlayerCardInfos);
+    }
+
+
+    public static void initPlayerCardInfos(NameAndCardsResponse response){
+        System.out.println(nameAndAllCards(response));
+    }
+
+    private static String nameAndAllCards(NameAndCardsResponse response) {
+        String cards = String.join(Constants.JOINER, response.cardInfos());
+        return OutputMessage.NAME_AND_CARDS.description(response.name(),cards);
     }
 
     public static void initCardStatus(List<GameStatus> gameStatuses) {
@@ -60,17 +89,17 @@ public class OutputView {
 
     private static String getInitGameLog(GameStatus gameStatuses) {
         if (gameStatuses.name().equals(Constants.DEALER_NAME)) {
-            return String.format(OutputMessage.GAME_LOG.description(), gameStatuses.name(),
+            return String.format(OutputMessage.NAME_AND_CARDS.description(), gameStatuses.name(),
                     gameStatuses.cards().getFirst());
         }
         return String.format(getGameLog(gameStatuses));
     }
 
     private static String getGameLog(GameStatus gameStatuses) {
-        return OutputMessage.GAME_LOG.description(gameStatuses.name(), handInfo(gameStatuses));
+        return OutputMessage.NAME_AND_CARDS.description(gameStatuses.name(), handInfo(gameStatuses));
     }
 
     private static String handInfo(GameStatus gameStatuses) {
-        return String.join(Constants.CARD_JOINER, gameStatuses.cards());
+        return String.join(Constants.JOINER, gameStatuses.cards());
     }
 }

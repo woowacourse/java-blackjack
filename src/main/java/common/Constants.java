@@ -4,7 +4,7 @@ public class Constants {
 
     public static final String DEALER_NAME = "딜러";
     public static final String DELIMITER = ",";
-    public static final String CARD_JOINER = ", ";
+    public static final String JOINER = ", ";
 
     public static final String POSITIVE = "y";
     public static final String NEGATIVE = "n";
