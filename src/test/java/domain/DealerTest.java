@@ -39,6 +39,17 @@ class DealerTest {
         assertThat(dealer.needAdditionalCard()).isEqualTo(false);
     }
 
+    @DisplayName("딜러가 블랙잭 패를 받으면 패를 더 받지 않는다.")
+    @Test
+    void 딜러가_블랙잭이면_추가패_X() {
+        Dealer dealer = createDealerFromCards(List.of(
+                new Card(CardShape.HEART, CardRank.TEN),
+                new Card(CardShape.HEART, CardRank.ACE)
+        ));
+
+        assertThat(dealer.needAdditionalCard()).isEqualTo(false);
+    }
+
     private Dealer createDealerFromCards(List<Card> cards) {
         Dealer dealer = new Dealer("aaaa");
         for (Card card : cards) {
