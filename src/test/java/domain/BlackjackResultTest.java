@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 class BlackjackResultTest {
 
     @Test
-    @DisplayName("딜러와 플레이어 승패 결과 테스트")
-    void 딜러_카드합계_VS_플레이어_카드합계() {
+    @DisplayName("딜러와 플레이어 모두 bust 되지 않은 경우의 승패를 판정한다.")
+    void 딜러_플레이어_모두_bust_되지_않은_경우_승패_판정_테스트() {
         int dealerScore = 20;
         int playerScore = 19;
         GameResult playerResult = GameResult.DRAW;
