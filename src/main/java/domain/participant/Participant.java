@@ -51,7 +51,7 @@ public class Participant {
     }
 
     public String getName() {
-        return name.getValue();
+        return name.value();
     }
 
     public List<Card> getCards() {
