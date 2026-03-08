@@ -68,18 +68,15 @@ public class Controller {
         }
     }
 
-    // TODO: 10줄 초과, depth 2 초과 (2026. 3. 6.)
     private void turnToOnePlayer(Deck deck, Player player) {
         player.updateScore();
 
         while (player.canReceive()) {
-            String receiveCard = inputView.getReceiveCard(player);
-            if (receiveCard.equals("n")) {
+            HitCommand command = HitCommand.from(inputView.getReceiveCard(player));
+            if (!command.isHit()) {
                 return;
             }
-            if (!receiveCard.equals("y")) {
-                throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT.getMessage());
-            }
+
             receiveCardToParticipant(player, deck, ONE_REPEAT);
             player.updateScore();
             if (player.isBurst()) {
