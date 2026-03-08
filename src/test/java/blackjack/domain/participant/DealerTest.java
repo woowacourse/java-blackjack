@@ -15,7 +15,7 @@ class DealerTest {
     @DisplayName("딜러가 정상적으로 생성된다.")
     @Test
     void createDealer() {
-        Dealer dealer = Dealer.from();
+        Dealer dealer = new Dealer();
         
         assertThat(dealer.getNickname()).isEqualTo("딜러");
         assertThat(dealer.isDealer()).isTrue();
@@ -24,7 +24,7 @@ class DealerTest {
     @DisplayName("딜러는 총합이 16점 이하일 때 카드를 받는다.")
     @Test
     void isDealerDraw() {
-        Dealer dealer = Dealer.from();
+        Dealer dealer = new Dealer();
         PlayingCards cards16 = PlayingCards.from(List.of(
                 new Card(Rank.TEN, Suit.SPADE),
                 new Card(Rank.SIX, Suit.HEART)
@@ -37,7 +37,7 @@ class DealerTest {
     @DisplayName("딜러는 총합이 16점 초과일 때 카드를 받지 않는다.")
     @Test
     void isDealerNotDraw() {
-        Dealer dealer = Dealer.from();
+        Dealer dealer = new Dealer();
         PlayingCards cards17 = PlayingCards.from(List.of(
                 new Card(Rank.TEN, Suit.SPADE),
                 new Card(Rank.SEVEN, Suit.HEART)
@@ -50,7 +50,7 @@ class DealerTest {
     @DisplayName("딜러의 첫 번째 카드 이름을 반환한다.")
     @Test
     void getFirstCard() {
-        Dealer dealer = Dealer.from();
+        Dealer dealer = new Dealer();
         PlayingCards cards = PlayingCards.from(List.of(
                 new Card(Rank.ACE, Suit.SPADE),
                 new Card(Rank.TEN, Suit.HEART)

@@ -22,7 +22,7 @@ public class Players {
         List<Player> result = new ArrayList<>();
         for (String name : names) {
             validate(name);
-            result.add(new Player(name, Role.PLAYER));
+            result.add(new Player(name));
         }
         return from(result);
     }

@@ -1,15 +1,13 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.PlayingCards;
-
 public class Player extends Participant {
-
-    private final int BUSTED_SCORE = 21;
+    
+    private static final int BUSTED_SCORE = 21;
 
     private boolean stopDrawing;
 
-    public Player(String nickname, Role role) {
-        super(nickname, PlayingCards.createEmptyHands(), role);
+    public Player(String nickname) {
+        super(nickname, Role.PLAYER);
         stopDrawing = false;
     }
 

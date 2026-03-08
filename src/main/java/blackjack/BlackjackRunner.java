@@ -52,7 +52,7 @@ public class BlackjackRunner {
         String playerNamesInput = inputView.readLine();
         List<String> playerNames = PlayerNameParser.parsePlayerNames(playerNamesInput);
         Players players = Players.makePlayers(playerNames);
-        Dealer dealer = Dealer.from();
+        Dealer dealer = new Dealer();
         return new Participants(players, dealer);
     }
 

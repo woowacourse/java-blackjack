@@ -17,7 +17,7 @@ class ParticipantsTest {
     @Test
     void distributeCardsSuccessfully() {
         Players players = Players.makePlayers(List.of("pobi", "jason"));
-        Dealer dealer = Dealer.from();
+        Dealer dealer = new Dealer();
         Participants participants = new Participants(players, dealer);
         PlayingCards deck = PlayingCards.createShuffledDeck();
         
@@ -30,7 +30,7 @@ class ParticipantsTest {
     @Test
     void distributeCardsThrowsExceptionOnShortDeck() {
         Players players = Players.makePlayers(List.of("pobi", "jason"));
-        Participants participants = new Participants(players, Dealer.from());
+        Participants participants = new Participants(players, new Dealer());
         PlayingCards shortDeck = PlayingCards.from(List.of(
                 new Card(Rank.TWO, Suit.SPADE),
                 new Card(Rank.THREE, Suit.SPADE)
@@ -45,7 +45,7 @@ class ParticipantsTest {
     @Test
     void isDealerDrawWorksCorrectly() {
         Players players = Players.makePlayers(List.of("pobi"));
-        Participants participants = new Participants(players, Dealer.from());
+        Participants participants = new Participants(players, new Dealer());
         PlayingCards dealerCards16 = PlayingCards.from(List.of(
                 new Card(Rank.TEN, Suit.SPADE),
                 new Card(Rank.SIX, Suit.HEART)

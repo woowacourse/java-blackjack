@@ -15,7 +15,7 @@ class PlayerTest {
     @DisplayName("플레이어가 정상적으로 생성된다.")
     @Test
     void createPlayer() {
-        Player player = new Player("pobi", Role.PLAYER);
+        Player player = new Player("pobi");
         
         assertThat(player.getNickname()).isEqualTo("pobi");
         assertThat(player.isDealer()).isFalse();
@@ -24,7 +24,7 @@ class PlayerTest {
     @DisplayName("플레이어가 카드를 더 받을 수 있는지 확인한다.")
     @Test
     void isDrawable() {
-        Player player = new Player("pobi", Role.PLAYER);
+        Player player = new Player("pobi");
         
         assertThat(player.isDrawable()).isTrue();
         
@@ -41,7 +41,7 @@ class PlayerTest {
     @DisplayName("플레이어의 점수가 21점 미만이면 카드를 받을 수 있다.")
     @Test
     void isDrawableWhenNotBustedOrNotBlackjack() {
-        Player player = new Player("pobi", Role.PLAYER);
+        Player player = new Player("pobi");
         PlayingCards blackjackCards = PlayingCards.from(List.of(
                 new Card(Rank.EIGHT, Suit.SPADE),
                 new Card(Rank.NINE, Suit.HEART)
@@ -55,7 +55,7 @@ class PlayerTest {
     @DisplayName("플레이어의 점수가 21점 이상이면 더 이상 카드를 받을 수 없다.")
     @Test
     void isNotDrawableWhenBustedOrBlackjack() {
-        Player player = new Player("pobi", Role.PLAYER);
+        Player player = new Player("pobi");
         PlayingCards blackjackCards = PlayingCards.from(List.of(
                 new Card(Rank.ACE, Suit.SPADE),
                 new Card(Rank.JACK, Suit.HEART)
@@ -68,7 +68,7 @@ class PlayerTest {
     @DisplayName("플레이어가 명시적으로 stop()을 호출하면 점수와 상관없이 카드를 받을 수 없다.")
     @Test
     void stopDrawing() {
-        Player player = new Player("pobi", Role.PLAYER);
+        Player player = new Player("pobi");
         
         player.stop();
         

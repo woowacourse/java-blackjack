@@ -1,8 +1,8 @@
 package blackjack.domain.participant;
 
 public enum Role {
-    PLAYER("player"),
-    DEALER("dealer"),
+    PLAYER("플레이어"),
+    DEALER("딜러"),
     ;
 
     private String name;
