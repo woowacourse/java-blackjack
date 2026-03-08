@@ -1,41 +1,68 @@
 package domain.member;
 
 import domain.card.Card;
+import domain.card.CardNumber;
+import domain.exception.DuplicatedException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Hand {
 
-    private static final int BLACKJACK = 21;
-    private static final int SOFT_HAND_VALUE = 10;
-
     private final List<Card> cards;
-
     public Hand() {
         cards = new ArrayList<>();
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+    public List<Card> cards() {
+        return cards;
     }
 
     public void appendCard(Card card) {
+        validateDuplicate(card);
         cards.add(card);
     }
 
     public int calculateTotalValue() {
-        int totalSum = cards.stream()
-                .mapToInt(Card::getNumber)
-                .sum();
-        if (hasAce() && totalSum + SOFT_HAND_VALUE <= BLACKJACK) {
-            return totalSum + SOFT_HAND_VALUE;
+        int aceAmount = aceAmount();
+        if (aceAmount > 0) {
+            return softHandAces(aceAmount);
         }
-        return totalSum;
+        return cards.stream()
+                .mapToInt(Card::number)
+                .sum();
     }
 
-    private boolean hasAce() {
-        return cards.stream()
-                .anyMatch(Card::isAce);
+    private int softHandAces(int aceAmount) {
+        int sumWithoutAces = cards.stream()
+                .filter(c -> c.number() != CardNumber.A.getValue())
+                .mapToInt(Card::number)
+                .sum();
+
+        if (sumWithoutAces >= CardNumber.A.getValue()) {
+            return sumWithoutAces + aceAmount;
+        }
+        return sumWithoutAces + CardNumber.A.getValue() + aceAmount - 1;
+    }
+    /**
+     * ace가 있는 경우
+     * - 다음 ace는 무조건 1 / 11,1
+     * - ace 제외 합이 11이상이면 ace 전부 1 /1,1
+     * ace가 없는 경우
+     * - 나머지 합이 11이상이면 ace 1
+     * - 나머지 합이 10이하이면 ace 11 11+@
+     * */
+
+    private int aceAmount() {
+        return Math.toIntExact(
+                cards.stream()
+                        .filter(card -> card.number() == CardNumber.A.getValue())
+                        .count()
+        );
+    }
+
+    private void validateDuplicate(Card card) {
+        if (cards.contains(card)) {
+            throw new DuplicatedException();
+        }
     }
 }
