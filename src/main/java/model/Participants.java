@@ -26,12 +26,15 @@ public class Participants implements Iterable<Participant> {
         return new Participants(participants);
     }
 
-    public Participant getDealer() {
-        return values.getFirst();
+    public Dealer getDealer() {
+        return (Dealer) values.getFirst();
     }
 
-    public List<Participant> getPlayers() {
-        return values.subList(1, values.size());
+    public List<Player> getPlayers() {
+        return values.stream()
+                .filter(participant -> participant instanceof Player)
+                .map(participant -> (Player) participant)
+                .toList();
     }
 
     public List<String> getNames() {

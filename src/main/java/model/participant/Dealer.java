@@ -4,6 +4,8 @@ import java.util.List;
 import model.Card;
 
 public class Dealer extends Participant {
+    private static final int DRAW_THRESHOLD = 16;
+
     private boolean firstTurn = true;
 
     private Dealer(String name) {
@@ -24,5 +26,9 @@ public class Dealer extends Participant {
         return hands.stream()
                 .map(Card::toString)
                 .toList();
+    }
+
+    public boolean needDraw() {
+        return this.calculateScore() <= DRAW_THRESHOLD;
     }
 }

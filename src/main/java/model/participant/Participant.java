@@ -7,7 +7,7 @@ import model.Rank;
 
 public abstract class Participant {
     private static final int BUST_THRESHOLD = 21;
-    private static final int DEALER_THRESHOLD = 16;
+
     private final String name;
     protected final List<Card> hands;
 
@@ -20,7 +20,7 @@ public abstract class Participant {
         return name;
     }
 
-    public List<Card> draw(Card card) {
+    public List<Card> receive(Card card) {
         hands.add(card);
         return List.copyOf(hands);
     }
@@ -35,16 +35,12 @@ public abstract class Participant {
         return total;
     }
 
-    public boolean isBust() {
-        if (calculateScore() > BUST_THRESHOLD) {
-            return true;
-        }
-
-        return false;
+    public boolean canHit() {
+        return calculateScore() < BUST_THRESHOLD;
     }
 
-    public boolean dealerNeedDraw() {
-        return calculateScore() <= DEALER_THRESHOLD;
+    public boolean isBust() {
+        return calculateScore() > BUST_THRESHOLD;
     }
 
     private int calculate() {

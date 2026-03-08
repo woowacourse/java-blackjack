@@ -29,8 +29,8 @@ class PlayerTest {
         // given
         Card card1 = Card.of("스페이드", 3);
         Card card2 = Card.of("스페이드", 4);
-        player.draw(card1);
-        player.draw(card2);
+        player.receive(card1);
+        player.receive(card2);
 
         // when
         player.open();

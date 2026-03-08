@@ -36,7 +36,7 @@ class ParticipantTest {
         Card card = Card.of("스페이드", 3);
 
         // when
-        List<Card> cards = participant.draw(card);
+        List<Card> cards = participant.receive(card);
 
         // then
         Assertions.assertThat(cards.getFirst()).isEqualTo(card);
@@ -53,11 +53,11 @@ class ParticipantTest {
         Card card3 = Card.of("스페이드", 8);
 
         // when
-        jason.draw(card1);
-        jason.draw(card2);
-        jason.draw(card3);
-        gump.draw(card1);
-        gump.draw(card2);
+        jason.receive(card1);
+        jason.receive(card2);
+        jason.receive(card3);
+        gump.receive(card1);
+        gump.receive(card2);
 
         // then
         assertThat(jason.isBust()).isTrue();
@@ -69,7 +69,7 @@ class ParticipantTest {
     void 참가자의_현재_점수를_계산한다(List<Card> cards, int expected) {
         // given
         for (Card card : cards) {
-            participant.draw(card);
+            participant.receive(card);
         }
 
         // when

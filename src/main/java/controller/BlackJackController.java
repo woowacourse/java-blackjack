@@ -29,36 +29,11 @@ public class BlackJackController {
         Map<String, List<String>> dealOutResult = blackJack.dealOut();
         outputView.printDealOut(dealOutResult);
 
-        for (Participant participant : participants) {
-            if (participant instanceof Dealer) {
-                continue;
-            }
+        blackJack.startPlayerTurn(this::askHit, this::afterHit);
 
-            if (participant.calculateScore() == 21) {
-                continue;
-            }
-
-            String input;
-            do {
-                input = inputView.readHitOrNot(participant.getName());
-                if (input.equals("n")) {
-                    outputView.printHands(participant);
-                    break;
-                }
-                blackJack.hit(participant);
-                if (participant.isBust()) {
-                    outputView.printBustState(participant.getName(), participant.calculateScore());
-                    outputView.printHands(participant);
-                    break;
-                }
-                outputView.printHands(participant);
-
-            } while (input.equals("y"));
-        }
-
-        Participant dealer = participants.getDealer();
-        if (dealer.dealerNeedDraw()) {
-            blackJack.hit(dealer);
+        Dealer dealer = participants.getDealer();
+        if (dealer.needDraw()) {
+            blackJack.giveCardTo(dealer);
             outputView.printDealerDraw();
         }
 
@@ -71,5 +46,17 @@ public class BlackJackController {
         List<String> parsed = InputParser.parseName(rawNames);
 
         return Participants.of(parsed);
+    }
+
+    private Boolean askHit(String name) {
+        return inputView.readHitOrNot(name);
+    }
+
+    private void afterHit(Participant participant) {
+        outputView.printHands(participant);
+
+        if (participant.isBust()) {
+            outputView.printBustState(participant.getName(), participant.calculateScore());
+        }
     }
 }

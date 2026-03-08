@@ -5,9 +5,13 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import model.deck.Deck;
 import model.deck.DeckImpl;
+import model.participant.Dealer;
 import model.participant.Participant;
+import model.participant.Player;
 
 public class BlackJack {
     private final Participants participants;
@@ -31,8 +35,8 @@ public class BlackJack {
         Map<String, List<String>> dealOutResult = new LinkedHashMap<>();
         for (Participant participant : participants) {
             for (int i = 0; i < 2; i++) {
-                Card card = deck.draw();
-                participant.draw(card);
+                Card card = drawNewCard();
+                participant.receive(card);
             }
 
             dealOutResult.put(participant.getName(), participant.open());
@@ -41,15 +45,28 @@ public class BlackJack {
         return dealOutResult;
     }
 
-    public void hit(Participant participant) {
-        participant.draw(deck.draw());
+    public void startPlayerTurn(Function<String, Boolean> askHit, Consumer<Participant> afterHit) {
+        for (Player player : participants.getPlayers()) {
+            while (player.canHit() && askHit.apply(player.getName())) {
+                giveCardTo(player);
+                afterHit.accept(player);
+            }
+        }
+    }
+
+    public void giveCardTo(Participant participant) {
+        participant.receive(drawNewCard());
+    }
+
+    private Card drawNewCard() {
+        return deck.draw();
     }
 
     public Map<String, Integer> calculateDealerResult() {
         Map<String, Integer> resultMap = new HashMap<>();
 
-        Participant dealer = participants.getDealer();
-        List<Participant> players = participants.getPlayers();
+        Dealer dealer = participants.getDealer();
+        List<Player> players = participants.getPlayers();
 
         for (Participant player : players) {
             if (dealer.calculateScore() > player.calculateScore() || player.isBust()) {
@@ -66,8 +83,8 @@ public class BlackJack {
     public Map<String, Boolean> calculatePlayerResult() {
         Map<String, Boolean> resultMap = new HashMap<>();
 
-        Participant dealer = participants.getDealer();
-        List<Participant> players = participants.getPlayers();
+        Dealer dealer = participants.getDealer();
+        List<Player> players = participants.getPlayers();
 
         for (Participant player : players) {
             if (dealer.calculateScore() > player.calculateScore() || player.isBust()) {

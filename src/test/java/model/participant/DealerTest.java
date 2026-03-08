@@ -29,8 +29,8 @@ class DealerTest {
         // given
         Card card1 = Card.of("스페이드", 3);
         Card card2 = Card.of("스페이드", 4);
-        dealer.draw(card1);
-        dealer.draw(card2);
+        dealer.receive(card1);
+        dealer.receive(card2);
 
         // when
         List<String> opened = dealer.open();
@@ -45,8 +45,8 @@ class DealerTest {
         // given
         Card card1 = Card.of("스페이드", 3);
         Card card2 = Card.of("스페이드", 4);
-        dealer.draw(card1);
-        dealer.draw(card2);
+        dealer.receive(card1);
+        dealer.receive(card2);
 
         // when
         dealer.open();
