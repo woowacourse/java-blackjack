@@ -1,16 +1,20 @@
 package team.blackjack.domain;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Deck {
-    private final List<Card> cards;
+    private final List<Card> cards = new ArrayList<>();
 
     public Deck() {
-        this.cards = Arrays.stream(Card.values())
-                .collect(Collectors.toList());
+        for(Suit suit : Suit.values()){
+            for (Rank rank : Rank.values()) {
+                cards.add(new Card(suit,rank));
+            }
+        }
+
+        shuffle();
     }
 
     public Card draw() {

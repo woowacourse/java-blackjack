@@ -1,5 +1,6 @@
 package team.blackjack.domain;
 
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -8,19 +9,25 @@ class PlayerTest {
     @Test
     void hit하면_플레이어_핸드에_카드가_추가된다() {
         Player player = new Player("pobi");
+        Card card = new Card(Suit.HEARTS, Rank.ACE);
 
-        player.hit(Card.ACE_OF_HEARTS);
+        player.hit(card);
 
         assertThat(player.getHands().getFirst().getCards())
-                .containsExactly(Card.ACE_OF_HEARTS);
+                .containsExactly(card);
     }
 
     @Test
     void 킹과_에이스를_각각_1장씩_받은_플레이어의_점수는_21로_정상_계산된다() {
         Player player = new Player("pobi");
+        List<Card> cards = List.of(
+                new Card(Suit.HEARTS, Rank.ACE),
+                new Card(Suit.CLUBS, Rank.KING)
+        );
 
-        player.hit(Card.ACE_OF_HEARTS);
-        player.hit(Card.KING_OF_CLUBS);
+        for (Card card : cards) {
+            player.hit(card);
+        }
 
         assertThat(player.getScore()).isEqualTo(21);
     }
