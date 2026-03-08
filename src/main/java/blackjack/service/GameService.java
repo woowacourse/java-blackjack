@@ -17,8 +17,4 @@ public class GameService {
         }
     }
 
-    public void getMoreCard(Player player) {
-        player.get(Deck.draw());
-    }
-
 }

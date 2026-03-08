@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.Dealer;
+import blackjack.domain.Deck;
 import blackjack.domain.Player;
 import blackjack.service.GameService;
 import blackjack.util.InputParser;
@@ -66,7 +67,7 @@ public class BlackjackController {
             while (!player.isBurst() && !player.isBlackjack()) {
                 String yesOrNo = inputView.readMoreCard(player.getName());
                 if (yesOrNo.equals("y")) {
-                    gameService.getMoreCard(player);
+                    player.get(Deck.draw());
                     OutputView.printSettingCardResults(player.getName(), player.getCardsName());
                     count++;
                     continue;
@@ -81,7 +82,7 @@ public class BlackjackController {
 
     private void getMoreCardsForDealer(Dealer dealer) {
         while (dealer.calculateCardsValue() < 17) {
-            gameService.getMoreCard(dealer);
+            dealer.get(Deck.draw());
             OutputView.printGetMoreCardsForDealer(dealer.getName());
         }
     }
