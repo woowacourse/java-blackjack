@@ -17,8 +17,12 @@ public abstract class Participant {
         handCards = firstHandCards;
     }
 
-    public void addCard(Card card) {
+    public void receiveMoreCard(Card card) {
         handCards.add(card);
+    }
+
+    public boolean isBust() {
+        return calculateScore() > 21;
     }
 
     public int calculateScore() {
@@ -43,11 +47,5 @@ public abstract class Participant {
         return List.copyOf(handCards);
     }
 
-    public boolean isBust() {
-        return calculateScore() > 21;
-    }
 
-    public void receiveMoreCard(Card card) {
-        handCards.add(card);
-    }
 }
