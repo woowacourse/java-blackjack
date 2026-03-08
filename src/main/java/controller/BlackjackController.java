@@ -1,7 +1,7 @@
 package controller;
 
 import domain.*;
-import domain.dto.CardContentDto;
+import domain.dto.PlayerCardDto;
 import domain.dto.FinalCardDto;
 import service.BlackjackService;
 import view.InputView;
@@ -31,7 +31,7 @@ public class BlackjackController {
         outputView.displayCardDistribution(names);
         List<Player> playerList = blackjackService.createPlayers(names, cards);
 
-        List<CardContentDto> firstCardContents = collectInitialCardContents(dealer, playerList);
+        List<PlayerCardDto> firstCardContents = collectInitialCardContents(dealer, playerList);
         outputView.displayCardContent(firstCardContents);
         Players players = processPlayersTurn(playerList, cards);
 
@@ -49,11 +49,11 @@ public class BlackjackController {
         outputView.displayMatchResult(blackjackResult.toResultDto());
     }
 
-    public List<CardContentDto> collectInitialCardContents(Dealer dealer, List<Player> playerList) {
-        List<CardContentDto> initialCardContents = new ArrayList<>();
-        initialCardContents.add(new CardContentDto(dealer.getName(), List.of(dealer.getFirstCard())));
+    public List<PlayerCardDto> collectInitialCardContents(Dealer dealer, List<Player> playerList) {
+        List<PlayerCardDto> initialCardContents = new ArrayList<>();
+        initialCardContents.add(dealer.toOpeningCardDto());
         for (Player player : playerList) {
-            initialCardContents.add(new CardContentDto(player.getName(), player.getCards()));
+            initialCardContents.add(player.toPlayerCardDto());
         }
         return initialCardContents;
     }
@@ -75,7 +75,7 @@ public class BlackjackController {
                 break;
             }
             player.add(deck.pop());
-            outputView.displayCardContent(List.of(player.toCardContentDto()));
+            outputView.displayCardContent(List.of(player.toPlayerCardDto()));
             wantsCard = wantsAdditionalCard(name);
         }
     }

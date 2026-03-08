@@ -2,16 +2,14 @@ package domain;
 
 
 import constant.GameConstant;
-import domain.dto.CardContentDto;
+import domain.dto.PlayerCardDto;
 import domain.dto.FinalCardDto;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Player {
     private static final int ACE_BONUS_SCORE = 10;
     private static final int ACE_NO_BONUS = 0;
-    protected final List<Card> cards = new ArrayList<>();
+    protected final Cards cards = new Cards();
     private final String name;
 
     public Player(String name) {
@@ -28,7 +26,7 @@ public class Player {
     }
 
     private int calculateAceScore() {
-        if (!hasAce() || calculateScore() > 11) {
+        if (!cards.hasAce() || calculateScore() > 11) {
             return ACE_NO_BONUS;
         }
 
@@ -56,24 +54,15 @@ public class Player {
         return name;
     }
 
-    public List<Card> getCards() {
-        return cards;
-    }
-
     public int getCardCount() {
-        return cards.size();
+        return cards.getSize();
     }
 
-    public CardContentDto toCardContentDto() {
-        return new CardContentDto(this.name, this.cards);
+    public PlayerCardDto toPlayerCardDto() {
+        return new PlayerCardDto(this.name, this.cards.toCardDtos());
     }
 
     public FinalCardDto toFinalCardDto() {
-        return new FinalCardDto(this.name, this.cards, getFinalScore());
-    }
-
-    public boolean hasAce() {
-        return cards.stream()
-                .anyMatch(c -> c.getCardRank().equals(CardRank.ACE));
+        return new FinalCardDto(this.name, this.cards.toCardDtos(), getFinalScore());
     }
 }

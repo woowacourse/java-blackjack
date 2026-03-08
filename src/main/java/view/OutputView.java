@@ -1,10 +1,10 @@
 package view;
 
 import constant.GameConstant;
-import domain.Card;
 import domain.MatchCase;
 import domain.dto.BlackjackResultDto;
-import domain.dto.CardContentDto;
+import domain.dto.CardDto;
+import domain.dto.PlayerCardDto;
 import domain.dto.FinalCardDto;
 
 import java.util.ArrayList;
@@ -17,11 +17,11 @@ public class OutputView {
         System.out.printf("딜러가 %s에게 2장을 나누었습니다.\n", nameContent);
     }
 
-    public void displayCardContent(List<CardContentDto> cardContentDtos) {
-        for (CardContentDto dto : cardContentDtos) {
+    public void displayCardContent(List<PlayerCardDto> playerCardDtos) {
+        for (PlayerCardDto dto : playerCardDtos) {
             List<String> cardContents = new ArrayList<>();
-            for (Card card : dto.cards()) {
-                cardContents.add(card.getCardRank().getName() + card.getCardShape().getName());
+            for (CardDto card : dto.cards()) {
+                cardContents.add(card.rankName() + card.shapeName());
             }
 
             System.out.printf("%s카드: %s\n", dto.name(), String.join(", ", cardContents));
@@ -29,10 +29,10 @@ public class OutputView {
 
     }
 
-    public void displayCardContent(CardContentDto dto) {
+    public void displayCardContent(PlayerCardDto dto) {
         List<String> cardContents = new ArrayList<>();
-        for (Card card : dto.cards()) {
-            cardContents.add(card.getCardRank().getName() + card.getCardShape().getName());
+        for (CardDto card : dto.cards()) {
+            cardContents.add(card.rankName() + card.shapeName());
         }
 
         System.out.printf("%s카드: %s\n", dto.name(), String.join(", ", cardContents));
@@ -45,8 +45,8 @@ public class OutputView {
     public void displayFinalCard(List<FinalCardDto> finalCardDtos) {
         for (FinalCardDto dto : finalCardDtos) {
             List<String> cardContents = new ArrayList<>();
-            for (Card card : dto.cards()) {
-                cardContents.add(card.getCardRank().getName() + card.getCardShape().getName());
+            for (CardDto card : dto.cards()) {
+                cardContents.add(card.rankName() + card.shapeName());
             }
 
             System.out.printf("%s카드: %s - 결과: %d\n", dto.name(), String.join(", ", cardContents), dto.total());

@@ -1,5 +1,7 @@
 package domain;
 
+import domain.dto.CardDto;
+
 public class Card {
     private final CardShape cardShape;
     private final CardRank cardRank;
@@ -15,5 +17,9 @@ public class Card {
 
     public CardShape getCardShape() {
         return cardShape;
+    }
+
+    public CardDto toCardDto() {
+        return new CardDto(this.cardShape.getName(), this.cardRank.getName());
     }
 }

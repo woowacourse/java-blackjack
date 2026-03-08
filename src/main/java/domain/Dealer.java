@@ -1,8 +1,8 @@
 package domain;
 
 import constant.GameConstant;
+import domain.dto.PlayerCardDto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Dealer extends Player {
@@ -15,7 +15,7 @@ public class Dealer extends Player {
         return this.calculateScore() <= GameConstant.DEALER_HIT_THRESHOLD;
     }
 
-    public Card getFirstCard() {
-        return cards.getFirst();
+    public PlayerCardDto toOpeningCardDto() {
+        return new PlayerCardDto(this.getName(), List.of(cards.getFirst().toCardDto()));
     }
 }
