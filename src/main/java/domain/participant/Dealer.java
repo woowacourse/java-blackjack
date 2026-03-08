@@ -1,6 +1,8 @@
 package domain.participant;
 
+import domain.card.Card;
 import domain.card.Deck;
+import java.util.List;
 
 public class Dealer extends Participant {
 
@@ -8,6 +10,14 @@ public class Dealer extends Participant {
 
     public Dealer(Hand hand) {
         super(new Name("딜러"), hand);
+    }
+
+    @Override
+    public List<String> getInitialCards() {
+        List<String> cards = hand.getCards().stream()
+                .map(Card::getCardName)
+                .toList();
+        return List.of(cards.getFirst());
     }
 
     @Override

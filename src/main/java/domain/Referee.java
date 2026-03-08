@@ -11,8 +11,8 @@ public class Referee {
         this.gameStatistics = new GameStatistics();
     }
 
-    public GameStatistics judge(Dealer dealer, Players players) {
-        for (Participant player : players.getPlayers()) {
+    public GameStatistics judge(Dealer dealer, Participants participants) {
+        for (Participant player : participants.getParticipants()) {
             judgePlayerResult(dealer, player);
             judgeDealerResult(dealer, player);
         }

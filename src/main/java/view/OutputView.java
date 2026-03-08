@@ -2,11 +2,10 @@ package view;
 
 import domain.GameResult;
 import domain.GameStatistics;
-import domain.Players;
+import domain.Participants;
 import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Participant;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,31 +14,30 @@ public final class OutputView {
     private static final String DELIMITER = ", ";
     private static final String NEW_LINE = System.lineSeparator();
 
-    public static void showIntroMessage(Players players) {
-        System.out.println(NEW_LINE + "딜러와 "
-                + String.join(DELIMITER, String.join(DELIMITER, players.getParticipantNames())
+    public static void showCardNames(Participants participants) {
+        showIntroMessage(participants);
+        showCards(participants);
+    }
+
+    private static void showIntroMessage(Participants participants) {
+        System.out.println(NEW_LINE + participants.getDealerName() + "와 "
+                + (String.join(DELIMITER, participants.getPlayerNames())
                 + "에게 2장을 나누었습니다."));
     }
 
-    public static void showDealerCardName(Dealer dealer) {
-        List<String> cardNames = createCardNames(dealer);
-        List<String> dealerCard = new ArrayList<>(cardNames);
-        dealerCard.removeFirst();
-        System.out.println(getCardNames(dealer, dealerCard));
+    private static void showCards(Participants participants) {
+        participants.getParticipants().stream()
+                .map(participant -> getCardNames(participant, participant.getInitialCards()))
+                .forEach(System.out::println);
     }
 
-    public static void showPlayerCardName(Players players) {
-        players.getPlayers()
-                .forEach(OutputView::showCardName);
+    private static String getCardNames(Participant participant, List<String> playerCardNames) {
+        return participant.getName() + "카드: " + String.join(DELIMITER, playerCardNames);
     }
 
     public static void showCardName(Participant participant) {
         List<String> playerCardNames = createCardNames(participant);
         System.out.println(getCardNames(participant, playerCardNames));
-    }
-
-    private static String getCardNames(Participant participant, List<String> playerCardNames) {
-        return participant.getName() + "카드: " + String.join(DELIMITER, playerCardNames);
     }
 
     private static List<String> createCardNames(Participant participant) {
@@ -52,11 +50,11 @@ public final class OutputView {
         System.out.println(NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void showResult(Dealer dealer, Players players) {
+    public static void showResult(Dealer dealer, Participants participants) {
         System.out.println();
 
         showCardAndScore(dealer, dealer.getScore());
-        players.getPlayers()
+        participants.getParticipants()
                 .forEach(participant -> showCardAndScore(participant, participant.getScore()));
     }
 

@@ -5,18 +5,21 @@ import static domain.GameResult.BLACKJACK_SCORE;
 import domain.card.Card;
 import domain.card.Deck;
 import java.util.List;
+import java.util.Objects;
 
-public class Participant {
+public abstract class Participant {
 
-    private final Name name;
-    private final Hand hand;
-    private GameState gameState;
+    protected final Name name;
+    protected final Hand hand;
+    protected GameState gameState;
 
     public Participant(Name name, Hand hand) {
         this.name = name;
         this.hand = hand;
         this.gameState = GameState.HIT;
     }
+
+    public abstract List<String> getInitialCards();
 
     public boolean isBust() {
         return getScore() > BLACKJACK_SCORE;
@@ -54,5 +57,19 @@ public class Participant {
 
     public GameState getGameState() {
         return gameState;
+    }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (!(o instanceof Participant that)) {
+            return false;
+        }
+
+        return Objects.equals(getName(), that.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getName());
     }
 }

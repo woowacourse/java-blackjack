@@ -1,6 +1,7 @@
 package domain.participant;
 
 import exception.ExceptionMessage;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,5 +38,19 @@ public class Name {
 
     public String getValue() {
         return value;
+    }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (!(o instanceof Name name)) {
+            return false;
+        }
+
+        return Objects.equals(getValue(), name.getValue());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getValue());
     }
 }
