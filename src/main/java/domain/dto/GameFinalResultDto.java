@@ -1,33 +1,22 @@
 package domain.dto;
 
-import domain.constant.Result;
+import java.util.Map;
+import java.util.Set;
 
 public class GameFinalResultDto {
-    String name;
-    Result result;
+    private DealerResultDto dealerResult;
+    private Map<String, String> playerResults;
 
-    public GameFinalResultDto(String name) {
-        this(name, null);
+    public GameFinalResultDto(DealerResultDto dealerResult, Map<String, String> playerResults) {
+        this.dealerResult = dealerResult;
+        this.playerResults = playerResults;
     }
 
-    public GameFinalResultDto(String name, Result result) {
-        this.name = name;
-        this.result = result;
+    public DealerResultDto getDealerResult() {
+        return dealerResult;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public Result getResult() {
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "domain.dto.GameFinalResultDto{" +
-                "name='" + name + '\'' +
-                ", result=" + result +
-                '}';
+    public Set<Map.Entry<String, String>> getPlayerResults() {
+        return playerResults.entrySet();
     }
 }

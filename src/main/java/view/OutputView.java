@@ -1,13 +1,11 @@
 package view;
 
-import domain.Player;
-import domain.constant.Result;
+import domain.dto.DealerResultDto;
 import domain.dto.GameFinalResultDto;
 import domain.dto.GameInitialInfoDto;
 import domain.dto.GameScoreResultDto;
 
 import java.text.MessageFormat;
-import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -49,65 +47,21 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printFinalResult(List<GameFinalResultDto> finalResult) {
+    public void printFinalResult(GameFinalResultDto finalResult) {
         System.out.println("## 최종 승패");
-        GameFinalResultDto firstPlayer = finalResult.removeFirst();
-        Map<Result, Integer> resultCounts = new EnumMap<>(Result.class);
-
-        countDealerResult(finalResult, resultCounts);
-        printDealerResult(firstPlayer, resultCounts);
-        printPlayerResult(finalResult);
+        DealerResultDto dealerResult = finalResult.getDealerResult();
+        printDealerResult(dealerResult);
+        printPlayerResults(finalResult);
     }
 
-    private void countDealerResult(List<GameFinalResultDto> finalResult, Map<Result, Integer> resultCounts) {
-        for (GameFinalResultDto result : finalResult) {
-            if (result.getResult() == Result.WIN) {
-                resultCounts.put(Result.LOSE, resultCounts.getOrDefault(Result.LOSE, 0) + 1);
-                continue;
-            }
-
-            if (result.getResult() == Result.LOSE) {
-                resultCounts.put(Result.WIN, resultCounts.getOrDefault(Result.WIN, 0) + 1);
-                continue;
-            }
-
-            resultCounts.put(result.getResult(), resultCounts.getOrDefault(result.getResult(), 0) + 1);
-        }
-    }
-
-    private void printDealerResult(GameFinalResultDto firstPlayer, Map<Result, Integer> resultCounts) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(firstPlayer.getName()).append(": ");
-        for (Result result : resultCounts.keySet()) {
-            sb.append(resultCounts.get(result)).append(result.getName());
-        }
-        System.out.println(sb);
-    }
-
-    private void printPlayerResult(List<GameFinalResultDto> finalResult) {
-        for (GameFinalResultDto result : finalResult) {
+    private void printPlayerResults(GameFinalResultDto finalResult) {
+        for (Map.Entry<String, String> result : finalResult.getPlayerResults()) {
             System.out.println(MessageFormat.format(
                     FINAL_RESULT_MESSAGE,
-                    result.getName(),
-                    result.getResult().getName()
+                    result.getKey(),
+                    result.getValue()
             ));
         }
-    }
-
-    private void printHandOutNotice(GameInitialInfoDto initialInfo) {
-        String playerNames = initialInfo.getPlayerResults().stream()
-                .map(GameScoreResultDto::getPlayerName)
-                .collect(Collectors.joining(", "));
-
-        System.out.println(MessageFormat.format(
-                DEAL_MESSAGE,
-                initialInfo.getDealerName(),
-                playerNames,
-                initialInfo.getPlayerResults().stream()
-                        .mapToInt(result -> result.getHand().size())
-                        .max()
-                        .orElse(0)
-        ));
     }
 
     private void printInitialHands(GameInitialInfoDto initialInfo) {
@@ -125,5 +79,39 @@ public class OutputView {
             ));
         }
         System.out.println();
+    }
+
+    private void printDealerResult(DealerResultDto dealerResult) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(dealerResult.getName()).append(": ");
+        if (dealerResult.getWinCount() != 0) {
+            sb.append(dealerResult.getWinCount()).append("승 ");
+        }
+
+        if (dealerResult.getDrawCount() != 0) {
+            sb.append(dealerResult.getDrawCount()).append("무 ");
+        }
+
+        if (dealerResult.getLoseCount() != 0) {
+            sb.append(dealerResult.getLoseCount()).append("패 ");
+        }
+
+        System.out.println(sb);
+    }
+
+    private void printHandOutNotice(GameInitialInfoDto initialInfo) {
+        String playerNames = initialInfo.getPlayerResults().stream()
+                .map(GameScoreResultDto::getPlayerName)
+                .collect(Collectors.joining(", "));
+
+        System.out.println(MessageFormat.format(
+                DEAL_MESSAGE,
+                initialInfo.getDealerName(),
+                playerNames,
+                initialInfo.getPlayerResults().stream()
+                        .mapToInt(result -> result.getHand().size())
+                        .max()
+                        .orElse(0)
+        ));
     }
 }

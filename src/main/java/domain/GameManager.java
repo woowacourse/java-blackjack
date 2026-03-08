@@ -1,6 +1,5 @@
 package domain;
 
-import domain.constant.Result;
 import domain.dto.GameFinalResultDto;
 import domain.dto.GameInitialInfoDto;
 import domain.dto.GameScoreResultDto;
@@ -36,10 +35,6 @@ public class GameManager {
                         .map(GameScoreResultDto::from)
                         .toList()
         );
-    }
-
-    public int calculateScore(Player player) {
-        return player.getScore();
     }
 
     public List<String> drawPlayerCard(String player) {
@@ -82,15 +77,10 @@ public class GameManager {
         return dealer.canReceiveCard();
     }
 
-    public List<GameFinalResultDto> getFinalResult() {
-        List<GameFinalResultDto> results = new ArrayList<>();
-        // 딜러 추가
-        results.add(new GameFinalResultDto(dealer.getName()));
+    public GameFinalResultDto getFinalResult() {
+        GameResult gameResult = new GameResult(dealer, players.values());
 
-        // 플레이어 추가
-        determineWinLose(results);
-
-        return results;
+        return gameResult.convertToDto();
     }
 
     private void drawInitialCards() {
@@ -99,24 +89,6 @@ public class GameManager {
                 player.addCard(deck.draw());
             }
             dealer.addCard(deck.draw());
-        }
-    }
-
-    private void determineWinLose(List<GameFinalResultDto> results) {
-        for (Player player : players.values()) {
-            int playerScore = player.getScore();
-            int dealerScore = dealer.getScore();
-            if (player.isBust() || playerScore < dealerScore) {
-                results.add(new GameFinalResultDto(player.getName(), Result.LOSE));
-                continue;
-            }
-
-            if (playerScore > dealerScore) {
-                results.add(new GameFinalResultDto(player.getName(), Result.WIN));
-                continue;
-            }
-
-            results.add(new GameFinalResultDto(player.getName(), Result.DRAW));
         }
     }
 }

@@ -1,14 +1,10 @@
 package controller;
 
 import domain.GameManager;
-import domain.Player;
-import domain.dto.GameInitialInfoDto;
 import view.InputView;
 import view.OutputView;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class GameController {
 
