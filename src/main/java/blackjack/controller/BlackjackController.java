@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.model.cardDeck.CardDeck;
-import blackjack.model.cardDeck.PickStrategy;
+import blackjack.model.cardDeck.RandomPickStrategy;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
 import blackjack.model.result.TotalResult;
@@ -13,18 +13,16 @@ public class BlackjackController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final PickStrategy pickStrategy;
 
-    public BlackjackController(InputView inputView, OutputView outputView, PickStrategy pickStrategy) {
+    public BlackjackController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.pickStrategy = pickStrategy;
     }
 
     public void run() {
         List<Player> players = setupPlayers();
         Dealer dealer = Dealer.create();
-        CardDeck cardDeck = CardDeck.of(pickStrategy);
+        CardDeck cardDeck = CardDeck.of(new RandomPickStrategy());
 
         distributeInitCards(dealer, cardDeck, players);
 

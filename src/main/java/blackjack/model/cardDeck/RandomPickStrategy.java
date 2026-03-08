@@ -1,16 +1,24 @@
 package blackjack.model.cardDeck;
 
+import blackjack.common.error.ErrorCode;
 import blackjack.model.card.Card;
 import java.util.List;
 import java.util.Random;
 
 public class RandomPickStrategy implements PickStrategy {
 
+    private static final Random RANDOM = new Random();
+
     @Override
     public Card pick(List<Card> cards) {
-        Random random = new Random();
-        int randomIndex = random.nextInt(0, cards.size());
-
+        validateCards(cards);
+        int randomIndex = RANDOM.nextInt(cards.size());
         return cards.remove(randomIndex);
+    }
+
+    private void validateCards(List<Card> cards) {
+        if (cards == null || cards.isEmpty()) {
+            throw new IllegalArgumentException(ErrorCode.NULL_OR_EMPTY_CARDS.getMessage());
+        }
     }
 }
