@@ -47,4 +47,8 @@ public class GameTableRepository {
     public boolean isCurrentPlayerPlayable() {
         return gameTable.isCurrentPlayerPlayable();
     }
+
+    public boolean hasWaitingPlayers() {
+        return gameTable.hasWaitingPlayers();
+    }
 }

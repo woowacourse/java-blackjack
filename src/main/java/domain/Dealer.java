@@ -1,6 +1,6 @@
 package domain;
 
-import common.Constants;
+import domain.constant.BlackJackRule;
 
 public class Dealer extends Participant {
 
@@ -14,6 +14,6 @@ public class Dealer extends Participant {
 
     @Override
     protected boolean isPlayable() {
-        return hand.scoreSum() <= Constants.DEALER_PLAYING_THRESHOLD;
+        return hand.scoreSum() <= BlackJackRule.DEALER_PLAYABLE_THRESHOLD.value();
     }
 }

@@ -32,4 +32,8 @@ public class BlackJackCommandService {
     public void currentPlayerDrawCard() {
         gameTableRepository.currentPlayerDrawCard();
     }
+
+    public void recordCurrentGameResult() {
+//        gameTableRepository.
+    }
 }

@@ -51,6 +51,10 @@ public class GameTable {
         return participants.isCurrentPlayerPlayable();
     }
 
+    public boolean hasWaitingPlayers() {
+        return participants.hasWaitingPlayers();
+    }
+
 //
 //    public List<GameStatus> initGameStatus() {
 //        List<GameStatus> gameStatuses = new ArrayList<>();

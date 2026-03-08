@@ -58,6 +58,12 @@ public class BlackJackController {
     }
 
     private void playerGamePhase() {
+        while (queryService.hasWaitingPlayers()) {
+            playerGameProcess();
+        }
+    }
+
+    private void playerGameProcess() {
         NameResponse currentPlayer = queryService.currentPlayerName();
         SelectRequest select = InputView.readSelect(currentPlayer);
 
@@ -66,6 +72,7 @@ public class BlackJackController {
         if(select.isPositive()) {
             playerGameLoop();
         }
+        commandService.recordCurrentGameResult();
     }
 
     private void firstPlayerGameProcess(boolean isPositive) {

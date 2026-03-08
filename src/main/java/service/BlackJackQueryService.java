@@ -44,4 +44,8 @@ public class BlackJackQueryService {
     public boolean isCurrentPlayerPlayable() {
         return gameTableRepository.isCurrentPlayerPlayable();
     }
+
+    public boolean hasWaitingPlayers() {
+        return gameTableRepository.hasWaitingPlayers();
+    }
 }

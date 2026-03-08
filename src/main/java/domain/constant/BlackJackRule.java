@@ -7,10 +7,12 @@ public enum BlackJackRule {
     BUST_NUMBER (21),
     ACE_WEIGHT(10),
 
-//    PLAYER_PLAYING_THRESHOLD(20),
-//    DEALER_PLAYING_THRESHOLD (16),
-//    DEFAULT_HAND_SCORE(0),
+    PLAYER_PLAYABLE_THRESHOLD(20),
+    DEALER_PLAYABLE_THRESHOLD (16),
+
+    DEFAULT_HAND_SCORE(0),
     ;
+
     private final int value;
 
     BlackJackRule(int value) {

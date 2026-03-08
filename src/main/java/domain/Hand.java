@@ -1,11 +1,11 @@
 package domain;
 
 import common.Constants;
+import domain.constant.BlackJackRule;
 import domain.vo.Card;
 import domain.vo.CardInfo;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Hand {
 
@@ -15,6 +15,11 @@ public class Hand {
     Hand(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
     }
+//
+//    Hand(DrawStrategy drawStrategy, List<Card> cards) {
+//        this.drawStrategy = drawStrategy;
+//        this.cards = new ArrayList<>(cards);
+//    }
 
     static Hand empty () {
         return new Hand(new ArrayList<>());
@@ -25,7 +30,9 @@ public class Hand {
     }
 
     List<CardInfo> cardInfos() {
-        return cards.stream().map(Card::info).collect(Collectors.toList());
+        return cards.stream()
+                .map(Card::info)
+                .toList();
     }
 
     List<Card> cards() {
@@ -35,17 +42,9 @@ public class Hand {
     boolean isBusted() {
         int score = rawScoreSum();
         if (aceCount() > 0) {
-            score -= aceCount() * Constants.ACE_WEIGHT;
+            score -= aceCount() * BlackJackRule.ACE_WEIGHT.value();
         }
-        return score > Constants.BUST_NUMBER;
-    }
-
-    int scoreSum() {
-        int total = rawScoreSum();
-        if (isOvercome()) {
-            total -= aceCount() * Constants.ACE_WEIGHT;
-        }
-        return total;
+        return score > BlackJackRule.BUST_NUMBER.value();
     }
 
     private int rawScoreSum() {
@@ -60,7 +59,15 @@ public class Hand {
                 .count();
     }
 
-    private boolean isOvercome() {
-        return rawScoreSum() > Constants.BUST_NUMBER;
+    int scoreSum() {
+        int total = rawScoreSum();
+        if (isExceededBustNumber()) {
+            total -= aceCount() * BlackJackRule.ACE_WEIGHT.value();
+        }
+        return total;
+    }
+
+    private boolean isExceededBustNumber() {
+        return rawScoreSum() > BlackJackRule.BUST_NUMBER.value();
     }
 }

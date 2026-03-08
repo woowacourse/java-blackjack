@@ -60,4 +60,8 @@ class Participants {
     public boolean isCurrentPlayerPlayable() {
         return players.isCurrentPlayerPlayable();
     }
+
+    public boolean hasWaitingPlayers() {
+        return players.hasWaitingPlayers();
+    }
 }

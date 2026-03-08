@@ -55,11 +55,10 @@ class Players {
     }
 
     boolean isCurrentPlayerPlayable() {
-        return isPlayerExist() && currentPlayer().isPlayable();
+        return hasWaitingPlayers() && currentPlayer().isPlayable();
     }
 
-    boolean isPlayerExist() {
+    boolean hasWaitingPlayers() {
         return !players.isEmpty();
     }
-
 }
