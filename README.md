@@ -31,8 +31,22 @@
 5. ScoreBoard
 - [x] 승패 집계
 
-### 필요 기능
-- [x] 딜러 카드 루프
+## 리팩토링
+- [ ] service, repository 레이어 도입
+- [ ] Constants를 각 도메인에 맞는 enum으로 분리
+- [ ] 애그리거트 내 접근 제어자 정리
+- [ ] 의존성 관리
+- [ ] 게임 진행 루프 리팩토링
+- [ ] ScoreBoard 책임 분리 고려
+- [ ] View 정리
+- [ ] 예외 처리
+
+## 테스트
+- [ ] TestFixture 또는 테스트용 팩토리 클래스 도입
+- [ ] 누락된 테스트들 작성
+  - [ ] GameTable
+  - [ ] ScoreBoard
+- [ ] 테스트 케이스 보강 및 `parameterizedTest` 도입
 
 ### HotFix
 - [x] 손패 결과는 딜러가 플레이어보다 먼저 나와야 한다. 
