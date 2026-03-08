@@ -1,15 +1,25 @@
 package domain;
 
+import java.util.function.Consumer;
+
 public enum MatchCase {
-    WIN("승"), LOSE("패"), DRAW("무");
+    WIN("승", BlackjackResult::increaseDealerLoseCount),
+    LOSE("패", BlackjackResult::increaseDealerWinCount),
+    DRAW("무", BlackjackResult::increaseDrawCount);
 
-    private final String displayName;
+    private final String korDisplayName;
+    private final Consumer<BlackjackResult> counter;
 
-    MatchCase(String displayName) {
-        this.displayName = displayName;
+    MatchCase(String korDisplayName,  Consumer<BlackjackResult> counter) {
+        this.korDisplayName = korDisplayName;
+        this.counter = counter;
     }
 
-    public String getDisplayName() {
-        return displayName;
+    public String getKorDisplayName() {
+        return korDisplayName;
+    }
+
+    public void increaseMatchCountOf(BlackjackResult blackjackResult) {
+        counter.accept(blackjackResult);
     }
 }

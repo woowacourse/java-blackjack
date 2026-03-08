@@ -58,7 +58,7 @@ public class OutputView {
         System.out.printf("## 최종 승패\n딜러: %d승 %d패\n", resultDto.winCount(), resultDto.loseCount());
         Map<String, MatchCase> resultMap = resultDto.matchResultMap();
         for (String playerName : resultMap.keySet()) {
-            System.out.printf("%s: %s\n", playerName, resultMap.get(playerName).getDisplayName());
+            System.out.printf("%s: %s\n", playerName, resultMap.get(playerName).getKorDisplayName());
         }
     }
 }

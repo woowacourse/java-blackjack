@@ -50,21 +50,7 @@ public class BlackjackResult {
 
     private void addMatchResult(String playerName, MatchCase matchCase) {
         playerResultMap.put(playerName, matchCase);
-        updateMatchCounts(matchCase);
-    }
-
-    private void updateMatchCounts(MatchCase matchCase) {
-        if (matchCase == MatchCase.WIN) {
-            dealerLoseCount++;
-            return;
-        }
-
-        if (matchCase == MatchCase.DRAW) {
-            drawCount++;
-            return;
-        }
-
-        dealerWinningCount++;
+        matchCase.increaseMatchCountOf(this);
     }
 
     public BlackjackResultDto toResultDto() {
@@ -74,5 +60,17 @@ public class BlackjackResult {
                 this.dealerLoseCount,
                 Map.copyOf(this.playerResultMap)
         );
+    }
+
+    public void increaseDealerWinCount() {
+        this.dealerWinningCount++;
+    }
+
+    public void increaseDrawCount() {
+        this.drawCount++;
+    }
+
+    public void increaseDealerLoseCount() {
+        this.dealerLoseCount++;
     }
 }
