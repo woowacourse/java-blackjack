@@ -44,10 +44,14 @@ public class BlackjackController {
                 .toList();
 
         OutputView.printGameSettingDoneMessage(dealer.getName(), playerNames);
-        OutputView.printSettingCardsResult(dealer.getName(), dealer.getCardsName().subList(0, 1));
+
+        Map<String, List<String>> cardsResult = new HashMap<>();
+        cardsResult.put(dealer.getName(), dealer.getCardsName().subList(0, 1));
         for (Player player : players) {
-            OutputView.printSettingCardsResult(player.getName(), player.getCardsName());
+            cardsResult.put(player.getName(), player.getCardsName());
         }
+
+        OutputView.printSettingCardResultsByPlayer(cardsResult);
     }
 
     private List<Player> readUsers() {
@@ -63,12 +67,12 @@ public class BlackjackController {
                 String yesOrNo = inputView.readMoreCard(player.getName());
                 if (yesOrNo.equals("y")) {
                     gameService.getMoreCard(player);
-                    OutputView.printSettingCardsResult(player.getName(), player.getCardsName());
+                    OutputView.printSettingCardResults(player.getName(), player.getCardsName());
                     count++;
                     continue;
                 }
                 if (count == 0) {
-                    OutputView.printSettingCardsResult(player.getName(), player.getCardsName());
+                    OutputView.printSettingCardResults(player.getName(), player.getCardsName());
                 }
                 break;
             }
@@ -91,7 +95,7 @@ public class BlackjackController {
 
     private void printGameResult(List<Player> players) {
         for (Player player : players) {
-            OutputView.printCardsResult(player.getName(), player.getCardsName(), player.calculateCardsValue());
+            OutputView.printCardResult(player.getName(), player.getCardsName(), player.calculateCardsValue());
         }
     }
 

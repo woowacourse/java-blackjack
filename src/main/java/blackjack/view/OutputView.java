@@ -10,23 +10,22 @@ public class OutputView {
     }
 
     public static void printGameSettingDoneMessage(String dealerName, List<String> playersName) {
-        System.out.println();
-        StringJoiner stringJoiner = new StringJoiner(", ");
-        for (String playerName : playersName) {
-            stringJoiner.add(playerName);
-        }
+        String joinedPlayersName = stringJoinWithComma(playersName);
 
-        System.out.println(dealerName + "와 " + stringJoiner + "에게 2장을 나누었습니다.");
+        System.out.println();
+        System.out.println(dealerName + "와 " + joinedPlayersName + "에게 2장을 나누었습니다.");
     }
 
-    public static void printSettingCardsResult(String playerName, List<String> cards) {
-        System.out.print(playerName + "카드: ");
-        StringJoiner stringJoiner = new StringJoiner(", ");
-        for (String card : cards) {
-            stringJoiner.add(card);
+    public static void printSettingCardResultsByPlayer(Map<String, List<String>> cardsResult) {
+        for (String playerName : cardsResult.keySet()) {
+            printSettingCardResults(playerName, cardsResult.get(playerName));
         }
+        System.out.println();
+    }
 
-        System.out.println(stringJoiner);
+    public static void printSettingCardResults(String playerName, List<String> cards) {
+        String joinedCards = stringJoinWithComma(cards);
+        System.out.println(playerName + "카드: " + joinedCards);
     }
 
     // TODO: 16점 고정 상수 제거
@@ -35,17 +34,13 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printCardsResult(String playerName, List<String> cards, int score) {
-        System.out.print(playerName + "카드: ");
-        StringJoiner stringJoiner = new StringJoiner(", ");
-        for (String card : cards) {
-            stringJoiner.add(card);
-        }
-
-        System.out.println(stringJoiner + " - 결과: " + score);
+    public static void printCardResult(String playerName, List<String> cards, int score) {
+        String joinedCards = stringJoinWithComma(cards);
+        System.out.println(playerName + "카드: " + joinedCards + " - 결과: " + score);
     }
 
     public static void printWinningResult(Map<String, Boolean> result, String dealerName, int dealerWinCount) {
+        System.out.println();
         System.out.println("## 최종 승패");
         System.out.println(dealerName + ": " + dealerWinCount + "승 " + (result.size() - dealerWinCount) + "패");
 
@@ -56,6 +51,14 @@ public class OutputView {
             }
             System.out.println(userName + ": " + flag);
         }
+    }
+
+    private static String stringJoinWithComma(List<String> strings) {
+        StringJoiner stringJoiner = new StringJoiner(",");
+        for (String string : strings) {
+            stringJoiner.add(string);
+        }
+        return stringJoiner.toString();
     }
 
 }
