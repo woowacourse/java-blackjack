@@ -17,7 +17,7 @@ public abstract class Participant {
     
     protected Participant(String nickname, Role role) {
         this.nickname = nickname;
-        this.hand = PlayingCards.createEmptyHands();
+        this.hand = new PlayingCards();
         this.role = role;
     }
 

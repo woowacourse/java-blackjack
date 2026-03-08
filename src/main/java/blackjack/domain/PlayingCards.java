@@ -12,6 +12,10 @@ public class PlayingCards {
     private final int BUSTED_SCORE = 21;
     private final int DEALER_SCORE = 16;
     private final List<Card> cards;
+    
+    public PlayingCards() {
+        this.cards = new ArrayList<>();
+    }
 
     private PlayingCards(List<Card> cards) {
         this.cards = cards;
@@ -19,10 +23,6 @@ public class PlayingCards {
 
     public static PlayingCards from(List<Card> cards) {
         return new PlayingCards(cards);
-    }
-
-    public static PlayingCards createEmptyHands() {
-        return from(new ArrayList<>());
     }
 
     public static PlayingCards createdDeck() {

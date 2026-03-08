@@ -21,7 +21,7 @@ class PlayingCardsTest {
     @DisplayName("빈 카드 뭉치에서 카드를 뽑으려 하면 예외가 발생한다.")
     @Test
     void drawFromEmptyDeckThrowsException() {
-        PlayingCards emptyHands = PlayingCards.createEmptyHands();
+        PlayingCards emptyHands = new PlayingCards();
         
         assertThatThrownBy(emptyHands::draw)
                 .isInstanceOf(IllegalArgumentException.class)
