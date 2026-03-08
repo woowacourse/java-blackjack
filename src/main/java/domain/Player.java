@@ -1,14 +1,12 @@
 package domain;
 
-import java.util.List;
 
-public class Player {
+public class Player extends Participant{
     private final Name name;
-    private final Hand hand;
 
     private Player(Name name, Hand hand) {
-        this.name = name;
-        this.hand = hand;
+        super(hand);
+        this.name=name;
     }
 
     public static Player of(Name name, Hand hand) {
@@ -19,19 +17,4 @@ public class Player {
         return name;
     }
 
-    public List<Card> getHandCards() {
-        return hand.getCards();
-    }
-
-    public Hand getHand() {
-        return hand;
-    }
-
-    public void addHandCard(Card card) {
-        hand.addCard(card);
-    }
-
-    public boolean isBust() {
-        return hand.getScore().isBust();
-    }
 }
