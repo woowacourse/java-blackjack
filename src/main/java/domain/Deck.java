@@ -1,9 +1,9 @@
 package domain;
 
+import domain.exception.DeckIsEmptyException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Queue;
 
 public class Deck {
@@ -23,7 +23,7 @@ public class Deck {
 
     public Card draw() {
         if (queue.isEmpty()) {
-            throw new NoSuchElementException();
+            throw new DeckIsEmptyException();
         }
         return queue.poll();
     }
