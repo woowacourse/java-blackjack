@@ -1,5 +1,8 @@
 package domain.constant;
 
+import domain.Dealer;
+import domain.Player;
+
 public enum Result {
     WIN("승"), DRAW("무"), LOSE("패");
 
@@ -7,6 +10,14 @@ public enum Result {
 
     Result(String name) {
         this.name = name;
+    }
+
+    public static Result of(Dealer dealer, Player player) {
+        if (player.isBust()) {
+            return LOSE;
+        }
+
+        return DRAW;
     }
 
     public String getName() {
