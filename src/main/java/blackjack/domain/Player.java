@@ -26,19 +26,15 @@ public class Player {
     }
 
     public List<String> getCardsName() {
-        List<String> cardsName = new ArrayList<>();
-        for (Card card : cards) {
-            cardsName.add(card.getName());
-        }
-
-        return cardsName;
+        return cards.stream()
+                .map(Card::getName)
+                .toList();
     }
 
     public int calculateCardsValue() {
-        int sum = 0;
-        for (Card card : cards) {
-            sum += card.getValue();
-        }
+        int sum = cards.stream()
+                .mapToInt(Card::getValue)
+                .sum();
 
         return applyBestAceValue(sum);
     }
@@ -59,12 +55,7 @@ public class Player {
     }
 
     private boolean hasAce() {
-        for (Card card : cards) {
-            if (card.isAce()) {
-                return true;
-            }
-        }
-        return false;
+        return cards.stream().anyMatch(Card::isAce);
     }
 
 }
