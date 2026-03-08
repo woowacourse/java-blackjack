@@ -30,7 +30,7 @@ class BlackjackControllerTest {
     }
 
     @Test
-    @DisplayName("카드의 합이 21이상인 경우 카드 추가 지급 불가 ( false 반환 )")
+    @DisplayName("카드의 합이 21 이하인 경우 카드 추가 지급 가능 ( true 반환 )")
     void test_checkAddCard_return_true() {
 
         Player player = new Player("pobi");
