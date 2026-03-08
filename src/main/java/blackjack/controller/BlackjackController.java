@@ -5,12 +5,13 @@ import blackjack.domain.Player;
 import blackjack.dto.DealResultDto;
 import blackjack.dto.GameResultDto;
 import blackjack.dto.PlayerHandDto;
-import blackjack.service.BlackjackGame;
+import blackjack.domain.BlackjackGame;
 import blackjack.service.RandomShuffleStrategy;
 import blackjack.util.Parser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +21,7 @@ import static blackjack.view.InputView.readPlayNames;
 public class BlackjackController {
     public void run() {
         List<String> names = inputNames();
-        BlackjackGame blackjackGame = BlackjackGame.create(names, new RandomShuffleStrategy());
+        BlackjackGame blackjackGame = BlackjackGame.create(names, Collections::shuffle);
 
         DealResultDto dealResultDto = deal(blackjackGame);
         OutputView.printDealResult(dealResultDto);
