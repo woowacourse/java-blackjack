@@ -15,6 +15,7 @@ class DealerTest {
     void receiveCardTest() {
         List<Card> cards = List.of(new Card(CardNumber.EIGHT, CardShape.CLUB), new Card(CardNumber.FOUR, CardShape.CLUB));
         Dealer dealer = new Dealer();
+        dealer.receiveInitialCards(cards);
 
         boolean isReceiveCard = dealer.isReceiveCard();
 
