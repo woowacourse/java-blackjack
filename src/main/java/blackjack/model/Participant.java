@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class Participant {
-    protected final List<Card> cards;
-    protected final Score score;
+    private final List<Card> cards;
+    private final Score score;
 
     public Participant() {
         this.cards = new ArrayList<>();
@@ -27,6 +27,10 @@ public abstract class Participant {
 
     public int getScore() {
         return score.getScore();
+    }
+
+    public String getInitialCards() {
+        return cards.getFirst().getCardName();
     }
 
     public List<Card> getCards() {
