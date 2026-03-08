@@ -1,15 +1,12 @@
 package service;
 
-import repository.ParticipantRepository;
-import repository.ScoreRepository;
+import repository.GameTableRepository;
 
 public class BlackJackQueryService {
 
-    private final ParticipantRepository participantRepository;
-    private final ScoreRepository scoreRepository;
+    private final GameTableRepository gameTableRepository;
 
-    public BlackJackQueryService(ParticipantRepository participantRepository, ScoreRepository scoreRepository) {
-        this.participantRepository = participantRepository;
-        this.scoreRepository = scoreRepository;
+    public BlackJackQueryService(GameTableRepository gameTableRepository) {
+        this.gameTableRepository = gameTableRepository;
     }
 }

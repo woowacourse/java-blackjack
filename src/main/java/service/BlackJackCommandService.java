@@ -1,15 +1,27 @@
 package service;
 
-import repository.ParticipantRepository;
-import repository.ScoreRepository;
+import domain.DrawStrategy;
+import domain.GameTable;
+import domain.BlackJackFactory;
+import java.util.List;
+import repository.GameTableRepository;
 
 public class BlackJackCommandService {
 
-    private final ParticipantRepository participantRepository;
-    private final ScoreRepository scoreRepository;
+    private final GameTableRepository gameTableRepository;
+    private final DrawStrategy drawStrategy;
 
-    public BlackJackCommandService(ParticipantRepository participantRepository, ScoreRepository scoreRepository) {
-        this.participantRepository = participantRepository;
-        this.scoreRepository = scoreRepository;
+    public BlackJackCommandService(GameTableRepository gameTableRepository, DrawStrategy drawStrategy) {
+        this.gameTableRepository = gameTableRepository;
+        this.drawStrategy = drawStrategy;
+    }
+
+    public void setupGameTable() {
+        GameTable gameTable = BlackJackFactory.basedOn(drawStrategy).openGame();
+        gameTableRepository.save(gameTable);
+    }
+
+    public void setupPlayers(List<String> names) {
+
     }
 }

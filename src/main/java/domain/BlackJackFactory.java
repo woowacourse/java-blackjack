@@ -1,11 +1,6 @@
-package domain.factory;
+package domain;
 
 import common.Constants;
-import domain.Dealer;
-import domain.DrawStrategy;
-import domain.GameTable;
-import domain.Hand;
-import java.util.ArrayList;
 
 public class BlackJackFactory {
 
@@ -19,7 +14,7 @@ public class BlackJackFactory {
         return new BlackJackFactory(drawStrategy);
     }
 
-    public GameTable openGameTable () {
+    public GameTable openGame() {
         GameTable gameTable = new GameTable();
         Dealer dealer = dealer();
         dealer.draw();
@@ -34,6 +29,6 @@ public class BlackJackFactory {
     }
 
     private Hand emptyhand() {
-        return new Hand(drawStrategy, new ArrayList<>());
+        return Hand.of(drawStrategy);
     }
 }

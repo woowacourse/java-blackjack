@@ -10,9 +10,13 @@ public class Hand {
     private final DrawStrategy drawStrategy;
     private final List<Card> cards;
 
-    public Hand(DrawStrategy drawStrategy, List<Card> cards) {
+    Hand(DrawStrategy drawStrategy, List<Card> cards) {
         this.drawStrategy = drawStrategy;
         this.cards = new ArrayList<>(cards);
+    }
+
+    static Hand of(DrawStrategy drawStrategy) {
+        return new Hand(drawStrategy, new ArrayList<>());
     }
 
     void drawCard() {

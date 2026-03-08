@@ -12,6 +12,10 @@ public abstract class Participant {
         this.hand = hand;
     }
 
+    private static Participant player(String name, DrawStrategy drawStrategy) {
+        return Player.of(name, drawStrategy);
+    }
+
     protected abstract boolean isPlayable();
 
     public void draw() {
