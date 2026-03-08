@@ -40,6 +40,5 @@ public class InputView {
         } catch (NoSuchElementException e) {
             throw new IllegalArgumentException("입력이 비어있습니다.");
         }
-
     }
 }

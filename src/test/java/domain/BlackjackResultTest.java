@@ -1,10 +1,8 @@
 package domain;
 
 import domain.dto.BlackjackResultDto;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import testutil.PlayerTestUtil;
 
 import java.util.List;

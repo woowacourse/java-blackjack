@@ -14,6 +14,10 @@ public class Deck {
         Collections.shuffle(cards);
     }
 
+    public int getSize() {
+        return cards.size();
+    }
+
     public Card pop() {
         return cards.removeFirst();
 

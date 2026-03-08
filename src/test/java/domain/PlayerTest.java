@@ -23,7 +23,7 @@ class PlayerTest {
         player.add(new Card(CardShape.SPADE, CardRank.THREE));
         player.add(new Card(CardShape.SPADE, CardRank.TWO));
 
-        int result = player.calculateScore();
+        int result = player.getFinalScore();
 
         assertThat(result).isEqualTo(5);
     }

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import domain.Cards;
+import domain.Deck;
 import domain.Player;
 
 class BlackjackServiceTest {
@@ -23,7 +23,7 @@ class BlackjackServiceTest {
     @DisplayName("처음 전쳬 카드는 52장 생성되야한다.")
     @Test
     void 처음_전쳬_카드_개수_테스트() {
-        Cards cards = blackjackService.generateCards();
+        Deck cards = blackjackService.generateCards();
 
         assertThat(cards.getSize()).isEqualTo(52);
     }
@@ -31,10 +31,9 @@ class BlackjackServiceTest {
     @DisplayName("처음에 카드 2장씩 베부 정상 테스트")
     @Test
     void 초기_카드_2장_배부_테스트() {
-        Cards cards = blackjackService.generateCards();
+        Deck cards = blackjackService.generateCards();
         List<Player> playerList = blackjackService.createPlayers(List.of("요크", "아티"), cards);
 
         assertThat(playerList.getFirst().getCardCount()).isEqualTo(2);
     }
-
 }
