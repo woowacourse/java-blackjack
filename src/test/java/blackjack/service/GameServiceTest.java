@@ -2,9 +2,6 @@ package blackjack.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.Card;
-import blackjack.domain.CardShape;
-import blackjack.domain.CardValue;
 import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 import java.util.List;
@@ -24,22 +21,6 @@ class GameServiceTest {
 
         // then
         assertThat(player.getCards().size()).isEqualTo(2);
-    }
-
-    @Test
-    void 승패_판단_테스트() {
-        // given
-        GameService gameService = new GameService();
-        Player player = new Player("흑곰");
-        Dealer dealer = new Dealer();
-        player.get(new Card(CardValue.SEVEN, CardShape.DIAMOND));
-        dealer.get(new Card(CardValue.EIGHT, CardShape.DIAMOND));
-
-        // when
-        boolean isDealerWinning = gameService.isDealerWinning(player, dealer);
-
-        // then
-        assertThat(isDealerWinning).isTrue();
     }
 
 }

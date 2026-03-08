@@ -8,4 +8,15 @@ public class Dealer extends Player {
         super(DEALER_NAME);
     }
 
+    public boolean winsAgainst(Player other) {
+        if (other.isBurst()) {
+            return true;
+        }
+        if (this.isBurst()) {
+            return false;
+        }
+
+        return other.calculateCardsValue() < this.calculateCardsValue();
+    }
+
 }

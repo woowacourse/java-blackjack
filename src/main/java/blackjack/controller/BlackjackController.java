@@ -103,7 +103,7 @@ public class BlackjackController {
         Map<String, Boolean> result = new HashMap<>();
         int dealerWinCount = 0;
         for (Player player : players) {
-            boolean isDealerWinning = gameService.isDealerWinning(player, dealer);
+            boolean isDealerWinning = dealer.winsAgainst(player);
             result.put(player.getName(), !isDealerWinning);
             if (isDealerWinning) {
                 dealerWinCount++;

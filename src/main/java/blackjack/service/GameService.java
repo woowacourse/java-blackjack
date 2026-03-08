@@ -21,15 +21,4 @@ public class GameService {
         player.get(Deck.draw());
     }
 
-    public boolean isDealerWinning(Player player, Dealer dealer) {
-        if (player.isBurst()) {
-            return true;
-        }
-        if (dealer.isBurst()) {
-            return false;
-        }
-
-        return player.calculateCardsValue() < dealer.calculateCardsValue();
-    }
-
 }
