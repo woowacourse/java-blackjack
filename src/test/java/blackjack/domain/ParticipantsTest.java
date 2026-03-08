@@ -3,9 +3,6 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.Card;
-import blackjack.domain.Rank;
-import blackjack.domain.Suit;
 import blackjack.domain.participant.Dealer;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -38,7 +35,7 @@ class ParticipantsTest {
         
         assertThatThrownBy(() -> participants.distributeCards(shortDeck))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("뽑을 카드가 남아있지 않습니다.");
+                .hasMessage("남은 카드가 없습니다.");
     }
     
     @DisplayName("딜러가 카드를 더 받아야 하는 상황인지 정확히 판단한다.")

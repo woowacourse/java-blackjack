@@ -13,7 +13,7 @@ class PlayingCardsTest {
     @Test
     void createDeck() {
         PlayingCards deck = PlayingCards.createdDeck();
-        
+
 //      ...isEqualTo(380); -> 340 합계 계산에서 에이스가 있는 만큼 -10을 시도, 총점에서 -40 해줘야
         assertThat(deck.calculateTotalScore()).isEqualTo(340);
     }
@@ -25,7 +25,7 @@ class PlayingCardsTest {
         
         assertThatThrownBy(emptyHands::draw)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("뽑을 카드가 남아있지 않습니다.");
+                .hasMessage("남은 카드가 없습니다.");
     }
     
     @DisplayName("ACE가 없는 일반 카드들의 총합을 계산한다.")

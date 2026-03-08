@@ -9,7 +9,7 @@ public class Dealer extends Participant {
     }
     
     public String getFirstCard() {
-        return hand.getFirstCard().getDisplayName();
+        return hand.getFirstCardDisplayName();
     }
     
     public boolean isDealerDraw() {
