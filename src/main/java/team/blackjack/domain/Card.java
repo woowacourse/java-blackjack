@@ -12,7 +12,7 @@ public class Card {
     }
 
     public String getCardName() {
-        return this.rank.name() + this.suit.getKoreanName();
+        return this.rank.getName() + this.suit.getKoreanName();
     }
 
     public boolean isAce() {

@@ -1,10 +1,9 @@
 package team.blackjack.service;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import team.blackjack.domain.Card;
 import team.blackjack.service.dto.DrawResult;
 import team.blackjack.service.dto.GameResult;
@@ -15,7 +14,6 @@ import team.blackjack.domain.BlackjackGame;
 import team.blackjack.domain.Dealer;
 import team.blackjack.domain.Player;
 import team.blackjack.domain.Result;
-import team.blackjack.domain.rule.DefaultBlackjackRule;
 
 public class BlackJackService {
     private BlackjackGame blackjackGame;
@@ -78,28 +76,35 @@ public class BlackJackService {
     }
 
     public GameResult getGameResult() {
-        final int dealerScore = blackjackGame.getDealerScore();
-        final Map<String, PlayerResult> playerResults = calculatePlayersResultMap(dealerScore);
-        final DealerResult dealerResult = calculateDealerResult(playerResults);
+        final Map<String, PlayerResult> playerResults = calculatePlayersResult();
+        final DealerResult dealerResult = calculateDealerResult();
 
         return new GameResult(dealerResult, playerResults);
     }
 
-    private Map<String, PlayerResult> calculatePlayersResultMap(int dealerScore) {
-        return blackjackGame.getPlayers().stream()
-                .collect(Collectors.toMap(
-                        Player::getName,
-                        player -> new PlayerResult(DefaultBlackjackRule.judgeResult(player.getScore(), dealerScore)),
-                        (existing, replacement) -> existing,
-                        LinkedHashMap::new
-                ));
+    private Map<String, PlayerResult> calculatePlayersResult() {
+        final Map<String, PlayerResult> playerResults = new HashMap<>();
+
+        final Dealer dealer = blackjackGame.getDealer();
+        final List<Player> players = blackjackGame.getPlayers();
+
+        for (Player player : players) {
+            PlayerResult playerResult = new PlayerResult(blackjackGame.getPlayerResult(player, dealer));
+            playerResults.put(player.getName(), playerResult);
+        }
+
+        return playerResults;
     }
 
-    private DealerResult calculateDealerResult(Map<String, PlayerResult> playerResults) {
-        final List<Result> dealerResults = new ArrayList<>();
+    private DealerResult calculateDealerResult() {
+        List<Result> dealerResults = new ArrayList<>();
 
-        for (PlayerResult playerResult : playerResults.values()) {
-            dealerResults.add(playerResult.result().reverse());
+        final Dealer dealer = blackjackGame.getDealer();
+        final List<Player> players = blackjackGame.getPlayers();
+
+        for (Player player : players) {
+            Result dealerResult = blackjackGame.getDealerResult(dealer, player);
+            dealerResults.add(dealerResult);
         }
 
         return new DealerResult(dealerResults);

@@ -30,15 +30,17 @@ public class DefaultBlackjackRule {
         return currentSum <= 10;
     }
 
-    // 딜러와 플레이어의 승패를 결정하는 메서드
-    public static Result judgeResult(int myScore, int targetScore) {
-        if(myScore > BLACKJACK){
+    public static Result judgePlayerResult(int playerScore, int dealerScore) {
+        if (playerScore > BLACKJACK) {
             return Result.LOSE;
         }
-        if(myScore > targetScore){
+        if (dealerScore > BLACKJACK) {
             return Result.WIN;
         }
-        if(myScore < targetScore){
+        if (playerScore > dealerScore) {
+            return Result.WIN;
+        }
+        if (playerScore < dealerScore) {
             return Result.LOSE;
         }
         return Result.DRAW;

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import team.blackjack.domain.rule.DefaultBlackjackRule;
 
 public class BlackjackGame {
     private static final int INITIAL_CARD_COUNT = 2;
@@ -50,7 +51,7 @@ public class BlackjackGame {
         return result;
     }
 
-    public Map<String, Integer> getAllPlayerScores(){
+    public Map<String, Integer> getAllPlayerScores() {
         return this.players.stream()
                 .collect(Collectors.toMap(
                         Player::getName,
@@ -58,12 +59,20 @@ public class BlackjackGame {
                 );
     }
 
-    public List<String> getDealerCards(){
+    public List<String> getDealerCards() {
         return dealer.getAllCards();
     }
 
-    public int getDealerScore(){
+    public int getDealerScore() {
         return this.dealer.getScore();
+    }
+
+    public Result getPlayerResult(Player player, Dealer dealer) {
+        return DefaultBlackjackRule.judgePlayerResult(player.getScore(), dealer.getScore());
+    }
+
+    public Result getDealerResult(Dealer dealer, Player player) {
+        return getPlayerResult(player, dealer).reverse();
     }
 
     private List<String> getPlayerCardInAllHand(Player player) {

@@ -14,6 +14,7 @@ public class Dealer implements Participant {
         return this.hand;
     }
 
+    @Override
     public int getScore() {
         return DefaultBlackjackRule.calculateBestScore(this.getHand().getCards());
     }
