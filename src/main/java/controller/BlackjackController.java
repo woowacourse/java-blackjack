@@ -6,7 +6,9 @@ import domain.Dealer;
 import domain.Player;
 import domain.Players;
 import domain.Policy;
+
 import java.util.List;
+
 import meesage.InputMessage;
 import meesage.OutputMessage;
 import utils.InputParser;
@@ -38,8 +40,8 @@ public class BlackjackController {
 
     private List<String> getUserNames() {
         List<String> names = null;
-        while (names == null){
-             names = readUserNames();
+        while (names == null) {
+            names = readUserNames();
         }
         return names;
     }
@@ -48,7 +50,7 @@ public class BlackjackController {
         try {
             String rawUserNames = inputView.askUserInputWithMessage(InputMessage.ASK_USER_NAME.getMessage());
             return InputParser.splitByDelimiter(rawUserNames);
-        } catch (IllegalArgumentException exception){
+        } catch (IllegalArgumentException exception) {
             outputView.println(exception.getMessage());
             return null;
         }
@@ -76,7 +78,6 @@ public class BlackjackController {
 
     private void addCard(Players players, Cards deck, Dealer dealer) {
         askPlayersAddCard(players, deck);
-
         addDealerCard(dealer, deck);
     }
 
@@ -88,28 +89,30 @@ public class BlackjackController {
 
     private void askAddCard(Player player, Cards deck) {
         String answer = InputMessage.USER_INPUT_YES.getMessage();
-        while (!player.isBust(player.calculateScore()) && answer.equals(InputMessage.USER_INPUT_YES.getMessage())) {
+        while (shouldDrawCard(player, answer)) {
             outputView.printfList(InputMessage.ASK_ADD_CARD.getMessage(), player.getName());
-            outputView.separatorLine();
             answer = inputView.askUserInput();
-            printInitialHandIfAnswerNo(player, answer);
-            printInitialHandIfAnswerYes(player, deck, answer);
+            dealAdditionalCardIfRequested(player, deck, answer);
         }
     }
 
-    private void printInitialHandIfAnswerNo(Player player, String answer) {
-        if (answer.equals(InputMessage.USER_INPUT_NO.getMessage())) {
-            if (player.getCardsInfo().size() == Policy.FIRST_DRAW_SIZE) {
-                outputView.println(player.getPlayerInfo());
-            }
-        }
+    private boolean shouldDrawCard(Player player, String answer) {
+        return !player.isBust(player.calculateScore()) && sayYes(answer);
     }
 
-    private void printInitialHandIfAnswerYes(Player player, Cards deck, String answer) {
-        if (answer.equals(InputMessage.USER_INPUT_YES.getMessage())) {
+    private void dealAdditionalCardIfRequested(Player player, Cards deck, String answer) {
+        if (sayYes(answer)) {
             player.addCard(deck.draw());
             outputView.println(player.getPlayerInfo());
+            return;
         }
+        if (player.getCardsInfo().size() == Policy.FIRST_DRAW_SIZE) {
+            outputView.println(player.getPlayerInfo());
+        }
+    }
+
+    private static boolean sayYes(String answer) {
+        return answer.equals(InputMessage.USER_INPUT_YES.getMessage());
     }
 
     private void addDealerCard(Dealer dealer, Cards deck) {
