@@ -10,7 +10,7 @@ public abstract class Participant {
 
     private static final int BLACKJACK_SCORE = 21;
 
-    protected final String name;
+    private final String name;
     protected final Hands hands;
 
     public Participant(String name, Hands hands) {
