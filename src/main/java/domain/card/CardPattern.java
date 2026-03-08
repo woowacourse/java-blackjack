@@ -9,15 +9,14 @@ public enum CardPattern {
     DIAMOND("다이아몬드"),
     CLUB("클로버");
 
-    private final String name;
+    private String name;
 
     CardPattern(String name) {
         this.name = name;
     }
 
     public static CardPattern matchCardPattern(String value) {
-        return Arrays.stream(CardPattern.values())
-                .filter(pattern ->  pattern.name.equals(value))
+        return Arrays.stream(CardPattern.values()).filter(pattern ->  pattern.name.equals(value))
                 .findAny()
                 .orElseThrow(NoSuchElementException::new);
     }

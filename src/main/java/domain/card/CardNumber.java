@@ -2,10 +2,9 @@ package domain.card;
 
 import domain.exception.OutOfBoundException;
 import java.util.Arrays;
-import java.util.NoSuchElementException;
 
 public enum CardNumber {
-    ACE(1, "A"),
+    A(11, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
     FOUR(4, "4"),
@@ -15,15 +14,12 @@ public enum CardNumber {
     EIGHT(8, "8"),
     NINE(9, "9"),
     TEN(10, "10"),
-    JACK(10, "J"),
-    QUEEN(10, "Q"),
-    KING(10, "K");
+    J(10, "J"),
+    Q(10, "Q"),
+    K(10, "K");
 
-    private static final int LOWER_BOUND = 1;
-    private static final int UPPER_BOUND = 10;
-
-    private final int number;
-    private final String court;
+    private int number;
+    private String court;
 
     CardNumber(int number, String court) {
         this.number = number;
@@ -35,11 +31,7 @@ public enum CardNumber {
         return Arrays.stream(CardNumber.values())
                 .filter(card -> card.court.equals(value))
                 .findAny()
-                .orElseThrow(NoSuchElementException::new);
-    }
-
-    public boolean isAce() {
-        return this == ACE;
+                .orElseThrow(NoSuchFieldError::new);
     }
 
     private static void validate(String value) {
@@ -52,17 +44,13 @@ public enum CardNumber {
     }
 
     private static void validateRange(int number) {
-        if (number < LOWER_BOUND || number > UPPER_BOUND) {
+        if (number < 1 || number > 10) {
             throw new OutOfBoundException();
         }
     }
 
     private static void validateCourt(String value) {
-        boolean isValid = Arrays.stream(CardNumber.values())
-                .anyMatch(card -> card.court.equals(value));
-        if (!isValid) {
-            throw new IllegalArgumentException();
-        }
+        CardNumber.valueOf(value);
     }
 
     public int getValue() {
