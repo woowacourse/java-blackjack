@@ -11,13 +11,17 @@ import dto.GameStatus;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import strategy.RandomStrategy;
+import domain.strategy.RandomStrategy;
 import view.InputView;
 import view.OutputView;
 
 public class Controller {
 
-    private GameTable gameTable;
+    private final GameTable gameTable;
+
+    public Controller(GameTable gameTable) {
+        this.gameTable = gameTable;
+    }
 
     public void run() {
         setupPhase();
@@ -27,8 +31,7 @@ public class Controller {
     }
 
     private void setupPhase() {
-        gameTable = new GameTable();
-        dealerSetup();
+//        dealerSetup();
         playerSetup();
         displayInitCard();
     }

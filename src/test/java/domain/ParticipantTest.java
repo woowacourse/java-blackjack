@@ -3,7 +3,7 @@ package domain;
 import static org.junit.jupiter.api.Assertions.*;
 
 import strategy.AceDrawStrategy;
-import strategy.RandomStrategy;
+import domain.strategy.RandomStrategy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;

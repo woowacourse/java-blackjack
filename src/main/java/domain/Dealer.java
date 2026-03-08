@@ -4,7 +4,6 @@ import common.Constants;
 
 public class Dealer extends Participant {
 
-
     public Dealer(String name, Hand hand) {
         super(name, hand);
     }
