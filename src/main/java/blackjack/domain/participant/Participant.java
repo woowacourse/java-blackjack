@@ -8,9 +8,9 @@ public abstract class Participant {
     private static final String DEALER_ROLE_NAME = "dealer";
     private static final int FIRST_DRAW_COUNT = 2;
 
-    protected String nickname;
+    protected final String nickname;
+    protected final Role role;
     protected PlayingCards hand;
-    protected Role role;
 
     public Participant(String nickname, PlayingCards hand, Role role) {
         this.nickname = nickname;
