@@ -17,20 +17,6 @@ public class Player {
         cards.add(card);
     }
 
-    public String getName() {
-        return name.name();
-    }
-
-    public List<Card> getCards() {
-        return cards;
-    }
-
-    public List<String> getCardsName() {
-        return cards.stream()
-                .map(Card::getName)
-                .toList();
-    }
-
     public int calculateCardsValue() {
         int sum = cards.stream()
                 .mapToInt(Card::getValue)
@@ -45,6 +31,20 @@ public class Player {
 
     public boolean isBlackjack() {
         return calculateCardsValue() == 21;
+    }
+
+    public String getName() {
+        return name.name();
+    }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
+    public List<String> getCardsName() {
+        return cards.stream()
+                .map(Card::getName)
+                .toList();
     }
 
     private int applyBestAceValue(int sum) {
