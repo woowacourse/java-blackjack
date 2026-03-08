@@ -37,7 +37,7 @@ public class HandTest {
     }
 
     @ParameterizedTest
-    @MethodSource("provideCases")
+    @MethodSource("provideAceCases")
     void Ace는_1_또는_11로_계산한다(List<Card> cards, int expected) {
         Hand hand = new Hand();
         for (Card card : cards) {
@@ -49,7 +49,7 @@ public class HandTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> provideCases() {
+    private static Stream<Arguments> provideAceCases() {
         return Stream.of(
                 Arguments.of(List.of(
                         new Card(Suit.SPADE, CardNumber.ACE)
@@ -76,5 +76,42 @@ public class HandTest {
                 ), 21)
         );
     }
+    @ParameterizedTest
+    @MethodSource("provideFaceCardCases")
+    void J_Q_K는_각각_10으로_계산한다(List<Card> cards, int expected) {
+        Hand hand = new Hand();
+        for (Card card : cards) {
+            hand.add(card);
+        }
+
+        int actual = hand.calculateScore();
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> provideFaceCardCases() {
+        return Stream.of(
+                Arguments.of(List.of(
+                        new Card(Suit.SPADE, CardNumber.JACK)
+                ), 10),
+                Arguments.of(List.of(
+                        new Card(Suit.SPADE, CardNumber.QUEEN)
+                ), 10),
+                Arguments.of(List.of(
+                        new Card(Suit.SPADE, CardNumber.KING)
+                ), 10),
+
+                Arguments.of(List.of(
+                        new Card(Suit.SPADE, CardNumber.ACE),
+                        new Card(Suit.SPADE, CardNumber.TEN),
+                        new Card(Suit.SPADE, CardNumber.JACK),
+                        new Card(Suit.SPADE, CardNumber.QUEEN),
+                        new Card(Suit.SPADE, CardNumber.KING)
+                ), 41)
+        );
+    }
+
+
+
 }
 
