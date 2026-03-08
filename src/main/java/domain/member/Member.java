@@ -3,30 +3,26 @@ package domain.member;
 import domain.card.Card;
 import java.util.List;
 
-public abstract class Member {
+public class Member {
 
-    private final Hand hand;
-    private final Name name;
+    protected final Hand hand;
+    private final String name;
 
     public Member(String name) {
-        this.name = new Name(name);
+        this.name = name;
         this.hand = new Hand();
     }
 
-    public abstract List<Card> showFirstCards();
-
-    public abstract boolean isDealer();
-
-    public String getName() {
-        return name.getValue();
+    public String name() {
+        return name;
     }
 
-    public int handValue() {
+    public int currentValue() {
         return hand.calculateTotalValue();
     }
 
-    public List<Card> handCards() {
-        return hand.getCards();
+    public List<Card> currentCards() {
+        return hand.cards();
     }
 
     public void receiveCard(Card card) {
