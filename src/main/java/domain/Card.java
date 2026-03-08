@@ -15,9 +15,14 @@ public class Card {
         this.suit = suit;
     }
 
-    public int getRank() {
+    public Rank getRank() {
+        return this.rank;
+    }
+
+    public int getRankValue() {
         return this.rank.getValue();
     }
+
 
     @Override
     public boolean equals(Object o) {

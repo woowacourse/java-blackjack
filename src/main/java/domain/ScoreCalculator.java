@@ -1,5 +1,6 @@
 package domain;
 
+import domain.constant.Rank;
 import java.util.List;
 
 public class ScoreCalculator {
@@ -10,15 +11,17 @@ public class ScoreCalculator {
     private int sumScore(List<Card> hand) {
         int score = 0;
         for (Card card : hand) {
-            score += card.getRank();
+            score += card.getRankValue();
         }
         return score;
     }
 
     public int calculateScore(List<Card> hand) {
         int currentScore = sumScore(hand);
-        Card findCard = hand.stream().filter(c -> c.getRank() == 1).findAny().orElse(null);
-        if (findCard == null) {
+        boolean hasACE = hand.stream()
+                .anyMatch(c -> c.getRank() == Rank.ACE);
+
+        if (!hasACE) {
             return currentScore;
         }
 
