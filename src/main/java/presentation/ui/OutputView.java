@@ -1,8 +1,11 @@
 package presentation.ui;
 
-import presentation.dto.GameResult;
-import domain.vo.RoundResult;
-import presentation.dto.MemberStatus;
+import static constant.Word.*;
+
+import application.dto.GameResult;
+import domain.RoundResult;
+import domain.card.Card;
+import domain.dto.MemberStatus;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -10,21 +13,21 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public void printInitialStatus(String dealerName, List<MemberStatus> playerStatuses) {
+    public void printInitialStatus(List<MemberStatus> playerStatuses) {
         System.out.println();
-        printDistributeMessage(dealerName, playerStatuses);
-        playerStatuses.forEach(this::printMemberHandCard);
+        printDistributeMessage(playerStatuses);
+        playerStatuses.forEach(this::printMemberCurrentCard);
         System.out.println();
     }
 
-    public void printHandCard(String playerName, List<String> cards) {
-        String cardNames = String.join(", ", cards);
-        System.out.printf("%s카드: %s\n", playerName, cardNames);
+    public void printCurrentCard(String playerName, List<Card> cards) {
+        String cardNames = cards.stream().map(Card::cardName).collect(Collectors.joining(", "));
+        System.out.println(CARD_STATUS.format(playerName, cardNames));
     }
 
     public void printDealerDrawResult() {
         System.out.println();
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(DEALER_DRAW_MESSAGE.format());
         System.out.println();
     }
 
@@ -34,7 +37,7 @@ public class OutputView {
     }
 
     public void printGameResult(GameResult gameResult) {
-        System.out.println("## 최종 승패");
+        System.out.println(FINAL_GAME_RESULT_MESSAGE.format());
         printDealerGameResult(
                 gameResult.dealerWinAmount(),
                 gameResult.dealerLoseAmount()
@@ -43,33 +46,52 @@ public class OutputView {
     }
 
     private void printDealerGameResult(int winAmount, int loseAmount) {
-        System.out.printf("딜러: %d승 %d패\n", winAmount, loseAmount);
+        System.out.println(DEALER_GAME_RESULT.format(winAmount, loseAmount));
     }
 
     private void printPlayerGameResult(Map<String, RoundResult> roundResults) {
         for (Entry<String, RoundResult> round : roundResults.entrySet()) {
-            System.out.printf("%s: %s\n", round.getKey(), round.getValue().result());
+            System.out.println(
+                    ROUND_RESULT.format(
+                            round.getKey(),
+                            round.getValue().result()
+                    )
+            );
         }
     }
 
-    private void printDistributeMessage(String dealerName, List<MemberStatus> memberStatuses) {
-        String playerNames = memberStatuses.stream()
-                .map(MemberStatus::memberName)
-                .filter(memberName -> !memberName.equals(dealerName))
+    private void printDistributeMessage(List<MemberStatus> playerStatuses) {
+        String playerNames = playerStatuses.stream()
+                .map(MemberStatus::playerName)
+                .filter(s -> !s.equals(DEALER.format()))
                 .collect(Collectors.joining(", "));
-        System.out.printf("딜러와 %s에게 2장을 나누었습니다.\n", playerNames);
+        System.out.println(DISTRIBUTE_MESSAGE.format(playerNames));
     }
 
-    private void printMemberHandCard(MemberStatus memberStatus) {
+    private void printMemberCurrentCard(MemberStatus playerStatus) {
+        if (playerStatus.playerName().equals(DEALER.format())) {
+            printDealerCurrentCard(playerStatus);
+            return;
+        }
         System.out.println(
-                memberStatus.memberName()
+                playerStatus.playerName()
                         + ": "
-                        + String.join(", ", memberStatus.cards())
+                        + playerStatus.cards().stream()
+                        .map(Card::cardName)
+                        .collect(Collectors.joining(", "))
         );
     }
 
-    private void printFinalMemberCardAndResult(MemberStatus memberStatus) {
-        String cards = String.join(", ", memberStatus.cards());
-        System.out.printf("%s카드: %s - 결과: %d\n", memberStatus.memberName(), cards, memberStatus.totalValue());
+    private void printDealerCurrentCard(MemberStatus dealerStatus) {
+        System.out.println(
+                dealerStatus.playerName()
+                    + ": "
+                    + dealerStatus.cards().getFirst().cardName()
+        );
+    }
+
+    private void printFinalMemberCardAndResult(MemberStatus status) {
+        String cards = status.cards().stream().map(Card::cardName).collect(Collectors.joining(", "));
+        System.out.println(CARD_STATUS.format(status.playerName(), cards) + RESULT_MESSAGE.format(status.totalValue()));
     }
 }
