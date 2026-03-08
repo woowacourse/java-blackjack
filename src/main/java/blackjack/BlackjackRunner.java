@@ -7,7 +7,6 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.ParticipantResult;
 import blackjack.dto.DrawResult;
 import blackjack.dto.WinningResult;
-import blackjack.util.PlayerNameParser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -49,8 +48,7 @@ public class BlackjackRunner {
     
     private Participants makeParticipants() {
         outputView.askGameMembers();
-        String playerNamesInput = inputView.readLine();
-        List<String> playerNames = PlayerNameParser.parsePlayerNames(playerNamesInput);
+        List<String> playerNames = inputView.parsePlayerNames();
         Players players = Players.makePlayers(playerNames);
         Dealer dealer = new Dealer();
         return new Participants(players, dealer);
