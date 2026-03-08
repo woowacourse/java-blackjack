@@ -32,8 +32,8 @@ class GameServiceTest {
         GameService gameService = new GameService();
         Player player = new Player("흑곰");
         Dealer dealer = new Dealer();
-        player.bring(new Card(CardValue.SEVEN, CardShape.DIAMOND));
-        dealer.bring(new Card(CardValue.EIGHT, CardShape.DIAMOND));
+        player.get(new Card(CardValue.SEVEN, CardShape.DIAMOND));
+        dealer.get(new Card(CardValue.EIGHT, CardShape.DIAMOND));
 
         // when
         boolean isDealerWinning = gameService.isDealerWinning(player, dealer);

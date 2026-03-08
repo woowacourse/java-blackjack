@@ -79,7 +79,7 @@ public class BlackjackController {
     private void getMoreCardsForDealer(Dealer dealer) {
         while (dealer.calculateCardsValue() < 17) {
             OutputView.printGetMoreCardsForDealer(dealer.getName());
-            gameService.getMoreCardForDealer(dealer);
+            gameService.getMoreCard(dealer);
         }
     }
 

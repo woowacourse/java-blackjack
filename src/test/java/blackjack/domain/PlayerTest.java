@@ -25,7 +25,7 @@ public class PlayerTest {
 
         // when
         int before = player.getCards().size();
-        player.bring(card);
+        player.get(card);
 
         // then
         assertThat(player.getCards().size()).isEqualTo(before + 1);
@@ -35,8 +35,8 @@ public class PlayerTest {
     void 가지고있는_카드의_합을_계산하는_기능_테스트() {
         // given
         Player player = new Player("밀란");
-        player.bring(new Card(CardValue.FOUR, CardShape.DIAMOND));
-        player.bring(new Card(CardValue.TWO, CardShape.DIAMOND));
+        player.get(new Card(CardValue.FOUR, CardShape.DIAMOND));
+        player.get(new Card(CardValue.TWO, CardShape.DIAMOND));
 
         // when
         int sum = player.calculateCardsValue();
@@ -49,9 +49,9 @@ public class PlayerTest {
     void 가지고_있는_카드의_핪이_버스트인지_확인하는_테스트() {
         // given
         Player player = new Player("밀란");
-        player.bring(new Card(CardValue.TEN, CardShape.DIAMOND));
-        player.bring(new Card(CardValue.TEN, CardShape.DIAMOND));
-        player.bring(new Card(CardValue.TEN, CardShape.DIAMOND));
+        player.get(new Card(CardValue.TEN, CardShape.DIAMOND));
+        player.get(new Card(CardValue.TEN, CardShape.DIAMOND));
+        player.get(new Card(CardValue.TEN, CardShape.DIAMOND));
 
         // when
         boolean isBurst = player.isBurst();
@@ -64,9 +64,9 @@ public class PlayerTest {
     void ACE의_값이_1이_유리할_때_테스트() {
         // given
         Player player = new Player("밀란");
-        player.bring(new Card(CardValue.ACE, CardShape.DIAMOND));
-        player.bring(new Card(CardValue.TEN, CardShape.DIAMOND));
-        player.bring(new Card(CardValue.THREE, CardShape.DIAMOND));
+        player.get(new Card(CardValue.ACE, CardShape.DIAMOND));
+        player.get(new Card(CardValue.TEN, CardShape.DIAMOND));
+        player.get(new Card(CardValue.THREE, CardShape.DIAMOND));
 
         // when
         int sum = player.calculateCardsValue();
@@ -79,8 +79,8 @@ public class PlayerTest {
     void ACE의_값이_11이_유리할_때_테스트() {
         // given
         Player player = new Player("밀란");
-        player.bring(new Card(CardValue.ACE, CardShape.DIAMOND));
-        player.bring(new Card(CardValue.TEN, CardShape.DIAMOND));
+        player.get(new Card(CardValue.ACE, CardShape.DIAMOND));
+        player.get(new Card(CardValue.TEN, CardShape.DIAMOND));
 
         // when
         int sum = player.calculateCardsValue();
@@ -93,9 +93,9 @@ public class PlayerTest {
     void 카드_합_Burst_판단_테스트() {
         // given
         Player player = new Player("밀란");
-        player.bring(new Card(CardValue.TEN, CardShape.CLOVER));
-        player.bring(new Card(CardValue.TEN, CardShape.DIAMOND));
-        player.bring(new Card(CardValue.TEN, CardShape.HEART));
+        player.get(new Card(CardValue.TEN, CardShape.CLOVER));
+        player.get(new Card(CardValue.TEN, CardShape.DIAMOND));
+        player.get(new Card(CardValue.TEN, CardShape.HEART));
 
         // when
         boolean isBurst = player.isBurst();
@@ -108,8 +108,8 @@ public class PlayerTest {
     void 카드_합_Blackjack_판단_테스트() {
         // given
         Player player = new Player("밀란");
-        player.bring(new Card(CardValue.ACE, CardShape.CLOVER));
-        player.bring(new Card(CardValue.TEN, CardShape.DIAMOND));
+        player.get(new Card(CardValue.ACE, CardShape.CLOVER));
+        player.get(new Card(CardValue.TEN, CardShape.DIAMOND));
 
         // when
         boolean isBlackjack = player.isBlackjack();

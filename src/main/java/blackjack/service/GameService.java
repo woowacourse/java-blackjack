@@ -11,18 +11,14 @@ public class GameService {
         Deck.shuffle();
         for (int i = 0; i < 2; i++) {
             for (Player player : players) {
-                player.bring(Deck.draw());
+                player.get(Deck.draw());
             }
-            dealer.bring(Deck.draw());
+            dealer.get(Deck.draw());
         }
     }
 
     public void getMoreCard(Player player) {
-        player.bring(Deck.draw());
-    }
-
-    public void getMoreCardForDealer(Dealer dealer) {
-        dealer.bring(Deck.draw());
+        player.get(Deck.draw());
     }
 
     public boolean isDealerWinning(Player player, Dealer dealer) {
