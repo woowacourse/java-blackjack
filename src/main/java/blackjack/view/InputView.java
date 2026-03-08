@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.common.error.ErrorCode;
 import blackjack.util.InputValidator;
 import java.util.Arrays;
 import java.util.List;
@@ -26,14 +27,14 @@ public class InputView {
     public boolean inputMoreCard() {
         String input = scanner.nextLine();
 
-        if("y".equals(input)){
+        if ("y".equals(input)) {
             return true;
         }
-        if("n".equals(input)) {
+        if ("n".equals(input)) {
             return false;
         }
 
-        throw new IllegalArgumentException("'y' 또는 'n'만 입력 가능합니다.");
+        throw new IllegalArgumentException(ErrorCode.INVALID_INPUT.getMessage());
     }
 
     public void closeScanner() {

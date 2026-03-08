@@ -40,7 +40,8 @@ public class BlackjackController {
         List<String> names = inputView.inputPlayerNames();
 
         return names.stream()
-                .map(Player::of).toList();
+                .map(Player::of)
+                .toList();
     }
 
     private void distributeInitCards(Dealer dealer, CardDeck cardDeck, List<Player> players) {

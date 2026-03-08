@@ -20,16 +20,16 @@ public class Card {
         this.isOpened = false;
     }
 
-    public int getDefaultScore() {
-        return rank.getDefaultScore();
-    }
-
     public boolean isAce() {
         return this.rank == Rank.ACE;
     }
 
     public boolean isOpened() {
         return this.isOpened;
+    }
+
+    public int getDefaultScore() {
+        return rank.getDefaultScore();
     }
 
     public CardDto toDto() {
