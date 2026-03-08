@@ -1,5 +1,6 @@
 package view;
 
+import dto.NameResponse;
 import dto.PlayerNamesRequest;
 import java.util.Scanner;
 
@@ -12,8 +13,8 @@ public final class InputView {
         return PlayerNamesRequest.from(scanner.nextLine());
     }
 
-    public static String readSelect(String name) {
-        System.out.println(InfoMessage.SELECT.messageWith(name));
+    public static String readSelect(NameResponse response) {
+        System.out.println(InfoMessage.SELECT.messageWith(response.name()));
         return scanner.nextLine();
     }
 }

@@ -40,6 +40,10 @@ public class GameTable {
         return participants.currentPlayerCardInfos();
     }
 
+    public String currentPlayerName() {
+        return participants.currentPlayerName();
+    }
+
 //
 //    public List<GameStatus> initGameStatus() {
 //        List<GameStatus> gameStatuses = new ArrayList<>();

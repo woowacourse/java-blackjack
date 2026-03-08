@@ -48,4 +48,8 @@ class Participants {
     List<NameAndCardInfos> allPlayerCardInfos() {
         return players.allPlayerCardInfos();
     }
+
+    public String currentPlayerName() {
+        return players.currentPlayerName();
+    }
 }

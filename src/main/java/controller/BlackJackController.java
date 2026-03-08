@@ -2,6 +2,8 @@ package controller;
 
 import static view.OutputView.initDealerCardInfos;
 
+import common.Constants;
+import dto.GameStatus;
 import dto.PlayerNamesRequest;
 import service.BlackJackCommandService;
 import service.BlackJackQueryService;
@@ -54,15 +56,18 @@ public class BlackJackController {
         OutputView.initAllPlayerCardInfos(queryService.playerCards());
     }
 
+    private void playerGamePhase() {
+        InputView.readSelect(queryService.currentPlayerName());
+
+    }
+
+
+
     private void dealerGamePhase() {
 
     }
 
     private void resultPhase() {
-
-    }
-
-    private void playerGamePhase() {
 
     }
 }

@@ -31,4 +31,8 @@ public class GameTableRepository {
     public void distributeInitialCards() {
         gameTable.allParticipantsDrawInitialCards();
     }
+
+    public String getCurrentPlayerName() {
+        return gameTable.currentPlayerName();
+    }
 }

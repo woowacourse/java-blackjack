@@ -45,4 +45,8 @@ class Players {
                 .map(Player::infos)
                 .toList();
     }
+
+    public String currentPlayerName() {
+        return currentPlayer().name();
+    }
 }

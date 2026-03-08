@@ -3,6 +3,7 @@ package service;
 import domain.vo.NameAndCardInfos;
 import dto.AllPlayersNameAndCardsResponse;
 import dto.NameAndCardsResponse;
+import dto.NameResponse;
 import dto.PlayerNamesResponse;
 import java.util.List;
 import repository.GameTableRepository;
@@ -28,5 +29,10 @@ public class BlackJackQueryService {
     public AllPlayersNameAndCardsResponse playerCards() {
         List<NameAndCardInfos> playerCardInfos = gameTableRepository.getAllPlayersCards();
         return AllPlayersNameAndCardsResponse.from(playerCardInfos);
+    }
+
+    public NameResponse currentPlayerName() {
+        String name = gameTableRepository.getCurrentPlayerName();
+        return new NameResponse(name);
     }
 }
