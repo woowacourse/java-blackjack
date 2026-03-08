@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class BlackjackController {
-    public static final String DEALER_NAME = "딜러";
     private static final int MAX_RETRY = 10;
     private final InputView inputView;
     private final OutputView outputView;
