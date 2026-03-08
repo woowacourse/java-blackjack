@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Controller {
+    private static final int INITIAL_DEAL_REPEAT = 2;
+    private static final int ONE_REPEAT = 1;
 
-    public static final int INITIAL_DEAL_REPEAT = 2;
-    public static final int ONE_REPEAT = 1;
     private final InputView inputView;
     private final OutputView outputView;
 
