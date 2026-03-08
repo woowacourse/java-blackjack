@@ -26,4 +26,16 @@ class ResultTest {
         assertThat(result).isEqualTo(Result.LOSE);
     }
 
+    @Test
+    void 딜러만_버스트면_결과는_승이다() {
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(TEN, SPADE));
+        dealer.addCard(new Card(TEN, HEART));
+        dealer.addCard(new Card(FIVE, HEART));
+        Player player = new Player("pobi", new Hand());
+
+        Result result = Result.of(dealer, player);
+
+        assertThat(result).isEqualTo(Result.WIN);
+    }
 }

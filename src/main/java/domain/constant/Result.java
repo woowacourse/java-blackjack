@@ -17,6 +17,10 @@ public enum Result {
             return LOSE;
         }
 
+        if (dealer.isBust()) {
+            return WIN;
+        }
+
         return DRAW;
     }
 
