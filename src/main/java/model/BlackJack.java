@@ -8,6 +8,8 @@ import model.participant.Participant;
 import util.Randoms;
 
 public class BlackJack {
+    private static final int STARTING_CARDS = 2;
+
     private Participants participants;
     private boolean firstTurn = Boolean.TRUE;
     private List<Card> pickedCards = new ArrayList<>();
@@ -58,7 +60,7 @@ public class BlackJack {
 
     public void dealOut() {
         for (Participant participant : participants) {
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < STARTING_CARDS; i++) {
                 Card pick = Randoms.pick();
                 while (pickedCards.contains(pick)) {
                     pick = Randoms.pick();
