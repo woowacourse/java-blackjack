@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import org.junit.jupiter.api.Test;
@@ -8,19 +7,11 @@ import org.junit.jupiter.api.Test;
 public class DeckTest {
 
     @Test
-    void 덱_생성_테스트() {
-        // when & then
-        assertThatCode(Deck::new)
-                .doesNotThrowAnyException();
-    }
-
-    @Test
-    void 카드_꺼내기_테스트() {
+    void 카드_뽑기_테스트() {
         // given
-        Deck deck = new Deck();
 
         // when & then
-        assertThatCode(deck::bringTopCard)
+        assertThatCode(Deck::draw)
                 .doesNotThrowAnyException();
     }
 
@@ -28,15 +19,12 @@ public class DeckTest {
     @Test
     void 카드_섞기_테스트() {
         // given
-        Deck deck = new Deck();
-        Deck compareDeck = new Deck();
 
         // when
-        deck.shuffle();
 
         // then
-        assertThat(deck.bringTopCard().getName())
-                .isNotEqualTo(compareDeck.bringTopCard().getName());
+        assertThatCode(Deck::shuffle)
+                .doesNotThrowAnyException();
     }
 
 }

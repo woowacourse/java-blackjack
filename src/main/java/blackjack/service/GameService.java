@@ -7,28 +7,22 @@ import java.util.List;
 
 public class GameService {
 
-    private final Deck deck;
-
-    public GameService(Deck deck) {
-        this.deck = deck;
-    }
-
     public void settingCards(List<Player> players, Dealer dealer) {
-        deck.shuffle();
+        Deck.shuffle();
         for (int i = 0; i < 2; i++) {
             for (Player player : players) {
-                player.bring(deck.bringTopCard());
+                player.bring(Deck.draw());
             }
-            dealer.bring(deck.bringTopCard());
+            dealer.bring(Deck.draw());
         }
     }
 
     public void getMoreCard(Player player, Dealer dealer) {
-        player.bring(deck.bringTopCard());
+        player.bring(Deck.draw());
     }
 
     public void getMoreCardForDealer(Dealer dealer) {
-        dealer.bring(deck.bringTopCard());
+        dealer.bring(Deck.draw());
     }
 
     public boolean isDealerWinning(Player player, Dealer dealer) {

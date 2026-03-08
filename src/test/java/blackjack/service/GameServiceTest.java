@@ -6,7 +6,6 @@ import blackjack.domain.Card;
 import blackjack.domain.CardShape;
 import blackjack.domain.CardValue;
 import blackjack.domain.Dealer;
-import blackjack.domain.Deck;
 import blackjack.domain.Player;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -16,7 +15,7 @@ class GameServiceTest {
     @Test
     void 게임_시작_세팅_테스트() {
         // given
-        GameService gameService = new GameService(new Deck());
+        GameService gameService = new GameService();
         Player player = new Player("흑곰");
         Dealer dealer = new Dealer();
 
@@ -30,7 +29,7 @@ class GameServiceTest {
     @Test
     void 승패_판단_테스트() {
         // given
-        GameService gameService = new GameService(new Deck());
+        GameService gameService = new GameService();
         Player player = new Player("흑곰");
         Dealer dealer = new Dealer();
         player.bring(new Card(CardValue.SEVEN, CardShape.DIAMOND));
