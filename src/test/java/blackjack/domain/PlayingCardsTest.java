@@ -15,7 +15,7 @@ class PlayingCardsTest {
         PlayingCards deck = PlayingCards.createdDeck();
 
 //      ...isEqualTo(380); -> 340 합계 계산에서 에이스가 있는 만큼 -10을 시도, 총점에서 -40 해줘야
-        assertThat(deck.calculateTotalScore()).isEqualTo(340);
+        assertThat(deck.calculateTotalScore(21)).isEqualTo(340);
     }
     
     @DisplayName("빈 카드 뭉치에서 카드를 뽑으려 하면 예외가 발생한다.")
@@ -36,8 +36,7 @@ class PlayingCardsTest {
                 new Card(Rank.SEVEN, Suit.HEART)
         ));
         
-        assertThat(hands.calculateTotalScore()).isEqualTo(17);
-        assertThat(hands.isDrawable()).isTrue();
+        assertThat(hands.calculateTotalScore(21)).isEqualTo(17);
     }
     
     @DisplayName("ACE 카드가 포함되었을 때 11점으로 점수를 계산한다.")
@@ -48,7 +47,7 @@ class PlayingCardsTest {
                 new Card(Rank.NINE, Suit.HEART)
         ));
         
-        assertThat(hands.calculateTotalScore()).isEqualTo(20);
+        assertThat(hands.calculateTotalScore(21)).isEqualTo(20);
     }
     
     @DisplayName("총합이 21점을 초과하면 ACE 카드를 1점으로 계산한다.")
@@ -60,7 +59,7 @@ class PlayingCardsTest {
                 new Card(Rank.NINE, Suit.DIAMOND)
         ));
         
-        assertThat(hands.calculateTotalScore()).isEqualTo(20);
+        assertThat(hands.calculateTotalScore(21)).isEqualTo(20);
     }
     
     @DisplayName("ACE 카드가 여러 장일 경우, 21점 이하가 될 때까지만 1점으로 변환한다.")
@@ -73,7 +72,7 @@ class PlayingCardsTest {
                 new Card(Rank.EIGHT, Suit.CLOVER)
         ));
         
-        assertThat(hands.calculateTotalScore()).isEqualTo(21);
+        assertThat(hands.calculateTotalScore(21)).isEqualTo(21);
     }
     
     @DisplayName("ACE를 모두 1점으로 바꿔도 21점을 넘기면, 결과용 계산 메서드는 0점을 반환한다.")
@@ -86,25 +85,7 @@ class PlayingCardsTest {
                 new Card(Rank.FIVE, Suit.CLOVER)
         ));
         
-        assertThat(hands.calculateTotalScore()).isEqualTo(26);
-        assertThat(hands.calculateTotalScoreForResult()).isEqualTo(0);
-        assertThat(hands.isNotDrawable()).isTrue();
-    }
-    
-    @DisplayName("딜러는 총합이 16점 이하일 때만 카드를 뽑을 수 있다.")
-    @Test
-    void isDealerDraw() {
-        PlayingCards dealerHands1 = PlayingCards.from(List.of(
-                new Card(Rank.TEN, Suit.SPADE),
-                new Card(Rank.SIX, Suit.HEART)
-        ));
-        
-        PlayingCards dealerHands2 = PlayingCards.from(List.of(
-                new Card(Rank.TEN, Suit.SPADE),
-                new Card(Rank.SEVEN, Suit.HEART)
-        ));
-        
-        assertThat(dealerHands1.isDealerDraw()).isTrue();
-        assertThat(dealerHands2.isDealerDraw()).isFalse();
+        assertThat(hands.calculateTotalScore(21)).isEqualTo(26);
+        assertThat(hands.calculateTotalScoreForResult(21)).isEqualTo(0);
     }
 }

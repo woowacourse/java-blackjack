@@ -2,8 +2,6 @@ package blackjack.domain.participant;
 
 public class Player extends Participant {
     
-    private static final int BUSTED_SCORE = 21;
-    
     private boolean stopDrawing;
     
     public Player(String nickname) {
@@ -26,7 +24,7 @@ public class Player extends Participant {
         if (stopDrawing) {
             return false;
         }
-        return hand.calculateTotalScore() < BUSTED_SCORE;
+        return hand.calculateTotalScore(BUSTED_SCORE) < BUSTED_SCORE;
     }
     
     @Override

@@ -9,8 +9,6 @@ import java.util.stream.Collectors;
 
 public class PlayingCards {
     
-    private final int BUSTED_SCORE = 21;
-    private final int DEALER_SCORE = 16;
     private final List<Card> cards;
     
     public PlayingCards() {
@@ -89,48 +87,36 @@ public class PlayingCards {
         return cards.getFirst().getDisplayName();
     }
     
-    public boolean isDealerDraw() {
-        return calculateScoreSum() <= DEALER_SCORE;
+    public boolean isBusted(int threshold, int scoreSum) {
+        return scoreSum > threshold;
     }
     
-    public boolean isNotDrawable() {
-        return !isDrawable();
-    }
-    
-    public boolean isDrawable() {
-        return calculateTotalScore() < BUSTED_SCORE;
-    }
-    
-    public boolean isBusted(int scoreSum) {
-        return scoreSum > BUSTED_SCORE;
-    }
-    
-    public int calculateTotalScore() {
+    public int calculateTotalScore(int threshold) {
         int scoreSum = calculateScoreSum();
-        boolean busted = isBusted(scoreSum);
+        boolean busted = isBusted(threshold, scoreSum);
         if (busted) {
             int aceCount = countAce();
-            return calculateWithAce(scoreSum, aceCount);
+            return calculateWithAce(scoreSum, aceCount, threshold);
         }
         return scoreSum;
     }
     
-    public int calculateTotalScoreForResult() {
+    public int calculateTotalScoreForResult(int threshold) {
         int scoreSum = calculateScoreSum();
-        boolean busted = isBusted(scoreSum);
+        boolean busted = isBusted(threshold, scoreSum);
         if (busted) {
             int aceCount = countAce();
-            return bustedScore(scoreSum, aceCount);
+            return bustedScore(scoreSum, aceCount, threshold);
         }
         return scoreSum;
     }
     
-    private int bustedScore(int scoreSum, int aceCount) {
+    private int bustedScore(int scoreSum, int aceCount, int threshold) {
         int totalScore = scoreSum;
         if (aceCount > 0) {
-            totalScore = calculateWithAce(scoreSum, aceCount);
+            totalScore = calculateWithAce(scoreSum, aceCount, threshold);
         }
-        if (totalScore <= BUSTED_SCORE) {
+        if (totalScore <= threshold) {
             return totalScore;
         }
         return 0;
@@ -154,15 +140,15 @@ public class PlayingCards {
                 .count();
     }
     
-    private int calculateWithAce(int scoreSum, int aceCount) {
+    private int calculateWithAce(int scoreSum, int aceCount, int threshold) {
         if (aceCount == 0) {
             return scoreSum;
         }
         int calculatedScore = scoreSum - 10;
-        if (calculatedScore <= BUSTED_SCORE) {
+        if (calculatedScore <= threshold) {
             return calculatedScore;
         }
-        return calculateWithAce(calculatedScore, aceCount - 1);
+        return calculateWithAce(calculatedScore, aceCount - 1, threshold);
     }
     
     private List<Card> getCards() {

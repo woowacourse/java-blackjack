@@ -5,8 +5,8 @@ import blackjack.dto.DrawResult;
 
 public abstract class Participant {
     
+    protected static final int BUSTED_SCORE = 21;
     private static final int FIRST_DRAW_COUNT = 2;
-    
     protected final String nickname;
     protected PlayingCards hand;
     
@@ -26,11 +26,11 @@ public abstract class Participant {
     }
     
     public int getTotalScore() {
-        return hand.calculateTotalScore();
+        return hand.calculateTotalScore(BUSTED_SCORE);
     }
     
     public int getTotalScoreForResult() {
-        return hand.calculateTotalScoreForResult();
+        return hand.calculateTotalScoreForResult(BUSTED_SCORE);
     }
     
     public DrawResult distributeCards(PlayingCards deck) {
