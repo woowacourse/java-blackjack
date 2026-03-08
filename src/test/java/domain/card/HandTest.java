@@ -39,7 +39,7 @@ class HandTest {
     void calculateScoreTests(HandScoreTestCase testCase) {
         // given
         Hand hand = new Hand();
-        testCase.cards().forEach(hand::drawCard);
+        testCase.cards().forEach(hand::receive);
 
         // when - then
         assertEquals(testCase.expectedScore(), hand.calculateScore(), testCase.displayName());
@@ -54,7 +54,7 @@ class HandTest {
         List<Card> cards = List.of(new Card(Rank.EIGHT, Suit.DIAMOND), new Card(Rank.KING, Suit.HEART), new Card(Rank.JACK, Suit.DIAMOND));
         Hand hand = new Hand();
         for (Card card : cards) {
-            hand.drawCard(card);
+            hand.receive(card);
         }
 
         // when - then
@@ -68,7 +68,7 @@ class HandTest {
         List<Card> cards = List.of(new Card(Rank.ACE, Suit.DIAMOND), new Card(Rank.KING, Suit.HEART));
         Hand hand = new Hand();
         for (Card card : cards) {
-            hand.drawCard(card);
+            hand.receive(card);
         }
 
         // when - then
@@ -82,7 +82,7 @@ class HandTest {
         List<Card> cards = List.of(new Card(Rank.ACE, Suit.DIAMOND), new Card(Rank.EIGHT, Suit.HEART), new Card(Rank.TWO, Suit.DIAMOND));
         Hand hand = new Hand();
         for (Card card : cards) {
-            hand.drawCard(card);
+            hand.receive(card);
         }
 
         // when - then
@@ -96,7 +96,7 @@ class HandTest {
         List<Card> cards = List.of(new Card(Rank.ACE, Suit.DIAMOND), new Card(Rank.EIGHT, Suit.HEART));
         Hand hand = new Hand();
         for (Card card : cards) {
-            hand.drawCard(card);
+            hand.receive(card);
         }
 
         // when - then
@@ -113,7 +113,7 @@ class HandTest {
         List<Card> cards = List.of(firstCard, secondCard);
         Hand hand = new Hand();
         for (Card card : cards) {
-            hand.drawCard(card);
+            hand.receive(card);
         }
 
         // when - then
@@ -130,7 +130,7 @@ class HandTest {
         List<Card> cards = List.of(firstCard, secondCard);
         Hand hand = new Hand();
         for (Card card : cards) {
-            hand.drawCard(card);
+            hand.receive(card);
         }
 
         // when - then
