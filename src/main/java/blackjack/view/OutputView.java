@@ -68,4 +68,8 @@ public class OutputView {
     private static void printPlayerFinalResult(String playerName, String result) {
         System.out.println(playerName + ": " + result);
     }
+
+    public static void printEmptyLine(){
+        System.out.println();
+    }
 }
