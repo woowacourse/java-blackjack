@@ -17,7 +17,7 @@ public enum Result {
             return LOSE;
         }
 
-        if (dealer.isBust()) {
+        if (dealer.isBust() || player.getScore() > dealer.getScore()) {
             return WIN;
         }
 
