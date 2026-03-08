@@ -3,6 +3,7 @@ package blackjack.model;
 import java.util.List;
 
 public class Score {
+    public static final int BLACKJACK_NUMBER = 21;
     private int score;
 
     public Score() {
@@ -32,7 +33,7 @@ public class Score {
     }
 
     public boolean isBurst() {
-        return score > 21;
+        return score > BLACKJACK_NUMBER;
     }
 
     public void add(int score) {
