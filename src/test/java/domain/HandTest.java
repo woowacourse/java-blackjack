@@ -1,6 +1,8 @@
 package domain;
 
+import domain.card.Card;
 import domain.exception.DuplicatedException;
+import domain.member.Hand;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;

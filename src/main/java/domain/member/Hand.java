@@ -1,9 +1,10 @@
-package domain;
+package domain.member;
 
+import domain.card.Card;
+import domain.card.CardNumber;
 import domain.exception.DuplicatedException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Hand {
 
@@ -26,20 +27,21 @@ public class Hand {
         if (aceAmount > 0) {
             return softHandAces(aceAmount);
         }
-        AtomicInteger tempValue = new AtomicInteger();
-        cards.forEach(card -> tempValue.addAndGet(card.number()));
-        return tempValue.get();
+        return cards.stream()
+                .mapToInt(Card::number)
+                .sum();
     }
 
     private int softHandAces(int aceAmount) {
-        AtomicInteger sumWithoutAce = new AtomicInteger();
-        cards.stream()
+        int sumWithoutAces = cards.stream()
                 .filter(c -> c.number() != CardNumber.A.getValue())
-                .forEach(c -> sumWithoutAce.addAndGet(c.number()));
-        if (sumWithoutAce.get() >= CardNumber.A.getValue()) {
-            return sumWithoutAce.get() + aceAmount;
+                .mapToInt(Card::number)
+                .sum();
+
+        if (sumWithoutAces >= CardNumber.A.getValue()) {
+            return sumWithoutAces + aceAmount;
         }
-        return sumWithoutAce.get() + CardNumber.A.getValue() + aceAmount - 1;
+        return sumWithoutAces + CardNumber.A.getValue() + aceAmount - 1;
     }
     /**
      * ace가 있는 경우
