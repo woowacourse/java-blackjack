@@ -1,81 +1,81 @@
 package domain.member;
+import static constant.Word.*;
 
-import domain.vo.RoundResult;
+import domain.RoundResult;
 import domain.card.Card;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 public class Members {
 
-    private final List<Member> members;
+    private final List<Player> players;
+    private final Dealer dealer;
 
-    public Members(List<String> playerNames) {
-        members = new ArrayList<>();
-        members.add(new Dealer());
-        playerNames.forEach(playerName -> members.add(new Player(playerName)));
+    public Members() {
+        players = new ArrayList<>();
+        dealer = new Dealer(DEALER.format());
     }
 
-    public List<Card> getFirstCards(String memberName) {
-        Member member = findByName(memberName);
-        return member.showFirstCards();
+    public void appendPlayer(List<String> playerNames) {
+        playerNames.forEach(playerName -> players.add(new Player(playerName)));
+    }
+
+    public void provideCardToPlayer(String memberName, Card card) {
+        Player member = findByName(memberName);
+        member.receiveCard(card);
+    }
+
+    public void provideCardToDealer(Card card) {
+        dealer.receiveCard(card);
     }
 
     public List<Card> findCardByName(String memberName) {
         Member member = findByName(memberName);
-        return member.handCards();
+        return member.currentCards();
     }
 
-    public void draw(String memberName, Card card) {
+    public boolean isDealer(String memberName) {
+        return memberName.equals(dealer.name());
+    }
+
+    public List<Card> dealerFirstCard() {
+        return List.of(dealer.firstCard());
+    }
+
+    public List<Card> dealerCards() {
+        return dealer.currentCards();
+    }
+
+    public int checkDealerValue() {
+        return dealer.currentValue();
+    }
+
+    public int checkValue(String memberName) {
         Member member = findByName(memberName);
-        member.receiveCard(card);
+        return member.currentValue();
     }
 
-    public Member findByName(String memberName) {
-        return members.stream()
-                .filter(member -> member.getName().equals(memberName))
+    private Player findByName(String memberName) {
+        return players.stream()
+                .filter(member -> member.name().equals(memberName))
                 .findAny()
                 .orElseThrow(NoSuchElementException::new);
     }
 
-    public int getValue(String memberName) {
-        Member member = findByName(memberName);
-        return member.handValue();
-    }
-
-    public List<String> getMemberNames() {
-        return members.stream()
-                .map(Member::getName)
+    public List<String> getAllPlayerName() {
+        return players.stream()
+                .map(Member::name)
                 .toList();
     }
 
-    public String getDealerName() {
-        return findDealer().getName();
-    }
-
     public Map<String, RoundResult> judgeGameResults() {
-        Member dealer = findDealer();
-        return members.stream()
-                .filter(member -> !member.isDealer())
-                .collect(Collectors.toMap(
-                                Member::getName,
-                                player -> RoundResult.judgeAgainst(
-                                        dealer.handValue(),
-                                        player.handValue()
-                                ),
-                                (existing, replacement) -> existing,
-                                LinkedHashMap::new
-                        )
-                );
-    }
-
-    private Member findDealer() {
-        return members.stream()
-                .filter(Member::isDealer)
-                .findFirst()
-                .orElseThrow(NoSuchElementException::new);
+        Map<String, RoundResult> playerResults = new LinkedHashMap<>();
+        players.forEach(player ->
+            playerResults.put(player.name(), player.judgeAgainst(dealer))
+        );
+        return playerResults;
     }
 }
