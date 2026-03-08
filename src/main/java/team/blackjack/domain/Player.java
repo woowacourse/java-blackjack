@@ -20,6 +20,14 @@ public class Player implements Participant {
         return this.name;
     }
 
+    public List<String> getCardInAllHands(){
+        return hands.stream()
+                .map(Hand::getCards)
+                .flatMap(List::stream)
+                .map(Card::getCardName)
+                .toList();
+    }
+
     /**
      * TODO: 추후 기능 확장시 한 라운드에 여러 개의 hand가 생기는 경우, 해당 메소드 수정 필요.
      *

@@ -3,6 +3,7 @@ package team.blackjack.domain;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackjackGame {
     private static final int INITIAL_CARD_COUNT = 2;
@@ -24,18 +25,20 @@ public class BlackjackGame {
         return players;
     }
 
-    public Deck getDeck() {
-        return deck;
-    }
-
     public void dealInitialCardsTo(Participant participant) {
         for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
             participant.hit(deck.draw());
         }
     }
 
-    public void dealCardTo(Participant participant){
+    public void dealCardTo(Participant participant) {
         participant.hit(deck.draw());
+    }
+
+    public List<String> getPlayerNames() {
+        return this.players.stream()
+                .map(Player::getName)
+                .toList();
     }
 
     public Map<String, List<String>> getAllPlayerCards() {
@@ -47,12 +50,24 @@ public class BlackjackGame {
         return result;
     }
 
+    public Map<String, Integer> getAllPlayerScores(){
+        return this.players.stream()
+                .collect(Collectors.toMap(
+                        Player::getName,
+                        Player::getScore)
+                );
+    }
+
+    public List<String> getDealerCards(){
+        return dealer.getAllCards();
+    }
+
+    public int getDealerScore(){
+        return this.dealer.getScore();
+    }
+
     private List<String> getPlayerCardInAllHand(Player player) {
-        return player.getHands().stream()
-                .map(Hand::getCards)
-                .flatMap(List::stream)
-                .map(Card::getCardName)
-                .toList();
+        return player.getCardInAllHands();
     }
 
     private List<Player> createPlayers(List<String> playerNames) {

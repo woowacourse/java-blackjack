@@ -37,7 +37,7 @@ class BlackJackServiceTest {
         assertThat(players.getFirst().getHands().getFirst().getCards()).hasSize(2);
 
         ScoreResult scoreResult = blackJackService.calculateAllParticipantScore();
-        assertThat(scoreResult.dealerCard()).hasSize(2);
+        assertThat(scoreResult.dealerCards()).hasSize(2);
         assertThat(scoreResult.playerCards().get("pobi")).hasSize(2);
     }
 
@@ -62,7 +62,7 @@ class BlackJackServiceTest {
         var scoreResult = blackJackService.calculateAllParticipantScore();
 
         assertThat(scoreResult.playerNames()).containsExactly("pobi", "jason");
-        assertThat(scoreResult.dealerCard()).isNotEmpty();
+        assertThat(scoreResult.dealerCards()).isNotEmpty();
         assertThat(scoreResult.playerCards()).containsKeys("pobi", "jason");
         assertThat(scoreResult.playerScores()).containsKeys("pobi", "jason");
 
@@ -73,9 +73,9 @@ class BlackJackServiceTest {
         blackJackService.initGame(List.of("pobi"));
         blackJackService.dealInitialCards();
 
-        int dealerCardsBefore = blackJackService.calculateAllParticipantScore().dealerCard().size();
+        int dealerCardsBefore = blackJackService.calculateAllParticipantScore().dealerCards().size();
         blackJackService.dealerHit();
-        int dealerCardsAfter = blackJackService.calculateAllParticipantScore().dealerCard().size();
+        int dealerCardsAfter = blackJackService.calculateAllParticipantScore().dealerCards().size();
 
         assertThat(dealerCardsAfter).isEqualTo(dealerCardsBefore + 1);
     }
