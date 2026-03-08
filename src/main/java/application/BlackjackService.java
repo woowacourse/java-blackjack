@@ -32,17 +32,17 @@ public class BlackjackService {
         ).toList();
 
         allParticipants.forEach(name -> {
-            gameTable.draw(name, deck.draw());
-            gameTable.draw(name, deck.draw());
+            gameTable.drawByName(name, deck.draw());
+            gameTable.drawByName(name, deck.draw());
         });
     }
 
     public List<Card> startOneRound(String memberName) {
-        return gameTable.draw(memberName, deck.draw());
+        return gameTable.drawByName(memberName, deck.draw());
     }
 
     public boolean drawDealerCardIfAvailable() {
-        return gameTable.draw(deck.draw());
+        return gameTable.drawByDealer(deck.draw());
     }
 
     public List<MemberStatus> getMemberStatuses() {

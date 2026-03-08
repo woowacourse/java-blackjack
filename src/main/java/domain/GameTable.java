@@ -28,14 +28,14 @@ public class GameTable {
         return members.checkValue(memberName) > BLACKJACK;
     }
 
-    public List<Card> draw(String memberName, Card card) {
+    public List<Card> drawByName(String memberName, Card card) {
         if (members.isDealer(memberName)) {
             return drawDealer(card);
         }
         return drawPlayer(memberName, card);
     }
 
-    public boolean draw(Card card) {
+    public boolean drawByDealer(Card card) {
         if (members.checkDealerValue() <= DEALER_DRAW_CONDITION) {
             members.provideCardToDealer(card);
             return true;
