@@ -19,12 +19,12 @@ public class OutputView {
         System.out.println("딜러와 " + String.join(", ", names) + "에게 2장을 나누었습니다.");
     }
 
-    public static void printDealerFirstCard(PlayerCardInfo playerCardInfo) {
-        System.out.println("딜러카드: " + playerCardInfo.card().getFirst());
+    public static void printDealerFirstCard(String card) {
+        System.out.println("딜러카드: " + card);
     }
 
     public static void printPlayerCards(PlayerCardInfo playerCardInfo) {
-        System.out.println(playerCardInfo.name() + " " + String.join(", ", playerCardInfo.card()));
+        System.out.println(playerCardInfo.name() + "카드 : " + String.join(", ", playerCardInfo.card()));
     }
 
     public static void printPlayerBust(String name) {
