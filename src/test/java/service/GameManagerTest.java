@@ -63,7 +63,7 @@ class GameManagerTest {
 
         // when
         GameResultDto gameResultDto = gameManager.calculateResults();
-        Map<String, MatchResult> playerResult = gameResultDto.getPlayerResult();
+        Map<String, MatchResult> playerResult = gameResultDto.getPlayersResult();
 
         // then
         for (Map.Entry<String, MatchResult> matchResultEntry : playerResult.entrySet()) {
@@ -89,7 +89,7 @@ class GameManagerTest {
 
         // when
         GameResultDto gameResultDto = gameManager.calculateResults();
-        Map<String, MatchResult> playerResult = gameResultDto.getPlayerResult();
+        Map<String, MatchResult> playerResult = gameResultDto.getPlayersResult();
 
         // then
         for (Map.Entry<String, MatchResult> matchResultEntry : playerResult.entrySet()) {
@@ -115,7 +115,7 @@ class GameManagerTest {
 
         // when
         GameResultDto gameResultDto = gameManager.calculateResults();
-        Map<String, MatchResult> playerResult = gameResultDto.getPlayerResult();
+        Map<String, MatchResult> playerResult = gameResultDto.getPlayersResult();
         // then
         for (Map.Entry<String, MatchResult> matchResultEntry : playerResult.entrySet()) {
             Assertions.assertEquals(matchResultEntry.getValue(), MatchResult.LOSE);
@@ -141,7 +141,7 @@ class GameManagerTest {
 
         // when
         GameResultDto gameResultDto = gameManager.calculateResults();
-        Map<String, MatchResult> playerResult = gameResultDto.getPlayerResult();
+        Map<String, MatchResult> playerResult = gameResultDto.getPlayersResult();
 
         // then
         for (Map.Entry<String, MatchResult> matchResultEntry : playerResult.entrySet()) {
@@ -168,7 +168,7 @@ class GameManagerTest {
 
         // when
         GameResultDto gameResultDto = gameManager.calculateResults();
-        Map<String, MatchResult> playerResult = gameResultDto.getPlayerResult();
+        Map<String, MatchResult> playerResult = gameResultDto.getPlayersResult();
 
         // then
         for (Map.Entry<String, MatchResult> matchResultEntry : playerResult.entrySet()) {
@@ -195,7 +195,7 @@ class GameManagerTest {
 
         // when
         GameResultDto gameResultDto = gameManager.calculateResults();
-        Map<String, MatchResult> playerResult = gameResultDto.getPlayerResult();
+        Map<String, MatchResult> playerResult = gameResultDto.getPlayersResult();
 
         // then
         for (Map.Entry<String, MatchResult> matchResultEntry : playerResult.entrySet()) {
@@ -222,7 +222,7 @@ class GameManagerTest {
 
         // when
         GameResultDto gameResultDto = gameManager.calculateResults();
-        Map<String, MatchResult> playerResult = gameResultDto.getPlayerResult();
+        Map<String, MatchResult> playerResult = gameResultDto.getPlayersResult();
 
         // then
         for (Map.Entry<String, MatchResult> matchResultEntry : playerResult.entrySet()) {

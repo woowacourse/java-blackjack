@@ -25,44 +25,44 @@ public class Players {
         }
     }
 
-    public Map<String, MatchResult> calculateResult(Dealer dealer) {
-        Map<String, MatchResult> playersResult = new HashMap<>();
+    public Map<Player, MatchResult> calculateResult(Dealer dealer) {
+        Map<Player, MatchResult> playersResult = new HashMap<>();
 
         for (Player player : players) {
             if (isBustResult(dealer, player, playersResult)) continue;
             if (isHigherScoreThanDealer(dealer, player, playersResult)) continue;
             if (isDrawResult(dealer, player, playersResult)) continue;
 
-            playersResult.put(player.getName(), MatchResult.LOSE);
+            playersResult.put(player, MatchResult.LOSE);
         }
 
         return playersResult;
     }
 
-    private boolean isBustResult(Dealer dealer, Player player, Map<String, MatchResult> playersResult) {
+    private boolean isBustResult(Dealer dealer, Player player, Map<Player, MatchResult> playersResult) {
         if (player.isBust()) {
-            playersResult.put(player.getName(), MatchResult.LOSE);
+            playersResult.put(player, MatchResult.LOSE);
             return true;
         }
 
         if (dealer.isBust()) {
-            playersResult.put(player.getName(), MatchResult.WIN);
+            playersResult.put(player, MatchResult.WIN);
             return true;
         }
 
         return false;
     }
 
-    private boolean isHigherScoreThanDealer(Dealer dealer, Player player, Map<String, MatchResult> playersResult) {
+    private boolean isHigherScoreThanDealer(Dealer dealer, Player player, Map<Player, MatchResult> playersResult) {
         if (player.isHigherThan(dealer)) {
-            playersResult.put(player.getName(), MatchResult.WIN);
+            playersResult.put(player, MatchResult.WIN);
             return true;
         }
 
         return false;
     }
 
-    private boolean isDrawResult(Dealer dealer, Player player, Map<String, MatchResult> playersResult) {
+    private boolean isDrawResult(Dealer dealer, Player player, Map<Player, MatchResult> playersResult) {
         if (player.isTie(dealer)) {
             return isDrawWithBlackJack(dealer, player, playersResult);
         }
@@ -70,19 +70,19 @@ public class Players {
         return false;
     }
 
-    private boolean isDrawWithBlackJack(Dealer dealer, Player player, Map<String, MatchResult> playersResult) {
+    private boolean isDrawWithBlackJack(Dealer dealer, Player player, Map<Player, MatchResult> playersResult) {
         if (player.isBlackJack() && !dealer.isBlackJack()) {
-            playersResult.put(player.getName(), MatchResult.WIN);
+            playersResult.put(player, MatchResult.WIN);
             return true;
         }
 
         if (!player.isBlackJack() && dealer.isBlackJack()) {
-            playersResult.put(player.getName(), MatchResult.LOSE);
+            playersResult.put(player, MatchResult.LOSE);
             return true;
         }
 
         if (!player.isBlackJack() && !dealer.isBlackJack()) {
-            playersResult.put(player.getName(), MatchResult.DRAW);
+            playersResult.put(player, MatchResult.DRAW);
             return true;
         }
 

@@ -3,6 +3,7 @@ package service;
 import domain.MatchResult;
 import domain.card.Deck;
 import domain.participant.Dealer;
+import domain.participant.Player;
 import domain.participant.Players;
 import dto.GameResultDto;
 
@@ -29,7 +30,7 @@ public class GameManager {
     }
 
     public GameResultDto calculateResults() {
-        Map<String, MatchResult> playersResult = players.calculateResult(dealer);
+        Map<Player, MatchResult> playersResult = players.calculateResult(dealer);
         Map<MatchResult, Integer> dealerResult = dealer.calculateResult(playersResult);
 
         return new GameResultDto(dealerResult, playersResult);

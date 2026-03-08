@@ -2,8 +2,6 @@ package view;
 
 import domain.MatchResult;
 import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Suit;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -68,7 +66,7 @@ public class OutputView {
 
         System.out.printf("딜러: %s\n", dealerResult);
 
-        for (Map.Entry<String, MatchResult> playersResult : gameResultDto.getPlayerResult().entrySet()) {
+        for (Map.Entry<String, MatchResult> playersResult : gameResultDto.getPlayersResult().entrySet()) {
             System.out.printf("%s: %s\n", playersResult.getKey(), MatchResultMessage.of(playersResult.getValue()));
         }
     }

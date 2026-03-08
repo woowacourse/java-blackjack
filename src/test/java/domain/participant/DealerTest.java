@@ -68,13 +68,13 @@ class DealerTest {
     void 딜러_승패_판단() {
         // given
         Dealer dealer = new Dealer();
-        Map<String, MatchResult> playerResults = new HashMap<>();
+        Map<Player, MatchResult> playerResults = new HashMap<>();
 
-        playerResults.put("pobi", MatchResult.WIN);
-        playerResults.put("sisi", MatchResult.WIN);
-        playerResults.put("ao", MatchResult.WIN);
-        playerResults.put("james", MatchResult.DRAW);
-        playerResults.put("lala", MatchResult.LOSE);
+        playerResults.put(new Player("pobi"), MatchResult.WIN);
+        playerResults.put(new Player("sisi"), MatchResult.WIN);
+        playerResults.put(new Player("ao"), MatchResult.WIN);
+        playerResults.put(new Player("james"), MatchResult.DRAW);
+        playerResults.put(new Player("lala"), MatchResult.LOSE);
 
         // when
         Map<MatchResult, Integer> dealerResult = dealer.calculateResult(playerResults);

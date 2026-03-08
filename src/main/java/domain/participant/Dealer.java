@@ -13,10 +13,10 @@ public class Dealer extends Participant {
     public Dealer() {
     }
 
-    public Map<MatchResult, Integer> calculateResult(Map<String, MatchResult> playersResult) {
+    public Map<MatchResult, Integer> calculateResult(Map<Player, MatchResult> playersResult) {
         Map<MatchResult, Integer> dealerResult = new EnumMap<>(MatchResult.class);
 
-        for (Map.Entry<String, MatchResult> playerResult : playersResult.entrySet()) {
+        for (Map.Entry<Player, MatchResult> playerResult : playersResult.entrySet()) {
             MatchResult dealerMatchResult = MatchResult.reverse(playerResult.getValue());
             int resultCount = dealerResult.getOrDefault(dealerMatchResult, 0);
 
