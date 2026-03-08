@@ -12,7 +12,6 @@ import java.util.List;
 
 public class GameManager {
     private Deck deck = new Deck();
-    private ScoreCalculator scoreCalculator = new ScoreCalculator();
     private List<Player> players = new ArrayList<>();
     private Dealer dealer = new Dealer();
 
