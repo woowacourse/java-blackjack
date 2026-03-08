@@ -108,7 +108,7 @@ class DefaultBlackjackRuleTest {
         int dealerScore = 20;
         int playerScore = 18;
 
-        Assertions.assertEquals(Result.WIN, DefaultBlackjackRule.judgeResult(dealerScore, playerScore));
+        Assertions.assertEquals(Result.WIN, DefaultBlackjackRule.judgePlayerResult(dealerScore, playerScore));
     }
 
     @Test
@@ -116,7 +116,7 @@ class DefaultBlackjackRuleTest {
         int dealerScore = 18;
         int playerScore = 20;
 
-        Assertions.assertEquals(Result.WIN, DefaultBlackjackRule.judgeResult(playerScore, dealerScore));
+        Assertions.assertEquals(Result.WIN, DefaultBlackjackRule.judgePlayerResult(playerScore, dealerScore));
     }
 
     @Test
@@ -124,7 +124,7 @@ class DefaultBlackjackRuleTest {
         int dealerScore = 18;
         int playerScore = 20;
 
-        Assertions.assertEquals(Result.LOSE, DefaultBlackjackRule.judgeResult(dealerScore, playerScore));
+        Assertions.assertEquals(Result.LOSE, DefaultBlackjackRule.judgePlayerResult(dealerScore, playerScore));
     }
 
     @Test
@@ -132,7 +132,7 @@ class DefaultBlackjackRuleTest {
         int dealerScore = 20;
         int playerScore = 18;
 
-        Assertions.assertEquals(Result.LOSE, DefaultBlackjackRule.judgeResult(playerScore, dealerScore));
+        Assertions.assertEquals(Result.LOSE, DefaultBlackjackRule.judgePlayerResult(playerScore, dealerScore));
     }
 
     @Test
@@ -140,7 +140,7 @@ class DefaultBlackjackRuleTest {
         int dealerScore = 20;
         int playerScore = 20;
 
-        Assertions.assertEquals(Result.DRAW, DefaultBlackjackRule.judgeResult(dealerScore, playerScore));
+        Assertions.assertEquals(Result.DRAW, DefaultBlackjackRule.judgePlayerResult(dealerScore, playerScore));
     }
 
     @Test
@@ -148,7 +148,7 @@ class DefaultBlackjackRuleTest {
         int dealerScore = 20;
         int playerScore = 20;
 
-        Assertions.assertEquals(Result.DRAW, DefaultBlackjackRule.judgeResult(playerScore, dealerScore));
+        Assertions.assertEquals(Result.DRAW, DefaultBlackjackRule.judgePlayerResult(playerScore, dealerScore));
     }
 
     @Test
@@ -156,7 +156,7 @@ class DefaultBlackjackRuleTest {
         int dealerScore = 22;
         int playerScore = 20;
 
-        Assertions.assertEquals(Result.LOSE, DefaultBlackjackRule.judgeResult(dealerScore, playerScore));
+        Assertions.assertEquals(Result.LOSE, DefaultBlackjackRule.judgePlayerResult(dealerScore, playerScore));
     }
 
     @Test
@@ -164,7 +164,7 @@ class DefaultBlackjackRuleTest {
         int dealerScore = 20;
         int playerScore = 22;
 
-        Assertions.assertEquals(Result.LOSE, DefaultBlackjackRule.judgeResult(playerScore, dealerScore));
+        Assertions.assertEquals(Result.LOSE, DefaultBlackjackRule.judgePlayerResult(playerScore, dealerScore));
     }
 
     @Test
@@ -172,7 +172,7 @@ class DefaultBlackjackRuleTest {
         int dealerScore = 22;
         int playerScore = 22;
 
-        Assertions.assertEquals(Result.LOSE, DefaultBlackjackRule.judgeResult(playerScore, dealerScore));
+        Assertions.assertEquals(Result.LOSE, DefaultBlackjackRule.judgePlayerResult(playerScore, dealerScore));
     }
 
     @Test

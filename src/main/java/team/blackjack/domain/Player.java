@@ -33,6 +33,7 @@ public class Player implements Participant {
      *
      * @return
      */
+    @Override
     public int getScore() {
         return this.hands.getFirst().getScore();
     }
