@@ -51,7 +51,7 @@ public class OutputView {
     }
 
     public static void printParticipantScoreResult(ScoreResult scoreResult) {
-        println("딜러의 최종 카드: %s - 결과: %d".formatted(String.join(", ", scoreResult.dealerCard()), scoreResult.dealerScore()));
+        println("딜러의 최종 카드: %s - 결과: %d".formatted(String.join(", ", scoreResult.dealerCards()), scoreResult.dealerScore()));
         for (String playerName : scoreResult.playerNames()) {
             println("%s의 카드: %s - 결과: %d".formatted(playerName,
                     String.join(", ", scoreResult.playerCards().get(playerName)),

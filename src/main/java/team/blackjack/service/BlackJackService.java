@@ -36,6 +36,14 @@ public class BlackJackService {
         blackjackGame.dealInitialCardsTo(dealer);
     }
 
+    public DrawResult getHandResult() {
+        final List<String> playerNames = blackjackGame.getPlayerNames();
+        final List<Card> cards = blackjackGame.getDealer().getHand().getCards();
+        final Map<String, List<String>> playerCards = blackjackGame.getAllPlayerCards();
+
+        return new DrawResult(playerNames, cards.getFirst().getCardName(), playerCards);
+    }
+
     public List<Player> getPlayer() {
         return this.blackjackGame.getPlayers();
     }
@@ -54,27 +62,14 @@ public class BlackJackService {
     }
 
     public ScoreResult calculateAllParticipantScore() {
-        final List<String> playerNames = blackjackGame.getPlayers().stream()
-                .map(Player::getName)
-                .toList();
-
-        final Map<String, List<String>> playerCards = blackjackGame.getPlayers().stream()
-                .collect(Collectors.toMap(
-                        Player::getName,
-                        player -> player.getHands().getFirst().getCardNames()
-                ));
-
-        final Map<String, Integer> playerScores = blackjackGame.getPlayers().stream()
-                .collect(Collectors.toMap(
-                        Player::getName,
-                        Player::getScore)
-                );
-
-        final Dealer dealer = blackjackGame.getDealer();
-        final int dealerScore = dealer.getScore();
+        final List<String> playerNames = blackjackGame.getPlayerNames();
+        final Map<String, List<String>> playerCards = blackjackGame.getAllPlayerCards();
+        final Map<String, Integer> playerScores = blackjackGame.getAllPlayerScores();
+        final List<String> dealerCards = blackjackGame.getDealerCards();
+        final int dealerScore = blackjackGame.getDealerScore();
 
         return new ScoreResult(
-                dealer.getHand().getCardNames(),
+                dealerCards,
                 dealerScore,
                 playerNames,
                 playerCards,
@@ -82,25 +77,12 @@ public class BlackJackService {
         );
     }
 
-    public DrawResult getHandResult() {
-        final List<String> playerNames = blackjackGame.getPlayers().stream()
-                .map(Player::getName)
-                .toList();
-        final List<Card> cards = blackjackGame.getDealer().getHand().getCards();
-        final Map<String, List<String>> playerCards = blackjackGame.getAllPlayerCards();
-
-        return new DrawResult(playerNames, cards.getFirst().getCardName(), playerCards);
-    }
-
     public GameResult getGameResult() {
-        final Map<String, PlayerResult> playerResults = calculatePlayersResultMap(getDealerScore());
+        final int dealerScore = blackjackGame.getDealerScore();
+        final Map<String, PlayerResult> playerResults = calculatePlayersResultMap(dealerScore);
         final DealerResult dealerResult = calculateDealerResult(playerResults);
 
         return new GameResult(dealerResult, playerResults);
-    }
-
-    private int getDealerScore() {
-        return blackjackGame.getDealer().getScore();
     }
 
     private Map<String, PlayerResult> calculatePlayersResultMap(int dealerScore) {

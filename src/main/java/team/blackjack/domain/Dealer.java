@@ -1,5 +1,6 @@
 package team.blackjack.domain;
 
+import java.util.List;
 import team.blackjack.domain.rule.DefaultBlackjackRule;
 
 public class Dealer implements Participant {
@@ -7,10 +8,6 @@ public class Dealer implements Participant {
 
     public Dealer() {
         this.hand = new Hand();
-    }
-
-    public Card draw(Deck deck) {
-        return deck.draw();
     }
 
     public Hand getHand() {
@@ -28,5 +25,11 @@ public class Dealer implements Participant {
     @Override
     public void hit(Card card) {
         this.hand.addCard(card);
+    }
+
+    public List<String> getAllCards(){
+        return hand.getCards().stream()
+                .map(Card::getCardName)
+                .toList();
     }
 }
