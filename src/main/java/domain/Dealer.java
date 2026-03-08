@@ -12,14 +12,15 @@ public class Dealer extends Participant {
     }
 
     @Override
+    public List<Card> getInitialVisibleCards() {
+        return List.of(this.getDeck().getCards().getFirst());
+    }
+
+    @Override
     public Optional<Card> addCard(Deck totalDeck) {
         if (super.calculateDeckSum() <= MINIMUM_TOTAL_SCORE) {
             return super.addCard(totalDeck);
         }
         return Optional.empty();
-    }
-
-    public List<Card> getCards() {
-        return getDeck().getCards();
     }
 }

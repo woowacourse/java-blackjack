@@ -11,6 +11,10 @@ public class Card {
         this.cardContents = cardContents;
     }
 
+    public CardShape getCardShape() {
+        return cardShape;
+    }
+
     public CardContents getCardContents() {
         return cardContents;
     }

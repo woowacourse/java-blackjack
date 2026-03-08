@@ -34,6 +34,10 @@ public class Players {
         return players;
     }
 
+    public List<Player> getPlayers() {
+        return players;
+    }
+
     public Map<String, List<Card>> getDecksPerPlayer() {
         Map<String, List<Card>> decksPerUser = new LinkedHashMap<>();
         for (Player player : players) {
@@ -43,21 +47,5 @@ public class Players {
             );
         }
         return decksPerUser;
-    }
-
-//    public List<String> getPlayersNames() {
-//
-//    }
-
-    public boolean isAnyOneGo() {
-        boolean result = false;
-
-        for (Player player : players) {
-            if (player.isGo()) {
-                result = true;
-            }
-        }
-
-        return result;
     }
 }

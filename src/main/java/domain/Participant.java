@@ -1,5 +1,7 @@
 package domain;
 
+import common.ErrorMessage;
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -38,6 +40,8 @@ public abstract class Participant {
     public String getName() {
         return name;
     }
+
+    public abstract List<Card> getInitialVisibleCards();
 
     public boolean isBust() {
         return deck.isBust();
