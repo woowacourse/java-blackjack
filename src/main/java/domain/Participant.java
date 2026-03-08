@@ -7,9 +7,11 @@ import java.util.List;
 
 public abstract class Participant {
     private List<Card> handCards;
+    private final String name;
 
-    public Participant() {
+    public Participant(String name) {
         this.handCards = new ArrayList<>();
+        this.name = name;
     }
 
     public void receiveInitialCards(List<Card> firstHandCards) {
@@ -46,5 +48,7 @@ public abstract class Participant {
         return List.copyOf(handCards);
     }
 
-
+    public String getName() {
+        return name;
+    }
 }

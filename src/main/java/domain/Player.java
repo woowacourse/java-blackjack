@@ -1,15 +1,9 @@
 package domain;
 
 public class Player extends Participant {
-    private final String name;
 
     public Player(String name) {
-        super();
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
+        super(name);
     }
 
     public GameResult compareScore(int dealerScore) {
@@ -34,6 +28,4 @@ public class Player extends Participant {
         }
         return GameResult.LOSE;
     }
-
-
 }

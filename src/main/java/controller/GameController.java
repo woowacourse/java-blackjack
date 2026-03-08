@@ -4,6 +4,9 @@ import domain.Dealer;
 import domain.GameResult;
 import domain.Player;
 import domain.card.Card;
+import dto.GameScoreDTO;
+import dto.ParticipantHandDTO;
+import dto.GameStartDTO;
 import util.HitOption;
 import util.InputHitOptionParser;
 import util.InputNameParser;
@@ -25,7 +28,6 @@ public class GameController {
     }
 
     public void run() {
-        // 시나리오
         List<Player> players = participateGame(getInputPlayers());
         Dealer dealer = new Dealer();
 
@@ -34,12 +36,11 @@ public class GameController {
             player.receiveInitialCards(firstHandCards);
         }
         dealer.receiveInitialCards(dealer.dealInitialCards());
-
-        printGameStart(players, dealer);
+        outputView.printStartGame(GameStartDTO.from(players, dealer));
 
 
         receiveMoreCard(players, dealer);
-        outputView.printFinalScore(dealer, players);
+        outputView.printFinalScore(GameScoreDTO.from(players, dealer));
 
         // 5. 승패를 계산한다.
         Map<String, GameResult> playerFinalResults = getPlayerFinalResults(players, dealer);
@@ -57,13 +58,6 @@ public class GameController {
                 .toList();
     }
 
-    private void printGameStart(List<Player> players, Dealer dealer) {
-        List<String> playersNames = players.stream().map(Player::getName).toList();
-        outputView.printStartCardMessage(playersNames);
-        outputView.printDealerStartCard(dealer.getHandCards().getFirst());
-        outputView.printStartCard(players);
-    }
-
     private void receiveMoreCard(List<Player> players, Dealer dealer) {
         for (Player player : players) {
             processRound(player, dealer);
@@ -78,10 +72,10 @@ public class GameController {
     private void processRound(Player player, Dealer dealer) {
         while (!player.isBust() && inputHitOption(player) == HitOption.YES) {
             player.receiveHitCard(dealer.dealHitCard());
-            outputView.printCurrentHoldCard(player);
+            outputView.printHandCard(new ParticipantHandDTO(player, player.getHandCards()));
         }
         if (!player.isBust()) {
-            outputView.printCurrentHoldCard(player);
+            outputView.printHandCard(new ParticipantHandDTO(player, player.getHandCards()));
         }
     }
 

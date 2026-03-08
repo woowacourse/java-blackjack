@@ -8,7 +8,7 @@ public class Dealer extends Participant {
     private final Deck deck = new Deck();
 
     public Dealer() {
-        super();
+        super("딜러");
     }
 
     public List<Card> dealInitialCards() {
@@ -17,6 +17,10 @@ public class Dealer extends Participant {
 
     public Card dealHitCard() {
         return deck.drawCard();
+    }
+
+    public List<Card> getFirstCard() {
+        return getHandCards().subList(0, 1);
     }
 
     public boolean isReceiveCard() {
