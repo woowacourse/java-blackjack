@@ -38,15 +38,16 @@ public class BlackjackGame {
     }
 
     private void determineGameState(Deck deck, Participant participant) {
-        while (participant.isHit()) {
-            String input = InputView.readHitOrStand(participant.getName());
-            GameCommand gameCommand = GameCommand.from(input);
-            if (gameCommand.isNo()) {
-                participant.changeState();
-                break;
-            }
-            participant.playTurn(deck);
-            OutputView.showCardName(participant);
+        String input = InputView.readHitOrStand(participant.getName());
+        GameCommand gameCommand = GameCommand.from(input);
+        if (gameCommand.isNo()) {
+            participant.changeState();
+            return;
+        }
+        participant.playTurn(deck);
+        OutputView.showCardName(participant);
+        if (participant.isHit()) {
+            determineGameState(deck, participant);
         }
     }
 
