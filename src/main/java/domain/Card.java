@@ -16,7 +16,7 @@ public class Card {
     }
 
     public int getRank() {
-        return this.rank.getValue();
+        return this.rank.getScore();
     }
 
     @Override
