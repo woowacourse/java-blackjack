@@ -52,4 +52,23 @@ public class HandTest {
 
         assertThat(totalScore).isEqualTo(12);
     }
+
+    @Test
+    void 합계_점수가_21점을_초과하면_버스트이다() {
+        Hand hand = new Hand();
+        hand.addCard(new Card(TEN, SPADE));
+        hand.addCard(new Card(JACK, HEART));
+        hand.addCard(new Card(JACK, SPADE));
+
+        assertThat(hand.isBust()).isTrue();
+    }
+
+    @Test
+    void 합계_점수가_21점_이하이면_버스트가_아니다() {
+        Hand hand = new Hand();
+        hand.addCard(new Card(ACE, SPADE));
+        hand.addCard(new Card(KING, HEART));
+
+        assertThat(hand.isBust()).isFalse();
+    }
 }

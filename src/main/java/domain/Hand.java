@@ -29,9 +29,13 @@ public class Hand {
         return totalScore;
     }
 
+    public boolean isBust() {
+        return calculateScore() > MAX_NON_BUST_SCORE;
+    }
+
     private int calculateAceBonus(int totalScore) {
         if (totalScore + ACE_BONUS_SCORE <= MAX_NON_BUST_SCORE) {
-            return totalScore + 10;
+            return totalScore + ACE_BONUS_SCORE;
         }
         return totalScore;
     }
