@@ -19,7 +19,7 @@ import static blackjack.view.InputView.readPlayNames;
 
 public class BlackjackController {
     public void run(){
-        List<String> names = inputName();
+        List<String> names = inputNames();
         BlackjackGame blackjackGame = BlackjackGame.create(names, new RandomShuffleStrategy());
 
         DealResult dealResult = deal(blackjackGame);
@@ -41,7 +41,7 @@ public class BlackjackController {
 
     }
 
-    private List<String> inputName() {
+    private List<String> inputNames() {
         String input = readPlayNames();
         Parser.notEmpty(input);
         return splitDelimiter(input);
