@@ -9,7 +9,7 @@ public class Application {
 
     private static Controller blackjackController() {
         AppConfig config = new AppConfig();
-        return config.blackJackController();
+        return config.preController();
     }
 }
 
