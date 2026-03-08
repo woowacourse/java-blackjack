@@ -4,7 +4,7 @@ import domain.exception.OutOfBoundException;
 import java.util.Arrays;
 
 public enum CardNumber {
-    A(11, "A"),
+    ACE(11, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
     FOUR(4, "4"),
@@ -14,9 +14,9 @@ public enum CardNumber {
     EIGHT(8, "8"),
     NINE(9, "9"),
     TEN(10, "10"),
-    J(10, "J"),
-    Q(10, "Q"),
-    K(10, "K");
+    JACK(10, "J"),
+    QUEEN(10, "Q"),
+    KING(10, "K");
 
     private int number;
     private String court;
@@ -50,7 +50,11 @@ public enum CardNumber {
     }
 
     private static void validateCourt(String value) {
-        CardNumber.valueOf(value);
+        boolean isValid = Arrays.stream(CardNumber.values())
+                .anyMatch(card -> card.court.equals(value));
+        if (!isValid) {
+            throw new IllegalArgumentException();
+        }
     }
 
     public int getValue() {
