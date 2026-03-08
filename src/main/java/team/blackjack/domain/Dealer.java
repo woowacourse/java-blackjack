@@ -1,12 +1,15 @@
 package team.blackjack.domain;
 
 import java.util.List;
-import team.blackjack.domain.rule.DefaultBlackjackRule;
+import team.blackjack.config.AppConfig;
+import team.blackjack.domain.rule.BlackjackRule;
 
 public class Dealer implements Participant {
+    private final BlackjackRule blackjackRule;
     private final Hand hand;
 
     public Dealer() {
+        this.blackjackRule = AppConfig.getInstance().blackjackRule();
         this.hand = new Hand();
     }
 
@@ -16,11 +19,11 @@ public class Dealer implements Participant {
 
     @Override
     public int getScore() {
-        return DefaultBlackjackRule.calculateBestScore(this.getHand().getCards());
+        return blackjackRule.calculateBestScore(this.getHand().getCards());
     }
 
     public boolean shouldHit() {
-        return DefaultBlackjackRule.isDealerMustDraw(getScore());
+        return blackjackRule.isDealerMustDraw(getScore());
     }
 
     @Override

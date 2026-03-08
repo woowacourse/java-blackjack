@@ -4,15 +4,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import team.blackjack.domain.rule.DefaultBlackjackRule;
+import team.blackjack.config.AppConfig;
+import team.blackjack.domain.rule.BlackjackRule;
 
 public class BlackjackGame {
     private static final int INITIAL_CARD_COUNT = 2;
+
+    private final BlackjackRule blackjackRule;
     private final Dealer dealer;
     private final List<Player> players;
     private final Deck deck;
 
     public BlackjackGame(List<String> playerNames) {
+        this.blackjackRule = AppConfig.getInstance().blackjackRule();
         this.dealer = new Dealer();
         this.players = createPlayers(playerNames);
         this.deck = new Deck();
@@ -68,7 +72,7 @@ public class BlackjackGame {
     }
 
     public Result getPlayerResult(Player player, Dealer dealer) {
-        return DefaultBlackjackRule.judgePlayerResult(player.getScore(), dealer.getScore());
+        return blackjackRule.judgePlayerResult(player.getScore(), dealer.getScore());
     }
 
     public Result getDealerResult(Dealer dealer, Player player) {
