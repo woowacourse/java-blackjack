@@ -30,7 +30,7 @@ public class Hand {
                 .mapToInt(Card::number)
                 .sum();
         if (hasAce() && totalSum + SOFT_HAND_VALUE <= BLACKJACK) {
-            return totalSum + 10;
+            return totalSum + SOFT_HAND_VALUE;
         }
         return totalSum;
     }
