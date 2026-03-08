@@ -7,8 +7,6 @@ import blackjack.dto.GameResultDto;
 import blackjack.dto.PlayerHandDto;
 import blackjack.domain.BlackjackGame;
 import blackjack.util.Parser;
-import blackjack.view.InputView;
-import blackjack.view.OutputView;
 
 import java.util.Collections;
 import java.util.List;
@@ -16,6 +14,13 @@ import java.util.Map;
 
 import static blackjack.util.Parser.splitDelimiter;
 import static blackjack.view.InputView.readPlayNames;
+import static blackjack.view.InputView.readYesOrNo;
+import static blackjack.view.OutputView.printCurrentPlayerHand;
+import static blackjack.view.OutputView.printDealResult;
+import static blackjack.view.OutputView.printDealerDrawMessage;
+import static blackjack.view.OutputView.printEmptyLine;
+import static blackjack.view.OutputView.printFinalResult;
+import static blackjack.view.OutputView.printGameResult;
 
 public class BlackjackController {
     public void run() {
@@ -23,22 +28,17 @@ public class BlackjackController {
         BlackjackGame blackjackGame = BlackjackGame.create(names, Collections::shuffle);
 
         DealResultDto dealResultDto = deal(blackjackGame);
-        OutputView.printDealResult(dealResultDto);
+        printDealResult(dealResultDto);
 
         playPlayerTurn(blackjackGame);
-
-        while (blackjackGame.canDealerHit()) {
-            OutputView.printDealerDrawMessage();
-            blackjackGame.dealerDraw();
-        }
+        playDealerTurn(blackjackGame);
 
         GameResultDto gameResultDto = blackjackGame.generateGameResult();
-        OutputView.printGameResult(gameResultDto);
+        printGameResult(gameResultDto);
 
         Map<Player, MatchResult> playerFinalResult = blackjackGame.getPlayerFinalResult();
         Map<String, Long> dealerFinalResult = blackjackGame.getDealerFinalResult(playerFinalResult);
-        OutputView.printFinalResult(playerFinalResult, dealerFinalResult);
-
+        printFinalResult(playerFinalResult, dealerFinalResult);
     }
 
     private List<String> inputNames() {
@@ -59,14 +59,26 @@ public class BlackjackController {
     }
 
     private void playTurn(BlackjackGame blackjackGame, int index) {
-        while (blackjackGame.canPlayerHit(index)) {
-            String answer = InputView.readYesOrNo(blackjackGame.playerNameByIndex(index));
-            if ("n".equals(answer)) {
-                break;
-            }
-            PlayerHandDto playerHandDto = PlayerHandDto.from(blackjackGame.playerDraw(index));
-            OutputView.printCurrentPlayerHand(playerHandDto);
+        while (blackjackGame.canPlayerHit(index) && wantsToHit(blackjackGame, index)) {
+            hitAndPrintHand(blackjackGame, index);
         }
-        System.out.println();
+        printEmptyLine();
+    }
+
+    private boolean wantsToHit(BlackjackGame blackjackGame, int index) {
+        String answer = readYesOrNo(blackjackGame.playerNameByIndex(index));
+        return answer.equals("y");
+    }
+
+    private void hitAndPrintHand(BlackjackGame blackjackGame, int index){
+        PlayerHandDto playerHandDto = PlayerHandDto.from(blackjackGame.playerDraw(index));
+        printCurrentPlayerHand(playerHandDto);
+    }
+
+    private void playDealerTurn(BlackjackGame blackjackGame){
+        while (blackjackGame.canDealerHit()) {
+            printDealerDrawMessage();
+            blackjackGame.dealerDraw();
+        }
     }
 }

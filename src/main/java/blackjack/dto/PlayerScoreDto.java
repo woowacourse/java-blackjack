@@ -1,4 +1,4 @@
-package blackjack.dto.response;
+package blackjack.dto;
 
 import blackjack.domain.Player;
 
