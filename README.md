@@ -1,96 +1,141 @@
-# java-blackjack
+# ♠️ java-blackjack
 
 블랙잭 미션 저장소
 
-## 입출력
+---
 
-### 입력
+## 📌 프로젝트 개요
 
-- [x] 플레이어의 이름을 입력받는다.
-    - **(예외 처리)** 공백 문자열인 경우
+콘솔 기반으로 즐길 수 있는 블랙잭 게임입니다.
 
-- [x] hit(`y`) 혹은 stand(`n`)를 입력받는다.
-    - **(예외 처리)** `y` 혹은 `n`이 아닌 경우
+## 🚀 기능 요구 사항
 
-### 출력
+### 1. 게임 준비 및 카드 분배
 
-- [x] 게임 안내 문구를 출력한다.
+- [x] 참여할 플레이어들의 이름을 쉼표(,) 기준으로 입력받는다.
+    - 예외: 이름이 공백이거나 한글/영문이 아닌 경우.
+    - 예외: 최대 참여 인원(5명)을 초과하는 경우.
+- [x] 딜러와 플레이어들에게 무작위로 섞인 카드를 2장씩 나누어 준다.
+- [x] 분배된 초기 카드를 출력한다. (딜러는 1장만 공개)
 
-- [x] 초기 카드 내역을 출력한다.
+### 2. 카드 추가 발급 (Hit / Stand)
 
-- [x] 최종 카드 내역을 출력한다.
+- [x] 각 플레이어에게 카드를 더 받을지(y/n) 입력받는다.
+- [x] 'y'를 입력하면 카드를 1장 추가로 지급하고 현재 카드를 출력한다.
+- [x] 카드의 합이 21을 초과(Bust)하면 더 이상 카드를 받을 수 없다.
+- [x] 딜러는 플레이어의 턴이 모두 끝난 후, 카드의 합이 16 이하이면 카드를 1장 더 받는다. (17 이상이면 받지 않음)
 
-- [x] 최종 승패 결과를 출력한다.
+### 3. 점수 계산 및 승패 판정
 
-## 도메인
+- [x] J, Q, K는 10으로 계산한다.
+- [x] Ace(A)는 1 또는 11 중 카드 합산 범위(21)를 초과하지 않는 유리한 방향으로 계산한다.
+- [x] 딜러와 플레이어의 점수를 비교하여 최종 승패를 결정한다.
+    - 딜러가 Bust인 경우, Bust되지 않은 플레이어는 모두 승리한다.
+    - 점수가 같을 경우 무승부로 처리한다.
 
-### Players
+### 4. 게임 결과 출력
 
-- [x] 플레이어들을 생성한다.
+- [x] 모든 참가자의 최종 카드 목록과 점수를 출력한다.
+- [x] 딜러와 플레이어들의 최종 승패(승/무/패)를 출력한다.
 
-### Participant
+## 🗂️ 클래스 다이어그램
 
-- [x] 버스트 판정
+```mermaid
+classDiagram
+%% 1. 도메인 클래스 선언
+    class Game {
+        -Deck totalDeck
+        -Dealer dealer
+        -Players players
+    }
+    class Participant {
+        <<abstract>>
+        -Deck deck
+        -String name
+    }
+    class Player {
+    }
+    class Dealer {
+    }
+    class Players {
+        -List~Player~ players
+    }
+    class Deck {
+        -List~Card~ cards
+    }
+    class Card {
+        -CardShape cardShape
+        -CardContents cardContents
+    }
+    class CardShape {
+        <<enumeration>>
+    }
+    class CardContents {
+        <<enumeration>>
+        -String number
+        -int score
+    }
+    class CardCreationStrategy {
+        <<interface>>
+    }
+    class RandomCardCreationStrategy {
+    }
 
-- [x] 총합 구하기
+%% 2. 컨트롤러 및 뷰 클래스 선언
+    class Main {
+    }
+    class GameDelegate {
+        <<interface>>
+    }
+    class BlackJackController {
+        -InputView inputView
+        -OutputView outputView
+        -CardCreationStrategy strategy
+    }
+    class InputView {
+        -Scanner sc
+    }
+    class OutputView {
+    }
 
-- [x] 카드 받기
+%% 3. DTO 클래스 선언
+    class GameResultDto {
+        -ParticipantDto dealerDto
+        -List~ParticipantDto~ playerDtos
+        -Map dealerWinLossResults
+        -Map playerWinLossResults
+    }
+    class ParticipantDto {
+        -String name
+        -List~CardDto~ cards
+        -int score
+    }
+    class CardDto {
+        -String cardShape
+        -String cardContentNumber
+    }
 
-- [x] 이름 검증
-    - 공백 불가
-    - 한국어, 알파벳만 허용
+%% Relationships
+%% 도메인 내부 관계
+    Game --> Deck
+    Game --> Dealer
+    Game --> Players
+    Participant <|-- Player
+    Participant <|-- Dealer
+    Players --> Player
+    Deck --> Card
+    Card --> CardShape
+    Card --> CardContents
+    CardCreationStrategy <|.. RandomCardCreationStrategy
+%% 컨트롤러 및 뷰 관계
+    Main --> BlackJackController
+    GameDelegate <|.. BlackJackController
+    BlackJackController --> InputView
+    BlackJackController --> OutputView
+    BlackJackController --> CardCreationStrategy
+%% DTO 관계
+    GameResultDto --> ParticipantDto
+    ParticipantDto --> CardDto
+```
 
-### Dealer
 
-- [x] 카드를 받는다.
-    - 점수 합이 16 이하면 카드를 한장 더 받는다.
-
-### Player
-
-- [x] 카드를 받는다.
-    - `hit`를 선택하면 한 장 더 받는다.
-
-### Card
-
-- [x] 카드 점수 계산
-    - 숫자 카드는 숫자 그대로, J/Q/K는 10점
-
-### Deck
-
-- [x] 카드 덱 생성
-    - 전체 카드 덱 + 셔플
-    - 참가자 카드 덱 생성
-
-- [x] 카드 N장 뽑기
-
-- [x] Ace카드를 제외한 카드들의 합계
-    - 여러 카드의 점수 합산
-
-- [x] 버스트 판정
-    - 합계가 21 초과인지 판단
-
-- [x] Ace의 1/11 처리
-    - 합계에 따라 1 또는 11로 계산
-
-- [x] 카드 넣기
-
-### Game
-
-- [x] 게임에 필요한 객체들을 생성한다.
-    - 전체 덱 객체를 생성한다.
-    - 딜러 객체를 생성한다.
-    - 플레이어 객체들을 생성한다.
-
-- [x] 게임을 진행한다
-- [x] 게임
-
-## Delegate
-
-- `Controller` 와 `Game` 의 상호 작용을 위한 도입
-
-### BlackJackController
-
-- [x] 플레이어 이름을 입력받아 게임에 전달한다
-    - 딜러와 플레이어에게 각각 전체 덱에서 카드를 뽑아 초기 덱을 지급한다.
-- [x] 플레이어의 `hit` or `stand` 여부를 게임이 전달한다.
-- [x] 게임에서 결과를 받아 `OutputView` 에 전달한다
