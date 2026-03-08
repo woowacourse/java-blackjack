@@ -3,7 +3,6 @@ package model;
 import java.util.Arrays;
 
 public enum Suits {
-
     SPADE("스페이드"),
     DIAMOND("다이아몬드"),
     HEART("하트"),

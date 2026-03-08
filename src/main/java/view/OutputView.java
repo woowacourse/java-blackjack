@@ -7,7 +7,6 @@ import model.participant.Participant;
 import model.Participants;
 
 public class OutputView {
-
     public static final String LINE_SEPARATOR = System.lineSeparator();
 
     public void printDealOut(Participants participants) {
@@ -30,7 +29,8 @@ public class OutputView {
 
     public void printHandsAndScore(Participants participants) {
         for (Participant participant : participants) {
-            System.out.printf("%s카드: %s - 결과: %d%s", participant.getName(), participant.open(), participant.calculateScore(), LINE_SEPARATOR);
+            System.out.printf("%s카드: %s - 결과: %d%s", participant.getName(), participant.open(),
+                    participant.calculateScore(), LINE_SEPARATOR);
         }
 
         System.out.println();
@@ -38,7 +38,8 @@ public class OutputView {
 
     public void printResult(Map<String, Integer> dealerResult, Map<String, Boolean> playerResult) {
         System.out.println("## 최종 승패");
-        System.out.printf("딜러: %d승 %d패%s", dealerResult.getOrDefault("승", 0), dealerResult.getOrDefault("패", 0), LINE_SEPARATOR);
+        System.out.printf("딜러: %d승 %d패%s", dealerResult.getOrDefault("승", 0), dealerResult.getOrDefault("패", 0),
+                LINE_SEPARATOR);
         for (Entry<String, Boolean> entry : playerResult.entrySet()) {
             System.out.printf("%s: %s%s", entry.getKey(), entry.getValue() ? "승" : "패", LINE_SEPARATOR);
         }

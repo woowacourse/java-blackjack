@@ -9,7 +9,6 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackJackController {
-
     private final InputView inputView;
     private final OutputView outputView;
 
