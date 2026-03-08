@@ -32,4 +32,10 @@ class PlayerTest {
 
         assertFalse(player.isPlayable());
     }
+
+    @Test
+    @DisplayName("플레이어의 이름이 \"딜러\"이면 예외를 발생시켜야 한다.")
+    void player_name_exception_test() {
+        assertThrows(IllegalArgumentException.class, () -> Player.of("딜러"));
+    }
 }
