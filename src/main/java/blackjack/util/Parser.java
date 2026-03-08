@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Parser {
+    private Parser(){
+    }
+
     public static List<String> splitDelimiter(String playerNames) {
         String[] values = playerNames.split(",");
 
