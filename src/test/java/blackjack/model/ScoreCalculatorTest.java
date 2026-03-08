@@ -20,7 +20,7 @@ class ScoreCalculatorTest {
         );
         int sum = Rank.ACE.getValue() + rank.getValue();
         // when
-        Score adjustedScore = scoreCalculator.calculate(cards);
+        Score adjustedScore = scoreCalculator.calculateOptimalTotal(cards);
         // then
         assertThat(adjustedScore.value()).isEqualTo(sum + 10);
     }

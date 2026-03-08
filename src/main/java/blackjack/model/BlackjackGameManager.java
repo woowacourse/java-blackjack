@@ -22,7 +22,7 @@ public class BlackjackGameManager {
     }
 
     public Score calculate(List<Card> cards) {
-        return scoreCalculator.calculate(cards);
+        return scoreCalculator.calculateOptimalTotal(cards);
     }
 
     public PlayerBlackjackResult judge(Participant player, Dealer dealer) {

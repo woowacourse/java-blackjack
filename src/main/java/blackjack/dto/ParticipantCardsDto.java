@@ -8,18 +8,12 @@ public record ParticipantCardsDto(
     List<CardDto> cards
 ) {
     public static ParticipantCardsDto fromAllCards(Participant participant) {
-        List<CardDto> cards = participant.getCards()
-            .stream()
-            .map(CardDto::from)
-            .toList();
+        List<CardDto> cards = participant.getCards().stream().map(CardDto::from).toList();
         return new ParticipantCardsDto(participant.getName(), cards);
     }
 
     public static ParticipantCardsDto fromVisibleCards(Participant participant) {
-        List<CardDto> cards = participant.getVisibleCards()
-            .stream()
-            .map(CardDto::from)
-            .toList();
+        List<CardDto> cards = participant.getVisibleCards().stream().map(CardDto::from).toList();
         return new ParticipantCardsDto(participant.getName(), cards);
     }
 }

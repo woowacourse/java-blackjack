@@ -11,7 +11,7 @@ public class ScoreCalculator {
         this.bustPolicy = bustPolicy;
     }
 
-    public Score calculate(List<Card> cards) {
+    public Score calculateOptimalTotal(List<Card> cards) {
         int sum = cards.stream().mapToInt(Card::getValue).sum();
 
         if (hasAce(cards) && canApplyAceAmount(sum)) {
