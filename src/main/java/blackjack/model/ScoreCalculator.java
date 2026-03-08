@@ -13,15 +13,18 @@ public class ScoreCalculator {
 
     public Score calculate(List<Card> cards) {
         int sum = cards.stream().mapToInt(Card::getValue).sum();
-        boolean hasAce = cards.stream().anyMatch(x -> x.rank() == Rank.ACE);
 
-        if (canBeSoft(sum, hasAce)) {
+        if (hasAce(cards) && canApplyAceAmount(sum)) {
             return new Score(sum + ACE_ADJUST_AMOUNT);
         }
         return new Score(sum);
     }
 
-    private boolean canBeSoft(int sum, boolean hasAce) {
-        return hasAce && !bustPolicy.isBust(new Score(sum + ACE_ADJUST_AMOUNT));
+    private static boolean hasAce(List<Card> cards) {
+        return cards.stream().anyMatch(x -> x.rank() == Rank.ACE);
+    }
+
+    private boolean canApplyAceAmount(int sum) {
+        return !bustPolicy.isBust(new Score(sum + ACE_ADJUST_AMOUNT));
     }
 }

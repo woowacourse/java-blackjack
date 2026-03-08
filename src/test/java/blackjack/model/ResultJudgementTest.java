@@ -21,9 +21,9 @@ class ResultJudgementTest {
         Score playerScore = new Score(HIGHER_SCORE);
         Score dealerScore = new Score(LOWER_SCORE);
         // when
-        BlackjackResult result = resultJudgement.judge(playerScore, dealerScore);
+        PlayerBlackjackResult result = resultJudgement.judge(playerScore, dealerScore);
         // then
-        assertThat(result).isEqualTo(BlackjackResult.WIN);
+        assertThat(result).isEqualTo(PlayerBlackjackResult.WIN);
     }
 
     @Test
@@ -32,9 +32,9 @@ class ResultJudgementTest {
         Score playerScore = new Score(LOWER_SCORE);
         Score dealerScore = new Score(HIGHER_SCORE);
         // when
-        BlackjackResult result = resultJudgement.judge(playerScore, dealerScore);
+        PlayerBlackjackResult result = resultJudgement.judge(playerScore, dealerScore);
         // then
-        assertThat(result).isEqualTo(BlackjackResult.LOSE);
+        assertThat(result).isEqualTo(PlayerBlackjackResult.LOSE);
     }
 
     @Test
@@ -43,9 +43,9 @@ class ResultJudgementTest {
         Score playerScore = new Score(DEFAULT_SCORE);
         Score dealerScore = new Score(DEFAULT_SCORE);
         // when
-        BlackjackResult result = resultJudgement.judge(playerScore, dealerScore);
+        PlayerBlackjackResult result = resultJudgement.judge(playerScore, dealerScore);
         // then
-        assertThat(result).isEqualTo(BlackjackResult.PUSH);
+        assertThat(result).isEqualTo(PlayerBlackjackResult.PUSH);
     }
 
     @Test
@@ -54,9 +54,9 @@ class ResultJudgementTest {
         Score playerScore = new Score(BUST_SCORE);
         Score dealerScore = new Score(DEFAULT_SCORE);
         // when
-        BlackjackResult result = resultJudgement.judge(playerScore, dealerScore);
+        PlayerBlackjackResult result = resultJudgement.judge(playerScore, dealerScore);
         // then
-        assertThat(result).isEqualTo(BlackjackResult.LOSE);
+        assertThat(result).isEqualTo(PlayerBlackjackResult.LOSE);
     }
 
     @Test
@@ -65,9 +65,9 @@ class ResultJudgementTest {
         Score playerScore = new Score(DEFAULT_SCORE);
         Score dealerScore = new Score(BUST_SCORE);
         // when
-        BlackjackResult result = resultJudgement.judge(playerScore, dealerScore);
+        PlayerBlackjackResult result = resultJudgement.judge(playerScore, dealerScore);
         // then
-        assertThat(result).isEqualTo(BlackjackResult.WIN);
+        assertThat(result).isEqualTo(PlayerBlackjackResult.WIN);
     }
 
     @Test
@@ -76,8 +76,8 @@ class ResultJudgementTest {
         Score playerScore = new Score(BUST_SCORE);
         Score dealerScore = new Score(BUST_SCORE);
         // when
-        BlackjackResult result = resultJudgement.judge(playerScore, dealerScore);
+        PlayerBlackjackResult result = resultJudgement.judge(playerScore, dealerScore);
         // then
-        assertThat(result).isEqualTo(BlackjackResult.LOSE);
+        assertThat(result).isEqualTo(PlayerBlackjackResult.LOSE);
     }
 }

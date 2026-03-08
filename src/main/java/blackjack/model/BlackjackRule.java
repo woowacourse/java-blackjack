@@ -1,35 +1,25 @@
 package blackjack.model;
 
 public class BlackjackRule {
-    private final ScoreCalculator scoreCalculator;
     private final DealerHitPolicy dealerHitPolicy;
     private final BustPolicy bustPolicy;
     private final ResultJudgement resultJudgement;
 
-    public BlackjackRule(ScoreCalculator scoreCalculator, DealerHitPolicy dealerHitPolicy, BustPolicy bustPolicy,
-                         ResultJudgement resultJudgement) {
-        this.scoreCalculator = scoreCalculator;
+    public BlackjackRule(DealerHitPolicy dealerHitPolicy, BustPolicy bustPolicy, ResultJudgement resultJudgement) {
         this.dealerHitPolicy = dealerHitPolicy;
         this.bustPolicy = bustPolicy;
         this.resultJudgement = resultJudgement;
     }
 
-    public boolean canHit(Participant player) {
-        return !bustPolicy.isBust(scoreCalculator.calculate(player.getCards()));
+    public boolean canHitPlayer(Score score) {
+        return !bustPolicy.isBust(score);
     }
 
-    public boolean shouldHit(Dealer dealer) {
-        Score score = scoreCalculator.calculate(dealer.getCards());
-        return dealer.shouldHit(dealerHitPolicy, score);
+    public boolean shouldHitDealer(Score score) {
+        return dealerHitPolicy.shouldHit(score);
     }
 
-    public Score calculate(Participant participant) {
-        return scoreCalculator.calculate(participant.getCards());
-    }
-
-    public BlackjackResult judge(Participant player, Dealer dealer) {
-        return resultJudgement.judge(
-            scoreCalculator.calculate(player.getCards()),
-            scoreCalculator.calculate(dealer.getCards()));
+    public PlayerBlackjackResult judge(Score playerScore, Score dealerScore) {
+        return resultJudgement.judge(playerScore, dealerScore);
     }
 }

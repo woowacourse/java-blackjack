@@ -8,23 +8,23 @@ public class ResultJudgement {
         this.bustPolicy = bustPolicy;
     }
 
-    public BlackjackResult judge(Score playerScore, Score dealerScore) {
-        if (bustPolicy.isBust(playerScore)) {
-            return BlackjackResult.LOSE;
+    public PlayerBlackjackResult judge(Score playerScore, Score dealerScore) {
+        if (isBust(playerScore)) {
+            return PlayerBlackjackResult.LOSE;
         }
-
-        if (bustPolicy.isBust(dealerScore)) {
-            return BlackjackResult.WIN;
+        if (isBust(dealerScore)) {
+            return PlayerBlackjackResult.WIN;
         }
-
         if (playerScore.value() > dealerScore.value()) {
-            return BlackjackResult.WIN;
+            return PlayerBlackjackResult.WIN;
         }
-
         if (playerScore.value() == dealerScore.value()) {
-            return BlackjackResult.PUSH;
+            return PlayerBlackjackResult.PUSH;
         }
+        return PlayerBlackjackResult.LOSE;
+    }
 
-        return BlackjackResult.LOSE;
+    private boolean isBust(Score playerScore) {
+        return bustPolicy.isBust(playerScore);
     }
 }

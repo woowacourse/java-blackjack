@@ -10,10 +10,10 @@ public class Participants implements Iterable<Participant> {
     private static final String DEALER_NAME = "딜러";
     private static final int INCLUDE_EMPTY_ELEMENT = -1;
 
-    private final Participant dealer;
-    private final List<Participant> players;
+    private final Dealer dealer;
+    private final List<Player> players;
 
-    public Participants(List<Participant> players) {
+    public Participants(List<Player> players) {
         this.dealer = new Dealer(DEALER_NAME, new Hand());
         this.players = players;
     }
@@ -21,8 +21,8 @@ public class Participants implements Iterable<Participant> {
     public static Participants from(String rawPlayerNames) {
         List<String> playerNames = Arrays.asList(rawPlayerNames.split(DELIMITER, INCLUDE_EMPTY_ELEMENT));
         validateDuplicatedNames(playerNames);
-        List<Participant> players = new java.util.ArrayList<>(playerNames.stream()
-            .map(playerName -> (Participant) new Player(playerName, new Hand())).toList());
+        List<Player> players = new java.util.ArrayList<>(playerNames.stream()
+            .map(playerName -> new Player(playerName, new Hand())).toList());
         return new Participants(players);
     }
 
@@ -35,12 +35,12 @@ public class Participants implements Iterable<Participant> {
         }
     }
 
-    public List<Participant> getPlayers() {
+    public List<Player> getPlayers() {
         return List.copyOf(players);
     }
 
     public Dealer getDealer() {
-        return (Dealer) dealer;
+        return dealer;
     }
 
     public Stream<Participant> stream() {

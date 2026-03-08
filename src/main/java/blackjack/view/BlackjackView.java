@@ -3,7 +3,7 @@ package blackjack.view;
 import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.ParticipantInitialDealDtos;
 import blackjack.dto.ParticipantScoreDto;
-import blackjack.dto.ResultDto;
+import blackjack.dto.PlayerResultDto;
 import java.util.List;
 
 public class BlackjackView {
@@ -39,7 +39,7 @@ public class BlackjackView {
         outputView.printScore(participantScoreDtos);
     }
 
-    public void printResult(List<ResultDto> resultDtos) {
-        outputView.printResult(resultDtos);
+    public void printResult(List<PlayerResultDto> playerResultDtos) {
+        outputView.printResult(playerResultDtos);
     }
 }

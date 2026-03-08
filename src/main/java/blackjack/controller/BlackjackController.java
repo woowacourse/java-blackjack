@@ -3,13 +3,13 @@ package blackjack.controller;
 import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.ParticipantInitialDealDtos;
 import blackjack.dto.ParticipantScoreDto;
-import blackjack.dto.ResultDto;
+import blackjack.dto.PlayerResultDto;
 import blackjack.model.Answer;
-import blackjack.model.BlackjackResult;
+import blackjack.model.PlayerBlackjackResult;
 import blackjack.model.Dealer;
 import blackjack.model.Deck;
-import blackjack.model.Participant;
 import blackjack.model.Participants;
+import blackjack.model.Player;
 import blackjack.model.Score;
 import blackjack.service.BlackjackService;
 import blackjack.view.BlackjackView;
@@ -29,8 +29,7 @@ public class BlackjackController {
         Participants participants = Participants.from(view.readPlayers());
         Deck deck = service.createDeck();
 
-        service.initialDeal(participants, deck);
-        view.printInitialDeal(ParticipantInitialDealDtos.from(participants));
+        initialDeal(participants, deck);
 
         hitPlayers(participants.getPlayers(), deck);
         hitDealer(participants.getDealer(), deck);
@@ -39,13 +38,18 @@ public class BlackjackController {
         printResult(participants);
     }
 
-    private void hitPlayers(List<Participant> players, Deck deck) {
-        for (Participant player : players) {
+    private void initialDeal(Participants participants, Deck deck) {
+        service.initialDeal(participants, deck);
+        view.printInitialDeal(ParticipantInitialDealDtos.from(participants));
+    }
+
+    private void hitPlayers(List<Player> players, Deck deck) {
+        for (Player player : players) {
             hitPlayer(player, deck);
         }
     }
 
-    private void hitPlayer(Participant player, Deck deck) {
+    private void hitPlayer(Player player, Deck deck) {
         while (service.canHit(player)) {
             Answer answer = Answer.from(view.askHit(player.getName()));
             service.hitPlayer(player, deck, answer);
@@ -63,7 +67,7 @@ public class BlackjackController {
     private void printScore(Participants participants) {
         List<ParticipantScoreDto> participantScoreDtos = participants.stream()
             .map(participant -> {
-                Score score = service.calculate(participant);
+                Score score = service.calculate(participant.getCards());
                 return ParticipantScoreDto.from(participant, score);
             })
             .toList();
@@ -71,12 +75,12 @@ public class BlackjackController {
     }
 
     private void printResult(Participants participants) {
-        List<ResultDto> resultDtos = participants.getPlayers().stream()
+        List<PlayerResultDto> playerResultDtos = participants.getPlayers().stream()
             .map(player -> {
-                    BlackjackResult result = service.judge(player, participants.getDealer());
-                    return new ResultDto(player.getName(), result);
+                    PlayerBlackjackResult result = service.judge(player, participants.getDealer());
+                    return new PlayerResultDto(player.getName(), result);
                 }
             ).toList();
-        view.printResult(resultDtos);
+        view.printResult(playerResultDtos);
     }
 }

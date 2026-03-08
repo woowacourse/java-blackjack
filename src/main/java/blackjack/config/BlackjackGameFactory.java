@@ -1,6 +1,7 @@
 package blackjack.config;
 
 import blackjack.controller.BlackjackController;
+import blackjack.model.BlackjackGameManager;
 import blackjack.model.BlackjackRule;
 import blackjack.model.BustPolicy;
 import blackjack.model.BustPolicyImpl;
@@ -32,19 +33,23 @@ public class BlackjackGameFactory {
     }
 
     private BlackjackService service() {
-        return new BlackjackService(new ShuffledCardsGenerator(), rule());
+        return new BlackjackService(new ShuffledCardsGenerator(), manager());
+    }
+
+    private BlackjackGameManager manager() {
+        BustPolicy bustPolicy = bustPolicy();
+        return new BlackjackGameManager(new ScoreCalculator(bustPolicy), rule());
+    }
+
+    private BustPolicy bustPolicy() {
+        return new BustPolicyImpl(bustThreshold);
     }
 
     private BlackjackRule rule() {
         BustPolicy bustPolicy = bustPolicy();
         return new BlackjackRule(
-            new ScoreCalculator(bustPolicy),
             new DealerThresholdHitPolicy(dealerThreshold),
             bustPolicy,
             new ResultJudgement(bustPolicy));
-    }
-
-    private BustPolicy bustPolicy() {
-        return new BustPolicyImpl(bustThreshold);
     }
 }

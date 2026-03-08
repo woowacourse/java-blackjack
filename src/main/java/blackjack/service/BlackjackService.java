@@ -1,24 +1,26 @@
 package blackjack.service;
 
 import blackjack.model.Answer;
-import blackjack.model.BlackjackResult;
-import blackjack.model.BlackjackRule;
+import blackjack.model.PlayerBlackjackResult;
+import blackjack.model.BlackjackGameManager;
+import blackjack.model.Card;
 import blackjack.model.CardsGenerator;
 import blackjack.model.Dealer;
 import blackjack.model.Deck;
 import blackjack.model.Participant;
 import blackjack.model.Participants;
 import blackjack.model.Score;
+import java.util.List;
 
 public class BlackjackService {
     private static final int INITIAL_DEAL_COUNT = 2;
 
     private final CardsGenerator cardsGenerator;
-    private final BlackjackRule rule;
+    private final BlackjackGameManager manager;
 
-    public BlackjackService(CardsGenerator cardsGenerator, BlackjackRule rule) {
+    public BlackjackService(CardsGenerator cardsGenerator, BlackjackGameManager manager) {
         this.cardsGenerator = cardsGenerator;
-        this.rule = rule;
+        this.manager = manager;
     }
 
     public Deck createDeck() {
@@ -45,22 +47,22 @@ public class BlackjackService {
     }
 
     public boolean canHit(Participant player) {
-        return rule.canHit(player);
+        return manager.canHit(player);
     }
 
     public boolean shouldHit(Dealer dealer) {
-        return rule.shouldHit(dealer);
+        return manager.shouldHit(dealer);
     }
 
     public void hitDealer(Dealer dealer, Deck deck) {
         dealer.hit(deck.draw());
     }
 
-    public Score calculate(Participant participant) {
-        return rule.calculate(participant);
+    public Score calculate(List<Card> cards) {
+        return manager.calculate(cards);
     }
 
-    public BlackjackResult judge(Participant player, Dealer dealer) {
-        return rule.judge(player, dealer);
+    public PlayerBlackjackResult judge(Participant player, Dealer dealer) {
+        return manager.judge(player, dealer);
     }
 }

@@ -4,8 +4,8 @@ import blackjack.dto.CardDto;
 import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.ParticipantInitialDealDtos;
 import blackjack.dto.ParticipantScoreDto;
-import blackjack.dto.ResultDto;
-import blackjack.model.BlackjackResult;
+import blackjack.dto.PlayerResultDto;
+import blackjack.model.PlayerBlackjackResult;
 import blackjack.model.Score;
 import java.util.List;
 
@@ -52,25 +52,25 @@ public class OutputView {
         System.out.println(playerName + "카드: " + joinedCards + " - 결과: " + score.value());
     }
 
-    public void printResult(List<ResultDto> resultDtos) {
+    public void printResult(List<PlayerResultDto> playerResultDtos) {
         System.out.println("## 최종 승패");
 
-        long dealerLoseCount = resultDtos.stream()
-            .filter(resultDto -> resultDto.result() == BlackjackResult.WIN)
+        long dealerLoseCount = playerResultDtos.stream()
+            .filter(playerResultDto -> playerResultDto.result() == PlayerBlackjackResult.WIN)
             .count();
-        long dealerWinCount = resultDtos.stream()
-            .filter(resultDto -> resultDto.result() == BlackjackResult.LOSE)
+        long dealerWinCount = playerResultDtos.stream()
+            .filter(playerResultDto -> playerResultDto.result() == PlayerBlackjackResult.LOSE)
             .count();
-        int playerCount = resultDtos.size();
+        int playerCount = playerResultDtos.size();
         System.out.println(
             "딜러: " + dealerWinCount + "승 " + dealerLoseCount + "패 " +
                 (playerCount - dealerLoseCount - dealerWinCount) + "무");
 
-        resultDtos.forEach(this::printResult);
+        playerResultDtos.forEach(this::printResult);
     }
 
-    public void printResult(ResultDto resultDto) {
-        System.out.println(resultDto.name() + ": " + resultDto.result().getLabel());
+    public void printResult(PlayerResultDto playerResultDto) {
+        System.out.println(playerResultDto.participantName() + ": " + playerResultDto.result().getLabel());
     }
 
     private List<String> parseCardsToOutputs(List<CardDto> cards) {
