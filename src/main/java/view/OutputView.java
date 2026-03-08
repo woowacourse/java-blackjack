@@ -1,5 +1,6 @@
 package view;
 
+import domain.Player;
 import domain.constant.Result;
 import domain.dto.GameFinalResultDto;
 import domain.dto.GameInitialInfoDto;
@@ -12,12 +13,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    private static final String DEAL_MESSAGE = "딜러와 {0}에게 {1}장을 나누었습니다.";
+    private static final String DEAL_MESSAGE = "{0}와 {1}에게 {2}장을 나누었습니다.";
     private static final String SHOW_HAND_MESSAGE = "{0}카드: {1}";
     private static final String FINAL_RESULT_MESSAGE = "{0}: {1}";
     private static final String DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
 
-    public void printInitialInfo(List<GameInitialInfoDto> initialInfo) {
+    public void printInitialInfo(GameInitialInfoDto initialInfo) {
         printHandOutNotice(initialInfo);
         printInitialHands(initialInfo);
     }
@@ -42,7 +43,7 @@ public class OutputView {
                     SHOW_HAND_MESSAGE,
                     scoreResult.getPlayerName(),
                     String.join(", ", scoreResult.getHand())
-                            + " - 결과: " + scoreResult.getResult()
+                            + " - 결과: " + scoreResult.getScore()
             ));
         }
         System.out.println();
@@ -93,25 +94,34 @@ public class OutputView {
         }
     }
 
-    private void printHandOutNotice(List<GameInitialInfoDto> initialInfo) {
-        String playerNames = initialInfo.stream()
-                .skip(1) // 0번은 딜러
-                .map(GameInitialInfoDto::getPlayerName)
+    private void printHandOutNotice(GameInitialInfoDto initialInfo) {
+        String playerNames = initialInfo.getPlayerResults().stream()
+                .map(GameScoreResultDto::getPlayerName)
                 .collect(Collectors.joining(", "));
 
         System.out.println(MessageFormat.format(
                 DEAL_MESSAGE,
+                initialInfo.getDealerName(),
                 playerNames,
-                initialInfo.getFirst().getInitialHandSize()
+                initialInfo.getPlayerResults().stream()
+                        .mapToInt(result -> result.getHand().size())
+                        .max()
+                        .orElse(0)
         ));
     }
 
-    private void printInitialHands(List<GameInitialInfoDto> initialInfo) {
-        for (GameInitialInfoDto info : initialInfo) {
+    private void printInitialHands(GameInitialInfoDto initialInfo) {
+        System.out.println(MessageFormat.format(
+                SHOW_HAND_MESSAGE,
+                initialInfo.getDealerName(),
+                initialInfo.getDealerOpenCard()
+        ));
+
+        for (GameScoreResultDto result : initialInfo.getPlayerResults()) {
             System.out.println(MessageFormat.format(
                     SHOW_HAND_MESSAGE,
-                    info.getPlayerName(),
-                    String.join(", ", info.getHand())
+                    result.getPlayerName(),
+                    String.join(", ", result.getHand())
             ));
         }
         System.out.println();

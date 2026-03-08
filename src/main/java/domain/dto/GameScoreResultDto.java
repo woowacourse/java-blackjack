@@ -1,40 +1,38 @@
 package domain.dto;
 
+import domain.Player;
+
 import java.util.List;
 
 public class GameScoreResultDto {
     String playerName;
     List<String> hand;
-    int result;
+    int score;
 
-    public GameScoreResultDto(String playerName, List<String> hand, int result) {
+    private GameScoreResultDto(String playerName, List<String> hand, int result) {
         this.playerName = playerName;
         this.hand = hand;
-        this.result = result;
+        this.score = result;
+    }
+
+    public static GameScoreResultDto from(Player player) {
+        return new GameScoreResultDto(
+                player.getName(),
+                player.showHand(),
+                player.getScore()
+        );
     }
 
     public String getPlayerName() {
         return playerName;
     }
 
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
-
     public List<String> getHand() {
         return hand;
     }
 
-    public void setHand(List<String> hand) {
-        this.hand = hand;
-    }
-
-    public int getResult() {
-        return result;
-    }
-
-    public void setResult(int result) {
-        this.result = result;
+    public int getScore() {
+        return score;
     }
 
     @Override
@@ -42,7 +40,7 @@ public class GameScoreResultDto {
         return "domain.dto.GameScoreResultDto{" +
                 "playerName='" + playerName + '\'' +
                 ", hand=" + hand +
-                ", result=" + result +
+                ", result=" + score +
                 '}';
     }
 }

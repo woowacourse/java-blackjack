@@ -4,25 +4,25 @@ import java.util.List;
 
 public class GameInitialInfoDto {
 
-    private String playerName;
-    private int initialHandSize;
-    private List<String> hand;
+    private String dealerName;
+    private String dealerOpenCard;
+    private List<GameScoreResultDto> playerResults;
 
-    public GameInitialInfoDto(String playerName, int initialHandSize, List<String> hand) {
-        this.playerName = playerName;
-        this.initialHandSize = initialHandSize;
-        this.hand = hand;
+    public GameInitialInfoDto(String dealerName, String dealerOpenCard, List<GameScoreResultDto> playerResults) {
+        this.dealerName = dealerName;
+        this.dealerOpenCard = dealerOpenCard;
+        this.playerResults = playerResults;
     }
 
-    public String getPlayerName() {
-        return playerName;
+    public String getDealerName() {
+        return dealerName;
     }
 
-    public int getInitialHandSize() {
-        return initialHandSize;
+    public String getDealerOpenCard() {
+        return dealerOpenCard;
     }
 
-    public List<String> getHand() {
-        return hand;
+    public List<GameScoreResultDto> getPlayerResults() {
+        return playerResults;
     }
 }

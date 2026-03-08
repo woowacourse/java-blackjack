@@ -6,35 +6,45 @@ import domain.dto.GameInitialInfoDto;
 import domain.dto.GameScoreResultDto;
 import domain.shuffle.RandomShuffle;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class GameManager {
-    private Deck deck = new Deck();
-    private List<Player> players = new ArrayList<>();
-    private Dealer dealer = new Dealer();
+    private final Deck deck;
+    private final Dealer dealer;
+    private final Map<String, Player> players;
 
-    public GameManager() {
-        deck.shuffle(new RandomShuffle());
+    public GameManager(Deck deck, Dealer dealer) {
+        this.deck = deck;
+        this.dealer = dealer;
+        this.players = new LinkedHashMap<>();
+    }
+
+    public void registerPlayer(String name) {
+        players.put(name, new Player(name, new Hand()));
     }
 
     public void startGame() {
-        for (int i = 0; i < 2; i++) {
-            for (Player player : players) {
-                player.addCard(deck.draw());
-            }
-            dealer.addCard(deck.draw());
-        }
+        deck.shuffle(new RandomShuffle());
+        drawInitialCards();
+    }
+
+    public GameInitialInfoDto getInitialInfo() {
+        return new GameInitialInfoDto(
+                dealer.getName(),
+                dealer.showHand().getFirst(),
+                players.values().stream()
+                        .map(GameScoreResultDto::from)
+                        .toList()
+        );
     }
 
     public int calculateScore(Player player) {
         return player.getScore();
     }
 
-    public List<String> drawPlayerCard(Player player) {
-        player.addCard(deck.draw());
-        return player.showHand();
+    public List<String> drawPlayerCard(String player) {
+        players.get(player).addCard(deck.draw());
+        return players.get(player).showHand();
     }
 
     public List<String> drawDealerCard() {
@@ -42,77 +52,30 @@ public class GameManager {
         return dealer.showHand();
     }
 
-    public void addPlayer(String name) {
-        players.add(new Player(name, new Hand()));
-    }
-
     public List<Player> getPlayerSequence() {
-        return Collections.unmodifiableList(players);
+        return players.values().stream().toList();
     }
 
     public List<GameScoreResultDto> getScoreResults() {
         List<GameScoreResultDto> results = new ArrayList<>();
-        // dealer
-        aggregateDealerResult(results);
-        //players
-        aggregatePlayerResult(results);
+        aggregateDealerResult(results); // dealer
+        aggregatePlayerResult(results); // players
 
         return results;
     }
 
     private void aggregateDealerResult(List<GameScoreResultDto> results) {
-        results.add(new GameScoreResultDto(
-                dealer.getName(),
-                dealer.showHand(),
-                dealer.getScore()
-        ));
+        results.add(GameScoreResultDto.from(dealer));
     }
 
     private void aggregatePlayerResult(List<GameScoreResultDto> results) {
-        for (Player player : players) {
-            results.add(new GameScoreResultDto(
-                    player.getName(),
-                    player.showHand(),
-                    player.getScore()
-            ));
+        for (Player player : players.values()) {
+            results.add(GameScoreResultDto.from(player));
         }
     }
 
-    public List<GameInitialInfoDto> getInitialInfo() {
-        List<GameInitialInfoDto> results = new ArrayList<>();
-
-        // 딜러 첫 카드 공개
-        List<String> dealerOpenCard = new ArrayList<>();
-        dealerOpenCard.add(dealer.showHand().getFirst());
-
-        // dealer
-        addDealerInfo(results, dealerOpenCard);
-        //players
-        addPlayersInfo(results);
-
-        return results;
-    }
-
-    private void addPlayersInfo(List<GameInitialInfoDto> results) {
-        for (Player player : players) {
-            results.add(new GameInitialInfoDto(
-                    player.getName(),
-                    2,
-                    player.showHand()
-            ));
-        }
-    }
-
-    private void addDealerInfo(List<GameInitialInfoDto> results, List<String> dealerOpenCard) {
-        results.add(new GameInitialInfoDto(
-                dealer.getName(),
-                2,
-                dealerOpenCard
-        ));
-    }
-
-    public boolean canReceiveCard(Player player) {
-        return player.canReceiveCard();
+    public boolean canReceiveCard(String player) {
+        return players.get(player).canReceiveCard();
     }
 
     public boolean canReceiveCard() {
@@ -130,8 +93,17 @@ public class GameManager {
         return results;
     }
 
+    private void drawInitialCards() {
+        for (int i = 0; i < 2; i++) {
+            for (Player player : players.values()) {
+                player.addCard(deck.draw());
+            }
+            dealer.addCard(deck.draw());
+        }
+    }
+
     private void determineWinLose(List<GameFinalResultDto> results) {
-        for (Player player : players) {
+        for (Player player : players.values()) {
             int playerScore = player.getScore();
             int dealerScore = dealer.getScore();
             if (player.isBust() || playerScore < dealerScore) {
