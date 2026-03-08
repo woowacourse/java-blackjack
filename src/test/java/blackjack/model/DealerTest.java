@@ -3,6 +3,8 @@ package blackjack.model;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {
@@ -22,5 +24,19 @@ class DealerTest {
         Dealer dealer = new Dealer();
         // when & then
         assertThat(dealer.canReceive(17)).isFalse();
+    }
+
+    @Test
+    @DisplayName("딜러의 카드 하나를 반환한다")
+    void getFirstCardTest() {
+        // given
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Figure.CLOVER, Number.ACE));
+
+        // when
+        String card = dealer.getInitialCards();
+
+        // then
+        assertThat(card).isEqualTo("A클로버");
     }
 }
