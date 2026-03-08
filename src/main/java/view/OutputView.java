@@ -12,12 +12,13 @@ import java.util.Map.Entry;
 public class OutputView {
     public void printStartGame(GameStartDTO startGameDTO) {
         System.out.println("딜러와 " + startGameDTO.getPlayerNames() + "에게 2장을 나누었습니다.");
+        printHandCard(startGameDTO.getDealer());
 
         List<ParticipantHandDTO> players = startGameDTO.getPlayers();
         for (ParticipantHandDTO player : players) {
             printHandCard(player);
         }
-        printHandCard(startGameDTO.getDealer());
+        System.out.println();
     }
 
     public void printHandCard(ParticipantHandDTO participantHandDTO) {
@@ -29,7 +30,6 @@ public class OutputView {
     }
 
     public void printDealerReceiveCard() {
-        System.out.println();
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 

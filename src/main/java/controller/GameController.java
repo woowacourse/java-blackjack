@@ -3,13 +3,15 @@ package controller;
 import domain.participant.Dealer;
 import domain.GameResult;
 import domain.participant.Player;
-import domain.card.Card;
+
 import dto.GameScoreDTO;
-import dto.ParticipantHandDTO;
-import dto.GameStartDTO;
+
+import service.GameService;
+
 import util.HitOption;
 import util.InputHitOptionParser;
 import util.InputNameParser;
+
 import view.InputView;
 import view.OutputView;
 
@@ -28,54 +30,49 @@ public class GameController {
     }
 
     public void run() {
-        List<Player> players = participateGame(getInputPlayers());
-        Dealer dealer = new Dealer();
+        // 1. 게임 준비
+        GameService gameService = new GameService(inputPlayers());
+        outputView.printStartGame(gameService.startGame());
 
-        for (Player player : players) {
-            List<Card> firstHandCards = dealer.dealInitialCards();
-            player.receiveInitialCards(firstHandCards);
-        }
-        dealer.receiveInitialCards(dealer.dealInitialCards());
-        outputView.printStartGame(GameStartDTO.from(players, dealer));
+        // 2. 게임 진행
+        processGame(gameService);
 
-
-        receiveMoreCard(players, dealer);
-        outputView.printFinalScore(GameScoreDTO.from(players, dealer));
-
-        // 5. 승패를 계산한다.
-        Map<String, GameResult> playerFinalResults = getPlayerFinalResults(players, dealer);
+        // 3. 결과 집계
+        Map<String, GameResult> playerFinalResults = getPlayerFinalResults(gameService.getPlayers(), gameService.getDealer());
         outputView.printPlayerFinalResults(playerFinalResults);
     }
 
-    private List<String> getInputPlayers() {
+    private List<String> inputPlayers() {
         String rawPlayerNames = inputView.readPlayerNames();
         return InputNameParser.parsePlayerNames(rawPlayerNames);
     }
 
-    private List<Player> participateGame(List<String> playerNames) {
-        return playerNames.stream()
-                .map(Player::new)
-                .toList();
+    private HitOption inputHitOption(Player player) {
+        String rawHitOption = inputView.readHitOption(player.getName());
+        return InputHitOptionParser.parseHitOption(rawHitOption);
     }
 
-    private void receiveMoreCard(List<Player> players, Dealer dealer) {
-        for (Player player : players) {
-            processRound(player, dealer);
+    private void processGame(GameService gameService) {
+        for (Player player : gameService.getPlayers()) {
+            playerTurn(player, gameService);
         }
-
-        while (dealer.isReceiveCard()) {
-            dealer.receiveHitCard(dealer.dealHitCard());
-            outputView.printDealerReceiveCard();
-        }
+        dealerTurn(gameService);
+        outputView.printFinalScore(GameScoreDTO.from(gameService.getPlayers(), gameService.getDealer()));
     }
 
-    private void processRound(Player player, Dealer dealer) {
+    private void playerTurn(Player player, GameService gameService) {
         while (!player.isBust() && inputHitOption(player) == HitOption.YES) {
-            player.receiveHitCard(dealer.dealHitCard());
-            outputView.printHandCard(new ParticipantHandDTO(player, player.getHandCards()));
+            outputView.printHandCard(gameService.playerHit(player));
         }
-        if (!player.isBust()) {
-            outputView.printHandCard(new ParticipantHandDTO(player, player.getHandCards()));
+        if(!player.isBust()) {
+            outputView.printHandCard(gameService.getCurrentHand(player));
+        }
+    }
+
+    private void dealerTurn(GameService gameService) {
+        while(gameService.getDealer().isReceiveCard()) {
+            gameService.dealerHit();
+            outputView.printDealerReceiveCard();
         }
     }
 
@@ -101,9 +98,4 @@ public class GameController {
         return playerFinalResults;
     }
 
-
-    private HitOption inputHitOption(Player player) {
-        String rawHitOption = inputView.readHitOption(player.getName());
-        return InputHitOptionParser.parseHitOption(rawHitOption);
-    }
 }
