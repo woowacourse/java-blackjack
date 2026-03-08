@@ -12,6 +12,7 @@ public class OutputView {
 
     public void printfList(String outputMessage, String value) {
         System.out.printf(outputMessage, value);
+        separatorLine();
     }
 
     public void separatorLine() {
