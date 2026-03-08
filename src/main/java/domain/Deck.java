@@ -1,5 +1,8 @@
 package domain;
 
+import domain.card.Card;
+import domain.card.CardNumber;
+import domain.card.CardPattern;
 import domain.exception.DeckIsEmptyException;
 import java.util.Collections;
 import java.util.LinkedList;
