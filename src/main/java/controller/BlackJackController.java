@@ -6,7 +6,6 @@ import model.BlackJack;
 import model.Rank;
 import model.Suit;
 import model.deck.DeckImpl;
-import model.participant.Dealer;
 import model.participant.Participant;
 import model.Participants;
 import util.InputParser;

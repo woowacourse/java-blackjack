@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -16,7 +15,6 @@ import model.participant.Player;
 public class BlackJack {
     private final Participants participants;
     private final Deck deck;
-    private final List<Card> pickedCards = new ArrayList<>();
 
     private BlackJack(Participants participants, Deck deck) {
         this.participants = participants;
