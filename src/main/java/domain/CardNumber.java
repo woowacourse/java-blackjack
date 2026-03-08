@@ -23,4 +23,8 @@ public enum CardNumber {
         this.point = point;
         this.symbol = symbol;
     }
+
+    public int getPoint() {
+        return this.point;
+    }
 }
