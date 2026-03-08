@@ -5,6 +5,7 @@ import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.ParticipantResult;
 import blackjack.domain.participant.Player;
 import blackjack.dto.DrawResult;
+import blackjack.dto.PlayerResult;
 import blackjack.dto.WinningResult;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +14,12 @@ public class Participants {
     
     private final Players players;
     private final Dealer dealer;
-
+    
     public Participants(Players players, Dealer dealer) {
         this.players = players;
         this.dealer = dealer;
     }
-
+    
     public PlayingCards distributeCards(PlayingCards deck) {
         List<Participant> participants = getParticipants();
         for (Participant participant : participants) {
@@ -27,14 +28,14 @@ public class Participants {
         }
         return deck;
     }
-
+    
     private List<Participant> getParticipants() {
         List<Participant> participants = new ArrayList<>();
         participants.add(dealer);
         participants.addAll(players.getAllPlayers());
         return participants;
     }
-
+    
     public List<ParticipantResult> getInitialResult() {
         List<ParticipantResult> participantResults = new ArrayList<>();
         ParticipantResult dealerParticipantResult = new ParticipantResult(dealer, dealer.getFirstCard());
@@ -44,7 +45,7 @@ public class Participants {
         }
         return participantResults;
     }
-
+    
     public List<ParticipantResult> getGameResult() {
         List<Participant> participants = getParticipants();
         List<ParticipantResult> resultList = new ArrayList<>();
@@ -53,54 +54,62 @@ public class Participants {
         }
         return resultList;
     }
-
-    public List<WinningResult> getWinningResult() {
+    
+    public WinningResult getWinningResult() {
         int dealerScore = dealer.getTotalScoreForResult();
         if (dealerScore == 0) {
             dealerScore = 1;
         }
-        return getPlayerWinningResult(dealerScore);
+        return getWinningResult(dealerScore);
     }
-
-    private List<WinningResult> getPlayerWinningResult(int dealerScore) {
+    
+    public WinningResult getWinningResult(int dealerScore) {
+        List<PlayerResult> playerResults = getPlayerWinningResult(dealerScore);
+        int dealerLoss = (int) playerResults.stream()
+                .filter(result -> result.gameResult() == GameResult.WIN)
+                .count();
+        int dealerWin = playerResults.size() - dealerLoss;
+        return new WinningResult(dealerWin, dealerLoss, playerResults);
+    }
+    
+    private List<PlayerResult> getPlayerWinningResult(int dealerScore) {
         return players.getWinningResults(dealerScore);
     }
-
+    
     public String findDrawablePlayer() {
         return players.findDrawablePlayerNickname();
     }
-
+    
     public DrawResult addCardToAvailablePlayer(PlayingCards deck) {
         DrawResult drawResult = deck.draw();
         PlayingCards drawCard = drawResult.drewCard();
         PlayingCards drawDeck = drawResult.drewDeck();
-
+        
         PlayingCards playerHand = players.addCardToAvailablePlayer(drawCard);
-
+        
         return new DrawResult(playerHand, drawDeck);
     }
-
+    
     public void dontWandDraw() {
         players.dontWandDraw();
     }
-
+    
     public boolean isDealerDraw() {
         return dealer.isDealerDraw();
     }
-
+    
     public PlayingCards dealerDraw(PlayingCards deck) {
         DrawResult drawResult = deck.draw();
         PlayingCards drawCard = drawResult.drewCard();
         dealer.receiveCard(drawCard);
         return drawResult.drewDeck();
     }
-
+    
     public List<String> getAllPlayerNickname() {
         return players.getAllPlayerNickname();
     }
-
+    
     public ParticipantResult getDrawPlayerResult() {
         return new ParticipantResult(players.findDrawablePlayer());
     }
-
 }
