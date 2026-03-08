@@ -1,7 +1,5 @@
-import application.BlackjackService;
-import domain.Deck;
-import domain.GameTable;
-import presentation.BlackjackController;
+import domain.BlackjackGame;
+import java.util.List;
 import presentation.ui.InputView;
 import presentation.ui.OutputView;
 
@@ -9,13 +7,17 @@ public class Main {
     public static void main(String[] args) {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
+        BlackjackGame game = new BlackjackGame();
 
-        GameTable gameTable = new GameTable();
-        Deck deck = new Deck();
-
-        BlackjackService blackjackService = new BlackjackService(gameTable, deck);
-        BlackjackController blackjackController = new BlackjackController(blackjackService, inputView, outputView);
-
-        blackjackController.run();
+        List<String> playerNames = inputView.readPlayerNames();
+        game.joinPlayerToGame(playerNames);
+        outputView.printInitialStatus(game.playerHands());
+        game.playGame(playerNames, inputView, outputView);
+        if (game.checkDealerDrawable()) {
+            game.dealerDrawCard();
+            outputView.printDealerDrawResult();
+        }
+        outputView.printFinalMemberStatus(game.playerHands());
+        outputView.printGameResult(game.getGameResults());
     }
 }

@@ -1,4 +1,4 @@
-package application.dto;
+package domain.dto;
 
 import java.util.Map;
 

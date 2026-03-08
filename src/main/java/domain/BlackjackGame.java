@@ -1,11 +1,8 @@
-package application;
+package domain;
 
 import static constant.Word.*;
 
-import application.dto.GameResult;
-import domain.RoundResult;
-import domain.Deck;
-import domain.GameTable;
+import domain.dto.GameResult;
 import domain.card.Card;
 import domain.dto.MemberStatus;
 import java.util.ArrayList;
@@ -13,16 +10,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import presentation.ui.InputView;
+import presentation.ui.OutputView;
 
-public class BlackjackService {
+public class BlackjackGame {
 
     private final GameTable gameTable;
     private final Deck deck;
 
-    public BlackjackService(GameTable gameTable, Deck deck) {
-        this.gameTable = gameTable;
-        this.deck = deck;
+    public BlackjackGame() {
+        this.gameTable = new GameTable();
+        this.deck = new Deck();
         this.deck.init();
+    }
+
+    public void playGame(List<String> playerNames, InputView inputView, OutputView outputView) {
+        for (String playerName : playerNames) {
+            playAllRoundOfPlayer(playerName, inputView, outputView);
+        }
     }
 
     public void joinPlayerToGame(List<String> players) {
@@ -38,15 +43,16 @@ public class BlackjackService {
         });
     }
 
-    public List<Card> startOneRound(String memberName) {
-        return gameTable.drawByName(memberName, deck.draw());
+    public boolean checkDealerDrawable() {
+        return gameTable.dealerDrawable();
+
     }
 
-    public boolean drawDealerCardIfAvailable() {
-        return gameTable.drawByDealer(deck.draw());
+    public void dealerDrawCard() {
+        gameTable.drawDealer(deck.draw());
     }
 
-    public List<MemberStatus> getMemberStatuses() {
+    public List<MemberStatus> playerHands() {
         MemberStatus dealer = checkDealerStatus();
         List<MemberStatus> players = checkPlayerStatuses();
 
@@ -55,10 +61,6 @@ public class BlackjackService {
         totalStatuses.addAll(players);
 
         return totalStatuses;
-    }
-
-    public boolean isContinuable(String playerName) {
-        return !gameTable.checkBust(playerName);
     }
 
     public GameResult getGameResults() {
@@ -86,5 +88,16 @@ public class BlackjackService {
         List<Card> cards = gameTable.dealerCards();
         int dealerPoint = gameTable.dealerPoint();
         return new MemberStatus(DEALER.format(), cards, dealerPoint);
+    }
+
+    private void playAllRoundOfPlayer(String playerName, InputView inputView, OutputView outputView) {
+        while (isContinuable(playerName) && inputView.playContinue(playerName)) {
+            List<Card> cards = gameTable.drawByName(playerName, deck.draw());
+            outputView.printCurrentCard(playerName, cards);
+        }
+    }
+
+    private boolean isContinuable(String playerName) {
+        return !gameTable.checkBust(playerName);
     }
 }
