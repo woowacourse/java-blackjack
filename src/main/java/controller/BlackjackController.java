@@ -37,8 +37,21 @@ public class BlackjackController {
     }
 
     private List<String> getUserNames() {
-        String rawUserNames = inputView.askUserInputWithMessage(InputMessage.ASK_USER_NAME.getMessage());
-        return InputParser.splitByDelimiter(rawUserNames);
+        List<String> names = null;
+        while (names == null){
+             names = readUserNames();
+        }
+        return names;
+    }
+
+    private List<String> readUserNames() {
+        try {
+            String rawUserNames = inputView.askUserInputWithMessage(InputMessage.ASK_USER_NAME.getMessage());
+            return InputParser.splitByDelimiter(rawUserNames);
+        } catch (IllegalArgumentException exception){
+            outputView.println(exception.getMessage());
+            return null;
+        }
     }
 
     private Cards getDeck() {

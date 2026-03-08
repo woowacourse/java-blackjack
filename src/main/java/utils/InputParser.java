@@ -29,7 +29,7 @@ public class InputParser {
 
     private static void validateNames(List<String> names) {
         if (names.isEmpty()) {
-            throw new IllegalArgumentException(ErrorMessage.INVALIDE_NAMES_SIZE.getMessage());
+            throw new IllegalArgumentException(ErrorMessage.INVALID_NAMES_SIZE.getMessage());
         }
     }
 }
