@@ -11,13 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public final class OutputView {
-    public static void displayCardDistribution(List<String> names) {
+public class OutputView {
+    public void displayCardDistribution(List<String> names) {
         String nameContent = String.join(", ", names);
         System.out.printf("딜러가 %s에게 2장을 나누었습니다.\n", nameContent);
     }
 
-    public static void displayCardContent(List<CardContentDto> cardContentDto) {
+    public void displayCardContent(List<CardContentDto> cardContentDto) {
         for (CardContentDto dto : cardContentDto) {
             List<String> cardContents = new ArrayList<>();
             for (Card card : dto.cards()) {
@@ -29,7 +29,7 @@ public final class OutputView {
 
     }
 
-    public static void displayCardContent(CardContentDto dto) {
+    public void displayCardContent(CardContentDto dto) {
         List<String> cardContents = new ArrayList<>();
         for (Card card : dto.cards()) {
             cardContents.add(card.getCardRank().getName() + card.getCardShape().getName());
@@ -38,11 +38,11 @@ public final class OutputView {
         System.out.printf("%s카드: %s\n", dto.name(), String.join(", ", cardContents));
     }
 
-    public static void displayDealerCard() {
+    public void displayDealerCard() {
         System.out.println("딜러는 " + GameConstant.ADDITIONAL_THRESHOLD + "이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void displayFinalCard(List<FinalCardDto> finalCardDto) {
+    public void displayFinalCard(List<FinalCardDto> finalCardDto) {
         for (FinalCardDto dto : finalCardDto) {
             List<String> cardContents = new ArrayList<>();
             for (Card card : dto.cards()) {
@@ -54,7 +54,7 @@ public final class OutputView {
 
     }
 
-    public static void displayMatchResult(BlackjackResultDto resultDto) {
+    public void displayMatchResult(BlackjackResultDto resultDto) {
         System.out.printf("## 최종 승패\n딜러: %d승 %d패\n", resultDto.winCount(), resultDto.loseCount());
         Map<String, MatchCase> resultMap = resultDto.matchResultMap();
         for (String playerName : resultMap.keySet()) {

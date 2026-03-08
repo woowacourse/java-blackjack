@@ -15,10 +15,12 @@ public class BlackjackController {
     public static final String DEALER_NAME = "딜러";
     private static final int MAX_RETRY = 10;
     private final InputView inputView;
+    private final OutputView outputView;
     private final BlackjackService blackjackService;
 
     public BlackjackController(BlackjackService blackjackService) {
         this.inputView = new InputView();
+        this.outputView = new OutputView();
         this.blackjackService = blackjackService;
     }
 
@@ -27,22 +29,25 @@ public class BlackjackController {
         List<String> names = inputNames();
 
         Dealer dealer = blackjackService.createDealer(cards);
-        OutputView.displayCardDistribution(names);
+        outputView.displayCardDistribution(names);
         List<Player> playerList = blackjackService.createPlayers(names, cards);
 
         List<CardContentDto> firstCardContents = collectInitialCardContents(dealer, playerList);
-        OutputView.displayCardContent(firstCardContents);
+        outputView.displayCardContent(firstCardContents);
         Players players = processPlayersTurn(playerList, cards);
 
         if (!players.areAllBust()) {
-            blackjackService.determineAdditionalCardOfDealer(dealer, cards);
+            int dealerCardCount = blackjackService.determineAdditionalCardOfDealer(dealer, cards);
+            for (int i = 0; i < dealerCardCount; i++) {
+                outputView.displayDealerCard();
+            }
         }
 
         displayFinalCards(dealer, players);
 
         // 최종 승패
         BlackjackResult blackjackResult = BlackjackResult.from(dealer, players);
-        OutputView.displayMatchResult(blackjackResult.toResultDto());
+        outputView.displayMatchResult(blackjackResult.toResultDto());
     }
 
     public List<CardContentDto> collectInitialCardContents(Dealer dealer, List<Player> playerList) {
@@ -71,7 +76,7 @@ public class BlackjackController {
                 break;
             }
             player.add(deck.pop());
-            OutputView.displayCardContent(List.of(player.toCardContentDto()));
+            outputView.displayCardContent(List.of(player.toCardContentDto()));
             wantsCard = wantsAdditionalCard(name);
         }
     }
@@ -82,7 +87,7 @@ public class BlackjackController {
         for (Player player : players) {
             finalCards.add(player.toFinalCardDto());
         }
-        OutputView.displayFinalCard(finalCards);
+        outputView.displayFinalCard(finalCards);
     }
 
     private List<String> inputNames() {

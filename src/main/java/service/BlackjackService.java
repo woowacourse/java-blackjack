@@ -8,7 +8,6 @@ import domain.Cards;
 import domain.Dealer;
 import domain.Player;
 import utils.generator.CardGenerator;
-import view.OutputView;
 
 public class BlackjackService {
 
@@ -38,10 +37,12 @@ public class BlackjackService {
         return dealer;
     }
 
-    public void determineAdditionalCardOfDealer(Dealer dealer, Cards cards) {
+    public int determineAdditionalCardOfDealer(Dealer dealer, Cards cards) {
+        int count = 0;
         while (dealer.needAdditionalCard()) {
             dealer.add(cards.pop());
-            OutputView.displayDealerCard();
+            count++;
         }
+        return count;
     }
 }
