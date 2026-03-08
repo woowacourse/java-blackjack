@@ -12,20 +12,12 @@ public class Card {
         this.pattern = CardPattern.matchCardPattern(pattern);
     }
 
-    public int getNumber() {
+    public int number() {
         return number.getValue();
     }
 
-    public boolean isAce() {
-        return number.isAce();
-    }
-
-    public String getCourt() {
-        return number.getCourt();
-    }
-
-    public String getPattern() {
-        return pattern.getName();
+    public String cardName() {
+        return number.getCourt() + pattern.getName();
     }
 
     @Override
