@@ -17,8 +17,10 @@ public class Deck {
     }
 
     public Card draw() {
-        int lastIndex = cards.size() - 1;
-        return cards.remove(lastIndex);
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("덱에 카드가 없습니다.");
+        }
+        return cards.remove(cards.size() - 1);
     }
 
     public int size() {
