@@ -13,16 +13,12 @@ public enum MatchResult {
         this.display = display;
     }
 
-    public String getDisplay() {
-        return display;
-    }
-
-    public static MatchResult playerResult(Player player, Dealer dealer){
-        if(player.isBust()){
+    public static MatchResult playerResult(Player player, Dealer dealer) {
+        if (player.isBust()) {
             return LOSE;
         }
 
-        if(dealer.isBust()){
+        if (dealer.isBust()) {
             return WIN;
         }
 
@@ -37,11 +33,15 @@ public enum MatchResult {
         return DRAW;
     }
 
-    public static Map<String, Long> dealerResult(Map<Player, MatchResult> playerResults){
+    public static Map<String, Long> dealerResult(Map<Player, MatchResult> playerResults) {
         return Map.of(
                 "승", playerResults.values().stream().filter(r -> r == LOSE).count(),
                 "패", playerResults.values().stream().filter(r -> r == WIN).count(),
                 "무", playerResults.values().stream().filter(r -> r == DRAW).count()
         );
+    }
+
+    public String getDisplay() {
+        return display;
     }
 }

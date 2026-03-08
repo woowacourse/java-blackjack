@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Players {
@@ -36,7 +35,7 @@ public class Players {
         players.get(index).receiveCard(card);
     }
 
-    public Player playerAt(int index){
+    public Player playerAt(int index) {
         return players.get(index);
     }
 }

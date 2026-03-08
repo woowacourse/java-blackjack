@@ -1,9 +1,20 @@
 package blackjack.service;
 
-import blackjack.domain.*;
+import blackjack.domain.Dealer;
+import blackjack.domain.Deck;
+import blackjack.domain.MatchResult;
+import blackjack.domain.Name;
+import blackjack.domain.Player;
+import blackjack.domain.Players;
+import blackjack.domain.ShuffleStrategy;
+import blackjack.domain.TrumpCard;
 import blackjack.dto.GameResult;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 
 public class BlackjackGame {
     private static final int BLACKJACK_THRESHOLD = 21;
@@ -34,20 +45,20 @@ public class BlackjackGame {
         return Players.of(players);
     }
 
-    public void deal(){
+    public void deal() {
         players.receiveCards(deck);
         dealer.receiveCards(deck.drawSecondTimes());
     }
 
-    public int playerCount(){
+    public int playerCount() {
         return players.count();
     }
 
-    public boolean canPlayerHit(int index){
+    public boolean canPlayerHit(int index) {
         return players.playerAt(index).canHit();
     }
 
-    public String playerNameByIndex(int index){
+    public String playerNameByIndex(int index) {
         return players.playerAt(index).name();
     }
 
@@ -61,16 +72,16 @@ public class BlackjackGame {
         return dealer.shouldHit();
     }
 
-    public void dealerDraw(){
+    public void dealerDraw() {
         TrumpCard drawn = deck.draw();
         dealer.receive(drawn);
     }
 
-    public GameResult generateGameResult(){
+    public GameResult generateGameResult() {
         return GameResult.from(players, dealer);
     }
 
-    public Map<Player, MatchResult> getPlayerFinalResult(){
+    public Map<Player, MatchResult> getPlayerFinalResult() {
         Map<Player, MatchResult> playerResult = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
             playerResult.put(player, MatchResult.playerResult(player, dealer));
@@ -78,7 +89,7 @@ public class BlackjackGame {
         return playerResult;
     }
 
-    public Map<String, Long> getDealerFinalResult(Map<Player, MatchResult> playerResult){
+    public Map<String, Long> getDealerFinalResult(Map<Player, MatchResult> playerResult) {
         return MatchResult.dealerResult(playerResult);
     }
 

@@ -2,6 +2,7 @@ package blackjack.dto;
 
 import blackjack.domain.Dealer;
 import blackjack.domain.Players;
+
 import java.util.List;
 
 public record GameResult(

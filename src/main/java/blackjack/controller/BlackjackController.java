@@ -18,7 +18,7 @@ import static blackjack.util.Parser.splitDelimiter;
 import static blackjack.view.InputView.readPlayNames;
 
 public class BlackjackController {
-    public void run(){
+    public void run() {
         List<String> names = inputNames();
         BlackjackGame blackjackGame = BlackjackGame.create(names, new RandomShuffleStrategy());
 
@@ -27,7 +27,7 @@ public class BlackjackController {
 
         playPlayerTurn(blackjackGame);
 
-        while(blackjackGame.canDealerHit()){
+        while (blackjackGame.canDealerHit()) {
             OutputView.printDealerDrawMessage();
             blackjackGame.dealerDraw();
         }
@@ -52,13 +52,13 @@ public class BlackjackController {
         return DealResult.from(blackjackGame.getPlayers(), blackjackGame.getDealer());
     }
 
-    private void playPlayerTurn(BlackjackGame blackjackGame){
+    private void playPlayerTurn(BlackjackGame blackjackGame) {
         for (int i = 0; i < blackjackGame.playerCount(); i++) {
             playTurn(blackjackGame, i);
         }
     }
 
-    private void playTurn(BlackjackGame blackjackGame, int index){
+    private void playTurn(BlackjackGame blackjackGame, int index) {
         while (blackjackGame.canPlayerHit(index)) {
             String answer = InputView.readYesOrNo(blackjackGame.playerNameByIndex(index));
             if ("n".equals(answer)) {

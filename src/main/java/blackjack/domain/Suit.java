@@ -11,10 +11,9 @@ public enum Suit {
     DIAMOND("다이아몬드"),
     CLOVER("클로버");
 
-    private final String koreanName;
-
     private static final Map<String, Suit> SUIT_MAP = Arrays.stream(values())
             .collect(Collectors.toMap(suit -> suit.koreanName, suit -> suit));
+    private final String koreanName;
 
     Suit(String koreanName) {
         this.koreanName = koreanName;

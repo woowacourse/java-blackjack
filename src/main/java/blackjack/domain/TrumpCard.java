@@ -26,6 +26,10 @@ public class TrumpCard {
         }
     }
 
+    public boolean isAce() {
+        return rank == Rank.ACE;
+    }
+
     public String koreanName() {
         return suit.getKoreanName();
     }
@@ -36,10 +40,6 @@ public class TrumpCard {
 
     public String rankName() {
         return rank.getRankName();
-    }
-
-    public boolean isAce() {
-        return rank == Rank.ACE;
     }
 
     @Override

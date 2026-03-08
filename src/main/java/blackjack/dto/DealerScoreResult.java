@@ -1,6 +1,7 @@
 package blackjack.dto;
 
 import blackjack.domain.Dealer;
+
 import java.util.List;
 
 public record DealerScoreResult(

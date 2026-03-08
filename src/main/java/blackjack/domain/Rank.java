@@ -20,24 +20,23 @@ public enum Rank {
     JACK("J", 10),
     KING("K", 10);
 
-    private final String rankName;
+    private static final Map<String, Rank> RANK_MAP = Arrays.stream(values())
+            .collect(Collectors.toMap(rank -> rank.symbol, rank -> rank));
+    private final String symbol;
     private final int score;
 
-    private static final Map<String, Rank> RANK_MAP = Arrays.stream(values())
-            .collect(Collectors.toMap(rank -> rank.rankName, rank -> rank));
-
-    Rank(String rankName, int score) {
-        this.rankName = rankName;
+    Rank(String symbol, int score) {
+        this.symbol = symbol;
         this.score = score;
     }
 
-    public static Rank of(String rankName) {
-        return Optional.ofNullable(RANK_MAP.get(rankName))
+    public static Rank of(String symbol) {
+        return Optional.ofNullable(RANK_MAP.get(symbol))
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드 이름입니다."));
     }
 
-    public String getRankName() {
-        return rankName;
+    public String getSymbol() {
+        return symbol;
     }
 
     public int getScore() {
