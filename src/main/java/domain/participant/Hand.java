@@ -47,7 +47,7 @@ public class Hand {
                 .count();
     }
 
-    private boolean isBustWithAce(int aCount, int score) {
-        return aCount > 0 && score > BLACKJACK_SCORE;
+    private boolean isBustWithAce(int aceCount, int cardScore) {
+        return aceCount > 0 && cardScore > BLACKJACK_SCORE;
     }
 }
