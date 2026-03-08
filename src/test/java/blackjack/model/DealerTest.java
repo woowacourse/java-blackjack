@@ -8,7 +8,8 @@ import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    private final ScoreCalculator scoreCalculator = new ScoreCalculator();
+    private static final BustPolicy NEVER_BUST_POLICY = score -> false;
+    private final ScoreCalculator scoreCalculator = new ScoreCalculator(NEVER_BUST_POLICY);
     private final Hand emptyHand = new Hand();
 
     @Nested

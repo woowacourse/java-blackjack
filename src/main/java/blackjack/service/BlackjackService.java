@@ -2,39 +2,27 @@ package blackjack.service;
 
 import blackjack.model.Answer;
 import blackjack.model.BlackjackResult;
-import blackjack.model.BustPolicy;
+import blackjack.model.BlackjackRule;
 import blackjack.model.CardsGenerator;
 import blackjack.model.Dealer;
-import blackjack.model.DealerHitPolicy;
 import blackjack.model.Deck;
 import blackjack.model.Participant;
 import blackjack.model.Participants;
-import blackjack.model.ResultJudgement;
 import blackjack.model.Score;
-import blackjack.model.ScoreCalculator;
 
 public class BlackjackService {
     private static final int INITIAL_DEAL_COUNT = 2;
 
-    private final ScoreCalculator scoreCalculator;
-    private final DealerHitPolicy dealerHitPolicy;
-    private final BustPolicy bustPolicy;
-
     private final CardsGenerator cardsGenerator;
+    private final BlackjackRule rule;
 
-    public BlackjackService(ScoreCalculator scoreCalculator, DealerHitPolicy dealerHitPolicy, BustPolicy bustPolicy,
-                            CardsGenerator cardsGenerator, ResultJudgement resultJudgement) {
-        this.scoreCalculator = scoreCalculator;
-        this.dealerHitPolicy = dealerHitPolicy;
-        this.bustPolicy = bustPolicy;
+    public BlackjackService(CardsGenerator cardsGenerator, BlackjackRule rule) {
         this.cardsGenerator = cardsGenerator;
-        this.resultJudgement = resultJudgement;
+        this.rule = rule;
     }
 
-    private final ResultJudgement resultJudgement;
-
     public Deck createDeck() {
-        return Deck.shuffled(cardsGenerator);
+        return Deck.create(cardsGenerator);
     }
 
     public void initialDeal(Participants participants, Deck deck) {
@@ -57,11 +45,11 @@ public class BlackjackService {
     }
 
     public boolean canHit(Participant player) {
-        return !bustPolicy.isBust(scoreCalculator.calculate(player.getCards()));
+        return rule.canHit(player);
     }
 
     public boolean shouldHit(Dealer dealer) {
-        return dealer.shouldHit(dealerHitPolicy, scoreCalculator.calculate(dealer.getCards()));
+        return rule.shouldHit(dealer);
     }
 
     public void hitDealer(Dealer dealer, Deck deck) {
@@ -69,12 +57,10 @@ public class BlackjackService {
     }
 
     public Score calculate(Participant participant) {
-        return scoreCalculator.calculate(participant.getCards());
+        return rule.calculate(participant);
     }
 
     public BlackjackResult judge(Participant player, Dealer dealer) {
-        return resultJudgement.judge(
-            scoreCalculator.calculate(player.getCards()),
-            scoreCalculator.calculate(dealer.getCards()));
+        return rule.judge(player, dealer);
     }
 }

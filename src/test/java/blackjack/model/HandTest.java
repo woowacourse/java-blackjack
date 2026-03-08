@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 class HandTest {
 
     private final Card card = new Card(Rank.ACE, Suit.CLOVER);
-    private final ScoreCalculator scoreCalculator = new ScoreCalculator();
 
     @Nested
     @DisplayName("1장 이상의 카드를 받아서 손패에 추가한다.")
