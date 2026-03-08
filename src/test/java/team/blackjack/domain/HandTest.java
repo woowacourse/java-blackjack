@@ -101,4 +101,35 @@ class HandTest {
 
         assertThat(hand.getScore()).isEqualTo(12);
     }
+
+    @Test
+    void ACE가_2장_들어오는_경우_ACE는_각각_1과_11로_계산된다(){
+        Hand hand = new Hand();
+        List<Card> cards = List.of(
+                new Card(Suit.HEARTS, Rank.ACE),
+                new Card(Suit.DIAMONDS, Rank.ACE)
+        );
+
+        for (Card card : cards) {
+            hand.addCard(card);
+        }
+
+        assertThat(hand.getScore()).isEqualTo(12);
+    }
+
+    @Test
+    void ACE가_2장과_숫자9가_들어오는_경우_ACE는_각각_1과_11로_계산된다(){
+        Hand hand = new Hand();
+        List<Card> cards = List.of(
+                new Card(Suit.HEARTS, Rank.NINE),
+                new Card(Suit.HEARTS, Rank.ACE),
+                new Card(Suit.DIAMONDS, Rank.ACE)
+        );
+
+        for (Card card : cards) {
+            hand.addCard(card);
+        }
+
+        assertThat(hand.getScore()).isEqualTo(21);
+    }
 }
