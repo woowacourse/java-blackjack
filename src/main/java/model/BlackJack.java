@@ -69,10 +69,6 @@ public class BlackJack {
         }
     }
 
-    public boolean isFirstTurn() {
-        return firstTurn;
-    }
-
     public void setFirstTurn() {
         this.firstTurn = Boolean.FALSE;
     }

@@ -13,7 +13,7 @@ public abstract class Participant {
 
     protected Participant(String name) {
         this.name = name;
-        this.hands = new ArrayList<Card>();
+        this.hands = new ArrayList<>();
     }
 
     public String getName() {
