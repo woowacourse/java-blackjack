@@ -104,23 +104,89 @@ class DefaultBlackjackRuleTest {
     }
 
     @Test
-    void 내_점수가_더_높으면_WIN() {
-        Assertions.assertEquals(Result.WIN, DefaultBlackjackRule.judgeResult(20, 18));
+    void 딜러의_승패를_계산할때_딜러가_플레이어보다_더_높으면_WIN() {
+        int dealerScore = 20;
+        int playerScore = 18;
+
+        Assertions.assertEquals(Result.WIN, DefaultBlackjackRule.judgeResult(dealerScore, playerScore));
     }
 
     @Test
-    void 상대_점수가_더_높으면_LOSE() {
-        Assertions.assertEquals(Result.LOSE, DefaultBlackjackRule.judgeResult(18, 20));
+    void 플레이어의_승패를_계산할때_플레이어가_딜러보다_더_높으면_WIN() {
+        int dealerScore = 18;
+        int playerScore = 20;
+
+        Assertions.assertEquals(Result.WIN, DefaultBlackjackRule.judgeResult(playerScore, dealerScore));
     }
 
     @Test
-    void 동점이면_DRAW() {
-        Assertions.assertEquals(Result.DRAW, DefaultBlackjackRule.judgeResult(17, 17));
+    void 딜러의_승패를_계산할때_딜러가_플레이어보다_더_낮으면_LOSE() {
+        int dealerScore = 18;
+        int playerScore = 20;
+
+        Assertions.assertEquals(Result.LOSE, DefaultBlackjackRule.judgeResult(dealerScore, playerScore));
     }
 
     @Test
-    void 버스트_21초과면_LOSE() {
-        Assertions.assertEquals(Result.LOSE, DefaultBlackjackRule.judgeResult(22, 20));
+    void 플레이어의_승패를_계산할때_플레이어가_딜러보다_더_낮으면_LOSE() {
+        int dealerScore = 20;
+        int playerScore = 18;
+
+        Assertions.assertEquals(Result.LOSE, DefaultBlackjackRule.judgeResult(playerScore, dealerScore));
+    }
+
+    @Test
+    void 딜러의_승패를_계산할때_플레이어가_딜러_점수와_같을때_DRAW() {
+        int dealerScore = 20;
+        int playerScore = 20;
+
+        Assertions.assertEquals(Result.DRAW, DefaultBlackjackRule.judgeResult(dealerScore, playerScore));
+    }
+
+    @Test
+    void 플레이어의_승패를_계산할때_플레이어가_딜러_점수와_같을때_DRAW() {
+        int dealerScore = 20;
+        int playerScore = 20;
+
+        Assertions.assertEquals(Result.DRAW, DefaultBlackjackRule.judgeResult(playerScore, dealerScore));
+    }
+
+    @Test
+    void 딜러의_승패를_계산할때_딜러의_점수가_21초과로_버스트일때_LOSE() {
+        int dealerScore = 22;
+        int playerScore = 20;
+
+        Assertions.assertEquals(Result.LOSE, DefaultBlackjackRule.judgeResult(dealerScore, playerScore));
+    }
+
+    @Test
+    void 플레이어의_승패를_계산할때_플레이어의_점수가_21초과로_버스트일때_LOSE() {
+        int dealerScore = 20;
+        int playerScore = 22;
+
+        Assertions.assertEquals(Result.LOSE, DefaultBlackjackRule.judgeResult(playerScore, dealerScore));
+    }
+
+    @Test
+    void 플레이어의_승패를_계산할때_플레이어의_점수가_21초과로_버스트이면서_딜러도_버스트일때_플레이어는_LOSE() {
+        int dealerScore = 22;
+        int playerScore = 22;
+
+        Assertions.assertEquals(Result.LOSE, DefaultBlackjackRule.judgeResult(playerScore, dealerScore));
+    }
+
+    @Test
+    void 딜러의_점수가_21을_넘을때_Bust(){
+        int dealerScore = 22;
+
+        Assertions.assertEquals(true, DefaultBlackjackRule.isBust(dealerScore));
+    }
+
+    @Test
+    void 플레이어의_점수가_21을_넘을때_Bust(){
+        int playerScore = 22;
+
+        Assertions.assertEquals(true, DefaultBlackjackRule.isBust(playerScore));
     }
 
     @Test
