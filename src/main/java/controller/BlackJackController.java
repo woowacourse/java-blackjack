@@ -1,10 +1,9 @@
 package controller;
 
-import static view.OutputView.initDealerCardInfos;
-
-import common.Constants;
 import dto.GameStatus;
+import dto.NameResponse;
 import dto.PlayerNamesRequest;
+import dto.SelectRequest;
 import service.BlackJackCommandService;
 import service.BlackJackQueryService;
 import view.InputView;
@@ -35,6 +34,8 @@ public class BlackJackController {
 
         distributeInitialCards();
         displayInitialCards();
+
+        OutputView.printTaskDivider();
     }
 
     private void setupGameTable() {
@@ -53,15 +54,43 @@ public class BlackJackController {
 
     private void displayInitialCards() {
         OutputView.initDealerCardInfos(queryService.dealerCards());
-        OutputView.initAllPlayerCardInfos(queryService.playerCards());
+        OutputView.initAllPlayerCardInfos(queryService.AllPlayersCards());
     }
 
     private void playerGamePhase() {
-        InputView.readSelect(queryService.currentPlayerName());
+        NameResponse currentPlayer = queryService.currentPlayerName();
+        SelectRequest select = InputView.readSelect(currentPlayer);
 
+        firstPlayerGameProcess(select.isPositive());
+
+        if(select.isPositive()) {
+            playerGameLoop();
+        }
     }
 
+    private void firstPlayerGameProcess(boolean isPositive) {
+        if (isPositive) {
+            commandService.currentPlayerDrawCard();
+        }
+        OutputView.playerCardInfos(queryService.currentPlayerCards());
+    }
 
+    private void playerGameLoop() {
+        boolean wantMoreCard = true;
+        while (wantMoreCard && queryService.isCurrentPlayerPlayable()) {
+            SelectRequest selected = InputView.readSelect(queryService.currentPlayerName());
+            wantMoreCard = selected.isPositive();
+
+            playerGameLoopProcess(wantMoreCard);
+        }
+    }
+
+    private void playerGameLoopProcess(boolean isRequestedMoreCard) {
+        if (isRequestedMoreCard) {
+            commandService.currentPlayerDrawCard();
+            OutputView.playerCardInfos(queryService.currentPlayerCards());
+        }
+    }
 
     private void dealerGamePhase() {
 

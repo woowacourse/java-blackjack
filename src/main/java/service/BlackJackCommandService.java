@@ -28,4 +28,8 @@ public class BlackJackCommandService {
     public void distributeInitialCards() {
         gameTableRepository.distributeInitialCards();
     }
+
+    public void currentPlayerDrawCard() {
+        gameTableRepository.currentPlayerDrawCard();
+    }
 }

@@ -40,13 +40,26 @@ class Players {
         return players.peek();
     }
 
-    public List<NameAndCardInfos> allPlayerCardInfos() {
+    List<NameAndCardInfos> allPlayerCardInfos() {
         return players.stream()
                 .map(Player::infos)
                 .toList();
     }
 
-    public String currentPlayerName() {
+    String currentPlayerName() {
         return currentPlayer().name();
     }
+
+    void currentPlayerDrawCard(DrawStrategy drawStrategy) {
+        currentPlayer().draw(drawStrategy);
+    }
+
+    boolean isCurrentPlayerPlayable() {
+        return isPlayerExist() && currentPlayer().isPlayable();
+    }
+
+    boolean isPlayerExist() {
+        return !players.isEmpty();
+    }
+
 }

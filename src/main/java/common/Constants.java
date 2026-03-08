@@ -6,9 +6,6 @@ public class Constants {
     public static final String DELIMITER = ",";
     public static final String JOINER = ", ";
 
-    public static final String POSITIVE = "y";
-    public static final String NEGATIVE = "n";
-
     public static final String WIN = "승";
     public static final String LOSE = "패";
 

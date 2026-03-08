@@ -26,7 +26,7 @@ public class BlackJackQueryService {
         return NameAndCardsResponse.from(dealerCards);
     }
 
-    public AllPlayersNameAndCardsResponse playerCards() {
+    public AllPlayersNameAndCardsResponse AllPlayersCards() {
         List<NameAndCardInfos> playerCardInfos = gameTableRepository.getAllPlayersCards();
         return AllPlayersNameAndCardsResponse.from(playerCardInfos);
     }
@@ -34,5 +34,14 @@ public class BlackJackQueryService {
     public NameResponse currentPlayerName() {
         String name = gameTableRepository.getCurrentPlayerName();
         return new NameResponse(name);
+    }
+
+    public NameAndCardsResponse currentPlayerCards() {
+        NameAndCardInfos dealerCards = gameTableRepository.getCurrentPlayerCards();
+        return NameAndCardsResponse.from(dealerCards);
+    }
+
+    public boolean isCurrentPlayerPlayable() {
+        return gameTableRepository.isCurrentPlayerPlayable();
     }
 }

@@ -2,16 +2,16 @@ package dto;
 
 import view.SelectFormat;
 
-public record SelectRequest(boolean positive) {
+public record SelectRequest(boolean isPositive) {
 
     public static SelectRequest from(String input) {
         requireNonBlank(input);
         requireCorrectFormat(input);
 
-        return new SelectRequest(isPositive(input));
+        return new SelectRequest(choosePositive(input));
     }
 
-    private static boolean isPositive(String input) {
+    private static boolean choosePositive(String input) {
         return input.equals(SelectFormat.POSITIVE.sign());
     }
 

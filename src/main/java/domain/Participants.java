@@ -52,4 +52,12 @@ class Participants {
     public String currentPlayerName() {
         return players.currentPlayerName();
     }
+
+    public void currentPlayerDrawCard(DrawStrategy drawStrategy) {
+        players.currentPlayerDrawCard(drawStrategy);
+    }
+
+    public boolean isCurrentPlayerPlayable() {
+        return players.isCurrentPlayerPlayable();
+    }
 }

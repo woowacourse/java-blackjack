@@ -28,11 +28,10 @@ public class OutputView {
 
     public static void initAllPlayerCardInfos(AllPlayersNameAndCardsResponse response){
         List<NameAndCardsResponse> infos = response.allInfos();
-        infos.forEach(OutputView::initPlayerCardInfos);
+        infos.forEach(OutputView::playerCardInfos);
     }
 
-
-    public static void initPlayerCardInfos(NameAndCardsResponse response){
+    public static void playerCardInfos(NameAndCardsResponse response){
         System.out.println(nameAndAllCards(response));
     }
 

@@ -32,7 +32,19 @@ public class GameTableRepository {
         gameTable.allParticipantsDrawInitialCards();
     }
 
+    public NameAndCardInfos getCurrentPlayerCards() {
+        return gameTable.currentPlayerCardInfos();
+    }
+
     public String getCurrentPlayerName() {
         return gameTable.currentPlayerName();
+    }
+
+    public void currentPlayerDrawCard() {
+        gameTable.currentPlayerDrawCard();
+    }
+
+    public boolean isCurrentPlayerPlayable() {
+        return gameTable.isCurrentPlayerPlayable();
     }
 }

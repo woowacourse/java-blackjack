@@ -2,7 +2,6 @@ package domain;
 
 import domain.strategy.RandomStrategy;
 import domain.vo.NameAndCardInfos;
-import dto.NameAndCardsResponse;
 import java.util.List;
 
 public class GameTable {
@@ -36,12 +35,20 @@ public class GameTable {
         return participants.allPlayerCardInfos();
     }
 
-    public NameAndCardInfos currentPlayersCardInfos() {
+    public NameAndCardInfos currentPlayerCardInfos() {
         return participants.currentPlayerCardInfos();
     }
 
     public String currentPlayerName() {
         return participants.currentPlayerName();
+    }
+
+    public void currentPlayerDrawCard() {
+        participants.currentPlayerDrawCard(drawStrategy);
+    }
+
+    public boolean isCurrentPlayerPlayable() {
+        return participants.isCurrentPlayerPlayable();
     }
 
 //
