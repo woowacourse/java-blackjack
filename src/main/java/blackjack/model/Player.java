@@ -12,7 +12,7 @@ public class Player extends Participant {
     }
 
     @Override
-    public boolean canReceive(int score) {
-        return score < 21;
+    public boolean canReceive() {
+        return score.isPlayerHitScore();
     }
 }

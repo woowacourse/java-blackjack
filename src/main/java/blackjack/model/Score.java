@@ -23,12 +23,20 @@ public class Score {
         }
     }
 
-    private int aceTranslate(int score, long aceCount) {
-        while (score <= 11 && aceCount > 0) {
-            score += 10;
-            aceCount--;
-        }
-        return score;
+    public boolean isSame(Score otherScore) {
+        return score == otherScore.score;
+    }
+
+    public boolean isLess(Score otherScore) {
+        return score < otherScore.score;
+    }
+
+    public boolean isDealerHitScore() {
+        return score <= 16;
+    }
+
+    public boolean isPlayerHitScore() {
+        return score < 21;
     }
 
     public boolean isBurst() {
@@ -43,7 +51,11 @@ public class Score {
         return score;
     }
 
-    public boolean isLess(int score) {
-        return this.score < score;
+    private int aceTranslate(int score, long aceCount) {
+        while (score <= 11 && aceCount > 0) {
+            score += 10;
+            aceCount--;
+        }
+        return score;
     }
 }

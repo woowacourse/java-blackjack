@@ -29,13 +29,13 @@ public abstract class Participant {
         return cards.getFirst();
     }
 
-    public int getScore() {
-        return score.getScore();
+    public Score getScore() {
+        return score;
     }
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
 
-    public abstract boolean canReceive(int score);
+    public abstract boolean canReceive();
 }
