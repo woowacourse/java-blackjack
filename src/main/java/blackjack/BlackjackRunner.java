@@ -77,11 +77,13 @@ public class BlackjackRunner {
         return deck;
     }
     
-    private PlayingCards playerTurn(Participants participants, PlayingCards deck) {
+    private PlayingCards playerTurn(Participants participants, final PlayingCards deck) {
+        PlayingCards copiedDeck = deck;
+        
         while (participants.findDrawablePlayer() != null) {
-            deck = drawCard(participants, deck);
+            copiedDeck = drawCard(participants, copiedDeck);
         }
-        return deck;
+        return copiedDeck;
     }
     
     private PlayingCards drawCard(Participants participants, PlayingCards deck) {
