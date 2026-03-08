@@ -23,19 +23,16 @@ public class GameController {
 
     public void run() {
         // 시나리오
-        List<Player> players = participateGame(getInputPlayers()); // TODO: 추후 일급 컬랙션으로 변경 고려
+        List<Player> players = participateGame(getInputPlayers());
         Dealer dealer = new Dealer();
 
         for (Player player : players) {
             List<Card> firstHandCards = dealer.handOutFirstHandCards();
             player.receiveFirstHandCards(firstHandCards);
         }
-
         dealer.receiveFirstHandCards(dealer.handOutFirstHandCards());
         printGameStart(players, dealer);
 
-        // 3. 각 플레이어는 버스트가 되지 않는 한 계속 뽑을 수 있다.
-        // 이때 히트 옵션을 계속 수행해야하며, 손패의 점수를 출력해야한다.
 
         receiveMoreCard(players, dealer);
         outputView.printFinalScore(dealer, players);
@@ -53,8 +50,7 @@ public class GameController {
     }
 
     private List<Player> participateGame(List<String> playerNames) {
-        return playerNames
-                .stream()
+        return playerNames.stream()
                 .map(Player::new)
                 .toList();
     }
@@ -77,6 +73,18 @@ public class GameController {
         }
     }
 
+    private void processRound(Player player, Dealer dealer) {
+        HitOption hitOption = HitOption.YES;
+        while (hitOption == HitOption.YES && !player.isBust()) {
+            hitOption = inputHitOption(player);
+            if (hitOption == HitOption.YES) {
+                player.receiveMoreCard(dealer.handOutMoreCard());
+            }
+            outputView.printCurrentHoldCard(player);
+        }
+    }
+
+    // TODO: 결과를 만드는 부분 리팩토링 필요
     private Map<String, GameResult> getPlayerFinalResults(List<Player> players, Dealer dealer) {
         Map<String, GameResult> playerFinalResults = new HashMap<>();
         int dealerWinningCount = 0;
@@ -98,16 +106,6 @@ public class GameController {
         return playerFinalResults;
     }
 
-    private void processRound(Player player, Dealer dealer) {
-        HitOption hitOption = HitOption.YES;
-        while (hitOption == HitOption.YES && !player.isBust()) {
-            hitOption = inputHitOption(player);
-            if (hitOption == HitOption.YES) {
-                player.receiveMoreCard(dealer.handOutMoreCard());
-            }
-            outputView.printCurrentHoldCard(player);
-        }
-    }
 
     private HitOption inputHitOption(Player player) {
         String rawHitOption = inputView.readHitOption(player.getName());
