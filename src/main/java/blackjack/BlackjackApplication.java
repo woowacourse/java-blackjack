@@ -11,6 +11,10 @@ public class BlackjackApplication {
         OutputView outputView = new OutputView();
         BlackjackController blackjackController = new BlackjackController(inputView, outputView);
 
-        blackjackController.run();
+        try {
+            blackjackController.run();
+        } finally {
+            inputView.closeScanner();
+        }
     }
 }
