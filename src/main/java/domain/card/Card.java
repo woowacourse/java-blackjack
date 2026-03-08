@@ -16,6 +16,10 @@ public class Card {
         return number.getValue();
     }
 
+    public boolean isAce() {
+        return number.isAce();
+    }
+
     public String cardName() {
         return number.getCourt() + pattern.getName();
     }
