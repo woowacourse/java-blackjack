@@ -1,8 +1,8 @@
 package controller;
 
-import domain.Dealer;
+import domain.participant.Dealer;
 import domain.GameResult;
-import domain.Player;
+import domain.participant.Player;
 import domain.card.Card;
 import dto.GameScoreDTO;
 import dto.ParticipantHandDTO;

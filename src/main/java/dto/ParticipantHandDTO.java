@@ -1,6 +1,6 @@
 package dto;
 
-import domain.Participant;
+import domain.participant.Participant;
 import domain.card.Card;
 
 import java.util.List;
