@@ -2,24 +2,26 @@ package domain;
 
 import static constant.Word.*;
 
-import domain.dto.GameResult;
+import domain.card.Card;
 import domain.dto.MemberStatus;
-import java.util.ArrayList;
+import domain.member.Members;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class GameTable {
 
     private static final int BLACKJACK = 21;
     private static final int DEALER_DRAW_CONDITION = 16;
+
     private final Members members;
 
     public GameTable() {
         this.members = new Members();
     }
 
-    public void joinMember(Member member) {
-        members.join(member);
+    public void joinPlayer(List<String> playerNames) {
+        members.appendPlayer(playerNames);
     }
 
     public boolean checkBust(String memberName) {
@@ -27,39 +29,47 @@ public class GameTable {
     }
 
     public List<Card> draw(String memberName, Card card) {
-        members.provideCard(memberName, card);
-        return members.findCardByName(memberName);
+        if (members.isDealer(memberName)) {
+            return drawDealer(card);
+        }
+        return drawPlayer(memberName, card);
     }
 
     public boolean draw(Card card) {
-        if (members.checkValue(DEALER.format()) <= DEALER_DRAW_CONDITION) {
-            members.provideCard(DEALER.format(), card);
+        if (members.checkDealerValue() <= DEALER_DRAW_CONDITION) {
+            members.provideCardToDealer(card);
             return true;
         }
         return false;
     }
 
-    public List<MemberStatus> checkMemberStatuses() {
+    public List<MemberStatus> checkPlayerStatuses() {
         return members.getAllPlayerName()
                 .stream()
                 .map(name -> {
                     List<Card> cards = members.findCardByName(name);
                     int totalValue = members.checkValue(name);
                     return new MemberStatus(name, cards, totalValue);
-                }).toList();
+                }).collect(Collectors.toList());
     }
 
-    public List<GameResult> checkGameResult() {
-        List<GameResult> gameResults = new ArrayList<>();
-        gameResults.add(new GameResult(DEALER.format(),
-                members.judgeDealerGameResult(DEALER.format())));
+    public MemberStatus checkDealerStatus() {
+        List<Card> cards = members.dealerCards();
+        int totalValue = members.checkDealerValue();
+        return new MemberStatus(DEALER.format(), cards, totalValue);
+    }
 
-        Map<String, Boolean> playerResults = members.judgePlayerGameResult(DEALER.format());
+    public Map<String, RoundResult> checkGameResult() {
+        return members.judgeGameResults();
+    }
 
-        for (String playerName : playerResults.keySet()) {
-            gameResults.add(new GameResult(playerName,
-                    List.of(playerResults.get(playerName))));
-        }
-        return gameResults;
+    private List<Card> drawPlayer(String memberName, Card card) {
+        members.provideCardToPlayer(memberName, card);
+        return members.findCardByName(memberName);
+    }
+
+    private List<Card> drawDealer(Card card) {
+        members.provideCardToDealer(card);
+        return members.dealerFirstCard();
     }
 }
