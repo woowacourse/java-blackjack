@@ -17,8 +17,8 @@ public class BlackJackFactory {
     public GameTable openGame() {
         GameTable gameTable = new GameTable();
         Dealer dealer = dealer();
-        dealer.draw();
-        dealer.draw();
+        dealer.draw(drawStrategy);
+        dealer.draw(drawStrategy);
         gameTable.addParticipant(dealer);
 
         return gameTable;
@@ -29,6 +29,6 @@ public class BlackJackFactory {
     }
 
     private Hand emptyhand() {
-        return Hand.of(drawStrategy);
+        return Hand.empty();
     }
 }

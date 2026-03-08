@@ -1,5 +1,6 @@
 package domain;
 
+import domain.strategy.RandomStrategy;
 import dto.GameResult;
 import dto.GameStatus;
 import java.util.ArrayList;
@@ -11,15 +12,22 @@ public class GameTable {
 
     private final Queue<Participant> participants;
     private final ScoreBoard scoreBoard;
+    private final DrawStrategy drawStrategy;
 
     public GameTable() {
         this.participants = new LinkedList<>();
         this.scoreBoard = new ScoreBoard();
+        this.drawStrategy = new RandomStrategy();
     }
 
     public void addParticipant(Participant participant) {
         participants.add(participant);
     }
+
+    public void addPlayer(String name) {
+        participants.add(Player.of(name));
+    }
+
 
     public List<GameStatus> initGameStatus() {
         List<GameStatus> gameStatuses = new ArrayList<>();
@@ -36,12 +44,12 @@ public class GameTable {
 
     public void playCurrentPlayer() {
         if (isPlayerExist()) {
-            currentPlayer().draw();
+            currentPlayer().draw(drawStrategy);
         }
     }
 
     public void playDealer() {
-        dealer().draw();
+        dealer().draw(drawStrategy);
     }
 
     public GameStatus currentPlayerStatus() {

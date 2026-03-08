@@ -2,7 +2,6 @@ package domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import domain.strategy.RandomStrategy;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,11 +9,9 @@ import org.junit.jupiter.api.Test;
 class DealerTest {
 
     static Hand playingHand = new Hand(
-            new RandomStrategy(),
             List.of(new Card(CardRank.QUEEN, CardMark.SPADE),
                     new Card(CardRank.TWO, CardMark.HEART)));
     static Hand stopHand = new Hand(
-            new RandomStrategy(),
             List.of(new Card(CardRank.QUEEN, CardMark.SPADE),
                     new Card(CardRank.EIGHT, CardMark.HEART)));
 

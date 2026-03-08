@@ -12,15 +12,15 @@ public abstract class Participant {
         this.hand = hand;
     }
 
-    private static Participant player(String name, DrawStrategy drawStrategy) {
-        return Player.of(name, drawStrategy);
+    private static Participant player(String name) {
+        return Player.of(name);
     }
 
     protected abstract boolean isPlayable();
 
-    public void draw() {
+    public void draw(DrawStrategy drawStrategy) {
         if (isPlayable()) {
-            hand.drawCard();
+            hand.drawCard(drawStrategy);
         }
     }
 

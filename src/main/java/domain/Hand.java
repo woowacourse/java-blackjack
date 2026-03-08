@@ -7,20 +7,19 @@ import java.util.stream.Collectors;
 
 public class Hand {
 
-    private final DrawStrategy drawStrategy;
+//    private final DrawStrategy drawStrategy;
     private final List<Card> cards;
 
-    Hand(DrawStrategy drawStrategy, List<Card> cards) {
-        this.drawStrategy = drawStrategy;
+    Hand(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
     }
 
-    static Hand of(DrawStrategy drawStrategy) {
-        return new Hand(drawStrategy, new ArrayList<>());
+    static Hand empty () {
+        return new Hand(new ArrayList<>());
     }
 
-    void drawCard() {
-        cards.add(createCard());
+    void drawCard(DrawStrategy drawStrategy) {
+        cards.add(drawStrategy.draw());
     }
 
     List<String> cardInfos() {
@@ -55,10 +54,6 @@ public class Hand {
         return (int) cards.stream()
                 .filter(c -> c.rank() == CardRank.ACE)
                 .count();
-    }
-
-    private Card createCard() {
-        return drawStrategy.draw();
     }
 
     private boolean isOvercome() {

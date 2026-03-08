@@ -4,12 +4,12 @@ import common.Constants;
 
 public class Player extends Participant {
 
-    public Player(String name, Hand hand) {
+    Player(String name, Hand hand) {
         super(name, hand);
     }
 
-    static Player of(String name, DrawStrategy drawStrategy) {
-        return new Player(name, Hand.of(drawStrategy));
+    static Player of(String name) {
+        return new Player(name, Hand.empty());
     }
 
     @Override
