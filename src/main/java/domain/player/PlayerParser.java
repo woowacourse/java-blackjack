@@ -1,6 +1,5 @@
 package domain.player;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,14 +10,12 @@ public class PlayerParser {
     public static Players parseToPlayers(String rawPlayerNames) {
         validateRawPlayerNames(rawPlayerNames);
 
-        List<String> splitedPlayerNames = splitByDelimiter(rawPlayerNames);
-        List<Name> names = splitedPlayerNames.stream()
+        List<Player> players = splitByDelimiter(rawPlayerNames).stream()
                 .map(Name::from)
+                .map(Player::new)
                 .toList();
-        // TODO
-//        List<Player> playerList = ;
-//        Players players = Players.of(playerList);
-        return new Players(new ArrayList<>());
+
+        return Players.of(players);
     }
 
     private static List<String> splitByDelimiter(String rawPlayerName) {
