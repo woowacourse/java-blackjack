@@ -14,7 +14,7 @@ public class Dealer extends Participant {
     }
     
     public boolean isDealerDraw() {
-        return hand.calculateTotalScoreForResult(BUSTED_SCORE) <= DEALER_SCORE;
+        return hand.calculateTotalScore(BUSTED_SCORE) <= DEALER_SCORE;
     }
     
     @Override

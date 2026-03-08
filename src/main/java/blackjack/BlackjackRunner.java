@@ -67,13 +67,14 @@ public class BlackjackRunner {
         return participants.distributeCards(deck);
     }
     
-    private PlayingCards dealerTurn(Participants participants, PlayingCards deck) {
-        boolean isDealerDraw = participants.isDealerDraw();
-        if (isDealerDraw) {
+    private PlayingCards dealerTurn(Participants participants, final PlayingCards deck) {
+        PlayingCards copiedDeck = deck;
+        
+        while (participants.isDealerDraw()) {
             outputView.printDealerTurn();
-            deck = participants.dealerDraw(deck);
+            copiedDeck = participants.dealerDraw(copiedDeck);
         }
-        return deck;
+        return copiedDeck;
     }
     
     private PlayingCards playerTurn(Participants participants, final PlayingCards deck) {
