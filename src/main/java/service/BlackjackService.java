@@ -3,6 +3,7 @@ package service;
 import domain.Dealer;
 import domain.Deck;
 import domain.Player;
+import domain.Players;
 import utils.generator.CardGenerator;
 
 import java.util.ArrayList;
@@ -20,14 +21,14 @@ public class BlackjackService {
         dealer.receiveInitialCards(deck);
     }
 
-    public List<Player> createPlayers(List<String> names, Deck deck) {
+    public Players createPlayers(List<String> names, Deck deck) {
         List<Player> playerList = new ArrayList<>();
         for (String name : names) {
             Player player = new Player(name);
             player.receiveInitialCards(deck);
             playerList.add(player);
         }
-        return playerList;
+        return new Players(playerList);
     }
 
     public Dealer createDealer(Deck deck) {
