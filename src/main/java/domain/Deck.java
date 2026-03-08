@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -7,7 +8,7 @@ public class Deck {
     private final List<Card> cards;
 
     public Deck(List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
     public void shuffle() {
@@ -19,9 +20,10 @@ public class Deck {
     }
 
     public Card pop() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("덱이 비었습니다.");
+        }
+
         return cards.removeFirst();
-
-
-        // 리스트 비었을 때 처리 필요
     }
 }
