@@ -1,6 +1,5 @@
 package dto;
 
-import domain.FinalResult;
 import domain.ResultType;
 import domain.TotalFinalResult;
 
@@ -8,23 +7,15 @@ public record DealerFinalResultDto(
         String result
 ) {
     public static DealerFinalResultDto from(TotalFinalResult totalFinalResult) {
-        int winCount = 0;
-        int drawCount = 0;
-        int loseCount = 0;
+        return new DealerFinalResultDto(checkDrawCount(countResult(totalFinalResult, ResultType.LOSE),
+                countResult(totalFinalResult, ResultType.DRAW),
+                countResult(totalFinalResult, ResultType.WIN)));
+    }
 
-        for (FinalResult finalResult : totalFinalResult.getTotalResult()) {
-            if (finalResult.getResultType().equals(ResultType.WIN)) {
-                loseCount++;
-                continue;
-            }
-            if (finalResult.getResultType().equals(ResultType.DRAW)) {
-                drawCount++;
-                continue;
-            }
-            winCount++;
-        }
-
-        return new DealerFinalResultDto(checkDrawCount(winCount, drawCount, loseCount));
+    private static int countResult(TotalFinalResult totalFinalResult, ResultType resultType) {
+        return (int) totalFinalResult.getTotalResult().stream()
+                .filter(finalResult -> finalResult.getResultType().equals(resultType))
+                .count();
     }
 
     private static String checkDrawCount(int winCount, int drawCount, int loseCount) {
