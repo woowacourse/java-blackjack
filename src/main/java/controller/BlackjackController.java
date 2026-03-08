@@ -41,13 +41,13 @@ public class BlackjackController {
         return InputParser.splitByDelimiter(rawUserNames);
     }
 
-    private static Cards getDeck() {
+    private Cards getDeck() {
         Cards deck = Cards.of();
         cardShuffle(deck);
         return deck;
     }
 
-    private static void cardShuffle(Cards deck) {
+    private void cardShuffle(Cards deck) {
         deck.shuffle();
     }
 
