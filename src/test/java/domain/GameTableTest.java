@@ -20,9 +20,9 @@ class GameTableTest {
         String playerName = "포비";
         gameTable.joinPlayer(List.of(playerName));
 
-        gameTable.draw(playerName, new Card("10","클로버"));
-        gameTable.draw(playerName, new Card("5", "하트"));
-        gameTable.draw(playerName, new Card("7", "하트"));
+        gameTable.drawByName(playerName, new Card("10","클로버"));
+        gameTable.drawByName(playerName, new Card("5", "하트"));
+        gameTable.drawByName(playerName, new Card("7", "하트"));
 
         Assertions.assertTrue(gameTable.checkBust("포비"));
     }
@@ -33,9 +33,9 @@ class GameTableTest {
         String playerName = "포비";
         gameTable.joinPlayer(List.of(playerName));
 
-        gameTable.draw(playerName, new Card("10","클로버"));
-        gameTable.draw(playerName, new Card("5", "하트"));
-        gameTable.draw(playerName, new Card("5", "스페이드"));
+        gameTable.drawByName(playerName, new Card("10","클로버"));
+        gameTable.drawByName(playerName, new Card("5", "하트"));
+        gameTable.drawByName(playerName, new Card("5", "스페이드"));
 
         Assertions.assertFalse(gameTable.checkBust("포비"));
     }
