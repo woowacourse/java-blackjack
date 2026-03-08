@@ -4,23 +4,23 @@ import java.util.List;
 
 public class User {
 
-    private final String name;
-    private final CardStatus cardStatus;
+    private final UserName name;
+    private final Hand hand;
 
     public User(String name) {
-        this.name = name;
-        this.cardStatus = new CardStatus();
+        this.name = new UserName(name);
+        this.hand = new Hand();
     }
 
     public String getName() {
-        return name;
+        return name.getName();
     }
 
     public List<Card> cards() {
-        return cardStatus.getCards();
+        return hand.getCards();
     }
 
     public void addCard(Card card) {
-        cardStatus.addCard(card);
+        hand.addCard(card);
     }
 }
