@@ -3,7 +3,6 @@ package blackjack.controller;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.Player;
-import blackjack.service.GameService;
 import blackjack.util.InputParser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -13,11 +12,9 @@ import java.util.Map;
 
 public class BlackjackController {
 
-    private final GameService gameService;
     private final InputView inputView;
 
-    public BlackjackController(GameService gameService, InputView inputView) {
-        this.gameService = gameService;
+    public BlackjackController(InputView inputView) {
         this.inputView = inputView;
     }
 
@@ -25,7 +22,7 @@ public class BlackjackController {
         List<Player> players = readUsers();
         Dealer dealer = new Dealer();
 
-        gameService.settingCards(players, dealer);
+        settingCards(players, dealer);
         printGameSettingResult(players, dealer);
 
         getMoreCards(players);
@@ -37,6 +34,16 @@ public class BlackjackController {
         printGameResult(players);
 
         printWinningResult(players, dealer);
+    }
+
+    private void settingCards(List<Player> players, Dealer dealer) {
+        Deck.shuffle();
+        for (int i = 0; i < 2; i++) {
+            for (Player player : players) {
+                player.draw(Deck.top());
+            }
+            dealer.draw(Deck.top());
+        }
     }
 
     private void printGameSettingResult(List<Player> players, Dealer dealer) {
@@ -67,7 +74,7 @@ public class BlackjackController {
             while (!player.isBurst() && !player.isBlackjack()) {
                 String yesOrNo = inputView.readMoreCard(player.getName());
                 if (yesOrNo.equals("y")) {
-                    player.get(Deck.draw());
+                    player.draw(Deck.top());
                     OutputView.printSettingCardResults(player.getName(), player.getCardsName());
                     count++;
                     continue;
@@ -82,7 +89,7 @@ public class BlackjackController {
 
     private void getMoreCardsForDealer(Dealer dealer) {
         while (dealer.calculateCardsValue() < 17) {
-            dealer.get(Deck.draw());
+            dealer.draw(Deck.top());
             OutputView.printGetMoreCardsForDealer(dealer.getName());
         }
     }

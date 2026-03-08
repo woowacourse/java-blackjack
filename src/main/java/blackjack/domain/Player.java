@@ -13,7 +13,7 @@ public class Player {
         this.cards = new ArrayList<>();
     }
 
-    public void get(Card card) {
+    public void draw(Card card) {
         cards.add(card);
     }
 

@@ -19,8 +19,8 @@ public class DealerTest {
         // given
         Player player = new Player("흑곰");
         Dealer dealer = new Dealer();
-        player.get(new Card(CardValue.SEVEN, CardShape.DIAMOND));
-        dealer.get(new Card(CardValue.EIGHT, CardShape.DIAMOND));
+        player.draw(new Card(CardValue.SEVEN, CardShape.DIAMOND));
+        dealer.draw(new Card(CardValue.EIGHT, CardShape.DIAMOND));
 
         // when
         boolean isDealerWinning = dealer.winsAgainst(player);
