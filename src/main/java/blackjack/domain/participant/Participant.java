@@ -8,17 +8,11 @@ public abstract class Participant {
     private static final int FIRST_DRAW_COUNT = 2;
     
     protected final String nickname;
-    protected final Role role;
     protected PlayingCards hand;
     
-    protected Participant(Role role) {
-        this(role.getName(), role);
-    }
-    
-    protected Participant(String nickname, Role role) {
+    protected Participant(String nickname) {
         this.nickname = nickname;
         this.hand = new PlayingCards();
-        this.role = role;
     }
     
     public abstract boolean isDealer();

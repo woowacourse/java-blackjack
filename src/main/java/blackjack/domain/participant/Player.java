@@ -7,7 +7,7 @@ public class Player extends Participant {
     private boolean stopDrawing;
     
     public Player(String nickname) {
-        super(nickname, Role.PLAYER);
+        super(nickname);
         validate(nickname);
         stopDrawing = false;
     }
