@@ -6,11 +6,11 @@ import blackjack.model.ScoreCalculator;
 import java.util.List;
 
 public record ParticipantScoreDto(
-    String name,
+    String participantName,
     List<CardDto> cards,
     Score score
 ) {
-    public static ParticipantScoreDto from(Participant participant, ScoreCalculator calculator) {
+    public static ParticipantScoreDto from(Participant participant, Score score) {
         List<CardDto> cards = participant.getCards()
             .stream()
             .map(CardDto::from)
@@ -19,7 +19,7 @@ public record ParticipantScoreDto(
         return new ParticipantScoreDto(
             participant.getName(),
             cards,
-            calculator.calculate(participant.getCards())
+            score
         );
     }
 }
