@@ -7,38 +7,27 @@ import domain.Player;
 import domain.Players;
 import domain.TotalFinalResult;
 import dto.DealerFinalResultDto;
-import dto.DealerResultDto;
 import dto.PlayerDto;
 import dto.PlayersDto;
+import dto.ResultDto;
 import dto.TotalFinalResultsDto;
-import java.util.List;
 import view.InputView;
 import view.OutputView;
 
 public class GameController {
 
     public void start() {
-        List<String> names = InputView.readParticipants();
-        BlackjackGame blackjackGame = BlackjackGame.start(names);
-
-
+        BlackjackGame blackjackGame = BlackjackGame.start(InputView.readParticipants());
         Dealer dealer = blackjackGame.getDealer();
         Players players = blackjackGame.getPlayers();
 
         PlayersDto playersDto = PlayersDto.from(players);
         OutputView.printHandOutMessage(playersDto);
-        OutputView.printCardStatus(playersDto, DealerResultDto.from(dealer));
+        OutputView.printCardStatus(playersDto, ResultDto.from(dealer));
 
-        // 플레이어 카드 추가 수령
         addPlayersCard(blackjackGame, players);
-
-        // 딜러 게임 진행
         addDealerCards(blackjackGame);
-
-        // 카드 결과, 점수 출력
-        printCardResults(DealerResultDto.from(dealer), PlayersDto.from(players));
-
-        // 최종 승패 출력
+        printCardResults(ResultDto.from(dealer), PlayersDto.from(players));
         printFinalResults(players, dealer);
     }
 
@@ -62,8 +51,8 @@ public class GameController {
         }
     }
 
-    private void printCardResults(DealerResultDto dealerResultDto, PlayersDto playersDto) {
-        OutputView.printCardResult(dealerResultDto, playersDto);
+    private void printCardResults(ResultDto resultDto, PlayersDto playersDto) {
+        OutputView.printCardResult(resultDto, playersDto);
     }
 
     private void printFinalResults(Players players, Dealer dealer) {

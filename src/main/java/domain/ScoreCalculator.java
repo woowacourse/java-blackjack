@@ -3,8 +3,6 @@ package domain;
 import java.util.List;
 
 public class ScoreCalculator {
-    // TODO 계산 로직 리팩토링 필요
-
     private static final int ACE_BONUS = 10;
     private static final int BUST_LIMIT_SCORE = 21;
 

@@ -15,7 +15,7 @@ public enum CardNumber {
     Q("Q", 10),
     K("K", 10);
 
-    private String symbol;
+    private final String symbol;
     private final int value;
 
     CardNumber(String symbol, int value) {

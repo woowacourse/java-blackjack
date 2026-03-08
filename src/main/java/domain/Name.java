@@ -2,6 +2,7 @@ package domain;
 
 public class Name {
     private static final int NAME_LIMIT_LENGTH = 20;
+
     private final String name;
 
     private Name(String name) {
