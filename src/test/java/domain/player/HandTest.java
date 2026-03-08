@@ -1,11 +1,16 @@
 package domain.player;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import domain.Card;
 import domain.CardNumber;
 import domain.Suit;
 import java.util.List;
-import org.assertj.core.api.Assertions;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class HandTest {
 
@@ -28,7 +33,48 @@ public class HandTest {
 
         int score = hand.calculateScore();
 
-        Assertions.assertThat(score).isEqualTo(54);
+        assertThat(score).isEqualTo(54);
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideCases")
+    void Ace는_1_또는_11로_계산한다(List<Card> cards, int expected) {
+        Hand hand = new Hand();
+        for (Card card : cards) {
+            hand.add(card);
+        }
+
+        int actual = hand.calculateScore();
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> provideCases() {
+        return Stream.of(
+                Arguments.of(List.of(
+                        new Card(Suit.SPADE, CardNumber.ACE)
+                ), 11),
+
+                Arguments.of(List.of(
+                        new Card(Suit.SPADE, CardNumber.ACE),
+                        new Card(Suit.CLOVER, CardNumber.ACE),
+                        new Card(Suit.SPADE, CardNumber.TWO),
+                        new Card(Suit.SPADE, CardNumber.THREE)
+                ), 17),
+
+                Arguments.of(List.of(
+                        new Card(Suit.SPADE, CardNumber.TEN),
+                        new Card(Suit.CLOVER, CardNumber.TEN),
+                        new Card(Suit.HEART, CardNumber.TEN),
+                        new Card(Suit.SPADE, CardNumber.ACE)
+                ), 31),
+
+                Arguments.of(List.of(
+                        new Card(Suit.SPADE, CardNumber.TEN),
+                        new Card(Suit.CLOVER, CardNumber.TEN),
+                        new Card(Suit.SPADE, CardNumber.ACE)
+                ), 21)
+        );
     }
 }
 
