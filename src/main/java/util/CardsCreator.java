@@ -1,8 +1,8 @@
 package util;
 
-import domain.Card;
-import domain.Rank;
-import domain.Suit;
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Suit;
 import java.util.LinkedList;
 import java.util.List;
 

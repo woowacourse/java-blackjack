@@ -1,12 +1,14 @@
 package view;
 
+import domain.Score.Result;
 import dto.DealerDto;
 import dto.NamesDto;
 import dto.PlayerCardsDto;
 import dto.StatisticsDto;
-import util.Parser;
-
+import java.io.PrintStream;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String DEAL_INITIAL_CARDS_MESSAGE = "%s와 %s에게 2장을 나누었습니다.";
@@ -17,18 +19,30 @@ public class OutputView {
     private static final String DEALER_RECORD_FORMAT = "%s: %s";
     private static final String STATISTICS_FORMAT = "%s: %s";
 
+    private final PrintStream out;
+
+    public OutputView(PrintStream out) {
+        this.out = out;
+        System.setOut(out);
+    }
+
     public void drawCard(NamesDto namesDto) {
         String namesResult = String.join(", ", namesDto.playerNames());
-        System.out.printf(DEAL_INITIAL_CARDS_MESSAGE + "%n",namesDto.dealerName(), namesResult);
+        System.out.printf(DEAL_INITIAL_CARDS_MESSAGE + "%n", namesDto.dealerName(), namesResult);
     }
 
     public void showCard(PlayerCardsDto playerCardsDto) {
-        System.out.println(SHOW_CARD.formatted(playerCardsDto.name(),String.join(", ", playerCardsDto.cards())));
+        System.out.println(SHOW_CARD.formatted(playerCardsDto.name(), String.join(", ", playerCardsDto.cards())));
+    }
+
+    public void showOnlyOneCard(PlayerCardsDto playerCardsDto) {
+        System.out.println(
+                SHOW_CARD.formatted(playerCardsDto.name(), String.join(", ", playerCardsDto.cards().getFirst())));
     }
 
     public void showCardsAndScore(PlayerCardsDto playerCardsDto, Integer totalScore) {
-        System.out.println(SHOW_RESULT.formatted(playerCardsDto.name() ,String.join(", ", playerCardsDto.cards())
-                ,totalScore));
+        System.out.println(SHOW_RESULT.formatted(playerCardsDto.name(), String.join(", ", playerCardsDto.cards())
+                , totalScore));
     }
 
     public void drawDealer(DealerDto dealerDto) {
@@ -37,9 +51,9 @@ public class OutputView {
 
     public void showResultStatistics(List<StatisticsDto> statisticsDtos, String dealerName) {
         System.out.println(PRINT_RESULT_PHRASE);
-        System.out.println(DEALER_RECORD_FORMAT.formatted(dealerName,makeResult(statisticsDtos)));
+        System.out.println(DEALER_RECORD_FORMAT.formatted(dealerName, makeResult(statisticsDtos)));
 
-        for(StatisticsDto statisticsDto: statisticsDtos) {
+        for (StatisticsDto statisticsDto : statisticsDtos) {
             String name = statisticsDto.name();
             String result = statisticsDto.result();
             System.out.println(STATISTICS_FORMAT.formatted(name, result));
@@ -47,26 +61,22 @@ public class OutputView {
     }
 
     private String makeResult(List<StatisticsDto> statisticsDtos) {
-        List<String> statistics = statisticsDtos.stream()
-                .map(StatisticsDto::result)
-                .toList();
+        Map<String, Long> resultCount = statisticsDtos.stream()
+                .collect(Collectors.groupingBy(StatisticsDto::result, Collectors.counting()));
         String message = "";
-        message += getResultMessage(statistics, Result.LOSE, Result.WIN);
-        message += getResultMessage(statistics, Result.DRAW, Result.DRAW);
-        getResultMessage(statistics, Result.WIN, Result.LOSE);
+
+        message = getResultConvertedMessage(resultCount, Result.LOSE, message, Result.WIN);
+        message = getResultConvertedMessage(resultCount, Result.DRAW, message, Result.DRAW);
+        message = getResultConvertedMessage(resultCount, Result.WIN, message, Result.LOSE);
 
         return message;
     }
 
-    private static String getResultMessage(List<String> statistics, Result playerResult, Result dealerResult) {
-        if (statistics.stream()
-                .anyMatch(s -> s.equals(playerResult.getDisplayName()))) {
-            return statistics.stream()
-                    .filter(s -> s.equals(playerResult.getDisplayName()))
-                    .count() + dealerResult.getDisplayName() + " ";
+    private static String getResultConvertedMessage(Map<String, Long> resultCount, Result lose, String message,
+                                                    Result win) {
+        if (resultCount.containsKey(lose.getDisplayName())) {
+            message += resultCount.get(lose.getDisplayName()) + win.getDisplayName();
         }
-        return "";
+        return message;
     }
-
-
 }

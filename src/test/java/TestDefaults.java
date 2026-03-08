@@ -1,6 +1,10 @@
-import domain.*;
-import domain.Hand;
+import domain.RandomValueGenerator;
+import domain.card.Card;
+import domain.card.Deck;
+import domain.card.Hand;
 
+import domain.card.Rank;
+import domain.card.Suit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,13 +16,18 @@ public class TestDefaults {
 
     private static final List<Card> DEFAULT_CARDS = createCards();
     private static final Hand DEFAULT_BLACKJACK_HAND = createBlackjackHand();
+    private static final RandomValueGenerator constantGenerator = (n) -> 1;
 
     public static Deck createDeck() {
-        return new Deck(createCards());
+        return new Deck(createCards(), constantGenerator);
     }
 
     public static Hand createBlackjackHand() {
         return new Hand(List.of(new Card(DEFAULT_RANK, FIRST_SUIT), new Card(DEFAULT_RANK, FIRST_SUIT)));
+    }
+
+    public static RandomValueGenerator getConstantGenerator() {
+        return constantGenerator;
     }
 
     public static Hand getBlackjackHand() {
@@ -34,6 +43,10 @@ public class TestDefaults {
         }
 
         return deck;
+    }
+
+    public static List<Card> getDefaultCards() {
+        return DEFAULT_CARDS;
     }
 
     public static List<Card> getCardsByRanks(List<Rank> ranks) {

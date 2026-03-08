@@ -1,9 +1,9 @@
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.Card;
+import domain.card.Card;
 import util.CardsCreator;
-import domain.Rank;
-import domain.Suit;
+import domain.card.Rank;
+import domain.card.Suit;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,6 @@
 package util;
 
-import domain.Deck;
+import domain.card.Deck;
 
 public enum ErrorMessage {
     DECK_SIZE("카드 사이즈는 %d 이어야 합니다.".formatted(Deck.CARD_SIZE)),

@@ -1,17 +1,20 @@
-package domain;
+package domain.participants;
 
+import domain.card.Card;
+import domain.card.Hand;
+import domain.Score.Score;
 import util.ErrorMessage;
-
+import java.util.Collections;
 import java.util.List;
 
-public class Player {
+public abstract class Participant {
     private static final int MIN_NAME_SIZE = 2;
     private static final int MAX_NAME_SIZE = 7;
 
     private final String name;
     private final Hand hand;
 
-    public Player (String name, Hand hand) {
+    protected Participant(String name, Hand hand) {
         validateNameLength(name);
         this.name = name;
         this.hand = hand;
@@ -23,19 +26,23 @@ public class Player {
         }
     }
 
-    public Hand getHand() {
-        return hand;
-    }
-
-    public List<Card> getCards(){
-        return getHand().getCards();
-    }
-
-    public void addHand(Card card){
+    public void addCard(Card card) {
         hand.add(card);
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(hand.getCards());
     }
 
     public String getName() {
         return name;
+    }
+
+    public Score getScore() {
+        return hand.getScore();
+    }
+
+    protected Hand getHand() {
+        return hand;
     }
 }

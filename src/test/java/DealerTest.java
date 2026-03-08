@@ -1,8 +1,9 @@
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.Hand;
-import domain.Dealer;
-import domain.Rank;
+import domain.card.Hand;
+import domain.participants.Dealer;
+import domain.card.Rank;
+import domain.stategy.CasinoDealerHitStrategy;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +23,7 @@ class DealerTest {
     @MethodSource
     @DisplayName("16이하의 값이라면 딜러는 카드를 더 받는다.")
     void needsToHit(Hand hand, boolean expected) {
-        Dealer dealer = new Dealer(hand);
+        Dealer dealer = new Dealer(hand, new CasinoDealerHitStrategy());
 
         assertThat(dealer.needsToHit()).isEqualTo(expected);
     }

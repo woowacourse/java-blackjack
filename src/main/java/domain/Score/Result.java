@@ -1,4 +1,4 @@
-package view;
+package domain.Score;
 
 public enum Result {
     WIN("승"),
