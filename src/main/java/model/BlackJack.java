@@ -8,9 +8,9 @@ import model.participant.Participant;
 import util.Randoms;
 
 public class BlackJack {
-    private Participants participants;
+    private final Participants participants;
     private boolean firstTurn = Boolean.TRUE;
-    private List<Card> pickedCards = new ArrayList<>();
+    private final List<Card> pickedCards = new ArrayList<>();
 
     private BlackJack(Participants participants) {
         this.participants = participants;

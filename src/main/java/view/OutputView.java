@@ -7,7 +7,7 @@ import model.participant.Participant;
 import model.Participants;
 
 public class OutputView {
-    public static final String LINE_SEPARATOR = System.lineSeparator();
+    private static final String LINE_SEPARATOR = System.lineSeparator();
 
     public void printDealOut(Participants participants) {
         List<String> names = participants.getNames();

@@ -9,7 +9,7 @@ import model.participant.Participant;
 import model.participant.Player;
 
 public class Participants implements Iterable<Participant> {
-    private List<Participant> values;
+    private final List<Participant> values;
 
     private Participants(String[] values) {
         List<Participant> list = new ArrayList<>();

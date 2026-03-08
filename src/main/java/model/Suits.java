@@ -8,7 +8,7 @@ public enum Suits {
     HEART("하트"),
     CLOVER("클로버");
 
-    String name;
+    private final String name;
 
     Suits(String name) {
         this.name = name;

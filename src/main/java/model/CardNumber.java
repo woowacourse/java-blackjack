@@ -18,8 +18,8 @@ public enum CardNumber {
     K(10, "K"),
     ACE(11, "A");
 
-    private int value;
-    private String name;
+    private final int value;
+    private final String name;
 
     CardNumber(int value, String name) {
         this.value = value;

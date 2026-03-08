@@ -1,8 +1,8 @@
 package model;
 
 public class Card {
-    private Suits suits;
-    private CardNumber cardNumber;
+    private final Suits suits;
+    private final CardNumber cardNumber;
 
     public Card(Suits suits, CardNumber cardNumber) {
         this.suits = suits;
@@ -23,6 +23,6 @@ public class Card {
 
     @Override
     public String toString() {
-        return cardNumber.getName() +  suits.name;
+        return cardNumber.getName() + suits.getName();
     }
 }

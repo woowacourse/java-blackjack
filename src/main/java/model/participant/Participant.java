@@ -8,8 +8,8 @@ import model.CardNumber;
 public abstract class Participant {
     private static final int BUST_THRESHOLD = 21;
     private static final int DEALER_THRESHOLD = 16;
-    private String name;
-    protected List<Card> hands;
+    private final String name;
+    protected final List<Card> hands;
 
     protected Participant(String name) {
         this.name = name;
