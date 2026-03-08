@@ -22,7 +22,7 @@ public class TotalResult {
         Map<Player, Result> results = new HashMap<>();
 
         for (Player player : players) {
-            Result result = dealer.compare(player);
+            Result result = dealer.judgePlayerResult(player);
             results.put(player, result);
         }
 

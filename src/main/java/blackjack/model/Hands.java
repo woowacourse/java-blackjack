@@ -36,7 +36,7 @@ public class Hands {
         return baseScore;
     }
 
-    public boolean isTotalScoreOver(final int score) {
+    public boolean hasScoreHigherThan(final int score) {
         return calculateTotalScore() > score;
     }
 

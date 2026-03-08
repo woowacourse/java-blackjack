@@ -3,12 +3,10 @@ package blackjack.model.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.card.Card;
-import blackjack.model.card.CardDto;
 import blackjack.model.card.Rank;
 import blackjack.model.card.Suit;
 import blackjack.model.cardDeck.CardDeck;
 import blackjack.model.cardDeck.PickStrategy;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

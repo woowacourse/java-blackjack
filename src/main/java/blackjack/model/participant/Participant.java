@@ -1,9 +1,8 @@
 package blackjack.model.participant;
 
-import blackjack.model.card.Card;
+import blackjack.model.Hands;
 import blackjack.model.card.CardDto;
 import blackjack.model.cardDeck.CardDeck;
-import blackjack.model.Hands;
 import java.util.List;
 
 public abstract class Participant {
@@ -24,9 +23,20 @@ public abstract class Participant {
 
     public abstract void pickInitCards(CardDeck cardDeck);
 
-    //핸즈의 총 점수가 21 초과이면 true를 반환한다.
+    public void pickAdditionalCard(CardDeck cardDeck) {
+        hands.addCard(cardDeck.pick());
+    }
+
     public boolean isBust() {
-        return hands.isTotalScoreOver(BLACKJACK_SCORE);
+        return hands.hasScoreHigherThan(BLACKJACK_SCORE);
+    }
+
+    public boolean hasHigherScoreThan(Participant other) {
+        return this.hands.hasScoreHigherThan(other.getCurrentTotalScore());
+    }
+
+    public int getCurrentTotalScore() {
+        return hands.calculateTotalScore();
     }
 
     public List<CardDto> getAllCard() {
@@ -35,14 +45,6 @@ public abstract class Participant {
 
     public List<CardDto> getOpenedCards() {
         return hands.getOpenedCards();
-    }
-
-    public int getCurrentTotalScore() {
-        return hands.calculateTotalScore();
-    }
-
-    public void pickAdditionalCard(CardDeck cardDeck) {
-        hands.addCard(cardDeck.pick());
     }
 
     public String getName() {

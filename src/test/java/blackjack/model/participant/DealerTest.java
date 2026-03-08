@@ -3,13 +3,11 @@ package blackjack.model.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.card.Card;
-import blackjack.model.card.CardDto;
 import blackjack.model.card.Rank;
 import blackjack.model.card.Suit;
 import blackjack.model.cardDeck.CardDeck;
 import blackjack.model.cardDeck.PickStrategy;
 import blackjack.model.result.Result;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -53,7 +51,7 @@ class DealerTest {
 
     @Test
     @DisplayName("딜러랑 플레이어 핸드 비교 결과 테스트")
-    void compare() {
+    void judgePlayerResult() {
         // given
         Dealer dealer = Dealer.create();
 
@@ -78,8 +76,8 @@ class DealerTest {
         player3.pickAdditionalCard(cardDeckForMustPickTen);
 
         // when & then
-        assertThat(dealer.compare(player1)).isEqualTo(Result.LOSE);
-        assertThat(dealer.compare(player2)).isEqualTo(Result.WIN);
-        assertThat(dealer.compare(player3)).isEqualTo(Result.DRAW);
+        assertThat(dealer.judgePlayerResult(player1)).isEqualTo(Result.LOSE);
+        assertThat(dealer.judgePlayerResult(player2)).isEqualTo(Result.WIN);
+        assertThat(dealer.judgePlayerResult(player3)).isEqualTo(Result.DRAW);
     }
 }
