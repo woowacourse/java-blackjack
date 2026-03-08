@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.List;
+import java.util.Map;
 import model.BlackJack;
 import model.participant.Participant;
 import model.Participants;
@@ -25,9 +26,8 @@ public class BlackJackController {
         Participants participants = Participants.of(parsed);
         BlackJack blackJack = BlackJack.from(participants);
 
-        blackJack.dealOut();
-        outputView.printDealOut(participants);
-        blackJack.setFirstTurn();
+        Map<String, List<String>> dealOutResult = blackJack.dealOut();
+        outputView.printDealOut(dealOutResult);
 
         for (Participant participant : participants) {
             if (participant.getName().equals("딜러")) {

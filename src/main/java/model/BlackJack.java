@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import model.participant.Participant;
@@ -9,15 +10,35 @@ import util.Randoms;
 
 public class BlackJack {
     private final Participants participants;
-    private boolean firstTurn = Boolean.TRUE;
+    private boolean firstTurn;
     private final List<Card> pickedCards = new ArrayList<>();
 
     private BlackJack(Participants participants) {
         this.participants = participants;
+        this.firstTurn = true;
     }
 
     public static BlackJack from(Participants participants) {
         return new BlackJack(participants);
+    }
+
+    public Map<String, List<String>> dealOut() {
+        Map<String, List<String>> dealOutResult = new LinkedHashMap<>();
+        for (Participant participant : participants) {
+            for (int i = 0; i < 2; i++) {
+                Card pick = Randoms.pick();
+                while (pickedCards.contains(pick)) {
+                    pick = Randoms.pick();
+                }
+                pickedCards.add(pick);
+                participant.draw(pick);
+            }
+            dealOutResult.put(participant.getName(), participant.open());
+        }
+
+        firstTurn = false;
+
+        return dealOutResult;
     }
 
     public Map<String, Integer> calculateDealerResult() {
@@ -54,19 +75,6 @@ public class BlackJack {
         }
 
         return resultMap;
-    }
-
-    public void dealOut() {
-        for (Participant participant : participants) {
-            for (int i = 0; i < 2; i++) {
-                Card pick = Randoms.pick();
-                while (pickedCards.contains(pick)) {
-                    pick = Randoms.pick();
-                }
-                pickedCards.add(pick);
-                participant.draw(pick);
-            }
-        }
     }
 
     public void setFirstTurn() {

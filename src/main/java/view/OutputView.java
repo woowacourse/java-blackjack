@@ -9,17 +9,17 @@ import model.Participants;
 public class OutputView {
     private static final String LINE_SEPARATOR = System.lineSeparator();
 
-    public void printDealOut(Participants participants) {
-        List<String> names = participants.getNames();
-        String joinedNames = String.join(", ", names.subList(1, names.size()));
-        System.out.println(LINE_SEPARATOR + "딜러와 " + joinedNames + "에게 2장을 나누었습니다.");
+    public void printDealOut(Map<String, List<String>> dealOutResult) {
+        List<String> names = dealOutResult.keySet().stream().toList();
+        String playerNames = String.join(", ", names.subList(1, names.size()));
+        System.out.println(LINE_SEPARATOR + "딜러와 " + playerNames + "에게 2장을 나누었습니다.");
 
-        for (Participant participant : participants) {
-            String replaced = participant.open().toString().replaceAll("[]\\[]", "");
-            System.out.printf("%s카드: %s", participant.getName(), replaced + LINE_SEPARATOR);
+        for (Entry<String, List<String>> entry : dealOutResult.entrySet()) {
+            System.out.printf("%s카드: %s",
+                    entry.getKey(), entry.getValue().toString().replaceAll("[]\\[]", "") + LINE_SEPARATOR);
         }
 
-        System.out.println();
+        printNewLine();
     }
 
     public void printHands(Participant participant) {
@@ -33,7 +33,7 @@ public class OutputView {
                     participant.calculateScore(), LINE_SEPARATOR);
         }
 
-        System.out.println();
+        printNewLine();
     }
 
     public void printResult(Map<String, Integer> dealerResult, Map<String, Boolean> playerResult) {
@@ -51,5 +51,9 @@ public class OutputView {
 
     public void printDealerDraw() {
         System.out.println(LINE_SEPARATOR + "딜러는 16이하라 한장의 카드를 더 받았습니다." + LINE_SEPARATOR);
+    }
+
+    private static void printNewLine() {
+        System.out.println();
     }
 }
