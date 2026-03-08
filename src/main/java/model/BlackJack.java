@@ -54,6 +54,17 @@ public class BlackJack {
         }
     }
 
+    public void startDealerTurn(Consumer<Boolean> afterDealerTurn) {
+        Dealer dealer = participants.getDealer();
+
+        boolean draw = dealer.needDraw();
+        if (draw) {
+            giveCardTo(dealer);
+        }
+
+        afterDealerTurn.accept(draw);
+    }
+
     public void giveCardTo(Participant participant) {
         participant.receive(drawNewCard());
     }

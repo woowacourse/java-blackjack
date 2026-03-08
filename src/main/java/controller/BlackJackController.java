@@ -30,12 +30,7 @@ public class BlackJackController {
         outputView.printDealOut(dealOutResult);
 
         blackJack.startPlayerTurn(this::askHit, this::afterHit);
-
-        Dealer dealer = participants.getDealer();
-        if (dealer.needDraw()) {
-            blackJack.giveCardTo(dealer);
-            outputView.printDealerDraw();
-        }
+        blackJack.startDealerTurn(this::afterDealerTurn);
 
         outputView.printHandsAndScore(participants);
         outputView.printResult(blackJack.calculateDealerResult(), blackJack.calculatePlayerResult());
@@ -58,5 +53,9 @@ public class BlackJackController {
         if (participant.isBust()) {
             outputView.printBustState(participant.getName(), participant.calculateScore());
         }
+    }
+
+    private void afterDealerTurn(Boolean draw) {
+        outputView.printDealerDrawResult(draw);
     }
 }

@@ -49,8 +49,14 @@ public class OutputView {
         System.out.printf("%s는 %d점이므로 21점 초과로 버스트입니다.%s", name, score, LINE_SEPARATOR);
     }
 
-    public void printDealerDraw() {
-        System.out.println(LINE_SEPARATOR + "딜러는 16이하라 한장의 카드를 더 받았습니다." + LINE_SEPARATOR);
+    public void printDealerDrawResult(boolean draw) {
+        printNewLine();
+        if (draw) {
+            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다." + LINE_SEPARATOR);
+            return;
+        }
+
+        System.out.println("딜러는 16을 초과하여 카드를 더 받지 않았습니다." + LINE_SEPARATOR);
     }
 
     private static void printNewLine() {
