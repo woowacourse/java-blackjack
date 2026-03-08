@@ -13,12 +13,10 @@ public class BlackJack {
     private final Participants participants;
     private final Deck deck;
     private final List<Card> pickedCards = new ArrayList<>();
-    private boolean firstTurn;
 
     private BlackJack(Participants participants, Deck deck) {
         this.participants = participants;
         this.deck = deck;
-        this.firstTurn = true;
     }
 
     public static BlackJack from(Participants participants) {
@@ -39,8 +37,6 @@ public class BlackJack {
 
             dealOutResult.put(participant.getName(), participant.open());
         }
-
-        firstTurn = false;
 
         return dealOutResult;
     }
@@ -83,9 +79,5 @@ public class BlackJack {
         }
 
         return resultMap;
-    }
-
-    public void setFirstTurn() {
-        this.firstTurn = Boolean.FALSE;
     }
 }
