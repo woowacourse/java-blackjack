@@ -1,22 +1,27 @@
 package model;
 
 import java.util.Arrays;
+import java.util.List;
 
-public enum Suits {
+public enum Suit {
+
     SPADE("스페이드"),
     DIAMOND("다이아몬드"),
     HEART("하트"),
-    CLOVER("클로버");
+    CLOVER("클로버"),
+    ;
+
+    public static final List<Suit> VALUES = List.of(values());
 
     private final String name;
 
-    Suits(String name) {
+    Suit(String name) {
         this.name = name;
     }
 
-    public static Suits findByName(String name) {
-        return Arrays.stream(Suits.values())
-                .filter(suits -> suits.name.equals(name))
+    public static Suit findByName(String name) {
+        return Arrays.stream(Suit.values())
+                .filter(suit -> suit.name.equals(name))
                 .findFirst()
                 .orElseThrow();
     }

@@ -5,40 +5,48 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import model.deck.Deck;
+import model.deck.DeckImpl;
 import model.participant.Participant;
-import util.Randoms;
 
 public class BlackJack {
     private final Participants participants;
-    private boolean firstTurn;
+    private final Deck deck;
     private final List<Card> pickedCards = new ArrayList<>();
+    private boolean firstTurn;
 
-    private BlackJack(Participants participants) {
+    private BlackJack(Participants participants, Deck deck) {
         this.participants = participants;
+        this.deck = deck;
         this.firstTurn = true;
     }
 
     public static BlackJack from(Participants participants) {
-        return new BlackJack(participants);
+        return new BlackJack(participants, DeckImpl.of(Suit.VALUES, Rank.VALUES));
+    }
+
+    public static BlackJack of(Participants participants, Deck deck) {
+        return new BlackJack(participants, deck);
     }
 
     public Map<String, List<String>> dealOut() {
         Map<String, List<String>> dealOutResult = new LinkedHashMap<>();
         for (Participant participant : participants) {
             for (int i = 0; i < 2; i++) {
-                Card pick = Randoms.pick();
-                while (pickedCards.contains(pick)) {
-                    pick = Randoms.pick();
-                }
-                pickedCards.add(pick);
-                participant.draw(pick);
+                Card card = deck.draw();
+                participant.draw(card);
             }
+
             dealOutResult.put(participant.getName(), participant.open());
         }
 
         firstTurn = false;
 
         return dealOutResult;
+    }
+
+    public void hit(Participant participant) {
+        participant.draw(deck.draw());
     }
 
     public Map<String, Integer> calculateDealerResult() {

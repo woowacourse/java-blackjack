@@ -1,28 +1,32 @@
 package model;
 
 public class Card {
-    private final Suits suits;
-    private final CardNumber cardNumber;
+    private final Suit suit;
+    private final Rank rank;
 
-    public Card(Suits suits, CardNumber cardNumber) {
-        this.suits = suits;
-        this.cardNumber = cardNumber;
+    private Card(Suit suit, Rank rank) {
+        this.suit = suit;
+        this.rank = rank;
     }
 
     public static Card of(String suits, int cardNumber) {
-        return new Card(Suits.findByName(suits), CardNumber.findByValue(cardNumber));
+        return new Card(Suit.findByName(suits), Rank.findByValue(cardNumber));
     }
 
     public static Card of(String suits, String cardName) {
-        return new Card(Suits.findByName(suits), CardNumber.findByName(cardName));
+        return new Card(Suit.findByName(suits), Rank.findByName(cardName));
     }
 
-    public CardNumber getCardNumber() {
-        return cardNumber;
+    public static Card of(Suit suit, Rank rank) {
+        return new Card(suit, rank);
+    }
+
+    public Rank getCardNumber() {
+        return rank;
     }
 
     @Override
     public String toString() {
-        return cardNumber.getName() + suits.getName();
+        return rank.getName() + suit.getName();
     }
 }

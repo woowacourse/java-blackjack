@@ -6,7 +6,6 @@ import model.BlackJack;
 import model.participant.Participant;
 import model.Participants;
 import util.InputParser;
-import util.Randoms;
 import view.InputView;
 import view.OutputView;
 
@@ -45,7 +44,7 @@ public class BlackJackController {
                     outputView.printHands(participant);
                     break;
                 }
-                participant.draw(Randoms.pick());
+                blackJack.hit(participant);
                 if (participant.isBust()) {
                     outputView.printBustState(participant.getName(), participant.calculateScore());
                     outputView.printHands(participant);
@@ -58,7 +57,7 @@ public class BlackJackController {
 
         Participant dealer = participants.getDealer();
         if (dealer.dealerNeedDraw()) {
-            dealer.draw(Randoms.pick());
+            blackJack.hit(dealer);
             outputView.printDealerDraw();
         }
 

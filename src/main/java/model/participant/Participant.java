@@ -3,7 +3,7 @@ package model.participant;
 import java.util.ArrayList;
 import java.util.List;
 import model.Card;
-import model.CardNumber;
+import model.Rank;
 
 public abstract class Participant {
     private static final int BUST_THRESHOLD = 21;
@@ -50,14 +50,14 @@ public abstract class Participant {
     private int calculate() {
         return hands.stream()
                 .map(Card::getCardNumber)
-                .mapToInt(CardNumber::toValue)
+                .mapToInt(Rank::toValue)
                 .sum();
     }
 
     private int aceCount() {
         int count = 0;
         for (Card card : hands) {
-            if (card.getCardNumber() == CardNumber.ACE) {
+            if (card.getCardNumber() == Rank.ACE) {
                 count++;
             }
         }

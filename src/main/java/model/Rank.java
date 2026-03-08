@@ -1,8 +1,9 @@
 package model;
 
 import java.util.Arrays;
+import java.util.List;
 
-public enum CardNumber {
+public enum Rank {
     ONE(1, "1"),
     TWO(2, "2"),
     THREE(3, "3"),
@@ -18,24 +19,26 @@ public enum CardNumber {
     K(10, "K"),
     ACE(11, "A");
 
+    public static final List<Rank> VALUES = List.of(values());
+
     private final int value;
     private final String name;
 
-    CardNumber(int value, String name) {
+    Rank(int value, String name) {
         this.value = value;
         this.name = name;
     }
 
-    public static CardNumber findByValue(int targetValue) {
-        return Arrays.stream(CardNumber.values())
-                .filter(cardNumber -> cardNumber.value == targetValue)
+    public static Rank findByValue(int targetValue) {
+        return Arrays.stream(Rank.values())
+                .filter(rank -> rank.value == targetValue)
                 .findFirst()
                 .orElseThrow();
     }
 
-    public static CardNumber findByName(String name) {
-        return Arrays.stream(CardNumber.values())
-                .filter(cardNumber -> cardNumber.name == name)
+    public static Rank findByName(String name) {
+        return Arrays.stream(Rank.values())
+                .filter(rank -> rank.name == name)
                 .findFirst()
                 .orElseThrow();
     }
