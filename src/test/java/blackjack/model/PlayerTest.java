@@ -13,7 +13,7 @@ class PlayerTest {
         // given
         Player player = new Player("luke");
         // when& then
-        assertThat(player.canReceive(12)).isTrue();
+        assertThat(player.canReceive()).isTrue();
     }
 
     @Test
@@ -21,7 +21,10 @@ class PlayerTest {
     void cantReceiveCard() {
         // given
         Player player = new Player("luke");
+        player.receiveCard(new Card(Figure.CLOVER, Number.ACE));
+        player.receiveCard(new Card(Figure.CLOVER, Number.KING));
+        player.updateScore();
         // when& then
-        assertThat(player.canReceive(22)).isFalse();
+        assertThat(player.canReceive()).isFalse();
     }
 }
