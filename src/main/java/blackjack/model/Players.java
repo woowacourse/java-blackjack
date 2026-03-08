@@ -7,8 +7,8 @@ import java.util.List;
 
 public class Players {
 
-    public static final int PLAYERS_MAX_LENGTH = 5;
-    public static final int PLAYERS_MIN_LENGTH = 2;
+    public static final int PLAYERS_MAX_SIZE = 5;
+    public static final int PLAYERS_MIN_SIZE = 2;
     private final List<Player> players;
 
     public Players(List<Player> players) {
@@ -21,7 +21,7 @@ public class Players {
     }
 
     private void validatePlayersNumber(List<Player> players) {
-        if (players.size() < Players.PLAYERS_MIN_LENGTH || players.size() > PLAYERS_MAX_LENGTH) {
+        if (players.size() < Players.PLAYERS_MIN_SIZE || players.size() > PLAYERS_MAX_SIZE) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_PLAYERS.getMessage());
         }
     }
