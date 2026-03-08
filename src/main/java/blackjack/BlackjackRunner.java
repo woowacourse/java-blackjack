@@ -9,6 +9,7 @@ import blackjack.dto.DrawResult;
 import blackjack.dto.WinningResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import blackjack.view.UserCommand;
 import java.util.List;
 
 public class BlackjackRunner {
@@ -103,12 +104,23 @@ public class BlackjackRunner {
     
     private boolean isDraw(String nickname) {
         outputView.hitOrStand(nickname);
-        String userCommand = inputView.readLine();
-        boolean isDraw = userCommand.equals("y");
-        boolean isNotDraw = userCommand.equals("n");
-        if (!(isDraw || isNotDraw)) {
-            throw new IllegalArgumentException("유효한 커맨드(예는 y, 아니오는 n)를 입력해 주세요.");
+        return getCommand() == UserCommand.YES;
+    }
+    
+    private UserCommand getCommand() {
+        UserCommand command = null;
+        while (command == null) {
+            command = getValidCommand();
         }
-        return userCommand.equals("y");
+        return command;
+    }
+    
+    private UserCommand getValidCommand() {
+        try {
+            return UserCommand.from(inputView.readLine());
+        } catch (IllegalArgumentException exception) {
+            outputView.printLine(exception.getMessage());
+            return null;
+        }
     }
 }
