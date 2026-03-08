@@ -1,8 +1,8 @@
 package strategy;
 
-import domain.Card;
-import domain.CardMark;
-import domain.CardRank;
+import domain.vo.Card;
+import domain.constant.CardMark;
+import domain.constant.CardRank;
 import domain.DrawStrategy;
 
 public class AceDrawStrategy implements DrawStrategy {

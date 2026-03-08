@@ -2,6 +2,10 @@ package domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import domain.constant.CardMark;
+import domain.constant.CardRank;
+import domain.vo.Card;
+import domain.vo.CardInfo;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,22 +26,50 @@ class CardTest {
     }
 
     @ParameterizedTest
-    @MethodSource("cardInfo")
-    @DisplayName("카드 정보가 정상적으로 반환되어야 한다.")
+    @MethodSource("cloverCards")
+    @DisplayName("카드 정보는 라벨과 문양을 가져야 한다.")
     void 카드_정보_반환(Card provided) {
-        Card card = provided;
+        String cardLabel = provided.rank().label();
+        String cardMark = provided.mark().description();
 
-        String expected = "8클로버";
-        String actual = card.info();
+        CardInfo expected = new CardInfo(cardLabel, cardMark);
+        CardInfo actual = provided.info();
 
         assertEquals(expected, actual);
     }
 
-    static Stream<CardRank> cardRanks() {
+    @ParameterizedTest
+    @MethodSource("aceCards")
+    @DisplayName("A 카드인 지 반환할 수 있어야 한다.")
+    void A카드_확인 (Card provided) {
+        String cardLabel = provided.rank().label();
+        String cardMark = provided.mark().description();
+
+        CardInfo expected = new CardInfo(cardLabel, cardMark);
+        CardInfo actual = provided.info();
+
+        assertEquals(expected, actual);
+    }
+
+    private static Stream<CardRank> cardRanks() {
         return Stream.of(CardRank.values());
     }
 
-    static Stream<Card> cardInfo() {
-        return Stream.of(new Card(CardRank.EIGHT, CardMark.CLOVER));
+    private static Stream<Card> cloverCards() {
+        return Stream.of(
+                new Card(CardRank.TWO, CardMark.CLOVER),
+                new Card(CardRank.EIGHT, CardMark.CLOVER),
+                new Card(CardRank.KING, CardMark.CLOVER),
+                new Card(CardRank.ACE, CardMark.CLOVER)
+        );
+    }
+
+    private static Stream<Card> aceCards() {
+        return Stream.of(
+                new Card(CardRank.ACE, CardMark.DIAMOND),
+                new Card(CardRank.ACE, CardMark.SPADE),
+                new Card(CardRank.ACE, CardMark.HEART),
+                new Card(CardRank.ACE, CardMark.CLOVER)
+        );
     }
 }

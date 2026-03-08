@@ -2,9 +2,10 @@ package domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import domain.constant.CardMark;
+import domain.constant.CardRank;
+import domain.vo.Card;
 import strategy.AceDrawStrategy;
-import domain.strategy.RandomStrategy;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -15,13 +16,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class ParticipantTest {
 
-    static Hand emptyHand = new Hand(new RandomStrategy(),new ArrayList<>());
+    static Hand emptyHand = Hand.empty();
     static Hand playingHand = new Hand(
-            new RandomStrategy(),
             List.of(new Card(CardRank.QUEEN, CardMark.SPADE),
                     new Card(CardRank.EIGHT, CardMark.HEART)));
     static Hand bustedHand = new Hand(
-            new RandomStrategy(),
             List.of(new Card(CardRank.QUEEN, CardMark.SPADE),
                     new Card(CardRank.EIGHT, CardMark.HEART),
                     new Card(CardRank.QUEEN, CardMark.CLOVER)));
@@ -71,12 +70,11 @@ class ParticipantTest {
     @DisplayName("A카드 드로우 시 버스트 상태라면 1로 처리한다.")
     void A카드_1처리_확인() {
         Hand customHand = new Hand(
-                new AceDrawStrategy(),
                 List.of(new Card(CardRank.QUEEN, CardMark.SPADE),
                         new Card(CardRank.EIGHT, CardMark.HEART)));
 
         Participant participant = new Player("pobi", customHand);
-        participant.draw();
+        participant.draw(new AceDrawStrategy());
         int expected = 19;
         int actual = participant.scoreSum();
 

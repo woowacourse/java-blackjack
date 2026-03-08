@@ -2,19 +2,19 @@ package domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import domain.constant.CardMark;
+import domain.constant.CardRank;
+import domain.vo.Card;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import domain.strategy.RandomStrategy;
 
 class PlayerTest {
     static Hand playingHand = new Hand(
-            new RandomStrategy(),
             List.of(
                     new Card(CardRank.QUEEN, CardMark.SPADE),
                     new Card(CardRank.TWO, CardMark.HEART)));
     static Hand stopHand = new Hand(
-            new RandomStrategy(),
             List.of(
                     new Card(CardRank.QUEEN, CardMark.SPADE),
                     new Card(CardRank.EIGHT, CardMark.HEART),
@@ -34,5 +34,11 @@ class PlayerTest {
         Player player = new Player("pobi", stopHand);
 
         assertFalse(player.isPlayable());
+    }
+
+    @Test
+    @DisplayName("플레이어의 이름이 \"딜러\"이면 예외를 발생시켜야 한다.")
+    void player_name_exception_test() {
+        assertThrows(IllegalArgumentException.class, () -> Player.of("딜러"));
     }
 }

@@ -1,5 +1,5 @@
 import config.AppConfig;
-import controller.Controller;
+import controller.BlackJackController;
 
 public class Application {
 
@@ -7,7 +7,7 @@ public class Application {
         blackjackController().run();
     }
 
-    private static Controller blackjackController() {
+    private static BlackJackController blackjackController() {
         AppConfig config = new AppConfig();
         return config.blackJackController();
     }

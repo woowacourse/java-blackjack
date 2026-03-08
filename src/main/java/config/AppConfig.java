@@ -1,18 +1,21 @@
 package config;
 
-import controller.Controller;
+import controller.BlackJackController;
 import domain.DrawStrategy;
-import domain.factory.BlackJackFactory;
 import domain.strategy.RandomStrategy;
+import repository.GameTableRepository;
+import service.BlackJackCommandService;
+import service.BlackJackQueryService;
 
 public class AppConfig {
 
-    public Controller blackJackController() {
-        return new Controller(blackJackFactory().openGameTable());
-    }
+    public BlackJackController blackJackController() {
+        GameTableRepository gameTableRepository = new GameTableRepository();
 
-    private BlackJackFactory blackJackFactory() {
-        return BlackJackFactory.basedOn(drawStrategy());
+        BlackJackCommandService commandService = new BlackJackCommandService(gameTableRepository, drawStrategy());
+        BlackJackQueryService queryService = new BlackJackQueryService(gameTableRepository);
+
+        return new BlackJackController(commandService, queryService);
     }
 
     private DrawStrategy drawStrategy() {
