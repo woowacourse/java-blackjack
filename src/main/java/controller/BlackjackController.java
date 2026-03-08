@@ -92,7 +92,9 @@ public class BlackjackController {
         while (shouldDrawCard(player, answer)) {
             outputView.printfList(InputMessage.ASK_ADD_CARD.getMessage(), player.getName());
             answer = inputView.askUserInput();
-            dealAdditionalCardIfRequested(player, deck, answer);
+
+            boolean wantsCard = sayYes(answer);
+            dealAdditionalCardIfRequested(player, deck, wantsCard);
         }
     }
 
@@ -100,8 +102,8 @@ public class BlackjackController {
         return !player.isBust(player.calculateScore()) && sayYes(answer);
     }
 
-    private void dealAdditionalCardIfRequested(Player player, Cards deck, String answer) {
-        if (sayYes(answer)) {
+    private void dealAdditionalCardIfRequested(Player player, Cards deck, boolean wantsCard) {
+        if (wantsCard) {
             player.addCard(deck.draw());
             outputView.println(player.getPlayerInfo());
             return;
