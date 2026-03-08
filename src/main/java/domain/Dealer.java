@@ -12,13 +12,18 @@ public record Dealer(Participant dealer) {
     public Dealer(Deck deck) {
         this(new Participant(new Name("딜러"), new Hand()));
         dealer.initHand(deck);
+        changeState();
+    }
+
+    private void changeState() {
+        if (isStand() && dealer.isHit()) {
+            dealer.changeState();
+        }
     }
 
     public void playTurn(Deck deck) {
         dealer.playTurn(deck);
-        if (isStand()) {
-            dealer.changeState();
-        }
+        changeState();
     }
 
     private boolean isStand() {

@@ -6,7 +6,6 @@ import domain.participant.Name;
 import domain.participant.Participant;
 import exception.ExceptionMessage;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Participants {
