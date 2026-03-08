@@ -2,130 +2,128 @@ package domain;
 
 import domain.deck.Deck;
 import domain.deck.RandomShuffle;
+import domain.deck.Shuffle;
+import domain.dto.GameInitialInfoDto;
 import domain.dto.GameScoreResultDto;
 import domain.participant.Dealer;
-import domain.participant.Player;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 
+import static domain.constant.Rank.ACE;
+import static domain.constant.Rank.KING;
+import static domain.constant.Suit.DIAMOND;
+import static domain.constant.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class GameManagerTest {
 
     @Test
-    void 게임을_시작하면_등록된_플레이어와_딜러_순서대로_카드를_2장씩_나눠준다() {
+    void 플레이어어_등록_테스트() {
         GameManager manager = new GameManager(new Deck(new RandomShuffle()), new Dealer());
+        manager.registerPlayer("pobi");
+        manager.registerPlayer("cary");
+
+        assertThat(manager.getFinalResult().getPlayerResults())
+                .extracting(Map.Entry::getKey)
+                .containsExactly("pobi", "cary");
+    }
+
+    @Test
+    void 게임을_시작하면_등록된_플레이어부터_딜러_순으로_순서대로_한_장씩_총_2장의_카드를_받는다() {
+        GameManager manager = new GameManager(new Deck(new Shuffle() {
+            @Override
+            public void shuffle(List<Card> cards) {
+                // 덱을 섞지 않음, 기본 순서: 스페이드 A, 2, 3, 4 ...
+            }
+        }), new Dealer());
+
         manager.registerPlayer("pobi");
         manager.registerPlayer("cary");
 
         manager.startGame();
 
+        assertThat(manager.getScoreResults())
+                .extracting(
+                        GameScoreResultDto::getPlayerName,
+                        GameScoreResultDto::getHand
+                ).containsExactlyInAnyOrder(
+                        tuple("pobi", List.of("A스페이드", "4스페이드")),
+                        tuple("cary", List.of("2스페이드", "5스페이드")),
+                        tuple("딜러", List.of("3스페이드", "6스페이드"))
+                );
+    }
+
+    @Test
+    void 처음_핸드_공개_시_딜러는_1장_플레이어는_2장의_카드를_공개한다() {
+        Dealer dealer = new Dealer();
+        GameManager manager = new GameManager(new Deck(new RandomShuffle()), dealer);
+        manager.registerPlayer("pobi");
+        manager.registerPlayer("cary");
+
+        manager.startGame();
+        GameInitialInfoDto initialInfo = manager.getInitialInfo();
+
+        assertAll(
+                () -> assertThat(dealer.showHand()).containsOnlyOnce(initialInfo.getDealerOpenCard()),
+                () -> assertThat(initialInfo.getPlayerResults())
+                        .extracting(
+                                result -> result.getHand().size()
+                        ).containsOnly(2)
+        );
+    }
+
+    @Test
+    void 플레이어_카드_드로우_테스트() {
+        GameManager manager = new GameManager(new Deck(new RandomShuffle()), new Dealer());
+        manager.registerPlayer("pobi");
+        manager.registerPlayer("cary");
+
+        manager.drawPlayerCard("pobi");
+        manager.drawPlayerCard("cary");
+        manager.drawPlayerCard("cary");
+
+        List<GameScoreResultDto> results = manager.getScoreResults();
+
+        assertAll(
+                () -> assertThat(results)
+                        .filteredOn(result -> result.getPlayerName().equals("pobi"))
+                        .extracting(result -> result.getHand().size())
+                        .containsExactly(1),
+                () -> assertThat(results)
+                        .filteredOn(result -> result.getPlayerName().equals("cary"))
+                        .extracting(result -> result.getHand().size())
+                        .containsExactly(2)
+        );
+    }
+
+    @Test
+    void 딜러_카드_드로우_테스트() {
+        Dealer dealer = new Dealer();
+        GameManager manager = new GameManager(new Deck(new RandomShuffle()), dealer);
+
+        manager.drawDealerCard();
+
+        assertThat(dealer.showHand().size()).isEqualTo(1);
+    }
+
+    @Test
+    void 참가자의_이름과_핸드와_점수를_제공한다() {
+        Dealer dealer = new Dealer();
+        GameManager manager = new GameManager(new Deck(new RandomShuffle()), dealer);
+        dealer.addCard(new Card(ACE, SPADE));
+        dealer.addCard(new Card(KING, DIAMOND));
+
         List<GameScoreResultDto> scoreResults = manager.getScoreResults();
 
         assertThat(scoreResults)
                 .extracting(
-                        result -> result.getHand().size(),
-                        GameScoreResultDto::getPlayerName
-                ).containsExactly(
-                        tuple(2, "딜러"),
-                        tuple(2, "pobi"),
-                        tuple(2, "cary"));
-    }
-
-//    @Test
-//    void 게임이_시작된_후_딜러의_카드는_한_장만_공개한다() {
-//        GameManager manager = new GameManager(new Deck(), new Dealer());
-//
-//        manager.startGame();
-//
-//        assertThat(manager.getInitialInfo())
-//                .filteredOn(info -> info.getPlayerName().equals("딜러"))
-//                        .extracting(info -> info.getHand().size())
-//                                .containsOnly(1);
-//    }
-
-//    @Test
-//    void 플레이어의_카드는_두_장_공개한다() {
-//        GameManager manager = new GameManager(new Deck(), new Dealer());
-//
-//        manager.registerPlayer("pobi");
-//
-//        manager.startGame();
-//        List<GameInitialInfoDto> initialInfo = manager.getInitialInfo();
-//
-//        assertThat(initialInfo.get(1).getHand().size()).isEqualTo(2);
-//    }
-
-//    @Test
-//    void 플레이어를_한명_등록한다() {
-//        GameManager manager = new GameManager(new Deck(), new Dealer());
-//        manager.registerPlayer("pobi");
-//
-//        List<Player> result = manager.getPlayerSequence();
-//
-//        assertThat(result)
-//                .extracting(Player::getName)
-//                .containsExactly("pobi");
-//    }
-//
-//    @Test
-//    void 플레이어를_세명_등록한다() {
-//        GameManager manager = new GameManager(new Deck(), new Dealer());
-//        List<String> playerNames = List.of("pobi", "cary", "rudy");
-//
-//        for (String playerName : playerNames) {
-//            manager.registerPlayer(playerName);
-//        }
-//
-//        List<Player> result = manager.getPlayerSequence();
-//
-//        assertThat(result).hasSize(3);
-//    }
-
-    @Test
-    void 딜러가_16점_이하인지_확인한다() {
-        GameManager manager = new GameManager(new Deck(new RandomShuffle()), new Dealer());
-        manager.startGame();
-        List<GameScoreResultDto> scoreResults = manager.getScoreResults();
-
-        boolean expected = false;
-        if (scoreResults.getFirst().getScore() <= 16) {
-            expected = manager.canReceiveCard();
-        }
-
-        assertThat(manager.canReceiveCard()).isEqualTo(expected);
-    }
-
-//    @Test
-//    void 플레이어_카드_드로우_테스트() {
-//        GameManager manager = new GameManager(new Deck(), new Dealer());
-//        Player player = new Player("pobi", new Hand());
-//        int beforeScore = manager.calculateScore(player);
-//
-//        manager.drawPlayerCard(player.getName());
-//        int afterScore = manager.calculateScore(player);
-//
-//        assertThat(player.showHand()).hasSize(1);
-//        assertThat(afterScore).isNotEqualTo(beforeScore);
-//    }
-
-    @Test
-    void 딜러_카드_드로우_테스트() {
-        GameManager manager = new GameManager(new Deck(new RandomShuffle()), new Dealer());
-        int beforeScore = manager.getScoreResults().stream()
-                .filter(result -> result.getPlayerName().equals("딜러"))
-                .mapToInt(GameScoreResultDto::getScore)
-                .findAny().orElse(0);
-
-        List<String> dealerHand = manager.drawDealerCard();
-        int afterScore = manager.getScoreResults().stream()
-                .filter(result -> result.getPlayerName().equals("딜러"))
-                .mapToInt(GameScoreResultDto::getScore)
-                .findAny().orElse(0);
-
-        assertThat(dealerHand).hasSize(1);
-        assertThat(afterScore).isNotEqualTo(beforeScore);
+                        result -> result.getPlayerName(),
+                        result -> result.getHand(),
+                        result -> result.getScore()
+                ).containsExactly(tuple("딜러", List.of("A스페이드", "K다이아몬드"), 21));
     }
 }

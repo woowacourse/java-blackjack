@@ -1,7 +1,6 @@
 package domain.dto;
 
 import domain.participant.Participant;
-import domain.participant.Player;
 
 import java.util.List;
 
@@ -34,14 +33,5 @@ public class GameScoreResultDto {
 
     public int getScore() {
         return score;
-    }
-
-    @Override
-    public String toString() {
-        return "domain.dto.GameScoreResultDto{" +
-                "playerName='" + playerName + '\'' +
-                ", hand=" + hand +
-                ", result=" + score +
-                '}';
     }
 }
