@@ -2,46 +2,32 @@ package domain.constant;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 
 class RankTest {
 
     @Test
-    void ACE_랭크는_기본값으로_1점을_갖는다() {
-        int score = Rank.ACE.getScore();
-
-        assertThat(score).isEqualTo(1);
-    }
-
-    @Test
-    void 랭크_숫자에_해당하는_점수를_갖는다() {
-        List<Rank> scores = List.of(Rank.THREE, Rank.TEN);
-
-        assertThat(scores)
-                .extracting(Rank::getScore)
-                .containsExactly(3, 10);
-    }
-
-    @Test
-    void J_Q_K_랭크는_10점을_갖는다() {
-        List<Rank> scores = List.of(Rank.JACK, Rank.QUEEN, Rank.KING);
-
-        assertThat(scores)
-                .extracting(Rank::getScore)
-                .containsOnly(10);
-    }
-
-    @Test
-    void 랭크에_해당하는_이름을_반환한다() {
-        List<String> rankNames = Arrays.stream(Rank.values())
-                .map(Rank::getName)
-                .toList();
-
-        assertThat(rankNames).containsExactly(
-                "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"
+    void 각_항목의_이름과_그에_매칭되는_기본_점수를_제공한다() {
+        assertThat(Rank.values())
+                .extracting(
+                        Rank::getName,
+                        Rank::getScore
+                )
+                .containsExactly(
+                tuple("A", 1),
+                tuple("2", 2),
+                tuple("3", 3),
+                tuple("4", 4),
+                tuple("5", 5),
+                tuple("6", 6),
+                tuple("7", 7),
+                tuple("8", 8),
+                tuple("9", 9),
+                tuple("10", 10),
+                tuple("J", 10),
+                tuple("Q", 10),
+                tuple("K", 10)
         );
     }
 }
