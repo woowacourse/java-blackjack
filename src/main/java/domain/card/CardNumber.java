@@ -18,6 +18,9 @@ public enum CardNumber {
     QUEEN(10, "Q"),
     KING(10, "K");
 
+    private static final int LOWER_BOUND = 1;
+    private static final int UPPER_BOUND = 10;
+
     private int number;
     private String court;
 
@@ -44,7 +47,7 @@ public enum CardNumber {
     }
 
     private static void validateRange(int number) {
-        if (number < 1 || number > 10) {
+        if (number < LOWER_BOUND || number > UPPER_BOUND) {
             throw new OutOfBoundException();
         }
     }
