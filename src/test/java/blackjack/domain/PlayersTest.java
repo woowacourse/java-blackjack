@@ -33,10 +33,10 @@ class PlayersTest {
         
         assertThat(players.findDrawablePlayerNickname()).isEqualTo("pobi");
         
-        players.dontWandDraw();
+        players.dontWantDraw();
         assertThat(players.findDrawablePlayerNickname()).isEqualTo("jason");
         
-        players.dontWandDraw();
+        players.dontWantDraw();
         assertThat(players.findDrawablePlayerNickname()).isNull();
     }
     
@@ -60,7 +60,7 @@ class PlayersTest {
     void findDrawablePlayerReturnsNullWhenAllDone() {
         Players players = Players.makePlayers(List.of("pobi"));
         
-        players.dontWandDraw();
+        players.dontWantDraw();
         
         assertThat(players.findDrawablePlayerNickname()).isNull();
     }
