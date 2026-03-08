@@ -1,5 +1,7 @@
 package blackjack.util;
 
+import blackjack.controller.DrawCommand;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +20,14 @@ public class Parser {
         return splitResult;
     }
 
+    public static DrawCommand parseDrawInput(String input){
+        notEmpty(input);
+        return DrawCommand.of(input);
+    }
+
     public static void notEmpty(String value) {
         if (value == null || value.isBlank()) {
             throw new IllegalArgumentException("입력이 비어있습니다.");
         }
     }
-
 }

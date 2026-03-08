@@ -67,7 +67,8 @@ public class BlackjackController {
 
     private boolean wantsToHit(BlackjackGame blackjackGame, int index) {
         String answer = readYesOrNo(blackjackGame.playerNameByIndex(index));
-        return answer.equals("y");
+        DrawCommand drawCommand = Parser.parseDrawInput(answer);
+        return drawCommand.isHit();
     }
 
     private void hitAndPrintHand(BlackjackGame blackjackGame, int index){
