@@ -6,18 +6,23 @@ import domain.participant.Name;
 import domain.participant.Participant;
 import exception.ExceptionMessage;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Participants {
 
     private final List<Participant> participants;
 
+    public Participants(List<Participant> participant) {
+        this.participants = participant;
+    }
+
     public Participants() {
-        this.participants = new ArrayList<>();
+        this(new ArrayList<>());
     }
 
     public Participants(List<String> playerNames, Deck deck) {
-        this.participants = new ArrayList<>();
+        this();
         validateUnique(playerNames);
         playerNames.forEach(playerName -> addParticipant(deck, playerName));
     }
