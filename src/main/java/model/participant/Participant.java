@@ -8,6 +8,7 @@ import model.CardNumber;
 public abstract class Participant {
     private static final int BUST_THRESHOLD = 21;
     private static final int DEALER_THRESHOLD = 16;
+    private static final String DEALER_NAME = "딜러";
     private String name;
     protected List<Card> hands;
 
@@ -45,6 +46,10 @@ public abstract class Participant {
 
     public boolean dealerNeedDraw() {
         return calculateScore() <= DEALER_THRESHOLD;
+    }
+
+    public boolean isDealer() {
+        return name.equals(DEALER_NAME);
     }
 
     private int calculate() {

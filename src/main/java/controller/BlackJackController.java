@@ -31,7 +31,7 @@ public class BlackJackController {
         blackJack.setFirstTurn();
 
         for (Participant participant : participants) {
-            if (participant.getName().equals("딜러")) {
+            if (participant.isDealer()) {
                 continue;
             }
 
