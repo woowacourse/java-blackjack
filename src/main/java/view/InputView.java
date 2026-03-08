@@ -1,25 +1,19 @@
 package view;
 
+import dto.PlayerNamesRequest;
 import java.util.Scanner;
 
 public final class InputView {
 
     private final static Scanner scanner = new Scanner(System.in);
 
-    public static String readPlayers() {
-        String names = readLine(InfoMessage.PLAYER_INPUT);
-        System.out.println();
-        return names;
+    public static PlayerNamesRequest readPlayers() {
+        System.out.println(InfoMessage.PLAYER_INPUT.message());
+        return PlayerNamesRequest.from(scanner.nextLine());
     }
 
     public static String readSelect(String name) {
-        String formatter = InfoMessage.SELECT.message();
-        System.out.printf(formatter + System.lineSeparator(), name);
-        return scanner.nextLine();
-    }
-
-    private static String readLine(InfoMessage info) {
-        System.out.println(info.message());
+        System.out.println(InfoMessage.SELECT.messageWith(name));
         return scanner.nextLine();
     }
 }
