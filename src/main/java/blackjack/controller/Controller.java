@@ -48,12 +48,12 @@ public class Controller {
     }
 
     private void turnToDealer(Dealer dealer, Deck deck) {
-        dealer.updateScore();
+        dealer.getScore();
 
         while (dealer.canReceive()) {
             outputView.printDealerReceiveCard();
             receiveCardToParticipant(dealer, deck, ONE_REPEAT);
-            dealer.updateScore();
+            dealer.getScore();
             if (dealer.isBurst()) {
                 outputView.printBurst("딜러");
                 return;
@@ -67,9 +67,8 @@ public class Controller {
         }
     }
 
-    // TODO: 10줄 초과, depth 2 초과 (2026. 3. 6.)
     private void turnToOnePlayer(Deck deck, Player player) {
-        player.updateScore();
+        player.getScore();
 
         while (player.canReceive()) {
             String receiveCard = inputView.getReceiveCard(player);
@@ -80,7 +79,7 @@ public class Controller {
                 throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT.getMessage());
             }
             receiveCardToParticipant(player, deck, ONE_REPEAT);
-            player.updateScore();
+            player.getScore();
             if (player.isBurst()) {
                 outputView.printBurst(player.getName());
                 return;

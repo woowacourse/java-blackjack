@@ -6,31 +6,25 @@ import java.util.List;
 
 public abstract class Participant {
     protected final List<Card> cards;
-    protected final Score score;
 
     public Participant() {
         this.cards = new ArrayList<>();
-        this.score = new Score();
     }
 
     public void receiveCard(Card card) {
         cards.add(card);
     }
 
-    public void updateScore() {
-        score.calculateAll(cards);
+    public Score getScore() {
+        return ScoreCalculator.calculate(cards);
     }
 
     public boolean isBurst() {
-        return score.isBurst();
+        return getScore().isBurst();
     }
 
     public Card getFirstCardName() {
         return cards.getFirst();
-    }
-
-    public Score getScore() {
-        return score;
     }
 
     public List<Card> getCards() {

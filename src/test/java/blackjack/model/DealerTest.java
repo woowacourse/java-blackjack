@@ -16,7 +16,7 @@ class DealerTest {
         // when
         dealer.receiveCard(cardTen);
         dealer.receiveCard(cardSix);
-        dealer.updateScore();
+        dealer.getScore();
         // then
         assertThat(dealer.canReceive()).isTrue();
     }
@@ -31,7 +31,7 @@ class DealerTest {
         // when
         dealer.receiveCard(cardTen);
         dealer.receiveCard(cardSeven);
-        dealer.updateScore();
+        dealer.getScore();
         // then
         assertThat(dealer.canReceive()).isFalse();
     }

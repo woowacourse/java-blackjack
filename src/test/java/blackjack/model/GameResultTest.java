@@ -19,8 +19,8 @@ class GameResultTest {
         player.receiveCard(card);
         dealer.receiveCard(card2);
 
-        player.updateScore();
-        dealer.updateScore();
+        player.getScore();
+        dealer.getScore();
 
         // when & then
         assertThat(GameResult.calculateScore(player, dealer).getStatus())
@@ -39,8 +39,8 @@ class GameResultTest {
         player.receiveCard(card);
         dealer.receiveCard(card2);
 
-        player.updateScore();
-        dealer.updateScore();
+        player.getScore();
+        dealer.getScore();
 
         // when & then
         assertThat(GameResult.calculateScore(player, dealer).getStatus())
@@ -63,8 +63,8 @@ class GameResultTest {
         dealer.receiveCard(card3);
         dealer.receiveCard(card4);
 
-        player.updateScore();
-        dealer.updateScore();
+        player.getScore();
+        dealer.getScore();
 
         // when & then
         assertThat(GameResult.calculateScore(player, dealer).getStatus())
@@ -87,8 +87,8 @@ class GameResultTest {
         dealer.receiveCard(card3);
         dealer.receiveCard(card4);
 
-        player.updateScore();
-        dealer.updateScore();
+        player.getScore();
+        dealer.getScore();
 
         // when & then
         assertThat(GameResult.calculateScore(player, dealer).getStatus())
@@ -111,8 +111,8 @@ class GameResultTest {
         player.receiveCard(card3);
         dealer.receiveCard(card4);
 
-        player.updateScore();
-        dealer.updateScore();
+        player.getScore();
+        dealer.getScore();
 
         // when & then
         assertThat(GameResult.calculateScore(player, dealer).getStatus())
@@ -139,8 +139,8 @@ class GameResultTest {
         dealer.receiveCard(card5);
         dealer.receiveCard(card6);
 
-        player.updateScore();
-        dealer.updateScore();
+        player.getScore();
+        dealer.getScore();
 
         // when & then
         assertThat(GameResult.calculateScore(player, dealer).getStatus())

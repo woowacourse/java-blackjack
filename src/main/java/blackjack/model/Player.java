@@ -13,6 +13,6 @@ public class Player extends Participant {
 
     @Override
     public boolean canReceive() {
-        return score.isPlayerHitScore();
+        return getScore().isPlayerHitScore();
     }
 }

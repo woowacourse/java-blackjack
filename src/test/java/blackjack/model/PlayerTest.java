@@ -17,7 +17,7 @@ class PlayerTest {
         // when
         player.receiveCard(cardTen);
         player.receiveCard(cardSix);
-        player.updateScore();
+        player.getScore();
         // then
         assertThat(player.canReceive()).isTrue();
     }
@@ -34,7 +34,7 @@ class PlayerTest {
         player.receiveCard(cardTen);
         player.receiveCard(cardJack);
         player.receiveCard(cardSix);
-        player.updateScore();
+        player.getScore();
         // then
         assertThat(player.canReceive()).isFalse();
     }
@@ -52,7 +52,7 @@ class PlayerTest {
         player.receiveCard(cardJack);
 
         player.receiveCard(cardAce);
-        player.updateScore();
+        player.getScore();
         // then
         assertThat(player.canReceive()).isFalse();
     }

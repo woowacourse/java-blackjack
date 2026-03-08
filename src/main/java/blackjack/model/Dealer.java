@@ -4,6 +4,6 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canReceive() {
-        return score.isDealerHitScore();
+        return getScore().isDealerHitScore();
     }
 }
