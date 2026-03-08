@@ -12,8 +12,14 @@ class PlayerTest {
     void canReceiveCard() {
         // given
         Player player = new Player("luke");
-        // when& then
-        assertThat(player.canReceive(12)).isTrue();
+        Card cardTen = new Card(Figure.SPADE, Number.TEN);
+        Card cardSix = new Card(Figure.SPADE, Number.SIX);
+        // when
+        player.receiveCard(cardTen);
+        player.receiveCard(cardSix);
+        player.updateScore();
+        // then
+        assertThat(player.canReceive()).isTrue();
     }
 
     @Test
@@ -21,8 +27,16 @@ class PlayerTest {
     void cantReceiveCard() {
         // given
         Player player = new Player("luke");
-        // when& then
-        assertThat(player.canReceive(22)).isFalse();
+        Card cardTen = new Card(Figure.SPADE, Number.TEN);
+        Card cardJack = new Card(Figure.SPADE, Number.JACK);
+        Card cardSix = new Card(Figure.SPADE, Number.SIX);
+        // when
+        player.receiveCard(cardTen);
+        player.receiveCard(cardJack);
+        player.receiveCard(cardSix);
+        player.updateScore();
+        // then
+        assertThat(player.canReceive()).isFalse();
     }
 
     @Test
@@ -30,7 +44,16 @@ class PlayerTest {
     void cantReceiveCardScore21Test() {
         // given
         Player player = new Player("luke");
-        // when& then
-        assertThat(player.canReceive(21)).isFalse();
+        Card cardTen = new Card(Figure.SPADE, Number.TEN);
+        Card cardJack = new Card(Figure.SPADE, Number.JACK);
+        Card cardAce = new Card(Figure.SPADE, Number.ACE);
+        // when
+        player.receiveCard(cardTen);
+        player.receiveCard(cardJack);
+
+        player.receiveCard(cardAce);
+        player.updateScore();
+        // then
+        assertThat(player.canReceive()).isFalse();
     }
 }

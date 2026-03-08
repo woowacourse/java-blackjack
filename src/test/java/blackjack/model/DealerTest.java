@@ -11,8 +11,14 @@ class DealerTest {
     void canReceiveCard() {
         // given
         Dealer dealer = new Dealer();
-        // when & then
-        assertThat(dealer.canReceive(16)).isTrue();
+        Card cardTen = new Card(Figure.SPADE, Number.TEN);
+        Card cardSix = new Card(Figure.SPADE, Number.SIX);
+        // when
+        dealer.receiveCard(cardTen);
+        dealer.receiveCard(cardSix);
+        dealer.updateScore();
+        // then
+        assertThat(dealer.canReceive()).isTrue();
     }
 
     @Test
@@ -20,7 +26,13 @@ class DealerTest {
     void cantReceiveCard() {
         // given
         Dealer dealer = new Dealer();
-        // when & then
-        assertThat(dealer.canReceive(17)).isFalse();
+        Card cardTen = new Card(Figure.SPADE, Number.TEN);
+        Card cardSeven = new Card(Figure.SPADE, Number.SEVEN);
+        // when
+        dealer.receiveCard(cardTen);
+        dealer.receiveCard(cardSeven);
+        dealer.updateScore();
+        // then
+        assertThat(dealer.canReceive()).isFalse();
     }
 }
