@@ -47,7 +47,7 @@ public class BlackJack {
 
     private void printInitialDealInfo(Dealer dealer, Gamblers gamblers) {
         OutputView.printInitMessage(gamblers.getNames());
-        OutputView.printDealerFirstCard(dealer.firstCard());
+        OutputView.printDealerFirstCard(PlayerCardInfo.from(dealer));
 
         gamblers.forEach(this::printPlayerCardInfo);
     }

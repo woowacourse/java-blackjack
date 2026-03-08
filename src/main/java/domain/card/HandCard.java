@@ -48,10 +48,6 @@ public class HandCard {
                 .toList();
     }
 
-    public String firstCardInfo() {
-        return cards.getFirst().getCardInfo();
-    }
-
     public boolean isBust() {
         return score() > BLACKJACK_MAX_LIMIT;
     }
