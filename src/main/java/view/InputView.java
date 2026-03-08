@@ -33,8 +33,8 @@ public class InputView {
     private String readInput(List<Validator> validators) {
         try {
             String input = new Scanner(System.in).nextLine();
-            for (Validator v : validators) {
-                v.validate(input);
+            for (Validator validator : validators) {
+                validator.validate(input);
             }
             return input;
         } catch (NoSuchElementException e) {

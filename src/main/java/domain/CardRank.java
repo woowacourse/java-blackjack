@@ -16,12 +16,12 @@ public enum CardRank {
     KING("K", 10);
 
     private final String name;
-    private final int number;
+    private final int value;
 
     // 생성자
-    CardRank(String name, int number) {
+    CardRank(String name, int value) {
         this.name = name;
-        this.number = number;
+        this.value = value;
     }
 
     public String getName() {
@@ -29,6 +29,6 @@ public enum CardRank {
     }
 
     public int getValue() {
-        return number;
+        return value;
     }
 }

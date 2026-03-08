@@ -39,11 +39,11 @@ public class BlackjackService {
     }
 
     public int determineAdditionalCardOfDealer(Dealer dealer, Cards cards) {
-        int count = 0;
+        int additionalCardCount = 0;
         while (dealer.needAdditionalCard()) {
             dealer.add(cards.pop());
-            count++;
+            additionalCardCount++;
         }
-        return count;
+        return additionalCardCount;
     }
 }

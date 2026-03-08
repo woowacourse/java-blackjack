@@ -50,12 +50,12 @@ public class BlackjackController {
     }
 
     public List<CardContentDto> collectInitialCardContents(Dealer dealer, List<Player> playerList) {
-        List<CardContentDto> firstCardContents = new ArrayList<>();
-        firstCardContents.add(new CardContentDto(dealer.getName(), List.of(dealer.getFirstCard())));
+        List<CardContentDto> initialCardContents = new ArrayList<>();
+        initialCardContents.add(new CardContentDto(dealer.getName(), List.of(dealer.getFirstCard())));
         for (Player player : playerList) {
-            firstCardContents.add(new CardContentDto(player.getName(), player.getCards()));
+            initialCardContents.add(new CardContentDto(player.getName(), player.getCards()));
         }
-        return firstCardContents;
+        return initialCardContents;
     }
 
     public Players processPlayersTurn(List<Player> playerList, Cards deck) {
@@ -100,15 +100,15 @@ public class BlackjackController {
     }
 
     private <T> T doRetry(Supplier<T> action) {
-        int retry = 0;
+        int retryCount = 0;
         while (true) {
             try {
                 return action.get();
             } catch (IllegalArgumentException e) {
-                retry++;
+                retryCount++;
                 System.out.println(e.getMessage());
 
-                if (retry >= MAX_RETRY) {
+                if (retryCount >= MAX_RETRY) {
                     throw new IllegalStateException("입력 횟수를 초과했습니다.");
                 }
             }

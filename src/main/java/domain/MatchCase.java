@@ -3,13 +3,13 @@ package domain;
 public enum MatchCase {
     WIN("승"), LOSE("패"), DRAW("무");
 
-    private final String korResult;
+    private final String displayName;
 
-    MatchCase(String korResult) {
-        this.korResult = korResult;
+    MatchCase(String displayName) {
+        this.displayName = displayName;
     }
 
-    public String getKorResult() {
-        return korResult;
+    public String getDisplayName() {
+        return displayName;
     }
 }

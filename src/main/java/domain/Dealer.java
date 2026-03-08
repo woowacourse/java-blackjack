@@ -12,7 +12,7 @@ public class Dealer extends Player {
     }
 
     public boolean needAdditionalCard() {
-        return this.calculateScore() <= GameConstant.ADDITIONAL_THRESHOLD;
+        return this.calculateScore() <= GameConstant.DEALER_HIT_THRESHOLD;
     }
 
     public Card getFirstCard() {

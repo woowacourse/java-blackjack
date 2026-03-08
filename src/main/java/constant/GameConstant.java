@@ -1,7 +1,7 @@
 package constant;
 
 public final class GameConstant {
-    public static final int ADDITIONAL_THRESHOLD = 16;
-    public static final int GAME_OVER_THRESHOLD_SCORE = 21;
+    public static final int DEALER_HIT_THRESHOLD = 16;
+    public static final int BUST_THRESHOLD = 21;
     public static final String DEALER_NAME = "딜러";
 }

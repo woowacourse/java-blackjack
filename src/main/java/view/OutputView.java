@@ -17,8 +17,8 @@ public class OutputView {
         System.out.printf("딜러가 %s에게 2장을 나누었습니다.\n", nameContent);
     }
 
-    public void displayCardContent(List<CardContentDto> cardContentDto) {
-        for (CardContentDto dto : cardContentDto) {
+    public void displayCardContent(List<CardContentDto> cardContentDtos) {
+        for (CardContentDto dto : cardContentDtos) {
             List<String> cardContents = new ArrayList<>();
             for (Card card : dto.cards()) {
                 cardContents.add(card.getCardRank().getName() + card.getCardShape().getName());
@@ -39,11 +39,11 @@ public class OutputView {
     }
 
     public void displayDealerCard() {
-        System.out.println("딜러는 " + GameConstant.ADDITIONAL_THRESHOLD + "이하라 한장의 카드를 더 받았습니다.");
+        System.out.println("딜러는 " + GameConstant.DEALER_HIT_THRESHOLD + "이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void displayFinalCard(List<FinalCardDto> finalCardDto) {
-        for (FinalCardDto dto : finalCardDto) {
+    public void displayFinalCard(List<FinalCardDto> finalCardDtos) {
+        for (FinalCardDto dto : finalCardDtos) {
             List<String> cardContents = new ArrayList<>();
             for (Card card : dto.cards()) {
                 cardContents.add(card.getCardRank().getName() + card.getCardShape().getName());
@@ -58,8 +58,7 @@ public class OutputView {
         System.out.printf("## 최종 승패\n딜러: %d승 %d패\n", resultDto.winCount(), resultDto.loseCount());
         Map<String, MatchCase> resultMap = resultDto.matchResultMap();
         for (String playerName : resultMap.keySet()) {
-            String korResult = resultMap.get(playerName).getKorResult();
-            System.out.printf("%s: %s\n", playerName, korResult);
+            System.out.printf("%s: %s\n", playerName, resultMap.get(playerName).getDisplayName());
         }
     }
 }
