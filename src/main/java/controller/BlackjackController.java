@@ -1,7 +1,6 @@
 package controller;
 
 import domain.Game;
-import domain.card.CardGenerator;
 import domain.card.Deck;
 import domain.enums.Result;
 import domain.participant.Dealer;
@@ -9,6 +8,8 @@ import domain.participant.Players;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import service.CardGenerator;
+import service.ShuffledCardGenerator;
 import util.InputParser;
 import view.InputView;
 import view.OutputView;
@@ -24,7 +25,8 @@ public class BlackjackController {
 
     public void start() {
         Players players = makePlayers();
-        Deck deck = new Deck(CardGenerator.generateCards());
+        CardGenerator cardGenerator = new ShuffledCardGenerator();
+        Deck deck = new Deck(cardGenerator.generate());
         Game game = new Game(players, new Dealer());
 
         game.initializeGame(deck);

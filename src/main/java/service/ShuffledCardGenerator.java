@@ -1,5 +1,6 @@
-package domain.card;
+package service;
 
+import domain.card.Card;
 import domain.enums.Rank;
 import domain.enums.Suit;
 import java.util.ArrayList;
@@ -7,9 +8,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class CardGenerator {
+public class ShuffledCardGenerator implements CardGenerator {
 
-    public static List<Card> generateCards() {
+    @Override
+    public List<Card> generate() {
         List<Card> cards = new ArrayList<>(Arrays.stream(Suit.values())
                 .flatMap(suit -> Arrays.stream(Rank.values())
                         .map(rank -> new Card(rank, suit)))

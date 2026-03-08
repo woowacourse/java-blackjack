@@ -15,6 +15,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import service.CardGenerator;
+import service.TestCardGenerator;
 
 public class GameTest {
 
@@ -31,10 +33,8 @@ public class GameTest {
 
         @BeforeEach
         void setUp() {
-
-            deck = new Deck(List.of(new Card(Rank.FIVE, Suit.CLOVER), new Card(Rank.FIVE, Suit.HEART),
-                    new Card(Rank.SIX, Suit.CLOVER), new Card(Rank.SEVEN, Suit.CLOVER),
-                    new Card(Rank.FOUR, Suit.SPADE), new Card(Rank.SEVEN, Suit.HEART)));
+            CardGenerator cardGenerator = new TestCardGenerator();
+            deck = new Deck(cardGenerator.generate());
 
             twoPlayers = new Players(List.of("피즈", "스타크"));
             twoPlayerGame = new Game(twoPlayers, dealer);
