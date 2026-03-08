@@ -79,7 +79,7 @@ public class Players {
     public List<Result> decideAllResults(int dealerScore, boolean dealerBurst) {
         List<Result> results = new ArrayList<>();
         for (Player player : players) {
-            Result playerResult = player.calculateResult(dealerScore, dealerBurst);
+            Result playerResult = Result.calculatePlayerResult(player, dealerScore, dealerBurst);
             results.add(playerResult);
         }
         return results;
@@ -92,12 +92,12 @@ public class Players {
 
     public List<CardDto> getPlayerCards(String name) {
         Player foundPlayer = findPlayerByName(name);
-        return foundPlayer.cardBoard.createDto();
+        return foundPlayer.getHand();
     }
 
     public Result getPlayerResult(String name, int dealerScore, boolean dealerBurst) {
         Player foundPlayer = findPlayerByName(name);
-        return foundPlayer.calculateResult(dealerScore, dealerBurst);
+        return Result.calculatePlayerResult(foundPlayer, dealerScore, dealerBurst);
     }
 
     public int getPlayerScore(String name) {

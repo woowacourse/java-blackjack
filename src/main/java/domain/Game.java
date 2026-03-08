@@ -20,7 +20,7 @@ public class Game {
     }
 
     public List<CardDto> getDealerCard() {
-        return dealer.getDealerCards();
+        return dealer.getHand();
     }
 
     public Map<String, List<CardDto>> getAllPlayerCard() {
@@ -68,14 +68,14 @@ public class Game {
     }
 
     public Map<Result, Integer> getDealerResult() {
-        int dealerScore = dealer.calculateScore();
-        boolean dealerBurst = dealer.isBurst();
-        return dealer.calculateResults(players.decideAllResults(dealerScore, dealerBurst));
+        int dealerScore = dealer.getScore();
+        boolean dealerBurst = dealer.isBust();
+        return Result.calculateDealerResult(players.decideAllResults(dealerScore, dealerBurst));
     }
 
     public Result getPlayerResult(String name) {
-        int dealerScore = dealer.calculateScore();
-        boolean dealerBurst = dealer.isBurst();
+        int dealerScore = dealer.getScore();
+        boolean dealerBurst = dealer.isBust();
         return players.getPlayerResult(name, dealerScore, dealerBurst);
     }
 
@@ -84,6 +84,6 @@ public class Game {
     }
 
     public int getDealerScore() {
-        return dealer.calculateScore();
+        return dealer.getScore();
     }
 }

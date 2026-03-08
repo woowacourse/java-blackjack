@@ -4,6 +4,7 @@ import static constant.GameRule.BLACKJACK_CRITERION;
 
 import domain.card.Card;
 import domain.card.CardBoard;
+import dto.CardDto;
 import java.util.List;
 
 public abstract class Participant {
@@ -24,5 +25,13 @@ public abstract class Participant {
 
     public boolean checkScoreUnderCriterion() {
         return cardBoard.calculateScore() <= BLACKJACK_CRITERION;
+    }
+
+    public boolean isBust() {
+        return cardBoard.isBust();
+    }
+
+    public List<CardDto> getHand() {
+        return cardBoard.createDto();
     }
 }

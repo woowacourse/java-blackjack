@@ -54,7 +54,7 @@ public class GameTest {
             assertThat(twoPlayers.getPlayerCards("피즈").size()).isEqualTo(2);
             assertThat(twoPlayers.getPlayerCards("스타크").size()).isEqualTo(2);
 
-            assertThat(dealer.getDealerCards().size()).isEqualTo(2);
+            assertThat(dealer.getHand().size()).isEqualTo(2);
         }
 
         @DisplayName("플레이어의 카드 총합이 21미만이고 히트 요청 시 한장을 더 분배한다.")
@@ -82,7 +82,7 @@ public class GameTest {
             //then
             onePlayerGame.dealerHit(deck);
 
-            assertThat(dealer.getDealerCards().size()).isEqualTo(4);
+            assertThat(dealer.getHand().size()).isEqualTo(4);
         }
 
         @DisplayName("플레이어가 버스트 되면 플레이어는 패배하고 딜러는 승리한다.")
