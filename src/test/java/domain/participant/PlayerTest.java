@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.GameResult;
+import domain.PlayerGameResult;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;
@@ -133,7 +133,7 @@ public class PlayerTest {
         List<Card> cards = new ArrayList<>(List.of(new Card(CardNumber.FOUR, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
         Player player = new Player("woni");
         player.receiveInitialCards(cards);
-        Assertions.assertThat(player.compareScore(14)).isEqualTo(GameResult.WIN);
+        Assertions.assertThat(player.compareScore(14)).isEqualTo(PlayerGameResult.WIN);
     }
 
     @Test
@@ -144,7 +144,7 @@ public class PlayerTest {
         player.receiveInitialCards(cards);
         player.receiveHitCard(new Card(CardNumber.TEN, CardShape.SPADE));
         player.receiveHitCard(new Card(CardNumber.TEN, CardShape.HEART));
-        Assertions.assertThat(player.compareScore(14)).isEqualTo(GameResult.LOSE);
+        Assertions.assertThat(player.compareScore(14)).isEqualTo(PlayerGameResult.LOSE);
     }
 
     @Test
@@ -155,7 +155,7 @@ public class PlayerTest {
         player.receiveInitialCards(cards);
         player.receiveHitCard(new Card(CardNumber.TEN, CardShape.SPADE));
         player.receiveHitCard(new Card(CardNumber.TEN, CardShape.HEART));
-        Assertions.assertThat(player.compareScore(22)).isEqualTo(GameResult.DRAW);
+        Assertions.assertThat(player.compareScore(22)).isEqualTo(PlayerGameResult.DRAW);
     }
 
     @Test
@@ -164,6 +164,6 @@ public class PlayerTest {
         List<Card> cards = new ArrayList<>(List.of(new Card(CardNumber.SIX, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
         Player player = new Player("woni");
         player.receiveInitialCards(cards);
-        Assertions.assertThat(player.compareScore(17)).isEqualTo(GameResult.DRAW);
+        Assertions.assertThat(player.compareScore(17)).isEqualTo(PlayerGameResult.DRAW);
     }
 }

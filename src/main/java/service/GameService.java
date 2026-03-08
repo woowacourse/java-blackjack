@@ -1,13 +1,13 @@
 package service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import domain.PlayerGameResult;
 import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Player;
-import dto.GameStartDTO;
-
-import dto.ParticipantHandDTO;
+import dto.*;
 
 public class GameService {
     private final List<Player> players;
@@ -18,6 +18,12 @@ public class GameService {
         this.dealer = new Dealer();
     }
 
+    private List<Player> participateGame(List<String> playerNames) {
+        return playerNames.stream()
+                .map(Player::new)
+                .toList();
+    }
+
     public GameStartDTO startGame() {
         for (Player player : players) {
             List<Card> firstHandCards = dealer.dealInitialCards();
@@ -26,12 +32,6 @@ public class GameService {
         dealer.receiveInitialCards(dealer.dealInitialCards());
 
         return GameStartDTO.from(players, dealer);
-    }
-
-    private List<Player> participateGame(List<String> playerNames) {
-        return playerNames.stream()
-                .map(Player::new)
-                .toList();
     }
 
     public ParticipantHandDTO playerHit(Player player) {
@@ -45,6 +45,33 @@ public class GameService {
 
     public void dealerHit() {
         dealer.receiveHitCard(dealer.dealHitCard());
+    }
+
+    public GameScoreDTO getTotalScore() {
+        return GameScoreDTO.from(players, dealer);
+    }
+
+    public GameResultDTO calculateResults() {
+        List<PlayerResultDTO> playerResultDTOs = new ArrayList<>();
+        int dealerWinCount = 0;
+        int dealerDrawCount = 0;
+        int dealerLoseCount = 0;
+        for (Player player : players) {
+            PlayerGameResult playerResult = PlayerGameResult.from(player, dealer);
+            if (playerResult == PlayerGameResult.WIN) {
+                dealerLoseCount++;
+            }
+            if (playerResult == PlayerGameResult.DRAW) {
+                dealerDrawCount++;
+            }
+            if (playerResult == PlayerGameResult.LOSE) {
+                dealerWinCount++;
+            }
+            playerResultDTOs.add(new PlayerResultDTO(player.getName(), playerResult.getValue()));
+        }
+
+        return new GameResultDTO(playerResultDTOs, new DealerResultDTO(dealerWinCount, dealerDrawCount, dealerLoseCount));
+
     }
 
     public List<Player> getPlayers() {

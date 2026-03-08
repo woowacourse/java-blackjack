@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.GameResult;
+import domain.PlayerGameResult;
 
 public class Player extends Participant {
 
@@ -8,26 +8,26 @@ public class Player extends Participant {
         super(name);
     }
 
-    public GameResult compareScore(int dealerScore) {
+    public PlayerGameResult compareScore(int dealerScore) {
         if (isBust() && dealerScore > 21) {
-            return GameResult.DRAW;
+            return PlayerGameResult.DRAW;
         }
         if (isBust() && dealerScore <= 21) {
-            return GameResult.LOSE;
+            return PlayerGameResult.LOSE;
         }
         if (!isBust() && dealerScore > 21) {
-            return GameResult.WIN;
+            return PlayerGameResult.WIN;
         }
         return getGameResult(dealerScore);
     }
 
-    private GameResult getGameResult(int dealerScore) {
+    private PlayerGameResult getGameResult(int dealerScore) {
         if (calculateScore() > dealerScore) {
-            return GameResult.WIN;
+            return PlayerGameResult.WIN;
         }
         if (calculateScore() == dealerScore) {
-            return GameResult.DRAW;
+            return PlayerGameResult.DRAW;
         }
-        return GameResult.LOSE;
+        return PlayerGameResult.LOSE;
     }
 }
