@@ -6,15 +6,15 @@ import java.util.List;
 public class Member {
 
     protected final Hand hand;
-    private final String name;
+    private final Name name;
 
     public Member(String name) {
-        this.name = name;
+        this.name = new Name(name);
         this.hand = new Hand();
     }
 
     public String name() {
-        return name;
+        return name.getValue();
     }
 
     public int currentValue() {
