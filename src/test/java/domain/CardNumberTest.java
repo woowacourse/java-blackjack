@@ -1,5 +1,6 @@
 package domain;
 
+import domain.card.CardNumber;
 import domain.exception.OutOfBoundException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
