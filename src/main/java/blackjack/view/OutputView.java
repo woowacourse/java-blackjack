@@ -2,12 +2,12 @@ package blackjack.view;
 
 import blackjack.domain.MatchResult;
 import blackjack.domain.Player;
-import blackjack.dto.CardInfo;
-import blackjack.dto.DealResult;
-import blackjack.dto.DealerScoreResult;
-import blackjack.dto.GameResult;
-import blackjack.dto.PlayerHandResult;
-import blackjack.dto.PlayerScoreResult;
+import blackjack.dto.CardDto;
+import blackjack.dto.DealResultDto;
+import blackjack.dto.DealerScoreDto;
+import blackjack.dto.GameResultDto;
+import blackjack.dto.PlayerHandDto;
+import blackjack.dto.PlayerScoreDto;
 
 import java.util.List;
 import java.util.Map;
@@ -17,34 +17,34 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printDealResult(DealResult dealResult) {
-        System.out.println("딜러카드: " + dealResult.dealerOpenCard().display());
-        for (PlayerHandResult playerHand : dealResult.playerHands()) {
+    public static void printDealResult(DealResultDto dealResultDto) {
+        System.out.println("딜러카드: " + dealResultDto.dealerOpenCard().display());
+        for (PlayerHandDto playerHand : dealResultDto.playerHands()) {
             printCurrentPlayerHand(playerHand);
         }
         System.out.println();
     }
 
-    public static void printCurrentPlayerHand(PlayerHandResult playerHand) {
+    public static void printCurrentPlayerHand(PlayerHandDto playerHand) {
         String cards = formatCards(playerHand.cards());
         System.out.println(playerHand.name() + "카드: " + cards);
     }
 
-    public static void printGameResult(GameResult gameResult) {
-        DealerScoreResult dealer = gameResult.dealerResult();
+    public static void printGameResult(GameResultDto gameResultDto) {
+        DealerScoreDto dealer = gameResultDto.dealerResult();
         System.out.println("딜러카드: " + formatCards(dealer.cards())
                 + " - 결과: " + dealer.score());
 
-        for (PlayerScoreResult player : gameResult.playerResults()) {
+        for (PlayerScoreDto player : gameResultDto.playerResults()) {
             System.out.println(player.name() + "카드: " + formatCards(player.cards())
                     + " - 결과: " + player.score());
         }
         System.out.println();
     }
 
-    private static String formatCards(List<CardInfo> cards) {
+    private static String formatCards(List<CardDto> cards) {
         return cards.stream()
-                .map(CardInfo::display)
+                .map(CardDto::display)
                 .collect(Collectors.joining(", "));
     }
 

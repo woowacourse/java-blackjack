@@ -2,9 +2,9 @@ package blackjack.controller;
 
 import blackjack.domain.MatchResult;
 import blackjack.domain.Player;
-import blackjack.dto.DealResult;
-import blackjack.dto.GameResult;
-import blackjack.dto.PlayerHandResult;
+import blackjack.dto.DealResultDto;
+import blackjack.dto.GameResultDto;
+import blackjack.dto.PlayerHandDto;
 import blackjack.service.BlackjackGame;
 import blackjack.service.RandomShuffleStrategy;
 import blackjack.util.Parser;
@@ -22,8 +22,8 @@ public class BlackjackController {
         List<String> names = inputNames();
         BlackjackGame blackjackGame = BlackjackGame.create(names, new RandomShuffleStrategy());
 
-        DealResult dealResult = deal(blackjackGame);
-        OutputView.printDealResult(dealResult);
+        DealResultDto dealResultDto = deal(blackjackGame);
+        OutputView.printDealResult(dealResultDto);
 
         playPlayerTurn(blackjackGame);
 
@@ -32,8 +32,8 @@ public class BlackjackController {
             blackjackGame.dealerDraw();
         }
 
-        GameResult gameResult = blackjackGame.generateGameResult();
-        OutputView.printGameResult(gameResult);
+        GameResultDto gameResultDto = blackjackGame.generateGameResult();
+        OutputView.printGameResult(gameResultDto);
 
         Map<Player, MatchResult> playerFinalResult = blackjackGame.getPlayerFinalResult();
         Map<String, Long> dealerFinalResult = blackjackGame.getDealerFinalResult(playerFinalResult);
@@ -47,9 +47,9 @@ public class BlackjackController {
         return splitDelimiter(input);
     }
 
-    private DealResult deal(BlackjackGame blackjackGame) {
+    private DealResultDto deal(BlackjackGame blackjackGame) {
         blackjackGame.deal();
-        return DealResult.from(blackjackGame.getPlayers(), blackjackGame.getDealer());
+        return DealResultDto.from(blackjackGame.getPlayers(), blackjackGame.getDealer());
     }
 
     private void playPlayerTurn(BlackjackGame blackjackGame) {
@@ -64,8 +64,8 @@ public class BlackjackController {
             if ("n".equals(answer)) {
                 break;
             }
-            PlayerHandResult playerHandResult = PlayerHandResult.from(blackjackGame.playerDraw(index));
-            OutputView.printCurrentPlayerHand(playerHandResult);
+            PlayerHandDto playerHandDto = PlayerHandDto.from(blackjackGame.playerDraw(index));
+            OutputView.printCurrentPlayerHand(playerHandDto);
         }
         System.out.println();
     }

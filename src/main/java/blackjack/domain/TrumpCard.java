@@ -38,8 +38,8 @@ public class TrumpCard {
         return rank.getScore();
     }
 
-    public String rankName() {
-        return rank.getRankName();
+    public String symbol() {
+        return rank.getSymbol();
     }
 
     @Override

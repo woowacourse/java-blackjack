@@ -8,7 +8,7 @@ import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.domain.ShuffleStrategy;
 import blackjack.domain.TrumpCard;
-import blackjack.dto.GameResult;
+import blackjack.dto.GameResultDto;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -77,8 +77,8 @@ public class BlackjackGame {
         dealer.receive(drawn);
     }
 
-    public GameResult generateGameResult() {
-        return GameResult.from(players, dealer);
+    public GameResultDto generateGameResult() {
+        return GameResultDto.from(players, dealer);
     }
 
     public Map<Player, MatchResult> getPlayerFinalResult() {
