@@ -11,6 +11,7 @@ import domain.dto.MemberStatus;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class BlackjackService {
@@ -46,8 +47,8 @@ public class BlackjackService {
     }
 
     public List<MemberStatus> getMemberStatuses() {
-        MemberStatus dealer = gameTable.checkDealerStatus();
-        List<MemberStatus> players = gameTable.checkPlayerStatuses();
+        MemberStatus dealer = checkDealerStatus();
+        List<MemberStatus> players = checkPlayerStatuses();
 
         List<MemberStatus> totalStatuses = new ArrayList<>();
         totalStatuses.add(dealer);
@@ -69,5 +70,21 @@ public class BlackjackService {
                 .filter(result -> result.equals(RoundResult.LOSE))
                 .count());
         return new GameResult(dealerWinAmount, dealerLoseAmount, gameResults);
+    }
+
+    private List<MemberStatus> checkPlayerStatuses() {
+        return gameTable.allPlayers()
+                .stream()
+                .map(name -> {
+                    List<Card> cards = gameTable.playerCards(name);
+                    int playerPoint = gameTable.playerPoint(name);
+                    return new MemberStatus(name, cards, playerPoint);
+                }).collect(Collectors.toList());
+    }
+
+    private MemberStatus checkDealerStatus() {
+        List<Card> cards = gameTable.dealerCards();
+        int dealerPoint = gameTable.dealerPoint();
+        return new MemberStatus(DEALER.format(), cards, dealerPoint);
     }
 }

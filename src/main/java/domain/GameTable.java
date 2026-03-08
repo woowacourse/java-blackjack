@@ -1,13 +1,9 @@
 package domain;
 
-import static constant.Word.*;
-
 import domain.card.Card;
-import domain.dto.MemberStatus;
 import domain.member.Members;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class GameTable {
 
@@ -20,12 +16,12 @@ public class GameTable {
         this.members = new Members();
     }
 
-    public void joinPlayer(List<String> playerNames) {
-        members.appendPlayer(playerNames);
+    public List<String> allPlayers() {
+        return members.getAllPlayerNames();
     }
 
-    public boolean checkBust(String memberName) {
-        return members.checkValue(memberName) > BLACKJACK;
+    public void joinPlayer(List<String> playerNames) {
+        members.appendPlayer(playerNames);
     }
 
     public List<Card> drawByName(String memberName, Card card) {
@@ -43,20 +39,24 @@ public class GameTable {
         return false;
     }
 
-    public List<MemberStatus> checkPlayerStatuses() {
-        return members.getAllPlayerName()
-                .stream()
-                .map(name -> {
-                    List<Card> cards = members.findCardByName(name);
-                    int totalValue = members.checkValue(name);
-                    return new MemberStatus(name, cards, totalValue);
-                }).collect(Collectors.toList());
+    public boolean checkBust(String memberName) {
+        return members.checkValue(memberName) > BLACKJACK;
     }
 
-    public MemberStatus checkDealerStatus() {
-        List<Card> cards = members.dealerCards();
-        int totalValue = members.checkDealerValue();
-        return new MemberStatus(DEALER.format(), cards, totalValue);
+    public List<Card> playerCards(String playerName) {
+        return members.findCardByName(playerName);
+    }
+
+    public List<Card> dealerCards() {
+        return members.dealerCards();
+    }
+
+    public int playerPoint(String playerName) {
+        return members.checkValue(playerName);
+    }
+
+    public int dealerPoint() {
+        return members.checkDealerValue();
     }
 
     public Map<String, RoundResult> checkGameResult() {

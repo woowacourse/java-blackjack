@@ -65,9 +65,9 @@ public class Members {
                 .orElseThrow(NoSuchElementException::new);
     }
 
-    public List<String> getAllPlayerName() {
+    public List<String> getAllPlayerNames() {
         return players.stream()
-                .map(Member::name)
+                .map(Player::name)
                 .toList();
     }
 
