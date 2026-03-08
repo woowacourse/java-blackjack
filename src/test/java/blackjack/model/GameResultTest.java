@@ -116,8 +116,8 @@ class GameResultTest {
     }
 
     @Test
-    @DisplayName("딜러와 플레이어 모두 버스티인 경우 무 판정")
-    void isDrawWhenBothIsBurstTest() {
+    @DisplayName("딜러와 플레이어 모두 버스트인 경우 패 판정")
+    void isLoseWhenBothIsBurstTest() {
         // given
         Dealer dealer = new Dealer();
         Player player = new Player("luke");
@@ -140,6 +140,6 @@ class GameResultTest {
 
         // when & then
         assertThat(GameResult.getResult(player, dealer).getStatus())
-                .isEqualTo("무");
+                .isEqualTo("패");
     }
 }
