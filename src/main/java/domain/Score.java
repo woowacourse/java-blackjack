@@ -1,6 +1,7 @@
 package domain;
 
 public class Score {
+    private static final int BUST_LIMIT_SCORE = 21;
     private final int value;
 
     public Score(int value) {
@@ -8,7 +9,7 @@ public class Score {
     }
 
     public boolean isBust(){
-        return value > 21;
+        return value > BUST_LIMIT_SCORE;
     }
 
     public int getValue() {
