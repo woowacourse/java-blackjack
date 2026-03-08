@@ -74,7 +74,7 @@ public class OutputView {
                 .map(Card::getCardName).toList();
         System.out.println(name + "카드: " +
                 String.join(", ", cardNames) +
-                " - 결과: " + participant.getScore());
+                " - 결과: " + participant.getScore().getScore());
     }
 
     private static void summaryGameResult(GameResult result, Map<GameResult, Integer> dealerResult) {
