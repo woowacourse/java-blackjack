@@ -9,7 +9,7 @@ public class ScoreCalculator {
 
     public int calculateScore(List<Card> hand) {
         int currentScore = sumScore(hand);
-        Card findCard = hand.stream().filter(c -> c.getRank() == 1).findAny().orElse(null);
+        Card findCard = hand.stream().filter(c -> c.getScore() == 1).findAny().orElse(null);
         if (findCard == null) {
             return currentScore;
         }
@@ -28,7 +28,7 @@ public class ScoreCalculator {
     private int sumScore(List<Card> hand) {
         int score = 0;
         for (Card card : hand) {
-            score += card.getRank();
+            score += card.getScore();
         }
         return score;
     }

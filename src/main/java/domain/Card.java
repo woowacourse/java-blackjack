@@ -7,16 +7,20 @@ import java.util.Objects;
 
 public class Card {
 
-    private Rank rank;
-    private Suit suit;
+    private final Rank rank;
+    private final Suit suit;
 
     public Card(Rank rank, Suit suit) {
         this.rank = rank;
         this.suit = suit;
     }
 
-    public int getRank() {
-        return this.rank.getScore();
+    public int getScore() {
+        return rank.getScore();
+    }
+
+    public String getName() {
+        return rank.getName() + suit.getName();
     }
 
     @Override
@@ -31,8 +35,4 @@ public class Card {
         return Objects.hash(rank, suit);
     }
 
-    @Override
-    public String toString() {
-        return rank.getName() + suit.getName();
-    }
 }
