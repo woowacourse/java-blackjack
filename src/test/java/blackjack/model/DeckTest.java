@@ -16,7 +16,7 @@ class DeckTest {
         // given
         Deck deck = new Deck();
         // when & then
-        assertThat(deck.getSize()).isEqualTo(52);
+        assertThat(deck.getDeckSize()).isEqualTo(52);
     }
 
     @Test
@@ -35,12 +35,12 @@ class DeckTest {
 
     @Test
     @DisplayName("덱에서 카드 한 장을 분배하고 삭제한다.")
-    void giveCardTest() {
+    void hitTest() {
         // given
         Deck deck = new Deck();
         // when
-        deck.giveCard();
+        deck.hit();
         // then
-        assertThat(deck.getSize()).isEqualTo(51);
+        assertThat(deck.getDeckSize()).isEqualTo(51);
     }
 }

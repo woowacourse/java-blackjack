@@ -16,8 +16,8 @@ class ScoreTest {
         Deck deck = new Deck();
         Score score = new Score();
         Score score1 = new Score();
-        List<Card> cardsOne = List.of(deck.giveCard(), deck.giveCard());
-        List<Card> cardsTwo = List.of(deck.giveCard(), deck.giveCard());
+        List<Card> cardsOne = List.of(deck.hit(), deck.hit());
+        List<Card> cardsTwo = List.of(deck.hit(), deck.hit());
 
         // when
         score.calculateAll(cardsOne);

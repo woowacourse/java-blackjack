@@ -2,25 +2,24 @@ package blackjack.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-    private final List<Card> cards; // 52장을 가지고 있음
+    private final Cards cards;
 
     public Deck() {
         this.cards = createDeck();
     }
 
-    public List<Card> createDeck() {
+    public Cards createDeck() {
         List<Card> cards = new ArrayList<>();
 
         for (Figure figure : Figure.values()) {
             cards.addAll(matchNumbersWith(figure));
         }
-        return cards;
+        return new Cards(cards);
     }
-
+    
     private List<Card> matchNumbersWith(Figure figure) {
         return Arrays.stream(Number.values())
                 .map(number -> new Card(figure, number))
@@ -28,18 +27,18 @@ public class Deck {
     }
 
     public void shuffle() {
-        Collections.shuffle(cards);
+        cards.shuffle();
     }
 
-    public Card giveCard() {
-        return cards.removeFirst();
+    public Card hit() {
+        return cards.giveFirstCard();
     }
 
-    public int getSize() {
-        return cards.size();
+    public int getDeckSize() {
+        return cards.getSize();
     }
 
     public List<Card> getCards() {
-        return cards;
+        return cards.getCards();
     }
 }

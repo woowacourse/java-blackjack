@@ -108,7 +108,7 @@ public class Controller {
 
     private void receiveCardToParticipant(Participant participant, Deck deck, int repeat) {
         for (int i = 0; i < repeat; i++) {
-            participant.receiveCard(deck.giveCard());
+            participant.receiveCard(deck.hit());
         }
     }
 }
