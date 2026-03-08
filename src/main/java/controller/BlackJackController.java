@@ -23,10 +23,7 @@ public class BlackJackController {
     }
 
     public void run() {
-        String rawNames = inputView.readPlayerNames();
-        List<String> parsed = InputParser.parseName(rawNames);
-
-        Participants participants = Participants.of(parsed);
+        Participants participants = setUpParticipants();
         BlackJack blackJack = BlackJack.of(participants, DeckImpl.of(Suit.VALUES, Rank.VALUES));
 
         Map<String, List<String>> dealOutResult = blackJack.dealOut();
@@ -67,5 +64,12 @@ public class BlackJackController {
 
         outputView.printHandsAndScore(participants);
         outputView.printResult(blackJack.calculateDealerResult(), blackJack.calculatePlayerResult());
+    }
+
+    private Participants setUpParticipants() {
+        String rawNames = inputView.readPlayerNames();
+        List<String> parsed = InputParser.parseName(rawNames);
+
+        return Participants.of(parsed);
     }
 }
