@@ -1,8 +1,8 @@
 package presentation;
 
 import application.BlackjackService;
-import application.dto.RoundResult;
-import domain.dto.GameResult;
+import application.dto.GameResult;
+import domain.card.Card;
 import domain.dto.MemberStatus;
 import java.util.List;
 import presentation.ui.InputView;
@@ -24,14 +24,14 @@ public class BlackjackController {
         List<String> playerNames = getPlayerNames();
         distributeInitialCards();
         playGame(playerNames);
-        checkDrawableOfDealer();
+        processDealerTurn();
         finalGameStatus();
         finalGameResult();
     }
 
     private void finalGameResult() {
-        List<GameResult> gameResults = blackjackService.getGameResults();
-        outputView.printGameResult(gameResults);
+        GameResult gameResult = blackjackService.getGameResults();
+        outputView.printGameResult(gameResult);
     }
 
     private void finalGameStatus() {
@@ -39,10 +39,10 @@ public class BlackjackController {
         outputView.printFinalMemberStatus(statuses);
     }
 
-    private void checkDrawableOfDealer() {
-        boolean dealerDrawable = blackjackService.checkDealerDrawable();
-        if (dealerDrawable) {
-            outputView.printDealerDrawOut();
+    private void processDealerTurn() {
+        boolean hasDrawn = blackjackService.drawDealerCardIfAvailable();
+        if (hasDrawn) {
+            outputView.printDealerDrawResult();
         }
     }
 
@@ -64,11 +64,9 @@ public class BlackjackController {
     }
 
     private void playAllRoundOfPlayer(String playerName) {
-        boolean isBust = false;
-        while (!isBust && inputView.playContinue(playerName)) {
-            RoundResult roundResult = blackjackService.startOneRound(playerName);
-            outputView.printCurrentCard(playerName, roundResult);
-            isBust = roundResult.isBust();
+        while (blackjackService.isContinuable(playerName) && inputView.playContinue(playerName)) {
+            List<Card> cards = blackjackService.startOneRound(playerName);
+            outputView.printCurrentCard(playerName, cards);
         }
     }
 }

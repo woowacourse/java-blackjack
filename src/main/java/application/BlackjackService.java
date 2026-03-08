@@ -2,15 +2,15 @@ package application;
 
 import static constant.Word.*;
 
-import domain.Card;
+import application.dto.GameResult;
+import domain.RoundResult;
 import domain.Deck;
 import domain.GameTable;
-import application.dto.RoundResult;
-import domain.Member;
-import domain.Role;
-import domain.dto.GameResult;
+import domain.card.Card;
 import domain.dto.MemberStatus;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 public class BlackjackService {
@@ -25,36 +25,49 @@ public class BlackjackService {
     }
 
     public void joinPlayerToGame(List<String> players) {
-        gameTable.joinMember(new Member(DEALER.format(), Role.DEALER));
-
-        players.forEach(name -> gameTable.joinMember(new Member(name, Role.PLAYER)));
-
-        List<String> allParticipants = Stream.concat(Stream.of(DEALER.format()), players.stream()).toList();
+        gameTable.joinPlayer(players);
+        List<String> allParticipants = Stream.concat(
+                Stream.of(DEALER.format()),
+                players.stream()
+        ).toList();
 
         allParticipants.forEach(name -> {
-            for (int i = 0; i < 2; i++) {
-                gameTable.draw(name, deck.draw());
-            }
+            gameTable.draw(name, deck.draw());
+            gameTable.draw(name, deck.draw());
         });
     }
 
-    public RoundResult startOneRound(String memberName) {
-        List<Card> playerCards = gameTable.draw(memberName, deck.draw());
-
-        boolean isBust = gameTable.checkBust(memberName);
-
-        return new RoundResult(playerCards, isBust);
+    public List<Card> startOneRound(String memberName) {
+        return gameTable.draw(memberName, deck.draw());
     }
 
-    public boolean checkDealerDrawable() {
+    public boolean drawDealerCardIfAvailable() {
         return gameTable.draw(deck.draw());
     }
 
     public List<MemberStatus> getMemberStatuses() {
-        return gameTable.checkMemberStatuses();
+        MemberStatus dealer = gameTable.checkDealerStatus();
+        List<MemberStatus> players = gameTable.checkPlayerStatuses();
+
+        List<MemberStatus> totalStatuses = new ArrayList<>();
+        totalStatuses.add(dealer);
+        totalStatuses.addAll(players);
+
+        return totalStatuses;
     }
 
-    public List<GameResult> getGameResults() {
-        return gameTable.checkGameResult();
+    public boolean isContinuable(String playerName) {
+        return !gameTable.checkBust(playerName);
+    }
+
+    public GameResult getGameResults() {
+        Map<String, RoundResult> gameResults = gameTable.checkGameResult();
+        int dealerLoseAmount = Math.toIntExact(gameResults.values().stream()
+                .filter(result -> result.equals(RoundResult.WIN))
+                .count());
+        int dealerWinAmount = Math.toIntExact(gameResults.values().stream()
+                .filter(result -> result.equals(RoundResult.LOSE))
+                .count());
+        return new GameResult(dealerWinAmount, dealerLoseAmount, gameResults);
     }
 }
