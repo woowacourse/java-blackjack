@@ -1,5 +1,6 @@
 package blackjack.model.participant;
 
+import blackjack.common.error.ErrorCode;
 import blackjack.model.Hands;
 import blackjack.model.card.CardDto;
 import blackjack.model.cardDeck.CardDeck;
@@ -13,9 +14,8 @@ public abstract class Participant {
     protected final Hands hands;
 
     public Participant(String name, Hands hands) {
-        if (hands == null) {
-            throw new IllegalArgumentException("hands가 null입니다.");
-        }
+        validateName(name);
+        validateHands(hands);
 
         this.name = name;
         this.hands = hands;
@@ -49,5 +49,17 @@ public abstract class Participant {
 
     public String getName() {
         return this.name;
+    }
+
+    private void validateName(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException(ErrorCode.NO_NAME_PARTICIPANT_NAME.getMessage());
+        }
+    }
+
+    private void validateHands(Hands hands) {
+        if (hands == null) {
+            throw new IllegalArgumentException(ErrorCode.NULL_HANDS.getMessage());
+        }
     }
 }
