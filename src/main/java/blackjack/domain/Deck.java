@@ -3,6 +3,7 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Deck {
@@ -29,6 +30,7 @@ public class Deck {
     }
 
     private void validate(List<TrumpCard> cards) {
+        Objects.requireNonNull(cards, "덱 카드 목록은 null일 수 없습니다.");
         validateCardsCount(cards);
         validateDuplicates(cards);
     }

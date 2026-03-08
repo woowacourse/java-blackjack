@@ -5,6 +5,7 @@ import blackjack.dto.GameResultDto;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 
@@ -14,9 +15,16 @@ public class BlackjackGame {
     private final Deck deck;
 
     private BlackjackGame(Dealer dealer, Players players, Deck deck) {
+        validate(dealer, players, deck);
         this.dealer = dealer;
         this.players = players;
         this.deck = deck;
+    }
+
+    private void validate(Dealer dealer, Players players, Deck deck) {
+        Objects.requireNonNull(dealer, "게임에 딜러가 존재해야 합니다.");
+        Objects.requireNonNull(players, "게임에 플레이어가 존재해야 합니다.");
+        Objects.requireNonNull(deck, "게임에 덱이 존재해야 합니다.");
     }
 
     public static BlackjackGame create(List<String> names, ShuffleStrategy strategy) {

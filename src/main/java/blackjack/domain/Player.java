@@ -1,14 +1,21 @@
 package blackjack.domain;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Player {
     private final Name name;
     private final Hand hand;
 
     private Player(Name name, Hand hand) {
+        validate(name, hand);
         this.name = name;
         this.hand = hand;
+    }
+
+    private void validate(Name name, Hand hand) {
+        Objects.requireNonNull(name, "플레이어 이름은 null일 수 없습니다.");
+        Objects.requireNonNull(hand, "플레이어 덱(카드)은 null일 수 없습니다.");
     }
 
     public static Player of(Name name) {

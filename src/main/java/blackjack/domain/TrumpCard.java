@@ -17,13 +17,8 @@ public class TrumpCard {
     }
 
     private void validate(Suit suit, Rank rank) {
-        validateSuitOrRankIsNull(suit, rank);
-    }
-
-    private void validateSuitOrRankIsNull(Suit suit, Rank rank) {
-        if (suit == null || rank == null) {
-            throw new IllegalArgumentException("Rank와 Suit 중 하나라도 null이 올 수 없습니다.");
-        }
+            Objects.requireNonNull(suit, "카드의 수트는 null일 수 없습니다.");
+            Objects.requireNonNull(rank, "카드의 랭크는 null일 수 없습니다.");
     }
 
     public boolean isAce() {

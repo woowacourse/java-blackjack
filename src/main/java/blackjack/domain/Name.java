@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import java.util.Objects;
+
 public class Name {
     private static final int MAX_LENGTH = 10;
     private static final String NAME_PATTERN = "^[a-zA-Z가-힣]+(\\s[a-zA-Z가-힣]+)*$";
@@ -16,6 +18,7 @@ public class Name {
     }
 
     private void validate(String name) {
+        Objects.requireNonNull(name, "이름은 null일 수 없습니다.");
         validateBlank(name);
         validateNameLength(name);
         validateKoreanOrEnglishOnly(name);
