@@ -3,9 +3,11 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.Hand;
 
+import java.util.List;
+
 public abstract class Participant {
 
-    protected final Hand hand;
+    private final Hand hand;
 
     protected Participant() {
         this.hand = new Hand();
@@ -27,7 +29,7 @@ public abstract class Participant {
         return hand.calculateScore();
     }
 
-    public Hand getHand() {
-        return hand;
+    public List<Card> getCards() {
+        return hand.getCards();
     }
 }

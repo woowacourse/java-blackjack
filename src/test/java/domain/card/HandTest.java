@@ -117,7 +117,7 @@ class HandTest {
         }
 
         // when - then
-        assertEquals(hand.getFirstCard(), firstCard);
+        assertEquals(hand.getCards().getFirst(), firstCard);
     }
 
     @Test
@@ -145,7 +145,7 @@ class HandTest {
 
 
         // when - then
-        assertThrows(IllegalStateException.class, hand::getFirstCard);
+        assertThrows(IllegalStateException.class, hand::getCards);
     }
 
     @Test

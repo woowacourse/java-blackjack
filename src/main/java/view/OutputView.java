@@ -33,7 +33,7 @@ public class OutputView {
     }
 
     public void showPlayerHand(Player player) {
-        System.out.printf("%s카드: %s\n", player.getName(), formatCards(player.getHand().getCards()));
+        System.out.printf("%s카드: %s\n", player.getName(), formatCards(player.getCards()));
     }
 
     public void showDealerHitMessage() {
@@ -45,14 +45,14 @@ public class OutputView {
     }
 
     public void showDealerHand(Dealer dealer) {
-        System.out.printf("딜러카드: %s\n", formatCards(dealer.getHand().getCards()));
+        System.out.printf("딜러카드: %s\n", formatCards(dealer.getCards()));
     }
 
     public void showHandResults(Dealer dealer, Players players) {
-        System.out.printf("\n딜러카드: %s - 결과: %d\n", formatCards(dealer.getHand().getCards()), dealer.getScore());
+        System.out.printf("\n딜러카드: %s - 결과: %d\n", formatCards(dealer.getCards()), dealer.getScore());
 
         for (Player player : players.getPlayers()) {
-            System.out.printf("%s카드: %s - 결과: %d\n", player.getName(), formatCards(player.getHand().getCards()), player.getScore());
+            System.out.printf("%s카드: %s - 결과: %d\n", player.getName(), formatCards(player.getCards()), player.getScore());
         }
     }
 

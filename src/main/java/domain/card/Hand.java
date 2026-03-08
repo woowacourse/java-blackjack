@@ -50,14 +50,6 @@ public class Hand {
         return sum;
     }
 
-    public Card getFirstCard() {
-        if (cards.isEmpty()) {
-            throw new IllegalStateException("손 패가 존재하지 않습니다.");
-        }
-
-        return cards.getFirst();
-    }
-
     public List<Card> getCards() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("손 패가 존재하지 않습니다.");

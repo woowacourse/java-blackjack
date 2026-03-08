@@ -27,10 +27,10 @@ public class Dealer extends Participant {
     }
 
     public boolean shouldHit() {
-        return hand.calculateScore() < HIT_THRESHOLD;
+        return getScore() < HIT_THRESHOLD;
     }
 
     public Card getFirstCard() {
-        return hand.getFirstCard();
+        return getCards().getFirst();
     }
 }

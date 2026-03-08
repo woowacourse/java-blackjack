@@ -50,6 +50,6 @@ class PlayerTest {
         player.receive(new Card(Rank.ACE, Suit.DIAMOND));
 
         // then
-        Assertions.assertEquals(player.getHand().getCards().size(), 1);
+        Assertions.assertEquals(player.getCards().size(), 1);
     }
 }

@@ -30,18 +30,18 @@ class GameManagerTest {
         GameManager gameManager = new GameManager(dealer, players);
 
 
-        assertThrows(IllegalStateException.class, () -> dealer.getHand().getCards().size());
+        assertThrows(IllegalStateException.class, () -> dealer.getCards().size());
         for (Player player : players.getPlayers()) {
-            assertThrows(IllegalStateException.class, () -> player.getHand().getCards().size());
+            assertThrows(IllegalStateException.class, () -> player.getCards().size());
         }
 
         // when
         gameManager.initHands(new Deck());
 
         // then
-        Assertions.assertEquals(dealer.getHand().getCards().size(), 2);
+        Assertions.assertEquals(dealer.getCards().size(), 2);
         for (Player player : players.getPlayers()) {
-            Assertions.assertEquals(player.getHand().getCards().size(), 2);
+            Assertions.assertEquals(player.getCards().size(), 2);
         }
     }
 

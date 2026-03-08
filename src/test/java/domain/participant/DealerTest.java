@@ -23,7 +23,7 @@ class DealerTest {
         dealer.receive(new Card(Rank.ACE, Suit.DIAMOND));
 
         // then
-        Assertions.assertEquals(dealer.getHand().getCards().size(), 1);
+        Assertions.assertEquals(dealer.getCards().size(), 1);
     }
 
     @Test

@@ -14,11 +14,11 @@ public class Player extends Participant {
     }
 
     public boolean isHigherThan(Dealer dealer) {
-        return hand.calculateScore() > dealer.getScore();
+        return getScore() > dealer.getScore();
     }
 
     public boolean isTie(Dealer dealer) {
-        return hand.calculateScore() == dealer.getScore();
+        return getScore() == dealer.getScore();
     }
 
     private void validateNameLength(String name) {
