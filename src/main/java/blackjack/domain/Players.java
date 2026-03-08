@@ -46,7 +46,7 @@ public class Players {
         return player.getNickname();
     }
     
-    public PlayingCards addCardToAvailablePlayer(PlayingCards card) throws IllegalArgumentException {
+    public PlayingCards addCardToAvailablePlayer(PlayingCards card) {
         Player player = findDrawablePlayer();
         return player.receiveCard(card);
     }
