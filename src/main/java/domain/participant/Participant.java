@@ -12,7 +12,7 @@ public abstract class Participant {
     }
 
     public void receive(Card card) {
-        hand.drawCard(card);
+        hand.receive(card);
     }
 
     public boolean isBust() {

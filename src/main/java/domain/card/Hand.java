@@ -29,7 +29,7 @@ public class Hand {
         return sum;
     }
 
-    public void drawCard(Card card) {
+    public void receive(Card card) {
         cards.add(card);
     }
 
