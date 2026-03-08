@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Dealer extends Participant {
 
-    private final static int HIT_THRESHOLD = 17;
+    private static final int HIT_THRESHOLD = 17;
 
     public Dealer() {
     }
