@@ -1,5 +1,10 @@
 package domain.enums;
 
+import domain.participant.Player;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public enum Result {
 
     WIN("승"),
@@ -12,7 +17,30 @@ public enum Result {
         this.description = description;
     }
 
-    public static Result getOpposite(Result result) {
+    public static Result calculatePlayerResult(Player player, int dealerScore, boolean dealerBurst) {
+        int playerScore = player.getScore();
+
+        if (player.isBust() || (playerScore < dealerScore && !dealerBurst)) {
+            return Result.LOSE;
+        }
+        if (playerScore == dealerScore) {
+            return Result.DRAW;
+        }
+        return Result.WIN;
+    }
+
+    public static Map<Result, Integer> calculateDealerResult(List<Result> playerResults) {
+        Map<Result, Integer> results = new HashMap<>();
+        playerResults.forEach(
+                result -> {
+                    Result dealerResult = Result.getOpposite(result);
+                    results.put(dealerResult, results.getOrDefault(dealerResult, 0) + 1);
+                }
+        );
+        return results;
+    }
+
+    private static Result getOpposite(Result result) {
         if (result.equals(WIN)) {
             return LOSE;
         }
