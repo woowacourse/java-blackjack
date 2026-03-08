@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {
-    Player player;
+    Participant player;
 
     @BeforeEach
     void setUp() {

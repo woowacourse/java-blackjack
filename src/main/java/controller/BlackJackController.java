@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.List;
 import model.BlackJack;
 import model.participant.Participant;
 import model.Participants;
@@ -18,11 +19,10 @@ public class BlackJackController {
     }
 
     public void run() {
-        String rawParticipants = "딜러,";
-        rawParticipants += inputView.readParticipantNames();
-        String[] parsedName = InputParser.parseName(rawParticipants);
+        String rawNames = inputView.readPlayerNames();
+        List<String> parsed = InputParser.parseName(rawNames);
 
-        Participants participants = Participants.of(parsedName);
+        Participants participants = Participants.of(parsed);
         BlackJack blackJack = BlackJack.from(participants);
 
         blackJack.dealOut();

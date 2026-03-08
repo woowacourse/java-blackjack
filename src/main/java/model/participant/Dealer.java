@@ -10,7 +10,7 @@ public class Dealer extends Participant {
         super(name);
     }
 
-    public static Dealer of(String input) {
+    public static Participant of(String input) {
         return new Dealer(input);
     }
 

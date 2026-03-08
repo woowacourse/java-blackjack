@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import model.participant.Dealer;
@@ -11,17 +10,20 @@ import model.participant.Player;
 public class Participants implements Iterable<Participant> {
     private final List<Participant> values;
 
-    private Participants(String[] values) {
-        List<Participant> list = new ArrayList<>();
-        list.add(Dealer.of(values[0]));
-        for (int i = 1; i < values.length; i++) {
-            list.add(Player.of(values[i]));
-        }
-        this.values = list;
+    private Participants(List<Participant> values) {
+        this.values = values;
     }
 
-    public static Participants of(String[] splitValue) {
-        return new Participants(splitValue);
+    public static Participants of(List<String> names) {
+        List<Participant> participants = new ArrayList<>();
+        participants.add(Dealer.of("딜러"));
+
+        List<Participant> players = names.stream()
+                .map(Player::of)
+                .toList();
+        participants.addAll(players);
+
+        return new Participants(participants);
     }
 
     public Participant getDealer() {
@@ -43,6 +45,6 @@ public class Participants implements Iterable<Participant> {
 
     @Override
     public Iterator<Participant> iterator() {
-        return Collections.unmodifiableList(values).iterator();
+        return List.copyOf(values).iterator();
     }
 }

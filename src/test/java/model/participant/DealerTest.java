@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
-    Dealer dealer;
+    Participant dealer;
 
     @BeforeEach
     void setUp() {
