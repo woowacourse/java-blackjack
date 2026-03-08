@@ -32,17 +32,18 @@ public class BlackjackController {
             getMoreCardsForDealer(dealer);
         }
 
-        printGameResult(players, dealer);
+        printGameResult(List.of(dealer));
+        printGameResult(players);
 
         printWinningResult(players, dealer);
     }
 
     private void printGameSettingResult(List<Player> players, Dealer dealer) {
-        List<String> playersName = players.stream()
+        List<String> playerNames = players.stream()
                 .map(Player::getName)
                 .toList();
 
-        OutputView.printGameSettingMessage(dealer.getName(), playersName);
+        OutputView.printGameSettingDoneMessage(dealer.getName(), playerNames);
         OutputView.printSettingCardsResult(dealer.getName(), dealer.getCardsName().subList(0, 1));
         for (Player player : players) {
             OutputView.printSettingCardsResult(player.getName(), player.getCardsName());
@@ -62,10 +63,8 @@ public class BlackjackController {
                 String yesOrNo = inputView.readMoreCard(player.getName());
                 if (yesOrNo.equals("y")) {
                     gameService.getMoreCard(player);
-
                     OutputView.printSettingCardsResult(player.getName(), player.getCardsName());
                     count++;
-
                     continue;
                 }
                 if (count == 0) {
@@ -78,8 +77,8 @@ public class BlackjackController {
 
     private void getMoreCardsForDealer(Dealer dealer) {
         while (dealer.calculateCardsValue() < 17) {
-            OutputView.printGetMoreCardsForDealer(dealer.getName());
             gameService.getMoreCard(dealer);
+            OutputView.printGetMoreCardsForDealer(dealer.getName());
         }
     }
 
@@ -90,8 +89,7 @@ public class BlackjackController {
         return players.size() == burstUserCount;
     }
 
-    private void printGameResult(List<Player> players, Dealer dealer) {
-        OutputView.printCardsResult(dealer.getName(), dealer.getCardsName(), dealer.calculateCardsValue());
+    private void printGameResult(List<Player> players) {
         for (Player player : players) {
             OutputView.printCardsResult(player.getName(), player.getCardsName(), player.calculateCardsValue());
         }

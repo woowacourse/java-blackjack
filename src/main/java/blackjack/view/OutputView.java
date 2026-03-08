@@ -9,7 +9,7 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printGameSettingMessage(String dealerName, List<String> playersName) {
+    public static void printGameSettingDoneMessage(String dealerName, List<String> playersName) {
         System.out.println();
         StringJoiner stringJoiner = new StringJoiner(", ");
         for (String playerName : playersName) {
@@ -19,9 +19,8 @@ public class OutputView {
         System.out.println(dealerName + "와 " + stringJoiner + "에게 2장을 나누었습니다.");
     }
 
-    public static void printSettingCardsResult(String userName, List<String> cards) {
-        System.out.print(userName + "카드: ");
-
+    public static void printSettingCardsResult(String playerName, List<String> cards) {
+        System.out.print(playerName + "카드: ");
         StringJoiner stringJoiner = new StringJoiner(", ");
         for (String card : cards) {
             stringJoiner.add(card);
@@ -36,15 +35,14 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printCardsResult(String userName, List<String> cards, int cardsValue) {
-        System.out.print(userName + "카드: ");
-
+    public static void printCardsResult(String playerName, List<String> cards, int score) {
+        System.out.print(playerName + "카드: ");
         StringJoiner stringJoiner = new StringJoiner(", ");
         for (String card : cards) {
             stringJoiner.add(card);
         }
 
-        System.out.println(stringJoiner + " - 결과: " + cardsValue);
+        System.out.println(stringJoiner + " - 결과: " + score);
     }
 
     public static void printWinningResult(Map<String, Boolean> result, String dealerName, int dealerWinCount) {
