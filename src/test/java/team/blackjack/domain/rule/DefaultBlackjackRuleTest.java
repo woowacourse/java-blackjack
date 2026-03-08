@@ -4,7 +4,9 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import team.blackjack.domain.Card;
+import team.blackjack.domain.Rank;
 import team.blackjack.domain.Result;
+import team.blackjack.domain.Suit;
 
 class DefaultBlackjackRuleTest {
     private static final DefaultBlackjackRule defaultBlackjackRule = new DefaultBlackjackRule();
@@ -76,7 +78,12 @@ class DefaultBlackjackRuleTest {
 
     @Test
     void 숫자10과_6이후에_ACE가_2개_오는_경우_각각_1로_정상_해석되는지_테스트() {
-        List<Card> cards = List.of(Card.KING_OF_CLUBS, Card.SIX_OF_HEARTS, Card.ACE_OF_SPADES, Card.ACE_OF_HEARTS);
+        List<Card> cards = List.of(
+                new Card(Suit.CLUBS, Rank.KING),
+                new Card(Suit.HEARTS, Rank.SIX),
+                new Card(Suit.SPADES, Rank.ACE),
+                new Card(Suit.HEARTS, Rank.ACE)
+        );
 
         int score = DefaultBlackjackRule.calculateBestScore(cards);
 
@@ -85,7 +92,12 @@ class DefaultBlackjackRuleTest {
 
     @Test
     void Ace가_1장있는_경우_최적의_합_정상_계산_테스트() {
-        List<Card> cards = List.of(Card.FIVE_OF_CLUBS, Card.FIVE_OF_DIAMONDS, Card.ACE_OF_SPADES);
+        List<Card> cards = List.of(
+                new Card(Suit.CLUBS, Rank.FIVE),
+                new Card(Suit.DIAMONDS, Rank.FIVE),
+                new Card(Suit.SPADES, Rank.ACE)
+        );
+
         int score = DefaultBlackjackRule.calculateBestScore(cards);
 
         Assertions.assertEquals(21, score);

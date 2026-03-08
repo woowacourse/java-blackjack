@@ -11,8 +11,14 @@ class HandTest {
     @Test
     void 에이스와_킹_두_장은_블랙잭_21로_정상_계산된다() {
         Hand hand = new Hand();
-        hand.addCard(Card.ACE_OF_HEARTS);
-        hand.addCard(Card.KING_OF_HEARTS);
+        List<Card> cards = List.of(
+                new Card(Suit.HEARTS, Rank.ACE),
+                new Card(Suit.HEARTS, Rank.KING)
+        );
+
+        for (Card card : cards) {
+            hand.addCard(card);
+        }
 
         assertThat(hand.getScore()).isEqualTo(21);
     }
@@ -20,8 +26,14 @@ class HandTest {
     @Test
     void 숫자_카드만_있을_때_합이_정확히_계산된다() {
         Hand hand = new Hand();
-        hand.addCard(Card.FIVE_OF_HEARTS);
-        hand.addCard(Card.TEN_OF_HEARTS);
+        List<Card> cards = List.of(
+                new Card(Suit.HEARTS, Rank.FIVE),
+                new Card(Suit.HEARTS, Rank.TEN)
+        );
+
+        for (Card card : cards) {
+            hand.addCard(card);
+        }
 
         assertThat(hand.getScore()).isEqualTo(15);
     }
@@ -29,9 +41,15 @@ class HandTest {
     @Test
     void 다른_카드들의_총합이_10인_이하인_경우_에이스가_11로_계산된다() {
         Hand hand = new Hand();
-        hand.addCard(Card.FIVE_OF_HEARTS);
-        hand.addCard(Card.FOUR_OF_HEARTS);
-        hand.addCard(Card.ACE_OF_HEARTS);
+        List<Card> cards = List.of(
+                new Card(Suit.HEARTS, Rank.FIVE),
+                new Card(Suit.HEARTS, Rank.FOUR),
+                new Card(Suit.HEARTS, Rank.ACE)
+        );
+
+        for (Card card : cards) {
+            hand.addCard(card);
+        }
 
         assertThat(hand.getScore()).isEqualTo(20);
     }
@@ -39,9 +57,15 @@ class HandTest {
     @Test
     void 다른_카드들의_총합이_10인인_경우_에이스가_11로_계산된다() {
         Hand hand = new Hand();
-        hand.addCard(Card.SIX_OF_HEARTS);
-        hand.addCard(Card.FOUR_OF_HEARTS);
-        hand.addCard(Card.ACE_OF_HEARTS);
+        List<Card> cards = List.of(
+                new Card(Suit.HEARTS, Rank.SIX),
+                new Card(Suit.HEARTS, Rank.FOUR),
+                new Card(Suit.HEARTS, Rank.ACE)
+                );
+
+        for (Card card : cards) {
+            hand.addCard(card);
+        }
 
         assertThat(hand.getScore()).isEqualTo(21);
     }
@@ -49,9 +73,15 @@ class HandTest {
     @Test
     void 다른_카드들의_총합이_11_이상인_경우_에이스가_1로_계산된다() {
         Hand hand = new Hand();
-        hand.addCard(Card.FIVE_OF_HEARTS);
-        hand.addCard(Card.SEVEN_OF_HEARTS);
-        hand.addCard(Card.ACE_OF_HEARTS);
+        List<Card> cards = List.of(
+                new Card(Suit.HEARTS, Rank.ACE),
+                new Card(Suit.HEARTS, Rank.FIVE),
+                new Card(Suit.HEARTS, Rank.SEVEN)
+        );
+
+        for (Card card : cards) {
+            hand.addCard(card);
+        }
 
         assertThat(hand.getScore()).isEqualTo(13);
     }
@@ -59,9 +89,15 @@ class HandTest {
     @Test
     void 다른_카드들의_총합이_11인인_경우_에이스가_1로_계산된다() {
         Hand hand = new Hand();
-        hand.addCard(Card.FIVE_OF_HEARTS);
-        hand.addCard(Card.SIX_OF_HEARTS);
-        hand.addCard(Card.ACE_OF_HEARTS);
+        List<Card> cards = List.of(
+                new Card(Suit.HEARTS, Rank.FIVE),
+                new Card(Suit.HEARTS, Rank.SIX),
+                new Card(Suit.HEARTS, Rank.ACE)
+        );
+
+        for (Card card : cards) {
+            hand.addCard(card);
+        }
 
         assertThat(hand.getScore()).isEqualTo(12);
     }
