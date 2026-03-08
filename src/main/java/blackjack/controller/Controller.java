@@ -1,8 +1,6 @@
 package blackjack.controller;
 
-import blackjack.exception.ErrorMessage;
 import blackjack.model.*;
-import blackjack.util.NameSplitter;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -26,7 +24,7 @@ public class Controller {
         Deck deck = new Deck();
         Dealer dealer = new Dealer();
 
-        Players players = getPlayers();
+        Players players = Players.from(inputView.getName());
         List<Player> participants = players.getPlayers();
 
         deck.shuffle();
@@ -85,14 +83,6 @@ public class Controller {
             }
             outputView.printPlayerCardStatus(player, player.getCards());
         }
-    }
-
-    private Players getPlayers() {
-        List<Player> players = NameSplitter.split(inputView.getName())
-                .stream()
-                .map(Player::new)
-                .toList();
-        return new Players(players);
     }
 
     private void initializeDealToParticipants(Dealer dealer, Players players, Deck deck) {

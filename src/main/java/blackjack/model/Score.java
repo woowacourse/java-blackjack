@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Score {
     public static final int BLACKJACK_NUMBER = 21;
+
     private int score;
 
     public Score() {
