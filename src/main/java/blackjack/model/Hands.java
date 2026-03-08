@@ -7,6 +7,9 @@ import java.util.List;
 
 public class Hands {
 
+    private static final int ACE_THRESHOLD_SCORE = 11;
+    private static final int ACE_ADDITIONAL_SCORE = 10;
+
     private final List<Card> cards;
 
     private Hands(List<Card> cards) {
@@ -29,8 +32,8 @@ public class Hands {
         boolean hasAce = cards.stream()
                 .anyMatch(Card::isAce);
 
-        if (hasAce && baseScore <= 11) {
-            baseScore += 10;
+        if (hasAce && baseScore <= ACE_THRESHOLD_SCORE) {
+            baseScore += ACE_ADDITIONAL_SCORE;
         }
 
         return baseScore;
