@@ -7,7 +7,7 @@ public enum BinaryOptionMessage {
     YES("y"),
     NO("n");
 
-    private static final String YES_NO_REGEX = "^[yYnN]$";
+    private static final String YES_NO_REGEX = "^[yn]$";
 
     private final String choice;
 
