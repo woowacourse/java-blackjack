@@ -13,7 +13,7 @@ public class Dealer extends Participant {
         return List.of(getCards().getFirst());
     }
 
-    public boolean shouldHit(DealerHitPolicy dealerHitPolicy, ScoreCalculator scoreCalculator) {
-        return dealerHitPolicy.shouldHit(scoreCalculator.calculate(getCards()));
+    public boolean shouldHit(DealerHitPolicy dealerHitPolicy, Score score) {
+        return dealerHitPolicy.shouldHit(score);
     }
 }

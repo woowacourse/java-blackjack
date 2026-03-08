@@ -7,6 +7,7 @@ import blackjack.model.DealerThresholdHitPolicy;
 import blackjack.model.ResultJudgement;
 import blackjack.model.ScoreCalculator;
 import blackjack.model.ShuffledCardsGenerator;
+import blackjack.service.BlackjackService;
 import blackjack.view.BlackjackView;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -22,16 +23,10 @@ public class BlackjackApplication {
         DealerThresholdHitPolicy dealerThresholdHitPolicy = new DealerThresholdHitPolicy(17);
         ShuffledCardsGenerator shuffledCardsGenerator = new ShuffledCardsGenerator();
         ResultJudgement resultJudgement = new ResultJudgement(bustPolicy);
+        BlackjackService service = new BlackjackService(scoreCalculator, dealerThresholdHitPolicy, bustPolicy,
+            shuffledCardsGenerator, resultJudgement);
 
-        BlackjackController controller = new BlackjackController(
-            view,
-            scoreCalculator,
-            dealerThresholdHitPolicy,
-            bustPolicy,
-            shuffledCardsGenerator,
-            resultJudgement
-        );
-
+        BlackjackController controller = new BlackjackController(view, service);
         controller.run();
     }
 }

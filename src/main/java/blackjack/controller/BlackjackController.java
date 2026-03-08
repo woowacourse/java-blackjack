@@ -6,71 +6,37 @@ import blackjack.dto.ParticipantScoreDto;
 import blackjack.dto.ResultDto;
 import blackjack.model.Answer;
 import blackjack.model.BlackjackResult;
-import blackjack.model.BustPolicy;
-import blackjack.model.CardsGenerator;
 import blackjack.model.Dealer;
-import blackjack.model.DealerHitPolicy;
 import blackjack.model.Deck;
 import blackjack.model.Participant;
 import blackjack.model.Participants;
-import blackjack.model.ResultJudgement;
 import blackjack.model.Score;
-import blackjack.model.ScoreCalculator;
+import blackjack.service.BlackjackService;
 import blackjack.view.BlackjackView;
 import java.util.List;
 
 public class BlackjackController {
 
-    private static final int INITIAL_DEAL_COUNT = 2;
-
     private final BlackjackView view;
+    private final BlackjackService service;
 
-    private final ScoreCalculator scoreCalculator;
-    private final DealerHitPolicy dealerHitPolicy;
-    private final BustPolicy bustPolicy;
-
-    private final CardsGenerator cardsGenerator;
-    private final ResultJudgement resultJudgement;
-
-    public BlackjackController(
-        BlackjackView view,
-        ScoreCalculator scoreCalculator,
-        DealerHitPolicy dealerHitPolicy,
-        BustPolicy bustPolicy,
-        CardsGenerator cardsGenerator,
-        ResultJudgement resultJudgement
-    ) {
+    public BlackjackController(BlackjackView view, BlackjackService service) {
         this.view = view;
-        this.scoreCalculator = scoreCalculator;
-        this.dealerHitPolicy = dealerHitPolicy;
-        this.bustPolicy = bustPolicy;
-        this.cardsGenerator = cardsGenerator;
-        this.resultJudgement = resultJudgement;
+        this.service = service;
     }
 
     public void run() {
         Participants participants = Participants.from(view.readPlayers());
-        Deck deck = Deck.shuffled(cardsGenerator);
+        Deck deck = service.createDeck();
 
-        initialDeal(participants, deck);
+        service.initialDeal(participants, deck);
+        view.printInitialDeal(ParticipantInitialDealDtos.from(participants));
+
         hitPlayers(participants.getPlayers(), deck);
         hitDealer(participants.getDealer(), deck);
 
         printScore(participants);
         printResult(participants);
-    }
-
-    private void initialDeal(Participants participants, Deck deck) {
-        for (int i = 0; i < INITIAL_DEAL_COUNT; i++) {
-            deal(participants, deck);
-        }
-        view.printInitialDeal(ParticipantInitialDealDtos.from(participants));
-    }
-
-    private void deal(Participants participants, Deck deck) {
-        for (Participant participant : participants) {
-            participant.hit(deck.draw());
-        }
     }
 
     private void hitPlayers(List<Participant> players, Deck deck) {
@@ -80,16 +46,16 @@ public class BlackjackController {
     }
 
     private void hitPlayer(Participant player, Deck deck) {
-        while (!bustPolicy.isBust(scoreCalculator.calculate(player.getCards()))
-            && Answer.from(view.askHit(player.getName())) == Answer.YES) {
-            player.hit(deck.draw());
+        while (service.canHit(player)) {
+            Answer answer = Answer.from(view.askHit(player.getName()));
+            service.hitPlayer(player, deck, answer);
             view.printPlayerCards(ParticipantCardsDto.fromAllCards(player));
         }
     }
 
     private void hitDealer(Dealer dealer, Deck deck) {
-        if (dealer.shouldHit(dealerHitPolicy, scoreCalculator)) {
-            dealer.hit(deck.draw());
+        if (service.shouldHit(dealer)) {
+            service.hitDealer(dealer, deck);
             view.printDealerHit();
         }
     }
@@ -97,7 +63,7 @@ public class BlackjackController {
     private void printScore(Participants participants) {
         List<ParticipantScoreDto> participantScoreDtos = participants.stream()
             .map(participant -> {
-                Score score = scoreCalculator.calculate(participant.getCards());
+                Score score = service.calculate(participant);
                 return ParticipantScoreDto.from(participant, score);
             })
             .toList();
@@ -107,9 +73,7 @@ public class BlackjackController {
     private void printResult(Participants participants) {
         List<ResultDto> resultDtos = participants.getPlayers().stream()
             .map(player -> {
-                    BlackjackResult result = resultJudgement.judge(
-                        scoreCalculator.calculate(player.getCards()),
-                        scoreCalculator.calculate(participants.getDealer().getCards()));
+                    BlackjackResult result = service.judge(player, participants.getDealer());
                     return new ResultDto(player.getName(), result);
                 }
             ).toList();
