@@ -2,8 +2,6 @@ package domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import constant.Rank;
-import constant.Suit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

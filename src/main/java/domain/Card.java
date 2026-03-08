@@ -1,8 +1,5 @@
 package domain;
 
-import constant.Rank;
-import constant.Suit;
-
 public class Card {
     private final Rank rank;
     private final Suit suit;
@@ -10,5 +7,9 @@ public class Card {
     public Card(Rank rank, Suit suit) {
         this.rank = rank;
         this.suit = suit;
+    }
+
+    public int getScore() {
+        return rank.getScore();
     }
 }
