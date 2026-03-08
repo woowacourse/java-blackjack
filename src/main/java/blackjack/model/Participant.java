@@ -25,10 +25,6 @@ public abstract class Participant {
         return score.isBurst();
     }
 
-    public Card getFirstCardName() {
-        return cards.getFirst();
-    }
-
     public int getScore() {
         return score.getScore();
     }
