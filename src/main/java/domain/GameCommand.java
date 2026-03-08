@@ -8,7 +8,7 @@ public enum GameCommand {
     Y("y"),
     N("n");
 
-    private String command;
+    private final String command;
 
     GameCommand(String command) {
         this.command = command;
