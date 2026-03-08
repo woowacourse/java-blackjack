@@ -16,6 +16,7 @@ class ResultTest {
     @Test
     void 플레이어가_버스트면_결과는_패다() {
         Dealer dealer = new Dealer();
+
         Player player = new Player("pobi", new Hand());
         player.addCard(new Card(TEN, SPADE));
         player.addCard(new Card(TEN, HEART));
@@ -32,6 +33,7 @@ class ResultTest {
         dealer.addCard(new Card(TEN, SPADE));
         dealer.addCard(new Card(TEN, HEART));
         dealer.addCard(new Card(FIVE, HEART));
+
         Player player = new Player("pobi", new Hand());
 
         Result result = Result.of(dealer, player);
@@ -44,6 +46,7 @@ class ResultTest {
         Dealer dealer = new Dealer();
         dealer.addCard(new Card(TEN, HEART));
         dealer.addCard(new Card(FIVE, HEART));
+
         Player player = new Player("pobi", new Hand());
         player.addCard(new Card(ACE, SPADE));
         player.addCard(new Card(KING, HEART));
@@ -51,5 +54,35 @@ class ResultTest {
         Result result = Result.of(dealer, player);
 
         assertThat(result).isEqualTo(Result.WIN);
+    }
+
+    @Test
+    void 플레이어의_점수가_낮으면_결과는_패이다() {
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(KING, HEART));
+        dealer.addCard(new Card(ACE, SPADE));
+
+        Player player = new Player("pobi", new Hand());
+        player.addCard(new Card(TEN, HEART));
+        player.addCard(new Card(FIVE, HEART));
+
+        Result result = Result.of(dealer, player);
+
+        assertThat(result).isEqualTo(Result.LOSE);
+    }
+
+    @Test
+    void 플레이어와_딜러의_점수가_같으면_결과는_무승부이다() {
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(KING, HEART));
+        dealer.addCard(new Card(ACE, SPADE));
+
+        Player player = new Player("pobi", new Hand());
+        player.addCard(new Card(ACE, HEART));
+        player.addCard(new Card(KING, SPADE));
+
+        Result result = Result.of(dealer, player);
+
+        assertThat(result).isEqualTo(Result.DRAW);
     }
 }
