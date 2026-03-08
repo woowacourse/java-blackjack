@@ -12,17 +12,21 @@ public enum GameResult {
     }
 
     public static GameResult getResult(Player player, Dealer dealer) {
-        int playerScore = player.getScore();
-        int dealerScore = dealer.getScore();
-
-        if ((player.isBurst() && dealer.isBurst()) || (playerScore == dealerScore)) {
-            return DRAW;
-        }
-
-        if (player.isBurst() || (!dealer.isBurst() && (playerScore < dealerScore))) {
+        if (player.isBurst()) {
             return LOSE;
         }
+        if (dealer.isBurst()) {
+            return WIN;
+        }
 
+        int playerScore = player.getScore();
+        int dealerScore = dealer.getScore();
+        if (playerScore < dealerScore) {
+            return LOSE;
+        }
+        if (playerScore == dealerScore) {
+            return DRAW;
+        }
         return WIN;
     }
 
