@@ -1,7 +1,7 @@
 package domain;
 
-import constant.GameConstant;
 import domain.dto.PlayerCardDto;
+import constant.GameConstant;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public class Dealer extends Player {
     }
 
     public boolean needAdditionalCard() {
-        return calculateScore() <= GameConstant.DEALER_HIT_THRESHOLD;
+        return hand.calculateScore() <= GameConstant.DEALER_HIT_THRESHOLD;
     }
 
     public PlayerCardDto toOpeningCardDto() {

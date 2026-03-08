@@ -17,6 +17,7 @@ public class Deck {
     public Card pop() {
         return cards.removeFirst();
 
+
         // 리스트 비었을 때 처리 필요
     }
 }

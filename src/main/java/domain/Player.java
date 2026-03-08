@@ -1,12 +1,9 @@
 package domain;
 
-import constant.GameConstant;
 import domain.dto.FinalCardDto;
 import domain.dto.PlayerCardDto;
 
 public class Player {
-    private static final int ACE_BONUS_SCORE = 10;
-    private static final int ACE_NO_BONUS = 0;
     protected final Hand hand = new Hand();
     private final String name;
 
@@ -14,29 +11,12 @@ public class Player {
         this.name = name;
     }
 
-    protected int calculateScore() {
-        int total = 0;
-        for (Card card : hand) {
-            total += card.getCardRank().getValue();
-        }
-
-        return total;
-    }
-
-    private int calculateAceScore() {
-        if (!hand.hasAce() || calculateScore() > 11) {
-            return ACE_NO_BONUS;
-        }
-
-        return ACE_BONUS_SCORE;
-    }
-
     public int getFinalScore() {
-        return calculateScore() + calculateAceScore();
+        return hand.calculateFinalScore();
     }
 
     public boolean isBust() {
-        return getFinalScore() > GameConstant.BUST_THRESHOLD;
+        return hand.isBust();
     }
 
     public void add(Card card) {
