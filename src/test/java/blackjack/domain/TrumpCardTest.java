@@ -50,6 +50,6 @@ class TrumpCardTest {
     @Test
     void 카드의_랭크_이름을_반환한다() {
         TrumpCard trumpCard = TrumpCard.of(Suit.of("하트"), Rank.of("A"));
-        assertThat(trumpCard.rankName()).isEqualTo("A");
+        assertThat(trumpCard.symbol()).isEqualTo("A");
     }
 }
