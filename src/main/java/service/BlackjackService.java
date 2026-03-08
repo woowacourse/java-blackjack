@@ -32,7 +32,7 @@ public class BlackjackService {
     }
 
     public Dealer createDealer(Deck deck) {
-        Dealer dealer = new Dealer(GameConstant.DEALER_NAME);
+        Dealer dealer = new Dealer(Dealer.DEALER_NAME);
         giveInitialCards(deck, dealer);
         return dealer;
     }
