@@ -36,6 +36,11 @@ public class BlackjackController {
         printWinningResult(players, dealer);
     }
 
+    private List<Player> readUsers() {
+        String userName = inputView.readUserName();
+        return InputParser.createUser(userName);
+    }
+
     private void settingCards(List<Player> players, Dealer dealer) {
         Deck.shuffle();
         for (int i = 0; i < 2; i++) {
@@ -62,11 +67,6 @@ public class BlackjackController {
         OutputView.printSettingCardResultsByPlayer(cardsResult);
     }
 
-    private List<Player> readUsers() {
-        String userName = inputView.readUserName();
-        return InputParser.createUser(userName);
-    }
-
     // TODO : 코드 품질 개선 필요
     private void getMoreCards(List<Player> players) {
         for (Player player : players) {
@@ -87,18 +87,19 @@ public class BlackjackController {
         }
     }
 
-    private void getMoreCardsForDealer(Dealer dealer) {
-        while (dealer.calculateCardsValue() < 17) {
-            dealer.draw(Deck.top());
-            OutputView.printGetMoreCardsForDealer(dealer.getName());
-        }
-    }
-
+    // TODO: Player를 일급컬랙션으로 감싸 상태 확인 로직을 숨긴다
     private boolean isAllUserBurst(List<Player> players) {
         int burstUserCount = (int) players.stream()
                 .filter(Player::isBurst)
                 .count();
         return players.size() == burstUserCount;
+    }
+
+    private void getMoreCardsForDealer(Dealer dealer) {
+        while (dealer.calculateCardsValue() < 17) {
+            dealer.draw(Deck.top());
+            OutputView.printGetMoreCardsForDealer(dealer.getName());
+        }
     }
 
     private void printGameResult(List<Player> players) {
