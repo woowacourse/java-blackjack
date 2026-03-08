@@ -21,6 +21,10 @@ public class Dealer implements Participant {
         return DefaultBlackjackRule.calculateBestScore(this.getHand().getCards());
     }
 
+    public boolean shouldHit() {
+        return DefaultBlackjackRule.isDealerMustDraw(getScore());
+    }
+
     @Override
     public void hit(Card card) {
         this.hand.addCard(card);

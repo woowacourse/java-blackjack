@@ -74,7 +74,7 @@ class BlackJackServiceTest {
         blackJackService.dealInitialCards();
 
         int dealerCardsBefore = blackJackService.calculateAllParticipantScore().dealerCard().size();
-        blackJackService.hitDealer();
+        blackJackService.dealerHit();
         int dealerCardsAfter = blackJackService.calculateAllParticipantScore().dealerCard().size();
 
         assertThat(dealerCardsAfter).isEqualTo(dealerCardsBefore + 1);
