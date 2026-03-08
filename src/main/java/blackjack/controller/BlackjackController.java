@@ -6,7 +6,6 @@ import blackjack.dto.DealResultDto;
 import blackjack.dto.GameResultDto;
 import blackjack.dto.PlayerHandDto;
 import blackjack.domain.BlackjackGame;
-import blackjack.service.RandomShuffleStrategy;
 import blackjack.util.Parser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
