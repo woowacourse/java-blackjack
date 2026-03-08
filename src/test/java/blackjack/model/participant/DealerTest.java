@@ -40,10 +40,7 @@ class DealerTest {
         CardDeck cardDeck = CardDeck.of(mustPickTen);
 
         dealer.pickAdditionalCard(cardDeck);
-        System.out.println(dealer.getAllCard());
         dealer.pickAdditionalCard(cardDeck);
-
-        System.out.println(dealer.getAllCard());
 
         // when & then
         assertThat(dealer.canPick()).isFalse();
