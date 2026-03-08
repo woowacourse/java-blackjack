@@ -8,7 +8,10 @@ public class Main {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
         BlackjackGame game = new BlackjackGame();
+        runBlackjack(inputView, outputView, game);
+    }
 
+    private static void runBlackjack(InputView inputView, OutputView outputView, BlackjackGame game) {
         List<String> playerNames = inputView.readPlayerNames();
         game.joinPlayerToGame(playerNames);
         outputView.printInitialStatus(game.playerHands());
