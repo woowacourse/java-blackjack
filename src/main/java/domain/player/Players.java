@@ -6,6 +6,8 @@ import java.util.Set;
 
 public class Players {
     private static final String ERROR_DUPLICATE_NAME = "플레이어 이름은 중복될 수 없습니다.";
+    private static final String ERROR_PLAYER_COUNT = "참가할 플레이어의 수는 최대 7명입니다.";
+    private static final int MAX_PLAYER_COUNT = 7;
     private final List<Player> players;
 
     private Players(List<Player> players) {
@@ -19,6 +21,14 @@ public class Players {
 
     private static void validate(List<Player> players) {
         validateUniqueName(players);
+        validatePlayerCount(players);
+    }
+
+    private static void validatePlayerCount(List<Player> players) {
+        if (players.size() > MAX_PLAYER_COUNT) {
+            throw new IllegalArgumentException(ERROR_PLAYER_COUNT);
+        }
+
     }
 
     private static void validateUniqueName(List<Player> players) {

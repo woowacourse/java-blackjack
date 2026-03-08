@@ -17,4 +17,20 @@ class PlayersTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @Test
+    void 플레이어_이름이_7개_초과시_예외처리() {
+        List<Player> players = List.of(
+                        new Player(Name.from("나무1")),
+                        new Player(Name.from("나무2")),
+                        new Player(Name.from("나무3")),
+                        new Player(Name.from("나무4")),
+                        new Player(Name.from("나무5")),
+                        new Player(Name.from("나무6")),
+                        new Player(Name.from("나무7")),
+                        new Player(Name.from("나무8"))
+                );
+
+        assertThatThrownBy(() -> Players.of(players))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
