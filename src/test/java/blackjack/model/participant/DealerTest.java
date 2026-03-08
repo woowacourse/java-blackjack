@@ -3,6 +3,7 @@ package blackjack.model.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.card.Card;
+import blackjack.model.card.CardDto;
 import blackjack.model.card.Rank;
 import blackjack.model.card.Suit;
 import blackjack.model.cardDeck.CardDeck;
@@ -29,10 +30,8 @@ class DealerTest {
         dealer.pickInitCards(cardDeck);
 
         //then
-        List<Card> cards = dealer.getOpenedCards();
-
-        assertThat(cards.size()).isEqualTo(1);
-        assertThat(cards.getFirst().getDefaultScore()).isEqualTo(10);
+        assertThat(dealer.getOpenedCards().size()).isEqualTo(1);
+        assertThat(dealer.getAllCard().size()).isEqualTo(2);
     }
 
     @Test

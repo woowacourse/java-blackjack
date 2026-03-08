@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.model.card.Card;
+import blackjack.model.card.CardDto;
 import blackjack.model.participant.Player;
 import blackjack.model.result.TotalResult;
 import java.util.List;
@@ -20,21 +20,13 @@ public class OutputView {
         System.out.println("딜러와 " + joinedName + "에게 2장을 나누었습니다.");
     }
 
-    public void printParticipantCards(String name, List<Card> openedCards) {
-        List<String> cardNames = openedCards.stream()
-                .map(Card::toString)
-                .toList();
-
-        String joinedCardNames = String.join(", ", cardNames);
+    public void printParticipantCards(String name, List<CardDto> openedCards) {
+        String joinedCardNames = getJoinedCardNames(openedCards);
         System.out.println(name + "카드: " + joinedCardNames);
     }
 
-    public void printParticipantCardsWithScore(String name, List<Card> cards, int score) {
-        List<String> cardNames = cards.stream()
-                .map(Card::toString)
-                .toList();
-
-        String joinedCardNames = String.join(", ", cardNames);
+    public void printParticipantCardsWithScore(String name, List<CardDto> cards, int score) {
+        String joinedCardNames = getJoinedCardNames(cards);
         System.out.println(name + "카드: " + joinedCardNames + " - 결과: " + score);
     }
 
@@ -63,5 +55,13 @@ public class OutputView {
     private void printAllPlayerResult(TotalResult totalResult) {
         List<String> playerResults = totalResult.getPlayerResults();
         System.out.println(String.join("\n", playerResults));
+    }
+
+    private String getJoinedCardNames(List<CardDto> cards) {
+        List<String> cardNames = cards.stream()
+                .map(card -> card.rank().getDisplayName() + card.suit().getDisplayName())
+                .toList();
+
+        return String.join(", ", cardNames);
     }
 }

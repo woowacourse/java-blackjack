@@ -20,11 +20,6 @@ public class Card {
         this.isOpened = false;
     }
 
-    @Override
-    public String toString() {
-        return rank.getDisplayName() + suit.getDisplayName();
-    }
-
     public int getDefaultScore() {
         return rank.getDefaultScore();
     }
@@ -35,5 +30,9 @@ public class Card {
 
     public boolean isOpened() {
         return this.isOpened;
+    }
+
+    public CardDto toDto() {
+        return new CardDto(this.rank, this.suit);
     }
 }

@@ -1,6 +1,7 @@
 package blackjack.model.participant;
 
 import blackjack.model.card.Card;
+import blackjack.model.card.CardDto;
 import blackjack.model.cardDeck.CardDeck;
 import blackjack.model.Hands;
 import java.util.List;
@@ -28,11 +29,11 @@ public abstract class Participant {
         return hands.isTotalScoreOver(BLACKJACK_SCORE);
     }
 
-    public List<Card> getAllCard() {
+    public List<CardDto> getAllCard() {
         return hands.getAllCard();
     }
 
-    public List<Card> getOpenedCards() {
+    public List<CardDto> getOpenedCards() {
         return hands.getOpenedCards();
     }
 

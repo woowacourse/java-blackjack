@@ -25,7 +25,7 @@ class ParticipantTest {
 
         // then
         assertThat(participant.getAllCard().size()).isEqualTo(1);
-        assertThat(participant.getAllCard().getFirst().isAce()).isTrue();
+        assertThat(participant.getAllCard().getFirst().rank()).isEqualTo(Rank.ACE);
     }
 
     @Test
