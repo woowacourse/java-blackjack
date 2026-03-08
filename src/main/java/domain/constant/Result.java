@@ -17,11 +17,19 @@ public enum Result {
             return LOSE;
         }
 
-        if (dealer.getScore() < player.getScore() || dealer.isBust()) {
+        if (dealer.isBust()) {
             return WIN;
         }
 
-        if (dealer.getScore() > player.getScore()) {
+        return compareScore(dealer.getScore(), player.getScore());
+    }
+
+    private static Result compareScore(int dealerScore, int playerScore) {
+        if (dealerScore < playerScore) {
+            return WIN;
+        }
+
+        if (dealerScore > playerScore) {
             return LOSE;
         }
 

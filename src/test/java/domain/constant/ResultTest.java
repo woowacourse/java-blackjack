@@ -6,10 +6,13 @@ import domain.Hand;
 import domain.Player;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+import java.util.stream.Stream;
+
 import static domain.constant.Rank.*;
+import static domain.constant.Result.*;
 import static domain.constant.Suit.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ResultTest {
 
@@ -22,9 +25,9 @@ class ResultTest {
         player.addCard(new Card(TEN, HEART));
         player.addCard(new Card(FIVE, HEART));
 
-        Result result = Result.of(dealer, player);
+        Result result = of(dealer, player);
 
-        assertThat(result).isEqualTo(Result.LOSE);
+        assertThat(result).isEqualTo(LOSE);
     }
 
     @Test
@@ -36,53 +39,34 @@ class ResultTest {
 
         Player player = new Player("pobi", new Hand());
 
-        Result result = Result.of(dealer, player);
+        Result result = of(dealer, player);
 
-        assertThat(result).isEqualTo(Result.WIN);
+        assertThat(result).isEqualTo(WIN);
     }
 
     @Test
-    void 플레이어의_점수가_높으면_결과는_승이다() {
-        Dealer dealer = new Dealer();
-        dealer.addCard(new Card(TEN, HEART));
-        dealer.addCard(new Card(FIVE, HEART));
-
-        Player player = new Player("pobi", new Hand());
-        player.addCard(new Card(ACE, SPADE));
-        player.addCard(new Card(KING, HEART));
-
-        Result result = Result.of(dealer, player);
-
-        assertThat(result).isEqualTo(Result.WIN);
-    }
-
-    @Test
-    void 플레이어의_점수가_낮으면_결과는_패이다() {
+    void 딜러와_플레이어의_점수를_비교하여_승패를_결정한다() {
         Dealer dealer = new Dealer();
         dealer.addCard(new Card(KING, HEART));
-        dealer.addCard(new Card(ACE, SPADE));
+        dealer.addCard(new Card(TEN, SPADE));
 
-        Player player = new Player("pobi", new Hand());
-        player.addCard(new Card(TEN, HEART));
-        player.addCard(new Card(FIVE, HEART));
+        Player player1 = new Player("pobi", new Hand());
+        player1.addCard(new Card(EIGHT, HEART));
+        player1.addCard(new Card(NINE, HEART));
 
-        Result result = Result.of(dealer, player);
+        Player player2 = new Player("cary", new Hand());
+        player2.addCard(new Card(TEN, HEART));
+        player2.addCard(new Card(JACK, HEART));
 
-        assertThat(result).isEqualTo(Result.LOSE);
-    }
+        Player player3 = new Player("jason", new Hand());
+        player3.addCard(new Card(ACE, HEART));
+        player3.addCard(new Card(QUEEN, HEART));
 
-    @Test
-    void 플레이어와_딜러의_점수가_같으면_결과는_무승부이다() {
-        Dealer dealer = new Dealer();
-        dealer.addCard(new Card(KING, HEART));
-        dealer.addCard(new Card(ACE, SPADE));
+        List<Result> results = Stream.of(player1, player2, player3)
+                .map(player -> of(dealer, player))
+                .toList();
 
-        Player player = new Player("pobi", new Hand());
-        player.addCard(new Card(ACE, HEART));
-        player.addCard(new Card(KING, SPADE));
+        assertThat(results).containsExactly(LOSE, DRAW, WIN);
 
-        Result result = Result.of(dealer, player);
-
-        assertThat(result).isEqualTo(Result.DRAW);
     }
 }
