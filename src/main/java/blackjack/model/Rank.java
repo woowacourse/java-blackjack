@@ -16,18 +16,18 @@ public enum Rank {
     JACK(10, "J");
 
     private final int value;
-    private final String label;
+    private final String symbol;
 
-    Rank(int value, String label) {
+    Rank(int value, String symbol) {
         this.value = value;
-        this.label = label;
+        this.symbol = symbol;
     }
 
     public int getValue() {
         return value;
     }
 
-    public String getLabel() {
-        return label;
+    public String getSymbol() {
+        return symbol;
     }
 }

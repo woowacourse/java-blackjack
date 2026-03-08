@@ -1,7 +1,9 @@
 package blackjack.controller;
 
+import blackjack.dto.DealerResultDto;
+import blackjack.dto.GameResultDto;
 import blackjack.dto.ParticipantCardsDto;
-import blackjack.dto.ParticipantInitialDealDtos;
+import blackjack.dto.InitialDealDtos;
 import blackjack.dto.ParticipantScoreDto;
 import blackjack.dto.PlayerResultDto;
 import blackjack.model.Answer;
@@ -40,7 +42,7 @@ public class BlackjackController {
 
     private void initialDeal(Participants participants, Deck deck) {
         service.initialDeal(participants, deck);
-        view.printInitialDeal(ParticipantInitialDealDtos.from(participants));
+        view.printInitialDeal(InitialDealDtos.from(participants));
     }
 
     private void hitPlayers(List<Player> players, Deck deck) {
@@ -50,9 +52,8 @@ public class BlackjackController {
     }
 
     private void hitPlayer(Player player, Deck deck) {
-        while (service.canHit(player)) {
-            Answer answer = Answer.from(view.askHit(player.getName()));
-            service.hitPlayer(player, deck, answer);
+        while (service.canHit(player) && view.askHit(player.getName()) == Answer.YES) {
+            service.hitPlayer(player, deck);
             view.printPlayerCards(ParticipantCardsDto.fromAllCards(player));
         }
     }
@@ -60,7 +61,7 @@ public class BlackjackController {
     private void hitDealer(Dealer dealer, Deck deck) {
         if (service.shouldHit(dealer)) {
             service.hitDealer(dealer, deck);
-            view.printDealerHit();
+            view.printDealerHit(dealer);
         }
     }
 
@@ -78,9 +79,10 @@ public class BlackjackController {
         List<PlayerResultDto> playerResultDtos = participants.getPlayers().stream()
             .map(player -> {
                     PlayerBlackjackResult result = service.judge(player, participants.getDealer());
-                    return new PlayerResultDto(player.getName(), result);
+                    return PlayerResultDto.of(player, result);
                 }
             ).toList();
-        view.printResult(playerResultDtos);
+        DealerResultDto dealerResultDto = DealerResultDto.from(playerResultDtos);
+        view.printResult(new GameResultDto(dealerResultDto, playerResultDtos));
     }
 }

@@ -16,5 +16,4 @@ public class PolicyManager {
     public boolean shouldHitDealer(Score score) {
         return dealerHitPolicy.shouldHit(score);
     }
-
 }

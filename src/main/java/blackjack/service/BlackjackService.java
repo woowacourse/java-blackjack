@@ -39,10 +39,7 @@ public class BlackjackService {
         }
     }
 
-    public void hitPlayer(Participant player, Deck deck, Answer answer) {
-        if (answer == Answer.NO) {
-            return;
-        }
+    public void hitPlayer(Participant player, Deck deck) {
         player.hit(deck.draw());
     }
 

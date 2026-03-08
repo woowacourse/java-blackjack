@@ -1,9 +1,12 @@
 package blackjack.view;
 
+import blackjack.dto.GameResultDto;
 import blackjack.dto.ParticipantCardsDto;
-import blackjack.dto.ParticipantInitialDealDtos;
+import blackjack.dto.InitialDealDtos;
 import blackjack.dto.ParticipantScoreDto;
 import blackjack.dto.PlayerResultDto;
+import blackjack.model.Answer;
+import blackjack.model.Dealer;
 import java.util.List;
 
 public class BlackjackView {
@@ -19,27 +22,27 @@ public class BlackjackView {
         return inputView.readPlayerNames();
     }
 
-    public String askHit(final String playerName) {
+    public Answer askHit(final String playerName) {
         return inputView.askHit(playerName);
     }
 
-    public void printInitialDeal(ParticipantInitialDealDtos participantInitialDealDtos) {
-        outputView.printInitialDeal(participantInitialDealDtos);
+    public void printInitialDeal(InitialDealDtos initialDealDtos) {
+        outputView.printInitialDeal(initialDealDtos);
     }
 
     public void printPlayerCards(ParticipantCardsDto participantCardsDto) {
-        outputView.printPlayerCards(participantCardsDto);
+        outputView.printParticipantCards(participantCardsDto);
     }
 
-    public void printDealerHit() {
-        outputView.printDealerHit();
+    public void printDealerHit(Dealer dealer) {
+        outputView.printDealerHit(dealer);
     }
 
     public void printScore(List<ParticipantScoreDto> participantScoreDtos) {
         outputView.printScore(participantScoreDtos);
     }
 
-    public void printResult(List<PlayerResultDto> playerResultDtos) {
-        outputView.printResult(playerResultDtos);
+    public void printResult(GameResultDto resultDto) {
+        outputView.printResults(resultDto);
     }
 }

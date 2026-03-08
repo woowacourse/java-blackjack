@@ -16,7 +16,7 @@ import blackjack.view.OutputView;
 public class BlackjackApplication {
 
     public static void main(String[] args) {
-        BlackjackGameFactory factory = new BlackjackGameFactory(21, 17);
+        BlackjackGameFactory factory = new BlackjackGameFactory(21, 16);
         factory.controller().run();
     }
 }

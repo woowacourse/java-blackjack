@@ -10,6 +10,6 @@ public class DealerThresholdHitPolicy implements DealerHitPolicy {
 
     @Override
     public boolean shouldHit(Score score) {
-        return score.value() < threshold;
+        return score.value() <= threshold;
     }
 }

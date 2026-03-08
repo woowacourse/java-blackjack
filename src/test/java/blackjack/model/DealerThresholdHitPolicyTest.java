@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 
 class DealerThresholdHitPolicyTest {
 
-    private static final int THRESHOLD = 17;
+    private static final int THRESHOLD = 16;
 
     @Test
-    void 점수가_임계점_이상이면_스탠드한다() {
+    void 점수가_임계점을_초과하면_스탠드한다() {
         // given
         DealerThresholdHitPolicy dealerHitPolicy = new DealerThresholdHitPolicy(THRESHOLD);
-        Score score = new Score(THRESHOLD);
+        Score score = new Score(THRESHOLD + 1);
         // when
         boolean shouldHit = dealerHitPolicy.shouldHit(score);
         // then
@@ -20,10 +20,10 @@ class DealerThresholdHitPolicyTest {
     }
 
     @Test
-    void 점수가_임계점_미만이면_힛한다() {
+    void 점수가_임계점_이하면_힛한다() {
         // given
         DealerThresholdHitPolicy dealerHitPolicy = new DealerThresholdHitPolicy(THRESHOLD);
-        Score score = new Score(THRESHOLD - 1);
+        Score score = new Score(THRESHOLD);
         // when
         boolean shouldHit = dealerHitPolicy.shouldHit(score);
         // then
