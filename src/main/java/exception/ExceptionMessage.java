@@ -2,11 +2,11 @@ package exception;
 
 public enum ExceptionMessage {
 
-    INVALID_INPUT("잘못된 입력 형식입니다."),
-    INVALID_NAME_RANGE("잘못된 이름 범위 입니다."),
-    INVALID_NAME_FORMAT("잘못된 이름 형식 입니다."),
-    COMMAND_NOT_FOUND("존재하지 않는 명령어 입니다."),
-    DUPLICATED_PARTICIPANT_NAME("중복된 참여자 이름 입니다."),
+    INVALID_INPUT("[ERROR] 쉼표를 기준으로 한글 또는 영문 이름을 입력해 주세요."),
+    INVALID_NAME_RANGE("[ERROR] 이름은 2자 이상 7자 이하이어야 합니다."),
+    INVALID_NAME_FORMAT("[ERROR] 이름은 한글 또는 영문만 가능합니다."),
+    COMMAND_NOT_FOUND("[ERROR] 존재하지 않는 명령어 입니다. (y/n)"),
+    DUPLICATED_PARTICIPANT_NAME("[ERROR] 중복된 참여자 이름이 존재합니다."),
     ;
 
     private final String message;
