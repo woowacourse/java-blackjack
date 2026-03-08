@@ -5,19 +5,14 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-    List<Card> cards = new ArrayList<>();
-    //enum을 순회하면서 조합??
+    private final List<Card> cards = new ArrayList<>();
 
-    public void init() {
+    public Deck() {
         for (Rank rank : Rank.values()) {
             for (Suit suit : Suit.values()) {
-                Card card = new Card(rank, suit);
-                cards.add(card);
+                cards.add(new Card(rank, suit));
             }
         }
-    }
-
-    public void shuffle() {
         Collections.shuffle(cards);
     }
 
@@ -26,4 +21,7 @@ public class Deck {
         return cards.remove(lastIndex);
     }
 
+    public int size() {
+        return cards.size();
+    }
 }
