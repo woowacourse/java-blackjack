@@ -16,7 +16,6 @@ public class InputParser {
         for (String name : userNames) {
             players.add(new Player(name));
         }
-
         return players;
     }
 

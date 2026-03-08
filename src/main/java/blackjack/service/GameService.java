@@ -17,7 +17,7 @@ public class GameService {
         }
     }
 
-    public void getMoreCard(Player player, Dealer dealer) {
+    public void getMoreCard(Player player) {
         player.bring(Deck.draw());
     }
 
