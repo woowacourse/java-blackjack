@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Suit {
-
     SPADE("스페이드"),
     DIAMOND("다이아몬드"),
     HEART("하트"),
