@@ -51,7 +51,7 @@ public class Controller {
     private void turnToDealer(Dealer dealer, Deck deck) {
         dealer.updateScore();
 
-        while (dealer.canReceive(dealer.getScore())) {
+        while (dealer.canReceive()) {
             outputView.printDealerReceiveCard();
             receiveCardToParticipant(dealer, deck, ONE_REPEAT);
             dealer.updateScore();
@@ -72,7 +72,7 @@ public class Controller {
     private void turnToOnePlayer(Deck deck, Player player) {
         player.updateScore();
 
-        while (player.canReceive(player.getScore())) {
+        while (player.canReceive()) {
             String receiveCard = inputView.getReceiveCard(player);
             if (receiveCard.equals("n")) {
                 return;

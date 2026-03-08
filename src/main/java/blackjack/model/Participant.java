@@ -6,7 +6,7 @@ import java.util.List;
 
 public abstract class Participant {
     private final List<Card> cards;
-    private final Score score;
+    protected final Score score;
 
     public Participant() {
         this.cards = new ArrayList<>();
@@ -37,5 +37,5 @@ public abstract class Participant {
         return Collections.unmodifiableList(cards);
     }
 
-    public abstract boolean canReceive(int score);
+    public abstract boolean canReceive();
 }
