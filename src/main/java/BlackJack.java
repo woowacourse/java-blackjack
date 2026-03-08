@@ -61,15 +61,13 @@ public class BlackJack {
     }
 
     private void gamblerTurn(Gambler gambler) {
-        while (askHit(gambler.getName())) {
+        while (askHit(gambler.getName()) && !gambler.isBust()) {
             gambler.deal(cardDeck);
-
-            if (gambler.isBust()) {
-                OutputView.printPlayerBust(gambler.getName());
-                break;
-            }
             OutputView.printPlayerCards(PlayerCardInfo.from(gambler));
         }
+
+        if(gambler.isBust())
+            OutputView.printPlayerBust(gambler.getName());
     }
 
     private boolean askHit(String name) {
