@@ -1,9 +1,9 @@
 package domain.constant;
 
 import domain.Card;
-import domain.Dealer;
+import domain.participant.Dealer;
 import domain.Hand;
-import domain.Player;
+import domain.participant.Player;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

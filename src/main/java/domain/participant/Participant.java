@@ -1,12 +1,15 @@
-package domain;
+package domain.participant;
+
+import domain.Card;
+import domain.Hand;
 
 import java.util.List;
 
-public class Player {
+public abstract class Participant {
     private String name;
-    private Hand hand;
+    protected Hand hand;
 
-    public Player(String name, Hand hand) {
+    protected Participant(String name, Hand hand) {
         this.name = name;
         this.hand = hand;
     }

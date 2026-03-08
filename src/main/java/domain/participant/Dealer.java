@@ -1,6 +1,8 @@
-package domain;
+package domain.participant;
 
-public class Dealer extends Player {
+import domain.Hand;
+
+public class Dealer extends Participant {
 
     public static final int MAX_DEALER_SHOULD_RECEIVE_SCORE = 16;
 
@@ -10,6 +12,6 @@ public class Dealer extends Player {
 
     @Override
     public boolean canReceiveCard() {
-        return getScore() <= MAX_DEALER_SHOULD_RECEIVE_SCORE;
+        return hand.calculateScore() <= MAX_DEALER_SHOULD_RECEIVE_SCORE;
     }
 }

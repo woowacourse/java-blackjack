@@ -1,5 +1,6 @@
-package domain;
+package domain.deck;
 
+import domain.Card;
 import domain.constant.Rank;
 import domain.constant.Suit;
 import org.junit.jupiter.api.BeforeEach;

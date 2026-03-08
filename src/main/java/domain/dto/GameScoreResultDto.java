@@ -1,6 +1,7 @@
 package domain.dto;
 
-import domain.Player;
+import domain.participant.Participant;
+import domain.participant.Player;
 
 import java.util.List;
 
@@ -15,11 +16,11 @@ public class GameScoreResultDto {
         this.score = result;
     }
 
-    public static GameScoreResultDto from(Player player) {
+    public static GameScoreResultDto from(Participant participant) {
         return new GameScoreResultDto(
-                player.getName(),
-                player.showHand(),
-                player.getScore()
+                participant.getName(),
+                participant.showHand(),
+                participant.getScore()
         );
     }
 

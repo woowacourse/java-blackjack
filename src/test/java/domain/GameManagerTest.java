@@ -1,7 +1,9 @@
 package domain;
 
-import domain.dto.GameInitialInfoDto;
+import domain.deck.Deck;
 import domain.dto.GameScoreResultDto;
+import domain.participant.Dealer;
+import domain.participant.Player;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -55,31 +57,31 @@ class GameManagerTest {
 //        assertThat(initialInfo.get(1).getHand().size()).isEqualTo(2);
 //    }
 
-    @Test
-    void 플레이어를_한명_등록한다() {
-        GameManager manager = new GameManager(new Deck(), new Dealer());
-        manager.registerPlayer("pobi");
-
-        List<Player> result = manager.getPlayerSequence();
-
-        assertThat(result)
-                .extracting(Player::getName)
-                .containsExactly("pobi");
-    }
-
-    @Test
-    void 플레이어를_세명_등록한다() {
-        GameManager manager = new GameManager(new Deck(), new Dealer());
-        List<String> playerNames = List.of("pobi", "cary", "rudy");
-
-        for (String playerName : playerNames) {
-            manager.registerPlayer(playerName);
-        }
-
-        List<Player> result = manager.getPlayerSequence();
-
-        assertThat(result).hasSize(3);
-    }
+//    @Test
+//    void 플레이어를_한명_등록한다() {
+//        GameManager manager = new GameManager(new Deck(), new Dealer());
+//        manager.registerPlayer("pobi");
+//
+//        List<Player> result = manager.getPlayerSequence();
+//
+//        assertThat(result)
+//                .extracting(Player::getName)
+//                .containsExactly("pobi");
+//    }
+//
+//    @Test
+//    void 플레이어를_세명_등록한다() {
+//        GameManager manager = new GameManager(new Deck(), new Dealer());
+//        List<String> playerNames = List.of("pobi", "cary", "rudy");
+//
+//        for (String playerName : playerNames) {
+//            manager.registerPlayer(playerName);
+//        }
+//
+//        List<Player> result = manager.getPlayerSequence();
+//
+//        assertThat(result).hasSize(3);
+//    }
 
     @Test
     void 딜러가_16점_이하인지_확인한다() {

@@ -1,7 +1,7 @@
 package domain.constant;
 
-import domain.Dealer;
-import domain.Player;
+import domain.participant.Dealer;
+import domain.participant.Player;
 
 public enum Result {
     WIN("승"), DRAW("무"), LOSE("패");

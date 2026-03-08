@@ -1,4 +1,4 @@
-package domain.shuffle;
+package domain.deck;
 
 import domain.Card;
 

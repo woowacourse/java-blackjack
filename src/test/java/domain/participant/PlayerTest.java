@@ -1,5 +1,7 @@
-package domain;
+package domain.participant;
 
+import domain.Card;
+import domain.Hand;
 import org.junit.jupiter.api.Test;
 
 import static domain.constant.Rank.*;

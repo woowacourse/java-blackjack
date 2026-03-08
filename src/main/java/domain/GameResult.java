@@ -3,6 +3,8 @@ package domain;
 import domain.constant.Result;
 import domain.dto.DealerResultDto;
 import domain.dto.GameFinalResultDto;
+import domain.participant.Dealer;
+import domain.participant.Player;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;

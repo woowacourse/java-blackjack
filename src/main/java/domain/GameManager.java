@@ -1,9 +1,12 @@
 package domain;
 
+import domain.deck.Deck;
 import domain.dto.GameFinalResultDto;
 import domain.dto.GameInitialInfoDto;
 import domain.dto.GameScoreResultDto;
-import domain.shuffle.RandomShuffle;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.deck.RandomShuffle;
 
 import java.util.*;
 
@@ -37,9 +40,17 @@ public class GameManager {
         );
     }
 
+    public boolean canReceiveCard(String player) {
+        return players.get(player).canReceiveCard();
+    }
+
     public List<String> drawPlayerCard(String player) {
         players.get(player).addCard(deck.draw());
         return players.get(player).showHand();
+    }
+
+    public boolean canReceiveCard() {
+        return dealer.canReceiveCard();
     }
 
     public List<String> drawDealerCard() {
@@ -47,34 +58,12 @@ public class GameManager {
         return dealer.showHand();
     }
 
-    public List<Player> getPlayerSequence() {
-        return players.values().stream().toList();
-    }
-
     public List<GameScoreResultDto> getScoreResults() {
         List<GameScoreResultDto> results = new ArrayList<>();
-        aggregateDealerResult(results); // dealer
-        aggregatePlayerResult(results); // players
+        aggregateDealerResult(results);
+        aggregatePlayerResult(results);
 
         return results;
-    }
-
-    private void aggregateDealerResult(List<GameScoreResultDto> results) {
-        results.add(GameScoreResultDto.from(dealer));
-    }
-
-    private void aggregatePlayerResult(List<GameScoreResultDto> results) {
-        for (Player player : players.values()) {
-            results.add(GameScoreResultDto.from(player));
-        }
-    }
-
-    public boolean canReceiveCard(String player) {
-        return players.get(player).canReceiveCard();
-    }
-
-    public boolean canReceiveCard() {
-        return dealer.canReceiveCard();
     }
 
     public GameFinalResultDto getFinalResult() {
@@ -89,6 +78,16 @@ public class GameManager {
                 player.addCard(deck.draw());
             }
             dealer.addCard(deck.draw());
+        }
+    }
+
+    private void aggregateDealerResult(List<GameScoreResultDto> results) {
+        results.add(GameScoreResultDto.from(dealer));
+    }
+
+    private void aggregatePlayerResult(List<GameScoreResultDto> results) {
+        for (Player player : players.values()) {
+            results.add(GameScoreResultDto.from(player));
         }
     }
 }

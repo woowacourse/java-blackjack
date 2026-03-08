@@ -1,6 +1,8 @@
 package domain;
 
 import domain.dto.GameFinalResultDto;
+import domain.participant.Dealer;
+import domain.participant.Player;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

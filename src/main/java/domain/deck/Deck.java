@@ -1,8 +1,8 @@
-package domain;
+package domain.deck;
 
+import domain.Card;
 import domain.constant.Rank;
 import domain.constant.Suit;
-import domain.shuffle.Shuffle;
 
 import java.util.ArrayList;
 import java.util.List;
