@@ -1,15 +1,18 @@
 package controller;
 
-import domain.*;
-
-import java.util.*;
-
+import domain.Dealer;
+import domain.GameResult;
+import domain.Player;
 import domain.card.Card;
 import util.HitOption;
 import util.InputHitOptionParser;
 import util.InputNameParser;
 import view.InputView;
 import view.OutputView;
+
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 public class GameController {
     private final InputView inputView;
@@ -27,17 +30,16 @@ public class GameController {
         Dealer dealer = new Dealer();
 
         for (Player player : players) {
-            List<Card> firstHandCards = dealer.handOutFirstHandCards();
-            player.receiveFirstHandCards(firstHandCards);
+            List<Card> firstHandCards = dealer.dealInitialCards();
+            player.receiveInitialCards(firstHandCards);
         }
-        dealer.receiveFirstHandCards(dealer.handOutFirstHandCards());
+        dealer.receiveInitialCards(dealer.dealInitialCards());
+
         printGameStart(players, dealer);
 
 
         receiveMoreCard(players, dealer);
         outputView.printFinalScore(dealer, players);
-
-        // 4. 딜러는 16이하인 경우 계속 뽑는다.
 
         // 5. 승패를 계산한다.
         Map<String, GameResult> playerFinalResults = getPlayerFinalResults(players, dealer);
@@ -68,18 +70,17 @@ public class GameController {
         }
 
         while (dealer.isReceiveCard()) {
-            dealer.receiveMoreCard(dealer.handOutMoreCard());
+            dealer.receiveHitCard(dealer.dealHitCard());
             outputView.printDealerReceiveCard();
         }
     }
 
     private void processRound(Player player, Dealer dealer) {
-        HitOption hitOption = HitOption.YES;
-        while (hitOption == HitOption.YES && !player.isBust()) {
-            hitOption = inputHitOption(player);
-            if (hitOption == HitOption.YES) {
-                player.receiveMoreCard(dealer.handOutMoreCard());
-            }
+        while (!player.isBust() && inputHitOption(player) == HitOption.YES) {
+            player.receiveHitCard(dealer.dealHitCard());
+            outputView.printCurrentHoldCard(player);
+        }
+        if (!player.isBust()) {
             outputView.printCurrentHoldCard(player);
         }
     }

@@ -21,7 +21,7 @@ public class PlayerTest {
         List<Card> firstHands1 = List.of(new Card(CardNumber.EIGHT, CardShape.CLUB),
                 new Card(CardNumber.FOUR, CardShape.CLUB));
         Player player1 = new Player("pobi");
-        player1.receiveFirstHandCards(firstHands1);
+        player1.receiveInitialCards(firstHands1);
 
         // When
         int score1 = player1.calculateScore();
@@ -32,7 +32,7 @@ public class PlayerTest {
         // Given
         List<Card> firstHands2 = List.of(new Card(CardNumber.EIGHT, CardShape.CLUB), new Card(CardNumber.TWO, CardShape.CLUB));
         Player player2 = new Player("woni");
-        player2.receiveFirstHandCards(firstHands2);
+        player2.receiveInitialCards(firstHands2);
 
         // When
         int score2 = player2.calculateScore();
@@ -47,7 +47,7 @@ public class PlayerTest {
         // Given
         List<Card> firstHands = List.of(new Card(CardNumber.JACK, CardShape.CLUB), new Card(CardNumber.FOUR, CardShape.CLUB));
         Player player = new Player("woni");
-        player.receiveFirstHandCards(firstHands);
+        player.receiveInitialCards(firstHands);
 
         // When
         int score = player.calculateScore();
@@ -62,8 +62,8 @@ public class PlayerTest {
         // Given
         List<Card> firstHands1 = new ArrayList<>(List.of(new Card(CardNumber.JACK, CardShape.CLUB), new Card(CardNumber.FOUR, CardShape.CLUB)));
         Player player1 = new Player("pobi");
-        player1.receiveFirstHandCards(firstHands1);
-        player1.receiveMoreCard(new Card(CardNumber.ACE, CardShape.CLUB));
+        player1.receiveInitialCards(firstHands1);
+        player1.receiveHitCard(new Card(CardNumber.ACE, CardShape.CLUB));
 
         // When
         int player1TotalScore = player1.calculateScore();
@@ -73,7 +73,7 @@ public class PlayerTest {
 
         List<Card> firstHands2 = new ArrayList<>(List.of(new Card(CardNumber.FOUR, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
         Player player2 = new Player("woni");
-        player2.receiveFirstHandCards(firstHands2);
+        player2.receiveInitialCards(firstHands2);
 
         int player2TotalScore = player2.calculateScore();
         Assertions.assertThat(player2TotalScore).isEqualTo(15);
@@ -84,17 +84,17 @@ public class PlayerTest {
     void judgeManyAceTest() {
         List<Card> firstHands1 = new ArrayList<>(List.of(new Card(CardNumber.EIGHT, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
         Player player1 = new Player("pobi");
-        player1.receiveFirstHandCards(firstHands1);
+        player1.receiveInitialCards(firstHands1);
 
-        player1.receiveMoreCard(new Card(CardNumber.ACE, CardShape.SPADE));
+        player1.receiveHitCard(new Card(CardNumber.ACE, CardShape.SPADE));
         int player1TotalScore = player1.calculateScore();
 
         List<Card> firstHands2 = new ArrayList<>(List.of(new Card(CardNumber.FOUR, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
         Player player2 = new Player("woni");
-        player2.receiveFirstHandCards(firstHands2);
+        player2.receiveInitialCards(firstHands2);
 
-        player2.receiveMoreCard(new Card(CardNumber.ACE, CardShape.SPADE));
-        player2.receiveMoreCard(new Card(CardNumber.ACE, CardShape.HEART));
+        player2.receiveHitCard(new Card(CardNumber.ACE, CardShape.SPADE));
+        player2.receiveHitCard(new Card(CardNumber.ACE, CardShape.HEART));
         int player2TotalScore = player2.calculateScore();
 
         Assertions.assertThat(player1TotalScore).isEqualTo(20);
@@ -106,9 +106,9 @@ public class PlayerTest {
     void judgeBustTest() {
         List<Card> firstHands = new ArrayList<>(List.of(new Card(CardNumber.JACK, CardShape.CLUB), new Card(CardNumber.FOUR, CardShape.CLUB)));
         Player player = new Player("pobi");
-        player.receiveFirstHandCards(firstHands);
+        player.receiveInitialCards(firstHands);
 
-        player.receiveMoreCard(new Card(CardNumber.EIGHT, CardShape.CLUB));
+        player.receiveHitCard(new Card(CardNumber.EIGHT, CardShape.CLUB));
         boolean isBust = player.isBust();
 
         assertTrue(isBust);
@@ -130,7 +130,7 @@ public class PlayerTest {
     void normalNumberTest() {
         List<Card> cards = new ArrayList<>(List.of(new Card(CardNumber.FOUR, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
         Player player = new Player("woni");
-        player.receiveFirstHandCards(cards);
+        player.receiveInitialCards(cards);
         Assertions.assertThat(player.compareScore(14)).isEqualTo(GameResult.WIN);
     }
 
@@ -139,9 +139,9 @@ public class PlayerTest {
     void bustTest() {
         List<Card> cards = new ArrayList<>(List.of(new Card(CardNumber.FOUR, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
         Player player = new Player("woni");
-        player.receiveFirstHandCards(cards);
-        player.receiveMoreCard(new Card(CardNumber.TEN, CardShape.SPADE));
-        player.receiveMoreCard(new Card(CardNumber.TEN, CardShape.HEART));
+        player.receiveInitialCards(cards);
+        player.receiveHitCard(new Card(CardNumber.TEN, CardShape.SPADE));
+        player.receiveHitCard(new Card(CardNumber.TEN, CardShape.HEART));
         Assertions.assertThat(player.compareScore(14)).isEqualTo(GameResult.LOSE);
     }
 
@@ -150,9 +150,9 @@ public class PlayerTest {
     void drawBustTest(){
         List<Card> cards = new ArrayList<>(List.of(new Card(CardNumber.FOUR, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
         Player player = new Player("woni");
-        player.receiveFirstHandCards(cards);
-        player.receiveMoreCard(new Card(CardNumber.TEN, CardShape.SPADE));
-        player.receiveMoreCard(new Card(CardNumber.TEN, CardShape.HEART));
+        player.receiveInitialCards(cards);
+        player.receiveHitCard(new Card(CardNumber.TEN, CardShape.SPADE));
+        player.receiveHitCard(new Card(CardNumber.TEN, CardShape.HEART));
         Assertions.assertThat(player.compareScore(22)).isEqualTo(GameResult.DRAW);
     }
 
@@ -161,7 +161,7 @@ public class PlayerTest {
     void drawNumberTest(){
         List<Card> cards = new ArrayList<>(List.of(new Card(CardNumber.SIX, CardShape.CLUB), new Card(CardNumber.ACE, CardShape.CLUB)));
         Player player = new Player("woni");
-        player.receiveFirstHandCards(cards);
+        player.receiveInitialCards(cards);
         Assertions.assertThat(player.compareScore(17)).isEqualTo(GameResult.DRAW);
     }
 }

@@ -11,13 +11,12 @@ public class Dealer extends Participant {
         super();
     }
 
-    public List<Card> handOutFirstHandCards() {
+    public List<Card> dealInitialCards() {
         return deck.firstHandCards();
     }
 
-    public Card handOutMoreCard() {
+    public Card dealHitCard() {
         return deck.drawCard();
-
     }
 
     public boolean isReceiveCard() {

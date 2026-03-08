@@ -2,7 +2,6 @@ package domain;
 
 import domain.card.Card;
 import domain.card.CardNumber;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,11 +12,11 @@ public abstract class Participant {
         this.handCards = new ArrayList<>();
     }
 
-    public void receiveFirstHandCards(List<Card> firstHandCards) {
+    public void receiveInitialCards(List<Card> firstHandCards) {
         handCards = firstHandCards;
     }
 
-    public void receiveMoreCard(Card card) {
+    public void receiveHitCard(Card card) {
         handCards.add(card);
     }
 
