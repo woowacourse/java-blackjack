@@ -37,8 +37,8 @@ public abstract class Person {
     }
 
     // 최종 합산 계산
-    public void calculateFinalSum() {
-        finalSum = deck.calculateFinalSum();
+    public int calculateFinalSum() {
+        return deck.calculateFinalSum();
     }
 
     // 최종 합산 조회

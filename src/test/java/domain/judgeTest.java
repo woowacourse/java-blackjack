@@ -213,7 +213,6 @@ public class judgeTest {
         );
         Deck deck1 = Deck.of(cards1);
         player.assignDeck(deck1);
-        player.calculateFinalSum();
 
         List<Card> cards2 = List.of(
                 Card.of(CardRank.TEN, CardShape.HEART),
@@ -221,7 +220,6 @@ public class judgeTest {
         );
         Deck deck2 = Deck.of(cards2);
         Dealer dealer = Dealer.of(deck2);
-        dealer.calculateFinalSum();
         dealerRepository.save(dealer);
 
         // when

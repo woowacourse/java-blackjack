@@ -17,14 +17,11 @@ public class JudgementService {
     }
 
     public ResultDto getGameResult() {
-        // 최종 점수 계산
         List<Player> players = personService.findAllPlayers();
         Dealer dealer = personService.getDealer();
-        dealer.calculateFinalSum();
 
         List<PlayerResultDto> playerResultDtos = new ArrayList<>();
         for (Player player : players) {
-            player.calculateFinalSum();
             judgementWinning(player, dealer);
             PlayerResultDto playerResultDto = PlayerResultDto.of(player);
             playerResultDtos.add(playerResultDto);
@@ -53,15 +50,15 @@ public class JudgementService {
     }
 
     private void judgeStatusByDeckSum(Player player, Dealer dealer) {
-        if (player.getFinalSum() > dealer.getFinalSum()) {
+        if (player.calculateFinalSum() > dealer.calculateFinalSum()) {
             player.changeStatus(PlayerStatus.WIN);
         }
 
-        if (player.getFinalSum() < dealer.getFinalSum()) {
+        if (player.calculateFinalSum() < dealer.calculateFinalSum()) {
             player.changeStatus(PlayerStatus.LOSS);
         }
 
-        if (player.getFinalSum() == dealer.getFinalSum()) {
+        if (player.calculateFinalSum() == dealer.calculateFinalSum()) {
             player.changeStatus(PlayerStatus.DRAW);
         }
     }

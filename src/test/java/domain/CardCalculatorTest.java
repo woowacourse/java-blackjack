@@ -60,6 +60,6 @@ public class CardCalculatorTest {
         phobi.calculateFinalSum();
 
         // then
-        assertThat(phobi.getFinalSum()).isEqualTo(16);
+        assertThat(phobi.calculateFinalSum()).isEqualTo(16);
     }
 }
