@@ -18,7 +18,7 @@ public class Score {
     }
 
     public Result getResult(Score otherScore) {
-        if (isBurst() || getValue() < otherScore.getValue()) {
+        if (isBurst() || (!otherScore.isBurst() && getValue() < otherScore.getValue())) {
             return Result.LOSE;
         }
         if (getValue() == otherScore.getValue()) {

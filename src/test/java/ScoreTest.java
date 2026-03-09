@@ -1,5 +1,6 @@
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.score.Result;
 import domain.score.Score;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -53,5 +54,31 @@ class ScoreTest {
 
             assertThat(score.isBurst()).isEqualTo(expected);
         }
+    }
+
+    @Nested
+    @DisplayName("getResult(): ")
+    class GetResult {
+        public static Stream<Arguments> getResult() {
+            return Stream.of(
+                    Arguments.of(22, 21, Result.LOSE),        //버스트라면 무조건 패배
+                    Arguments.of(22, 22, Result.LOSE),
+                    Arguments.of(2, 22, Result.WIN),          //상대가 버스트면서 내가 버스트가 아니면 무조건 승리
+                    Arguments.of(21, 22, Result.WIN),
+                    Arguments.of(21, 2, Result.WIN),
+                    Arguments.of(21, 21, Result.DRAW)
+            );
+        }
+
+        @ParameterizedTest
+        @DisplayName("버스트라면 무조건 패배이다.")
+        @MethodSource
+        void getResult(int scoreValue, int otherScoreValue, Result expected) {
+            Score score = new Score(scoreValue, false);
+            Score otherScore = new Score(otherScoreValue, false);
+
+            assertThat(score.getResult(otherScore)).isEqualTo(expected);
+        }
+
     }
 }
