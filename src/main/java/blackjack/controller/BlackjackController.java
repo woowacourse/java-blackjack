@@ -27,7 +27,7 @@ public class BlackjackController {
         gameService.settingCards(users, dealer);
         printGameSettingResult(users, dealer);
 
-        getMoreCards(users, dealer);
+        getMoreCards(users);
         if (!isAllUserBurst(users)) {
             getMoreCardsForDealer(dealer);
         }
@@ -57,7 +57,7 @@ public class BlackjackController {
     }
 
     // TODO : 코드 품질 개선 필요
-    private void getMoreCards(List<User> users, Dealer dealer) {
+    private void getMoreCards(List<User> users) {
         for (User user : users) {
             int count = 0;
             while (!user.isBurst() && !user.isBlackjack()) {
