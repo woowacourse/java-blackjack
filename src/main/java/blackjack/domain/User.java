@@ -51,6 +51,10 @@ public class User {
         return calculateCardsValue() == 21;
     }
 
+    public boolean isFinished() {
+        return isBurst() || isBlackjack();
+    }
+
     private int applyBestAceValue(int sum) {
         if (hasAce() && (sum + 10) <= 21) {
             return sum + 10;

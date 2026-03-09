@@ -56,26 +56,25 @@ public class BlackjackController {
                 .toList();
     }
 
-    // TODO : 코드 품질 개선 필요
     private void getMoreCards(List<User> users) {
-        for (User user : users) {
-            int count = 0;
-            while (!user.isBurst() && !user.isBlackjack()) {
-                String yesOrNo = inputView.readMoreCard(user.getName());
-                if (yesOrNo.equals("y")) {
-                    gameService.getMoreCard(user);
+        users.forEach(this::processUserTurn);
+    }
 
-                    OutputView.printSettingCardsResult(user.getName(), user.getCardsName());
-                    count++;
-
-                    continue;
-                }
-                if (count == 0) {
-                    OutputView.printSettingCardsResult(user.getName(), user.getCardsName());
-                }
-                break;
-            }
+    private void processUserTurn(User user) {
+        boolean drew = drawIfWanted(user);
+        if (!drew) {
+            OutputView.printSettingCardsResult(user.getName(), user.getCardsName());
         }
+    }
+
+    private boolean drawIfWanted(User user) {
+        boolean drew = false;
+        while (!user.isFinished() && "y".equals(inputView.readMoreCard(user.getName()))) {
+            gameService.getMoreCard(user);
+            OutputView.printSettingCardsResult(user.getName(), user.getCardsName());
+            drew = true;
+        }
+        return drew;
     }
 
     private void getMoreCardsForDealer(Dealer dealer) {
