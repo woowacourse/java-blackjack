@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class Hand {
-    private final static int BUST_THRESHOLD = 21;
     private final List<Card> cards;
 
     public Hand() {
@@ -42,9 +41,5 @@ public class Hand {
             return currentScore - 10;
         }
         return currentScore;
-    }
-
-    public boolean isBust() {
-        return calculateScore() > BUST_THRESHOLD;
     }
 }

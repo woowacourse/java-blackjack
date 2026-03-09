@@ -112,33 +112,5 @@ public class HandTest {
                 ), 41)
         );
     }
-
-    @Test
-    void 핸드_점수_총합이_21_초과인_경우_버스트_판정() {
-        Hand hand = new Hand();
-        List<Card> cards = List.of(
-                new Card(Suit.SPADE, CardNumber.KING),
-                new Card(Suit.SPADE, CardNumber.QUEEN),
-                new Card(Suit.SPADE, CardNumber.TWO));
-        for (Card card : cards) {
-            hand.add(card);
-        }
-
-        Assertions.assertThat(hand.isBust()).isTrue();
-    }
-
-    @Test
-    void 핸드_점수_총합이_21_이하인_경우_판정() {
-        Hand hand = new Hand();
-        List<Card> cards = List.of(
-                new Card(Suit.SPADE, CardNumber.KING),
-                new Card(Suit.SPADE, CardNumber.QUEEN),
-                new Card(Suit.SPADE, CardNumber.ACE));
-        for (Card card : cards) {
-            hand.add(card);
-        }
-
-        Assertions.assertThat(hand.isBust()).isFalse();
-    }
 }
 

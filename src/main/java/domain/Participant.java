@@ -21,13 +21,15 @@ public abstract class Participant {
         return hand.snapshot();
     }
 
-    public boolean canReceive() {
-        return !hand.isBust();
-    }
-
     public String getName() {
         return name.value();
     }
+
+    public int getScore() {
+        return hand.calculateScore();
+    }
+
+    public abstract boolean canReceive();
 
     @Override
     public boolean equals(Object o) {

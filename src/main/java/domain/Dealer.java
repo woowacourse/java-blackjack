@@ -14,4 +14,9 @@ public class Dealer extends Participant {
         List<Card> card = List.of(handInfo().cards().getFirst());
         return new CardDto(card);
     }
+
+    @Override
+    public boolean canReceive() {
+        return getScore() <= 16;
+    }
 }
