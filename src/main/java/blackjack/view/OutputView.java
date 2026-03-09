@@ -22,7 +22,7 @@ public class OutputView {
         System.out.println(playerName + "카드: " + stringJoinWithComma(cards) + " - 결과: " + score);
     }
 
-    public static void printGetMoreCardsForDealer(String dealerName) {
+    public static void printGetMoreCardsMessageForDealer(String dealerName) {
         System.out.println();
         System.out.println(dealerName + "는 16이하라 한장의 카드를 더 받았습니다.");
     }

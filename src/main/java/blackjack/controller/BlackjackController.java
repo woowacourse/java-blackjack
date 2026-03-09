@@ -54,11 +54,11 @@ public class BlackjackController {
 
     private void getMoreCardsForPlayers(Players players) {
         for (Player player : players.getPlayers()) {
-            getMoreCard(player);
+            getMoreCardsForPlayer(player);
         }
     }
 
-    private void getMoreCard(Player player) {
+    private void getMoreCardsForPlayer(Player player) {
         boolean isDraw = false;
         while (!player.isBurst() && !player.isBlackjack() && readPlayerWantMoreCard(player)) {
             player.draw(Deck.pop());
@@ -80,7 +80,7 @@ public class BlackjackController {
         }
         while (dealer.calculateCardsValue() < 17) {
             dealer.draw(Deck.pop());
-            OutputView.printGetMoreCardsForDealer(dealer.getName());
+            OutputView.printGetMoreCardsMessageForDealer(dealer.getName());
         }
     }
 
