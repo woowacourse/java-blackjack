@@ -6,6 +6,9 @@ import java.util.List;
 
 public class GameService {
 
+    private final int BLACKJACK_NUM = 21;
+    private final int DEALER_HIT_NUM = 16;
+
     private final CardDeck cardDeck;
 
     public GameService() {
