@@ -12,22 +12,22 @@ public record ResultAnalysisDto (
         List<PlayerGameResult> playerGameResults
 ) {
     public static ResultAnalysisDto from(List<PlayerGameResult> playerGameResults) {
-        EnumMap<GameResult, Integer> dealerGameResult = new EnumMap<>(GameResult.class);
-        List<GameResult> list = playerGameResults.stream()
+        EnumMap<GameResult, Integer> dealerGameResults = new EnumMap<>(GameResult.class);
+        List<GameResult> gameResults = playerGameResults.stream()
                 .map(PlayerGameResult::gameResult)
                 .map(GameResult::reverseResult)
                 .toList();
 
-        for (GameResult gameResult : list) {
-            dealerGameResult.put(gameResult, dealerGameResult.getOrDefault(gameResult, 0) + 1);
+        for (GameResult gameResult : gameResults) {
+            dealerGameResults.put(gameResult, dealerGameResults.getOrDefault(gameResult, 0) + 1);
         }
 
-        return new ResultAnalysisDto(dealerGameResult, playerGameResults);
+        return new ResultAnalysisDto(dealerGameResults, playerGameResults);
     }
 
     public String getDealerResult() {
         return Arrays.stream(GameResult.values())
-                .filter(dealerGameResult::containsKey) // 맵에 있는 결과만 필터링!
+                .filter(dealerGameResult::containsKey)
                 .map(result -> dealerGameResult.get(result) + result.displayName())
                 .collect(Collectors.joining(" "));
     }
