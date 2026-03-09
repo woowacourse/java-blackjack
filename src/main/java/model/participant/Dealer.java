@@ -3,7 +3,7 @@ package model.participant;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import model.Card;
+import model.card.Card;
 
 public class Dealer extends Participant {
     private static final int DRAW_THRESHOLD = 16;

@@ -1,4 +1,4 @@
-package model;
+package model.card;
 
 public class Card {
     private final Suit suit;

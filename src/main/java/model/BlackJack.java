@@ -1,14 +1,16 @@
 package model;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import model.deck.Deck;
-import model.deck.DeckImpl;
+import model.card.Card;
+import model.card.Deck;
+import model.card.RandomDeck;
+import model.card.Rank;
+import model.card.Suit;
 import model.participant.Dealer;
 import model.participant.Participant;
 import model.participant.Player;
@@ -23,7 +25,7 @@ public class BlackJack {
     }
 
     public static BlackJack from(Participants participants) {
-        return new BlackJack(participants, DeckImpl.of(Suit.values(), Rank.values()));
+        return new BlackJack(participants, RandomDeck.of(Suit.values(), Rank.values()));
     }
 
     public static BlackJack of(Participants participants, Deck deck) {

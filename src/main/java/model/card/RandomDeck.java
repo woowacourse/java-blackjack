@@ -1,21 +1,18 @@
-package model.deck;
+package model.card;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import model.Card;
-import model.Rank;
-import model.Suit;
 
-public class DeckImpl implements Deck {
+public class RandomDeck implements Deck {
     private final Iterator<Card> cards;
 
-    private DeckImpl(List<Card> cards) {
+    private RandomDeck(List<Card> cards) {
         this.cards = cards.iterator();
     }
 
-    public static DeckImpl of(Suit[] suits, Rank[] ranks) {
+    public static RandomDeck of(Suit[] suits, Rank[] ranks) {
         List<Card> cards = new ArrayList<>();
 
         for (Suit suit : suits) {
@@ -26,7 +23,7 @@ public class DeckImpl implements Deck {
 
         Collections.shuffle(cards);
 
-        return new DeckImpl(List.copyOf(cards));
+        return new RandomDeck(List.copyOf(cards));
     }
 
     @Override

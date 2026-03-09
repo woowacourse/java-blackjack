@@ -1,7 +1,7 @@
 package model.participant;
 
 import java.util.List;
-import model.Card;
+import model.card.Card;
 
 public class Player extends Participant {
     private Player(String name) {

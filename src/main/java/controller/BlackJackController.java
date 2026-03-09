@@ -3,9 +3,9 @@ package controller;
 import java.util.List;
 import java.util.Map;
 import model.BlackJack;
-import model.Rank;
-import model.Suit;
-import model.deck.DeckImpl;
+import model.card.Rank;
+import model.card.Suit;
+import model.card.RandomDeck;
 import model.participant.Participant;
 import model.Participants;
 import util.InputParser;
@@ -23,7 +23,7 @@ public class BlackJackController {
 
     public void run() {
         Participants participants = setUpParticipants();
-        BlackJack blackJack = BlackJack.of(participants, DeckImpl.of(Suit.values(), Rank.values()));
+        BlackJack blackJack = BlackJack.of(participants, RandomDeck.of(Suit.values(), Rank.values()));
 
         Map<String, List<String>> dealOutResult = blackJack.dealOut();
         outputView.printDealOut(dealOutResult);

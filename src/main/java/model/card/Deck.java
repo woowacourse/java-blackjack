@@ -1,6 +1,4 @@
-package model.deck;
-
-import model.Card;
+package model.card;
 
 public interface Deck {
     Card draw();

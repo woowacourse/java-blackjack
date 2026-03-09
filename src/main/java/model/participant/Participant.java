@@ -2,8 +2,8 @@ package model.participant;
 
 import java.util.ArrayList;
 import java.util.List;
-import model.Card;
-import model.Rank;
+import model.card.Card;
+import model.card.Rank;
 
 public abstract class Participant {
     private static final int BUST_THRESHOLD = 21;
