@@ -2,6 +2,9 @@ package util;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 
@@ -61,6 +64,14 @@ class InputParserTest {
         String input = "  ";
 
         assertThatThrownBy(() -> inputParser.parseName(input))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @ParameterizedTest
+    @EmptySource
+    @ValueSource(strings = {" ", "yes", "no", "1", "yy", "nn"})
+    void y_n_외_입력은_예외다(String input) {
+        assertThatThrownBy(() -> inputParser.parseUserChoice(input))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
