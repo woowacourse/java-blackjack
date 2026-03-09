@@ -1,6 +1,7 @@
 package view;
 
 import constant.ErrorMessage;
+import dto.PlayerName;
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,8 +19,8 @@ public class InputView {
         return List.of(nameInput.split(NAME_SPLIT_REGEX));
     }
 
-    public static String getDrawRequest(String name) {
-        System.out.println(name + DRAW_REQUEST_TEXT);
+    public static String getDrawRequest(PlayerName name) {
+        System.out.println(name.value() + DRAW_REQUEST_TEXT);
 
         return getInput();
     }

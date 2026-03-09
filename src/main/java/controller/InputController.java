@@ -19,7 +19,7 @@ public class InputController {
     }
 
     public boolean getCondition(PlayerName name) {
-        String input = InputView.getDrawRequest(name.toString());
+        String input = InputView.getDrawRequest(name);
         return new Agreement(input).get();
     }
 
