@@ -10,8 +10,8 @@ public class Players {
     private Players(Cards cards, List<String> userNames) {
         List<Player> players = new ArrayList<>();
 
-        for (int i = 0; i < userNames.size(); i++) {
-            players.add(Player.of(cards.drawInitialHand(), userNames.get(i)));
+        for (String userName : userNames) {
+            players.add(Player.of(cards.drawInitialHand(), userName));
         }
         this.players = players;
     }
@@ -26,15 +26,15 @@ public class Players {
                 .toList();
     }
 
-    public List<String> getPlayerInfo() {
+    public List<List<String>> getPlayersCardsInfo() {
         return players.stream()
-                .map(Player::getPlayerInfo)
+                .map(Player::getCardsInfo)
                 .toList();
     }
 
-    public List<String> getPlayerScoreInfo() {
+    public List<Integer> getPlayerScoreInfo() {
         return players.stream()
-                .map(Player::getPlayerScoreResult)
+                .map(Player::calculateScore)
                 .toList();
     }
 
