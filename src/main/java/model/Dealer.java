@@ -12,7 +12,7 @@ public class Dealer extends Player {
 
     public Dealer(Cards deck) {
         super(DEALER_NAME);
-        this.deck = deck.shuffle();
+        this.deck = deck;
     }
 
     @Override

@@ -39,6 +39,6 @@ public class Player {
     }
 
     public List<Card> getCards() {
-        return cards.getCard();
+        return cards.getCards();
     }
 }

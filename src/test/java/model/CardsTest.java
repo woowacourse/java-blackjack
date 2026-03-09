@@ -18,18 +18,6 @@ public class CardsTest {
         assertThat(cards.size()).isEqualTo(52);
     }
 
-    @Test
-    void 카드가_섞여있다() {
-        // given
-        Cards deck = Cards.createDeck();
-
-        // when
-        Cards shuffleDeck = deck.shuffle();
-
-        // then
-        assertThat(deck.compareTo(shuffleDeck)).isFalse();
-    }
-
     @ParameterizedTest
     @MethodSource("fixture.CardsTestFixture#카드_목록_별_점수_정보_제공")
     void 참가자의_카드가_주어지면_기본_점수를_계산할_수_있다(List<Card> randomCards, int expectedScore) {
@@ -38,7 +26,7 @@ public class CardsTest {
 
         // when
         int score = cards.calculateScore();
-        
+
         // then
         assertThat(score).isEqualTo(expectedScore);
     }

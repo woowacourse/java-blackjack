@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Cards {
@@ -11,13 +12,14 @@ public class Cards {
     private final List<Card> cards;
 
     public Cards(List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
     public static Cards createDeck() {
         List<Card> cards = Arrays.stream(CardShape.values())
                 .flatMap(Cards::combinate)
-                .toList();
+                .collect(Collectors.toCollection(ArrayList::new));
+        cardsShuffle(cards);
         return new Cards(cards);
     }
 
@@ -30,27 +32,16 @@ public class Cards {
                 .map(value -> new Card(shape, value));
     }
 
+    private static void cardsShuffle(List<Card> cards) {
+        Collections.shuffle(cards);
+    }
+
     public void add(Card card) {
         this.cards.add(card);
     }
 
     public int size() {
         return cards.size();
-    }
-
-    public Cards shuffle() {
-        ArrayList<Card> newCards = new ArrayList<>(cards);
-        Collections.shuffle(newCards);
-        return new Cards(newCards);
-    }
-
-    public boolean compareTo(Cards shuffleDeck) {
-        for (int i = 0; i < cards.size(); i++) {
-            if (!shuffleDeck.cards.get(i).equals(cards.get(i))) {
-                return false;
-            }
-        }
-        return true;
     }
 
     public Card pickCard() {
@@ -72,7 +63,7 @@ public class Cards {
                 .count();
     }
 
-    public List<Card> getCard() {
-        return this.cards;
+    public List<Card> getCards() {
+        return List.copyOf(this.cards);
     }
 }
