@@ -43,7 +43,7 @@ public class GameManager {
         }
     }
 
-    public void playPlayerTurns(Consumer<Player> action) {
+    public void forEachPlayer(Consumer<Player> action) {
         players.playTurns(action);
     }
 

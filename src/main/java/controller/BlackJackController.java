@@ -28,7 +28,7 @@ public class BlackJackController {
     }
 
     private void playBlackJack() {
-        gameManager.playPlayerTurns(this::playPlayerTurn);
+        gameManager.forEachPlayer(this::playPlayerTurn);
         playDealerTurn();
     }
 
