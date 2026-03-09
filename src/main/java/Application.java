@@ -6,7 +6,7 @@ public class Application {
     public static void main(String[] args) {
         AppConfig config = new AppConfig();
 
-        BlackjackController controller = config.controller();
-        controller.start();
+        BlackjackController blackjackController = config.blackjackController();
+        blackjackController.start();
     }
 }
