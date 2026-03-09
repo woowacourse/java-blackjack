@@ -4,12 +4,22 @@ import domain.card.*;
 import domain.card.exception.CardException;
 import domain.gamer.exception.PlayerException;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utils.CardDeckBuilder;
 
 import java.util.List;
 
 public class PlayerTest {
+
+    PlayerName testPlayerName;
+    Player testPlayer;
+
+    @BeforeEach
+    void setUp() {
+        testPlayerName = new PlayerName("test");
+        testPlayer = Player.from(testPlayerName);
+    }
 
     @Test
     void 플레이어가_카드를_1장_받는다() {
@@ -18,11 +28,10 @@ public class PlayerTest {
                         Card.of(CardDenomination.TWO, CardEmblem.SPADE), Card.of(CardDenomination.THREE, CardEmblem.HEART))
                 .build();
         Dealer dealer = Dealer.from(cardDeck);
-        Player player = Player.from(PlayerName.from("test"));
 
-        dealer.hitCardToPlayer(player);
+        dealer.hitCardToPlayer(testPlayer);
         Card card = Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER);
-        CardBundle playerCardBundle = player.getCardBundle();
+        CardBundle playerCardBundle = testPlayer.getCardBundle();
         CardBundle answerCardBundle = CardBundle.from(List.of(card));
 
         Assertions.assertThat(playerCardBundle)
@@ -35,20 +44,16 @@ public class PlayerTest {
                 .build();
 
         Dealer dealer = Dealer.from(cardDeck);
-        Player player = Player.from(PlayerName.from("test"));
 
         Assertions.assertThatThrownBy(() -> {
-            dealer.hitCardToPlayer(player);
+            dealer.hitCardToPlayer(testPlayer);
         }).isInstanceOf(CardException.class);
     }
 
     @Test
     void 플레이어를_생성한다() {
-        String name = "test1";
-        Player player = Player.from(PlayerName.from(name));
-
-        Assertions.assertThat(player.getMyName())
-                .isEqualTo(name);
+        Assertions.assertThat(testPlayer.getMyName())
+                .isEqualTo(testPlayerName.name());
     }
 
     @Test
@@ -56,7 +61,7 @@ public class PlayerTest {
         String overFiveLengthName = "testtest";
 
         Assertions.assertThatThrownBy(() -> {
-            Player.from(PlayerName.from(overFiveLengthName));
+            Player.from(new PlayerName(overFiveLengthName));
         }).isInstanceOf(PlayerException.class);
     }
 
@@ -69,9 +74,8 @@ public class PlayerTest {
                 .build();
         CardBundle origin = CardBundle.from(List.of(clover, spade));
         Dealer dealer = Dealer.from(cardDeck);
-        Player player = Player.from(PlayerName.from("test"));
 
-        CardBundle result = dealer.dealCardToPlayer(player);
+        CardBundle result = dealer.dealCardToPlayer(testPlayer);
 
         Assertions.assertThat(result.getBasicScore()).isEqualTo(origin.getBasicScore());
     }
@@ -86,12 +90,11 @@ public class PlayerTest {
                 .cards(cards)
                 .build();
         Dealer dealer = Dealer.from(cardDeck);
-        Player player = Player.from(PlayerName.from("test"));
 
-        dealer.dealCardToPlayer(player);
-        dealer.hitCardToPlayer(player);
+        dealer.dealCardToPlayer(testPlayer);
+        dealer.hitCardToPlayer(testPlayer);
 
-        Assertions.assertThat(player.isBusted()).isTrue();
+        Assertions.assertThat(testPlayer.isBusted()).isTrue();
     }
 
 }

@@ -6,6 +6,7 @@ import domain.gamer.Dealer;
 import domain.gamer.Player;
 import domain.gamer.PlayerName;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utils.CardDeckBuilder;
 
@@ -13,7 +14,14 @@ import java.util.List;
 
 public class DealerTest {
 
-    // THINK @BeforeEach 생각해볼 것.
+    PlayerName testPlayerName;
+    Player testPlayer;
+
+    @BeforeEach
+    void setUp() {
+        testPlayerName = new PlayerName("test");
+        testPlayer = Player.from(testPlayerName);
+    }
 
     @Test
     void 카드를_2장_나눠준다() {
@@ -22,9 +30,7 @@ public class DealerTest {
                 .build();
 
         Dealer dealer = Dealer.from(cardDeck);
-        Player player = Player.from(PlayerName.from("test"));
-
-        CardBundle cardBundle = dealer.dealCardToPlayer(player);
+        CardBundle cardBundle = dealer.dealCardToPlayer(testPlayer);
 
         Assertions.assertThat(cardBundle)
                 .isEqualTo(CardBundle.from(List.of(
@@ -40,9 +46,7 @@ public class DealerTest {
                 .build();
 
         Dealer dealer = Dealer.from(cardDeck);
-        Player player = Player.from(PlayerName.from("test"));
-
-        CardBundle cardBundle = dealer.hitCardToPlayer(player);
+        CardBundle cardBundle = dealer.hitCardToPlayer(testPlayer);
 
         Assertions.assertThat(cardBundle)
                 .isEqualTo(CardBundle.from(List.of(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER))
@@ -56,10 +60,9 @@ public class DealerTest {
                 .build();
 
         Dealer dealer = Dealer.from(cardDeck);
-        Player player = Player.from(PlayerName.from("test"));
 
         Assertions.assertThatThrownBy(() -> {
-            dealer.dealCardToPlayer(player);
+            dealer.dealCardToPlayer(testPlayer);
         }).isInstanceOf(CardException.class);
     }
 
