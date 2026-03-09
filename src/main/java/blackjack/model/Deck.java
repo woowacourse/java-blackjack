@@ -9,11 +9,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class CardProvider {
+public class Deck {
 
     private final Queue<Card> deck = new LinkedList<>();
 
-    public CardProvider() {
+    public Deck() {
         initDeck();
     }
 

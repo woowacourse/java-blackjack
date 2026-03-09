@@ -2,7 +2,7 @@ package blackjack.controller;
 
 import blackjack.model.Card;
 import blackjack.model.CardCalculator;
-import blackjack.model.CardProvider;
+import blackjack.model.Deck;
 import blackjack.model.GameResultCalculator;
 import blackjack.model.Player;
 import blackjack.model.Rank;
@@ -12,10 +12,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class BlackjackControllerTest {
-    private final CardProvider cardProvider = new CardProvider();
+    private final Deck deck = new Deck();
     private final CardCalculator cardCalculator = new CardCalculator();
     private final GameResultCalculator gameResultCalculator = new GameResultCalculator();
-    private final BlackjackController blackjackController = new BlackjackController(cardProvider, cardCalculator,
+    private final BlackjackController blackjackController = new BlackjackController(deck, cardCalculator,
             gameResultCalculator);
 
 

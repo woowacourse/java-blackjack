@@ -2,16 +2,16 @@ package blackjack;
 
 import blackjack.controller.BlackjackController;
 import blackjack.model.CardCalculator;
-import blackjack.model.CardProvider;
+import blackjack.model.Deck;
 import blackjack.model.GameResultCalculator;
 
 public class Application {
     public static void main(String[] args) {
 
-        CardProvider cardProvider = new CardProvider();
+        Deck deck = new Deck();
         CardCalculator cardCalculator = new CardCalculator();
         GameResultCalculator gameResultCalculator = new GameResultCalculator();
-        BlackjackController blackjackController = new BlackjackController(cardProvider, cardCalculator,
+        BlackjackController blackjackController = new BlackjackController(deck, cardCalculator,
                 gameResultCalculator);
         blackjackController.run();
 

@@ -5,8 +5,8 @@ import static blackjack.model.Constant.TWENTY_ONE;
 import static blackjack.util.ExceptionHandler.retryUntilSuccess;
 
 import blackjack.model.CardCalculator;
-import blackjack.model.CardProvider;
 import blackjack.model.Dealer;
+import blackjack.model.Deck;
 import blackjack.model.ErrorMessage;
 import blackjack.model.GameResultCalculator;
 import blackjack.model.GameSummary;
@@ -24,13 +24,13 @@ public class BlackjackController {
 
     private static final String Y_N_REGREX = "^[yYnN]$";
 
-    private final CardProvider cardProvider;
+    private final Deck deck;
     private final CardCalculator cardCalculator;
     private final GameResultCalculator gameResultCalculator;
 
-    public BlackjackController(CardProvider cardProvider, CardCalculator cardCalculator,
+    public BlackjackController(Deck deck, CardCalculator cardCalculator,
                                GameResultCalculator gameResultCalculator) {
-        this.cardProvider = cardProvider;
+        this.deck = deck;
         this.cardCalculator = cardCalculator;
         this.gameResultCalculator = gameResultCalculator;
     }
@@ -57,7 +57,7 @@ public class BlackjackController {
     }
 
     private void provideInitCardsPrint(List<Player> players, Dealer dealer) {
-        cardProvider.provideInitCards(players, dealer);
+        deck.provideInitCards(players, dealer);
         OutputView.printInitCards(players, dealer);
     }
 
@@ -83,14 +83,14 @@ public class BlackjackController {
     public void hit(List<Player> players, Dealer dealer) {
         for (Player player : players) {
             while (retryUntilSuccess(() -> checkY(player)) && checkAddCard(player)) {
-                cardProvider.provideOneCard(player);
+                deck.provideOneCard(player);
                 OutputView.printPlayerCards(player);
             }
         }
 
         while (cardCalculator.totalScore(dealer.cards()) < DEALER_ADD_CARD_STAND) {
             OutputView.printDealerHit();
-            cardProvider.provideOneCard(dealer);
+            deck.provideOneCard(dealer);
         }
     }
 
