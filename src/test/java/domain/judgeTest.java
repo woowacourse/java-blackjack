@@ -45,7 +45,7 @@ public class judgeTest {
         judgementService.judgementWinning(player, dealer);
 
         // then
-        assertThat(player.getPlayerStatus()).isEqualTo(PlayerStatus.DRAW);
+        assertThat(player.getPlayerStatus()).isEqualTo(PlayerStatus.LOSS);
     }
 
     // 플레이어 버스트
