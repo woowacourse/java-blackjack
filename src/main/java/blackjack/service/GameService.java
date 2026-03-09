@@ -1,0 +1,49 @@
+package blackjack.service;
+
+import blackjack.domain.Dealer;
+import blackjack.domain.Deck;
+import blackjack.domain.GameResult;
+import blackjack.domain.User;
+import blackjack.domain.Users;
+
+public class GameService {
+
+    private static final int INITIAL_CARD_COUNT = 2;
+
+    private final Deck deck;
+
+    public GameService(Deck deck) {
+        this.deck = deck;
+    }
+
+    public void settingCards(Users users, Dealer dealer) {
+        deck.shuffle();
+        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
+            distributeOneCard(users, dealer);
+        }
+    }
+
+    private void distributeOneCard(Users users, Dealer dealer) {
+        users.forEach(user -> user.bring(deck.bringTopCard()));
+        dealer.bring(deck.bringTopCard());
+    }
+
+    public void getMoreCard(User user) {
+        user.bring(deck.bringTopCard());
+    }
+
+    public boolean isDealerWinning(User user, Dealer dealer) {
+        if (user.isBurst()) {
+            return true;
+        }
+        if (dealer.isBurst()) {
+            return false;
+        }
+        return user.calculateCardsValue() < dealer.calculateCardsValue();
+    }
+
+    public void applyGameResult(User user, Dealer dealer, GameResult gameResult) {
+        boolean isUserWin = !isDealerWinning(user, dealer);
+        gameResult.add(user.getName(), isUserWin);
+    }
+}
