@@ -24,4 +24,7 @@ public class Participant {
         participantHand.addScore(score);
     }
 
+    public boolean isMoreThanScore(Integer threshold) {
+        return participantHand.getScore() > threshold;
+    }
 }
