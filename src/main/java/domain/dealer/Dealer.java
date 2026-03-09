@@ -24,8 +24,8 @@ public class Dealer {
         return new Dealer(cardDeck);
     }
 
-    public CardBundle handOutInitialCardToPlayer(Player player) {
-        return handOutCardToPlayer(player, INITIAL_CARD_DRAW_COUNT);
+    public void handOutInitialCardToPlayer(Player player) {
+        handOutCardToPlayer(player, INITIAL_CARD_DRAW_COUNT);
     }
 
     public CardBundle handOutCard(int tryCount) {
@@ -52,16 +52,21 @@ public class Dealer {
         return false;
     }
 
-    private boolean canHit() {
-        return cardBundle.getBasicScore() <= DEALER_ADDITIONAL_DRAW_CONDITION;
-    }
-
-    public CardBundle drawMySelf(int tryCount) {
-        return cardBundle.addUp(handOutCard(tryCount));
+    public void drawMySelf(int tryCount) {
+        cardBundle.addUp(handOutCard(tryCount));
     }
 
     public Card drawCard() {
         return cardDeck.getCard();
+    }
+
+
+    private boolean canHit() {
+        return cardBundle.getBasicScore() <= DEALER_ADDITIONAL_DRAW_CONDITION;
+    }
+
+    public boolean isBusted() {
+        return cardBundle.getBasicScore() > BUSTED_CONDITION;
     }
 
     public int getResultScore() {
@@ -74,10 +79,6 @@ public class Dealer {
 
     public List<String> disPlayMyCardBundle() {
         return cardBundle.toDisplay();
-    }
-
-    public boolean isBusted() {
-        return cardBundle.getBasicScore() > BUSTED_CONDITION;
     }
 
 }
