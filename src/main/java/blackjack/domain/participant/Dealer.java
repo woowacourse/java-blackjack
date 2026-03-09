@@ -8,6 +8,7 @@ public class Dealer extends Participant {
 
     private static final String DEALER_NAME = "딜러";
     private static final int HIT_THRESHOLD = 16;
+    private static final Score HIT_THRESHOLD_SCORE = new Score(HIT_THRESHOLD);
 
     private final Deck deck;
 
@@ -37,7 +38,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canReceiveCard() {
-        return calculateScore().isLessThanOrEqualTo(new Score(HIT_THRESHOLD));
+        return calculateScore().isLessThanOrEqualTo(HIT_THRESHOLD_SCORE);
     }
 
     public Card getOpenCard() {

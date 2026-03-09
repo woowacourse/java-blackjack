@@ -18,6 +18,7 @@ class GameResultsTest {
     @Test
     @DisplayName("플레이어가 승리하면 딜러 결과에 패가 1개 집계된다")
     void calculate_dealerLoseCount_whenPlayerWins() {
+        // given
         Dealer dealer = new Dealer(new Deck());
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.SEVEN));
@@ -26,14 +27,17 @@ class GameResultsTest {
         player.receiveCard(new Card(Suit.HEART, Rank.TEN));
         player.receiveCard(new Card(Suit.SPADE, Rank.NINE));
 
+        // when
         GameResults results = GameResults.calculate(new Players(List.of(player)), dealer);
 
+        // then
         assertThat(results.getDealerResults().get(GameResult.LOSE)).isEqualTo(1);
     }
 
     @Test
     @DisplayName("플레이어가 패배하면 딜러 결과에 승이 1개 집계된다")
     void calculate_dealerWinCount_whenPlayerLoses() {
+        // given
         Dealer dealer = new Dealer(new Deck());
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.NINE));
@@ -42,14 +46,17 @@ class GameResultsTest {
         player.receiveCard(new Card(Suit.HEART, Rank.TEN));
         player.receiveCard(new Card(Suit.SPADE, Rank.SEVEN));
 
+        // when
         GameResults results = GameResults.calculate(new Players(List.of(player)), dealer);
 
+        // then
         assertThat(results.getDealerResults().get(GameResult.WIN)).isEqualTo(1);
     }
 
     @Test
     @DisplayName("점수가 같으면 딜러 결과에 무승부가 1개 집계된다")
     void calculate_dealerDrawCount_whenScoresAreEqual() {
+        // given
         Dealer dealer = new Dealer(new Deck());
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.SEVEN));
@@ -58,8 +65,10 @@ class GameResultsTest {
         player.receiveCard(new Card(Suit.HEART, Rank.TEN));
         player.receiveCard(new Card(Suit.SPADE, Rank.SEVEN));
 
+        // when
         GameResults results = GameResults.calculate(new Players(List.of(player)), dealer);
 
+        // then
         assertThat(results.getDealerResults().get(GameResult.DRAW)).isEqualTo(1);
     }
 }

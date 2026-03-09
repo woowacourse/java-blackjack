@@ -10,18 +10,30 @@ class RankTest {
     @Test
     @DisplayName("ACE 카드는 isAce가 참이다")
     void isAce_ShouldReturnTrue_ForAce() {
-        assertThat(Rank.ACE.isAce()).isTrue();
+        // given & when
+        boolean result = Rank.ACE.isAce();
+
+        // then
+        assertThat(result).isTrue();
     }
 
     @Test
     @DisplayName("ACE가 아닌 카드는 isAce가 거짓이다")
     void isAce_ShouldReturnFalse_ForNonAce() {
-        assertThat(Rank.KING.isAce()).isFalse();
+        // given & when
+        boolean result = Rank.KING.isAce();
+
+        // then
+        assertThat(result).isFalse();
     }
 
     @Test
     @DisplayName("ACE 바로 다음 순서인 TWO는 isAce가 거짓이다")
     void isAce_ShouldReturnFalse_ForTwo() {
-        assertThat(Rank.TWO.isAce()).isFalse();
+        // given & when
+        boolean result = Rank.TWO.isAce();
+
+        // then
+        assertThat(result).isFalse();
     }
 }
