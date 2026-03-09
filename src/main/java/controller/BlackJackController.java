@@ -4,7 +4,7 @@ import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
-import service.GameManager;
+import domain.BlackJackGame;
 import view.InputView;
 import view.OutputView;
 
@@ -23,13 +23,13 @@ public class BlackJackController {
         Dealer dealer = new Dealer();
         Players players = readUntilValidPlayers();
 
-        GameManager gameManager = new GameManager(dealer, players);
-        gameManager.initHands(deck);
+        BlackJackGame blackJackGame = new BlackJackGame(dealer, players);
+        blackJackGame.initHands(deck);
         outputView.showInitialHands(dealer, players);
 
         playBlackJack(deck, dealer, players);
         outputView.showHandResults(dealer, players);
-        outputView.showGameResult(gameManager.calculateResults());
+        outputView.showGameResult(blackJackGame.calculateResults());
     }
 
     private void playBlackJack(Deck deck, Dealer dealer, Players players) {

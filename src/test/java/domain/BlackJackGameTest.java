@@ -1,6 +1,5 @@
-package service;
+package domain;
 
-import domain.MatchResult;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.card.Rank;
@@ -18,7 +17,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class GameManagerTest {
+class BlackJackGameTest {
 
     @Test
     @DisplayName("딜러와 모든 플레이어는 게임 시작 시, 2장의 카드를 받는다.")
@@ -27,7 +26,7 @@ class GameManagerTest {
         Dealer dealer = new Dealer();
         Players players = new Players(List.of("pobi", "james"));
 
-        GameManager gameManager = new GameManager(dealer, players);
+        BlackJackGame blackJackGame = new BlackJackGame(dealer, players);
 
 
         assertThrows(IllegalStateException.class, () -> dealer.getCards().size());
@@ -36,7 +35,7 @@ class GameManagerTest {
         }
 
         // when
-        gameManager.initHands(new Deck());
+        blackJackGame.initHands(new Deck());
 
         // then
         Assertions.assertEquals(dealer.getCards().size(), 2);
@@ -51,7 +50,7 @@ class GameManagerTest {
         // given
         Dealer dealer = new Dealer();
         Players players = new Players(List.of("pobi"));
-        GameManager gameManager = new GameManager(dealer, players);
+        BlackJackGame blackJackGame = new BlackJackGame(dealer, players);
 
         dealer.receive(new Card(Rank.JACK, Suit.CLOVER));
         dealer.receive(new Card(Rank.SEVEN, Suit.HEART));
@@ -62,7 +61,7 @@ class GameManagerTest {
         }
 
         // when
-        GameResultDto gameResultDto = gameManager.calculateResults();
+        GameResultDto gameResultDto = blackJackGame.calculateResults();
         Map<String, MatchResult> playerResult = gameResultDto.getPlayersResult();
 
         // then
@@ -77,7 +76,7 @@ class GameManagerTest {
         // given
         Dealer dealer = new Dealer();
         Players players = new Players(List.of("pobi"));
-        GameManager gameManager = new GameManager(dealer, players);
+        BlackJackGame blackJackGame = new BlackJackGame(dealer, players);
 
         dealer.receive(new Card(Rank.JACK, Suit.CLOVER));
         dealer.receive(new Card(Rank.SEVEN, Suit.HEART));
@@ -88,7 +87,7 @@ class GameManagerTest {
         }
 
         // when
-        GameResultDto gameResultDto = gameManager.calculateResults();
+        GameResultDto gameResultDto = blackJackGame.calculateResults();
         Map<String, MatchResult> playerResult = gameResultDto.getPlayersResult();
 
         // then
@@ -103,7 +102,7 @@ class GameManagerTest {
         // given
         Dealer dealer = new Dealer();
         Players players = new Players(List.of("pobi"));
-        GameManager gameManager = new GameManager(dealer, players);
+        BlackJackGame blackJackGame = new BlackJackGame(dealer, players);
 
         dealer.receive(new Card(Rank.ACE, Suit.CLOVER));
         dealer.receive(new Card(Rank.KING, Suit.CLOVER));
@@ -114,7 +113,7 @@ class GameManagerTest {
         }
 
         // when
-        GameResultDto gameResultDto = gameManager.calculateResults();
+        GameResultDto gameResultDto = blackJackGame.calculateResults();
         Map<String, MatchResult> playerResult = gameResultDto.getPlayersResult();
         // then
         for (Map.Entry<String, MatchResult> matchResultEntry : playerResult.entrySet()) {
@@ -128,7 +127,7 @@ class GameManagerTest {
         // given
         Dealer dealer = new Dealer();
         Players players = new Players(List.of("pobi"));
-        GameManager gameManager = new GameManager(dealer, players);
+        BlackJackGame blackJackGame = new BlackJackGame(dealer, players);
 
         dealer.receive(new Card(Rank.ACE, Suit.CLOVER));
         dealer.receive(new Card(Rank.KING, Suit.CLOVER));
@@ -140,7 +139,7 @@ class GameManagerTest {
         }
 
         // when
-        GameResultDto gameResultDto = gameManager.calculateResults();
+        GameResultDto gameResultDto = blackJackGame.calculateResults();
         Map<String, MatchResult> playerResult = gameResultDto.getPlayersResult();
 
         // then
@@ -155,7 +154,7 @@ class GameManagerTest {
         // given
         Dealer dealer = new Dealer();
         Players players = new Players(List.of("pobi"));
-        GameManager gameManager = new GameManager(dealer, players);
+        BlackJackGame blackJackGame = new BlackJackGame(dealer, players);
 
         dealer.receive(new Card(Rank.JACK, Suit.CLOVER));
         dealer.receive(new Card(Rank.SEVEN, Suit.HEART));
@@ -167,7 +166,7 @@ class GameManagerTest {
         }
 
         // when
-        GameResultDto gameResultDto = gameManager.calculateResults();
+        GameResultDto gameResultDto = blackJackGame.calculateResults();
         Map<String, MatchResult> playerResult = gameResultDto.getPlayersResult();
 
         // then
@@ -182,7 +181,7 @@ class GameManagerTest {
         // given
         Dealer dealer = new Dealer();
         Players players = new Players(List.of("pobi"));
-        GameManager gameManager = new GameManager(dealer, players);
+        BlackJackGame blackJackGame = new BlackJackGame(dealer, players);
 
         dealer.receive(new Card(Rank.JACK, Suit.CLOVER));
         dealer.receive(new Card(Rank.ACE, Suit.HEART));
@@ -194,7 +193,7 @@ class GameManagerTest {
         }
 
         // when
-        GameResultDto gameResultDto = gameManager.calculateResults();
+        GameResultDto gameResultDto = blackJackGame.calculateResults();
         Map<String, MatchResult> playerResult = gameResultDto.getPlayersResult();
 
         // then
@@ -209,7 +208,7 @@ class GameManagerTest {
         // given
         Dealer dealer = new Dealer();
         Players players = new Players(List.of("pobi"));
-        GameManager gameManager = new GameManager(dealer, players);
+        BlackJackGame blackJackGame = new BlackJackGame(dealer, players);
 
         dealer.receive(new Card(Rank.ACE, Suit.CLOVER));
         dealer.receive(new Card(Rank.KING, Suit.CLOVER));
@@ -221,12 +220,38 @@ class GameManagerTest {
         }
 
         // when
-        GameResultDto gameResultDto = gameManager.calculateResults();
+        GameResultDto gameResultDto = blackJackGame.calculateResults();
         Map<String, MatchResult> playerResult = gameResultDto.getPlayersResult();
 
         // then
         for (Map.Entry<String, MatchResult> matchResultEntry : playerResult.entrySet()) {
             Assertions.assertEquals(matchResultEntry.getValue(), MatchResult.LOSE);
+        }
+    }
+
+    @Test
+    @DisplayName("딜러와 플레이어 모두 블랙잭인 경우 무승부 처리된다.")
+    void 동점_딜러_플레이어_모두_블랙잭_무승부_판단() {
+        // given
+        Dealer dealer = new Dealer();
+        Players players = new Players(List.of("pobi"));
+        BlackJackGame blackJackGame = new BlackJackGame(dealer, players);
+
+        dealer.receive(new Card(Rank.ACE, Suit.CLOVER));
+        dealer.receive(new Card(Rank.KING, Suit.CLOVER));
+
+        for (Player player : players.getPlayers()) {
+            player.receive(new Card(Rank.JACK, Suit.CLOVER));
+            player.receive(new Card(Rank.ACE, Suit.HEART));
+        }
+
+        // when
+        GameResultDto gameResultDto = blackJackGame.calculateResults();
+        Map<String, MatchResult> playerResult = gameResultDto.getPlayersResult();
+
+        // then
+        for (Map.Entry<String, MatchResult> matchResultEntry : playerResult.entrySet()) {
+            Assertions.assertEquals(matchResultEntry.getValue(), MatchResult.DRAW);
         }
     }
 }
