@@ -11,6 +11,7 @@ import java.util.Map;
 
 public class PlayerResult {
 
+    private static final int BUST_LIMIT = 21;
     private final Map<Player, GameStatus> result;
 
     private PlayerResult(Map<Player, GameStatus> result) {
@@ -30,10 +31,10 @@ public class PlayerResult {
     }
 
     private static GameStatus decide(int playerScore, int dealerScore) {
-        if (playerScore > 21) {
+        if (playerScore > BUST_LIMIT) {
             return LOSE;
         }
-        if (dealerScore > 21 || playerScore > dealerScore) {
+        if (dealerScore > BUST_LIMIT || playerScore > dealerScore) {
             return WIN;
         }
         if (playerScore == dealerScore) {
