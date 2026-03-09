@@ -1,5 +1,6 @@
 import domain.Card;
 import domain.CardDeck;
+import domain.ShuffleStrategy;
 import domain.User;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,8 +19,8 @@ class UserTest {
 
     @BeforeEach
     void setUp() {
-        cardDeck = new CardDeck();
-        gameService = new GameService();
+        ShuffleStrategy strategy = (cards -> {});
+        gameService = new GameService(strategy);
     }
 
     @Test
@@ -35,8 +36,8 @@ class UserTest {
     public void dealer_should_open_1_card (){
         User user = User.from("json");
         List<Card> cards = new ArrayList<>();
-        cards.add(cardDeck.deal());
-        cards.add(cardDeck.deal());
+        cards.add(gameService.deal());
+        cards.add(gameService.deal());
         user.receiveInitCard(cards);
         assertThat(user.getHand().size()).isEqualTo(2);
     }
