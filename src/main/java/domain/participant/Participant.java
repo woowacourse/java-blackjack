@@ -25,9 +25,7 @@ public class Participant {
     }
 
     public void changeState() {
-        if (gameState == GameState.HIT) {
-            this.gameState = GameState.STAND;
-        }
+        this.gameState = gameState.toStand();
     }
 
     public void playTurn(Deck deck) {
