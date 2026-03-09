@@ -11,7 +11,7 @@ public record PlayerResultDto(
 
     public static PlayerResultDto from(Gamer gamer) {
         int resultScore = gamer.getResultScore();
-        return new PlayerResultDto(new PlayerHandDto(gamer), resultScore);
+        return new PlayerResultDto(PlayerHandDto.from(gamer), resultScore);
     }
 
 }

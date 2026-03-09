@@ -11,8 +11,8 @@ public record PlayerHandDto(
         String handOnCards
 ) {
 
-    public PlayerHandDto(Gamer gamer) {
-        this(gamer.getMyName(), joining(openGamerCards(gamer)));
+    public static PlayerHandDto from(Gamer gamer) {
+        return new PlayerHandDto(gamer.getMyName(), joining(openGamerCards(gamer)));
     }
 
     public static PlayerHandDto onlyFirstCard(Dealer dealer) {

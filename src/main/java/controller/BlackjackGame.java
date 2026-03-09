@@ -69,7 +69,7 @@ public class BlackjackGame {
 
     private List<PlayerHandDto> getPlayerHandInformation(List<Player> players) {
         return players.stream()
-                .map(PlayerHandDto::new)
+                .map(PlayerHandDto::from)
                 .toList();
     }
 
@@ -87,7 +87,7 @@ public class BlackjackGame {
     private void drawPlayerCard(Player player, Dealer dealer) {
         while (!player.isBusted() && isPlayerWantCard(player)) {
             dealer.hitCardToPlayer(player);
-            view.printParticipantHand(new PlayerHandDto(player));
+            view.printParticipantHand(PlayerHandDto.from(player));
         }
     }
 

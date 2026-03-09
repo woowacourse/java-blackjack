@@ -26,7 +26,7 @@ public class Dealer extends Gamer {
     }
 
     public static Dealer from(CardDeck cardDeck) {
-        return new Dealer(PlayerName.from(DEFAULT_DEALER_NAME), cardDeck);
+        return new Dealer(new PlayerName(DEFAULT_DEALER_NAME), cardDeck);
     }
 
     public CardBundle dealCardToPlayer(Player player) {

@@ -29,7 +29,7 @@ public class ApplicationView {
             String names = reader.readInput();
             return Arrays.stream(names.split(PLAYER_NAME_DELIMITER))
                     .map(String::trim)
-                    .map(PlayerName::from)
+                    .map(PlayerName::new)
                     .toList();
         });
     }

@@ -1,7 +1,5 @@
 package domain.gamer;
 
-import domain.gamer.dto.PlayerHandDto;
-
 import java.util.Collections;
 import java.util.List;
 
