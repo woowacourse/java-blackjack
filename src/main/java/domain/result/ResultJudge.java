@@ -1,12 +1,10 @@
-package service;
+package domain.result;
 
-import domain.result.Result;
-import domain.result.ResultInfo;
 import domain.participants.Dealer;
 import domain.participants.Player;
 import domain.participants.Players;
 
-public class BlackJackService {
+public class ResultJudge {
     private static final int BLACKJACK_LIMIT_NUMBER = 21;
 
     public Result calculateResult(Dealer dealer, Players players) {

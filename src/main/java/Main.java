@@ -1,10 +1,10 @@
 import controller.BlackJackController;
-import service.BlackJackService;
+import domain.result.ResultJudge;
 
 public class Main {
     public static void main(String[] args) {
-        BlackJackService blackJackService = new BlackJackService();
-        BlackJackController blackJackController = new BlackJackController(blackJackService);
+        ResultJudge resultJudge = new ResultJudge();
+        BlackJackController blackJackController = new BlackJackController(resultJudge);
         blackJackController.run();
     }
 }

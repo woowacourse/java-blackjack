@@ -6,7 +6,7 @@ import domain.participants.Dealer;
 import domain.participants.Hand;
 import domain.participants.Player;
 import domain.participants.Players;
-import service.BlackJackService;
+import domain.result.ResultJudge;
 import util.Parser;
 import util.Validator;
 import view.InputView;
@@ -17,10 +17,10 @@ import java.util.List;
 
 public class BlackJackController {
     private static final String HIT_COMMAND = "y";
-    private final BlackJackService blackJackService;
+    private final ResultJudge resultJudge;
 
-    public BlackJackController(BlackJackService blackJackService) {
-        this.blackJackService = blackJackService;
+    public BlackJackController(ResultJudge resultJudge) {
+        this.resultJudge = resultJudge;
     }
 
     public void run() {
@@ -36,7 +36,7 @@ public class BlackJackController {
 
         dealerHitOrStand(dealer, cardDeck);
         OutputView.scoreStatisticsMessage(dealer, players);
-        Result result = blackJackService.calculateResult(dealer, players);
+        Result result = resultJudge.calculateResult(dealer, players);
         OutputView.gameResultMessage(result);
     }
 
