@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 public class PlayingCards {
 
     private final int BUSTED_SCORE = 21;
-    private final int DEALER_SCORE = 16;
     private final List<Card> cards;
 
     private PlayingCards(List<Card> cards) {
@@ -78,10 +77,6 @@ public class PlayingCards {
 
     public Card getFirstCard() {
         return getCards().getFirst();
-    }
-
-    public boolean isDealerDraw() {
-        return calculateTotalScore() <= DEALER_SCORE;
     }
 
     public boolean isNotDrawable() {
