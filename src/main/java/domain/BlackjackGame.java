@@ -1,6 +1,7 @@
 package domain;
 
 import static domain.Constant.DEALER_HIT_STAND_BOUNDARY;
+import static domain.Constant.DEALER_NAME;
 import static domain.Constant.DEFAULT_HAND_NUMBER;
 
 import domain.card.Card;
@@ -18,7 +19,7 @@ public class BlackjackGame {
 
     public BlackjackGame() {
         this.players = new ArrayList<>();
-        this.dealer = new Dealer("딜러");
+        this.dealer = new Dealer(DEALER_NAME);
         this.deck = new Deck();
     }
 
