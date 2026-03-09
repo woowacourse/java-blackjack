@@ -18,6 +18,6 @@ public class Card {
     }
 
     public String cardToKorName() {
-        return ""+ number + suit;
+        return ""+ number.getName() + suit.getName();
     }
 }
