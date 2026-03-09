@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Dealer {
     private static final int DEALER_HIT_THRESHOLD = 16;
+    private static final int BLACKJACK_THRESHOLD = 21;
 
     private final Hand hand;
 
@@ -42,6 +43,6 @@ public class Dealer {
     }
 
     public boolean isBust() {
-        return score() > 21;
+        return score() > BLACKJACK_THRESHOLD;
     }
 }
