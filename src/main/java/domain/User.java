@@ -3,8 +3,8 @@ package domain;
 import view.Message;
 
 public class User {
-    private String username;
-    private Hand hand;
+    private final String username;
+    private final Hand hand;
 
     public User(String name) {
         this.username = name;

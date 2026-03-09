@@ -5,7 +5,7 @@ import vo.GameResult;
 public class Dealer {
     private static final Integer MAXIMUM_TOTAL_SCORE = 21;
 
-    private Hand hand;
+    private final Hand hand;
 
     public Dealer() {
         this.hand = new Hand();
