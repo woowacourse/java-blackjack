@@ -1,9 +1,9 @@
-package domain.player;
+package domain.participant.player;
 
 public enum WinStatus {
     WIN("승"),
     DRAW("무"),
-    LOSE("패");
+    LOSS("패");
 
     private String status;
 

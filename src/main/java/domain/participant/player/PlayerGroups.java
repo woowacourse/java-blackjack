@@ -16,8 +16,8 @@ public class PlayerGroups {
         this.players = new ArrayList<>(players);
     }
 
-    public void drawCard(Card card){
-        players.get(playIndex).addCard(card);
+    public void onePlayerDrawCard(Card card){
+        players.get(playIndex).drawCard(card);
     }
 
     public Map<String, List<String>> playersStatus() {
@@ -38,19 +38,15 @@ public class PlayerGroups {
         return players.get(playIndex).getCards();
     }
 
-    public int getCurrentPlayerCardSum() {
-        return players.get(playIndex).getCardSum();
-    }
-
-    public Player getDealer() {
-        return players.get(0);
+    public int getCurrentPlayerScore() {
+        return players.get(playIndex).getMyScore();
     }
 
     public Map<String, Integer> playersTotalScore() {
         Map<String, Integer> scores = new LinkedHashMap<>();
 
         for (Player player : players) {
-            scores.put(player.getName(), player.getCardSum());
+            scores.put(player.getName(), player.getMyScore());
         }
 
         return scores;
@@ -65,7 +61,7 @@ public class PlayerGroups {
             String playerName = player.getName();
 
             if(player.isBust()) {
-                result.put(playerName, WinStatus.LOSE);
+                result.put(playerName, WinStatus.LOSS);
                 continue;
             }
 
@@ -74,7 +70,7 @@ public class PlayerGroups {
                 continue;
             }
 
-            result.put(playerName, player.isWin(dealer.getCardSum()));
+            result.put(playerName, player.finalizeResult(dealer.getMyScore()));
         }
 
         return result;
