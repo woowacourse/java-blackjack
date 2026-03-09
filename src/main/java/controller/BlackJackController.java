@@ -89,6 +89,7 @@ public class BlackJackController {
         }
 
         blackJackService.draw(player);
+        OutputView.printPlayerCurrentDeck(player.getResult());
 
         return !blackJackService.isBust(player);
     }
