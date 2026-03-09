@@ -6,11 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
-//    딜러와 pobi, jason에게 2장을 나누었습니다.
-//    딜러카드: 3다이아몬드
-//    pobi카드: 2하트, 8스페이드
-//    jason카드: 7클로버, K스페이드
-
     public void outputInitialMessage(InitialDto initialDto) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("딜러와 ");
@@ -54,7 +49,6 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    //pobi카드: 2하트, 8스페이드, A클로버
     public void outputPlayerDeckDtos(PlayerResultDto playerResultDto) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(playerResultDto.playerName()).append("카드: ");
@@ -62,13 +56,13 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
+    public void outputDealerAdditionCardMessage() {
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
     private String getCardDtoStrings(List<CardDto> cardDtos) {
         return cardDtos.stream()
                 .map(CardDto::toString)
                 .collect(Collectors.joining(", "));
-    }
-
-    public void outputDealerAdditionCardMessage() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 }
