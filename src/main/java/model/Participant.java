@@ -1,5 +1,6 @@
 package model;
 
+import java.util.List;
 import model.dto.Card;
 import model.dto.PlayerName;
 import model.dto.PlayerResult;
@@ -14,8 +15,13 @@ public class Participant {
         this.name = name;
     }
 
+    public String getName() {
+        return this.name.value();
+    }
+
     public PlayerResult getResult() {
-        return new PlayerResult(name, participantHand.getDeck().get(), participantHand.getScore());
+        List<String> cards = participantHand.getDeck().stream().map(Card::getString).toList();
+        return new PlayerResult(getName(), cards, participantHand.getScore());
     }
 
     public void addCard(Card card) {

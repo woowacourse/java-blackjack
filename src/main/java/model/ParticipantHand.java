@@ -1,6 +1,7 @@
 package model;
 
 import constant.ErrorMessage;
+import java.util.List;
 import model.dto.Card;
 
 public class ParticipantHand {
@@ -26,8 +27,8 @@ public class ParticipantHand {
         return score.get();
     }
 
-    public Cards getDeck() {
-        return deck;
+    public List<Card> getDeck() {
+        return deck.get();
     }
 
     private void validateCardDuplicate(Card card) {

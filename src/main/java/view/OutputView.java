@@ -25,7 +25,7 @@ public class OutputView {
     private static final String DEALER_TEXT = "딜러:";
 
     public static void printInitDeck(List<PlayerResult> players, PlayerResult dealer) {
-        List<String> playerNames = players.stream().map(playerResult -> playerResult.name().value()).toList();
+        List<String> playerNames = players.stream().map(PlayerResult::name).toList();
         printInitDeckDrawMessage(playerNames);
         printDealerInitDeck(dealer.deck().getFirst());
         printPlayersCurrentDeck(players);
@@ -33,8 +33,7 @@ public class OutputView {
     }
 
     public static void printPlayerCurrentDeck(PlayerResult playerResult) {
-        List<String> cardString = playerResult.deck().stream().map(Card::getString).toList();
-        System.out.println(playerResult.name().value() + CARD_TEXT + String.join(JOIN_DELIMITER, cardString));
+        System.out.println(playerResult.name() + CARD_TEXT + String.join(JOIN_DELIMITER, playerResult.deck()));
     }
 
     public static void printDealerCardDrawMessage() {
@@ -66,8 +65,8 @@ public class OutputView {
         System.out.println(DEALER_INIT_DECK_TEXT + String.join(JOIN_DELIMITER, players) + INIT_DECK_TEXT);
     }
 
-    private static void printDealerInitDeck(Card card) {
-        System.out.println(DEALER_CARD_TEXT + card.getString());
+    private static void printDealerInitDeck(String card) {
+        System.out.println(DEALER_CARD_TEXT + card);
     }
 
     private static void printPlayersCurrentDeck(List<PlayerResult> players) {
@@ -77,8 +76,7 @@ public class OutputView {
     }
 
     private static void printPlayerScore(PlayerResult playerResult) {
-        List<String> cardString = playerResult.deck().stream().map(Card::getString).toList();
-        System.out.println(playerResult.name().value() + CARD_TEXT + String.join(JOIN_DELIMITER, cardString) + SCORE_TEXT + playerResult.score());
+        System.out.println(playerResult.name() + CARD_TEXT + String.join(JOIN_DELIMITER, playerResult.deck()) + SCORE_TEXT + playerResult.score());
     }
 
     private static void printDealerResult(DealerWinning dealerWinning) {
@@ -104,7 +102,7 @@ public class OutputView {
     }
 
     private static void printPlayerResult(PlayerWinning playerWinning) {
-        System.out.println(playerWinning.name().value() + RESULT_DELIMITER + playerWinning.matchStatus().getStatus());
+        System.out.println(playerWinning.name() + RESULT_DELIMITER + playerWinning.matchStatus().getStatus());
     }
 
 }

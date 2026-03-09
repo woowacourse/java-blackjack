@@ -2,4 +2,4 @@ package model.dto;
 
 import java.util.List;
 
-public record PlayerResult(PlayerName name, List<Card> deck, Integer score) {}
+public record PlayerResult(String name, List<String> deck, Integer score) {}
