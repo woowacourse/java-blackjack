@@ -108,12 +108,7 @@ public class BlackjackGame {
     }
 
     private ResultAnalysisDto analyzeBlackjackResult(Players players, Dealer dealer) {
-        ResultAnalyzer analyzer = getAnalyzer();
-        return analyzer.analyze(players, dealer);
-    }
-
-    private ResultAnalyzer getAnalyzer() {
-        return ResultAnalyzer.getInstance();
+        return ResultAnalyzer.analyze(players, dealer);
     }
 
 }
