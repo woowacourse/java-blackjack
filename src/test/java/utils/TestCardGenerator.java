@@ -1,4 +1,7 @@
-package domain.card;
+package utils;
+
+import domain.card.Card;
+import domain.card.CardGenerator;
 
 import java.util.List;
 

@@ -1,4 +1,7 @@
-package domain.card;
+package utils;
+
+import domain.card.Card;
+import domain.card.CardBundle;
 
 import java.util.List;
 
