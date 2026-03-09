@@ -22,12 +22,6 @@ public class CardDeck {
                 initialCard.add(new Card(rank, pattern));
             }
         }
-
-        //위아래중 무엇이 나은지?
-//                Arrays.stream(Pattern.values())
-//                        .flatMap(pattern -> Arrays.stream(Rank.values())
-//                        .map(rank -> new Card(rank, pattern)))
-//                        .forEach(deck::push);
     }
 
     private void shuffle(List<Card> initialCards) {

@@ -11,7 +11,7 @@ public class ResultTest {
 
     @Test
     void 플레이어의_승패_판정을_역산하면_딜러의_승패_결과가_나온다() {
-        Map<ResultInfo, Integer> expectedDealerResult=new EnumMap<>(ResultInfo.class);
+        Map<ResultInfo, Integer> expectedDealerResult = new EnumMap<>(ResultInfo.class);
 
         Result result = new Result();
         result.setPlayerResult("user1", ResultInfo.WIN);
