@@ -23,7 +23,7 @@ public class GameService {
         }
     }
 
-    public void getMoreCard(User user, Dealer dealer) {
+    public void getMoreCard(User user) {
         user.bring(deck.bringTopCard());
     }
 

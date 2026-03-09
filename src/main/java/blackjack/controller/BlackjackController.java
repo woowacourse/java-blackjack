@@ -63,7 +63,7 @@ public class BlackjackController {
             while (!user.isBurst() && !user.isBlackjack()) {
                 String yesOrNo = inputView.readMoreCard(user.getName());
                 if (yesOrNo.equals("y")) {
-                    gameService.getMoreCard(user, dealer);
+                    gameService.getMoreCard(user);
 
                     OutputView.printSettingCardsResult(user.getName(), user.getCardsName());
                     count++;
