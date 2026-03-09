@@ -59,7 +59,6 @@ public class BlackjackGame {
         return false;
     }
 
-
     public List<Player> getPlayers() {
         return players;
     }

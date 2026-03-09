@@ -1,4 +1,5 @@
 import domain.BlackjackGame;
+import domain.Constant;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import java.util.List;
@@ -25,7 +26,17 @@ public class BlackjackController {
         resultView.printParticipantsCards(players, dealer);
 
         playerHitStand(players);
-        resultView.printDealerHitStand(blackjackGame.dealerHitsStand());
+
+        while(true){
+            boolean dealerHitStand = dealer.decideHitStand(Constant.DEALER_HIT_STAND_BOUNDARY);
+            if(!dealerHitStand) {
+                resultView.printDealerHitStand(dealerHitStand);
+                break;
+            }
+            blackjackGame.giveCard(dealer);
+            resultView.printDealerHitStand(dealerHitStand);
+        }
+
         resultView.printCardsWithResult(players, dealer);
         resultView.printResultStatistics(players, dealer);
     }
