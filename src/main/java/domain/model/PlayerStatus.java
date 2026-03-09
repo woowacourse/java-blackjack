@@ -6,7 +6,7 @@ public enum PlayerStatus {
     DRAW("무"),
     NONE("미정");
 
-    private String name;
+    private final String name;
 
     PlayerStatus(String name) {
         this.name = name;
