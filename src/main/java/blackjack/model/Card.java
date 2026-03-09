@@ -3,8 +3,8 @@ package blackjack.model;
 import java.util.Objects;
 
 public class Card {
-    private final Figure figure; // 모양, 스페이드, 하트 등등
-    private final Number number; // a->k
+    private final Figure figure;
+    private final Number number;
 
     public Card(Figure figure, Number number) {
         this.figure = figure;
