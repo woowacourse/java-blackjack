@@ -21,15 +21,10 @@ public abstract class Participant {
         this.hands = hands;
     }
 
-    public abstract void pickInitCards(CardDeck cardDeck);
+    public abstract void pickInitialCards(CardDeck cardDeck);
 
-    //핸즈의 총 점수가 21 초과이면 true를 반환한다.
     public boolean isBust() {
         return hands.isTotalScoreOver(BLACKJACK_SCORE);
-    }
-
-    public List<Card> getAllCard() {
-        return hands.getAllCard();
     }
 
     public List<Card> getOpenedCards() {
@@ -42,6 +37,10 @@ public abstract class Participant {
 
     public void pickAdditionalCard(CardDeck cardDeck) {
         hands.addCard(cardDeck.pick());
+    }
+
+    public List<Card> getAllCard() {
+        return hands.getAllCard();
     }
 
     public String getName() {

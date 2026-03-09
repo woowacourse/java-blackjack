@@ -18,6 +18,7 @@ public class CardDeck {
         if (cards.isEmpty()) {
             throw new IllegalStateException("cards가 null입니다.");
         }
+
         this.cards = cards;
         this.pickStrategy = pickStrategy;
     }
@@ -30,13 +31,12 @@ public class CardDeck {
                         .forEach(rank -> cards.add(Card.openedCard(rank, suit))));
 
         if (cards.size() != CARD_DECK_SIZE) {
-            throw new IllegalStateException("덱이 잘 못 생성됐습니다.");
+            throw new IllegalStateException("덱이 잘못 생성됐습니다.");
         }
 
         return new CardDeck(cards, pickStrategy);
     }
 
-    // 카드 덱에서 1장 가져온다.
     public Card pick() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("카드 덱에 카드의 개수가 부족합니다.");

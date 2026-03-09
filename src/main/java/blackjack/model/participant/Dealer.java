@@ -10,17 +10,12 @@ public class Dealer extends Participant {
     private static final String DEALER_NAME = "딜러";
     private static final int PICK_THRESHOLD = 16;
 
-    private Dealer(Hands hands) {
-        super(DEALER_NAME, hands);
+    public Dealer() {
+        super(DEALER_NAME, Hands.empty());
     }
 
-    public static Dealer create() {
-        return new Dealer(Hands.empty());
-    }
-
-    // 딜러가 초기 2장의 카드를 받는다.
     @Override
-    public void pickInitCards(CardDeck cardDeck) {
+    public void pickInitialCards(CardDeck cardDeck) {
         hands.addCard(cardDeck.pick());
 
         Card secondPickedCard = cardDeck.pick();
@@ -28,12 +23,10 @@ public class Dealer extends Participant {
         hands.addCard(secondPickedCard);
     }
 
-    // 16점을 초과하면 false를 반환한다.
     public boolean canPick() {
         return !hands.isTotalScoreOver(PICK_THRESHOLD);
     }
 
-    // 플레이어와 딜러의 숫자를 비교한다.
     public Result compare(Player player) {
         // 플레이어가 버스트되면 무조건 딜러 승
         if (player.isBust()) {

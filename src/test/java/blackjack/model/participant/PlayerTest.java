@@ -17,13 +17,13 @@ class PlayerTest {
     
     @Test
     @DisplayName("플레이어는 2 장의 오픈된 카드를 뽑는다.")
-    void pickInitCards() {
+    void pickInitialCards() {
         // given
         Player player = Player.of("player1");
         CardDeck cardDeck = CardDeck.of(mockStrategy);
     
         // when
-        player.pickInitCards(cardDeck);
+        player.pickInitialCards(cardDeck);
 
         //then
         List<Card> cards = player.getOpenedCards();

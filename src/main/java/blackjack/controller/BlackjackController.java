@@ -47,7 +47,7 @@ public class BlackjackController {
 
     public void run() {
         List<Player> players = initPlayers();
-        Dealer dealer = Dealer.create();
+        Dealer dealer = new Dealer();
 
         CardDeck cardDeck = CardDeck.of(pickStrategy);
         distributeInitialCards(dealer, players, cardDeck);
@@ -76,9 +76,9 @@ public class BlackjackController {
             List<Player> players,
             CardDeck cardDeck
     ) {
-        dealer.pickInitCards(cardDeck);
+        dealer.pickInitialCards(cardDeck);
         players.forEach(
-                player -> player.pickInitCards(cardDeck)
+                player -> player.pickInitialCards(cardDeck)
         );
 
         outputView.printCardDistributionCompleted(players);

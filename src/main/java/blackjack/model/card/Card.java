@@ -8,6 +8,7 @@ public class Card {
 
     private Card(Rank rank, Suit suit, boolean isOpened) {
         validate(rank, suit);
+
         this.rank = rank;
         this.suit = suit;
         this.isOpened = isOpened;

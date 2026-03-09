@@ -58,7 +58,7 @@ class ParticipantTest {
         }
 
         @Override
-        public void pickInitCards(CardDeck cardDeck) {
+        public void pickInitialCards(CardDeck cardDeck) {
             // do nothing
         }
     }

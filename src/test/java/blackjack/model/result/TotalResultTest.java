@@ -26,7 +26,7 @@ class TotalResultTest {
     @DisplayName("딜러랑 플레이어 결과 생성 테스트")
     void totalResultTest() {
         // given
-        Dealer dealer = Dealer.create();
+        Dealer dealer =  new Dealer();
         dealer.pickAdditionalCard(cardDeckForMustPickTen);
         dealer.pickAdditionalCard(cardDeckForMustPickTen); // 20
 

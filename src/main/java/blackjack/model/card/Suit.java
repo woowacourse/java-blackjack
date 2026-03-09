@@ -9,8 +9,12 @@ public enum Suit {
 
     private final String displayName;
 
-    Suit(String suit) {
-        this.displayName = suit;
+    Suit(String displayName) {
+        if (displayName == null) {
+            throw new IllegalArgumentException("displayName이 null입니다.");
+        }
+
+        this.displayName = displayName;
     }
 
     public String getDisplayName() {

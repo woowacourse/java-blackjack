@@ -20,13 +20,13 @@ class DealerTest {
 
     @Test
     @DisplayName("딜러가 뽑은 두 장의 카드 중 한 장만 오픈돼 있다.")
-    void pickInitCards() {
+    void pickInitialCards() {
         // given
-        Dealer dealer = Dealer.create();
+        Dealer dealer = new Dealer();
         CardDeck cardDeck = CardDeck.of(mustPickTen);
 
         // when
-        dealer.pickInitCards(cardDeck);
+        dealer.pickInitialCards(cardDeck);
 
         //then
         List<Card> cards = dealer.getOpenedCards();
@@ -39,7 +39,7 @@ class DealerTest {
     @DisplayName("딜러의 점수가 16점을 초과하면 false를 반환한다.")
     void canPick() {
         //given
-        Dealer dealer = Dealer.create();
+        Dealer dealer =  new Dealer();
         CardDeck cardDeck = CardDeck.of(mustPickTen);
 
         dealer.pickAdditionalCard(cardDeck);
@@ -56,10 +56,10 @@ class DealerTest {
     @DisplayName("딜러랑 플레이어 핸드 비교 결과 테스트")
     void compare() {
         // given
-        Dealer dealer = Dealer.create();
+        Dealer dealer =  new Dealer();
 
         CardDeck cardDeckForMustPickTen = CardDeck.of(mustPickTen);
-        dealer.pickInitCards(cardDeckForMustPickTen);
+        dealer.pickInitialCards(cardDeckForMustPickTen);
 
         Player player1 = Player.of("player1");
 
