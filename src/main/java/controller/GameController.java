@@ -15,49 +15,64 @@ public class GameController {
     }
 
     public void run() {
-        List<String> names = InputView.askName();
-        gameService.joinPlayers(names);
-        gameService.initAllPlayerCard();
+        registerPlayers();
 
-        Map<String, List<String>> playersStatus = gameService.getPlayersStatus();
-        ResultView.printStartPlayersCards(playersStatus);
+        printInitialCardResult();
 
-        while(gameService.isRemainPlayer()) {
-            askPlayerHit();
-        }
+        playersHit();
+        dealerHit();
 
-        if (gameService.isDealerHit()) {
-            ResultView.printDealerOneMoreCard();
-        }
-
-        Map<String, List<String>> playersEndStatus = gameService.getPlayersStatus();
-        Map<String, Integer> playersTotalScore = gameService.getPlayersTotalScore();
-        ResultView.printCardSumResult(playersEndStatus, playersTotalScore);
-
-        ResultView.printResult(gameService.result());
+        printFinalCardResult();
+        printRankResult();
 
     }
 
+    private void printInitialCardResult() {
+        Map<String, List<String>> playersStatus = gameService.getPlayersStatus();
+        ResultView.printStartPlayersCards(playersStatus);
+    }
+
+    private void registerPlayers() {
+        List<String> names = InputView.askName();
+        gameService.joinPlayers(names);
+        gameService.initAllPlayerCard();
+    }
+
+    private void playersHit() {
+        while(gameService.isRemainPlayer()) {
+            askPlayerHit();
+        }
+    }
+
     private void askPlayerHit() {
+        // TODO: 딜러 도메인 분리 후 삭제
         if(gameService.getCurrentPlayerName().equals("딜러")) {
             gameService.nextPlayer();
             return;
         }
 
-        playerChooseHit();
+        while(InputView.askHit(gameService.getCurrentPlayerName()) && gameService.isCurrentPlayerBust()) {
+            gameService.selectHit();
+            ResultView.printPlayerCards(gameService.getCurrentPlayerName(), gameService.getCurrentPlayerCards());
+        }
+
         ResultView.printPlayerCards(gameService.getCurrentPlayerName(), gameService.getCurrentPlayerCards());
         gameService.nextPlayer();
     }
 
-    public void playerChooseHit() {
-        while(InputView.askHit(gameService.getCurrentPlayerName())) {
-            gameService.selectHit();
+    private void printFinalCardResult() {
+        Map<String, List<String>> playersEndStatus = gameService.getPlayersStatus();
+        Map<String, Integer> playersTotalScore = gameService.getPlayersTotalScore();
+        ResultView.printCardSumResult(playersEndStatus, playersTotalScore);
+    }
 
-            if(gameService.isCurrentPlayerBust()) {
-                break;
-            }
-
-            ResultView.printPlayerCards(gameService.getCurrentPlayerName(), gameService.getCurrentPlayerCards());
+    private void dealerHit() {
+        if (gameService.isDealerHit()) {
+            ResultView.printDealerOneMoreCard();
         }
+    }
+
+    private void printRankResult() {
+        ResultView.printResult(gameService.result());
     }
 }
