@@ -13,8 +13,7 @@ public class InputView {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         InputValidator.validateInput(input);
-        List<String> names = InputParser.separateBySeparator(input);
-        return names;
+        return InputParser.separateBySeparator(input);
     }
 
     public static boolean inputHitOrStand() {
