@@ -1,17 +1,18 @@
-package model;
+package constant;
 
 public enum MatchStatus {
     WIN("승"),
     DRAW("무"),
     LOSE("패");
 
+    private final String status;
+
     MatchStatus(String status) {
         this.status = status;
     }
-
-    private final String status;
 
     public String getStatus() {
         return status;
     }
 }
+
