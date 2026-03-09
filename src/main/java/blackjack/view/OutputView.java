@@ -1,9 +1,8 @@
 package blackjack.view;
 
-import static blackjack.domain.Dealer.DEALER_HIT_THRESHOLD;
+import static blackjack.global.Constants.DEALER_HIT_THRESHOLD;
 
 import blackjack.domain.Dealer;
-import blackjack.domain.GameResult;
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
 import blackjack.domain.Player;

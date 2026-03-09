@@ -1,10 +1,11 @@
 package blackjack.domain;
 
+import static blackjack.global.Constants.DEALER_HIT_THRESHOLD;
+
 import java.util.List;
 
 public class Dealer extends Participant {
 
-    public static final int DEALER_HIT_THRESHOLD = 16;
     private static final String DEALER_NICKNAME = "딜러";
 
     private final Trump trump;
