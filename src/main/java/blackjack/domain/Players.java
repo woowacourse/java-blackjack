@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.dto.PlayerResult;
 import blackjack.dto.WinningResult;
@@ -72,20 +73,28 @@ public class Players {
                 .collect(Collectors.joining("\n"));
     }
     
-    public WinningResult getWinningResult(int dealerScore) {
+    public WinningResult getWinningResult(Dealer dealer) {
         List<PlayerResult> playerResult = players
                 .stream()
-                .map(player -> player.determinePlayerResult(dealerScore))
+                .map(player -> player.determinePlayerResult(dealer))
                 .toList();
         return getWinningResultWithDealerWinning(playerResult);
     }
     
     private WinningResult getWinningResultWithDealerWinning(List<PlayerResult> playerResult) {
-        int dealerLoss = (int) playerResult.stream()
+        int dealerWin = (int) playerResult
+                .stream()
+                .filter(result -> result.gameResult() == GameResult.LOSE)
+                .count();
+        int dealerDraw = (int) playerResult
+                .stream()
+                .filter(result -> result.gameResult() == GameResult.DRAW)
+                .count();
+        int dealerLose = (int) playerResult
+                .stream()
                 .filter(result -> result.gameResult() == GameResult.WIN)
                 .count();
-        int dealerWin = playerResult.size() - dealerLoss;
-        return new WinningResult(dealerLoss, dealerWin, playerResult);
+        return new WinningResult(dealerWin, dealerDraw, dealerLose, playerResult);
     }
     
     public void distributeCards(Deck deck) {

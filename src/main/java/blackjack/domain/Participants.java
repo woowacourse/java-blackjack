@@ -36,12 +36,7 @@ public class Participants {
     }
     
     public WinningResult getWinningResult() {
-        int dealerScore = dealer.getTotalScore();
-        return getWinningResult(dealerScore);
-    }
-    
-    public WinningResult getWinningResult(int dealerScore) {
-        return players.getWinningResult(dealerScore);
+        return players.getWinningResult(dealer);
     }
     
     public String findDrawablePlayer() {

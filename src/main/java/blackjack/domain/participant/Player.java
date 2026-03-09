@@ -27,19 +27,26 @@ public class Player extends Participant {
         stopDrawing = true;
     }
     
-    public PlayerResult determinePlayerResult(int dealerScore) {
-        GameResult gameResult = resolveGameResult(dealerScore);
+    public PlayerResult determinePlayerResult(Dealer dealer) {
+        GameResult gameResult = determineGameResult(dealer);
         return new PlayerResult(nickname, gameResult);
     }
     
-    private GameResult resolveGameResult(int dealerScore) {
-        if (hand.isBlackjack()) {
-            return GameResult.WIN;
-        }
+    private GameResult determineGameResult(Dealer dealer) {
         if (isBusted()) {
             return GameResult.LOSE;
         }
-        if (getTotalScore() < dealerScore) {
+        if (dealer.isBusted()) {
+            return GameResult.WIN;
+        }
+        return compareScore(dealer.getTotalScore(), getTotalScore());
+    }
+    
+    private GameResult compareScore(int dealerScore, int playerScore) {
+        if (dealerScore == playerScore) {
+            return GameResult.DRAW;
+        }
+        if (dealerScore > playerScore) {
             return GameResult.LOSE;
         }
         return GameResult.WIN;
