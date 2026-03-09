@@ -1,7 +1,6 @@
 package controller;
 
 import domain.participant.Player;
-import domain.participant.Players;
 import service.GameManager;
 import view.InputView;
 import view.OutputView;
@@ -19,7 +18,7 @@ public class BlackJackController {
     }
 
     public void playGame() {
-        gameManager.addAllPlayers(readUntilValidPlayers());
+        readUntilValidPlayers();
         gameManager.dealInitialCardsToParticipants();
         outputView.showInitialHandsOfParticipants(gameManager.getDealerHand(), gameManager.getPlayersHand());
 
@@ -52,12 +51,14 @@ public class BlackJackController {
         outputView.showDealerStandMessage();
     }
 
-    private Players readUntilValidPlayers() {
-        try {
-            return new Players(gameManager.createPlayers(inputView.readPlayers()));
-        } catch (IllegalArgumentException e) {
-            OutputView.printErrorMessage(e.getMessage());
-            return readUntilValidPlayers();
+    private void readUntilValidPlayers() {
+        while (true) {
+            try {
+                gameManager.addPlayers(inputView.readPlayers());
+                return;
+            } catch (IllegalArgumentException e) {
+                OutputView.printErrorMessage(e.getMessage());
+            }
         }
     }
 }

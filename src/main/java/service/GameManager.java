@@ -27,15 +27,13 @@ public class GameManager {
         this.players = new Players();
     }
 
-    public List<Player> createPlayers(List<String> playerNames) {
-        return playerNames.stream()
-                .map(String::trim)
+    public void addPlayers(List<String> names) {
+        List<Player> players = names.stream()
                 .map(Player::new)
                 .toList();
-    }
 
-    public void addAllPlayers(Players players) {
-        this.players = players;
+
+        this.players = new Players(players);
     }
 
     public void dealInitialCardsToParticipants() {

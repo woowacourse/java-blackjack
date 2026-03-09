@@ -18,7 +18,7 @@ class GameManagerTest {
         GameManager gameManager = new GameManager();
 
         // when
-        gameManager.createPlayers(players);
+        gameManager.addPlayers(players);
         gameManager.dealInitialCardsToParticipants();
 
         // then
