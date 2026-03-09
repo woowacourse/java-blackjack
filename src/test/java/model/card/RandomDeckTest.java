@@ -22,9 +22,9 @@ public class RandomDeckTest {
     void 덱이_처음에_가지는_카드가_52개가_아니면_예외를_발생한다() {
         // given
         List<Card> cards = List.of(
-                Card.of(Suit.CLOVER, Rank.J),
-                Card.of(Suit.CLOVER, Rank.Q),
-                Card.of(Suit.CLOVER, Rank.K)
+                Card.of(Suit.CLOVER, Rank.JACK),
+                Card.of(Suit.CLOVER, Rank.QUEEN),
+                Card.of(Suit.CLOVER, Rank.KING)
         );
 
         // when and then
