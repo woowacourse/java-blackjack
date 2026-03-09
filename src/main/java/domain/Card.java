@@ -1,6 +1,7 @@
 package domain;
 
 public enum Card {
+
     SPADE_ACE("A", "스페이드", 1),
     SPADE_TWO("2", "스페이드", 2),
     SPADE_THREE("3", "스페이드", 3),

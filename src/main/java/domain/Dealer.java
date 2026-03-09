@@ -12,11 +12,7 @@ public class Dealer extends Player {
     }
 
     public void recordRounds(GameResult gameResult) {
-        gameResults.put(gameResult, gameResults.getOrDefault(gameResult,0) + 1);
-    }
-
-    public Map<GameResult, Integer> getGameResults() {
-        return gameResults;
+        gameResults.merge(gameResult, 1, Integer::sum);
     }
 
     public int getWinRounds() {

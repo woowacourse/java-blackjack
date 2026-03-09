@@ -1,5 +1,7 @@
 import domain.RandomShuffle;
 import domain.ShuffleStrategy;
+import view.InputView;
+import view.OutputView;
 
 public class AppConfig {
 
