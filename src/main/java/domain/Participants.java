@@ -1,5 +1,6 @@
 package domain;
 
+import dto.ParticipantsScoreDTO;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -102,14 +103,14 @@ public class Participants {
         return userDisplays;
     }
 
-    public List<String> judgeWinner() {
+    public ParticipantsScoreDTO judgeWinner() {
         EnumMap<GameResult, Integer> dealerScore = new EnumMap<>(GameResult.class);
 
         for (GameResult result : GameResult.values()) {
             dealerScore.put(result, 0);
         }
 
-        Map<String, GameResult> userScore = new HashMap<String, GameResult>();
+        Map<String, GameResult> userScore = new HashMap<>();
 
         for (User user : participants) {
             GameResult isDealerWin = dealer.judgeUserResult(user.getHand());
@@ -118,6 +119,13 @@ public class Participants {
             GameResult isUserWin = dealer.judgeUserWin(user.getHand());
             userScore.put(user.getName(), isUserWin);
         }
+
+        return new ParticipantsScoreDTO(dealerScore, userScore);
+    }
+
+    public List<String> makeFinalWinnerDisplays(ParticipantsScoreDTO participantsScore) {
+        EnumMap<GameResult, Integer> dealerScore = participantsScore.getDealerScore();
+        Map<String, GameResult> userScore = participantsScore.getUserScore();
 
         List<String> finalTotalDisplays = new ArrayList<>();
         String dealerTotalFinalDisplay = "딜러: " + dealerScore.get(GameResult.WIN) + "승 " + dealerScore.get(GameResult.LOSE) + "패";

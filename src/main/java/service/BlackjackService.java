@@ -2,6 +2,7 @@ package service;
 
 import domain.Deck;
 import domain.Participants;
+import dto.ParticipantsScoreDTO;
 import java.util.List;
 import view.Message;
 
@@ -70,6 +71,7 @@ public class BlackjackService {
     }
 
     public List<String> evaluateGame() {
-        return participants.judgeWinner();
+        ParticipantsScoreDTO participantsScoreDTO = participants.judgeWinner();
+        return participants.makeFinalWinnerDisplays(participantsScoreDTO);
     }
 }
