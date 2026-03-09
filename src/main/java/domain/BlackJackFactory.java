@@ -1,7 +1,7 @@
 package domain;
 
-import common.Constants;
-
+import java.util.List;
+// 굳이 둬야 할까?
 public class BlackJackFactory {
 
     private final DrawStrategy drawStrategy;
@@ -14,15 +14,7 @@ public class BlackJackFactory {
         return new BlackJackFactory(drawStrategy);
     }
 
-    public GameTable openGame() {
-        return new GameTable();
-    }
-
-    private Dealer dealer () {
-        return new Dealer(Constants.DEALER_NAME, emptyhand());
-    }
-
-    private Hand emptyhand() {
-        return Hand.empty();
+    public GameTable openGame(List<String> playerNames) {
+        return GameTable.setupGame(playerNames, drawStrategy);
     }
 }

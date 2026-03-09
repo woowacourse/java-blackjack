@@ -7,6 +7,7 @@ import domain.DrawStrategy;
 import java.util.Random;
 
 public class RandomStrategy implements DrawStrategy {
+
     @Override
     public Card draw() {
         return new Card(

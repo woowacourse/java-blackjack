@@ -1,6 +1,9 @@
 package repository;
 
+import domain.vo.DealerWinningScore;
 import domain.GameTable;
+import domain.PlayedGameResult;
+import domain.PlayerWinningInfo;
 import domain.vo.NameAndCardInfos;
 import java.util.List;
 
@@ -10,10 +13,6 @@ public class GameTableRepository {
 
     public void save(GameTable gameTable) {
         this.gameTable = gameTable;
-    }
-
-    public void addPlayer(String name) {
-        gameTable.addPlayer(name);
     }
 
     public NameAndCardInfos getDealerCards() {
@@ -50,5 +49,37 @@ public class GameTableRepository {
 
     public boolean hasWaitingPlayers() {
         return gameTable.hasWaitingPlayers();
+    }
+
+    public void recordCurrentGameResult() {
+        gameTable.recordCurrentGameResult();
+    }
+
+    public boolean isDealerPlayable() {
+        return gameTable.isDealerPlayable();
+    }
+
+    public void dealerDrawCard() {
+        gameTable.dealerDrawCard();
+    }
+
+    public void recordDealerGameResult() {
+        gameTable.recordDealerGameResult();
+    }
+
+    public PlayedGameResult dealerResult() {
+        return gameTable.dealerResult();
+    }
+
+    public List<PlayedGameResult> playerResults() {
+        return gameTable.playerResults();
+    }
+
+    public DealerWinningScore getDealerWinningStatistics() {
+        return gameTable.dealerWinningStatistics();
+    }
+
+    public List<PlayerWinningInfo> getPlayerWinningInfos() {
+        return gameTable.playerWinningInfos();
     }
 }

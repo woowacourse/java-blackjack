@@ -3,6 +3,7 @@ package view;
 import java.util.Arrays;
 
 public enum SelectFormat {
+
     POSITIVE("y"),
     NEGATIVE("n"),
     ;

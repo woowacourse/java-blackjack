@@ -9,13 +9,16 @@ class Participants {
     private final Dealer dealer;
     private final Players players;
 
-    Participants(Dealer dealer) {
+    Participants(Dealer dealer, Players players) {
         this.dealer = dealer;
-        this.players = new Players();
+        this.players = players;
     }
 
-    void addPlayer(String name) {
-        players.add(name);
+    static Participants from(List<String> names, DrawStrategy drawStrategy) {
+        Dealer dealer = Dealer.of(drawStrategy);
+        Players players = Players.from(names, drawStrategy);
+
+        return new Participants(dealer, players);
     }
 
     List<String> allPlayerNames() {
@@ -30,18 +33,18 @@ class Participants {
         return players.currentPlayerCardInfos();
     }
 
-    void allParticipantsDrawInitialCards(DrawStrategy drawStrategy) {
-        dealerDrawInitialCards(drawStrategy);
-        playersDrawInitialCards(drawStrategy);
+    void allParticipantsDrawInitialCards() {
+        dealerDrawInitialCards();
+        playersDrawInitialCards();
     }
 
-    private void playersDrawInitialCards(DrawStrategy drawStrategy) {
-        players.drawInitialCards(drawStrategy);
+    private void playersDrawInitialCards() {
+        players.drawInitialCards();
     }
 
-    void dealerDrawInitialCards(DrawStrategy drawStrategy) {
+    void dealerDrawInitialCards() {
         for (int i = 0; i < BlackJackRule.INITIAL_CARD_COUNT.value(); i++) {
-            dealer.draw(drawStrategy);
+            dealer.draw();
         }
     }
 
@@ -49,19 +52,35 @@ class Participants {
         return players.allPlayerCardInfos();
     }
 
-    public String currentPlayerName() {
+    String currentPlayerName() {
         return players.currentPlayerName();
     }
 
-    public void currentPlayerDrawCard(DrawStrategy drawStrategy) {
-        players.currentPlayerDrawCard(drawStrategy);
+    void currentPlayerDrawCard() {
+        players.currentPlayerDrawCard();
     }
 
-    public boolean isCurrentPlayerPlayable() {
+    boolean isCurrentPlayerPlayable() {
         return players.isCurrentPlayerPlayable();
     }
 
-    public boolean hasWaitingPlayers() {
+    boolean hasWaitingPlayers() {
         return players.hasWaitingPlayers();
+    }
+
+    PlayedGameResult currentPlayersResult() {
+        return players.currentPlayersResult();
+    }
+
+    PlayedGameResult dealerResult() {
+        return PlayedGameResult.from(dealer);
+    }
+
+    boolean isDealerPlayable() {
+        return dealer.isPlayable();
+    }
+
+    void dealerDrawCard() {
+        dealer.draw();
     }
 }

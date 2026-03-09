@@ -1,6 +1,5 @@
 package service;
 
-import domain.DrawStrategy;
 import domain.GameTable;
 import domain.BlackJackFactory;
 import java.util.List;
@@ -9,20 +8,17 @@ import repository.GameTableRepository;
 public class BlackJackCommandService {
 
     private final GameTableRepository gameTableRepository;
-    private final DrawStrategy drawStrategy;
+    private final BlackJackFactory blackJackFactory;
 
-    public BlackJackCommandService(GameTableRepository gameTableRepository, DrawStrategy drawStrategy) {
+    public BlackJackCommandService(GameTableRepository gameTableRepository,
+                                   BlackJackFactory blackJackFactory) {
         this.gameTableRepository = gameTableRepository;
-        this.drawStrategy = drawStrategy;
+        this.blackJackFactory = blackJackFactory;
     }
 
-    public void setupGameTable() {
-        GameTable gameTable = BlackJackFactory.basedOn(drawStrategy).openGame();
+    public void setupGameTable(List<String> playerNames) {
+        GameTable gameTable = blackJackFactory.openGame(playerNames);
         gameTableRepository.save(gameTable);
-    }
-
-    public void setupPlayers(List<String> names) {
-        names.forEach(gameTableRepository::addPlayer);
     }
 
     public void distributeInitialCards() {
@@ -34,6 +30,14 @@ public class BlackJackCommandService {
     }
 
     public void recordCurrentGameResult() {
-//        gameTableRepository.
+        gameTableRepository.recordCurrentGameResult();
+    }
+
+    public void dealerDrawCard() {
+        gameTableRepository.dealerDrawCard();
+    }
+
+    public void recordDealerGameResult() {
+        gameTableRepository.recordDealerGameResult();
     }
 }

@@ -1,9 +1,11 @@
-package dto;
+package dto.request;
 
 import java.util.Arrays;
 import java.util.List;
 
 public record PlayerNamesRequest(List<String> names) {
+
+    private static final String DELIMITER = ",";
 
     public static PlayerNamesRequest from(String rawInput) {
         requireNonBlank(rawInput);
@@ -11,7 +13,7 @@ public record PlayerNamesRequest(List<String> names) {
     }
 
     private static List<String> namesFrom(String rawInput) {
-        return Arrays.stream(rawInput.split(","))
+        return Arrays.stream(rawInput.split(DELIMITER))
                 .map(String::trim)
                 .filter(name -> !name.isEmpty())
                 .toList();

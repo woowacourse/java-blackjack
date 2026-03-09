@@ -2,6 +2,7 @@ package domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import domain.strategy.RandomStrategy;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -14,8 +15,7 @@ class PlayersTest {
     @MethodSource("playerNames")
     @DisplayName("플레이어들 중 현재(peek) 플레이어의 이름을 반환할 수 있어야한다.")
     void 현재_플레이어_이름_확인(List<String> names) {
-        Players players = new Players();
-        names.forEach(players::add);
+        Players players = Players.from(names, new RandomStrategy());
 
         String expected = names.getFirst();
         String actual = players.currentPlayerName();

@@ -1,9 +1,11 @@
 package controller;
 
-import dto.GameStatus;
-import dto.NameResponse;
-import dto.PlayerNamesRequest;
-import dto.SelectRequest;
+import dto.response.AllPlayerWinningInfoResponse;
+import dto.response.DealerWinningStatisticsResponse;
+import dto.response.PlayedGameResultResponse;
+import dto.response.PlayerGameResultsResponse;
+import dto.request.PlayerNamesRequest;
+import dto.request.SelectRequest;
 import service.BlackJackCommandService;
 import service.BlackJackQueryService;
 import view.InputView;
@@ -28,23 +30,17 @@ public class BlackJackController {
 
     private void setupPhase() {
         setupGameTable();
-        setupPlayers();
-
         OutputView.printTaskDivider();
 
         distributeInitialCards();
         displayInitialCards();
-
         OutputView.printTaskDivider();
     }
 
-    private void setupGameTable() {
-        commandService.setupGameTable();
-    }
 
-    private void setupPlayers() {
+    private void setupGameTable() {
         PlayerNamesRequest request = InputView.readPlayers();
-        commandService.setupPlayers(request.names());
+        commandService.setupGameTable(request.names());
     }
 
     private void distributeInitialCards() {
@@ -61,22 +57,25 @@ public class BlackJackController {
         while (queryService.hasWaitingPlayers()) {
             playerGameProcess();
         }
+        OutputView.printTaskDivider();
     }
 
     private void playerGameProcess() {
-        NameResponse currentPlayer = queryService.currentPlayerName();
-        SelectRequest select = InputView.readSelect(currentPlayer);
+        SelectRequest select = playerSelect();
+        firstPlayerGameProcess(select);
 
-        firstPlayerGameProcess(select.isPositive());
-
-        if(select.isPositive()) {
+        if (select.isPositive()) {
             playerGameLoop();
         }
         commandService.recordCurrentGameResult();
     }
 
-    private void firstPlayerGameProcess(boolean isPositive) {
-        if (isPositive) {
+    private SelectRequest playerSelect() {
+        return InputView.readSelect(queryService.currentPlayerName());
+    }
+
+    private void firstPlayerGameProcess(SelectRequest select) {
+        if (select.isPositive()) {
             commandService.currentPlayerDrawCard();
         }
         OutputView.playerCardInfos(queryService.currentPlayerCards());
@@ -85,9 +84,7 @@ public class BlackJackController {
     private void playerGameLoop() {
         boolean wantMoreCard = true;
         while (wantMoreCard && queryService.isCurrentPlayerPlayable()) {
-            SelectRequest selected = InputView.readSelect(queryService.currentPlayerName());
-            wantMoreCard = selected.isPositive();
-
+            wantMoreCard = playerSelect().isPositive();
             playerGameLoopProcess(wantMoreCard);
         }
     }
@@ -100,10 +97,55 @@ public class BlackJackController {
     }
 
     private void dealerGamePhase() {
+        if(queryService.isDealerPlayable()) {
+            dealerGameLoop();
+            commandService.recordDealerGameResult();
+            OutputView.printTaskDivider();
+        }
+        commandService.recordDealerGameResult();
+    }
 
+    private void dealerGameLoop() {
+        while (queryService.isDealerPlayable()) {
+            dealerGameLoopProcess();
+        }
+    }
+
+    private void dealerGameLoopProcess() {
+        if (queryService.isDealerPlayable()) {
+            commandService.dealerDrawCard();
+            OutputView.dealerDrawCard();
+        }
     }
 
     private void resultPhase() {
+        displayDealersResult();
+        displayPlayerResults();
 
+        OutputView.printTaskDivider();
+
+        displayDealerWinningStatistics();
+        displayPlayerWinningConditions();
+    }
+
+    private void displayDealersResult() {
+        PlayedGameResultResponse dealerResultResponse = queryService.dealerResult();
+        OutputView.participantResult(dealerResultResponse);
+    }
+
+    private void displayPlayerResults() {
+        PlayerGameResultsResponse playerGameResultsResponse = queryService.playerResult();
+        OutputView.playerResults(playerGameResultsResponse);
+    }
+
+    private void displayDealerWinningStatistics() {
+        OutputView.winningConditionsHeader();
+        DealerWinningStatisticsResponse response = queryService.dealerWinningStatistics();
+        OutputView.dealerWinningStatistics(response);
+    }
+
+    private void displayPlayerWinningConditions() {
+        AllPlayerWinningInfoResponse response = queryService.playerWinningInfos();
+        OutputView.playerWinningConditions(response);
     }
 }

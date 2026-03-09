@@ -1,6 +1,7 @@
 package domain;
 
 import domain.constant.BlackJackRule;
+import domain.constant.DealerName;
 
 public class Dealer extends Participant {
 
@@ -8,8 +9,8 @@ public class Dealer extends Participant {
         super(name, hand);
     }
 
-    static Dealer of(String name) {
-        return new Dealer(name, Hand.empty());
+    static Dealer of(DrawStrategy drawStrategy) {
+        return new Dealer(DealerName.DEFAULT.dealerName(), Hand.based(drawStrategy));
     }
 
     @Override
