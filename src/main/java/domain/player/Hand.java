@@ -31,7 +31,7 @@ public class Hand {
         return score;
     }
 
-    public CardDto handToDto() {
+    public CardDto snapshot() {
         return new CardDto(List.copyOf(cards));
     }
 

@@ -44,8 +44,6 @@ public class GameManagerTest {
 
         Players players = Players.of(List.of(player1, player2));
 
-        manager.dealCardTo(players);
-
         for (Player player : players) {
             manager.dealCard(player);
             manager.dealCard(player);

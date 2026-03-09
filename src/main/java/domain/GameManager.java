@@ -22,8 +22,13 @@ public class GameManager {
         }
     }
 
+    public CardDto getStartingCard(Dealer dealer) {
+        return dealer.startingHandInfo();
+
+    }
+
     public CardDto getCardsResult(Participant participant) {
-        return participant.toDto();
+        return participant.handInfo();
     }
 
 }

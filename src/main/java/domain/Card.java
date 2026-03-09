@@ -5,4 +5,12 @@ public record Card(Suit suit, CardNumber cardNumber) {
         return this.cardNumber == CardNumber.ACE;
     }
 
+    public String suitValue() {
+        return this.suit.getValue();
+    }
+
+    public String symbol() {
+        return this.cardNumber.getSymbol();
+    }
+
 }

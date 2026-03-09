@@ -1,10 +1,15 @@
 package controller;
 
+import domain.CardDto;
 import domain.Dealer;
 import domain.Deck;
 import domain.GameManager;
+import domain.player.Player;
 import domain.player.PlayerParser;
 import domain.player.Players;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
@@ -25,5 +30,12 @@ public class GameController {
         gameManager.dealCard(dealer);
         gameManager.dealCard(dealer);
         gameManager.dealCardTo(players, 2);
+
+        Map<String, CardDto> result = new LinkedHashMap<>();
+        result.put(dealer.getName(), gameManager.getStartingCard(dealer));
+        for (Player player : players) {
+            result.put(player.getName(), gameManager.getCardsResult(player));
+        }
+        outputView.printGameInitResult(result);
     }
 }
