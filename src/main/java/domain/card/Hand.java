@@ -20,17 +20,7 @@ public class Hand {
     }
 
     public int calculateSum() {
-        int sum = 0;
-        int aceCount = 0;
-
-        for (Card card : hand) {
-            sum += card.getScore();
-            aceCount = countAce(card, aceCount);
-        }
-
-        sum = handleAce(sum, aceCount);
-
-        return sum;
+        return Score.calculate(this);
     }
 
     public boolean isBlackJack() {
@@ -39,22 +29,5 @@ public class Hand {
 
     public List<Card> getHand() {
         return hand;
-    }
-
-    private int countAce(Card card, int aceCount) {
-        if (card.isAce()) {
-            aceCount++;
-        }
-        return aceCount;
-    }
-
-    private int handleAce(int sum, int aceCount) {
-        for (int i = 0; i < aceCount; i++) {
-            if (sum <= BLACKJACK_SCORE) {
-                break;
-            }
-            sum -= ACE_ADJUSTMENT_VALUE;
-        }
-        return sum;
     }
 }
