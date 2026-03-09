@@ -19,7 +19,7 @@ public class Player {
 
     public int calculateCardsValue() {
         int sum = cards.stream()
-                .mapToInt(Card::getValue)
+                .mapToInt(Card::getCardValue)
                 .sum();
 
         return applyBestAceValue(sum);

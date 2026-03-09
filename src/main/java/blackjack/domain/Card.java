@@ -1,25 +1,20 @@
 package blackjack.domain;
 
-public class Card {
-
-    private final CardValue value;
-    private final CardShape cardShape;
-
-    public Card(CardValue value, CardShape cardShape) {
-        this.value = value;
-        this.cardShape = cardShape;
-    }
+public record Card(
+        CardValue cardValue,
+        CardShape cardShape
+) {
 
     public boolean isAce() {
-        return value == CardValue.ACE;
+        return cardValue.isAce();
     }
 
     public String getName() {
-        return value.getName() + cardShape.getName();
+        return cardValue.getName() + cardShape.getName();
     }
 
-    public int getValue() {
-        return value.getValue();
+    public int getCardValue() {
+        return cardValue.getValue();
     }
 
 }
