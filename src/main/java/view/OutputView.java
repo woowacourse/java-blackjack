@@ -14,8 +14,11 @@ import java.util.Map;
 
 public class OutputView {
 
+    private static final String COMMA_SEPARATOR = ", ";
+    private static final String SPACE_SEPARATOR = " ";
+
     public void showInitialHandsOfParticipants(DealerHandDto dealerHandDto, PlayersHandDto playersHandDto) {
-        String playerNames = String.join(", ", playersHandDto.getPlayersHand().keySet());
+        String playerNames = String.join(COMMA_SEPARATOR, playersHandDto.getPlayersHand().keySet());
         System.out.printf("\n딜러와 %s에게 2장을 나누었습니다.\n", playerNames);
 
         Card firstCard = dealerHandDto.getFirstOpenCard();
@@ -65,7 +68,7 @@ public class OutputView {
         String dealerResult = gameResultDto.getDealerResult().entrySet().stream()
                 .filter(entry -> entry.getValue() > 0)
                 .map(entry -> entry.getValue() + MatchResultMessage.of(entry.getKey()))
-                .collect(java.util.stream.Collectors.joining(" "));
+                .collect(java.util.stream.Collectors.joining(SPACE_SEPARATOR));
 
         System.out.printf("딜러: %s\n", dealerResult);
 
@@ -79,7 +82,7 @@ public class OutputView {
     private String formatCards(List<Card> cards) {
         return cards.stream()
                 .map(card -> RankMessage.of(card.getRank()) + SuitMessage.of(card.getSuit()))
-                .collect(java.util.stream.Collectors.joining(", "));
+                .collect(java.util.stream.Collectors.joining(COMMA_SEPARATOR));
     }
 
     public static void printErrorMessage(String message) {

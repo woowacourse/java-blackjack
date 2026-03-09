@@ -32,7 +32,6 @@ public class GameManager {
                 .map(Player::new)
                 .toList();
 
-
         this.players = new Players(players);
     }
 
