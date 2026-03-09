@@ -25,17 +25,13 @@ public class BlackJackController {
     public void run() {
         Players players = inputController.getPlayersName();
         Dealer dealer = new Dealer();
-
         OutputView.printNewLine();
 
-        blackJackService.shuffle();
-
         initDraw(dealer, players);
-
         drawPlayersTurn(players);
         drawDealer(dealer);
-
         printPlayersScore(dealer, players);
+
         OutputView.printResult(blackJackService.getGameResult(players, dealer));
     }
 

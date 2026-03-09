@@ -5,6 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import java.util.List;
 import java.util.stream.Stream;
 import model.BlackJackDeck;
+import model.CardDeckFactory;
 import model.CardNumber;
 import model.Dealer;
 import constant.MatchStatus;
@@ -23,7 +24,7 @@ public class TestBlackJackService {
 
     @Test
     public void 카드_뽑기_정상_작동() {
-        BlackJackDeck cards = new BlackJackDeck();
+        BlackJackDeck cards = new BlackJackDeck(CardDeckFactory.createShuffledDeck());
         BlackJackService blackJackService = new BlackJackService(cards);
         Player player = new Player(new PlayerName("player1"));
         blackJackService.draw(player);
@@ -36,12 +37,12 @@ public class TestBlackJackService {
             Arguments.of(List.of(
                 new Card(Shape.CLOVER, CardNumber.SEVEN),
                 new Card(Shape.HEART, CardNumber.SEVEN),
-                new Card(Shape.SPADE, CardNumber.SEVEN)   //21, 버스트 아님
+                new Card(Shape.SPADE, CardNumber.SEVEN)   // 7+7+7=21, 버스트 아님
             ), false),
             Arguments.of(List.of(
                 new Card(Shape.CLOVER, CardNumber.TEN),
                 new Card(Shape.HEART, CardNumber.TEN),
-                new Card(Shape.SPADE, CardNumber.TWO)     //22, 버스트
+                new Card(Shape.SPADE, CardNumber.TWO)     // 10+10+2=22, 버스트
             ), true)
         );
     }
@@ -49,7 +50,7 @@ public class TestBlackJackService {
     @ParameterizedTest
     @MethodSource("bustCases")
     public void 버스트_판정(List<Card> cards, boolean expected) {
-        BlackJackService service = new BlackJackService(new BlackJackDeck());
+        BlackJackService service = new BlackJackService(new BlackJackDeck(CardDeckFactory.createShuffledDeck()));
         Player player = new Player(new PlayerName("player"));
         cards.forEach(player::draw);
         assertThat(service.isBust(player)).isEqualTo(expected);
@@ -59,16 +60,16 @@ public class TestBlackJackService {
         return Stream.of(
             Arguments.of(List.of(
                 new Card(Shape.CLOVER, CardNumber.ACE),
-                new Card(Shape.CLOVER, CardNumber.KING)   // 21, 2장 → 블랙잭
+                new Card(Shape.CLOVER, CardNumber.KING)   // ACE+KING=21, 2장 → 블랙잭
             ), true),
             Arguments.of(List.of(
                 new Card(Shape.CLOVER, CardNumber.SEVEN),
                 new Card(Shape.HEART, CardNumber.SEVEN),
-                new Card(Shape.SPADE, CardNumber.SEVEN)   // 21, 3장 → 블랙잭 아님
+                new Card(Shape.SPADE, CardNumber.SEVEN)   // 7+7+7=21, 3장 → 블랙잭 아님
             ), false),
             Arguments.of(List.of(
                 new Card(Shape.CLOVER, CardNumber.NINE),
-                new Card(Shape.CLOVER, CardNumber.KING)   // 19, 2장 → 블랙잭 아님
+                new Card(Shape.CLOVER, CardNumber.KING)   // 19점, 2장 → 블랙잭 아님
             ), false)
         );
     }
@@ -76,7 +77,7 @@ public class TestBlackJackService {
     @ParameterizedTest
     @MethodSource("isBlackJackCases")
     public void 블랙잭_판정(List<Card> cards, boolean expected) {
-        BlackJackService service = new BlackJackService(new BlackJackDeck());
+        BlackJackService service = new BlackJackService(new BlackJackDeck(CardDeckFactory.createShuffledDeck()));
         Player player = new Player(new PlayerName("player1"));
         cards.forEach(player::draw);
         assertThat(service.isBlackJack(player)).isEqualTo(expected);
@@ -120,7 +121,7 @@ public class TestBlackJackService {
     @ParameterizedTest
     @MethodSource("scoreMatchCases")
     public void 승패무_판정(List<Card> playerCards, List<Card> dealerCards, MatchStatus expected) {
-        BlackJackService service = new BlackJackService(new BlackJackDeck());
+        BlackJackService service = new BlackJackService(new BlackJackDeck(CardDeckFactory.createShuffledDeck()));
         Player player = new Player(new PlayerName("player1"));
         playerCards.forEach(player::draw);
         Dealer dealer = new Dealer();
@@ -131,7 +132,7 @@ public class TestBlackJackService {
 
     @Test
     public void 플레이어_블랙잭_딜러_블랙잭_무() {
-        BlackJackService service = new BlackJackService(new BlackJackDeck());
+        BlackJackService service = new BlackJackService(new BlackJackDeck(CardDeckFactory.createShuffledDeck()));
         Player player = new Player(new PlayerName("player1"));
         player.draw(new Card(Shape.HEART, CardNumber.ACE));
         player.draw(new Card(Shape.HEART, CardNumber.KING));
@@ -145,7 +146,7 @@ public class TestBlackJackService {
 
     @Test
     public void 플레이어_블랙잭_딜러_일반_승() {
-        BlackJackService service = new BlackJackService(new BlackJackDeck());
+        BlackJackService service = new BlackJackService(new BlackJackDeck(CardDeckFactory.createShuffledDeck()));
         Player player = new Player(new PlayerName("player1"));
         player.draw(new Card(Shape.HEART, CardNumber.ACE));
         player.draw(new Card(Shape.HEART, CardNumber.KING));
@@ -159,7 +160,7 @@ public class TestBlackJackService {
 
     @Test
     public void 딜러_블랙잭_플레이어_일반_패() {
-        BlackJackService service = new BlackJackService(new BlackJackDeck());
+        BlackJackService service = new BlackJackService(new BlackJackDeck(CardDeckFactory.createShuffledDeck()));
         Player player = new Player(new PlayerName("player1"));
         player.draw(new Card(Shape.CLOVER, CardNumber.TEN));
         player.draw(new Card(Shape.HEART, CardNumber.QUEEN));
@@ -173,7 +174,7 @@ public class TestBlackJackService {
 
     @Test
     public void 딜러_블랙잭_플레이어_버스트_패() {
-        BlackJackService service = new BlackJackService(new BlackJackDeck());
+        BlackJackService service = new BlackJackService(new BlackJackDeck(CardDeckFactory.createShuffledDeck()));
         Player player = new Player(new PlayerName("player1"));
         player.draw(new Card(Shape.CLOVER, CardNumber.TEN));
         player.draw(new Card(Shape.HEART, CardNumber.TEN));
@@ -186,4 +187,3 @@ public class TestBlackJackService {
         assertThat(result.dealerWinning().get(MatchStatus.WIN)).isEqualTo(1);
     }
 }
-
