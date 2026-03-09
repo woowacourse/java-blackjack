@@ -54,7 +54,7 @@ class DealerTest {
 
     @Test
     @DisplayName("딜러랑 플레이어 핸드 비교 결과 테스트")
-    void compare() {
+    void determineResultOf() {
         // given
         Dealer dealer =  new Dealer();
 
@@ -79,8 +79,8 @@ class DealerTest {
         player3.pickAdditionalCard(cardDeckForMustPickTen);
 
         // when & then
-        assertThat(dealer.compare(player1)).isEqualTo(Result.LOSE);
-        assertThat(dealer.compare(player2)).isEqualTo(Result.WIN);
-        assertThat(dealer.compare(player3)).isEqualTo(Result.DRAW);
+        assertThat(dealer.determineResultOf(player1)).isEqualTo(Result.LOSE);
+        assertThat(dealer.determineResultOf(player2)).isEqualTo(Result.WIN);
+        assertThat(dealer.determineResultOf(player3)).isEqualTo(Result.DRAW);
     }
 }

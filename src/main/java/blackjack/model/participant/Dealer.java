@@ -17,38 +17,40 @@ public class Dealer extends Participant {
     @Override
     public void pickInitialCards(CardDeck cardDeck) {
         hands.addCard(cardDeck.pick());
-
+        
+        Card secondPickedCard = pickSecondCard(cardDeck);
+        hands.addCard(secondPickedCard);
+    }
+    
+    private Card pickSecondCard(CardDeck cardDeck) {
         Card secondPickedCard = cardDeck.pick();
         secondPickedCard.flip();
-        hands.addCard(secondPickedCard);
+        return secondPickedCard;
     }
 
     public boolean canPick() {
         return !hands.isTotalScoreOver(PICK_THRESHOLD);
     }
 
-    public Result compare(Player player) {
-        // 플레이어가 버스트되면 무조건 딜러 승
+    public Result determineResultOf(Player player) {
         if (player.isBust()) {
             return Result.LOSE;
         }
 
-        // 플레이어가 버스트 되지 않고, 딜러가 버스트 되면 플레이어 승
         if (this.isBust()) {
             return Result.WIN;
         }
 
-        // 딜러의 점수가 더 높으면 승
-        if (this.hands.isTotalScoreOver(player.getCurrentTotalScore())) {
+        if (hands.isTotalScoreOver(
+                player.getCurrentTotalScore())
+        ) {
             return Result.LOSE;
         }
 
-        // 플레이어 점수가 더 높으면 패
-        if (player.getCurrentTotalScore() > this.hands.calculateTotalScore()) {
+        if (player.getCurrentTotalScore() > hands.calculateTotalScore()) {
             return Result.WIN;
         }
 
-        // 무승부
         return Result.DRAW;
     }
 }
