@@ -29,7 +29,7 @@ public class CardTest {
         Card card = new Card(CardNumber.ACE, CardSuit.CLUB);
         int number = card.getScore();
 
-        Assertions.assertThat(number == 1|| number == 11).isEqualTo(true);
+        Assertions.assertThat(number).isEqualTo(11);
     }
 
 
