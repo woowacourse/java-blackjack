@@ -13,6 +13,10 @@ public class User extends Player {
     }
 
     public static User from(String input) {
+        String name = input.strip();
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 이름은 공백이 아니어야 합니다.");
+        }
         return new User(input);
     }
 
