@@ -3,7 +3,7 @@ package blackjack.domain;
 import java.util.List;
 
 public class Dealer {
-    private Cards drawnCards;
+    private final Cards drawnCards;
 
     public Dealer() {
         drawnCards = new Cards();
