@@ -14,7 +14,7 @@ public class Dealer extends Participant {
         super(name);
     }
 
-    public static Participant of(String input) {
+    public static Participant from(String input) {
         return new Dealer(input);
     }
 

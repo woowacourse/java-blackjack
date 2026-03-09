@@ -17,7 +17,7 @@ public class BlackJackTest {
 
     @BeforeEach
     void setUp() {
-        participants = Participants.of(List.of("pobi", "jason"));
+        participants = Participants.from(List.of("pobi", "jason"));
         Dealer dealer = participants.getDealer();
         dealer.receive(Card.of("스페이드", 2));
         dealer.receive(Card.of("스페이드", 4));

@@ -1,23 +1,23 @@
 package model.participant;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-public class Participants implements Iterable<Participant> {
+public class Participants {
     private final List<Participant> values;
 
     private Participants(List<Participant> values) {
-        this.values = values;
+        this.values = List.copyOf(values);
     }
 
-    public static Participants of(List<String> names) {
+    public static Participants from(List<String> names) {
         List<Participant> participants = new ArrayList<>();
-        participants.add(Dealer.of("딜러"));
+        participants.add(Dealer.from("딜러"));
 
         List<Participant> players = names.stream()
                 .map(Player::of)
                 .toList();
+
         participants.addAll(players);
 
         return new Participants(participants);
@@ -43,8 +43,7 @@ public class Participants implements Iterable<Participant> {
         return names;
     }
 
-    @Override
-    public Iterator<Participant> iterator() {
-        return List.copyOf(values).iterator();
+    public List<Participant> toList() {
+        return List.copyOf(values);
     }
 }

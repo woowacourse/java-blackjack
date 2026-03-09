@@ -37,7 +37,7 @@ public class BlackJackController {
         proceedPlayerTurns(blackJack, participants.getPlayers());
         proceedDealerTurn(blackJack, participants.getDealer());
 
-        outputView.printHandsAndScore(participants);
+        outputView.printHandsAndScore(participants.toList());
         outputView.printResult(blackJack.calculateDealerResult(), blackJack.calculatePlayerResult());
     }
 
@@ -45,7 +45,7 @@ public class BlackJackController {
         String rawNames = inputView.readPlayerNames();
         List<String> parsed = InputParser.parseName(rawNames);
 
-        return Participants.of(parsed);
+        return Participants.from(parsed);
     }
 
     private Deck setUpDeck() {

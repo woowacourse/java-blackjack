@@ -12,7 +12,7 @@ class DealerTest {
 
     @BeforeEach
     void setUp() {
-        dealer = Dealer.of("딜러");
+        dealer = Dealer.from("딜러");
     }
 
     @Test

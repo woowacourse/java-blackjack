@@ -33,7 +33,7 @@ public class BlackJack {
 
     public Map<String, List<String>> dealOut() {
         Map<String, List<String>> dealOutResult = new LinkedHashMap<>();
-        for (Participant participant : participants) {
+        for (Participant participant : participants.toList()) {
             for (int i = 0; i < 2; i++) {
                 Card card = drawNewCard();
                 participant.receive(card);

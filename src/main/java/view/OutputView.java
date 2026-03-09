@@ -27,7 +27,7 @@ public class OutputView {
         System.out.printf("%s카드: %s", participant.getName(), replaced + LINE_SEPARATOR);
     }
 
-    public void printHandsAndScore(Participants participants) {
+    public void printHandsAndScore(List<Participant> participants) {
         for (Participant participant : participants) {
             System.out.printf("%s카드: %s - 결과: %d%s", participant.getName(), participant.open(),
                     participant.calculateScore(), LINE_SEPARATOR);
