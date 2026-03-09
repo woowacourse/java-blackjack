@@ -8,6 +8,7 @@ import domain.result.Result;
 import domain.result.ResultInfo;
 import domain.result.ResultJudge;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -25,13 +26,17 @@ class ResultJudgeTest {
     @BeforeEach
     void init() {
         dealer = new Dealer(new Hand());
-        winPlayer = new Player(new PlayerName("이김"), new Hand());
-        defeatPlayer = new Player(new PlayerName("짐"), new Hand());
-        drawPlayer = new Player(new PlayerName("비김"), new Hand());
         dealer.keepCard(new Card(Rank.FIVE, Pattern.CLOVER));
+
+        winPlayer = new Player(new PlayerName("이김"), new Hand());
         winPlayer.keepCard(new Card(Rank.SIX, Pattern.CLOVER));
+
+        defeatPlayer = new Player(new PlayerName("짐"), new Hand());
         defeatPlayer.keepCard(new Card(Rank.FOUR, Pattern.CLOVER));
+
+        drawPlayer = new Player(new PlayerName("비김"), new Hand());
         drawPlayer.keepCard(new Card(Rank.FIVE, Pattern.SPADE));
+
         players = new Players(List.of(winPlayer, defeatPlayer, drawPlayer));
     }
 
@@ -58,4 +63,47 @@ class ResultJudgeTest {
         ResultInfo info = result.getGameResult().get(drawPlayer.getName());
         assertThat(info).isEqualTo(ResultInfo.DRAW);
     }
+
+    @Test
+    @DisplayName("딜러와 플레이어가 둘 다 버스트되면 플레이어 패배를 우선으로 처리한다.")
+    void ResultJudge_ReturnsDrawWhenPlayerAndDealerAreBothBust(){
+        ResultJudge resultJudge = new ResultJudge();
+        dealer.keepCard(new Card(Rank.NINE, Pattern.CLOVER));
+        dealer.keepCard(new Card(Rank.JACK, Pattern.CLOVER));
+        drawPlayer.keepCard(new Card(Rank.SEVEN, Pattern.SPADE));
+        drawPlayer.keepCard(new Card(Rank.QUEEN, Pattern.SPADE));
+
+        Result result = resultJudge.calculateResult(dealer, players);
+        ResultInfo info = result.getGameResult().get(drawPlayer.getName());
+
+        assertThat(info).isEqualTo(ResultInfo.DEFEAT);
+    }
+
+    @Test
+    @DisplayName("딜러가 버스트되면 플레이어가 승리한다.")
+    void ResultJudge_ReturnsWinWhenDealerIsBust(){
+        ResultJudge resultJudge = new ResultJudge();
+        dealer.keepCard(new Card(Rank.NINE, Pattern.CLOVER));
+        dealer.keepCard(new Card(Rank.JACK, Pattern.CLOVER));
+        winPlayer.keepCard(new Card(Rank.SEVEN, Pattern.SPADE));
+
+        Result result = resultJudge.calculateResult(dealer, players);
+        ResultInfo info = result.getGameResult().get(drawPlayer.getName());
+
+        assertThat(info).isEqualTo(ResultInfo.WIN);
+    }
+
+    @Test
+    @DisplayName("플레이어가 버스트 되면 플레이어가 패배한다")
+    void ResultJudge_ReturnsDefeatWhenPlayerIsBust(){
+        ResultJudge resultJudge = new ResultJudge();
+        dealer.keepCard(new Card(Rank.NINE, Pattern.CLOVER));
+        defeatPlayer.keepCard(new Card(Rank.SIX, Pattern.SPADE));
+
+        Result result = resultJudge.calculateResult(dealer, players);
+        ResultInfo info = result.getGameResult().get(defeatPlayer.getName());
+
+        assertThat(info).isEqualTo(ResultInfo.DEFEAT);
+    }
+
 }
