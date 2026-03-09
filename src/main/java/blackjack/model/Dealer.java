@@ -1,8 +1,11 @@
 package blackjack.model;
 
+import static blackjack.model.BlackjackConfig.DEALER_STAND_SCORE;
+
 import java.util.EnumMap;
 
 public class Dealer extends User {
+
     private final EnumMap<GameResult, Integer> gameResults;
 
     public Dealer() {
@@ -19,7 +22,7 @@ public class Dealer extends User {
     }
 
     public boolean canHit() {
-        return getScore() < 17;
+        return getScore() < DEALER_STAND_SCORE;
     }
 }
 

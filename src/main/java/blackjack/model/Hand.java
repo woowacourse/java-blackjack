@@ -1,7 +1,9 @@
 package blackjack.model;
 
-import static blackjack.model.Constant.BLACKJACK_SCORE;
-import static blackjack.model.Constant.INITIAL_CARD_COUNT;
+import static blackjack.model.BlackjackConfig.ACE_HIGH_SCORE;
+import static blackjack.model.BlackjackConfig.ACE_LOW_SCORE;
+import static blackjack.model.BlackjackConfig.BLACKJACK_SCORE;
+import static blackjack.model.BlackjackConfig.INITIAL_CARD_COUNT;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,8 +51,8 @@ public class Hand {
     }
 
     private int convertAceToEleven(int currentScore) {
-        if (currentScore + 10 <= 21) {
-            return currentScore + 10;
+        if (currentScore + (ACE_HIGH_SCORE - ACE_LOW_SCORE) <= BLACKJACK_SCORE) {
+            return currentScore + (ACE_HIGH_SCORE - ACE_LOW_SCORE);
         }
         return currentScore;
     }

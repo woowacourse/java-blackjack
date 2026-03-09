@@ -1,5 +1,6 @@
 package blackjack.model;
 
+import static blackjack.model.BlackjackConfig.BLACKJACK_SCORE;
 
 public class Player extends User {
     private GameResult gameResult;
@@ -18,7 +19,7 @@ public class Player extends User {
     }
 
     public boolean canHit() {
-        return getScore() < 21;
+        return getScore() < BLACKJACK_SCORE;
     }
 }
 

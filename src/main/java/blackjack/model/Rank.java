@@ -1,7 +1,9 @@
 package blackjack.model;
 
+import static blackjack.model.BlackjackConfig.ACE_LOW_SCORE;
+
 public enum Rank {
-    ACE("A", 1),
+    ACE("A", ACE_LOW_SCORE),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
