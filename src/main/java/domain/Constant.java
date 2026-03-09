@@ -10,4 +10,6 @@ public class Constant {
     public static final int NAME_MAX_LENGTH = 10;
     public static final String DELIMITER = ", ";
     public static final String DEALER_NAME = "딜러";
+    public static final int SCORE_MIN_SIZE = 1;
+    public static final int SCORE_MAX_SIZE = 10;
 }

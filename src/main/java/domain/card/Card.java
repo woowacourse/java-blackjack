@@ -22,7 +22,7 @@ public class Card {
 
     public int getRankValueIfNotAce() {
         if (!rank.isAce()) {
-            return rank.getScoreValue();
+            return rank.getScore().getValue();
         }
         return 0;
     }
