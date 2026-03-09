@@ -3,13 +3,13 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player {
+public class User {
 
-    private final PlayerName name;
+    private final UserName name;
     private final List<Card> cards;
 
-    public Player(String name) {
-        this.name = new PlayerName(name);
+    public User(String name) {
+        this.name = new UserName(name);
         this.cards = new ArrayList<>();
     }
 

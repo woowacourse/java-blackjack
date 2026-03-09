@@ -1,10 +1,10 @@
 package blackjack.domain;
 
-public record PlayerName(
+public record UserName(
         String name
 ) {
 
-    public PlayerName {
+    public UserName {
         name = name.strip();
         validate(name);
     }

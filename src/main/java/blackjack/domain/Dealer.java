@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-public class Dealer extends Player {
+public class Dealer extends User {
 
     private static final String DEALER_NAME = "딜러";
 

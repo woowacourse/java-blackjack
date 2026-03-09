@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.Dealer;
-import blackjack.domain.Player;
+import blackjack.domain.User;
 import blackjack.service.GameService;
 import blackjack.util.InputParser;
 import blackjack.view.InputView;
@@ -21,57 +21,57 @@ public class BlackjackController {
     }
 
     public void run() {
-        List<Player> players = createPlayers();
+        List<User> users = createUsers();
         Dealer dealer = new Dealer();
 
-        gameService.settingCards(players, dealer);
-        printGameSettingResult(players, dealer);
+        gameService.settingCards(users, dealer);
+        printGameSettingResult(users, dealer);
 
-        getMoreCards(players, dealer);
-        if (!isAllUserBurst(players)) {
+        getMoreCards(users, dealer);
+        if (!isAllUserBurst(users)) {
             getMoreCardsForDealer(dealer);
         }
 
-        printGameResult(players, dealer);
+        printGameResult(users, dealer);
 
-        printWinningResult(players, dealer);
+        printWinningResult(users, dealer);
     }
 
-    private void printGameSettingResult(List<Player> players, Dealer dealer) {
-        List<String> playersName = players.stream()
-                .map(Player::getName)
+    private void printGameSettingResult(List<User> users, Dealer dealer) {
+        List<String> userNames = users.stream()
+                .map(User::getName)
                 .toList();
 
-        OutputView.printGameSettingMessage(dealer.getName(), playersName);
+        OutputView.printGameSettingMessage(dealer.getName(), userNames);
         OutputView.printSettingCardsResult(dealer.getName(), dealer.getCardsName().subList(0, 1));
-        for (Player player : players) {
-            OutputView.printSettingCardsResult(player.getName(), player.getCardsName());
+        for (User user : users) {
+            OutputView.printSettingCardsResult(user.getName(), user.getCardsName());
         }
     }
 
-    private List<Player> createPlayers() {
-        List<String> playerNames = InputParser.parsePlayer(inputView.readPlayerName());
-        return playerNames.stream()
-                .map(Player::new)
+    private List<User> createUsers() {
+        List<String> userNames = InputParser.parseUser(inputView.readUserName());
+        return userNames.stream()
+                .map(User::new)
                 .toList();
     }
 
     // TODO : 코드 품질 개선 필요
-    private void getMoreCards(List<Player> players, Dealer dealer) {
-        for (Player player : players) {
+    private void getMoreCards(List<User> users, Dealer dealer) {
+        for (User user : users) {
             int count = 0;
-            while (!player.isBurst() && !player.isBlackjack()) {
-                String yesOrNo = inputView.readMoreCard(player.getName());
+            while (!user.isBurst() && !user.isBlackjack()) {
+                String yesOrNo = inputView.readMoreCard(user.getName());
                 if (yesOrNo.equals("y")) {
-                    gameService.getMoreCard(player, dealer);
+                    gameService.getMoreCard(user, dealer);
 
-                    OutputView.printSettingCardsResult(player.getName(), player.getCardsName());
+                    OutputView.printSettingCardsResult(user.getName(), user.getCardsName());
                     count++;
 
                     continue;
                 }
                 if (count == 0) {
-                    OutputView.printSettingCardsResult(player.getName(), player.getCardsName());
+                    OutputView.printSettingCardsResult(user.getName(), user.getCardsName());
                 }
                 break;
             }
@@ -85,26 +85,26 @@ public class BlackjackController {
         }
     }
 
-    private boolean isAllUserBurst(List<Player> players) {
-        int burstUserCount = (int) players.stream()
-                .filter(Player::isBurst)
+    private boolean isAllUserBurst(List<User> users) {
+        int burstUserCount = (int) users.stream()
+                .filter(User::isBurst)
                 .count();
-        return players.size() == burstUserCount;
+        return users.size() == burstUserCount;
     }
 
-    private void printGameResult(List<Player> players, Dealer dealer) {
+    private void printGameResult(List<User> users, Dealer dealer) {
         OutputView.printCardsResult(dealer.getName(), dealer.getCardsName(), dealer.calculateCardsValue());
-        for (Player player : players) {
-            OutputView.printCardsResult(player.getName(), player.getCardsName(), player.calculateCardsValue());
+        for (User user : users) {
+            OutputView.printCardsResult(user.getName(), user.getCardsName(), user.calculateCardsValue());
         }
     }
 
-    private void printWinningResult(List<Player> players, Dealer dealer) {
+    private void printWinningResult(List<User> users, Dealer dealer) {
         Map<String, Boolean> result = new HashMap<>();
         int dealerWinCount = 0;
-        for (Player player : players) {
-            boolean isDealerWinning = gameService.isDealerWinning(player, dealer);
-            result.put(player.getName(), !isDealerWinning);
+        for (User user : users) {
+            boolean isDealerWinning = gameService.isDealerWinning(user, dealer);
+            result.put(user.getName(), !isDealerWinning);
             if (isDealerWinning) {
                 dealerWinCount++;
             }
