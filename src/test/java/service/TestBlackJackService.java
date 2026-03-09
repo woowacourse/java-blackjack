@@ -57,11 +57,10 @@ public class TestBlackJackService {
 
         ParticipantWinning winning = blackJackService.getGameResult(new Players(List.of(player)), dealer);
 
-        Map<MatchStatus, Integer> dealerWinning = winning.dealerWinning().getDealerWinning();
+        List<String> dealerWinning = winning.dealerWinning().getFormattedDealerWinning();
 
-        assertThat(dealerWinning.get(MatchStatus.WIN)).isEqualTo(1);
-        assertThat(dealerWinning.get(MatchStatus.DRAW)).isEqualTo(0);
-        assertThat(dealerWinning.get(MatchStatus.LOSE)).isEqualTo(0);
+        assertThat(dealerWinning.getFirst()).isEqualTo("1승");
+        assertThat(dealerWinning.size()).isEqualTo(1);
     }
 
     @Test
@@ -74,11 +73,10 @@ public class TestBlackJackService {
 
         ParticipantWinning winning = blackJackService.getGameResult(new Players(List.of(player)), dealer);
 
-        Map<MatchStatus, Integer> dealerWinning = winning.dealerWinning().getDealerWinning();
+        List<String> dealerWinning = winning.dealerWinning().getFormattedDealerWinning();
 
-        assertThat(dealerWinning.get(MatchStatus.WIN)).isEqualTo(0);
-        assertThat(dealerWinning.get(MatchStatus.DRAW)).isEqualTo(1);
-        assertThat(dealerWinning.get(MatchStatus.LOSE)).isEqualTo(0);
+        assertThat(dealerWinning.getFirst()).isEqualTo("1무");
+        assertThat(dealerWinning.size()).isEqualTo(1);
     }
 
     @Test
@@ -91,11 +89,10 @@ public class TestBlackJackService {
 
         ParticipantWinning winning = blackJackService.getGameResult(new Players(List.of(player)), dealer);
 
-        Map<MatchStatus, Integer> dealerWinning = winning.dealerWinning().getDealerWinning();
+        List<String> dealerWinning = winning.dealerWinning().getFormattedDealerWinning();
 
-        assertThat(dealerWinning.get(MatchStatus.WIN)).isEqualTo(0);
-        assertThat(dealerWinning.get(MatchStatus.DRAW)).isEqualTo(0);
-        assertThat(dealerWinning.get(MatchStatus.LOSE)).isEqualTo(1);
+        assertThat(dealerWinning.getFirst()).isEqualTo("1패");
+        assertThat(dealerWinning.size()).isEqualTo(1);
     }
 
     @Test
@@ -109,11 +106,10 @@ public class TestBlackJackService {
 
         ParticipantWinning winning = blackJackService.getGameResult(new Players(List.of(player)), dealer);
 
-        Map<MatchStatus, Integer> dealerWinning = winning.dealerWinning().getDealerWinning();
+        List<String> dealerWinning = winning.dealerWinning().getFormattedDealerWinning();
 
-        assertThat(dealerWinning.get(MatchStatus.WIN)).isEqualTo(1);
-        assertThat(dealerWinning.get(MatchStatus.DRAW)).isEqualTo(0);
-        assertThat(dealerWinning.get(MatchStatus.LOSE)).isEqualTo(0);
+        assertThat(dealerWinning.getFirst()).isEqualTo("1승");
+        assertThat(dealerWinning.size()).isEqualTo(1);
     }
 
     @Test
@@ -127,11 +123,10 @@ public class TestBlackJackService {
 
         ParticipantWinning winning = blackJackService.getGameResult(new Players(List.of(player)), dealer);
 
-        Map<MatchStatus, Integer> dealerWinning = winning.dealerWinning().getDealerWinning();
+        List<String> dealerWinning = winning.dealerWinning().getFormattedDealerWinning();
 
-        assertThat(dealerWinning.get(MatchStatus.WIN)).isEqualTo(0);
-        assertThat(dealerWinning.get(MatchStatus.DRAW)).isEqualTo(0);
-        assertThat(dealerWinning.get(MatchStatus.LOSE)).isEqualTo(1);
+        assertThat(dealerWinning.getFirst()).isEqualTo("1패");
+        assertThat(dealerWinning.size()).isEqualTo(1);
     }
 
     @Test
@@ -146,10 +141,9 @@ public class TestBlackJackService {
 
         ParticipantWinning winning = blackJackService.getGameResult(new Players(List.of(player)), dealer);
 
-        Map<MatchStatus, Integer> dealerWinning = winning.dealerWinning().getDealerWinning();
+        List<String> dealerWinning = winning.dealerWinning().getFormattedDealerWinning();
 
-        assertThat(dealerWinning.get(MatchStatus.WIN)).isEqualTo(0);
-        assertThat(dealerWinning.get(MatchStatus.DRAW)).isEqualTo(1);
-        assertThat(dealerWinning.get(MatchStatus.LOSE)).isEqualTo(0);
+        assertThat(dealerWinning.getFirst()).isEqualTo("1승");
+        assertThat(dealerWinning.size()).isEqualTo(1);
     }
 }
