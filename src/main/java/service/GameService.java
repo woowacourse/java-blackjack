@@ -1,10 +1,13 @@
 package service;
 
+import domain.participant.Dealer;
 import domain.card.CardDeck;
-import domain.player.Player;
-import domain.player.PlayerGroups;
-import domain.player.WinStatus;
+import domain.participant.player.Player;
+import domain.participant.player.PlayerGroups;
+import domain.participant.WinStatus;
 import domain.vo.Name;
+import dto.DealerInfoDto;
+import dto.PlayerInfoDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +15,12 @@ import java.util.Map;
 
 public class GameService {
     private PlayerGroups playerGroups;
+    private Dealer dealer = new Dealer();
     private CardDeck cardDeck = new CardDeck();
+    private static final int START_CARD_COUNT = 2;
 
-    public void joinPlayers(List<String> playerNames) {
+    public void registerPlayers(List<String> playerNames) {
         List<Player> players = new ArrayList<>();
-
-        players.add(new Player(new Name("딜러")));
 
         for (String playerName : playerNames) {
             Player player = new Player(new Name(playerName));
@@ -27,21 +30,36 @@ public class GameService {
         playerGroups = new PlayerGroups(players);
     }
 
-    public void initAllPlayerCard() {
-        for (int i = 0; i < 2; i++) {
-            giveAllPlayerCard();
+    public void initAllParticipantsCard() {
+        for (int i = 0; i < START_CARD_COUNT; i++) {
+            dealInitialDealerCards();
+            dealInitialPlayersCards();
         }
     }
 
-    private void giveAllPlayerCard() {
+    private void dealInitialDealerCards() {
+        dealer.drawCard(cardDeck.getCard());
+    }
+
+    private void dealInitialPlayersCards() {
         while (playerGroups.hasNextPlayer()) {
-            playerGroups.drawCard(cardDeck.getCard());
+            playerGroups.onePlayerDrawCard(cardDeck.getCard());
             playerGroups.nextPlayer();
         }
     }
 
-    public Map<String, List<String>> getPlayersStatus() {
-        return playerGroups.playersStatus();
+    public DealerInfoDto getDealerInfo() {
+        return new DealerInfoDto(dealer.getName(), dealer.getCards(), dealer.getScore(), dealer.getRecord());
+    }
+
+    public List<PlayerInfoDto> getAllPlayersInfo() {
+        List<PlayerInfoDto> playerInfoDtos = new ArrayList<>();
+
+        for (Player player : playerGroups.getPlayers()) {
+            playerInfoDtos.add(new PlayerInfoDto(player.getName(), player.getCards(), player.getScore(), player.getWinStatus()));
+        }
+
+        return playerInfoDtos;
     }
 
     public boolean isRemainPlayer() {
@@ -57,16 +75,12 @@ public class GameService {
         return playerGroups.getCurrentPlayerCards();
     }
 
-    public void selectHit(){
-        playerGroups.drawCard(cardDeck.getCard());
+    public void currentPlayerHit(){
+        playerGroups.onePlayerDrawCard(cardDeck.getCard());
     }
 
     public boolean isCurrentPlayerBust() {
-        if (playerGroups.getCurrentPlayerCardSum() > 21){
-            return true;
-        }
-
-        return false;
+        return playerGroups.getCurrentPlayer().isBust();
     }
 
     public void nextPlayer() {
@@ -74,19 +88,18 @@ public class GameService {
     }
 
     public boolean isDealerHit(){
-        if (playerGroups.getDealer().getCardSum() < 17) {
-            playerGroups.getDealer().addCard(cardDeck.getCard());
+        if (dealer.isDealerHit()) {
+            dealer.drawCard(cardDeck.getCard());
             return true;
         }
         return false;
     }
 
-    public Map<String, Integer> getPlayersTotalScore() {
-        return playerGroups.playersTotalScore();
-    }
-
-    public Map<String, WinStatus> result() {
-        return playerGroups.getGameResult();
+    public void finalizeGameResult() {
+        for (Player player : playerGroups.getPlayers()) {
+            player.finalizeResult(dealer.getScore());
+            dealer.finalizeResult(player.getScore());
+        }
     }
 
     public int getPlayerGroupSize() {
