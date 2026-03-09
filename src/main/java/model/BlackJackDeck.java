@@ -7,9 +7,10 @@ import java.util.List;
 import model.dto.Card;
 
 public class BlackJackDeck {
-    private Cards cards = new Cards();
+    private Cards cards;
 
     public BlackJackDeck() {
+        this.cards = new Cards();
         initCards();
     }
 
@@ -31,11 +32,11 @@ public class BlackJackDeck {
         return drawedCard;
     }
 
-    private void initCards() {
-        Arrays.stream(Shape.values()).forEach(shape -> {
-            Arrays.stream(CardNumber.values()).forEach(number -> {
-                cards.add(new Card(shape, number));
-            });
-        });
-    }
+ private void initCards() {
+     Arrays.asList(Shape.values()).forEach(shape -> {
+         Arrays.asList(CardNumber.values()).forEach(number -> {
+             cards.add(new Card(shape, number));
+         });
+     });
+ }
 }
