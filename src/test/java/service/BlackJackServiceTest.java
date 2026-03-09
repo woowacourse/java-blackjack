@@ -1,6 +1,7 @@
 package service;
 
 import domain.card.*;
+import domain.card.DefaultShuffleStrategy;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
