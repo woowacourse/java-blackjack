@@ -31,8 +31,11 @@ public class Hands {
         boolean hasAce = cards.stream()
                 .anyMatch(Card::isAce);
 
-        if (hasAce && baseScore <= 11) {
-            baseScore += 10;
+        int aceValue = 11;
+        int aceAdjustment = 10;
+
+        if (hasAce && baseScore <= aceValue) {
+            baseScore += aceAdjustment;
         }
 
         return baseScore;
