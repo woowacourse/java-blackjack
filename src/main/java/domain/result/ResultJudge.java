@@ -20,8 +20,8 @@ public class ResultJudge {
         int dealerTotalScore = dealer.getTotalCardScore();
         int playerTotalScore = player.getTotalCardScore();
 
-        if (dealerTotalScore > BLACKJACK_LIMIT_NUMBER) return ResultInfo.WIN;
         if (playerTotalScore > BLACKJACK_LIMIT_NUMBER) return ResultInfo.DEFEAT;
+        if (dealerTotalScore > BLACKJACK_LIMIT_NUMBER) return ResultInfo.WIN;
         if (dealerTotalScore < playerTotalScore) return ResultInfo.WIN;
         if (dealerTotalScore > playerTotalScore) return ResultInfo.DEFEAT;
         return ResultInfo.DRAW;
