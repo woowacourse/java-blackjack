@@ -83,6 +83,6 @@ public class BlackjackGame {
         participants.forEach(outputView::printFinalResult);
 
         GameResult gameResult = new GameResult(players, dealer);
-        outputView.printGameResult(gameResult);
+        outputView.printGameResult(gameResult, dealer);
     }
 }
