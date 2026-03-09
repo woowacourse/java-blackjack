@@ -33,4 +33,17 @@ public class TestParticipant {
         assertThat(deck.size()).isEqualTo(1);
     }
 
+    @Test
+    public void 버스트_판정_정상_작동() {
+        Participant participant = new Participant(new PlayerName("player"));
+        participant.addCard(new Card(Shape.CLOVER, CardNumber.KING));
+        participant.addCard(new Card(Shape.DIAMOND, CardNumber.KING));
+        participant.addCard(new Card(Shape.DIAMOND, CardNumber.ACE));
+
+        assertThat(participant.isBust()).isFalse();
+
+        participant.addCard(new Card(Shape.CLOVER, CardNumber.ACE));
+        assertThat(participant.isBust()).isTrue();
+    }
+
 }
