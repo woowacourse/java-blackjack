@@ -1,12 +1,9 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.List;
 
-public class User {
+public class User extends Participant{
 
     private final String name;
-    private final List<Card> hand = new ArrayList<>();
     private GameResult gameResult;
 
     private User(String name) {
@@ -21,23 +18,11 @@ public class User {
         return name;
     }
 
-    public void receiveInitCard(List<Card> cards) {
-        hand.addAll(cards);
-    }
-
-    public void receiveCard(Card card) {
-        hand.add(card);
-    }
-
-    public List<Card> getHand() {
-        return hand;
+    public GameResult getGameResult() {
+        return gameResult;
     }
 
     public void setGameResult(GameResult gameResult) {
         this.gameResult = gameResult;
-    }
-
-    public GameResult getGameResult() {
-        return gameResult;
     }
 }
