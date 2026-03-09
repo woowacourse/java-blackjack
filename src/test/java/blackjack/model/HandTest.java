@@ -3,15 +3,12 @@ package blackjack.model;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class HandTest {
 
     static final int ACE_ADJUST_VALUE = 10;
-
-
 
     @Nested
     class 카드를_받아서_손패에_추가한다 {
