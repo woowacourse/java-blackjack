@@ -1,6 +1,8 @@
-package domain.player;
+package domain.participant.player;
 
-import domain.Participant;
+import domain.participant.HandCards;
+import domain.participant.Participant;
+import domain.participant.WinStatus;
 import domain.vo.Name;
 
 import java.util.List;
@@ -8,25 +10,27 @@ import java.util.List;
 public class Player extends Participant {
     private WinStatus winStatus = WinStatus.DRAW;
 
-    public Player(Name name) {
+    public Player(Name name, HandCards handCards) {
+        super(handCards);
         this.name = name;
     }
 
-    public void finalizeResult(int dealerScore) {
-        if (isBust() || getMyScore() < dealerScore) {
-            winStatus = WinStatus.LOSS;
-        }
-
-        if (getMyScore() > dealerScore) {
-            winStatus = WinStatus.WIN;
-        }
-    }
-
-    public String getName() {
-        return name.getName();
+    public WinStatus getWinStatus() {
+        return winStatus;
     }
 
     public List<String> getCards() {
         return handCards.cardsToString();
+    }
+
+    @Override
+    public void finalizeResult(int dealerScore) {
+        if (isBust() || getScore() < dealerScore) {
+            winStatus = WinStatus.LOSS;
+        }
+
+        if (getScore() > dealerScore) {
+            winStatus = WinStatus.WIN;
+        }
     }
 }
