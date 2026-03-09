@@ -9,7 +9,7 @@ public class Gambler extends Player {
     private static final int GAMBLER_NAME_MAX_LENGTH = 10;
     private static final int GAMBLER_NAME_MIN_LENGTH = 2;
     private static final String MATCH_NUMBER_PATTERN = ".*\\d.*";
-    private static final String RESULT_FORMAT = "%s: %s";
+    private static final String RESULT_FORMAT = "%s:%s";
 
     private final String name;
 
