@@ -27,5 +27,21 @@ public class CardCalculatorTest {
         assertThat(phobi.getDeckSum()).isEqualTo(9);
     }
 
-    // TODO: ACE 예외 케이스랑 엣지케이스들 추가
+    @Test
+    void ACE_11이_유리한_경우_테스트() {
+        // given
+        Player phobi = Player.of("phobi");
+
+        List<Card> cards = new ArrayList<>();
+        cards.add(Card.of(CardRank.EIGHT, CardShape.HEART));
+        cards.add(Card.of(CardRank.ACE, CardShape.HEART));
+
+        // when
+        phobi.assignDeck(Deck.of(cards));
+        phobi.calculateFinalSum();
+
+        // then
+        assertThat(phobi.getDeckSum()).isEqualTo(19);
+
+    }
 }

@@ -12,7 +12,6 @@ import java.util.List;
 
 public class JudgementService {
 
-    // TODO: 최종 합산 시에 생존이라면 11로 계산했을 때 생존이면 이값으로,11로 계산했을 때 버스트면 1로 계산
     private final PlayerRepository playerRepository;
     private final DealerRepository dealerRepository;
 
@@ -52,7 +51,7 @@ public class JudgementService {
             player.changeStatus(PlayerStatus.WIN);
             return;
         }
-        // 합산 비교 TODO: 마지막 조건을 if로 처리하는게 맞을까?
+        // 합산 비교
         if (player.isAlive() && dealer.isAlice()) {
             judgeStatusByDeckSum(player, dealer);
         }
