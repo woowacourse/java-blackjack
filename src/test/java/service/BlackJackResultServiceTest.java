@@ -73,7 +73,6 @@ class BlackJackResultServiceTest {
         assertEquals("봉구스: 패", finalResultDto.finalResults().get(1));
     }
 
-
     @Test
     void 딜러가_Bust로_패배하는_경우() {
         // given
