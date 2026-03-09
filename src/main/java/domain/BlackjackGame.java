@@ -2,7 +2,7 @@ package domain;
 
 import domain.analyzer.ResultAnalyzer;
 import domain.analyzer.dto.ResultAnalysisDto;
-import domain.answer.Answer;
+import domain.answer.DrawCardIntetion;
 import domain.card.CardDeck;
 import domain.card.CardGenerator;
 import domain.config.BlackjackGameConfiguration;
@@ -79,8 +79,8 @@ public class BlackjackGame {
 
     private void drawPlayerCard(Player p, Dealer dealer) {
         while (!p.isBusted()) {
-            Answer answer = view.askDrawCard(p.toDisplayMyName());
-            if (answer.isNo()) {
+            DrawCardIntetion drawCardIntetion = view.requestDrawCardIntention(p.toDisplayMyName());
+            if (drawCardIntetion.isNo()) {
                 return;
             }
 
