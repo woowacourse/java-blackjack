@@ -3,6 +3,7 @@ import domain.card.Pattern;
 import domain.card.Rank;
 import domain.participant.Hand;
 import domain.participant.Player;
+import domain.participant.PlayerName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,12 +13,12 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class PlayerTest {
 
     Hand dummyHand;
-    String name;
+    PlayerName name;
 
     @BeforeEach
     void init() {
         dummyHand = new Hand();
-        name = "제발";
+        name = new PlayerName("제발");
     }
 
     @Test

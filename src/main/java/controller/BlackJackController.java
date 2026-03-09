@@ -30,7 +30,7 @@ public class BlackJackController {
 
     private GameState prepareGame() {
         CardDeck cardDeck = new CardDeck();
-        Players players = new Players(getPlayer());
+        Players players = getPlayer();
         Dealer dealer = new Dealer(new Hand());
 
         initGame(cardDeck, dealer, players);
@@ -54,18 +54,18 @@ public class BlackJackController {
         OutputView.gameResultMessage(result);
     }
 
-    private List<Player> getPlayer() {
+    private Players getPlayer() {
         List<Player> players = new ArrayList<>();
 
         OutputView.inputPlayerMessage();
         String input = InputView.input();
-        Validator.validateInput(input);
+        Validator.validateInputName(input);
         List<String> names = Parser.separateBySeparator(input);
 
         for (String name : names) {
-            players.add(new Player(name, new Hand()));
+            players.add(new Player(new PlayerName(name), new Hand()));
         }
-        return players;
+        return new Players(players);
     }
 
     private void initGame(CardDeck cardDeck, Dealer dealer, Players players) {

@@ -1,12 +1,9 @@
 import domain.card.Card;
 import domain.card.Pattern;
 import domain.card.Rank;
+import domain.participant.*;
 import domain.result.Result;
 import domain.result.ResultInfo;
-import domain.participant.Dealer;
-import domain.participant.Hand;
-import domain.participant.Player;
-import domain.participant.Players;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import domain.result.ResultJudge;
@@ -26,9 +23,9 @@ public class ResultJudgeTest {
     @BeforeEach
     void init() {
         dealer = new Dealer(new Hand());
-        winPlayer = new Player("이김", new Hand());
-        defeatPlayer = new Player("짐", new Hand());
-        drawPlayer = new Player("비김", new Hand());
+        winPlayer = new Player(new PlayerName("이김"), new Hand());
+        defeatPlayer = new Player(new PlayerName("짐"), new Hand());
+        drawPlayer = new Player(new PlayerName("비김"), new Hand());
         dealer.keepCard(new Card(Rank.FIVE, Pattern.CLOVER));
         winPlayer.keepCard(new Card(Rank.SIX, Pattern.CLOVER));
         defeatPlayer.keepCard(new Card(Rank.FOUR, Pattern.CLOVER));

@@ -3,10 +3,10 @@ package domain.participant;
 import domain.card.Card;
 
 public class Participant {
-    private final String name;
+    private final PlayerName name;
     private final Hand hand;
 
-    public Participant(String name, Hand hand) {
+    public Participant(PlayerName name, Hand hand) {
         this.name = name;
         this.hand = hand;
     }
@@ -24,7 +24,7 @@ public class Participant {
     }
 
     public String getName() {
-        return name;
+        return name.getName();
     }
 
     public Hand getHand() {
