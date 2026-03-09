@@ -19,7 +19,7 @@ public record Dealer(Participant dealer) {
     }
 
     public boolean stay() {
-        return dealer.getScore() <= STAND_SCORE;
+        return dealer.getScore() < STAND_SCORE;
     }
 
     public int getScore() {
