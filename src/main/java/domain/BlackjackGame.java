@@ -4,7 +4,7 @@ import static domain.config.BlackjackGameConstant.*;
 
 import domain.analyzer.ResultAnalyzer;
 import domain.analyzer.dto.ResultAnalysisDto;
-import domain.answer.DrawCardIntetion;
+import domain.intention.DrawCardIntetion;
 import domain.card.CardDeck;
 import domain.card.CardDeckInitializer;
 import domain.config.BlackjackGameConfiguration;

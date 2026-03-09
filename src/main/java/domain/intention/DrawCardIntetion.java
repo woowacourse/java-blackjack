@@ -1,4 +1,4 @@
-package domain.answer;
+package domain.intention;
 
 import java.util.Arrays;
 

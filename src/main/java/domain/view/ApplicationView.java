@@ -1,7 +1,7 @@
 package domain.view;
 
 import domain.analyzer.dto.ResultAnalysisDto;
-import domain.answer.DrawCardIntetion;
+import domain.intention.DrawCardIntetion;
 import domain.player.PlayerName;
 import domain.player.dto.PlayerHandDto;
 import domain.player.dto.PlayerResultDto;
