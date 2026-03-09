@@ -1,23 +1,28 @@
-package domain;
+package domain.participant;
 
 import domain.card.Card;
-import domain.player.HandCards;
 import domain.vo.Name;
 
-public class Participant {
+public abstract class Participant {
+    private static final int BUST_CONDITION = 22;
     protected Name name;
-    protected HandCards handCards;
-    private static final int BUST_CONDITION = 21;
+    protected HandCards handCards = new HandCards();
 
-    public void drawCard(Card card){
-        handCards.addCard(card);
+    public void drawCard(Card card) {
+        handCards.drawCard(card);
     }
 
     public boolean isBust() {
-        return handCards.calculateCards() > BUST_CONDITION;
+        return handCards.calculateCardsScore() >= BUST_CONDITION;
     }
 
-    public int getMyScore(){
-        return handCards.calculateCards();
+    public String getName() {
+        return name.getName();
     }
+
+    public int getScore() {
+        return handCards.calculateCardsScore();
+    }
+
+    public abstract void finalizeResult(int score);
 }
