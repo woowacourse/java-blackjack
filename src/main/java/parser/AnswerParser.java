@@ -18,7 +18,6 @@ public class AnswerParser {
         if (NO.equals(input)) {
             return false;
         }
-
         throw new BlackjackException(ExceptionMessage.INPUT_ERROR);
     }
 }
