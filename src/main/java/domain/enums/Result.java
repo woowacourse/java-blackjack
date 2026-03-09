@@ -17,10 +17,10 @@ public enum Result {
         this.description = description;
     }
 
-    public static Result calculatePlayerResult(Player player, int dealerScore, boolean dealerBurst) {
+    public static Result calculatePlayerResult(Player player, int dealerScore, boolean dealerBust) {
         int playerScore = player.getScore();
 
-        if (player.isBust() || (playerScore < dealerScore && !dealerBurst)) {
+        if (player.isBust() || (playerScore < dealerScore && !dealerBust)) {
             return Result.LOSE;
         }
         if (playerScore == dealerScore) {

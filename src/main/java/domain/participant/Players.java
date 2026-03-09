@@ -95,9 +95,9 @@ public class Players {
         return foundPlayer.getHand();
     }
 
-    public Result getPlayerResult(String name, int dealerScore, boolean dealerBurst) {
+    public Result getPlayerResult(String name, int dealerScore, boolean dealerBust) {
         Player foundPlayer = findPlayerByName(name);
-        return Result.calculatePlayerResult(foundPlayer, dealerScore, dealerBurst);
+        return Result.calculatePlayerResult(foundPlayer, dealerScore, dealerBust);
     }
 
     public int getPlayerScore(String name) {
