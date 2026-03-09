@@ -5,7 +5,7 @@ import blackjack.model.Deck;
 import blackjack.model.GameSummary;
 import blackjack.model.Player;
 import blackjack.model.Players;
-import blackjack.util.PlayerParser;
+import blackjack.util.InputParser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -25,12 +25,12 @@ public class BlackjackController {
     }
 
     public void run() {
-        List<Player> playerList = retry(() -> {
+        Players players = retry(() -> {
             String input = inputView.readPlayerName();
-            return PlayerParser.parse(input);
+            List<String> names = InputParser.parse(input);
+            return new Players(names);
         });
 
-        Players players = new Players(playerList);
         Dealer dealer = new Dealer();
 
         deck.provideInitCards(players, dealer);

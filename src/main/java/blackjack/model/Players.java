@@ -8,8 +8,11 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<Player> players) {
-        this.players = players;
+    public Players(List<String> names) {
+        validateDuplicate(names);
+        this.players = names.stream()
+                .map(Player::new)
+                .toList();
     }
 
     public List<Player> all() {
@@ -34,5 +37,12 @@ public class Players {
         }
 
         return gameSummaries;
+    }
+
+    private void validateDuplicate(List<String> names) {
+        int unique = (int) names.stream().distinct().count();
+        if (unique != names.size()) {
+            throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
+        }
     }
 }

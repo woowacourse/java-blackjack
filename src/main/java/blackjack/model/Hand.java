@@ -30,7 +30,7 @@ public class Hand {
                 .sum();
 
         int aceCount = (int) cards.stream()
-                .filter((card) -> card.getRank() == Rank.ACE)
+                .filter((card) -> card.isAce())
                 .count();
 
         for (int i = 0; i < aceCount; i++) {
