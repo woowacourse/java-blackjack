@@ -18,23 +18,30 @@ public class CardProvider {
 
     private void initDeck() {
         List<Card> cards = new ArrayList<>();
-        for (Card card : Card.values()) {
-            cards.add(card);
+        for (Rank rank : Rank.values()) {
+            for (Suit suit : Suit.values()) {
+                cards.add(new Card(rank, suit));
+            }
         }
         Collections.shuffle(cards);
         this.deck.addAll(cards);
     }
 
-    public void provideInitCards(List<Player> players, Dealer dealer) {
+    public void provideInitCards(Users users) {
+        List<Player> players = users.getPlayers();
+        Dealer dealer = users.getDealer();
         for (int i = INIT_CARDS_START_IDX; i < INIT_CARDS_END_IDX; i++) {
             for (Player player : players) {
-                player.addCard(deck.poll());
+                provideOneCard(player);
             }
-            dealer.addCard(deck.poll());
+            provideOneCard(dealer);
         }
     }
 
     public void provideOneCard(User user) {
+        if (deck.peek() == null) {
+
+        }
         user.addCard(deck.poll());
     }
 }
