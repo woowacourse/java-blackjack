@@ -35,10 +35,6 @@ public class Players {
         }
     }
     
-    public List<Player> getAllPlayers() {
-        return List.copyOf(players);
-    }
-    
     public String findDrawablePlayerNickname() {
         Player player = findDrawablePlayer();
         if (player == null) {
@@ -99,5 +95,9 @@ public class Players {
                 .count();
         int dealerWin = playerResult.size() - dealerLoss;
         return new WinningResult(dealerLoss, dealerWin, playerResult);
+    }
+    
+    public void distributeCards(Deck deck) {
+        players.forEach(player -> player.distributeCards(deck));
     }
 }

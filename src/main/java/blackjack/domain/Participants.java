@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
 import blackjack.dto.WinningResult;
 import java.util.List;
 
@@ -17,9 +16,7 @@ public class Participants {
     
     public void distributeCards(Deck deck) {
         dealer.distributeCards(deck);
-        for (Player player : players.getAllPlayers()) {
-            player.distributeCards(deck);
-        }
+        players.distributeCards(deck);
     }
     
     public String getPlayerNicknames() {
@@ -31,13 +28,13 @@ public class Participants {
         String playersInfo = players.getPlayersInfo();
         return String.format("%s\n%s", dealerInfo, playersInfo);
     }
-
+    
     public String getTotalResults() {
         String dealerResult = dealer.getResultSnapshot();
         String playersResult = players.getPlayersResult();
         return String.format("%s\n%s", dealerResult, playersResult);
     }
-
+    
     public WinningResult getWinningResult() {
         int dealerScore = dealer.getTotalScore();
         if (dealer.isBusted()) {
@@ -49,6 +46,7 @@ public class Participants {
     public WinningResult getWinningResult(int dealerScore) {
         return players.getWinningResult(dealerScore);
     }
+    
     public String findDrawablePlayer() {
         return players.findDrawablePlayerNickname();
     }
