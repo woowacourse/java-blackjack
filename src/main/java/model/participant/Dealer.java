@@ -3,7 +3,6 @@ package model.participant;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import model.card.Card;
 import model.card.Cards;
 
 public class Dealer extends Participant {
@@ -21,13 +20,14 @@ public class Dealer extends Participant {
 
     @Override
     public Cards open() {
+        validateHasCards();
+
         if (firstTurn) {
             firstTurn = false;
             return Cards.from(List.of(hands.getFirst()));
         }
 
         return Cards.from(hands);
-
     }
 
     @Override

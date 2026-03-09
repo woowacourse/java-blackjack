@@ -17,10 +17,6 @@ public abstract class Participant {
         this.hands = new ArrayList<>();
     }
 
-    public String getName() {
-        return name;
-    }
-
     public List<Card> receive(Card card) {
         hands.add(card);
         return List.copyOf(hands);
@@ -60,6 +56,16 @@ public abstract class Participant {
         }
 
         return count;
+    }
+
+    public void validateHasCards() {
+        if (hands.isEmpty()) {
+            throw new IllegalStateException("가진 카드 패가 없어 오픈할 수 없습니다.");
+        }
+    }
+
+    public String getName() {
+        return name;
     }
 
     public abstract Cards open();

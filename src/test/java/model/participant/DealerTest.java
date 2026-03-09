@@ -1,6 +1,7 @@
 package model.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 import model.card.Card;
@@ -17,7 +18,13 @@ class DealerTest {
     }
 
     @Test
-    void 첫번째_턴의_딜러의_카드_오픈_테스트() {
+    void 가진_카드패가_없는데_오픈하면_예외를_발생한다() {
+        assertThatThrownBy(() -> dealer.open())
+                .isInstanceOf(IllegalStateException.class);
+    }
+
+    @Test
+    void 첫_번째_오픈_때는_한_장의_카드만_오픈한다() {
         // given
         Card card1 = Card.of("스페이드", 3);
         Card card2 = Card.of("스페이드", 4);
@@ -33,7 +40,7 @@ class DealerTest {
     }
 
     @Test
-    void 첫번째가_아닌_턴의_딜러의_카드_오픈_테스트() {
+    void 첫_번째_오픈이_아니면_모든_카드를_오픈한다() {
         // given
         Card card1 = Card.of("스페이드", 3);
         Card card2 = Card.of("스페이드", 4);
