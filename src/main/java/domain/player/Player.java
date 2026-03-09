@@ -2,7 +2,6 @@ package domain.player;
 
 import domain.card.Card;
 import domain.card.CardBundle;
-import domain.player.dto.PlayerHandDto;
 
 import java.util.List;
 
@@ -38,10 +37,6 @@ public class Player {
 
     public List<String> disPlayMyCardBundle() {
         return cardBundle.toDisplay();
-    }
-
-    public PlayerHandDto getMyHands() {
-        return PlayerHandDto.of(this);
     }
 
     public boolean isBusted() {

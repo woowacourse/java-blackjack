@@ -23,14 +23,7 @@ public class Players {
     }
 
     public void giveInitialCardBundle(Dealer dealer) {
-        players.forEach(player ->
-                dealer.handOutInitialCardToPlayer(player));
-    }
-
-    public List<PlayerHandDto> getPlayersHand() {
-        return players.stream()
-                .map(Player::getMyHands)
-                .toList();
+        players.forEach(dealer::handOutInitialCardToPlayer);
     }
 
     public List<String> displayNames() {
