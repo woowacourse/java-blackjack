@@ -1,7 +1,6 @@
 package domain;
 
 import java.util.List;
-import meesage.OutputMessage;
 
 public class Dealer {
 
@@ -15,7 +14,20 @@ public class Dealer {
         return new Dealer(cards);
     }
 
-    public void addCard(Card card) {
+    public int drawUntilHitAndReturnCount(Cards deck) {
+        int count = 0;
+        while (isHit()) {
+            addCard(deck.draw());
+            count++;
+        }
+        return count;
+    }
+
+    private boolean isHit() {
+        return calculateScore() < Policy.DEALER_HIT_THRESHOLD;
+    }
+
+    private void addCard(Card card) {
         cards.add(card);
     }
 
@@ -59,26 +71,10 @@ public class Dealer {
         return score;
     }
 
-    public String getDealerInfo() {
-        return OutputMessage.DEALER_CARD_INFO.format(OutputMessage.DELIMITER.join(getCardsInfo()));
-    }
-
     public List<String> getCardsInfo() {
         return cards.stream()
                 .map(Card::getName)
                 .toList();
-    }
-
-    public String getDealerInitialInfo() {
-        return OutputMessage.DEALER_CARD_INFO.format(getCardsInfo().getFirst());
-    }
-
-    public String getDealerScoreInfo() {
-        return OutputMessage.RESULT_TEXT.format(getDealerInfo(), calculateScore());
-    }
-
-    public boolean shouldHit() {
-        return calculateScore() < Policy.DEALER_HIT_THRESHOLD;
     }
 
 }
