@@ -1,5 +1,7 @@
 package domain.view;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class InputReader {
@@ -14,4 +16,10 @@ public class InputReader {
         return scanner.nextLine();
     }
 
+    public List<String> readInputBasedOnSeparator(String separator) {
+        String input = readInput();
+        return Arrays.stream(input.split(separator))
+                .map(String::trim)
+                .toList();
+    }
 }

@@ -32,9 +32,9 @@ public class ApplicationView {
 
     private List<PlayerName> readPlayerNames() {
         writer.printInputNameGuideMessage();
-        String names = reader.readInput();
-        return Arrays.stream(names.split(DELIMITER))
-                .map(String::trim)
+        List<String> names = reader.readInputBasedOnSeparator(DELIMITER);
+
+        return names.stream()
                 .map(PlayerName::from)
                 .toList();
     }
