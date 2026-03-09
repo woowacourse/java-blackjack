@@ -10,7 +10,7 @@ public class Deck {
 
     static {
         for (CardShape cardShape : CardShape.values()) {
-            matching(cardShape);
+            cards.addAll(Card.makeCardsWith(cardShape));
         }
     }
 
@@ -23,12 +23,6 @@ public class Deck {
 
     public static Card pop() {
         return cards.removeFirst();
-    }
-
-    private static void matching(CardShape cardShape) {
-        for (CardValue cardValue : CardValue.values()) {
-            cards.add(new Card(cardValue, cardShape));
-        }
     }
 
 }
