@@ -41,6 +41,14 @@ public class BlackjackController {
         return new Players(names);
     }
 
+    private void playTurn(Game game, List<String> playersName, Deck deck) {
+        for (String name : playersName) {
+            playPlayerTurn(game, name, deck);
+        }
+        playDealerTurn(game, deck);
+    }
+
+
     private void playPlayerTurn(Game game, String name, Deck deck) {
         boolean shouldContinue = true;
         while (shouldContinue && !game.isPlayerBust(name)) {
@@ -60,13 +68,6 @@ public class BlackjackController {
             game.dealerHit(deck);
             outputView.printDealerHit();
         }
-    }
-
-    private void playTurn(Game game, List<String> playersName, Deck deck) {
-        for (String name : playersName) {
-            playPlayerTurn(game, name, deck);
-        }
-        playDealerTurn(game, deck);
     }
 
     private void printResult(Game game, List<String> playerNames) {
