@@ -35,5 +35,14 @@ public class User {
     public boolean isBlackjack() {
         return hand.isBlackjack();
     }
+
+    public GameSummary toSummary() {
+        return new GameSummary(
+                this,
+                getScore(),
+                isBust(),
+                isBlackjack()
+        );
+    }
 }
 

@@ -13,12 +13,13 @@ class DeckTest {
     void test_provide_init_cards() {
         Deck deck = new Deck();
 
-        List<Player> players = List.of(new Player("pobi"), new Player("james"));
+        List<Player> playerList = List.of(new Player("pobi"), new Player("james"));
+        Players players = new Players(playerList);
         Dealer dealer = new Dealer();
 
         deck.provideInitCards(players, dealer);
 
-        for (Player player : players) {
+        for (Player player : players.all()) {
             assertThat(player.cards().size()).isEqualTo(2);
         }
         assertThat(dealer.cards().size()).isEqualTo(2);

@@ -16,5 +16,9 @@ public class Player extends User {
     public void mark(GameResult gameResult) {
         this.gameResult = gameResult;
     }
+
+    public boolean canHit() {
+        return getScore() < 21;
+    }
 }
 

@@ -1,4 +1,4 @@
 package blackjack.model;
 
-public record GameSummary(User user, int totalScore, boolean bust, boolean blackjack) {
+public record GameSummary(User user, int score, boolean isBust, boolean isBlackjack) {
 }

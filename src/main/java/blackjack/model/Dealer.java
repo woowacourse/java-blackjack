@@ -17,5 +17,9 @@ public class Dealer extends User {
     public void addResult(GameResult gameResult) {
         gameResults.put(gameResult, gameResults.getOrDefault(gameResult, 0) + 1);
     }
+
+    public boolean canHit() {
+        return getScore() < 17;
+    }
 }
 

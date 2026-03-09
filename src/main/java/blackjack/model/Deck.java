@@ -28,9 +28,9 @@ public class Deck {
         this.deck.addAll(cards);
     }
 
-    public void provideInitCards(List<Player> players, Dealer dealer) {
+    public void provideInitCards(Players players, Dealer dealer) {
         for (int i = INIT_CARDS_START_IDX; i < INITIAL_CARD_COUNT; i++) {
-            for (Player player : players) {
+            for (Player player : players.all()) {
                 player.addCard(deck.poll());
             }
             dealer.addCard(deck.poll());

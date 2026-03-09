@@ -6,6 +6,7 @@ import blackjack.model.Dealer;
 import blackjack.model.GameResult;
 import blackjack.model.GameSummary;
 import blackjack.model.Player;
+import blackjack.model.Players;
 import blackjack.model.User;
 import java.util.EnumMap;
 import java.util.List;
@@ -61,27 +62,22 @@ public class OutputView {
         List<String> cardFormats = user.cards().stream()
                 .map((card) -> card.getSuit().getName() + card.getRank().getName()).toList();
         sb.append(String.join(", ", cardFormats));
-        sb.append(" - 결과: " + gameSummary.totalScore());
+        sb.append(" - 결과: " + gameSummary.score());
 
         System.out.println(sb);
     }
 
-    public static void printGameResult(List<User> users) {
+    public static void printGameResult(Players players, Dealer dealer) {
         System.out.println();
         System.out.println("## 최종 승패");
 
-        Dealer dealer = (Dealer) users.getFirst();
         EnumMap<GameResult, Integer> dealerGameResult = dealer.getGameResults();
         System.out.println(
                 dealer.getName() + ": " + dealerGameResult.getOrDefault(GameResult.WIN, 0) + "승 " +
                         dealerGameResult.getOrDefault(GameResult.DRAW, 0) + "무 " + dealerGameResult.getOrDefault(
                         GameResult.LOSE, 0) + "패");
 
-        List<Player> players = users.stream()
-                .skip(1)
-                .map(user -> (Player) user)
-                .toList();
-        for (Player player : players) {
+        for (Player player : players.all()) {
             System.out.print(player.getName() + ": ");
             System.out.println(player.getGameResult().getFormat());
         }
