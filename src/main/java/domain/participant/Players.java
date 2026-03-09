@@ -1,7 +1,7 @@
 package domain.participant;
 
 import domain.MatchResult;
-import domain.card.Deck;
+import domain.card.Card;
 
 import java.util.*;
 
@@ -11,18 +11,44 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<String> playerNames) {
-        validateSize(playerNames);
-        validateDuplicateName(playerNames);
-        this.players = from(playerNames);
+    public Players() {
+        this.players = new ArrayList<>();
     }
 
-    public void initialHands(Deck deck, int initialCardCount) {
+    public Players(List<Player> players) {
+        validateSize(players);
+        validateDuplicateName(players);
+        this.players = players;
+    }
+
+    public Player findBy(Player targetPlayer) {
         for (Player player : players) {
-            for (int i = 0; i < initialCardCount; i++) {
-                player.receive(deck.drawCard());
+            if (player.equals(targetPlayer)) {
+                return player;
             }
         }
+
+        throw new IllegalArgumentException("존재하지 않는 플레이어입니다.");
+    }
+
+    public Map<Player, List<Card>> getPlayersHand() {
+        Map<Player, List<Card>> playersHand = new HashMap<>();
+
+        for (Player player : players) {
+            playersHand.put(player, player.getCards());
+        }
+
+        return playersHand;
+    }
+
+    public Map<Player, Integer> getPlayersScore() {
+        Map<Player, Integer> playersScore = new HashMap<>();
+
+        for (Player player : players) {
+            playersScore.put(player, player.getScore());
+        }
+
+        return playersScore;
     }
 
     public Map<Player, MatchResult> calculateResult(Dealer dealer) {
@@ -43,29 +69,21 @@ public class Players {
         if (player.isTie(dealer)) {
             if (player.isBlackJack() && !dealer.isBlackJack()) return MatchResult.WIN;
             if (!player.isBlackJack() && dealer.isBlackJack()) return MatchResult.LOSE;
-
             return MatchResult.DRAW;
         }
 
         return MatchResult.LOSE;
     }
 
-    private List<Player> from(List<String> playerNames) {
-        return playerNames.stream()
-                .map(String::trim)
-                .map(Player::new)
-                .toList();
-    }
-
-    private void validateDuplicateName(List<String> playerNames) {
-        Set<String> uniqueNames = new HashSet<>(playerNames);
+    private void validateDuplicateName(List<Player> playerNames) {
+        Set<Player> uniqueNames = new HashSet<>(playerNames);
 
         if (uniqueNames.size() != playerNames.size()) {
             throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
         }
     }
 
-    private void validateSize(List<String> playerNames) {
+    private void validateSize(List<Player> playerNames) {
         if (playerNames.size() > MAX_PLAYER_SIZE)
             throw new IllegalArgumentException("플레이어 인원 수는 5명 이하여야 합니다.");
     }

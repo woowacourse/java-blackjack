@@ -18,7 +18,8 @@ public class GameResultDto {
                 .collect(Collectors.toMap(
                         entry -> entry.getKey().getName(),
                         Map.Entry::getValue
-                ));    }
+                ));
+    }
 
     public Map<MatchResult, Integer> getDealerResult() {
         return dealerResult;
