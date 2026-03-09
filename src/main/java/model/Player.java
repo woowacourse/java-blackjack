@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
@@ -39,6 +40,6 @@ public class Player {
     }
 
     public List<Card> getCards() {
-        return cards.getCards();
+        return new ArrayList<>(cards.getCards());
     }
 }
