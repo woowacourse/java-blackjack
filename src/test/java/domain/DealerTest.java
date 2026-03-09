@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class DealerTest {
+class DealerTest {
 
     @Test
     @DisplayName("hit 처리 시, 1장을 뽑는다.")

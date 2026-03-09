@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class PlayerTest {
+class PlayerTest {
 
     @Test
     @DisplayName("플레이어 이름은 1글자 이상 8글자 이하여야 한다.")
