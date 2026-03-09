@@ -1,9 +1,13 @@
 package domain;
 
-public class Dealer extends Player {
+import constant.PolicyConstant;
+
+public class Dealer extends Participant {
+
+    private final String name = PolicyConstant.DEALER_NAME;
 
     public Dealer(String name) {
-        super(name);
+        super();
     }
 
     public Hand getOnlyFirstHand() {
