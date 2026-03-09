@@ -1,9 +1,9 @@
 package domain;
 
-public class Dealer extends Participant{
+public class Dealer extends Participant {
     private static final int burstThreshold = 17;
 
-    public Dealer(Name name){
+    public Dealer(Name name) {
         super(name);
     }
 
