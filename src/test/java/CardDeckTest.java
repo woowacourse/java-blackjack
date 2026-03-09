@@ -1,5 +1,6 @@
 import domain.card.Card;
 import domain.card.CardDeck;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
@@ -42,5 +43,18 @@ public class CardDeckTest {
 
         //then
         assertThat(cardDeck.getDeckSize()).isEqualTo(51);
+    }
+
+    @Test
+    void 카드덱에_카드가_0장이라면_카드를_다_뽑았다는_에러를_발생시킨다() {
+        CardDeck cardDeck = new CardDeck();
+
+        while (cardDeck.getDeckSize() > 0) {
+            cardDeck.drawCard();
+        }
+
+        Assertions.assertThatThrownBy(cardDeck::drawCard)
+                .hasMessageContaining("[ERROR] 카드를 다 뽑았습니다.");
+
     }
 }
