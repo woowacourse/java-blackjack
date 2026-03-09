@@ -5,6 +5,7 @@ import domain.card.Pattern;
 import domain.card.Rank;
 import domain.participant.Hand;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -62,12 +63,18 @@ class HandTest {
     }
 
     @Test
-    void 핸드_총합이_21_초과이면_버스트다() {
-        //버스트면 true
-        Card card3 = new Card(Rank.JACK, Pattern.DIAMOND);
-        Card card4 = new Card(Rank.JACK, Pattern.CLOVER);
+    @DisplayName("에이스가 핸드에 여러 장 있어도 가장 유리하게 계산한다")
+    void calculateTotalScore_WhenHandHasMultipleAces_UsesMostAdvantageousScore(){
+        Card card3 = new Card(Rank.ACE, Pattern.DIAMOND);
+        Card card4 = new Card(Rank.TEN, Pattern.SPADE);
+        Card card5 = new Card(Rank.ACE, Pattern.HEART);
         dummyHand.addCard(card3);
         dummyHand.addCard(card4);
-        assertThat(dummyHand.isBust()).isTrue();
+        dummyHand.addCard(card5);
+
+        int expectedScore = 1 + 1 + card1.getCardScore() + card2.getCardScore() + card4.getCardScore(); //19
+        int totalScore = dummyHand.calculateTotalScore();
+
+        assertThat(totalScore).isEqualTo(expectedScore);
     }
 }
