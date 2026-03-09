@@ -24,11 +24,11 @@ public class UserTest {
         Card card = new Card(CardValue.ACE, CardShape.DIAMOND);
 
         // when
-        int before = user.getCards().size();
+        int before = user.getCardsName().size();
         user.bring(card);
 
         // then
-        assertThat(user.getCards().size()).isEqualTo(before + 1);
+        assertThat(user.getCardsName().size()).isEqualTo(before + 1);
     }
 
     @Test
