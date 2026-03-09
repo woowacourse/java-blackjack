@@ -1,13 +1,5 @@
-package blackjack.service;
+package blackjack.domain;
 
-import blackjack.domain.Dealer;
-import blackjack.domain.Deck;
-import blackjack.domain.MatchResult;
-import blackjack.domain.Name;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
-import blackjack.domain.ShuffleStrategy;
-import blackjack.domain.TrumpCard;
 import blackjack.dto.GameResult;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -15,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 public class BlackjackGame {
-    private static final int BLACKJACK_THRESHOLD = 21;
-
     private final Dealer dealer;
     private final Players players;
     private final Deck deck;

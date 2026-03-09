@@ -3,12 +3,12 @@ package blackjack.controller;
 import static blackjack.util.Parser.splitDelimiter;
 import static blackjack.view.InputView.readPlayNames;
 
+import blackjack.domain.BlackjackGame;
 import blackjack.domain.MatchResult;
 import blackjack.domain.Player;
 import blackjack.dto.DealResult;
 import blackjack.dto.GameResult;
 import blackjack.dto.PlayerHandResult;
-import blackjack.service.BlackjackGame;
 import blackjack.service.RandomShuffleStrategy;
 import blackjack.util.Parser;
 import blackjack.view.InputView;
