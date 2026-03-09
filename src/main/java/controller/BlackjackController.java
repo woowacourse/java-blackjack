@@ -82,10 +82,10 @@ public class BlackjackController {
 
     private void dealAdditionalCards(Player player, boolean wantsCard, Deck deck, String name) {
         while (wantsCard) {
+            player.add(deck.pop());
             if (player.isBust()) {
                 break;
             }
-            player.add(deck.pop());
             outputView.displayCardContent(List.of(PlayerCardDto.from(player)));
             wantsCard = wantsAdditionalCard(name);
         }
