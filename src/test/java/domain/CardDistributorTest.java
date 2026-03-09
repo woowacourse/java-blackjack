@@ -6,6 +6,7 @@ import domain.service.CardFactory;
 import org.junit.jupiter.api.Test;
 import repository.CardRepository;
 import repository.DealerRepository;
+import util.RandomCardGenerator;
 import util.RandomRankNumberGenerator;
 import util.RandomShapeNumberGenerator;
 
@@ -18,8 +19,10 @@ public class CardDistributorTest {
             new DealerRepository(),
             new CardFactory(
                     new CardRepository(),
-                    new RandomRankNumberGenerator(),
-                    new RandomShapeNumberGenerator()
+                    new RandomCardGenerator(
+                            new RandomRankNumberGenerator(),
+                            new RandomShapeNumberGenerator()
+                    )
             )
     );
 

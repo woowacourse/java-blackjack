@@ -4,19 +4,17 @@ import domain.model.Card;
 import domain.model.CardRank;
 import domain.model.CardShape;
 import repository.CardRepository;
-import util.NumberGenerator;
+import util.RandomCardGenerator;
 
 public class CardFactory {
 
     private final CardRepository cardRepository;
-    private final NumberGenerator randomRankNumberGenerator;
-    private final NumberGenerator randomShapeNumberGenerator;
+    private final RandomCardGenerator randomCardGenerator;
     // TODO: 인스턴스 변수 2개까지 줄이기
 
-    public CardFactory(CardRepository cardRepository, NumberGenerator randomRankNumberGenerator, NumberGenerator randomShapeNumberGenerator) {
+    public CardFactory(CardRepository cardRepository, RandomCardGenerator randomCardGenerator) {
         this.cardRepository = cardRepository;
-        this.randomRankNumberGenerator = randomRankNumberGenerator;
-        this.randomShapeNumberGenerator = randomShapeNumberGenerator;
+        this.randomCardGenerator = randomCardGenerator;
     }
 
     // 카드 생성 후 저장
@@ -26,8 +24,8 @@ public class CardFactory {
     }
 
     private Card getCard() {
-        CardRank rank = CardRank.getRank(randomRankNumberGenerator.generate());
-        CardShape shape = CardShape.getShape(randomShapeNumberGenerator.generate());
+        CardRank rank = randomCardGenerator.generateRank();
+        CardShape shape = randomCardGenerator.generateShape();
 
         if (!cardRepository.isExistByShapeAndRank(rank, shape)) {
             return Card.of(rank, shape);

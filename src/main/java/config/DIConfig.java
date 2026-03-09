@@ -55,6 +55,12 @@ public class DIConfig {
     public CardFactory cardFactory() {
         return new CardFactory(
                 cardRepository(),
+                randomCardGenerator()
+        );
+    }
+
+    public RandomCardGenerator randomCardGenerator() {
+        return new RandomCardGenerator(
                 randomRankNumberGenerator(),
                 randomShapeNumberGenerator()
         );
