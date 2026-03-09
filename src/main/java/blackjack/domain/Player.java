@@ -25,6 +25,17 @@ public class Player {
         return applyBestAceValue(sum);
     }
 
+    public boolean winsAgainst(Player other) {
+        if (other.isBurst()) {
+            return true;
+        }
+        if (this.isBurst()) {
+            return false;
+        }
+
+        return other.calculateCardsValue() < this.calculateCardsValue();
+    }
+
     public boolean isBurst() {
         return calculateCardsValue() > 21;
     }

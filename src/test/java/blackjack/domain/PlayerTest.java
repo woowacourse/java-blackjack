@@ -118,4 +118,19 @@ public class PlayerTest {
         assertThat(isBlackjack).isTrue();
     }
 
+    @Test
+    void 승패_판단_테스트() {
+        // given
+        Player player = new Player("흑곰");
+        Player dealer = new Player("딜러");
+        player.draw(new Card(CardValue.SEVEN, CardShape.DIAMOND));
+        dealer.draw(new Card(CardValue.EIGHT, CardShape.DIAMOND));
+
+        // when
+        boolean isDealerWinning = dealer.winsAgainst(player);
+
+        // then
+        assertThat(isDealerWinning).isTrue();
+    }
+
 }

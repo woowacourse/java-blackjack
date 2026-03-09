@@ -1,6 +1,5 @@
 package blackjack.controller;
 
-import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.Player;
 import blackjack.util.InputParser;
@@ -20,7 +19,7 @@ public class BlackjackController {
 
     public void run() {
         List<Player> players = readUsers();
-        Dealer dealer = new Dealer();
+        Player dealer = new Player("딜러");
 
         settingCards(players, dealer);
         printGameSettingResult(players, dealer);
@@ -40,7 +39,7 @@ public class BlackjackController {
     }
 
     // TODO: 가독성 향상 필요
-    private void settingCards(List<Player> players, Dealer dealer) {
+    private void settingCards(List<Player> players, Player dealer) {
         Deck.shuffle();
         for (int i = 0; i < 2; i++) {
             for (Player player : players) {
@@ -50,7 +49,7 @@ public class BlackjackController {
         }
     }
 
-    private void printGameSettingResult(List<Player> players, Dealer dealer) {
+    private void printGameSettingResult(List<Player> players, Player dealer) {
         List<String> playerNames = players.stream()
                 .map(Player::getName)
                 .toList();
@@ -94,7 +93,7 @@ public class BlackjackController {
         return players.size() == burstUserCount;
     }
 
-    private void getMoreCardsForDealer(Dealer dealer, List<Player> players) {
+    private void getMoreCardsForDealer(Player dealer, List<Player> players) {
         if (isAllUserBurst(players)) {
             return;
         }
@@ -110,7 +109,7 @@ public class BlackjackController {
         }
     }
 
-    private void printWinningResult(List<Player> players, Dealer dealer) {
+    private void printWinningResult(List<Player> players, Player dealer) {
         Map<String, Boolean> result = new HashMap<>();
         int dealerWinCount = 0;
         for (Player player : players) {
