@@ -1,10 +1,10 @@
-package util;
+package view.util;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Parser {
+public class InputParse {
     public static List<String> separateBySeparator(String input) {
 
         return Arrays.stream(input.split(","))

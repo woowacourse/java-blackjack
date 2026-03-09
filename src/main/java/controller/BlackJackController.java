@@ -7,8 +7,8 @@ import domain.participant.Hand;
 import domain.participant.Player;
 import domain.participant.Players;
 import service.BlackJackService;
-import util.Parser;
-import util.Validator;
+import view.util.InputParse;
+import view.util.InputValidate;
 import view.InputView;
 import view.OutputView;
 
@@ -47,8 +47,8 @@ public class BlackJackController {
 
         OutputView.inputPlayerMessage();
         String input = InputView.input();
-        Validator.validateInput(input);
-        List<String> names = Parser.separateBySeparator(input);
+        InputValidate.validateInput(input);
+        List<String> names = InputParse.separateBySeparator(input);
 
         for (String name : names) {
             players.add(new Player(name, new Hand()));
@@ -71,7 +71,7 @@ public class BlackJackController {
     private boolean isHitRequested(Player player) {
         OutputView.hitOrStandMessage(player);
         String input = InputView.input();
-        Validator.validateChoiceInput(input);
+        InputValidate.validateChoiceInput(input);
         return HIT_COMMAND.equals(input);
     }
 
