@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class GameCardGenerator implements CardGenerator {
+public class DefaultCardDeckInitializer implements CardDeckInitializer {
 
     @Override
-    public List<Card> generate() {
+    public List<Card> initialize() {
         List<Card> blackjackGameCards = new ArrayList<>();
         for (CardDenomination emblem : CardDenomination.values()) {
             for (CardEmblem denomination : CardEmblem.values()) {

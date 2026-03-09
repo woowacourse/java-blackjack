@@ -18,7 +18,7 @@ public class CardDeckBuilder {
     }
 
     public CardDeck build() {
-        return CardDeck.from(TestCardGenerator.of(cards));
+        return CardDeck.from(TestCardDeckGenerator.of(cards));
     }
 
 }

@@ -12,8 +12,8 @@ public class CardDeck {
         this.deck = new LinkedList<>(cardList);
     }
 
-    public static CardDeck from(CardGenerator cardGenerator) {
-        return new CardDeck(cardGenerator.generate());
+    public static CardDeck from(CardDeckInitializer cardDeckInitializer) {
+        return new CardDeck(cardDeckInitializer.initialize());
     }
 
     public Card getCard() {

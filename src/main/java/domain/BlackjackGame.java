@@ -6,7 +6,7 @@ import domain.analyzer.ResultAnalyzer;
 import domain.analyzer.dto.ResultAnalysisDto;
 import domain.answer.DrawCardIntetion;
 import domain.card.CardDeck;
-import domain.card.CardGenerator;
+import domain.card.CardDeckInitializer;
 import domain.config.BlackjackGameConfiguration;
 import domain.dealer.Dealer;
 import domain.player.Player;
@@ -23,13 +23,13 @@ public class BlackjackGame {
     private final ApplicationView view;
     private final CardDeck cardDeck;
 
-    private BlackjackGame(ApplicationView view, CardGenerator cardGenerator) {
+    private BlackjackGame(ApplicationView view, CardDeckInitializer cardDeckInitializer) {
         this.view = view;
-        this.cardDeck = CardDeck.from(cardGenerator);
+        this.cardDeck = CardDeck.from(cardDeckInitializer);
     }
 
     public static BlackjackGame from(BlackjackGameConfiguration configuration) {
-        return new BlackjackGame(configuration.view(), configuration.gameCardGenerator());
+        return new BlackjackGame(configuration.view(), configuration.gameCardDeckInitializer());
     }
 
     public void start() {
