@@ -6,6 +6,8 @@ import domain.GameResult;
 import domain.Judgement;
 import domain.Player;
 import domain.Players;
+import dto.ParticipantDto;
+import dto.PlayerResultDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -26,21 +28,24 @@ public class GameController {
 
     public void run() {
         List<String> playerNames = getPlayerNames();
-
         Deck deck = new Deck();
         Dealer dealer = new Dealer(new ArrayList<>(List.of(deck.draw(), deck.draw())), deck);
-
         Players players = getPlayers(playerNames, deck);
+
         printGameStart(playerNames, dealer, players);
         receiveMoreCard(players, dealer);
 
-        outputView.printFinalScore(dealer, players);
+        List<ParticipantDto> participantDtos = players.getPlayers().stream()
+                .map(player -> ParticipantDto.from(player.getName(), player))
+                .toList();
+        outputView.printFinalScore(
+                ParticipantDto.from("딜러", dealer), participantDtos);
 
         Judgement judgement = new Judgement();
         Map<String, GameResult> playerResults = judgement.judgePlayerResults(players, dealer);
         Map<GameResult, Integer> dealerResults = judgement.judgeDealerResults(playerResults);
         outputView.printDealerFinalCount(dealerResults);
-        outputView.printPlayerFinalResults(playerResults);
+        outputView.printPlayerFinalResults(PlayerResultDto.from(playerResults));
     }
 
     private List<String> getPlayerNames() {
@@ -59,8 +64,9 @@ public class GameController {
 
     private void printGameStart(List<String> playerNames, Dealer dealer, Players players) {
         outputView.printStartCardMessage(playerNames);
-        outputView.printDealerStartCard(dealer.getHand().getFirst());
-        outputView.printStartCard(players);
+        outputView.printDealerStartCard(dealer.getHand().getFirst().toString());
+        outputView.printStartCard(
+                players.getPlayers().stream().map(p -> ParticipantDto.from(p.getName(), p)).toList());
     }
 
     private void receiveMoreCard(Players players, Dealer dealer) {
@@ -75,15 +81,14 @@ public class GameController {
     }
 
     private void processRound(Player player, Dealer dealer) {
-        String hitOption;
         while (!player.isBust()) {
-            hitOption = inputView.readHitOption(player.getName());
+            String hitOption = inputView.readHitOption(player.getName());
             InputValidator.validateHitOption(hitOption);
             if (hitOption.equals("n")) {
                 break;
             }
             player.addCard(dealer.dealCard());
-            outputView.printCurrentHoldCard(player);
+            outputView.printCurrentHoldCard(ParticipantDto.from(player.getName(), player));
         }
     }
 }
