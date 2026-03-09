@@ -1,9 +1,8 @@
-package domain.participant.player;
+package domain.participant;
 
 import domain.card.Card;
 import domain.card.TrumpNumber;
 import domain.card.TrumpSuit;
-import domain.participant.HandCards;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
