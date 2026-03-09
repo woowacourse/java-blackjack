@@ -1,7 +1,5 @@
 package blackjack.controller;
 
-import static blackjack.util.ExceptionHandler.retryUntilSuccess;
-
 import blackjack.model.Dealer;
 import blackjack.model.Deck;
 import blackjack.model.GameSummary;
@@ -11,6 +9,7 @@ import blackjack.util.PlayerParser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
+import java.util.function.Supplier;
 
 
 public class BlackjackController {
@@ -26,7 +25,7 @@ public class BlackjackController {
     }
 
     public void run() {
-        List<Player> playerList = retryUntilSuccess(() -> {
+        List<Player> playerList = retry(() -> {
             String input = inputView.readPlayerName();
             return PlayerParser.parse(input);
         });
@@ -52,7 +51,7 @@ public class BlackjackController {
 
     private void hit(Players players, Dealer dealer) {
         for (Player player : players.all()) {
-            while (player.canHit() && retryUntilSuccess(() -> inputView.readCardAdd(player))) {
+            while (player.canHit() && retry(() -> inputView.readCardAdd(player))) {
                 deck.provideOneCard(player);
                 outputView.printPlayerCards(player);
             }
@@ -61,6 +60,16 @@ public class BlackjackController {
         while (dealer.canHit()) {
             outputView.printDealerHit();
             deck.provideOneCard(dealer);
+        }
+    }
+
+    private <T> T retry(Supplier<T> supplier) {
+        while (true) {
+            try {
+                return supplier.get();
+            } catch (Exception e) {
+                outputView.printError(e.getMessage());
+            }
         }
     }
 
