@@ -2,7 +2,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Hand;
 import domain.card.Rank;
-import domain.hitstategy.CasinoDealerHitStrategy;
+import domain.hitStrategy.CasinoDealerHitStrategy;
 import domain.participants.Dealer;
 import domain.score.Score;
 import java.util.List;

@@ -1,7 +1,7 @@
 package domain.participants;
 
 import domain.card.Hand;
-import domain.hitstategy.HitStrategy;
+import domain.hitStrategy.HitStrategy;
 
 public class Player extends Participant {
     private final HitStrategy hitStrategy;

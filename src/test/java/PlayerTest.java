@@ -1,6 +1,6 @@
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.hitstategy.UntilBurstHitStrategy;
+import domain.hitStrategy.UntilBurstHitStrategy;
 import domain.participants.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

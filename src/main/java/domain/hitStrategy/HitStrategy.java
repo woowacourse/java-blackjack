@@ -1,4 +1,4 @@
-package domain.hitstategy;
+package domain.hitStrategy;
 
 import domain.score.Score;
 
