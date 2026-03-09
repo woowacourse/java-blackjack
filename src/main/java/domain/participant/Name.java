@@ -13,6 +13,10 @@ public class Name {
         this.value = name.strip();
     }
 
+    public String getValue() {
+        return value;
+    }
+
     private void validate(String name) {
         if (name.isBlank()) {
             throw new IllegalArgumentException(ExceptionMessage.BLANK_NAME_NOT_ALLOWED.getMessage());
@@ -20,9 +24,5 @@ public class Name {
         if (name.length() < NAME_MIN_LENGTH || name.length() > NAME_MAX_LENGTH) {
             throw new IllegalArgumentException(ExceptionMessage.NAME_OUT_OF_RANGE.getMessage());
         }
-    }
-
-    public String getValue() {
-        return value;
     }
 }

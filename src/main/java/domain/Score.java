@@ -10,14 +10,14 @@ public class Score {
         this.value = value;
     }
 
+    public int getValue() {
+        return value;
+    }
+
     private void validate(int value) {
         if (value > Constant.SCORE_MAX_SIZE || value < Constant.SCORE_MIN_SIZE) {
             throw new IllegalArgumentException(ExceptionMessage.SCORE_OUT_OF_RANGE.getMessage());
         }
-    }
-
-    public int getValue() {
-        return value;
     }
 
     @Override

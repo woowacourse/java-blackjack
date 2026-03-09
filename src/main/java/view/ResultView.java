@@ -42,10 +42,11 @@ public class ResultView {
     }
 
     public void printCards(Player player) {
-        System.out.println(player.getName().getValue() + "카드: " + printCards(player.getCards().getCards()));
+        System.out.println(
+                player.getName().getValue() + "카드: " + cardsToString(player.getCards().getCards()));
     }
 
-    private String printCards(List<Card> cards) {
+    private String cardsToString(List<Card> cards) {
         return cards.stream()
                 .map(card -> card.getRank().getDisplayValue() + card.getSuit().getValue())
                 .collect(Collectors.joining(DELIMITER));
@@ -58,21 +59,6 @@ public class ResultView {
             return;
         }
         System.out.println("딜러는 " + (DEALER_HIT_STAND_BOUNDARY + 1) + "이상이라 카드를 받지 않았습니다.");
-    }
-
-    public void printCardsWithResult(List<Player> players, Dealer dealer) {
-        printEmptyLine();
-        printCardWithResult(dealer);
-
-        for (Player player : players) {
-            printCardWithResult(player);
-        }
-    }
-
-    private void printCardWithResult(Participant participant) {
-        System.out.println(
-                participant.getName().getValue() + "카드: " + printCards(participant.getCards().getCards()) + " - 결과: "
-                        + participant.getTotalSum());
     }
 
     public void printResult(List<RoundResult> results) {
@@ -105,8 +91,23 @@ public class ResultView {
         return Result.DRAW;
     }
 
+    public void printCardsWithResult(List<Player> players, Dealer dealer) {
+        printEmptyLine();
+        printCardWithResult(dealer);
+
+        for (Player player : players) {
+            printCardWithResult(player);
+        }
+    }
+
+    private void printCardWithResult(Participant participant) {
+        System.out.println(
+                participant.getName().getValue() + "카드: " + cardsToString(
+                        participant.getCards().getCards()) + " - 결과: "
+                        + participant.getTotalSum());
+    }
+
     private void printEmptyLine() {
         System.out.println();
     }
-
 }

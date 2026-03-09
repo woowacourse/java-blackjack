@@ -30,17 +30,16 @@ public class Players {
         }
     }
 
-    public void hitStandEachPlayers(Function<Player, Boolean> hitStandFunc, Supplier<Card> getCard,
+    public void hitStandEachPlayers(Function<Player, Boolean> hitStandDecisionFunc, Supplier<Card> getCard,
                                     Consumer<Player> printResultFunc) {
         for (Player player : players) {
             while (true) {
-                if (hitStandFunc.apply(player)) {
-                    player.addCard(getCard.get());
+                if (!hitStandDecisionFunc.apply(player)) {
                     printResultFunc.accept(player);
-                    continue;
+                    break;
                 }
+                player.addCard(getCard.get());
                 printResultFunc.accept(player);
-                break;
             }
         }
     }
@@ -55,7 +54,15 @@ public class Players {
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return List.copyOf(players);
+    }
+
+    private void validate(List<String> players) {
+        HashSet<String> uniqueNames = new HashSet<>(players);
+
+        if (uniqueNames.size() != players.size()) {
+            throw new IllegalArgumentException(ExceptionMessage.ALREADY_EXIST_NAME.getMessage());
+        }
     }
 
     private void addPlayers(List<String> names) {
@@ -66,13 +73,5 @@ public class Players {
 
     private void addPlayer(String name) {
         players.add(new Player(name));
-    }
-
-    private void validate(List<String> players) {
-        HashSet<String> uniqueNames = new HashSet<>(players);
-
-        if (uniqueNames.size() != players.size()) {
-            throw new IllegalArgumentException(ExceptionMessage.ALREADY_EXIST_NAME.getMessage());
-        }
     }
 }

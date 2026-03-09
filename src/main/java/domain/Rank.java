@@ -34,14 +34,9 @@ public enum Rank {
         return ACE_MIN_VALUE;
     }
 
-    private static int calculateThreshold(int leftAce) {
-        return BLACKJACK_MAX_NUMBER + 1 - leftAce;
-    }
-
     public boolean isAce() {
         return this == Rank.ACE;
     }
-
 
     public Score getScore() {
         return score;
@@ -49,5 +44,9 @@ public enum Rank {
 
     public String getDisplayValue() {
         return displayValue;
+    }
+
+    private static int calculateThreshold(int leftAce) {
+        return BLACKJACK_MAX_NUMBER + 1 - leftAce;
     }
 }

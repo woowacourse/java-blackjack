@@ -20,7 +20,7 @@ public abstract class Participant {
     }
 
     public void addCard(Supplier<Card> getCard) {
-        cards.addCard(getCard);
+        cards.add(getCard);
     }
 
     public void addCards(List<Card> cards) {
@@ -30,7 +30,6 @@ public abstract class Participant {
     public void addCards(Function<Integer, List<Card>> getCardsFunc, int quantity) {
         cards.addAll(getCardsFunc, quantity);
     }
-
 
     public int getTotalSum() {
         return cards.getTotalSum();

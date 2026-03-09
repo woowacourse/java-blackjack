@@ -19,7 +19,7 @@ public class Cards {
         cards.add(card);
     }
 
-    public void addCard(Supplier<Card> getCard) {
+    public void add(Supplier<Card> getCard) {
         cards.add(getCard.get());
     }
 
@@ -36,10 +36,12 @@ public class Cards {
         return cards.removeFirst();
     }
 
-    private void validateIsEmpty() {
-        if (cards.isEmpty()) {
-            throw new IllegalArgumentException(ExceptionMessage.EMPTY_CARDS.getMessage());
+    public List<Card> pullByCount(int quantity) {
+        List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < quantity; i++) {
+            cards.add(pull());
         }
+        return cards;
     }
 
     public Card peek() {
@@ -64,6 +66,16 @@ public class Cards {
         return sum;
     }
 
+    public List<Card> getCards() {
+        return List.copyOf(cards);
+    }
+
+    private void validateIsEmpty() {
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException(ExceptionMessage.EMPTY_CARDS.getMessage());
+        }
+    }
+
     private int getAceAmount() {
         int aceAmount = 0;
         for (Card card : cards) {
@@ -79,11 +91,4 @@ public class Cards {
         }
         return sum;
     }
-
-
-    public List<Card> getCards() {
-        return List.copyOf(cards);
-    }
-
-
 }
