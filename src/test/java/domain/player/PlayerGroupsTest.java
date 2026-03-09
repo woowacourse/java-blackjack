@@ -1,5 +1,7 @@
 package domain.player;
 
+import domain.participant.player.Player;
+import domain.participant.player.PlayerGroups;
 import domain.vo.Name;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +25,7 @@ class PlayerGroupsTest {
     @Test
     void 플레이어_정원초과_테스트() {
         List<Player> players = new ArrayList<>(List
-                .of(new Player(new Name("딜러")), new Player(new Name("pobi")), new Player(new Name("Jason")),
+                .of(new Player(new Name("pobi")), new Player(new Name("Jason")),
                         new Player(new Name("파도")), new Player(new Name("이안")), new Player(new Name("슈크림"))));
 
         assertThatThrownBy(() -> new PlayerGroups(players))
