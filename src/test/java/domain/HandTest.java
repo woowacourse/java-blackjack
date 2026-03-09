@@ -46,6 +46,8 @@ class HandTest {
         return Stream.of(
                 Arguments.of(cards(Grade.FIVE, Grade.TWO), 7),
                 Arguments.of(cards(Grade.ACE, Grade.FOUR), 15),
+                Arguments.of(cards(Grade.ACE, Grade.ACE), 12),
+                Arguments.of(cards(Grade.ACE, Grade.ACE, Grade.NINE), 21),
                 Arguments.of(cards(Grade.ACE, Grade.ACE, Grade.TEN, Grade.NINE), 21),
                 Arguments.of(cards(Grade.JACK, Grade.FIVE, Grade.ACE, Grade.FOUR), 20)
         );
