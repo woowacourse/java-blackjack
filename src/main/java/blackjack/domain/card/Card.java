@@ -1,14 +1,6 @@
 package blackjack.domain.card;
 
-public class Card {
-
-    private final Suit suit;
-    private final Rank rank;
-
-    public Card(final Suit suit, final Rank rank) {
-        this.suit = suit;
-        this.rank = rank;
-    }
+public record Card(Suit suit, Rank rank) {
 
     public String getDisplayName() {
         return rank.getName() + suit.getDisplayName();

@@ -1,9 +1,9 @@
 package blackjack.domain.participant;
 
+import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import org.junit.jupiter.api.Test;
 
 class NameTest {
 
@@ -11,7 +11,7 @@ class NameTest {
     void 정상적인_이름으로_생성에_성공한다() {
         Name name = new Name("pobi");
 
-        assertThat(name.getValue()).isEqualTo("pobi");
+        assertThat(name.value()).isEqualTo("pobi");
     }
 
     @Test

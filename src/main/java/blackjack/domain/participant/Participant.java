@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.card.Card;
 import blackjack.domain.hand.Hand;
 import blackjack.domain.hand.Score;
+
 import java.util.List;
 
 public abstract class Participant {
@@ -31,7 +32,7 @@ public abstract class Participant {
     }
 
     public String getName() {
-        return name.getValue();
+        return name.value();
     }
 
     public abstract boolean canReceiveCard();

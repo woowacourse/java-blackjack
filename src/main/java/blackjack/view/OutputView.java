@@ -6,6 +6,7 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.GameResult;
 import blackjack.domain.result.GameResults;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -13,12 +14,12 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     public void printInitialDeal(final Players players, final Dealer dealer) {
-        final String playerNames = players.getPlayers().stream()
+        final String playerNames = players.players().stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(", "));
         System.out.printf("%n딜러와 %s에게 2장을 나누었습니다.%n", playerNames);
         System.out.printf("딜러카드: %s%n", dealer.getCards().get(0).getDisplayName());
-        players.getPlayers().forEach(this::printPlayerCards);
+        players.players().forEach(this::printPlayerCards);
         System.out.println();
     }
 
@@ -32,9 +33,9 @@ public class OutputView {
 
     public void printFinalCards(final Players players, final Dealer dealer) {
         System.out.println();
-        printParticipantFinalCards(dealer.getName(), dealer.getCards(), dealer.calculateScore().getValue());
-        players.getPlayers().forEach(player ->
-                printParticipantFinalCards(player.getName(), player.getCards(), player.calculateScore().getValue())
+        printParticipantFinalCards(dealer.getName(), dealer.getCards(), dealer.calculateScore().value());
+        players.players().forEach(player ->
+                printParticipantFinalCards(player.getName(), player.getCards(), player.calculateScore().value())
         );
     }
 

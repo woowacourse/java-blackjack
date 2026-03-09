@@ -1,11 +1,11 @@
 package blackjack.domain.hand;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class HandTest {
 
@@ -15,7 +15,7 @@ class HandTest {
         hand.add(new Card(Suit.HEART, Rank.SEVEN));
         hand.add(new Card(Suit.SPADE, Rank.EIGHT));
 
-        assertThat(hand.calculateScore().getValue()).isEqualTo(15);
+        assertThat(hand.calculateScore().value()).isEqualTo(15);
     }
 
     @Test
@@ -24,7 +24,7 @@ class HandTest {
         hand.add(new Card(Suit.HEART, Rank.ACE));
         hand.add(new Card(Suit.SPADE, Rank.EIGHT));
 
-        assertThat(hand.calculateScore().getValue()).isEqualTo(19);
+        assertThat(hand.calculateScore().value()).isEqualTo(19);
     }
 
     @Test
@@ -34,7 +34,7 @@ class HandTest {
         hand.add(new Card(Suit.SPADE, Rank.EIGHT));
         hand.add(new Card(Suit.CLOVER, Rank.SEVEN));
 
-        assertThat(hand.calculateScore().getValue()).isEqualTo(16);
+        assertThat(hand.calculateScore().value()).isEqualTo(16);
     }
 
     @Test

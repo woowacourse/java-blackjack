@@ -1,10 +1,11 @@
 package blackjack.domain.participant;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayersTest {
 
@@ -30,6 +31,6 @@ class PlayersTest {
 
         Players result = new Players(players);
 
-        assertThat(result.getPlayers()).hasSize(1);
+        assertThat(result.players()).hasSize(1);
     }
 }
