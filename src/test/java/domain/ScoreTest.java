@@ -9,7 +9,6 @@ import java.util.List;
 
 class ScoreTest {
 
-
     @Test
     @DisplayName("Ace 없는 Hand에 대해서 점수를 합산한다.")
     void Ace없는_Hand_점수_합계() {
@@ -21,7 +20,7 @@ class ScoreTest {
         }
 
         // when - then
-        Assertions.assertEquals(hand.calculateSum(), 12);
+        Assertions.assertEquals(12, Score.calculate(hand));
     }
 
     @Test
@@ -35,7 +34,7 @@ class ScoreTest {
         }
 
         // when - then
-        Assertions.assertEquals(hand.calculateSum(), 21);
+        Assertions.assertEquals(21, Score.calculate(hand));
     }
 
     @Test
@@ -49,6 +48,6 @@ class ScoreTest {
         }
 
         // when - then
-        Assertions.assertEquals(hand.calculateSum(), 12);
+        Assertions.assertEquals(12, Score.calculate(hand));
     }
 }
