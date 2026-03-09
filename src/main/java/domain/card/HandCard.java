@@ -18,6 +18,7 @@ public class HandCard {
         int nonAceTotal = cards.stream().map(Card::getRankScore).filter(e -> !CardRank.isAce(e))
                 .mapToInt(Integer::intValue).sum();
         int aceCount = (int) cards.stream().map(Card::getRankScore).filter(CardRank::isAce).count();
+
         return aceCalculate(nonAceTotal, aceCount);
     }
 
@@ -28,6 +29,7 @@ public class HandCard {
             totalSum -= (ACE_MAX_VALUE - ACE_MIN_VALUE);
             remainingAce--;
         }
+
         return totalSum;
     }
 
