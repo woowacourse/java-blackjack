@@ -5,6 +5,7 @@ import domain.answer.DrawDecision;
 import domain.gamer.PlayerName;
 import domain.gamer.dto.PlayerHandDto;
 import domain.gamer.dto.PlayerResultDto;
+import domain.gamer.dto.PlayersNameDto;
 
 import java.util.Arrays;
 import java.util.List;
@@ -41,8 +42,8 @@ public class ApplicationView {
         });
     }
 
-    public void printFirstHandOutResult(List<String> playerNames) {
-        String formattedNames = String.join(PLAYER_NAME_DELIMITER, playerNames);
+    public void printFirstHandOutResult(PlayersNameDto playerNames) {
+        String formattedNames = String.join(PLAYER_NAME_DELIMITER, playerNames.playerNames());
         writer.printDealInitialCardMessage(formattedNames);
     }
 

@@ -2,12 +2,12 @@ package domain.gamer;
 
 import domain.gamer.dto.PlayerHandDto;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class Players {
 
-    private List<Player> players;
+    private final List<Player> players;
 
     private Players(List<Player> players) {
         this.players = players;
@@ -23,20 +23,8 @@ public class Players {
         }
     }
 
-    public Stream<Player> stream() {
-        return players.stream();
-    }
-
-    public List<PlayerHandDto> getPlayersHand() {
-        return players.stream()
-                .map(Player::getMyHands)
-                .toList();
-    }
-
-    public List<String> displayNames() {
-        return players.stream()
-                .map(Player::getMyName)
-                .toList();
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 
 }

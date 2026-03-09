@@ -48,17 +48,6 @@ public class CardBundle {
         return Objects.hashCode(cardBundle);
     }
 
-    public boolean checkExist(Card targetCard) {
-        return cardBundle.stream().
-                anyMatch(card -> card.equals(targetCard));
-    }
-
-    public List<String> toDisplay() {
-        return cardBundle.stream()
-                .map(Card::toDisplay)
-                .toList();
-    }
-
     public int getResultScore() {
         int basicScore = getBasicScore();
         if (hasAce() && (basicScore + ACE_BONUS_SCORE <= BUSTED_CONDITION)) {
@@ -83,7 +72,7 @@ public class CardBundle {
                 .anyMatch(Card::isAce);
     }
 
-    public List<Card> getCardBundle() {
+    public List<Card> openMyCards() {
         return Collections.unmodifiableList(cardBundle);
     }
 

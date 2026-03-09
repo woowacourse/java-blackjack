@@ -77,8 +77,8 @@ public class DealerTest {
         dealer.dealMyself();
 
         CardBundle cardBundle = CardBundle.from(cards);
-        Assertions.assertThat(dealer.disPlayMyCardBundle())
-                .isEqualTo(cardBundle.toDisplay());
+        Assertions.assertThat(dealer.getCardBundle())
+                .isEqualTo(cardBundle);
     }
 
     @Test

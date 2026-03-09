@@ -55,6 +55,11 @@ public class Dealer extends Gamer {
         return false;
     }
 
+    public Card openMyFirstCard() {
+        return cardBundle.openMyCards()
+                .getFirst();
+    }
+
     private boolean canHit() {
         return cardBundle.getBasicScore() <= ADDITIONAL_DRAW_CONDITION;
     }
@@ -77,10 +82,6 @@ public class Dealer extends Gamer {
 
     private Card drawCard() {
         return cardDeck.giveCard();
-    }
-
-    public List<String> disPlayMyCardBundle() {
-        return cardBundle.toDisplay();
     }
 
 }

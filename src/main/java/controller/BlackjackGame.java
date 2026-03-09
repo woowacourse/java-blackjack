@@ -11,6 +11,7 @@ import domain.gamer.PlayerName;
 import domain.gamer.Players;
 import domain.gamer.dto.PlayerHandDto;
 import domain.gamer.dto.PlayerResultDto;
+import domain.gamer.dto.PlayersNameDto;
 import domain.view.ApplicationView;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class BlackjackGame {
 
         dealInitialCard(dealer, players);
         showGamerHands(players, dealer);
-        
+
         tryHitPlayers(players, dealer);
         tryHitDealer(dealer);
 
@@ -61,19 +62,19 @@ public class BlackjackGame {
     }
 
     private void showGamerHands(Players players, Dealer dealer) {
-        view.printFirstHandOutResult(players.displayNames());
-        view.printParticipantHand(PlayerHandDto.of(dealer));
-        view.printAllParticipantsHand(getPlayerHandInformation(players));
+        view.printFirstHandOutResult(PlayersNameDto.from(players.getPlayers()));
+        view.printParticipantHand(PlayerHandDto.onlyFirstCard(dealer));
+        view.printAllParticipantsHand(getPlayerHandInformation(players.getPlayers()));
     }
 
-    private List<PlayerHandDto> getPlayerHandInformation(Players players) {
+    private List<PlayerHandDto> getPlayerHandInformation(List<Player> players) {
         return players.stream()
-                .map(PlayerHandDto::of)
+                .map(PlayerHandDto::new)
                 .toList();
     }
 
     private void tryHitPlayers(Players players, Dealer dealer) {
-        players.stream()
+        players.getPlayers()
                 .forEach(player -> drawPlayerCard(player, dealer));
     }
 
@@ -84,9 +85,9 @@ public class BlackjackGame {
     }
 
     private void drawPlayerCard(Player player, Dealer dealer) {
-        while(!player.isBusted() && isPlayerWantCard(player)) {
+        while (!player.isBusted() && isPlayerWantCard(player)) {
             dealer.hitCardToPlayer(player);
-            view.printParticipantHand(PlayerHandDto.of(player));
+            view.printParticipantHand(new PlayerHandDto(player));
         }
     }
 
@@ -97,7 +98,7 @@ public class BlackjackGame {
 
     private void showGamerHandResult(Dealer dealer, Players players) {
         view.printFinalResultMessage(PlayerResultDto.from(dealer));
-        players.stream().forEach(player -> {
+        players.getPlayers().forEach(player -> {
             view.printFinalResultMessage(PlayerResultDto.from(player));
         });
     }
@@ -108,7 +109,7 @@ public class BlackjackGame {
     }
 
     private ResultAnalysisDto analyzeBlackjackResult(Players players, Dealer dealer) {
-        return ResultAnalyzer.analyze(players, dealer);
+        return ResultAnalyzer.analyze(players.getPlayers(), dealer);
     }
 
 }

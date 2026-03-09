@@ -1,6 +1,9 @@
 package domain.gamer;
 
+import domain.card.Card;
 import domain.card.CardBundle;
+
+import java.util.List;
 
 public abstract class Gamer {
 
@@ -22,6 +25,14 @@ public abstract class Gamer {
 
     public String getMyName() {
         return name.name();
+    }
+
+    public CardBundle getCardBundle() {
+        return CardBundle.from(cardBundle.openMyCards());
+    }
+
+    public List<Card> openMyCards() {
+        return cardBundle.openMyCards();
     }
 
 }

@@ -23,8 +23,12 @@ class PlayersTest {
         Dealer dealer = Dealer.from(cardDeck);
 
         players.dealCardBundle(dealer);
-        List<PlayerHandDto> playersHand = players.getPlayersHand();
-        Assertions.assertThat(playersHand.getFirst()).isEqualTo(PlayerHandDto.of(songsong));
+        List<PlayerHandDto> playersHand = players.getPlayers().stream()
+                .map(PlayerHandDto::new)
+                .toList();
+
+        Assertions.assertThat(playersHand.getFirst())
+                .isEqualTo(new PlayerHandDto(songsong));
     }
 
 }

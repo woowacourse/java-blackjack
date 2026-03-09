@@ -9,7 +9,7 @@ public record Card(
         return new Card(denomination, emblem);
     }
 
-    public String toDisplay() {
+    public String openCard() {
         return denomination.getName() + emblem.getName();
     }
 
