@@ -14,6 +14,10 @@ public class Card {
         return rank;
     }
 
+    public Suit getSuit() {
+        return suit;
+    }
+
     public int score() {
         return rank.getScore();
     }
