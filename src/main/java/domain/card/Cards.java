@@ -13,7 +13,7 @@ public class Cards {
     private final List<Card> cards;
 
     public Cards() {
-        this.cards = new ArrayList<Card>();
+        this.cards = new ArrayList<>();
     }
 
     public void add(Card card) {
@@ -70,6 +70,6 @@ public class Cards {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return List.copyOf(cards);
     }
 }
