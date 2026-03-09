@@ -38,10 +38,10 @@ public class BlackJackResultService {
         if (dealer.isBust()) {
             return WinningStatus.WIN;
         }
-        if (dealer.getHand().getSum() > player.getHand().getSum()) {
+        if (dealer.getScore() > player.getScore()) {
             return WinningStatus.LOSE;
         }
-        if (dealer.getHand().getSum() == player.getHand().getSum()) {
+        if (dealer.getScore() == player.getScore()) {
             return WinningStatus.DRAW;
         }
         return WinningStatus.WIN;

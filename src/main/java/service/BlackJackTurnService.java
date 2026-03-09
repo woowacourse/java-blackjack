@@ -19,7 +19,7 @@ public class BlackJackTurnService {
     }
 
     public boolean canDealerHit(Dealer dealer) {
-        return dealer.getHand().getSum() < 17;
+        return dealer.getScore() < 17;
     }
 
     public boolean canPlayerHit(Player player, String input) {
@@ -27,7 +27,7 @@ public class BlackJackTurnService {
     }
 
     public boolean isPlayerUnder21(Player player) {
-        return player.getHand().getSum() < 21;
+        return player.getScore() < 21;
     }
 
     public BlackJackHandDto createHandDto(Player player) {

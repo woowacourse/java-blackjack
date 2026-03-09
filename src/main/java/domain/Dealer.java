@@ -20,4 +20,8 @@ public class Dealer {
     public Hand getHand() {
         return hand;
     }
+
+    public int getScore() {
+        return hand.getSum();
+    }
 }

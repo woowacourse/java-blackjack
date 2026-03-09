@@ -26,4 +26,8 @@ public class Player {
     public Hand getHand() {
         return hand;
     }
+
+    public int getScore() {
+        return hand.getSum();
+    }
 }
