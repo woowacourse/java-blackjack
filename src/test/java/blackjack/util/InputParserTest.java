@@ -15,7 +15,7 @@ public class InputParserTest {
         String input = "흑곰,밀란,로치";
 
         //when
-        List<String> playerNames = InputParser.parsePlayer(input);
+        List<String> playerNames = InputParser.parseUser(input);
 
         //then
         assertThat(List.of("흑곰", "밀란", "로치")).isEqualTo(playerNames);
