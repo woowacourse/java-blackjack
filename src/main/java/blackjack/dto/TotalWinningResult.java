@@ -2,7 +2,7 @@ package blackjack.dto;
 
 import java.util.List;
 
-public record WinningResult(
+public record TotalWinningResult(
         int dealerWin,
         int dealerDraw,
         int dealerLoss,
