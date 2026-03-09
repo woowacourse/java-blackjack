@@ -6,11 +6,11 @@ import static domain.Constant.NAME_MIN_LENGTH;
 import domain.ExceptionMessage;
 
 public class Name {
-    private final String name;
+    private final String value;
 
     public Name(String name) {
         validate(name);
-        this.name = name.strip();
+        this.value = name.strip();
     }
 
     private void validate(String name) {
@@ -22,7 +22,7 @@ public class Name {
         }
     }
 
-    public String getName() {
-        return name;
+    public String getValue() {
+        return value;
     }
 }
