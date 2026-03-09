@@ -16,7 +16,6 @@ public class HandCards {
         cards.add(card);
     }
 
-    // 손에 쥔 카드 출력
     public List<String> cardsToString() {
         List<String> cardList = new ArrayList<>();
 
@@ -27,7 +26,6 @@ public class HandCards {
         return cardList;
     }
 
-    // 손에 쥔 카드 점수 계산해 반환
     public int calculateCards(){
         int sum = 0;
         int aceCount = 0;
@@ -50,7 +48,6 @@ public class HandCards {
         return sum;
     }
 
-    // ACE 처리 로직
     private int calculateAce(int currentSum){
         int aceCase10 = Math.max(21 - (currentSum + 11), 0);
         int aceCase1 = Math.max(21 - (currentSum + 11), 0);

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 public class ResultView {
-    // 딜러와 플레이어들의 카드 보유 내역
     public static void printStartPlayersCards(Map<String, List<String>> playerCardList) {
         List<String> playerNames = new ArrayList<>();
         for (String playerName : playerCardList.keySet()) {
@@ -33,7 +32,6 @@ public class ResultView {
         System.out.println();
     }
 
-    // 플레이어 한 명의 결과 출력
     public static void printPlayerCards(String name, List<String> playCardList) {
         System.out.println(name + "카드: " + String.join(", ", playCardList));
     }
@@ -42,7 +40,6 @@ public class ResultView {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    // 카드 합산 결과
     public static void printCardSumResult(Map<String, List<String>> playerCardList, Map<String, Integer> playerTotalScore) {
         System.out.println();
         for (String playerName : playerCardList.keySet()) {
