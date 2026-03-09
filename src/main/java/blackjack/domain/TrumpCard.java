@@ -1,0 +1,56 @@
+package blackjack.domain;
+
+import java.util.Objects;
+
+public class TrumpCard {
+    private final Suit suit;
+    private final Rank rank;
+
+    private TrumpCard(Suit suit, Rank rank) {
+        validate(suit, rank);
+        this.suit = suit;
+        this.rank = rank;
+    }
+
+    public static TrumpCard of(Suit suit, Rank rank) {
+        return new TrumpCard(suit, rank);
+    }
+
+    private void validate(Suit suit, Rank rank) {
+            Objects.requireNonNull(suit, "카드의 수트와 랭크는 null일 수 없습니다.");
+            Objects.requireNonNull(rank, "카드의 수트와 랭크는 null일 수 없습니다.");
+    }
+
+    public boolean isAce() {
+        return rank == Rank.ACE;
+    }
+
+    public String koreanName() {
+        return suit.getKoreanName();
+    }
+
+    public int score() {
+        return rank.getScore();
+    }
+
+    public String symbol() {
+        return rank.getSymbol();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        TrumpCard trumpCard = (TrumpCard) o;
+        return suit == trumpCard.suit && rank == trumpCard.rank;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(suit, rank);
+    }
+}
