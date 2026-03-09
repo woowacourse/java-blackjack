@@ -5,7 +5,6 @@ import domain.player.Player;
 
 import java.util.List;
 
-// TODO 추후 Gamer로 개선 예정.
 public record PlayerHandDto(
         String playerName,
         String handOnCards

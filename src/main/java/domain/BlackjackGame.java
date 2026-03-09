@@ -1,5 +1,7 @@
 package domain;
 
+import static domain.config.BlackjackGameConstant.*;
+
 import domain.analyzer.ResultAnalyzer;
 import domain.analyzer.dto.ResultAnalysisDto;
 import domain.answer.DrawCardIntetion;
@@ -17,9 +19,6 @@ import domain.view.ApplicationView;
 import java.util.List;
 
 public class BlackjackGame {
-
-    private static final int INITIAL_CARD_DRAW_COUNT = 2;
-    private static final int DEFAULT_CARD_DRAW_COUNT = 1;
 
     private final ApplicationView view;
     private final CardDeck cardDeck;

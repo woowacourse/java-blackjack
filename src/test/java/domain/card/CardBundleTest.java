@@ -1,5 +1,6 @@
 package domain.card;
 
+import domain.config.BlackjackGameConstant;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

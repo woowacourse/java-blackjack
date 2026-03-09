@@ -1,5 +1,7 @@
 package player;
 
+import static domain.config.BlackjackGameConstant.DEFAULT_CARD_DRAW_COUNT;
+
 import domain.card.*;
 import domain.dealer.Dealer;
 import domain.player.Player;
@@ -20,7 +22,7 @@ public class PlayerTest {
         Dealer dealer = Dealer.of(cardDeck);
         Player player = Player.from(PlayerName.from("test"));
 
-        dealer.handOutCardToPlayer(player, 1);
+        dealer.handOutCardToPlayer(player, DEFAULT_CARD_DRAW_COUNT);
         Card card = Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER);
 
         Assertions.assertThat(player.hasCard(card)).isTrue();
@@ -35,7 +37,7 @@ public class PlayerTest {
         Player player = Player.from(PlayerName.from("test"));
 
         Assertions.assertThatThrownBy(() -> {
-            dealer.handOutCardToPlayer(player, 1);
+            dealer.handOutCardToPlayer(player, DEFAULT_CARD_DRAW_COUNT);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 

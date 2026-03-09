@@ -1,5 +1,7 @@
 package dealer;
 
+import static domain.config.BlackjackGameConstant.*;
+
 import domain.card.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -18,7 +20,7 @@ public class DealerTest {
                 .build();
 
         Dealer dealer = Dealer.of(cardDeck);
-        CardBundle cardBundle = dealer.handOutCard(2);
+        CardBundle cardBundle = dealer.handOutCard(INITIAL_CARD_DRAW_COUNT);
 
         Assertions.assertThat(cardBundle)
                 .isEqualTo(CardBundle.of(List.of(
@@ -50,7 +52,7 @@ public class DealerTest {
         Dealer dealer = Dealer.of(cardDeck);
 
         Assertions.assertThatThrownBy(() -> {
-            CardBundle cardBundle = dealer.handOutCard(2);
+            CardBundle cardBundle = dealer.handOutCard(INITIAL_CARD_DRAW_COUNT);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -65,7 +67,7 @@ public class DealerTest {
                 .build();
 
         Dealer dealer = Dealer.of(cardDeck);
-        dealer.drawMySelf(2);
+        dealer.drawMySelf(INITIAL_CARD_DRAW_COUNT);
 
         CardBundle cardBundle = CardBundle.of(cards);
         Assertions.assertThat(dealer.disPlayMyCardBundle())
@@ -84,7 +86,7 @@ public class DealerTest {
         Dealer dealer = Dealer.of(cardDeck);
 
         Assertions.assertThatThrownBy(() -> {
-            dealer.drawMySelf(2);
+            dealer.drawMySelf(INITIAL_CARD_DRAW_COUNT);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -100,7 +102,7 @@ public class DealerTest {
                 .build();
 
         Dealer dealer = Dealer.of(cardDeck);
-        dealer.drawMySelf(2);
+        dealer.drawMySelf(INITIAL_CARD_DRAW_COUNT);
 
         Assertions.assertThat(dealer.hitIfRequired()).isTrue();
     }

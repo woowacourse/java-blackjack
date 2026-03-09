@@ -1,5 +1,7 @@
 package domain.dealer;
 
+import static domain.config.BlackjackGameConstant.*;
+
 import domain.card.Card;
 import domain.card.CardBundle;
 import domain.card.CardDeck;
@@ -9,9 +11,6 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class Dealer {
-
-    private static final int INITIAL_CARD_DRAW_COUNT = 2;
-    private static final int ADDITIONAL_DRAW_CONDITION = 16;
 
     private final CardDeck cardDeck;
     private final CardBundle cardBundle;
@@ -47,14 +46,14 @@ public class Dealer {
 
     public boolean hitIfRequired() {
         if (canHit()) {
-            drawMySelf(1);
+            drawMySelf(DEFAULT_CARD_DRAW_COUNT);
             return true;
         }
         return false;
     }
 
     private boolean canHit() {
-        return cardBundle.getBasicScore() <= 16;
+        return cardBundle.getBasicScore() <= DEALER_ADDITIONAL_DRAW_CONDITION;
     }
 
     public CardBundle drawMySelf(int tryCount) {
@@ -70,7 +69,7 @@ public class Dealer {
     }
 
     public String toDisplayMyName() {
-        return "딜러";
+        return DEALER_DISPLAY_NAME;
     }
 
     public List<String> disPlayMyCardBundle() {
@@ -78,7 +77,7 @@ public class Dealer {
     }
 
     public boolean isBusted() {
-        return cardBundle.getBasicScore() > 21;
+        return cardBundle.getBasicScore() > BUSTED_CONDITION;
     }
 
 }
