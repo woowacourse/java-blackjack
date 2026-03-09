@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.GameResult;
@@ -41,15 +42,15 @@ public class OutputView {
 
     public void printFinalResults(final GameResults gameResults) {
         System.out.println("\n## 최종 승패");
-        printDealerResult(gameResults.getDealerResults());
-        gameResults.getPlayerResults().forEach(this::printPlayerResult);
+        printDealerResult(gameResults.dealerResult());
+        gameResults.playerResults().forEach(this::printPlayerResult);
     }
 
     private void printParticipantFinalCards(final String name, final List<Card> cards, final int score) {
         System.out.printf("%s카드: %s - 결과: %d%n", name, formatCards(cards), score);
     }
 
-    private void printDealerResult(final Map<GameResult, Integer> dealerResults) {
+    private void printDealerResult(Map<GameResult, Integer> dealerResults) {
         System.out.println("딜러: " + buildDealerResultText(dealerResults).trim());
     }
 
@@ -72,7 +73,7 @@ public class OutputView {
         }
     }
 
-    private void printPlayerResult(final Player player, final GameResult result) {
+    private void printPlayerResult(final Participant player, final GameResult result) {
         System.out.printf("%s: %s%n", player.getName(), toDisplayText(result));
     }
 
