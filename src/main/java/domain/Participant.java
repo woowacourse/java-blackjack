@@ -21,6 +21,10 @@ public abstract class Participant {
         return hand.snapshot();
     }
 
+    public boolean canReceive() {
+        return !hand.isBust();
+    }
+
     public String getName() {
         return name.value();
     }

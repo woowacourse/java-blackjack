@@ -1,12 +1,14 @@
 package controller;
 
 import domain.CardDto;
+import domain.Command;
 import domain.Dealer;
 import domain.Deck;
 import domain.GameManager;
 import domain.player.Player;
 import domain.player.PlayerParser;
 import domain.player.Players;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -37,5 +39,18 @@ public class GameController {
             result.put(player.getName(), gameManager.getCardsResult(player));
         }
         outputView.printGameInitResult(result);
+
+        for (Player player : players) {
+            while (player.canReceive()) {
+                Command yesOrNo = Command.from(inputView.askPlayHit(player.getName()));
+
+                if (yesOrNo.isNo()) {
+                    break;
+                }
+                gameManager.dealCard(player);
+                outputView.printParticipantCard(player.getName(),gameManager.getCardsResult(player).getFormattedCards());
+            }
+        }
+
     }
 }

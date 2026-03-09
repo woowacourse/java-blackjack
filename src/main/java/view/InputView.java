@@ -14,6 +14,11 @@ public class InputView {
         return readLine();
     }
 
+    public String askPlayHit(String playerName) {
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", playerName);
+        return readLine();
+    }
+
     private String readLine() {
        return scanner.nextLine();
     }
