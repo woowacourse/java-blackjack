@@ -43,4 +43,16 @@ public class BlackjackGame {
     public Dealer getDealer() {
         return dealer;
     }
+
+    public void dealerHitStand(Consumer<Boolean> printDecisionOutput) {
+        while (true) {
+            boolean dealerHitStand = dealer.decideHitStand(Constant.DEALER_HIT_STAND_BOUNDARY);
+            if (!dealerHitStand) {
+                printDecisionOutput.accept(dealerHitStand);
+                break;
+            }
+            dealer.addCards(deck.getCardsWithQuantityFunc, 1);
+            printDecisionOutput.accept(dealerHitStand);
+        }
+    }
 }
