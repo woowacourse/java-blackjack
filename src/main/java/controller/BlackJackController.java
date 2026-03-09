@@ -48,7 +48,7 @@ public class BlackJackController {
     }
 
     private void playPlayerTurn(Deck deck, Player player) {
-        while (!player.getHand().isBust()) {
+        while (!player.getHand().isBust() && !player.getHand().isBlackJack()) {
             if (!inputView.readPlayerToHitUntilValid(player.getName())) break;
 
             player.hit(deck.drawCard());
