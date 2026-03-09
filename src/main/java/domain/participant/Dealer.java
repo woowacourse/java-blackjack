@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.GameScore;
 import domain.card.Card;
 import java.util.List;
 
@@ -21,6 +22,9 @@ public class Dealer extends Participant {
     }
 
     public boolean isStand() {
-        return getScore() >= STAND_SCORE;
+        GameScore standScore = new GameScore(STAND_SCORE);
+
+        return getScore().isBiggerThan(standScore)
+                || getScore().isSame(standScore);
     }
 }

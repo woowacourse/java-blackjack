@@ -1,7 +1,6 @@
 package domain.participant;
 
-import static domain.GameResult.BLACKJACK_SCORE;
-
+import domain.GameScore;
 import domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,30 +23,28 @@ public class Hand {
         return List.copyOf(cards);
     }
 
-    public int calculate() {
-        int score = calculateCardScore();
-        int aCount = calculateAceCount();
+    public GameScore calculateTotalScore() {
+        GameScore score = calculateCardScore();
+        int aceCount = calculateAceCount();
 
-        while (isBustWithAce(aCount, score)) {
-            score -= ACE_SCORE_DIFFERENCE;
-            aCount--;
+        while (score.isBustWithAce(aceCount)) {
+            score = score.minus(ACE_SCORE_DIFFERENCE);
+            aceCount--;
         }
+
         return score;
     }
 
-    private int calculateCardScore() {
-        return cards.stream()
+    private GameScore calculateCardScore() {
+        int sum = cards.stream()
                 .mapToInt(Card::getCardValue)
                 .sum();
+        return new GameScore(sum);
     }
 
     private int calculateAceCount() {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
-    }
-
-    private boolean isBustWithAce(int aCount, int score) {
-        return aCount > 0 && score > BLACKJACK_SCORE;
     }
 }

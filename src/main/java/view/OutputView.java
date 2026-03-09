@@ -52,7 +52,7 @@ public final class OutputView {
     public static void showResult(Participants participants) {
         System.out.println();
         participants.getParticipants()
-                .forEach(participant -> showCardAndScore(participant, participant.getScore()));
+                .forEach(participant -> showCardAndScore(participant, participant.getScore().getScore()));
     }
 
     private static void showCardAndScore(Participant participant, int score) {
@@ -61,21 +61,19 @@ public final class OutputView {
 
     public static void showGameResult(GameStatistics statistics) {
         System.out.println(NEW_LINE + "## 최종 승패");
-        showDealerResult(statistics);
+        showDealerResult(statistics.getDealerResult());
         System.out.println();
-
-        showPlayerResult(statistics);
+        showPlayerResult(statistics.getPlayerResult());
     }
 
-    private static void showDealerResult(GameStatistics statistics) {
+    private static void showDealerResult(Map<GameResult, Integer> dealerResult) {
         System.out.print("딜러: ");
-        for (Map.Entry<GameResult, Integer> entry : statistics.getDealerResult().entrySet()) {
+        for (Map.Entry<GameResult, Integer> entry : dealerResult.entrySet()) {
             System.out.print(entry.getValue() + entry.getKey().getDescription() + " ");
         }
     }
 
-    private static void showPlayerResult(GameStatistics statistics) {
-        Map<Participant, GameResult> playerResult = statistics.getPlayerResult();
+    private static void showPlayerResult(Map<Participant, GameResult> playerResult) {
         for (Map.Entry<Participant, GameResult> entry : playerResult.entrySet()) {
             System.out.println(entry.getKey().getName() + ": " + entry.getValue().getDescription());
         }

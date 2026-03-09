@@ -35,10 +35,6 @@ public class GameStatistics {
         return playerResult;
     }
 
-    public GameResult findGameResultBy(Participant player) {
-        return playerResult.get(player);
-    }
-
     public Map<GameResult, Integer> getDealerResult() {
         return dealerResult;
     }

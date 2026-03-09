@@ -1,13 +1,13 @@
 package domain;
 
+import static domain.GameScore.BLACKJACK_SCORE;
+
 public enum GameResult {
 
     WIN("승"),
     LOSE("패"),
     DRAW("무"),
     ;
-
-    public static final int BLACKJACK_SCORE = 21;
 
     private String description;
 
@@ -19,13 +19,13 @@ public enum GameResult {
         return description;
     }
 
-    public static GameResult judge(int standardScore, int myScore) {
-        if ((standardScore < myScore && myScore <= BLACKJACK_SCORE)
-                || (standardScore > BLACKJACK_SCORE && myScore <= BLACKJACK_SCORE)) {
+    public static GameResult judge(GameScore standardScore, GameScore myScore) {
+        if ((myScore.isBiggerThan(standardScore) && myScore.isSameOrSmallerThan(BLACKJACK_SCORE))
+                || (standardScore.isBiggerThan(BLACKJACK_SCORE) && myScore.isSameOrSmallerThan(BLACKJACK_SCORE))) {
             return WIN;
         }
-        if (standardScore > BLACKJACK_SCORE
-                || (myScore <= BLACKJACK_SCORE && standardScore == myScore)) {
+        if (standardScore.isBiggerThan(BLACKJACK_SCORE)
+                || (myScore.isSameOrSmallerThan(BLACKJACK_SCORE)) && standardScore.isSame(myScore)) {
             return DRAW;
         }
         return LOSE;

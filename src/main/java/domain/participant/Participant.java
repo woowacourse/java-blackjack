@@ -1,7 +1,6 @@
 package domain.participant;
 
-import static domain.GameResult.BLACKJACK_SCORE;
-
+import domain.GameScore;
 import domain.card.Card;
 import domain.card.Deck;
 import java.util.List;
@@ -20,7 +19,8 @@ public abstract class Participant {
     public abstract List<String> getInitialCards();
 
     public boolean isBust() {
-        return getScore() > BLACKJACK_SCORE;
+        GameScore gameScore = hand.calculateTotalScore();
+        return gameScore.isBust();
     }
 
     public void playTurn(Deck deck) {
@@ -42,8 +42,8 @@ public abstract class Participant {
         return hand.getCards();
     }
 
-    public int getScore() {
-        return hand.calculate();
+    public GameScore getScore() {
+        return hand.calculateTotalScore();
     }
 
     @Override
