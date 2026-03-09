@@ -38,8 +38,11 @@ public class OutputView {
         System.out.println(playerName + "카드: " + joinedCards);
     }
 
-    public void printDealerHit() {
+    public void printEmptyLine() {
         System.out.println();
+    }
+
+    public void printDealerHit() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
         System.out.println();
     }

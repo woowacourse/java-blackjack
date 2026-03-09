@@ -73,6 +73,8 @@ public class BlackjackController {
         for (Player player : players) {
             playerHit(player, deck);
         }
+        outputView.printEmptyLine();
+
         dealerHit(dealer, deck);
     }
 
@@ -84,7 +86,7 @@ public class BlackjackController {
     }
 
     private void dealerHit(Dealer dealer, Deck deck) {
-        if (dealer.shouldDraw()) {
+        while (dealer.shouldDraw()) {
             dealer.addCard(deck.draw());
             outputView.printDealerHit();
         }
