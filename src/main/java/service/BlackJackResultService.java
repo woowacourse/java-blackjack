@@ -31,10 +31,10 @@ public class BlackJackResultService {
     }
 
     private WinningStatus calculateWinningStatus(Dealer dealer, Player player) {
-        if (player.isBurst()) {
+        if (player.isBust()) {
             return WinningStatus.LOSE;
         }
-        if (dealer.isBurst()) {
+        if (dealer.isBust()) {
             return WinningStatus.WIN;
         }
         if (dealer.getHand().getSum() > player.getHand().getSum()) {

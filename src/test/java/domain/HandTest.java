@@ -58,7 +58,7 @@ class HandTest {
     }
 
     @Test
-    void 손패가_Burst인_경우() {
+    void 손패가_Bust인_경우() {
         //given
         Hand hand = new Hand();
         hand.addCard(new Card(Suit.SPADES, Rank.KING));
@@ -66,11 +66,11 @@ class HandTest {
         hand.addCard(new Card(Suit.SPADES, Rank.TWO));
 
         // when, then
-        assertTrue(hand.isBurst());
+        assertTrue(hand.isBust());
     }
 
     @Test
-    void 손패가_Burst가_아닌_경우() {
+    void 손패가_Bust가_아닌_경우() {
         //given
         Hand hand = new Hand();
         hand.addCard(new Card(Suit.SPADES, Rank.KING));
@@ -78,6 +78,6 @@ class HandTest {
         hand.addCard(new Card(Suit.SPADES, Rank.NINE));
 
         // when, then
-        assertFalse(hand.isBurst());
+        assertFalse(hand.isBust());
     }
 }

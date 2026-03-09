@@ -9,8 +9,8 @@ public class Dealer {
         hand = new Hand();
     }
 
-    public boolean isBurst() {
-        return hand.isBurst();
+    public boolean isBust() {
+        return hand.isBust();
     }
 
     public void draw(Card card) {

@@ -15,8 +15,8 @@ public class Player {
         hand.addCard(card);
     }
 
-    public boolean isBurst() {
-        return hand.isBurst();
+    public boolean isBust() {
+        return hand.isBust();
     }
 
     public String getName() {

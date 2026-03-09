@@ -23,7 +23,7 @@ class PlayerTest {
     }
 
     @Test
-    void 플레이어가_Burst인_경우() {
+    void 플레이어가_Bust인_경우() {
         // given
         Player player = new Player("봉구스");
 
@@ -33,6 +33,6 @@ class PlayerTest {
         player.draw(new Card(Suit.CLUBS, Rank.JACK));
 
         // then
-        assertTrue(player.isBurst());
+        assertTrue(player.isBust());
     }
 }

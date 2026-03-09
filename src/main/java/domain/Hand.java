@@ -37,7 +37,7 @@ public class Hand {
                 .count();
     }
 
-    public boolean isBurst() {
+    public boolean isBust() {
         return getSum() > 21;
     }
 

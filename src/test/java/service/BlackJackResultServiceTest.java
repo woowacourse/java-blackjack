@@ -59,7 +59,7 @@ class BlackJackResultServiceTest {
     }
 
     @Test
-    void 플레이어가_Burst로_패배하는_경우() {
+    void 플레이어가_Bust로_패배하는_경우() {
         // given
         dealer.draw(new Card(Suit.HEARTS, Rank.JACK));
         players.get(0).draw(new Card(Suit.CLUBS, Rank.KING));
@@ -75,7 +75,7 @@ class BlackJackResultServiceTest {
 
 
     @Test
-    void 딜러가_Burst로_패배하는_경우() {
+    void 딜러가_Bust로_패배하는_경우() {
         // given
         dealer.draw(new Card(Suit.HEARTS, Rank.JACK));
         dealer.draw(new Card(Suit.HEARTS, Rank.KING));

@@ -23,7 +23,7 @@ class DealerTest {
     }
 
     @Test
-    void 딜러가_Burst인_경우() {
+    void 딜러가_Bust인_경우() {
         // given
         Dealer dealer = new Dealer();
 
@@ -33,6 +33,6 @@ class DealerTest {
         dealer.draw(new Card(Suit.CLUBS, Rank.JACK));
 
         // then
-        assertTrue(dealer.isBurst());
+        assertTrue(dealer.isBust());
     }
 }
