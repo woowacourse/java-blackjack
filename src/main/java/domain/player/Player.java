@@ -5,6 +5,7 @@ import domain.deck.Deck;
 
 public abstract class Player {
     protected static final int BLACKJACK_MAX_LIMIT = 21;
+
     protected final HandCard handCard;
 
     protected Player() {
