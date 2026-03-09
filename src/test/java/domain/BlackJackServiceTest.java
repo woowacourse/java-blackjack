@@ -1,7 +1,10 @@
 package domain;
 
 import domain.model.*;
-import domain.service.*;
+import domain.service.BlackJackService;
+import domain.service.CardDistributor;
+import domain.service.CardFactory;
+import domain.service.JudgementService;
 import org.junit.jupiter.api.Test;
 import repository.CardRepository;
 import repository.DealerRepository;
@@ -17,28 +20,23 @@ public class BlackJackServiceTest {
 
     private final PlayerRepository playerRepository = new PlayerRepository();
     private final DealerRepository dealerRepository = new DealerRepository();
-    private final PersonService personService = new PersonService(
-            playerRepository,
-            dealerRepository
-    );
     private final CardRepository cardRepository = new CardRepository();
-    private final CardNumberGenerator cardNumberGenerator = new CardNumberGenerator(
-            new RandomRankNumberGenerator(),
-            new RandomShapeNumberGenerator()
-    );
     private final CardFactory cardFactory = new CardFactory(
             cardRepository,
-            cardNumberGenerator
+            new RandomShapeNumberGenerator(),
+            new RandomRankNumberGenerator()
     );
     private final CardDistributor cardDistributor = new CardDistributor(
-            personService,
+            dealerRepository,
             cardFactory
     );
     private final JudgementService judgementService = new JudgementService(
-            personService
+            playerRepository,
+            dealerRepository
     );
     private final BlackJackService blackJackService = new BlackJackService(
-            personService,
+            playerRepository,
+            dealerRepository,
             cardDistributor,
             judgementService
     );

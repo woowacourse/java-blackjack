@@ -6,7 +6,6 @@ import dto.*;
 import repository.DealerRepository;
 import repository.PlayerRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static constant.BlackJackConstant.DEALER_APPEND_CRITERIA;
@@ -56,7 +55,8 @@ public class BlackJackService {
 
     public boolean isDealerCanAppend() {
         Dealer dealer = dealerRepository.getDealer();
-        return dealer.getDeckSum() <= DEALER_APPEND_CRITERIA;
+        dealer.calculateFinalSum();
+        return dealer.getFinalSum() <= DEALER_APPEND_CRITERIA;
     }
 
     public void additionalDealerCard() {

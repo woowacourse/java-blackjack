@@ -51,7 +51,6 @@ public class BlackJackController {
 
     public void getAdditionalDealerCard() {
         boolean dealerCanAppend = blackJackService.isDealerCanAppend();
-
         if (dealerCanAppend) {
             blackJackService.additionalDealerCard();
             outputView.outputDealerAdditionCardMessage();
