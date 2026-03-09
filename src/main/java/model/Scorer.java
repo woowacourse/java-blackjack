@@ -24,9 +24,7 @@ public class Scorer {
     private static boolean hasAceCard(PlayerResult playerResult) {
         List<Card> cards = playerResult.deck();
 
-        return !cards.stream()
-                .filter((card) -> card.cardNumber().equals(CardNumber.ACE))
-                .toList()
-                .isEmpty();
+        return cards.stream()
+                .anyMatch(card -> card.cardNumber().equals(CardNumber.ACE));
     }
 }
