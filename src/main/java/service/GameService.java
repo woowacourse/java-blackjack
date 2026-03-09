@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Map;
 
 public class GameService {
+    private static final int CARDS_PER_PLAYER_AT_START = 2;
+    private static final int MAX_SCORE = 21;
+    private static final int DEALER_STAY_THRESHOLD = 17;
     private PlayerGroups playerGroups;
     private final CardDeck cardDeck = new CardDeck();
 
@@ -28,7 +31,7 @@ public class GameService {
     }
 
     public void initAllPlayerCard() {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < CARDS_PER_PLAYER_AT_START; i++) {
             giveAllPlayerCard();
         }
     }
@@ -67,7 +70,7 @@ public class GameService {
     }
 
     public boolean isCurrentPlayerBust() {
-        if (playerGroups.getCurrentPlayerCardSum() > 21){
+        if (playerGroups.getCurrentPlayerCardSum() > MAX_SCORE) {
             return true;
         }
 
@@ -81,7 +84,7 @@ public class GameService {
 
     // 딜러 히트
     public boolean isDealerHit(){
-        if (playerGroups.getDealer().getCardSum() < 17) {
+        if (playerGroups.getDealer().getCardSum() < DEALER_STAY_THRESHOLD) {
             playerGroups.getDealer().addCard(cardDeck.draw());
             return true;
         }
