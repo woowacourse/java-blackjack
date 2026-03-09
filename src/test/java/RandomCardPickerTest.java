@@ -5,6 +5,9 @@ import blackjack.domain.Card;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+
+import blackjack.domain.Rank;
+import blackjack.domain.Shape;
 import org.junit.jupiter.api.Test;
 import blackjack.service.RandomCardPicker;
 
@@ -17,7 +20,7 @@ public class RandomCardPickerTest {
         when(mockRandom.nextInt(13)).thenReturn(0); // "2"
         when(mockRandom.nextInt(4)).thenReturn(0); // "하트"
 
-        assertThat(randomCardPicker.drawCard()).isEqualTo(new Card("2", "하트"));
+        assertThat(randomCardPicker.drawCard()).isEqualTo(new Card(Rank.TWO, Shape.HEART));
     }
 
     @Test

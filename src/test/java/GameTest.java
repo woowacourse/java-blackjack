@@ -2,11 +2,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import blackjack.domain.ScoreCompareResult;
-import blackjack.domain.Card;
-import blackjack.domain.Dealer;
-import blackjack.domain.GameResult;
-import blackjack.domain.Player;
+import blackjack.domain.*;
 import blackjack.service.CardDistributor;
 import blackjack.service.Game;
 import java.util.List;
@@ -38,11 +34,11 @@ public class GameTest {
         Player player = new Player("player1");
         Dealer dealer = new Dealer();
 
-        player.receiveOneCard(new Card("A", "하트"));
-        player.receiveOneCard(new Card("Q", "스페이드"));
+        player.receiveOneCard(new Card(Rank.ACE, Shape.HEART));
+        player.receiveOneCard(new Card(Rank.QUEEN, Shape.SPADE));
 
-        dealer.receiveOneCard(new Card("10", "하트"));
-        dealer.receiveOneCard(new Card("7", "스페이드"));
+        dealer.receiveOneCard(new Card(Rank.TEN, Shape.HEART));
+        dealer.receiveOneCard(new Card(Rank.SEVEN, Shape.SPADE));
 
         Game game = new Game(null);
         assertThat(game.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.PLAYER_WIN);
@@ -53,11 +49,11 @@ public class GameTest {
         Player player = new Player("player1");
         Dealer dealer = new Dealer();
 
-        player.receiveOneCard(new Card("A", "하트"));
-        player.receiveOneCard(new Card("4", "스페이드"));
+        player.receiveOneCard(new Card(Rank.ACE, Shape.HEART));
+        player.receiveOneCard(new Card(Rank.FOUR, Shape.SPADE));
 
-        dealer.receiveOneCard(new Card("10", "하트"));
-        dealer.receiveOneCard(new Card("9", "스페이드"));
+        dealer.receiveOneCard(new Card(Rank.TEN, Shape.HEART));
+        dealer.receiveOneCard(new Card(Rank.NINE, Shape.SPADE));
 
         Game game = new Game(null);
         assertThat(game.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.DEALER_WIN);
@@ -68,11 +64,11 @@ public class GameTest {
         Player player = new Player("player1");
         Dealer dealer = new Dealer();
 
-        player.receiveOneCard(new Card("A", "하트"));
-        player.receiveOneCard(new Card("Q", "스페이드"));
+        player.receiveOneCard(new Card(Rank.ACE, Shape.HEART));
+        player.receiveOneCard(new Card(Rank.QUEEN, Shape.SPADE));
 
-        dealer.receiveOneCard(new Card("10", "하트"));
-        dealer.receiveOneCard(new Card("A", "스페이드"));
+        dealer.receiveOneCard(new Card(Rank.TEN, Shape.HEART));
+        dealer.receiveOneCard(new Card(Rank.ACE, Shape.SPADE));
 
         Game game = new Game(null);
         assertThat(game.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.PUSH);
@@ -106,7 +102,10 @@ public class GameTest {
         Player player = new Player(name);
         for (String card : cards) {
             String[] parts = card.split(":");
-            player.receiveOneCard(new Card(parts[0], parts[1]));
+            Rank rank = Rank.from(parts[0]);
+            Shape shape = Shape.from(parts[1]);
+
+            player.receiveOneCard(new Card(rank, shape));
         }
         return player;
     }
@@ -115,7 +114,10 @@ public class GameTest {
         Dealer dealer = new Dealer();
         for (String card : cards) {
             String[] parts = card.split(":");
-            dealer.receiveOneCard(new Card(parts[0], parts[1]));
+            Rank rank = Rank.from(parts[0]);
+            Shape shape = Shape.from(parts[1]);
+
+            dealer.receiveOneCard(new Card(rank, shape));
         }
         return dealer;
     }

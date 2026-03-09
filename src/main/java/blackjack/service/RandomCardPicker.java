@@ -1,6 +1,9 @@
 package blackjack.service;
 
 import blackjack.domain.Card;
+import blackjack.domain.Rank;
+import blackjack.domain.Shape;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -20,7 +23,7 @@ public class RandomCardPicker {
     }
 
     private List<Card> initializeNotDrawnCards() {
-        List<String> ranks = List.of("2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A");
+        /*List<String> ranks = List.of("2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A");
         List<String> shapes = List.of("하트", "스페이드", "다이아몬드", "클로버");
 
         List<Card> notDrawnCards = new ArrayList<>();
@@ -29,7 +32,15 @@ public class RandomCardPicker {
                 notDrawnCards.add(new Card(rank, shape));
             }
         }
-        return notDrawnCards;
+        return notDrawnCards;*/
+
+        List<Card> cards = new ArrayList<>();
+        for (Rank rank : Rank.values()) {
+            for (Shape shape : Shape.values()) {
+                cards.add(new Card(rank, shape));
+            }
+        }
+        return cards;
     }
 
 

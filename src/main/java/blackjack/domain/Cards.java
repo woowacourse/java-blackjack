@@ -18,9 +18,10 @@ public class Cards {
     public int sumScore() {
         int totalScore = 0;
         for (Card card : cards) {
-            totalScore += card.translateToScore();
+            totalScore += card.getScore();
         }
-        int aceCount = countAces();
+        int aceCount = (int) cards.stream().filter(Card::isAce).count();
+
         while (totalScore > 21 && aceCount > 0) {
             totalScore -= 10;
             aceCount--;
@@ -35,19 +36,9 @@ public class Cards {
     public List<String> getCardNames() {
         List<String> cardNames = new ArrayList<>();
         for (Card card : cards) {
-            String cardName = card.getRank() + card.getShape();
+            String cardName = card.getCardName();
             cardNames.add(cardName);
         }
         return cardNames;
-    }
-
-    private int countAces() {
-        int count = 0;
-        for (Card card : cards) {
-            if (card.getRank().equals("A")) {
-                count++;
-            }
-        }
-        return count;
     }
 }
