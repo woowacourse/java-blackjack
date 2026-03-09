@@ -7,6 +7,9 @@ import java.util.Map;
 
 public record FinalResultDto(List<String> finalResults) {
 
+    public static final String DEALER_COUNT_FORMAT = "딜러: %d승 %d패";
+    public static final String PLAYER_RESULT_FORMAT = "%s: %s";
+
     public static FinalResultDto from(Map<String, WinningStatus> playerResults) {
         long dealerWinCount = playerResults.values().stream()
                 .filter(v -> v == WinningStatus.LOSE)
@@ -17,12 +20,18 @@ public record FinalResultDto(List<String> finalResults) {
                 .count();
 
         List<String> finalResults = new ArrayList<>();
-        finalResults.add(String.format("딜러: %d승 %d패", dealerWinCount, dealerLoseCount));
-        playerResults.forEach((key, value) -> {
-            finalResults.add(key + ": " + value.getDescription());
-        });
+        addDealerCount(finalResults, dealerWinCount, dealerLoseCount);
+        addPlayerResults(playerResults, finalResults);
 
         return new FinalResultDto(finalResults);
     }
 
+    private static void addPlayerResults(Map<String, WinningStatus> playerResults, List<String> finalResults) {
+        playerResults.forEach((key, value) ->
+                finalResults.add(String.format(PLAYER_RESULT_FORMAT, key, value.getDescription())));
+    }
+
+    private static void addDealerCount(List<String> finalResults, long dealerWinCount, long dealerLoseCount) {
+        finalResults.add(String.format(DEALER_COUNT_FORMAT, dealerWinCount, dealerLoseCount));
+    }
 }
