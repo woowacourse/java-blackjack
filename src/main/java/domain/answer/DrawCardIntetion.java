@@ -10,12 +10,8 @@ public enum DrawCardIntetion {
 
     private final String answer;
 
-    private DrawCardIntetion(String ansewr) {
+    DrawCardIntetion(String ansewr) {
         this.answer = ansewr;
-    }
-
-    public String getAnswer() {
-        return answer;
     }
 
     public static DrawCardIntetion from(String value) {

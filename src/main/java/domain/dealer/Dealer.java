@@ -12,8 +12,8 @@ public class Dealer {
 
     private static final int ADDITIONAL_DRAW_CONDITION = 16;
 
-    private CardDeck cardDeck;
-    private CardBundle cardBundle;
+    private final CardDeck cardDeck;
+    private final CardBundle cardBundle;
 
     private Dealer(CardDeck cardDeck) {
         this.cardBundle = CardBundle.empty();

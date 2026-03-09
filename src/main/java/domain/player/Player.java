@@ -8,8 +8,8 @@ import java.util.List;
 
 public class Player {
 
-    private PlayerName name;
-    private CardBundle cardBundle;
+    private final PlayerName name;
+    private final CardBundle cardBundle;
 
     private Player(PlayerName name) {
         this.cardBundle = CardBundle.empty();
@@ -22,10 +22,6 @@ public class Player {
 
     public boolean hasCard(Card targetCard) {
         return cardBundle.checkExist(targetCard);
-    }
-
-    public void setUpCardBundle(CardBundle cardBundle) {
-        this.cardBundle = cardBundle;
     }
 
     public CardBundle addCardBundle(CardBundle newCardBundle) {
