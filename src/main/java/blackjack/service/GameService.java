@@ -4,6 +4,7 @@ import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.User;
 import java.util.List;
+import java.util.Map;
 
 public class GameService {
 
@@ -40,6 +41,16 @@ public class GameService {
         }
 
         return user.calculateCardsValue() < dealer.calculateCardsValue();
+    }
+
+    public int applyGameResult(User user, Dealer dealer, Map<String, Boolean> result) {
+        boolean isDealerWinning = isDealerWinning(user, dealer);
+        result.put(user.getName(), !isDealerWinning);
+
+        if (isDealerWinning) {
+            return 1;
+        }
+        return 0;
     }
 
 }
