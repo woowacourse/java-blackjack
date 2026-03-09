@@ -24,17 +24,24 @@ public class Player extends Participant {
         if (stopDrawing) {
             return false;
         }
-        return hand.getResultScore(BUSTED_SCORE) < BUSTED_SCORE;
+        return hand.getDrawableScore(BUSTED_SCORE) < BUSTED_SCORE;
     }
 
     public void stop() {
         stopDrawing = true;
     }
 
-    public PlayerResult getWinningResult(int dealerScore) {
-        int playerScore = getTotalScoreForResult();
-        GameResult gameResult = getGameResult(dealerScore, playerScore);
-        PlayerResult playerResult = new PlayerResult(player.getNickname(), gameResult);
-        return null;
+    public PlayerResult determinePlayerResult(int dealerScore) {
+        int playerScore = getResultScore();
+        GameResult gameResult = resolveGameResult(playerScore, dealerScore);
+        return new PlayerResult(nickname, gameResult);
     }
+
+    private GameResult resolveGameResult(int playerScore, int dealerScore) {
+        if (playerScore < dealerScore) {
+            return GameResult.LOSE;
+        }
+        return GameResult.WIN;
+    }
+
 }

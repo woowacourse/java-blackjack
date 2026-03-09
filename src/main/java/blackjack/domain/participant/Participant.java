@@ -17,7 +17,7 @@ public abstract class Participant {
 
     public String getResultSnapshot() {
         String info = getInfoSnapshot();
-        int score = getTotalScore();
+        int score = getResultScore();
         return String.format("%s - 결과: %d", info, score);
     }
 
@@ -43,10 +43,10 @@ public abstract class Participant {
     }
 
     public int getTotalScore() {
-        return hand.getTotalScore();
+        return hand.calculateScoreSum();
     }
     
-    public int getTotalScoreForResult() {
-        return hand.getResultScore(BUSTED_SCORE);
+    public int getResultScore() {
+        return hand.getTotalScore(BUSTED_SCORE);
     }
 }

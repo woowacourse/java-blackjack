@@ -16,6 +16,6 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isDrawable() {
-        return hand.getResultScore(BUSTED_SCORE) <= DEALER_SCORE;
+        return hand.getTotalScore(BUSTED_SCORE) <= DEALER_SCORE;
     }
 }

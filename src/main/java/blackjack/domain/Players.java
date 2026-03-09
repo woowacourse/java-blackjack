@@ -2,8 +2,8 @@ package blackjack.domain;
 
 import blackjack.domain.participant.Player;
 import blackjack.dto.PlayerResult;
+import blackjack.dto.WinningResult;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -71,26 +71,6 @@ public class Players {
                 .map(Player::getInfoSnapshot)
                 .collect(Collectors.joining("\n"));
     }
-    
-    public List<PlayerResult> getWinningResults(int dealerScore) {
-        List<PlayerResult> winningResults = new ArrayList<>();
-        
-        for (Player player : players) {
-            winningResults.add(player.getWinningResult(dealerScore));
-        }
-        
-        return winningResults;
-    }
-    
-    private GameResult getGameResult(int dealerScore, int playerScore) {
-        if (dealerScore < playerScore) {
-            return GameResult.WIN;
-        }
-//        if (dealerScore == playerScore) {
-//            return GameResult.DRAW;
-//        }
-        return GameResult.LOSE;
-    }
 
     public String getAllPlayerNicknames() {
         return players
@@ -104,5 +84,21 @@ public class Players {
                 .stream()
                 .map(Player::getResultSnapshot)
                 .collect(Collectors.joining("\n"));
+    }
+
+    public WinningResult getWinningResult(int dealerScore) {
+        List<PlayerResult> playerResult = players
+                .stream()
+                .map(player -> player.determinePlayerResult(dealerScore))
+                .toList();
+        return getWinningResultWithDealerWinning(playerResult);
+    }
+
+    private WinningResult getWinningResultWithDealerWinning(List<PlayerResult> playerResult) {
+        int dealerLoss = (int) playerResult.stream()
+                .filter(result -> result.gameResult() == GameResult.WIN)
+                .count();
+        int dealerWin = playerResult.size() - dealerLoss;
+        return new WinningResult(dealerLoss, dealerWin, playerResult);
     }
 }

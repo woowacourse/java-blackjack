@@ -1,13 +1,10 @@
 package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.ParticipantResult;
 import blackjack.domain.participant.Player;
 import blackjack.dto.PlayerResult;
 import blackjack.dto.WinningResult;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Participants {
     
@@ -43,23 +40,13 @@ public class Participants {
     }
 
     public WinningResult getWinningResult() {
-        int dealerScore = dealer.getTotalScoreForResult();
+        int dealerScore = dealer.getResultScore();
         return getWinningResult(dealerScore);
     }
     
     public WinningResult getWinningResult(int dealerScore) {
-        List<PlayerResult> playerResults = getPlayerWinningResult(dealerScore);
-        int dealerLoss = (int) playerResults.stream()
-                .filter(result -> result.gameResult() == GameResult.WIN)
-                .count();
-        int dealerWin = playerResults.size() - dealerLoss;
-        return new WinningResult(dealerWin, dealerLoss, playerResults);
+        return players.getWinningResult(dealerScore);
     }
-    
-    private List<PlayerResult> getPlayerWinningResult(int dealerScore) {
-        return players.getWinningResults(dealerScore);
-    }
-    
     public String findDrawablePlayer() {
         return players.findDrawablePlayerNickname();
     }

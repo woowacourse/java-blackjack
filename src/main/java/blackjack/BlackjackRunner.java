@@ -54,6 +54,7 @@ public class BlackjackRunner {
         outputView.printTotalResult(participants.getTotalResults());
         
         WinningResult winningResults = participants.getWinningResult();
+
         outputView.printWinningResults(winningResults);
     }
     

@@ -24,24 +24,47 @@ public class Hand {
         return getCardSnapshot();
     }
 
-    public int getTotalScore() {
+    public int getDrawableScore(int threshold) {
+        boolean busted = isBusted(threshold);
+        int scoreSum = calculateScoreSum();
+        if (busted) {
+            int aceCount = countAce();
+            return calculateWithAce(threshold, scoreSum, aceCount);
+        }
+        return scoreSum;
+    }
+
+    public int calculateScoreSum() {
         return cards.getCards()
                 .stream()
                 .mapToInt(Card::getScore)
                 .sum();
     }
 
-    public int getResultScore(int bustedScore) {
+    public int getTotalScore(int bustedScore) {
         return calculateResultScore(bustedScore);
     }
 
-    public int calculateResultScore(int threshold) {
-        int totalScore = getTotalScore();
-        boolean busted = isBusted(threshold, totalScore);
+    private int calculateResultScore(int threshold) {
+        boolean busted = isBusted(threshold);
         if (busted) {
-            return calculateWithAce(totalScore, countAce(), threshold);
+            return calculateBustedScore(threshold);
         }
-        return totalScore;
+        return calculateScoreSum();
+    }
+
+    public boolean isBusted(int threshold) {
+        int scoreSum = calculateScoreSum();
+        return threshold <= scoreSum;
+    }
+
+    private int calculateBustedScore(int threshold) {
+        int aceCount = countAce();
+        if (aceCount > 0) {
+            int scoreSum = calculateScoreSum();
+            return calculateWithAce(threshold, scoreSum, aceCount);
+        }
+        return 0;
     }
 
     public int countAce() {
@@ -50,19 +73,15 @@ public class Hand {
                 .filter(Card::isAce)
                 .count();
     }
-    
-    public boolean isBusted(int threshold, int scoreSum) {
-        return scoreSum > threshold;
-    }
 
-    private int calculateWithAce(int scoreSum, int remainAce, int threshold) {
-        if (remainAce == 0) {
+    private int calculateWithAce(int threshold, int scoreSum, int aceCount) {
+        if (aceCount == 0) {
             return scoreSum;
         }
         int calculatedScore = scoreSum - 10;
         if (calculatedScore <= threshold) {
             return calculatedScore;
         }
-        return calculateWithAce(calculatedScore, remainAce - 1, threshold);
+        return calculateWithAce(calculatedScore, aceCount - 1, threshold);
     }
 }

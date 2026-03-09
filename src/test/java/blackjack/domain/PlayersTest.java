@@ -67,7 +67,7 @@ class PlayersTest {
     
     @DisplayName("플레이어가 딜러보다 점수가 높으면 승리로 기록되어야 한다.")
     @Test
-    void getWinningResultsPlayerWins() {
+    void determinePlayerResultsPlayerWins() {
         Players players = Players.makePlayers(List.of("pobi"));
         PlayingCards playerCards = PlayingCards.from(List.of(
                 new Card(Rank.TEN, Suit.SPADE),
@@ -85,7 +85,7 @@ class PlayersTest {
     
     @DisplayName("플레이어가 딜러보다 점수가 낮으면 패배로 기록되어야 한다.")
     @Test
-    void getWinningResultsPlayerLoses() {
+    void determinePlayerResultsPlayerLoses() {
         Players players = Players.makePlayers(List.of("pobi"));
         PlayingCards playerCards = PlayingCards.from(List.of(
                 new Card(Rank.TEN, Suit.SPADE),
