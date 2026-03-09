@@ -49,8 +49,10 @@ public class Hand {
     }
 
     private int handleAce(int sum, int aceCount) {
-        while (sum > BLACKJACK_SCORE && aceCount > 0) {
-            aceCount--;
+        for (int i = 0; i < aceCount; i++) {
+            if (sum <= BLACKJACK_SCORE) {
+                break;
+            }
             sum -= ACE_ADJUSTMENT_VALUE;
         }
         return sum;
