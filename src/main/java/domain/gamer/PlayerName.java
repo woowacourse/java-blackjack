@@ -1,6 +1,5 @@
 package domain.gamer;
 
-import domain.common.exception.BlackjackGameException;
 import domain.gamer.exception.ErrorMessage;
 import domain.gamer.exception.PlayerException;
 
@@ -8,15 +7,14 @@ public record PlayerName(
         String name
 ) {
 
-    public static PlayerName from(String name) {
+    public PlayerName{
         validateNameIsBlank(name);
         validateNameLength(name);
-        return new PlayerName(name);
     }
 
     private static void validateNameIsBlank(String name) {
         if (name.isBlank()) {
-            throw new BlackjackGameException(ErrorMessage.NAME_BLANK_ERROR);
+            throw new PlayerException(ErrorMessage.NAME_BLANK_ERROR);
         }
     }
 
