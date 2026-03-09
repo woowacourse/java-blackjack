@@ -4,6 +4,8 @@ import blackjack.domain.Dealer;
 import blackjack.domain.GameResult;
 import blackjack.domain.Player;
 import blackjack.domain.ScoreCompareResult;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -78,5 +80,38 @@ public class Game {
             return ScoreCompareResult.DEALER_WIN;
         }
         return ScoreCompareResult.PUSH;
+    }
+
+    public void distributeInitialCards(List<Player> players, Dealer dealer) {
+        for (Player player : players) {
+            cardDistributor.distributeTwoCardsToPlayer(player);
+        }
+        cardDistributor.distributeTwoCardsToDealer(dealer);
+    }
+
+    public void processTurn(List<Player> players) {
+        for (Player player : players) {
+            while (true) {
+                String hitOrStand = InputView.askHitOrStand(player.getName());
+                if (!isHit(hitOrStand)) {
+                    break;
+                }
+                cardDistributor.distributeCardToPlayer(player);
+                OutputView.printDrawnCards(player.getName(), player.getCardNames());
+                if (player.isBust()) {
+                    break;
+                }
+            }
+        }
+    }
+
+    private boolean isHit(String hitOrStand) {
+        if (hitOrStand.equals("y")) {
+            return true;
+        }
+        if (hitOrStand.equals("n")) {
+            return false;
+        }
+        throw new IllegalArgumentException("잘못된 입력입니다. y 또는 n을 입력해주세요");
     }
 }

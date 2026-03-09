@@ -16,11 +16,9 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackjackController {
-    private final CardDistributor cardDistributor;
     private final Game game;
 
     public BlackjackController(CardDistributor cardDistributor) {
-        this.cardDistributor = cardDistributor;
         this.game = new Game(cardDistributor);
     }
 
@@ -31,7 +29,7 @@ public class BlackjackController {
 
         setupInitialHand(players, dealer, playerNames); // 2장씩 카드 분배
         
-        processTurn(players); // 플레이어 hit or stand
+        game.processTurn(players); // 플레이어 hit or stand
         playDealerTurn(dealer);
 
         calculateFinalScore(players, dealer);
@@ -39,7 +37,7 @@ public class BlackjackController {
     }
 
     private void setupInitialHand(List<Player> players, Dealer dealer, List<String> playerNames) {
-        distributeInitialCards(players, dealer);
+        game.distributeInitialCards(players, dealer);
         OutputView.printInitialCardsDistribution(playerNames);
         printInitialCards(players, dealer);
     }
@@ -65,22 +63,6 @@ public class BlackjackController {
     private void playDealerTurn(Dealer dealer) {
         game.dealerDrawsCardsUntilDone(dealer);
         OutputView.printDealerCardDrawnResult(dealer.getAdditionalDrawnCardCount());
-    }
-
-    private void processTurn(List<Player> players) {
-        for (Player player : players) {
-            while (true) {
-                String hitOrStand = InputView.askHitOrStand(player.getName());
-                if (!isHit(hitOrStand)) {
-                    break;
-                }
-                cardDistributor.distributeCardToPlayer(player);
-                OutputView.printDrawnCards(player.getName(), player.getCardNames());
-                if (player.isBust()) {
-                    break;
-                }
-            }
-        }
     }
 
     private static void printInitialCards(List<Player> players, Dealer dealer) {
@@ -111,23 +93,6 @@ public class BlackjackController {
         int dealerScore = dealer.calculateTotalScore();
 
         OutputView.printFinalCardScores(playerCards, dealerCards, playerScores, dealerScore);
-    }
-
-    private void distributeInitialCards(List<Player> players, Dealer dealer) {
-        for (Player player : players) {
-            cardDistributor.distributeTwoCardsToPlayer(player);
-        }
-        cardDistributor.distributeTwoCardsToDealer(dealer);
-    }
-
-    private boolean isHit(String hitOrStand) {
-        if (hitOrStand.equals("y")) {
-            return true;
-        }
-        if (hitOrStand.equals("n")) {
-            return false;
-        }
-        throw new IllegalArgumentException("잘못된 입력입니다. y 또는 n을 입력해주세요");
     }
 
 }
