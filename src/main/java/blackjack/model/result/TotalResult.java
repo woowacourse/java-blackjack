@@ -1,5 +1,6 @@
 package blackjack.model.result;
 
+import blackjack.common.error.ErrorCode;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
 import java.util.HashMap;
@@ -12,7 +13,7 @@ public class TotalResult {
 
     public TotalResult(Map<Player, Result> results) {
         if (results == null) {
-            throw new IllegalArgumentException("results가 null입니다.");
+            throw new IllegalArgumentException(ErrorCode.NULL_OR_EMPTY_RESULT.getMessage());
         }
 
         this.results = results;
