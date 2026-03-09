@@ -23,7 +23,7 @@ public class BlackJackController {
 
     public void run() {
         Participants participants = setUpParticipants();
-        BlackJack blackJack = BlackJack.of(participants, DeckImpl.of(Suit.VALUES, Rank.VALUES));
+        BlackJack blackJack = BlackJack.of(participants, DeckImpl.of(Suit.values(), Rank.values()));
 
         Map<String, List<String>> dealOutResult = blackJack.dealOut();
         outputView.printDealOut(dealOutResult);

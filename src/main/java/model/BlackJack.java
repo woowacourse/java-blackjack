@@ -23,7 +23,7 @@ public class BlackJack {
     }
 
     public static BlackJack from(Participants participants) {
-        return new BlackJack(participants, DeckImpl.of(Suit.VALUES, Rank.VALUES));
+        return new BlackJack(participants, DeckImpl.of(Suit.values(), Rank.values()));
     }
 
     public static BlackJack of(Participants participants, Deck deck) {

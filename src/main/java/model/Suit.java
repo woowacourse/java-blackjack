@@ -1,7 +1,6 @@
 package model;
 
 import java.util.Arrays;
-import java.util.List;
 
 public enum Suit {
     SPADE("스페이드"),
@@ -9,8 +8,6 @@ public enum Suit {
     HEART("하트"),
     CLOVER("클로버"),
     ;
-
-    public static final List<Suit> VALUES = List.of(values());
 
     private final String name;
 

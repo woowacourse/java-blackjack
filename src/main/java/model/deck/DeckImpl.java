@@ -15,7 +15,7 @@ public class DeckImpl implements Deck {
         this.cards = cards.iterator();
     }
 
-    public static DeckImpl of(List<Suit> suits, List<Rank> ranks) {
+    public static DeckImpl of(Suit[] suits, Rank[] ranks) {
         List<Card> cards = new ArrayList<>();
 
         for (Suit suit : suits) {

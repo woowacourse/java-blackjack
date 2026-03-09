@@ -1,7 +1,6 @@
 package model;
 
 import java.util.Arrays;
-import java.util.List;
 
 public enum Rank {
     ONE(1, "1"),
@@ -18,8 +17,6 @@ public enum Rank {
     Q(10, "Q"),
     K(10, "K"),
     ACE(11, "A");
-
-    public static final List<Rank> VALUES = List.of(values());
 
     private final int value;
     private final String name;
