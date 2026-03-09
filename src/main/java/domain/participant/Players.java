@@ -5,7 +5,9 @@ import domain.card.Card;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class Players {
     private final List<Player> players;
@@ -42,6 +44,21 @@ public class Players {
 
     private void addPlayer(String name) {
         players.add(new Player(name));
+    }
+
+    public void hitStandEachPlayers(Function<Player, Boolean> hitStandFunc, Supplier<Card> getCard,
+                                    Consumer<Player> printResultFunc) {
+        for (Player player : players) {
+            while (true) {
+                if (hitStandFunc.apply(player)) {
+                    player.add(getCard.get());
+                    printResultFunc.accept(player);
+                    continue;
+                }
+                printResultFunc.accept(player);
+                break;
+            }
+        }
     }
 
     public List<Player> getPlayers() {

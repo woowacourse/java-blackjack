@@ -1,7 +1,7 @@
 package view;
 
 import domain.ExceptionMessage;
-import domain.participant.Name;
+import domain.participant.Player;
 import java.util.List;
 import util.Console;
 
@@ -13,12 +13,15 @@ public class InputView {
         return List.of(split);
     }
 
-    public String readHitStand(Name name) {
-        System.out.println(name.getValue() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+    public boolean readHitStand(Player player) {
+        System.out.println(player.getName().getValue() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = Console.readLine();
-        if (!(input.equals("y") || input.equals("n"))) {
-            throw new IllegalArgumentException(ExceptionMessage.INVALID_HIT_STAND_RESPONSE.getMessage());
+        if (input.equals("y")) {
+            return true;
         }
-        return input;
+        if (input.equals("n")) {
+            return false;
+        }
+        throw new IllegalArgumentException(ExceptionMessage.INVALID_HIT_STAND_RESPONSE.getMessage());
     }
 }

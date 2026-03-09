@@ -1,7 +1,6 @@
 import domain.BlackjackGame;
 import domain.Constant;
 import domain.participant.Dealer;
-import domain.participant.Player;
 import domain.participant.Players;
 import java.util.List;
 import view.InputView;
@@ -25,7 +24,8 @@ public class BlackjackController {
         Dealer dealer = blackjackGame.getDealer();
         resultView.printParticipantsCards(players.getPlayers(), dealer);
 
-        playerHitStand(players.getPlayers());
+        blackjackGame.playerHitStand((player) -> inputView.readHitStand(player),
+                (player) -> resultView.printCards(player));
 
         while (true) {
             boolean dealerHitStand = dealer.decideHitStand(Constant.DEALER_HIT_STAND_BOUNDARY);
@@ -44,18 +44,5 @@ public class BlackjackController {
     private void readAndRegistPlayers() {
         List<String> names = inputView.readPlayerNames();
         this.blackjackGame = new BlackjackGame(names);
-    }
-
-    private void playerHitStand(List<Player> players) {
-        for (Player player : players) {
-            hitStand(player);
-        }
-    }
-
-    private void hitStand(Player player) {
-        while (inputView.readHitStand(player.getName()).equals("y")) {
-            blackjackGame.giveCard(player);
-            resultView.printCards(player);
-        }
     }
 }
