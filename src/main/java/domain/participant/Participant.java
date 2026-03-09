@@ -23,4 +23,8 @@ public abstract class Participant {
     public Name getName() {
         return name;
     }
+
+    public Cards getCards() {
+        return cards;
+    }
 }

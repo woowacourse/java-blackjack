@@ -69,10 +69,7 @@ public class Cards {
         return sum;
     }
 
-    @Override
-    public String toString() {
-        return cards.stream()
-                .map(card -> card.toString())
-                .collect(Collectors.joining(DELIMITER));
+    public List<Card> getCards() {
+        return cards;
     }
 }

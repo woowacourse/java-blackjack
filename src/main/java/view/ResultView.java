@@ -4,6 +4,8 @@ import static domain.Constant.DEALER_HIT_STAND_BOUNDARY;
 import static domain.Constant.DEFAULT_HAND_NUMBER;
 import static domain.Constant.DELIMITER;
 
+import domain.card.Card;
+import domain.card.Cards;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Participant;
@@ -15,9 +17,10 @@ import java.util.stream.Collectors;
 public class ResultView {
     public void printParticipantsCards(List<Player> players, Dealer dealer) {
         printEmptyLine();
-        System.out.println(dealer.getName() + "와 " + joinPlayersNameByDelimiter(players) + "에게 " + DEFAULT_HAND_NUMBER
+        System.out.println(dealer.getName().getName() + "와 " + joinPlayersNameByDelimiter(players) + "에게 " + DEFAULT_HAND_NUMBER
                 + "장을 나누었습니다.");
-        System.out.println("딜러카드: " + dealer.getFirstCard());
+        Card dealerCard = dealer.getFirstCard();
+        System.out.println("딜러카드: " + dealerCard.getRank().getDisplayValue() + dealerCard.getSuit().getValue());
         printParticipantsCard(players);
         printEmptyLine();
     }
@@ -25,7 +28,7 @@ public class ResultView {
     private String joinPlayersNameByDelimiter(List<Player> players) {
         return players.stream()
                 .map(Player::getName)
-                .map(Name::toString)
+                .map(Name::getName)
                 .collect(Collectors.joining(DELIMITER));
     }
 
@@ -36,7 +39,13 @@ public class ResultView {
     }
 
     public void printCards(Player player) {
-        System.out.println(player.getName() + "카드: " + player);
+        System.out.println(player.getName().getName() + "카드: " + printCards(player.getCards().getCards()));
+    }
+
+    private String printCards(List<Card> cards){
+        return cards.stream()
+                .map(card -> card.getRank().getDisplayValue() + card.getSuit().getValue())
+                .collect(Collectors.joining(DELIMITER));
     }
 
     public void printDealerHitStand(boolean value) {
@@ -58,7 +67,7 @@ public class ResultView {
     }
 
     private void printCardWithResult(Participant participant) {
-        System.out.println(participant.getName() + "카드: " + participant + " - 결과: " + participant.getTotalSum());
+        System.out.println(participant.getName().getName() + "카드: " + printCards(participant.getCards().getCards()) + " - 결과: " + participant.getTotalSum());
     }
 
     public void printResultStatistics(List<Player> players, Dealer dealer) {
@@ -86,7 +95,7 @@ public class ResultView {
         sb.append("딜러: " + playerLoseCount + "승 " + playerDrawCount + "무 " + playerWinCount + "패\n");
 
         for (Player player : players) {
-            sb.append(player.getName() + ": ");
+            sb.append(player.getName().getName() + ": ");
             Result result = Result.judge(player.getTotalSum(), dealer.getTotalSum());
             if (result == Result.WIN) {
                 sb.append("승\n");

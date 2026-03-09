@@ -14,9 +14,4 @@ public class Dealer extends Participant {
     public boolean decideHitStand(int boundary) {
         return cards.getTotalSum() <= boundary;
     }
-
-    @Override
-    public String toString() {
-        return cards.toString();
-    }
 }

@@ -27,9 +27,12 @@ public class Card {
         return 0;
     }
 
-    @Override
-    public String toString() {
-        return rank.getDisplayValue() + suit.getValue();
+    public Suit getSuit() {
+        return suit;
+    }
+
+    public Rank getRank() {
+        return rank;
     }
 
     @Override
