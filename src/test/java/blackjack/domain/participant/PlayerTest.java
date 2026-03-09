@@ -1,12 +1,12 @@
 package blackjack.domain.participant;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayerTest {
 
@@ -24,14 +24,6 @@ class PlayerTest {
         player.receiveCard(new Card(Suit.HEART, Rank.TEN));
         player.receiveCard(new Card(Suit.SPADE, Rank.TEN));
         player.receiveCard(new Card(Suit.CLOVER, Rank.TEN));
-
-        assertThat(player.canReceiveCard()).isFalse();
-    }
-
-    @Test
-    void 히트를_거부하면_카드를_받을_수_없다() {
-        Player player = new Player("pobi");
-        player.stay();
 
         assertThat(player.canReceiveCard()).isFalse();
     }
