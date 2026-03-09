@@ -7,8 +7,10 @@ import java.util.List;
 import model.participant.Dealer;
 import model.participant.Participant;
 import model.participant.Player;
+import util.InputParser;
 
 public class Participants implements Iterable<Participant> {
+    private static final String DEALER_PARTICIPANT = "딜러,";
     private List<Participant> values;
 
     private Participants(String[] values) {
@@ -20,8 +22,10 @@ public class Participants implements Iterable<Participant> {
         this.values = list;
     }
 
-    public static Participants of(String[] splitValue) {
-        return new Participants(splitValue);
+    public static Participants of(String[] input) {
+        String rawParticipants = DEALER_PARTICIPANT;
+        rawParticipants += input;
+        return new Participants(InputParser.parseName(rawParticipants));
     }
 
     public Participant getDealer() {

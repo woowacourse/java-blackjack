@@ -9,6 +9,7 @@ public abstract class Participant {
     private static final int BUST_THRESHOLD = 21;
     private static final int DEALER_THRESHOLD = 16;
     private static final String DEALER_NAME = "딜러";
+
     private String name;
     protected List<Card> hands;
 
@@ -33,7 +34,7 @@ public abstract class Participant {
     public int calculateScore() {
         int total = calculate();
         int aceCardCount = aceCount();
-        while (aceCardCount-- > 0 && total > 21) {
+        while (aceCardCount-- > 0 && total > BUST_THRESHOLD) {
             total -= 10;
         }
 

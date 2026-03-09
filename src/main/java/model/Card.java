@@ -5,7 +5,7 @@ public class Card {
     private Suits suits;
     private CardNumber cardNumber;
 
-    public Card(Suits suits, CardNumber cardNumber) {
+    private Card(Suits suits, CardNumber cardNumber) {
         this.suits = suits;
         this.cardNumber = cardNumber;
     }

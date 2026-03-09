@@ -19,11 +19,7 @@ public class BlackJackController {
     }
 
     public void run() {
-        String rawParticipants = "딜러,";
-        rawParticipants += inputView.readParticipantNames();
-        String[] parsedName = InputParser.parseName(rawParticipants);
-
-        Participants participants = Participants.of(parsedName);
+        Participants participants = Participants.of(inputView.readParticipantNames());
         BlackJack blackJack = BlackJack.from(participants);
 
         blackJack.dealOut();
