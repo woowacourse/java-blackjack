@@ -25,18 +25,18 @@ class BlackJackServiceTest {
         BlackJackService blackJackService = new BlackJackService(
                 new Deck(new DefaultShuffleStrategy()), dealer, players);
 
-        Assertions.assertEquals(dealer.getHand().getHand().size(), 0);
+        Assertions.assertEquals(0, dealer.getHand().getHand().size());
         for (Player player : players.getPlayers()) {
-            Assertions.assertEquals(player.getHand().getHand().size(), 0);
+            Assertions.assertEquals(0, player.getHand().getHand().size());
         }
 
         // when
         blackJackService.initHand();
 
         // then
-        Assertions.assertEquals(dealer.getHand().getHand().size(), 2);
+        Assertions.assertEquals(2, dealer.getHand().getHand().size());
         for (Player player : players.getPlayers()) {
-            Assertions.assertEquals(player.getHand().getHand().size(), 2);
+            Assertions.assertEquals(2, player.getHand().getHand().size());
         }
     }
 
@@ -62,7 +62,7 @@ class BlackJackServiceTest {
 
         // then
         for (Map.Entry<String, MatchResult> matchResultEntry : matchResult.entrySet()) {
-            Assertions.assertEquals(matchResultEntry.getValue(), MatchResult.WIN);
+            Assertions.assertEquals(MatchResult.WIN, matchResultEntry.getValue());
         }
     }
 
@@ -88,7 +88,7 @@ class BlackJackServiceTest {
 
         // then
         for (Map.Entry<String, MatchResult> matchResultEntry : matchResult.entrySet()) {
-            Assertions.assertEquals(matchResultEntry.getValue(), MatchResult.DRAW);
+            Assertions.assertEquals(MatchResult.DRAW, matchResultEntry.getValue());
         }
     }
 
@@ -114,7 +114,7 @@ class BlackJackServiceTest {
 
         // then
         for (Map.Entry<String, MatchResult> matchResultEntry : matchResult.entrySet()) {
-            Assertions.assertEquals(matchResultEntry.getValue(), MatchResult.LOSE);
+            Assertions.assertEquals(MatchResult.LOSE, matchResultEntry.getValue());
         }
     }
 
@@ -141,7 +141,7 @@ class BlackJackServiceTest {
 
         // then
         for (Map.Entry<String, MatchResult> matchResultEntry : matchResult.entrySet()) {
-            Assertions.assertEquals(matchResultEntry.getValue(), MatchResult.LOSE);
+            Assertions.assertEquals(MatchResult.LOSE, matchResultEntry.getValue());
         }
     }
 
@@ -168,7 +168,7 @@ class BlackJackServiceTest {
 
         // then
         for (Map.Entry<String, MatchResult> matchResultEntry : matchResult.entrySet()) {
-            Assertions.assertEquals(matchResultEntry.getValue(), MatchResult.WIN);
+            Assertions.assertEquals(MatchResult.WIN, matchResultEntry.getValue());
         }
     }
 
@@ -195,7 +195,7 @@ class BlackJackServiceTest {
 
         // then
         for (Map.Entry<String, MatchResult> matchResultEntry : matchResult.entrySet()) {
-            Assertions.assertEquals(matchResultEntry.getValue(), MatchResult.WIN);
+            Assertions.assertEquals(MatchResult.WIN, matchResultEntry.getValue());
         }
     }
 
@@ -222,7 +222,7 @@ class BlackJackServiceTest {
 
         // then
         for (Map.Entry<String, MatchResult> matchResultEntry : matchResult.entrySet()) {
-            Assertions.assertEquals(matchResultEntry.getValue(), MatchResult.LOSE);
+            Assertions.assertEquals(MatchResult.LOSE, matchResultEntry.getValue());
         }
     }
 
@@ -247,8 +247,8 @@ class BlackJackServiceTest {
         Map<MatchResult, Integer> matchResults = blackJackService.calculateDealerResult(playerResults);
 
         // then
-        Assertions.assertEquals(matchResults.get(MatchResult.LOSE), 3);
-        Assertions.assertEquals(matchResults.get(MatchResult.DRAW), 1);
-        Assertions.assertEquals(matchResults.get(MatchResult.WIN), 1);
+        Assertions.assertEquals(3, matchResults.get(MatchResult.LOSE));
+        Assertions.assertEquals(1, matchResults.get(MatchResult.DRAW));
+        Assertions.assertEquals(1, matchResults.get(MatchResult.WIN));
     }
 }

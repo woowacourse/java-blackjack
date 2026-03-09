@@ -60,6 +60,6 @@ public class PlayerTest {
         player.hit(new Card(Rank.ACE, Suit.DIAMOND));
 
         // then
-        Assertions.assertEquals(player.getHand().getHand().size(), 1);
+        Assertions.assertEquals(1, player.getHand().getHand().size());
     }
 }

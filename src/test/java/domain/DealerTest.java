@@ -20,7 +20,7 @@ public class DealerTest {
         dealer.hit(new Card(Rank.ACE, Suit.DIAMOND));
 
         // then
-        Assertions.assertEquals(dealer.getHand().getHand().size(), 1);
+        Assertions.assertEquals(1, dealer.getHand().getHand().size());
     }
 
     @Test
