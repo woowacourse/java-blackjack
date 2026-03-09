@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Result {
+    private static final String DEALER = "딜러";
+    private static final Integer JUDGE_SCORE = 21;
 
     public static Map<String, Boolean> calculateResult(Map<Participant, Integer> participantScores) {
         Map<String, Boolean> gameResult = new HashMap<>();
@@ -11,18 +13,18 @@ public class Result {
         int dealerScore = getDealerScore(participantScores);
 
         for (Map.Entry<Participant, Integer> entry : participantScores.entrySet()) {
-            if (entry.getKey().getName().equals("딜러")) {
+            if (entry.getKey().getName().equals(DEALER)) {
                 continue;
             }
             String name = entry.getKey().getName();
             int score = entry.getValue();
 
-            if (score > 21) {
+            if (score > JUDGE_SCORE) {
                 gameResult.put(name, false);
                 continue;
             }
 
-            if (dealerScore > 21) {
+            if (dealerScore > JUDGE_SCORE) {
                 gameResult.put(name, true);
                 continue;
             }
@@ -40,7 +42,7 @@ public class Result {
     private static int getDealerScore(Map<Participant, Integer> participantScores) {
         int dealerScore = 0;
         for (Map.Entry<Participant, Integer> entry : participantScores.entrySet()) {
-            if (entry.getKey().getName().equals("딜러")) {
+            if (entry.getKey().getName().equals(DEALER)) {
                 dealerScore = entry.getValue();
             }
         }
