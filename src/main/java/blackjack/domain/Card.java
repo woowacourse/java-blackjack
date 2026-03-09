@@ -31,7 +31,7 @@ public class Card {
         int score;
         try {
             score = Integer.parseInt(rank);
-        } catch (IllegalArgumentException e) {
+        } catch (NumberFormatException e) {
             throw new IllegalArgumentException("J,Q,K 외의 문자열 입력은 불가능합니다.");
         }
 
