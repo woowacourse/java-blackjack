@@ -42,7 +42,7 @@ public class Players {
     }
 
     public List<Player> getAllPlayers() {
-        return players;
+        return List.copyOf(players);
     }
 
     public String findDrawablePlayerNickname() {
