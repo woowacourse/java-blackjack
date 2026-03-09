@@ -23,7 +23,7 @@ public class InputView {
                 System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", name);
                 return BinaryOptionMessage.isYes(userInput());
             } catch (IllegalArgumentException e) {
-                OutputView.printErrorMessage("잘못된 입력입니다. 다시 입력해주세요.");
+                OutputView.printErrorMessage(e.getMessage());
             }
         }
     }

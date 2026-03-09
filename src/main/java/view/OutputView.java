@@ -55,7 +55,7 @@ public class OutputView {
             List<Card> cards = playerInfo.getValue();
             int score = playersHandDto.getPlayersScore().get(name);
 
-            System.out.printf("%s카드: %s - 결과: %d\n", name, cards, score);
+            System.out.printf("%s카드: %s - 결과: %d\n", name, formatCards(cards), score);
         }
     }
 

@@ -11,6 +11,7 @@ import dto.PlayersHandDto;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class GameManager {
 
@@ -18,7 +19,7 @@ public class GameManager {
 
     private final Deck deck;
     private final Dealer dealer;
-    private final Players players;
+    private Players players;
 
     public GameManager() {
         this.deck = new Deck();
@@ -33,11 +34,19 @@ public class GameManager {
                 .toList();
     }
 
+    public void addAllPlayers(Players players) {
+        this.players = players;
+    }
+
     public void dealInitialCardsToParticipants() {
         for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
             dealCardToDealer();
             players.dealCardToAllPlayers(deck);
         }
+    }
+
+    public void playPlayerTurns(Consumer<Player> action) {
+        players.playTurns(action);
     }
 
     public void dealCardTo(Player player) {

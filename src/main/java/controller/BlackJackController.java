@@ -6,8 +6,6 @@ import service.GameManager;
 import view.InputView;
 import view.OutputView;
 
-import java.util.List;
-
 public class BlackJackController {
 
     private final InputView inputView;
@@ -21,18 +19,17 @@ public class BlackJackController {
     }
 
     public void playGame() {
-        Players players = new Players(readUntilValidPlayers());
-
+        gameManager.addAllPlayers(readUntilValidPlayers());
         gameManager.dealInitialCardsToParticipants();
         outputView.showInitialHandsOfParticipants(gameManager.getDealerHand(), gameManager.getPlayersHand());
 
-        playBlackJack(players);
+        playBlackJack();
         outputView.showHandResults(gameManager.getDealerHand(), gameManager.getPlayersHand());
         outputView.showGameResult(gameManager.calculateResults());
     }
 
-    private void playBlackJack(Players players) {
-        players.playTurns(this::playPlayerTurn);
+    private void playBlackJack() {
+        gameManager.playPlayerTurns(this::playPlayerTurn);
         playDealerTurn();
     }
 
@@ -55,9 +52,9 @@ public class BlackJackController {
         outputView.showDealerStandMessage();
     }
 
-    private List<Player> readUntilValidPlayers() {
+    private Players readUntilValidPlayers() {
         try {
-            return gameManager.createPlayers(inputView.readPlayers());
+            return new Players(gameManager.createPlayers(inputView.readPlayers()));
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             return readUntilValidPlayers();
