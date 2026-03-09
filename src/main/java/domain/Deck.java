@@ -20,14 +20,18 @@ public class Deck {
             Arrays.stream(CardNumber.values())
                     .forEach(cardNumber -> results.add(new Card(cardNumber, cardSuit)));
         }
-        List<Card> shuffled = new ArrayList<>(results);
-        Collections.shuffle(shuffled);
-
-        return new ArrayDeque<>(shuffled);
+        return shuffle(results);
     }
 
     public Card draw() {
         return cards.pop();
+    }
+
+    private ArrayDeque<Card> shuffle(Deque<Card> results) {
+        List<Card> shuffled = new ArrayList<>(results);
+        Collections.shuffle(shuffled);
+
+        return new ArrayDeque<>(shuffled);
     }
 
     public List<Card> getCards() {

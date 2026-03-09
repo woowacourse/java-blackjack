@@ -28,7 +28,7 @@ public class GameController {
         List<String> playerNames = getPlayerNames();
 
         Deck deck = new Deck();
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer(new ArrayList<>(List.of(deck.draw(), deck.draw())), deck);
 
         Players players = getPlayers(playerNames, deck);
         printGameStart(playerNames, dealer, players);
@@ -37,9 +37,8 @@ public class GameController {
         outputView.printFinalScore(dealer, players);
 
         Judgement judgement = new Judgement();
-
-        Map<String, GameResult> playerResults = judgement.calculatePlayerResults(players, dealer);
-        Map<GameResult, Integer> dealerResults = judgement.calculateDealerResults(playerResults);
+        Map<String, GameResult> playerResults = judgement.judgePlayerResults(players, dealer);
+        Map<GameResult, Integer> dealerResults = judgement.judgeDealerResults(playerResults);
         outputView.printDealerFinalCount(dealerResults);
         outputView.printPlayerFinalResults(playerResults);
     }
@@ -69,7 +68,7 @@ public class GameController {
             processRound(player, dealer);
         }
 
-        while (dealer.isReceiveCard()) {
+        while (dealer.canReceiveCard()) {
             dealer.addCard(dealer.dealCard());
             outputView.printDealerReceiveCard();
         }

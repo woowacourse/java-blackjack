@@ -1,13 +1,12 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Dealer extends Participant {
     private final Deck deck;
 
-    public Dealer(Deck deck) {
-        super(new ArrayList<>(List.of(deck.draw(), deck.draw())));
+    public Dealer(List<Card> hand, Deck deck) {
+        super(hand);
         this.deck = deck;
     }
 
@@ -15,7 +14,7 @@ public class Dealer extends Participant {
         return deck.draw();
     }
 
-    public boolean isReceiveCard() {
-        return calculateTotalScore() <= 16;
+    public boolean canReceiveCard() {
+        return calculateScore() <= 16;
     }
 }

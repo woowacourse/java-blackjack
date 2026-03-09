@@ -13,7 +13,7 @@ public abstract class Participant {
         hand.add(card);
     }
 
-    public int calculateTotalScore() {
+    public int calculateScore() {
         int results = 0;
         for (Card holdCard : hand) {
             results += holdCard.getScore();
@@ -21,14 +21,18 @@ public abstract class Participant {
 
         boolean isAceExist = hand.stream()
                 .anyMatch(holdCard -> holdCard.getCardNumber() == CardNumber.ACE);
-        if (isAceExist && (results + 10) <= 21) {
+        if (isSoftHand(isAceExist, results)) {
             return results + 10;
         }
         return results;
     }
 
     public boolean isBust() {
-        return calculateTotalScore() > 21;
+        return calculateScore() > 21;
+    }
+
+    private boolean isSoftHand(boolean isAceExist, int results) {
+        return isAceExist && (results + 10) <= 21;
     }
 
     public List<Card> getHand() {
