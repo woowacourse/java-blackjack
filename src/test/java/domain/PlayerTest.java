@@ -1,6 +1,7 @@
 package domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import domain.card.Card;
@@ -23,7 +24,7 @@ class PlayerTest {
     }
 
     @Test
-    void 플레이어가_Bust인_경우() {
+    void 플레이어가_Bust인_경우_isBust가_True를_리턴한다() {
         // given
         Player player = new Player("봉구스");
 
@@ -34,5 +35,18 @@ class PlayerTest {
 
         // then
         assertTrue(player.isBust());
+    }
+
+    @Test
+    void 플레이어가_Bust가_아닌_경우_isBust가_False를_리턴한다() {
+        // given
+        Player player = new Player("봉구스");
+
+        // when
+        player.draw(new Card(Suit.CLUBS, Rank.KING));
+        player.draw(new Card(Suit.CLUBS, Rank.QUEEN));
+
+        // then
+        assertFalse(player.isBust());
     }
 }

@@ -58,7 +58,7 @@ class HandTest {
     }
 
     @Test
-    void 손패가_Bust인_경우() {
+    void 손패가_Bust인_경우_isBust가_True를_리턴한다() {
         //given
         Hand hand = new Hand();
         hand.addCard(new Card(Suit.SPADES, Rank.KING));
@@ -70,7 +70,7 @@ class HandTest {
     }
 
     @Test
-    void 손패가_Bust가_아닌_경우() {
+    void 손패가_Bust가_아닌_경우_isBust가_False를_리턴한다() {
         //given
         Hand hand = new Hand();
         hand.addCard(new Card(Suit.SPADES, Rank.KING));
