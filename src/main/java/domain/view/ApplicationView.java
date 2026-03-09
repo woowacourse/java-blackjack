@@ -3,9 +3,9 @@ package domain.view;
 import domain.analyzer.dto.ResultAnalysisDto;
 import domain.answer.DrawDecision;
 import domain.gamer.PlayerName;
-import domain.gamer.dto.PlayerHandDto;
-import domain.gamer.dto.PlayerResultDto;
-import domain.gamer.dto.PlayersNameDto;
+import domain.gamer.dto.GamerHandDto;
+import domain.gamer.dto.GamerResultDto;
+import domain.gamer.dto.GamersNameDto;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,18 +42,18 @@ public class ApplicationView {
         });
     }
 
-    public void printFirstHandOutResult(PlayersNameDto playerNames) {
+    public void printFirstHandOutResult(GamersNameDto playerNames) {
         String formattedNames = String.join(PLAYER_NAME_DELIMITER, playerNames.playerNames());
         writer.printDealInitialCardMessage(formattedNames);
     }
 
-    public void printAllParticipantsHand(List<PlayerHandDto> playerHands) {
-        for (PlayerHandDto playerHand : playerHands) {
+    public void printAllParticipantsHand(List<GamerHandDto> playerHands) {
+        for (GamerHandDto playerHand : playerHands) {
             printParticipantHand(playerHand);
         }
     }
 
-    public void printParticipantHand(PlayerHandDto playerHand) {
+    public void printParticipantHand(GamerHandDto playerHand) {
         writer.printAllParticipantsHand(playerHand.playerName(), playerHand.handOnCards());
     }
 
@@ -74,8 +74,8 @@ public class ApplicationView {
                 });
     }
 
-    public void printFinalResultMessage(PlayerResultDto playerResult) {
-        PlayerHandDto playerHand = playerResult.playerHand();
+    public void printFinalResultMessage(GamerResultDto playerResult) {
+        GamerHandDto playerHand = playerResult.playerHand();
         writer.printFinalResultMessage(playerHand.playerName(), playerHand.handOnCards(), playerResult.resultScore());
     }
 

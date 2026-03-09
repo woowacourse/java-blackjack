@@ -1,6 +1,5 @@
-package domain;
+package domain.analyzer;
 
-import domain.analyzer.ResultAnalyzer;
 import domain.card.*;
 import domain.gamer.Dealer;
 import domain.gamer.Player;

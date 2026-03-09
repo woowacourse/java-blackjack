@@ -1,7 +1,7 @@
 package domain.gamer;
 
 import domain.card.*;
-import domain.gamer.dto.PlayerHandDto;
+import domain.gamer.dto.GamerHandDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,12 +33,12 @@ class PlayersTest {
         Dealer dealer = Dealer.from(cardDeck);
 
         players.dealCardBundle(dealer);
-        List<PlayerHandDto> playersHand = players.getPlayers().stream()
-                .map(PlayerHandDto::from)
+        List<GamerHandDto> playersHand = players.getPlayers().stream()
+                .map(GamerHandDto::from)
                 .toList();
 
         Assertions.assertThat(playersHand.getFirst())
-                .isEqualTo(PlayerHandDto.from(testPlayer));
+                .isEqualTo(GamerHandDto.from(testPlayer));
     }
 
 }

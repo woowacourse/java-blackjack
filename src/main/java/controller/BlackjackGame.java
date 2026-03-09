@@ -9,9 +9,9 @@ import domain.gamer.Dealer;
 import domain.gamer.Player;
 import domain.gamer.PlayerName;
 import domain.gamer.Players;
-import domain.gamer.dto.PlayerHandDto;
-import domain.gamer.dto.PlayerResultDto;
-import domain.gamer.dto.PlayersNameDto;
+import domain.gamer.dto.GamerHandDto;
+import domain.gamer.dto.GamerResultDto;
+import domain.gamer.dto.GamersNameDto;
 import domain.view.ApplicationView;
 
 import java.util.List;
@@ -62,14 +62,14 @@ public class BlackjackGame {
     }
 
     private void showGamerHands(Players players, Dealer dealer) {
-        view.printFirstHandOutResult(PlayersNameDto.from(players.getPlayers()));
-        view.printParticipantHand(PlayerHandDto.onlyFirstCard(dealer));
+        view.printFirstHandOutResult(GamersNameDto.from(players.getPlayers()));
+        view.printParticipantHand(GamerHandDto.onlyFirstCard(dealer));
         view.printAllParticipantsHand(getPlayerHandInformation(players.getPlayers()));
     }
 
-    private List<PlayerHandDto> getPlayerHandInformation(List<Player> players) {
+    private List<GamerHandDto> getPlayerHandInformation(List<Player> players) {
         return players.stream()
-                .map(PlayerHandDto::from)
+                .map(GamerHandDto::from)
                 .toList();
     }
 
@@ -87,7 +87,7 @@ public class BlackjackGame {
     private void drawPlayerCard(Player player, Dealer dealer) {
         while (!player.isBusted() && isPlayerWantCard(player)) {
             dealer.hitCardToPlayer(player);
-            view.printParticipantHand(PlayerHandDto.from(player));
+            view.printParticipantHand(GamerHandDto.from(player));
         }
     }
 
@@ -97,9 +97,9 @@ public class BlackjackGame {
     }
 
     private void showGamerHandResult(Dealer dealer, Players players) {
-        view.printFinalResultMessage(PlayerResultDto.from(dealer));
+        view.printFinalResultMessage(GamerResultDto.from(dealer));
         players.getPlayers().forEach(player -> {
-            view.printFinalResultMessage(PlayerResultDto.from(player));
+            view.printFinalResultMessage(GamerResultDto.from(player));
         });
     }
 
