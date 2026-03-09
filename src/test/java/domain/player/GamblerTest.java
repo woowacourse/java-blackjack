@@ -3,8 +3,8 @@ package domain.player;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.FixedDeck;
 import domain.MatchResult;
-import domain.StubDeckImplTest;
 import domain.card.Card;
 import domain.card.CardRank;
 import domain.card.CardSuit;
@@ -50,10 +50,10 @@ class GamblerTest {
         Card eight = new Card(CardRank.EIGHT, CardSuit.DIAMOND); // tobi
         Card ten = new Card(CardRank.TEN, CardSuit.CLOVER); // quda
 
-        StubDeckImplTest sd = new StubDeckImplTest(List.of(jack, eight, ten));
-        dealer.deal(sd);
-        tobi.deal(sd);
-        quda.deal(sd);
+        FixedDeck fixedDeck = new FixedDeck(List.of(jack, eight, ten));
+        dealer.deal(fixedDeck);
+        tobi.deal(fixedDeck);
+        quda.deal(fixedDeck);
 
         //when
         MatchResult tobiResult = tobi.getResult(dealer);

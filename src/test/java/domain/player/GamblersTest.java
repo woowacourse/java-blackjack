@@ -3,6 +3,7 @@ package domain.player;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.FixedDeck;
 import domain.card.Card;
 import domain.card.CardRank;
 import domain.card.CardSuit;
@@ -40,7 +41,7 @@ class GamblersTest {
         Card sevenClover = new Card(CardRank.SEVEN, CardSuit.CLOVER); // tobi
         Card nine = new Card(CardRank.NINE, CardSuit.DIAMOND); // quda
 
-        StubDeck sd = new StubDeck(List.of(jack, eight, ten, sevenDiamond, sevenClover, nine));
+        FixedDeck sd = new FixedDeck(List.of(jack, eight, ten, sevenDiamond, sevenClover, nine));
         dealer.deal(sd);
         gamblers.dealAll(sd);
         dealer.deal(sd);

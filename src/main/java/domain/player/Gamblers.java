@@ -1,7 +1,7 @@
 package domain.player;
 
 import domain.MatchResult;
-import domain.deck.CardDeck;
+import domain.deck.Deck;
 import dto.BlackjackResult;
 import dto.GamblerCardInfo;
 import expcetion.BlackjackException;
@@ -42,8 +42,8 @@ public class Gamblers {
         return gamblers;
     }
 
-    public void dealAll(CardDeck cardDeck) {
-        gamblers.forEach(gambler -> gambler.deal(cardDeck));
+    public void dealAll(Deck deck) {
+        gamblers.forEach(gambler -> gambler.deal(deck));
         /*
         for(Gambler gambler : gamblers) {
             gambler.deal(cardDeck.deal());
