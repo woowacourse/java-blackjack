@@ -1,6 +1,8 @@
 package domain.dealer;
 
 import domain.card.*;
+import domain.player.Player;
+import domain.player.PlayerName;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +19,9 @@ public class DealerTest {
                 .build();
 
         Dealer dealer = Dealer.from(cardDeck);
-        CardBundle cardBundle = dealer.handOutCard(2);
+        Player player = Player.from(PlayerName.from("test"));
+
+        CardBundle cardBundle = dealer.dealCardToPlayer(player);
 
         Assertions.assertThat(cardBundle)
                 .isEqualTo(CardBundle.from(List.of(
@@ -33,7 +37,9 @@ public class DealerTest {
                 .build();
 
         Dealer dealer = Dealer.from(cardDeck);
-        CardBundle cardBundle = dealer.handOutCard(1);
+        Player player = Player.from(PlayerName.from("test"));
+
+        CardBundle cardBundle = dealer.hitCardToPlayer(player);
 
         Assertions.assertThat(cardBundle)
                 .isEqualTo(CardBundle.from(List.of(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER))
@@ -43,13 +49,14 @@ public class DealerTest {
     @Test
     void 카드덱에_카드가없으면_딜러가_카드를_나눠줄_수_없다() {
         CardDeck cardDeck = new CardDeckBuilder()
-                .cards(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER))
+                .cards()
                 .build();
 
         Dealer dealer = Dealer.from(cardDeck);
+        Player player = Player.from(PlayerName.from("test"));
 
         Assertions.assertThatThrownBy(() -> {
-            CardBundle cardBundle = dealer.handOutCard(2);
+            dealer.dealCardToPlayer(player);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 

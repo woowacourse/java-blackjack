@@ -6,14 +6,10 @@ import domain.player.dto.PlayerHandDto;
 
 import java.util.List;
 
-public class Player {
-
-    private PlayerName name;
-    private CardBundle cardBundle;
+public class Player extends Gamer{
 
     private Player(PlayerName name) {
-        this.cardBundle = CardBundle.empty();
-        this.name = name;
+        super(name);
     }
 
     public static Player from(PlayerName name) {
@@ -29,10 +25,6 @@ public class Player {
         return cardBundle;
     }
 
-    public int getResultScore() {
-        return cardBundle.getResultScore();
-    }
-
     public String toDisplayMyName() {
         return name.name();
     }
@@ -43,10 +35,6 @@ public class Player {
 
     public PlayerHandDto getMyHands() {
         return PlayerHandDto.of(this);
-    }
-
-    public boolean isBusted() {
-        return cardBundle.isBusted();
     }
 
 }
