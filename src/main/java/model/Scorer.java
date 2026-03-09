@@ -10,7 +10,7 @@ public class Scorer {
 
     public static void updateAceScore(Participant participant) {
         boolean hasAce = hasAceCard(participant.getResult());
-        Integer score = participant.getResult().score();
+        Integer score = participant.getScore();
 
         if(hasAce && score <= MAX_ACE_SCORE) {
             participant.addScore(ADDITIONAL_ACE_SCORE);
