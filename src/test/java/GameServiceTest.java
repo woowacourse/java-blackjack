@@ -87,8 +87,8 @@ class GameServiceTest {
     @DisplayName("처음 카드를 분배받으면 각 사람들이 패에 2장씩 가지고 있어야 한다.")
     public void when_init_deal_each_must_have_2cards() {
         Dealer dealer = new Dealer();
-        User user1 = User.from("json");
-        User user2 = User.from("poby");
+        User user1 = new User("json");
+        User user2 = new User("poby");
         List<User> users = List.of(user1,user2);
 
         gameService.initDeal(users,dealer);
@@ -101,9 +101,9 @@ class GameServiceTest {
     @DisplayName("딜러의 최종 승패는 각 사용자들의 결과를 합쳐서 계산된다.")
     public void calculate_dealer_final_result_by_sum_of_users_result(){
         Dealer dealer = new Dealer();
-        User winUser = User.from("json");
-        User loseUser = User.from("poby");
-        User drawUser = User.from("draw");
+        User winUser = new User("json");
+        User loseUser = new User("poby");
+        User drawUser = new User("draw");
         List<User> users = List.of(winUser, loseUser);
 
         dealer.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_NINE));

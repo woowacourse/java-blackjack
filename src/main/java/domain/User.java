@@ -6,12 +6,8 @@ public class User extends Participant{
     private final String name;
     private GameResult gameResult;
 
-    private User(String name) {
+    public User(String name) {
         this.name = name;
-    }
-
-    public static User from(String input) {
-        return new User(input);
     }
 
     public String getName() {
