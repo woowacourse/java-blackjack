@@ -9,6 +9,7 @@ import blackjack.domain.GameResult;
 import blackjack.domain.Player;
 import blackjack.service.CardDistributor;
 import blackjack.service.Game;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -86,15 +87,21 @@ public class GameTest {
         Dealer dealer = createDealer("3:다이아몬드", "9:클로버", "8:다이아몬드");
 
         Game game = new Game(null);
+
+        Map<ScoreCompareResult, Integer> dealerResult = Map.of(
+                ScoreCompareResult.DEALER_WIN, 1,
+                ScoreCompareResult.DEALER_LOSS, 1,
+                ScoreCompareResult.PUSH, 1
+        );
+
+        LinkedHashMap<Player, ScoreCompareResult> playerResults = new LinkedHashMap<>();
+        playerResults.put(pobi, ScoreCompareResult.PLAYER_WIN);
+        playerResults.put(jason, ScoreCompareResult.PLAYER_LOSS);
+        playerResults.put(brown, ScoreCompareResult.PUSH);
+
         GameResult expected = new GameResult(
-                Map.of(
-                        ScoreCompareResult.DEALER_WIN, 1,
-                        ScoreCompareResult.DEALER_LOSS, 1,
-                        ScoreCompareResult.PUSH, 1),
-                Map.of(
-                        pobi, ScoreCompareResult.PLAYER_WIN,
-                        jason, ScoreCompareResult.PLAYER_LOSS,
-                        brown, ScoreCompareResult.PUSH)
+                dealerResult,
+                playerResults
         );
 
         GameResult actual = game.judgeTotalGameResult(List.of(pobi, jason, brown), dealer);
