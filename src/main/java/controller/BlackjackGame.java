@@ -1,7 +1,6 @@
 package controller;
 
 import domain.*;
-import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
@@ -17,13 +16,9 @@ import view.OutputView;
 
 import java.util.List;
 import java.util.Map;
-import java.util.SequencedCollection;
 
 public class BlackjackGame {
     public static final String NO = "n";
-    public static final String WIN = "승";
-    public static final String TIE = "무";
-    public static final String LOSE = "패";
     public static final int INITIAL_CARDS_COUNT = 2;
     private final InputView inputView;
     private final InputParser inputParser;
@@ -116,17 +111,9 @@ public class BlackjackGame {
             String name = entry.getKey();
             WinningStatus status = entry.getValue();
 
-            resultInfos.add(new PlayerResultInfo(name, toKorean(status)));
+            resultInfos.add(new PlayerResultInfo(name, status));
         }
 
         return resultInfos;
-    }
-
-    private String toKorean(WinningStatus status) {
-        return switch (status) {
-            case WinningStatus.WIN -> WIN;
-            case WinningStatus.TIE -> TIE;
-            case WinningStatus.LOSE -> LOSE;
-        };
     }
 }

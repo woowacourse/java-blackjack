@@ -1,6 +1,6 @@
 package view;
 
-import domain.GameResult;
+import domain.WinningStatus;
 import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Participant;
@@ -111,7 +111,15 @@ public class OutputView {
 
     public void printPlayersResult(List<PlayerResultInfo> playersResult) {
         for (PlayerResultInfo playerResult : playersResult) {
-            System.out.println(playerResult.name() + ": " + playerResult.resultText());
+            System.out.println(playerResult.name() + ": " + toKorean(playerResult.status()));
         }
+    }
+
+    private String toKorean(WinningStatus status) {
+        return switch (status) {
+            case WIN -> "승";
+            case TIE -> "무";
+            case LOSE -> "패";
+        };
     }
 }

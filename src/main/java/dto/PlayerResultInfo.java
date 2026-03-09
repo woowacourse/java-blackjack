@@ -1,4 +1,6 @@
 package dto;
 
-public record PlayerResultInfo(String name, String resultText) {
+import domain.WinningStatus;
+
+public record PlayerResultInfo(String name, WinningStatus status) {
 }
