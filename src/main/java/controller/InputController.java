@@ -15,7 +15,7 @@ public class InputController {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    public Players getParticipantsName() {
+    public Players getPlayersName() {
         InputView.printNameRequest();
         String nameInput = getInput();
         List<Player> players = Arrays.stream(nameInput.split(NAME_SPLIT_REGEX))

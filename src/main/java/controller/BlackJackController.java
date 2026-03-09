@@ -23,7 +23,7 @@ public class BlackJackController {
     }
 
     public void run() {
-        Players players = inputController.getParticipantsName();
+        Players players = inputController.getPlayersName();
         Dealer dealer = new Dealer();
 
         OutputView.printNewLine();
@@ -65,7 +65,9 @@ public class BlackJackController {
     }
 
     private void drawPlayerTurns(Player player) {
-        while(drawPlayerTurn(player));
+        while(drawPlayerTurn(player)) {
+            OutputView.printPlayerCurrentDeck(player.getResult());
+        };
         blackJackService.updateFinalScore(player);
     }
 
