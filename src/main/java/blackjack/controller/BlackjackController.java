@@ -1,14 +1,14 @@
 package blackjack.controller;
 
 import blackjack.domain.Dealer;
+import blackjack.domain.GameResult;
 import blackjack.domain.User;
+import blackjack.domain.Users;
 import blackjack.service.GameService;
 import blackjack.util.InputParser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackController {
 
@@ -21,42 +21,36 @@ public class BlackjackController {
     }
 
     public void run() {
-        List<User> users = createUsers();
+        Users users = createUsers();
         Dealer dealer = new Dealer();
 
         gameService.settingCards(users, dealer);
         printGameSettingResult(users, dealer);
 
         getMoreCards(users);
-        if (!isAllUserBurst(users)) {
+        if (!users.isAllBurst()) {
             getMoreCardsForDealer(dealer);
         }
 
         printGameResult(users, dealer);
-
         printWinningResult(users, dealer);
     }
 
-    private void printGameSettingResult(List<User> users, Dealer dealer) {
-        List<String> userNames = users.stream()
-                .map(User::getName)
-                .toList();
-
-        OutputView.printGameSettingMessage(dealer.getName(), userNames);
-        OutputView.printSettingCardsResult(dealer.getName(), dealer.getFirstCard());
-        for (User user : users) {
-            OutputView.printSettingCardsResult(user.getName(), user.getCardsName());
-        }
-    }
-
-    private List<User> createUsers() {
+    private Users createUsers() {
         List<String> userNames = InputParser.parseUser(inputView.readUserName());
-        return userNames.stream()
+        List<User> users = userNames.stream()
                 .map(User::new)
                 .toList();
+        return new Users(users);
     }
 
-    private void getMoreCards(List<User> users) {
+    private void printGameSettingResult(Users users, Dealer dealer) {
+        OutputView.printGameSettingMessage(dealer.getName(), users.getNames());
+        OutputView.printSettingCardsResult(dealer.getName(), List.of(dealer.getFirstCardName()));
+        users.forEach(user -> OutputView.printSettingCardsResult(user.getName(), user.getCardsName()));
+    }
+
+    private void getMoreCards(Users users) {
         users.forEach(this::processUserTurn);
     }
 
@@ -78,34 +72,20 @@ public class BlackjackController {
     }
 
     private void getMoreCardsForDealer(Dealer dealer) {
-        while (dealer.calculateCardsValue() < 17) {
+        while (dealer.shouldDrawCard()) {
             OutputView.printGetMoreCardsForDealer(dealer.getName());
-            gameService.getMoreCardForDealer(dealer);
+            gameService.getMoreCard(dealer);
         }
     }
 
-    private boolean isAllUserBurst(List<User> users) {
-        int burstUserCount = (int) users.stream()
-                .filter(User::isBurst)
-                .count();
-        return users.size() == burstUserCount;
-    }
-
-    private void printGameResult(List<User> users, Dealer dealer) {
+    private void printGameResult(Users users, Dealer dealer) {
         OutputView.printCardsResult(dealer.getName(), dealer.getCardsName(), dealer.calculateCardsValue());
-        for (User user : users) {
-            OutputView.printCardsResult(user.getName(), user.getCardsName(), user.calculateCardsValue());
-        }
+        users.forEach(user -> OutputView.printCardsResult(user.getName(), user.getCardsName(), user.calculateCardsValue()));
     }
 
-    private void printWinningResult(List<User> users, Dealer dealer) {
-        Map<String, Boolean> result = new HashMap<>();
-        int dealerWinCount = 0;
-        for (User user : users) {
-            dealerWinCount += gameService.applyGameResult(user, dealer, result);
-        }
-
-        OutputView.printWinningResult(result, dealer.getName(), dealerWinCount);
+    private void printWinningResult(Users users, Dealer dealer) {
+        GameResult gameResult = new GameResult();
+        users.forEach(user -> gameService.applyGameResult(user, dealer, gameResult));
+        OutputView.printWinningResult(gameResult, dealer.getName());
     }
-
 }
