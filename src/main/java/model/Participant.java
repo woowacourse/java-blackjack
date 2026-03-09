@@ -4,6 +4,7 @@ import dto.Card;
 import dto.PlayerResult;
 
 public class Participant {
+
     private final PlayerName name;
     private final ParticipantHand participantHand = new ParticipantHand();
 
@@ -12,7 +13,7 @@ public class Participant {
     }
 
     public PlayerResult getResult() {
-        return new PlayerResult(name.value(), participantHand.getHand().get(), getScore());
+        return new PlayerResult(name.value(), participantHand.getHand(), getScore());
     }
 
     public PlayerName getName() {
@@ -24,6 +25,10 @@ public class Participant {
         return participantHand.getScore();
     }
 
+    public int getHandSize() {
+        return participantHand.getHandSize();
+    }
+
     public void draw(Card card) {
         participantHand.addCard(card);
         Integer score = card.cardNumber().getScore();
@@ -33,5 +38,4 @@ public class Participant {
     public void addScore(Integer score) {
         participantHand.addScore(score);
     }
-
 }

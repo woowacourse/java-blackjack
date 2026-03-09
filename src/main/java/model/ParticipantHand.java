@@ -2,6 +2,7 @@ package model;
 
 import constant.ErrorMessage;
 import dto.Card;
+import java.util.List;
 
 public class ParticipantHand {
 
@@ -21,8 +22,12 @@ public class ParticipantHand {
         return score.get();
     }
 
-    public Cards getHand() {
-        return hand;
+    public Integer getHandSize() {
+        return hand.get().size();
+    }
+
+    public List<Card> getHand() {
+        return hand.get();
     }
 
     private void validateCardDuplicate(Card card) {
