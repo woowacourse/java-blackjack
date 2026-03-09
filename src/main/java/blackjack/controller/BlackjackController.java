@@ -52,7 +52,7 @@ public class BlackjackController {
 
     public void hit(Players players, Dealer dealer) {
         for (Player player : players.all()) {
-            while (retryUntilSuccess(() -> checkY(player)) && checkAddCard(player)) {
+            while (player.canHit() && retryUntilSuccess(() -> checkY(player))) {
                 deck.provideOneCard(player);
                 OutputView.printPlayerCards(player);
             }
@@ -71,12 +71,5 @@ public class BlackjackController {
         return input.equals("y");
     }
 
-    private boolean checkAddCard(Player player) {
-        if (!player.canHit()) {
-            OutputView.printCantAddCard();
-            return false;
-        }
-        return true;
-    }
 }
 
