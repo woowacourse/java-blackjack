@@ -83,4 +83,12 @@ public class Deck {
         }
         return DeckStatus.ALIVE;
     }
+
+    public boolean isBurst() {
+        return deckStatus == DeckStatus.BURST;
+    }
+
+    public boolean isAlive() {
+        return deckStatus == DeckStatus.ALIVE;
+    }
 }
