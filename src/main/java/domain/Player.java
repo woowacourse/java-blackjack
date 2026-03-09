@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Player {
     private final String name;
-    private final List<Card> hand = new ArrayList<>();
+    private final Hand hand = new Hand();
     private boolean isBust = false;
 
     public Player(String name) {
@@ -25,24 +25,14 @@ public class Player {
     }
 
     public List<Card> getHand() {
-        return List.copyOf(hand);
+        return hand.getHand();
     }
 
     public List<String> getHandToString() {
-        return hand.stream()
-                .map(Card::toString)
-                .toList();
+        return hand.toStringList();
     }
 
     public void setBust() {
         isBust = true;
     }
-
-    @Override
-    public String toString() {
-        return "domain.Player{" +
-                "name='" + name + '\'' +
-                ", hand=" + hand +
-                ", isBust=" + isBust +
-                '}';
-    }}
+}
