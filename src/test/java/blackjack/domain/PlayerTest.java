@@ -46,12 +46,27 @@ public class PlayerTest {
     }
 
     @Test
+    void 승자를_판단하는_기능_테스트() {
+        // given
+        Player milan = new Player("밀란");
+        milan.draw(new Card(CardValue.FOUR, CardShape.DIAMOND));
+        Player blackBear = new Player("흑곰");
+        blackBear.draw(new Card(CardValue.SIX, CardShape.CLOVER));
+
+        // when
+        boolean isWin = milan.winsAgainst(blackBear);
+
+        // then
+        assertThat(isWin).isFalse();
+    }
+
+    @Test
     void 가지고_있는_카드의_핪이_버스트인지_확인하는_테스트() {
         // given
         Player player = new Player("밀란");
         player.draw(new Card(CardValue.TEN, CardShape.DIAMOND));
-        player.draw(new Card(CardValue.TEN, CardShape.DIAMOND));
-        player.draw(new Card(CardValue.TEN, CardShape.DIAMOND));
+        player.draw(new Card(CardValue.TEN, CardShape.CLOVER));
+        player.draw(new Card(CardValue.TEN, CardShape.HEART));
 
         // when
         boolean isBurst = player.isBurst();
@@ -119,18 +134,19 @@ public class PlayerTest {
     }
 
     @Test
-    void 승패_판단_테스트() {
+    void 첫_번째_카드_이름을_가져오는_기능_테스트() {
         // given
-        Player player = new Player("흑곰");
-        Player dealer = new Player("딜러");
-        player.draw(new Card(CardValue.SEVEN, CardShape.DIAMOND));
-        dealer.draw(new Card(CardValue.EIGHT, CardShape.DIAMOND));
+        Player player = new Player("밀란");
+        Card firstCard = new Card(CardValue.ACE, CardShape.CLOVER);
+        Card secondCard = new Card(CardValue.TEN, CardShape.DIAMOND);
+        player.draw(firstCard);
+        player.draw(secondCard);
 
         // when
-        boolean isDealerWinning = dealer.winsAgainst(player);
+        String firstCardName = player.getFirstCardName();
 
         // then
-        assertThat(isDealerWinning).isTrue();
+        assertThat(firstCardName).isEqualTo(firstCard.getName());
     }
 
 }
