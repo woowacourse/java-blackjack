@@ -1,7 +1,5 @@
 package model;
 
-import dto.PlayerName;
-
 public class Dealer extends Participant{
     private static final String DEALER_NAME = "딜러";
 

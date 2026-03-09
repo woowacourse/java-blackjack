@@ -1,7 +1,7 @@
 package view;
 
 import constant.ErrorMessage;
-import dto.PlayerName;
+import model.PlayerName;
 import java.util.List;
 import java.util.Scanner;
 

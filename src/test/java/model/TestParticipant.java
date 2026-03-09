@@ -3,7 +3,6 @@ package model;
 
 import java.util.List;
 import dto.Card;
-import dto.PlayerName;
 import dto.PlayerResult;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +16,7 @@ public class TestParticipant {
 
         PlayerResult result = participant.getResult();
 
-        assertThat(result.name().value()).isEqualTo("jason");
+        assertThat(result.name()).isEqualTo("jason");
         assertThat(result.hand().isEmpty()).isTrue();
         assertThat(result.score()).isEqualTo(0);
     }

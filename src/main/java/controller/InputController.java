@@ -1,6 +1,6 @@
 package controller;
 
-import dto.PlayerName;
+import model.PlayerName;
 import java.util.List;
 import model.Agreement;
 import model.Player;

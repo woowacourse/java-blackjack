@@ -8,7 +8,7 @@ import model.BlackJackDeck;
 import model.Dealer;
 import constant.MatchStatus;
 import model.Player;
-import dto.PlayerName;
+import model.PlayerName;
 import model.Players;
 import dto.ParticipantWinning;
 import org.junit.jupiter.api.Test;

@@ -5,7 +5,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import constant.ErrorMessage;
 import java.util.List;
-import dto.PlayerName;
 import org.junit.jupiter.api.Test;
 
 public class TestPlayers {

@@ -1,15 +1,13 @@
 package view;
 
-
-import java.util.List;
-import java.util.Map.Entry;
-import model.DealerWinning;
 import constant.MatchStatus;
-import model.PlayersWinning;
 import dto.Card;
 import dto.ParticipantWinning;
 import dto.PlayerResult;
 import dto.PlayerWinning;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class OutputView {
     private static final String JOIN_DELIMITER = ", ";
@@ -25,7 +23,7 @@ public class OutputView {
     private static final String DEALER_TEXT = "딜러:";
 
     public static void printInitDeck(List<PlayerResult> players, PlayerResult dealer) {
-        List<String> playerNames = players.stream().map(playerResult -> playerResult.name().value()).toList();
+        List<String> playerNames = players.stream().map(PlayerResult::name).toList();
         printInitDeckDrawMessage(playerNames);
         printDealerInitDeck(dealer.hand().getFirst());
         printPlayersCurrentDeck(players);
@@ -34,7 +32,7 @@ public class OutputView {
 
     public static void printPlayerCurrentDeck(PlayerResult playerResult) {
         List<String> cardString = playerResult.hand().stream().map(Card::getString).toList();
-        System.out.println(playerResult.name().value() + CARD_TEXT + String.join(JOIN_DELIMITER, cardString));
+        System.out.println(playerResult.name() + CARD_TEXT + String.join(JOIN_DELIMITER, cardString));
     }
 
     public static void printDealerCardDrawMessage() {
@@ -77,12 +75,12 @@ public class OutputView {
 
     private static void printPlayerScore(PlayerResult playerResult) {
         List<String> cardString = playerResult.hand().stream().map(Card::getString).toList();
-        System.out.println(playerResult.name().value() + CARD_TEXT + String.join(JOIN_DELIMITER, cardString) + SCORE_TEXT + playerResult.score());
+        System.out.println(playerResult.name() + CARD_TEXT + String.join(JOIN_DELIMITER, cardString) + SCORE_TEXT + playerResult.score());
     }
 
-    private static void printDealerResult(DealerWinning dealerWinning) {
+    private static void printDealerResult(Map<MatchStatus, Integer> dealerWinning) {
         System.out.print(DEALER_TEXT);
-        for(Entry<MatchStatus, Integer> matchStatus : dealerWinning.getDealerWinning().entrySet()) {
+        for(Entry<MatchStatus, Integer> matchStatus : dealerWinning.entrySet()) {
             printStatusResult(matchStatus.getKey(), matchStatus.getValue());
         }
         printNewLine();
@@ -96,14 +94,14 @@ public class OutputView {
 
     }
 
-    private static void printPlayersResult(PlayersWinning playersWinning) {
-        for(PlayerWinning playerWinning : playersWinning.getPlayersWinnings()) {
+    private static void printPlayersResult(List<PlayerWinning> playersWinning) {
+        for(PlayerWinning playerWinning : playersWinning) {
             printPlayerResult(playerWinning);
         }
     }
 
     private static void printPlayerResult(PlayerWinning playerWinning) {
-        System.out.println(playerWinning.name().value() + RESULT_DELIMITER + playerWinning.matchStatus().getStatus());
+        System.out.println(playerWinning.name() + RESULT_DELIMITER + playerWinning.matchStatus().getStatus());
     }
 
 }

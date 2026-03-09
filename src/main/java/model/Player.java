@@ -2,7 +2,6 @@ package model;
 
 import constant.ErrorMessage;
 import java.util.Objects;
-import dto.PlayerName;
 
 public class Player extends Participant {
     private static final String DEALER_NAME = "딜러";

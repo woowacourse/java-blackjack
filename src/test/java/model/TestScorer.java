@@ -3,7 +3,6 @@ package model;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import dto.Card;
-import dto.PlayerName;
 import org.junit.jupiter.api.Test;
 
 public class TestScorer {

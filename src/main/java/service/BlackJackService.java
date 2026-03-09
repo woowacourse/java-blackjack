@@ -52,7 +52,7 @@ public class BlackJackService {
 
         for(Player player : players.getPlayers()) {
             MatchStatus matchStatus = getPlayerResult(player, dealer);
-            playersWinning.add(new PlayerWinning(player.getName(), matchStatus));
+            playersWinning.add(new PlayerWinning(player.getResult().name(), matchStatus));
         }
 
         return playersWinning;

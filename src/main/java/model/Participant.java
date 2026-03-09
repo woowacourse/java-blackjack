@@ -1,7 +1,6 @@
 package model;
 
 import dto.Card;
-import dto.PlayerName;
 import dto.PlayerResult;
 
 public class Participant {
@@ -13,12 +12,13 @@ public class Participant {
     }
 
     public PlayerResult getResult() {
-        return new PlayerResult(name, participantHand.getHand().get(), getScore());
+        return new PlayerResult(name.value(), participantHand.getHand().get(), getScore());
     }
 
     public PlayerName getName() {
         return name;
     }
+
 
     public Integer getScore() {
         return participantHand.getScore();
