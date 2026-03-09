@@ -10,7 +10,7 @@ GameResult {
 
     public static final int BLACKJACK_SCORE = 21;
 
-    private String description;
+    private final String description;
 
     GameResult(String description) {
         this.description = description;

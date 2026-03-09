@@ -5,13 +5,13 @@ import java.util.List;
 
 public class Parser {
 
+    private static final String DELIMITER = ",";
+
     private Parser() {
     }
 
-    private static final String delimiter = ",";
-
-    public static List<String> parseByDelimiter(String delimiter, String input) {
-        return Arrays.stream(input.split(delimiter))
+    public static List<String> parseByDelimiter(String input) {
+        return Arrays.stream(input.split(DELIMITER))
                 .map(String::strip)
                 .toList();
     }

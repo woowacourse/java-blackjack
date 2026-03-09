@@ -8,16 +8,14 @@ import util.Parser;
 public final class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
-    private static final String DELIMITER = ",";
     private static final String NEW_LINE = System.lineSeparator();
 
     private InputView() {
     }
 
-    public static List<String> readPlayerNames() {
+    public static String readPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
-        String input = readLine();
-        return Parser.parseByDelimiter(DELIMITER, input);
+        return readLine();
     }
 
     public static String readHitOrStand(String name) {

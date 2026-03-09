@@ -6,6 +6,8 @@ import domain.Referee;
 import domain.card.Deck;
 import domain.participant.Participant;
 import java.util.List;
+
+import util.Parser;
 import view.InputView;
 import view.OutputView;
 
@@ -22,7 +24,8 @@ public class BlackjackGame {
     }
 
     private Participants createParticipants(Deck deck) {
-        List<String> playerNames = InputView.readPlayerNames();
+        String inputNames = InputView.readPlayerNames();
+        List<String> playerNames = Parser.parseByDelimiter(inputNames);
         return new Participants(playerNames, deck);
     }
 
