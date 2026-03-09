@@ -1,6 +1,7 @@
 package controller;
 
 import domain.card.Deck;
+import domain.card.DefaultShuffleStrategy;
 import domain.card.MatchResult;
 import domain.participant.Dealer;
 import domain.participant.Player;
@@ -23,7 +24,7 @@ public class BlackJackController {
     }
 
     public void play() {
-        Deck deck = new Deck();
+        Deck deck = new Deck(new DefaultShuffleStrategy());
         Dealer dealer = new Dealer();
         Players players = readUntilValidPlayers();
 

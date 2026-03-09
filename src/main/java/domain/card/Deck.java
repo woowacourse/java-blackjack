@@ -6,12 +6,12 @@ public class Deck {
 
     private final List<Card> cards = new ArrayList<>();
 
-    public Deck() {
+    public Deck(ShuffleStrategy shuffleStrategy) {
         for (Suit suit : Suit.values()) {
             generateRank(suit);
         }
 
-        Collections.shuffle(cards);
+        shuffleStrategy.shuffle(cards);
     }
 
     public Card drawCard() {

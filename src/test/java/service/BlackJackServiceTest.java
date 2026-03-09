@@ -21,7 +21,8 @@ class BlackJackServiceTest {
         Dealer dealer = new Dealer();
         Players players = new Players(List.of("pobi", "james"));
 
-        BlackJackService blackJackService = new BlackJackService(new Deck(), dealer, players);
+        BlackJackService blackJackService = new BlackJackService(
+                new Deck(new DefaultShuffleStrategy()), dealer, players);
 
         Assertions.assertEquals(dealer.getHand().getHand().size(), 0);
         for (Player player : players.getPlayers()) {
@@ -44,7 +45,8 @@ class BlackJackServiceTest {
         // given
         Dealer dealer = new Dealer();
         Players players = new Players(List.of("pobi"));
-        BlackJackService blackJackService = new BlackJackService(new Deck(), dealer, players);
+        BlackJackService blackJackService = new BlackJackService(
+                new Deck(new DefaultShuffleStrategy()), dealer, players);
 
         dealer.hit(new Card(Rank.JACK, Suit.CLOVER));
         dealer.hit(new Card(Rank.SEVEN, Suit.HEART));
@@ -69,7 +71,8 @@ class BlackJackServiceTest {
         // given
         Dealer dealer = new Dealer();
         Players players = new Players(List.of("pobi"));
-        BlackJackService blackJackService = new BlackJackService(new Deck(), dealer, players);
+        BlackJackService blackJackService = new BlackJackService(
+                new Deck(new DefaultShuffleStrategy()), dealer, players);
 
         dealer.hit(new Card(Rank.JACK, Suit.CLOVER));
         dealer.hit(new Card(Rank.SEVEN, Suit.HEART));
@@ -94,7 +97,8 @@ class BlackJackServiceTest {
         // given
         Dealer dealer = new Dealer();
         Players players = new Players(List.of("pobi"));
-        BlackJackService blackJackService = new BlackJackService(new Deck(), dealer, players);
+        BlackJackService blackJackService = new BlackJackService(
+                new Deck(new DefaultShuffleStrategy()), dealer, players);
 
         dealer.hit(new Card(Rank.ACE, Suit.CLOVER));
         dealer.hit(new Card(Rank.KING, Suit.CLOVER));
@@ -119,7 +123,8 @@ class BlackJackServiceTest {
         // given
         Dealer dealer = new Dealer();
         Players players = new Players(List.of("pobi"));
-        BlackJackService blackJackService = new BlackJackService(new Deck(), dealer, players);
+        BlackJackService blackJackService = new BlackJackService(
+                new Deck(new DefaultShuffleStrategy()), dealer, players);
 
         dealer.hit(new Card(Rank.ACE, Suit.CLOVER));
         dealer.hit(new Card(Rank.KING, Suit.CLOVER));
@@ -145,7 +150,8 @@ class BlackJackServiceTest {
         // given
         Dealer dealer = new Dealer();
         Players players = new Players(List.of("pobi"));
-        BlackJackService blackJackService = new BlackJackService(new Deck(), dealer, players);
+        BlackJackService blackJackService = new BlackJackService(
+                new Deck(new DefaultShuffleStrategy()), dealer, players);
 
         dealer.hit(new Card(Rank.JACK, Suit.CLOVER));
         dealer.hit(new Card(Rank.SEVEN, Suit.HEART));
@@ -171,7 +177,8 @@ class BlackJackServiceTest {
         // given
         Dealer dealer = new Dealer();
         Players players = new Players(List.of("pobi"));
-        BlackJackService blackJackService = new BlackJackService(new Deck(), dealer, players);
+        BlackJackService blackJackService = new BlackJackService(
+                new Deck(new DefaultShuffleStrategy()), dealer, players);
 
         dealer.hit(new Card(Rank.JACK, Suit.CLOVER));
         dealer.hit(new Card(Rank.ACE, Suit.HEART));
@@ -197,7 +204,8 @@ class BlackJackServiceTest {
         // given
         Dealer dealer = new Dealer();
         Players players = new Players(List.of("pobi"));
-        BlackJackService blackJackService = new BlackJackService(new Deck(), dealer, players);
+        BlackJackService blackJackService = new BlackJackService(
+                new Deck(new DefaultShuffleStrategy()), dealer, players);
 
         dealer.hit(new Card(Rank.ACE, Suit.CLOVER));
         dealer.hit(new Card(Rank.KING, Suit.CLOVER));
@@ -223,7 +231,8 @@ class BlackJackServiceTest {
         // given
         Dealer dealer = new Dealer();
         Players players = new Players(List.of());
-        BlackJackService blackJackService = new BlackJackService(new Deck(), dealer, players);
+        BlackJackService blackJackService = new BlackJackService(
+                new Deck(new DefaultShuffleStrategy()), dealer, players);
 
         Map<String, MatchResult> playerResults = new HashMap<>();
 
