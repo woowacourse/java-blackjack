@@ -29,7 +29,7 @@ public class InputView {
         String input = scanner.nextLine();
 
         if(input.isBlank()) {
-            throw new IllegalArgumentException(ErrorMessage.INPUT_IS_BLANK.getMessage());
+            ErrorMessage.INPUT_IS_BLANK.throwException();
         }
         return input;
     }

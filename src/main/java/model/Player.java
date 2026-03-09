@@ -13,7 +13,7 @@ public class Player extends Participant {
 
     private void validate(PlayerName name) {
         if(name.value().equals(DEALER_NAME)) {
-            throw new IllegalArgumentException(ErrorMessage.NO_PLAYER_NAME_DEALER.getMessage());
+            ErrorMessage.NO_PLAYER_NAME_DEALER.throwException();
         }
     }
 

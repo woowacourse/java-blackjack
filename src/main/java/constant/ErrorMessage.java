@@ -23,4 +23,8 @@ public enum ErrorMessage {
     public String getMessage() {
         return message;
     }
+
+    public void throwException() {
+        throw new IllegalArgumentException(message);
+    }
 }

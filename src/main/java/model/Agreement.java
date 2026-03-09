@@ -24,13 +24,13 @@ public class Agreement {
 
     private void validateEmptyValue(String value) {
         if(value.isBlank()) {
-            throw new IllegalArgumentException(ErrorMessage.INPUT_IS_BLANK.getMessage());
+            ErrorMessage.INPUT_IS_BLANK.throwException();
         }
     }
 
     private void validatePossibleValue(String value) {
         if(!value.equals(TRUE_TEXT) && !value.equals(FALSE_TEXT)) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_CONDITION_INPUT.getMessage());
+            ErrorMessage.INVALID_CONDITION_INPUT.throwException();
         }
     }
 }

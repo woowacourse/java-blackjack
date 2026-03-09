@@ -23,7 +23,7 @@ public class BlackJackDeck {
     public Card draw() {
         List<Card> currentCards = cards.get();
         if(currentCards.isEmpty()) {
-            throw new IllegalArgumentException(ErrorMessage.NO_CARD_IN_DECK.getMessage());
+            ErrorMessage.NO_CARD_IN_DECK.throwException();
         }
 
         Card drawedCard = currentCards.removeFirst();

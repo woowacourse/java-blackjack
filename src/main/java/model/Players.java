@@ -15,7 +15,7 @@ public class Players {
 
     private void validate(List<Player> players) {
         if (new HashSet<>(players).size() != players.size()) {
-            throw new IllegalArgumentException(ErrorMessage.DUPLICATED_NAME.getMessage());
+            ErrorMessage.DUPLICATED_NAME.throwException();
         }
     }
 

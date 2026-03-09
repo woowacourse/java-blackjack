@@ -27,7 +27,7 @@ public class ParticipantHand {
 
     private void validateCardDuplicate(Card card) {
         if(hand.get().contains(card)) {
-            throw new IllegalArgumentException(ErrorMessage.DUPLICATED_CARD_IN_DECK.getMessage());
+            ErrorMessage.DUPLICATED_CARD_IN_DECK.throwException();
         }
     }
 }
