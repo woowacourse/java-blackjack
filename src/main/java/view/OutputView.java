@@ -23,8 +23,12 @@ public class OutputView {
         System.out.println("딜러카드: " + card);
     }
 
-    public static void printPlayerCards(PlayerCardInfo playerCardInfo) {
-        System.out.println(playerCardInfo.name() + "카드 : " + String.join(", ", playerCardInfo.card()));
+    public static void printGamblerCards(String name, PlayerCardInfo playerCardInfo) {
+        System.out.println(name + "카드 : " + String.join(", ", playerCardInfo.card()));
+    }
+
+    public static void printDealerCards(PlayerCardInfo playerCardInfo) {
+        System.out.println("딜러카드 : " + String.join(", ", playerCardInfo.card()));
     }
 
     public static void printPlayerBust(String name) {
@@ -38,9 +42,13 @@ public class OutputView {
     public static void printDealerHit() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
+    public static void printFinalGambler(String name, PlayerCardInfo playerCardInfo) {
+        System.out.println(name + "카드: " +
+                String.join(", ", playerCardInfo.card()) + " - 결과: " + playerCardInfo.score());
+    }
 
-    public static void printFinalPlayer(PlayerCardInfo playerCardInfo) {
-        System.out.println(playerCardInfo.name() + "카드: " +
+    public static void printFinalDealer(PlayerCardInfo playerCardInfo) {
+        System.out.println("딜러카드: " +
                 String.join(", ", playerCardInfo.card()) + " - 결과: " + playerCardInfo.score());
     }
 

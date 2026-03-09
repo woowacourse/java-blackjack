@@ -4,9 +4,14 @@ import domain.MatchResult;
 
 public class Gambler extends Player {
 
-
+    private final Name name;
     public Gambler(String name) {
-        super(new Name(name));
+        super();
+        this.name = new Name(name);
+    }
+
+    public String getName(){
+        return name.getName();
     }
 
     public MatchResult getResult(int dealerScore) {

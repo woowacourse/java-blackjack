@@ -2,7 +2,6 @@ import domain.deck.CardDeck;
 import domain.player.Dealer;
 import domain.player.Gambler;
 import domain.player.Gamblers;
-import domain.player.Player;
 import dto.PlayerCardInfo;
 import java.util.List;
 import parser.AnswerParser;
@@ -49,11 +48,11 @@ public class BlackJack {
         OutputView.printInitMessage(gamblers.getNames());
         OutputView.printDealerFirstCard(dealer.firstCard());
 
-        gamblers.forEach(this::printPlayerCardInfo);
+        gamblers.forEach(this::printGamblerCardInfo);
     }
 
-    private void printPlayerCardInfo(Player player) {
-        OutputView.printPlayerCards(PlayerCardInfo.from(player));
+    private void printGamblerCardInfo(Gambler gambler) {
+        OutputView.printGamblerCards(gambler.getName(), PlayerCardInfo.from(gambler));
     }
 
     private void gamblersTurn(Gamblers gamblers) {
@@ -61,13 +60,14 @@ public class BlackJack {
     }
 
     private void gamblerTurn(Gambler gambler) {
-        while (askHit(gambler.getName()) && !gambler.isBust()) {
+        while (!gambler.isBust() && askHit(gambler.getName())) {
             gambler.deal(cardDeck);
-            OutputView.printPlayerCards(PlayerCardInfo.from(gambler));
+            OutputView.printGamblerCards(gambler.getName(), PlayerCardInfo.from(gambler));
         }
 
-        if(gambler.isBust())
+        if (gambler.isBust()) {
             OutputView.printPlayerBust(gambler.getName());
+        }
     }
 
     private boolean askHit(String name) {
@@ -83,12 +83,12 @@ public class BlackJack {
     }
 
     private void printFinalPlayerInfo(Dealer dealer, Gamblers gamblers) {
-        printFinalPlayerCardInfo(dealer);
-        gamblers.forEach(this::printFinalPlayerCardInfo);
+        OutputView.printFinalDealer(PlayerCardInfo.from(dealer));
+        gamblers.forEach(this::printFinalGamblerCardInfo);
     }
 
-    private void printFinalPlayerCardInfo(Player player) {
-        OutputView.printFinalPlayer(PlayerCardInfo.from(player));
+    private void printFinalGamblerCardInfo(Gambler gambler) {
+        OutputView.printFinalGambler(gambler.getName(), PlayerCardInfo.from(gambler));
     }
 
     private void printFinalResult(Dealer dealer, Gamblers gamblers) {
