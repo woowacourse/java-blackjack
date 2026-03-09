@@ -24,3 +24,4 @@ public class User {
         cardStatus.addCard(card);
     }
 }
+

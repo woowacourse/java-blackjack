@@ -19,3 +19,4 @@ public class CardStatus {
         cards.add(card);
     }
 }
+

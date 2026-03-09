@@ -18,3 +18,4 @@ public class Dealer extends User {
         gameResults.put(gameResult, gameResults.getOrDefault(gameResult, 0) + 1);
     }
 }
+

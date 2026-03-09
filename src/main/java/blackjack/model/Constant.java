@@ -12,3 +12,4 @@ public class Constant {
     public static final int ACE_SCORE_ELEVEN = 11;
 
 }
+

@@ -17,3 +17,4 @@ public class Player extends User {
         this.gameResult = gameResult;
     }
 }
+
