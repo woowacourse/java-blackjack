@@ -12,7 +12,7 @@ public class Cards {
     }
 
     public Cards(List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
     public int sumScore() {
