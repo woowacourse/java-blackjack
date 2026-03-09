@@ -50,16 +50,4 @@ public enum CardRank {
     public int getAdditionalValue() {
         return additionalValue;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public int getAdditionalValue() {
-        return additionalValue;
-    }
 }
