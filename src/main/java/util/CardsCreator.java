@@ -11,11 +11,15 @@ public class CardsCreator {
     public static List<Card> createLinkedCards() {
         List<Card> cards = new LinkedList<>();
         for (Rank rank : Rank.values()) {
-            for (Suit suit : Suit.values()) {
-                cards.add(new Card(rank, suit));
-            }
+            addCards(rank, cards);
         }
 
         return cards;
+    }
+
+    private static void addCards(Rank rank, List<Card> cards) {
+        for (Suit suit : Suit.values()) {
+            cards.add(new Card(rank, suit));
+        }
     }
 }
