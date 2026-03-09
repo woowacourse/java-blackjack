@@ -27,12 +27,12 @@ public class GameService {
     public void settleResult(List<User> users, Dealer dealer) {
         dealer.calculateScore();
         boolean dealerBurst = dealer.isBurst();
-        users.forEach(user -> user.setGameResult(decideResult(user,dealer,dealerBurst)));
+        users.forEach(user -> user.setGameResult(decideResult(user,dealer)));
     }
 
-    private GameResult decideResult(User user, Dealer dealer, boolean dealerBurst) {
+    private GameResult decideResult(User user, Dealer dealer) {
         user.calculateScore();
-        dealer.calculateScore();
+        boolean dealerBurst = dealer.isBurst();
         boolean userBurst = user.isBurst();
 
         if (dealerBurst && userBurst) {
@@ -48,11 +48,11 @@ public class GameService {
             return GameResult.LOSE;
         }
 
-        if (userScore > dealerScore) {
+        if (user.getScore() > dealer.getScore()) {
             dealer.setRounds(GameResult.LOSE);
             return GameResult.WIN;
         }
-        if (userScore < dealerScore) {
+        if (user.getScore() < dealer.getScore()) {
             dealer.setRounds(GameResult.WIN);
             return GameResult.LOSE;
         }
