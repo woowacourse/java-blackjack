@@ -1,74 +1,66 @@
 package team.blackjack.domain.rule;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.List;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import team.blackjack.domain.Card;
 import team.blackjack.domain.Result;
 
 class DefaultBlackjackRuleTest {
-    @Test
-    void 각_핸드의_점수는_21점을_초과하는_경우_버스트이다() {
-        int handScore = 22;
 
+
+    @ParameterizedTest
+    @CsvSource({
+            "22, true",
+            "21, false"
+    })
+    void 버스트_판정(int handScore, boolean expected) {
         boolean isBust = DefaultBlackjackRule.isBust(handScore);
-
-        Assertions.assertEquals(true, isBust);
+        assertEquals(expected, isBust);
     }
 
-    @Test
-    void 각_핸드의_점수는_21점을_초과하지_않는_경우_버스트가_아니다() {
-        int handScore = 21;
-
-        boolean isBust = DefaultBlackjackRule.isBust(handScore);
-
-        Assertions.assertEquals(false, isBust);
-    }
-
-    @Test
-    void 각_핸드의_카드_개수가_2개이고_점수가_21점인_경우_블랙잭이다() {
-        int handScore = 21;
-        int cardCount = 2;
-
+    @ParameterizedTest
+    @CsvSource({
+            "21, 2, true",
+            "21, 3, false",
+            "20, 2, false"
+    })
+    void 블랙잭_판정(int handScore, int cardCount, boolean expected) {
         boolean isBlackjack = DefaultBlackjackRule.isBlackjack(handScore, cardCount);
-
-        Assertions.assertEquals(true, isBlackjack);
+        assertEquals(expected, isBlackjack);
     }
 
-    @Test
-    void 각_핸드의_카드_개수가_3개이상이고_점수가_21점인_경우_블랙잭이_아니다() {
-        int handScore = 21;
-        int cardCount = 3;
-
-        boolean isBlackjack = DefaultBlackjackRule.isBlackjack(handScore, cardCount);
-
-        Assertions.assertEquals(false, isBlackjack);
-    }
-
-    @Test
-    void 각_핸드의_점수가_21점이_아닌_경우_블랙잭이_아니다() {
-        int handScore = 20;
-        int cardCount = 2;
-
-        boolean isBlackjack = DefaultBlackjackRule.isBlackjack(handScore, cardCount);
-
-        Assertions.assertEquals(false, isBlackjack);
-    }
-
-    @Test
-    void 딜러의_점수가_17점_미만인_경우_딜러는_카드를_더_받아야한다() {
-        int dealerScore = 16;
+    @ParameterizedTest
+    @CsvSource({
+            "16, true",
+            "17, false"
+    })
+    void 딜러_카드_추가_여부(int dealerScore, boolean expected) {
         boolean isDealerMustDraw = DefaultBlackjackRule.isDealerMustDraw(dealerScore);
-
-        Assertions.assertEquals(true, isDealerMustDraw);
+        assertEquals(expected, isDealerMustDraw);
     }
 
-    @Test
-    void 딜러의_점수가_17점_이상인_경우_딜러는_카드를_더_받지_않아야한다() {
-        int dealerScore = 17;
-        boolean isDealerMustDraw = DefaultBlackjackRule.isDealerMustDraw(dealerScore);
+    @ParameterizedTest
+    @CsvSource({
+            "20,18,WIN",
+            "18,20,LOSE",
+            "17,17,DRAW",
+            "22,20,LOSE"
+    })
+    void 승패_판정(int myScore, int opponentScore, Result expected) {
+        assertEquals(expected, DefaultBlackjackRule.judgeResult(myScore, opponentScore));
+    }
 
-        Assertions.assertEquals(false, isDealerMustDraw);
+    @ParameterizedTest
+    @CsvSource({
+            "10, true",
+            "11, false"
+    })
+    void Ace를_11로_사용_가능한지(int score, boolean expected) {
+        assertEquals(expected, DefaultBlackjackRule.canUseAceAsEleven(score));
     }
 
 
@@ -78,7 +70,7 @@ class DefaultBlackjackRuleTest {
 
         int score = DefaultBlackjackRule.calculateBestScore(cards);
 
-        Assertions.assertEquals(18, score);
+        assertEquals(18, score);
     }
 
     @Test
@@ -86,36 +78,6 @@ class DefaultBlackjackRuleTest {
         List<Card> cards = List.of(Card.FIVE_OF_CLUBS, Card.FIVE_OF_DIAMONDS, Card.ACE_OF_SPADES);
         int score = DefaultBlackjackRule.calculateBestScore(cards);
 
-        Assertions.assertEquals(21, score);
-    }
-
-    @Test
-    void 내_점수가_더_높으면_WIN() {
-        Assertions.assertEquals(Result.WIN, DefaultBlackjackRule.judgeResult(20, 18));
-    }
-
-    @Test
-    void 상대_점수가_더_높으면_LOSE() {
-        Assertions.assertEquals(Result.LOSE, DefaultBlackjackRule.judgeResult(18, 20));
-    }
-
-    @Test
-    void 동점이면_DRAW() {
-        Assertions.assertEquals(Result.DRAW, DefaultBlackjackRule.judgeResult(17, 17));
-    }
-
-    @Test
-    void 버스트_21초과면_LOSE() {
-        Assertions.assertEquals(Result.LOSE, DefaultBlackjackRule.judgeResult(22, 20));
-    }
-
-    @Test
-    void 합이_10이하면_Ace는_11() {
-        Assertions.assertTrue(DefaultBlackjackRule.canUseAceAsEleven(10));
-    }
-
-    @Test
-    void 합이_10초과면_Ace는_11() {
-        Assertions.assertFalse(DefaultBlackjackRule.canUseAceAsEleven(11));
+        assertEquals(21, score);
     }
 }
