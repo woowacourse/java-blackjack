@@ -48,7 +48,7 @@ public class BlackjackController {
         for (String name : players.getAllPlayerNames()) {
             playPlayerTurn(game, players, name, deck);
         }
-        blackjackService.playDealerTurn(game, deck);
+        playDealerTurn(game, deck);
     }
 
     private void playPlayerTurn(Game game, Players players, String name, Deck deck) {
@@ -63,6 +63,13 @@ public class BlackjackController {
     private boolean isPlayerWantHit(String name) {
         String input = retryOnException(() -> InputView.askPlayerHit(name));
         return InputParser.parseHitAnswer(input);
+    }
+
+    public void playDealerTurn(Game game, Deck deck) {
+        while (!game.isDealerBust()) {
+            blackjackService.playDealerTurn(game, deck);
+            OutputView.printDealerHit();
+        }
     }
 
     private void printResult(Game game, Dealer dealer, Players players) {

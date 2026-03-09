@@ -11,7 +11,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import util.InputParser;
-import view.OutputView;
 
 public class BlackjackService {
     public Players makePlayers(String input) {
@@ -35,10 +34,7 @@ public class BlackjackService {
     }
 
     public void playDealerTurn(Game game, Deck deck) {
-        while (!game.isDealerBust()) {
-            game.dealerHit(deck);
-            OutputView.printDealerHit();
-        }
+        game.dealerHit(deck);
     }
 
     public Map<String, List<CardDto>> makePlayerCardDtos(Players players) {
