@@ -14,9 +14,9 @@ public class Deck {
 
     private List<Card> initialize() {
         List<Card> results = new ArrayList<>();
-        for (CardShape cardShape : CardShape.values()) {
+        for (CardSuit cardSuit : CardSuit.values()) {
             Arrays.stream(CardNumber.values())
-                    .forEach(cardNumber -> results.add(new Card(cardNumber, cardShape)));
+                    .forEach(cardNumber -> results.add(new Card(cardNumber, cardSuit)));
         }
         Collections.shuffle(results);
         return results;
