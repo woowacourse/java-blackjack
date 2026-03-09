@@ -1,10 +1,11 @@
 package presentation.dto;
 
+import domain.card.Card;
 import java.util.List;
 
 public record MemberStatus(
-        String memberName,
-        List<String> cards,
+        String playerName,
+        List<Card> cards,
         int totalValue
 ) {
 }
