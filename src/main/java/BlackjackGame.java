@@ -4,7 +4,6 @@ import domain.Participants;
 import domain.Referee;
 import domain.card.Deck;
 import domain.participant.Dealer;
-import domain.participant.Name;
 import domain.participant.Player;
 import java.util.List;
 import view.InputView;
@@ -12,58 +11,62 @@ import view.OutputView;
 
 public class BlackjackGame {
 
+    private final Deck deck;
+
+    public BlackjackGame(Deck deck) {
+        this.deck = deck;
+    }
+
     public void run() {
-        Deck deck = new Deck();
-        Participants participants = createPlayers(deck);
-
-        OutputView.showCardNames(participants);
-//        playTurn(participants, deck);
-//        judge(participants);
+        Participants participants = createParticipants();
+        playTurns(participants);
+        judge(participants);
     }
 
-    private Participants createPlayers(Deck deck) {
+    private Participants createParticipants() {
         Dealer dealer = new Dealer(deck.dealInitialCards());
-        List<String> playerNames = InputView.readPlayerNames();
-        List<Player> players = playerNames.stream()
-                .map(name -> new Player(new Name(name), deck.dealInitialCards()))
-                .toList();
-        return new Participants(dealer, players);
+        List<Player> players = createPlayers();
+        Participants participants = new Participants(dealer, players);
+        OutputView.showCardNames(participants);
+        return participants;
     }
 
-//    private void playTurn(Participants participants, Deck deck, Dealer dealer) {
-//        playPlayerTurn(participants, deck);
-//        playDealerTurn(dealer, deck);
-//        OutputView.showResult(dealer, participants);
-//    }
-//
-//    private void playPlayerTurn(Participants participants, Deck deck) {
-//        participants.getParticipants()
-//                .forEach(player -> determineGameState(deck, player));
-//    }
+    private List<Player> createPlayers() {
+        List<String> playerNames = InputView.readPlayerNames();
+        return playerNames.stream()
+                .map(name -> new Player(name, deck.dealInitialCards()))
+                .toList();
+    }
 
-    private void determineGameState(Deck deck, Player player) {
-        while (player.isHit()) {
-            String input = InputView.readHitOrStand(player.getName());
-            GameCommand gameCommand = GameCommand.from(input);
-            if (gameCommand.isNo()) {
-                player.changeState();
-                break;
-            }
+    private void playTurns(Participants participants) {
+        participants.playPlayerTurn(this::playPlayerTurn);
+        participants.playDealerTurn(this::playDealerTurn);
+        OutputView.showResult(participants);
+    }
+
+    private void playPlayerTurn(Player player) {
+        while (!player.isBust() && wantHit(player)) {
             player.playTurn(deck);
             OutputView.showCardName(player);
         }
     }
 
-    private void playDealerTurn(Dealer dealer, Deck deck) {
-        while (dealer.isHit()) {
-            OutputView.showDealerMessage();
+    private boolean wantHit(Player player) {
+        String input = InputView.readHitOrStand(player.getName());
+        GameCommand command = GameCommand.from(input);
+        return command.isYes();
+    }
+
+    private void playDealerTurn(Dealer dealer) {
+        while (!dealer.isStand()) {
             dealer.playTurn(deck);
+            OutputView.showDealerMessage();
         }
     }
 
-    private void judge(Dealer dealer, Participants participants) {
+    private void judge(Participants participants) {
         Referee referee = new Referee();
-        GameStatistics statistics = referee.judge(dealer, participants);
+        GameStatistics statistics = referee.judge(participants);
         OutputView.showGameResult(statistics);
     }
 }

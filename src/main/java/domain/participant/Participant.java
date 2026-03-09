@@ -6,41 +6,35 @@ import domain.card.Card;
 import domain.card.Deck;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public abstract class Participant {
 
     protected final Name name;
     protected final Hand hand;
-    protected GameState gameState;
 
-    public Participant(Name name, Hand hand) {
-        this.name = name;
+    public Participant(String name, Hand hand) {
+        this.name = new Name(name);
         this.hand = hand;
-        this.gameState = GameState.HIT;
     }
 
     public abstract List<String> getInitialCards();
+
+    public abstract void play(Consumer<Participant> consumer);
 
     public boolean isBust() {
         return getScore() > BLACKJACK_SCORE;
     }
 
-    public void changeState() {
-        if (gameState == GameState.HIT) {
-            this.gameState = GameState.STAND;
-        }
-    }
-
     public void playTurn(Deck deck) {
         Card hitCard = deck.drawCard();
         hand.receiveCard(hitCard);
-        if (isBust()) {
-            changeState();
-        }
     }
 
-    public boolean isHit() {
-        return this.gameState == GameState.HIT;
+    public List<String> getCardNames() {
+        return hand.getCards().stream()
+                .map(Card::getCardName)
+                .toList();
     }
 
     public String getName() {
@@ -53,10 +47,6 @@ public abstract class Participant {
 
     public int getScore() {
         return hand.calculate();
-    }
-
-    public GameState getGameState() {
-        return gameState;
     }
 
     @Override

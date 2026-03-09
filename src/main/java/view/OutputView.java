@@ -4,7 +4,6 @@ import domain.GameResult;
 import domain.GameStatistics;
 import domain.Participants;
 import domain.card.Card;
-import domain.participant.Dealer;
 import domain.participant.Participant;
 import java.util.List;
 import java.util.Map;
@@ -50,17 +49,14 @@ public final class OutputView {
         System.out.println(NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void showResult(Dealer dealer, Participants participants) {
+    public static void showResult(Participants participants) {
         System.out.println();
-
-        showCardAndScore(dealer, dealer.getScore());
         participants.getParticipants()
                 .forEach(participant -> showCardAndScore(participant, participant.getScore()));
     }
 
     private static void showCardAndScore(Participant participant, int score) {
-        List<String> dealerCardNames = createCardNames(participant);
-        System.out.println(getCardNames(participant, dealerCardNames) + " - 결과: " + score);
+        System.out.println(getCardNames(participant, participant.getCardNames()) + " - 결과: " + score);
     }
 
     public static void showGameResult(GameStatistics statistics) {

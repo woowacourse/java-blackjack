@@ -2,10 +2,11 @@ package domain.participant;
 
 import domain.card.Card;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Player extends Participant {
 
-    public Player(Name name, Hand hand) {
+    public Player(String name, Hand hand) {
         super(name, hand);
     }
 
@@ -14,5 +15,10 @@ public class Player extends Participant {
         return hand.getCards().stream()
                 .map(Card::getCardName)
                 .toList();
+    }
+
+    @Override
+    public void play(Consumer<Participant> consumer) {
+        consumer.accept(this);
     }
 }

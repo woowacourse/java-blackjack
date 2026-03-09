@@ -11,10 +11,10 @@ public class Referee {
         this.gameStatistics = new GameStatistics();
     }
 
-    public GameStatistics judge(Dealer dealer, Participants participants) {
-        for (Participant player : participants.getParticipants()) {
-            judgePlayerResult(dealer, player);
-            judgeDealerResult(dealer, player);
+    public GameStatistics judge(Participants participants) {
+        for (Participant player : participants.getPlayers()) {
+            judgeDealerResult(participants.getDealer(), player);
+            judgePlayerResult(participants.getDealer(), player);
         }
         return gameStatistics;
     }

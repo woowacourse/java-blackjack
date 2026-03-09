@@ -1,15 +1,16 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.Deck;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Dealer extends Participant {
 
+    private static final String NAME_VALUE = "딜러";
     private static final int STAND_SCORE = 17;
 
     public Dealer(Hand hand) {
-        super(new Name("딜러"), hand);
+        super(NAME_VALUE, hand);
     }
 
     @Override
@@ -21,14 +22,11 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public void playTurn(Deck deck) {
-        super.playTurn(deck);
-        if (isStand()) {
-            changeState();
-        }
+    public void play(Consumer<Participant> consumer) {
+        consumer.accept(this);
     }
 
-    private boolean isStand() {
+    public boolean isStand() {
         return getScore() >= STAND_SCORE;
     }
 }

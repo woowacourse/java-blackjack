@@ -5,6 +5,7 @@ import domain.participant.Participant;
 import domain.participant.Player;
 import exception.ExceptionMessage;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 public class Participants {
@@ -48,5 +49,21 @@ public class Participants {
 
     public List<Participant> getParticipants() {
         return getParticipants(dealer, players);
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void playPlayerTurn(Consumer<Player> consumer) {
+        players.forEach(consumer);
+    }
+
+    public void playDealerTurn(Consumer<Dealer> consumer) {
+        consumer.accept(dealer);
     }
 }

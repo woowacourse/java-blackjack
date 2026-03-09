@@ -21,7 +21,7 @@ public enum GameCommand {
                 .orElseThrow(() -> new IllegalArgumentException(ExceptionMessage.COMMAND_NOT_FOUND.getMessage()));
     }
 
-    public boolean isNo() {
-        return this == N;
+    public boolean isYes() {
+        return this == Y;
     }
 }
