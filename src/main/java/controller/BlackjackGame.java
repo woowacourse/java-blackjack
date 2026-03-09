@@ -5,12 +5,12 @@ import domain.analyzer.dto.ResultAnalysisDto;
 import domain.answer.DrawDecision;
 import domain.card.CardDeck;
 import domain.card.CardGenerator;
-import domain.dealer.Dealer;
-import domain.player.Player;
-import domain.player.PlayerName;
-import domain.player.Players;
-import domain.player.dto.PlayerHandDto;
-import domain.player.dto.PlayerResultDto;
+import domain.gamer.Dealer;
+import domain.gamer.Player;
+import domain.gamer.PlayerName;
+import domain.gamer.Players;
+import domain.gamer.dto.PlayerHandDto;
+import domain.gamer.dto.PlayerResultDto;
 import domain.view.ApplicationView;
 
 import java.util.List;

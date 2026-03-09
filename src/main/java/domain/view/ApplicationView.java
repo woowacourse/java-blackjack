@@ -2,9 +2,9 @@ package domain.view;
 
 import domain.analyzer.dto.ResultAnalysisDto;
 import domain.answer.DrawDecision;
-import domain.player.PlayerName;
-import domain.player.dto.PlayerHandDto;
-import domain.player.dto.PlayerResultDto;
+import domain.gamer.PlayerName;
+import domain.gamer.dto.PlayerHandDto;
+import domain.gamer.dto.PlayerResultDto;
 
 import java.util.Arrays;
 import java.util.List;

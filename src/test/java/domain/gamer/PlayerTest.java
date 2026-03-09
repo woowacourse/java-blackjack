@@ -1,9 +1,8 @@
-package domain.player;
+package domain.gamer;
 
 import domain.card.*;
 import domain.card.exception.CardException;
-import domain.dealer.Dealer;
-import domain.player.exception.PlayerException;
+import domain.gamer.exception.PlayerException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import utils.CardDeckBuilder;

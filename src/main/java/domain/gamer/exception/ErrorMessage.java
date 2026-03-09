@@ -1,4 +1,4 @@
-package domain.player.exception;
+package domain.gamer.exception;
 
 import domain.common.exception.ExceptionInformation;
 

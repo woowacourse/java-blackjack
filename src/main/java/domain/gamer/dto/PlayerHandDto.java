@@ -1,11 +1,10 @@
-package domain.player.dto;
+package domain.gamer.dto;
 
-import domain.dealer.Dealer;
-import domain.player.Player;
+import domain.gamer.Dealer;
+import domain.gamer.Player;
 
 import java.util.List;
 
-// TODO 추후 Gamer로 개선 예정.
 public record PlayerHandDto(
         String playerName,
         String handOnCards

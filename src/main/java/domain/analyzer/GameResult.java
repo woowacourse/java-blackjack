@@ -1,7 +1,7 @@
 package domain.analyzer;
 
-import domain.dealer.Dealer;
-import domain.player.Player;
+import domain.gamer.Dealer;
+import domain.gamer.Player;
 
 public enum GameResult {
 

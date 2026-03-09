@@ -1,7 +1,7 @@
 package domain.analyzer.dto;
 
 import domain.analyzer.GameResult;
-import domain.player.Player;
+import domain.gamer.Player;
 
 public record PlayerGameResult(
         String playerName,

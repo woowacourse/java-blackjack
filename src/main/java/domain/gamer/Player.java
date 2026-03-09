@@ -1,8 +1,8 @@
-package domain.player;
+package domain.gamer;
 
 import domain.card.Card;
 import domain.card.CardBundle;
-import domain.player.dto.PlayerHandDto;
+import domain.gamer.dto.PlayerHandDto;
 
 import java.util.List;
 

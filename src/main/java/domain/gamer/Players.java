@@ -1,7 +1,6 @@
-package domain.player;
+package domain.gamer;
 
-import domain.dealer.Dealer;
-import domain.player.dto.PlayerHandDto;
+import domain.gamer.dto.PlayerHandDto;
 
 import java.util.List;
 import java.util.stream.Stream;

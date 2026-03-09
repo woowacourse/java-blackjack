@@ -1,8 +1,8 @@
-package domain.player;
+package domain.gamer;
 
 import domain.common.exception.BlackjackGameException;
-import domain.player.exception.ErrorMessage;
-import domain.player.exception.PlayerException;
+import domain.gamer.exception.ErrorMessage;
+import domain.gamer.exception.PlayerException;
 
 public record PlayerName(
         String name

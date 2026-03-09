@@ -2,10 +2,10 @@ package domain;
 
 import domain.analyzer.ResultAnalyzer;
 import domain.card.*;
-import domain.dealer.Dealer;
-import domain.player.Player;
-import domain.player.PlayerName;
-import domain.player.Players;
+import domain.gamer.Dealer;
+import domain.gamer.Player;
+import domain.gamer.PlayerName;
+import domain.gamer.Players;
 import domain.analyzer.dto.ResultAnalysisDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

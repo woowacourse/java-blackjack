@@ -1,18 +1,14 @@
-package domain.dealer;
+package domain.gamer;
 
 import domain.card.Card;
 import domain.card.CardBundle;
 import domain.card.CardDeck;
-import domain.player.Gamer;
-import domain.player.Player;
-import domain.player.PlayerName;
 
 import java.util.List;
 import java.util.stream.Stream;
 
 public class Dealer extends Gamer {
 
-    private static final String CANNOT_HAND_OUT_CARDS_ERROR = "딜러가 카드를 나눠줄 수 없습니다.";
     private static final String DEFAULT_DEALER_NAME = "딜러";
     private static final int ADDITIONAL_DRAW_CONDITION = 16;
     private static final int INITIAL_DEAL_COUNT = 2;
