@@ -3,12 +3,15 @@ package blackjack.controller;
 import blackjack.domain.Dealer;
 import blackjack.domain.GameResult;
 import blackjack.domain.Player;
+import blackjack.domain.PlayerCardsName;
+import blackjack.domain.PlayerFinalCardsScore;
+import blackjack.domain.PlayerFinalResult;
 import blackjack.domain.ScoreCompareResult;
 import blackjack.service.CardDistributor;
 import blackjack.service.Game;
 import blackjack.utils.InputParser;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -53,11 +56,11 @@ public class BlackjackController {
     private void calculateFinalGameResult(List<Player> players, Dealer dealer) {
         GameResult gameResult = game.judgeTotalGameResult(players, dealer);
         Map<ScoreCompareResult, Integer> dealerResult = gameResult.dealerResult();
-        Map<Player, ScoreCompareResult> playerResult = gameResult.playerResults();
-        HashMap<String, ScoreCompareResult> playerNameResult = new HashMap<>();
 
+        LinkedHashMap<Player, ScoreCompareResult> playerResult = gameResult.playerResults();
+        List<PlayerFinalResult> playerNameResult = new ArrayList<>();
         for (Entry<Player, ScoreCompareResult> entry : playerResult.entrySet()) {
-            playerNameResult.put(entry.getKey().getName(), entry.getValue());
+            playerNameResult.add(new PlayerFinalResult(entry.getKey().getName(), entry.getValue()));
         }
         OutputView.printFinalResult(dealerResult, playerNameResult);
     }
@@ -90,11 +93,11 @@ public class BlackjackController {
     }
 
     private static void printInitialCards(List<Player> players, Dealer dealer) {
-        Map<String, List<String>> playerCards = new HashMap<>();
+        List<PlayerCardsName> playersCardsName = new ArrayList<>();
         for (Player player : players) {
-            playerCards.put(player.getName(), player.getCardNames());
+            playersCardsName.add(new PlayerCardsName(player.getName(), player.getCardNames()));
         }
-        OutputView.printAllUserCards(playerCards, dealer.getOneCardName());
+        OutputView.printAllUserCards(playersCardsName, dealer.getOneCardName());
     }
 
     private List<Player> getPlayers(List<String> playerNames) {
@@ -106,17 +109,16 @@ public class BlackjackController {
     }
 
     private void calculateFinalScore(List<Player> players, Dealer dealer) {
-        Map<String, List<String>> playerCards = new HashMap<>();
-        Map<String, Integer> playerScores = new HashMap<>();
+        List<PlayerFinalCardsScore> playerFinalCardsScores = new ArrayList<>();
         for (Player player : players) {
-            playerCards.put(player.getName(), player.getCardNames());
-            playerScores.put(player.getName(), player.calculateTotalScore());
+            playerFinalCardsScores.add(
+                    new PlayerFinalCardsScore(player.getName(), player.getCardNames(), player.calculateTotalScore()));
         }
 
         List<String> dealerCards = dealer.getCardNames();
         int dealerScore = dealer.calculateTotalScore();
 
-        OutputView.printFinalCardScores(playerCards, dealerCards, playerScores, dealerScore);
+        OutputView.printFinalCardScores(playerFinalCardsScores, dealerCards, dealerScore);
     }
 
     private void distributeInitialCards(List<Player> players, Dealer dealer) {

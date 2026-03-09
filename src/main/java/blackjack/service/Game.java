@@ -5,6 +5,7 @@ import blackjack.domain.GameResult;
 import blackjack.domain.Player;
 import blackjack.domain.ScoreCompareResult;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +25,7 @@ public class Game {
 
     public GameResult judgeTotalGameResult(List<Player> players, Dealer dealer) {
         Map<ScoreCompareResult, Integer> dealerResult = new HashMap<>();
-        Map<Player, ScoreCompareResult> playerResults = new HashMap<>();
+        LinkedHashMap<Player, ScoreCompareResult> playerResults = new LinkedHashMap<>();
 
         for (Player player : players) {
             ScoreCompareResult result = compareScore(player, dealer);

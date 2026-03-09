@@ -1,15 +1,18 @@
 package blackjack.view;
 
+import blackjack.domain.PlayerCardsName;
+import blackjack.domain.PlayerFinalCardsScore;
+import blackjack.domain.PlayerFinalResult;
 import blackjack.domain.ScoreCompareResult;
 import java.util.List;
 import java.util.Map;
 
 public class OutputView {
 
-    public static void printAllUserCards(Map<String, List<String>> playerCards, String dealerCards) {
+    public static void printAllUserCards(List<PlayerCardsName> playersCards, String dealerCards) {
         printDealerInitialDrawnCard(dealerCards);
-        for (String playerName : playerCards.keySet()) {
-            printDrawnCards(playerName, playerCards.get(playerName));
+        for (PlayerCardsName playerCardsName : playersCards) {
+            printDrawnCards(playerCardsName.playerName(), playerCardsName.cardNames());
         }
         System.out.println();
     }
@@ -36,20 +39,21 @@ public class OutputView {
         System.out.println("딜러는 " + cardCount + "장의 카드를 더 뽑았습니다.");
     }
 
-    public static void printFinalCardScores(Map<String, List<String>> playerCards, List<String> dealerCards,
-                                            Map<String, Integer> playerScores, int dealerScore) {
+    public static void printFinalCardScores(List<PlayerFinalCardsScore> playerFinalCardsScores,
+                                            List<String> dealerCards,
+                                            int dealerScore) {
         System.out.println();
         printFinalDrawnCards("딜러", dealerCards);
         System.out.printf(" - 결과: %d\n", dealerScore);
-        for (String playerName : playerCards.keySet()) {
-            printFinalDrawnCards(playerName, playerCards.get(playerName));
-            System.out.printf(" - 결과: %d\n", playerScores.get(playerName));
+        for (PlayerFinalCardsScore playerFinalCardsScore : playerFinalCardsScores) {
+            printFinalDrawnCards(playerFinalCardsScore.playerName(), playerFinalCardsScore.cardNames());
+            System.out.printf(" - 결과: %d\n", playerFinalCardsScore.totalScore());
         }
     }
 
     public static void printFinalResult(
             Map<ScoreCompareResult, Integer> dealerResult,
-            Map<String, ScoreCompareResult> playerResults) {
+            List<PlayerFinalResult> playerResults) {
         System.out.println();
         System.out.println("## 최종 승패");
         int wins = dealerResult.getOrDefault(ScoreCompareResult.DEALER_WIN, 0);
@@ -57,8 +61,8 @@ public class OutputView {
         int pushes = dealerResult.getOrDefault(ScoreCompareResult.PUSH, 0);
         System.out.printf("딜러: %d승 %d무 %d패%n", wins, pushes, losses);
 
-        for (Map.Entry<String, ScoreCompareResult> entry : playerResults.entrySet()) {
-            System.out.println(entry.getKey() + ": " + toKorean(entry.getValue()));
+        for (PlayerFinalResult playerResult : playerResults) {
+            System.out.println(playerResult.name() + ": " + toKorean(playerResult.scoreCompareResult()));
         }
     }
 
