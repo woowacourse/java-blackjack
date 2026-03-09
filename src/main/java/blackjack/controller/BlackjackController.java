@@ -5,10 +5,8 @@ import blackjack.dto.DealerScoreDto;
 import blackjack.dto.PlayerDto;
 import blackjack.dto.PlayerScoreDto;
 import blackjack.dto.ResultDto;
-import blackjack.model.AceAdjustPolicy;
 import blackjack.model.Answer;
 import blackjack.model.BlackjackResult;
-import blackjack.model.BustPolicy;
 import blackjack.model.Card;
 import blackjack.model.CardsGenerator;
 import blackjack.model.Dealer;
@@ -27,9 +25,7 @@ public class BlackjackController {
     private final InputView inputView;
     private final OutputView outputView;
 
-    private final AceAdjustPolicy aceAdjustPolicy;
     private final DealerDrawPolicy dealerDrawPolicy;
-    private final BustPolicy bustPolicy;
 
     private final CardsGenerator cardsGenerator;
     private final ResultJudgement resultJudgement;
@@ -37,24 +33,20 @@ public class BlackjackController {
     public BlackjackController(
             InputView inputView,
             OutputView outputView,
-            AceAdjustPolicy aceAdjustPolicy,
             DealerDrawPolicy dealerDrawPolicy,
-            BustPolicy bustPolicy,
             CardsGenerator cardsGenerator,
             ResultJudgement resultJudgement
     ) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.aceAdjustPolicy = aceAdjustPolicy;
         this.dealerDrawPolicy = dealerDrawPolicy;
-        this.bustPolicy = bustPolicy;
         this.cardsGenerator = cardsGenerator;
         this.resultJudgement = resultJudgement;
     }
 
     public void run() {
         Players players = readPlayers();
-        Dealer dealer = new Dealer(aceAdjustPolicy, dealerDrawPolicy);
+        Dealer dealer = new Dealer(dealerDrawPolicy);
         Deck deck = Deck.shuffled(cardsGenerator);
 
         initialDeal(players, dealer, deck);
@@ -66,7 +58,7 @@ public class BlackjackController {
     private Players readPlayers() {
         String rawPlayerNames = inputView.readPlayerNames();
 
-        return Players.from(rawPlayerNames, aceAdjustPolicy);
+        return Players.from(rawPlayerNames);
     }
 
     private void initialDeal(Players players, Dealer dealer, Deck deck) {
@@ -94,7 +86,7 @@ public class BlackjackController {
     }
 
     private void playerHit(Player player, Deck deck) {
-        while (!bustPolicy.isBust(player.getScore()) && askHit(player.getName()) == Answer.YES) {
+        while (!player.isBust() && askHit(player.getName()) == Answer.YES) {
             player.addCard(deck.draw());
             outputView.printPlayerCards(player.getName(), cardsToDtos(player.getCards()));
         }

@@ -5,13 +5,10 @@ import java.util.List;
 
 public class Hand {
 
-    private final List<Card> cards;
-    private final AceAdjustPolicy aceAdjustPolicy;
+    private static final int BUST_LOWER_BOUND = 22;
+    private static final int ACE_ADJUST_SCORE = 10;
 
-    public Hand(AceAdjustPolicy aceAdjustPolicy) {
-        this.cards = new ArrayList<>();
-        this.aceAdjustPolicy = aceAdjustPolicy;
-    }
+    private final List<Card> cards  = new ArrayList<>();
 
     public List<Card> getCards() {
         return List.copyOf(cards);
@@ -25,11 +22,35 @@ public class Hand {
         this.cards.addAll(cards);
     }
 
-    public int calculateScore() {
-        int score = cards.stream()
-                .mapToInt(Card::getValue)
-                .sum();
+    public boolean isBust() {
+        return calculateScore() >= BUST_LOWER_BOUND;
+    }
 
-        return aceAdjustPolicy.adjust(score, cards);
+    public int calculateScore() {
+        int scoreBeforeAdjust = getScoreBeforeAdjust();
+
+        return adjust(scoreBeforeAdjust, cards);
+    }
+
+    private int getScoreBeforeAdjust() {
+        return cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
+    }
+
+    private int adjust(int scoreBeforeAdjust, List<Card> cards) {
+        boolean containAce = cards.stream()
+                .anyMatch(card -> card.rank() == Rank.ACE);
+        int scoreAfterAdjust = scoreBeforeAdjust + ACE_ADJUST_SCORE;
+
+        if (isNotBust(scoreAfterAdjust) && containAce) {
+            return scoreAfterAdjust;
+        }
+
+        return scoreBeforeAdjust;
+    }
+
+    private boolean isNotBust(int score) {
+        return score <= BUST_LOWER_BOUND;
     }
 }

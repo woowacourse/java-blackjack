@@ -5,7 +5,7 @@ public record Card(
         Suit suit
 ) {
 
-    public int getValue() {
+    public int getScore() {
         return rank.getScore();
     }
 }

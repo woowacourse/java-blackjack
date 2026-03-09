@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test;
 
 class PlayerTest {
 
-    static final int ADJUST_VALUE = 10;
-    final Hand hand = new Hand(new AceAdjustPolicy(ADJUST_VALUE, new BustPolicyImpl()));
+    final Hand hand = new Hand();
 
     @Test
     void 본인의_이름을_반환한다() {

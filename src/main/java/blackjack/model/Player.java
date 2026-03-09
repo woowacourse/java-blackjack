@@ -27,4 +27,8 @@ public class Player {
     public int getScore() {
         return hand.calculateScore();
     }
+
+    public boolean isBust() {
+        return hand.isBust();
+    }
 }

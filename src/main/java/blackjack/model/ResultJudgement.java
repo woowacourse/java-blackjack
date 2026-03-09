@@ -2,18 +2,14 @@ package blackjack.model;
 
 public class ResultJudgement {
 
-    private final BustPolicy bustPolicy;
-
-    public ResultJudgement(BustPolicy bustPolicy) {
-        this.bustPolicy = bustPolicy;
-    }
+    private static final int BUST_LOWER_BOUND = 22;
 
     public BlackjackResult judge(int playerScore, int dealerScore) {
-        if (bustPolicy.isBust(playerScore)) {
+        if (isBust(playerScore)) {
             return BlackjackResult.LOSE;
         }
 
-        if (bustPolicy.isBust(dealerScore)) {
+        if (isBust(dealerScore)) {
             return BlackjackResult.WIN;
         }
 
@@ -26,5 +22,9 @@ public class ResultJudgement {
         }
 
         return BlackjackResult.LOSE;
+    }
+
+    private boolean isBust(int score) {
+        return score >= BUST_LOWER_BOUND;
     }
 }

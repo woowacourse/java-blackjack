@@ -7,8 +7,8 @@ public class Dealer {
     private final Hand hand;
     private final DealerDrawPolicy drawPolicy;
 
-    public Dealer(AceAdjustPolicy aceAdjustPolicy, DealerDrawPolicy drawPolicy) {
-        this.hand = new Hand(aceAdjustPolicy);
+    public Dealer(DealerDrawPolicy drawPolicy) {
+        this.hand = new Hand();
         this.drawPolicy = drawPolicy;
     }
 

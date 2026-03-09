@@ -10,8 +10,6 @@ class DealerTest {
 
     static final int ADJUST_VALUE = 10;
 
-    final AceAdjustPolicy aceAdjustPolicy = new AceAdjustPolicy(ADJUST_VALUE, new BustPolicyImpl());
-
     @Nested
     @DisplayName("카드를 더 뽑아야 하는지 판단한다")
     class JudgeShouldDraw {
@@ -19,7 +17,7 @@ class DealerTest {
         void 카드를_더_뽑아야_한다면_true를_반환한다() {
             // given
             DealerDrawPolicy alwaysDrawPolicy = (score) -> true;
-            Dealer dealer = new Dealer(aceAdjustPolicy, alwaysDrawPolicy);
+            Dealer dealer = new Dealer(alwaysDrawPolicy);
 
             // when
             boolean shouldDraw = dealer.shouldDraw();
@@ -32,7 +30,7 @@ class DealerTest {
         void 카드를_더_뽑지_말아야_한다면_false를_반환한다() {
             // given
             DealerDrawPolicy neverDrawPolicy = (score) -> false;
-            Dealer dealer = new Dealer(aceAdjustPolicy, neverDrawPolicy);
+            Dealer dealer = new Dealer(neverDrawPolicy);
 
             // when
             boolean shouldDraw = dealer.shouldDraw();

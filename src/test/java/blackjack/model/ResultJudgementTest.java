@@ -11,8 +11,7 @@ class ResultJudgementTest {
     static final int HIGHER_SCORE = 20;
     static final int BUST_SCORE = 30;
 
-    final BustPolicy bustPolicy = score -> score > 20;
-    final ResultJudgement resultJudgement = new ResultJudgement(bustPolicy);
+    final ResultJudgement resultJudgement = new ResultJudgement();
 
     @Test
     void 둘_다_버스트가_아니면서_플레이어가_점수가_더_높다면_플레이어가_승리한다() {
