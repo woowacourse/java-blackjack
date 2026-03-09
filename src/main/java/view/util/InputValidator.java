@@ -1,6 +1,6 @@
 package view.util;
 
-public class InputValidate {
+public class InputValidator {
     private static final String INVALID_INPUT_ERROR_MESSAGE = "[ERROR] 올바르지 않은 입력입니다!";
     private static final String NOT_Y_AND_N_ERROR_MESSAGE = "[ERROR] y나 n이 아닙니다!";
     private static final String HIT_COMMAND = "y";
