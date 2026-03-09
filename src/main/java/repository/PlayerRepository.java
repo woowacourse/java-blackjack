@@ -15,6 +15,10 @@ public class PlayerRepository {
         return player;
     }
 
+    public void saveAll(List<Player> players) {
+        players.forEach(player -> this.players.put(player.getName(), player));
+    }
+
     public List<Player> findAll() {
         return players.values().stream().toList();
     }

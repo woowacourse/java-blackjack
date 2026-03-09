@@ -3,8 +3,6 @@ package domain.service;
 import domain.model.Dealer;
 import domain.model.Player;
 import dto.*;
-import repository.DealerRepository;
-import repository.PlayerRepository;
 
 import java.util.List;
 
@@ -12,19 +10,16 @@ import static constant.BlackJackConstant.DEALER_APPEND_CRITERIA;
 
 public class BlackJackService {
 
-    private final PlayerRepository playerRepository;
-    private final DealerRepository dealerRepository;
+    private final PersonService personService;
     private final CardDistributor cardDistributor;
     private final JudgementService judgementService;
 
     public BlackJackService(
-            PlayerRepository playerRepository,
-            DealerRepository dealerRepository,
+            PersonService personService,
             CardDistributor cardDistributor,
             JudgementService judgementService
     ) {
-        this.playerRepository = playerRepository;
-        this.dealerRepository = dealerRepository;
+        this.personService = personService;
         this.cardDistributor = cardDistributor;
         this.judgementService = judgementService;
     }
@@ -33,13 +28,15 @@ public class BlackJackService {
     public InitialDto createPlayer(List<String> playerNames) {
         List<Player> players = playerNames.stream()
                 .map(Player::of)
-                .map(playerRepository::save)
                 .toList();
         cardDistributor.initialize(players);
         return InitialDto.of(cardDistributor.getDealer(), players);
     }
 
-    // 플레이어 추가 카드
+    public List<Player> getAllPlayers() {
+        return personService.findAllPlayers();
+    }
+
     public PlayerResultDto additionalCard(Player player) {
         cardDistributor.distributeAdditionalCard(player);
         return PlayerResultDto.of(player);
@@ -49,18 +46,14 @@ public class BlackJackService {
         return judgementService.getGameResult();
     }
 
-    public List<Player> getAllPlayers() {
-        return playerRepository.findAll();
-    }
-
     public boolean isDealerCanAppend() {
-        Dealer dealer = dealerRepository.getDealer();
+        Dealer dealer = personService.getDealer();
         dealer.calculateFinalSum();
         return dealer.getFinalSum() <= DEALER_APPEND_CRITERIA;
     }
 
     public void additionalDealerCard() {
-        Dealer dealer = dealerRepository.getDealer();
+        Dealer dealer = personService.getDealer();
         cardDistributor.distributeAdditionalCard(dealer);
     }
 }

@@ -3,9 +3,12 @@ package domain;
 import domain.model.Player;
 import domain.service.CardDistributor;
 import domain.service.CardFactory;
+import domain.service.CardNumberGenerator;
+import domain.service.PersonService;
 import org.junit.jupiter.api.Test;
 import repository.CardRepository;
 import repository.DealerRepository;
+import repository.PlayerRepository;
 import util.RandomRankNumberGenerator;
 import util.RandomShapeNumberGenerator;
 
@@ -14,13 +17,25 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class CardDistributorTest {
+
+    private final PlayerRepository playerRepository = new PlayerRepository();
+    private final DealerRepository dealerRepository = new DealerRepository();
+    private final PersonService personService = new PersonService(
+            playerRepository,
+            dealerRepository
+    );
+    private final CardRepository cardRepository = new CardRepository();
+    private final CardNumberGenerator cardNumberGenerator = new CardNumberGenerator(
+            new RandomRankNumberGenerator(),
+            new RandomShapeNumberGenerator()
+    );
+    private final CardFactory cardFactory = new CardFactory(
+            cardRepository,
+            cardNumberGenerator
+    );
     private final CardDistributor cardDistributor = new CardDistributor(
-            new DealerRepository(),
-            new CardFactory(
-                    new CardRepository(),
-                    new RandomRankNumberGenerator(),
-                    new RandomShapeNumberGenerator()
-            )
+            personService,
+            cardFactory
     );
 
     @Test

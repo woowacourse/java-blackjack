@@ -1,10 +1,7 @@
 package config;
 
 import controller.BlackJackController;
-import domain.service.BlackJackService;
-import domain.service.CardDistributor;
-import domain.service.CardFactory;
-import domain.service.JudgementService;
+import domain.service.*;
 import repository.CardRepository;
 import repository.DealerRepository;
 import repository.PlayerRepository;
@@ -26,12 +23,17 @@ public class DIConfig {
         );
     }
 
-    // service
+    public PersonService personService() {
+        return new PersonService(
+                playerRepository(),
+                dealerRepository()
+        );
+    }
 
+    // service
     public BlackJackService blackJackService() {
         return new BlackJackService(
-                playerRepository(),
-                dealerRepository(),
+                personService(),
                 cardDistributor(),
                 judgementService()
         );
@@ -39,14 +41,13 @@ public class DIConfig {
 
     public JudgementService judgementService() {
         return new JudgementService(
-                playerRepository(),
-                dealerRepository()
+                personService()
         );
     }
 
     public CardDistributor cardDistributor() {
         return new CardDistributor(
-                dealerRepository(),
+                personService(),
                 cardFactory()
         );
     }
@@ -54,13 +55,18 @@ public class DIConfig {
     public CardFactory cardFactory() {
         return new CardFactory(
                 cardRepository(),
+                cardNumberGenerator()
+        );
+    }
+
+    public CardNumberGenerator cardNumberGenerator() {
+        return new CardNumberGenerator(
                 randomRankNumberGenerator(),
                 randomShapeNumberGenerator()
         );
     }
 
     // repository
-
     public PlayerRepository playerRepository() {
         return playerRepository;
     }

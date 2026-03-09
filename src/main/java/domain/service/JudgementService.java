@@ -4,27 +4,22 @@ import domain.model.*;
 import dto.DealerResultDto;
 import dto.PlayerResultDto;
 import dto.ResultDto;
-import repository.DealerRepository;
-import repository.PlayerRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class JudgementService {
 
-    // TODO: 최종 합산 시에 생존이라면 11로 계산했을 때 생존이면 이값으로,11로 계산했을 때 버스트면 1로 계산
-    private final PlayerRepository playerRepository;
-    private final DealerRepository dealerRepository;
+    private final PersonService personService;
 
-    public JudgementService(PlayerRepository playerRepository, DealerRepository dealerRepository) {
-        this.playerRepository = playerRepository;
-        this.dealerRepository = dealerRepository;
+    public JudgementService(PersonService personService) {
+        this.personService = personService;
     }
 
     public ResultDto getGameResult() {
         // 최종 점수 계산
-        List<Player> players = playerRepository.findAll();
-        Dealer dealer = dealerRepository.getDealer();
+        List<Player> players = personService.findAllPlayers();
+        Dealer dealer = personService.getDealer();
         dealer.calculateFinalSum();
 
         List<PlayerResultDto> playerResultDtos = new ArrayList<>();
@@ -40,7 +35,6 @@ public class JudgementService {
     }
 
     public void judgementWinning(Player player, Dealer dealer) {
-        // 버스트 비교
         if (player.isBurst() && dealer.isBurst()) {
             player.changeStatus(PlayerStatus.LOSS);
             return;
@@ -53,7 +47,6 @@ public class JudgementService {
             player.changeStatus(PlayerStatus.WIN);
             return;
         }
-        // 합산 비교 TODO: 마지막 조건을 if로 처리하는게 맞을까?
         if (player.isAlive() && dealer.isAlive()) {
             judgeStatusByDeckSum(player, dealer);
         }

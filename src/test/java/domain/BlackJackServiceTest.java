@@ -1,10 +1,7 @@
 package domain;
 
 import domain.model.*;
-import domain.service.BlackJackService;
-import domain.service.CardDistributor;
-import domain.service.CardFactory;
-import domain.service.JudgementService;
+import domain.service.*;
 import org.junit.jupiter.api.Test;
 import repository.CardRepository;
 import repository.DealerRepository;
@@ -20,23 +17,28 @@ public class BlackJackServiceTest {
 
     private final PlayerRepository playerRepository = new PlayerRepository();
     private final DealerRepository dealerRepository = new DealerRepository();
-    private final CardRepository cardRepository = new CardRepository();
-    private final CardFactory cardFactory = new CardFactory(
-            cardRepository,
-            new RandomShapeNumberGenerator(),
-            new RandomRankNumberGenerator()
-    );
-    private final CardDistributor cardDistributor = new CardDistributor(
-            dealerRepository,
-            cardFactory
-    );
-    private final JudgementService judgementService = new JudgementService(
+    private final PersonService personService = new PersonService(
             playerRepository,
             dealerRepository
     );
+    private final CardRepository cardRepository = new CardRepository();
+    private final CardNumberGenerator cardNumberGenerator = new CardNumberGenerator(
+            new RandomRankNumberGenerator(),
+            new RandomShapeNumberGenerator()
+    );
+    private final CardFactory cardFactory = new CardFactory(
+            cardRepository,
+            cardNumberGenerator
+    );
+    private final CardDistributor cardDistributor = new CardDistributor(
+            personService,
+            cardFactory
+    );
+    private final JudgementService judgementService = new JudgementService(
+            personService
+    );
     private final BlackJackService blackJackService = new BlackJackService(
-            playerRepository,
-            dealerRepository,
+            personService,
             cardDistributor,
             judgementService
     );

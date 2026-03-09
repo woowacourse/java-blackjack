@@ -2,6 +2,7 @@ package domain;
 
 import domain.model.*;
 import domain.service.JudgementService;
+import domain.service.PersonService;
 import org.junit.jupiter.api.Test;
 import repository.DealerRepository;
 import repository.PlayerRepository;
@@ -14,9 +15,12 @@ public class judgeTest {
 
     private final PlayerRepository playerRepository = new PlayerRepository();
     private final DealerRepository dealerRepository = new DealerRepository();
-    private final JudgementService judgementService = new JudgementService(
+    private final PersonService personService = new PersonService(
             playerRepository,
             dealerRepository
+    );
+    private final JudgementService judgementService = new JudgementService(
+            personService
     );
 
     @Test
