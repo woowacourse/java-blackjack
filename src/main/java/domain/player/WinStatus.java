@@ -5,7 +5,7 @@ public enum WinStatus {
     DRAW("무"),
     LOSE("패");
 
-    private String status;
+    private final String status;
 
     WinStatus(String status) {
         this.status = status;

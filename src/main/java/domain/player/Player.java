@@ -6,8 +6,8 @@ import domain.vo.Name;
 import java.util.List;
 
 public class Player {
-    private Name name;
-    private HandCards handCards = new HandCards();
+    private final Name name;
+    private final HandCards handCards = new HandCards();
 
     public Player(Name name) {
         this.name = name;
@@ -18,15 +18,15 @@ public class Player {
     }
 
     public int getCardSum(){
-        return handCards.calculateCards();
+        return handCards.getCardScoreSum();
     }
 
     public boolean isBust() {
-        return handCards.calculateCards() > 21;
+        return handCards.getCardScoreSum() > 21;
     }
 
-    public WinStatus isWin(int score) {
-        int myScore = handCards.calculateCards();
+    public WinStatus matchResult(int score) {
+        int myScore = handCards.getCardScoreSum();
         if (myScore > score) {
             return WinStatus.WIN;
         }

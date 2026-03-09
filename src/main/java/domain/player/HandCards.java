@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HandCards {
-    private List<Card> cards;
+    private final List<Card> cards;
 
     public HandCards() {
         this.cards = new ArrayList<>();
@@ -28,7 +28,7 @@ public class HandCards {
     }
 
     // 손에 쥔 카드 점수 계산해 반환
-    public int calculateCards(){
+    public int getCardScoreSum() {
         int sum = 0;
         int aceCount = 0;
 
@@ -52,11 +52,11 @@ public class HandCards {
 
     // ACE 처리 로직
     private int calculateAce(int currentSum){
-        int aceCase10 = Math.max(21 - (currentSum + 11), 0);
-        int aceCase1 = Math.max(21 - (currentSum + 11), 0);
+        int aceCase11 = Math.max(21 - (currentSum + 11), 0);
+        int aceCase1 = Math.max(21 - (currentSum + 1), 0);
 
-        if (aceCase10 < aceCase1) {
-            return 10;
+        if (aceCase11 < aceCase1) {
+            return 11;
         }
 
         return 1;

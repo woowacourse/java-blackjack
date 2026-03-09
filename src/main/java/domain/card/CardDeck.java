@@ -1,9 +1,11 @@
 package domain.card;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class CardDeck {
-    private List<Card> cardDeck = new ArrayList<>();
+    private final List<Card> cardDeck = new ArrayList<>();
     private int index = 0;
 
     public CardDeck() {
@@ -24,7 +26,7 @@ public class CardDeck {
         Collections.shuffle(cardDeck);
     }
 
-    public Card getCard() {
+    public Card draw() {
         if (index > cardDeck.size() - 1) {
             shuffleCards();
             index = 0;

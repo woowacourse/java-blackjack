@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class GameService {
     private PlayerGroups playerGroups;
-    private CardDeck cardDeck = new CardDeck();
+    private final CardDeck cardDeck = new CardDeck();
 
     public void joinPlayers(List<String> playerNames) {
         List<Player> players = new ArrayList<>();
@@ -35,7 +35,7 @@ public class GameService {
 
     private void giveAllPlayerCard() {
         while (playerGroups.hasNextPlayer()) {
-            playerGroups.drawCard(cardDeck.getCard());
+            playerGroups.drawCard(cardDeck.draw());
             playerGroups.nextPlayer();
         }
     }
@@ -63,7 +63,7 @@ public class GameService {
 
     // 히트
     public void selectHit(){
-        playerGroups.drawCard(cardDeck.getCard());
+        playerGroups.drawCard(cardDeck.draw());
     }
 
     public boolean isCurrentPlayerBust() {
@@ -82,14 +82,14 @@ public class GameService {
     // 딜러 히트
     public boolean isDealerHit(){
         if (playerGroups.getDealer().getCardSum() < 17) {
-            playerGroups.getDealer().addCard(cardDeck.getCard());
+            playerGroups.getDealer().addCard(cardDeck.draw());
             return true;
         }
         return false;
     }
 
     public Map<String, Integer> getPlayersTotalScore() {
-        return playerGroups.playersTotalScore();
+        return playerGroups.getPlayerTotalScore();
     }
 
     public Map<String, WinStatus> result() {

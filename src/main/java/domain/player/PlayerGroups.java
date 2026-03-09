@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class PlayerGroups {
-    private List<Player> players;
+    private final List<Player> players;
     private int playIndex = 0;
 
     public PlayerGroups(List<Player> players) {
@@ -50,7 +50,7 @@ public class PlayerGroups {
         return players.get(0);
     }
 
-    public Map<String, Integer> playersTotalScore() {
+    public Map<String, Integer> getPlayerTotalScore() {
         Map<String, Integer> scores = new LinkedHashMap<>();
 
         for (Player player : players) {
@@ -78,7 +78,7 @@ public class PlayerGroups {
                 continue;
             }
 
-            result.put(playerName, player.isWin(dealer.getCardSum()));
+            result.put(playerName, player.matchResult(dealer.getCardSum()));
         }
 
         return result;
