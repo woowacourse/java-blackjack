@@ -6,6 +6,9 @@ import java.util.List;
 
 public class GameService {
 
+    private final int BLACKJACK_NUM = 21;
+    private final int DEALER_HIT_NUM = 16;
+
     private final CardDeck cardDeck;
 
     public GameService() {
@@ -43,21 +46,21 @@ public class GameService {
     
 
     public boolean isBlackjack(int score) {
-        if(score == 21) {
+        if(score == BLACKJACK_NUM) {
             return true;
         }
         return false;
     }
 
     public boolean isBurst(int score) {
-        if(score > 21) {
+        if(score > BLACKJACK_NUM) {
             return true;
         }
         return false;
     }
 
     public boolean isHit(int score) {
-        if (score <= 16) {
+        if (score <= DEALER_HIT_NUM) {
             return true;
         }
         return false;
@@ -75,7 +78,6 @@ public class GameService {
         boolean dealerBurst = isBurst(dealerScore);
 
         for (User user : users) {
-            int userScore = calculateScore(user.getHand());
             user.setGameResult(judge(user, dealer, dealerBurst));
         }
     }
