@@ -14,7 +14,7 @@ public class GameCardGenerator implements CardGenerator {
         return cards;
     }
 
-    private static List<Card> generateAllCards() {
+    private List<Card> generateAllCards() {
         List<Card> cards = new ArrayList<>();
         Arrays.stream(CardDenomination.values()).forEach(denomination ->
                 Arrays.stream(CardEmblem.values()).forEach(emblem ->
