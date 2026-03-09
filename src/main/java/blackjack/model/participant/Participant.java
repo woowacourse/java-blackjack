@@ -1,0 +1,51 @@
+package blackjack.model.participant;
+
+import blackjack.model.card.Card;
+import blackjack.model.cardDeck.CardDeck;
+import blackjack.model.Hands;
+import java.util.List;
+
+public abstract class Participant {
+
+    protected static final int BLACKJACK_SCORE = 21;
+
+    protected final String name;
+    protected final Hands hands;
+
+    public Participant(String name, Hands hands) {
+        if (hands == null) {
+            throw new IllegalArgumentException("hands가 null입니다.");
+        }
+
+        this.name = name;
+        this.hands = hands;
+    }
+
+    public abstract void pickInitialCards(CardDeck cardDeck);
+
+    public abstract boolean canPick();
+
+    public boolean isBust() {
+        return hands.isTotalScoreOver(BLACKJACK_SCORE);
+    }
+
+    public List<Card> getOpenedCards() {
+        return hands.getOpenedCards();
+    }
+
+    public int getCurrentTotalScore() {
+        return hands.calculateTotalScore();
+    }
+
+    public void pickAdditionalCard(CardDeck cardDeck) {
+        hands.addCard(cardDeck.pick());
+    }
+
+    public List<Card> getAllCard() {
+        return hands.getAllCard();
+    }
+
+    public String getName() {
+        return this.name;
+    }
+}
