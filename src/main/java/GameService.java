@@ -62,7 +62,7 @@ public class GameService {
     }
 
     private GameResult applyResult(Dealer dealer, GameResult userResult) {
-        dealer.setRounds(userResult.opposite());
+        dealer.recordRounds(userResult.opposite());
         return userResult;
     }
 }

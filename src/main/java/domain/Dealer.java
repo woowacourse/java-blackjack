@@ -1,8 +1,6 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Dealer extends Player {
@@ -13,7 +11,7 @@ public class Dealer extends Player {
         return getHand().getFirst();
     }
 
-    public void setRounds(GameResult gameResult) {
+    public void recordRounds(GameResult gameResult) {
         gameResults.put(gameResult, gameResults.getOrDefault(gameResult,0) + 1);
     }
 
