@@ -14,10 +14,7 @@ public class GameManager {
     private final Players players = new Players();
     private final Dealer dealer = new Dealer();
 
-    public GameManager() {
-        deck.init();
-        deck.shuffle();
-    }
+    public GameManager() {}
 
     public void startGame() {
         for (int i = 0; i < 2; i++) {
