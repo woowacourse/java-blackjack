@@ -12,6 +12,8 @@ import java.util.function.Supplier;
 
 public class ApplicationView {
 
+    private final String DELIMITER = ",";
+
     private final InputReader reader;
     private final OutputWriter writer;
 
@@ -31,7 +33,7 @@ public class ApplicationView {
     private List<PlayerName> readPlayerNames() {
         writer.printInputNameGuideMessage();
         String names = reader.readInput();
-        return Arrays.stream(names.split(","))
+        return Arrays.stream(names.split(DELIMITER))
                 .map(String::trim)
                 .map(PlayerName::from)
                 .toList();
@@ -48,7 +50,7 @@ public class ApplicationView {
     }
 
     public void printInitialHandOutResult(List<String> playerNames, int initialCardCount) {
-        String formattedNames = String.join(",", playerNames);
+        String formattedNames = String.join(DELIMITER, playerNames);
         writer.printDealInitialCardMessage(formattedNames, initialCardCount);
     }
 
@@ -68,11 +70,11 @@ public class ApplicationView {
 
     public void printFinalResultMessage(ResultAnalysisDto resultAnalysis) {
         writer.printFinalResultTitleMessage();
-        writer.printFinalResultOfDealer(resultAnalysis.getDealerResult());
         printAllPlayersResult(resultAnalysis);
     }
 
     private void printAllPlayersResult(ResultAnalysisDto resultAnalysis) {
+        writer.printFinalResultOfDealer(resultAnalysis.getDealerResult());
         resultAnalysis.playerGameResults()
                 .forEach(player -> {
                     writer.printFinalResultOfPlayer(player.playerName(), player.gameResult().displayName());
