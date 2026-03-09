@@ -1,20 +1,18 @@
 package blackjack.domain;
 
 public enum Suit {
-    SPADE("spade", "스페이드"),
-    DIAMOND("diamond", "다이아몬드"),
-    HEART("heart", "하트"),
-    CLOVER("clover", "클로버"),
+    SPADE("스페이드"),
+    DIAMOND("다이아몬드"),
+    HEART("하트"),
+    CLOVER("클로버"),
     ;
-
-    private String name;
-    private String displayName;
-
-    Suit(String name, String displayName) {
-        this.name = name;
+    
+    private final String displayName;
+    
+    Suit(String displayName) {
         this.displayName = displayName;
     }
-
+    
     public String getSuitDisplayName() {
         return displayName;
     }
