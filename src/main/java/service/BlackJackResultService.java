@@ -26,7 +26,8 @@ public class BlackJackResultService {
                 .collect(Collectors.toMap(
                         Player::getName,
                         player -> calculateWinningStatus(dealer, player),
-                        (x, y) -> y, LinkedHashMap::new)
+                        (x, y) -> y,
+                        LinkedHashMap::new)
                 );
     }
 
