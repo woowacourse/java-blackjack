@@ -3,44 +3,45 @@ package model;
 import constant.CardErrorCode;
 import exception.GameException;
 import dto.Card;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ParticipantHand {
 
     private static final int ADDITIONAL_ACE_SCORE = 10;
-    private static final int ACE_THRESHOLD = 11;
+    private static final int BLACKJACK_SCORE = 21;
 
-    private final Cards hand = new Cards();
+    private final List<Card> hand = new ArrayList<>();
 
     public void addCard(Card card) {
         validateCardDuplicate(card);
         hand.add(card);
     }
 
-    public Integer getScore() {
-        int baseScore = hand.get().stream()
+    public int getScore() {
+        int baseScore = hand.stream()
                 .mapToInt(card -> card.cardNumber().getScore())
                 .sum();
 
-        boolean hasAce = hand.get().stream()
+        boolean hasAce = hand.stream()
                 .anyMatch(card -> card.cardNumber() == CardNumber.ACE);
 
-        if (hasAce && baseScore <= ACE_THRESHOLD) {
+        if (hasAce && baseScore + ADDITIONAL_ACE_SCORE <= BLACKJACK_SCORE) {
             return baseScore + ADDITIONAL_ACE_SCORE;
         }
         return baseScore;
     }
 
-    public Integer getHandSize() {
-        return hand.get().size();
+    public int getHandSize() {
+        return hand.size();
     }
 
     public List<Card> getHand() {
-        return hand.get();
+        return List.copyOf(hand);
     }
 
     private void validateCardDuplicate(Card card) {
-        if(hand.get().contains(card)) {
+        if (hand.contains(card)) {
             throw new GameException(CardErrorCode.DUPLICATED_CARD_IN_DECK);
         }
     }
